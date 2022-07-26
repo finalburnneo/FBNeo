@@ -115,6 +115,8 @@ INT32 TaitoDoReset()
 	
 	memset (TaitoCoinLockout, 0, 4);
 
+	HiscoreReset();
+
 	return 0;
 }
 

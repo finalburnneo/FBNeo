@@ -2044,7 +2044,7 @@ struct BurnDriver BurnDrvSnowboar = {
 };
 
 
-// Touch & Go (World)
+// Touch and Go (World)
 
 static struct BurnRomInfo touchgoRomDesc[] = {
 	{ "tg_56.ic56",		0x080000, 0x8ab065f3, 1 | BRF_PRG | BRF_ESS }, //  0  68k Code
@@ -2056,7 +2056,7 @@ static struct BurnRomInfo touchgoRomDesc[] = {
 	{ "tg_ic67.ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
 	{ "touchgo_ds5002fp_sram.bin",	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
-	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
+	{ "touchgo_scratch",		    0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
 STD_ROM_PICK(touchgo)
@@ -2069,7 +2069,7 @@ static INT32 touchgoInit()
 
 struct BurnDriver BurnDrvTouchgo = {
 	"touchgo", NULL, NULL, NULL, "1995",
-	"Touch & Go (World)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (World)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2078,7 +2078,7 @@ struct BurnDriver BurnDrvTouchgo = {
 };
 
 
-// Touch & Go (Non North America)
+// Touch and Go (Non North America)
 
 static struct BurnRomInfo touchgonRomDesc[] = {
 	{ "1.ic63",			0x080000, 0xfd3b4642, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2090,7 +2090,7 @@ static struct BurnRomInfo touchgonRomDesc[] = {
 	{ "tg_ic67.ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
 	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
-	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
+	{ "touchgo_scratch",		   0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
 STD_ROM_PICK(touchgon)
@@ -2098,7 +2098,7 @@ STD_ROM_FN(touchgon)
 
 struct BurnDriver BurnDrvTouchgon = {
 	"touchgon", "touchgo", NULL, NULL, "1995",
-	"Touch & Go (Non North America)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (Non North America)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonRomInfo, touchgonRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2107,7 +2107,7 @@ struct BurnDriver BurnDrvTouchgon = {
 };
 
 
-// Touch & Go (earlier revision)
+// Touch and Go (earlier revision)
 
 static struct BurnRomInfo touchgoeRomDesc[] = {
 	{ "tg56.ic63",		0x080000, 0x6d0f5c65, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2119,7 +2119,7 @@ static struct BurnRomInfo touchgoeRomDesc[] = {
 	{ "tg_ic67.ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
 	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
-	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
+	{ "touchgo_scratch",		   0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
 STD_ROM_PICK(touchgoe)
@@ -2127,7 +2127,7 @@ STD_ROM_FN(touchgoe)
 
 struct BurnDriver BurnDrvTouchgoe = {
 	"touchgoe", "touchgo", NULL, NULL, "1995",
-	"Touch & Go (earlier revision)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (earlier revision)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgoeRomInfo, touchgoeRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
@@ -2136,7 +2136,7 @@ struct BurnDriver BurnDrvTouchgoe = {
 };
 
 
-// Touch & Go (Korea, unprotected)
+// Touch and Go (Korea, unprotected)
 
 static struct BurnRomInfo touchgokRomDesc[] = {
 	{ "56.ic56",		0x080000, 0xcbb87505, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2153,7 +2153,7 @@ STD_ROM_FN(touchgok)
 
 struct BurnDriver BurnDrvTouchgok = {
 	"touchgok", "touchgo", NULL, NULL, "1995",
-	"Touch & Go (Korea, unprotected)\0", NULL, "Gaelco", "Miscellaneous",
+	"Touch and Go (Korea, unprotected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgokRomInfo, touchgokRomName, NULL, NULL, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,

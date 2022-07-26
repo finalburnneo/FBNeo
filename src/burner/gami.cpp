@@ -1911,8 +1911,13 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 		TCHAR* szValue;
 		INT32 nLen = _tcslen(szLine);
 
-		// Get rid of the linefeed at the end
+		// Get rid of the linefeed and carriage return at the end
 		if (szLine[nLen - 1] == 10) {
+			szLine[nLen - 1] = 0;
+			nLen--;
+		}
+		if (szLine[nLen - 1] == 13)
+		{
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
@@ -2048,7 +2053,13 @@ void GetHistoryDatHardwareToken(char *to_string)
 
 INT32 ConfigGameLoadHardwareDefaults()
 {
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+	TCHAR *szFolderName = NULL;
+	szFolderName = SDL_GetPrefPath(NULL, "fbneo");		// Get fbneo folder path
+	TCHAR szFileName[MAX_PATH] = _T("");
+#else
 	TCHAR *szFileName = _T("");
+#endif
 	INT32 nApplyHardwareDefaults = 0;
 
 	INT32 nHardwareFlag = (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK);
@@ -2058,7 +2069,11 @@ INT32 ConfigGameLoadHardwareDefaults()
 		for (INT32 hw = 0; gamehw_cfg[i].hw[hw] != 0; hw++) {
 			if (gamehw_cfg[i].hw[hw] == nHardwareFlag)
 			{
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+				_stprintf(szFileName, _T("%s%s"), szFolderName, gamehw_cfg[i].ini);
+#else
 				szFileName = gamehw_cfg[i].ini;
+#endif
 				nApplyHardwareDefaults = 1;
 				break;
 			}
@@ -2071,6 +2086,9 @@ INT32 ConfigGameLoadHardwareDefaults()
 		}
 	}
 
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+	SDL_free(szFolderName);
+#endif
 	return 0;
 }
 

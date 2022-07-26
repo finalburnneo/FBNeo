@@ -886,6 +886,8 @@ void v70Init()
 	// so I don't know what it contains.
 	PIR = 0x00007000;
 	v60.info = v70_i;
+
+	CpuCheatRegister(0, &v60Config);
 }
 
 INT32 v60Scan(INT32 nAction)

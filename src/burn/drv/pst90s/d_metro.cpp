@@ -1,11 +1,9 @@
-// FB Alpha Metro driver module
+// FB Neo Metro driver module
 // Based on MAME driver by Luca Elia and David Haywood
 
 /*
 	Tofix:
- 		Sky alert priorities
- 		blzntrnd roz offset
-
+		?
 
  	Needs porting:
 		dokyusei	(ym2413+msm6295 sound)
@@ -3415,8 +3413,9 @@ static INT32 blzntrndInit()
 	K053936Init(0, DrvK053936RAM, 0x40000, 256 * 8, 512 * 8, pBlzntrnd_roz_callback);
 	K053936SetOffset(0, -69-8, -21);
 
-	i4x00_set_offsets(8, 8, 8);
+	i4x00_set_offsets(0, 0, 0);
 	i4x00_set_extrachip_callback(blzntrnd_zoomchip_draw);
+	i4x00_set_blazing();
 
 	vblank_bit = 0;
 	irq_line = 1;
@@ -3790,7 +3789,7 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 	}
 	SekClose();
 
-	sound_system = sound_type;
+	sound_system = sound_type & 0x0f;
 
 	if (sound_system == 2)
 	{
@@ -3803,10 +3802,10 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 		upd7810SetWritePortHandler(metro_upd7810_write_port);
 
 		BurnYM2413Init(3579545);
-		BurnYM2413SetAllRoutes(1.40, BURN_SND_ROUTE_BOTH);
+		BurnYM2413SetAllRoutes((sound_type & 0x10) ? 10.80 : 4.80, BURN_SND_ROUTE_BOTH);
 
 		MSM6295Init(0, 1056000 / 132, 1);
-		MSM6295SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 
 	if (sound_system == 5)
@@ -3965,7 +3964,7 @@ static void dharmaRomCallback()
 
 static INT32 dharmaInit()
 {
-	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2/*udp*/);
+	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2 | 0x10/*udp*/);
 }
 
 static INT32 dharmajInit()
@@ -4316,8 +4315,6 @@ static INT32 Z80Frame()
 		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -4504,8 +4501,6 @@ static INT32 YMF278bFrame()
 			}
 		}
 	}
-
-	BurnTimerEndFrame(nCyclesTotal[0]);
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);

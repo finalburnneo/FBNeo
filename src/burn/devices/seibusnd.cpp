@@ -42,6 +42,7 @@ UINT8 *SeibuZ80DecROM = NULL;
 UINT8 *SeibuZ80ROM = NULL;
 UINT8 *SeibuZ80RAM = NULL;
 INT32 seibu_coin_input;
+INT32 seibu_fm_type;
 
 static INT32 seibu_sndcpu_frequency;
 static INT32 seibu_snd_type;
@@ -478,6 +479,8 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 	ZetSetReadHandler(seibu_sound_read);
 	ZetClose();
 
+	seibu_fm_type = seibu_snd_type & 3;
+
 	switch (seibu_snd_type & 3)
 	{
 		case 0:
@@ -486,9 +489,10 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 		break;
 
 		case 1:
-			BurnYM2151Init(freq1);
+			BurnYM2151InitBuffered(freq1, 1, NULL, 0);
 			BurnYM2151SetIrqHandler(&Drv2151FMIRQHandler);
 			BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+			BurnTimerAttach(&ZetConfig, freq0);
 		break;
 
 		case 2:
@@ -556,6 +560,7 @@ void seibu_sound_exit()
 	SeibuZ80RAM = NULL;
 	seibu_sndcpu_frequency = 0;
 	is_sdgndmps = 0;
+	seibu_fm_type = 0;
 
 	SeibuADPCMData[0] = SeibuADPCMData[1] = NULL;
 	SeibuADPCMDataLen[0] = SeibuADPCMDataLen[1] = 0;

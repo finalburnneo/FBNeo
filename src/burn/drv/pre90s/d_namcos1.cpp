@@ -12,6 +12,7 @@
 #include "namco_snd.h"
 #include "dac.h"
 #include "driver.h"
+#include "burn_gun.h" // paddle (quester)
 
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
@@ -99,8 +100,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[7];
 static UINT8 DrvReset;
 
-static INT16 Paddle[2]; // quester
 static UINT8 quester = 0; // use paddle?
+static INT16 Analog[2];
 
 static UINT8 sixtyhz = 0; // some games only like 60hz
 
@@ -131,6 +132,29 @@ static struct BurnInputInfo DrvInputList[] = {
 };
 
 STDINPUTINFO(Drv)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo QuesterInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	A("P1 Paddle",		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
+	A("P2 Paddle",		BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+};
+
+STDINPUTINFO(Quester)
 
 static struct BurnInputInfo Tankfrce4InputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -245,6 +269,34 @@ static struct BurnDIPInfo DrvDIPList[]=
 };
 
 STDDIPINFO(Drv)
+
+static struct BurnDIPInfo QuesterDIPList[]=
+{
+	DIP_OFFSET(0x0e)
+	{0x00, 0xff, 0xff, 0xfb, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Unk 1"				},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"				},
+	{0x00, 0x01, 0x10, 0x10, "Off"					},
+	{0x00, 0x01, 0x10, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Brightness"			},
+	{0x00, 0x01, 0x04, 0x04, "Low"					},
+	{0x00, 0x01, 0x04, 0x00, "Normal"				},
+
+	{0   , 0xfe, 0   ,    2, "Level Select"			},
+	{0x00, 0x01, 0x01, 0x01, "Off"					},
+	{0x00, 0x01, 0x01, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
+};
+
+STDDIPINFO(Quester)
 
 static struct BurnDIPInfo ShadowldDIPList[]=
 {
@@ -623,9 +675,9 @@ static UINT8 quester_paddle_read(INT32 offset)
 		INT32 ret;
 
 		if (!(strobe_count & 0x20))
-			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40) | (Paddle[0]&0x0f);
+			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40) | (BurnTrackballRead(0, 0)&0x0f);
 		else
-			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40) | (Paddle[1]&0x0f);
+			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40) | (BurnTrackballRead(0, 1)&0x0f);
 
 		strobe_count ^= 0x40;
 
@@ -636,9 +688,9 @@ static UINT8 quester_paddle_read(INT32 offset)
 		INT32 ret;
 
 		if (!(strobe_count & 0x20))
-			ret = (DrvInputs[1]&0x90) | 0x00 | (Paddle[0]>>4);
+			ret = (DrvInputs[1]&0x90) | 0x00 | (BurnTrackballRead(0, 0)>>4);
 		else
-			ret = (DrvInputs[1]&0x90) | 0x20 | (Paddle[1]>>4);
+			ret = (DrvInputs[1]&0x90) | 0x20 | (BurnTrackballRead(0, 1)>>4);
 
 		if (!(strobe_count & 0x40)) strobe_count ^= 0x20;
 
@@ -1127,11 +1179,8 @@ static void sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x4000:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0x4001:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address & 1, data);
 		return;
 
 		case 0xc000:
@@ -1400,8 +1449,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	strobe_count = 0;
 	stored_input[0] = stored_input[1] = 0;
 
-	Paddle[0] = Paddle[1] = 0;
-
 	return 0;
 }
 
@@ -1621,10 +1668,11 @@ static INT32 DrvInit()
 	HD63701SetReadPortHandler(mcu_read_port);
 	HD63701Close();
 
-	BurnYM2151Init(3579580);
+	BurnYM2151InitBuffered(3579580, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&YM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachM6809(1536000);
 
 	NamcoSoundInit(24000/2, 8, 1);
 	NamcoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
@@ -1649,9 +1697,6 @@ static INT32 DrvExit()
 	key_read_callback = NULL;
 	key_write_callback = NULL;
 
-	sixtyhz = 0;
-	quester = 0;
-
 	M6809Exit();
 	HD63701Exit();
 
@@ -1662,7 +1707,12 @@ static INT32 DrvExit()
 
 	BurnYM2151Exit();
 
+	if (quester) BurnTrackballExit();
+
 	BurnFree(AllMem);
+
+	sixtyhz = 0;
+	quester = 0;
 
 	return 0;
 }
@@ -1934,21 +1984,15 @@ static INT32 DrvFrame()
 		}
 
 		if (quester) {
-			if (DrvJoy1[0]) Paddle[0] += 0x04;
-			if (DrvJoy1[1]) Paddle[0] -= 0x04;
-			if (Paddle[0] >= 0x100) Paddle[0] = 0;
-			if (Paddle[0] < 0) Paddle[0] = 0xfc;
-			if (DrvJoy2[0]) Paddle[1] += 0x04;
-			if (DrvJoy2[1]) Paddle[1] -= 0x04;
-			if (Paddle[1] >= 0x100) Paddle[1] = 0;
-			if (Paddle[1] < 0) Paddle[1] = 0xfc;
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x02, 0x3f);
+			BurnTrackballUDLR(0, DrvJoy2[1], DrvJoy2[0], DrvJoy1[1], DrvJoy1[0], 8);
+			BurnTrackballUpdate(0);
 		}
 	}
 
-	INT32 nSegment = 0;
 	INT32 nInterleave = 640; // mame interleave
 	INT32 S1VBL = ((nInterleave * 240) / 256);
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.00/*6060*/) }; // run dac cpu @ 60hz for better dac sound quality
 	if (sixtyhz) {
 		nCyclesTotal[0] = nCyclesTotal[1] = nCyclesTotal[2] = nCyclesTotal[3] = 1536000 / 60;
@@ -1970,7 +2014,7 @@ static INT32 DrvFrame()
 			M6809Close();
 
 			M6809Open(2);
-			CPU_RUN(2, M6809);
+			CPU_RUN_TIMER(2);
 			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 
@@ -2004,34 +2048,13 @@ static INT32 DrvFrame()
 				buffer_sprites = 0;
 			}
 		}
-
-		if ((i % 8) == 7) {
-			if (pBurnSoundOut) {
-				nSegment = nBurnSoundLen / (nInterleave / 8);
-				M6809Open(2);
-				BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-				M6809Close();
-				nSoundBufferPos += nSegment;
-			}
-		}
 	}
-
-	M6809Open(2);
 
 	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
-
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
-
-		HD63701Open(0);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		HD63701Close();
 	}
-
-	M6809Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -2104,6 +2127,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(dac1_value);
 		SCAN_VAR(dac0_gain);
 		SCAN_VAR(dac1_gain);
+		if (quester) BurnTrackballScan();
 
 		BurnRandomScan(nAction);
 	}
@@ -2565,6 +2589,8 @@ static INT32 QuesterInit()
 	input_read_callback = quester_paddle_read;
 	quester = 1;
 
+	BurnTrackballInit(1); // 1 device = 2 paddles
+
 	return DrvInit();
 }
 
@@ -2573,7 +2599,7 @@ struct BurnDriver BurnDrvQuester = {
 	"Quester (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, questerRomInfo, questerRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo, //QuesterInputInfo, QuesterDIPInfo,
+	NULL, questerRomInfo, questerRomName, NULL, NULL, NULL, NULL, QuesterInputInfo, QuesterDIPInfo,
 	QuesterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };
@@ -2610,7 +2636,7 @@ struct BurnDriver BurnDrvQuesters = {
 	"Quester Special Edition (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, questersRomInfo, questersRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo, //QuesterInputInfo, QuesterDIPInfo,
+	NULL, questersRomInfo, questersRomName, NULL, NULL, NULL, NULL, QuesterInputInfo, QuesterDIPInfo,
 	QuesterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };

@@ -162,6 +162,7 @@ void BurnPaddleReturn(BurnDialINF &dial, INT32 num, INT32 isB)
 // Trackball Helpers
 static INT32 TrackA[MAX_GUNS]; // trackball counters / main accumulator
 static INT32 TrackB[MAX_GUNS];
+static INT32 TrackDefault; // default value to load w/ ReadReset() (usually 0)
 
 static UINT8 CURVE[0x100];
 static INT32 bLogarithmicCurve;
@@ -435,9 +436,9 @@ void BurnTrackballReadReset(INT32 dev)
 void BurnTrackballReadReset(INT32 dev, INT32 isB)
 {
 	if (isB)
-		TrackB[dev] = 0;
+		TrackB[dev] = TrackDefault;
 	else
-		TrackA[dev] = 0;
+		TrackA[dev] = TrackDefault;
 }
 
 void BurnTrackballReadReset()
@@ -446,6 +447,11 @@ void BurnTrackballReadReset()
 		BurnTrackballReadReset(i, 0);
 		BurnTrackballReadReset(i, 1);
 	}
+}
+
+void BurnTrackballSetResetDefault(INT32 nDefault)
+{
+	TrackDefault = nDefault;
 }
 
 void BurnTrackballUDLR(INT32 dev, INT32 u, INT32 d, INT32 l, INT32 r, INT32 speed)
@@ -569,6 +575,13 @@ void BurnTrackballInit(INT32 nNumPlayers)
 	BurnGunInit(nNumPlayers, false);
 }
 
+void BurnTrackballInit(INT32 nNumPlayers, INT32 nDefault)
+{
+	BurnTrackballInit(nNumPlayers);
+
+	BurnTrackballSetResetDefault(nDefault);
+}
+
 void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 {
 	Debug_BurnGunInitted = 1;
@@ -606,6 +619,8 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 		TrackStart[i] = -1;
 		TrackStop[i]  = -1;
 	}
+
+	TrackDefault = 0;
 }
 
 void BurnGunExit()

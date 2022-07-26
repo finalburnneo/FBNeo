@@ -41,6 +41,8 @@ static INT32 clip_min_y = 0;
 static INT32 clip_max_y = 0;
 INT32 i4x00_raster_update = 0;
 
+static INT32 is_blazing = 0;
+
 static void palette_update()
 {
 	UINT16 *p = (UINT16*)(BurnPalRAM + 0x2000);
@@ -382,7 +384,7 @@ void i4x00_draw_scanline(INT32 drawto)
 
 		for (INT32 pri = 3; pri >= 0; pri--)
 		{
-			if (nBurnLayer & 2) draw_layers(pri);
+			if (nBurnLayer & (1<<pri)) draw_layers(pri);
 		}
 
 		if (nSpriteEnable & 1) draw_sprites();
@@ -565,8 +567,8 @@ static void __fastcall i4x00_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address >= 0x78800 && address <= 0x78813) || (address >= 0x079700 && address <= 0x79713)) {
-		if (address != 0x78802) // breaks blazing tornado
-			*((UINT16*)(VideoRegs + (address & 0x1f))) = BURN_ENDIAN_SWAP_INT16(data);
+		if (is_blazing && address == 0x78802) return;
+		*((UINT16*)(VideoRegs + (address & 0x1f))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -748,6 +750,11 @@ void i4x00_set_offsets(INT32 layer0, INT32 layer1, INT32 layer2)
 	tilemap_scrolldx[2] = layer2;
 }
 
+void i4x00_set_blazing() // blzntrnd
+{
+	is_blazing = 1;
+}
+
 void i4x00_set_extrachip_callback(void (*callback)())
 {
 	additional_video_chips_cb = callback;
@@ -800,6 +807,8 @@ void i4x00_exit()
 	irq_cause_write_cb = NULL;
 	soundlatch_write_cb = NULL;
 	additional_video_chips_cb = NULL;
+
+	is_blazing = 0;
 
 	i4x00_set_offsets(0,0,0);
 }

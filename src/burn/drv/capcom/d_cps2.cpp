@@ -6488,6 +6488,54 @@ static struct BurnRomInfo Sfa3usRomDesc[] = {
 STD_ROM_PICK(Sfa3us)
 STD_ROM_FN(Sfa3us)
 
+
+// Street Fighter Alpha/Zero 3 Challenger's Edition
+// https://github.com/originalgrego/sfa3ce
+
+/* Created by Grego and Gnawtor
+   
+   Features
+
+    - Secret Characters Unlocked And Selectable Without Codes
+    - Color Selection From Char Select Screen, Lights = Xism, Mediums = Aism, Strongs = Vism
+    - Play With Either Branding Zero/Alpha
+    - Stage Select - Hold Start On A Character, A Sound Will Play Indicating Success
+    - Unlimited Taunts For A/V ism
+    - Six New Palettes For Chun Li Taken From The Console Releases
+    - Sodom Palette Fixes For Xism 
+*/
+
+static struct BurnRomInfo Sfa3ceRomDesc[] = {
+	{ "sz3ce.03c",     0x080000, 0xe6a3c330, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3ce.04c",     0x080000, 0x78650280, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05c",       0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06c",       0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07c",       0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08c",       0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3ce.09c",     0x080000, 0x8353dae0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10b",       0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3ce.13m",     0x400000, 0xd941f463, CPS2_GFX | BRF_GRA },
+	{ "sz3ce.15m",     0x400000, 0xd25f4fbf, CPS2_GFX | BRF_GRA },
+	{ "sz3ce.17m",     0x400000, 0x5c210d31, CPS2_GFX | BRF_GRA },
+	{ "sz3ce.19m",     0x400000, 0xa0b6f359, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3u.key",     0x000014, 0x4a8f98c1, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfa3ce)
+STD_ROM_FN(Sfa3ce)
+
 static struct BurnRomInfo Sfz3aRomDesc[] = {
 	{ "sz3a.03d",      0x080000, 0xd7e140d6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3a.04d",      0x080000, 0xe06869a2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -7671,26 +7719,26 @@ STD_ROM_PICK(Ssf2th)
 STD_ROM_FN(Ssf2th)
 
 static struct BurnRomInfo Ssf2tnlRomDesc[] = {
-	{ "sfxe.03c",      0x080000, 0x46722af4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.04a",      0x080000, 0xc8167018, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.05",       0x080000, 0x244be873, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.06a",      0x080000, 0x3a7f1f24, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.07",       0x080000, 0xaf0babd3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.08",       0x080000, 0x2c717380, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfx.09",        0x080000, 0xaf970b89, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.03c",      0x080000, 0x571944fb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.04a",      0x080000, 0xad4e5240, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.05",       0x080000, 0x6fe99f40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.06a",      0x080000, 0xd2de5788, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.07",       0x080000, 0x2da4d098, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.08",       0x080000, 0x04462bf4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfx.09",        0x080000, 0x23d51921, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sfx.13m",       0x200000, 0xc74a5e1c, CPS2_GFX | BRF_GRA },
-	{ "sfx.15m",       0x200000, 0xd666749d, CPS2_GFX | BRF_GRA },
-	{ "sfx.17m",       0x200000, 0x378925a1, CPS2_GFX | BRF_GRA },
-	{ "sfx.19m",       0x200000, 0x41187858, CPS2_GFX | BRF_GRA },
-	{ "sfx.14m",       0x100000, 0x1a6e6aa9, CPS2_GFX | BRF_GRA },
-	{ "sfx.16m",       0x100000, 0x0f6251bd, CPS2_GFX | BRF_GRA },
-	{ "sfx.18m",       0x100000, 0x8b1eccaf, CPS2_GFX | BRF_GRA },
-	{ "sfx.20m",       0x100000, 0x26eb0233, CPS2_GFX | BRF_GRA },
-	{ "sfx.21m",       0x100000, 0x40144981, CPS2_GFX | BRF_GRA },
-	{ "sfx.23m",       0x100000, 0x49953e2c, CPS2_GFX | BRF_GRA },
-	{ "sfx.25m",       0x100000, 0x8c7ef38b, CPS2_GFX | BRF_GRA },
-	{ "sfx.27m",       0x100000, 0x9ad47db1, CPS2_GFX | BRF_GRA },
+	{ "sfx.13m",       0x200000, 0xc05989e6, CPS2_GFX | BRF_GRA },
+	{ "sfx.15m",       0x200000, 0xee15fca6, CPS2_GFX | BRF_GRA },
+	{ "sfx.17m",       0x200000, 0x2e9d2558, CPS2_GFX | BRF_GRA },
+	{ "sfx.19m",       0x200000, 0x6f01ec3b, CPS2_GFX | BRF_GRA },
+	{ "sfx.14m",       0x100000, 0x08c6976b, CPS2_GFX | BRF_GRA },
+	{ "sfx.16m",       0x100000, 0x4d94aee3, CPS2_GFX | BRF_GRA },
+	{ "sfx.18m",       0x100000, 0xfab6dfd6, CPS2_GFX | BRF_GRA },
+	{ "sfx.20m",       0x100000, 0x5080bc5c, CPS2_GFX | BRF_GRA },
+	{ "sfx.21m",       0x100000, 0x9c871fdd, CPS2_GFX | BRF_GRA },
+	{ "sfx.23m",       0x100000, 0xa05ad3bd, CPS2_GFX | BRF_GRA },
+	{ "sfx.25m",       0x100000, 0x36894d02, CPS2_GFX | BRF_GRA },
+	{ "sfx.27m",       0x100000, 0x46d6f9bd, CPS2_GFX | BRF_GRA },
 
 	{ "sfx.01",        0x020000, 0xb47b8835, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "sfx.02",        0x020000, 0x0022633f, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
@@ -11204,6 +11252,16 @@ struct BurnDriver BurnDrvCpsSfa3us = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsSfa3ce = {
+	"sfa3ce", "sfa3", NULL, NULL, "2022",
+	"Street Fighter Alpha 3 Challenger's Edition\0", NULL, "Grego and Gnawtor", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfa3ceRomInfo, Sfa3ceRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsSfz3a = {
 	"sfz3a", "sfa3", NULL, NULL, "1998",
 	"Street Fighter Zero 3 (980904 Asia)\0", NULL, "Capcom", "CPS2",
@@ -11596,7 +11654,7 @@ struct BurnDriver BurnDrvCpsSsf2ta = {
 
 struct BurnDriver BurnDrvCpsSsf2tnl = {
 	"ssf2tnl", "ssf2t", NULL, NULL, "2022",
-	"Super Street Fighter II Turbo New Legacy v0.6 (Beta) (Hack by Born2SPD)\0", NULL, "hack", "CPS2",
+	"Super Street Fighter II Turbo New Legacy v0.7 (Beta) (Hack by Born2SPD)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2tnlRomInfo, Ssf2tnlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

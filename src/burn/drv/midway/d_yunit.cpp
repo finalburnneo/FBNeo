@@ -4287,9 +4287,48 @@ struct BurnDriver BurnDrvTotcarn = {
 };
 
 
+// Total Carnage (prototype, proto v 2.0 02/10/92)
+
+static struct BurnRomInfo totcarnp2RomDesc[] = {
+	{ "sl1_total_carnage_sound_rom_u3.u3",				0x20000, 0x5bdb4665, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
+
+	{ "sl1_total_carnage_sound_rom_u12.u12",			0x40000, 0xd0000ac7, 2 | BRF_SND },           //  1 Samples
+	{ "sl1_total_carnage_sound_rom_u13.u13",			0x40000, 0xe48e6f0c, 2 | BRF_SND },           //  2
+
+	{ "proto2_total_carnage_game_rom_u105.u105",		0x40000, 0xe273d43c, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "proto2_total_carnage_game_rom_u89.u89",			0x40000, 0xe759078b, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "la1_total_carnage_game_rom_u111.u111",			0x40000, 0x13f3f231, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "la1_total_carnage_game_rom_u112.u112",			0x40000, 0x72e45007, 4 | BRF_GRA },           //  6
+	{ "la1_total_carnage_game_rom_u113.u113",			0x40000, 0x2c8ec753, 4 | BRF_GRA },           //  7
+	{ "la1_total_carnage_game_rom_u114.u114",			0x40000, 0x6210c36c, 4 | BRF_GRA },           //  8
+	{ "la1_total_carnage_game_rom_u95.u95",				0x40000, 0x579caeba, 4 | BRF_GRA },           //  9
+	{ "la1_total_carnage_game_rom_u96.u96",				0x40000, 0xf43f1ffe, 4 | BRF_GRA },           // 10
+	{ "la1_total_carnage_game_rom_u97.u97",				0x40000, 0x1675e50d, 4 | BRF_GRA },           // 11
+	{ "la1_total_carnage_game_rom_u98.u98",				0x40000, 0xab06c885, 4 | BRF_GRA },           // 12
+	{ "la1_total_carnage_game_rom_u106.u106",			0x40000, 0x146e3863, 4 | BRF_GRA },           // 13
+	{ "la1_total_carnage_game_rom_u107.u107",			0x40000, 0x95323320, 4 | BRF_GRA },           // 14
+	{ "la1_total_carnage_game_rom_u108.u108",			0x40000, 0xed152acc, 4 | BRF_GRA },           // 15
+	{ "la1_total_carnage_game_rom_u109.u109",			0x40000, 0x80715252, 4 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(totcarnp2)
+STD_ROM_FN(totcarnp2)
+
+struct BurnDriver BurnDrvTotcarnp2 = {
+	"totcarnp2", "totcarn", NULL, NULL, "1992",
+	"Total Carnage (prototype, proto v 2.0 02/10/92)\0", NULL, "Midway", "Y Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_PREFIX_MIDWAY, GBF_RUNGUN, 0,
+	NULL, totcarnp2RomInfo, totcarnp2RomName, NULL, NULL, NULL, NULL, TotcarnInputInfo, TotcarnDIPInfo,
+	TotcarnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	400, 256, 4, 3
+};
+
+
 // Total Carnage (prototype, proto v 1.0 01/25/92)
 
-static struct BurnRomInfo totcarnpRomDesc[] = {
+static struct BurnRomInfo totcarnp1RomDesc[] = {
 	{ "sl1_total_carnage_sound_rom_u3.u3",				0x20000, 0x5bdb4665, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (Sound)
 
 	{ "sl1_total_carnage_sound_rom_u12.u12",			0x40000, 0xd0000ac7, 2 | BRF_SND },           //  1 Samples
@@ -4312,15 +4351,15 @@ static struct BurnRomInfo totcarnpRomDesc[] = {
 	{ "la1_total_carnage_game_rom_u109.u109",			0x40000, 0x80715252, 4 | BRF_GRA },           // 16
 };
 
-STD_ROM_PICK(totcarnp)
-STD_ROM_FN(totcarnp)
+STD_ROM_PICK(totcarnp1)
+STD_ROM_FN(totcarnp1)
 
-struct BurnDriver BurnDrvTotcarnp = {
-	"totcarnp", "totcarn", NULL, NULL, "1992",
+struct BurnDriver BurnDrvTotcarnp1 = {
+	"totcarnp1", "totcarn", NULL, NULL, "1992",
 	"Total Carnage (prototype, proto v 1.0 01/25/92)\0", NULL, "Midway", "Y Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_PREFIX_MIDWAY, GBF_RUNGUN, 0,
-	NULL, totcarnpRomInfo, totcarnpRomName, NULL, NULL, NULL, NULL, TotcarnInputInfo, TotcarnDIPInfo,
+	NULL, totcarnp1RomInfo, totcarnp1RomName, NULL, NULL, NULL, NULL, TotcarnInputInfo, TotcarnDIPInfo,
 	TotcarnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
 	400, 256, 4, 3
 };

@@ -646,24 +646,7 @@ static void Mapper_write(UINT16 address, UINT8 data)
 		SCCReg[PSlot] = (data == 0x3f) ? 1 : 0;
 
 	if (((address & 0xdf00) == 0x9800) && SCCReg[PSlot]) { // Handle Konami-SCC (+)
-		UINT16 offset = address & 0x00ff;
-
-		if (offset < 0x80) {
-			K051649WaveformWrite(offset, data);
-		}
-		else if (offset < 0xa0)	{
-			offset &= 0xf;
-
-			if (offset < 0xa) {
-				K051649FrequencyWrite(offset, data);
-			}
-			else if (offset < 0xf) {
-				K051649VolumeWrite(offset - 0xa, data);
-			}
-			else {
-				K051649KeyonoffWrite(data);
-			}
-		}
+		K051649Write(address & 0xff, data);
 
 		return;
 	}
@@ -841,7 +824,7 @@ static INT32 Mapper_read(UINT16 address, UINT8 *data)
   if (PSlot >= MAXSLOTS) return 0;
 
   if (((address & 0xdf00) == 0x9800) && SCCReg[PSlot]) { // Handle Konami-SCC (+)
-	  *data = (address & 0x80) ? 0xff : K051649WaveformRead(address & 0x7f);
+	  *data = K051649Read(address & 0xff);
 	  return 1;
   }
 
@@ -19848,7 +19831,7 @@ struct BurnDriver BurnDrvMSX_magical = {
 	"Magical Stones (HB)\0", NULL, "Dioniso (Alfonso D.C.)", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
-	MSXGetZipName, MSX_magicalRomInfo, MSX_magicalRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_magicalRomInfo, MSX_magicalRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -32398,10 +32381,10 @@ struct BurnDriver BurnDrvMSX_blacksea = {
 	272, 228, 4, 3
 };
 
-// Mix (HB, v1.1)
+// Mix (HB, v1.2)
 
 static struct BurnRomInfo MSX_mixRomDesc[] = {
-	{ "Mix v1.1 (2022)(uninteresting).rom",	16384, 0xae5c8bdb, BRF_PRG | BRF_ESS },
+	{ "Mix v1.2 (2022)(Uninteresting).rom",	16384, 0x7bc49d78, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mix, MSX_mix, msx_msx)
@@ -32409,7 +32392,7 @@ STD_ROM_FN(MSX_mix)
 
 struct BurnDriver BurnDrvMSX_mix = {
 	"msx_mix", NULL, "msx_msx", NULL, "2022",
-	"Mix (HB, v1.1)\0", NULL, "Uninteresting", "MSX",
+	"Mix (HB, v1.2)\0", NULL, "Uninteresting", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_mixRomInfo, MSX_mixRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -32451,6 +32434,44 @@ struct BurnDriver BurnDrvMSX_virgilsexpt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_virgilsexptRomInfo, MSX_virgilsexptRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mine Finder (HB, v1.2)
+
+static struct BurnRomInfo MSX_minefindRomDesc[] = {
+	{ "Mine Finder v1.2 (2022)(Paolo F. Pugno).rom",	16384, 0x429b6ade, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_minefind, MSX_minefind, msx_msx)
+STD_ROM_FN(MSX_minefind)
+
+struct BurnDriver BurnDrvMSX_minefind = {
+	"msx_minefind", NULL, "msx_msx", NULL, "2022",
+	"Mine Finder (HB, v1.2)\0", NULL, "Paolo F. Pugno", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_minefindRomInfo, MSX_minefindRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// T.C.Q. (HB)
+
+static struct BurnRomInfo MSX_tcqmsxRomDesc[] = {
+	{ "T.C.Q. (2022)(Amaweks).rom",	49152, 0xbeb5b313, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_tcqmsx, MSX_tcqmsx, msx_msx)
+STD_ROM_FN(MSX_tcqmsx)
+
+struct BurnDriver BurnDrvMSX_tcqmsx = {
+	"msx_tcqmsx", NULL, "msx_msx", NULL, "2022",
+	"T.C.Q. (HB)\0", NULL, "Amaweks", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_tcqmsxRomInfo, MSX_tcqmsxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

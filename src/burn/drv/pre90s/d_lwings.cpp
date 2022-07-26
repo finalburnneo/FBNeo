@@ -2417,41 +2417,48 @@ struct BurnDriver BurnDrvTrojanj = {
 };
 
 
-// Avengers (US set 1)
+/*
+Known to exist but currently undumped, a set with all ROMs stamped U for the US region and stamped as
+  revision D, with each having a red stripe across the label.
+It was common for Capcom to use the same ROM label across regional sets but add a RED stripe for the US
+  region, BLUE stripe for Europe and no stripe for the Japanese region.
+*/
+
+// Avengers (US, revision C)
 
 static struct BurnRomInfo avengersRomDesc[] = {
-	{ "04.10n",		0x8000, 0xa94aadcc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "06.13n",		0x8000, 0x39cd80bd, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "05.12n",		0x8000, 0x06b1cec9, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "avu_04c.10n",	0x8000, 0x4555b925, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "avu_06c.13n",	0x8000, 0xea202879, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "av_05.12n",		0x8000, 0x9a214b42, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "av_01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
+	{ "av_03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
 
-	{ "13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
-	{ "09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
-	{ "12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
-	{ "08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
-	{ "11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
-	{ "07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
-	{ "14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
-	{ "10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
+	{ "av_13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "av_09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
+	{ "av_12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
+	{ "av_08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
+	{ "av_11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
+	{ "av_07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
+	{ "av_14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
+	{ "av_10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
 
-	{ "18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
-	{ "16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
-	{ "17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
-	{ "15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
-	{ "22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
-	{ "20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
-	{ "21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
-	{ "19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
+	{ "av_18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
+	{ "av_16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
+	{ "av_17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
+	{ "av_15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
+	{ "av_22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
+	{ "av_20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
+	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
+	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
 
-	{ "25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
+	{ "av_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "av_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
 
-	{ "23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 
 	{ "tbb_2bpr.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
 	{ "tbb_1bpr.1e",	0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
@@ -2469,7 +2476,7 @@ static INT32 AvengersInit()
 
 struct BurnDriver BurnDrvAvengers = {
 	"avengers", NULL, NULL, NULL, "1987",
-	"Avengers (US set 1)\0", NULL, "Capcom", "Miscellaneous",
+	"Avengers (US, revision C)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
 	NULL, avengersRomInfo, avengersRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
@@ -2478,95 +2485,203 @@ struct BurnDriver BurnDrvAvengers = {
 };
 
 
-// Avengers (US set 2)
+// Avengers (US, revision A)
 
-static struct BurnRomInfo avenger2RomDesc[] = {
-	{ "avg4.bin",		0x8000, 0x0fea7ac5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+static struct BurnRomInfo avengeraRomDesc[] = {
+	{ "av_04a.10n",		0x8000, 0x0fea7ac5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "av_06a.13n",		0x8000, 0x491a712c, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "av_05.12n",		0x8000, 0x9a214b42, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "av_01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
+	{ "av_03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
 
-	{ "13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
-	{ "09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
-	{ "12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
-	{ "08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
-	{ "11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
-	{ "07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
-	{ "14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
-	{ "10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
+	{ "av_13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "av_09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
+	{ "av_12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
+	{ "av_08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
+	{ "av_11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
+	{ "av_07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
+	{ "av_14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
+	{ "av_10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
 
-	{ "18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
-	{ "16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
-	{ "17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
-	{ "15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
-	{ "22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
-	{ "20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
-	{ "21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
-	{ "19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
+	{ "av_18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
+	{ "av_16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
+	{ "av_17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
+	{ "av_15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
+	{ "av_22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
+	{ "av_20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
+	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
+	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
 
-	{ "25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
+	{ "av_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "av_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
 
-	{ "23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 
 	{ "tbb_2bpr.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
 	{ "tbb_1bpr.1e",	0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
 };
 
-STD_ROM_PICK(avenger2)
-STD_ROM_FN(avenger2)
+STD_ROM_PICK(avengera)
+STD_ROM_FN(avengera)
 
-struct BurnDriver BurnDrvAvenger2 = {
-	"avengers2", "avengers", NULL, NULL, "1987",
-	"Avengers (US set 2)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvAvengera = {
+	"avengersa", "avengers", NULL, NULL, "1987",
+	"Avengers (US, revision A)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
-	NULL, avenger2RomInfo, avenger2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	NULL, avengeraRomInfo, avengeraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
 	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
 
-// Hissatsu Buraiken (Japan)
+// Avengers (US)
+
+static struct BurnRomInfo avengerbRomDesc[] = {
+	{ "av_04.10n",		0x8000, 0xc785e1f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "av_06.13n",		0x8000, 0xc6f84a5f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "av_05.12n",		0x8000, 0xf9a9a92f, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "av_01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "av_03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
+
+	{ "av_13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "av_09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
+	{ "av_12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
+	{ "av_08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
+	{ "av_11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
+	{ "av_07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
+	{ "av_14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
+	{ "av_10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
+
+	{ "av_18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
+	{ "av_16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
+	{ "av_17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
+	{ "av_15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
+	{ "av_22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
+	{ "av_20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
+	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
+	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
+
+	{ "av_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "av_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
+
+	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+
+	{ "tbb_2bpr.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
+	{ "tbb_1bpr.1e",	0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(avengerb)
+STD_ROM_FN(avengerb)
+
+struct BurnDriver BurnDrvAvengerb = {
+	"avengersb", "avengers", NULL, NULL, "1987",
+	"Avengers (US)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
+	NULL, avengerbRomInfo, avengerbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 256, 3, 4
+};
+
+
+// Avengers (US, unknown revision)
+
+static struct BurnRomInfo avengercRomDesc[] = {
+	{ "04.10n",			0x8000, 0xa94aadcc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "06.13n",			0x8000, 0x39cd80bd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "05.12n",			0x8000, 0x06b1cec9, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "av_01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "av_03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
+
+	{ "av_13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "av_09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
+	{ "av_12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
+	{ "av_08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
+	{ "av_11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
+	{ "av_07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
+	{ "av_14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
+	{ "av_10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
+
+	{ "av_18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
+	{ "av_16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
+	{ "av_17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
+	{ "av_15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
+	{ "av_22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
+	{ "av_20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
+	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
+	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
+
+	{ "av_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "av_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
+
+	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+
+	{ "tbb_2bpr.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
+	{ "tbb_1bpr.1e",	0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(avengerc)
+STD_ROM_FN(avengerc)
+
+struct BurnDriver BurnDrvAvengerc = {
+	"avengersc", "avengers", NULL, NULL, "1987",
+	"Avengers (US, unknown revision)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
+	NULL, avengercRomInfo, avengercRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,
+	AvengersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 256, 3, 4
+};
+
+
+// Hissatsu Buraiken (Japan, revision A)
 
 static struct BurnRomInfo buraikenRomDesc[] = {
 	{ "av_04a.10n",		0x8000, 0x361fc614, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "av_06a.13n",		0x8000, 0x491a712c, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "av_05.12n",		0x8000, 0x9a214b42, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "av_02.15h",		0x8000, 0x107a2e17, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "av_01.6d",		0x8000, 0xc1e5d258, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
+	{ "av_03.8k",		0x8000, 0xefb5883e, 4 | BRF_GRA },           //  5 Characters
 
-	{ "13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
-	{ "09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
-	{ "12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
-	{ "08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
-	{ "11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
-	{ "07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
-	{ "14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
-	{ "10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
+	{ "av_13.6b",		0x8000, 0x9b5ff305, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "av_09.6a",		0x8000, 0x08323355, 5 | BRF_GRA },           //  7
+	{ "av_12.4b",		0x8000, 0x6d5261ba, 5 | BRF_GRA },           //  8
+	{ "av_08.4a",		0x8000, 0xa13d9f54, 5 | BRF_GRA },           //  9
+	{ "av_11.3b",		0x8000, 0xa2911d8b, 5 | BRF_GRA },           // 10
+	{ "av_07.3a",		0x8000, 0xcde78d32, 5 | BRF_GRA },           // 11
+	{ "av_14.8b",		0x8000, 0x44ac2671, 5 | BRF_GRA },           // 12
+	{ "av_10.8a",		0x8000, 0xb1a717cb, 5 | BRF_GRA },           // 13
 
-	{ "18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
-	{ "16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
-	{ "17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
-	{ "15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
-	{ "22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
-	{ "20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
-	{ "21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
-	{ "19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
+	{ "av_18.7l",		0x8000, 0x3c876a17, 6 | BRF_GRA },           // 14 Sprites
+	{ "av_16.3l",		0x8000, 0x4b1ff3ac, 6 | BRF_GRA },           // 15
+	{ "av_17.5l",		0x8000, 0x4eb543ef, 6 | BRF_GRA },           // 16
+	{ "av_15.2l",		0x8000, 0x8041de7f, 6 | BRF_GRA },           // 17
+	{ "av_22.7n",		0x8000, 0xbdaa8b22, 6 | BRF_GRA },           // 18
+	{ "av_20.3n",		0x8000, 0x566e3059, 6 | BRF_GRA },           // 19
+	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
+	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
 
 	{ "av_25.15n",		0x8000, 0x88a505a7, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
 	{ "av_24.13n",		0x8000, 0x1f4463c8, 7 | BRF_GRA },           // 23
 
-	{ "23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 
 	{ "tbb_2bpr.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
 	{ "tbb_1bpr.1e",	0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
@@ -2577,7 +2692,7 @@ STD_ROM_FN(buraiken)
 
 struct BurnDriver BurnDrvBuraiken = {
 	"buraiken", "avengers", NULL, NULL, "1987",
-	"Hissatsu Buraiken (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	"Hissatsu Buraiken (Japan, revision A)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT, 0,
 	NULL, buraikenRomInfo, buraikenRomName, NULL, NULL, NULL, NULL, DrvInputInfo, AvengersDIPInfo,

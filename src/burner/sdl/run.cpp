@@ -30,7 +30,6 @@ static Uint32 starting_stick;
 extern SDL_Renderer* sdlRenderer;
 extern void ingame_gui_start(SDL_Renderer* renderer);
 /// Save States
-static char* szSDLSavePath = NULL;
 static char Windowtitle[512];
 #endif
 
@@ -42,18 +41,10 @@ int StatedAuto(int bSave)
 	static TCHAR szName[MAX_PATH] = _T("");
 	int nRet;
 
-#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)	
-	if (szSDLSavePath == NULL)
-	{
-		szSDLSavePath = SDL_GetPrefPath("fbneo", "states");
-	}
-
-	snprintf(szName, MAX_PATH, "%s%s.fs", szSDLSavePath, BurnDrvGetText(DRV_NAME));
-
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+	_stprintf(szName, _T("%s%s.fs"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 #else
-
 	_stprintf(szName, _T("config/games/%s.fs"), BurnDrvGetText(DRV_NAME));
-
 #endif
 
 	if (bSave == 0)

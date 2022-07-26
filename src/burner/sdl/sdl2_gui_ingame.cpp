@@ -175,8 +175,8 @@ int DIPMenuSelected()
 
 
 // Controllers stuff
+#define MAX_JOYSTICKS 8
 #define JOYSTICK_DEAD_ZONE 8000
-#define MAX_JOYSTICKS 4
 #define BUTTONS_TO_MAP 8
 
 struct MenuItem controllerMenu[MAX_JOYSTICKS + 1];	// One more for BACK
@@ -200,7 +200,6 @@ int mappedbuttons[BUTTONS_TO_MAP] = {-1,-1,-1,-1,-1,-1,-1,-1};
 
 int ControllerMenuSelected();
 extern bool do_reload_game;	// To reload game when buttons mapping changed
-static char* szSDLconfigPath = NULL;
 
 int SaveMappedButtons()
 {
@@ -216,11 +215,11 @@ int SaveMappedButtons()
 	char* pos = NULL;
 	char gamecontrollerdbpath[MAX_PATH] = { 0 };
 	char tempgamecontrollerdbpath[MAX_PATH] = { 0 };
-	if (szSDLconfigPath == NULL) {
-		szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
-	}
-	snprintf(gamecontrollerdbpath, MAX_PATH, "%sgamecontrollerdb.txt", szSDLconfigPath);
-	snprintf(tempgamecontrollerdbpath, MAX_PATH, "%sgamecontrollerdb.TEMP.txt", szSDLconfigPath);
+	TCHAR *szSDLconfigPath = NULL;
+	szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+	_stprintf(gamecontrollerdbpath, _T("%sgamecontrollerdb.txt"), szSDLconfigPath);
+	_stprintf(tempgamecontrollerdbpath, _T("%sgamecontrollerdb.TEMP.txt"), szSDLconfigPath);
+	SDL_free(szSDLconfigPath);
 
 	for (int i = 0; i < BUTTONS_TO_MAP; i++) {
 		if (mappedbuttons[i] > -1) {
@@ -385,7 +384,8 @@ int ControllerMenuSelected()
 		controllerMenu[i] = (MenuItem){joystickNames[i], MappingMenuSelected, NULL};
 		controllermenucount++;
 	}
-	controllerMenu[controllermenucount] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+	if (controllermenucount > 0) controllerMenu[controllermenucount] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+	else controllerMenu[controllermenucount] = (MenuItem){"BACK (no controllers found)\0", MainMenuSelected, NULL};
 	controllermenucount++;
   return 0;
 }
@@ -484,11 +484,15 @@ int CheatMenuSelected()
 			pCurrentCheat = pCurrentCheat->pNext;
 			i++;
 		}
-		cheatMenu[i] = (MenuItem){"DISABLE ALL CHEATS\0", DisableAllCheats, NULL};
-		i++;
-
-		cheatMenu[i] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
-		cheatcount = i + 1;
+		if (i > 0) {
+			cheatMenu[i] = (MenuItem){"DISABLE ALL CHEATS\0", DisableAllCheats, NULL};
+			i++;
+			cheatMenu[i] = (MenuItem){"BACK\0", MainMenuSelected, NULL};
+			cheatcount = i + 1;
+		} else {
+			cheatMenu[i] = (MenuItem){"BACK (no cheats found)\0", MainMenuSelected, NULL};
+			cheatcount = 1;
+		}
 	}
 	return 0;
 }
@@ -507,6 +511,14 @@ int QuickLoad()
 	return 1;
 }
 
+// Screenshot related stuff
+int MakeScreenShotSelected()
+{
+	if (MakeScreenShot()) UpdateMessage("There was some error saving the screenshot!");
+	else UpdateMessage("Screenshot saved.");
+	return 1;
+}
+
 // Main menu related stuff
 int BackToGameSelected()
 {
@@ -520,7 +532,7 @@ struct MenuItem mainMenu[MAINMENU_COUNT] =
 	{"Cheats\0", CheatMenuSelected, NULL},
 	{"Save State\0", QuickSave, NULL},
 	{"Load State\0", QuickLoad, NULL},
-	{"Save Screenshot\0", MakeScreenShot, NULL},
+	{"Save Screenshot\0", MakeScreenShotSelected, NULL},
 	{"Reset the game\0", ResetMenuSelected, NULL},
 	{"Back to Game!\0", BackToGameSelected, NULL},
 };

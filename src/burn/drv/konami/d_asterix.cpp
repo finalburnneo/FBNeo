@@ -392,6 +392,8 @@ static INT32 DrvDoReset()
 	BurnYM2151Reset();
 	K053260Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -735,7 +737,7 @@ struct BurnDriver BurnDrvAsterix = {
 	"asterix", NULL, NULL, NULL, "1992",
 	"Asterix (ver EAD)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, asterixRomInfo, asterixRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -770,7 +772,7 @@ struct BurnDriver BurnDrvAsterixeac = {
 	"asterixeac", "asterix", NULL, NULL, "1992",
 	"Asterix (ver EAC)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, asterixeacRomInfo, asterixeacRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -805,7 +807,7 @@ struct BurnDriver BurnDrvAsterixeaa = {
 	"asterixeaa", "asterix", NULL, NULL, "1992",
 	"Asterix (ver EAA)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, asterixeaaRomInfo, asterixeaaRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -840,7 +842,7 @@ struct BurnDriver BurnDrvAsterixaad = {
 	"asterixaad", "asterix", NULL, NULL, "1992",
 	"Asterix (ver AAD)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, asterixaadRomInfo, asterixaadRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -875,7 +877,7 @@ struct BurnDriver BurnDrvAsterixj = {
 	"asterixj", "asterix", NULL, NULL, "1992",
 	"Asterix (ver JAD)\0", NULL, "Konami", "GX068",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, asterixjRomInfo, asterixjRomName, NULL, NULL, NULL, NULL, AsterixInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3

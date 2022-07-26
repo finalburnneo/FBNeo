@@ -16,6 +16,7 @@
 #include "burner.h"
 
 INT32 Init_Joysticks(int p1_use_joystick);
+INT32 display_set_controls();
 
 int  nAppVirtualFps = 0;         // App fps * 100
 bool bRunPause = 0;
@@ -36,12 +37,6 @@ char videofiltering[3];
 bool do_reload_game = false;	// To reload game when buttons mapping changed
 #ifdef BUILD_SDL2
 SDL_Window* sdlWindow = NULL;
-
-static char* szSDLeepromPath = NULL;
-static char* szSDLhiscorePath = NULL;
-static char* szSDLHDDPath = NULL;
-static char* szSDLSamplePath = NULL;
-static char* szSDLconfigPath = NULL;
 #endif
 
 #define set_commandline_option_not_config(i,v) i = v;
@@ -119,57 +114,57 @@ void generateDats()
 	char filename[1024] = { 0 };
 
 #if defined(BUILD_SDL2)
-	printf("Creating fbneo dats in %s\n", SDL_GetPrefPath("fbneo", "dats"));
+	printf("Creating fbneo dats in %s\n", szAppDatListsPath);
 #if defined(ALT_DAT)
-	sprintf(filename, "%sFBNeo_-_ALL_SYSTEMS.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_ALL_SYSTEMS.dat"), szAppDatListsPath);
 	create_datfile(filename, -1);
 #endif
-	sprintf(filename, "%sFBNeo_-_Arcade.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Arcade.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_ARCADE_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_MegaDrive.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_MegaDrive.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_MEGADRIVE_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_PC_ENGINE.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_PC_ENGINE.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_PCENGINE_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_TurboGrafx-16.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_TurboGrafx-16.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_TG16_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_PC_Engine_SuperGrafx.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_PC_Engine_SuperGrafx.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_SGX_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Sega_SG-1000.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Sega_SG-1000.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_SG1000_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_ColecoVision.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_ColecoVision.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_COLECO_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Sega_Master_System.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Sega_Master_System.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_MASTERSYSTEM_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Sega_Game_Gear.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Sega_Game_Gear.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_GAMEGEAR_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_MSX.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_MSX.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_MSX_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Sinclair_ZX_Spectrum.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Sinclair_ZX_Spectrum.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_SPECTRUM_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Neogeo.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Neogeo.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_NEOGEO_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Nintendo_Entertainment_System.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Nintendo_Entertainment_System.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_NES_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Nintendo_Famicom_Disk_System.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Nintendo_Famicom_Disk_System.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_FDS_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Neo_Geo_Pocket.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Neo_Geo_Pocket.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_NGP_ONLY);
 
-	sprintf(filename, "%sFBNeo_-_Fairchild_Channel_F.dat", SDL_GetPrefPath("fbneo", "dats"));
+	_stprintf(filename, _T("%sFBNeo_-_Fairchild_Channel_F.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_CHANNELF_ONLY);
 
 #else
@@ -237,7 +232,8 @@ void DoGame(int gameToRun)
 		if (!DrvInit(gameToRun, 0))
 		{
 			MediaInit();
-			Init_Joysticks(usejoy);
+			if (usejoy) Init_Joysticks(1);	// This will ignore inputs defined in *.ini and use joysticks for all players
+			display_set_controls();
 			RunMessageLoop();
 		}
 		else
@@ -306,16 +302,6 @@ int main(int argc, char* argv[])
 
 	printf("FBNeo v%s\n", szAppBurnVer);
 
-	// create a default ini if one is not valid
-	fail = ConfigAppLoad();
-	if (fail)
-	{
-		if (bSaveconfig)
-		{
-			ConfigAppSave();
-		}
-	}
-
 	for (int i = 1; i < argc; i++)
 	{
 		if (*argv[i] != '-' && !gamefound)
@@ -327,7 +313,7 @@ int main(int argc, char* argv[])
 
 	parseSwitches(argc, argv);
 
-	if (romname == NULL)
+	if ((romname == NULL) && !usemenu && !bAlwaysMenu && !dat)
 	{
 		printf("Usage: %s [-cd] [-joy] [-menu] [-novsync] [-integerscale] [-fullscreen] [-dat] [-autosave] [-nearest] [-linear] [-best] <romname>\n", argv[0]);
 		printf("Note the -menu switch does not require a romname\n");
@@ -336,11 +322,7 @@ int main(int argc, char* argv[])
 		printf("For NeoCD games:\n");
 		printf("%s neocdz -cd path/to/ccd/filename.cue (or .ccd)\n", argv[0]);
 		printf("Usage is restricted by the license at https://raw.githubusercontent.com/finalburnneo/FBNeo/master/src/license.txt\n");
-
-		if (!usemenu && !bAlwaysMenu && !dat)
-		{
-			return 0;
-		}
+		return 0;
 	}
 
 	// Do these bits before override via ConfigAppLoad
@@ -389,34 +371,19 @@ int main(int argc, char* argv[])
 	//SDL_ShowCursor(SDL_DISABLE);
 
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
-	szSDLhiscorePath = SDL_GetPrefPath("fbneo", "hiscore");
-	szSDLeepromPath = SDL_GetPrefPath("fbneo", "eeprom");
-	szSDLHDDPath = SDL_GetPrefPath("fbneo", "hdd");
-	szSDLSamplePath = SDL_GetPrefPath("fbneo", "samples");
-	_stprintf(szAppHiscorePath, _T("%s"), szSDLhiscorePath);
-	_stprintf(szAppEEPROMPath, _T("%s"), szSDLeepromPath);
-	_stprintf(szAppHDDPath, _T("%s"), szSDLHDDPath);
-	_stprintf(szAppSamplesPath, _T("%s"), szSDLSamplePath);
-
-
     // Load mapping from file if it exists
-	char gamecontrollerdbfile[MAX_PATH] = { 0 };
-	if (szSDLconfigPath == NULL) {
-		szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
-	}
-	snprintf(gamecontrollerdbfile, MAX_PATH, "%sgamecontrollerdb.txt", szSDLconfigPath);
-
+	char gamecontrollerdbfile[MAX_PATH] = _T("");
+	TCHAR *szSDLconfigPath = NULL;
+	szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+	_stprintf(gamecontrollerdbfile, _T("%sgamecontrollerdb.txt"), szSDLconfigPath);
+	SDL_free(szSDLconfigPath);
 	if (SDL_GameControllerAddMappingsFromFile(gamecontrollerdbfile) > 0) printf("Game controller mappings loaded from: %s\n", gamecontrollerdbfile);
 #endif
 
+	// create a default ini if one is not valid
 	fail = ConfigAppLoad();
-	if (fail)
-	{
-		if (bSaveconfig)
-		{
-			ConfigAppSave();
-		}
-	}
+	if ((fail) && (bSaveconfig)) ConfigAppSave();		// for SDL2 this will also create folders in ~/.local/share/fbneo/
+
 	ComputeGammaLUT();
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	bprintf = AppDebugPrintf;

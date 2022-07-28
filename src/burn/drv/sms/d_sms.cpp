@@ -30107,10 +30107,10 @@ struct BurnDriver BurnDrvgg_tetris4gg = {
 	256, 192, 4, 3
 };
 
-// Do The Same (HB, v1.30)
+// Do The Same (HB, v1.40)
 
 static struct BurnRomInfo sms_dothesameRomDesc[] = {
-	{ "Do The Same v1.30 (2022)(Ricco59).sms",	49152, 0x01e68ff7, BRF_PRG | BRF_ESS },
+	{ "Do The Same v1.40 (2022)(Ricco59).sms",	98304, 0x641fb1f2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_dothesame)
@@ -30118,7 +30118,7 @@ STD_ROM_FN(sms_dothesame)
 
 struct BurnDriver BurnDrvsms_dothesame = {
 	"sms_dothesame", NULL, NULL, NULL, "2022",
-	"Do The Same (HB, v1.30)\0", "No Sound", "Ricco59", "Sega Master System",
+	"Do The Same (HB, v1.40)\0", NULL, "Ricco59", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_dothesameRomInfo, sms_dothesameRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

@@ -2636,7 +2636,7 @@ struct BurnDriver BurnDrvQuesters = {
 	"Quester Special Edition (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
-	NULL, questersRomInfo, questersRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo, //QuesterInputInfo, QuesterDIPInfo,
+	NULL, questersRomInfo, questersRomName, NULL, NULL, NULL, NULL, QuesterInputInfo, QuesterDIPInfo,
 	QuesterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
 };

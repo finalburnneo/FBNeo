@@ -2344,6 +2344,8 @@ INT32 System16Init()
 		SekOpen(0);
 		SekMapMemory(System16Rom           , 0x000000, 0x07ffff, MAP_READ);
 		SekMapMemory(System16Code          , 0x000000, 0x07ffff, MAP_FETCH);
+		SekMapMemory(System16BackupRam     , 0x080000, 0x083fff, MAP_RAM);
+		SekMapMemory(System16BackupRam2    , 0x0a0000, 0x0a3fff, MAP_RAM);
 		SekMapMemory(System16TileRam       , 0x0c0000, 0x0cffff, MAP_READ);
 		SekMapMemory(System16TextRam       , 0x0d0000, 0x0d0fff, MAP_RAM);
 		SekMapMemory(System16SpriteRam     , 0x100000, 0x100fff, MAP_RAM);

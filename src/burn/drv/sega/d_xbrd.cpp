@@ -3449,7 +3449,7 @@ struct BurnDriver BurnDrvGprider = {
 	"gprider", NULL, NULL, NULL, "1990",
 	"GP Rider (World, FD1094 317-0163) (Twin setup)\0", "Single version only", "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GpriderRomInfo, GpriderRomName, NULL, NULL, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrameGPRider, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -3459,7 +3459,7 @@ struct BurnDriver BurnDrvGpriders = {
 	"gpriders", "gprider", NULL, NULL, "1990",
 	"GP Rider (World, FD1094 317-0163)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GpridersRomInfo, GpridersRomName, NULL, NULL, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrameGPRider, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -3469,7 +3469,7 @@ struct BurnDriver BurnDrvGpriderj = {
 	"gpriderj", "gprider", NULL, NULL, "1990",
 	"GP Rider (Japan, FD1094 317-0161) (Twin setup)\0", "Single version only", "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GpriderjRomInfo, GpriderjRomName, NULL, NULL, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrameGPRider, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -3479,7 +3479,7 @@ struct BurnDriver BurnDrvGpriderjs = {
 	"gpriderjs", "gprider", NULL, NULL, "1990",
 	"GP Rider (Japan, FD1094 317-0161)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GpriderjsRomInfo, GpriderjsRomName, NULL, NULL, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrameGPRider, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -3489,7 +3489,7 @@ struct BurnDriver BurnDrvGprideru = {
 	"gprideru", "gprider", NULL, NULL, "1990",
 	"GP Rider (US, FD1094 317-0162) (Twin setup)\0", "Single version only", "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GprideruRomInfo, GprideruRomName, NULL, NULL, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrameGPRider, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -3499,7 +3499,7 @@ struct BurnDriver BurnDrvGpriderus = {
 	"gpriderus", "gprider", NULL, NULL, "1990",
 	"GP Rider (US, FD1094 317-0162)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GpriderusRomInfo, GpriderusRomName, NULL, NULL, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrameGPRider, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3

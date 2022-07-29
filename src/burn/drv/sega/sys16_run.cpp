@@ -2342,10 +2342,26 @@ INT32 System16Init()
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMX) {
 		SekInit(0, 0x68000);
 		SekOpen(0);
+		SekSetAddressMask(0x3fffff);
 		SekMapMemory(System16Rom           , 0x000000, 0x07ffff, MAP_READ);
 		SekMapMemory(System16Code          , 0x000000, 0x07ffff, MAP_FETCH);
-		SekMapMemory(System16BackupRam     , 0x080000, 0x083fff, MAP_RAM);
-		SekMapMemory(System16BackupRam2    , 0x0a0000, 0x0a3fff, MAP_RAM);
+
+		// Backup RAM: first chunk + mirrors
+		for (INT32 m = 0x80000; m < (0x83fff + 0x1c000); m += 0x4000) { // 0x80000 - 83fff mirror 0x1c000
+			SekMapMemory(System16BackupRam, m, m + 0x3fff, MAP_RAM);
+			//bprintf(0, _T("map mirror %x - %x\n"), m, m + 0x3fff);
+		}
+		// Backup RAM: second chunk
+		SekMapMemory(System16BackupRam, 0x3f8000, 0x3fbfff, MAP_RAM);
+
+		// Backup RAM2: first chunk + mirrors
+		for (INT32 m = 0xa0000; m < (0xa3fff + 0x1c000); m += 0x4000) { // 0xa0000 - a3fff mirror 0x1c000
+			SekMapMemory(System16BackupRam2, m, m + 0x3fff, MAP_RAM);
+			//bprintf(0, _T("map mirror %x - %x\n"), m, m + 0x3fff);
+		}
+		// Backup RAM2: second chunk
+		SekMapMemory(System16BackupRam2, 0x3fc000, 0x3fffff, MAP_RAM);
+
 		SekMapMemory(System16TileRam       , 0x0c0000, 0x0cffff, MAP_READ);
 		SekMapMemory(System16TextRam       , 0x0d0000, 0x0d0fff, MAP_RAM);
 		SekMapMemory(System16SpriteRam     , 0x100000, 0x100fff, MAP_RAM);
@@ -2366,12 +2382,20 @@ INT32 System16Init()
 		SekMapMemory(System16SpriteRam     , 0x10f000, 0x10ffff, MAP_RAM); // Tests past Sprite RAM in mem tests (mirror?)
 		SekMapMemory(System16PaletteRam    , 0x120000, 0x123fff, MAP_RAM);
 		SekMapMemory(System16Rom2          , 0x200000, 0x27ffff, MAP_READ);
-		SekMapMemory(System16Ram           , 0x29c000, 0x2a3fff, MAP_RAM);
+
+		// Shared RAM: first chunk + mirrors
+		for (INT32 m = 0x280000; m < (0x283fff + 0x1c000); m += 0x4000) { // 0x280000 - 283fff mirror 0x1c000
+			SekMapMemory(System16Ram, m, m + 0x3fff, MAP_RAM);
+			//bprintf(0, _T("main map shared0 %x - %x\n"), m, m + 0x3fff);
+		}
+		// Shared RAM: 2nd chunk + mirrors
+		for (INT32 m = 0x2a0000; m < (0x2a3fff + 0x1c000); m += 0x4000) { // 0x2a0000 - 2a3fff mirror 0x1c000
+			SekMapMemory(System16Ram + 0x4000, m, m + 0x3fff, MAP_RAM);
+			//bprintf(0, _T("main map shared1 %x - %x\n"), m, m + 0x3fff);
+		}
+
 		SekMapMemory(System16RoadRam       , 0x2ec000, 0x2ecfff, MAP_RAM);
 		SekMapMemory(System16RoadRam       , 0x2ed000, 0x2edfff, MAP_RAM); // Tests past Road RAM in mem tests (mirror?)
-		SekMapMemory(System16BackupRam2    , 0xff4000, 0xff7fff, MAP_RAM);
-		SekMapMemory(System16BackupRam     , 0xff8000, 0xffffff, MAP_RAM);
-		SekMapMemory(System16BackupRam2    , 0xffc000, 0xffffff, MAP_RAM);
 		SekSetResetCallback(OutrunResetCallback);
 		SekSetReadWordHandler(0, XBoardReadWord);
 		SekSetWriteWordHandler(0, XBoardWriteWord);
@@ -2381,12 +2405,22 @@ INT32 System16Init()
 		
 		SekInit(1, 0x68000);
 		SekOpen(1);
+		SekSetAddressMask(0xfffff);
 		SekMapMemory(System16Rom2          , 0x000000, 0x07ffff, MAP_ROM);
-		SekMapMemory(System16Ram           , 0x09c000, 0x0a3fff, MAP_RAM);
+
+		// Shared RAM: first chunk + mirrors
+		for (INT32 m = 0x80000; m < (0x83fff + 0x1c000); m += 0x4000) { // 0x80000 - 83fff mirror 0x1c000
+			SekMapMemory(System16Ram, m, m + 0x3fff, MAP_RAM);
+			//bprintf(0, _T("sub map shared0 %x - %x\n"), m, m + 0x3fff);
+		}
+		// Shared RAM: 2nd chunk + mirrors
+		for (INT32 m = 0xa0000; m < (0xa3fff + 0x1c000); m += 0x4000) { // 0xa0000 - a3fff mirror 0x1c000
+			SekMapMemory(System16Ram + 0x4000, m, m + 0x3fff, MAP_RAM);
+			//bprintf(0, _T("sub map shared1 %x - %x\n"), m, m + 0x3fff);
+		}
+
 		SekMapMemory(System16RoadRam       , 0x0ec000, 0x0ecfff, MAP_RAM);
-		SekMapMemory(System16Rom2          , 0x200000, 0x27ffff, MAP_ROM);
-		SekMapMemory(System16Ram           , 0x29c000, 0x2a3fff, MAP_RAM);
-		SekMapMemory(System16RoadRam       , 0x2ec000, 0x2ecfff, MAP_RAM);
+
 		SekSetReadWordHandler(0, XBoard2ReadWord);
 		SekSetWriteWordHandler(0, XBoard2WriteWord);
 		SekSetReadByteHandler(0, XBoard2ReadByte);

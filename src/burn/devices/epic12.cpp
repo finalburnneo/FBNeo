@@ -999,7 +999,9 @@ void epic12_scan(INT32 nAction, INT32 *pnMin)
 	SCAN_VAR(epic12_device_blit_delay);
 	SCAN_VAR(m_delay_scale);
 	SCAN_VAR(m_blitter_busy);
-	ScanVar(m_bitmaps, m_gfx_size * 4, "epic12 vram");
+	if (~nAction & ACB_RUNAHEAD) {
+		ScanVar(m_bitmaps, m_gfx_size * 4, "epic12 vram");
+	}
 	thready.scan();
 }
 

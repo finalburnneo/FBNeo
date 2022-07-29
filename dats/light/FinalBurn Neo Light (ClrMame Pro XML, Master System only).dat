@@ -1332,11 +1332,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="dothesame">
-		<comment>Homebrew, No Sound</comment>
-		<description>Do The Same (HB, v1.30)</description>
+		<comment>Homebrew</comment>
+		<description>Do The Same (HB, v1.40)</description>
 		<year>2022</year>
 		<manufacturer>Ricco59</manufacturer>
-		<rom name="Do The Same v1.30 (2022)(Ricco59).sms" size="49152" crc="01e68ff7"/>
+		<rom name="Do The Same v1.40 (2022)(Ricco59).sms" size="98304" crc="641fb1f2"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

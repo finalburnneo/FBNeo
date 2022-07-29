@@ -22950,7 +22950,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDjboy,				// DJ Boy (World)
 	&BurnSpecDjpuff,			// DJ Puff's Volcanic Capers (128K)
 	&BurnDrvMSX_dothesame,		// Do the Same (HB, v1.1)
-	&BurnDrvsms_dothesame,		// Do The Same (HB, v1.30)
+	&BurnDrvsms_dothesame,		// Do The Same (HB, v1.40)
 	&BurnDrvDorunrunc,			// Do! Run Run (Do's Castle hardware, set 1)
 	&BurnDrvDorunrunca,			// Do! Run Run (Do's Castle hardware, set 2)
 	&BurnDrvDorunrun,			// Do! Run Run (set 1)

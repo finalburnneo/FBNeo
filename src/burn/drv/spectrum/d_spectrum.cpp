@@ -36593,3 +36593,41 @@ struct BurnDriver BurnSpecTcqzx = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Tiny Crate (English) (128K) (HB)
+
+static struct BurnRomInfo SpecTinycratenRomDesc[] = {
+	{ "Tiny Crate EN 128K (2022)(PC NONO Games).tap", 39862, 0xc1f7ff6b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTinycraten, SpecTinycraten, Spec128)
+STD_ROM_FN(SpecTinycraten)
+
+struct BurnDriver BurnSpecTinycraten = {
+	"spec_tinycraten", NULL, "spec_spec128", NULL, "2022",
+	"Tiny Crate (English) (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecTinycratenRomInfo, SpecTinycratenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tiny Crate (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecTinycratesRomDesc[] = {
+	{ "Tiny Crate ES 128K (2022)(PC NONO Games).tap", 39862, 0xdcab09bc, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTinycrates, SpecTinycrates, Spec128)
+STD_ROM_FN(SpecTinycrates)
+
+struct BurnDriver BurnSpecTinycrates = {
+	"spec_tinycrates", "spec_tinycraten", "spec_spec128", NULL, "2022",
+	"Tiny Crate (Spanish) (128K) (HB)\0", NULL, "PC NONO Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecTinycratesRomInfo, SpecTinycratesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

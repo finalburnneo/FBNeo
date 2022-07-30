@@ -395,10 +395,18 @@ INT32 StartRecord()
 			nRet = 1;
 		} else {
 			fwrite(&szFileHeader, 1, 4, fp);
+			INT32 flags_offset = ftell(fp);
 			fwrite(&movieFlags, 1, 4, fp);
 			if (bStartFromReset) {
 				if (movieFlags & MOVIE_FLAG_WITH_NVRAM) {
 					nRet = BurnStateSaveEmbed(fp, -1, 0); // Embed contents of NVRAM
+					if (nRet == -1) {
+						// game doesn't have NVRAM
+						fseek(fp, flags_offset, SEEK_SET);
+						movieFlags &= ~MOVIE_FLAG_WITH_NVRAM; // remove NVRAM flag.
+						fwrite(&movieFlags, 1, 4, fp);
+					}
+					nRet = 1;
 				} else {
 					nRet = 1; // don't embed nvram, but say everything's OK
 				}

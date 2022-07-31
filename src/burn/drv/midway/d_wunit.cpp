@@ -1029,10 +1029,10 @@ struct BurnDriver BurnDrvUmk3uc = {
 // Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)
 // Author: zpaul2fresh8
 static struct BurnRomInfo umk3pRomDesc[] = {
-	{ "l1.2_mortal_kombat_3_u54_ultimate.u54",				0x080000, 0x54A5359F, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "l1.2_mortal_kombat_3_u63_ultimate.u63",				0x080000, 0xFB83320D, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u54_umk3plus.u54",									0x080000, 0x54a5359f, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "u63_umk3plus.u63",									0x080000, 0xfb83320d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "l2.0_mortal_kombat_3_u2_ultimate.u2",				0x100000, 0x2C7F4A1D, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "l2.0_mortal_kombat_3_u2_umk3plus.u2",				0x100000, 0x2c7f4a1d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
 	{ "l1_mortal_kombat_3_u3_music_spch.u3",				0x100000, 0x856fe411, 2 | BRF_PRG | BRF_ESS }, //  3
 	{ "l1_mortal_kombat_3_u4_music_spch.u4",				0x100000, 0x428a406f, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "l1_mortal_kombat_3_u5_music_spch.u5",				0x100000, 0x3b98a09f, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -1057,10 +1057,10 @@ static struct BurnRomInfo umk3pRomDesc[] = {
 	{ "mortal_kombat_iii_ultimate_u119_video_image.u119",	0x100000, 0x5f10c543, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "mortal_kombat_iii_ultimate_u118_video_image.u118",	0x100000, 0xde0c4488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 
-	{ "umk3plus-u117.bin",									0x080000, 0x52EE547E, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
-	{ "umk3plus-u116.bin",									0x080000, 0xF6DF5C98, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
-	{ "umk3plus-u115.bin",									0x080000, 0xE003A51B, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
-	{ "umk3plus-u114.bin",									0x080000, 0xB8504598, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
+	{ "umk3p-u117.bin",										0x080000, 0x52ee547e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 0) }, // 22
+	{ "umk3p-u116.bin",										0x080000, 0xf6df5c98, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 1) }, // 23
+	{ "umk3p-u115.bin",										0x080000, 0xe003a51b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 2) }, // 24
+	{ "umk3p-u114.bin",										0x080000, 0xb8504598, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x10, 3) }, // 25
 
 	{ "mortal_kombat_iii_ultimate_u113_video_image.u113",	0x100000, 0x99d74a1e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 0) }, // 26
 	{ "mortal_kombat_iii_ultimate_u112_video_image.u112",	0x100000, 0xb5a46488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 27
@@ -1075,7 +1075,7 @@ STD_ROM_FN(umk3p)
 
 struct BurnDriver BurnDrvUmk3p = {
 	"umk3p", "umk3", NULL, NULL, "2022",
-	"Ultimate Mortal Kombat 3 PLUS (BETA 2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
+	"Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, umk3pRomInfo, umk3pRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,

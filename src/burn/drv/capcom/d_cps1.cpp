@@ -5719,15 +5719,11 @@ static struct BurnRomInfo DinohcRomDesc[] = {
 STD_ROM_PICK(Dinohc)
 STD_ROM_FN(Dinohc)
 
-/* in 'static const struct GameConfig ConfigTable[] =', add this line:
-{ "dinore"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-*/
-
 // Cadillacs and Dinossaurs Readjusted, hacked by GameHackFan 
 // source: https://gamehackfan.github.io/dinore/
 
 static struct BurnRomInfo DinoreRomDesc[] = {
-	{ "cde_re.10f",    0x200000, 0x530b7e43, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_re.10f",    0x200000, 0x282e9cd8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -14685,8 +14681,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinohc"      , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         }, // hacked to run on Street Fighter II' Champion Edition C-Board
 	{ "dinot"       , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         },
 	{ "dinotpic"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-	{ "dinore"		, CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinohunt"    , CPS_B_21_DEF, mapper_CD63B , 0, NULL                },
+	{ "dinore"		, CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dynwar"      , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwara"     , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwarj"     , CPS_B_02    , mapper_TK22B , 0, NULL                },
@@ -19784,7 +19780,7 @@ struct BurnDriver BurnDrvCpsDinohc = {
 
 struct BurnDriver BurnDrvCpsDinore = {
 	"dinore", "dino", NULL, NULL, "2022",
-	"Cadillacs & Dinosaurs Readjusted (Hack, v1.0)\0", NULL, "GameHackFan", "CPS1 / QSound",
+	"Cadillacs & Dinosaurs Readjusted (Hack, v1.1)\0", NULL, "GameHackFan", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinoreRomInfo, DinoreRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -23289,11 +23285,11 @@ static struct BurnRomInfo sf2mixRomDesc[] = {
 
 	A_BOARD_PLDS
 
-{ "s9263b.1a",     0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
-{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
-{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
-{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
-{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
+	{ "s9263b.1a",     0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
 STD_ROM_PICK(sf2mix)

@@ -1072,7 +1072,7 @@ struct BurnDriver BurnDrvngp_neocup98 = {
 // Pocket Sports Series - Pocket Tennis (Euro, Jpn)
 
 static struct BurnRomInfo ngp_ptennisRomDesc[] = {
-	{ "pocket tennis - pocket sports series (japan, europe) (en,ja).bin", 0x80000, 0x89410850, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "pocket tennis - pocket sports series (japan, europe) (en,ja).bin", 0x80000, 0x4b1eed05, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngp_ptennis, ngp_ptennis, ngpc_ngp)

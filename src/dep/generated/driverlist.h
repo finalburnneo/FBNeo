@@ -16856,6 +16856,8 @@ DRV		BurnDrvTinklpit;
 DRV		BurnDrvmd_tintin;
 DRV		BurnDrvgg_tintin;
 DRV		BurnSpectintmoon;
+DRV		BurnSpecTinycraten;
+DRV		BurnSpecTinycrates;
 DRV		BurnSpecTinydungs;
 DRV		BurnDrvnes_tinytooadvc;
 DRV		BurnDrvmd_ttoonbhtk;
@@ -35694,6 +35696,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tintin,			// Tintin au Tibet (Euro)
 	&BurnDrvgg_tintin,			// Tintin in Tibet (Euro)
 	&BurnSpectintmoon,			// Tintin on the Moon (48K)
+	&BurnSpecTinycraten,		// Tiny Crate (English) (128K) (HB)
+	&BurnSpecTinycrates,		// Tiny Crate (Spanish) (128K) (HB)
 	&BurnSpecTinydungs,			// Tiny Dungeons (128K) (HB)
 	&BurnDrvnes_tinytooadvc,	// Tiny Toon Adventures (Hack, Spanish v1.0)
 	&BurnDrvmd_ttoonbhtk,		// Tiny Toon Adventures (Kor) [no comment, NOT WORKING]

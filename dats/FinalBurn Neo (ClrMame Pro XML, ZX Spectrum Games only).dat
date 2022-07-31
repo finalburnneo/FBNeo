@@ -16890,6 +16890,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tinycraten" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Tiny Crate (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>PC NONO Games</manufacturer>
+		<rom name="Tiny Crate EN 128K (2022)(PC NONO Games).tap" size="39862" crc="c1f7ff6b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tinycrates" cloneof="tinycraten" romof="tinycraten">
+		<comment>Homebrew</comment>
+		<description>Tiny Crate (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>PC NONO Games</manufacturer>
+		<rom name="Tiny Crate ES 128K (2022)(PC NONO Games).tap" size="39862" crc="dcab09bc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tinydungs" romof="spec128">
 		<comment>Homebrew, Press 'Z', 'X' and 'C' to switch heroes</comment>
 		<description>Tiny Dungeons (128K) (HB)</description>

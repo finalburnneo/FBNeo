@@ -19587,11 +19587,11 @@ struct BurnDriver BurnDrvrbffspbh = {
 };
 
 
-// The Eye of Typhoon (Beta 6 Version)
+// The Eye of Typhoon (Beta 7 Version)
 // https://ozzyouzo.itch.io/teot
 
 static struct BurnRomInfo teotRomDesc[] = {
-	{ "teot-p1.bin",    0x0100000, 0x49b25c64, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "teot-p1.bin",    0x0100000, 0xc0ae0a56, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "teot-p2.bin",    0x0800000, 0x68dc7463, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
 	{ "teot-s1.bin",    0x0020000, 0x6d05f74b, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -19599,7 +19599,7 @@ static struct BurnRomInfo teotRomDesc[] = {
 	{ "teot-c1.bin",    0x1000000, 0x2fdbfbef, 3 | BRF_GRA },           //  3 Sprite data
 	{ "teot-c2.bin",    0x1000000, 0x4b953a79, 3 | BRF_GRA },           //  4
 	
-	{ "teot-m1.bin",    0x0010000, 0x16f81e41, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+	{ "teot-m1.bin",    0x0010000, 0x0c17ccac, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
 
 	{ "teot-v1.bin",    0x0800000, 0xd2911e9c, 5 | BRF_SND },           //  6 Sound data
 	{ "teot-v2.bin",    0x0800000, 0x49e3afe6, 5 | BRF_SND },           //  7
@@ -19610,7 +19610,7 @@ STD_ROM_FN(teot)
 
 struct BurnDriver BurnDrvTeot = {
 	"teot", NULL, "neogeo", NULL, "2022",
-	"The Eye of Typhoon (Beta 6 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
+	"The Eye of Typhoon (Beta 7 Version)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, teotRomInfo, teotRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

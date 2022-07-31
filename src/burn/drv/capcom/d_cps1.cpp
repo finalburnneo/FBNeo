@@ -15832,6 +15832,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "captcommb3"    , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommp4"    , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommr1pwx" , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
+	{ "captre"        , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "cawing"        , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingr1"      , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingu"       , CPS_B_05    , mapper_CA22B , 0, NULL                },
@@ -25031,6 +25032,48 @@ struct BurnDriver BurnDrvCpsCaptcommr1pwx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommr1pwxRomInfo, Captcommr1pwxRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm4pDIPInfo,  
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Captain Commando Readjusted, hacked by GameHackFan 
+// source: https://gamehackfan.github.io/captre/
+
+static struct BurnRomInfo CaptreRomDesc[] = {
+	{ "cce_re.10f",    0x200000, 0x591ea997, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cc-5re.3a",     0x080000, 0xd78482a8, BRF_GRA | CPS1_TILES },
+	{ "cc-7re.5a",     0x080000, 0xfe4f474d, BRF_GRA | CPS1_TILES },
+	{ "cc-1re.4a",     0x080000, 0xe45c8021, BRF_GRA | CPS1_TILES },
+	{ "cc-3re.6a",     0x080000, 0x0d7f9314, BRF_GRA | CPS1_TILES },
+	{ "cc-6re.7a",     0x080000, 0xbd687ae8, BRF_GRA | CPS1_TILES },
+	{ "cc-8re.9a",     0x080000, 0xf222c02e, BRF_GRA | CPS1_TILES },
+	{ "cc-2re.8a",     0x080000, 0x8296149a, BRF_GRA | CPS1_TILES },
+	{ "cc-4re.10a",    0x080000, 0xa7b9288e, BRF_GRA | CPS1_TILES },
+
+	{ "cc_09.11a",     0x010000, 0x698e8b58, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cc_18.11c",     0x020000, 0x6de2c2db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "cc_19.12c",     0x020000, 0xb99091ae, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Captre)
+STD_ROM_FN(Captre)
+
+struct BurnDriver BurnDrvCpsCaptre = {
+	"captre", "captcomm", NULL, NULL, "2022",
+	"Captain Commando Readjusted (Hack, v1.0)\0", NULL, "GameHackFan", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, CaptreRomInfo, CaptreRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
 	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

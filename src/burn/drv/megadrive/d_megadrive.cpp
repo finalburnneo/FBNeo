@@ -46537,7 +46537,7 @@ struct BurnDriver BurnDrvmd_ppersia2r = {
 // https://www.romhacking.net/hacks/6969/
 
 static struct BurnRomInfo md_ppersiarRomDesc[] = {
-	{ "Prince of Persia - Remastered Edition (2022)(Linkuei).bin", 1323702, 0xd97467a1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Prince of Persia - Remastered Edition (2022)(Linkuei).bin", 2097152, 0x897f3fe8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_ppersiar)
@@ -46545,7 +46545,7 @@ STD_ROM_FN(md_ppersiar)
 
 struct BurnDriver BurnDrvmd_ppersiar = {
 	"md_ppersiar", "md_ppersia", NULL, NULL, "2022",
-	"Prince of Persia - Remastered Edition (Hack, v1.0)\0", NULL, "Linkuei", "Sega Megadrive",
+	"Prince of Persia - Remastered Edition (Hack, v1.3)\0", NULL, "Linkuei", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_ppersiarRomInfo, md_ppersiarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

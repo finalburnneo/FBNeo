@@ -21300,9 +21300,79 @@ struct BurnDriver BurnDrvnes_virus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Kaguya Hime Densetsu (T-Eng)
+static struct BurnRomInfo nes_kaguyaeRomDesc[] = {
+	{ "Kaguya Hime Densetsu (T-Eng)(2022)(FCandChill).nes",          524304, 0x80de5290, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kaguyae)
+STD_ROM_FN(nes_kaguyae)
+
+struct BurnDriver BurnDrvnes_kaguyae = {
+	"nes_kaguyae", NULL, NULL, NULL, "2022",
+	"Kaguya Hime Densetsu (T-Eng)\0", NULL, "FCandChill", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_kaguyaeRomInfo, nes_kaguyaeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Kaguya Hime Densetsu (Japan)
+static struct BurnRomInfo nes_kaguyajRomDesc[] = {
+	{ "Kaguya Hime Densetsu (J)(1988)(Victor).nes",          262160, 0x69565d0e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kaguyaj)
+STD_ROM_FN(nes_kaguyaj)
+
+struct BurnDriver BurnDrvnes_kaguyaj = {
+	"nes_kaguyaj", "nes_kaguyae", NULL, NULL, "1988",
+	"Kaguya Hime Densetsu (Japan)\0", NULL, "Victor", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_kaguyajRomInfo, nes_kaguyajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_gravedudeRomDesc[] = {
+	{ "Graveyard Dude (2022)(Rani Baker).nes",          40976, 0xb0c5ff55, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gravedude)
+STD_ROM_FN(nes_gravedude)
+
+struct BurnDriver BurnDrvnes_gravedude = {
+	"nes_gravedude", NULL, NULL, NULL, "2022",
+	"Graveyard Dude (HB)\0", NULL, "Rani Baker", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_gravedudeRomInfo, nes_gravedudeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_orpheaRomDesc[] = {
+	{ "Orphea v1.1 (2021)(SkyBoy Games).nes",          40976, 0x7d8a4906, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_orphea)
+STD_ROM_FN(nes_orphea)
+
+struct BurnDriver BurnDrvnes_orphea = {
+	"nes_orphea", NULL, NULL, NULL, "2021",
+	"Orphea (HB, v1.1)\0", NULL, "SkyBoy Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_orpheaRomInfo, nes_orpheaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_fullquietRomDesc[] = {
 	{ "Full Quiet (Test Cart)(2021)(Retrotainment Games).nes",          524304, 0x03055116, BRF_ESS | BRF_PRG },
@@ -38482,8 +38552,8 @@ STD_ROM_PICK(nes_kage)
 STD_ROM_FN(nes_kage)
 
 struct BurnDriver BurnDrvnes_kage = {
-	"nes_kage", "nes_shadonin", NULL, NULL, "1989?",
-	"Kage (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_kage", "nes_shadonin", NULL, NULL, "1990",
+	"Kage (Japan)\0", NULL, "Natsume", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_kageRomInfo, nes_kageRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45537,8 +45607,8 @@ STD_ROM_PICK(nes_saintsaitiamahuxi)
 STD_ROM_FN(nes_saintsaitiamahuxi)
 
 struct BurnDriver BurnDrvnes_saintsaitiamahuxi = {
-	"nes_saintsaitiamahuxi", NULL, NULL, NULL, "1989?",
-	"Saint Saiya - Tian Ma Huan Xiang (China)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_saintsaitiamahuxi", NULL, NULL, NULL, "200?",
+	"Saint Saiya - Tian Ma Huan Xiang (China)\0", NULL, "Unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_saintsaitiamahuxiRomInfo, nes_saintsaitiamahuxiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45571,10 +45641,10 @@ STD_ROM_PICK(nes_saintseiougden)
 STD_ROM_FN(nes_saintseiougden)
 
 struct BurnDriver BurnDrvnes_saintseiougden = {
-	"nes_saintseiougden", NULL, NULL, NULL, "1987",
-	"Saint Seiya - Ougon Densetsu (T-Eng)\0", NULL, "Bandai", "Miscellaneous",
+	"nes_saintseiougden", NULL, NULL, NULL, "2001",
+	"Saint Seiya - Ougon Densetsu (T-Eng)\0", NULL, "KingMike", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_saintseiougdenRomInfo, nes_saintseiougdenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45605,10 +45675,10 @@ STD_ROM_PICK(nes_saintseiougdenkahen)
 STD_ROM_FN(nes_saintseiougdenkahen)
 
 struct BurnDriver BurnDrvnes_saintseiougdenkahen = {
-	"nes_saintseiougdenkahen", NULL, NULL, NULL, "1989?",
-	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_saintseiougdenkahen", NULL, NULL, NULL, "2010",
+	"Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)\0", NULL, "Djinn, aishsha", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
 	NESGetZipName, nes_saintseiougdenkahenRomInfo, nes_saintseiougdenkahenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -45911,8 +45981,8 @@ STD_ROM_PICK(nes_shinsamspi2)
 STD_ROM_FN(nes_shinsamspi2)
 
 struct BurnDriver BurnDrvnes_shinsamspi2 = {
-	"nes_shinsamspi2", NULL, NULL, NULL, "1989?",
-	"Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_shinsamspi2", NULL, NULL, NULL, "1996",
+	"Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China) (Unl)\0", NULL, "J.Y. Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_shinsamspi2RomInfo, nes_shinsamspi2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -45996,10 +46066,10 @@ STD_ROM_PICK(nes_shufflepuckcafe)
 STD_ROM_FN(nes_shufflepuckcafe)
 
 struct BurnDriver BurnDrvnes_shufflepuckcafe = {
-	"nes_shufflepuckcafe", NULL, NULL, NULL, "1990",
-	"Shufflepuck Cafe (T-Eng)\0", NULL, "Pony Canyon", "Miscellaneous",
+	"nes_shufflepuckcafe", NULL, NULL, NULL, "2016",
+	"Shufflepuck Cafe (T-Eng)\0", NULL, "MadHacker", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_BALLPADDLE, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_BALLPADDLE, 0,
 	NESGetZipName, nes_shufflepuckcafeRomInfo, nes_shufflepuckcafeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -46030,10 +46100,10 @@ STD_ROM_PICK(nes_sidewinder)
 STD_ROM_FN(nes_sidewinder)
 
 struct BurnDriver BurnDrvnes_sidewinder = {
-	"nes_sidewinder", NULL, NULL, NULL, "1989?",
-	"Sidewinder (USA)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_sidewinder", "nes_missioncobra", NULL, NULL, "1989",
+	"Sidewinder (USA) (Unl)\0", NULL, "Sachen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_sidewinderRomInfo, nes_sidewinderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -49520,8 +49590,8 @@ STD_ROM_PICK(nes_tokkyshisolj)
 STD_ROM_FN(nes_tokkyshisolj)
 
 struct BurnDriver BurnDrvnes_tokkyshisolj = {
-	"nes_tokkyshisolj", "nes_shatterhand", NULL, NULL, "1989?",
-	"Tokkyuu Shirei Solbrain (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_tokkyshisolj", "nes_shatterhand", NULL, NULL, "1991",
+	"Tokkyuu Shirei Solbrain (Japan)\0", NULL, "Angel Studio", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_tokkyshisoljRomInfo, nes_tokkyshisoljRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -49537,10 +49607,10 @@ STD_ROM_PICK(nes_tokkyshisol)
 STD_ROM_FN(nes_tokkyshisol)
 
 struct BurnDriver BurnDrvnes_tokkyshisol = {
-	"nes_tokkyshisol", "nes_shatterhand", NULL, NULL, "1989?",
-	"Tokkyuu Shirei Solbrain (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_tokkyshisol", "nes_shatterhand", NULL, NULL, "2019",
+	"Tokkyuu Shirei Solbrain (T-Eng)\0", NULL, "chronix", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_tokkyshisolRomInfo, nes_tokkyshisolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

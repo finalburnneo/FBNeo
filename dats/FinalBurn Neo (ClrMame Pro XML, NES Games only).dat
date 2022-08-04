@@ -6712,6 +6712,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gravedude">
+		<comment>Homebrew</comment>
+		<description>Graveyard Dude (HB)</description>
+		<year>2022</year>
+		<manufacturer>Rani Baker</manufacturer>
+		<rom name="Graveyard Dude (2022)(Rani Baker).nes" size="40976" crc="b0c5ff55"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="greatbatcyb">
 		<description>Great Battle Cyber (Japan)</description>
 		<year>1992</year>
@@ -8238,8 +8247,8 @@
 	</game>
 	<game name="kage" cloneof="shadonin" romof="shadonin">
 		<description>Kage (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1990</year>
+		<manufacturer>Natsume</manufacturer>
 		<rom name="Kage (Japan).nes" size="262160" crc="459fbede"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -8275,6 +8284,23 @@
 		<year>1990</year>
 		<manufacturer>Pixel</manufacturer>
 		<rom name="Kagerou Densetsu (Japan).nes" size="262160" crc="205631f7"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="kaguyaj" cloneof="kaguyae" romof="kaguyae">
+		<description>Kaguya Hime Densetsu (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Victor</manufacturer>
+		<rom name="Kaguya Hime Densetsu (J)(1988)(Victor).nes" size="262160" crc="69565d0e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="kaguyae">
+		<comment>Hack</comment>
+		<description>Kaguya Hime Densetsu (T-Eng)</description>
+		<year>2022</year>
+		<manufacturer>FCandChill</manufacturer>
+		<rom name="Kaguya Hime Densetsu (T-Eng)(2022)(FCandChill).nes" size="524304" crc="80de5290"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11570,6 +11596,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="orphea">
+		<comment>Homebrew</comment>
+		<description>Orphea (HB, v1.1)</description>
+		<year>2021</year>
+		<manufacturer>SkyBoy Games</manufacturer>
+		<rom name="Orphea v1.1 (2021)(SkyBoy Games).nes" size="40976" crc="7d8a4906"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="outlandersj" cloneof="outlanders" romof="outlanders">
 		<description>Outlanders (Japan)</description>
 		<year>1987</year>
@@ -13219,8 +13254,8 @@
 	</game>
 	<game name="saintsaitiamahuxi">
 		<description>Saint Saiya - Tian Ma Huan Xiang (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>200?</year>
+		<manufacturer>Unknown</manufacturer>
 		<rom name="Saint Saiya - Tian Ma Huan Xiang (China).nes" size="2097168" crc="31f810f2"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13252,9 +13287,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiougden">
+		<comment>Hack</comment>
 		<description>Saint Seiya - Ougon Densetsu (T-Eng)</description>
-		<year>1987</year>
-		<manufacturer>Bandai</manufacturer>
+		<year>2001</year>
+		<manufacturer>KingMike</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu (T-Eng).nes" size="262160" crc="0914dd20"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13277,9 +13313,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="saintseiougdenkahen">
+		<comment>Hack</comment>
 		<description>Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2010</year>
+		<manufacturer>Djinn, aishsha</manufacturer>
 		<rom name="Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Eng).nes" size="262160" crc="912be32d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13653,9 +13690,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinsamspi2">
-		<description>Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<description>Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China) (Unl)</description>
+		<year>1996</year>
+		<manufacturer>J.Y. Company</manufacturer>
 		<rom name="Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China).nes" size="655376" crc="3398afe5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13702,9 +13739,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="shufflepuckcafe">
+		<comment>Hack</comment>
 		<description>Shufflepuck Cafe (T-Eng)</description>
-		<year>1990</year>
-		<manufacturer>Pony Canyon</manufacturer>
+		<year>2016</year>
+		<manufacturer>MadHacker</manufacturer>
 		<rom name="Shufflepuck Cafe (T-Eng).nes" size="131088" crc="60253774"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -13726,10 +13764,10 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="sidewinder">
-		<description>Sidewinder (USA)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+	<game name="sidewinder" cloneof="missioncobra" romof="missioncobra">
+		<description>Sidewinder (USA) (Unl)</description>
+		<year>1989</year>
+		<manufacturer>Sachen</manufacturer>
 		<rom name="Sidewinder (USA).nes" size="32784" crc="11b37264"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16070,8 +16108,8 @@
 	</game>
 	<game name="tokkyshisolj" cloneof="shatterhand" romof="shatterhand">
 		<description>Tokkyuu Shirei Solbrain (Japan)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>1991</year>
+		<manufacturer>Angel Studio</manufacturer>
 		<rom name="Tokkyuu Shirei Solbrain (Japan).nes" size="262160" crc="6a09e2bb"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -16086,9 +16124,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tokkyshisol" cloneof="shatterhand" romof="shatterhand">
+		<comment>Hack</comment>
 		<description>Tokkyuu Shirei Solbrain (T-Eng)</description>
-		<year>1989?</year>
-		<manufacturer>Nintendo</manufacturer>
+		<year>2019</year>
+		<manufacturer>chronix</manufacturer>
 		<rom name="Tokkyuu Shirei Solbrain (T-Eng).nes" size="262160" crc="f84e3211"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

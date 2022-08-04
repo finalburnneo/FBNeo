@@ -699,6 +699,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="alicesisters">
+		<comment>Homebrew</comment>
+		<description>Alice Sisters (HB)</description>
+		<year>2022</year>
+		<manufacturer>PixelHeart</manufacturer>
+		<rom name="Alice Sisters (2022)(PixelHeart).bin" size="4194304" crc="d5b794ed"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="alien3s" cloneof="alien3" romof="alien3">
 		<comment>Hack</comment>
 		<description>Alien 3 (Hack, Spanish)</description>
@@ -11970,17 +11979,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="mk5a" cloneof="mk5" romof="mk5">
-		<description>MK 5 - Mortal Combat - SubZero (Pirate)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>MK 5 - Mortal Combat - SubZero (Pirate) (Uml)</description>
+		<year>1998</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="mk 5 - mortal combat - subzero (unl) (pirate).bin" size="2097152" crc="41203006"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="mk5">
-		<description>MK 5 - Mortal Combat - SubZero</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>MK 5 - Mortal Combat - SubZero (Unl)</description>
+		<year>1998</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="mk 5 - mortal combat - subzero (unl).bin" size="2097152" crc="11e367a1"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12010,6 +12019,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="monopolyp" cloneof="monopoly" romof="monopoly">
+		<comment>Prototype</comment>
 		<description>Monopoly (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -12021,7 +12031,7 @@
 		<comment>Hack</comment>
 		<description>Monster World IV (Hack, English v2.2)</description>
 		<year>2008</year>
-		<manufacturer>Di Somma Michele</manufacturer>
+		<manufacturer>Michele Di Somma</manufacturer>
 		<rom name="Monster World IV (J) [!] [T-Eng].bin" size="2097152" crc="c94a35bf"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14738,49 +14748,49 @@
 		<driver status="good"/>
 	</game>
 	<game name="pokemona" cloneof="pokemon" romof="pokemon">
-		<description>Pocket Monsters (Alt)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Pocket Monsters (Alt) (Unl)</description>
+		<year>2000</year>
+		<manufacturer>X-boy, Chuanpu</manufacturer>
 		<rom name="pocket monsters (unl) (alt).bin" size="2097152" crc="fb176667"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
-	<game name="pokemon2">
-		<description>Pocket Monsters 2</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="pocket monsters 2 (unl).bin" size="2097152" crc="30f7031f"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="pokemon">
-		<description>Pocket Monsters</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Pocket Monsters (Unl)</description>
+		<year>2000</year>
+		<manufacturer>X-boy, Chuanpu</manufacturer>
 		<rom name="pocket monsters (unl).bin" size="2097152" crc="f68f6367"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pokemon2">
+		<description>Pocket Monsters 2 (Unl)</description>
+		<year>2001</year>
+		<manufacturer>X-boy, Chuanpu</manufacturer>
+		<rom name="pocket monsters 2 (unl).bin" size="2097152" crc="30f7031f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pokecda" cloneof="pokecd" romof="pokecd">
-		<description>Pokemon Crazy Drummer (Alt)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Pokemon Crazy Drummer (Alt) (Unl)</description>
+		<year>2003</year>
+		<manufacturer>Tomsoft</manufacturer>
 		<rom name="pokemon crazy drummer (unl) [a].bin" size="2097152" crc="84f49061"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pokecd">
-		<description>Pokemon Crazy Drummer</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Pokemon Crazy Drummer (Unl)</description>
+		<year>2003</year>
+		<manufacturer>Tomsoft</manufacturer>
 		<rom name="pokemon crazy drummer (unl).bin" size="2097152" crc="8838a25d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="pokestad">
-		<description>Pokemon Stadium</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Pokemon Stadium (Unl)</description>
+		<year>200?</year>
+		<manufacturer>SKOB</manufacturer>
 		<rom name="pokemon stadium (unl).bin" size="2097152" crc="fe187c5d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14943,10 +14953,10 @@
 	</game>
 	<game name="ppersiar" cloneof="ppersia" romof="ppersia">
 		<comment>Hack</comment>
-		<description>Prince of Persia - Remastered Edition (Hack, v1.0)</description>
+		<description>Prince of Persia - Remastered Edition (Hack, v1.3)</description>
 		<year>2022</year>
 		<manufacturer>Linkuei</manufacturer>
-		<rom name="Prince of Persia - Remastered Edition (2022)(Linkuei).bin" size="1323702" crc="d97467a1"/>
+		<rom name="Prince of Persia - Remastered Edition (2022)(Linkuei).bin" size="2097152" crc="897f3fe8"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15060,17 +15070,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="psyoblade" cloneof="psyoblad" romof="psyoblad">
+		<comment>Hack</comment>
 		<description>Psy-O-Blade (Hack, English)</description>
 		<year>2015</year>
-		<manufacturer>Sigma</manufacturer>
+		<manufacturer>Eien Ni Hen, tryphon</manufacturer>
 		<rom name="psy-o-blade (english translation).md" size="785184" crc="427f95cd"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="psyoblads" cloneof="psyoblad" romof="psyoblad">
+		<comment>Hack</comment>
 		<description>Psy-O-Blade (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sigma Enterprises</manufacturer>
+		<manufacturer>Luceid</manufacturer>
 		<rom name="psy-o-blade (hack, spanish).bin" size="785184" crc="8247a914"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15078,7 +15090,7 @@
 	<game name="psyoblad">
 		<description>Psy-O-Blade (Jpn)</description>
 		<year>1990</year>
-		<manufacturer>Sigma</manufacturer>
+		<manufacturer>Sigma Ent.</manufacturer>
 		<rom name="psy-o-blade (jpn).bin" size="655360" crc="8ba7e6c5"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15306,9 +15318,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="quackshts" cloneof="quacksht" romof="quacksht">
-		<description>Quack Shot Starring Donald Duck (Hack, Spanish)</description>
+		<comment>Hack</comment>
+		<description>QuackShot Starring Donald Duck (Hack, Spanish)</description>
 		<year>2014</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jate</manufacturer>
 		<rom name="quack shot starring donald duck (hack, spanish).bin" size="524288" crc="2e304494"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

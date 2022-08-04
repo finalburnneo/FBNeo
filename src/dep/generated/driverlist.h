@@ -516,6 +516,7 @@ DRV		BurnDrvMSX_alibaba;
 DRV		BurnDrvMSX_alibabab;
 DRV		BurnDrvMSX_alibabaa;
 DRV		BurnDrvsms_alibaba;
+DRV		BurnDrvmd_alicesisters;
 DRV		BurnDrvsms_alien3;
 DRV		BurnDrvgg_alien3;
 DRV		BurnDrvsms_alien3c;
@@ -2455,6 +2456,7 @@ DRV		BurnDrvCpsCaptcommb2;
 DRV		BurnDrvCpsCaptcommb3;
 DRV		BurnDrvCpsCaptcommp4;
 DRV		BurnDrvCpsCaptcommr1pwx;
+DRV		BurnDrvCpsCaptre;
 DRV		BurnSpecCaptaindrexx;
 DRV		BurnSpecCaptaindynamo;
 DRV		BurnDrvnes_captained;
@@ -6525,6 +6527,7 @@ DRV		BurnDrvCgraplop2;
 DRV		BurnDrvGrasspin;
 DRV		BurnDrvGratiaa;
 DRV		BurnDrvGratia;
+DRV		BurnDrvnes_gravedude;
 DRV		BurnSpecgravibots;
 DRV		BurnDrvmd_gravibots;
 DRV		BurnDrvGravitar1;
@@ -7882,6 +7885,8 @@ DRV		BurnDrvKagekij;
 DRV		BurnDrvKagekiu;
 DRV		BurnDrvKageki;
 DRV		BurnDrvnes_kageroudensetsu;
+DRV		BurnDrvnes_kaguyaj;
+DRV		BurnDrvnes_kaguyae;
 DRV		BurnDrvnes_kaikeyanmar;
 DRV		BurnDrvnes_kaikeyanmar2j;
 DRV		BurnDrvnes_kaikeyanmar2;
@@ -9880,8 +9885,8 @@ DRV		BurnDrvsms_monopoly;
 DRV		BurnDrvmd_monopoly;
 DRV		BurnDrvnes_monopoly;
 DRV		BurnDrvsms_monopolyu;
-DRV		BurnDrvsms_monopolyp;
 DRV		BurnDrvmd_monopolyp;
+DRV		BurnDrvsms_monopolyp;
 DRV		BurnDrvsms_moncrunch;
 DRV		BurnDrvMSX_monsterhunter;
 DRV		BurnDrvnes_monstinmypoc;
@@ -11081,6 +11086,7 @@ DRV		BurnDrvOlds103t;
 DRV		BurnDrvOlds;
 DRV		BurnDrvzerofxz;
 DRV		BurnDrvOrius;
+DRV		BurnDrvnes_orphea;
 DRV		BurnDrvOsman;
 DRV		BurnDrvmd_osomatsu;
 DRV		BurnDrvsg1k_othello;
@@ -11795,8 +11801,8 @@ DRV		BurnDrvPgalvipa;
 DRV		BurnDrvgg_pocketj;
 DRV		BurnDrvngpc_poktlove;
 DRV		BurnDrvmd_pokemona;
-DRV		BurnDrvmd_pokemon2;
 DRV		BurnDrvmd_pokemon;
+DRV		BurnDrvmd_pokemon2;
 DRV		BurnDrvngpc_pockrev;
 DRV		BurnDrvngpc_pockrevj;
 DRV		BurnDrvngpc_bstarsc;
@@ -19356,6 +19362,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_alibabab,		// Alibaba and 40 Thieves (Jpn, Alt 2)
 	&BurnDrvMSX_alibabaa,		// Alibaba and 40 Thieves (Jpn, Alt)
 	&BurnDrvsms_alibaba,		// Alibaba and 40 Thieves (Kor)
+	&BurnDrvmd_alicesisters,	// Alice Sisters (HB)
 	&BurnDrvsms_alien3,			// Alien 3 (Euro, Bra)
 	&BurnDrvgg_alien3,			// Alien 3 (Euro, USA)
 	&BurnDrvsms_alien3c,		// Alien 3 (Hack, Spanish v1.0)
@@ -21295,6 +21302,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsCaptcommb3,		// Captain Commando (bootleg set 3 (with YM2151 + 2xMSM5205), 911014 other country)
 	&BurnDrvCpsCaptcommp4,		// Captain Commando (Enhanced edition 1 V 4, Hack)
 	&BurnDrvCpsCaptcommr1pwx,	// Captain Commando (Unlimited Bullet)
+	&BurnDrvCpsCaptre,			// Captain Commando Readjusted (Hack, v1.0)
 	&BurnSpecCaptaindrexx,		// Captain Drexx (128K) (HB)
 	&BurnSpecCaptaindynamo,		// Captain Dynamo (128K)
 	&BurnDrvnes_captained,		// Captain ED (Japan)
@@ -25365,6 +25373,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGrasspin,			// Grasspin
 	&BurnDrvGratiaa,			// Gratia - Second Earth (ver 1.0, 91022-10 version)
 	&BurnDrvGratia,				// Gratia - Second Earth (ver 1.0, 92047-01 version)
+	&BurnDrvnes_gravedude,		// Graveyard Dude (HB)
 	&BurnSpecgravibots,			// GraviBots (128K) (HB)
 	&BurnDrvmd_gravibots,		// GraviBots (HB)
 	&BurnDrvGravitar1,			// Gravitar (version 1)
@@ -26722,6 +26731,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKagekiu,			// Kageki (US)
 	&BurnDrvKageki,				// Kageki (World)
 	&BurnDrvnes_kageroudensetsu,// Kagerou Densetsu (Japan)
+	&BurnDrvnes_kaguyaj,		// Kaguya Hime Densetsu (Japan)
+	&BurnDrvnes_kaguyae,		// Kaguya Hime Densetsu (T-Eng)
 	&BurnDrvnes_kaikeyanmar,	// Kaiketsu Yancha Maru (Japan)
 	&BurnDrvnes_kaikeyanmar2j,	// Kaiketsu Yancha Maru 2 - Karakuri Land (Japan)
 	&BurnDrvnes_kaikeyanmar2,	// Kaiketsu Yancha Maru 2 - Karakuri Land (T-Eng)
@@ -28653,8 +28664,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_mizubaku,		// Mizubaku Dai Bouken (Liquid Kids)
 	&BurnDrvMizubaku,			// Mizubaku Daibouken (Japan)
 	&BurnDrvngpc_mizuki,		// Mizuki Shigeru no Youkai Shashinkan (Jpn)
-	&BurnDrvmd_mk5a,			// MK 5 - Mortal Combat - SubZero (Pirate)
-	&BurnDrvmd_mk5,				// MK 5 - Mortal Combat - SubZero
+	&BurnDrvmd_mk5a,			// MK 5 - Mortal Combat - SubZero (Pirate) (Uml)
+	&BurnDrvmd_mk5,				// MK 5 - Mortal Combat - SubZero (Unl)
 	&BurnDrvgg_mlbpa,			// MLBPA Baseball (USA)
 	&BurnDrvmd_mlbpa,			// MLBPA Baseball (USA)
 	&BurnDrvsg1k_motianda,		// Mo Tian Da Lou (Tw)
@@ -28720,8 +28731,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_monopoly,		// Monopoly (USA)
 	&BurnDrvnes_monopoly,		// Monopoly (USA)
 	&BurnDrvsms_monopolyu,		// Monopoly (USA)
-	&BurnDrvsms_monopolyp,		// Monopoly (USA, Prototype)
 	&BurnDrvmd_monopolyp,		// Monopoly (USA, Prototype)
+	&BurnDrvsms_monopolyp,		// Monopoly (USA, Prototype)
 	&BurnDrvsms_moncrunch,		// Monster Crunch (HB, v1.00)
 	&BurnDrvMSX_monsterhunter,	// Monster Hunter (HB)
 	&BurnDrvnes_monstinmypoc,	// Monster in My Pocket (USA)
@@ -29921,6 +29932,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOlds,				// Oriental Legend Super (V101, Korea)
 	&BurnDrvzerofxz,			// Oriental Legend ZERO (Hack)
 	&BurnDrvOrius,				// Orius (ver UAA)
+	&BurnDrvnes_orphea,			// Orphea (HB, v1.1)
 	&BurnDrvOsman,				// Osman (World)
 	&BurnDrvmd_osomatsu,		// Osomatsu-kun Hachamecha Gekijou (Jpn)
 	&BurnDrvsg1k_othello,		// Othello (Jpn)
@@ -30634,9 +30646,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPgalvipa,			// Pocket Gals V.I.P (set 2)
 	&BurnDrvgg_pocketj,			// Pocket Jansou (Jpn)
 	&BurnDrvngpc_poktlove,		// Pocket Love if (Jpn)
-	&BurnDrvmd_pokemona,		// Pocket Monsters (Alt) [no comment, NOT WORKING]
-	&BurnDrvmd_pokemon2,		// Pocket Monsters 2
-	&BurnDrvmd_pokemon,			// Pocket Monsters
+	&BurnDrvmd_pokemona,		// Pocket Monsters (Alt) (Unl) [no comment, NOT WORKING]
+	&BurnDrvmd_pokemon,			// Pocket Monsters (Unl)
+	&BurnDrvmd_pokemon2,		// Pocket Monsters 2 (Unl)
 	&BurnDrvngpc_pockrev,		// Pocket Reversi (Euro)
 	&BurnDrvngpc_pockrevj,		// Pocket Reversi (Jpn)
 	&BurnDrvngpc_bstarsc,		// Pocket Sport Series - Baseball Stars Color (World)
@@ -30654,9 +30666,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPtblanka,			// Point Blank (World, GN2 Rev B, set 2)
 	&BurnDrvPoittoc,			// Poitto! (revision C) [no comment, NOT WORKING]
 	&BurnDrvPoitto,				// Poitto!
-	&BurnDrvmd_pokecda,			// Pokemon Crazy Drummer (Alt)
-	&BurnDrvmd_pokecd,			// Pokemon Crazy Drummer
-	&BurnDrvmd_pokestad,		// Pokemon Stadium
+	&BurnDrvmd_pokecda,			// Pokemon Crazy Drummer (Alt) (Unl)
+	&BurnDrvmd_pokecd,			// Pokemon Crazy Drummer (Unl)
+	&BurnDrvmd_pokestad,		// Pokemon Stadium (Unl)
 	&BurnDrvgg_pokerfbj,		// Poker Face Paul's Blackjack (USA)
 	&BurnDrvgg_pokerfp,			// Poker Face Paul's Poker (USA)
 	&BurnDrvgg_pokerfs,			// Poker Face Paul's Solitaire (USA)
@@ -30863,7 +30875,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ppersiau,		// Prince of Persia (USA)
 	&BurnDrvnes_princeofpersia,	// Prince of Persia (USA)
 	&BurnDrvgg_ppersiau,		// Prince of Persia (USA, SMS Mode)
-	&BurnDrvmd_ppersiar,		// Prince of Persia - Remastered Edition (Hack, v1.0)
+	&BurnDrvmd_ppersiar,		// Prince of Persia - Remastered Edition (Hack, v1.3)
 	&BurnDrvmd_ppersia2r,		// Prince of Persia 2 - Remastered Edition (Hack, v1.5)
 	&BurnDrvmd_ppersia2,		// Prince of Persia 2 - The Shadow and the Flame (Euro, Prototype)
 	&BurnDrvmd_ppersia2s,		// Prince of Persia 2 - The Shadow and the Flame (Hack, Spanish)
@@ -31170,7 +31182,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvQixo,				// Qix (set 3, earlier)
 	&BurnDrvnes_qix,			// QIX (USA)
 	&BurnDrvQix2,				// Qix II (Tournament)
-	&BurnDrvmd_quackshts,		// Quack Shot Starring Donald Duck (Hack, Spanish)
+	&BurnDrvmd_quackshts,		// QuackShot Starring Donald Duck (Hack, Spanish)
 	&BurnDrvmd_quacksht,		// QuackShot Starring Donald Duck ~ QuackShot - Guruzia Ou no Hihou (World)
 	&BurnDrvmd_quacksht1,		// QuackShot Starring Donald Duck ~ QuackShot - Guruzia Ou no Hihou (World, Alt)
 	&BurnDrvmd_quadchal,		// Quad Challenge (USA)
@@ -32559,7 +32571,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_shikinjo,		// Shikinjou (Jpn)
 	&BurnDrvnes_shin4ninuchma,	// Shin 4 Nin Uchi Mahjong (Japan)
 	&BurnDrvnes_shin4ninuchmac,	// Shin 4 Nin Uchi Mahjong (T-Chi)
-	&BurnDrvnes_shinsamspi2,	// Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China)
+	&BurnDrvnes_shinsamspi2,	// Shin Samurai Spirits 2 - Haoumaru Jigoku Hen (China) (Unl)
 	&BurnDrvmd_ragnacen,		// Shin Souseiki Ragnacenty (Jpn)
 	&BurnDrvmd_ragnacenp,		// Shin Souseiki Ragnacenty (Jpn, Prototype)
 	&BurnDrvmd_ragnacenc,		// Shin Souseiki Ragnacenty (T-Chi)
@@ -32695,7 +32707,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_sidetrak,		// Side Trak (HB)
 	&BurnDrvpce_sidearms,		// Sidearms - Hyper Dyne
 	&BurnDrvtg_sidearms,		// Sidearms - Hyper Dyne
-	&BurnDrvnes_sidewinder,		// Sidewinder (USA)
+	&BurnDrvnes_sidewinder,		// Sidewinder (USA) (Unl)
 	&BurnSpecsidewize,			// Sidewize (48K)
 	&BurnDrvpce_silentd,		// Silent Debuggers
 	&BurnDrvtg_silentd,			// Silent Debuggers
@@ -35237,7 +35249,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTheendss,			// The End (SegaSA / Sonic)
 	&BurnDrvTheends,			// The End (Stern)
 	&BurnDrvTheend,				// The End
-	&BurnDrvTeot,				// The Eye of Typhoon (Beta 6 Version)
+	&BurnDrvTeot,				// The Eye of Typhoon (Beta 7 Version)
 	&BurnDrvFlstoryj,			// The FairyLand Story (Japan)
 	&BurnDrvFlstory,			// The FairyLand Story
 	&BurnDrvDaraku,				// The Fallen Angels (World) / Daraku Tenshi - The Fallen Angels (Japan)

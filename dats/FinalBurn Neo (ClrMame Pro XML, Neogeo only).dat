@@ -17716,15 +17716,15 @@
 	</game>
 	<game name="teot" romof="neogeo">
 		<comment>Homebrew</comment>
-		<description>The Eye of Typhoon (Beta 6 Version)</description>
+		<description>The Eye of Typhoon (Beta 7 Version)</description>
 		<year>2022</year>
 		<manufacturer>OzzyOuzo</manufacturer>
-		<rom name="teot-p1.bin" size="1048576" crc="49b25c64"/>
+		<rom name="teot-p1.bin" size="1048576" crc="c0ae0a56"/>
 		<rom name="teot-p2.bin" size="8388608" crc="68dc7463"/>
 		<rom name="teot-s1.bin" size="131072" crc="6d05f74b"/>
 		<rom name="teot-c1.bin" size="16777216" crc="2fdbfbef"/>
 		<rom name="teot-c2.bin" size="16777216" crc="4b953a79"/>
-		<rom name="teot-m1.bin" size="65536" crc="16f81e41"/>
+		<rom name="teot-m1.bin" size="65536" crc="0c17ccac"/>
 		<rom name="teot-v1.bin" size="8388608" crc="d2911e9c"/>
 		<rom name="teot-v2.bin" size="8388608" crc="49e3afe6"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>

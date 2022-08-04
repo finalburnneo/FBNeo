@@ -2533,7 +2533,6 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 
 	if (!max_x && !max_y) return; //nothing to draw (zdrawgfxzoom draws a 1x1 pixel at 0,0 if max_x and max_y are 0)
 
-	const INT32 shadow_offset = 0x800;
 	const UINT8 *source_base = gfx + (code * tile_size * tile_size);
 	INT32 sprite_screen_height = (scaley*tile_size+0x8000)>>16;
 	INT32 sprite_screen_width = (scalex*tile_size+0x8000)>>16;
@@ -4966,9 +4965,16 @@ static UINT16 dsaber_key_read(UINT8 offset)
 
 static INT32 DsaberInit()
 {
-	weird_vbl = 1;
+	INT32 rc = Namcos2Init(NULL, dsaber_key_read);
 
-	return Namcos2Init(NULL, dsaber_key_read);
+	if (!rc) {
+		weird_vbl = 1; // fix palette weirdness on continue screen
+
+		pDrvDrawBegin = DrvDrawBegin; // needs linedraw to prevent st.2 and st.5 bg tiles breaking apart
+		pDrvDrawLine = DrvDrawLine;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvDsaber = {

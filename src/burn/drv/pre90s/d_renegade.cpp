@@ -1,6 +1,8 @@
 // FB Alpha Renegade driver module
 // Based on MAME driver by Phil Stroffolino, Carlos A. Lozano, Rob Rosenbrock
 
+// todo: clean up this mess. -dink
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "m6805_intf.h"
@@ -383,6 +385,8 @@ static INT32 DrvDoReset()
 	M6502Close();
 	
 	M6809Open(0);
+	BurnYM3526Reset();
+	MSM5205Reset();
 	M6809Reset();
 	M6809Close();
 	
@@ -405,10 +409,7 @@ static INT32 DrvDoReset()
 		MCUPortBIn = 0;
 		MCUPortCIn = 0;
 	}
-	
-	BurnYM3526Reset();
-	MSM5205Reset();
-	
+
 	DrvRomBank = 0;
 	DrvVBlank = 0;
 	memset(DrvScrollX, 0, 2);
@@ -812,7 +813,7 @@ static INT32 DrvInit(INT32 nMcuType)
 		DisableMCUEmulation = 1;
 	}
 	
-	BurnYM3526Init(3000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(3000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachYM3526(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
@@ -938,7 +939,7 @@ static void DrvRenderSprites()
 	UINT8 *Finish = Source + 96 * 4;
 
 	while (Source < Finish) {
-		INT32 sy = 240 - Source[0];
+		INT32 sy = 224 - Source[0];
 
 		if (sy >= 16) {
 			INT32 Attr = Source[1];

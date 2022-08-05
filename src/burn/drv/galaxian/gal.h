@@ -171,6 +171,7 @@ void RescueDrawBackground();
 void MinefldDrawBackground();
 void DambustrDrawBackground();
 void GalaxianDrawBullets(INT32 Offs, INT32 x, INT32 y);
+void RescueDrawBullets(INT32 Offs, INT32 x, INT32 y);
 void TheendDrawBullets(INT32 Offs, INT32 x, INT32 y);
 void ScrambleDrawBullets(INT32, INT32 x, INT32 y);
 void MoonwarDrawBullets(INT32, INT32 x, INT32 y);

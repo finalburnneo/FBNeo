@@ -6789,6 +6789,7 @@ DRV		BurnDrvnes_hammerinharry;
 DRV		BurnDrvHharryu;
 DRV		BurnDrvHharry;
 DRV		BurnDrvHharryb;
+DRV		BurnDrvcv_hamsterww;
 DRV		BurnDrvpce_hanataka;
 DRV		BurnDrvmd_handyharvy;
 DRV		BurnDrvsms_hangon;
@@ -7758,6 +7759,7 @@ DRV		BurnDrvJumpcoasa;
 DRV		BurnDrvJumpkids;
 DRV		BurnDrvJumpkun;
 DRV		BurnDrvMSX_jumpland;
+DRV		BurnDrvcv_jumpland;
 DRV		BurnDrvjumpshotp;
 DRV		BurnDrvjumpshot;
 DRV		BurnDrvnes_jumpjump;
@@ -25635,6 +25637,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHharryu,			// Hammerin' Harry (US, M84 hardware)
 	&BurnDrvHharry,				// Hammerin' Harry (World, M81 hardware))
 	&BurnDrvHharryb,			// Hammerin' Harry (World, M84 hardware bootleg)
+	&BurnDrvcv_hamsterww,		// Hamster with Wire (HB)
 	&BurnDrvpce_hanataka,		// Hana Taaka Daka!?
 	&BurnDrvmd_handyharvy,		// Handy Harvy (HB)
 	&BurnDrvsms_hangon,			// Hang-On (Euro, Bra, Aus)
@@ -26604,6 +26607,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJumpkids,			// Jump Kids
 	&BurnDrvJumpkun,			// Jump Kun (prototype)
 	&BurnDrvMSX_jumpland,		// Jump Land (Jpn)
+	&BurnDrvcv_jumpland,		// Jump Land (SGM) (HB)
 	&BurnDrvjumpshotp,			// Jump Shot Engineering Sample
 	&BurnDrvjumpshot,			// Jump Shot
 	&BurnDrvnes_jumpjump,		// Jump-Jump (Unl)

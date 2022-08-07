@@ -22615,7 +22615,7 @@ static INT32 RescueInit()
 	
 	GalCalcPaletteFunction = RescueCalcPalette;
 	GalRenderBackgroundFunction = RescueDrawBackground;
-	GalDrawBulletsFunction = ScrambleDrawBullets;
+	GalDrawBulletsFunction = RescueDrawBullets;
 	
 	KonamiPPIInit();
 	
@@ -22658,7 +22658,7 @@ static INT32 MinefldInit()
 	
 	GalCalcPaletteFunction = MinefldCalcPalette;
 	GalRenderBackgroundFunction = MinefldDrawBackground;
-	GalDrawBulletsFunction = ScrambleDrawBullets;
+	GalDrawBulletsFunction = RescueDrawBullets;
 	
 	KonamiPPIInit();
 	

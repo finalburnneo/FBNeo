@@ -5723,7 +5723,7 @@ STD_ROM_FN(Dinohc)
 // source: https://gamehackfan.github.io/dinore/
 
 static struct BurnRomInfo DinoreRomDesc[] = {
-	{ "cde_re.10f",    0x200000, 0x282e9cd8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_re.10f",    0x200000, 0x9e75c12c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
@@ -19780,7 +19780,7 @@ struct BurnDriver BurnDrvCpsDinohc = {
 
 struct BurnDriver BurnDrvCpsDinore = {
 	"dinore", "dino", NULL, NULL, "2022",
-	"Cadillacs & Dinosaurs Readjusted (Hack, v1.1)\0", NULL, "GameHackFan", "CPS1 / QSound",
+	"Cadillacs & Dinosaurs Readjusted (Hack, v1.2)\0", NULL, "GameHackFan", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinoreRomInfo, DinoreRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,

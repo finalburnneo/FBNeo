@@ -1039,7 +1039,7 @@ static struct BurnRomInfo Psychic5jRomDesc[] = {
 	{ "p5d",           0x08000, 0x90259249, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "p5e",           0x10000, 0x72298f34, BRF_ESS | BRF_PRG }, //	 1
 
-	{ "p5a",           0x08000, 0x50060ecd, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program
+	{ "p5a",           0x10000, 0x6efee094, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program
 
 	{ "p5b",           0x10000, 0x7e3f87d4, BRF_GRA },	     //  3	Sprites
 	{ "p5c",           0x10000, 0x8710fedb, BRF_GRA },	     //  4

@@ -3073,7 +3073,6 @@ static void DrvDrawBegin()
 static void DrvDrawLine(INT32 line)
 {
 	INT32 roz_enable = (gfx_ctrl & 0x7000) ? 1 : 0;
-
 	for (INT32 pri = 0; pri < 8; pri++)
 	{
 		draw_layer_line(line, pri);
@@ -3084,8 +3083,10 @@ static void DrvDrawLine(INT32 line)
 				INT32 oldmin_y = min_y;
 				INT32 oldmax_y = max_y;
 				min_y = (line >= min_y && line <= max_y) ? line : 255;
-				max_y = (line+1 <= max_y) ? line+1 : 0;
-				if (nBurnLayer & 1) draw_roz(pri);
+				max_y = (line+1 <= max_y+1) ? (line+1) : 0;
+				if (max_y > 223) max_y = 223; // (plus above) makes little sense, but it needs to draw the last line twice, or it won't draw the last line (dsaber, valkyrie)
+				//bprintf(0, _T("line/miny/maxy   %d  %d  %d\n"), line, min_y, max_y);
+				if (nBurnLayer & 1 && max_y != 0) draw_roz(pri);
 				min_y = oldmin_y;
 				max_y = oldmax_y;
 			}
@@ -3543,7 +3544,7 @@ static INT32 DrvFrame()
 
 	}
 
-	INT32 nInterleave = 264*2;
+	INT32 nInterleave = 261*2; // was 264, but too glitchy for dsaber
 	INT32 nCyclesTotal[4] = { (INT32)((double)12288000 / 60.606061), (INT32)((double)12288000 / 60.606061), (INT32)((double)2048000 / 60.606061), (INT32)((double)2048000 / 1 / 60.606061) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 	INT32 vbloffs = 8;
@@ -3586,7 +3587,7 @@ static INT32 DrvFrame()
 		if (pBurnDraw && pDrvDrawLine && i&1)
 			pDrvDrawLine(i/2);
 
-		if (i == (240+vbloffs)*2 && has_shift) {
+		if (i == ((223)*2) + 1) {
 			if (pBurnDraw) {
 				BurnDrvRedraw();
 			}
@@ -3623,10 +3624,6 @@ static INT32 DrvFrame()
 
 	m6805Close();
 	M6809Close();
-
-	if (pBurnDraw && !has_shift) {
-		BurnDrvRedraw();
-	}
 
 	return 0;
 }
@@ -4968,9 +4965,7 @@ static INT32 DsaberInit()
 	INT32 rc = Namcos2Init(NULL, dsaber_key_read);
 
 	if (!rc) {
-		weird_vbl = 1; // fix palette weirdness on continue screen
-
-		pDrvDrawBegin = DrvDrawBegin; // needs linedraw to prevent st.2 and st.5 bg tiles breaking apart
+		pDrvDrawBegin = DrvDrawBegin; // needs linedraw
 		pDrvDrawLine = DrvDrawLine;
 	}
 

@@ -8917,3 +8917,41 @@ struct BurnDriver BurnDrvcv_zcalavera = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
+
+// Jump Land (SGM) (HB)
+
+static struct BurnRomInfo cv_jumplandRomDesc[] = {
+    { "Jump Land (2015)(CollectorVision).bin",	32768, 0x1ec92fa3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_jumpland, cv_jumpland, cv_coleco)
+STD_ROM_FN(cv_jumpland)
+
+struct BurnDriver BurnDrvcv_jumpland = {
+    "cv_jumpland", NULL, "cv_coleco", NULL, "2015",
+    "Jump Land (SGM) (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+    CVGetZipName, cv_jumplandRomInfo, cv_jumplandRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Hamster with Wire (HB)
+
+static struct BurnRomInfo cv_hamsterwwRomDesc[] = {
+	{ "Hamster with Wire (2022)(Nicolas Campion).rom",	27673, 0xb852affe, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_hamsterww, cv_hamsterww, cv_coleco)
+STD_ROM_FN(cv_hamsterww)
+
+struct BurnDriver BurnDrvcv_hamsterww = {
+	"cv_hamsterww", NULL, "cv_coleco", NULL, "2022",
+	"Hamster with Wire (HB)\0", NULL, "Nicam Shilova", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_hamsterwwRomInfo, cv_hamsterwwRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

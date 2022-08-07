@@ -1014,6 +1014,16 @@ void ScrambleDrawBullets(INT32, INT32 x, INT32 y)
 	GalDrawPixel(x, y, GAL_PALETTE_BULLETS_OFFSET + 7);
 }
 
+void RescueDrawBullets(INT32, INT32 x, INT32 y)
+{
+	x -= 6;
+
+	GalDrawPixel(x + 0, y + 0, GAL_PALETTE_BULLETS_OFFSET + 7);
+	GalDrawPixel(x + 1, y + 0, GAL_PALETTE_BULLETS_OFFSET + 7);
+	GalDrawPixel(x + 0, y + 1, GAL_PALETTE_BULLETS_OFFSET + 7);
+	GalDrawPixel(x + 1, y + 1, GAL_PALETTE_BULLETS_OFFSET + 7);
+}
+
 void MoonwarDrawBullets(INT32, INT32 x, INT32 y)
 {
 	x -= 6;

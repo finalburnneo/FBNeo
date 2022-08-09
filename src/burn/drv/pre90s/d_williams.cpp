@@ -3480,33 +3480,34 @@ struct BurnDriver BurnDrvLottofun = {
 
 
 // Blaster
+// 20 Level version - Each ROM label had an additional "PROTO5" or "PROTO6" sticker attached (verified on multiple PCBs)
 
 static struct BurnRomInfo blasterRomDesc[] = {
-	{ "16.ic39",			0x1000, 0x54a40b21, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "13.ic27",			0x2000, 0xf4dae4c8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "11.ic25",			0x2000, 0x6371e62f, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "12.ic26",			0x2000, 0x9804faac, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "17.ic41",			0x1000, 0xbf96182f, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "15.ic38",			0x4000, 0x1ad146a4, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "8.ic20",				0x4000, 0xf110bbb0, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "9.ic22",				0x4000, 0x5c5b0f8a, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "10.ic24",			0x4000, 0xd47eb67f, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "6.ic13",				0x4000, 0x47fc007e, 1 | BRF_PRG | BRF_ESS }, //  9
-	{ "5.ic11",				0x4000, 0x15c1b94d, 1 | BRF_PRG | BRF_ESS }, // 10
-	{ "14.ic35",			0x4000, 0xaea6b846, 1 | BRF_PRG | BRF_ESS }, // 11
-	{ "7.ic15",				0x4000, 0x7a101181, 1 | BRF_PRG | BRF_ESS }, // 12
-	{ "1.ic1",				0x4000, 0x8d0ea9e7, 1 | BRF_PRG | BRF_ESS }, // 13
-	{ "2.ic3",				0x4000, 0x03c4012c, 1 | BRF_PRG | BRF_ESS }, // 14
-	{ "4.ic7",				0x4000, 0xfc9d39fb, 1 | BRF_PRG | BRF_ESS }, // 15
-	{ "3.ic6",				0x4000, 0x253690fb, 1 | BRF_PRG | BRF_ESS }, // 16
+	{ "proto6_blaster_3021_rom_16.ic39",		0x1000, 0x54a40b21, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "proto6_blaster_3021_rom_13.ic27",		0x2000, 0xf4dae4c8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "proto6_blaster_3021_rom_11.ic25",		0x2000, 0x6371e62f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "proto6_blaster_3021_rom_12.ic26",		0x2000, 0x9804faac, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "proto6_blaster_3021_rom_17.ic41",		0x1000, 0xbf96182f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "proto5_blaster_3021_rom_15.ic38",		0x4000, 0x1ad146a4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "proto5_blaster_3021_rom_8.ic20",			0x4000, 0xf110bbb0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "proto5_blaster_3021_rom_9.ic22",			0x4000, 0x5c5b0f8a, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "proto5_blaster_3021_rom_10.ic24",		0x4000, 0xd47eb67f, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "proto5_blaster_3021_rom_6.ic13",			0x4000, 0x47fc007e, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "proto5_blaster_3021_rom_5.ic11",			0x4000, 0x15c1b94d, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "proto5_blaster_3021_rom_14.ic35",		0x4000, 0xaea6b846, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "proto6_blaster_3021_rom_7.ic15",			0x4000, 0x7a101181, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "proto5_blaster_3021_rom_1.ic1",			0x4000, 0x8d0ea9e7, 1 | BRF_PRG | BRF_ESS }, // 13
+	{ "proto5_blaster_3021_rom_2.ic3",			0x4000, 0x03c4012c, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "proto6_blaster_3021_rom_4.ic7",			0x4000, 0xfc9d39fb, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "proto6_blaster_3021_rom_3.ic6",			0x4000, 0x253690fb, 1 | BRF_PRG | BRF_ESS }, // 16
 
-	{ "18.sb13",			0x1000, 0xc33a3145, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 #0 Code
+	{ "proto5_blaster_3021_rom_18.sb13",		0x1000, 0xc33a3145, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 #0 Code
 
-	{ "18.sb10",			0x1000, 0xc33a3145, 3 | BRF_PRG | BRF_ESS }, // 18 M6800 #1 Code
+	{ "proto5_blaster_3021_rom_18.sb10",		0x1000, 0xc33a3145, 3 | BRF_PRG | BRF_ESS }, // 18 M6800 #1 Code
 
-	{ "4.u42",				0x0200, 0xe6631c23, 0 | BRF_OPT },           // 19 proms
-	{ "6.u23",				0x0200, 0x83faf25e, 0 | BRF_OPT },           // 20
-	{ "blaster.col",		0x0800, 0xbac50bc4, 4 | BRF_GRA },           // 21
+	{ "decoder_rom_4.ic42",						0x0200, 0xe6631c23, 0 | BRF_OPT },           // 19 proms
+	{ "video_decoder_rom_6.ic23",				0x0200, 0x83faf25e, 0 | BRF_OPT },           // 20
+	{ "blaster.col",							0x0800, 0xbac50bc4, 4 | BRF_GRA },           // 21
 };
 
 STD_ROM_PICK(blaster)
@@ -3539,33 +3540,34 @@ struct BurnDriver BurnDrvBlaster = {
 
 
 // Blaster (location test)
+// 30 Level version
 
 static struct BurnRomInfo blasteroRomDesc[] = {
-	{ "16.ic39",			0x1000, 0x2db032d2, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "13.ic27",			0x2000, 0xc99213c7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "11.ic25",			0x2000, 0xbc2d7eda, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "12.ic26",			0x2000, 0x8a215017, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "17.ic41",			0x1000, 0xb308f0e5, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "15.ic38",			0x4000, 0x1ad146a4, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "8.ic20",				0x4000, 0xf110bbb0, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "9.ic22",				0x4000, 0x5c5b0f8a, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "10.ic24",			0x4000, 0xd47eb67f, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "6.ic13",				0x4000, 0x47fc007e, 1 | BRF_PRG | BRF_ESS }, //  9
-	{ "5.ic11",				0x4000, 0x15c1b94d, 1 | BRF_PRG | BRF_ESS }, // 10
-	{ "14.ic35",			0x4000, 0xaea6b846, 1 | BRF_PRG | BRF_ESS }, // 11
-	{ "7.ic15",				0x4000, 0xa1c4db77, 1 | BRF_PRG | BRF_ESS }, // 12
-	{ "1.ic1",				0x4000, 0x8d0ea9e7, 1 | BRF_PRG | BRF_ESS }, // 13
-	{ "2.ic3",				0x4000, 0x03c4012c, 1 | BRF_PRG | BRF_ESS }, // 14
-	{ "4.ic7",				0x4000, 0x39d2a32c, 1 | BRF_PRG | BRF_ESS }, // 15
-	{ "3.ic6",				0x4000, 0x054c9f1c, 1 | BRF_PRG | BRF_ESS }, // 16
+	{ "proto5_blaster_3021_rom_16.ic39",			0x1000, 0x2db032d2, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "proto5_blaster_3021_rom_13.ic27",			0x2000, 0xc99213c7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "proto5_blaster_3021_rom_11.ic25",			0x2000, 0xbc2d7eda, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "proto5_blaster_3021_rom_12.ic26",			0x2000, 0x8a215017, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "proto5_blaster_3021_rom_17.ic41",			0x1000, 0xb308f0e5, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "proto5_blaster_3021_rom_15.ic38",			0x4000, 0x1ad146a4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "proto5_blaster_3021_rom_8.ic20",				0x4000, 0xf110bbb0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "proto5_blaster_3021_rom_9.ic22",				0x4000, 0x5c5b0f8a, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "proto5_blaster_3021_rom_10.ic24",			0x4000, 0xd47eb67f, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "proto5_blaster_3021_rom_6.ic13",				0x4000, 0x47fc007e, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "proto5_blaster_3021_rom_5.ic11",				0x4000, 0x15c1b94d, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "proto5_blaster_3021_rom_14.ic35",			0x4000, 0xaea6b846, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "proto5_blaster_3021_rom_7.ic15",				0x4000, 0xa1c4db77, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "proto5_blaster_3021_rom_1.ic1",				0x4000, 0x8d0ea9e7, 1 | BRF_PRG | BRF_ESS }, // 13
+	{ "proto5_blaster_3021_rom_2.ic3",				0x4000, 0x03c4012c, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "proto5_blaster_3021_rom_4.ic7",				0x4000, 0x39d2a32c, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "proto5_blaster_3021_rom_3.ic6",				0x4000, 0x054c9f1c, 1 | BRF_PRG | BRF_ESS }, // 16
 
-	{ "18.sb13",			0x1000, 0xc33a3145, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 #0 Code
+	{ "proto5_blaster_3021_rom_18.sb13",			0x1000, 0xc33a3145, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 #0 Code
 
-	{ "18.sb10",			0x1000, 0xc33a3145, 3 | BRF_PRG | BRF_ESS }, // 18 M6800 #1 Code
+	{ "proto5_blaster_3021_rom_18.sb10",			0x1000, 0xc33a3145, 3 | BRF_PRG | BRF_ESS }, // 18 M6800 #1 Code
 
-	{ "4.u42",				0x0200, 0xe6631c23, 0 | BRF_OPT },           // 19 proms
-	{ "6.u23",				0x0200, 0x83faf25e, 0 | BRF_OPT },           // 20
-	{ "blaster.col",		0x0800, 0xbac50bc4, 4 | BRF_GRA },           // 21
+	{ "decoder_rom_4.ic42",							0x0200, 0xe6631c23, 0 | BRF_OPT },           // 19 proms
+	{ "video_decoder_rom_6.ic23",					0x0200, 0x83faf25e, 0 | BRF_OPT },           // 20
+	{ "blaster.col",								0x0800, 0xbac50bc4, 4 | BRF_GRA },           // 21
 };
 
 STD_ROM_PICK(blastero)

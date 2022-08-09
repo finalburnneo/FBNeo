@@ -4630,6 +4630,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="darksceptre" romof="spectrum">
+		<description>Dark Sceptre (48K)</description>
+		<year>1987</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Dark Sceptre 48K (1987)(Firebird).tap" size="54587" crc="364d1c34"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="darkstar" romof="spectrum">
 		<description>Dark Star (48K)</description>
 		<year>1984</year>
@@ -5823,7 +5832,7 @@
 		<comment>Q: increase altitude - W: decrease altitude</comment>
 		<description>Earthlight (128K)</description>
 		<year>1988</year>
-		<manufacturer>Firebird</manufacturer>
+		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Earthlight 128K (1988)(Firebird).tap" size="61597" crc="063d61f4"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -8013,6 +8022,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="hobgobl" romof="spectrum">
+		<description>Hobgoblin (48K)</description>
+		<year>1991</year>
+		<manufacturer>Atlantis Software</manufacturer>
+		<rom name="Hobgoblin 48K (1991)(Atlantis).tap" size="31817" crc="244df5e4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hollow" romof="spectrum">
 		<description>Hollow, The (48K)</description>
 		<year>1985</year>
@@ -8097,6 +8115,16 @@
 		<year>1990</year>
 		<manufacturer>Infogrames</manufacturer>
 		<rom name="Hostages (1990)(Infogrames).tap" size="222554" crc="171b72b5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hotshot" romof="spec128">
+		<description>Hotshot (128K)</description>
+		<year>1988</year>
+		<manufacturer>Addictive Games</manufacturer>
+		<rom name="Hotshot 128K (1988)(Addictive Games).tap" size="30707" crc="4f9b3846"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -8592,7 +8620,7 @@
 	<game name="intspeedway" romof="spec128">
 		<description>International Speedway (128K)</description>
 		<year>1988</year>
-		<manufacturer>Silverbird</manufacturer>
+		<manufacturer>Silverbird Software</manufacturer>
 		<rom name="International Speedway (1988)(Silverbird).z80" size="35832" crc="7d1e8f3a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -10257,6 +10285,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="magnetron" romof="spectrum">
+		<description>Magnetron (48K)</description>
+		<year>1988</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Magnetron 48K (1988)(Firebird).tap" size="48383" crc="f407317e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="msolitaire" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Mahjong Solitaire (128K) (HB)</description>
@@ -11584,6 +11621,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mansellwc" romof="spec128">
+		<description>Nigel Mansell's World Championship (128K)</description>
+		<year>1993</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Nigel Mansell's World Championship 128K (1993)(Gremlin Graphics).tap" size="224111" crc="36ee68e4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nbreed" romof="spec128">
 		<description>Night Breed (128K)</description>
 		<year>1990</year>
@@ -12462,6 +12509,16 @@
 		<year>2020</year>
 		<manufacturer>highriser</manufacturer>
 		<rom name="Perils of Willy (2020)(highriser).tap" size="26968" crc="19e22f49"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pprat" romof="spec128">
+		<description>Peter Pack Rat (128K)</description>
+		<year>1989</year>
+		<manufacturer>Silverbird Software</manufacturer>
+		<rom name="Peter Pack Rat 128K (1989)(Silverbird).tap" size="53285" crc="5d318fcd"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13400,6 +13457,15 @@
 		<year>2020</year>
 		<manufacturer>MemSoftware</manufacturer>
 		<rom name="Ratos! 48K (2020)(MemSoftware).tap" size="33662" crc="08d7327a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rebel" romof="spectrum">
+		<description>Rebel (48K)</description>
+		<year>1987</year>
+		<manufacturer>Virgin Games</manufacturer>
+		<rom name="Rebel 48K (1987)(Virgin Games).tap" size="47276" crc="f7833b9c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14671,6 +14737,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sherlock" romof="spectrum">
+		<description>Sherlock (48K)</description>
+		<year>1984</year>
+		<manufacturer>Melbourne House</manufacturer>
+		<rom name="Sherlock 48K (1984)(Melbourne House).z80" size="43891" crc="91d7e211"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shinobi" romof="spec128">
 		<description>Shinobi (128K)</description>
 		<year>1989</year>
@@ -15428,6 +15503,15 @@
 		<rom name="Sploids (2019)(Stonechat).tap" size="47960" crc="04ec461b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spooked" romof="spectrum">
+		<description>Spooked (48K)</description>
+		<year>1989</year>
+		<manufacturer>Players Premier</manufacturer>
+		<rom name="Spooked 48K (1989)(Players Premier).tap" size="40963" crc="b3b2d241"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17317,6 +17401,16 @@
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Twin Turbo V8 (1989)(Codemasters).tap" size="49133" crc="98b8d8ff"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="twinworld" romof="spec128">
+		<description>Twin World (128K)</description>
+		<year>1990</year>
+		<manufacturer>Ubi Soft</manufacturer>
+		<rom name="Twin World 128K (1990)(Ubi Soft).tap" size="357327" crc="1b14d5c6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

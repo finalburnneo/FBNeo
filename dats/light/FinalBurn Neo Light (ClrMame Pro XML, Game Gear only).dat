@@ -599,7 +599,7 @@
 	</game>
 	<game name="breakthru">
 		<comment>Prototype</comment>
-		<description>Break Thru! (Prototype)</description>
+		<description>Break Thru! (Unl) (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Spectrum HoloByte</manufacturer>
 		<rom name="BreakThru! (Proto)(Unl)(Patched).gg" size="131072" crc="6edd48a6"/>
@@ -619,6 +619,15 @@
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18846-s.ic1" size="524288" crc="5c34d9cd"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="burgkitch">
+		<comment>Homebrew</comment>
+		<description>Burger Kitchen (HB)</description>
+		<year>2022</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="Burger Kitchen (2022)(Habit Soft).gg" size="65536" crc="a7a9dd46"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2059,7 +2068,7 @@
 	<game name="halleyw">
 		<description>Halley Wars (Euro, USA, Bra)</description>
 		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Taito</manufacturer>
 		<rom name="halley wars (usa, europe).bin" size="131072" crc="7e9dea46"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6434,6 +6443,15 @@
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="x-men - mojo world (prototype - jun 29,  1996).bin" size="524288" crc="ba71da19"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yakitori">
+		<comment>Homebrew</comment>
+		<description>Yakitori Meijin Torigin (HB)</description>
+		<year>2022</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="Yakitori Meijin Torigin (2022)(Habit Soft).gg" size="65536" crc="bfb52bb3"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

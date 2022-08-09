@@ -194,7 +194,7 @@ static INT32 DrvInit(INT32 game_select)
 		}
 		break;
 
-		case 2: // usg187c
+		case 2: // usg187c, usg211c
 		{
 			if (BurnLoadRom(DrvM6809ROM + 0x10000,  1, 1)) return 1;
 			if (BurnLoadRom(DrvM6809ROM + 0x20000,  2, 1)) return 1;
@@ -519,6 +519,38 @@ struct BurnDriver BurnDrvUsgames = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, usgamesRomInfo, usgamesRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	UsgamesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	400, 256, 4, 3
+};
+
+// Games V21.1C
+// Version 21.1C - all ROMs dumped matched the printed checksum
+
+static struct BurnRomInfo usg211cRomDesc[] = {
+	{ "sdrom0c.211_4e17_u12.u12",	0x08000, 0x54986073, 1 | BRF_PRG | BRF_ESS }, 	//  0 M6809 Code
+	{ "gamerom_1-a_e9fd_u18.u18",	0x10000, 0x8feabf59, 1 | BRF_PRG | BRF_ESS }, 	//  1
+	{ "gamerom_2-a_c61a_u28.u28",	0x10000, 0xeb225ef4, 1 | BRF_PRG | BRF_ESS }, 	//  2
+	{ "gamerom_3-a_24ba_u35.u35",	0x10000, 0x9542295b, 1 | BRF_PRG | BRF_ESS }, 	//  3
+	{ "gamerom_4-a_447e_u36.u36",	0x10000, 0xb6d007be, 1 | BRF_PRG | BRF_ESS }, 	//  4
+	
+	{ "pal16l8.u19",				0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 5 plds
+	{ "bb_sec1.u46",				0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 6
+};
+
+STD_ROM_PICK(usg211c)
+STD_ROM_FN(usg211c)
+
+static INT32 Usg211cInit()
+{
+	return DrvInit(1);
+}
+
+struct BurnDriver BurnDrvUsg211c = {
+	"usg211c", "usgames", NULL, NULL, "1991",
+	"Games V21.1C\0", NULL, "U.S. Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	NULL, usg211cRomInfo, usg211cRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	Usg211cInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	400, 256, 4, 3
 };
 

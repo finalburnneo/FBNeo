@@ -8921,7 +8921,7 @@ struct BurnDriver BurnDrvcv_zcalavera = {
 // Jump Land (SGM) (HB)
 
 static struct BurnRomInfo cv_jumplandRomDesc[] = {
-    { "Jump Land (2015)(CollectorVision).bin",	32768, 0x1ec92fa3, BRF_PRG | BRF_ESS },
+    { "Jump Land (2015)(CollectorVision).bin",  14815, 0xc48db4ce, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_jumpland, cv_jumpland, cv_coleco)

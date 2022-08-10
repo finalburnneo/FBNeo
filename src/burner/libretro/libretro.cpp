@@ -1072,6 +1072,9 @@ void retro_init()
 {
 	struct retro_log_callback log;
 
+	uint64_t serialization_quirks = RETRO_SERIALIZATION_QUIRK_PLATFORM_DEPENDENT;
+	environ_cb(RETRO_ENVIRONMENT_SET_SERIALIZATION_QUIRKS, &serialization_quirks);
+
 	if (environ_cb(RETRO_ENVIRONMENT_GET_LOG_INTERFACE, &log))
 		log_cb = log.log;
 	else

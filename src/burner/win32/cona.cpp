@@ -263,6 +263,9 @@ int ConfigAppLoad()
 
 		VAR(nAutoFireRate);
 
+		VAR(bRewindEnabled);
+		VAR(nRewindMemory);
+
 		VAR(EnableHiscores);
 		VAR(bBurnUseBlend);
 		VAR(BurnShiftEnabled);
@@ -687,6 +690,12 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n"));
 	VAR(nAutoFireRate);
+
+	_ftprintf(h, _T("\n// Rewind, If non-zero, enable rewind feature.\n"));
+	VAR(bRewindEnabled);
+
+	_ftprintf(h, _T("\n// Memory allocated to the Rewind feature, in MegaBytes\n"));
+	VAR(nRewindMemory);
 
 	_ftprintf(h, _T("\n// If non-zero, enable high score saving support.\n"));
 	VAR(EnableHiscores);

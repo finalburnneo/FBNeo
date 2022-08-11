@@ -26,6 +26,8 @@ UINT8 macroSystemSaveState = 0;
 UINT8 macroSystemLoadState = 0;
 UINT8 macroSystemUNDOState = 0;
 UINT8 macroSystemSlowMo[5] = { 0, 0, 0, 0, 0 };
+UINT8 macroSystemRewind = 0;
+UINT8 macroSystemRewindCancel = 0;
 UINT8 macroSystemLuaHotkey1 = 0;
 UINT8 macroSystemLuaHotkey2 = 0;
 UINT8 macroSystemLuaHotkey3 = 0;
@@ -360,6 +362,26 @@ static void GameInpInitMacros()
 			pgi->Macro.nSysMacro = 1;
 			sprintf(pgi->Macro.szName, "System UNDO State");
 			pgi->Macro.pVal[0] = &macroSystemUNDOState;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System Rewind");
+			pgi->Macro.pVal[0] = &macroSystemRewind;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System Rewind Cancel");
+			pgi->Macro.pVal[0] = &macroSystemRewindCancel;
 			pgi->Macro.nVal[0] = 1;
 			nMacroCount++;
 			pgi++;

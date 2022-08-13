@@ -9183,3 +9183,117 @@ struct BurnDriver BurnDrvcv_zanac = {
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
+
+// Chack'n Pop (HB)
+
+static struct BurnRomInfo cv_chackpopRomDesc[] = {
+	{ "Chack'n Pop (2011)(CollectorVision).bin",	32768, 0xc1366313, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_chackpop, cv_chackpop, cv_coleco)
+STD_ROM_FN(cv_chackpop)
+
+struct BurnDriver BurnDrvcv_chackpop = {
+	"cv_chackpop", NULL, "cv_coleco", NULL, "1985-2011",
+	"Chack'n Pop (HB)\0", "Published by CollectorVision Games", "Sega", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	CVGetZipName, cv_chackpopRomInfo, cv_chackpopRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Comic Bakery (HB)
+
+static struct BurnRomInfo cv_comicbakeryRomDesc[] = {
+	{ "Comic Bakery (2014)(CollectorVision).rom",	27925, 0x8884bac2, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_comicbakery, cv_comicbakery, cv_coleco)
+STD_ROM_FN(cv_comicbakery)
+
+struct BurnDriver BurnDrvcv_comicbakery = {
+	"cv_comicbakery", NULL, "cv_coleco", NULL, "1984-2014",
+	"Comic Bakery (HB)\0", "Published by CollectorVision Games", "Konami", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_comicbakeryRomInfo, cv_comicbakeryRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Hole in One (SGM) (HB)
+
+static struct BurnRomInfo cv_holeoneRomDesc[] = {
+    { "Hole in One SGM (2017)(CollectorVision).rom",	24520, 0x7270ae16, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_holeone, cv_holeone, cv_coleco)
+STD_ROM_FN(cv_holeone)
+
+struct BurnDriver BurnDrvcv_holeone = {
+    "cv_holeone", NULL, "cv_coleco", NULL, "1984-2017",
+    "Hole in One (SGM) (HB)\0", "SGM - Published by CollectorVision Games", "HAL Lab.", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SPORTSMISC, 0,
+    CVGetZipName, cv_holeoneRomInfo, cv_holeoneRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Hustle Chumy (HB)
+
+static struct BurnRomInfo cv_hchumyRomDesc[] = {
+	{ "Hustle Chumy (2019)(CollectorVision).rom",	18416, 0x5de1fa04, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_hchumy, cv_hchumy, cv_coleco)
+STD_ROM_FN(cv_hchumy)
+
+struct BurnDriver BurnDrvcv_hchumy = {
+	"cv_hchumy", NULL, "cv_coleco", NULL, "1984-2019",
+	"Hustle Chumy (HB)\0", "Published by CollectorVision Games", "Compile", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+	CVGetZipName, cv_hchumyRomInfo, cv_hchumyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// L'Abbaye des Morts (HB)
+
+static struct BurnRomInfo cv_labbayeRomDesc[] = {
+	{ "L'Abbaye des Morts (2019)(CollectorVision).rom",	131072, 0xb11a6d23, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_labbaye, cv_labbaye, cv_coleco)
+STD_ROM_FN(cv_labbaye)
+
+struct BurnDriver BurnDrvcv_labbaye = {
+	"cv_labbaye", NULL, "cv_coleco", NULL, "2019",
+	"L'Abbaye des Morts (HB)\0", "Published by CollectorVision Games", "Exidy - Alekmaul", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM | GBF_ADV, 0,
+	CVGetZipName, cv_labbayeRomInfo, cv_labbayeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Pang (HB)
+
+static struct BurnRomInfo cv_pangRomDesc[] = {
+	{ "Pang (2012)(CollectorVision).rom",	32558, 0x18aced43, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pang, cv_pang, cv_coleco)
+STD_ROM_FN(cv_pang)
+
+struct BurnDriver BurnDrvcv_pang = {
+	"cv_pang", NULL, "cv_coleco", NULL, "2012",
+	"Pang (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_pangRomInfo, cv_pangRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

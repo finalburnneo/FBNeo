@@ -23667,6 +23667,25 @@ struct BurnDriver BurnSpecSpooked = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Stardust (48K)
+
+static struct BurnRomInfo SpecStardustRomDesc[] = {
+    { "Stardust 48K (1987)(Topo Soft).tap", 73651, 0xe6a65d7b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStardust, SpecStardust, Spectrum)
+STD_ROM_FN(SpecStardust)
+
+struct BurnDriver BurnSpecStardust = {
+    "spec_stardust", NULL, "spec_spectrum", NULL, "1987",
+    "Stardust (48K)\0", NULL, "Topo Soft", "ZX Spectrum",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+    SpectrumGetZipName, SpecStardustRomInfo, SpecStardustRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+    SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+    &SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Twin World (128K)
 
 static struct BurnRomInfo SpecTwinworldRomDesc[] = {

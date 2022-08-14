@@ -32475,3 +32475,22 @@ struct BurnDriver BurnDrvMSX_tcqmsx = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Robo Rumble (HB)
+
+static struct BurnRomInfo MSX_roborumbleRomDesc[] = {
+	{ "Robo Rumble (2022)(Robosoft).rom",	32768, 0xc7a8b58c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_roborumble, MSX_roborumble, msx_msx)
+STD_ROM_FN(MSX_roborumble)
+
+struct BurnDriver BurnDrvMSX_roborumble = {
+	"msx_roborumble", NULL, "msx_msx", NULL, "2022",
+	"Robo Rumble (HB)\0", "Q-A: left magnet - P-L: right magnet", "Robosoft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_roborumbleRomInfo, MSX_roborumbleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

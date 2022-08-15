@@ -315,6 +315,7 @@ int RunFrame(int bDraw, int bPause, int bInput)
 			AudSoundFrame();
 		} else {
 			pBurnDraw = NULL;
+			pBurnSoundOut = nAudNextSound;
 			BurnDrvFrame();
 		}
 

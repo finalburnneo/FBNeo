@@ -9232,7 +9232,7 @@ STD_ROM_FN(sms_sonicfm102)
 
 struct BurnDriver BurnDrvsms_sonicfm102 = {
 	"sms_sonicfm102", "sms_sonic", NULL, NULL, "2014",
-	"Sonic The Hedgehog (Hack, FM Mod v1.02)\0", "YM2413 FM sound chip supported", "Sega - Valleybell", "Sega Master System",
+	"Sonic The Hedgehog (Hack, FM Mod v1.02)\0", "YM2413 FM sound chip supported", "Valleybell", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_sonicfm102RomInfo, sms_sonicfm102RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
@@ -9257,6 +9257,26 @@ struct BurnDriver BurnDrvsms_sonici131fm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_sonici131fmRomInfo, sms_sonici131fmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Sonic Genesis (Hack, v1.04)
+// https://www.romhacking.net/hacks/7062/
+static struct BurnRomInfo sms_sonicgenRomDesc[] = {
+	{ "Sonic Genesis v1.04 (2022)(slogra).sms",	0x40000, 0xc829fd7e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sonicgen)
+STD_ROM_FN(sms_sonicgen)
+
+struct BurnDriver BurnDrvsms_sonicgen = {
+	"sms_sonicgen", "sms_sonic", NULL, NULL, "2022",
+	"Sonic Genesis (Hack, v1.04)\0", NULL, "slogra", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_sonicgenRomInfo, sms_sonicgenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

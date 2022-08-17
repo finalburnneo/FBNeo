@@ -15135,8 +15135,8 @@ STD_ROM_PICK(nes_xiaomali)
 STD_ROM_FN(nes_xiaomali)
 
 struct BurnDriver BurnDrvnes_xiaomali = {
-	"nes_xiaomali", NULL, NULL, NULL, "1989?",
-	"Xiao Ma Li (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_xiaomali", NULL, NULL, NULL, "1989-90",
+	"Xiao Ma Li (Unl)\0", NULL, "Nei-Hu Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_xiaomaliRomInfo, nes_xiaomaliRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -15728,8 +15728,8 @@ STD_ROM_PICK(nes_magickidsdorp)
 STD_ROM_FN(nes_magickidsdorp)
 
 struct BurnDriver BurnDrvnes_magickidsdorp = {
-	"nes_magickidsdorp", "nes_krioncon", NULL, NULL, "1989?",
-	"Magical Kid's Doropie (Prototype)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_magickidsdorp", "nes_krioncon", NULL, NULL, "1990",
+	"Magical Kid's Doropie (Prototype)\0", NULL, "Vic Tokai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_magickidsdorpRomInfo, nes_magickidsdorpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -22252,7 +22252,7 @@ struct BurnDriver BurnDrvnes_bandana = {
 };
 
 static struct BurnRomInfo nes_cavedrillRomDesc[] = {
-	{ "Cave Driller v2 (2021)(Mazin).nes",          40976, 0x334cc66a, BRF_ESS | BRF_PRG },
+	{ "Cave Driller v2.2 (2021)(Mazin).nes",          40976, 0xf11b4a70, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_cavedrill)
@@ -22260,7 +22260,7 @@ STD_ROM_FN(nes_cavedrill)
 
 struct BurnDriver BurnDrvnes_cavedrill = {
 	"nes_cavedrill", NULL, NULL, NULL, "2021",
-	"Cave Driller (HB, v2)\0", NULL, "Mazin", "Miscellaneous",
+	"Cave Driller (HB, v2.2)\0", NULL, "Mazin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_cavedrillRomInfo, nes_cavedrillRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -23291,7 +23291,7 @@ struct BurnDriver BurnDrvnes_minibrix = {
 };
 
 static struct BurnRomInfo nes_nessyrobotRomDesc[] = {
-	{ "Nessy The NES Robot mmc30 (2021)(Daniel T. Gaming).nes",          524304, 0xeac62d7d, BRF_ESS | BRF_PRG },
+	{ "Nessy the NES Robot v1.30 (2021)(Daniel T. Gaming).nes",          524304, 0x709d7dcf, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nessyrobot)
@@ -23299,7 +23299,7 @@ STD_ROM_FN(nes_nessyrobot)
 
 struct BurnDriver BurnDrvnes_nessyrobot = {
 	"nes_nessyrobot", NULL, NULL, NULL, "2021",
-	"Nessy the NES Robot (HB, v1.25)\0", NULL, "Daniel T. Gaming", "Miscellaneous",
+	"Nessy the NES Robot (HB, v1.30)\0", NULL, "Daniel T. Gaming", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_nessyrobotRomInfo, nes_nessyrobotRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -25511,7 +25511,7 @@ STD_ROM_FN(nes_mysticorigins)
 
 struct BurnDriver BurnDrvnes_mysticorigins = {
 	"nes_mysticorigins", NULL, NULL, NULL, "2019",
-	"Mystic Origins (HB)\0", NULL, "Nintendo", "Miscellaneous",
+	"Mystic Origins (HB)\0", NULL, "New 8-bit Heroes", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_mysticoriginsRomInfo, nes_mysticoriginsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -30343,8 +30343,8 @@ STD_ROM_PICK(nes_chikichimacmoura)
 STD_ROM_FN(nes_chikichimacmoura)
 
 struct BurnDriver BurnDrvnes_chikichimacmoura = {
-	"nes_chikichimacmoura", "nes_wackyraces", NULL, NULL, "1989?",
-	"Chiki Chiki Machine Mou Race (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_chikichimacmoura", "nes_wackyraces", NULL, NULL, "1991",
+	"Chiki Chiki Machine Mou Race (Japan)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_chikichimacmouraRomInfo, nes_chikichimacmouraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36658,8 +36658,8 @@ STD_ROM_PICK(nes_gundecj)
 STD_ROM_FN(nes_gundecj)
 
 struct BurnDriver BurnDrvnes_gundecj = {
-	"nes_gundecj", "nes_vice", NULL, NULL, "1989?",
-	"Gun-Dec (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_gundecj", "nes_vice", NULL, NULL, "1991",
+	"Gun-Dec (Japan)\0", NULL, "Sammy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_gundecjRomInfo, nes_gundecjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36675,10 +36675,10 @@ STD_ROM_PICK(nes_gundec)
 STD_ROM_FN(nes_gundec)
 
 struct BurnDriver BurnDrvnes_gundec = {
-	"nes_gundec", "nes_vice", NULL, NULL, "1989?",
-	"Gun-Dec (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_gundec", "nes_vice", NULL, NULL, "2015",
+	"Gun-Dec (T-Eng)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SHOOT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_SHOOT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_gundecRomInfo, nes_gundecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -39701,8 +39701,8 @@ STD_ROM_PICK(nes_kyoursenjuuj)
 STD_ROM_FN(nes_kyoursenjuuj)
 
 struct BurnDriver BurnDrvnes_kyoursenjuuj = {
-	"nes_kyoursenjuuj", "nes_kyoursenjuu", NULL, NULL, "1989?",
-	"Kyouryuu Sentai Juuranger (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_kyoursenjuuj", "nes_kyoursenjuu", NULL, NULL, "1992",
+	"Kyouryuu Sentai Juuranger (Japan)\0", NULL, "Angel Studios", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
 	NESGetZipName, nes_kyoursenjuujRomInfo, nes_kyoursenjuujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -39718,10 +39718,10 @@ STD_ROM_PICK(nes_kyoursenjuu)
 STD_ROM_FN(nes_kyoursenjuu)
 
 struct BurnDriver BurnDrvnes_kyoursenjuu = {
-	"nes_kyoursenjuu", NULL, NULL, NULL, "1989?",
-	"Kyouryuu Sentai Juuranger (T-Eng)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_kyoursenjuu", NULL, NULL, NULL, "2009",
+	"Kyouryuu Sentai Juuranger (T-Eng)\0", NULL, "Grimm Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
 	NESGetZipName, nes_kyoursenjuuRomInfo, nes_kyoursenjuuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -40687,8 +40687,8 @@ STD_ROM_PICK(nes_magickidsdor)
 STD_ROM_FN(nes_magickidsdor)
 
 struct BurnDriver BurnDrvnes_magickidsdor = {
-	"nes_magickidsdor", "nes_krioncon", NULL, NULL, "1989?",
-	"Magical Kid's Doropie (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_magickidsdor", "nes_krioncon", NULL, NULL, "1990",
+	"Magical Kid's Doropie (Japan)\0", NULL, "Vic Tokai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_magickidsdorRomInfo, nes_magickidsdorRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -42353,10 +42353,10 @@ STD_ROM_PICK(nes_mottoabudek)
 STD_ROM_FN(nes_mottoabudek)
 
 struct BurnDriver BurnDrvnes_mottoabudek = {
-	"nes_mottoabudek", NULL, NULL, NULL, "1989?",
-	"Mottomo Abunai Deka (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_mottoabudek", NULL, NULL, NULL, "1990",
+	"Mottomo Abunai Deka (Japan)\0", NULL, "Toei Animation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_mottoabudekRomInfo, nes_mottoabudekRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -49481,8 +49481,8 @@ STD_ROM_PICK(nes_timediveonman)
 STD_ROM_FN(nes_timediveonman)
 
 struct BurnDriver BurnDrvnes_timediveonman = {
-	"nes_timediveonman", NULL, NULL, NULL, "1989?",
-	"Time Diver Eon Man (USA)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_timediveonman", NULL, NULL, NULL, "1993",
+	"Time Diver Eon Man (USA)\0", NULL, "Taito Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_timediveonmanRomInfo, nes_timediveonmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -49651,8 +49651,8 @@ STD_ROM_PICK(nes_tinytooadv6)
 STD_ROM_FN(nes_tinytooadv6)
 
 struct BurnDriver BurnDrvnes_tinytooadv6 = {
-	"nes_tinytooadv6", NULL, NULL, NULL, "1989?",
-	"Tiny Toon Adventures 6 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_tinytooadv6", NULL, NULL, NULL, "1997",
+	"Tiny Toon Adventures 6 (Unl)\0", NULL, "J.Y. Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tinytooadv6RomInfo, nes_tinytooadv6RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -49685,10 +49685,10 @@ STD_ROM_PICK(nes_titanwarriors)
 STD_ROM_FN(nes_titanwarriors)
 
 struct BurnDriver BurnDrvnes_titanwarriors = {
-	"nes_titanwarriors", NULL, NULL, NULL, "0000",
+	"nes_titanwarriors", NULL, NULL, NULL, "1988",
 	"Titan Warriors (USA) (Proto)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_titanwarriorsRomInfo, nes_titanwarriorsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50331,10 +50331,10 @@ STD_ROM_PICK(nes_ultimmorkom3h)
 STD_ROM_FN(nes_ultimmorkom3h)
 
 struct BurnDriver BurnDrvnes_ultimmorkom3h = {
-	"nes_ultimmorkom3h", "nes_ultimmorkom3", NULL, NULL, "1989?",
-	"Ultimate Mortal Kombat 3 (Hack)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ultimmorkom3h", "nes_ultimmorkom3", NULL, NULL, "2020",
+	"Ultimate Mortal Kombat 3 (Hack)\0", NULL, "Vasil", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_ultimmorkom3hRomInfo, nes_ultimmorkom3hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -50348,8 +50348,8 @@ STD_ROM_PICK(nes_ultimmorkom3)
 STD_ROM_FN(nes_ultimmorkom3)
 
 struct BurnDriver BurnDrvnes_ultimmorkom3 = {
-	"nes_ultimmorkom3", NULL, NULL, NULL, "1989?",
-	"Ultimate Mortal Kombat 3 (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_ultimmorkom3", NULL, NULL, NULL, "1996",
+	"Ultimate Mortal Kombat 3 (Unl)\0", NULL, "Ka Sheng", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_ultimmorkom3RomInfo, nes_ultimmorkom3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50501,8 +50501,8 @@ STD_ROM_PICK(nes_urbanstrike)
 STD_ROM_FN(nes_urbanstrike)
 
 struct BurnDriver BurnDrvnes_urbanstrike = {
-	"nes_urbanstrike", NULL, NULL, NULL, "1989?",
-	"Urban Strike (USA)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_urbanstrike", NULL, NULL, NULL, "1995",
+	"Urban Strike (Unl)\0", NULL, "Unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_urbanstrikeRomInfo, nes_urbanstrikeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50535,8 +50535,8 @@ STD_ROM_PICK(nes_utsurundesu)
 STD_ROM_FN(nes_utsurundesu)
 
 struct BurnDriver BurnDrvnes_utsurundesu = {
-	"nes_utsurundesu", NULL, NULL, NULL, "1989?",
-	"Utsurun Desu (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_utsurundesu", NULL, NULL, NULL, "1991",
+	"Utsurun Desu (Japan)\0", NULL, "Takara", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_utsurundesuRomInfo, nes_utsurundesuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50586,10 +50586,10 @@ STD_ROM_PICK(nes_valkynobou)
 STD_ROM_FN(nes_valkynobou)
 
 struct BurnDriver BurnDrvnes_valkynobou = {
-	"nes_valkynobou", NULL, NULL, NULL, "1986",
-	"Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)\0", NULL, "Namco", "Miscellaneous",
+	"nes_valkynobou", NULL, NULL, NULL, "2001",
+	"Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)\0", NULL, "Some Good Shit Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_valkynobouRomInfo, nes_valkynobouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -51420,10 +51420,10 @@ STD_ROM_PICK(nes_xiaohonmao)
 STD_ROM_FN(nes_xiaohonmao)
 
 struct BurnDriver BurnDrvnes_xiaohonmao = {
-	"nes_xiaohonmao", NULL, NULL, NULL, "1989?",
-	"Xiao Hong Mao - Little Red Hood (Ch)\0", NULL, "Nintendo", "Miscellaneous",
+	"nes_xiaohonmao", NULL, NULL, NULL, "1989",
+	"Xiao Hong Mao - Little Red Hood (Unl)\0", NULL, "Joy Van", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ADV, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_xiaohonmaoRomInfo, nes_xiaohonmaoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

@@ -15394,6 +15394,45 @@ struct BurnDriver BurnDrvmagdrop3bh = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Magical Drop III Tournament Edition
+// hack by bankbank :
+// * forced mirror match (this is their competitive standard)
+// * loser chooses character
+// * hidden characters unlocked at character select screen
+// * random select by pressing button D
+// * per-character music themes play instead of only having one versus music
+// * previously unselectable hidden character 'black pierrot' available by using C button+select on Empress
+// * single player modes removed
+
+static struct BurnRomInfo magdrop3teRomDesc[] = {
+	{ "233-p1te.p1",  0x100000, 0xe2068d05, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "233-s1.s1",    0x020000, 0x7399e68a, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "233-c1.c1",    0x400000, 0x65e3f4c4, 3 | BRF_GRA },           //  2 Sprite data
+	{ "233-c2.c2",    0x400000, 0x35dea6c9, 3 | BRF_GRA },           //  3
+	{ "233-c3.c3",    0x400000, 0x0ba2c502, 3 | BRF_GRA },           //  4
+	{ "233-c4.c4",    0x400000, 0x70dbbd6d, 3 | BRF_GRA },           //  5
+
+	{ "233-m1.m1",    0x020000, 0x5beaf34e, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "233-v1.v1",    0x400000, 0x58839298, 5 | BRF_SND },           //  7 Sound data
+	{ "233-v2.v2",    0x080000, 0xd5e30df4, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(magdrop3te, magdrop3te, neogeo)
+STD_ROM_FN(magdrop3te)
+
+struct BurnDriver BurnDrvmagdrop3te = {
+	"magdrop3te", "magdrop3", "neogeo", NULL, "2022",
+	"Magical Drop III Tournament Edition\0", NULL, "hack", "Neo Geo MVS",
+	L"Magical Drop III\0\u30DE\u30B8\u30AB\u30EB\u30C9\u30ED\u30C3\u30D7III Tournament Edition\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	NULL, magdrop3teRomInfo, magdrop3teRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Matrimelee / Shin Gouketsuji Ichizoku Toukon (Enable Hidden Characters V2)
 
 static struct BurnRomInfo matrimbhRomDesc[] = {

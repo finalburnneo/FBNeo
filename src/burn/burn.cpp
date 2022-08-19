@@ -1159,11 +1159,8 @@ extern UINT32 nStartFrame;
 // replay.cpp
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
-// dynhuff.cpp
-int FreezeDecode(unsigned char **buffer, int *size);
-int UnfreezeDecode(const unsigned char* buffer, int size);
-int FreezeEncode(unsigned char **buffer, int *size);
-int UnfreezeEncode(const unsigned char* buffer, int size);
+#include "inputbuf.h"
+
 // interface.h
 #if defined (BUILD_WIN32)
 extern INT32 VidSNewShortMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);
@@ -1223,6 +1220,9 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 			goto superfail;
 		}
 
+		// clear buffer
+		memset(RewindBuffer, 0, nRewindTotalAllocated);
+
 		nRewindIndexCount = (nRewindTotalAllocated / nTotalLenRewind) + 1;
 		if (nRewindIndexCount < 16) {
 			if (RewindBuffer) {
@@ -1235,6 +1235,9 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 
 		pRewindIndex = (RewindIndex*)malloc (nRewindIndexCount * sizeof(RewindIndex));
 		if (!pRewindIndex) goto superfail;
+
+		// clear buffer
+		memset(pRewindIndex, 0, nRewindIndexCount * sizeof(RewindIndex));
 
 		superfail: // failure checks
 
@@ -1289,9 +1292,14 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 			INT32 ret = 1;
 
 			switch (nReplayStatus) {
-				case 1:	ret = FreezeEncode(&huff_buf, &huff_size); break;
-				case 2:	ret = FreezeDecode(&huff_buf, &huff_size); break;
+				//case 1:	ret = FreezeEncode(&huff_buf, &huff_size); break;
+				//case 2:	ret = FreezeDecode(&huff_buf, &huff_size); break;
+				case 1:
+				case 2: ret = inputbuf_freeze(&huff_buf, &huff_size); break;
+				default: bprintf(0, _T("StateRewindFrame(): broken nReplayStatus %x\n"), nReplayStatus); break;
 			}
+
+			if (ret) bprintf(0, _T("nReplayStatus: %x  Bad retval from FreezeEn/Decode!! %x\n"), nReplayStatus, ret);
 
 			if (!ret && !FreezeInput(&input_buf, &input_size))
 			{
@@ -1311,6 +1319,7 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 				// copy size
 				memcpy(pRewindBuffer, &input_size, 4);
 				pRewindBuffer += 4;
+				// copy data
 				memcpy(pRewindBuffer, input_buf, input_size);
 				pRewindBuffer += input_size; // done!
 
@@ -1391,8 +1400,11 @@ static void StateRewindLoad()
 			INT32 ret = 1;
 
 			switch (nReplayStatus) {
-				case 1: ret = UnfreezeEncode(pRewindBuffer, buf_size); break;
-				case 2:	ret = UnfreezeDecode(pRewindBuffer, buf_size); break;
+				case 1:
+				case 2: ret = inputbuf_unfreeze(pRewindBuffer, buf_size); break;
+				//case 1: ret = UnfreezeEncode(pRewindBuffer, buf_size); break;
+				//case 2: ret = UnfreezeDecode(pRewindBuffer, buf_size); break;
+				default: bprintf(0, _T("StateRewindLoad(): broken nReplayStatus %x\n"), nReplayStatus); break;
 			}
 
 			if (ret != 0) bprintf(0, _T("problem unfreezing dynhuff. replaystatus %x\n"), nReplayStatus);

@@ -15696,6 +15696,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="stardust" romof="spectrum">
+		<description>Stardust (48K)</description>
+		<year>1987</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Stardust 48K (1987)(Topo Soft).tap" size="73651" crc="e6a65d7b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="starglider128k" romof="spec128">
 		<description>Starglider (128K)</description>
 		<year>1986</year>

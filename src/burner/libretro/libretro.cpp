@@ -141,6 +141,9 @@ void IpsApplyPatches(UINT8 *, char *) {}
 INT32 GetIpsesMaxLen(char* rom_name) {return -1;}
 bool GetIpsDrvProtection() { return false; };
 UINT32 GetIpsDrvDefine() { return 0; }
+UINT32 nStartFrame = 0;
+INT32 FreezeInput(UINT8** buf, INT32* size) { return 0; }
+INT32 UnfreezeInput(const UINT8* buf, INT32 size) { return 0; }
 
 TCHAR szAppEEPROMPath[MAX_PATH];
 TCHAR szAppHiscorePath[MAX_PATH];

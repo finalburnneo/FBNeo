@@ -13285,6 +13285,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="roborumble" romof="msx">
+		<comment>Homebrew, Q-A: left magnet - P-L: right magnet</comment>
+		<description>Robo Rumble (HB)</description>
+		<year>2022</year>
+		<manufacturer>Robosoft</manufacturer>
+		<rom name="Robo Rumble (2022)(Robosoft).rom" size="32768" crc="c7a8b58c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="robocop" romof="msx">
 		<description>Robocop (Euro)</description>
 		<year>1988</year>

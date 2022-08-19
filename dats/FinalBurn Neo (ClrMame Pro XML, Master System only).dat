@@ -188,7 +188,7 @@
 	</game>
 	<game name="alexkidd3" cloneof="alexkidd3f" romof="alexkidd3f">
 		<comment>Hack, Homebrew</comment>
-		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack Demo-4)</description>
+		<description>Alex Kidd 3 - Curse in Miracle World (GlobalHack, Demo-4)</description>
 		<year>2016</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
@@ -197,7 +197,7 @@
 	</game>
 	<game name="alexkidd3f">
 		<comment>Hack, Homebrew</comment>
-		<description>Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0)</description>
+		<description>Alex Kidd 3 - Curse in Miracle World (GlobalHack, v3.0)</description>
 		<year>2021</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world v3.0 (2021)(yeti).sms" size="524288" crc="2096b9f1"/>
@@ -256,7 +256,7 @@
 	</game>
 	<game name="alexkidd2">
 		<comment>Hack, Homebrew</comment>
-		<description>Alex Kidd in Miracle World 2 (HB, Hack)</description>
+		<description>Alex Kidd in Miracle World 2 (GlobalHack)</description>
 		<year>2016</year>
 		<manufacturer>Ian Wall</manufacturer>
 		<rom name="Alex Kidd in Miracle World 2.sms" size="524288" crc="7de172ff"/>
@@ -265,9 +265,9 @@
 	</game>
 	<game name="alexkiddrr" cloneof="alexkidd" romof="alexkidd">
 		<comment>Hack</comment>
-		<description>Alex Kidd in Radaxian Rumble (ver. 1.5)</description>
+		<description>Alex Kidd in Radaxian Rumble (Hack, v1.5)</description>
 		<year>2015</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Alianger</manufacturer>
 		<rom name="Alex Kidd in Radaxian Rumble 1.5.sms" size="524288" crc="02760e17"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -687,7 +687,7 @@
 	</game>
 	<game name="battleorfm" cloneof="battleor" romof="battleor">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Battle Out Run (FM Mod)</description>
+		<description>Battle Out Run (Hack, FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
 		<rom name="battle out run (fm mod).sms" size="262144" crc="7c849999"/>
@@ -1391,7 +1391,7 @@
 	</game>
 	<game name="doublhwkfm" cloneof="doublhwk" romof="doublhwk">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Double Hawk (FM Mod)</description>
+		<description>Double Hawk (Hack, FM Mod)</description>
 		<year>201?</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="double hawk fm.bin" size="262144" crc="fe7f9f17"/>
@@ -1458,7 +1458,7 @@
 	</game>
 	<game name="dnukem">
 		<comment>Hack, Homebrew</comment>
-		<description>Duke Nukem (HB, Hack v0.93)</description>
+		<description>Duke Nukem (GlobalHack, v0.93)</description>
 		<year>2017</year>
 		<manufacturer>revo, tibone, calindro</manufacturer>
 		<rom name="duke nukem (2017)(revo-tibone-calindro).sms" size="524288" crc="a16dba3b"/>
@@ -1483,7 +1483,7 @@
 	</game>
 	<game name="dduxfm" cloneof="ddux" romof="ddux">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Dynamite Dux (FM Mod)</description>
+		<description>Dynamite Dux (Hack, FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="dynamite dux (fm-mod).sms" size="262144" crc="26dfc995"/>
@@ -1872,8 +1872,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="gboogers">
-		<comment>Homebrew</comment>
-		<description>Galactic Boogers (HB)</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Galactic Boogers (GlobalHack)</description>
 		<year>2020</year>
 		<manufacturer>YETI</manufacturer>
 		<rom name="Galactic Boogers.sms" size="1048576" crc="b5dac318"/>
@@ -2100,6 +2100,15 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13166.ic1" size="524288" crc="c08132fb"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="goldnaxetf" cloneof="goldnaxe" romof="goldnaxe">
+		<comment>Hack</comment>
+		<description>Golden Axe - Tyris Flare Edition (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Pyxosoft</manufacturer>
+		<rom name="Golden Axe - Tyris Flare Edition (2022)(Pyxosoft).sms" size="573440" crc="53aec4a5"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2904,7 +2913,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="loretta">
-		<description>Loretta no Shouzou (Jpn)</description>
+		<description>Loretta no Shouzou - Sherlock Holmes (Jpn)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10517.ic2" size="131072" crc="323f357f"/>
@@ -3366,7 +3375,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="novdmvdp">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>New Order vs Depeche Mode vs Daft Punk - (HB, Demo)</description>
 		<year>2019</year>
 		<manufacturer>Maxim</manufacturer>
@@ -3505,8 +3514,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="papicom">
-		<comment>Homebrew</comment>
-		<description>Papi Commando in CPP Land (HB, Hack v1.01)</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Papi Commando in CPP Land (GlobalHack, v1.01)</description>
 		<year>2019</year>
 		<manufacturer>Vetea</manufacturer>
 		<rom name="papi commando in cpp land v1.01 (2019)(studio vetea).sms" size="1048576" crc="bd531375"/>
@@ -3617,6 +3626,15 @@
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="phantasy star (korea).bin" size="524288" crc="747e83b5"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="piracycod">
+		<comment>Hack, Homebrew, Demo with the 5 first levels</comment>
+		<description>Piracy - The Chest Of Doom (GlobalHack, Demo)</description>
+		<year>2021</year>
+		<manufacturer>SirDarkNoon</manufacturer>
+		<rom name="Piracy - The Chest Of Doom (2021)(SirDarkNoon).sms" size="524288" crc="d94c89fa"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3895,7 +3913,7 @@
 	</game>
 	<game name="rambo3fm" cloneof="rambo3" romof="rambo3">
 		<comment>Hack, Light Phaser game - YM2413 FM support</comment>
-		<description>Rambo III (FM Mod)</description>
+		<description>Rambo III (Hack, FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="rambo iii (fm-mod).sms" size="262144" crc="c2073674"/>
@@ -3923,6 +3941,15 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="rastan (usa, europe).bin" size="262144" crc="c547eb1b"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="raymanrr">
+		<comment>Hack, Homebrew</comment>
+		<description>Rayman Retro Rumble (GlobalHack, v1.3)</description>
+		<year>2022</year>
+		<manufacturer>Maxim</manufacturer>
+		<rom name="Rayman Retro Rumble v1.3 (2022)(Maxim).sms" size="524288" crc="932c57d5"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4381,6 +4408,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sonicgen" cloneof="sonic" romof="sonic">
+		<comment>Hack</comment>
+		<description>Sonic Genesis (Hack, v1.04)</description>
+		<year>2022</year>
+		<manufacturer>slogra</manufacturer>
+		<rom name="Sonic Genesis v1.04 (2022)(slogra).sms" size="262144" crc="c829fd7e"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sonic">
 		<description>Sonic The Hedgehog (Euro, USA, Bra)</description>
 		<year>1991</year>
@@ -4391,9 +4427,9 @@
 	</game>
 	<game name="sonicfm102" cloneof="sonic" romof="sonic">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Sonic The Hedgehog (FM Mod, v1.02)</description>
+		<description>Sonic The Hedgehog (Hack, FM Mod v1.02)</description>
 		<year>2014</year>
-		<manufacturer>Sega - Valleybell</manufacturer>
+		<manufacturer>Valleybell</manufacturer>
 		<rom name="Sonic1SMS_FM_v102.sms" size="262144" crc="7c077b38"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4424,7 +4460,7 @@
 	</game>
 	<game name="sonici131fm" cloneof="sonic" romof="sonic">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Sonic The Hedgehog Improvement (v1.31) + FM Mod (v1.02)</description>
+		<description>Sonic The Hedgehog Improvement (Hack, v1.31) + (FM Mod v1.02)</description>
 		<year>2020</year>
 		<manufacturer>Penta Penguin - Valleybell</manufacturer>
 		<rom name="Sonic_The_Hedgehog_Enhanced1.31_FM1.02.sms" size="262144" crc="850b9554"/>
@@ -4778,7 +4814,7 @@
 	</game>
 	<game name="sumgamesfm" cloneof="sumgames" romof="sumgames">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Summer Games (FM Mod)</description>
+		<description>Summer Games (Hack, FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
 		<rom name="summer games (fm-mod).sms" size="131072" crc="bbae488d"/>
@@ -5473,8 +5509,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="voyage">
-		<comment>Homebrew</comment>
-		<description>Voyage - A Sorceress Vacation (HB, v1.05)</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Voyage - A Sorceress Vacation (GlobalHack, v1.05)</description>
 		<year>2021</year>
 		<manufacturer>SNAGS</manufacturer>
 		<rom name="Voyage - A Sorceress Vacation v1.05.sms" size="524288" crc="76a1d277"/>
@@ -5616,7 +5652,7 @@
 	</game>
 	<game name="wboy3fm" cloneof="wboy3" romof="wboy3">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Wonder Boy III - The Dragon's Trap (FM Mod)</description>
+		<description>Wonder Boy III - The Dragon's Trap (Hack, FM Mod)</description>
 		<year>1999</year>
 		<manufacturer>Sega - Bock</manufacturer>
 		<rom name="wonder boy iii - the dragon's trap (fm mod).sms" size="262144" crc="9442cfff"/>
@@ -5847,7 +5883,7 @@
 	</game>
 	<game name="ysfm" cloneof="ys" romof="ys">
 		<comment>Hack, YM2413 FM sound chip supported</comment>
-		<description>Ys - The Vanished Omens (FM Mod, v1.2)</description>
+		<description>Ys - The Vanished Omens (Hack, FM Mod v1.2)</description>
 		<year>2009</year>
 		<manufacturer>Sega - SSTranslations</manufacturer>
 		<rom name="ys - the vanished omens (fm patch).sms" size="262144" crc="7ed5dca2"/>
@@ -5872,8 +5908,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeloliv">
-		<comment>Homebrew</comment>
-		<description>Ze Legende of Oliv (HB)</description>
+		<comment>Hack, Homebrew</comment>
+		<description>Ze Legende of Oliv (GlobalHack)</description>
 		<year>2019</year>
 		<manufacturer>OscarB</manufacturer>
 		<rom name="Ze Legende of Oliv (2019)(OscarB).sms" size="1048576" crc="388b8eee"/>

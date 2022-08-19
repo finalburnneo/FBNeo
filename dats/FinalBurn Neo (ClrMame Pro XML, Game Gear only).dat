@@ -45,7 +45,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd">
-		<description>Alex Kidd in Miracle World (Unl) (Tw, SMS Mode)</description>
+		<description>Alex Kidd in Miracle World (Tw, SMS Mode) (Unl)</description>
 		<year>198?</year>
 		<manufacturer>Hung Tao Hsin</manufacturer>
 		<rom name="alex kidd in miracle world [sms-gg] (tw).bin" size="131072" crc="6f8e46cf"/>

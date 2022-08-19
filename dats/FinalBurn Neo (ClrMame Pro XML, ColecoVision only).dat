@@ -797,6 +797,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chackpop" romof="coleco">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>Chack'n Pop (HB)</description>
+		<year>1985-2011</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Chack'n Pop (2011)(CollectorVision).bin" size="32768" crc="c1366313"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chprowres" romof="coleco">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Champion Pro Wrestling (HB)</description>
@@ -918,6 +931,19 @@
 		<year>200x</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="super_game_module_test.rom" size="8192" crc="abc4763d"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="comicbakery" romof="coleco">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>Comic Bakery (HB)</description>
+		<year>1984-2014</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Comic Bakery (2014)(CollectorVision).rom" size="27925" crc="8884bac2"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1307,6 +1333,19 @@
 		<year>2007</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Easter Bunny (2007)(Daniel Bienvenu).rom" size="5888" crc="5c494be5"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="elevaction" romof="coleco">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>Elevator Action (HB)</description>
+		<year>1985-2012</year>
+		<manufacturer>Sega - Taito</manufacturer>
+		<rom name="Elevator Action (2012)(CollectorVision).bin" size="32768" crc="4bb8dc2a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1769,6 +1808,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gnz" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Ghosts'n Zombies (HB)</description>
+		<year>2009</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Ghosts'n Zombies (2009)(CollectorVision).bin" size="32768" crc="cc63ca4b"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ggarden" romof="coleco">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Girl's Garden (HB)</description>
@@ -1917,6 +1969,32 @@
 		<year>2010-2017</year>
 		<manufacturer>Imanok</manufacturer>
 		<rom name="heroes-arena-2017-sgm.rom" size="32768" crc="87a49761"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="holeone" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Hole in One (SGM) (HB)</description>
+		<year>1984-2017</year>
+		<manufacturer>HAL Lab.</manufacturer>
+		<rom name="Hole in One SGM (2017)(CollectorVision).rom" size="24520" crc="7270ae16"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hchumy" romof="coleco">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>Hustle Chumy (HB)</description>
+		<year>1984-2019</year>
+		<manufacturer>Compile</manufacturer>
+		<rom name="Hustle Chumy (2019)(CollectorVision).rom" size="18416" crc="5de1fa04"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2356,6 +2434,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="labbaye" romof="coleco">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>L'Abbaye des Morts (HB)</description>
+		<year>2019</year>
+		<manufacturer>Exidy - Alekmaul</manufacturer>
+		<rom name="L'Abbaye des Morts (2019)(CollectorVision).rom" size="131072" crc="b11a6d23"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ladybug" romof="coleco">
 		<description>Lady Bug</description>
 		<year>1982</year>
@@ -2388,6 +2479,19 @@
 		<year>2022</year>
 		<manufacturer>Inufuto</manufacturer>
 		<rom name="Lift (2022)(Inufuto).rom" size="8166" crc="7a4d5d1b"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lgracing" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Light Grid Racing (HB)</description>
+		<year>2015</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Light Grid Racing (2015)(CollectorVision).bin" size="32768" crc="1e37ec6a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -2744,6 +2848,19 @@
 		<rom name="monkey.2" size="8192" crc="c1effcb3"/>
 		<rom name="monkey.3" size="8192" crc="5594b4c4"/>
 		<rom name="monkey.4" size="8192" crc="b4293435"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="monsthouse" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Monster House (SGM) (HB)</description>
+		<year>1986-2017</year>
+		<manufacturer>Casio</manufacturer>
+		<rom name="Monster House SGM (2017)(CollectorVision).rom" size="32768" crc="50f02dc9"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3217,6 +3334,19 @@
 		<year>1983-2017</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="Pacar (2017) (Team Pixelboy).col" size="32768" crc="a82c9593"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pang" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Pang (HB)</description>
+		<year>2012</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Pang (2012)(CollectorVision).rom" size="32558" crc="18aced43"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3748,6 +3878,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rollerball" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Rollerball (SGM) (HB)</description>
+		<year>1984-2013</year>
+		<manufacturer>HAL Lab.</manufacturer>
+		<rom name="Rollerball SGM (2013)(CollectorVision).rom" size="32768" crc="aefdba29"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rollover" romof="coleco">
 		<description>Rolloverture</description>
 		<year>1983</year>
@@ -4148,6 +4291,19 @@
 		<manufacturer>Coleco</manufacturer>
 		<rom name="panic.1" size="8192" crc="e06fa55b"/>
 		<rom name="panic.2" size="8192" crc="66fcda90"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sparkie" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Sparkie (SGM) (HB)</description>
+		<year>1983-2013</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Sparkie SGM (2017)(CollectorVision).rom" size="32768" crc="eb19c7a3"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4703,6 +4859,19 @@
 		<manufacturer>Coleco</manufacturer>
 		<rom name="sword-chip1-a176.bin" size="8192" crc="a1548994"/>
 		<rom name="sword-chip2-d5ba.bin" size="8192" crc="1d03dfae"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sydneyhunt2" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Sydney Hunter and the Caverns of Death (HB)</description>
+		<year>2019</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Sydney Hunter and the Caverns of Death (2019)(CollectorVision).rom" size="131072" crc="81bfb02d"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

@@ -13,15 +13,15 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="12in1">
-		<description>12 in 1</description>
+		<description>12 in 1 (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="12-in-1 (unl).bin" size="2097152" crc="a98bf454"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="13mahjan">
-		<description>13 Ma Jiang - 98 Mei Shao Nu Pian (Unl) (Chi)</description>
+		<description>13 Ma Jiang - 98 Mei Shao Nu Pian (Chi) (Unl)</description>
 		<year>1998</year>
 		<manufacturer>BBD</manufacturer>
 		<rom name="13 mahjong 98 (unl).bin" size="655360" crc="68b372f6"/>
@@ -45,7 +45,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="16zhan">
-		<description>16 Zhang Ma Jiang (Unl) (Chi)</description>
+		<description>16 Zhang Ma Jiang (Chi) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="16 zhang ma jiang (chi) (unl).bin" size="1048576" crc="36407c82"/>
@@ -144,17 +144,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="bugslifea" cloneof="bugslife" romof="bugslife">
-		<description>A Bug's Life (Alt?)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>A Bug's Life (Alt?) (Tw) (Unl)</description>
+		<year>1999</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="bug's life (unl).bin" size="1048576" crc="ed1c1a67"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="bugslife">
-		<description>A Bug's Life</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>A Bug's Life (Tw) (Unl)</description>
+		<year>1999</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="bug's life, a (unl).bin" size="1048576" crc="10458e09"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -218,7 +218,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="action52">
-		<description>Action 52 (Unl) (USA)</description>
+		<description>Action 52 (USA) (Unl)</description>
 		<year>1993</year>
 		<manufacturer>Active Enterprises</manufacturer>
 		<rom name="action 52 (usa) (unl).bin" size="2097152" crc="29ff58ae"/>
@@ -226,7 +226,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="action52a" cloneof="action52" romof="action52">
-		<description>Action 52 (Unl) (USA, Alt)</description>
+		<description>Action 52 (USA, Alt) (Unl)</description>
 		<year>1993</year>
 		<manufacturer>Active Enterprises</manufacturer>
 		<rom name="action 52 (usa) (alt) (unl).bin" size="2097152" crc="8809d666"/>
@@ -460,7 +460,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="adveboy">
-		<description>Adventurous Boy - Mao Xian Xiao Zi (Unl) (Chi)</description>
+		<description>Adventurous Boy - Mao Xian Xiao Zi (Chi) (Unl)</description>
 		<year>1998</year>
 		<manufacturer>Gamtec</manufacturer>
 		<rom name="adventurous boy - mao xian xiao zi (chi) (unl).bin" size="524288" crc="d4403913"/>
@@ -717,6 +717,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aliencat2">
+		<comment>Homebrew</comment>
+		<description>Alien Cat 2 (HB)</description>
+		<year>2020</year>
+		<manufacturer>PSCD Games, Repa Games</manufacturer>
+		<rom name="Alien Cat 2 (2020)(PSCD Games).bin" size="1310720" crc="01010466"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aliensol">
 		<description>Alien Soldier (Euro)</description>
 		<year>1995</year>
@@ -927,7 +936,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aqrenk">
-		<description>Aq Renkan Awa (Unl) (Chi)</description>
+		<description>Aq Renkan Awa (Chi) (Unl)</description>
 		<year>1995</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="aq renkan awa (chi) (unl).bin" size="1048576" crc="2c6cbd77"/>
@@ -1111,7 +1120,7 @@
 	</game>
 	<game name="asscreed" cloneof="dlair" romof="dlair">
 		<comment>Hack</comment>
-		<description>Assassins Creed (Unl) (Rus)</description>
+		<description>Assassins Creed (Rus) (Unl)</description>
 		<year>20??</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="assassins creed (unl).bin" size="1048576" crc="3f2d6ccc"/>
@@ -1316,9 +1325,9 @@
 	</game>
 	<game name="avatar" cloneof="jimpowerpiko" romof="jimpowerpiko">
 		<comment>Hack</comment>
-		<description>Avatar (Unl) (Rus)</description>
-		<year>199?</year>
-		<manufacturer>Unknown</manufacturer>
+		<description>Avatar (Rus) (Unl)</description>
+		<year>201?</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="avatar.bin" size="1114112" crc="d33e0ada"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1704,20 +1713,20 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="barver">
+		<description>Barver Battle Saga - Tai Kong Zhan Shi (Chi) (Unl)</description>
+		<year>1996</year>
+		<manufacturer>Chuanpu</manufacturer>
+		<rom name="barver battle saga - tai kong zhan shi (chi) (unl).bin" size="2097152" crc="d37a37c6"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="barvere" cloneof="barver" romof="barver">
 		<comment>Hack</comment>
 		<description>Barver Battle Saga - Tai Kong Zhan Shi (Hack, English)</description>
 		<year>2010</year>
 		<manufacturer>Djinn</manufacturer>
 		<rom name="barver battle saga - tai kong zhan shi (english translation).md" size="2097152" crc="34e5445f"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="barver">
-		<description>Barver Battle Saga - Tai Kong Zhan Shi (Unl) (Chi)</description>
-		<year>1996</year>
-		<manufacturer>Chuanpu</manufacturer>
-		<rom name="barver battle saga - tai kong zhan shi (chi) (unl).bin" size="2097152" crc="d37a37c6"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2045,7 +2054,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ben10">
-		<description>Ben 10 (Unl) (Rus)</description>
+		<description>Ben 10 (Rus) (Unl)</description>
 		<year>20??</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="ben 10 (unl)[rus].bin" size="1048576" crc="c8be0b26"/>
@@ -2293,7 +2302,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bibleadv">
-		<description>Bible Adventures (Unl) (USA, v5.0)</description>
+		<description>Bible Adventures (USA, v5.0) (Unl)</description>
 		<year>1995</year>
 		<manufacturer>Wisdom Tree</manufacturer>
 		<rom name="bible adventures (usa) (unl).bin" size="524288" crc="64446b77"/>
@@ -2327,7 +2336,7 @@
 	</game>
 	<game name="btomatog">
 		<comment>Prototype, originally planned for 1994</comment>
-		<description>Bill's Tomato Game (Unl) (Prototype)</description>
+		<description>Bill's Tomato Game (Prototype) (Unl)</description>
 		<year>1994-2017</year>
 		<manufacturer>Psygnosis</manufacturer>
 		<rom name="bill's tomato game (unl)(2017)(psygnosis).bin" size="1048576" crc="0e1f263f"/>
@@ -2564,7 +2573,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bomboy">
-		<description>Bomboy (Tw)</description>
+		<description>Bomboy (Tw) (Unl)</description>
 		<year>1993</year>
 		<manufacturer>Gamtec</manufacturer>
 		<rom name="bomboy (unl).bin" size="524288" crc="065d2019"/>
@@ -2603,6 +2612,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bonemarrow">
+		<comment>Homebrew</comment>
+		<description>Bone Marrow (HB)</description>
+		<year>2021</year>
+		<manufacturer>PSCD Games, Hugepixel</manufacturer>
+		<rom name="Bone Marrow (2021)(PSCD Games).bin" size="2359296" crc="cde9ea8a"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bmarrowdm">
 		<comment>Homebrew</comment>
 		<description>Bone Marrow Rebirth (HB, Demo v2)</description>
@@ -2621,9 +2639,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonkerss" cloneof="bonkers" romof="bonkers">
+		<comment>Hack</comment>
 		<description>Bonkers (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="bonkers (hack, spanish).bin" size="1048576" crc="2bde8dc6"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2731,9 +2750,9 @@
 	</game>
 	<game name="bravebtl">
 		<comment>Piko Int. English Translation 2017</comment>
-		<description>Brave Battle Saga - Legend of the Magic Warrior (Ch)</description>
+		<description>Brave Battle Saga - Legend of the Magic Warrior (Chi) (Unl)</description>
 		<year>1996</year>
-		<manufacturer>&lt;unlicensed&gt; Chuanpu</manufacturer>
+		<manufacturer>Chuanpu</manufacturer>
 		<rom name="brave battle saga - legend of the magic warrior.md" size="2097152" crc="f4554624"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3378,9 +3397,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="cjfuweng">
-		<description>Chao Ji Da Fu Weng (Chi)</description>
-		<year>199?</year>
-		<manufacturer>Gametec?</manufacturer>
+		<description>Chao Ji Da Fu Weng (Tw) (Unl)</description>
+		<year>1994</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="chao ji da fu weng (chi) (unl).bin" size="1048576" crc="2e2ea687"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3460,7 +3479,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chess">
-		<description>Chess (Rus)</description>
+		<description>Chess (Rus) (Unl)</description>
 		<year>1998</year>
 		<manufacturer>BSComp</manufacturer>
 		<rom name="chess (unl).bin" size="524288" crc="47380edd"/>
@@ -3468,7 +3487,7 @@
 		<driver status="preliminary"/>
 	</game>
 	<game name="chessa" cloneof="chess" romof="chess">
-		<description>Chess (Rus, Alt)</description>
+		<description>Chess (Rus, Alt) (Unl)</description>
 		<year>1998</year>
 		<manufacturer>BSComp</manufacturer>
 		<rom name="chess (unl) [rus].bin" size="524288" crc="a5cef7b6"/>
@@ -3476,9 +3495,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="chessb" cloneof="chess" romof="chess">
-		<description>Chess (Rus, v1.05)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<description>Chess (Rus, v1.05) (Unl)</description>
+		<year>1999</year>
+		<manufacturer>BSComp</manufacturer>
 		<rom name="chess (unl) [rus v1.05].bin" size="1048576" crc="10683e83"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
@@ -3548,18 +3567,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="chinesec">
-		<description>Chinese Chess</description>
+		<description>Chinese Chess (Tw) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="chinese chess (unl).bin" size="524288" crc="475215a0"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="chinf3">
 		<comment>Imperfect Protection Emulation</comment>
-		<description>Chinese Fighter III (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Chinese Fighter III (Chi) (Unl)</description>
+		<year>1996</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="chinese fighter iii (unl).bin" size="2097152" crc="e833bc6e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
@@ -3665,7 +3684,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="excelart">
-		<description>Chuck's Excellent Art Tool Animator (USA)</description>
+		<comment>Demo</comment>
+		<description>Chuck's Excellent Art Tool Animator (USA) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="chuck's excellent art tool animator (usa) (unl).bin" size="393216" crc="6360ee58"/>
@@ -4210,9 +4230,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="commconq">
+		<comment>Prototype</comment>
 		<description>Command &amp; Conquer (Prototype)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<manufacturer>Digital Distribution</manufacturer>
 		<rom name="command &amp; conquer (beta).bin" size="1598086" crc="747fcc62"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4358,9 +4379,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="crash" cloneof="zero" romof="zero">
-		<description>Crash Bandicoot (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<comment>Hack</comment>
+		<description>Crash Bandicoot (Rus) (Unl)</description>
+		<year>2008</year>
+		<manufacturer>BMB</manufacturer>
 		<rom name="crash bandicoot.bin" size="4194304" crc="e06bd944"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4613,6 +4635,15 @@
 		<year>2021</year>
 		<manufacturer>2nd Dimension</manufacturer>
 		<rom name="Curse of Illmoore Bay, the (2021)(2nd Dimension).bin" size="4189440" crc="7ad106c0"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cuknight">
+		<comment>Homebrew</comment>
+		<description>Cursed Knight, The (HB)</description>
+		<year>2022</year>
+		<manufacturer>Broke Studio</manufacturer>
+		<rom name="Cursed Knight, The (2022)(Broke Studio).bin" size="4194304" crc="52c6ef0f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4988,17 +5019,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="deathcal">
-		<description>Death Caliber (Rus)</description>
-		<year>199?</year>
-		<manufacturer>Tomsoft</manufacturer>
+		<description>Death Caliber (Rus) (Unl)</description>
+		<year>2002</year>
+		<manufacturer>Glorysun</manufacturer>
 		<rom name="death caliber.bin" size="4194304" crc="3cd2c797"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="deathdls" cloneof="deathdl" romof="deathdl">
+		<comment>Hack</comment>
 		<description>Death Duel (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Razorsoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="death duel (hack, spanish).bin" size="1048576" crc="0b7de738"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5029,26 +5061,36 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="debtor">
+		<comment>Homebrew</comment>
+		<description>Debtor (HB)</description>
+		<year>2020</year>
+		<manufacturer>PSCD Games, SharkGame</manufacturer>
+		<rom name="Debtor (2020)(PSCD Games).bin" size="2228224" crc="c16c2aa4"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="decapatt">
 		<description>DecapAttack (Euro, USA, Kor)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-14249.bin" size="524288" crc="73dc0dd8"/>
+		<rom name="DecapAttack (1991)(Sega).bin" size="524288" crc="73dc0dd8"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="decapatts" cloneof="decapatt" romof="decapatt">
-		<description>DecapAttack (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="decapattack (hack, spanish).bin" size="524288" crc="47dda2c0"/>
+		<comment>Hack</comment>
+		<description>DecapAttack (Hack v2.0, Spanish)</description>
+		<year>2022</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="DecapAttack (2022)(hack v2.0, Spanish).bin" size="524288" crc="29369a7d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="deerhunt">
-		<description>Deer Hunter (Rus)</description>
-		<year>199?</year>
-		<manufacturer>Tomsoft</manufacturer>
+		<description>Deer Hunter (Rus) (Unl)</description>
+		<year>2002</year>
+		<manufacturer>Glorysun</manufacturer>
 		<rom name="deer hunter.bin" size="1048576" crc="da11978b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5282,8 +5324,8 @@
 	</game>
 	<game name="diablo" cloneof="fatallab" romof="fatallab">
 		<comment>Hack</comment>
-		<description>Diablo (Rus)</description>
-		<year>199?</year>
+		<description>Diablo (Rus) (Unl)</description>
+		<year>200?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="diablo.bin" size="1048576" crc="bd642da0"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -5291,7 +5333,7 @@
 	</game>
 	<game name="dialqoc" cloneof="dialqo" romof="dialqo">
 		<comment>Hack</comment>
-		<description>Dial Q o Mawase! (Unl) (Hack, Chinese)</description>
+		<description>Dial Q o Mawase! (Hack, Chinese) (Unl)</description>
 		<year>200?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="dial q o mawase! (T-Chi) (unl).bin" size="1048576" crc="1002c02f"/>
@@ -5299,7 +5341,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dialqo">
-		<description>Dial Q o Mawase! (Unl) (Jpn)</description>
+		<description>Dial Q o Mawase! (Jpn) (Unl)</description>
 		<year>1992</year>
 		<manufacturer>Studio Fazzy</manufacturer>
 		<rom name="dial q o mawase! (jpn) (unl).bin" size="1048576" crc="c632e5af"/>
@@ -5489,7 +5531,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="divine">
-		<description>Divine Sealing (Jpn)</description>
+		<description>Divine Sealing (Jpn) (Unl)</description>
 		<year>1991</year>
 		<manufacturer>CYX</manufacturer>
 		<rom name="divine sealing (jpn) (unl).bin" size="1048576" crc="ca72973c"/>
@@ -5505,9 +5547,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="djboys" cloneof="djboy" romof="djboy">
+		<comment>Hack</comment>
 		<description>Dj Boy (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Kaneko</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="dj boy (hack, spanish).bin" size="524288" crc="18614e10"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6765,7 +6808,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="exodus">
-		<description>Exodus - Journey to the Promised Land (USA)</description>
+		<description>Exodus - Journey to the Promised Land (USA) (Unl)</description>
 		<year>1993</year>
 		<manufacturer>Wisdom Tree</manufacturer>
 		<rom name="exodus - journey to the promised land (usa) (unl).bin" size="524288" crc="22e6fc04"/>
@@ -7021,15 +7064,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="fengkuan">
-		<description>Feng Kuang Tao Hua Yuan (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Feng Kuang Tao Hua Yuan (Tw) (Unl)</description>
+		<year>1998</year>
+		<manufacturer>Creaton Softech</manufacturer>
 		<rom name="feng kuang tao hua yuan (chi) (unl).bin" size="1048576" crc="8d40d64f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="fengshen">
-		<description>Feng Shen Ying Jie Chuan (Chi)</description>
+		<description>Feng Shen Ying Jie Chuan (Tw) (Unl)</description>
 		<year>1996</year>
 		<manufacturer>Chuanpu Technologies</manufacturer>
 		<rom name="feng shen ying jie chuan (chi) (unl).bin" size="2097152" crc="6a382b60"/>
@@ -7037,7 +7080,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fengshena" cloneof="fengshen" romof="fengshen">
-		<description>Feng Shen Ying Jie Zhuan (Chi, Alt?)</description>
+		<description>Feng Shen Ying Jie Zhuan (Tw, Alt?) (Unl)</description>
 		<year>1996</year>
 		<manufacturer>Chuanpu Technologies</manufacturer>
 		<rom name="unknown chinese game 1 (chi).bin" size="2097152" crc="dfacb9ff"/>
@@ -7127,9 +7170,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="fifa2k" cloneof="fifa97" romof="fifa97">
-		<description>FIFA Soccer 2000 Gold Edition (Pirate)</description>
+		<description>FIFA Soccer 2000 Gold Edition (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="fifa soccer 2000 gold edition (pirate) (unl).bin" size="2097152" crc="647df504"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7167,9 +7210,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="fifa99" cloneof="fifa96" romof="fifa96">
-		<description>FIFA Soccer 99 (Pirate)</description>
+		<description>FIFA Soccer 99 (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="fifa soccer 99 (pirate) (unl).bin" size="2097152" crc="c5c5a4b0"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7464,6 +7507,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="foxyland">
+		<comment>Homebrew</comment>
+		<description>Foxy Land (HB)</description>
+		<year>2020</year>
+		<manufacturer>PSCD Games, Bug Studio</manufacturer>
+		<rom name="Foxy Land (2020)(PSCD-Bug Studio).bin" size="3014656" crc="ba322eee"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bighurt">
 		<description>Frank Thomas Big Hurt Baseball (Euro, USA)</description>
 		<year>1995</year>
@@ -7497,9 +7549,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="slamdunkc" cloneof="slamdunk" romof="slamdunk">
+		<comment>Hack</comment>
 		<description>From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (T-Chi)</description>
-		<year>1995</year>
-		<manufacturer>Bandai</manufacturer>
+		<year>200?</year>
+		<manufacturer>Bear Team</manufacturer>
 		<rom name="from tv animation slam dunk - kyougou makkou taiketsu! (T-Chi).bin" size="2097152" crc="89253739"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7564,9 +7617,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="futbol" cloneof="fifa95" romof="fifa95">
-		<description>Futbol Argentino 98 - Pasion de Multitudes (Pirate)</description>
+		<description>Futbol Argentino 98 - Pasion de Multitudes (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="futbol argentino 98 - pasion de multitudes (unl).bin" size="2097152" crc="5c015888"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8469,7 +8522,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hpotter">
-		<description>Harry Potter (Unl) (Rus)</description>
+		<description>Harry Potter (Rus) (Unl)</description>
 		<year>200?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="harry potter.bin" size="2097152" crc="a184fc76"/>
@@ -8478,7 +8531,7 @@
 	</game>
 	<game name="hpotter2" cloneof="mickmack" romof="mickmack">
 		<comment>Hack</comment>
-		<description>Harry Potter and the Chamber of Secrets (Unl) (Rus)</description>
+		<description>Harry Potter and the Chamber of Secrets (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="harry potter 2.bin" size="1048576" crc="1684479f"/>
@@ -8536,7 +8589,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="heitao">
-		<description>Hei Tao 2 - Super Big 2 (Unl) (Chi)</description>
+		<description>Hei Tao 2 - Super Big 2 (Chi) (Unl)</description>
 		<year>1996</year>
 		<manufacturer>King Tec</manufacturer>
 		<rom name="hei tao 2 - super big 2 (chi) (unl).bin" size="1048576" crc="31449113"/>
@@ -8576,20 +8629,20 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="hercules" cloneof="dahnam" romof="dahnam">
+		<comment>Hack</comment>
+		<description>Hercules (Unl)</description>
+		<year>1997</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="hercules (unl).bin" size="1048576" crc="ff75d9d0"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="herculs2">
 		<description>Hercules 2</description>
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
 		<rom name="hercules 2 (unl).bin" size="2097152" crc="292623db"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="hercules" cloneof="dahnam" romof="dahnam">
-		<comment>Hack</comment>
-		<description>Hercules</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="hercules (unl).bin" size="1048576" crc="ff75d9d0"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8698,9 +8751,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="huamul">
-		<description>Hua Mu Lan - Mulan (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Hua Mu Lan - Mulan (Tw) (Unl)</description>
+		<year>2000</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="hua mu lan - mulan (chi) (unl).bin" size="2097152" crc="796882b8"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8771,7 +8824,7 @@
 	</game>
 	<game name="iceage" cloneof="awepossm" romof="awepossm">
 		<comment>Hack</comment>
-		<description>Ice Age (Unl) (Rus)</description>
+		<description>Ice Age (Rus) (Unl)</description>
 		<year>200?</year>
 		<manufacturer>KDS</manufacturer>
 		<rom name="ice age.bin" size="4194304" crc="3a585408"/>
@@ -8780,7 +8833,7 @@
 	</game>
 	<game name="iceage3" cloneof="chuckrck" romof="chuckrck">
 		<comment>Hack</comment>
-		<description>Ice Age 3 (Unl) (Rus)</description>
+		<description>Ice Age 3 (Rus) (Unl)</description>
 		<year>200?</year>
 		<manufacturer>KDS</manufacturer>
 		<rom name="ice age 3 (unl).bin" size="1077536" crc="58fcffb3"/>
@@ -8789,7 +8842,7 @@
 	</game>
 	<game name="iceage4" cloneof="chuckrck" romof="chuckrck">
 		<comment>Hack</comment>
-		<description>Ice Age 4 (Unl) (Rus)</description>
+		<description>Ice Age 4 (Rus) (Unl)</description>
 		<year>200?</year>
 		<manufacturer>KDS</manufacturer>
 		<rom name="ice age 4 (unl).bin" size="1107488" crc="92e86cfc"/>
@@ -9000,15 +9053,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="iraqwara" cloneof="iraqwar" romof="iraqwar">
-		<description>Iraq War 2003 (Alt)</description>
+		<description>Iraq War 2003 (Alt) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>Tomsoft</manufacturer>
 		<rom name="iraq war 2003 (alt) (unl).bin" size="1048576" crc="23689237"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="iraqwar">
-		<description>Iraq War 2003</description>
+		<description>Iraq War 2003 (Unl)</description>
 		<year>199?</year>
 		<manufacturer>Tomsoft</manufacturer>
 		<rom name="iraq war 2003 (unl).bin" size="1048576" crc="49dd6f52"/>
@@ -9332,24 +9385,25 @@
 	</game>
 	<game name="jimmywws">
 		<description>Jimmy White's Whirlwind Snooker (Euro)</description>
-		<year>1991</year>
+		<year>1994</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="jimmy white's whirlwind snooker (euro).bin" size="524288" crc="0aef5b1f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="jiujim">
-		<description>Jiu Ji Ma Jiang II - Ye Yan Bian (Chi)</description>
+		<description>Jiu Ji Ma Jiang II - Ye Yan Bian (Chi) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="jiu ji ma jiang ii - ye yan bian (chi) (unl).bin" size="1048576" crc="e9829b22"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="joemacs" cloneof="joemac" romof="joemac">
+		<comment>Hack</comment>
 		<description>Joe &amp; Mac (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Takara</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="joe &amp; mac (hack, spanish).bin" size="1048576" crc="aa290350"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9427,8 +9481,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="joshua">
-		<description>Joshua &amp; The Battle of Jericho (USA)</description>
-		<year>1992</year>
+		<description>Joshua &amp; The Battle of Jericho (USA) (Unl)</description>
+		<year>1994</year>
 		<manufacturer>Wisdom Tree</manufacturer>
 		<rom name="joshua &amp; the battle of jericho (usa) (unl).bin" size="262144" crc="da9e25aa"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -9444,6 +9498,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jdreddp1" cloneof="jdredd" romof="jdredd">
+		<comment>Prototype</comment>
 		<description>Judge Dredd (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -9452,6 +9507,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jdreddp2" cloneof="jdredd" romof="jdredd">
+		<comment>Prototype</comment>
 		<description>Judge Dredd (USA, Prototype, Alt)</description>
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -9468,9 +9524,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="junctions" cloneof="junction" romof="junction">
+		<comment>Hack</comment>
 		<description>Junction (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Micronet</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="junction (hack, spanish).bin" size="524288" crc="8d2cce27"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9680,28 +9737,28 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2k" cloneof="kof98" romof="kof98">
-		<description>K.O.F 2000</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>K.O.F 2000 (Unl)</description>
+		<year>2000</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="king of fighters 2000 (unl).bin" size="2097152" crc="34cbac5d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kof98a" cloneof="kof98" romof="kof98">
-		<description>K.O.F 98' (Unprotected?)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="king of fighters '98, the (unl) (pirate).bin" size="2097152" crc="c79e1074"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="kof98">
-		<description>K.O.F 98'</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>K.O.F 98' (Unl)</description>
+		<year>1998</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="king of fighters '98, the (unl).bin" size="2097152" crc="cbc38eea"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
+	</game>
+	<game name="kof98a" cloneof="kof98" romof="kof98">
+		<description>K.O.F 98' (Unprotected?) (Unl)</description>
+		<year>1998</year>
+		<manufacturer>X Boy</manufacturer>
+		<rom name="king of fighters '98, the (unl) (pirate).bin" size="2097152" crc="c79e1074"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
 	</game>
 	<game name="kagekij" cloneof="kageki" romof="kageki">
 		<description>Ka-Ge-Ki (Jpn)</description>
@@ -9712,9 +9769,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kagekis" cloneof="kageki" romof="kageki">
+		<comment>Hack</comment>
 		<description>Ka-Ge-Ki - Fists of Steel (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sage's Creation</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="ka-ge-ki - fists of steel (hack, spanish).bin" size="1048576" crc="7978b1e4"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9736,6 +9794,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kawasakip" cloneof="kawasaki" romof="kawasaki">
+		<comment>Prototype</comment>
 		<description>Kawasaki Superbike Challenge (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Time Warner Interactive</manufacturer>
@@ -9781,6 +9840,14 @@
 		<year>1992</year>
 		<manufacturer>Ma-Ba</manufacturer>
 		<rom name="kidou keisatsu patlabor - 98-shiki kidou seyo! (jpn).bin" size="524288" crc="21a0e749"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kof99">
+		<description>King of Fighters '99, The (Unl)</description>
+		<year>1999</year>
+		<manufacturer>X Boy</manufacturer>
+		<rom name="the king of fighters 99 (unl).bin" size="3145728" crc="54638c11"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9841,9 +9908,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingsbtys" cloneof="kingsbty" romof="kingsbty">
+		<comment>Hack</comment>
 		<description>King's Bounty - The Conqueror's Quest (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="king's bounty - the conqueror's quest (hack, spanish).bin" size="524288" crc="06f79c46"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9858,7 +9926,7 @@
 	</game>
 	<game name="kissshot">
 		<description>Kiss Shot (Jpn, SegaNet)</description>
-		<year>1991</year>
+		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="kiss shot (jpn) (sn).bin" size="262144" crc="e487088c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -9897,10 +9965,11 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kolobok">
-		<description>Kolobok ~ Pyramid (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+	<game name="kolobok" cloneof="uwol" romof="uwol">
+		<comment>Homebrew</comment>
+		<description>Kolobok ~ Pyramid (HB, Rus) (Unl)</description>
+		<year>201?</year>
+		<manufacturer>Kudos</manufacturer>
 		<rom name="kolobok.bin" size="131072" crc="c4c55bab"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9939,9 +10008,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="krustys" cloneof="krusty" romof="krusty">
+		<comment>Hack</comment>
 		<description>Krusty's Super Fun House (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Flying Edge</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="krusty's super fun house (hack, spanish).bin" size="524288" crc="e3a453db"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9956,8 +10026,8 @@
 	</game>
 	<game name="kfpanda2" cloneof="brutal" romof="brutal">
 		<comment>Hack</comment>
-		<description>Kung Fu Panda 2 (Rus)</description>
-		<year>199?</year>
+		<description>Kung Fu Panda 2 (Rus) (Unl)</description>
+		<year>201?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="kung fu panda 2 (unl).bin" size="4194304" crc="a08c3b25"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -9973,7 +10043,7 @@
 	</game>
 	<game name="kuzyaeo" cloneof="chukrck2" romof="chukrck2">
 		<comment>Hack</comment>
-		<description>Kuzya - Ekologiya V Opasnosti (Unl) (Rus)</description>
+		<description>Kuzya - Ekologiya V Opasnosti (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="agent hugo - environment at risk (unl).bin" size="2097152" crc="be32d65b"/>
@@ -9982,7 +10052,7 @@
 	</game>
 	<game name="kuzyamd" cloneof="chukrck2" romof="chukrck2">
 		<comment>Hack</comment>
-		<description>Kuzya - V Mire Dinozavrov (Unl) (Rus)</description>
+		<description>Kuzya - V Mire Dinozavrov (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="agent hugo - in the world of dinosaurs (unl).bin" size="2097152" crc="bd0ebe1c"/>
@@ -10007,7 +10077,7 @@
 	</game>
 	<game name="labbaye">
 		<comment>Homebrew</comment>
-		<description>L'Abbaye Des Morts (HB)</description>
+		<description>L'Abbaye des Morts (HB)</description>
 		<year>2010</year>
 		<manufacturer>2010 Locomalito and Gryzor</manufacturer>
 		<rom name="20170907 - AbbayeMD.bin" size="3932160" crc="8865ee24"/>
@@ -10047,9 +10117,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="landstlkc" cloneof="landstlk" romof="landstlk">
+		<comment>Hack</comment>
 		<description>Landstalker - Koutei no Zaihou (T-Chi)</description>
 		<year>2007</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Yi Zhi Zhi Lu</manufacturer>
 		<rom name="landstalker - koutei no zaihou (T-Chi).bin" size="2293760" crc="d2982a65"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10071,9 +10142,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="landstlks" cloneof="landstlk" romof="landstlk">
+		<comment>Hack</comment>
 		<description>Landstalker - The Treasures of King Nole (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Paspallas</manufacturer>
 		<rom name="landstalker - the treasures of king nole (hack, spanish).bin" size="2359296" crc="019cb7a6"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10087,6 +10159,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="landstlkup" cloneof="landstlk" romof="landstlk">
+		<comment>Prototype</comment>
 		<description>Landstalker - Treasure of King Nole (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -10103,25 +10176,28 @@
 		<driver status="good"/>
 	</game>
 	<game name="langris2c" cloneof="langris2" romof="langris2">
+		<comment>Hack</comment>
 		<description>Langrisser Hikari II (T-Chi)</description>
 		<year>2015</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Xing Kong</manufacturer>
 		<rom name="Langrisser Hikari II (T-Chi).bin" size="2097152" crc="26233aee"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="langris2e" cloneof="langris2" romof="langris2">
+		<comment>Hack</comment>
 		<description>Langrisser II (Hack, English)</description>
 		<year>2011</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="langrisser ii (english translation).bin" size="2097152" crc="e8f28522"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="langris2s" cloneof="langris2" romof="langris2">
+		<comment>Hack</comment>
 		<description>Langrisser II (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Luceid</manufacturer>
 		<rom name="langrisser ii (hack, spanish).bin" size="2097152" crc="6ed77151"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10184,7 +10260,7 @@
 	</game>
 	<game name="legobatman">
 		<comment>Homebrew</comment>
-		<description>Lego Batman (HB, Rus)</description>
+		<description>Lego Batman (HB, Rus) (Unl)</description>
 		<year>2014</year>
 		<manufacturer>BMB</manufacturer>
 		<rom name="Lego Batman (Unl).bin" size="524288" crc="00da53a9"/>
@@ -10353,9 +10429,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="supmagic">
-		<description>Linghuan Daoshi Super Magician (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Linghuan Daoshi Super Magician (Chi) (Unl)</description>
+		<year>1994</year>
+		<manufacturer>Ming Super Chip</manufacturer>
 		<rom name="elf wor (chi) (unl).bin" size="1048576" crc="e24ac6b2"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10420,12 +10496,13 @@
 		<driver status="good"/>
 	</game>
 	<game name="long">
-		<description>Long (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<comment>No Sound</comment>
+		<description>Long (Tw) (Unl)</description>
+		<year>1993</year>
+		<manufacturer>Songtly &amp; Jumbo Team</manufacturer>
 		<rom name="long (chi) (unl).bin" size="262144" crc="1b86e623"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="preliminary"/>
+		<driver status="good"/>
 	</game>
 	<game name="lordmone" cloneof="lordmon" romof="lordmon">
 		<description>Lord Monarch - Legendary Battle Royale (Hack, English)</description>
@@ -10453,8 +10530,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lotrgs">
-		<description>Lord of the Rings - The Return of the King (Rus)</description>
-		<year>199?</year>
+		<description>Lord of the Rings - The Return of the King (Rus) (Unl)</description>
+		<year>200?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="lord of the rings (unl).bin" size="2097152" crc="513ea675"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -10543,7 +10620,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="maqiao">
-		<description>Ma Qiao E Mo Ta - Devilish Mahjong Tower (Chi)</description>
+		<description>Ma Qiao E Mo Ta - Devilish Mahjong Tower (Tw) (Unl)</description>
 		<year>1994</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="ma qiao e mo ta - devilish mahjong tower (chi) (unl).bin" size="1048576" crc="12e35994"/>
@@ -10569,8 +10646,8 @@
 	</game>
 	<game name="madagsc3" cloneof="dinotale" romof="dinotale">
 		<comment>Hack</comment>
-		<description>Madagascar 3 (Rus)</description>
-		<year>199?</year>
+		<description>Madagascar 3 (Rus) (Unl)</description>
+		<year>200?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="madagascar 3 (unl).bin" size="1048576" crc="0bd6d0a5"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -10634,7 +10711,7 @@
 	</game>
 	<game name="mafia" cloneof="dicktr" romof="dicktr">
 		<comment>Hack</comment>
-		<description>Mafia (Unl) (Rus)</description>
+		<description>Mafia (Rus) (Unl)</description>
 		<year>2010</year>
 		<manufacturer>BMB</manufacturer>
 		<rom name="mafia (unl).bin" size="1048576" crc="ede60834"/>
@@ -11058,7 +11135,7 @@
 	</game>
 	<game name="megabm8">
 		<comment>Demo</comment>
-		<description>Mega Bomberman - 8 Player Demo</description>
+		<description>Mega Bomberman - 8 Player Demo (Unl)</description>
 		<year>1994</year>
 		<manufacturer>Factor 5</manufacturer>
 		<rom name="mega bomberman - 8 player demo (unl).bin" size="1048576" crc="d41c0d81"/>
@@ -11066,7 +11143,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="casanova">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Adult game</comment>
 		<description>Mega Casanova (HB, v1.3)</description>
 		<year>2016</year>
 		<manufacturer>TLT, Tomahomae</manufacturer>
@@ -11075,19 +11152,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="casanova2">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Adult game</comment>
 		<description>Mega Casanova 2 (HB, v1.0)</description>
 		<year>2021</year>
-		<manufacturer>Tomahome，arekuse，TLT</manufacturer>
+		<manufacturer>TLT, Tomahomae</manufacturer>
 		<rom name="Mega Casanova 2 (W)(REV01)[!].bin" size="1788570" crc="6e570d41"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="casanova3">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Adult game</comment>
 		<description>Mega Casanova 3 (HB, v1.0)</description>
 		<year>2022</year>
-		<manufacturer>Tomahome, arekuse, TLT</manufacturer>
+		<manufacturer>TLT, Tomahomae</manufacturer>
 		<rom name="Mega Casanova 3 (W)(REV00)[!].bin" size="1341556" crc="b1bfedf9"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11387,9 +11464,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="menghu">
-		<description>Meng Huan Shui Guo Pan - 777 Casino (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Meng Huan Shui Guo Pan - 777 Casino (Tw) (Unl)</description>
+		<year>1996</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="meng huan shui guo pan - 777 casino (chi) (unl).bin" size="1048576" crc="42dc03e4"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11439,7 +11516,7 @@
 	</game>
 	<game name="mgs" cloneof="crkdown" romof="crkdown">
 		<comment>Hack</comment>
-		<description>Metal Gear Solid (Unl) (Rus)</description>
+		<description>Metal Gear Solid (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="metal gear solid (unl).bin" size="524288" crc="b38191eb"/>
@@ -11817,7 +11894,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mmprfe">
-		<description>Mighty Morphin Power Rangers - The Fighting Edition (Unl) (Rus)</description>
+		<description>Mighty Morphin Power Rangers - The Fighting Edition (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="mighty morphin power ranger - the fighting edition (unl).bin" size="2097152" crc="b53ff16c"/>
@@ -11978,19 +12055,19 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mk5a" cloneof="mk5" romof="mk5">
-		<description>MK 5 - Mortal Combat - SubZero (Pirate) (Uml)</description>
-		<year>1998</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
-		<rom name="mk 5 - mortal combat - subzero (unl) (pirate).bin" size="2097152" crc="41203006"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="mk5">
 		<description>MK 5 - Mortal Combat - SubZero (Unl)</description>
 		<year>1998</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="mk 5 - mortal combat - subzero (unl).bin" size="2097152" crc="11e367a1"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mk5a" cloneof="mk5" romof="mk5">
+		<description>MK 5 - Mortal Combat - SubZero (Unl)</description>
+		<year>1998</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="mk 5 - mortal combat - subzero (unl) (pirate).bin" size="2097152" crc="41203006"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12080,7 +12157,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="monstinc" cloneof="decapatt" romof="decapatt">
-		<description>Monsters, Inc. (Rus)</description>
+		<description>Monsters, Inc. (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="monsters inc. (unl).bin" size="524288" crc="3f4657d5"/>
@@ -12399,7 +12476,7 @@
 	</game>
 	<game name="narnia3" cloneof="galahad" romof="galahad">
 		<comment>Hack</comment>
-		<description>Narnia 3 (Unl) (Rus)</description>
+		<description>Narnia 3 (Rus) (Unl)</description>
 		<year>200?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="narnia 3 (unl).bin" size="1220032" crc="ab69bcd3"/>
@@ -15783,8 +15860,8 @@
 	<game name="rickdang">
 		<comment>Homebrew</comment>
 		<description>Rick Dangerous (HB, Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>2011</year>
+		<manufacturer>Foxy and Pascal</manufacturer>
 		<rom name="rick dangerous (unl).bin" size="4063232" crc="545cbbe4"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16463,7 +16540,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sanguo5">
-		<description>San Guo Zhi V (Chi)</description>
+		<description>San Guo Zhi V (Chi) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>SKOB</manufacturer>
 		<rom name="san guo zhi v (chi) (unl).bin" size="2097152" crc="cd7e53d0"/>
@@ -16948,7 +17025,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shijie">
-		<description>Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94 (Chi)</description>
+		<description>Shi Jie Zhi Bang Zheng Ba Zhan - World Pro Baseball 94 (Tw) (Unl)</description>
 		<year>1994</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="shi jie zhi bang zheng ba zhan - world pro baseball 94 (chi) (unl).bin" size="2097152" crc="72dd884f"/>
@@ -17267,7 +17344,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shuihu">
-		<description>Shui Hu - Feng Yun Zhuan (Chi)</description>
+		<description>Shui Hu - Feng Yun Zhuan (Chi) (Unl)</description>
 		<year>1999</year>
 		<manufacturer>Never Ending Soft Team</manufacturer>
 		<rom name="shui hu - feng yun zhuan (chi) (unl).bin" size="2097152" crc="3e9e010c"/>
@@ -17275,7 +17352,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shuihuzh">
-		<description>Shui Hu Zhuan (Chi)</description>
+		<description>Shui Hu Zhuan (Chi) (Unl)</description>
 		<year>1996</year>
 		<manufacturer>Chuanpu Technologies</manufacturer>
 		<rom name="shui hu zhuan (chi) (unl).bin" size="2097152" crc="61e458c3"/>
@@ -17458,7 +17535,7 @@
 	</game>
 	<game name="snezkoro" cloneof="mickmack" romof="mickmack">
 		<comment>Hack</comment>
-		<description>Snezhnaya Koroleva (Unl) (Rus)</description>
+		<description>Snezhnaya Koroleva (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="snow queen (unl).bin" size="2097152" crc="e6c07946"/>
@@ -17889,10 +17966,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicjam1" cloneof="sonicjam" romof="sonicjam">
-		<description>Sonic Jam 6 (Alt)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Sonic Jam 6 (Alt) (Chi) (Unl)</description>
+		<year>1998</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="sonic jam 6 (unl) (pirate).bin" size="2097152" crc="04f0c93e"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="preliminary"/>
+	</game>
+	<game name="sonicjam">
+		<description>Sonic Jam 6 (Chi) (Unl)</description>
+		<year>1998</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="sonic jam 6 (unl).bin" size="2097152" crc="bf39d897"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
@@ -17903,14 +17988,6 @@
 		<rom name="sonic_6.bin" size="2097152" crc="87d86501"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
-	</game>
-	<game name="sonicjam">
-		<description>Sonic Jam 6</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="sonic jam 6 (unl).bin" size="2097152" crc="bf39d897"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="preliminary"/>
 	</game>
 	<game name="sonicmmix" cloneof="sonic" romof="sonic">
 		<description>Sonic Megamix (Hack By Team Megamix V3.0)</description>
@@ -18262,17 +18339,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="soulblada" cloneof="soulblad" romof="soulblad">
-		<description>Soul Blade (Alt)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Soul Blade Super (Alt) (Unl)</description>
+		<year>1997</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="soul blade (unl)[p].bin" size="3145728" crc="dd1c7a79"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="soulblad">
-		<description>Soul Blade</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Soul Blade Super (Unl)</description>
+		<year>1997</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="soul blade (unl).bin" size="4194304" crc="f26f88d1"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18506,7 +18583,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spiritwf">
-		<description>Spiritual Warfare (USA)</description>
+		<description>Spiritual Warfare (USA) (Unl)</description>
 		<year>1994</year>
 		<manufacturer>Wisdom Tree</manufacturer>
 		<rom name="spiritual warfare (usa) (unl).bin" size="524288" crc="d9a364ff"/>
@@ -18590,7 +18667,7 @@
 	</game>
 	<game name="spongbob" cloneof="coolspot" romof="coolspot">
 		<comment>Hack</comment>
-		<description>Sponge Bob (Unl) (Rus)</description>
+		<description>Sponge Bob (Rus) (Unl)</description>
 		<year>20??</year>
 		<manufacturer>KDS</manufacturer>
 		<rom name="sponge bob.bin" size="1048576" crc="c5437496"/>
@@ -18639,9 +18716,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="squirrel">
-		<description>Squirrel King (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Squirrel King (Tw) (Unl)</description>
+		<year>1995</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="squirrel king (chi) (unl).bin" size="1048576" crc="b8261ff5"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18768,7 +18845,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwars" cloneof="elimdown" romof="elimdown">
-		<description>Star Wars (Rus)</description>
+		<description>Star Wars (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="star wars (unl).bin" size="1048576" crc="94af8d44"/>
@@ -18776,7 +18853,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="starjedi" cloneof="wolfchld" romof="wolfchld">
-		<description>Star Wars Jedi (Rus)</description>
+		<description>Star Wars Jedi (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="star wars jedi (unl).bin" size="1220816" crc="48c5bf60"/>
@@ -19698,9 +19775,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="suprbubl">
-		<description>Super Bubble Bobble MD (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Super Bubble Bobble MD (Tw) (Unl)</description>
+		<year>1995</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="super bubble bobble (chi) (unl).bin" size="1048576" crc="4820a161"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19746,9 +19823,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sfzones" cloneof="sfzone" romof="sfzone">
+		<comment>Hack</comment>
 		<description>Super Fantasy Zone (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="super fantasy zone (hack, spanish).bin" size="1048576" crc="e79f6216"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19770,9 +19848,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="shangons" cloneof="shangon" romof="shangon">
+		<comment>Hack</comment>
 		<description>Super Hang-On (Hack, Spanish)</description>
-		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="super hang-on (hack, spanish).bin" size="524288" crc="9586e314"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19797,7 +19876,7 @@
 		<comment>Hack</comment>
 		<description>Super Hang-On Enhanced (Hack)</description>
 		<year>2018</year>
-		<manufacturer>Sega - Pyron</manufacturer>
+		<manufacturer>Pyron</manufacturer>
 		<rom name="super hang-on enhanced.bin" size="524288" crc="ff381fed"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19876,17 +19955,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="smario2a" cloneof="smario2" romof="smario2">
-		<description>Super Mario 2 (Alt?)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Super Mario 2 (Alt?) (Unl)</description>
+		<year>1998</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="super_mario_2.bin" size="2097152" crc="0da6dc4b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
 	<game name="smario2">
-		<description>Super Mario 2 1998</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Super Mario 2 (Unl)</description>
+		<year>1998</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="super mario 2 1998 (unl).bin" size="2097152" crc="f7e1b3e1"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19923,27 +20002,27 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
-	<game name="smb">
-		<description>Super Mario World ~ Super Mario Bros. (Pirate)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="super mario bros. (unl).bin" size="2097152" crc="9cfa2bd8"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="smbb" cloneof="smb" romof="smb">
-		<description>Super Mario World ~ Super Mario Bros. (Pirate, Alt 2)</description>
+		<description>Super Mario World ~ Super Mario Bros. (Alt 2) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="super mario world (unl) (pirate).bin" size="2097152" crc="97c2695e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="smba" cloneof="smb" romof="smb">
-		<description>Super Mario World ~ Super Mario Bros. (Pirate, Alt)</description>
+		<description>Super Mario World ~ Super Mario Bros. (Alt) (Unl)</description>
+		<year>199?</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="super mario world (unl).bin" size="2097152" crc="cf540ba6"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smb">
+		<description>Super Mario World ~ Super Mario Bros. (Pirate)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="super mario world (unl).bin" size="2097152" crc="cf540ba6"/>
+		<rom name="super mario bros. (unl).bin" size="2097152" crc="9cfa2bd8"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20489,7 +20568,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="taiwan">
-		<description>Taiwan Daheng (Chi)</description>
+		<description>Taiwan Daheng (Tw) (Unl)</description>
 		<year>1994</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="taiwan daheng (chi) (unl).bin" size="1048576" crc="baf20f81"/>
@@ -21096,7 +21175,7 @@
 	</game>
 	<game name="incredib" cloneof="tick" romof="tick">
 		<comment>Hack</comment>
-		<description>The Incredibles (Rus)</description>
+		<description>The Incredibles (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="the incredibles (unl).bin" size="2097152" crc="31f7af7c"/>
@@ -21120,18 +21199,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof99a" cloneof="kof99" romof="kof99">
-		<description>The King of Fighters '99 (Alt)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>The King of Fighters '99, The (Alt) (Unl)</description>
+		<year>1999</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="king of fighters 99 (unl).bin" size="3145728" crc="ab82afbe"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="kof99">
-		<description>The King of Fighters '99</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
-		<rom name="the king of fighters 99 (unl).bin" size="3145728" crc="54638c11"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21328,6 +21399,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="thundpaw">
+		<comment>Homebrew</comment>
+		<description>Thunder Paw (HB)</description>
+		<year>2021</year>
+		<manufacturer>PSCD Games</manufacturer>
+		<rom name="Thunder Paw (2021)(PSCD Games).bin" size="3014656" crc="81858c5b"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tpwres">
 		<description>Thunder Pro Wrestling Retsuden (Jpn)</description>
 		<year>1992</year>
@@ -21354,6 +21434,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tbolt2a">
+		<comment>Prototype</comment>
 		<description>Thunderbolt II (Unprotected, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>SUN GREEN</manufacturer>
@@ -21626,9 +21707,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="tomclown">
-		<description>Tom Clown (Tw)</description>
+		<description>Tom Clown (Tw) (Unl)</description>
 		<year>1993</year>
-		<manufacturer>&lt;unlicensed&gt; Realtec</manufacturer>
+		<manufacturer>Realtec</manufacturer>
 		<rom name="tom clown (unl) [f1].bin" size="524288" crc="bd741108"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21741,17 +21822,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingcole" cloneof="kingcol" romof="kingcol">
+		<comment>Hack</comment>
 		<description>Tougiou King Colossus (Hack, English)</description>
 		<year>2006</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="tougiou king colossus (english translation).bin" size="1048576" crc="016afd40"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="kingcols" cloneof="kingcol" romof="kingcol">
+		<comment>Hack</comment>
 		<description>Tougiou King Colossus (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Luceid</manufacturer>
 		<rom name="tougiou king colossus (hack, spanish).bin" size="1048576" crc="a6c9e0b6"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21912,9 +21995,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="trueliess" cloneof="truelies" romof="truelies">
+		<comment>Hack</comment>
 		<description>True Lies (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Acclaim</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="true lies (hack, spanish).bin" size="2097152" crc="97821532"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21944,17 +22028,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="tunshi1" cloneof="tunshi" romof="tunshi">
-		<description>Tun Shi Tian Di III (Chi)</description>
-		<year>199?</year>
+		<description>Tun Shi Tian Di III (Chi) (Unl)</description>
+		<year>1997</year>
 		<manufacturer>SKOB</manufacturer>
 		<rom name="tun shi tian di iii (chi) (unl).bin" size="2097152" crc="b23c4166"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="tunshi">
-		<description>Tun Shi Tian Di III (China, Simple Chinese)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Tun Shi Tian Di III (China, Simple Chinese) (Unl)</description>
+		<year>1997</year>
+		<manufacturer>SKOB</manufacturer>
 		<rom name="tun shi tian di iii (chi) (simple chinese) (unl).bin" size="2097152" crc="ea57b668"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21977,9 +22061,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="toutruns" cloneof="toutrun" romof="toutrun">
+		<comment>Hack</comment>
 		<description>Turbo OutRun (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="turbo outrun (hack, spanish).bin" size="524288" crc="5ee9ce5b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22010,33 +22095,37 @@
 		<driver status="good"/>
 	</game>
 	<game name="turricanf" cloneof="turrican" romof="turrican">
+		<comment>Hack</comment>
 		<description>Turrican (Hack, Colors and Lifebar Fix)</description>
 		<year>2015</year>
-		<manufacturer>Ballistic - Linkuei &amp; Helder</manufacturer>
+		<manufacturer>Linkuei &amp; Helder</manufacturer>
 		<rom name="Turrican (USA, fixed Linkuei and Helder).bin" size="524288" crc="60f8bbdd"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="turricans" cloneof="turrican" romof="turrican">
+		<comment>Hack</comment>
 		<description>Turrican (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Accolade</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="turrican (hack, spanish).bin" size="524288" crc="29991d29"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="twincobrgfx" cloneof="twincobr" romof="twincobr">
+		<comment>Hack</comment>
 		<description>Twin Cobra (Hack, Arcade GFX v2.0)</description>
 		<year>2016</year>
-		<manufacturer>Sega - fusaru</manufacturer>
+		<manufacturer>fusaru</manufacturer>
 		<rom name="twin cobra (arcade gfx v2.0).md" size="704120" crc="88ea1e4e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="twincobrs" cloneof="twincobr" romof="twincobr">
+		<comment>Hack</comment>
 		<description>Twin Cobra (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="twin cobra (hack, spanish).bin" size="655360" crc="8102ceea"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22050,9 +22139,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="twinhawkgfx" cloneof="twinhawk" romof="twinhawk">
+		<comment>Hack</comment>
 		<description>Twin Hawk (Arcade GFX)</description>
 		<year>2017</year>
-		<manufacturer>Sega - fusaru</manufacturer>
+		<manufacturer>fusaru</manufacturer>
 		<rom name="twin hawk (arcade gfx).md" size="524288" crc="abd8ce33"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22066,25 +22156,28 @@
 		<driver status="good"/>
 	</game>
 	<game name="twinhawks" cloneof="twinhawk" romof="twinhawk">
+		<comment>Hack</comment>
 		<description>Twin Hawk (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="twin hawk (hack, spanish).bin" size="524288" crc="42115f8e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="twinklete" cloneof="twinklet" romof="twinklet">
+		<comment>Hack</comment>
 		<description>Twinkle Tale (Hack, English)</description>
 		<year>2007</year>
-		<manufacturer>Toyo Records</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="twinkle tale (english translation).bin" size="1048576" crc="0c43b66b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="twinklets" cloneof="twinklet" romof="twinklet">
+		<comment>Hack</comment>
 		<description>Twinkle Tale (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Toyo Recording Group</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="twinkle tale (hack, spanish).bin" size="1048576" crc="cacdb98e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22092,7 +22185,7 @@
 	<game name="twinklet">
 		<description>Twinkle Tale (Jpn)</description>
 		<year>1992</year>
-		<manufacturer>Toyo Records</manufacturer>
+		<manufacturer>Toyo Recording Co.</manufacturer>
 		<rom name="twinkle tale (jpn).bin" size="1048576" crc="d757f924"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22682,9 +22775,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="vf2tek">
-		<description>Virtua Fighter 2 vs Tekken 2</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Virtua Fighter 2 vs Tekken 2 (Unl)</description>
+		<year>1997</year>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="virtua fighter 2 vs tekken 2 (unl).bin" size="2097152" crc="2cdb499d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24061,9 +24154,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="wukong">
-		<description>Wu Kong Wai Zhuan (Chi)</description>
+		<description>Wu Kong Wai Zhuan (Chi) (Unl)</description>
 		<year>1996</year>
-		<manufacturer>Ming</manufacturer>
+		<manufacturer>Ming Super Chip</manufacturer>
 		<rom name="wu kong wai zhuan (chi) (unl).bin" size="2097152" crc="880a916e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24380,15 +24473,15 @@
 		<driver status="good"/>
 	</game>
 	<game name="xiaomo">
-		<description>Xiao Monv - Magic Girl (Chi)</description>
+		<description>Xiao Monv - Magic Girl (Tw) (Unl)</description>
 		<year>1993</year>
-		<manufacturer>&lt;unlicensed&gt; Gamtec</manufacturer>
+		<manufacturer>Gamtec</manufacturer>
 		<rom name="xiao monv - magic girl (chi) (unl).bin" size="524288" crc="8e49a92e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="xinqig">
-		<description>Xin Qi Gai Wang Zi (Chi)</description>
+		<description>Xin Qi Gai Wang Zi (Chi) (Unl)</description>
 		<year>1996</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="xin qi gai wang zi (chi) (unl).bin" size="4194304" crc="dd2f38b5"/>
@@ -24396,7 +24489,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="xinqig1" cloneof="xinqig" romof="xinqig">
-		<description>Xin Qi Gai Wang Zi (Chi, Alt)</description>
+		<description>Xin Qi Gai Wang Zi (Chi, Alt) (Unl)</description>
 		<year>1996</year>
 		<manufacturer>C&amp;E</manufacturer>
 		<rom name="xin qi gai wang zi (chi) (alt) (unl).bin" size="4194304" crc="da5a4bfe"/>
@@ -24422,17 +24515,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="yasech">
-		<description>Ya Se Chuan Shuo (Chi)</description>
+		<description>Ya Se Chuan Shuo (Chi) (Unl)</description>
 		<year>1995</year>
-		<manufacturer>Chuanpu Technologies</manufacturer>
+		<manufacturer>Ming Super Chip</manufacturer>
 		<rom name="ya se chuan shuo (chi) (unl).bin" size="2097152" crc="095b9a15"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="yangji">
-		<description>Yang Jia Jiang - Yang Warrior Family (Chi)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Yang Jia Jiang - Yang Warrior Family (Chi) (Unl)</description>
+		<year>1990</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="yang jia jiang - yang warrior family (chi) (unl).bin" size="2097152" crc="6604a79e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24560,9 +24653,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="zeros" cloneof="zero" romof="zero">
+		<comment>Hack</comment>
 		<description>Zero the Kamikaze Squirrel (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sunsoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="zero the kamikaze squirrel (hack, spanish).bin" size="2097152" crc="c1eae5e7"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24593,9 +24687,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="zerowings" cloneof="zerowing" romof="zerowing">
+		<comment>Hack</comment>
 		<description>Zero Wing (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="zero wing (hack, spanish).bin" size="1048576" crc="75e2703f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24609,9 +24704,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="zerowingc" cloneof="zerowing" romof="zerowing">
+		<comment>Hack</comment>
 		<description>Zero Wing (T-Chi)</description>
-		<year>1991</year>
-		<manufacturer>Toaplan</manufacturer>
+		<year>200?</year>
+		<manufacturer>Bear Team</manufacturer>
 		<rom name="zero wing (T-Chi).bin" size="1048576" crc="7218212f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24665,9 +24761,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="zools" cloneof="zool" romof="zool">
+		<comment>Hack</comment>
 		<description>Zool (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="zool (hack, spanish).bin" size="1048576" crc="b26abdbc"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

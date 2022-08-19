@@ -1,7 +1,8 @@
 // Functions for recording & replaying input
 #include "burner.h"
-#include "dynhuff.h"
+//#include "dynhuff.h"
 #include <commdlg.h>
+#include "inputbuf.h"
 
 #include <io.h>
 
@@ -36,7 +37,7 @@ UINT8 *ReplayExternalData = NULL;
 #define MOVIE_FLAG_FROM_POWERON			(1<<1)
 #define MOVIE_FLAG_WITH_NVRAM			(1<<2) // to be used w/FROM_POWERON (if selected)
 
-const UINT32 nMovieVersion = 0x0402;
+const UINT32 nMovieVersion = 0x0403;
 UINT32 nThisMovieVersion = 0;
 UINT32 nThisFBVersion = 0;
 
@@ -83,25 +84,25 @@ INT32 RecordInput()
 		if (bii.pVal) {
 			if (bii.nType & BIT_GROUP_ANALOG) {
 				if (*bii.pShortVal != nPrevInputs[i]) {
-					EncodeBuffer(i);
-					EncodeBuffer(*bii.pShortVal >> 8);
-					EncodeBuffer(*bii.pShortVal & 0xFF);
+					inputbuf_addbuffer(i);
+					inputbuf_addbuffer(*bii.pShortVal >> 8);
+					inputbuf_addbuffer(*bii.pShortVal & 0xFF);
 					nPrevInputs[i] = *bii.pShortVal;
 				}
 			} else {
 				if (*bii.pVal != nPrevInputs[i]) {
-					EncodeBuffer(i);
-					EncodeBuffer(*bii.pVal);
+					inputbuf_addbuffer(i);
+					inputbuf_addbuffer(*bii.pVal);
 					nPrevInputs[i] = *bii.pVal;
 				}
 			}
 		}
 	}
-	EncodeBuffer(0xFF);
+	inputbuf_addbuffer(0xFF);
 
 	if (nReplayExternalDataCount && ReplayExternalData) {
 		for (INT32 i = 0; i < nReplayExternalDataCount; i++) {
-			EncodeBuffer(ReplayExternalData[i]);
+			inputbuf_addbuffer(ReplayExternalData[i]);
 		}
 	}
 
@@ -277,22 +278,22 @@ INT32 ReplayInput()
 	}
 
 	// Now read all inputs that need to change from the .fr file
-	while ((n = DecodeBuffer()) != 0xFF) {
+	while ((n = inputbuf_getbuffer()) != 0xFF) {
 		BurnDrvGetInputInfo(&bii, n);
 		if (bii.pVal) {
 			if (bii.nType & BIT_GROUP_ANALOG) {
-				*bii.pShortVal = nPrevInputs[n] = (DecodeBuffer() << 8) | DecodeBuffer();
+				*bii.pShortVal = nPrevInputs[n] = (inputbuf_getbuffer() << 8) | inputbuf_getbuffer();
 			} else {
-				*bii.pVal = nPrevInputs[n] = DecodeBuffer();
+				*bii.pVal = nPrevInputs[n] = inputbuf_getbuffer();
 			}
 		} else {
-			DecodeBuffer();
+			inputbuf_getbuffer();
 		}
 	}
 
 	if (nReplayExternalDataCount && ReplayExternalData) {
 		for (INT32 i = 0; i < nReplayExternalDataCount; i++) {
-			ReplayExternalData[i] = DecodeBuffer();
+			ReplayExternalData[i] = inputbuf_getbuffer();
 		}
 	}
 
@@ -310,7 +311,7 @@ INT32 ReplayInput()
 	}
 #endif
 
-	if (end_of_buffer) {
+	if (inputbuf_eof()) {
 		StopReplay();
 		return 1;
 	} else {
@@ -437,7 +438,8 @@ INT32 StartRecord()
 				}
 				fwrite(&nBurnVer, 1, 4, fp);			// fb version#
 
-				nRet = EmbedCompressedFile(fp, -1);
+				//nRet = EmbedCompressedFile(fp, -1);
+				nRet = inputbuf_embed(fp);
 			}
 		}
 	}
@@ -470,15 +472,15 @@ INT32 StartRecord()
 			BurnDrvGetInputInfo(&bii, i);
 			if (bii.pVal) {
 				if (bii.nType & BIT_GROUP_ANALOG) {
-					EncodeBuffer(*bii.pShortVal >> 8);
-					EncodeBuffer(*bii.pShortVal & 0xFF);
+					inputbuf_addbuffer(*bii.pShortVal >> 8);
+					inputbuf_addbuffer(*bii.pShortVal & 0xFF);
 					nPrevInputs[i] = *bii.pShortVal;
 				} else {
-					EncodeBuffer(*bii.pVal);
+					inputbuf_addbuffer(*bii.pVal);
 					nPrevInputs[i] = *bii.pVal;
 				}
 			} else {
-				EncodeBuffer(0);
+				inputbuf_addbuffer(0);
 			}
 		}
 
@@ -607,8 +609,8 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 
 					// Seek back to the beginning of compressed data
 					fseek(fp, nEmbedPosition, SEEK_SET);
-					nRet = EmbedCompressedFile(fp, -1);
-
+					//nRet = EmbedCompressedFile(fp, -1);
+					nRet = inputbuf_embed(fp);
 				}
 			}
 		}
@@ -661,20 +663,20 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 		struct BurnInputInfo bii;
 		memset(&bii, 0, sizeof(bii));
 
-		LoadCompressedFile();
+		inputbuf_load();
 
 		// Get the baseline
 		for (UINT32 i = 0; i < nGameInpCount; i++) {
 			BurnDrvGetInputInfo(&bii, i);
 			if (bii.pVal) {
 				if (bii.nType & BIT_GROUP_ANALOG) {
-					*bii.pShortVal = nPrevInputs[i] = (DecodeBuffer() << 8) | DecodeBuffer();
+					*bii.pShortVal = nPrevInputs[i] = (inputbuf_getbuffer() << 8) | inputbuf_getbuffer();
 
 				} else {
-					*bii.pVal = nPrevInputs[i] = DecodeBuffer();
+					*bii.pVal = nPrevInputs[i] = inputbuf_getbuffer();
 				}
 			} else {
-				DecodeBuffer();
+				inputbuf_getbuffer();
 			}
 		}
 	}
@@ -690,7 +692,7 @@ static void CloseRecord()
 {
 	INT32 nFrames = GetCurrentFrame() - nStartFrame;
 
-	WriteCompressedFile();
+	inputbuf_save();
 
 	fseek(fp, 0, SEEK_END);
 	INT32 nMetadataOffset = ftell(fp);
@@ -730,7 +732,7 @@ static void CloseRecord()
 
 static void CloseReplay()
 {
-	CloseCompressedFile();
+	inputbuf_exit();
 
 	if(fp) {
 		fclose(fp);
@@ -750,7 +752,7 @@ void StopReplay()
 #endif
 			CloseRecord();
 #ifdef FBNEO_DEBUG
-			PrintResult();
+			//PrintResult();
 #endif
 		} else {
 #ifdef FBNEO_DEBUG
@@ -868,10 +870,10 @@ static void DisplayPropertiesError(HWND hDlg, INT32 nErrType)
 	if (hDlg != 0) {
 		switch (nErrType) {
 			case 0:
-				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Not a FBAlpha input recording file.\0"));
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Not a FBNeo input recording file.\0"));
 				break;
 			case 1:
-				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Incompatible file-type.  Try playback with an earlier version of FBAlpha.\0"));
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Incompatible file-type.  Try playback with an earlier version of FBNeo.\0"));
 				break;
 			case 2:
 				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Recording is corrupt :(\0"));
@@ -1052,6 +1054,11 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		fread(&MovieInfo, 1, sizeof(MovieInfo), fd);
 		bprintf(0, _T("Movie Version %X\n"), nThisMovieVersion);
 		bprintf(0, _T("Ext Info: %S\n"), ReplayDecodeDateTime());
+	}
+	if (nThisMovieVersion < 0x403) { // Uhoh, wrong format!
+		fclose(fd);
+		DisplayPropertiesError(hDlg, 1 /* most likely recorded w/ an earlier version */);
+		return;
 	}
 	fread(&nThisFBVersion, 1, 4, fd);
 

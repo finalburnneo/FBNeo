@@ -1,11 +1,7 @@
 // Driver Save State module
 #include "burner.h"
 
-// from dynhuff.cpp
-INT32 FreezeDecode(UINT8 **buffer, INT32 *size);
-INT32 UnfreezeDecode(const UINT8* buffer, INT32 size);
-INT32 FreezeEncode(UINT8 **buffer, INT32 *size);
-INT32 UnfreezeEncode(const UINT8* buffer, INT32 size);
+#include "inputbuf.h"
 
 // from replay.cpp
 INT32 FreezeInput(UINT8** buf, int* size);
@@ -235,12 +231,14 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 			INT32 ret=-1;
 			if(nReplayStatus == 1)
 			{
-				ret = UnfreezeEncode(buf, nChunkSize);
+				ret = inputbuf_unfreeze(buf, nChunkSize);
+				//ret = UnfreezeEncode(buf, nChunkSize);
 				++nReplayUndoCount;
 			}
 			else if(nReplayStatus == 2)
 			{
-				ret = UnfreezeDecode(buf, nChunkSize);
+				ret = inputbuf_unfreeze(buf, nChunkSize);
+				//ret = UnfreezeDecode(buf, nChunkSize);
 			}
 			if(ret)                                             { nRet = -1;  break; }
 
@@ -477,11 +475,13 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 
 		if(nReplayStatus == 1)
 		{
-			ret = FreezeEncode(&huff_buf, &huff_size);
+			ret = inputbuf_freeze(&huff_buf, &huff_size);
+			//ret = FreezeEncode(&huff_buf, &huff_size);
 		}
 		else if(nReplayStatus == 2)
 		{
-			ret = FreezeDecode(&huff_buf, &huff_size);
+			ret = inputbuf_freeze(&huff_buf, &huff_size);
+			//ret = FreezeDecode(&huff_buf, &huff_size);
 		}
 
 		if(!ret &&

@@ -1092,7 +1092,17 @@ void MenuUpdate()
 	if (nAutoFireRate == 24) var = MENU_INPUT_AUTOFIRE_RATE_1;
 	CheckMenuRadioItem(hMenu, MENU_INPUT_AUTOFIRE_RATE_1, MENU_INPUT_AUTOFIRE_RATE_6, var, MF_BYCOMMAND);
 
-	MenuUpdateVolume(); // called in run.cpp by alt+ / alt-
+	// Rewind
+	CheckMenuItem(hMenu, MENU_INPUT_REWIND_ENABLED, bRewindEnabled ? MF_CHECKED : MF_UNCHECKED);
+
+	if (nRewindMemory == 128)  var = MENU_INPUT_REWIND_128MB;
+	if (nRewindMemory == 256)  var = MENU_INPUT_REWIND_256MB;
+	if (nRewindMemory == 512)  var = MENU_INPUT_REWIND_512MB;
+	if (nRewindMemory == 768)  var = MENU_INPUT_REWIND_768MB;
+	if (nRewindMemory == 1024) var = MENU_INPUT_REWIND_1GB;
+	CheckMenuRadioItem(hMenu, MENU_INPUT_REWIND_128MB, MENU_INPUT_REWIND_1GB, var, MF_BYCOMMAND);
+
+	MenuUpdateVolume(); // also called in run.cpp by alt+ / alt-
 
 #ifdef BUILD_A68K
 	CheckMenuItem(hMenu, MENU_ASSEMBLYCORE, bBurnUseASMCPUEmulation ? MF_CHECKED : MF_UNCHECKED);

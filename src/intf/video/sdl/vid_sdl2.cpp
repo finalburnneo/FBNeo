@@ -21,6 +21,8 @@ static int  nRotateGame = 0;
 static bool bFlipped = false;
 static SDL_Rect dstrect;
 static char Windowtitle[512];
+static int display_w = 400, display_h = 300;
+Uint32 screenFlags;
 
 extern UINT16 maxLinesMenu;	// sdl2_gui_ingame.cpp: number of lines to show in ingame menus
 extern bool didReinitialise;
@@ -71,17 +73,64 @@ static int Exit()
 	}
 	return 0;
 }
-static int display_w = 400, display_h = 300;
 
+void AdjustImageSize()
+{
+	screenFlags = SDL_GetWindowFlags(sdlWindow);
+
+	// Scale forced to "*2"
+	// Screen center fix thanks to Woises
+	if (nRotateGame) {
+		if (screenFlags & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_FULLSCREEN_DESKTOP)) {
+			int w;
+			int h;
+			SDL_GetWindowSize(sdlWindow, &w, &h);
+			SDL_SetWindowSize(sdlWindow, (display_w * w / h) * 2, display_w * 2);
+			SDL_RenderSetLogicalSize(sdlRenderer, (display_w * w / h), display_w);
+			dstrect.x = ((display_w * w / h) - display_w) / 2;
+		} else {
+			SDL_RestoreWindow(sdlWindow);		// If started fullscreen, switching to window can get maximized
+			SDL_SetWindowSize(sdlWindow, display_h * 2, display_w * 2);
+			SDL_RenderSetLogicalSize(sdlRenderer, display_h, display_w);
+			dstrect.x = (display_h - display_w) / 2;
+		}
+		dstrect.y = (display_w - display_h) / 2;
+		maxLinesMenu = display_w / 10 - 6;		// Get number of lines to show in ingame menus
+	} else {
+		if (screenFlags & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_FULLSCREEN_DESKTOP)) {
+			int w;
+			int h;
+			SDL_GetWindowSize(sdlWindow, &w, &h);
+			SDL_SetWindowSize(sdlWindow, (display_h * w / h) * 2, display_h * 2);
+
+			if (display_w < (display_h * w / h)) {
+				SDL_RenderSetLogicalSize(sdlRenderer, (display_h * w / h), display_h);
+				dstrect.x = ((display_h * w / h) - display_w) / 2;
+				dstrect.y = 0;
+			} else {
+				SDL_RenderSetLogicalSize(sdlRenderer, display_w, (display_w * h / w));
+				dstrect.x = 0;
+				dstrect.y = ((display_w * h / w) - display_h) / 2;
+			}
+		} else {
+			SDL_RestoreWindow(sdlWindow);
+			SDL_SetWindowSize(sdlWindow, display_w * 2, display_h * 2);
+			SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
+			dstrect.x = 0;
+			dstrect.y = 0;
+		}
+		maxLinesMenu = display_h / 10 - 6;		// Get number of lines to show in ingame menus
+	}
+	SDL_SetWindowPosition(sdlWindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	dstrect.w = display_w;
+	dstrect.h = display_h;
+}
 
 static int Init()
 {
 	int nMemLen = 0;
 	int GameAspectX = 4, GameAspectY = 3;
 
-#ifdef INCLUDE_SWITCHRES
-	sr_mode srm;
-#endif
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("vid init error\n");
@@ -94,44 +143,34 @@ static int Init()
 	if (bDrvOkay)
 	{
 		// Get the game screen size
-		BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
 		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
 		{
+#ifdef FBNEO_DEBUG
+			printf("Vertical\n");
+#endif
+			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
 			BurnDrvGetAspect(&GameAspectY, &GameAspectX);
+			nRotateGame = 1;
 		}
 		else
 		{
+			BurnDrvGetVisibleSize(&nVidImageWidth, &nVidImageHeight);
 			BurnDrvGetAspect(&GameAspectX, &GameAspectY);
 		}
 
-		display_w = nVidImageWidth;
 #ifdef INCLUDE_SWITCHRES
-		sr_init();
 		// Don't force 4:3 aspect-ratio, until there is a command-line switch
+		display_w = nVidImageWidth;
 		display_h = nVidImageHeight;
-		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
-		{
-			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-#ifdef FBNEO_DEBUG
-			printf("Vertical\n");
-#endif
-			nRotateGame = 1;
-			sr_set_rotation(1);
-			display_w = nVidImageWidth;
-			display_h = nVidImageHeight;
-		}
+		sr_init();
+		if (nRotateGame) sr_set_rotation(1);
 #else
-		display_h = nVidImageWidth * GameAspectY / GameAspectX;
-
-		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
-		{
-			BurnDrvGetVisibleSize(&nVidImageHeight, &nVidImageWidth);
-#ifdef FBNEO_DEBUG
-			printf("Vertical\n");
-#endif
-			nRotateGame = 1;
+		if (nRotateGame) {
 			display_w = nVidImageHeight * GameAspectX / GameAspectY;
 			display_h = nVidImageHeight;
+		} else {
+			display_w = nVidImageWidth;
+			display_h = nVidImageWidth * GameAspectY / GameAspectX;
 		}
 #endif
 
@@ -148,17 +187,8 @@ static int Init()
 
 	sprintf(Windowtitle, "FBNeo - %s - %s", BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_FULLNAME));
 
-	Uint32 screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
-
-	if (bAppFullscreen)
-	{
-		screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
-	}
-
-	dstrect.y = 0;
-	dstrect.x = 0;
-	dstrect.h = display_h;
-	dstrect.w = display_w;
+	if (bAppFullscreen) screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN_DESKTOP;
+	else screenFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
 
 	//Test refresh rate availability
 #ifdef FBNEO_DEBUG
@@ -166,6 +196,7 @@ static int Init()
 #endif
 
 #ifdef INCLUDE_SWITCHRES
+	sr_mode srm;
 	unsigned char interlace = 0; // FBN doesn't handle interlace yet, force it to disabled
 	double rr = nBurnFPS / 100.0;
 	sr_init_disp();
@@ -183,11 +214,6 @@ static int Init()
 			display_w,
 			screenFlags
 		);
-		dstrect.y = (display_w - display_h) / 2;
-		dstrect.x = (display_h - display_w) / 2;
-		dstrect.h = display_h;
-		dstrect.w = display_w;
-
 	}
 	else
 	{
@@ -248,27 +274,12 @@ static int Init()
 	}
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, videofiltering);
+
+	AdjustImageSize();
+
 #ifdef FBNEO_DEBUG
 	printf("setting logical size w: %d h: %d\n", display_w, display_h);
 #endif
-	if (nRotateGame)
-	{
-		maxLinesMenu = display_w / 10 - 6;		// Get number of lines to show in ingame menus
-		SDL_RenderSetLogicalSize(sdlRenderer, display_h, display_w);
-	}
-	else
-	{
-		maxLinesMenu = display_h / 10 - 6;		// Get number of lines to show in ingame menus
-		SDL_RenderSetLogicalSize(sdlRenderer, display_w, display_h);
-	}
-
-	// Force to scale * 2
-	// TODO
-	int w;
-	int h;
-	SDL_GetWindowSize(sdlWindow, &w, &h);
-	SDL_SetWindowSize(sdlWindow, w*2, h*2);
-	SDL_SetWindowPosition(sdlWindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	
 	inrenderer(sdlRenderer); //TODO: this is not supposed to be here
 	prepare_inline_font();   // TODO: BAD

@@ -31,6 +31,8 @@ extern SDL_Renderer* sdlRenderer;
 extern void ingame_gui_start(SDL_Renderer* renderer);
 /// Save States
 static char Windowtitle[512];
+
+extern void AdjustImageSize();		// vid_sdl2.cpp
 #endif
 
 int bDrvSaveAll = 0;
@@ -467,6 +469,7 @@ int RunMessageLoop()
 					if (event.key.keysym.mod & KMOD_ALT) 
 					{
 						SetFullscreen(!GetFullscreen());
+						AdjustImageSize();
 					}
 					break;
 #endif

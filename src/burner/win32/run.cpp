@@ -250,10 +250,6 @@ int RunFrame(int bDraw, int bPause)
 			RecordInput();						// Write input to file
 		}
 
-		if (kNetGame == 0) {                    // Rewind Implementation
-			StateRewindDoFrame(macroSystemRewind || bAppDoRewind, macroSystemRewindCancel, bRunPause);
-		}
-
 		if (bDraw) {                            // Draw Frame
 			nFramesRendered++;
 
@@ -278,6 +274,10 @@ int RunFrame(int bDraw, int bPause)
 		} else {								// frame skipping
 			pBurnDraw = NULL;					// Make sure no image is drawn
 			BurnDrvFrame();
+		}
+
+		if (kNetGame == 0) {                    // Rewind Implementation
+			StateRewindDoFrame(macroSystemRewind || bAppDoRewind, macroSystemRewindCancel, bRunPause);
 		}
 
 		if (bShowFPS) {

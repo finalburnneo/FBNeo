@@ -10,6 +10,9 @@
 
 #if defined(WIN32)
 #define THREADY THREADY_WINDOWS
+#ifndef UNICODE
+#define UNICODE
+#endif
 #include "windows.h"
 #endif
 

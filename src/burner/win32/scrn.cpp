@@ -2268,6 +2268,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_INPUT_AUTOFIRE_RATE_5: nAutoFireRate =  4; break;
 		case MENU_INPUT_AUTOFIRE_RATE_6: nAutoFireRate =  2; break;
 
+		case MENU_INPUT_REWIND_ENABLED: bRewindEnabled = !bRewindEnabled; break;
+		case MENU_INPUT_REWIND_128MB: nRewindMemory = 128; break;
+		case MENU_INPUT_REWIND_256MB: nRewindMemory = 256; break;
+		case MENU_INPUT_REWIND_512MB: nRewindMemory = 512; break;
+		case MENU_INPUT_REWIND_768MB: nRewindMemory = 768; break;
+		case MENU_INPUT_REWIND_1GB: nRewindMemory = 1024; break;
+
 		case MENU_PRIORITY_REALTIME: // bad idea, this will freeze the entire system.
 			break;
 		case MENU_PRIORITY_HIGH:

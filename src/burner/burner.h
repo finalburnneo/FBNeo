@@ -74,6 +74,11 @@ typedef struct tagIMAGE {
 #define FIND_WS(s) while (*s && !_istspace(*s)) { s++; }	// Find whitespace
 #define FIND_QT(s) while (*s && *s != _T('\"')) { s++; }	// Find quote
 
+// burn/burn.cpp
+extern INT32 bRewindEnabled;
+extern INT32 nRewindMemory;
+
+
 // image.cpp
 extern int bPngImageOrientation;
 void img_free(IMAGE* img);
@@ -146,6 +151,8 @@ extern UINT8 macroSystemFrame;
 extern UINT8 macroSystemSaveState;
 extern UINT8 macroSystemLoadState;
 extern UINT8 macroSystemUNDOState;
+extern UINT8 macroSystemRewind;
+extern UINT8 macroSystemRewindCancel;
 extern UINT8 macroSystemSlowMo[5];
 extern UINT8 macroSystemLuaHotkey1;
 extern UINT8 macroSystemLuaHotkey2;

@@ -7,7 +7,7 @@ depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o
 			media.o memcard.o menu.o misc_win32.o neocdlist.o neocdsel.o numdial.o paletteviewer.o placeholder.o popup_win32.o \
 			progress.o replay.o res.o roms.o run.o scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
 			\
-			conc.o cong.o dat.o dynhuff.o gamc.o gami.o image.o ioapi.o misc.o nvram.o sshot.o state.o statec.o unzip.o zipfn.o \
+			conc.o cong.o dat.o inputbuf.o gamc.o gami.o image.o ioapi.o misc.o nvram.o sshot.o state.o statec.o unzip.o zipfn.o \
 			luaconsole.o luaengine.o luasav.o \
 			\
 			lapi.o lauxlib.o lbaselib.o lcode.o ldblib.o ldebug.o ldo.o ldump.o lfunc.o lgc.o linit.o liolib.o llex.o \

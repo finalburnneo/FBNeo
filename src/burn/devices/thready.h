@@ -10,7 +10,7 @@
 
 #if defined(WIN32)
 #define THREADY THREADY_WINDOWS
-#if !defined(UNICODE) && !defined(__LIBRETRO__)
+#if !defined(UNICODE) && defined(BUILD_WIN32)
 #define UNICODE
 #endif
 #include "windows.h"

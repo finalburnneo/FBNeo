@@ -1051,7 +1051,7 @@ void StateRunAheadLoad()
 // --------- State-ing for Rewind ----------
 
 // TODO:
-//  if recording, don't rewind back before recording started
+//  if recording from "savestate", don't rewind back before recording started
 //  MAYBE move from burn.cpp to burner/win32/rewind.cpp
 
 enum {
@@ -1117,7 +1117,6 @@ void StateRewindExit()
 		free (pRewindIndex);
 	}
 
-	//StateRewindInit(); // clear variables
 	thready.exit();
 }
 
@@ -1152,11 +1151,9 @@ static INT32 StateRewindGetSize()
 	return nTotalLenRewind;
 }
 
-// ---- once moved to burner/??/rewind.cpp, these forwards go away ----
-// burner stuff
+// exported from replay.cpp
 extern int nReplayStatus;
 extern UINT32 nStartFrame;
-// replay.cpp
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
 #include "inputbuf.h"
@@ -1285,48 +1282,37 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 		}
 
 		if (nReplayStatus != 0) { // recording / playing inputs
-			UINT8* huff_buf = NULL;
-			INT32 huff_size;
 			UINT8* input_buf = NULL;
 			INT32 input_size;
-			INT32 ret = 1;
+			UINT8* inputstat_buf = NULL;
+			INT32 inputstat_size;
 
-			switch (nReplayStatus) {
-				//case 1:	ret = FreezeEncode(&huff_buf, &huff_size); break;
-				//case 2:	ret = FreezeDecode(&huff_buf, &huff_size); break;
-				case 1:
-				case 2: ret = inputbuf_freeze(&huff_buf, &huff_size); break;
-				default: bprintf(0, _T("StateRewindFrame(): broken nReplayStatus %x\n"), nReplayStatus); break;
-			}
-
-			if (ret) bprintf(0, _T("nReplayStatus: %x  Bad retval from FreezeEn/Decode!! %x\n"), nReplayStatus, ret);
-
-			if (!ret && !FreezeInput(&input_buf, &input_size))
+			if (!inputbuf_freeze(&input_buf, &input_size) && !FreezeInput(&inputstat_buf, &inputstat_size))
 			{
 				// point to end of state data
 				pRewindBuffer = RewindBuffer + pRewindIndex[nRewindFrames].pos +
 					pRewindIndex[nRewindFrames].len;
 
-				// huffman-encoded input data
-				// copy size
-				memcpy(pRewindBuffer, &huff_size, 4);
-				pRewindBuffer += 4;
-				// copy data
-				memcpy(pRewindBuffer, huff_buf, huff_size);
-				pRewindBuffer += huff_size;
-
-				// replay.cpp input status
+				// raw input data
 				// copy size
 				memcpy(pRewindBuffer, &input_size, 4);
 				pRewindBuffer += 4;
 				// copy data
 				memcpy(pRewindBuffer, input_buf, input_size);
-				pRewindBuffer += input_size; // done!
+				pRewindBuffer += input_size;
 
-				pRewindIndex[nRewindFrames].len += 4 + huff_size + 4 + input_size;
+				// replay.cpp input status
+				// copy size
+				memcpy(pRewindBuffer, &inputstat_size, 4);
+				pRewindBuffer += 4;
+				// copy data
+				memcpy(pRewindBuffer, inputstat_buf, inputstat_size);
+				pRewindBuffer += inputstat_size; // done!
 
-				if (huff_buf) free(huff_buf);
+				pRewindIndex[nRewindFrames].len += 4 + input_size + 4 + inputstat_size;
+
 				if (input_buf) free(input_buf);
+				if (inputstat_buf) free(inputstat_buf);
 			}
 		}
 
@@ -1384,7 +1370,7 @@ static void StateRewindLoad()
 
 		nCurrentFrame = nStartFrame + pRewindIndex[nRewindFrames].this_frame;
 
-		if (nReplayStatus) { // we're recording or playing back inputs
+		if (nReplayStatus != 0) { // we're recording or playing back inputs
 			INT32 buf_size;
 
 			// point to end of state data
@@ -1397,17 +1383,9 @@ static void StateRewindLoad()
 			// point to data
 			pRewindBuffer += 4;
 
-			INT32 ret = 1;
-
-			switch (nReplayStatus) {
-				case 1:
-				case 2: ret = inputbuf_unfreeze(pRewindBuffer, buf_size); break;
-				//case 1: ret = UnfreezeEncode(pRewindBuffer, buf_size); break;
-				//case 2: ret = UnfreezeDecode(pRewindBuffer, buf_size); break;
-				default: bprintf(0, _T("StateRewindLoad(): broken nReplayStatus %x\n"), nReplayStatus); break;
+			if (inputbuf_unfreeze(pRewindBuffer, buf_size) != 0) {
+				bprintf(0, _T("problem unfreezing inputbuf. replaystatus %x\n"), nReplayStatus);
 			}
-
-			if (ret != 0) bprintf(0, _T("problem unfreezing dynhuff. replaystatus %x\n"), nReplayStatus);
 
 			pRewindBuffer += buf_size;
 

@@ -4862,12 +4862,28 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="echocamb">
+		<description>Echo Chamber (Unl)</description>
+		<year>200?</year>
+		<manufacturer>Nice Code</manufacturer>
+		<rom name="Echo Chamber (Unl)(200X)(Nice Code).nes" size="40976" crc="c2aa9dc8"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="eeeaaaooo">
 		<comment>Demo, Homebrew</comment>
 		<description>EEEAAAOOO - aka AAAEEEOOO (HB, Tech-Demo)</description>
 		<year>2020</year>
 		<manufacturer>N.K</manufacturer>
 		<rom name="EEEAAAOOO (HB).nes" size="589840" crc="ea1cb7b6"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="eeeck">
+		<description>Eeeck! A Mouse! (Unl)</description>
+		<year>200?</year>
+		<manufacturer>Nice Code</manufacturer>
+		<rom name="Eeeck! A Mouse! (Unl)(200X)(Nice Code).nes" size="40976" crc="9efb7a7d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6356,6 +6372,15 @@
 		<year>1992</year>
 		<manufacturer>Koei</manufacturer>
 		<rom name="Gemfire (USA).nes" size="524304" crc="2af6d3d6"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="gemventure">
+		<comment>Homebrew</comment>
+		<description>GemVenture (HB)</description>
+		<year>2010</year>
+		<manufacturer>Tom Livac</manufacturer>
+		<rom name="GemVenture (2010)(Tom Livac).nes" size="32784" crc="2b8eae32"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14079,6 +14104,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="snakky">
+		<comment>Homebrew</comment>
+		<description>Snakky (HB)</description>
+		<year>2016</year>
+		<manufacturer>Shiru</manufacturer>
+		<rom name="Snakky (2016)(Shiru).nes" size="40976" crc="c1b8427e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="snoopssilsposp">
 		<description>Snoopy's Silly Sports Spectacular (USA)</description>
 		<year>1990</year>
@@ -17415,7 +17449,7 @@
 		<manufacturer>Nei-Hu Electronics</manufacturer>
 		<rom name="Xiao Ma Li (Unl).nes" size="24592" crc="c8f9a5ab"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
+		<driver status="preliminary"/>
 	</game>
 	<game name="xybots">
 		<comment>Prototype</comment>

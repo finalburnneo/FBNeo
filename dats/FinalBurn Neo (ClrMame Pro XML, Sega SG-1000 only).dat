@@ -78,6 +78,32 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="blckonyxee" cloneof="blckonyx" romof="blckonyx">
+		<comment>Hack</comment>
+		<description>Black Onyx Enhanced, The (Hack, T-Eng)</description>
+		<year>2010</year>
+		<manufacturer>SSTranslations</manufacturer>
+		<rom name="Black Onyx Enhanced, the (T-Eng)(2010)(SSTranslations).bin" size="65535" crc="3003d9bd"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="blckonyxe" cloneof="blckonyx" romof="blckonyx">
+		<comment>Hack</comment>
+		<description>Black Onyx, The (Hack, T-Eng)</description>
+		<year>2010</year>
+		<manufacturer>SSTranslations</manufacturer>
+		<rom name="Black Onyx, the (T-Eng)(2010)(SSTranslations).bin" size="65535" crc="626e30cc"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="blckonyx">
+		<description>Black Onyx, The (Jpn)</description>
+		<year>1987</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="black onyx, the (japan).bin" size="32768" crc="26ecd094"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bombjack">
 		<description>Bomb Jack (Jpn)</description>
 		<year>1985</year>
@@ -131,6 +157,15 @@
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="cabbage patch kids (tw).bin" size="32768" crc="9d91ab78"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chackne" cloneof="chackn" romof="chackn">
+		<comment>Hack</comment>
+		<description>Chack'n Pop (Hack, T-Eng)</description>
+		<year>2010</year>
+		<manufacturer>goldenband</manufacturer>
+		<rom name="Chack'n Pop (T-Eng)(2010)(goldenband).bin" size="32768" crc="c106c923"/>
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -326,12 +361,21 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cheman">
+		<comment>Homebrew</comment>
+		<description>Che-Man (HB)</description>
+		<year>2018</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Che-Man (2018)(The Mojon Twins).bin" size="49152" crc="477a5d75"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cherilp">
 		<comment>Homebrew</comment>
-		<description>Cheril Perils Classic SG-1000 (HB)</description>
+		<description>Cheril Perils Classic (HB)</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
-		<rom name="cheril-perils-classic-ntsc.sg" size="49152" crc="60d5c65d"/>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Cheril Perils Classic (2018)(The Mojon Twins).bin" size="49152" crc="f87d6ef5"/>
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -575,6 +619,15 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="foryster">
+		<comment>Homebrew</comment>
+		<description>Foryster (HB, v00.9)</description>
+		<year>2022</year>
+		<manufacturer>siudym</manufacturer>
+		<rom name="Foryster v00.9 (2022)(siudym).bin" size="32768" crc="f8d7fa2c"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="galaga" cloneof="segagala" romof="segagala">
 		<description>Galaga (Tw)</description>
 		<year>1983?</year>
@@ -777,9 +830,9 @@
 	</game>
 	<game name="jetpaco">
 		<comment>Homebrew</comment>
-		<description>Jet Paco and Jet Puri SG-1000 (HB)</description>
+		<description>Jet Paco and Jet Puri (HB)</description>
 		<year>2018</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="jet-paco-and-jet-puri-ntsc.sg" size="49152" crc="d31c6b3b"/>
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1000,6 +1053,15 @@
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
 		<rom name="n-sub (tw).bin" size="16384" crc="3e371769"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjaprie" cloneof="ninjapri" romof="ninjapri">
+		<comment>Hack</comment>
+		<description>Ninja Princess (Hack, T-Eng)</description>
+		<year>2010</year>
+		<manufacturer>goldenband</manufacturer>
+		<rom name="Ninja Princess (T-Eng)(2010)(goldenband).bin" size="32768" crc="bdb6cf0e"/>
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1342,6 +1404,15 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sgthelmet">
+		<comment>Homebrew</comment>
+		<description>Sgt. Helmet - Training Day (HB)</description>
+		<year>2018</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Sgt. Helmet - Training Day (2018)(The Mojon Twins).bin" size="49152" crc="27c065a5"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shinnyus">
 		<description>Shinnyushain Tooru Kun (Jpn)</description>
 		<year>1985</year>
@@ -1537,9 +1608,9 @@
 	</game>
 	<game name="superuwol">
 		<comment>Homebrew</comment>
-		<description>Super UWOL! SG-1000 (HB)</description>
+		<description>Super UWOL! (HB)</description>
 		<year>2016</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="mojon-twins--super-uwol.sg" size="49152" crc="aa8ea6eb"/>
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1557,14 +1628,6 @@
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="terebi oekaki (japan).bin" size="8192" crc="dd4a661b"/>
-		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="blckonyx">
-		<description>The Black Onyx (Jpn)</description>
-		<year>1987</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="black onyx, the (japan).bin" size="32768" crc="26ecd094"/>
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

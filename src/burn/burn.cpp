@@ -31,6 +31,13 @@ bool bBurnUseASMCPUEmulation = false;
 #define FBA_DEBUG 1
 #endif
 
+#if defined(BUILD_WIN32) || defined(BUILD_SDL) || defined(BUILD_SDL2) || defined(BUILD_MACOS)
+#define INCLUDE_RUNAHEAD_SUPPORT
+#endif
+
+#if defined(BUILD_WIN32)
+#define INCLUDE_REWIND_SUPPORT
+#endif
 
 #if defined (FBNEO_DEBUG)
  clock_t starttime = 0;
@@ -673,8 +680,10 @@ extern "C" INT32 BurnDrvInit()
 	CheatInit();
 	HiscoreInit();
 	BurnStateInit();
-#if defined (BUILD_WIN32)
+#if defined (INCLUDE_RUNAHEAD_SUPPORT)
 	StateRunAheadInit();
+#endif
+#if defined (INCLUDE_REWIND_SUPPORT)
 	StateRewindInit();
 #endif
 	BurnInitMemoryManager();
@@ -721,8 +730,10 @@ extern "C" INT32 BurnDrvExit()
 	CheatExit();
 	CheatSearchExit();
 	BurnStateExit();
-#if defined (BUILD_WIN32)
+#if defined (INCLUDE_RUNAHEAD_SUPPORT)
 	StateRunAheadExit();
+#endif
+#if defined (INCLUDE_REWIND_SUPPORT)
 	StateRewindExit();
 #endif
 
@@ -971,7 +982,7 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 // for drivers, hiscore, etc, to recognize that this is the "runahead frame"
 INT32 bBurnRunAheadFrame = 0;
 
-#if defined (BUILD_WIN32)
+#if defined (INCLUDE_RUNAHEAD_SUPPORT)
 static INT32 nTotalLenRunAhead = 0;
 static UINT8 *RunAheadBuffer = NULL;
 static UINT8 *pRunAheadBuffer = NULL;
@@ -1050,8 +1061,9 @@ void StateRunAheadLoad()
 	BurnAcb = RunAheadWriteAcb;
 	BurnAreaScan(ACB_FULLSCAN | ACB_WRITE | ACB_RUNAHEAD, NULL);
 }
+#endif
 
-
+#if defined (INCLUDE_REWIND_SUPPORT)
 #include "thready.h"
 
 // --------- State-ing for Rewind ----------

@@ -673,8 +673,10 @@ extern "C" INT32 BurnDrvInit()
 	CheatInit();
 	HiscoreInit();
 	BurnStateInit();
+#if defined (BUILD_WIN32)
 	StateRunAheadInit();
 	StateRewindInit();
+#endif
 	BurnInitMemoryManager();
 	BurnRandomInit();
 	BurnSoundDCFilterReset();
@@ -719,8 +721,10 @@ extern "C" INT32 BurnDrvExit()
 	CheatExit();
 	CheatSearchExit();
 	BurnStateExit();
+#if defined (BUILD_WIN32)
 	StateRunAheadExit();
 	StateRewindExit();
+#endif
 
 	nBurnCPUSpeedAdjust = 0x0100;
 
@@ -964,11 +968,13 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 }
 
 // --------- State-ing for RunAhead ----------
+// for drivers, hiscore, etc, to recognize that this is the "runahead frame"
+INT32 bBurnRunAheadFrame = 0;
+
+#if defined (BUILD_WIN32)
 static INT32 nTotalLenRunAhead = 0;
 static UINT8 *RunAheadBuffer = NULL;
 static UINT8 *pRunAheadBuffer = NULL;
-// for drivers, hiscore, etc, to recognize that this is the "runahead frame"
-INT32 bBurnRunAheadFrame = 0;
 
 void StateRunAheadInit()
 {
@@ -1159,9 +1165,7 @@ int UnfreezeInput(const unsigned char* buf, int size);
 #include "inputbuf.h"
 
 // interface.h
-#if defined (BUILD_WIN32)
 extern INT32 VidSNewShortMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);
-#endif
 
 static void StateRewind_Repack()
 {
@@ -1248,9 +1252,7 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 				break;
 			case REWINDSTATUS_BROKEN:
 				bprintf(0, _T(" ** Rewind init failed, disabled for this session\n"));
-#if defined (BUILD_WIN32)
 				VidSNewShortMsg(_T("Rewind: Failed init!"));
-#endif
 				return; // can't proceed!
 		}
 	}
@@ -1413,6 +1415,7 @@ void StateRewindDoFrame(INT32 bDoRewind, INT32 bDoCancel, INT32 bIsPaused)
 		StateRewindFrame();
 	}
 }
+#endif
 
 // ----------------------------------------------------------------------------
 // Get the local time - make tweaks if netgame or input recording/playback

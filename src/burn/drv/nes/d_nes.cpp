@@ -1,4 +1,4 @@
-// FBNEO NES/Famicom FDS emulator
+// FBNEO NES/Famicom and FDS emulator
 // (c)2019-2020 dink, kev, iq_132
 
 #include "tiles_generic.h"
@@ -15138,7 +15138,7 @@ struct BurnDriver BurnDrvnes_xiaomali = {
 	"nes_xiaomali", NULL, NULL, NULL, "1989-90",
 	"Xiao Ma Li (Unl)\0", NULL, "Nei-Hu Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	0, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_xiaomaliRomInfo, nes_xiaomaliRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21380,9 +21380,79 @@ struct BurnDriver BurnDrvnes_kaguyaj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Echo Chamber (Unl)
+static struct BurnRomInfo nes_echocambRomDesc[] = {
+	{ "Echo Chamber (Unl)(200X)(Nice Code).nes",          40976, 0xc2aa9dc8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_echocamb)
+STD_ROM_FN(nes_echocamb)
+
+struct BurnDriver BurnDrvnes_echocamb = {
+	"nes_echocamb", NULL, NULL, NULL, "200?",
+	"Echo Chamber (Unl)\0", NULL, "Nice Code", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_echocambRomInfo, nes_echocambRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Eeeck! A Mouse! (Unl)
+static struct BurnRomInfo nes_eeeckRomDesc[] = {
+	{ "Eeeck! A Mouse! (Unl)(200X)(Nice Code).nes",          40976, 0x9efb7a7d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_eeeck)
+STD_ROM_FN(nes_eeeck)
+
+struct BurnDriver BurnDrvnes_eeeck = {
+	"nes_eeeck", NULL, NULL, NULL, "200?",
+	"Eeeck! A Mouse! (Unl)\0", NULL, "Nice Code", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_eeeckRomInfo, nes_eeeckRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_gemventureRomDesc[] = {
+	{ "GemVenture (2010)(Tom Livac).nes",          32784, 0x2b8eae32, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gemventure)
+STD_ROM_FN(nes_gemventure)
+
+struct BurnDriver BurnDrvnes_gemventure = {
+	"nes_gemventure", NULL, NULL, NULL, "2010",
+	"GemVenture (HB)\0", NULL, "Tom Livac", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_gemventureRomInfo, nes_gemventureRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_snakkyRomDesc[] = {
+	{ "Snakky (2016)(Shiru).nes",          40976, 0xc1b8427e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_snakky)
+STD_ROM_FN(nes_snakky)
+
+struct BurnDriver BurnDrvnes_snakky = {
+	"nes_snakky", NULL, NULL, NULL, "2016",
+	"Snakky (HB)\0", NULL, "Shiru", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_snakkyRomInfo, nes_snakkyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_8bitxmas17RomDesc[] = {
 	{ "8-bit XMAS 2017 (2017)(RetroUSB).nes",          2097168, 0x330da716, BRF_ESS | BRF_PRG },

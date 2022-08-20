@@ -31,6 +31,13 @@ bool bBurnUseASMCPUEmulation = false;
 #define FBA_DEBUG 1
 #endif
 
+#if defined(BUILD_WIN32) || defined(BUILD_SDL) || defined(BUILD_SDL2) || defined(BUILD_MACOS)
+#define INCLUDE_RUNAHEAD_SUPPORT
+#endif
+
+#if defined(BUILD_WIN32)
+#define INCLUDE_REWIND_SUPPORT
+#endif
 
 #if defined (FBNEO_DEBUG)
  clock_t starttime = 0;
@@ -673,8 +680,12 @@ extern "C" INT32 BurnDrvInit()
 	CheatInit();
 	HiscoreInit();
 	BurnStateInit();
+#if defined (INCLUDE_RUNAHEAD_SUPPORT)
 	StateRunAheadInit();
+#endif
+#if defined (INCLUDE_REWIND_SUPPORT)
 	StateRewindInit();
+#endif
 	BurnInitMemoryManager();
 	BurnRandomInit();
 	BurnSoundDCFilterReset();
@@ -719,8 +730,12 @@ extern "C" INT32 BurnDrvExit()
 	CheatExit();
 	CheatSearchExit();
 	BurnStateExit();
+#if defined (INCLUDE_RUNAHEAD_SUPPORT)
 	StateRunAheadExit();
+#endif
+#if defined (INCLUDE_REWIND_SUPPORT)
 	StateRewindExit();
+#endif
 
 	nBurnCPUSpeedAdjust = 0x0100;
 
@@ -964,11 +979,13 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 }
 
 // --------- State-ing for RunAhead ----------
+// for drivers, hiscore, etc, to recognize that this is the "runahead frame"
+INT32 bBurnRunAheadFrame = 0;
+
+#if defined (INCLUDE_RUNAHEAD_SUPPORT)
 static INT32 nTotalLenRunAhead = 0;
 static UINT8 *RunAheadBuffer = NULL;
 static UINT8 *pRunAheadBuffer = NULL;
-// for drivers, hiscore, etc, to recognize that this is the "runahead frame"
-INT32 bBurnRunAheadFrame = 0;
 
 void StateRunAheadInit()
 {
@@ -1044,14 +1061,15 @@ void StateRunAheadLoad()
 	BurnAcb = RunAheadWriteAcb;
 	BurnAreaScan(ACB_FULLSCAN | ACB_WRITE | ACB_RUNAHEAD, NULL);
 }
+#endif
 
-
+#if defined (INCLUDE_REWIND_SUPPORT)
 #include "thready.h"
 
 // --------- State-ing for Rewind ----------
 
 // TODO:
-//  if recording, don't rewind back before recording started
+//  if recording from "savestate", don't rewind back before recording started
 //  MAYBE move from burn.cpp to burner/win32/rewind.cpp
 
 enum {
@@ -1117,7 +1135,6 @@ void StateRewindExit()
 		free (pRewindIndex);
 	}
 
-	//StateRewindInit(); // clear variables
 	thready.exit();
 }
 
@@ -1152,19 +1169,15 @@ static INT32 StateRewindGetSize()
 	return nTotalLenRewind;
 }
 
-// ---- once moved to burner/??/rewind.cpp, these forwards go away ----
-// burner stuff
+// exported from replay.cpp
 extern int nReplayStatus;
 extern UINT32 nStartFrame;
-// replay.cpp
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
 #include "inputbuf.h"
 
 // interface.h
-#if defined (BUILD_WIN32)
 extern INT32 VidSNewShortMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);
-#endif
 
 static void StateRewind_Repack()
 {
@@ -1251,9 +1264,7 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 				break;
 			case REWINDSTATUS_BROKEN:
 				bprintf(0, _T(" ** Rewind init failed, disabled for this session\n"));
-#if defined (BUILD_WIN32)
 				VidSNewShortMsg(_T("Rewind: Failed init!"));
-#endif
 				return; // can't proceed!
 		}
 	}
@@ -1285,48 +1296,37 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 		}
 
 		if (nReplayStatus != 0) { // recording / playing inputs
-			UINT8* huff_buf = NULL;
-			INT32 huff_size;
 			UINT8* input_buf = NULL;
 			INT32 input_size;
-			INT32 ret = 1;
+			UINT8* inputstat_buf = NULL;
+			INT32 inputstat_size;
 
-			switch (nReplayStatus) {
-				//case 1:	ret = FreezeEncode(&huff_buf, &huff_size); break;
-				//case 2:	ret = FreezeDecode(&huff_buf, &huff_size); break;
-				case 1:
-				case 2: ret = inputbuf_freeze(&huff_buf, &huff_size); break;
-				default: bprintf(0, _T("StateRewindFrame(): broken nReplayStatus %x\n"), nReplayStatus); break;
-			}
-
-			if (ret) bprintf(0, _T("nReplayStatus: %x  Bad retval from FreezeEn/Decode!! %x\n"), nReplayStatus, ret);
-
-			if (!ret && !FreezeInput(&input_buf, &input_size))
+			if (!inputbuf_freeze(&input_buf, &input_size) && !FreezeInput(&inputstat_buf, &inputstat_size))
 			{
 				// point to end of state data
 				pRewindBuffer = RewindBuffer + pRewindIndex[nRewindFrames].pos +
 					pRewindIndex[nRewindFrames].len;
 
-				// huffman-encoded input data
-				// copy size
-				memcpy(pRewindBuffer, &huff_size, 4);
-				pRewindBuffer += 4;
-				// copy data
-				memcpy(pRewindBuffer, huff_buf, huff_size);
-				pRewindBuffer += huff_size;
-
-				// replay.cpp input status
+				// raw input data
 				// copy size
 				memcpy(pRewindBuffer, &input_size, 4);
 				pRewindBuffer += 4;
 				// copy data
 				memcpy(pRewindBuffer, input_buf, input_size);
-				pRewindBuffer += input_size; // done!
+				pRewindBuffer += input_size;
 
-				pRewindIndex[nRewindFrames].len += 4 + huff_size + 4 + input_size;
+				// replay.cpp input status
+				// copy size
+				memcpy(pRewindBuffer, &inputstat_size, 4);
+				pRewindBuffer += 4;
+				// copy data
+				memcpy(pRewindBuffer, inputstat_buf, inputstat_size);
+				pRewindBuffer += inputstat_size; // done!
 
-				if (huff_buf) free(huff_buf);
+				pRewindIndex[nRewindFrames].len += 4 + input_size + 4 + inputstat_size;
+
 				if (input_buf) free(input_buf);
+				if (inputstat_buf) free(inputstat_buf);
 			}
 		}
 
@@ -1384,7 +1384,7 @@ static void StateRewindLoad()
 
 		nCurrentFrame = nStartFrame + pRewindIndex[nRewindFrames].this_frame;
 
-		if (nReplayStatus) { // we're recording or playing back inputs
+		if (nReplayStatus != 0) { // we're recording or playing back inputs
 			INT32 buf_size;
 
 			// point to end of state data
@@ -1397,17 +1397,9 @@ static void StateRewindLoad()
 			// point to data
 			pRewindBuffer += 4;
 
-			INT32 ret = 1;
-
-			switch (nReplayStatus) {
-				case 1:
-				case 2: ret = inputbuf_unfreeze(pRewindBuffer, buf_size); break;
-				//case 1: ret = UnfreezeEncode(pRewindBuffer, buf_size); break;
-				//case 2: ret = UnfreezeDecode(pRewindBuffer, buf_size); break;
-				default: bprintf(0, _T("StateRewindLoad(): broken nReplayStatus %x\n"), nReplayStatus); break;
+			if (inputbuf_unfreeze(pRewindBuffer, buf_size) != 0) {
+				bprintf(0, _T("problem unfreezing inputbuf. replaystatus %x\n"), nReplayStatus);
 			}
-
-			if (ret != 0) bprintf(0, _T("problem unfreezing dynhuff. replaystatus %x\n"), nReplayStatus);
 
 			pRewindBuffer += buf_size;
 
@@ -1435,6 +1427,7 @@ void StateRewindDoFrame(INT32 bDoRewind, INT32 bDoCancel, INT32 bIsPaused)
 		StateRewindFrame();
 	}
 }
+#endif
 
 // ----------------------------------------------------------------------------
 // Get the local time - make tweaks if netgame or input recording/playback

@@ -55,7 +55,7 @@ void SetFullscreen(int f)
 
 	if (bAppFullscreen)
 	{
-		SDL_SetWindowFullscreen(sdlWindow, SDL_WINDOW_FULLSCREEN);
+		SDL_SetWindowFullscreen(sdlWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	}
 	else
 	{

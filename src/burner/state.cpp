@@ -209,7 +209,7 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 	if(nReplayStatus)
 	{
 		const char szMovieExtra[] = "MOV ";
-		const char szDecodeChunk[] = "HUFF";
+		const char szDecodeChunk[] = "INPB";
 		const char szInputChunk[] = "INP ";
 
 		INT32 nChunkSize;
@@ -232,13 +232,11 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 			if(nReplayStatus == 1)
 			{
 				ret = inputbuf_unfreeze(buf, nChunkSize);
-				//ret = UnfreezeEncode(buf, nChunkSize);
 				++nReplayUndoCount;
 			}
 			else if(nReplayStatus == 2)
 			{
 				ret = inputbuf_unfreeze(buf, nChunkSize);
-				//ret = UnfreezeDecode(buf, nChunkSize);
 			}
 			if(ret)                                             { nRet = -1;  break; }
 
@@ -476,19 +474,17 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 		if(nReplayStatus == 1)
 		{
 			ret = inputbuf_freeze(&huff_buf, &huff_size);
-			//ret = FreezeEncode(&huff_buf, &huff_size);
 		}
 		else if(nReplayStatus == 2)
 		{
 			ret = inputbuf_freeze(&huff_buf, &huff_size);
-			//ret = FreezeDecode(&huff_buf, &huff_size);
 		}
 
 		if(!ret &&
 			!FreezeInput(&input_buf, &input_size))
 		{
 			const char szMovieExtra[] = "MOV ";
-			const char szDecodeChunk[] = "HUFF";
+			const char szDecodeChunk[] = "INPB";
 			const char szInputChunk[] = "INP ";
 
 			INT32 nZero = 0;

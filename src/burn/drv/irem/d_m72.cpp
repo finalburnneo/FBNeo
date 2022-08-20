@@ -6,6 +6,7 @@
 #include "burn_ym2151.h"
 #include "nec_intf.h"
 #include "irem_cpu.h"
+#include "mcs51.h"
 #include "dac.h"
 #include "burn_gun.h"
 
@@ -15,6 +16,7 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvV30ROM;
 static UINT8 *DrvZ80ROM;
+static UINT8 *DrvMcuROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
@@ -38,6 +40,7 @@ static UINT8 *video_disable;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
 static UINT8 irqvector;
 static INT32 sample_address;
 static INT32 irq_raster_position;
@@ -52,24 +55,25 @@ static UINT8 DrvJoy5[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
-static INT16 DrvAnalogPort0 = 0;
-static INT16 DrvAnalogPort1 = 0;
-static INT16 DrvAnalogPort2 = 0;
-static INT16 DrvAnalogPort3 = 0;
+static INT16 Analog[4];
 
-static INT32 nExtraCycles[2];
+static INT32 nExtraCycles[3];
 
 static INT32 Clock_16mhz = 0;
 static INT32 Kengo = 0;
 static INT32 CosmicCop = 0;
 static INT32 Poundfor = 0;
+static INT32 airduelm72 = 0;
 static INT32 m72_video_type = 0;
+static INT32 m72_video_mask = 0;
 static INT32 z80_nmi_enable = 0;
 static INT32 enable_z80_reset = 0; // only if z80 is not rom-based!
 static INT32 m72_irq_base = 0;
 static INT32 code_mask[4];
 static INT32 graphics_length[4];
 static INT32 video_offsets[2] = { 0, 0 };
+
+static INT32 use_mcu = 0;
 
 enum { Z80_NO_NMI = 0, Z80_REAL_NMI, Z80_FAKE_NMI };
 enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, Z80_ASSERT, Z80_CLEAR };
@@ -112,15 +116,15 @@ static struct BurnInputInfo PoundforInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis" ),
-	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis" ),
+	A("P1 Trackball X", BIT_ANALOG_REL, &Analog[0],		"p1 x-axis" ),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog[1],		"p1 y-axis" ),
 
 	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"	},
-	A("P2 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis" ),
-	A("P2 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis" ),
+	A("P2 Trackball X", BIT_ANALOG_REL, &Analog[2],		"p2 x-axis" ),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog[3],		"p2 y-axis" ),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 4,	"service"	},
@@ -133,546 +137,647 @@ STDINPUTINFO(Poundfor)
 
 static struct BurnDIPInfo Dip2CoinDIPList[]=
 {
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x16, 0x01, 0x40, 0x40, "Off"				},
-	{0x16, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x16, 0x01, 0x40, 0x40, "Off"							},
+	{0x16, 0x01, 0x40, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x16, 0x01, 0x80, 0x80, "Off"				},
-	{0x16, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"					},
+	{0x16, 0x01, 0x80, 0x80, "Off"							},
+	{0x16, 0x01, 0x80, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x17, 0x01, 0x01, 0x01, "Off"				},
-	{0x17, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x17, 0x01, 0x01, 0x01, "Off"							},
+	{0x17, 0x01, 0x01, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Coin Mode"			},
-	{0x17, 0x01, 0x08, 0x08, "Mode 1"			},
-	{0x17, 0x01, 0x08, 0x00, "Mode 2"			},
+	{0   , 0xfe, 0   ,    2, "Coin Mode"					},
+	{0x17, 0x01, 0x08, 0x08, "Mode 1"						},
+	{0x17, 0x01, 0x08, 0x00, "Mode 2"						},
 
-	{0   , 0xfe, 0   ,   16, "Coinage"			},
-	{0x17, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"		},
-	{0x17, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"		},
-	{0x17, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"		},
-	{0x17, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"		},
-	{0x17, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"		},
+	{0   , 0xfe, 0   ,   16, "Coinage"						},
+	{0x17, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"				},
+	{0x17, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"				},
+	{0x17, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"				},
+	{0x17, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"				},
+	{0x17, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"				},
 	{0x17, 0x01, 0xf0, 0x10, "2 Coins to Start/1 to Cont."	},
-	{0x17, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"		},
-	{0x17, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"		},
-	{0x17, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"		},
-	{0x17, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"		},
-	{0x17, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"		},
-	{0x17, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"		},
-	{0x17, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"		},
-	{0x17, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"		},
-	{0x17, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"		},
-	{0x17, 0x01, 0xf0, 0x00, "Free Play"			},
+	{0x17, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"			},
+	{0x17, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"			},
+	{0x17, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"				},
+	{0x17, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"			},
+	{0x17, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"			},
+	{0x17, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"			},
+	{0x17, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"			},
+	{0x17, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"			},
+	{0x17, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"			},
+	{0x17, 0x01, 0xf0, 0x00, "Free Play"					},
 };
 
 static struct BurnDIPInfo Dip1CoinDIPList[]=
 {
-	{0   , 0xfe, 0   ,   16, "Coinage"			},
-	{0x16, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"		},
-	{0x16, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"		},
-	{0x16, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"		},
-	{0x16, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"		},
-	{0x16, 0x01, 0xf0, 0x10, "8 Coins 3 Credits"		},
-	{0x16, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"		},
-	{0x16, 0x01, 0xf0, 0x20, "5 Coins 3 Credits"		},
-	{0x16, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"		},
-	{0x16, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"		},
-	{0x16, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"		},
-	{0x16, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"		},
-	{0x16, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"		},
-	{0x16, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"		},
-	{0x16, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"		},
-	{0x16, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"		},
-	{0x16, 0x01, 0xf0, 0x00, "Free Play"			},
+	{0   , 0xfe, 0   ,   16, "Coinage"						},
+	{0x16, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"				},
+	{0x16, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"				},
+	{0x16, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"				},
+	{0x16, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"				},
+	{0x16, 0x01, 0xf0, 0x10, "8 Coins 3 Credits"			},
+	{0x16, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"				},
+	{0x16, 0x01, 0xf0, 0x20, "5 Coins 3 Credits"			},
+	{0x16, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"			},
+	{0x16, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"				},
+	{0x16, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"			},
+	{0x16, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"			},
+	{0x16, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"			},
+	{0x16, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"			},
+	{0x16, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"			},
+	{0x16, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"			},
+	{0x16, 0x01, 0xf0, 0x00, "Free Play"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x17, 0x01, 0x01, 0x01, "Off"				},
-	{0x17, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x17, 0x01, 0x01, 0x01, "Off"							},
+	{0x17, 0x01, 0x01, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Coin Mode"			},
-	{0x17, 0x01, 0x04, 0x04, "Mode 1"			},
-	{0x17, 0x01, 0x04, 0x00, "Mode 2"			},
+	{0   , 0xfe, 0   ,    2, "Coin Mode"					},
+	{0x17, 0x01, 0x04, 0x04, "Mode 1"						},
+	{0x17, 0x01, 0x04, 0x00, "Mode 2"						},
 
-	{0   , 0xfe, 0   ,    2, "Stop Mode"			},
-	{0x17, 0x01, 0x20, 0x20, "Off"				},
-	{0x17, 0x01, 0x20, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Stop Mode"					},
+	{0x17, 0x01, 0x20, 0x20, "Off"							},
+	{0x17, 0x01, 0x20, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x17, 0x01, 0x80, 0x80, "Off"				},
-	{0x17, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"					},
+	{0x17, 0x01, 0x80, 0x80, "Off"							},
+	{0x17, 0x01, 0x80, 0x00, "On"							},
 };
 
 static struct BurnDIPInfo RtypeDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xfb, NULL				},
-	{0x17, 0xff, 0xff, 0xfd, NULL				},
+	{0x16, 0xff, 0xff, 0xfb, NULL							},
+	{0x17, 0xff, 0xff, 0xfd, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x16, 0x01, 0x04, 0x04, "Off"				},
-	{0x16, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x16, 0x01, 0x04, 0x04, "Off"							},
+	{0x16, 0x01, 0x04, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
-	{0x16, 0x01, 0x08, 0x00, "50K 150K 250K 400K 600K"	},
-	{0x16, 0x01, 0x08, 0x08, "100K 200K 350K 500K 700K"	},
+	{0   , 0xfe, 0   ,    2, "Bonus Life"					},
+	{0x16, 0x01, 0x08, 0x00, "50K 150K 250K 400K 600K"		},
+	{0x16, 0x01, 0x08, 0x08, "100K 200K 350K 500K 700K"		},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright"			},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright"						},
+	{0x17, 0x01, 0x02, 0x02, "Cocktail"						},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x17, 0x01, 0x08, 0x08, "Normal"			},
-	{0x17, 0x01, 0x08, 0x00, "Hard"				},
+	{0   , 0xfe, 0   ,    2, "Difficulty"					},
+	{0x17, 0x01, 0x08, 0x08, "Normal"						},
+	{0x17, 0x01, 0x08, 0x00, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x17, 0x01, 0x10, 0x00, "No"				},
-	{0x17, 0x01, 0x10, 0x10, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x17, 0x01, 0x10, 0x00, "No"							},
+	{0x17, 0x01, 0x10, 0x10, "Yes"							},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x17, 0x01, 0x40, 0x40, "Off"				},
-	{0x17, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Invulnerability"				},
+	{0x17, 0x01, 0x40, 0x40, "Off"							},
+	{0x17, 0x01, 0x40, 0x00, "On"							},
 };
 
 STDDIPINFOEXT(Rtype,	Dip1Coin, Rtype	)
 
 static struct BurnDIPInfo RtypepDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xfb, NULL				},
+	{0x16, 0xff, 0xff, 0xfb, NULL							},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x16, 0x01, 0x04, 0x04, "On"				},
-	{0x16, 0x01, 0x04, 0x00, "Off"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x16, 0x01, 0x04, 0x04, "On"							},
+	{0x16, 0x01, 0x04, 0x00, "Off"							},
 };
 
 STDDIPINFOEXT(Rtypep,	Rtype, Rtypep	)
 
 static struct BurnDIPInfo XmultiplDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xff, NULL				},
-	{0x17, 0xff, 0xff, 0xfd, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL							},
+	{0x17, 0xff, 0xff, 0xfd, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x03, 0x02, "Very Easy"			},
-	{0x16, 0x01, 0x03, 0x01, "Easy"				},
-	{0x16, 0x01, 0x03, 0x03, "Normal"			},
-	{0x16, 0x01, 0x03, 0x00, "Hard"				},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x03, 0x02, "Very Easy"					},
+	{0x16, 0x01, 0x03, 0x01, "Easy"							},
+	{0x16, 0x01, 0x03, 0x03, "Normal"						},
+	{0x16, 0x01, 0x03, 0x00, "Hard"							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x0c, 0x08, "1"				},
-	{0x16, 0x01, 0x0c, 0x04, "2"				},
-	{0x16, 0x01, 0x0c, 0x0c, "3"				},
-	{0x16, 0x01, 0x0c, 0x00, "4"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x0c, 0x08, "1"							},
+	{0x16, 0x01, 0x0c, 0x04, "2"							},
+	{0x16, 0x01, 0x0c, 0x0c, "3"							},
+	{0x16, 0x01, 0x0c, 0x00, "4"							},
 
-	{0   , 0xfe, 0   ,    4, "Cabinet"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright (single)"		},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright (double) On"		},
-	{0x17, 0x01, 0x02, 0x02, "Upright (double) Off"		},
+	{0   , 0xfe, 0   ,    4, "Cabinet"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright (single)"				},
+	{0x17, 0x01, 0x02, 0x02, "Cocktail"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright (double) On"			},
+	{0x17, 0x01, 0x02, 0x02, "Upright (double) Off"			},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x17, 0x01, 0x08, 0x00, "Off"				},
-	{0x17, 0x01, 0x08, 0x08, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x17, 0x01, 0x08, 0x00, "Off"							},
+	{0x17, 0x01, 0x08, 0x08, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Upright (double) Mode"	},
-	{0x17, 0x01, 0x10, 0x10, "Off"				},
-	{0x17, 0x01, 0x10, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Upright (double) Mode"		},
+	{0x17, 0x01, 0x10, 0x10, "Off"							},
+	{0x17, 0x01, 0x10, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x17, 0x01, 0x20, 0x00, "No"				},
-	{0x17, 0x01, 0x20, 0x20, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x17, 0x01, 0x20, 0x00, "No"							},
+	{0x17, 0x01, 0x20, 0x20, "Yes"							},
 };
 
 STDDIPINFOEXT(Xmultipl,	Dip1Coin, Xmultipl	)
 
 static struct BurnDIPInfo DbreedDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xff, NULL				},
-	{0x17, 0xff, 0xff, 0xf5, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL							},
+	{0x17, 0xff, 0xff, 0xf5, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x00, "Very Easy"			},
-	{0x16, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x04, "Hard"				},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x00, "Very Easy"					},
+	{0x16, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright"			},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright"						},
+	{0x17, 0x01, 0x02, 0x02, "Cocktail"						},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x17, 0x01, 0x08, 0x08, "Off"				},
-	{0x17, 0x01, 0x08, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x17, 0x01, 0x08, 0x08, "Off"							},
+	{0x17, 0x01, 0x08, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x17, 0x01, 0x10, 0x00, "No"				},
-	{0x17, 0x01, 0x10, 0x10, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x17, 0x01, 0x10, 0x00, "No"							},
+	{0x17, 0x01, 0x10, 0x10, "Yes"							},
 };
 
 STDDIPINFOEXT(Dbreed,	Dip1Coin, Dbreed	)
 
 static struct BurnDIPInfo BchopperDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xfb, NULL				},
-	{0x17, 0xff, 0xff, 0xfd, NULL				},
+	{0x16, 0xff, 0xff, 0xfb, NULL							},
+	{0x17, 0xff, 0xff, 0xfd, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x00, "1"				},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x00, "1"							},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x16, 0x01, 0x04, 0x04, "Off"				},
-	{0x16, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x16, 0x01, 0x04, 0x04, "Off"							},
+	{0x16, 0x01, 0x04, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
-	{0x16, 0x01, 0x08, 0x08, "80K 200K 350K"		},
-	{0x16, 0x01, 0x08, 0x00, "100K 250K 400K"		},
+	{0   , 0xfe, 0   ,    2, "Bonus Life"					},
+	{0x16, 0x01, 0x08, 0x08, "80K 200K 350K"				},
+	{0x16, 0x01, 0x08, 0x00, "100K 250K 400K"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright"			},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright"						},
+	{0x17, 0x01, 0x02, 0x02, "Cocktail"						},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x17, 0x01, 0x08, 0x08, "Normal"			},
-	{0x17, 0x01, 0x08, 0x00, "Hard"				},
+	{0   , 0xfe, 0   ,    2, "Difficulty"					},
+	{0x17, 0x01, 0x08, 0x08, "Normal"						},
+	{0x17, 0x01, 0x08, 0x00, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x17, 0x01, 0x10, 0x00, "No"				},
-	{0x17, 0x01, 0x10, 0x10, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x17, 0x01, 0x10, 0x00, "No"							},
+	{0x17, 0x01, 0x10, 0x10, "Yes"							},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x17, 0x01, 0x40, 0x40, "Off"				},
-	{0x17, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Invulnerability"				},
+	{0x17, 0x01, 0x40, 0x40, "Off"							},
+	{0x17, 0x01, 0x40, 0x00, "On"							},
 };
 
 STDDIPINFOEXT(Bchopper,	Dip1Coin, Bchopper	)
 
 static struct BurnDIPInfo NspiritDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xff, NULL				},
-	{0x17, 0xff, 0xff, 0xf5, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL							},
+	{0x17, 0xff, 0xff, 0xf5, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x04, "Hard"				},
-	{0x16, 0x01, 0x0c, 0x00, "Hardest"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "Hard"							},
+	{0x16, 0x01, 0x0c, 0x00, "Hardest"						},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright"			},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright"						},
+	{0x17, 0x01, 0x02, 0x02, "Cocktail"						},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x17, 0x01, 0x08, 0x08, "Off"				},
-	{0x17, 0x01, 0x08, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x17, 0x01, 0x08, 0x08, "Off"							},
+	{0x17, 0x01, 0x08, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x17, 0x01, 0x10, 0x00, "No"				},
-	{0x17, 0x01, 0x10, 0x10, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x17, 0x01, 0x10, 0x00, "No"							},
+	{0x17, 0x01, 0x10, 0x10, "Yes"							},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x17, 0x01, 0x40, 0x40, "Off"				},
-	{0x17, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Invulnerability"				},
+	{0x17, 0x01, 0x40, 0x40, "Off"							},
+	{0x17, 0x01, 0x40, 0x00, "On"							},
 };
 
 STDDIPINFOEXT(Nspirit,	Dip1Coin, Nspirit	)
 
 static struct BurnDIPInfo ImgfightDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xff, NULL				},
-	{0x17, 0xff, 0xff, 0xe5, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL							},
+	{0x17, 0xff, 0xff, 0xe5, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x08, "Hard"				},
-	{0x16, 0x01, 0x0c, 0x04, "Hardest"			},
-	{0x16, 0x01, 0x0c, 0x00, "Debug Mode 2 lap"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x08, "Hard"							},
+	{0x16, 0x01, 0x0c, 0x04, "Hardest"						},
+	{0x16, 0x01, 0x0c, 0x00, "Debug Mode 2 lap"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright"			},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright"						},
+	{0x17, 0x01, 0x02, 0x02, "Cocktail"						},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x17, 0x01, 0x08, 0x08, "Off"				},
-	{0x17, 0x01, 0x08, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x17, 0x01, 0x08, 0x08, "Off"							},
+	{0x17, 0x01, 0x08, 0x00, "On"							},
 };
 
 STDDIPINFOEXT(Imgfight,	Dip1Coin, Imgfight	)
 
 static struct BurnDIPInfo Rtype2DIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xff, NULL				},
-	{0x17, 0xff, 0xff, 0xf7, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL							},
+	{0x17, 0xff, 0xff, 0xf7, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x04, "Hard"				},
-	{0x16, 0x01, 0x0c, 0x00, "Hardest"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "Hard"							},
+	{0x16, 0x01, 0x0c, 0x00, "Hardest"						},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x17, 0x01, 0x02, 0x00, "Off"				},
-	{0x17, 0x01, 0x02, 0x02, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x17, 0x01, 0x02, 0x00, "Off"							},
+	{0x17, 0x01, 0x02, 0x02, "On"							},
 
-	{0   , 0xfe, 0   ,    3, "Cabinet"			},
-	{0x17, 0x01, 0x18, 0x10, "Upright"			},
-	{0x17, 0x01, 0x18, 0x00, "Upright (2P)"			},
-	{0x17, 0x01, 0x18, 0x18, "Cocktail"			},
+	{0   , 0xfe, 0   ,    3, "Cabinet"						},
+	{0x17, 0x01, 0x18, 0x10, "Upright"						},
+	{0x17, 0x01, 0x18, 0x00, "Upright (2P)"					},
+	{0x17, 0x01, 0x18, 0x18, "Cocktail"						},
 };
 
 STDDIPINFOEXT(Rtype2,	Dip1Coin, Rtype2	)
 
 static struct BurnDIPInfo LohtDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xfb, NULL				},
-	{0x17, 0xff, 0xff, 0xfd, NULL				},
+	{0x16, 0xff, 0xff, 0xfb, NULL							},
+	{0x17, 0xff, 0xff, 0xfd, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x00, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x02, "4"				},
-	{0x16, 0x01, 0x03, 0x01, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x00, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x02, "4"							},
+	{0x16, 0x01, 0x03, 0x01, "5"							},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x16, 0x01, 0x04, 0x04, "Off"				},
-	{0x16, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x16, 0x01, 0x04, 0x04, "Off"							},
+	{0x16, 0x01, 0x04, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x17, 0x01, 0x02, 0x00, "Upright"			},
-	{0x17, 0x01, 0x02, 0x02, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x17, 0x01, 0x02, 0x00, "Upright"						},
+	{0x17, 0x01, 0x02, 0x02, "Cocktail"						},
 	
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x17, 0x01, 0x18, 0x00, "Easy"				},
-	{0x17, 0x01, 0x18, 0x18, "Normal"			},
-	{0x17, 0x01, 0x18, 0x10, "Hard"				},
-	{0x17, 0x01, 0x18, 0x08, "Hardest"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x17, 0x01, 0x18, 0x00, "Easy"							},
+	{0x17, 0x01, 0x18, 0x18, "Normal"						},
+	{0x17, 0x01, 0x18, 0x10, "Hard"							},
+	{0x17, 0x01, 0x18, 0x08, "Hardest"						},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x17, 0x01, 0x40, 0x40, "Off"				},
-	{0x17, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Invulnerability"				},
+	{0x17, 0x01, 0x40, 0x40, "Off"							},
+	{0x17, 0x01, 0x40, 0x00, "On"							},
 };
 
 STDDIPINFOEXT(Loht,	Dip1Coin, Loht		)
 
 static struct BurnDIPInfo AirduelDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xbf, NULL				},
-	{0x17, 0xff, 0xff, 0xff, NULL				},
+	{0x16, 0xff, 0xff, 0xbf, NULL							},
+	{0x17, 0xff, 0xff, 0xff, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x00, "Very Easy"			},
-	{0x16, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x04, "Hard"				},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x00, "Very Easy"					},
+	{0x16, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x17, 0x01, 0x01, 0x01, "Off"				},
-	{0x17, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x17, 0x01, 0x01, 0x01, "Off"							},
+	{0x17, 0x01, 0x01, 0x00, "On"							},
 };
 
 STDDIPINFOEXT(Airduel,	Dip2Coin, Airduel	)
 
 static struct BurnDIPInfo GallopDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xbf, NULL				},
-	{0x17, 0xff, 0xff, 0xf9, NULL				},
+	{0x16, 0xff, 0xff, 0xbf, NULL							},
+	{0x17, 0xff, 0xff, 0xf9, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x00, "Very Easy"			},
-	{0x16, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x04, "Hard"				},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x00, "Very Easy"					},
+	{0x16, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "Hard"							},
 
-	{0   , 0xfe, 0   ,    0, "Allow Continue"		},
-	{0x16, 0x01, 0x20, 0x00, "No"				},
-	{0x16, 0x01, 0x20, 0x20, "Yes"				},
+	{0   , 0xfe, 0   ,    0, "Allow Continue"				},
+	{0x16, 0x01, 0x20, 0x00, "No"							},
+	{0x16, 0x01, 0x20, 0x20, "Yes"							},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x17, 0x01, 0x01, 0x01, "Off"				},
-	{0x17, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x17, 0x01, 0x01, 0x01, "Off"							},
+	{0x17, 0x01, 0x01, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x17, 0x01, 0x06, 0x00, "Upright"			},
-	{0x17, 0x01, 0x06, 0x02, "Upright (2P)"			},
-	{0x17, 0x01, 0x06, 0x06, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"						},
+	{0x17, 0x01, 0x06, 0x00, "Upright"						},
+	{0x17, 0x01, 0x06, 0x02, "Upright (2P)"					},
+	{0x17, 0x01, 0x06, 0x06, "Cocktail"						},
 };
 
 STDDIPINFOEXT(Gallop,	Dip2Coin, Gallop	)
 
 static struct BurnDIPInfo KengoDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xbf, NULL				},
-	{0x17, 0xff, 0xff, 0xf9, NULL				},
+	{0x16, 0xff, 0xff, 0xbf, NULL							},
+	{0x17, 0xff, 0xff, 0xf9, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x00, "Very Easy"			},
-	{0x16, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x04, "Hard"				},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x00, "Very Easy"					},
+	{0x16, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x16, 0x01, 0x20, 0x00, "No"				},
-	{0x16, 0x01, 0x20, 0x20, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x16, 0x01, 0x20, 0x00, "No"							},
+	{0x16, 0x01, 0x20, 0x20, "Yes"							},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x17, 0x01, 0x01, 0x01, "Off"				},
-	{0x17, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x17, 0x01, 0x01, 0x01, "Off"							},
+	{0x17, 0x01, 0x01, 0x00, "On"							},
 };
 
 STDDIPINFOEXT(Kengo,	Dip2Coin, Kengo	)
 
 static struct BurnDIPInfo HharryDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xbf, NULL				},
-	{0x17, 0xff, 0xff, 0xfd, NULL				},
+	{0x16, 0xff, 0xff, 0xbf, NULL							},
+	{0x17, 0xff, 0xff, 0xfd, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x16, 0x01, 0x03, 0x02, "2"				},
-	{0x16, 0x01, 0x03, 0x03, "3"				},
-	{0x16, 0x01, 0x03, 0x01, "4"				},
-	{0x16, 0x01, 0x03, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"						},
+	{0x16, 0x01, 0x03, 0x02, "2"							},
+	{0x16, 0x01, 0x03, 0x03, "3"							},
+	{0x16, 0x01, 0x03, 0x01, "4"							},
+	{0x16, 0x01, 0x03, 0x00, "5"							},
 	
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x0c, 0x00, "Very Easy"			},
-	{0x16, 0x01, 0x0c, 0x08, "Easy"				},
-	{0x16, 0x01, 0x0c, 0x0c, "Normal"			},
-	{0x16, 0x01, 0x0c, 0x04, "Hard"				},
+	{0   , 0xfe, 0   ,    4, "Difficulty"					},
+	{0x16, 0x01, 0x0c, 0x00, "Very Easy"					},
+	{0x16, 0x01, 0x0c, 0x08, "Easy"							},
+	{0x16, 0x01, 0x0c, 0x0c, "Normal"						},
+	{0x16, 0x01, 0x0c, 0x04, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Continue Limit"		},
-	{0x16, 0x01, 0x10, 0x00, "No"				},
-	{0x16, 0x01, 0x10, 0x10, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Continue Limit"				},
+	{0x16, 0x01, 0x10, 0x00, "No"							},
+	{0x16, 0x01, 0x10, 0x10, "Yes"							},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x16, 0x01, 0x20, 0x00, "No"				},
-	{0x16, 0x01, 0x20, 0x20, "Yes"				},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"				},
+	{0x16, 0x01, 0x20, 0x00, "No"							},
+	{0x16, 0x01, 0x20, 0x20, "Yes"							},
 
-	{0   , 0xfe, 0   ,    3, "Cabinet"			},
-	{0x17, 0x01, 0x06, 0x04, "Upright"			},
-	{0x17, 0x01, 0x06, 0x00, "Upright (2P)"			},
-	{0x17, 0x01, 0x06, 0x06, "Cocktail"			},
+	{0   , 0xfe, 0   ,    3, "Cabinet"						},
+	{0x17, 0x01, 0x06, 0x04, "Upright"						},
+	{0x17, 0x01, 0x06, 0x00, "Upright (2P)"					},
+	{0x17, 0x01, 0x06, 0x06, "Cocktail"						},
 };
 
 STDDIPINFOEXT(Hharry,	Dip2Coin, Hharry	)
 
 static struct BurnDIPInfo PoundforDIPList[]=
 {
-	{0x0e, 0xff, 0xff, 0xbf, NULL				},
-	{0x0f, 0xff, 0xff, 0xfd, NULL				},
+	{0x0e, 0xff, 0xff, 0xbf, NULL							},
+	{0x0f, 0xff, 0xff, 0xfd, NULL							},
 
-	{0   , 0xfe, 0   ,    4, "Round Time"			},
-	{0x0e, 0x01, 0x03, 0x02, "60"				},
-	{0x0e, 0x01, 0x03, 0x03, "90"				},
-	{0x0e, 0x01, 0x03, 0x01, "120"				},
-	{0x0e, 0x01, 0x03, 0x00, "150"				},
+	{0   , 0xfe, 0   ,    4, "Round Time"					},
+	{0x0e, 0x01, 0x03, 0x02, "60"							},
+	{0x0e, 0x01, 0x03, 0x03, "90"							},
+	{0x0e, 0x01, 0x03, 0x01, "120"							},
+	{0x0e, 0x01, 0x03, 0x00, "150"							},
 
-	{0   , 0xfe, 0   ,    2, "Matches/Credit (2P)"		},
-	{0x0e, 0x01, 0x04, 0x04, "1"				},
-	{0x0e, 0x01, 0x04, 0x00, "2"				},
+	{0   , 0xfe, 0   ,    2, "Matches/Credit (2P)"			},
+	{0x0e, 0x01, 0x04, 0x04, "1"							},
+	{0x0e, 0x01, 0x04, 0x00, "2"							},
 
-	{0   , 0xfe, 0   ,    2, "Rounds/Match"			},
-	{0x0e, 0x01, 0x08, 0x08, "2"				},
-	{0x0e, 0x01, 0x08, 0x00, "3"				},
+	{0   , 0xfe, 0   ,    2, "Rounds/Match"					},
+	{0x0e, 0x01, 0x08, 0x08, "2"							},
+	{0x0e, 0x01, 0x08, 0x00, "3"							},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x0e, 0x01, 0x10, 0x10, "Normal"			},
-	{0x0e, 0x01, 0x10, 0x00, "Hard"				},
+	{0   , 0xfe, 0   ,    2, "Difficulty"					},
+	{0x0e, 0x01, 0x10, 0x10, "Normal"						},
+	{0x0e, 0x01, 0x10, 0x00, "Hard"							},
 
-	{0   , 0xfe, 0   ,    2, "Trackball Size"		},
-	{0x0e, 0x01, 0x20, 0x20, "Small"			},
-	{0x0e, 0x01, 0x20, 0x00, "Large"			},
+	{0   , 0xfe, 0   ,    2, "Trackball Size"				},
+	{0x0e, 0x01, 0x20, 0x20, "Small"						},
+	{0x0e, 0x01, 0x20, 0x00, "Large"						},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x0e, 0x01, 0x40, 0x40, "Off"				},
-	{0x0e, 0x01, 0x40, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
+	{0x0e, 0x01, 0x40, 0x40, "Off"							},
+	{0x0e, 0x01, 0x40, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x0e, 0x01, 0x80, 0x80, "Off"				},
-	{0x0e, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"					},
+	{0x0e, 0x01, 0x80, 0x80, "Off"							},
+	{0x0e, 0x01, 0x80, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x0f, 0x01, 0x01, 0x01, "Off"				},
-	{0x0f, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
+	{0x0f, 0x01, 0x01, 0x01, "Off"							},
+	{0x0f, 0x01, 0x01, 0x00, "On"							},
 
-	{0   , 0xfe, 0   ,    3, "Cabinet"			},
-	{0x0f, 0x01, 0x06, 0x04, "Upright"			},
-	{0x0f, 0x01, 0x06, 0x02, "Upright (2P)"			},
-	{0x0f, 0x01, 0x06, 0x06, "Cocktail"			},
+	{0   , 0xfe, 0   ,    3, "Cabinet"						},
+	{0x0f, 0x01, 0x06, 0x04, "Upright"						},
+	{0x0f, 0x01, 0x06, 0x02, "Upright (2P)"					},
+	{0x0f, 0x01, 0x06, 0x06, "Cocktail"						},
 
-	{0   , 0xfe, 0   ,    2, "Coin Mode"			},
-	{0x0f, 0x01, 0x08, 0x08, "Mode 1"			},
-	{0x0f, 0x01, 0x08, 0x00, "Mode 2"			},
-
-	{0   , 0xfe, 0   ,    16, "Coinage"			},
-	{0x0f, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"		},
-	{0x0f, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"		},
-	{0x0f, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"		},
-	{0x0f, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"		},
-	{0x0f, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"		},
-	{0x0f, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"		},
-	{0x0f, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"		},
-	{0x0f, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"		},
+	{0   , 0xfe, 0   ,    2, "Coin Mode"					},
+	{0x0f, 0x01, 0x08, 0x08, "Mode 1"						},
+	{0x0f, 0x01, 0x08, 0x00, "Mode 2"						},
+															
+	{0   , 0xfe, 0   ,    16, "Coinage"						},
+	{0x0f, 0x01, 0xf0, 0xa0, "6 Coins 1 Credit"				},
+	{0x0f, 0x01, 0xf0, 0xb0, "5 Coins 1 Credit"				},
+	{0x0f, 0x01, 0xf0, 0xc0, "4 Coins 1 Credit"				},
+	{0x0f, 0x01, 0xf0, 0xd0, "3 Coins 1 Credit"				},
+	{0x0f, 0x01, 0xf0, 0xe0, "2 Coins 1 Credit"				},
+	{0x0f, 0x01, 0xf0, 0x30, "3 Coins 2 Credits"			},
+	{0x0f, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"			},
+	{0x0f, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"				},
 	{0x0f, 0x01, 0xf0, 0x10, "1 Coin/1 Credit, 1 Coin/Cont."},
-	{0x0f, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"		},
-	{0x0f, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"		},
-	{0x0f, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"		},
-	{0x0f, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"		},
-	{0x0f, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"		},
-	{0x0f, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"		},
-	{0x0f, 0x01, 0xf0, 0x00, "Free Play"			},
+	{0x0f, 0x01, 0xf0, 0x40, "2 Coins 3 Credits"			},
+	{0x0f, 0x01, 0xf0, 0x90, "1 Coin  2 Credits"			},
+	{0x0f, 0x01, 0xf0, 0x80, "1 Coin  3 Credits"			},
+	{0x0f, 0x01, 0xf0, 0x70, "1 Coin  4 Credits"			},
+	{0x0f, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"			},
+	{0x0f, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"			},
+	{0x0f, 0x01, 0xf0, 0x00, "Free Play"					},
 };
 
 STDDIPINFO(Poundfor)
+
+static UINT8 mcu_cmd = 0;
+static UINT8 mcu_to_snd = 0;
+
+// mcu jib
+static UINT8 mcu_read_port(INT32 port)
+{
+	if (port == 0) {
+		UINT8 ret =  DrvSndROM[sample_address & 0x3ffff];
+		sample_address = (sample_address + 1) & 0x3ffff;
+		return ret;
+	}
+
+	if (port == 2) {
+		return mcu_cmd;
+	}
+
+	if (port >= 0xc000 && port <= 0xcfff) {
+		if ((port & 0xfff) == 0xfff) { // latch on ffe or fff? -dink
+			mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
+		}
+		return DrvProtRAM[port & 0xfff];
+	}
+
+	return 0x00;
+}
+
+static void mcu_write_port(INT32 port, UINT8 data)
+{
+	if (port == MCS51_PORT_P1) {
+		if (ZetGetActive() == -1) return; // mcs51_reset() writes here, (z80 is not active yet)
+		DACSignedWrite(0, data);
+		return;
+	}
+
+	if (port == 0) {
+		sample_address = (sample_address & ~0x1fff) | (data << 5);
+		return;
+	}
+
+	if (port == 1) {
+		sample_address = (sample_address & 0x1fff) | (data << 13);
+		return;
+	}
+
+	if (port == 2) {
+		mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
+		return;
+	}
+
+	if (port >= 0xc000 && port <= 0xcfff) {
+		DrvProtRAM[port & 0xfff] = data;
+		return;
+	}
+}
+
+static void DrvMCUReset()
+{
+	mcu_to_snd = 0;
+	mcu_cmd = 0;
+	mcs51_reset();
+}
+
+static void DrvMCUInit()
+{
+	mcs51_init();
+	mcs51_set_program_data(DrvMcuROM);
+	mcs51_set_write_handler(mcu_write_port);
+	mcs51_set_read_handler(mcu_read_port);
+
+	DrvMCUReset();
+}
+
+static void DrvMCUExit() {
+	mcs51_exit();
+}
+
+static INT32 DrvMCURun(INT32 cycles)
+{
+	return mcs51Run(cycles);
+}
+
+static void DrvMCUSync()
+{
+	INT32 main_clock = (Clock_16mhz) ? 16000000 : 8000000;
+
+	INT32 todo = ((INT64)((double)VezTotalCycles() * ((double)8000000 / 12)) / main_clock) - mcs51TotalCycles();
+
+	if (todo > 0) DrvMCURun(todo);
+}
+
+static INT32 DrvMCUScan(INT32 nAction)
+{
+	mcs51_scan(nAction);
+
+	SCAN_VAR(mcu_to_snd);
+	SCAN_VAR(mcu_cmd);
+
+	return 0;
+}
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 // Protection handlers
@@ -683,6 +788,11 @@ static const INT32 *protection_sample_offsets = NULL;
 
 static UINT8 protection_read(INT32 address)
 {
+	if (use_mcu) {
+		DrvMCUSync();
+		return DrvProtRAM[(address) & 0xfff];
+	}
+
 	if (address == 0xb0ffb) {
 		if (protection_code != NULL) {
 			memcpy (DrvProtRAM, protection_code, 96);
@@ -694,6 +804,15 @@ static UINT8 protection_read(INT32 address)
 
 static void protection_write(INT32 address, UINT8 data)
 {
+	if (use_mcu) {
+		DrvMCUSync();
+		if ((address & 0xfff) == 0xffe) {
+			mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+		}
+		DrvProtRAM[(address) & 0xfff] = data;
+		return;
+	}
+
 	DrvProtRAM[address & 0xfff] = data ^ 0xff;
 
 	if (address == 0xb0fff && data == 0) {
@@ -703,8 +822,20 @@ static void protection_write(INT32 address, UINT8 data)
 	}
 }
 
-static void protection_sample_offset_write(UINT8 data)
+static void protection_sample_offset_write(UINT8 data) // 0xc0
 {
+	if (use_mcu) {
+		if (airduelm72) {
+			DrvMCUSync();
+			mcu_cmd = data;
+			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+		} else {
+			mcu_to_snd = data;
+			ZetNmi(0);
+		}
+		return;
+	}
+
 	if (protection_sample_offsets != NULL) {
 		if (data < protection_sample_offsets[0]) {
 			sample_address = protection_sample_offsets[data+1];
@@ -1234,10 +1365,17 @@ static void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x82:
+			if (use_mcu) {
+				DrvMCUSync();
+				mcu_cmd = data;
+				mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+				return;
+			}
+
 			DACSignedWrite(0, data);
 			sample_address = (sample_address + 1) & 0x3ffff;
 			if (!DrvSndROM[sample_address]) {
- 				DACWrite(0, 0); // clear dac @ end of sample, fixes distortion in rtype2 level4 after death while also killing an air-tank
+				DACWrite(0, 0); // clear dac @ end of sample, fixes distortion in rtype2 level4 after death while also killing an air-tank
 			}
 		return;
 	}
@@ -1259,6 +1397,9 @@ static UINT8 __fastcall m72_sound_read_port(UINT16 port)
 			return *soundlatch;
 
 		case 0x84:
+			if (use_mcu) {
+				return mcu_to_snd;
+			}
 			return DrvSndROM[sample_address & 0x3ffff];
 	}
 
@@ -1283,10 +1424,11 @@ static INT32 DrvDoReset()
 	setvector_callback(VECTOR_INIT);
 	z80_reset = (enable_z80_reset) ? 1 : 0;
 	ZetSetRESETLine(z80_reset);
-	ZetClose();
-
 	BurnYM2151Reset();
 	DACReset();
+	ZetClose();
+
+	if (use_mcu) DrvMCUReset();
 
 	HiscoreReset();
 
@@ -1295,7 +1437,7 @@ static INT32 DrvDoReset()
 	if (!CosmicCop) m72_irq_base = 0;
 	majtitle_rowscroll_enable = 0;
 
-	nExtraCycles[0] = nExtraCycles[1] = 0;
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
 	return 0;
 }
@@ -1381,7 +1523,7 @@ static void rtype2_main_cpu_map()
 
 static void hharryu_main_cpu_map()
 {
-	VezInit(0, V35_TYPE);
+	VezInit(0, V30_TYPE);
 
 	VezOpen(0);
 	VezMapArea(0x00000, 0x7ffff, 0, DrvV30ROM + 0x000000);
@@ -1524,6 +1666,7 @@ static INT32 GetRoms(INT32 bLoad)
 	UINT8 *GFXROM2 = DrvGfxROM2;
 	UINT8 *GFXROM3 = DrvGfxROM3;
 	UINT8 *SNDROM = DrvSndROM;
+	UINT8 *MCUROM = DrvMcuROM;
 	INT32 pglen = 0;
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
@@ -1581,6 +1724,14 @@ static INT32 GetRoms(INT32 bLoad)
 			SNDROM += ri.nLen;
 			continue;
 		}
+
+		if ((ri.nType & 15) == 7) {
+			use_mcu = 1;
+			if (bLoad) bprintf(0, _T("Loading i8751 MCU @ %d - size %x\n"), i, ri.nLen);
+			if (bLoad) if (BurnLoadRom(MCUROM , i, 1)) return 1;
+			MCUROM += ri.nLen;
+			continue;
+		}
 	}
 
 	if (bLoad) {
@@ -1610,6 +1761,7 @@ static INT32 GetRoms(INT32 bLoad)
 		} else {
 			code_mask[3] = 0;
 		}
+
 	} else {
 		graphics_length[0] = GFXROM0 - DrvGfxROM0;
 		graphics_length[1] = GFXROM1 - DrvGfxROM1;
@@ -1640,6 +1792,7 @@ static INT32 MemIndex()
 	DrvGfxROM2	= Next; Next += graphics_length[2] * 2;
 	DrvGfxROM3	= Next; Next += graphics_length[3] * 2;
 	DrvSndROM	= Next; Next += 0x040000;
+	DrvMcuROM   = Next; Next += 0x010000;
 
 	AllRam	= Next;
 
@@ -1651,6 +1804,7 @@ static INT32 MemIndex()
 	DrvVidRAM1	= Next; Next += 0x010000;
 	DrvV30RAM	= Next; Next += 0x004000;
 	DrvPalRAM	= Next; Next += 0x002000;
+
 	DrvProtRAM	= Next; Next += 0x001000;
 	DrvRowScroll	= Next; Next += 0x000800;
 
@@ -1669,7 +1823,7 @@ static INT32 MemIndex()
 }
 
 
-static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32 (*pRomLoadCallback)(), INT32 z80_nmi, INT32 video_type)
+static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32 (*pRomLoadCallback)(), INT32 z80_nmi, INT32 video_type, INT32 video_mask)
 {
 	BurnSetRefreshRate(55.00);
 
@@ -1696,9 +1850,10 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 	m72_irq_base = 0; // set by port 42. (programmable interrupt controller)
 	z80_nmi_enable = z80_nmi;
 	m72_video_type = video_type;
+	m72_video_mask = video_mask;
 
 	switch (video_type)
-	{	
+	{
 		case 0: // m72
 			video_offsets[0] = video_offsets[1] = 0;
 		break;
@@ -1742,6 +1897,11 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
+	if (use_mcu) {
+		DrvMCUInit();
+		bprintf(0, _T("*** Irem M72, with i8751 mcu\n"));
+	}
+
 	DrvDoReset();
 
 	return 0;
@@ -1769,11 +1929,18 @@ static INT32 DrvExit()
 	Kengo = 0;
 	CosmicCop = 0;
 	Poundfor = 0;
+	airduelm72 = 0;
 	Clock_16mhz = 0;
 
 	m72_install_protection(NULL,NULL,NULL);
 
 	video_offsets[0] = video_offsets[1] = 0;
+
+	if (use_mcu) {
+		DrvMCUExit();
+	}
+
+	use_mcu = 0;
 
 	return 0;
 }
@@ -1785,10 +1952,17 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 	UINT8  *gfx  = (layer) ? DrvGfxROM2 : DrvGfxROM1;
 
 	//	    layer, prio, forcelayer
-	const UINT16 transmask[2][3][2] = {
+	UINT16 transmask[2][3][2] = {
 		{ { 0xffff, 0x0001 }, { 0x00ff, 0xff01 }, { 0x0001, 0xffff } },
-		{ { 0xffff, 0x0000 }, { 0x00ff, 0xff00 }, { (type == 0) ? (const UINT16)0x0007 : (const UINT16)0x0001, (type == 0) ? (const UINT16)0xfff8 : (const UINT16)0xfffe } }
+		{ { 0xffff, 0x0000 }, { 0x00ff, 0xff00 }, { 0x0007, 0xfff8 } }
 	};
+
+	switch (m72_video_mask) {
+		case 1: transmask[1][2][0] = 0x0001; transmask[1][2][1] = 0xfffe; break;
+		case 2: transmask[1][2][0] = 0xff00; transmask[1][2][1] = 0x00ff; break;
+		case 3: transmask[1][2][0] = 0x001f; transmask[1][2][1] = 0xffe0; break;
+		case 4: transmask[1][2][0] = 0x00ff; transmask[1][2][1] = 0xff00; break;
+	}
 
 	INT32 scrolly = scroll[layer * 4 + 0] | (scroll[layer * 4 + 1] << 8);
 	INT32 scrollx = scroll[layer * 4 + 2] | (scroll[layer * 4 + 3] << 8);
@@ -2031,8 +2205,8 @@ static void compile_inputs()
 	if (Poundfor) {
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
 		BurnTrackballConfig(1, AXIS_NORMAL, AXIS_REVERSED);
-		BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 5, 8);
-		BurnTrackballFrame(1, DrvAnalogPort2, DrvAnalogPort3, 5, 8);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 5, 8);
+		BurnTrackballFrame(1, Analog[2], Analog[3], 5, 8);
 		BurnTrackballUpdate(0);
 		BurnTrackballUpdate(1);
 	}
@@ -2052,7 +2226,7 @@ static void scanline_interrupts(INT32 scanline)
 		else
 			VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, CPU_IRQSTATUS_AUTO);
 	}
-	else if (scanline == 255) // vblank
+	else if (scanline == 256) // vblank
 	{
 		if (nPreviousLine < nScreenHeight) {
 			dodrawline(nPreviousLine, nScreenHeight);
@@ -2075,14 +2249,16 @@ static INT32 DrvFrame()
 
 	VezNewFrame();
 	ZetNewFrame();
+	if (use_mcu) mcs51NewFrame();
 
 	compile_inputs();
 
 	INT32 multiplier = 3;
-	INT32 nInterleave = 256 * multiplier;
-	INT32 nSampleInt = nInterleave / 128;
-	INT32 nCyclesTotal[2] = { (INT32)((INT64)(8000000 / 55) * nBurnCPUSpeedAdjust / 0x0100), (INT32)((INT64)(3579545 / 55) * nBurnCPUSpeedAdjust / 0x0100) };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
+	INT32 nInterleave = 284 * multiplier;
+	INT32 nSampleInt = nInterleave / 142;
+//	INT32 nCyclesTotal[3] = { (INT32)((INT64)(8000000 / 55.017606) * nBurnCPUSpeedAdjust / 0x0100), (INT32)((INT64)(3579545 / 55.017606) * nBurnCPUSpeedAdjust / 0x0100), (INT32)((double)8000000 / 12 / 55) };
+	INT32 nCyclesTotal[3] = { (INT32)((double)8000000 / 55.017606), (INT32)((double)3579545 / 55.017606), (INT32)((double)8000000 / 12 / 55.017606) };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 	INT32 z80samplecount = 0;
 
 	if (Clock_16mhz) // Ken-go, Cosmic Cop
@@ -2094,19 +2270,27 @@ static INT32 DrvFrame()
 
 	VezOpen(0);
 	ZetOpen(0);
+	VezIdle(nExtraCycles[0]); // for mcu sync to nec
 	ZetIdle(nExtraCycles[1]); // using timer
+	if (use_mcu) {
+		mcs51Idle(nExtraCycles[2]);
+	}
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		CPU_RUN(0, Vez);
-
 		if ((i%multiplier)==0)
 			scanline_interrupts(i/multiplier);
 
+		CPU_RUN(0, Vez);
+
+		if (use_mcu) {
+			CPU_RUN_SYNCINT(2, mcs51);
+		}
+
 		CPU_RUN_TIMER(1);
 
-		if (i%nSampleInt == nSampleInt-1) { // 128x per frame
-			if (z80_nmi_enable == Z80_FAKE_NMI) {
+		if (i%nSampleInt == nSampleInt-1) { // 142x per frame
+			if (z80_nmi_enable == Z80_FAKE_NMI && use_mcu == 0) {
 				z80samplecount++;
 				if (DrvSndROM[sample_address]) {
 					DACSignedWrite(0, DrvSndROM[sample_address]);
@@ -2124,6 +2308,9 @@ static INT32 DrvFrame()
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
+	if (use_mcu) nExtraCycles[2] = mcs51TotalCycles() - nCyclesTotal[2];
+
+	//if (use_mcu) bprintf(0, _T("mcu %d  v30 %d  mcutotalcyc  %d   nectotalcyc  %d\n"), nExtraCycles[2], nExtraCycles[0], mcs51TotalCycles(), VezTotalCycles());
 
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
@@ -2161,6 +2348,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2151Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 		VezScan(nAction);
+
+		if (use_mcu) {
+			DrvMCUScan(nAction);
+		}
 
 		if (Poundfor)
 			BurnTrackballScan();
@@ -2214,7 +2405,7 @@ STD_ROM_FN(rtype)
 
 static INT32 rtypeInit()
 {
-	return DrvInit(common_040000_040000, sound_ram_map, NULL, Z80_NO_NMI, 0);
+	return DrvInit(common_040000_040000, sound_ram_map, NULL, Z80_NO_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvRtype = {
@@ -2443,7 +2634,7 @@ STD_ROM_FN(xmultipl)
 
 static INT32 xmultiplInit()
 {
-	return DrvInit(common_080000_09c000, sound_rom_map, NULL, Z80_REAL_NMI, 2);
+	return DrvInit(common_080000_09c000, sound_rom_map, NULL, Z80_REAL_NMI, 2, 0);
 }
 
 struct BurnDriver BurnDrvXmultipl = {
@@ -2486,7 +2677,7 @@ static struct BurnRomInfo xmultiplm72RomDesc[] = {
 
 	{ "t52.v0.ic44",	0x20000, 0x2db1bd80, 0x05 | BRF_SND },           // 20 DAC Samples
 
-	{ "xm_c-pr-.ic1",	0x01000, 0xc8ceb3cd, 0x00 | BRF_OPT }, 	 	 // 21 i8751 microcontroller
+	{ "xm_c-pr-.ic1",	0x01000, 0xc8ceb3cd, 0x07 | BRF_PRG }, 	 	 // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(xmultiplm72)
@@ -2496,7 +2687,7 @@ static INT32 xmultiplm72Init()
 {
 	install_protection(xmultiplm72);
 
-	return DrvInit(common_080000_080000, sound_ram_map, NULL, Z80_REAL_NMI, 0);
+	return DrvInit(common_080000_080000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvXmultiplm72 = {
@@ -2543,7 +2734,7 @@ static INT32 dbreedRomLoadCallback()
 
 static INT32 dbreedInit()
 {
-	return DrvInit(common_080000_088000, sound_rom_map, dbreedRomLoadCallback, Z80_REAL_NMI, 2);
+	return DrvInit(common_080000_088000, sound_rom_map, dbreedRomLoadCallback, Z80_REAL_NMI, 2, 0);
 }
 
 struct BurnDriver BurnDrvDbreed = {
@@ -2600,7 +2791,7 @@ static INT32 dbreedm72Init()
 {
 	install_protection(dbreedm72);
 
-	return DrvInit(common_080000_090000, sound_ram_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 0);
+	return DrvInit(common_080000_090000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvDbreedm72 = {
@@ -2640,7 +2831,7 @@ static struct BurnRomInfo dbreedjm72RomDesc[] = {
 
 	{ "db_c-v0.ic44",	0x20000, 0x312f7282, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "db_c-pr-.ic1",	0x01000, 0x8bf2910c, 0x00 | BRF_OPT }, 			 // 17 i8751 microcontroller
+	{ "db_c-pr-.ic1",	0x01000, 0x8bf2910c, 0x07 | BRF_PRG }, 			 // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(dbreedjm72)
@@ -2698,7 +2889,7 @@ static INT32 bchopperInit()
 {
 	install_protection(bchopper);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0, 4);
 }
 
 struct BurnDriver BurnDrvBchopper = {
@@ -2739,7 +2930,7 @@ static struct BurnRomInfo mrheliRomDesc[] = {
 
 	{ "mh_c-v0-b.ic44",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },           // 18 DAC Samples
 
-	{ "mh_c-pr-.ic1",	0x01000, 0x897dc4ee, 0x00 | BRF_OPT }, 			 // 19 i8751 microcontroller
+	{ "mh_c-pr-.ic1",	0x01000, 0x897dc4ee, 0x07 | BRF_PRG }, 			 // 19 i8751 microcontroller
 };
 
 STD_ROM_PICK(mrheli)
@@ -2749,7 +2940,7 @@ static INT32 mrheliInit()
 {
 	m72_install_protection(bchopper_code, mrheli_crc, bchopper_sample_offsets);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0, 4);
 }
 
 struct BurnDriver BurnDrvMrheli = {
@@ -2810,7 +3001,7 @@ static INT32 nspiritInit()
 {
 	install_protection(nspirit);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 3);
 }
 
 struct BurnDriver BurnDrvNspirit = {
@@ -2853,7 +3044,7 @@ static struct BurnRomInfo nspiritjRomDesc[] = {
 
 	{ "nin-v0.7a",		0x10000, 0xa32e8caf, 0x05 | BRF_SND },           // 20 DAC Samples
 
-	{ "nin_c-pr-.ic1",	0x01000, 0x802d440a, 0x00 | BRF_OPT },           // 21 i8751 microcontroller
+	{ "nin_c-pr-.ic1",	0x01000, 0x802d440a, 0x07 | BRF_PRG },           // 21 i8751 microcontroller
 };
 
 STD_ROM_PICK(nspiritj)
@@ -2863,7 +3054,7 @@ static INT32 nspiritjInit()
 {
 	m72_install_protection(nspirit_code, nspiritj_crc, nspirit_sample_offsets);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 3);
 }
 
 struct BurnDriver BurnDrvNspiritj = {
@@ -2903,7 +3094,7 @@ static struct BurnRomInfo imgfightRomDesc[] = {
 	{ "if-c-v0.ic44",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
 	{ "if-c-v1.ic45",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
 
-	{ "if_c-pr-a.ic1",  0x01000, 0x55f10458, 0x00 | BRF_OPT },           // 18 i8751 microcontroller
+	{ "if_c-pr-a.ic1",  0x01000, 0x55f10458, 0x07 | BRF_PRG },           // 18 i8751 microcontroller
 };
 
 STD_ROM_PICK(imgfight)
@@ -2920,7 +3111,7 @@ static INT32 imgfightInit()
 {
 	install_protection(imgfight);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, imgfightRomLoadCallback, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, imgfightRomLoadCallback, Z80_FAKE_NMI, 0, 2);
 }
 
 struct BurnDriver BurnDrvImgfight = {
@@ -2960,7 +3151,7 @@ static struct BurnRomInfo imgfightjRomDesc[] = {
 	{ "if-c-v0.ic44",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
 	{ "if-c-v1.ic45",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
 
-	{ "if_c-pr-.ic1",	0x01000, 0xef0d5098, 0x00 | BRF_OPT }, 			 // 18 i8751 microcontroller
+	{ "if_c-pr-.ic1",	0x01000, 0xef0d5098, 0x07 | BRF_PRG }, 			 // 18 i8751 microcontroller
 };
 
 STD_ROM_PICK(imgfightj)
@@ -3010,7 +3201,7 @@ STD_ROM_FN(airduel)
 
 static INT32 airduelInit()
 {
-	return DrvInit(majtitle_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 6);
+	return DrvInit(majtitle_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 6, 0);
 }
 
 struct BurnDriver BurnDrvAirduel = {
@@ -3091,7 +3282,7 @@ static struct BurnRomInfo airduelm72RomDesc[] = {
 
 	{ "ad-v0.ic44",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "ad_c-pr-c.ic1",	0x01000, 0x8785e4e2, 0x00 | BRF_OPT },           // 17 i8751 microcontroller
+	{ "ad_c-pr-c.ic1",	0x01000, 0x8785e4e2, 0x07 | BRF_PRG },           // 17 i8751 microcontroller
 	
 	{ "ad-c-3f.ic13",	0x00117, 0x9748fa38, 0x00 | BRF_OPT },           // 18 Pals
 };
@@ -3103,7 +3294,9 @@ static INT32 airduelm72Init()
 {
 	install_protection(airduel);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
+	airduelm72 = 1;
+
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvAirduelm72 = {
@@ -3142,7 +3335,7 @@ static struct BurnRomInfo airdueljm72RomDesc[] = {
 
 	{ "ad-v0.ic44",		0x20000, 0x339f474d, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "ad_c-pr-.ic1",	0x01000, 0x45584e52, 0x00 | BRF_OPT },           // 17 i8751 microcontroller
+	{ "ad_c-pr-.ic1",	0x01000, 0x45584e52, 0x07 | BRF_PRG },           // 17 i8751 microcontroller
 	
 	{ "ad-c-3f.ic13",	0x00117, 0x9748fa38, 0x00 | BRF_OPT },           // 18 Pals
 };
@@ -3193,7 +3386,7 @@ STD_ROM_FN(rtype2)
 
 static INT32 rtype2Init()
 {
-	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 1);
+	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 1, 0);
 }
 
 struct BurnDriver BurnDrvRtype2 = {
@@ -3325,7 +3518,7 @@ STD_ROM_FN(hharry)
 
 static INT32 hharryInit()
 {
-	return DrvInit(common_080000_0a0000, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 2);
+	return DrvInit(common_080000_0a0000, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 2, 1);
 }
 
 struct BurnDriver BurnDrvHharry = {
@@ -3367,7 +3560,7 @@ STD_ROM_FN(hharryu)
 
 static INT32 hharryuInit()
 {
-	return DrvInit(hharryu_main_cpu_map, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 7);
+	return DrvInit(hharryu_main_cpu_map, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 7, 1);
 }
 
 struct BurnDriver BurnDrvHharryu = {
@@ -3495,7 +3688,7 @@ static INT32 dkgensanm72Init()
 {
 	install_protection(dkgenm72);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvDkgensanm72 = {
@@ -3535,7 +3728,7 @@ STD_ROM_FN(ltswords)
 
 static INT32 kengoInit()
 {
-	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 5);
+	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 5, 0);
 
 	if (nRet == 0) {
 		Kengo = 1;
@@ -3660,7 +3853,7 @@ static INT32 cosmccopInit()
 {
 	Clock_16mhz = 1;
 
-	INT32 rc = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 7);
+	INT32 rc = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 7, 0);
 
 	m72_irq_base = 0x60; // Cosmic Cop doesn't write to port 0x42 (irq config), set it manually. (after DrvInit()!)
 	CosmicCop = 1;
@@ -3715,7 +3908,7 @@ static INT32 gallopInit()
 	protection_sample_offsets = gallop_sample_offsets;
 	Clock_16mhz = 1;
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvGallop = {
@@ -3755,7 +3948,7 @@ static struct BurnRomInfo lohtRomDesc[] = {
 
 	{ "tom_m44.ic44",	0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "tom_c-pr-b.ic1",	0x01000, 0x9c9545f1, 0x00 | BRF_OPT },           // 17 i8751 microcontroller
+	{ "tom_c-pr-b.ic1",	0x01000, 0x9c9545f1, 0x07 | BRF_PRG },           // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(loht)
@@ -3765,7 +3958,7 @@ static INT32 lohtInit()
 {
 	install_protection(loht);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvLoht = {
@@ -3804,7 +3997,7 @@ static struct BurnRomInfo lohtjRomDesc[] = {
 
 	{ "082",		0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 16 DAC Samples
 
-	{ "tom_c-pr-.ic1",	0x01000, 0x9fa9b496, 0x00 | BRF_OPT },       // 17 i8751 microcontroller
+	{ "tom_c-pr-.ic1",	0x01000, 0x9fa9b496, 0x07 | BRF_PRG },       // 17 i8751 microcontroller
 };
 
 STD_ROM_PICK(lohtj)
@@ -3952,7 +4145,7 @@ static INT32 lohtbInit()
 {
 	install_protection(loht);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, lohtbRomLoadCallback, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, lohtbRomLoadCallback, Z80_FAKE_NMI, 0, 0);
 }
 
 struct BurnDriver BurnDrvLohtb = {
@@ -3999,7 +4192,7 @@ static struct BurnRomInfo lohtb2RomDesc[] = {
 
 	{ "loht-a1.bin",	0x10000, 0x3ed51d1f, 0x05 | BRF_SND },           // 24 DAC Samples
 
-	{ "loht-a26.bin",	0x02000, 0xac901e17, 0x00 | BRF_OPT },           // 25 i8751 microcontroller
+	{ "loht-a26.bin",	0x02000, 0xac901e17, 0x07 | BRF_PRG },           // 25 i8751 microcontroller
 };
 
 STD_ROM_PICK(lohtb2)
@@ -4044,7 +4237,7 @@ STD_ROM_FN(poundfor)
 
 static INT32 poundforInit()
 {
-	INT32 rc = DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_FAKE_NMI, 4);
+	INT32 rc = DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_FAKE_NMI, 4, 0);
 
 	if (!rc) {
 		Poundfor = 1;
@@ -4172,7 +4365,7 @@ STD_ROM_FN(majtitle)
 
 static INT32 majtitleInit()
 {
-	return DrvInit(majtitle_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 3);
+	return DrvInit(majtitle_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 3, 0);
 }
 
 struct BurnDriver BurnDrvMajtitle = {

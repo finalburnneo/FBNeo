@@ -37,7 +37,7 @@ INT32 inputbuf_freeze(UINT8 **buf, INT32 *size)
 	UINT8 *b = (UINT8*)malloc(buffer_pos + FREEZE_EXTRA);
 	*buf = b;
 
-	//bprintf(0, _T("inputbuf frozen, pos %d\n"), buffer_pos);
+	if (b == NULL) return 1;
 
 	memcpy(b, &buffer_pos, sizeof(buffer_pos));
 	b += sizeof(buffer_pos);
@@ -52,6 +52,9 @@ INT32 inputbuf_unfreeze(UINT8 *buf, INT32 size)
 {
 	if (size > buffer_size) {
 		buffer = (UINT8*)realloc(buffer, size);
+
+		if (buffer == NULL) return 1;
+
 		buffer_size = size;
 	}
 
@@ -78,14 +81,18 @@ void inputbuf_load()
 	// seek to embedded position
 	fseek(input_f, input_f_embed_pos, SEEK_SET);
 
+	INT32 packet_len = 0;
 	INT32 data_len = 0;
+
+	fread(&packet_len, sizeof(packet_len), 1, input_f); // packet length (data len rounded to multiple of 4 / dword aligned)
 	fread(&data_len, sizeof(data_len), 1, input_f);
 
-	bprintf(0, _T("inputbuf_load() - loading %d bytes\n"), data_len);
+	bprintf(0, _T("inputbuf_load() - loading %d bytes (%d data)\n"), packet_len, data_len);
 
-	buffer = (UINT8*)realloc(buffer, data_len);
+	buffer = (UINT8*)realloc(buffer, packet_len);
 	buffer_size = data_len;
-	fread(buffer, buffer_size, 1, input_f);
+
+	fread(buffer, packet_len, 1, input_f);
 }
 
 void inputbuf_save()
@@ -93,12 +100,21 @@ void inputbuf_save()
 	// seek to embedded position
 	fseek(input_f, input_f_embed_pos, SEEK_SET);
 
+	INT32 packet_len = (buffer_pos + 3) & -4;
 	INT32 data_len = buffer_pos;
+	INT32 difference = packet_len - data_len;
+	INT32 align = 0;
+
+	fwrite(&packet_len, sizeof(packet_len), 1, input_f);
 	fwrite(&data_len, sizeof(data_len), 1, input_f);
 
-	bprintf(0, _T("inputbuf_save() - saving %d bytes\n"), data_len);
+	bprintf(0, _T("inputbuf_save() - saving %d bytes (%d data)\n"), packet_len, data_len);
 
 	fwrite(buffer, data_len, 1, input_f);
+	if (difference) {
+		fwrite(&align, difference, 1, input_f);
+		bprintf(0, _T("alignment of + %d\n"), difference);
+	}
 }
 
 INT32 inputbuf_eof()

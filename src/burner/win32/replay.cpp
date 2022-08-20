@@ -1,6 +1,5 @@
 // Functions for recording & replaying input
 #include "burner.h"
-//#include "dynhuff.h"
 #include <commdlg.h>
 #include "inputbuf.h"
 
@@ -37,7 +36,8 @@ UINT8 *ReplayExternalData = NULL;
 #define MOVIE_FLAG_FROM_POWERON			(1<<1)
 #define MOVIE_FLAG_WITH_NVRAM			(1<<2) // to be used w/FROM_POWERON (if selected)
 
-const UINT32 nMovieVersion = 0x0403;
+const UINT32 nMovieVersion = 0x0404;
+const UINT32 nMinimumMovieVersion = 0x0404; // anything lower will not work w/this version of FB Neo
 UINT32 nThisMovieVersion = 0;
 UINT32 nThisFBVersion = 0;
 
@@ -431,14 +431,13 @@ INT32 StartRecord()
 				fwrite(&nZero, 1, 4, fp);				// undo count
 				fwrite(&nMovieVersion, 1, 4, fp);		// ThisMovieVersion
 
-				if (nMovieVersion >= 0x0401) {
-					bprintf(0, _T("nMovieVersion %X .. writing date stuff!\n"), nMovieVersion);
+				fwrite(&MovieInfo, 1, sizeof(MovieInfo), fp); // date structure (starting point for timer chips)
 
-					fwrite(&MovieInfo, 1, sizeof(MovieInfo), fp);
-				}
 				fwrite(&nBurnVer, 1, 4, fp);			// fb version#
 
-				//nRet = EmbedCompressedFile(fp, -1);
+				INT32 derp = ftell(fp);
+				bprintf(0, _T("embedding inputbuf at %d\n"), derp);
+
 				nRet = inputbuf_embed(fp);
 			}
 		}
@@ -577,11 +576,10 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 					fread(&nThisMovieVersion, 1, 4, fp);
 
 					memset(&MovieInfo, 0, sizeof(MovieInfo));
-					if (nThisMovieVersion >= 0x0401) {
-						bprintf(0, _T("loading ext movie version!!\n"));
-						fread(&MovieInfo, 1, sizeof(MovieInfo), fp);
-						bprintf(0, _T("Ext Info: %S\n"), ReplayDecodeDateTime());
-					}
+
+					fread(&MovieInfo, 1, sizeof(MovieInfo), fp);
+					bprintf(0, _T("Ext Info: %S\n"), ReplayDecodeDateTime());
+
 					fread(&nThisFBVersion, 1, 4, fp);
 					INT32 nEmbedPosition = ftell(fp);
 
@@ -607,9 +605,8 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 						wszMetadata[i] = L'\0';
 					}
 
-					// Seek back to the beginning of compressed data
+					// Seek back to the beginning of inputbuf data
 					fseek(fp, nEmbedPosition, SEEK_SET);
-					//nRet = EmbedCompressedFile(fp, -1);
 					nRet = inputbuf_embed(fp);
 				}
 			}
@@ -697,6 +694,8 @@ static void CloseRecord()
 	fseek(fp, 0, SEEK_END);
 	INT32 nMetadataOffset = ftell(fp);
 	INT32 nChunkSize = ftell(fp) - 4 - nSizeOffset;		// Fill in chunk size and no of recorded frames
+	bprintf(0, _T("close record.  metadata offset:  %d\n"), nMetadataOffset);
+	bprintf(0, _T("nSizeOffset  %d   nChunkSize  %d\n"),nSizeOffset,nChunkSize);
 	fseek(fp, nSizeOffset, SEEK_SET);
 	fwrite(&nChunkSize, 1, 4, fp);
 	fwrite(&nFrames, 1, 4, fp);
@@ -1050,12 +1049,12 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	fread(&nThisMovieVersion, 1, 4, fd);
 
 	memset(&MovieInfo, 0, sizeof(MovieInfo));
-	if (nThisMovieVersion >= 0x0401) {
-		fread(&MovieInfo, 1, sizeof(MovieInfo), fd);
-		bprintf(0, _T("Movie Version %X\n"), nThisMovieVersion);
-		bprintf(0, _T("Ext Info: %S\n"), ReplayDecodeDateTime());
-	}
-	if (nThisMovieVersion < 0x403) { // Uhoh, wrong format!
+
+	fread(&MovieInfo, 1, sizeof(MovieInfo), fd);
+	bprintf(0, _T("Movie Version %X\n"), nThisMovieVersion);
+	bprintf(0, _T("Ext Info: %S\n"), ReplayDecodeDateTime());
+
+	if (nThisMovieVersion < nMinimumMovieVersion) { // Uhoh, wrong format!
 		fclose(fd);
 		DisplayPropertiesError(hDlg, 1 /* most likely recorded w/ an earlier version */);
 		return;
@@ -1129,9 +1128,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		else
 			sprintf(szRecordedFrom, "%s", szStartType);
 
-		if (nThisMovieVersion >= 0x0401) {
-			strcpy(szRecordedTime, ReplayDecodeDateTime());
-		}
+		strcpy(szRecordedTime, ReplayDecodeDateTime());
 
 		SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);
 		SetDlgItemTextA(hDlg, IDC_FRAMES, szFramesString);

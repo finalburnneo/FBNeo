@@ -558,6 +558,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bugsbots" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Bugs'n Bots (HB)</description>
+		<year>2012</year>
+		<manufacturer>Nicam Shilova</manufacturer>
+		<rom name="Bugs'n Bots (2012)(Nicam Shilova).bin" size="32768" crc="542a5c61"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bnj" romof="coleco">
 		<description>Bump 'n' Jump</description>
 		<year>1984</year>
@@ -720,6 +733,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="carfight" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Car Fighter (SGM) (HB)</description>
+		<year>1985-2018</year>
+		<manufacturer>Casio</manufacturer>
+		<rom name="Car Fighter SGM (2018)(CollectorVision).rom" size="27340" crc="66357edf"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="carnival" romof="coleco">
 		<description>Carnival</description>
 		<year>1982</year>
@@ -738,6 +764,32 @@
 		<year>1985</year>
 		<manufacturer>Splice Vision</manufacturer>
 		<rom name="castelo.bin" size="8192" crc="07a3d3db"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="castleex" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Castle Excellent (SGM) (HB)</description>
+		<year>1986-2018</year>
+		<manufacturer>ASCII - Sega</manufacturer>
+		<rom name="Castle Excellent SGM (2018)(CollectorVision).rom" size="32678" crc="674c0fec"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="castle" cloneof="castleex" romof="castleex">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Castle, The (SGM) (HB)</description>
+		<year>1986-2018</year>
+		<manufacturer>ASCII - Sega</manufacturer>
+		<rom name="Castle, The SGM (2018)(CollectorVision).rom" size="32399" crc="8aee473c"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4152,6 +4204,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="smurfchal" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Smurf Challenge (HB)</description>
+		<year>2010</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Smurf Challenge (2010)(CollectorVision).bin" size="32768" crc="807e1811"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="smurfpnt" romof="coleco">
 		<description>Smurf Paint 'n' Play Workshop</description>
 		<year>1983</year>
@@ -4207,10 +4272,10 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurfsav" romof="coleco">
+	<game name="smurfsav" cloneof="smurfply" romof="smurfply">
 		<comment>Prototype</comment>
 		<description>Smurfs Save the Day (Prototype)</description>
-		<year>1982</year>
+		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
 		<rom name="Smurfs Save the Day (Prototype).col" size="16384" crc="9a3b8587"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>

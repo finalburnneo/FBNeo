@@ -2238,6 +2238,7 @@ DRV		BurnDrvnes_bugsbuncracas;
 DRV		BurnDrvmd_bugsbun;
 DRV		BurnDrvgg_bugsbun;
 DRV		BurnDrvmd_bugsbunu;
+DRV		BurnDrvcv_bugsbots;
 DRV		BurnDrvpce_bullfght;
 DRV		BurnDrvBulletd;
 DRV		BurnDrvBullet;
@@ -2500,6 +2501,7 @@ DRV		BurnDrvnes_captatsuvolii;
 DRV		BurnDrvCar2;			// No sound
 #endif
 DRV		BurnDrvMSX_carfight;
+DRV		BurnDrvcv_carfight;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvCarhntds;		// No sound
 #endif
@@ -2552,6 +2554,7 @@ DRV		BurnSpecCastlecapers;
 DRV		BurnDrvnes_castleexcellent;
 DRV		BurnDrvMSX_castlex;
 DRV		BurnDrvMSX_castlexa;
+DRV		BurnDrvcv_castleex;
 DRV		BurnSpecCastlemaster;
 DRV		BurnDrvnes_castleofdeceit;
 DRV		BurnSpecCodg;
@@ -2567,6 +2570,7 @@ DRV		BurnDrvsms_castlills;
 DRV		BurnSpecCastleofsorrow;
 DRV		BurnDrvMSX_castle;
 DRV		BurnDrvMSX_castlek;
+DRV		BurnDrvcv_castle;
 DRV		BurnDrvnes_castlevaniac;
 DRV		BurnDrvnes_castlevania;
 DRV		BurnDrvmd_cvaniaec;
@@ -14125,6 +14129,7 @@ DRV		BurnSpecsmashtv;
 DRV		BurnDrvsms_vdptest;		// no comment
 #endif
 DRV		BurnSpecSbmr;
+DRV		BurnDrvcv_smurfchal;
 DRV		BurnDrvcv_smurfpnt;
 DRV		BurnDrvcv_smurfply;
 DRV		BurnDrvcv_smurfa;
@@ -21158,6 +21163,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bugsbun,			// Bugs Bunny in Double Trouble (Euro)
 	&BurnDrvgg_bugsbun,			// Bugs Bunny in Double Trouble (Euro, USA)
 	&BurnDrvmd_bugsbunu,		// Bugs Bunny in Double Trouble (USA)
+	&BurnDrvcv_bugsbots,		// Bugs'n Bots (HB)
 	&BurnDrvpce_bullfght,		// Bull Fight - Ring no Haja
 	&BurnDrvBulletd,			// Bullet (FD1094 317-0041 decrypted)
 	&BurnDrvBullet,				// Bullet (FD1094 317-0041)
@@ -21420,6 +21426,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCar2,				// Car 2 (bootleg of Head On 2) [No sound]
 #endif
 	&BurnDrvMSX_carfight,		// Car Fighter (Jpn)
+	&BurnDrvcv_carfight,		// Car Fighter (SGM) (HB)
 #if defined FBNEO_DEBUG
 	&BurnDrvCarhntds,			// Car Hunt / Deep Scan (France) [No sound]
 #endif
@@ -21472,6 +21479,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_castleexcellent,// Castle Excellent (Japan)
 	&BurnDrvMSX_castlex,		// Castle Excellent (Jpn)
 	&BurnDrvMSX_castlexa,		// Castle Excellent (Jpn, Alt)
+	&BurnDrvcv_castleex,		// Castle Excellent (SGM) (HB)
 	&BurnSpecCastlemaster,		// Castle Master (48K)
 	&BurnDrvnes_castleofdeceit,	// Castle of Deceit (USA)
 	&BurnSpecCodg,				// Castle Of Dr Game (48K) (HB)
@@ -21487,6 +21495,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecCastleofsorrow,	// Castle Of Sorrow (48K) (HB)
 	&BurnDrvMSX_castle,			// Castle, The (Jpn)
 	&BurnDrvMSX_castlek,		// Castle, The (Kor)
+	&BurnDrvcv_castle,			// Castle, The (SGM) (HB)
 	&BurnDrvnes_castlevaniac,	// Castlevania (Hack, Spanish v1.0)
 	&BurnDrvnes_castlevania,	// Castlevania (USA)
 	&BurnDrvmd_cvaniaec,		// Castlevania - Bloodlines (Hack, Enhanced Colors)
@@ -33045,6 +33054,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_vdptest,		// SMS VDP Test [no comment]
 #endif
 	&BurnSpecSbmr,				// Smudge Bad Moonee Rising (48K) (HB)
+	&BurnDrvcv_smurfchal,		// Smurf Challenge (HB)
 	&BurnDrvcv_smurfpnt,		// Smurf Paint 'n' Play Workshop
 	&BurnDrvcv_smurfply,		// Smurf Play and Learn (Prototype)
 	&BurnDrvcv_smurfa,			// Smurf Rescue in Gargamel's Castle (Alt)

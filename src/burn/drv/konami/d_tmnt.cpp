@@ -5925,6 +5925,8 @@ static INT32 TmntFrame()
 		ZetOpen(0);
 		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
+
+		BurnSoundLimiter(pBurnSoundOut, nBurnSoundLen, 0.75 /* 75% */);
 	}
 	
 	if (pBurnDraw) TmntDraw();

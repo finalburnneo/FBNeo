@@ -33,11 +33,14 @@ static INT16 dac_lastout_r = 0;
 static INT16 dac_lastin_l  = 0;
 static INT16 dac_lastout_l = 0;
 
+static INT32 limiter = 0;
+
 // BurnSoundDCFilterReset() is called automatically @ game init, no need to call this in-driver.
 void BurnSoundDCFilterReset()
 {
 	dac_lastin_r = dac_lastout_r = 0;
 	dac_lastin_l = dac_lastout_l = 0;
+	limiter = 0;
 }
 
 // Runs a dc-blocking filter on pBurnSoundOut - see drv/pre90s/d_mappy.cpp for usage.
@@ -70,6 +73,35 @@ void BurnSoundTweakVolume(INT16 *sndout, INT32 len, double volume)
 		sndout[i] = BURN_SND_CLIP(sample);
 	}
 	if (clip) bprintf(0, _T("BurnSoundTweakVolume(): CLIPPING @ frame %x\n"), nCurrentFrame);
+}
+
+void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent)
+{
+	const INT32 limit_samples = nBurnSoundRate * 0.100; // 100ms (response time)
+
+	const INT32 sample_pos_limit = 0x7fff * percent;
+	const INT32 sample_neg_limit = -0x8000 * percent;
+
+	for (INT32 i = 0; i < len; i++) {
+		INT32 sample_l = (sndout[i * 2 + 0]);
+		INT32 sample_r = (sndout[i * 2 + 1]);
+
+		if (sample_l > sample_pos_limit || sample_l < sample_neg_limit ||
+			sample_r > sample_pos_limit || sample_r < sample_neg_limit)
+		{
+			limiter = limit_samples;
+		}
+
+		if (limiter) {
+			sample_l *= percent;
+			sample_r *= percent;
+		}
+
+		sndout[i * 2 + 0] = BURN_SND_CLIP(sample_l);
+		sndout[i * 2 + 1] = BURN_SND_CLIP(sample_r);
+
+		if (limiter > 0) limiter--;
+	}
 }
 
 void BurnSoundClear()

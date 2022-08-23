@@ -33,14 +33,14 @@ static INT16 dac_lastout_r = 0;
 static INT16 dac_lastin_l  = 0;
 static INT16 dac_lastout_l = 0;
 
-static INT32 limiter = 0;
+static INT32 limiting = 0;
 
 // BurnSoundDCFilterReset() is called automatically @ game init, no need to call this in-driver.
 void BurnSoundDCFilterReset()
 {
 	dac_lastin_r = dac_lastout_r = 0;
 	dac_lastin_l = dac_lastout_l = 0;
-	limiter = 0;
+	limiting = 0;
 }
 
 // Runs a dc-blocking filter on pBurnSoundOut - see drv/pre90s/d_mappy.cpp for usage.
@@ -75,12 +75,15 @@ void BurnSoundTweakVolume(INT16 *sndout, INT32 len, double volume)
 	if (clip) bprintf(0, _T("BurnSoundTweakVolume(): CLIPPING @ frame %x\n"), nCurrentFrame);
 }
 
-void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent)
+void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent, double make_up_gain)
 {
-	const INT32 limit_samples = nBurnSoundRate * 0.100; // 100ms (response time)
+	const INT32 limit_samples = nBurnSoundRate * 0.200; // 200ms (response time)
 
 	const INT32 sample_pos_limit = 0x7fff * percent;
 	const INT32 sample_neg_limit = -0x8000 * percent;
+
+	static INT32 mode = -1; // -1 startup, 0 attack, 1 release
+	static double envelope = 0;
 
 	for (INT32 i = 0; i < len; i++) {
 		INT32 sample_l = (sndout[i * 2 + 0]);
@@ -89,18 +92,38 @@ void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent)
 		if (sample_l > sample_pos_limit || sample_l < sample_neg_limit ||
 			sample_r > sample_pos_limit || sample_r < sample_neg_limit)
 		{
-			limiter = limit_samples;
+			limiting = limit_samples;
 		}
 
-		if (limiter) {
-			sample_l *= percent;
-			sample_r *= percent;
+		if (limiting > 0) {
+			switch (mode) {
+				case -1: { // envelope start-up
+					envelope = 1.0;
+					mode++;
+					//NO break; - go straight to attack!
+				}
+				case 0: { // attack
+					if ((int)(envelope * 100) == (int)(percent * 100)) { // comparison never hits w/o the cast!
+						//bprintf(0, _T("Attack ends! %f  %f\n"), envelope, percent);
+						envelope = percent; // doubles are goofy
+						mode++;
+					} else {
+						envelope -= 0.01;
+					}
+					break;
+				}
+				case 1: {  break; }
+			}
+			sample_l *= envelope;
+			sample_r *= envelope;
+
+			limiting--;
+		} else {
+			mode = -1;
 		}
 
-		sndout[i * 2 + 0] = BURN_SND_CLIP(sample_l);
-		sndout[i * 2 + 1] = BURN_SND_CLIP(sample_r);
-
-		if (limiter > 0) limiter--;
+		sndout[i * 2 + 0] = BURN_SND_CLIP(sample_l * make_up_gain);
+		sndout[i * 2 + 1] = BURN_SND_CLIP(sample_r * make_up_gain);
 	}
 }
 

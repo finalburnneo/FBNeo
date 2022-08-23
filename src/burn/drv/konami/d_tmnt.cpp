@@ -4733,18 +4733,18 @@ static INT32 TmntInit()
 	
 	// Setup the YM2151 emulation
 	BurnYM2151Init(3579545);
-	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	
 	K007232Init(0, 3579545, DrvSoundRom, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
-	K007232PCMSetAllRoutes(0, 0.33, BURN_SND_ROUTE_BOTH);
+	K007232PCMSetAllRoutes(0, 0.33 / 2, BURN_SND_ROUTE_BOTH);
 	uses_k007232 = 1;
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUPD7759CRom);
-	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
+	UPD7759SetRoute(0, 0.60 / 2, BURN_SND_ROUTE_BOTH);
 	UPD7759SetSyncCallback(0, ZetTotalCycles, 3579545);
 
-	TmntTitleSampleSetRoute(1.00, BURN_SND_ROUTE_BOTH);
+	TmntTitleSampleSetRoute(1.00 / 2, BURN_SND_ROUTE_BOTH);
 	
 	LayerColourBase[0] = 0;
 	LayerColourBase[1] = 32;
@@ -5922,11 +5922,9 @@ static INT32 TmntFrame()
 			K007232Update(0, pSoundBuf, nSegmentLength);
 			if (PlayTitleSample) RenderTitleSample(pSoundBuf, nSegmentLength);
 		}
-		ZetOpen(0);
 		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 
-		BurnSoundLimiter(pBurnSoundOut, nBurnSoundLen, 0.75 /* 75% */);
+		BurnSoundLimiter(pBurnSoundOut, nBurnSoundLen, 0.55, 1.80);
 	}
 	
 	if (pBurnDraw) TmntDraw();

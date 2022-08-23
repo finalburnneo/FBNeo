@@ -36840,3 +36840,98 @@ struct BurnDriver BurnSpecTinycrates = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Agatha Adventure (128K) (HB)
+
+static struct BurnRomInfo SpecAgathadvRomDesc[] = {
+	{ "Agatha Adventure 128K (2021)(Daniel Isoba).tap", 45114, 0x86776da5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAgathadv, SpecAgathadv, Spec128)
+STD_ROM_FN(SpecAgathadv)
+
+struct BurnDriver BurnSpecAgathadv = {
+	"spec_agathadv", NULL, "spec_spec128", NULL, "2021",
+	"Agatha Adventure (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecAgathadvRomInfo, SpecAgathadvRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Agatha Adventure (48K) (HB)
+
+static struct BurnRomInfo SpecAgathadv48RomDesc[] = {
+	{ "Agatha Adventure 48K (2021)(Daniel Isoba).tap", 43861, 0x5af05ceb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAgathadv48, SpecAgathadv48, Spectrum)
+STD_ROM_FN(SpecAgathadv48)
+
+struct BurnDriver BurnSpecAgathadv48 = {
+	"spec_agathadv48", "spec_agathadv", "spec_spectrum", NULL, "2021",
+	"Agatha Adventure (48K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecAgathadv48RomInfo, SpecAgathadv48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Agatha Adventure 'hard-mode' (128K) (HB)
+
+static struct BurnRomInfo SpecAgathadvhRomDesc[] = {
+	{ "Agatha Adventure 128K hard-mode (2021)(Daniel Isoba).tap", 44651, 0x56a5f727, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAgathadvh, SpecAgathadvh, Spec128)
+STD_ROM_FN(SpecAgathadvh)
+
+struct BurnDriver BurnSpecAgathadvh = {
+	"spec_agathadvh", "spec_agathadv", "spec_spec128", NULL, "2021",
+	"Agatha Adventure 'hard-mode' (128) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecAgathadvhRomInfo, SpecAgathadvhRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Waldo's Life (128K) (HB)
+
+static struct BurnRomInfo SpecWaldolifeRomDesc[] = {
+	{ "Waldo's Life 128K EN (2022)(Daniel Isoba).tap", 45080, 0x1d914f86, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWaldolife, SpecWaldolife, Spec128)
+STD_ROM_FN(SpecWaldolife)
+
+struct BurnDriver BurnSpecWaldolife = {
+	"spec_waldolife", NULL, "spec_spec128", NULL, "2022",
+	"Waldo's Life (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWaldolifeRomInfo, SpecWaldolifeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Waldo's Life 'hard-mode' (128K) (HB)
+
+static struct BurnRomInfo SpecWaldolifehRomDesc[] = {
+	{ "Waldo's Life 128K EN hard-mode (2022)(Daniel Isoba).tap", 45080, 0x8f9d21ca, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWaldolifeh, SpecWaldolifeh, Spec128)
+STD_ROM_FN(SpecWaldolifeh)
+
+struct BurnDriver BurnSpecWaldolifeh = {
+	"spec_waldolifeh", "spec_waldolife", "spec_spec128", NULL, "2022",
+	"Waldo's Life 'hard-mode' (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWaldolifehRomInfo, SpecWaldolifehRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

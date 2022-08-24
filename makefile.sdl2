@@ -100,14 +100,14 @@ endif
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/local/include -I$(srcdir)dep/sdl/include \
-		  -I$(srcdir)intf/input/sdl `sdl2-config --cflags`
+		  -I$(srcdir)intf/input/sdl `pkgconf --cflags sdl2`
 
 ifdef WINDOWS
-lib	= -lstdc++ `sdl2-config --libs` -lopengl32 -lSDL2_image -lm
+lib	= -lstdc++ `pkgconf --libs sdl2` -lopengl32 -lSDL2_image -lm
 else ifdef DARWIN
-lib	= -lstdc++ `sdl2-config --libs` -lSDL2_image -lm -lpthread
+lib	= -lstdc++ `pkgconf --libs sdl2` -lSDL2_image -lm -lpthread
 else
-lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm -lpthread
+lib	= -lstdc++ `pkgconf --libs sdl2` -lGL -lSDL2_image -lm -lpthread
 endif
 
 ifdef FORCE_SYSTEM_LIBPNG

@@ -27,7 +27,10 @@ void inputbuf_exit()
 	free(buffer);
 
 	buffer = NULL;
-	buffer_eof = 1;
+	buffer_eof = 0;
+
+	input_f = NULL;
+	input_f_embed_pos = 0;
 }
 
 #define FREEZE_EXTRA (sizeof(INT32)*4)
@@ -50,18 +53,18 @@ INT32 inputbuf_freeze(UINT8 **buf, INT32 *size)
 
 INT32 inputbuf_unfreeze(UINT8 *buf, INT32 size)
 {
-	if (size > buffer_size) {
-		buffer = (UINT8*)realloc(buffer, size);
+	memcpy(&buffer_pos, buf, sizeof(buffer_pos));
+
+	if (buffer_pos >= buffer_size) {
+		buffer = (UINT8*)realloc(buffer, buffer_pos + 1);
 
 		if (buffer == NULL) return 1;
 
-		buffer_size = size;
+		buffer_size = buffer_pos + 1;
+		bprintf(0, _T("unfreeze, size %d   buffer_size %d\n"), size, buffer_size);
 	}
 
-	memcpy(&buffer_pos, buf, sizeof(buffer_pos));
-	memcpy(buffer, buf + sizeof(buffer_pos), size - FREEZE_EXTRA);
-
-	//bprintf(0, _T("inputbuf unfrozen, pos %d\n"), buffer_pos);
+	memcpy(buffer, buf + sizeof(buffer_pos), buffer_pos);
 
 	return 0;
 }
@@ -119,7 +122,8 @@ void inputbuf_save()
 
 INT32 inputbuf_eof()
 {
-	return buffer_eof;
+	//bprintf(0, _T("inputbuf_eof. bpos bsize:  %d  %d\n"), buffer_pos, buffer_size);
+	return (buffer_pos + 1 > buffer_size) || buffer_eof;
 }
 
 void inputbuf_addbuffer(UINT8 c)
@@ -145,10 +149,13 @@ void inputbuf_addbuffer(UINT8 c)
 UINT8 inputbuf_getbuffer()
 {
 	if (buffer_pos + 1 < buffer_size) {
+		//bprintf(0, _T("inputbuf_getbuffer:  %x\n"), buffer[buffer_pos]);
 		return buffer[buffer_pos++];
 	}
 
 	// implied else
 	buffer_eof = 1;
+	bprintf(0, _T("getbuffer sets eof. bpos bsize:  %d  %d\n"), buffer_pos, buffer_size);
+	bprintf(0, _T("inputbuf_getbuffer:  %x\n"), buffer[buffer_pos]);
 	return buffer[buffer_pos];
 }

@@ -1068,10 +1068,6 @@ void StateRunAheadLoad()
 
 // --------- State-ing for Rewind ----------
 
-// TODO:
-//  if recording from "savestate", don't rewind back before recording started
-//  MAYBE move from burn.cpp to burner/win32/rewind.cpp
-
 enum {
 	REWINDSTATUS_PREINIT = 0,
 	REWINDSTATUS_OK = 1,
@@ -1178,6 +1174,17 @@ int UnfreezeInput(const unsigned char* buf, int size);
 
 // interface.h
 extern INT32 VidSNewShortMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);
+
+void StateRewindReset()
+{
+	if (bRewindStatus != REWINDSTATUS_OK) return;
+
+	thready.notify_wait(); // wait, just in-case we're repacking.
+
+	nRewindFrames = 0;
+	nRewindFramesLast = 0;
+	nRewindFrameCounter = 0;
+}
 
 static void StateRewind_Repack()
 {

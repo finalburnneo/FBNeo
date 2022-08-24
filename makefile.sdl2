@@ -183,7 +183,6 @@ autdrv := $(drvsrc:.cpp=.o)
 ifdef DARWIN
 	CC	= gcc
 else
-	CC	= gcc
 endif
 
 CXX	= $(CC)

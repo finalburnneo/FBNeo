@@ -97,8 +97,10 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 	{ // Init input and audio, save blitter init for later. (reduce # of mode changes, nice for emu front-ends)
 		bVidOkay = 1;
+		bAudOkay = 1;
 		MediaInit();
 		bVidOkay = 0;
+		bAudOkay = 0;
 	}
 
 	// Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
@@ -131,8 +133,6 @@ int DrvInit(int nDrvNum, bool bRestore)
 	ConfigCheatLoad();
 	// Reset the speed throttling code, so we don't 'jump' after the load
 	RunReset();
-	VidExit();
-	AudSoundExit();
 	return 0;
 }
 

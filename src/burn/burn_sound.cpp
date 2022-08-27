@@ -83,7 +83,8 @@ void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent, double make_up_g
 	const INT32 sample_neg_limit = -0x8000 * percent;
 
 	static INT32 mode = -1; // -1 startup, 0 attack, 1 release
-	static double envelope = 0;
+	static INT32 envelope = 0;
+	static INT32 percent_int = percent * 100;
 
 	for (INT32 i = 0; i < len; i++) {
 		INT32 sample_l = (sndout[i * 2 + 0]);
@@ -98,24 +99,25 @@ void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent, double make_up_g
 		if (limiting > 0) {
 			switch (mode) {
 				case -1: { // envelope start-up
-					envelope = 1.0;
+					envelope = 100; // 1.0;
 					mode++;
 					//NO break; - go straight to attack!
 				}
 				case 0: { // attack
-					if ((int)(envelope * 100) == (int)(percent * 100)) { // comparison never hits w/o the cast!
-						//bprintf(0, _T("Attack ends! %f  %f\n"), envelope, percent);
-						envelope = percent; // doubles are goofy
+					if (envelope == percent_int) {
+						// limit hit!
+						//bprintf(0, _T("Attack ends! %d  %d\n"), envelope, percent_int);
 						mode++;
 					} else {
-						envelope -= 0.01;
+						// decay volume towards the limit
+						envelope--;
 					}
 					break;
 				}
 				case 1: {  break; }
 			}
-			sample_l *= envelope;
-			sample_r *= envelope;
+			sample_l = sample_l * envelope / 100;
+			sample_r = sample_r * envelope / 100;
 
 			limiting--;
 		} else {

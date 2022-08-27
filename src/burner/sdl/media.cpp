@@ -61,9 +61,7 @@ int MediaExit()
 	pBurnSoundOut = NULL;
 
 	AudSoundExit();                  // Exit sound
-	bAudOkay = 0;
 	VidExit();
-
 	InputExit();
 
 	//ScrnExit();			// Exit the Scrn Window

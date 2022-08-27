@@ -232,6 +232,7 @@ void DoGame(int gameToRun)
 		if (!DrvInit(gameToRun, 0))
 		{
 			MediaInit();
+			printf("bAudOkay:%d\n",bAudOkay);
 			if (usejoy) Init_Joysticks(1);	// This will ignore inputs defined in *.ini and use joysticks for all players
 			display_set_controls();
 			RunMessageLoop();

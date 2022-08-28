@@ -11,13 +11,10 @@ ifeq ($(UNAME_S),Darwin)
 DARWIN=1
 endif
 
-LD=$(CC) 
-
 
 ifeq ($(OS),Windows_NT)
 WINDOWS=1
 endif
-
 
 #
 #	Flags. Uncomment any of these declarations to enable their function.
@@ -103,14 +100,14 @@ endif
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/local/include -I$(srcdir)dep/sdl/include \
-		  -I$(srcdir)intf/input/sdl `pkgconf --cflags sdl2`
+		  -I$(srcdir)intf/input/sdl `sdl2-config --cflags`
 
 ifdef WINDOWS
-lib	= -lstdc++ `pkgconf --libs sdl2` -lopengl32 -lSDL2_image -lm
+lib	= -lstdc++ `sdl2-config --libs` -lopengl32 -lSDL2_image -lm
 else ifdef DARWIN
-lib	= -lstdc++ `pkgconf --libs sdl2` -lSDL2_image -lm -lpthread
+lib	= -lstdc++ `sdl2-config --libs` -lSDL2_image -lm -lpthread
 else
-lib	= -lstdc++ `pkgconf --libs sdl2` -lGL -lSDL2_image -lm -lpthread
+lib	= -lstdc++ `sdl2-config --libs` -lGL -lSDL2_image -lm -lpthread
 endif
 
 ifdef FORCE_SYSTEM_LIBPNG
@@ -186,6 +183,7 @@ autdrv := $(drvsrc:.cpp=.o)
 ifdef DARWIN
 	CC	= gcc
 else
+	CC	= gcc
 endif
 
 CXX	= $(CC)
@@ -377,7 +375,7 @@ ifdef WINDOWS
 
 $(NAME):	$(allobj) $(objdir)drivers.o
 	@echo
-	@echo Linking executable... $(NAME).exe
+	@echo Linking executable... $(NAME)
 	@$(LD)  -mconsole $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
 
 else
@@ -455,6 +453,7 @@ $(a68k.o):	fba_make68k.c
 endif
 
 # Musashi
+
 $(objdir)cpu/m68k/m68kcpu.o: $(srcdir)cpu/m68k/m68kcpu.c $(objdir)dep/generated/m68kops.h $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
 	@echo Compiling Musashi MC680x0 core \(m68kcpu.c\)...
 	@$(CC) $(CFLAGS) -c $(srcdir)cpu/m68k/m68kcpu.c -o $(objdir)cpu/m68k/m68kcpu.o
@@ -464,11 +463,7 @@ $(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake $(objdir)dep/generated/m
 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
 
 $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake $(srcdir)cpu/m68k/m68k_in.c
-ifdef WINDOWS
-	$(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
-else
 	$(objdir)cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
-endif
 
 $(objdir)cpu/m68k/m68kmake: $(srcdir)cpu/m68k/m68kmake.c
 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...

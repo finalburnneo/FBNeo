@@ -36919,7 +36919,7 @@ struct BurnDriver BurnSpecAgathadvh = {
 // Waldo's Life (128K) (HB)
 
 static struct BurnRomInfo SpecWaldolifeRomDesc[] = {
-	{ "Waldo's Life 128K EN (2022)(Daniel Isoba).tap", 45080, 0x1d914f86, BRF_ESS | BRF_PRG },
+	{ "Waldo's Life 128K EN (2022)(Daniel Isoba).tap", 45064, 0xa18f6513, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecWaldolife, SpecWaldolife, Spec128)
@@ -36935,21 +36935,21 @@ struct BurnDriver BurnSpecWaldolife = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Waldo's Life 'hard-mode' (128K) (HB)
+// Waldo's Life ES (128K) (HB)
 
-static struct BurnRomInfo SpecWaldolifehRomDesc[] = {
-	{ "Waldo's Life 128K EN hard-mode (2022)(Daniel Isoba).tap", 45080, 0x8f9d21ca, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecWaldolifesRomDesc[] = {
+	{ "Waldo's Life 128K ES (2022)(Daniel Isoba).tap", 45060, 0x62890e34, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecWaldolifeh, SpecWaldolifeh, Spec128)
-STD_ROM_FN(SpecWaldolifeh)
+STDROMPICKEXT(SpecWaldolifes, SpecWaldolifes, Spec128)
+STD_ROM_FN(SpecWaldolifes)
 
-struct BurnDriver BurnSpecWaldolifeh = {
-	"spec_waldolifeh", "spec_waldolife", "spec_spec128", NULL, "2022",
-	"Waldo's Life 'hard-mode' (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+struct BurnDriver BurnSpecWaldolifes = {
+	"spec_waldolifes", "spec_waldolife", "spec_spec128", NULL, "2022",
+	"Waldo's Life ES (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecWaldolifehRomInfo, SpecWaldolifehRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecWaldolifesRomInfo, SpecWaldolifesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

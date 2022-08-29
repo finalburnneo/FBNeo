@@ -11,6 +11,24 @@ ifeq ($(UNAME_S),Darwin)
 DARWIN=1
 endif
 
+#this is needed for cross compiling envronments but if pkgconf is not avaialable for any reason fall back to sdl2-config
+
+ifeq ($(shell which pkgconf >/dev/null 2>&1; echo $$?), 0)
+sdlgetconfig=pkgconf
+sdlflags=sdl2
+
+else ifeq ($(shell which pkg-config >/dev/null 2>&1; echo $$?), 0)
+sdlgetconfig=pkg-config
+sdlflags=sdl2
+
+else ifeq ($(shell which sdl2-config >/dev/null 2>&1; echo $$?), 0)
+sdlgetconfig=sdl2-config
+sdlflags=
+
+else
+$(error "sdl2 not found are your sure its installed") 
+endif
+
 LD=$(CC) 
 
 
@@ -41,6 +59,7 @@ BUILD_X86_ASM=
 INCLUDE_AVI_RECORDING=
 BUILD_A68K=
 UNICODE=
+
 
 
 #
@@ -103,14 +122,14 @@ endif
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
 		  -I/local/include -I$(srcdir)dep/sdl/include \
-		  -I$(srcdir)intf/input/sdl `pkgconf --cflags sdl2`
+		  -I$(srcdir)intf/input/sdl `$(sdlgetconfig) --cflags $(sdlflags)`
 
 ifdef WINDOWS
-lib	= -lstdc++ `pkgconf --libs sdl2` -lopengl32 -lSDL2_image -lm
+lib	= -lstdc++ `$(sdlgetconfig) --libs  $(sdlflags) ` -lopengl32 -lSDL2_image -lm
 else ifdef DARWIN
-lib	= -lstdc++ `pkgconf --libs sdl2` -lSDL2_image -lm -lpthread
+lib	= -lstdc++ `$(sdlgetconfig) --libs  $(sdlflags)` -lSDL2_image -lm -lpthread
 else
-lib	= -lstdc++ `pkgconf --libs sdl2` -lGL -lSDL2_image -lm -lpthread
+lib	= -lstdc++ `$(sdlgetconfig) --libs  $(sdlflags)` -lGL -lSDL2_image -lm -lpthread
 endif
 
 ifdef FORCE_SYSTEM_LIBPNG
@@ -394,6 +413,8 @@ ifdef	DEBUG
 #	Don't compress when making a debug build
 
 else
+
+
 ifdef	COMPRESS
 	@upx --best $@
 endif

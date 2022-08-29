@@ -1168,6 +1168,7 @@ static INT32 StateRewindGetSize()
 // exported from replay.cpp
 extern int nReplayStatus;
 extern UINT32 nStartFrame;
+extern INT32 nReplayUndoCount;
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
 #include "inputbuf.h"
@@ -1423,6 +1424,8 @@ static void StateRewindLoad()
 
 void StateRewindDoFrame(INT32 bDoRewind, INT32 bDoCancel, INT32 bIsPaused)
 {
+	static INT32 bWasRewinding = 0;
+
 	bRewindSingleStepping = bIsPaused;
 
 	if (bDoRewind) {
@@ -1431,8 +1434,13 @@ void StateRewindDoFrame(INT32 bDoRewind, INT32 bDoCancel, INT32 bIsPaused)
 		}
 		StateRewindLoad();
 	} else {
+		if (nReplayStatus == 1 && bWasRewinding) {
+			nReplayUndoCount++;
+		}
 		StateRewindFrame();
 	}
+
+	bWasRewinding = bDoRewind;
 }
 #endif
 

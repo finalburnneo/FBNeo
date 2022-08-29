@@ -702,11 +702,8 @@ static void CloseRecord()
 
 	inputbuf_save();
 
-	fseek(fp, 0, SEEK_END);
-	INT32 nMetadataOffset = ftell(fp);
+	INT32 nMetadataOffset = ftell(fp); // save FRM1 chunk after inputbuf.
 	INT32 nChunkSize = ftell(fp) - 4 - nSizeOffset;		// Fill in chunk size and no of recorded frames
-	bprintf(0, _T("close record.  metadata offset:  %d\n"), nMetadataOffset);
-	bprintf(0, _T("nSizeOffset  %d   nChunkSize  %d\n"),nSizeOffset,nChunkSize);
 	fseek(fp, nSizeOffset, SEEK_SET);
 	fwrite(&nChunkSize, 1, 4, fp);
 	fwrite(&nFrames, 1, 4, fp);

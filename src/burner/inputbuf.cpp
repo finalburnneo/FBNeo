@@ -60,9 +60,9 @@ INT32 inputbuf_unfreeze(UINT8 *buf, INT32 size)
 
 		if (buffer == NULL) return 1;
 
-		buffer_size = buffer_pos + 1;
-		bprintf(0, _T("unfreeze, size %d   buffer_size %d\n"), size, buffer_size);
+		buffer_size = buffer_pos;
 	}
+	memcpy(&buffer_pos, buf, sizeof(buffer_pos));
 
 	memcpy(buffer, buf + sizeof(buffer_pos), buffer_pos);
 
@@ -92,8 +92,8 @@ void inputbuf_load()
 
 	bprintf(0, _T("inputbuf_load() - loading %d bytes (%d data)\n"), packet_len, data_len);
 
-	buffer = (UINT8*)realloc(buffer, packet_len);
-	buffer_size = data_len;
+	buffer = (UINT8*)realloc(buffer, packet_len + 1); // need to fread() packet_len
+	buffer_size = data_len;                       // but only keep data_len!
 
 	fread(buffer, packet_len, 1, input_f);
 }
@@ -103,7 +103,7 @@ void inputbuf_save()
 	// seek to embedded position
 	fseek(input_f, input_f_embed_pos, SEEK_SET);
 
-	INT32 packet_len = (buffer_pos + 3) & -4;
+	INT32 packet_len = (buffer_pos + 3) & -4; // packet must be 4-byte aligned
 	INT32 data_len = buffer_pos;
 	INT32 difference = packet_len - data_len;
 	INT32 align = 0;
@@ -116,14 +116,14 @@ void inputbuf_save()
 	fwrite(buffer, data_len, 1, input_f);
 	if (difference) {
 		fwrite(&align, difference, 1, input_f);
-		bprintf(0, _T("alignment of + %d\n"), difference);
+		bprintf(0, _T("... alignment of + %d\n"), difference);
 	}
 }
 
 INT32 inputbuf_eof()
 {
 	//bprintf(0, _T("inputbuf_eof. bpos bsize:  %d  %d\n"), buffer_pos, buffer_size);
-	return (buffer_pos + 1 > buffer_size) || buffer_eof;
+	return (buffer_pos >= buffer_size) || buffer_eof;
 }
 
 void inputbuf_addbuffer(UINT8 c)
@@ -133,13 +133,11 @@ void inputbuf_addbuffer(UINT8 c)
 		inputbuf_init();
 	}
 
-	if (buffer_pos + 1 < buffer_size) {
-		// yay!
-	} else {
+	if (buffer_pos >= buffer_size) {
 		// realloc buffer!!
 		INT32 previous_size = buffer_size;
-		buffer_size *= 2;
-		buffer = (UINT8*)realloc(buffer, buffer_size);
+		buffer_size += 0x10000; // +64k
+		buffer = (UINT8*)realloc(buffer, buffer_size + 1);
 		bprintf(0, _T("inputbuf_addbuffer: reallocing buffer, was / new:  %d   %d\n"), previous_size, buffer_size);
 	}
 
@@ -148,14 +146,15 @@ void inputbuf_addbuffer(UINT8 c)
 
 UINT8 inputbuf_getbuffer()
 {
-	if (buffer_pos + 1 < buffer_size) {
-		//bprintf(0, _T("inputbuf_getbuffer:  %x\n"), buffer[buffer_pos]);
+	// hints / example:
+	// buffer_size = 1079 == buffer_pos[0..1078]
+	// buffer_size = 1079 && buffer_pos = 1079 (end of video)
+
+	if (buffer_pos + 2 <= buffer_size) { // 2 frames or more left
 		return buffer[buffer_pos++];
 	}
 
-	// implied else
+	// implied else - last frame!
 	buffer_eof = 1;
-	bprintf(0, _T("getbuffer sets eof. bpos bsize:  %d  %d\n"), buffer_pos, buffer_size);
-	bprintf(0, _T("inputbuf_getbuffer:  %x\n"), buffer[buffer_pos]);
 	return buffer[buffer_pos];
 }

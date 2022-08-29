@@ -50,6 +50,10 @@
 #define FILTER_4XBR_C			33
 #define FILTER_DDT3X            34
 
+#define FILTER_CRTx22			35
+#define FILTER_CRTx33			36
+#define FILTER_CRTx44			37
+
 TCHAR* VidSoftFXGetEffect(int nEffect);
 int VidSoftFXGetZoom(int nEffect);
 int VidSoftFXCheckDepth(int nEffect, int nDepth);

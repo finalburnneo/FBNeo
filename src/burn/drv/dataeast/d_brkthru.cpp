@@ -349,6 +349,8 @@ static INT32 DrvDoReset()
 	nmi_mask = 0;
 	bgbasecolor = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -797,7 +799,7 @@ struct BurnDriver BurnDrvBrkthru = {
 	"brkthru", NULL, NULL, NULL, "1986",
 	"Break Thru (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, brkthruRomInfo, brkthruRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthruDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
@@ -835,7 +837,7 @@ struct BurnDriver BurnDrvBrkthruj = {
 	"brkthruj", "brkthru", NULL, NULL, "1986",
 	"Kyohkoh-Toppa (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, brkthrujRomInfo, brkthrujRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
@@ -875,7 +877,7 @@ struct BurnDriver BurnDrvBrkthrut = {
 	"brkthrut", "brkthru", NULL, NULL, "1986",
 	"Break Thru (Tecfri license)\0", NULL, "Data East Corporation (Tecfri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, brkthrutRomInfo, brkthrutRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
@@ -913,7 +915,7 @@ struct BurnDriver BurnDrvBrkthrubl = {
 	"brkthrubl", "brkthru", NULL, NULL, "1986",
 	"Break Thru (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, brkthrublRomInfo, brkthrublRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthrujDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
@@ -951,7 +953,7 @@ struct BurnDriver BurnDrvForcebrk = {
 	"forcebrk", "brkthru", NULL, NULL, "1986",
 	"Force Break (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, forcebrkRomInfo, forcebrkRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, BrkthruDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 4, 3
@@ -999,7 +1001,7 @@ struct BurnDriver BurnDrvDarwin = {
 	"darwin", NULL, NULL, NULL, "1986",
 	"Darwin 4078 (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, darwinRomInfo, darwinRomName, NULL, NULL, NULL, NULL, BrkthruInputInfo, DarwinDIPInfo,
 	darwinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 240, 3, 4

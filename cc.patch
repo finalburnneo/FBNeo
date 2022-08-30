@@ -1,0 +1,695 @@
+diff --git a/makefile.sdl b/makefile.sdl
+index d635973b8..fe452b45a 100644
+--- a/makefile.sdl
++++ b/makefile.sdl
+@@ -66,7 +66,7 @@ depobj	+= 	neocdlist.o \
+ 			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
+ 			vid_softfx.o vid_support.o \
+ 			\
+-			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
++			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
+ 			\
+ 			inp_sdl.o aud_sdl.o support_paths.o ips_manager.o scrn.o \
+ 		  cd_sdl2.o config.o main.o run.o stringset.o bzip.o drv.o media.o \
+diff --git a/makefile.sdl2 b/makefile.sdl2
+index ef8e21381..b64777911 100644
+--- a/makefile.sdl2
++++ b/makefile.sdl2
+@@ -11,14 +11,30 @@ ifeq ($(UNAME_S),Darwin)
+ DARWIN=1
+ endif
+ 
+-LD=$(CC) 
++#this is needed for cross compiling envronments but if pkgconf is not avaialable for any reason fall back to sdl2-config
++
++ifeq ($(shell which pkgconf >/dev/null 2>&1; echo $$?), 0)
++sdlgetconfig=pkgconf
++sdlflags=sdl2
++
++else ifeq ($(shell which pkg-config >/dev/null 2>&1; echo $$?), 0)
++sdlgetconfig=pkg-config
++sdlflags=sdl2
+ 
++else ifeq ($(shell which sdl2-config >/dev/null 2>&1; echo $$?), 0)
++sdlgetconfig=sdl2-config
++sdlflags=
++
++else
++$(error "sdl2 not found are your sure its installed") 
++endif
++
++LD=$(CC) 
+ 
+ ifeq ($(OS),Windows_NT)
+ WINDOWS=1
+ endif
+ 
+-
+ #
+ #	Flags. Uncomment any of these declarations to enable their function.
+ #
+@@ -43,6 +59,7 @@ BUILD_A68K=
+ UNICODE=
+ 
+ 
++
+ #
+ #	Specify paths/files
+ #
+@@ -103,14 +120,14 @@ endif
+ 
+ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated \
+ 		  -I/local/include -I$(srcdir)dep/sdl/include \
+-		  -I$(srcdir)intf/input/sdl `pkgconf --cflags sdl2`
++		  -I$(srcdir)intf/input/sdl `$(sdlgetconfig) --cflags $(sdlflags)`
+ 
+ ifdef WINDOWS
+-lib	= -lstdc++ `pkgconf --libs sdl2` -lopengl32 -lSDL2_image -lm
++lib	= -lstdc++ `$(sdlgetconfig) --libs  $(sdlflags) ` -lopengl32 -lSDL2_image -lm
+ else ifdef DARWIN
+-lib	= -lstdc++ `pkgconf --libs sdl2` -lSDL2_image -lm -lpthread
++lib	= -lstdc++ `$(sdlgetconfig) --libs  $(sdlflags)` -lSDL2_image -lm -lpthread
+ else
+-lib	= -lstdc++ `pkgconf --libs sdl2` -lGL -lSDL2_image -lm -lpthread
++lib	= -lstdc++ `$(sdlgetconfig) --libs  $(sdlflags)` -lGL -lSDL2_image -lm -lpthread
+ endif
+ 
+ ifdef FORCE_SYSTEM_LIBPNG
+@@ -186,6 +203,7 @@ autdrv := $(drvsrc:.cpp=.o)
+ ifdef DARWIN
+ 	CC	= gcc
+ else
++	CC	= gcc
+ endif
+ 
+ CXX	= $(CC)
+@@ -377,7 +395,7 @@ ifdef WINDOWS
+ 
+ $(NAME):	$(allobj) $(objdir)drivers.o
+ 	@echo
+-	@echo Linking executable... $(NAME).exe
++	@echo Linking executable... $(NAME)
+ 	@$(LD)  -mconsole $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
+ 
+ else
+@@ -394,6 +412,8 @@ ifdef	DEBUG
+ #	Don't compress when making a debug build
+ 
+ else
++
++
+ ifdef	COMPRESS
+ 	@upx --best $@
+ endif
+@@ -455,6 +475,7 @@ $(a68k.o):	fba_make68k.c
+ endif
+ 
+ # Musashi
++
+ $(objdir)cpu/m68k/m68kcpu.o: $(srcdir)cpu/m68k/m68kcpu.c $(objdir)dep/generated/m68kops.h $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+ 	@echo Compiling Musashi MC680x0 core \(m68kcpu.c\)...
+ 	@$(CC) $(CFLAGS) -c $(srcdir)cpu/m68k/m68kcpu.c -o $(objdir)cpu/m68k/m68kcpu.o
+@@ -464,11 +485,7 @@ $(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake $(objdir)dep/generated/m
+ 	@$(CC) $(CFLAGS) -c $(objdir)dep/generated/m68kops.c -o $(objdir)cpu/m68k/m68kops.o
+ 
+ $(objdir)dep/generated/m68kops.h $(objdir)dep/generated/m68kops.c: $(objdir)cpu/m68k/m68kmake $(srcdir)cpu/m68k/m68k_in.c
+-ifdef WINDOWS
+-	$(objdir)cpu/m68k/m68kmake.exe $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
+-else
+ 	$(objdir)cpu/m68k/m68kmake $(objdir)dep/generated/ $(srcdir)cpu/m68k/m68k_in.c
+-endif
+ 
+ $(objdir)cpu/m68k/m68kmake: $(srcdir)cpu/m68k/m68kmake.c
+ 	@echo Compiling Musashi MC680x0 core \(m68kmake.c\)...
+diff --git a/src/intf/video/scalers/crt.cpp b/src/intf/video/scalers/crt.cpp
+index 002a59464..62bbda398 100644
+--- a/src/intf/video/scalers/crt.cpp
++++ b/src/intf/video/scalers/crt.cpp
+@@ -1,44 +1,46 @@
+ /*
+ By Kannagichan (kannagichan@gmail.com)
+ */
+-
++#include <stdint.h>
+ #include "crt.h"
+-static unsigned char line_buf[0x8000];
++static unsigned char line_buf[0x4000];
++
+ 
+ static inline void CRT_initline(unsigned char *dstPtr,int l,int n,int bytepixel)
+ {
+-	for(int j = 0;j < n;j+= bytepixel)
+-	{
+-		dstPtr[l+j+0] = (line_buf[j+0])&0xF8;
+-		dstPtr[l+j+1] = (line_buf[j+1])&0xF8;
+-		dstPtr[l+j+2] = (line_buf[j+2])&0xF8;
+-		j+= bytepixel;
++	uint32_t *pline_buf = (uint32_t*)line_buf;
++	uint32_t *pdstPtr = (uint32_t*)dstPtr;
+ 
+-		dstPtr[l+j+0] = (line_buf[j+0])|7;
+-		dstPtr[l+j+1] = (line_buf[j+1])|7;
+-		dstPtr[l+j+2] = (line_buf[j+2])|7;
++	n = n>>2;
++	l = l>>2;
++	for(int j = 0;j < n;j++)
++	{
++		pdstPtr[l+j] = (pline_buf[j])&0xF8F8F8F8;
++		j++;
++		pdstPtr[l+j] = (pline_buf[j])|0x07070707;
+ 	}
+ 
+ }
+ 
+ static inline void CRT_drawline(unsigned char *dstPtr,int l,int n,int bytepixel,float *fading)
+ {
++	float fdg1 = fading[0];
++	float fdg2 = fading[1];
+ 
+ 	for(int j = 0;j < n;j+= bytepixel)
+ 	{
+-		dstPtr[l+j+0] = (line_buf[j+0])*fading[0];
+-		dstPtr[l+j+1] = (line_buf[j+1])*fading[0];
+-		dstPtr[l+j+2] = (line_buf[j+2])*fading[0];
++		dstPtr[l+j+0] = (line_buf[j+0])*fdg1;
++		dstPtr[l+j+1] = (line_buf[j+1])*fdg1;
++		dstPtr[l+j+2] = (line_buf[j+2])*fdg1;
+ 		j+= bytepixel;
+ 
+-		dstPtr[l+j+0] = (line_buf[j+0])*fading[1];
+-		dstPtr[l+j+1] = (line_buf[j+1])*fading[1];
+-		dstPtr[l+j+2] = (line_buf[j+2])*fading[1];
++		dstPtr[l+j+0] = (line_buf[j+0])*fdg2;
++		dstPtr[l+j+1] = (line_buf[j+1])*fdg2;
++		dstPtr[l+j+2] = (line_buf[j+2])*fdg2;
+ 	}
+ 
+ }
+ 
+-
+ void CRTx22(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,int srcpitch,int pitch)
+ {
+ 	const int bytepixel = 4;
+@@ -50,6 +52,7 @@ void CRTx22(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 
+ 	for(y = 0;y < height;y++)
+ 	{
++		int tmp = 0;
+ 		for(x = 0;x < width;x++)
+ 		{
+ 
+@@ -58,21 +61,13 @@ void CRTx22(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 			G = srcPtr[i+1];
+ 			B = srcPtr[i+2];
+ 
+-			if(x != width-1)
+-			{
+-				i+=bytepixel;
+-				RS = ( ((int)srcPtr[i+0]+R)/2 );
+-				GS = ( ((int)srcPtr[i+1]+G)/2 );
+-				BS = ( ((int)srcPtr[i+2]+B)/2 );
+-			}
+-			else
+-			{
+-				RS = R;
+-				GS = G;
+-				BS = B;
+-			}
+ 
+-			int tmp = x*bytepixel*2;
++			i+=bytepixel;
++			RS = ( ((int)srcPtr[i+0]+R)>>1);
++			GS = ( ((int)srcPtr[i+1]+G)>>1);
++			BS = ( ((int)srcPtr[i+2]+B)>>1);
++
++
+ 			line_buf[tmp+0] = R;
+ 			line_buf[tmp+1] = G;
+ 			line_buf[tmp+2] = B;
+@@ -80,7 +75,7 @@ void CRTx22(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 			line_buf[tmp+0] = RS;
+ 			line_buf[tmp+1] = GS;
+ 			line_buf[tmp+2] = BS;
+-
++			tmp += bytepixel;
+ 		}
+ 
+ 		int n = bytepixel*width*2;
+@@ -96,10 +91,7 @@ void CRTx22(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 		CRT_drawline(dstPtr,l,n,bytepixel,fading);
+ 
+ 		l += pitch;
+-
+-
+ 	}
+-
+ }
+ 
+ void CRTx32(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,int srcpitch,int pitch)
+@@ -112,55 +104,49 @@ void CRTx32(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 
+ 	for(y = 0;y < height;y++)
+ 	{
++		int yp = y*srcpitch;
++		int tmp = 0;
+ 		for(x = 0;x < width;x++)
+ 		{
+-			i = (x*bytepixel) + (y*srcpitch);
+-			R = srcPtr[i+0];
+-			G = srcPtr[i+1];
+-			B = srcPtr[i+2];
++			i = (x*bytepixel) + yp;
++			float srcR,srcG,srcB,RF,GF,BF;
+ 
+-			if(x != width-1)
+-			{
+-				i+=bytepixel;
+-				RS[0] = ( ((float)srcPtr[i+0]*0.3)+((float)R*0.7) );
+-				GS[0] = ( ((float)srcPtr[i+1]*0.3)+((float)G*0.7) );
+-				BS[0] = ( ((float)srcPtr[i+2]*0.3)+((float)B*0.7) );
++			RF = R = srcPtr[i+0];
++			GF = G = srcPtr[i+1];
++			BF = B = srcPtr[i+2];
+ 
++			i+=bytepixel;
++			srcR = srcPtr[i+0];
++			srcG = srcPtr[i+1];
++			srcB = srcPtr[i+2];
+ 
+-				RS[2] = ( ((float)srcPtr[i+0]*0.7)+((float)R*0.4) );
+-				GS[2] = ( ((float)srcPtr[i+1]*0.7)+((float)G*0.4) );
+-				BS[2] = ( ((float)srcPtr[i+2]*0.7)+((float)B*0.4) );
++			RS[0] = ( (srcR*0.3)+(RF*0.7) );
++			GS[0] = ( (srcG*0.3)+(GF*0.7) );
++			BS[0] = ( (srcB*0.3)+(BF*0.7) );
++
++			RS[1] = ( (srcR*0.7)+(RF*0.3) );
++			GS[1] = ( (srcG*0.7)+(GF*0.3) );
++			BS[1] = ( (srcB*0.7)+(BF*0.3) );
+ 
+ 
+-			}
+-			else
+-			{
+-				for(j = 0;j < 2;j++)
+-				{
+-					RS[j] = R;
+-					GS[j] = G;
+-					BS[j] = B;
+-				}
+-			}
+ 
+-			int tmp = x*bytepixel*4;
+ 			line_buf[tmp+0] = R;
+ 			line_buf[tmp+1] = G;
+ 			line_buf[tmp+2] = B;
+ 			line_buf[tmp+3] = 0xFF;
++			tmp += bytepixel;
+ 
+ 			for(j = 0;j < 2;j++)
+ 			{
+-				line_buf[tmp+4] = RS[j];
+-				line_buf[tmp+5] = GS[j];
+-				line_buf[tmp+6] = BS[j];
+-				line_buf[tmp+7] = 0xFF;
+-
++				line_buf[tmp+0] = RS[j];
++				line_buf[tmp+1] = GS[j];
++				line_buf[tmp+2] = BS[j];
++				line_buf[tmp+3] = 0xFF;
+ 				tmp += bytepixel;
+ 			}
+ 		}
+ 
+-		int n = bytepixel*width*2;
++		int n = bytepixel*width*3;
+ 
+ 		CRT_initline(dstPtr,l,n,bytepixel);
+ 		l += pitch;
+@@ -187,55 +173,48 @@ void CRTx33(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 
+ 	for(y = 0;y < height;y++)
+ 	{
++		int yp = y*srcpitch;
++		int tmp = 0;
+ 		for(x = 0;x < width;x++)
+ 		{
+-			i = (x*bytepixel) + (y*srcpitch);
+-			R = srcPtr[i+0];
+-			G = srcPtr[i+1];
+-			B = srcPtr[i+2];
++			i = (x*bytepixel) + yp;
++			float srcR,srcG,srcB,RF,GF,BF;
+ 
+-			if(x != width-1)
+-			{
+-				i+=bytepixel;
+-				RS[0] = ( ((float)srcPtr[i+0]*0.3)+((float)R*0.7) );
+-				GS[0] = ( ((float)srcPtr[i+1]*0.3)+((float)G*0.7) );
+-				BS[0] = ( ((float)srcPtr[i+2]*0.3)+((float)B*0.7) );
++			RF = R = srcPtr[i+0];
++			GF = G = srcPtr[i+1];
++			BF = B = srcPtr[i+2];
+ 
++			i+=bytepixel;
++			srcR = srcPtr[i+0];
++			srcG = srcPtr[i+1];
++			srcB = srcPtr[i+2];
+ 
+-				RS[2] = ( ((float)srcPtr[i+0]*0.7)+((float)R*0.4) );
+-				GS[2] = ( ((float)srcPtr[i+1]*0.7)+((float)G*0.4) );
+-				BS[2] = ( ((float)srcPtr[i+2]*0.7)+((float)B*0.4) );
++			RS[0] = ( (srcR*0.3)+(RF*0.7) );
++			GS[0] = ( (srcG*0.3)+(GF*0.7) );
++			BS[0] = ( (srcB*0.3)+(BF*0.7) );
+ 
++			RS[1] = ( (srcR*0.7)+(RF*0.3) );
++			GS[1] = ( (srcG*0.7)+(GF*0.3) );
++			BS[1] = ( (srcB*0.7)+(BF*0.3) );
+ 
+-			}
+-			else
+-			{
+-				for(j = 0;j < 2;j++)
+-				{
+-					RS[j] = R;
+-					GS[j] = G;
+-					BS[j] = B;
+-				}
+-			}
+ 
+-			int tmp = x*bytepixel*4;
+ 			line_buf[tmp+0] = R;
+ 			line_buf[tmp+1] = G;
+ 			line_buf[tmp+2] = B;
+ 			line_buf[tmp+3] = 0xFF;
++			tmp += bytepixel;
+ 
+ 			for(j = 0;j < 2;j++)
+ 			{
+-				line_buf[tmp+4] = RS[j];
+-				line_buf[tmp+5] = GS[j];
+-				line_buf[tmp+6] = BS[j];
+-				line_buf[tmp+7] = 0xFF;
+-
++				line_buf[tmp+0] = RS[j];
++				line_buf[tmp+1] = GS[j];
++				line_buf[tmp+2] = BS[j];
++				line_buf[tmp+3] = 0xFF;
+ 				tmp += bytepixel;
+ 			}
+ 		}
+ 
+-		int n = bytepixel*width*4;
++		int n = bytepixel*width*3;
+ 		CRT_initline(dstPtr,l,n,bytepixel);
+ 		l += pitch;
+ 
+@@ -258,7 +237,6 @@ void CRTx33(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 			l += pitch;
+ 		}
+ 	}
+-
+ }
+ 
+ 
+@@ -272,53 +250,47 @@ void CRTx43(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 
+ 	for(y = 0;y < height;y++)
+ 	{
++		int yp = y*srcpitch;
++		int tmp = 0;
+ 		for(x = 0;x < width;x++)
+ 		{
+-			i = (x*bytepixel) + (y*srcpitch);
+-			R = srcPtr[i+0];
+-			G = srcPtr[i+1];
+-			B = srcPtr[i+2];
++			i = (x*bytepixel) + yp;
++			float srcR,srcG,srcB,RF,GF,BF;
+ 
+-			if(x != width-1)
+-			{
+-				i+=bytepixel;
+-				RS[0] = ( ((float)srcPtr[i+0]*0.3)+((float)R*0.7) );
+-				GS[0] = ( ((float)srcPtr[i+1]*0.3)+((float)G*0.7) );
+-				BS[0] = ( ((float)srcPtr[i+2]*0.3)+((float)B*0.7) );
++			RF = R = srcPtr[i+0];
++			GF = G = srcPtr[i+1];
++			BF = B = srcPtr[i+2];
+ 
+-				RS[1] = ((int)srcPtr[i+0]+R)/2;
+-				GS[1] = ((int)srcPtr[i+1]+G)/2;
+-				BS[1] = ((int)srcPtr[i+2]+B)/2;
++			i+=bytepixel;
++			srcR = srcPtr[i+0];
++			srcG = srcPtr[i+1];
++			srcB = srcPtr[i+2];
+ 
+-				RS[2] = ( ((float)srcPtr[i+0]*0.7)+((float)R*0.3) );
+-				GS[2] = ( ((float)srcPtr[i+1]*0.7)+((float)G*0.3) );
+-				BS[2] = ( ((float)srcPtr[i+2]*0.7)+((float)B*0.3) );
++			RS[0] = ( (srcR*0.3)+(RF*0.7) );
++			GS[0] = ( (srcG*0.3)+(GF*0.7) );
++			BS[0] = ( (srcB*0.3)+(BF*0.7) );
+ 
++			RS[1] = ((int)srcPtr[i+0]+R)>>1;
++			GS[1] = ((int)srcPtr[i+1]+G)>>1;
++			BS[1] = ((int)srcPtr[i+2]+B)>>1;
++
++			RS[2] = ( (srcR*0.7)+(RF*0.3) );
++			GS[2] = ( (srcG*0.7)+(GF*0.3) );
++			BS[2] = ( (srcB*0.7)+(BF*0.3) );
+ 
+-			}
+-			else
+-			{
+-				for(j = 0;j < 3;j++)
+-				{
+-					RS[j] = R;
+-					GS[j] = G;
+-					BS[j] = B;
+-				}
+-			}
+ 
+-			int tmp = x*bytepixel*4;
+ 			line_buf[tmp+0] = R;
+ 			line_buf[tmp+1] = G;
+ 			line_buf[tmp+2] = B;
+ 			line_buf[tmp+3] = 0xFF;
++			tmp += bytepixel;
+ 
+ 			for(j = 0;j < 3;j++)
+ 			{
+-				line_buf[tmp+4] = RS[j];
+-				line_buf[tmp+5] = GS[j];
+-				line_buf[tmp+6] = BS[j];
+-				line_buf[tmp+7] = 0xFF;
+-
++				line_buf[tmp+0] = RS[j];
++				line_buf[tmp+1] = GS[j];
++				line_buf[tmp+2] = BS[j];
++				line_buf[tmp+3] = 0xFF;
+ 				tmp += bytepixel;
+ 			}
+ 		}
+@@ -346,7 +318,6 @@ void CRTx43(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 			l += pitch;
+ 		}
+ 	}
+-
+ }
+ 
+ void CRTx44(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,int srcpitch,int pitch)
+@@ -360,52 +331,47 @@ void CRTx44(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 
+ 	for(y = 0;y < height;y++)
+ 	{
++		int yp = y*srcpitch;
++		int tmp = 0;
+ 		for(x = 0;x < width;x++)
+ 		{
+-			i = (x*bytepixel) + (y*srcpitch);
+-			R = srcPtr[i+0];
+-			G = srcPtr[i+1];
+-			B = srcPtr[i+2];
++			i = (x*bytepixel) + yp;
++			float srcR,srcG,srcB,RF,GF,BF;
+ 
+-			if(x != width-1)
+-			{
+-				i+=bytepixel;
+-				RS[0] = ( ((float)srcPtr[i+0]*0.3)+((float)R*0.7) );
+-				GS[0] = ( ((float)srcPtr[i+1]*0.3)+((float)G*0.7) );
+-				BS[0] = ( ((float)srcPtr[i+2]*0.3)+((float)B*0.7) );
++			RF = R = srcPtr[i+0];
++			GF = G = srcPtr[i+1];
++			BF = B = srcPtr[i+2];
+ 
+-				RS[1] = ((int)srcPtr[i+0]+R)/2;
+-				GS[1] = ((int)srcPtr[i+1]+G)/2;
+-				BS[1] = ((int)srcPtr[i+2]+B)/2;
++			i+=bytepixel;
++			srcR = srcPtr[i+0];
++			srcG = srcPtr[i+1];
++			srcB = srcPtr[i+2];
+ 
+-				RS[2] = ( ((float)srcPtr[i+0]*0.7)+((float)R*0.3) );
+-				GS[2] = ( ((float)srcPtr[i+1]*0.7)+((float)G*0.3) );
+-				BS[2] = ( ((float)srcPtr[i+2]*0.7)+((float)B*0.3) );
++			RS[0] = ( (srcR*0.3)+(RF*0.7) );
++			GS[0] = ( (srcG*0.3)+(GF*0.7) );
++			BS[0] = ( (srcB*0.3)+(BF*0.7) );
+ 
++			RS[1] = ((int)srcPtr[i+0]+R)>>1;
++			GS[1] = ((int)srcPtr[i+1]+G)>>1;
++			BS[1] = ((int)srcPtr[i+2]+B)>>1;
++
++			RS[2] = ( (srcR*0.7)+(RF*0.3) );
++			GS[2] = ( (srcG*0.7)+(GF*0.3) );
++			BS[2] = ( (srcB*0.7)+(BF*0.3) );
+ 
+-			}
+-			else
+-			{
+-				for(j = 0;j < 3;j++)
+-				{
+-					RS[j] = R;
+-					GS[j] = G;
+-					BS[j] = B;
+-				}
+-			}
+ 
+-			int tmp = x*bytepixel*4;
+ 			line_buf[tmp+0] = R;
+ 			line_buf[tmp+1] = G;
+ 			line_buf[tmp+2] = B;
+ 			line_buf[tmp+3] = 0xFF;
++			tmp += bytepixel;
+ 
+ 			for(j = 0;j < 3;j++)
+ 			{
+-				line_buf[tmp+4] = RS[j];
+-				line_buf[tmp+5] = GS[j];
+-				line_buf[tmp+6] = BS[j];
+-				line_buf[tmp+7] = 0xFF;
++				line_buf[tmp+0] = RS[j];
++				line_buf[tmp+1] = GS[j];
++				line_buf[tmp+2] = BS[j];
++				line_buf[tmp+3] = 0xFF;
+ 				tmp += bytepixel;
+ 			}
+ 
+@@ -440,72 +406,67 @@ void CRTx44(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 
+ 			l += pitch;
+ 		}
+-
+ 	}
+-
+ }
+ 
++
+ void CRTx54(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,int srcpitch,int pitch)
+ {
+ 	const int bytepixel = 4;
+ 	int i;
+ 
+-	int R = 0,G = 0,B = 0,RS[4],GS[4],BS[4];
++	int R = 0,G = 0,B = 0,RS[5],GS[5],BS[5];
+ 	int l = 0,j;
+ 	int x,y;
+ 
++	int tmp =0;
++
+ 	for(y = 0;y < height;y++)
+ 	{
++		tmp = 0;
++		int yp = y*srcpitch;
+ 		for(x = 0;x < width;x++)
+ 		{
+-			i = (x*bytepixel) + (y*srcpitch);
+-			R = srcPtr[i+0];
+-			G = srcPtr[i+1];
+-			B = srcPtr[i+2];
++			i = (x*bytepixel) + yp;
++			float srcR,srcG,srcB,RF,GF,BF;
+ 
+-			if(x != width-1)
+-			{
+-				i+=bytepixel;
+-				RS[0] = ( ((float)srcPtr[i+0]*0.2)+((float)R*0.8) );
+-				GS[0] = ( ((float)srcPtr[i+1]*0.2)+((float)G*0.8) );
+-				BS[0] = ( ((float)srcPtr[i+2]*0.2)+((float)B*0.8) );
++			RF = R = srcPtr[i+0];
++			GF = G = srcPtr[i+1];
++			BF = B = srcPtr[i+2];
+ 
+-				RS[1] = ( ((float)srcPtr[i+0]*0.4)+((float)R*0.6) );
+-				GS[1] = ( ((float)srcPtr[i+1]*0.4)+((float)G*0.6) );
+-				BS[1] = ( ((float)srcPtr[i+2]*0.4)+((float)B*0.6) );
++			i+=bytepixel;
++			srcR = srcPtr[i+0];
++			srcG = srcPtr[i+1];
++			srcB = srcPtr[i+2];
+ 
+-				RS[2] = ( ((float)srcPtr[i+0]*0.6)+((float)R*0.4) );
+-				GS[2] = ( ((float)srcPtr[i+1]*0.6)+((float)G*0.4) );
+-				BS[2] = ( ((float)srcPtr[i+2]*0.6)+((float)B*0.4) );
++			RS[0] = ( (srcR*0.2)+(RF*0.8) );
++			GS[0] = ( (srcG*0.2)+(GF*0.8) );
++			BS[0] = ( (srcB*0.2)+(BF*0.8) );
+ 
+-				RS[3] = ( ((float)srcPtr[i+0]*0.8)+((float)R*0.2) );
+-				GS[3] = ( ((float)srcPtr[i+1]*0.8)+((float)G*0.2) );
+-				BS[3] = ( ((float)srcPtr[i+2]*0.8)+((float)B*0.2) );
++			RS[1] = ( (srcR*0.4)+(RF*0.6) );
++			GS[1] = ( (srcG*0.4)+(GF*0.6) );
++			BS[1] = ( (srcB*0.4)+(BF*0.6) );
+ 
++			RS[2] = ( (srcR*0.6)+(RF*0.4) );
++			GS[2] = ( (srcG*0.6)+(GF*0.4) );
++			BS[2] = ( (srcB*0.6)+(BF*0.4) );
+ 
+-			}
+-			else
+-			{
+-				for(j = 0;j < 4;j++)
+-				{
+-					RS[j] = R;
+-					GS[j] = G;
+-					BS[j] = B;
+-				}
+-			}
++			RS[3] = ( (srcR*0.8)+(RF*0.2) );
++			GS[3] = ( (srcG*0.8)+(GF*0.2) );
++			BS[3] = ( (srcB*0.8)+(BF*0.2) );
+ 
+-			int tmp = x*bytepixel*5;
+ 			line_buf[tmp+0] = R;
+ 			line_buf[tmp+1] = G;
+ 			line_buf[tmp+2] = B;
+ 			line_buf[tmp+3] = 0xFF;
++			tmp += bytepixel;
+ 
+ 			for(j = 0;j < 4;j++)
+ 			{
+-				line_buf[tmp+4] = RS[j];
+-				line_buf[tmp+5] = GS[j];
+-				line_buf[tmp+6] = BS[j];
+-				line_buf[tmp+7] = 0xFF;
++				line_buf[tmp+0] = RS[j];
++				line_buf[tmp+1] = GS[j];
++				line_buf[tmp+2] = BS[j];
++				line_buf[tmp+3] = 0xFF;
+ 				tmp += bytepixel;
+ 			}
+ 
+@@ -541,7 +502,5 @@ void CRTx54(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,in
+ 
+ 			l += pitch;
+ 		}
+-
+ 	}
+-
+ }

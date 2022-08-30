@@ -4,6 +4,8 @@
 #include "vid_softfx.h"
 #include "xbr.h"
 
+#include "crt.h"
+
 typedef unsigned long uint32;
 typedef unsigned short uint16;
 typedef unsigned char uint8;
@@ -38,6 +40,7 @@ void RenderEPXB(unsigned char*, unsigned int, unsigned char*, unsigned int, int,
 void RenderEPXC(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int, int);
 
 void ddt3x(unsigned char * src,  unsigned int srcPitch, unsigned char * dest, unsigned int dstPitch, int Xres, int Yres);
+
 
 #if defined __GNUC__
  #include "scale2x.h"
@@ -115,6 +118,9 @@ static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] =
 	{ _T("4xBR (Semi-Rounded) Filter"),		4, FXF_MMX },
 	{ _T("4xBR (Rounded) Filter"),			4, FXF_MMX },
 	{ _T("DDT3x"),                          3, FXF_MMX },
+	{ _T("CRT 2x2"),						2, 0 },
+	{ _T("CRT 3x3"),						3, 0 },
+	{ _T("CRT 4x4"),						4, 0 },
 };
 
 static unsigned char* pSoftFXImage = NULL;
@@ -211,6 +217,14 @@ int VidSoftFXCheckDepth(int nEffect, int nDepth)
 		case FILTER_HQ3X:
 		case FILTER_HQ4X:
 			if (nDepth == 15 || nDepth == 16) {
+				return 32;
+			}
+			break;
+
+		case FILTER_CRTx22:
+		case FILTER_CRTx33:
+		case FILTER_CRTx44:
+			if (nDepth == 32) {
 				return 32;
 			}
 			break;
@@ -984,6 +998,18 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 		}
 		case FILTER_DDT3X: {
 			ddt3x(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			break;
+		}
+		case FILTER_CRTx22: {
+			CRTx22(ps,pd,nSoftFXImageWidth,nSoftFXImageHeight, nSoftFXImagePitch, nPitch);
+			break;
+		}
+		case FILTER_CRTx33: {
+			CRTx33(ps,pd,nSoftFXImageWidth,nSoftFXImageHeight, nSoftFXImagePitch, nPitch);
+			break;
+		}
+		case FILTER_CRTx44: {
+			CRTx44(ps,pd,nSoftFXImageWidth,nSoftFXImageHeight, nSoftFXImagePitch, nPitch);
 			break;
 		}
 	}

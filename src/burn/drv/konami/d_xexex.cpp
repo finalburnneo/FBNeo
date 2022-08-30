@@ -472,6 +472,8 @@ static INT32 DrvDoReset()
 	z80_bank = 0;
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
+	
+	HiscoreReset();
 
 	return 0;
 }
@@ -867,7 +869,7 @@ struct BurnDriver BurnDrvXexex = {
 	"xexex", NULL, NULL, NULL, "1991",
 	"Xexex (ver EAA)\0", NULL, "Konami", "GX067",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, xexexRomInfo, xexexRomName, NULL, NULL, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 256, 4, 3
@@ -947,7 +949,7 @@ struct BurnDriver BurnDrvXexexa = {
 	"xexexa", "xexex", NULL, NULL, "1991",
 	"Xexex (ver AAA)\0", NULL, "Konami", "GX067",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, xexexaRomInfo, xexexaRomName, NULL, NULL, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 256, 4, 3
@@ -987,7 +989,7 @@ struct BurnDriver BurnDrvXexexj = {
 	"xexexj", "xexex", NULL, NULL, "1991",
 	"Xexex (ver JAA)\0", NULL, "Konami", "GX067",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, xexexjRomInfo, xexexjRomName, NULL, NULL, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 256, 4, 3

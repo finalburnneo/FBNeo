@@ -21,6 +21,10 @@ bool        bAppShowFPS = 0;
 static int  nFastSpeed = 6;
 static bool bscreenshot = 0;
 
+// SlowMo T.A. feature
+int nSlowMo = 0;
+static int flippy = 0; // free running RunFrame() counter
+
 UINT32 messageFrames = 0;
 char lastMessage[MESSAGE_MAX_LENGTH];
 
@@ -133,6 +137,12 @@ static int RunFrame(int bDraw, int bPause)
 	{
 		return 1;
 	}
+
+	// SlowMo stuff
+	flippy++;
+	nSlowMo = macroSystemSlowMo[0] + macroSystemSlowMo[1] * 2 + macroSystemSlowMo[2] * 3 + macroSystemSlowMo[3] * 4 + macroSystemSlowMo[4] * 5;
+	if ((nSlowMo == 1) && ((flippy % 4) == 0)) return 0;		// 75% speed
+	else if ((nSlowMo > 1) && (nSlowMo < 6) && (flippy % ((nSlowMo - 1) * 2)) < (((nSlowMo - 1) * 2) - 1)) return 0;		// 50% and less
 
 	if (bPause)
 	{

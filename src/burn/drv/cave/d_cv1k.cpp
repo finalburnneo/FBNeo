@@ -381,7 +381,7 @@ static INT32 MemIndex()
 	AllRam			= Next;
 
 	DrvMainRAM		= Next; Next += 0x1000000;
-	DrvCacheRAM		= Next; Next += 0x1000000;
+	DrvCacheRAM		= Next; Next += 0x0004000;
 
 	RamEnd			= Next;
 
@@ -474,7 +474,7 @@ static INT32 DrvInit()
 	} else {
 		Sh3MapMemory(DrvMainRAM,	0xc000000, 	0xcffffff,	MAP_RAM);
 	}
-	Sh3MapMemory(DrvCacheRAM,		0xf0000000,	0xf0ffffff,	MAP_RAM);
+	Sh3MapMemory(DrvCacheRAM,		0xf0000000,	0xf0003fff,	MAP_RAM); // this 16k cache area used as ram
 
 	Sh3SetReadByteHandler (0, main_read_byte);
 	Sh3SetReadWordHandler (0, main_read_word);

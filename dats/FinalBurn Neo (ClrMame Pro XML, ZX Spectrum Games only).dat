@@ -626,6 +626,38 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="agathadvh" cloneof="agathadv" romof="agathadv">
+		<comment>Homebrew</comment>
+		<description>Agatha Adventure 'hard-mode' (128) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Agatha Adventure 128K hard-mode (2021)(Daniel Isoba).tap" size="44651" crc="56a5f727"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="agathadv" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Agatha Adventure (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Agatha Adventure 128K (2021)(Daniel Isoba).tap" size="45114" crc="86776da5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="agathadv48" cloneof="agathadv" romof="agathadv">
+		<comment>Homebrew</comment>
+		<description>Agatha Adventure (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Agatha Adventure 48K (2021)(Daniel Isoba).tap" size="43861" crc="5af05ceb"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="agtbluedm" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Agent Blue - Daytime Missions (128K) (HB)</description>
@@ -17747,6 +17779,28 @@
 		<year>1992</year>
 		<manufacturer>Hi-Tec Software</manufacturer>
 		<rom name="Wacky Races 128K (1992)(Hi-Tec).tap" size="149897" crc="c46f4db9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="waldolife" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Waldo's Life (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Waldo's Life 128K EN (2022)(Daniel Isoba).tap" size="45064" crc="a18f6513"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="waldolifes" cloneof="waldolife" romof="waldolife">
+		<comment>Homebrew</comment>
+		<description>Waldo's Life (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Waldo's Life 128K ES (2022)(Daniel Isoba).tap" size="45060" crc="62890e34"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

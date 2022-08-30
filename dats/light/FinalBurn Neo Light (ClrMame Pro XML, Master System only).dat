@@ -4976,6 +4976,24 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sww22">
+		<comment>Homebrew</comment>
+		<description>Super Wild War '22 (HB)</description>
+		<year>2022</year>
+		<manufacturer>90soft</manufacturer>
+		<rom name="Super Wild War '22 (2022)(90soft).sms" size="131072" crc="d9ec4d01"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sww22e" cloneof="sww22" romof="sww22">
+		<comment>Homebrew</comment>
+		<description>Super Wild War '22 - 224p extended (HB)</description>
+		<year>2022</year>
+		<manufacturer>90soft</manufacturer>
+		<rom name="Super Wild War '22 224p (2022)(90soft).sms" size="131072" crc="2d391e7f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="wboymlndj" cloneof="wboymlnd" romof="wboymlnd">
 		<description>Super Wonder Boy - Monster World (Jpn)</description>
 		<year>1988</year>

@@ -1379,12 +1379,38 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ed2083" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Earth Defend 2083 (HB)</description>
+		<year>2013</year>
+		<manufacturer>CollectorVision Games</manufacturer>
+		<rom name="Earth Defend 2083 (2013)(CollectorVision).bin" size="32768" crc="6498372c"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="easterbunny" romof="coleco">
 		<comment>Homebrew</comment>
 		<description>Easter Bunny (HB)</description>
 		<year>2007</year>
 		<manufacturer>Daniel Bienvenu</manufacturer>
 		<rom name="Easter Bunny (2007)(Daniel Bienvenu).rom" size="5888" crc="5c494be5"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eggerland" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Eggerland Mystery (SGM) (HB)</description>
+		<year>1985-2018</year>
+		<manufacturer>HAL Lab.</manufacturer>
+		<rom name="Eggerland Mystery SGM (2018)(CollectorVision).rom" size="131072" crc="2488ca1a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3357,7 +3383,7 @@
 		<comment>Homebrew</comment>
 		<description>Pac Man Collection (HB)</description>
 		<year>2008</year>
-		<manufacturer>Opcodes Games - Namco</manufacturer>
+		<manufacturer>Opcode Games - Namco</manufacturer>
 		<rom name="pac-man-collection-2008.rom" size="131072" crc="f3ccacb3"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -3451,6 +3477,19 @@
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Pillars (2021)(Under4Mhz).rom" size="32768" crc="5a49b249"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pippols" romof="coleco">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>Pippols (HB)</description>
+		<year>1985-2014</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Pippols (2014)(CollectorVision).bin" size="32768" crc="28d04775"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -3988,6 +4027,19 @@
 		<manufacturer>Sierra On-Line</manufacturer>
 		<rom name="sammylf.1" size="8192" crc="2492bac2"/>
 		<rom name="sammylf.2" size="8192" crc="7fee3b34"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sasa" romof="coleco">
+		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
+		<description>Sasa (SGM) (HB)</description>
+		<year>1983-2015</year>
+		<manufacturer>Mass Tael Ltd.</manufacturer>
+		<rom name="Sasa SGM (2015)(CollectorVision).rom" size="23894" crc="9c48816c"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4593,6 +4645,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="starcom" romof="coleco">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>Starcom (HB)</description>
+		<year>1986-2012</year>
+		<manufacturer>Coleco</manufacturer>
+		<rom name="Starcom (2012)(CollectorVision).bin" size="32768" crc="61c98628"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="starshipdf" romof="coleco">
 		<comment>Homebrew</comment>
 		<description>Starship Defence Force (HB)</description>
@@ -4917,6 +4982,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="swtacorn" romof="coleco">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Sweet Acorn (SGM) (HB)</description>
+		<year>1984-2019</year>
+		<manufacturer>Opcode Games - Taito Corp.</manufacturer>
+		<rom name="Sweet Acorn SGM (2019)(Opcode Games).rom" size="32768" crc="19ceb69d"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sword" romof="coleco">
 		<comment>Prototype</comment>
 		<description>Sword and Sorcerer (Prototype)</description>
@@ -4950,6 +5028,19 @@
 		<year>2017</year>
 		<manufacturer>CollectorVision Games</manufacturer>
 		<rom name="Sydney Hunter and the Sacred Tribe (2017)(CollectorVision).bin" size="131072" crc="b5c92637"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tankbtln" romof="coleco">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Tank Battalion (SGM) (HB)</description>
+		<year>1984-2019</year>
+		<manufacturer>Opcode Games - Namcot</manufacturer>
+		<rom name="Tank Battalion SGM (2016 Opcode Games).rom" size="32768" crc="3e4f3045"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -5427,6 +5518,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="warpwarp" romof="coleco">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Warp &amp; Warp (SGM) (HB)</description>
+		<year>1984-2016</year>
+		<manufacturer>Opcode Games - Namcot</manufacturer>
+		<rom name="Warp &amp; Warp SGM (2016)(Opcode Games).rom" size="32768" crc="b90c2062"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="watervil" romof="coleco">
 		<comment>Homebrew</comment>
 		<description>Waterville Rescue (HB)</description>
@@ -5531,11 +5635,37 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="xyzolog" romof="coleco">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Xyzolog (SGM) (HB)</description>
+		<year>1984-2019</year>
+		<manufacturer>Opcode Games - Taito Corp.</manufacturer>
+		<rom name="Xyzolog SGM (2019)(Opcode Games).rom" size="32768" crc="95ff75e8"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yiearii" romof="coleco">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Yie Ar Kung Fu II (SGM) (HB)</description>
+		<year>1985-2018</year>
+		<manufacturer>Opcode Games - Konami</manufacturer>
+		<rom name="Yie Ar Kung Fu II SGM (2018)(Opcode Games).rom" size="131072" crc="3143c6dd"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="yiear" romof="coleco">
-		<comment>Homebrew, Published by Opcode Games</comment>
+		<comment>Homebrew</comment>
 		<description>Yie-Ar Kung Fu (HB)</description>
 		<year>1985-2005</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Opcode Games - Konami</manufacturer>
 		<rom name="Yie-Ar Kung Fu (2005) (Opcode Games).col" size="32768" crc="471240bb"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>

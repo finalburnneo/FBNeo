@@ -384,6 +384,9 @@ DRV		BurnDrvMSX_afterthewar2;
 DRV		BurnSpecAfterburner;
 DRV		BurnSpecafteroids;
 DRV		BurnDrvMSX_afteroids;
+DRV		BurnSpecAgathadvh;
+DRV		BurnSpecAgathadv;
+DRV		BurnSpecAgathadv48;
 DRV		BurnDrvAoh;
 DRV		BurnSpecAgtbluedm;
 DRV		BurnSpecAgtbluenm;
@@ -4794,6 +4797,7 @@ DRV		BurnDrvMSX_earthatk;
 DRV		BurnDrvnes_earthboundc;
 DRV		BurnDrvnes_earthboundzeroc;
 DRV		BurnDrvnes_earthboundzero;
+DRV		BurnDrvcv_ed2083;
 DRV		BurnDrvmd_earthdef;
 DRV		BurnDrvnes_earthbound;
 DRV		BurnSpecEarthlight;
@@ -4847,6 +4851,7 @@ DRV		BurnDrvEgghunt;
 DRV		BurnDrvfds_eggerland;
 DRV		BurnDrvfds_eggerlansouenota;
 DRV		BurnDrvMSX_eggerlnd;
+DRV		BurnDrvcv_eggerland;
 DRV		BurnDrvMSX_eggerlnd2;
 DRV		BurnSpecEgghead;
 DRV		BurnSpecEgghead3;
@@ -11729,6 +11734,7 @@ DRV		BurnDrvPipibibsa;
 DRV		BurnDrvMSX_pipi;
 DRV		BurnSpecpippo;
 DRV		BurnDrvMSX_pippo;
+DRV		BurnDrvcv_pippols;
 DRV		BurnDrvMSX_pippols;
 DRV		BurnDrvMSX_pippolsb;
 DRV		BurnDrvMSX_pippolsc;
@@ -13450,6 +13456,7 @@ DRV		BurnDrvSarge;
 DRV		BurnDrvSarukani;
 DRV		BurnDrvMSX_sasa;
 DRV		BurnDrvMSX_sasaa;
+DRV		BurnDrvcv_sasa;
 DRV		BurnDrvSasuke;
 DRV		BurnDrvMSX_satan;
 DRV		BurnSpecsatan;
@@ -14886,6 +14893,7 @@ DRV		BurnDrvnes_starwarseasy;
 DRV		BurnDrvmd_starjedi;
 DRV		BurnDrvcv_starwars;
 DRV		BurnDrvMSX_starbugg;
+DRV		BurnDrvcv_starcom;
 DRV		BurnSpecStardust;
 DRV		BurnDrvMSX_stardust;
 DRV		BurnDrvmd_starfl1;
@@ -15868,6 +15876,8 @@ DRV		BurnDrvSvolleyk;
 DRV		BurnDrvSvolleyu;
 DRV		BurnDrvpce_svolley;
 DRV		BurnDrvtg_svolley;
+DRV		BurnDrvsms_sww22;
+DRV		BurnDrvsms_sww22e;
 DRV		BurnSpecSuperwonderboy;
 DRV		BurnDrvsms_wboymlndj;
 DRV		BurnDrvSwcourtj;
@@ -15935,6 +15945,7 @@ DRV		BurnDrvSwat;
 DRV		BurnDrvSwatpolc;
 DRV		BurnDrvMSX_sweetacr;
 DRV		BurnDrvMSX_sweetacra;
+DRV		BurnDrvcv_swtacorn;
 DRV		BurnDrvCsweetht;
 DRV		BurnDrvnes_sweethomee;
 DRV		BurnDrvnes_sweethome;
@@ -16063,6 +16074,7 @@ DRV		BurnDrvTangtang;
 DRV		BurnDrvmd_tnglwdd;
 DRV		BurnDrvmd_tnglwd;
 DRV		BurnDrvMSX_tankbatt;
+DRV		BurnDrvcv_tankbtln;
 DRV		BurnSpecTankbtle;
 DRV		BurnDrvTankbust;
 DRV		BurnDrvcv_tankchal;
@@ -17911,6 +17923,8 @@ DRV		BurnDrvWwmarine;
 DRV		BurnDrvSoniccar;
 DRV		BurnDrvUltracin;
 DRV		BurnDrvfds_wakusatogai;
+DRV		BurnSpecWaldolife;
+DRV		BurnSpecWaldolifes;
 DRV		BurnDrvnes_wall;
 DRV		BurnDrvWallc;
 DRV		BurnDrvWallca;
@@ -17963,6 +17977,7 @@ DRV		BurnDrvmd_warlock;
 DRV		BurnDrvmd_warlocks;
 DRV		BurnDrvmd_warlockp;
 DRV		BurnDrvMSX_warpwarp;
+DRV		BurnDrvcv_warpwarp;
 DRV		BurnDrvWarpwarp;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvWarpsped;		// No sound, bad colors
@@ -18617,6 +18632,7 @@ DRV		BurnDrvXyonix;
 DRV		BurnDrvMSX_xyzolog;
 DRV		BurnDrvMSX_xyzologa;
 DRV		BurnDrvsms_xyzolog;
+DRV		BurnDrvcv_xyzolog;
 DRV		BurnDrvmd_yasech;
 DRV		BurnSpecYabbadoo;
 DRV		BurnDrvgg_yakitori;
@@ -18644,6 +18660,7 @@ DRV		BurnDrvMSX_yellowsb;
 DRV		BurnSpecYenght;
 DRV		BurnDrvYesnoj;
 DRV		BurnSpecYeti;
+DRV		BurnDrvcv_yiearii;
 DRV		BurnSpecyiarkufu;
 DRV		BurnSpecyiarkufu_48;
 DRV		BurnDrvYieartf;
@@ -19309,6 +19326,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAfterburner,		// Afterburner (128K)
 	&BurnSpecafteroids,			// Afteroids (Spanish) (48K)
 	&BurnDrvMSX_afteroids,		// Afteroids (Spanish)
+	&BurnSpecAgathadvh,			// Agatha Adventure 'hard-mode' (128) (HB)
+	&BurnSpecAgathadv,			// Agatha Adventure (128K) (HB)
+	&BurnSpecAgathadv48,		// Agatha Adventure (48K) (HB)
 	&BurnDrvAoh,				// Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)
 	&BurnSpecAgtbluedm,			// Agent Blue - Daytime Missions (128K) (HB)
 	&BurnSpecAgtbluenm,			// Agent Blue - Night Missions (128K) (HB)
@@ -23719,6 +23739,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_earthboundc,	// Earth Bound (Hack, Spanish v2.2)
 	&BurnDrvnes_earthboundzeroc,// Earth Bound Zero (Hack, Spanish v0.99)
 	&BurnDrvnes_earthboundzero,	// Earth Bound Zero (USA)
+	&BurnDrvcv_ed2083,			// Earth Defend 2083 (HB)
 	&BurnDrvmd_earthdef,		// Earth Defense, The (USA)
 	&BurnDrvnes_earthbound,		// Earthbound (USA) (Prototype)
 	&BurnSpecEarthlight,		// Earthlight (128K)
@@ -23772,6 +23793,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_eggerland,		// Egger Land (Japan)
 	&BurnDrvfds_eggerlansouenota,// Egger Land - Souzouhe no Tabidachi (Japan)
 	&BurnDrvMSX_eggerlnd,		// Eggerland Mystery (Jpn)
+	&BurnDrvcv_eggerland,		// Eggerland Mystery (SGM) (HB)
 	&BurnDrvMSX_eggerlnd2,		// Eggerland Mystery 2- Meikyuu Shinwa (Jpn)
 	&BurnSpecEgghead,			// Egghead (48K)
 	&BurnSpecEgghead3,			// Egghead 3 - Egghead in Space (48K) (HB)
@@ -30654,6 +30676,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_pipi,			// Pipi (Jpn)
 	&BurnSpecpippo,				// Pippo (48K)
 	&BurnDrvMSX_pippo,			// Pippo La Scopa Ficcanaso (HB)
+	&BurnDrvcv_pippols,			// Pippols (HB)
 	&BurnDrvMSX_pippols,		// Pippols (Jpn)
 	&BurnDrvMSX_pippolsb,		// Pippols (Jpn, Alt 2)
 	&BurnDrvMSX_pippolsc,		// Pippols (Jpn, Alt 3)
@@ -32375,6 +32398,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSarukani,			// Saru-Kani-Hamu-Zou (Japan)
 	&BurnDrvMSX_sasa,			// Sasa (Jpn)
 	&BurnDrvMSX_sasaa,			// Sasa (Jpn, Alt)
+	&BurnDrvcv_sasa,			// Sasa (SGM) (HB)
 	&BurnDrvSasuke,				// Sasuke vs. Commander
 	&BurnDrvMSX_satan,			// Satan (Euro)
 	&BurnSpecsatan,				// Satan - Part 1 (48K)
@@ -33811,6 +33835,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_starjedi,		// Star Wars Jedi (Rus) (Unl)
 	&BurnDrvcv_starwars,		// Star Wars: The Arcade Game
 	&BurnDrvMSX_starbugg,		// Starbuggy (Euro)
+	&BurnDrvcv_starcom,			// Starcom (HB)
 	&BurnSpecStardust,			// Stardust (48K)
 	&BurnDrvMSX_stardust,		// Stardust (Spanish)
 	&BurnDrvmd_starfl1,			// Starflight (Euro, USA)
@@ -34793,6 +34818,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSvolleyu,			// Super Volleyball (US)
 	&BurnDrvpce_svolley,		// Super Volleyball
 	&BurnDrvtg_svolley,			// Super Volleyball
+	&BurnDrvsms_sww22,			// Super Wild War '22 (HB)
+	&BurnDrvsms_sww22e,			// Super Wild War '22 - 224p extended (HB)
 	&BurnSpecSuperwonderboy,	// Super Wonder Boy (48K)
 	&BurnDrvsms_wboymlndj,		// Super Wonder Boy - Monster World (Jpn)
 	&BurnDrvSwcourtj,			// Super World Court (Japan)
@@ -34860,6 +34887,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSwatpolc,			// SWAT Police
 	&BurnDrvMSX_sweetacr,		// Sweet Acorn (Jpn)
 	&BurnDrvMSX_sweetacra,		// Sweet Acorn (Jpn, Alt)
+	&BurnDrvcv_swtacorn,		// Sweet Acorn (SGM) (HB)
 	&BurnDrvCsweetht,			// Sweet Heart (DECO Cassette) (US)
 	&BurnDrvnes_sweethomee,		// Sweet Home (English Hack)
 	&BurnDrvnes_sweethome,		// Sweet Home (Japan)
@@ -34988,6 +35016,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tnglwdd,			// Tanglewood (HB, Demo)
 	&BurnDrvmd_tnglwd,			// Tanglewood (HB, v1.0)
 	&BurnDrvMSX_tankbatt,		// Tank Battalion (Jpn)
+	&BurnDrvcv_tankbtln,		// Tank Battalion (SGM) (HB)
 	&BurnSpecTankbtle,			// Tank Battle (128K) (HB)
 	&BurnDrvTankbust,			// Tank Busters
 	&BurnDrvcv_tankchal,		// Tank Challenge (HB)
@@ -36836,6 +36865,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSoniccar,			// Waku Waku Sonic Patrol Car
 	&BurnDrvUltracin,			// Waku Waku Ultraman Racing
 	&BurnDrvfds_wakusatogai,	// Wakusei Aton Gaiden (Japan)
+	&BurnSpecWaldolife,			// Waldo's Life (English) (128K) (HB)
+	&BurnSpecWaldolifes,		// Waldo's Life (Spanish) (128K) (HB)
 	&BurnDrvnes_wall,			// Wall (HB, Tech-Demo)
 	&BurnDrvWallc,				// Wall Crash (set 1)
 	&BurnDrvWallca,				// Wall Crash (set 2)
@@ -36888,6 +36919,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_warlocks,		// Warlock (Hack, Spanish)
 	&BurnDrvmd_warlockp,		// Warlock (USA, Prototype)
 	&BurnDrvMSX_warpwarp,		// Warp & Warp (Jpn)
+	&BurnDrvcv_warpwarp,		// Warp & Warp (SGM) (HB)
 	&BurnDrvWarpwarp,			// Warp & Warp
 #if defined FBNEO_DEBUG
 	&BurnDrvWarpsped,			// Warp Speed (prototype) [No sound, bad colors]
@@ -37542,6 +37574,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_xyzolog,		// Xyzolog (Jpn)
 	&BurnDrvMSX_xyzologa,		// Xyzolog (Jpn, Alt)
 	&BurnDrvsms_xyzolog,		// Xyzolog (Kor)
+	&BurnDrvcv_xyzolog,			// Xyzolog (SGM) (HB)
 	&BurnDrvmd_yasech,			// Ya Se Chuan Shuo (Chi) (Unl)
 	&BurnSpecYabbadoo,			// Yabba Dabba Doo! - Flintstones (48K)
 	&BurnDrvgg_yakitori,		// Yakitori Meijin Torigin (HB)
@@ -37569,6 +37602,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecYenght,			// Yenght - La Fuente de la Juventud (Spanish) (48K)
 	&BurnDrvYesnoj,				// Yes/No Sinri Tokimeki Chart
 	&BurnSpecYeti,				// Yeti (48K)
+	&BurnDrvcv_yiearii,			// Yie Ar Kung Fu II (SGM) (HB)
 	&BurnSpecyiarkufu,			// Yie Ar Kung-Fu (128K)
 	&BurnSpecyiarkufu_48,		// Yie Ar Kung-Fu (48K)
 	&BurnDrvYieartf,			// Yie Ar Kung-Fu (GX361 conversion)

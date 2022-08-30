@@ -449,6 +449,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+	
 	return 0;
 }
 
@@ -802,7 +804,7 @@ struct BurnDriver BurnDrvHyprduel = {
 	"hyprduel", NULL, NULL, NULL, "1993",
 	"Hyper Duel (Japan set 1)\0", NULL, "Technosoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hyprduelRomInfo, hyprduelRomName, NULL, NULL, NULL, NULL, HyprduelInputInfo, HyprduelDIPInfo,
 	HyprduelInit, DrvExit, DrvFrame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
@@ -830,7 +832,7 @@ struct BurnDriver BurnDrvHyprduel2 = {
 	"hyprduel2", "hyprduel", NULL, NULL, "1993",
 	"Hyper Duel (Japan set 2)\0", NULL, "Technosoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hyprduel2RomInfo, hyprduel2RomName, NULL, NULL, NULL, NULL, HyprduelInputInfo, HyprduelDIPInfo,
 	HyprduelInit, DrvExit, DrvFrame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

@@ -265,6 +265,12 @@ INT32 ReplayInput()
 	struct BurnInputInfo bii;
 	memset(&bii, 0, sizeof(bii));
 
+	if (inputbuf_eof()) {
+		bprintf(0, _T("eof at beginning of ReplayInput()!\n"));
+		StopReplay();
+		return 1;
+	}
+
 	// Just to be safe, restore the inputs to the known correct settings
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		BurnDrvGetInputInfo(&bii, i);
@@ -384,6 +390,11 @@ INT32 StartRecord()
 			movieFlags = 0;
 			return 1;
 		}
+	} else {
+		// If we're starting a recording from savestate, clear rewind buffer.
+		// This makes it impossible to rewind to a time before the recording
+		// started, which will totally break the recording.
+		StateRewindReset();
 	}
 
 	{
@@ -691,11 +702,8 @@ static void CloseRecord()
 
 	inputbuf_save();
 
-	fseek(fp, 0, SEEK_END);
-	INT32 nMetadataOffset = ftell(fp);
+	INT32 nMetadataOffset = ftell(fp); // save FRM1 chunk after inputbuf.
 	INT32 nChunkSize = ftell(fp) - 4 - nSizeOffset;		// Fill in chunk size and no of recorded frames
-	bprintf(0, _T("close record.  metadata offset:  %d\n"), nMetadataOffset);
-	bprintf(0, _T("nSizeOffset  %d   nChunkSize  %d\n"),nSizeOffset,nChunkSize);
 	fseek(fp, nSizeOffset, SEEK_SET);
 	fwrite(&nChunkSize, 1, 4, fp);
 	fwrite(&nFrames, 1, 4, fp);
@@ -731,8 +739,6 @@ static void CloseRecord()
 
 static void CloseReplay()
 {
-	inputbuf_exit();
-
 	if(fp) {
 		fclose(fp);
 		fp = NULL;
@@ -760,6 +766,9 @@ void StopReplay()
 
 			CloseReplay();
 		}
+
+		inputbuf_exit();
+
 		nReplayStatus = 0;
 		nStartFrame = 0;
 		memset(&MovieInfo, 0, sizeof(MovieInfo));
@@ -812,12 +821,12 @@ INT32 FreezeInput(UINT8** buf, INT32* size)
 	*buf = (UINT8*)malloc(*size);
 	if(!*buf)
 	{
+		bprintf(0, _T("error in FreezeInput()\n"));
 		return -1;
 	}
 
 	UINT8* ptr=*buf;
 	Write32(ptr, nGameInpCount);
-
 	for (UINT32 i = 0; i < nGameInpCount; i++)
 	{
 		Write16(ptr, nPrevInputs[i]);
@@ -831,6 +840,7 @@ INT32 UnfreezeInput(const UINT8* buf, INT32 size)
 	UINT32 n=Read32(buf);
 	if(n>0x100 || (unsigned)size < (4 + 2*n))
 	{
+		bprintf(0, _T("error in UnfreezeInput()\n"));
 		return -1;
 	}
 

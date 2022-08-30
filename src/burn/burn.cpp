@@ -1068,10 +1068,6 @@ void StateRunAheadLoad()
 
 // --------- State-ing for Rewind ----------
 
-// TODO:
-//  if recording from "savestate", don't rewind back before recording started
-//  MAYBE move from burn.cpp to burner/win32/rewind.cpp
-
 enum {
 	REWINDSTATUS_PREINIT = 0,
 	REWINDSTATUS_OK = 1,
@@ -1172,12 +1168,24 @@ static INT32 StateRewindGetSize()
 // exported from replay.cpp
 extern int nReplayStatus;
 extern UINT32 nStartFrame;
+extern INT32 nReplayUndoCount;
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
 #include "inputbuf.h"
 
 // interface.h
 extern INT32 VidSNewShortMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);
+
+void StateRewindReset()
+{
+	if (bRewindStatus != REWINDSTATUS_OK) return;
+
+	thready.notify_wait(); // wait, just in-case we're repacking.
+
+	nRewindFrames = 0;
+	nRewindFramesLast = 0;
+	nRewindFrameCounter = 0;
+}
 
 static void StateRewind_Repack()
 {
@@ -1416,6 +1424,8 @@ static void StateRewindLoad()
 
 void StateRewindDoFrame(INT32 bDoRewind, INT32 bDoCancel, INT32 bIsPaused)
 {
+	static INT32 bWasRewinding = 0;
+
 	bRewindSingleStepping = bIsPaused;
 
 	if (bDoRewind) {
@@ -1424,8 +1434,13 @@ void StateRewindDoFrame(INT32 bDoRewind, INT32 bDoCancel, INT32 bIsPaused)
 		}
 		StateRewindLoad();
 	} else {
+		if (nReplayStatus == 1 && bWasRewinding) {
+			nReplayUndoCount++;
+		}
 		StateRewindFrame();
 	}
+
+	bWasRewinding = bDoRewind;
 }
 #endif
 

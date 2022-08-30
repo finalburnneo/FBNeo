@@ -30316,3 +30316,41 @@ struct BurnDriver BurnDrvsms_raymanrr = {
     SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
     256, 192, 4, 3
 };
+
+// Super Wild War '22 (HB)
+
+static struct BurnRomInfo sms_sww22RomDesc[] = {
+	{ "Super Wild War '22 (2022)(90soft).sms",	131072, 0xd9ec4d01, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sww22)
+STD_ROM_FN(sms_sww22)
+
+struct BurnDriver BurnDrvsms_sww22 = {
+	"sms_sww22", NULL, NULL, NULL, "2022",
+	"Super Wild War '22 (HB)\0", NULL, "90soft", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_STRATEGY, 0,
+	SMSGetZipName, sms_sww22RomInfo, sms_sww22RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Super Wild War '22 - 224p extended (HB)
+
+static struct BurnRomInfo sms_sww22eRomDesc[] = {
+	{ "Super Wild War '22 224p (2022)(90soft).sms",	131072, 0x2d391e7f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sww22e)
+STD_ROM_FN(sms_sww22e)
+
+struct BurnDriver BurnDrvsms_sww22e = {
+	"sms_sww22e", "sms_sww22", NULL, NULL, "2022",
+	"Super Wild War '22 - 224p extended (HB)\0", NULL, "90soft", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_STRATEGY, 0,
+	SMSGetZipName, sms_sww22eRomInfo, sms_sww22eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 224, 4, 3
+};

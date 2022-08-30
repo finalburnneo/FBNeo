@@ -5517,7 +5517,7 @@ STD_ROM_FN(cv_pacmancol)
 
 struct BurnDriver BurnDrvcv_pacmancol = {
 	"cv_pacmancol", NULL, "cv_coleco", NULL, "2008",
-	"Pac Man Collection (HB)\0", NULL, "Opcodes Games - Namco", "ColecoVision",
+	"Pac Man Collection (HB)\0", NULL, "Opcode Games - Namco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_MAZE | GBF_ACTION, 0,
 	CVGetZipName, cv_pacmancolRomInfo, cv_pacmancolRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -8046,7 +8046,7 @@ STD_ROM_FN(cv_yiear)
 
 struct BurnDriver BurnDrvcv_yiear = {
     "cv_yiear", NULL, "cv_coleco", NULL, "1985-2005",
-    "Yie-Ar Kung Fu (HB)\0", "Published by Opcode Games", "Konami", "ColecoVision",
+    "Yie-Ar Kung Fu (HB)\0", NULL, "Opcode Games - Konami", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VSFIGHT, 0,
     CVGetZipName, cv_yiearRomInfo, cv_yiearRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -9524,4 +9524,194 @@ struct BurnDriver BurnDrvcv_smurfchal = {
 	CVGetZipName, cv_smurfchalRomInfo, cv_smurfchalRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// Earth Defend 2083 (HB)
+
+static struct BurnRomInfo cv_ed2083RomDesc[] = {
+	{ "Earth Defend 2083 (2013)(CollectorVision).bin",	32768, 0x6498372c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_ed2083, cv_ed2083, cv_coleco)
+STD_ROM_FN(cv_ed2083)
+
+struct BurnDriver BurnDrvcv_ed2083 = {
+	"cv_ed2083", NULL, "cv_coleco", NULL, "2013",
+	"Earth Defend 2083 (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+	CVGetZipName, cv_ed2083RomInfo, cv_ed2083RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Eggerland Mystery (SGM) (HB)
+
+static struct BurnRomInfo cv_eggerlandRomDesc[] = {
+    { "Eggerland Mystery SGM (2018)(CollectorVision).rom",	131072, 0x2488ca1a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_eggerland, cv_eggerland, cv_coleco)
+STD_ROM_FN(cv_eggerland)
+
+struct BurnDriver BurnDrvcv_eggerland = {
+    "cv_eggerland", NULL, "cv_coleco", NULL, "1985-2018",
+    "Eggerland Mystery (SGM) (HB)\0", "SGM - Published by CollectorVision Games", "HAL Lab.", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
+    CVGetZipName, cv_eggerlandRomInfo, cv_eggerlandRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Pippols (HB)
+
+static struct BurnRomInfo cv_pippolsRomDesc[] = {
+	{ "Pippols (2014)(CollectorVision).bin",	32768, 0x28d04775, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_pippols, cv_pippols, cv_coleco)
+STD_ROM_FN(cv_pippols)
+
+struct BurnDriver BurnDrvcv_pippols = {
+	"cv_pippols", NULL, "cv_coleco", NULL, "1985-2014",
+	"Pippols (HB)\0", "Published by CollectorVision Games", "Konami", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_pippolsRomInfo, cv_pippolsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Sasa (SGM) (HB)
+
+static struct BurnRomInfo cv_sasaRomDesc[] = {
+    { "Sasa SGM (2015)(CollectorVision).rom",	23894, 0x9c48816c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_sasa, cv_sasa, cv_coleco)
+STD_ROM_FN(cv_sasa)
+
+struct BurnDriver BurnDrvcv_sasa = {
+    "cv_sasa", NULL, "cv_coleco", NULL, "1983-2015",
+    "Sasa (SGM) (HB)\0", "SGM - Published by CollectorVision Games", "Mass Tael Ltd.", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_sasaRomInfo, cv_sasaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Starcom (HB)
+
+static struct BurnRomInfo cv_starcomRomDesc[] = {
+	{ "Starcom (2012)(CollectorVision).bin",	32768, 0x61c98628, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_starcom, cv_starcom, cv_coleco)
+STD_ROM_FN(cv_starcom)
+
+struct BurnDriver BurnDrvcv_starcom = {
+	"cv_starcom", NULL, "cv_coleco", NULL, "1986-2012",
+	"Starcom (HB)\0", "Published by CollectorVision Games", "Coleco", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SHOOT, 0,
+	CVGetZipName, cv_starcomRomInfo, cv_starcomRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Sweet Acorn (SGM) (HB)
+
+static struct BurnRomInfo cv_swtacornRomDesc[] = {
+    { "Sweet Acorn SGM (2019)(Opcode Games).rom",	32768, 0x19ceb69d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_swtacorn, cv_swtacorn, cv_coleco)
+STD_ROM_FN(cv_swtacorn)
+
+struct BurnDriver BurnDrvcv_swtacorn = {
+    "cv_swtacorn", NULL, "cv_coleco", NULL, "1984-2019",
+    "Sweet Acorn (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Taito Corp.", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_swtacornRomInfo, cv_swtacornRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Tank Battalion (SGM) (HB)
+
+static struct BurnRomInfo cv_tankbtlnRomDesc[] = {
+    { "Tank Battalion SGM (2016 Opcode Games).rom",	32768, 0x3e4f3045, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_tankbtln, cv_tankbtln, cv_coleco)
+STD_ROM_FN(cv_tankbtln)
+
+struct BurnDriver BurnDrvcv_tankbtln = {
+    "cv_tankbtln", NULL, "cv_coleco", NULL, "1984-2019",
+    "Tank Battalion (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Namcot", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE | GBF_SHOOT, 0,
+    CVGetZipName, cv_tankbtlnRomInfo, cv_tankbtlnRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Warp & Warp (SGM) (HB)
+
+static struct BurnRomInfo cv_warpwarpRomDesc[] = {
+    { "Warp & Warp SGM (2016)(Opcode Games).rom",	32768, 0xb90c2062, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_warpwarp, cv_warpwarp, cv_coleco)
+STD_ROM_FN(cv_warpwarp)
+
+struct BurnDriver BurnDrvcv_warpwarp = {
+    "cv_warpwarp", NULL, "cv_coleco", NULL, "1984-2016",
+    "Warp & Warp (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Namcot", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_warpwarpRomInfo, cv_warpwarpRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Xyzolog (SGM) (HB)
+
+static struct BurnRomInfo cv_xyzologRomDesc[] = {
+    { "Xyzolog SGM (2019)(Opcode Games).rom",	32768, 0x95ff75e8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_xyzolog, cv_xyzolog, cv_coleco)
+STD_ROM_FN(cv_xyzolog)
+
+struct BurnDriver BurnDrvcv_xyzolog = {
+    "cv_xyzolog", NULL, "cv_coleco", NULL, "1984-2019",
+    "Xyzolog (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Taito Corp.", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    CVGetZipName, cv_xyzologRomInfo, cv_xyzologRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Yie Ar Kung Fu II (SGM) (HB)
+
+static struct BurnRomInfo cv_yieariiRomDesc[] = {
+    { "Yie Ar Kung Fu II SGM (2018)(Opcode Games).rom",	131072, 0x3143c6dd, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_yiearii, cv_yiearii, cv_coleco)
+STD_ROM_FN(cv_yiearii)
+
+struct BurnDriver BurnDrvcv_yiearii = {
+    "cv_yiearii", NULL, "cv_coleco", NULL, "1985-2018",
+    "Yie Ar Kung Fu II (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Konami", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+    CVGetZipName, cv_yieariiRomInfo, cv_yieariiRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
 };

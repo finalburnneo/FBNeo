@@ -227,8 +227,11 @@ static INT32 LibretroAreaScan(INT32 nAction)
 
 	// The following value is sometimes used in game logic (xmen6p, ...),
 	// and will lead to various issues if not handled properly.
-	// On standalone, this value is stored in savestate files headers,
-	// and has special logic in runahead feature.
+	// On standalone, this value is stored in savestate files headers
+	// (and has special logic in runahead feature ?).
+	// Due to core's logic, this value is increased at each frame iteration,
+	// including multiple iterations of the same frame through runahead,
+	// but it needs to stay synced between multiple iterations of a given frame
 	SCAN_VAR(nCurrentFrame);
 
 	BurnAreaScan(nAction, 0);

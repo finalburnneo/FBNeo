@@ -2884,14 +2884,15 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
+		INT32 j = (i+224) % nInterleave;
 		ZetOpen(0);
 		CPU_RUN_TIMER_YM3526(0);
-		if (i == 224 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (j == 224 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
 		CPU_RUN(1, Zet);
-		if (i == 224) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (j == 224) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
@@ -2905,12 +2906,12 @@ static INT32 DrvFrame()
 		if (DrvMCUInUse && DrvMCUActive) {
 			if (DrvMCUInUse == 2) {
 				CPU_RUN(3, m6805);
-				if (i == 125) m68705SetIrqLine(0, 1); // fidgety bootleg mcu..
-				if (i == 224) m68705SetIrqLine(0, 0);
+				if (j == 125) m68705SetIrqLine(0, 1); // fidgety bootleg mcu..
+				if (j == 224) m68705SetIrqLine(0, 0);
 			} else {
 				M6801Open(0);
 				CPU_RUN(3, M6801);
-				if (i == 224) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				if (j == 224) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				M6801Close();
 			}
 		}

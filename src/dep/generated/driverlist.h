@@ -14253,6 +14253,7 @@ DRV		BurnDrvSolomonj;
 DRV		BurnDrvsms_solomon;
 DRV		BurnDrvnes_solonokagi2;
 DRV		BurnDrvnes_solonokagi2h;
+DRV		BurnDrvSolomonjx;
 DRV		BurnSpecsolomon;
 DRV		BurnDrvSolomon;
 DRV		BurnDrvnes_solomonskey;
@@ -33195,6 +33196,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_solomon,		// Solomon no Kagi - Oujo Rihita no Namida (Jpn)
 	&BurnDrvnes_solonokagi2,	// Solomon no Kagi 2 - Coolmintou Kyuushutsu Sakusen (Japan)
 	&BurnDrvnes_solonokagi2h,	// Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.1)
+	&BurnDrvSolomonjx,			// Solomon no Kagi X (Japan)
 	&BurnSpecsolomon,			// Solomon's Key (48K)
 	&BurnDrvSolomon,			// Solomon's Key (US)
 	&BurnDrvnes_solomonskey,	// Solomon's Key (USA)

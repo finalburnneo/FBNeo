@@ -601,3 +601,37 @@ struct BurnDriver BurnDrvSolomonj = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	256, 224, 4, 3
 };
+
+// Solomon no Kagi X (Japan)
+
+static struct BurnRomInfo solomonjxRomDesc[] = {
+	{ "slmn_06.bin",	0x4000, 0x959049ac, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "slmn_07.bin",	0x8000, 0x9d3098ca, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "slmn_08.bin",	0x1000, 0xb924d162, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "slmn_01.bin",	0x4000, 0xfa6e562e, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "slmn_12.bin",	0x8000, 0xaa26dfcb, 3 | BRF_GRA },           //  4 Foreground Tiles
+	{ "slmn_11.bin",	0x8000, 0x6f94d2af, 3 | BRF_GRA },           //  5
+
+	{ "slmn_10.bin",	0x8000, 0x8310c2a1, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "slmn_09.bin",	0x8000, 0xab7e6c42, 4 | BRF_GRA },           //  7
+
+	{ "slmn_02.bin",	0x4000, 0x80fa2be3, 5 | BRF_GRA },           //  8 Sprites
+	{ "slmn_03.bin",	0x4000, 0x236106b4, 5 | BRF_GRA },           //  9
+	{ "slmn_04.bin",	0x4000, 0x088fe5d9, 5 | BRF_GRA },           // 10
+	{ "slmn_05.bin",	0x4000, 0x8366232a, 5 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(solomonjx)
+STD_ROM_FN(solomonjx)
+
+struct BurnDriver BurnDrvSolomonjx = {
+	"solomonjx", "solomon", NULL, NULL, "1986",
+	"Solomon no Kagi X (Japan)\0", "Use Konami code @ diagnostics screen to boot!", "Tecmo", "Miscellaneous",
+	L"Solomon's Key X (Japan)\0Solomon's Key X \u30BD\u30ED\u30E2\u30F3\u306E\u9375 X\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, solomonjxRomInfo, solomonjxRomName, NULL, NULL, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
+	256, 224, 4, 3
+};

@@ -1343,6 +1343,8 @@ static INT32 Z80YM2203DoReset()
 	priority_select = 0;
 	text_layer_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1390,6 +1392,8 @@ static INT32 Drv68KDoReset()
 	soundlatch = 0;
 	priority_select = 0;
 	text_layer_enable = 0;
+
+	HiscoreReset();
 
 	return 0;
 }

@@ -9583,6 +9583,25 @@ struct BurnDriver BurnDrvcv_pippols = {
 	272, 228, 4, 3
 };
 
+// Prisoner of War (SGM) (HB)
+
+static struct BurnRomInfo cv_prisonofwarRomDesc[] = {
+    { "Prisoner of War SGM (2019)(Team Pixelboy).rom",	131072, 0xf998b515, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_prisonofwar, cv_prisonofwar, cv_coleco)
+STD_ROM_FN(cv_prisonofwar)
+
+struct BurnDriver BurnDrvcv_prisonofwar = {
+    "cv_prisonofwar", NULL, "cv_coleco", NULL, "2018-19",
+    "Prisoner of War (SGM) (HB)\0", "SGM - Super Game Module", "Team Pixelboy", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_ADV, 0,
+    CVGetZipName, cv_prisonofwarRomInfo, cv_prisonofwarRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
 // Sasa (SGM) (HB)
 
 static struct BurnRomInfo cv_sasaRomDesc[] = {
@@ -9693,25 +9712,6 @@ struct BurnDriver BurnDrvcv_xyzolog = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_xyzologRomInfo, cv_xyzologRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-    DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-    272, 228, 4, 3
-};
-
-// Yie Ar Kung Fu II (SGM) (HB)
-
-static struct BurnRomInfo cv_yieariiRomDesc[] = {
-    { "Yie Ar Kung Fu II SGM (2018)(Opcode Games).rom",	131072, 0x3143c6dd, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_yiearii, cv_yiearii, cv_coleco)
-STD_ROM_FN(cv_yiearii)
-
-struct BurnDriver BurnDrvcv_yiearii = {
-    "cv_yiearii", NULL, "cv_coleco", NULL, "1985-2018",
-    "Yie Ar Kung Fu II (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Konami", "ColecoVision",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
-    CVGetZipName, cv_yieariiRomInfo, cv_yieariiRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };

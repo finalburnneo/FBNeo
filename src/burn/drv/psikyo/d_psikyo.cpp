@@ -2585,7 +2585,7 @@ static struct BurnRomInfo tengaiRomDesc[] = {
 	{ "u61.bin",      0x200000, 0xa63633c5, BRF_SND },			 //  8 PCM data
 	{ "u62.bin",      0x200000, 0x3ad0c357, BRF_SND },			 //  9
 	
-	{ "4-u59.bin",    0x001000, 0xe563b054, BRF_OPT },			 //	10 Mcu
+	{ "4.u59",    	  0x001000, 0xe563b054, BRF_OPT },			 //	10 Mcu
 };
 
 STD_ROM_PICK(tengai)
@@ -2618,7 +2618,7 @@ static struct BurnRomInfo tengaijRomDesc[] = {
 	{ "u61.bin",      0x200000, 0xa63633c5, BRF_SND },			 //  8 PCM data
 	{ "u62.bin",      0x200000, 0x3ad0c357, BRF_SND },			 //  9
 	
-	{ "4-u59.bin",    0x001000, 0xe563b054, BRF_OPT },			 //	10 Mcu
+	{ "4.u59",    	  0x001000, 0xe563b054, BRF_OPT },			 //	10 Mcu
 };
 
 STD_ROM_PICK(tengaij)

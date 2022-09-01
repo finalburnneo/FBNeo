@@ -14876,6 +14876,38 @@ struct BurnDriver BurnDrvbrkrevext = {
 	0x1000,	320, 224, 4, 3
 };
 
+// Cake Fighter (hack of Twinkle Star Sprites)
+// EKORZ 2022
+
+static struct BurnRomInfo cakefghtRomDesc[] = {
+	{ "cake-p1.p1",   0x200000, 0x8fea9dc4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "cake-s1.s1",   0x020000, 0x10037303, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "cake-c1.c1",   0x400000, 0x5c56060d, 3 | BRF_GRA },           //  2 Sprite data
+	{ "cake-c2.c2",   0x400000, 0xb51249d0, 3 | BRF_GRA },           //  3
+	{ "cake-c3.c3",   0x100000, 0x9f634b11, 3 | BRF_GRA },           //  4
+	{ "cake-c4.c4",   0x100000, 0x1a120e61, 3 | BRF_GRA },           //  5
+
+	{ "224-m1.m1",    0x020000, 0x364d6f96, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "cake-v1.v1",   0x400000, 0x3eb19769, 5 | BRF_SND },           //  7 Sound data
+	{ "224-v2.v2",    0x200000, 0x7ad26599, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(cakefght, cakefght, neogeo)
+STD_ROM_FN(cakefght)
+
+struct BurnDriver BurnDrvcakefght = {
+	"cakefght", "twinspri", "neogeo", NULL, "2022",
+	"Cake Fighter (hack of Twinkle Star Sprites)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VERSHOOT, 0,
+	NULL, cakefghtRomInfo, cakefghtRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Crossed Swords 2 (bootleg CD to cartridge conversion)
 
 static struct BurnRomInfo crswd2blRomDesc[] = {

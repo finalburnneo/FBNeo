@@ -9089,7 +9089,7 @@ struct BurnDriver BurnDrvcv_locomotion = {
     272, 228, 4, 3
 };
 
-// Ozma Wars (HB)
+// Ozma Wars (HB) (2011)
 
 static struct BurnRomInfo cv_ozmawarRomDesc[] = {
 	{ "Ozma Wars (2011)(CollectorVision).bin",	32768, 0x2424627f, BRF_PRG | BRF_ESS },
@@ -9100,7 +9100,7 @@ STD_ROM_FN(cv_ozmawar)
 
 struct BurnDriver BurnDrvcv_ozmawar = {
 	"cv_ozmawar", NULL, "cv_coleco", NULL, "2011",
-	"Ozma Wars (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
+	"Ozma Wars (HB) (2011)\0", NULL, "CollectorVision Games", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VERSHOOT, 0,
 	CVGetZipName, cv_ozmawarRomInfo, cv_ozmawarRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

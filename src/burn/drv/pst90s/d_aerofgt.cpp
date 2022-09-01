@@ -2913,7 +2913,7 @@ struct BurnDriver BurnDrvTurbofrco = {
 };
 
 
-// Turbo Force (US)
+// Turbo Force (US, set 1)
 
 static struct BurnRomInfo turbofrcuRomDesc[] = {
 	{ "8v2.subpcb.u2",  0x040000, 0x721300ee, BRF_ESS | BRF_PRG }, // 68000 code swapped
@@ -2945,10 +2945,51 @@ STD_ROM_FN(turbofrcu)
 
 struct BurnDriver BurnDrvTurbofrcu = {
 	"turbofrcu", "turbofrc", NULL, NULL, "1991",
-	"Turbo Force (US)\0", NULL, "Video System Co.", "Video System",
+	"Turbo Force (US, set 1)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, turbofrcuRomInfo, turbofrcuRomName, NULL, NULL, NULL, NULL, turbofrcInputInfo, turbofrcDIPInfo,
+	turbofrcInit,DrvExit,DrvFrame,turbofrcDraw,DrvScan,&DrvRecalc,0x400,
+	240,352,3,4
+};
+
+
+// Turbo Force (US, set 2)
+
+static struct BurnRomInfo turbofrcuaRomDesc[] = {
+	{ "7v2.subpcb.u2",  0x040000, 0x721300ee, BRF_ESS | BRF_PRG }, // 68000 code swapped
+	{ "7v1.subpcb.u1",  0x040000, 0xd1513f96, BRF_ESS | BRF_PRG },
+	{ "7v3.u14",    	0x040000, 0x63f50557, BRF_ESS | BRF_PRG },
+
+	{ "lh534ggs.u94",  	0x080000, 0xbaa53978, BRF_GRA },		   // gfx1
+	{ "7.u95",  	  	0x020000, 0x71a6c573, BRF_GRA },
+	
+	{ "lh534ggy.u105", 	0x080000, 0x4de4e59e, BRF_GRA },		   // gfx2
+	{ "8.u106", 	  	0x020000, 0xc6479eb5, BRF_GRA },
+	
+	{ "lh534gh2.u116", 	0x080000, 0xdf210f3b, BRF_GRA },		   // gfx3
+	{ "5.u118", 	  	0x040000, 0xf61d1d79, BRF_GRA },
+	{ "lh534gh1.u117", 	0x080000, 0xf70812fd, BRF_GRA },
+	{ "4.u119", 	  	0x040000, 0x474ea716, BRF_GRA },
+
+	{ "lh532a52.u134", 	0x040000, 0x3c725a48, BRF_GRA },		   // gfx4
+	{ "lh532a51.u135", 	0x040000, 0x95c63559, BRF_GRA },
+
+	{ "6.u166", 	  	0x020000, 0x2ca14a65, BRF_ESS | BRF_PRG }, // Sound CPU
+	
+	{ "lh532h74.u180", 	0x040000, 0xa3d43254, BRF_SND },		   // samples
+	{ "lh538o7j.u179", 	0x100000, 0x60ca0333, BRF_SND },	
+};
+
+STD_ROM_PICK(turbofrcua)
+STD_ROM_FN(turbofrcua)
+
+struct BurnDriver BurnDrvTurbofrcua = {
+	"turbofrcua", "turbofrc", NULL, NULL, "1991",
+	"Turbo Force (US, set 2)\0", NULL, "Video System Co.", "Video System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, turbofrcuaRomInfo, turbofrcuaRomName, NULL, NULL, NULL, NULL, turbofrcInputInfo, turbofrcDIPInfo,
 	turbofrcInit,DrvExit,DrvFrame,turbofrcDraw,DrvScan,&DrvRecalc,0x400,
 	240,352,3,4
 };

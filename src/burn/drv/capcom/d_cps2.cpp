@@ -14201,7 +14201,7 @@ STD_ROM_PICK(Ffightaec2)
 STD_ROM_FN(Ffightaec2)
 
 struct BurnDriver BurnDrvCpsFfightaec2 = {
-	"Ffightaec2", NULL, NULL, NULL, "1998",
+	"ffightaec2", NULL, NULL, NULL, "1998",
 	"Final Fight Anniversary Edition (CPS2 hardware)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,

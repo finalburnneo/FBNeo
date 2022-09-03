@@ -5886,25 +5886,6 @@ struct BurnDriver BurnDrvcv_ninjaprincess = {
     272, 228, 4, 3
 };
 
-// Ozma Wars (HB)
-
-static struct BurnRomInfo cv_ozmawarsRomDesc[] = {
-    { "ozmawars.rom",	0x5479, 0x4aafdc07, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_ozmawars, cv_ozmawars, cv_coleco)
-STD_ROM_FN(cv_ozmawars)
-
-struct BurnDriver BurnDrvcv_ozmawars = {
-    "cv_ozmawars", NULL, "cv_coleco", NULL, "2011",
-    "Ozma Wars (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_VERSHOOT, 0,
-    CVGetZipName, cv_ozmawarsRomInfo, cv_ozmawarsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-    272, 228, 4, 3
-};
-
 // Space Invaders Collection (HB)
 
 static struct BurnRomInfo cv_spaceinvcolRomDesc[] = {
@@ -7905,7 +7886,7 @@ struct BurnDriver BurnDrvcv_roadfght = {
 // Search For The Stolen Crown Jewels (HB)
 
 static struct BurnRomInfo cv_sftscjRomDesc[] = {
-    { "Search For The Stolen Crown Jewels (2006) (Good Deal Games).col",	28849, 0xad1ba6ed, BRF_PRG | BRF_ESS },
+    { "Search for the Stolen Crown Jewels (2006)(Philipp Klaus Krause).rom",	32768, 0x889f5b98, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_sftscj, cv_sftscj, cv_coleco)
@@ -7913,7 +7894,7 @@ STD_ROM_FN(cv_sftscj)
 
 struct BurnDriver BurnDrvcv_sftscj = {
     "cv_sftscj", NULL, "cv_coleco", NULL, "2006",
-    "Search For The Stolen Crown Jewels (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    "Search For The Stolen Crown Jewels (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_sftscjRomInfo, cv_sftscjRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -7924,7 +7905,7 @@ struct BurnDriver BurnDrvcv_sftscj = {
 // Search For The Stolen Crown Jewels 2 (HB)
 
 static struct BurnRomInfo cv_sftscj2RomDesc[] = {
-    { "Search For The Stolen Crown Jewels 2 (2007) (Good Deal Games).col",	29256, 0xeaf7d6dc, BRF_PRG | BRF_ESS },
+    { "Search for the Stolen Crown Jewels 2 (2007)(Philipp Klaus Krause).rom",	32768, 0xa883fa9a, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_sftscj2, cv_sftscj2, cv_coleco)
@@ -7932,9 +7913,9 @@ STD_ROM_FN(cv_sftscj2)
 
 struct BurnDriver BurnDrvcv_sftscj2 = {
     "cv_sftscj2", NULL, "cv_coleco", NULL, "2007",
-    "Search For The Stolen Crown Jewels 2 (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    "Search For The Stolen Crown Jewels 2 (HB)\0", NULL, "Philipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_sftscj2RomInfo, cv_sftscj2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
@@ -7943,7 +7924,7 @@ struct BurnDriver BurnDrvcv_sftscj2 = {
 // Search For The Stolen Crown Jewels 3 (HB)
 
 static struct BurnRomInfo cv_sftscj3RomDesc[] = {
-    { "Search For The Stolen Crown Jewels 3 (2013) (Good Deal Games).col",	31303, 0x23988ef9, BRF_PRG | BRF_ESS },
+    { "Search for the Stolen Crown Jewels 3 (2013)(Phillipp Klaus Krause).rom",	32768, 0x1f3981fc, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_sftscj3, cv_sftscj3, cv_coleco)
@@ -7951,9 +7932,9 @@ STD_ROM_FN(cv_sftscj3)
 
 struct BurnDriver BurnDrvcv_sftscj3 = {
     "cv_sftscj3", NULL, "cv_coleco", NULL, "2013",
-    "Search For The Stolen Crown Jewels 3 (HB)\0", NULL, "Good Deal Games", "ColecoVision",
+    "Search For The Stolen Crown Jewels 3 (HB)\0", NULL, "Phillipp Klaus Krause", "ColecoVision",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_COLECO, GBF_MAZE, 0,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE | GBF_ACTION, 0,
     CVGetZipName, cv_sftscj3RomInfo, cv_sftscj3RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
@@ -9089,7 +9070,7 @@ struct BurnDriver BurnDrvcv_locomotion = {
     272, 228, 4, 3
 };
 
-// Ozma Wars (HB) (2011)
+// Ozma Wars (HB)
 
 static struct BurnRomInfo cv_ozmawarRomDesc[] = {
 	{ "Ozma Wars (2011)(CollectorVision).bin",	32768, 0x2424627f, BRF_PRG | BRF_ESS },
@@ -9100,7 +9081,7 @@ STD_ROM_FN(cv_ozmawar)
 
 struct BurnDriver BurnDrvcv_ozmawar = {
 	"cv_ozmawar", NULL, "cv_coleco", NULL, "2011",
-	"Ozma Wars (HB) (2011)\0", NULL, "CollectorVision Games", "ColecoVision",
+	"Ozma Wars (HB)\0", NULL, "CollectorVision Games", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VERSHOOT, 0,
 	CVGetZipName, cv_ozmawarRomInfo, cv_ozmawarRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

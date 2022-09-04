@@ -3287,6 +3287,44 @@ struct BurnDriver BurnDrvMkyawdim4 = {
 	400, 256, 4, 3
 };
 
+// Mortal Kombat (Yawdim bootleg, set 5)
+// f20v id 1408
+
+static struct BurnRomInfo mkyawdim5RomDesc[] = {
+	{ "1.u167",											0x10000, 0xb58d229e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (sound)
+
+	{ "2.u159",											0x20000, 0x921c613d, 2 | BRF_SND },           //  1 Samples
+	{ "3.u160",											0x80000, 0x6e68e0b0, 2 | BRF_SND },           //  2
+
+	{ "4.u25",											0x80000, 0xb12b3bf2, 3 | BRF_PRG | BRF_ESS }, //  3 TMS34010 Code
+	{ "5.u26",											0x80000, 0x7a37dc5c, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "9.u52",											0x80000, 0xd17096c4, 4 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "8.u49",											0x80000, 0x993bc2e4, 4 | BRF_GRA },           //  6
+	{ "7.u46",											0x80000, 0x6fb91ede, 4 | BRF_GRA },           //  7
+	{ "6.u43",											0x80000, 0xed1ff88a, 4 | BRF_GRA },           //  8
+	{ "13.u53",											0x80000, 0xa002a155, 4 | BRF_GRA },           //  9
+	{ "12.u50",											0x80000, 0xdcee8492, 4 | BRF_GRA },           // 10
+	{ "11.u47",											0x80000, 0xde88caef, 4 | BRF_GRA },           // 11
+	{ "10.u44",											0x80000, 0x37eb01b4, 4 | BRF_GRA },           // 12
+	{ "17.u54",											0x80000, 0x45acaf21, 4 | BRF_GRA },           // 13
+	{ "16.u51",											0x80000, 0x2a6c10a0, 4 | BRF_GRA },           // 14
+	{ "15.u48",											0x80000, 0x23308979, 4 | BRF_GRA },           // 15
+	{ "14.u45",											0x80000, 0xcafc47bb, 4 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(mkyawdim5)
+STD_ROM_FN(mkyawdim5)
+
+struct BurnDriver BurnDrvMkyawdim5 = {
+	"mkyawdim5", "mk", NULL, NULL, "1992",
+	"Mortal Kombat (Yawdim bootleg, set 5)\0", NULL, "bootleg (Yawdim)", "Y Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_MIDWAY, GBF_VSFIGHT, 0,
+	NULL, mkyawdim5RomInfo, mkyawdim5RomName, NULL, NULL, NULL, NULL, Mkla4InputInfo, Mkla4DIPInfo,
+	Mkyawdim3Init, DrvExit, YawdimFrame, DrvDraw, DrvScan, &BurnRecalc, 256,
+	400, 256, 4, 3
+};
 
 // Trog (rev LA5 3/29/91)
 

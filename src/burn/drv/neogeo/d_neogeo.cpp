@@ -14876,6 +14876,36 @@ struct BurnDriver BurnDrvbrkrevext = {
 	0x1000,	320, 224, 4, 3
 };
 
+// 19YY NGCD ADK World port to MVS
+// EKORZ August 23, 2022
+
+static struct BurnRomInfo _19yyRomDesc[] = {
+	{ "19yy-p1.p1",   0x200000, 0x59374c47, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "19yy-s1.s1",   0x020000, 0x219b6f40, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "19yy-c1.c1",   0x400000, 0x622719d5, 3 | BRF_GRA },           //  2 Sprite data
+	{ "19yy-c2.c2",   0x400000, 0x41b07be5, 3 | BRF_GRA },           //  3
+
+	{ "19yy-m1.m1",   0x020000, 0x636d8ac8, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "19yy-v1.v1",   0x400000, 0x7bb79a6a, 5 | BRF_SND },           //  7 Sound data
+	{ "19yy-v2.v2",   0x200000, 0x1908a7ce, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(_19yy, _19yy, neogeo)
+STD_ROM_FN(_19yy)
+
+struct BurnDriver BurnDrv_19yy = {
+	"19yy", NULL, "neogeo", NULL, "2022",
+	"19YY (Neo CD conversion, ADK World)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VERSHOOT, 0,
+	NULL, _19yyRomInfo, _19yyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Cake Fighter (hack of Twinkle Star Sprites)
 // EKORZ 2022
 

@@ -1201,6 +1201,12 @@
     <ClInclude Include="..\..\src\cpu\sh4\sh4.h">
       <Filter>cpus\sh4</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\intf\video\scalers\crt.h">
+      <Filter>interfaces\video\scalers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burner\inputbuf.h">
+      <Filter>burner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4697,6 +4703,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\sh4\sh4.cpp">
       <Filter>cpus\sh4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_sderby.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\intf\video\scalers\crt.cpp">
+      <Filter>interfaces\video\scalers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burner\inputbuf.cpp">
+      <Filter>burner</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

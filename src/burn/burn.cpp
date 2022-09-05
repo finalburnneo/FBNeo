@@ -1040,12 +1040,22 @@ static INT32 __cdecl RunAheadWriteAcb(struct BurnArea* pba)
 	return 0;
 }
 
+static INT32 StateRunAheadGetSize()
+{
+	nTotalLenRunAhead = 0;
+	BurnAcb = RunAheadLenAcb; // Get length of RunAhead buffer
+	BurnAreaScan(ACB_FULLSCAN | ACB_READ | ACB_RUNAHEAD, NULL);
+
+	return nTotalLenRunAhead;
+}
+
 void StateRunAheadSave()
 {
-	if (RunAheadBuffer == NULL) { // Initialise on first RunAhead frame instead of driver init, to ensure emulation is ready
-		nTotalLenRunAhead = 0;
-		BurnAcb = RunAheadLenAcb; // Get length of RunAhead buffer
-		BurnAreaScan(ACB_FULLSCAN | ACB_READ | ACB_RUNAHEAD, NULL);
+	INT32 last_size = nTotalLenRunAhead;
+	nTotalLenRunAhead = StateRunAheadGetSize();
+
+	if (RunAheadBuffer == NULL || nTotalLenRunAhead != last_size) { // Initialise on first RunAhead frame instead of driver init, to ensure emulation is ready
+		if (RunAheadBuffer) free(RunAheadBuffer);
 
 		RunAheadBuffer = (UINT8*)malloc (nTotalLenRunAhead);
 		bprintf(0, _T(" ** RunAhead initted, state size $%x.\n"), nTotalLenRunAhead);
@@ -1231,7 +1241,7 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 			if (!RewindBuffer) {
 				if (nRewindTotalAllocated <= 128 * 1024 * 1024) break; // going to be too low to do anything decent!
 				// re-try allocation w/smaller amount.
-				bprintf(0, _T("*** Rewind init-notice: allocation failed (%dMB). retying with %dMB\n"), nRewindTotalAllocated / (1024 * 1024), (nRewindTotalAllocated / (1024 * 1024)) - 128);
+				bprintf(0, _T("*** Rewind init-notice: allocation failed (%dMB). retrying with %dMB\n"), nRewindTotalAllocated / (1024 * 1024), (nRewindTotalAllocated / (1024 * 1024)) - 128);
 				nRewindTotalAllocated -= 128 * 1024 * 1024;
 			}
 		} while (RewindBuffer == NULL);

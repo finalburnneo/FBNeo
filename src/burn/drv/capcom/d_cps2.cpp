@@ -14177,6 +14177,39 @@ struct BurnDriver BurnDrvCpsXmvsfu1d = {
 
 // other bootlegs
 
+// Final Fight Anniversary Edition (CPS2 hardware)
+// Grego and Gnawtor
+static struct BurnRomInfo Ffightaec2RomDesc[] = {
+	{ "ff-23m.8h",     0x080000, 0xb598d599, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ff-22m.7h",     0x080000, 0x3615cfb9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	
+	{ "ff-5m.7a",      0x400000, 0x3f4028c5, CPS2_GFX | BRF_GRA },
+	{ "ff-7m.9a",      0x400000, 0xbe3858b0, CPS2_GFX | BRF_GRA },
+	{ "ff-1m.3a",      0x400000, 0xed622314, CPS2_GFX | BRF_GRA },
+	{ "ff-3m.5a",      0x400000, 0xd65b53e9, CPS2_GFX | BRF_GRA },
+	
+	{ "sz3.01",        0x020000, 0x7ee68d38, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       0x400000, 0x71af8d5a, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ffightaec2)
+STD_ROM_FN(Ffightaec2)
+
+struct BurnDriver BurnDrvCpsFfightaec2 = {
+	"ffightaec2", NULL, NULL, NULL, "1998",
+	"Final Fight Anniversary Edition (CPS2 hardware)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Ffightaec2RomInfo, Ffightaec2RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Progear No Arashi (010117 Japan, decrypted set)
 static struct BurnRomInfo ProgearjblRomDesc[] = {
 	{ "pgaj_bl.03",    0x080000, 0x4fef676c, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum

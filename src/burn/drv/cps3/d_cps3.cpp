@@ -2127,17 +2127,17 @@ struct BurnDriver BurnDrvSfiii3th = {
 };
 
 // -------------------------------------------------------------------------
-// Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220701)
+// Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220903)
 // -------------------------------------------------------------------------
 
 static struct BurnRomInfo sfiii3wsRomDesc[] = {
 
 	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
-	{ "sfiii3ws-simm1.0",				0x200000, 0xc1c25038, BRF_ESS | BRF_PRG },
-	{ "sfiii3ws-simm1.1",				0x200000, 0x284a0c1c, BRF_ESS | BRF_PRG },
-	{ "sfiii3ws-simm1.2",				0x200000, 0x3ab2c9c2, BRF_ESS | BRF_PRG },
-	{ "sfiii3ws-simm1.3",				0x200000, 0xdffd42b2, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.0",				0x200000, 0xb00fc316, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.1",				0x200000, 0x621449a2, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.2",				0x200000, 0xdf23ab58, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.3",				0x200000, 0xa3410e4a, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.0",					0x200000, 0x06eb969e, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.1",					0x200000, 0xe7039f82, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.2",					0x200000, 0x645c96f7, BRF_ESS | BRF_PRG },
@@ -2181,7 +2181,7 @@ STD_ROM_FN(sfiii3ws)
 
 struct BurnDriver BurnDrvSfiii3ws = {
 	"sfiii3ws", "sfiii3", NULL, NULL, "2022",
-	"Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220701)\0", NULL, "hack", "CPS-3",
+	"Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220903)\0", NULL, "hack", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiii3wsRomInfo, sfiii3wsRomName, NULL, NULL, NULL, NULL, cps3InputInfo, japanDIPInfo,

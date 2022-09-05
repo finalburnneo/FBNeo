@@ -21420,6 +21420,23 @@ struct BurnDriver BurnDrvnes_eeeck = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_advpanzer2RomDesc[] = {
+	{ "Adventures of Panzer 2, The v1.1 (2022)(PixelCraft).nes",          524304, 0x29750f4f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_advpanzer2)
+STD_ROM_FN(nes_advpanzer2)
+
+struct BurnDriver BurnDrvnes_advpanzer2 = {
+	"nes_advpanzer2", NULL, NULL, NULL, "2022",
+	"Adventures of Panzer 2, The (HB, v1.1)\0", NULL, "PixelCraft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_advpanzer2RomInfo, nes_advpanzer2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_gemventureRomDesc[] = {
 	{ "GemVenture (2010)(Tom Livac).nes",          32784, 0x2b8eae32, BRF_ESS | BRF_PRG },
 };

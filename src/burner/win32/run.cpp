@@ -793,7 +793,7 @@ int RunMessageLoop()
 								}
 								break;
 
-							case VK_OEM_2:
+							case 'T':
 								if (kNetGame && !bEditActive) {
 									if (AppMessage(&Msg)) {
 										ActivateChat();

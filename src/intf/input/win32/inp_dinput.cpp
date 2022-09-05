@@ -52,6 +52,7 @@ struct mouseData {
 int keyboardCount;		// Number of keyboards connected to this machine
 int gamepadCount;		// Number of gamepads connected to this machine
 int mouseCount;			// Number of mice connected to this machine
+bool keyboardCooperativeModeForeground = false;
 
 IDirectInput8W* pDI;
 HWND hDinpWnd;
@@ -192,7 +193,8 @@ bool gamepadEnumObject(LPCDIDEVICEOBJECTINSTANCE instance)
 
 int setCooperativeLevel(bool exclusive, bool foreGround)
 {
-	if (keyboardProperties[0].lpdid) {
+	if (keyboardProperties[0].lpdid && keyboardCooperativeModeForeground != foreGround) {
+		keyboardCooperativeModeForeground = foreGround;
 		keyboardProperties[0].lpdid->Unacquire();
 		if (foreGround) {
 			keyboardProperties[0].lpdid->SetCooperativeLevel(hDinpWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND | (nVidFullscreen ? DISCL_NOWINKEY : 0));
@@ -282,6 +284,7 @@ int init()
 	keyboardProperties[0].lpdid->SetCooperativeLevel(hDinpWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
 	keyboardProperties[0].lpdid->Acquire();
 	keyboardCount = 1;
+	keyboardCooperativeModeForeground = false;
 
 	// Enumerate and set up the mice connected to the system
 	// Note that under Win2K/WinXP only one mouse device will be enumerated

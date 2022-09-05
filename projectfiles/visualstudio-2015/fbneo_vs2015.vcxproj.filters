@@ -940,26 +940,11 @@
     <ClInclude Include="..\..\src\dep\libs\lua\lzio.h">
       <Filter>libs\lua</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\cpu\tms34\tms34010.h">
+      <Filter>cpus\tms34</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\cpu\tms34_intf.h">
       <Filter>cpus</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\dcs2k.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\ide.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midtunit.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midtunit_dma.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midwayic.h">
-      <Filter>Burn\drv\midway</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\burn\drv\midway\midwunit.h">
-      <Filter>Burn\drv\midway</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2970,6 +2955,30 @@
     <ClCompile Include="..\..\src\burn\drv\megadrive\stm95.cpp">
       <Filter>Burn\drv\megadrive</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\d_kinst.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\d_tunit.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\d_wunit.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\dcs2k.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\ide.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\midtunit.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\midwayic.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\midway\midwunit.cpp">
+      <Filter>Burn\drv\midway</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\msx\d_msx.cpp">
       <Filter>Burn\drv\msx</Filter>
     </ClCompile>
@@ -4209,35 +4218,14 @@
     <ClCompile Include="..\..\src\dep\libs\lua\print.c">
       <Filter>libs\lua</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\tms34\tms34010.cpp">
+      <Filter>cpus\tms34</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\cpu\tms34_intf.cpp">
       <Filter>cpus</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\cpu\tms34\tms34010.cpp">
-      <Filter>cpus\tms34010</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\d_kinst.cpp">
-      <Filter>Burn\drv\midway</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\d_tunit.cpp">
-      <Filter>Burn\drv\midway</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\d_wunit.cpp">
-      <Filter>Burn\drv\midway</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\dcs2k.cpp">
-      <Filter>Burn\drv\midway</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\ide.cpp">
-      <Filter>Burn\drv\midway</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\midtunit.cpp">
-      <Filter>Burn\drv\midway</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\midwayic.cpp">
-      <Filter>Burn\drv\midway</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\midwunit.cpp">
-      <Filter>Burn\drv\midway</Filter>
+    <ClCompile Include="..\..\src\intf\audio\win32\aud_wasapi.cpp">
+      <Filter>interfaces\audio\win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4445,9 +4433,6 @@
     <Filter Include="cpus\tms32010">
       <UniqueIdentifier>{1fec7b27-9ff0-4383-b012-205720e8b6b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cpus\tms34010">
-      <UniqueIdentifier>{a40a6638-2a81-4cd9-a464-386c8b8d8c8d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cpus\upd7725">
       <UniqueIdentifier>{c7ac38ac-45ca-4765-90a1-239d709609a5}</UniqueIdentifier>
     </Filter>
@@ -4480,6 +4465,9 @@
     </Filter>
     <Filter Include="libs\lua">
       <UniqueIdentifier>{45ea9120-65df-47c5-aa36-164f90d67e56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\tms34">
+      <UniqueIdentifier>{58a8a59e-3592-4b83-a5b9-c64619a0465e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

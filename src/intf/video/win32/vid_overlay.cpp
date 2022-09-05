@@ -1235,26 +1235,33 @@ void VidOverlayRender(const RECT &dest, int gameWidth, int gameHeight, int scan_
 					INT32 values = display_inputs[player][buffer][i].values;
 					wchar_t buf[128];
 					wsprintf(buf, _T("%d"), display_inputs[player][buffer][i].frame);
-					INT32 color;
+					wchar_t type[2] = _T("");
+					INT32 color = 0;
 					switch (display_inputs[player][buffer][i].state) {
-						case 0: color = 0xFFFFFFFF; break;
-						case 1: color = 0xFFFF9090; break;
-						case 2: color = 0xFF9090FF; break;
-						case 3: color = 0xFF90FF90; values = 0; break;
-						case 4: color = 0xFFFF90FF; break;
+						case 0: color = 0xFFFFFFFF; break; // Regular frame
+						case 1: color = 0xFFFF6000; wsprintf(type, _T("-")); break; // Rollback frame
+						case 2: color = 0xFF6000FF; break; // Processed frame
+						case 3: color = 0xFF00FF60; wsprintf(type, _T("*")); values = 0; break;
+						case 4: color = 0xFFFF00FF; wsprintf(type, _T("R")); break;
 					}
-					fontWrite(buf, x, y + fy, color, 1.f, FNT_SMA * size, FONT_ALIGN_CENTER);
-					x+= sep*2.5f;
-					if (values & (1 << INPUT_LEFT)) { InputRender(x, y, 0); x+= sep; }
-					if (values & (1 << INPUT_RIGHT)) { InputRender(x, y, 1); x+= sep; }
-					if (values & (1 << INPUT_UP)) { InputRender(x, y, 2); x+= sep; }
-					if (values & (1 << INPUT_DOWN)) { InputRender(x, y, 3); x+= sep; }
-					if (values & (1 << INPUT_LP)) { InputRender(x, y, 8); x+= sep; }
-					if (values & (1 << INPUT_MP)) { InputRender(x, y, 9); x+= sep; }
-					if (values & (1 << INPUT_HP)) { InputRender(x, y, 10); x+= sep; }
-					if (values & (1 << INPUT_LK)) { InputRender(x, y, 11); x+= sep; }
-					if (values & (1 << INPUT_MK)) { InputRender(x, y, 12); x+= sep; }
-					if (values & (1 << INPUT_HK)) { InputRender(x, y, 13); x+= sep; }
+					if (color) {
+						if (type[0]) {
+							static float fs = 0.05f;
+							fontWrite(type, x - fs, y + fy, color, 1.f, FNT_SMA * size, FONT_ALIGN_CENTER);
+						}
+						fontWrite(buf, x, y + fy, color, 1.f, FNT_SMA * size, FONT_ALIGN_CENTER);
+						x+= sep*2.5f;
+						if (values & (1 << INPUT_LEFT)) { InputRender(x, y, 0); x+= sep; }
+						if (values & (1 << INPUT_RIGHT)) { InputRender(x, y, 1); x+= sep; }
+						if (values & (1 << INPUT_UP)) { InputRender(x, y, 2); x+= sep; }
+						if (values & (1 << INPUT_DOWN)) { InputRender(x, y, 3); x+= sep; }
+						if (values & (1 << INPUT_LP)) { InputRender(x, y, 8); x+= sep; }
+						if (values & (1 << INPUT_MP)) { InputRender(x, y, 9); x+= sep; }
+						if (values & (1 << INPUT_HP)) { InputRender(x, y, 10); x+= sep; }
+						if (values & (1 << INPUT_LK)) { InputRender(x, y, 11); x+= sep; }
+						if (values & (1 << INPUT_MK)) { InputRender(x, y, 12); x+= sep; }
+						if (values & (1 << INPUT_HK)) { InputRender(x, y, 13); x+= sep; }
+					}
 				}
 			}
 		}

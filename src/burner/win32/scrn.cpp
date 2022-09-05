@@ -3179,11 +3179,27 @@ int ScrnSize()
 	}
 
 	int nScrnWidth, nScrnHeight;
+	int nWorkWidth, nWorkHeight;
 	int nBmapWidth = nVidImageWidth, nBmapHeight = nVidImageHeight;
 	int nGameAspectX = 4, nGameAspectY = 3;
 	int nMaxSize;
 
-	SystemParametersInfo(SPI_GETWORKAREA, 0, &SystemWorkArea, 0);	// Find the size of the visible WorkArea
+	// SystemWorkArea = resolution of desktop
+	// RealWorkArea = resolution of desktop - taskbar (if avail)
+	RECT RealWorkArea;
+	SystemParametersInfo(SPI_GETWORKAREA, 0, &RealWorkArea, 0);	// Find the size of the visible WorkArea
+
+	HMONITOR monitor = MonitorFromRect(&RealWorkArea, MONITOR_DEFAULTTOPRIMARY);
+	MONITORINFO mi;
+
+	memset(&mi, 0, sizeof(mi));
+	mi.cbSize = sizeof(mi);
+	GetMonitorInfo(monitor, &mi);
+	SystemWorkArea = mi.rcMonitor; // needs to be set to monitor's resolution for proper aspect calculation
+
+	if (hScrnWnd == NULL || nVidFullscreen) {
+		return 1;
+	}
 
 	if (bDrvOkay) {
 		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1)) {
@@ -3204,6 +3220,8 @@ int ScrnSize()
 
 	nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
 	nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
+	nWorkWidth = RealWorkArea.right - RealWorkArea.left;
+	nWorkHeight = RealWorkArea.bottom - RealWorkArea.top;
 
 	if (nVidSelect == 2 && nVidBlitterOpt[2] & 0x0100) {								// The Software effects blitter uses a fixed size
 		nMaxSize = 9;

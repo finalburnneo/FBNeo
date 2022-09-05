@@ -106,6 +106,8 @@ static INT32 pastelis = 0;
 static INT32 sxyreact_kludge = 0;
 static INT16 SxyGun = 0;
 
+static INT32 has_nvram = 0;
+
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -4004,6 +4006,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnRandomScan(nAction);
 	}
 
+	if (has_nvram && (nAction & ACB_NVRAM)) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= DrvNVRAM;
+		ba.nLen		= 0x10000;
+		ba.nAddress	= 0;
+		ba.szName	= "NVRAM";
+		BurnAcb(&ba);
+	}
+
 	return 0;
 }
 
@@ -4522,6 +4533,7 @@ static INT32 Drifto94Init()
 {
 	watchdog_disable = 1;
 	use_hblank = 1;
+	has_nvram = 1;
 
 	if (DrvDips[2] & 1) {
 		BurnSetRefreshRate(60.186);
@@ -4575,6 +4587,8 @@ static void MeosismV60Map()
 
 static INT32 MeosismInit()
 {
+	has_nvram = 1;
+
 	return DrvCommonInit(MeosismV60Map, NULL, 0, -1, -1, 2, -1, 0.80);
 }
 
@@ -4623,6 +4637,8 @@ static void CairbladV60Map()
 
 static INT32 CairbladInit()
 {
+	has_nvram = 1;
+
 	return DrvCommonInit(CairbladV60Map, NULL, 1, 0, -1, -1, -1, 0.80);
 }
 
@@ -4770,6 +4786,7 @@ static void StmbladeV60Map()
 static INT32 StmbladeInit()
 {
 	watchdog_disable = 1;
+	has_nvram = 1;
 
 	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1, 1.80);
 }
@@ -5471,6 +5488,7 @@ static void SxyreactV60Map()
 static INT32 SxyreactInit()
 {
 	sxyreact_kludge = 1;
+	has_nvram = 1;
 
 	return DrvCommonInit(SxyreactV60Map, SexyreactRomLoadCallback, 1, 0, 1, 2, -1, 0.10);
 }
@@ -5598,6 +5616,8 @@ static void EaglshotV60Map()
 
 static INT32 EaglshotInit()
 {
+	has_nvram = 1;
+
 	return DrvCommonInit(EaglshotV60Map, NULL, 0, 0, 0, 0, 0, 0.80);
 }
 

@@ -4630,6 +4630,54 @@ struct BurnDriver BurnDrvTwinqix = {
 	320, 224, 4, 3
 };
 
+// Twin Qix Japan Hack (Ver 1.0A 1995/01/17) (Prototype)
+
+static struct BurnRomInfo twinqixjhRomDesc[] = {
+	{ "mpr0-3.b60",		0x40000, 0x1a63d0de, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "mpr0-2.b61",		0x40000, 0x45a70987, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "mpr0-1.b62",		0x40000, 0x531f9447, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "jh_mpr0-0.b63",	0x40000, 0x3dcd1dab, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "obj0-0.a08",		0x80000, 0xc6ea845c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "obj0-1.a20",		0x80000, 0x8c12b7fb, TAITO_SPRITESA_BYTESWAP },  //  5
+
+	{ "scr0-0.b07",		0x80000, 0x9a1b9b34, TAITO_CHARS_BYTESWAP32 },   //  6 Layer Tiles
+	{ "scr0-2.b05",		0x80000, 0xcac6854b, TAITO_CHARS_BYTESWAP32 },   //  7
+	{ "scr0-1.b06",		0x80000, 0xe9bef879, TAITO_CHARS_BYTESWAP32 },   //  8
+	{ "scr0-3.b04",		0x80000, 0xce063034, TAITO_CHARS_BYTESWAP32 },   //  9
+	{ "scr0-4.b03",		0x80000, 0xd32280fe, TAITO_CHARS_BYTESWAP },     // 10
+	{ "scr0-5.b02",		0x80000, 0xfdd1a85b, TAITO_CHARS_BYTESWAP },     // 11
+
+	{ "spr0-1.b66",		0x40000, 0x4b20e99d, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
+	{ "spr0-0.b65",		0x40000, 0x2569eb30, TAITO_68KROM2_BYTESWAP },   // 13
+
+	{ "snd-0.b43",		0x80000, 0xad5405a9, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
+	{ "snd-1.b44",		0x80000, 0x274864af, TAITO_ES5505_BYTESWAP },    // 15
+	{ "snd-14.b10",		0x80000, 0x26312451, TAITO_ES5505_BYTESWAP },    // 16
+	{ "snd-15.b11",		0x80000, 0x2edaa9dc, TAITO_ES5505_BYTESWAP },    // 17
+
+	{ "pal20l10a.a12",	0x0cc, 0x00000000, 0 | BRF_NODUMP },       		   // 18 plds
+	{ "pal20l10a.a24",	0x0cc, 0x00000000, 0 | BRF_NODUMP },       		   // 19
+	{ "pal16l8b.b24",	0x104, 0x0b73a7d1, 0 },                    // 20
+	{ "pal16l8b.b57",	0x104, 0x74b4d8be, 0 },                    // 21
+	{ "pal16l8b.b58",	0x104, 0x17e2c9b8, 0 },                    // 22
+	{ "pal16l8b.b59",	0x104, 0xdc0db200, 0 },                    // 23
+	{ "pal16l8b.b64",	0x104, 0x3aed3d98, 0 },                    // 24
+};
+
+STD_ROM_PICK(twinqixjh)
+STD_ROM_FN(twinqixjh)
+
+struct BurnDriver BurnDrvTwinqixjh = {
+	"twinqixjh", "twinqix", NULL, NULL, "1995",
+	"Twin Qix Japan (Ver 1.0A 1995/01/17) (Hack)\0", NULL, "hack", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, twinqixjhRomInfo, twinqixjhRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	twinqixInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
 
 // Moriguchi Hiroko no Quiz de Hyuu!Hyuu! (Ver 2.2J 1995/05/25)
 

@@ -20360,7 +20360,7 @@ struct BurnDriver BurnDrvmd_mk5 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// MK 5 - Mortal Combat - SubZero (Unl)
+// MK 5 - Mortal Combat - SubZero (Unl) (Pirate)
 static struct BurnRomInfo md_mk5aRomDesc[] = {
 	{ "mk 5 - mortal combat - subzero (unl) (pirate).bin", 0x200000, 0x41203006, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20370,7 +20370,7 @@ STD_ROM_FN(md_mk5a)
 
 struct BurnDriver BurnDrvmd_mk5a = {
 	"md_mk5a", "md_mk5", NULL, NULL, "1998",
-	"MK 5 - Mortal Combat - SubZero (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
+	"MK 5 - Mortal Combat - SubZero (Unl) (Pirate)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mk5aRomInfo, md_mk5aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

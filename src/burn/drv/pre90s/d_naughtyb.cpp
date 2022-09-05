@@ -1050,6 +1050,46 @@ struct BurnDriver BurnDrvTrvmstrc = {
 };
 
 
+// Trivia Master (set 5)
+// JALECO NB8201 + NB8202 PCBs + ENERDYNE riser board for the questions' ROMs. All labels hand-written
+
+static struct BurnRomInfo trvmstrdRomDesc[] = {
+	{ "ic30",				0x1000, 0x9a80c5a7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "ic28",				0x1000, 0x70322d65, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ic26",				0x1000, 0x31dfa9cf, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "ic44",				0x1000, 0xdac8cff7, 2 | BRF_GRA },           //  3 Background Tiles
+	{ "ic46",				0x1000, 0xa97ab879, 2 | BRF_GRA },           //  4
+
+	{ "ic48",				0x1000, 0x79952015, 3 | BRF_GRA },           //  5 Foreground Tiles
+	{ "ic50",				0x1000, 0xf09da428, 3 | BRF_GRA },           //  6
+
+	{ "ic64",				0x0100, 0xe9915da8, 4 | BRF_GRA },           //  7 Color Proms
+
+	{ "rock_lo.u2",			0x4000, 0xec1df27b, 5 | BRF_GRA },           //  8 Question Data
+	{ "rock_hi.u1",			0x4000, 0x8a4eccc9, 5 | BRF_GRA },           //  9
+	{ "history_geo_lo.u4",	0x4000, 0x15686fb3, 5 | BRF_GRA },           // 10
+	{ "history_geo_hi.u3",	0x4000, 0x86bb748f, 5 | BRF_GRA },           // 11
+	{ "sports_lo.u6",		0x4000, 0xd5317b26, 5 | BRF_GRA },           // 12
+	{ "sports_hi.u5",		0x4000, 0x9f706db2, 5 | BRF_GRA },           // 13
+	{ "earlytv_lo.u8",		0x4000, 0xdbfce45f, 5 | BRF_GRA },           // 14
+	{ "earlytv_hi.u7",		0x4000, 0xc8f5a02d, 5 | BRF_GRA },           // 15
+};
+
+STD_ROM_PICK(trvmstrd)
+STD_ROM_FN(trvmstrd)
+
+struct BurnDriver BurnDrvTrvmstrd = {
+	"trvmstrd", "trvmstr", NULL, NULL, "1985",
+	"Trivia Master (set 5)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	NULL, trvmstrdRomInfo, trvmstrdRomName, NULL, NULL, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
+	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 288, 3, 4
+};
+
+
 // Trivia Genius
 
 static struct BurnRomInfo trvgnsRomDesc[] = {

@@ -1478,7 +1478,6 @@ del build_details.exe
     <ClCompile Include="..\..\src\intf\audio\aud_interface.cpp" />
     <ClCompile Include="..\..\src\intf\audio\lowpass2.cpp" />
     <ClCompile Include="..\..\src\intf\audio\win32\aud_dsound3.cpp" />
-    <ClCompile Include="..\..\src\intf\audio\win32\aud_wasapi.cpp" />
     <ClCompile Include="..\..\src\intf\audio\win32\dsound_core.cpp" />
     <ClCompile Include="..\..\src\intf\cd\cd_interface.cpp" />
     <ClCompile Include="..\..\src\intf\input\inp_interface.cpp" />

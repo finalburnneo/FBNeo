@@ -224,21 +224,6 @@ static struct BurnDIPInfo F3DIPList[]=
 
 STDDIPINFO(F3)
 
-static struct BurnDIPInfo twinqixDIPList[]=
-{
-	{0x2e, 0xff, 0xff, 0x00, NULL },
-
-	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
-	{0x2e, 0x01, 0x02, 0x00, "Normal / Fast" },
-	{0x2e, 0x01, 0x02, 0x02, "Slow / Mellow" },
-
-	{0   , 0xfe, 0   , 2   , "Japanese Version" },
-	{0x2e, 0x01, 0x04, 0x00, "Off" },
-	{0x2e, 0x01, 0x04, 0x04, "On" },
-};
-
-STDDIPINFO(twinqix)
-
 static struct BurnDIPInfo F3AnalogDIPList[]=
 {
 	{0x30, 0xff, 0xff, 0x00, NULL },
@@ -813,16 +798,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 	if (f3_game == LANDMAKR)
 	{ // init landmakr's palette with rainbow, needed for text on the "you win" / "you lose" screen.
 		f3_palette_landmakr_onreset();
-	}
-
-	if (f3_game == TWINQIX) {
-		if (TaitoDip[0] & 4) {
-			bprintf(0, _T("twinqix: Japanese Mode\n"));
-			Taito68KRom1[0xfffff ^ 1] = 1;
-		} else {
-			// US/World
-			Taito68KRom1[0xfffff ^ 1] = 2;
-		}
 	}
 
 	sound_cpu_in_reset = 1;
@@ -4650,7 +4625,7 @@ struct BurnDriver BurnDrvTwinqix = {
 	"Twin Qix (Ver 1.0A 1995/01/17) (Prototype)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
-	NULL, twinqixRomInfo, twinqixRomName, NULL, NULL, NULL, NULL, F3InputInfo, twinqixDIPInfo,
+	NULL, twinqixRomInfo, twinqixRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	twinqixInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3
 };

@@ -45,7 +45,7 @@ static INT32 active_cpu = -1;
 static INT32 total_cpus = 0;
 static INT32 context_size = 0;
 
-static UINT16 default_read(UINT32 address) { return ~0; }
+static UINT16 default_read(UINT32 address) { return 0; }
 static void default_write(UINT32 address, UINT16 value) {}
 static void default_shift_op(UINT32,UINT16*){}
 

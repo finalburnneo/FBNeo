@@ -12055,19 +12055,19 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mk5a" cloneof="mk5" romof="mk5">
+		<description>MK 5 - Mortal Combat - SubZero (Unl) (Pirate)</description>
+		<year>1998</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="mk 5 - mortal combat - subzero (unl) (pirate).bin" size="2097152" crc="41203006"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mk5">
 		<description>MK 5 - Mortal Combat - SubZero (Unl)</description>
 		<year>1998</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="mk 5 - mortal combat - subzero (unl).bin" size="2097152" crc="11e367a1"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mk5a" cloneof="mk5" romof="mk5">
-		<description>MK 5 - Mortal Combat - SubZero (Unl)</description>
-		<year>1998</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
-		<rom name="mk 5 - mortal combat - subzero (unl) (pirate).bin" size="2097152" crc="41203006"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

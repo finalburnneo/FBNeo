@@ -492,6 +492,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="advpanzer2">
+		<comment>Homebrew</comment>
+		<description>Adventures of Panzer 2, The (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>PixelCraft</manufacturer>
+		<rom name="Adventures of Panzer 2, The v1.1 (2022)(PixelCraft).nes" size="524304" crc="29750f4f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="advpanzer">
 		<comment>Homebrew</comment>
 		<description>Adventures of Panzer, The (HB, v1.3)</description>

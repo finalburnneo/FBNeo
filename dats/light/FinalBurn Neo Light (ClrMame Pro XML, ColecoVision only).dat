@@ -3366,19 +3366,6 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ozmawars" romof="coleco">
-		<comment>Homebrew</comment>
-		<description>Ozma Wars (HB)</description>
-		<year>2011</year>
-		<manufacturer>CollectorVision Games</manufacturer>
-		<rom name="ozmawars.rom" size="21625" crc="4aafdc07"/>
-		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
-		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
-		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
-		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
-		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="pacmancol" romof="coleco">
 		<comment>Homebrew</comment>
 		<description>Pac Man Collection (HB)</description>
@@ -3650,6 +3637,19 @@
 		<year>2012</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="princess_quest_colecovision.rom" size="262144" crc="a59eaa2b"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="prisonofwar" romof="coleco">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Prisoner of War (SGM) (HB)</description>
+		<year>2018-19</year>
+		<manufacturer>Team Pixelboy</manufacturer>
+		<rom name="Prisoner of War SGM (2019)(Team Pixelboy).rom" size="131072" crc="f998b515"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4051,8 +4051,8 @@
 		<comment>Homebrew</comment>
 		<description>Search For The Stolen Crown Jewels (HB)</description>
 		<year>2006</year>
-		<manufacturer>Good Deal Games</manufacturer>
-		<rom name="Search For The Stolen Crown Jewels (2006) (Good Deal Games).col" size="28849" crc="ad1ba6ed"/>
+		<manufacturer>Philipp Klaus Krause</manufacturer>
+		<rom name="Search for the Stolen Crown Jewels (2006)(Philipp Klaus Krause).rom" size="32768" crc="889f5b98"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4061,11 +4061,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="sftscj2" romof="coleco">
-		<comment>Demo, Homebrew</comment>
+		<comment>Homebrew</comment>
 		<description>Search For The Stolen Crown Jewels 2 (HB)</description>
 		<year>2007</year>
-		<manufacturer>Good Deal Games</manufacturer>
-		<rom name="Search For The Stolen Crown Jewels 2 (2007) (Good Deal Games).col" size="29256" crc="eaf7d6dc"/>
+		<manufacturer>Philipp Klaus Krause</manufacturer>
+		<rom name="Search for the Stolen Crown Jewels 2 (2007)(Philipp Klaus Krause).rom" size="32768" crc="a883fa9a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4074,11 +4074,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="sftscj3" romof="coleco">
-		<comment>Demo, Homebrew</comment>
+		<comment>Homebrew</comment>
 		<description>Search For The Stolen Crown Jewels 3 (HB)</description>
 		<year>2013</year>
-		<manufacturer>Good Deal Games</manufacturer>
-		<rom name="Search For The Stolen Crown Jewels 3 (2013) (Good Deal Games).col" size="31303" crc="23988ef9"/>
+		<manufacturer>Phillipp Klaus Krause</manufacturer>
+		<rom name="Search for the Stolen Crown Jewels 3 (2013)(Phillipp Klaus Krause).rom" size="32768" crc="1f3981fc"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -5641,19 +5641,6 @@
 		<year>1984-2019</year>
 		<manufacturer>Opcode Games - Taito Corp.</manufacturer>
 		<rom name="Xyzolog SGM (2019)(Opcode Games).rom" size="32768" crc="95ff75e8"/>
-		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
-		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
-		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
-		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
-		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="yiearii" romof="coleco">
-		<comment>Homebrew, SGM - Super Game Module</comment>
-		<description>Yie Ar Kung Fu II (SGM) (HB)</description>
-		<year>1985-2018</year>
-		<manufacturer>Opcode Games - Konami</manufacturer>
-		<rom name="Yie Ar Kung Fu II SGM (2018)(Opcode Games).rom" size="131072" crc="3143c6dd"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

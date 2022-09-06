@@ -976,7 +976,11 @@ static INT32 DynabombInit()
 	eeprom_bit_config		= 0x00800000;
 	spriteram_bit_config	= 0x80000000;
 
-	return LimenkoCommonInit(TYPE_E132XN, 80000000, DynabombLoadCallback, 0x800000, 0);
+	INT32 rc = LimenkoCommonInit(TYPE_E132XN, 80000000, DynabombLoadCallback, 0x800000, 0);
+	if (!rc) {
+		qs1000_set_volume(8.00);
+	}
+	return rc;
 }
 
 struct BurnDriver BurnDrvDynabomb = {

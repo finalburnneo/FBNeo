@@ -7719,11 +7719,11 @@ STD_ROM_PICK(Ssf2th)
 STD_ROM_FN(Ssf2th)
 
 static struct BurnRomInfo Ssf2tnlRomDesc[] = {
-	{ "sfxe.03c",      0x080000, 0x571944fb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.04a",      0x080000, 0xad4e5240, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.05",       0x080000, 0x6fe99f40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.06a",      0x080000, 0xd2de5788, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxe.07",       0x080000, 0x2da4d098, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.03c",      0x080000, 0xff8a0f1e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.04a",      0x080000, 0x570b7843, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.05",       0x080000, 0x866c980e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.06a",      0x080000, 0xadb6474e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.07",       0x080000, 0xf4ebe547, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxe.08",       0x080000, 0x04462bf4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfx.09",        0x080000, 0x23d51921, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
@@ -11654,7 +11654,7 @@ struct BurnDriver BurnDrvCpsSsf2ta = {
 
 struct BurnDriver BurnDrvCpsSsf2tnl = {
 	"ssf2tnl", "ssf2t", NULL, NULL, "2022",
-	"Super Street Fighter II Turbo New Legacy v0.7 (Beta) (Hack by Born2SPD)\0", NULL, "hack", "CPS2",
+	"Super Street Fighter II Turbo New Legacy v0.7.1 (Beta) (Hack by Born2SPD)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2tnlRomInfo, Ssf2tnlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

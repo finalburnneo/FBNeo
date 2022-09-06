@@ -1305,7 +1305,7 @@ static void StateRewindFrame() // called once per frame (see burner/win32/run.cp
 
 		pRewindBuffer = RewindBuffer + pRewindIndex[nRewindFrames].pos;
 		BurnAcb = RewindReadAcb;
-		BurnAreaScan(ACB_FULLSCAN | ACB_READ | ACB_RUNAHEAD, NULL);
+		BurnAreaScan(ACB_FULLSCAN | ACB_READ, NULL);
 
 		pRewindIndex[nRewindFrames].this_frame = GetCurrentFrame() - nStartFrame;
 

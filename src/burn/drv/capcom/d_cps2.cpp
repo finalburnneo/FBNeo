@@ -14204,7 +14204,7 @@ struct BurnDriver BurnDrvCpsFfightaec2 = {
 	"ffightaec2", NULL, NULL, NULL, "1998",
 	"Final Fight Anniversary Edition (CPS2 hardware)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ffightaec2RomInfo, Ffightaec2RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

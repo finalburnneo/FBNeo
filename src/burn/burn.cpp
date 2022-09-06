@@ -1171,7 +1171,7 @@ static INT32 StateRewindGetSize()
 {
 	nTotalLenRewind = 0;
 	BurnAcb = RewindLenAcb; // Get length of Rewind buffer
-	BurnAreaScan(ACB_FULLSCAN | ACB_READ | ACB_RUNAHEAD, NULL);
+	BurnAreaScan(ACB_FULLSCAN | ACB_READ, NULL);
 	return nTotalLenRewind;
 }
 
@@ -1396,7 +1396,7 @@ static void StateRewindLoad()
 
 		pRewindBuffer = RewindBuffer + pRewindIndex[nRewindFrames].pos;
 		BurnAcb = RewindWriteAcb;
-		BurnAreaScan(ACB_FULLSCAN | ACB_WRITE | ACB_RUNAHEAD, NULL);
+		BurnAreaScan(ACB_FULLSCAN | ACB_WRITE, NULL);
 
 		BurnRecalcPal();
 

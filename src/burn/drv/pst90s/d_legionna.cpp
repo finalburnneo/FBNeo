@@ -602,7 +602,9 @@ static inline void legionna_common_write_word(UINT32 address, UINT16 data)
 		seibu_cop_write(address & 0x3ff, data);
 		return;
 	}
-	bprintf(0, _T("ww: %X  %x   PC:%X\n"), address, data, SekGetPC(-1));
+
+	if (address < 0x7ffff) // denjinmk spams writes to romspace @ coin/start
+		bprintf(0, _T("ww: %X  %x   PC:%X\n"), address, data, SekGetPC(-1));
 }
 
 static inline void legionna_common_write_byte(UINT32 address, UINT8 data)

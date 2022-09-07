@@ -12970,6 +12970,7 @@ DRV		BurnDrvMSX_risedung;
 DRV		BurnDrvMSX_risedunga;
 DRV		BurnDrvmd_risk;
 DRV		BurnDrvRiskchal;
+DRV		BurnDrvcv_Riskyrick;
 DRV		BurnDrvmd_riskyw;
 DRV		BurnDrvmd_ristar1;
 DRV		BurnDrvmd_ristar;
@@ -31936,6 +31937,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_risedunga,		// Rise Out from Dungeons (Jpn, Alt)
 	&BurnDrvmd_risk,			// Risk (USA)
 	&BurnDrvRiskchal,			// Risky Challenge
+	&BurnDrvcv_Riskyrick,		// Risky Rick (HB)
 	&BurnDrvmd_riskyw,			// Risky Woods (Euro, USA)
 	&BurnDrvmd_ristar1,			// Ristar (Euro, USA, 199408)
 	&BurnDrvmd_ristar,			// Ristar (Euro, USA, 199409)
@@ -34814,7 +34816,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSsf2th,			// Super Street Fighter II Turbo (super street fighter 2 X 940223 Hispanic)
 	&BurnDrvCpsSsf2tur1,		// Super Street Fighter II Turbo (super street fighter 2 X 940223 USA)
 	&BurnDrvCpsSsf2tu,			// Super Street Fighter II Turbo (super street fighter 2 X 940323 USA)
-	&BurnDrvCpsSsf2tnl,			// Super Street Fighter II Turbo New Legacy v0.7 (Beta) (Hack by Born2SPD)
+	&BurnDrvCpsSsf2tnl,			// Super Street Fighter II Turbo New Legacy v0.7.1 (Beta) (Hack by Born2SPD)
 	&BurnDrvCpsSsf2xjr1trn,		// Super Street Fighter II X - GMC Trainer (super street fighter 2 X 940223 Japan)
 	&BurnDrvCpsSsf2xjr1d,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan Phoenix Edition)
 	&BurnDrvCpsSsf2xjr1r,		// Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan rent version)

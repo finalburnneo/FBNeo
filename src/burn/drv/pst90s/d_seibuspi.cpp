@@ -2099,6 +2099,10 @@ static INT32 Sys386fDraw()
 		DrvRecalc = 0;
 	}
 
+	UINT16 *crtc = (UINT16*)DrvCRTCRAM;
+
+	layer_enable = BURN_ENDIAN_SWAP_INT16(crtc[0x1c/2]);
+
 	BurnPrioClear();
 
 	memset(bitmap32, 0x00, 320 * 256 * sizeof(UINT32));
@@ -2298,7 +2302,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (sound_system == 0) MSM6295Scan(nAction, pnMin);
 
 		if (sound_system == 1) ZetScan(nAction);
-		if (sound_system == 1) {bprintf(0, _T("scan ymf271 from seibuspi.\n")); BurnYMF271Scan(nAction, pnMin);}
+		if (sound_system == 1) BurnYMF271Scan(nAction, pnMin);
 		if (sound_system == 1 && rom_based_z80 == 0 && has_eeprom == 0) intelflash_scan(nAction, pnMin);
 		if (sound_system == 2) YMZ280BScan(nAction, pnMin);
 
@@ -2393,7 +2397,7 @@ struct BurnDriver BurnDrvSenkyu = {
 	"senkyu", NULL, NULL, NULL, "1995",
 	"Senkyu (Japan, newer)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, senkyuRomInfo, senkyuRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	SenkyuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3
@@ -2436,7 +2440,7 @@ struct BurnDriver BurnDrvSenkyua = {
 	"senkyua", "senkyu", NULL, NULL, "1995",
 	"Senkyu (Japan, earlier)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, senkyuaRomInfo, senkyuaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	SenkyuaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3
@@ -2479,7 +2483,7 @@ struct BurnDriver BurnDrvBatlball = {
 	"batlball", "senkyu", NULL, NULL, "1995",
 	"Battle Balls (Germany, newer)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, batlballRomInfo, batlballRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	BatlballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3
@@ -2522,7 +2526,7 @@ struct BurnDriver BurnDrvBatlballo = {
 	"batlballo", "senkyu", NULL, NULL, "1995",
 	"Battle Balls (Germany, earlier)\0", NULL, "Seibu Kaihatsu (Tuning license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, batlballoRomInfo, batlballoRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	BatlballoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3
@@ -2565,7 +2569,7 @@ struct BurnDriver BurnDrvBatlballa = {
 	"batlballa", "senkyu", NULL, NULL, "1995",
 	"Battle Balls (Hong Kong)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, batlballaRomInfo, batlballaRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	BatlballaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3
@@ -2608,7 +2612,7 @@ struct BurnDriver BurnDrvBatlballe = {
 	"batlballe", "senkyu", NULL, NULL, "1995",
 	"Battle Balls (Hong Kong, earlier)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, batlballeRomInfo, batlballeRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	BatlballeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3
@@ -2651,7 +2655,7 @@ struct BurnDriver BurnDrvBatlballu = {
 	"batlballu", "senkyu", NULL, NULL, "1995",
 	"Battle Balls (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, batlballuRomInfo, batlballuRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	BatlballuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3
@@ -2694,7 +2698,7 @@ struct BurnDriver BurnDrvBatlballpt = {
 	"batlballpt", "senkyu", NULL, NULL, "1995",
 	"Battle Balls (Portugal)\0", NULL, "Seibu Kaihatsu", "SPI",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, batlballptRomInfo, batlballptRomName, NULL, NULL, NULL, NULL, Spi_3buttonInputInfo, Spi_3buttonDIPInfo,
 	BatlballptInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 240, 4, 3

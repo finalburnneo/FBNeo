@@ -9583,6 +9583,25 @@ struct BurnDriver BurnDrvcv_prisonofwar = {
     272, 228, 4, 3
 };
 
+// Risky Rick
+
+static struct BurnRomInfo cv_RiskyrickRomDesc[] = {
+	{ "Risky Rick (2018)(ArcadeVision).rom", 32768, 0x68fdb91b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Riskyrick, cv_Riskyrick, cv_coleco)
+STD_ROM_FN(cv_Riskyrick)
+
+struct BurnDriver BurnDrvcv_Riskyrick = {
+	"cv_riskyrick", NULL, "cv_coleco", NULL, "2018",
+	"Risky Rick (HB)\0", NULL, "ArcadeVision", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ADV, 0,
+	CVGetZipName, cv_RiskyrickRomInfo, cv_RiskyrickRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Sasa (SGM) (HB)
 
 static struct BurnRomInfo cv_sasaRomDesc[] = {

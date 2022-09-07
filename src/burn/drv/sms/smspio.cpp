@@ -105,17 +105,38 @@ void ioctrl_w(UINT8 data)
 	sms.ioctrl = data;
 }
 
-UINT8 device_r(INT32 offset)
+UINT8 device_r(INT32 port)
 {
 	UINT8 temp = 0x7F;
 
-	switch(sms.device[offset].type)
+	switch(sms.device[port].type)
 	{
 		case DEVICE_NONE:
 			break;
 		case DEVICE_PAD2B:
+			if(input.pad[port] & INPUT_UP)    temp &= ~0x01;
+			if(input.pad[port] & INPUT_DOWN)  temp &= ~0x02;
+			if(input.pad[port] & INPUT_LEFT)  temp &= ~0x04;
+			if(input.pad[port] & INPUT_RIGHT)   temp &= ~0x08;
+			if(input.pad[port] & INPUT_BUTTON1) temp &= ~0x10;  /* TL */
+			if(input.pad[port] & INPUT_BUTTON2) temp &= ~0x20;  /* TR */
 			break;
 		case DEVICE_PADDLE:
+			if (sms.territory == TERRITORY_EXPORT) {
+				sms.paddle_ff[port] = (io_current->th_level[0] == PIN_LVL_LO);
+			} else {
+				sms.paddle_ff[port] ^= 1;
+			}
+
+			if (sms.paddle_ff[port]) {
+				temp = (temp & 0xf0) | (input.analog[port] & 0x0f);
+				temp &= ~0x20;
+			} else {
+				temp = (temp & 0xf0) | ((input.analog[port] >> 4) & 0x0f);
+			}
+
+			if (input.pad[port] & INPUT_BUTTON1) temp &= ~0x10;
+
 			break;
 	}
 
@@ -136,72 +157,63 @@ UINT8 input_r(INT32 offset)
 	offset &= 1;
 	if(offset == 0)
 	{
-		/* Input port #0 */
+		/* read I/O port A pins */
+		temp = device_r(0) & 0x3f;
 
-		if(input.pad[0] & INPUT_UP)         temp &= ~0x01; /* D0 */
-		if(input.pad[0] & INPUT_DOWN)       temp &= ~0x02; /* D1 */
-		if(input.pad[0] & INPUT_LEFT)       temp &= ~0x04; /* D2 */
-		if(input.pad[0] & INPUT_RIGHT)      temp &= ~0x08; /* D3 */
-		if(input.pad[0] & INPUT_BUTTON2)    temp &= ~0x10; /* TL */
-		if(input.pad[0] & INPUT_BUTTON1)    temp &= ~0x20; /* TR */
-
-		if(sms.console == CONSOLE_GG)
-		{
-			UINT8 state = sio_r(0x01);
-			temp = (temp & 0x3F) | (state & 0x03) << 6; /* Insert D1,D0 */
-		}
-		else
-		{
-			if(input.pad[1] & INPUT_UP)     temp &= ~0x40; /* D0 */
-			if(input.pad[1] & INPUT_DOWN)   temp &= ~0x80; /* D1 */
-		}
+		/* read I/O port B low pins (Game Gear is special case) */
+		if (IS_GG) temp |= ((sio_r(1) & 0x03) << 6);
+		else temp |= ((device_r(1) & 0x03) << 6);
 
 		/* Adjust TR state if it is an output */
-		if(io_current->tr_dir[0] == PIN_DIR_OUT) {
+		if(io_current->tr_dir[0] == PIN_DIR_OUT)
+		{
 			temp &= ~0x20;
 			temp |= (io_current->tr_level[0] == PIN_LVL_HI) ? 0x20 : 0x00;
 		}
 	}
 	else
 	{
-		/* Input port #1 */
-		if(sms.console == CONSOLE_GG)
+		/* read I/O port B low pins (Game Gear is special case) */
+		if (IS_GG)
 		{
 			UINT8 state = sio_r(0x01);
-			temp = (temp & 0xF0) | ((state & 0x3C) >> 2); /* Insert TR,TL,D3,D2 */
-			temp = (temp & 0x7F) | ((state & 0x40) << 1); /* Insert TH */
+			temp = (state & 0x3C) >> 2;     /* Insert TR,TL,D3,D2       */
+			temp |= ((state & 0x40) << 1);  /* Insert TH2               */
+			temp |= 0x40;                   /* Insert TH1 (unconnected) */
 		}
 		else
 		{
-			if(input.pad[1] & INPUT_LEFT)       temp &= ~0x01; /* D2 */
-			if(input.pad[1] & INPUT_RIGHT)      temp &= ~0x02; /* D3 */
-			if(input.pad[1] & INPUT_BUTTON2)    temp &= ~0x04; /* TL */
-			if(input.pad[1] & INPUT_BUTTON1)    temp &= ~0x08; /* TR */
-
-			/* Adjust TR state if it is an output */
-			if(io_current->tr_dir[1] == PIN_DIR_OUT) {
-				temp &= ~0x08;
-				temp |= (io_current->tr_level[1] == PIN_LVL_HI) ? 0x08 : 0x00;
-			}
-
-			/* Adjust TH state if it is an output */
-			if(io_current->th_dir[1] == PIN_DIR_OUT) {
-				temp &= ~0x80;
-				temp |= (io_current->th_level[1] == PIN_LVL_HI) ? 0x80 : 0x00;
-			}
-
-			if(input.system & INPUT_RESET)  temp &= ~0x10;
+			UINT8 state = device_r(1);
+			temp = (state & 0x3C) >> 2;   /* Insert TR,TL,D3,D2 */
+			temp |= ((state & 0x40) << 1);  /* Insert TH2 */
+			temp |= (device_r(0) & 0x40);   /* Insert TH1 */
 		}
 
-		/* /CONT fixed at '1' for SMS/SMS2/GG */
-		/* /CONT fixed at '0' for GEN/MD */
-		if(IS_MD) temp &= ~0x20;
+		/* Adjust TR state if it is an output */
+		if(io_current->tr_dir[1] == PIN_DIR_OUT)
+		{
+			temp &= ~0x08;
+			temp |= (io_current->tr_level[1] == PIN_LVL_HI) ? 0x08 : 0x00;
+		}
 
-		/* Adjust TH state if it is an output */
-		if(io_current->th_dir[0] == PIN_DIR_OUT) {
+		/* Adjust TH1 state if it is an output */
+		if(io_current->th_dir[0] == PIN_DIR_OUT)
+		{
 			temp &= ~0x40;
 			temp |= (io_current->th_level[0] == PIN_LVL_HI) ? 0x40 : 0x00;
 		}
+
+		/* Adjust TH2 state if it is an output */
+		if(io_current->th_dir[1] == PIN_DIR_OUT)
+		{
+			temp &= ~0x80;
+			temp |= (io_current->th_level[1] == PIN_LVL_HI) ? 0x80 : 0x00;
+		}
+
+		/* RESET and /CONT */
+		temp |= 0x30;
+		if (input.system & INPUT_RESET) temp &= ~0x10;
+		if(IS_MD) temp &= ~0x20;
 	}
 	return temp;
 }

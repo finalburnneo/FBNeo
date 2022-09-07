@@ -4,6 +4,7 @@
 #include "z80_intf.h"
 #include "sn76496.h"
 #include "burn_ym2413.h"
+#include "burn_gun.h" // paddle
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -17,26 +18,37 @@ UINT8 SMSJoy1[12];
 UINT8 SMSJoy2[12];
 UINT8 SMSDips[3];
 
+static INT32 has_paddle = 0;
+static INT16 Analog[2]; // paddle
+
 static struct BurnDIPInfo SMSDIPList[] = {
 	{0   , 0xfe, 0   ,    2, "FM Unit Emulation"			},
-	{0x0e, 0x01, 0x04, 0x04, "On (Change needs restart!)"	},
-	{0x0e, 0x01, 0x04, 0x00, "Off"							},
+	{0x00, 0x01, 0x04, 0x04, "On (Change needs restart!)"	},
+	{0x00, 0x01, 0x04, 0x00, "Off"							},
 
 	{0   , 0xfe, 0   ,    2, "Disable Sprite Limit"			},
-	{0x0e, 0x01, 0x01, 0x01, "On"							},
-	{0x0e, 0x01, 0x01, 0x00, "Off"							},
+	{0x00, 0x01, 0x01, 0x01, "On"							},
+	{0x00, 0x01, 0x01, 0x00, "Off"							},
 };
 
 static struct BurnDIPInfo SMSDefaultDIPList[] = {
-	{0x0e, 0xff, 0xff, 0x00, NULL							},
+	DIP_OFFSET(0x0e)
+	{0x00, 0xff, 0xff, 0x00, NULL							},
 };
 
 static struct BurnDIPInfo SMSFMDIPList[] = {
-	{0x0e, 0xff, 0xff, 0x04, NULL							},
+	DIP_OFFSET(0x0e)
+	{0x00, 0xff, 0xff, 0x04, NULL							},
+};
+
+static struct BurnDIPInfo SMSPaddleDIPList[] = {
+	DIP_OFFSET(0x0a)
+	{0x00, 0xff, 0xff, 0x00, NULL							},
 };
 
 STDDIPINFOEXT(SMS, SMSDefault, SMS)
 STDDIPINFOEXT(SMSFM, SMSFM, SMS)
+STDDIPINFOEXT(SMSPaddle, SMSPaddle, SMS)
 
 static struct BurnDIPInfo GGDIPList[]=
 {
@@ -54,7 +66,6 @@ static struct BurnDIPInfo GGDIPList[]=
 STDDIPINFO(GG)
 
 static struct BurnInputInfo SMSInputList[] = {
-	{"P1 Start(GG)/Pause(SMS)",		BIT_DIGITAL,	SMSJoy1 + 1,	"p1 start"	},
 	{"P1 Up",		    BIT_DIGITAL,	SMSJoy1 + 3,	"p1 up"		},
 	{"P1 Down",		    BIT_DIGITAL,	SMSJoy1 + 4,	"p1 down"	},
 	{"P1 Left",		    BIT_DIGITAL,	SMSJoy1 + 5,	"p1 left"	},
@@ -69,11 +80,33 @@ static struct BurnInputInfo SMSInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	SMSJoy2 + 7,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	SMSJoy2 + 8,	"p2 fire 2"	},
 
+	{"Start(GG)/Pause(SMS)", BIT_DIGITAL,	SMSJoy1 + 1,	"p1 start"	},
+
 	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Dip A",		    BIT_DIPSWITCH,	SMSDips + 0,	"dip"       },
 };
 
 STDINPUTINFO(SMS)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo SMSPaddleInputList[] = {
+	A("P1 Spinner",     BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
+	{"P1 Left",		    BIT_DIGITAL,	SMSJoy1 + 5,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	SMSJoy1 + 6,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	SMSJoy1 + 7,	"p1 fire 1"	},
+
+	A("P2 Spinner",     BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
+	{"P2 Left",		    BIT_DIGITAL,	SMSJoy2 + 5,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	SMSJoy2 + 6,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	SMSJoy2 + 7,	"p2 fire 1"	},
+
+	{"Pause",			BIT_DIGITAL,	SMSJoy1 + 1,	"p1 start"	},
+
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Dip A",		    BIT_DIPSWITCH,	SMSDips + 0,	"dip"       },
+};
+
+STDINPUTINFO(SMSPaddle)
 
 static INT32 MemIndex()
 {
@@ -100,6 +133,11 @@ INT32 SMSExit()
 {
 	ZetExit();
 	GenericTilesExit();
+
+	if (has_paddle) {
+		has_paddle = 0;
+		BurnTrackballExit();
+	}
 
 	BurnFreeMemIndex();
 
@@ -157,23 +195,35 @@ INT32 SMSFrame()
 		input.analog[0] = 0x7F;
 		input.analog[1] = 0x7F;
 
-		// Player 1
-		if (SMSJoy1[3]) input.pad[0] |= INPUT_UP;
-		if (SMSJoy1[4]) input.pad[0] |= INPUT_DOWN;
-		if (SMSJoy1[5]) input.pad[0] |= INPUT_LEFT;
-		if (SMSJoy1[6]) input.pad[0] |= INPUT_RIGHT;
-		if (SMSJoy1[7]) input.pad[0] |= INPUT_BUTTON2;
-		if (SMSJoy1[8]) input.pad[0] |= INPUT_BUTTON1;
-		DrvClearOpposites(&input.pad[0]);
-		// Player 2
-		if (SMSJoy2[3]) input.pad[1] |= INPUT_UP;
-		if (SMSJoy2[4]) input.pad[1] |= INPUT_DOWN;
-		if (SMSJoy2[5]) input.pad[1] |= INPUT_LEFT;
-		if (SMSJoy2[6]) input.pad[1] |= INPUT_RIGHT;
-		if (SMSJoy2[7]) input.pad[1] |= INPUT_BUTTON2;
-		if (SMSJoy2[8]) input.pad[1] |= INPUT_BUTTON1;
-		DrvClearOpposites(&input.pad[1]);
-		if (SMSJoy1[1]) input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
+		if (has_paddle) {
+			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0xf);
+			BurnTrackballUDLR(0, SMSJoy2[5], SMSJoy2[6], SMSJoy1[5], SMSJoy1[6], 7);
+			BurnTrackballUpdate(0);
+			input.analog[0] = BurnTrackballRead(0, 0);
+			input.analog[1] = BurnTrackballRead(0, 1);
+			BurnTrackballConfigStartStopPoints(0, 0, 0xff, 0, 0xff);
+			if (SMSJoy1[7]) input.pad[0] |= INPUT_BUTTON1;
+			if (SMSJoy2[7]) input.pad[1] |= INPUT_BUTTON1;
+		} else {
+			// Player 1
+			if (SMSJoy1[3]) input.pad[0] |= INPUT_UP;
+			if (SMSJoy1[4]) input.pad[0] |= INPUT_DOWN;
+			if (SMSJoy1[5]) input.pad[0] |= INPUT_LEFT;
+			if (SMSJoy1[6]) input.pad[0] |= INPUT_RIGHT;
+			if (SMSJoy1[7]) input.pad[0] |= INPUT_BUTTON2;
+			if (SMSJoy1[8]) input.pad[0] |= INPUT_BUTTON1;
+			DrvClearOpposites(&input.pad[0]);
+			// Player 2
+			if (SMSJoy2[3]) input.pad[1] |= INPUT_UP;
+			if (SMSJoy2[4]) input.pad[1] |= INPUT_DOWN;
+			if (SMSJoy2[5]) input.pad[1] |= INPUT_LEFT;
+			if (SMSJoy2[6]) input.pad[1] |= INPUT_RIGHT;
+			if (SMSJoy2[7]) input.pad[1] |= INPUT_BUTTON2;
+			if (SMSJoy2[8]) input.pad[1] |= INPUT_BUTTON1;
+			DrvClearOpposites(&input.pad[1]);
+			if (SMSJoy1[1]) input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
+		}
 
 		gg_overscanmode = (SMSDips[0] & 0x08);
 		vdp.no_spr_limit = (SMSDips[0] & 0x01);
@@ -307,8 +357,17 @@ static INT32 load_rom()
 		sms.territory = TERRITORY_DOMESTIC;
 	}
 
-    system_assign_device(PORT_A, DEVICE_PAD2B);
-    system_assign_device(PORT_B, DEVICE_PAD2B);
+	if ((BurnDrvGetHardwareCode() & HARDWARE_SMS_CONTROL_PADDLE) == HARDWARE_SMS_CONTROL_PADDLE) {
+		system_assign_device(PORT_A, DEVICE_PADDLE);
+		system_assign_device(PORT_B, DEVICE_PADDLE);
+
+		has_paddle = 1;
+		BurnTrackballInit(2);
+
+	} else {
+		system_assign_device(PORT_A, DEVICE_PAD2B);
+		system_assign_device(PORT_B, DEVICE_PAD2B);
+	}
 
     return 1;
 }
@@ -839,8 +898,8 @@ struct BurnDriver BurnDrvsms_alexbmx = {
 	"sms_alexbmx", NULL, NULL, NULL, "1987",
 	"Alex Kidd BMX Trial (Jpn)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
-	SMSGetZipName, sms_alexbmxRomInfo, sms_alexbmxRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_CONTROL_PADDLE, GBF_ACTION, 0,
+	SMSGetZipName, sms_alexbmxRomInfo, sms_alexbmxRomName, NULL, NULL, NULL, NULL, SMSPaddleInputInfo, SMSPaddleDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -4375,8 +4434,8 @@ struct BurnDriver BurnDrvsms_galactpr = {
 	"sms_galactpr", NULL, NULL, NULL, "1988",
 	"Galactic Protector (Jpn)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
-	SMSGetZipName, sms_galactprRomInfo, sms_galactprRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM /*| HARDWARE_SMS_JAPANESE*/ | HARDWARE_SMS_CONTROL_PADDLE, GBF_SHOOT, 0,
+	SMSGetZipName, sms_galactprRomInfo, sms_galactprRomName, NULL, NULL, NULL, NULL, SMSPaddleInputInfo, SMSPaddleDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -6435,8 +6494,8 @@ struct BurnDriver BurnDrvsms_megumi = {
 	"sms_megumi", NULL, NULL, NULL, "1988",
 	"Megumi Rescue (Jpn)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
-	SMSGetZipName, sms_megumiRomInfo, sms_megumiRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_CONTROL_PADDLE, GBF_ACTION, 0,
+	SMSGetZipName, sms_megumiRomInfo, sms_megumiRomName, NULL, NULL, NULL, NULL, SMSPaddleInputInfo, SMSPaddleDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -12353,8 +12412,8 @@ struct BurnDriver BurnDrvsms_woodypop = {
 	"sms_woodypop", NULL, NULL, NULL, "1987",
 	"Woody Pop - Shinjinrui no Block Kuzushi (Jpn, MyCard)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_BREAKOUT, 0,
-	SMSGetZipName, sms_woodypopRomInfo, sms_woodypopRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_CONTROL_PADDLE, GBF_BREAKOUT, 0,
+	SMSGetZipName, sms_woodypopRomInfo, sms_woodypopRomName, NULL, NULL, NULL, NULL, SMSPaddleInputInfo, SMSPaddleDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -28772,8 +28831,8 @@ struct BurnDriver BurnDrvsms_alexbmxc = {
 	"sms_alexbmxc", "sms_alexbmx", NULL, NULL, "2018",
 	"Alex Kidd BMX Trial (Hack, Spanish v1.1)\0", NULL, "Wave", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
-	SMSGetZipName, sms_alexbmxcRomInfo, sms_alexbmxcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_CONTROL_PADDLE, GBF_ACTION, 0,
+	SMSGetZipName, sms_alexbmxcRomInfo, sms_alexbmxcRomName, NULL, NULL, NULL, NULL, SMSPaddleInputInfo, SMSPaddleDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

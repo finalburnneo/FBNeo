@@ -27702,3 +27702,22 @@ struct BurnDriver BurnDrvsms_voyage = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Alex Kidd 3 - Curse in Miracle World (Global Hack, final version)
+
+static struct BurnRomInfo sms_alexkidd3fRomDesc[] = {
+	{ "alex kidd 3 - curse in miracle world v3.0 (2021)(yeti).sms",	524288, 0x2096b9f1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alexkidd3f)
+STD_ROM_FN(sms_alexkidd3f)
+
+struct BurnDriver BurnDrvsms_alexkidd3f = {
+	"sms_alexkidd3f", NULL, NULL, NULL, "2021",
+	"Alex Kidd 3 - Curse in Miracle World (HB, Hack v3.0)\0", NULL, "Yeti", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_alexkidd3fRomInfo, sms_alexkidd3fRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

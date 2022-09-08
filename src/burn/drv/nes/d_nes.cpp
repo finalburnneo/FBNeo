@@ -24406,6 +24406,24 @@ struct BurnDriver BurnDrvnes_nekkestrbas = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Nekketsu! Street Basket: Ganbare Dunk Heroes (T-Eng)
+static struct BurnRomInfo nes_nekkestrbasenRomDesc[] = {
+	{ "Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Eng).nes",          262160, 0xa4680ca5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nekkestrbasen)
+STD_ROM_FN(nes_nekkestrbasen)
+
+struct BurnDriver BurnDrvnes_nekkestrbasen = {
+	"nes_nekkestrbasen", "nes_nekkestrbas", NULL, NULL, "2010",
+	"Nekketsu! Street Basket - Ganbare Dunk Heroes (T-Eng)\0", NULL, "Farid", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_nekkestrbasenRomInfo, nes_nekkestrbasenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_nesopetougolRomDesc[] = {
 	{ "NES Open Tournament Golf (USA).nes",          262160, 0x9316bf4b, BRF_ESS | BRF_PRG },
 };

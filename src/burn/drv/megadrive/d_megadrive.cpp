@@ -43566,3 +43566,183 @@ struct BurnDriver BurnDrvmd_fightvengt = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// TMNT - The Streets of Rage Project (U) (V0.3.24) (Hack By savok)
+static struct BurnRomInfo md_tmnttsorpRomDesc[] = {
+	{ "TMNT The Streets of Rage Project.bin", 0x2B0A46, 0x48FCB065, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmnttsorp)
+STD_ROM_FN(md_tmnttsorp)
+
+struct BurnDriver BurnDrvmd_tmnttsorp = {
+	"md_tmnttsorp", "md_sor2", NULL, NULL, "1992",
+	"TMNT - The Streets of Rage Project (U) (V0.3.24) (Hack By savok)\0", NULL, "2021 Savok", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_tmnttsorpRomInfo, md_tmnttsorpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Extreme Mania (U) (V1.0) (Hack By eskayelle)
+static struct BurnRomInfo md_sor2emRomDesc[] = {
+	{ "Streets of Rage 2 Extreme Mania.bin", 0x200000, 0x3AE95E2F, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2em)
+STD_ROM_FN(md_sor2em)
+
+struct BurnDriver BurnDrvmd_sor2em = {
+	"md_sor2em", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 - Extreme Mania (U) (V1.0) (Hack By eskayelle)\0", NULL, "2019 eskayelle", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2emRomInfo, md_sor2emRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Captain Commando Edition (U) (Hack By Metal64)
+static struct BurnRomInfo md_sor2ccRomDesc[] = {
+	{ "Streets of Rage 2 Captain Commando Edition.gen", 0x296056, 0xDC455FD8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2cc)
+STD_ROM_FN(md_sor2cc)
+
+struct BurnDriver BurnDrvmd_sor2cc = {
+	"md_sor2cc", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 - Captain Commando Edition (U) (Hack By Metal64)\0", NULL, "2019 Metal64", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2ccRomInfo, md_sor2ccRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Final Fight Crossover 2020 (V1.30) (Hack By DhaLauHoo)
+static struct BurnRomInfo md_sor2ffc20RomDesc[] = {
+	{ "Streets of Rage 2 Final Fight Crossover 2020.bin", 0x2B7F92, 0x8BD9E3E2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2ffc20)
+STD_ROM_FN(md_sor2ffc20)
+
+struct BurnDriver BurnDrvmd_sor2ffc20 = {
+	"md_sor2ffc20", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 - Final Fight Crossover 2020 (V1.30) (Hack By DhaLauHoo)\0", NULL, "2020 DhaLauHoo", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2ffc20RomInfo, md_sor2ffc20RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The Punisher in the Streets of Rage (V1.26) (Hack By DhaLauHoo)
+static struct BurnRomInfo md_punisorRomDesc[] = {
+	{ "The Punisher in the Streets of Rage.bin", 0x2C7B40, 0x59942A92, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_punisor)
+STD_ROM_FN(md_punisor)
+
+struct BurnDriver BurnDrvmd_punisor = {
+	"md_punisor", "md_sor2", NULL, NULL, "1992",
+	"The Punisher in the Streets of Rage (V1.26) (Hack By DhaLauHoo)\0", NULL, "2020 DhaLauHoo", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_punisorRomInfo, md_punisorRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - The World Warrior (USA) (V1.10) (Hack By DhaLauHoo)
+static struct BurnRomInfo md_sor2twwRomDesc[] = {
+	{ "Streets of Rage 2 The World Warrior.bin", 0x2B50F0, 0xBA50B490, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tww)
+STD_ROM_FN(md_sor2tww)
+
+struct BurnDriver BurnDrvmd_sor2tww = {
+	"md_sor2tww", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 - The World Warrior (USA) (V1.10) (Hack By DhaLauHoo)\0", NULL, "2020 DhaLauHoo", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2twwRomInfo, md_sor2twwRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - The New Challengers (USA) (V1.26) (SOR2 Hack By DhaLauHoo)
+static struct BurnRomInfo md_sor2tnchaRomDesc[] = {
+	{ "Sor2TheNewChallengers.gen", 0x2B5C30, 0xA3D20794, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tncha)
+STD_ROM_FN(md_sor2tncha)
+
+struct BurnDriver BurnDrvmd_sor2tncha = {
+	"md_sor2tncha", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 - The New Challengers (USA) (V1.26) (SOR2 Hack By DhaLauHoo)\0", NULL, "2020 DhaLauHoo", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2tnchaRomInfo, md_sor2tnchaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Warriors of Fate 1000 Mans KO (V1.33) (Hack By DhaLauHoo)
+static struct BurnRomInfo md_sor2wof1kRomDesc[] = {
+	{ "Sor2 Warriors of Fate 1kMansKO.bin", 0x275810, 0xA170282A, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2wof1k)
+STD_ROM_FN(md_sor2wof1k)
+
+struct BurnDriver BurnDrvmd_sor2wof1k = {
+	"md_sor2wof1k", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 - Warriors of Fate 1000 Mans KO (V1.33) (Hack By DhaLauHoo)\0", NULL, "2020 DhaLauHoo", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2wof1kRomInfo, md_sor2wof1kRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic 3 & Knuckles - Batlle Race (Hack By Natsumi)
+static struct BurnRomInfo md_sonic3kbrcRomDesc[] = {
+	{ "Sonic3KnucklesBatlleRace.bin", 0x3FB496, 0xE23DD7C2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonic3kbrc)
+STD_ROM_FN(md_sonic3kbrc)
+
+struct BurnDriver BurnDrvmd_sonic3kbrc = {
+	"md_sonic3kbrc", "md_sks3", NULL, NULL, "2021",
+	"Sonic 3 & Knuckles - Batlle Race (Hack By Natsumi)\0", NULL, "Natsumi", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_sonic3kbrcRomInfo, md_sonic3kbrcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - The Ninja Warriors Once Again (V.02905) (Hack By Savok)
+static struct BurnRomInfo md_sor2tnwoaRomDesc[] = {
+	{ "Sor2TheNinjaWarriorsOnceAgain.bin", 0x2E7422, 0x1D6747E9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tnwoa)
+STD_ROM_FN(md_sor2tnwoa)
+
+struct BurnDriver BurnDrvmd_sor2tnwoa = {
+	"md_sor2tnwoa", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 - The Ninja Warriors Once Again (V.02905) (Hack By Savok)\0", NULL, "2021 Savok", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2tnwoaRomInfo, md_sor2tnwoaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

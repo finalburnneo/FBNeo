@@ -13,6 +13,10 @@ extern int nAcbVersion;
 extern int nAcbLoadState;
 extern int bMediaExit;
 
+// rollback counter
+int nRollbackFrames = 0;
+int nRollbackCount = 0;
+
 static bool bDirect = false;
 static bool bReplaySupport = false;
 static bool bReplayStarted = false;
@@ -243,6 +247,7 @@ bool __cdecl ggpo_advance_frame_callback(int flags)
 {
 	bSkipPerfmonUpdates = true;
 	nFramesEmulated--;
+	nRollbackFrames++;
 	RunFrame(0, 0, 0);
 	bSkipPerfmonUpdates = false;
 	return true;
@@ -397,6 +402,7 @@ bool __cdecl ggpo_load_game_state_callback(unsigned char *buffer, int len)
 	BurnAreaScan(ACB_FULLSCANL | ACB_WRITE, NULL);
 	nAcbLoadState = 0;
 	nAcbVersion = nBurnVer;
+	nRollbackCount++;
 	return true;
 }
 

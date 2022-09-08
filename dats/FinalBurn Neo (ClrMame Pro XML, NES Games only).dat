@@ -15077,6 +15077,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="smbsp35th" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Super Mario Bros. Special 35th Anniversary (Hack, v1.3)</description>
+		<year>2021</year>
+		<manufacturer>Frantik</manufacturer>
+		<rom name="Super Mario Bros. Special 35th Anniversary (Hack, v1.3).nes" size="98320" crc="3800de83"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="smbspex1" cloneof="smb" romof="smb">
 		<comment>Hack</comment>
 		<description>Super Mario Bros. Special X1 (Hack)</description>

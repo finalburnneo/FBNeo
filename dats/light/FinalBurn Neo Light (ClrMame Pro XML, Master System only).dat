@@ -204,6 +204,23 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="alexbmxc" cloneof="alexbmx" romof="alexbmx">
+		<comment>Hack</comment>
+		<description>Alex Kidd BMX Trial (Hack, Spanish v1.1)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="alex kidd bmx trial (jpn) - castellano v1.1.sms" size="131072" crc="2a5449d4"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="alexbmx">
+		<description>Alex Kidd BMX Trial (Jpn)</description>
+		<year>1987</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="alex kidd bmx trial (japan).bin" size="131072" crc="f9dbb533"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="alexkiddb" cloneof="alexkidd" romof="alexkidd">
 		<description>Alex Kidd in Miracle World (Bra, v1, Pirate)</description>
 		<year>1986</year>
@@ -1863,6 +1880,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="galactpr">
+		<description>Galactic Protector (Jpn)</description>
+		<year>1988</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-11385.ic1" size="131072" crc="a6fa42d0"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="galrevenge">
 		<comment>Homebrew</comment>
 		<description>Galactic Revenge (HB, v3)</description>
@@ -3063,6 +3088,14 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11337.ic1" size="131072" crc="871562b0"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="megumi">
+		<description>Megumi Rescue (Jpn)</description>
+		<year>1988</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="megumi rescue (japan).bin" size="131072" crc="29bc7fad"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5709,6 +5742,14 @@
 		<year>1991</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="wonsiin (kr).bin" size="131072" crc="a05258f5"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="woodypop">
+		<description>Woody Pop - Shinjinrui no Block Kuzushi (Jpn, MyCard)</description>
+		<year>1987</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="woody pop - shinjinrui no block kuzushi (japan).bin" size="32768" crc="315917d4"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

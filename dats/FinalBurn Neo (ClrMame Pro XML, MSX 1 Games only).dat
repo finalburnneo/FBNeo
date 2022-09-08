@@ -1197,6 +1197,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="automania" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Automania Remake (HB)</description>
+		<year>2022</year>
+		<manufacturer>Fregarni</manufacturer>
+		<rom name="Automania Remake v1.0 (2022)(Fregarni).rom" size="131072" crc="223be07f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="avenger" romof="msx">
 		<description>Avenger (Euro)</description>
 		<year>1986</year>
@@ -1466,11 +1478,33 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="barb" romof="msx">
+	<game name="barben" romof="msx">
+		<description>Barbarian (English)</description>
+		<year>1988</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Barbarian EN (1988)(Mastertronic).rom" size="65536" crc="88871a93"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbpt" cloneof="barben" romof="barben">
+		<description>Barbarian (Portuguese)</description>
+		<year>1988</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Barbarian PT (1988)(Mastertronic).rom" size="65536" crc="3f026623"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="barbes" cloneof="barben" romof="barben">
 		<description>Barbarian (Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Mastertronic</manufacturer>
-		<rom name="barbarian (1988)(mastertronic)(es-gb)[run'cas-'].cas" size="57314" crc="de27937b"/>
+		<rom name="Barbarian ES (1988)(Mastertronic).rom" size="65536" crc="d1637fd4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2484,6 +2518,30 @@
 		<rom name="Budokan (1991)(Dro Soft)(Side B)[RUN'CAS-'].cas" size="71595" crc="56f5adf2"/>
 		<rom name="Budokan (1991)(Dro Soft)(Side C)[RUN'CAS-'].cas" size="14473" crc="9b67a98f"/>
 		<rom name="Budokan (1991)(Dro Soft)(Side D)[RUN'CAS-'].cas" size="79738" crc="7f30c4f3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bufonada" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Bufonada (English) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="Bufonada v1.0 EN (2022)(Roolandoo).rom" size="49152" crc="ab9d3ac5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bufonadas" cloneof="bufonada" romof="bufonada">
+		<comment>Homebrew</comment>
+		<description>Bufonada (Spanish) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="Bufonada v1.0 ES (2022)(Roolandoo).rom" size="49152" crc="e75c8e50"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

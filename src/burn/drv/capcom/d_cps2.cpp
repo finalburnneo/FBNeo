@@ -11593,7 +11593,7 @@ struct BurnDriver BurnDrvCpsXmcotan = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
     NULL, XmcotanRomInfo, XmcotanRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
-    XmcotanInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+    XmcotaInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
     &CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -1791,7 +1791,7 @@ INT32 DrvCps3Draw()
 	UINT32 fullscreenzoom = RamVReg[ 6 * 4 + 3 ] & 0xff;
 	UINT32 fullscreenzoomwidecheck = RamVReg[6 * 4 + 1];
 	
-	if (((fullscreenzoomwidecheck & 0xffff0000) >> 16) == 0x0265) {
+	if (((fullscreenzoomwidecheck & 0xffff0000) >> 16) == 0x0265 || strcmp(BurnDrvGetTextA(DRV_NAME), "sfiii3ws") == 0) {
 		INT32 Width, Height;
 		BurnDrvGetVisibleSize(&Width, &Height);
 		

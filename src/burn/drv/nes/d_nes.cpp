@@ -48047,6 +48047,24 @@ struct BurnDriver BurnDrvnes_royalflush = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://www.romhacking.net/hacks/6067/
+static struct BurnRomInfo nes_smbsp35thRomDesc[] = {
+	{ "Super Mario Bros. Special 35th Anniversary (Hack, v1.3).nes",          98320, 0x3800de83, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smbsp35th)
+STD_ROM_FN(nes_smbsp35th)
+
+struct BurnDriver BurnDrvnes_smbsp35th = {
+	"nes_smbsp35th", "nes_smb", NULL, NULL, "2021",
+	"Super Mario Bros. Special 35th Anniversary (Hack, v1.3)\0", NULL, "Frantik", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smbsp35thRomInfo, nes_smbsp35thRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_smbspehRomDesc[] = {
 	{ "Super Mario Bros. Special (Hack, Triforce89).nes",          98320, 0xab872e74, BRF_ESS | BRF_PRG },
 };

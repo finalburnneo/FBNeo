@@ -23721,25 +23721,62 @@ struct BurnDriver BurnDrvMSX_barnstrm = {
 	272, 228, 4, 3
 };
 
-// Barbarian (Spanish)
+// Barbarian (English)
 
-static struct BurnRomInfo MSX_barbRomDesc[] = {
-	{ "barbarian (1988)(mastertronic)(es-gb)[run'cas-'].cas",	0x0dfe2, 0xde27937b, BRF_PRG | BRF_ESS },
+static struct BurnRomInfo MSX_barbenRomDesc[] = {
+	{ "Barbarian EN (1988)(Mastertronic).rom",	65536, 0x88871a93, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_barb, MSX_barb, msx_msx)
-STD_ROM_FN(MSX_barb)
+STDROMPICKEXT(MSX_barben, MSX_barben, msx_msx)
+STD_ROM_FN(MSX_barben)
 
-struct BurnDriver BurnDrvMSX_barb = {
-	"msx_barb", NULL, "msx_msx", NULL, "1988",
-	"Barbarian (Spanish)\0", NULL, "Mastertronic", "MSX",
+struct BurnDriver BurnDrvMSX_barben = {
+	"msx_barben", NULL, "msx_msx", NULL, "1988",
+	"Barbarian (English)\0", NULL, "Mastertronic", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_SCRFIGHT | GBF_ADV, 0,
-	MSXGetZipName, MSX_barbRomInfo, MSX_barbRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_SCRFIGHT | GBF_ADV, 0,
+	MSXGetZipName, MSX_barbenRomInfo, MSX_barbenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
+// Barbarian (Spanish)
+
+static struct BurnRomInfo MSX_barbesRomDesc[] = {
+	{ "Barbarian ES (1988)(Mastertronic).rom",	65536, 0xd1637fd4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_barbes, MSX_barbes, msx_msx)
+STD_ROM_FN(MSX_barbes)
+
+struct BurnDriver BurnDrvMSX_barbes = {
+	"msx_barbes", "msx_barben", "msx_msx", NULL, "1988",
+	"Barbarian (Spanish)\0", NULL, "Mastertronic", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_SCRFIGHT | GBF_ADV, 0,
+	MSXGetZipName, MSX_barbesRomInfo, MSX_barbesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Barbarian (Portuguese)
+
+static struct BurnRomInfo MSX_barbptRomDesc[] = {
+	{ "Barbarian PT (1988)(Mastertronic).rom",	65536, 0x3f026623, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_barbpt, MSX_barbpt, msx_msx)
+STD_ROM_FN(MSX_barbpt)
+
+struct BurnDriver BurnDrvMSX_barbpt = {
+	"msx_barbpt", "msx_barben", "msx_msx", NULL, "1988",
+	"Barbarian (Portuguese)\0", NULL, "Mastertronic", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_SCRFIGHT | GBF_ADV, 0,
+	MSXGetZipName, MSX_barbptRomInfo, MSX_barbptRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
 
 // Barbarian II - The Dungeon of Drax (Euro)
 
@@ -32491,6 +32528,63 @@ struct BurnDriver BurnDrvMSX_roborumble = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_roborumbleRomInfo, MSX_roborumbleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Automania Remake (HB)
+
+static struct BurnRomInfo MSX_automaniaRomDesc[] = {
+	{ "Automania Remake v1.0 (2022)(Fregarni).rom",	131072, 0x223be07f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_automania, MSX_automania, msx_msx)
+STD_ROM_FN(MSX_automania)
+
+struct BurnDriver BurnDrvMSX_automania = {
+	"msx_automania", NULL, "msx_msx", NULL, "2022",
+	"Automania Remake (HB)\0", NULL, "Fregarni", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_ACTION, 0,
+	MSXGetZipName, MSX_automaniaRomInfo, MSX_automaniaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Bufonada (English) (HB)
+
+static struct BurnRomInfo MSX_bufonadaRomDesc[] = {
+	{ "Bufonada v1.0 EN (2022)(Roolandoo).rom",	49152, 0xab9d3ac5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_bufonada, MSX_bufonada, msx_msx)
+STD_ROM_FN(MSX_bufonada)
+
+struct BurnDriver BurnDrvMSX_bufonada = {
+	"msx_bufonada", NULL, "msx_msx", NULL, "2022",
+	"Bufonada (English) (HB)\0", NULL, "Roolandoo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_bufonadaRomInfo, MSX_bufonadaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Bufonada (Spanish) (HB)
+
+static struct BurnRomInfo MSX_bufonadasRomDesc[] = {
+	{ "Bufonada v1.0 ES (2022)(Roolandoo).rom",	49152, 0xe75c8e50, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_bufonadas, MSX_bufonadas, msx_msx)
+STD_ROM_FN(MSX_bufonadas)
+
+struct BurnDriver BurnDrvMSX_bufonadas = {
+	"msx_bufonadas", "msx_bufonada", "msx_msx", NULL, "2022",
+	"Bufonada (Spanish) (HB)\0", NULL, "Roolandoo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_bufonadasRomInfo, MSX_bufonadasRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

@@ -17469,6 +17469,24 @@ struct BurnDriver BurnDrvnes_ducktales2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// DuckTales 2 - Two Players (Hack By Ti) (Version 1.4a)
+static struct BurnRomInfo nes_ducktales2tpRomDesc[] = {
+	{ "DuckTales 2 Two Players (USA) (V1.4a) (Hack By Ti).nes",          262160, 0xbfe8d4b3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ducktales2tp)
+STD_ROM_FN(nes_ducktales2tp)
+
+struct BurnDriver BurnDrvnes_ducktales2tp = {
+	"nes_ducktales2tp", "nes_ducktales2", NULL, NULL, "2014",
+	"DuckTales 2 Two Players v1.4a (Hack By Ti)\0", NULL, "Ti", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ducktales2tpRomInfo, nes_ducktales2tpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_dynamitebatmanRomDesc[] = {
 	{ "Dynamite Batman (Japan).nes",          393232, 0xed509c6b, BRF_ESS | BRF_PRG },
 };

@@ -179,10 +179,8 @@ STDINPUTINFO(Marukin)
 
 static struct BurnInputInfo PkladiesInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort1  + 2, "p1 start"  },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort7  + 2, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1  + 2, "p1 start"  },
 	{"P1 A"              , BIT_DIGITAL  , DrvInputPort1  + 7, "mah a"     },
 	{"P1 B"              , BIT_DIGITAL  , DrvInputPort2  + 7, "mah b"     },
 	{"P1 C"              , BIT_DIGITAL  , DrvInputPort4  + 7, "mah c"     },
@@ -192,6 +190,8 @@ static struct BurnInputInfo PkladiesInputList[] =
 	{"P1 Cancel"         , BIT_DIGITAL  , DrvInputPort2  + 5, "p1 fire 2" },
 	{"P1 Flip"           , BIT_DIGITAL  , DrvInputPort4  + 5, "p1 fire 3" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort7  + 2, "p2 start"  },
 	{"P2 A"              , BIT_DIGITAL  , DrvInputPort7  + 7, "mah a"     },
 	{"P2 B"              , BIT_DIGITAL  , DrvInputPort8  + 7, "mah b"     },
 	{"P2 C"              , BIT_DIGITAL  , DrvInputPort9  + 7, "mah c"     },
@@ -237,15 +237,15 @@ STDINPUTINFO(Pang)
 
 static struct BurnInputInfo Qtono1InputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort1  + 2, "p1 start"  },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2  + 2, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1  + 2, "p1 start"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1  + 7, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1  + 6, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort1  + 5, "p1 fire 3" },
 	{"P1 Fire 4"         , BIT_DIGITAL  , DrvInputPort1  + 4, "p1 fire 4" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2  + 2, "p2 start"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2  + 7, "p2 fire 1" },
 	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort2  + 6, "p2 fire 2" },
 	{"P2 Fire 3"         , BIT_DIGITAL  , DrvInputPort2  + 5, "p2 fire 3" },
@@ -260,11 +260,8 @@ STDINPUTINFO(Qtono1)
 
 static struct BurnInputInfo MstworldInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0  + 5, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1  + 7, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1  + 6, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1  + 5, "p1 left"   },
@@ -273,6 +270,8 @@ static struct BurnInputInfo MstworldInputList[] =
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1  + 2, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort1  + 1, "p1 fire 3" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 5, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2  + 7, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2  + 6, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2  + 5, "p2 left"   },
@@ -291,14 +290,14 @@ STDINPUTINFO(Mstworld)
 
 static struct BurnInputInfo BlockInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort11 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort11 + 1, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1  + 7, "p1 fire 1" },
-		
+	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort11 + 2, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort11 + 3, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2  + 7, "p2 fire 1" },
@@ -312,14 +311,14 @@ STDINPUTINFO(Block)
 
 static struct BurnInputInfo BlockjoyInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0  + 3, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1  + 5, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort1  + 4, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1  + 7, "p1 fire 1" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0  + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0  + 1, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2  + 5, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort2  + 4, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2  + 7, "p2 fire 1" },

@@ -1562,6 +1562,58 @@ static struct BurnRomInfo sailormnohRomDesc[] = {
 STD_ROM_PICK(sailormnoh)
 STD_ROM_FN(sailormnoh)
 
+// Pretty Soldier Sailor Moon (Reign of Terror, Hack), hacked by ZombieMaster with the PSSME Editor
+// Edtior Link: https://gamehackfan.github.io/pssme
+//
+// PM ZombieMaster on discord for more info about this rom
+//
+// Some of the extra features:
+// Players can select the same sailor.
+// All sailors have 6 colors, original + 5 new colors.
+// Stage 1 was reworked and it is different than the original game.
+// One new stage was added to the game and it was named Extra Stage.
+// Almost all enemies in the game got 2 extra colors, 1 got 4 extra colors and 1 only got 1 extra color.
+// Enemies will have better AI based on their color, the new extra colors have higher AI.
+// All enemies from all stages were changed.
+// 1 enemy got a new kick attack.
+// Bosses will spawn mid stage as sub bosses, which makes this hack a very hard one.
+// Players can control the amount of crystals the sailor will use by piano input Punch and Crystal Button.
+// Several bug fixes.
+// There are many more changes, those are just some of them.
+
+
+static struct BurnRomInfo sailormnrotRomDesc[] = {
+	{ "bpsm945a.u45", 0x080000, 0xdaf0db76, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
+
+	{ "bpsm945a.u9",  0x080000, 0x438de548, BRF_ESS | BRF_PRG }, //  2 Z80 code
+
+	{ "bpsm.u76",     0x200000, 0xa243a5ba, BRF_GRA },			 //  3 Sprite data
+	{ "bpsm.u77",     0x200000, 0x5179a4ac, BRF_GRA },			 //  4
+
+	{ "bpsm.u53",     0x200000, 0xb9b15f83, BRF_GRA },			 //  5 Layer 0 Tile data
+	{ "bpsm.u54",     0x200000, 0x8f00679d, BRF_GRA },			 //  6 Layer 1 Tile data
+
+	{ "bpsm.u57",     0x200000, 0x86be7b63, BRF_GRA },			 //  7 Layer 2 Tile data
+	{ "bpsm.u58",     0x200000, 0xe0bba83b, BRF_GRA },			 //  8
+	{ "bpsm.u62",     0x200000, 0xa1e3bfac, BRF_GRA },			 //  9
+	{ "bpsm.u61",     0x200000, 0x6a014b52, BRF_GRA },			 // 10
+	{ "bpsm.u60",     0x200000, 0x992468c0, BRF_GRA },			 // 11
+
+	{ "bpsm.u65",     0x200000, 0xf60fb7b5, BRF_GRA },			 // 12
+	{ "bpsm.u64",     0x200000, 0x6559d31c, BRF_GRA },			 // 13
+	{ "bpsm.u63",     0x200000, 0xd57a56b4, BRF_GRA },			 // 14
+
+	{ "bpsm.u48",     0x200000, 0x498e4ed1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
+	{ "bpsm.u47",     0x080000, 0x0f2901b9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
+
+	{ "sailormn_europe.nv", 0x0080, 0x59a7dc50, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(sailormnrot)
+STD_ROM_FN(sailormnrot)
+
+
 static struct BurnRomInfo agalletRomDesc[] = {
 	// these roms were dumped from a board set to Taiwanese region.
 	{ "bp962a.u45",   0x080000, 0x24815046, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -2004,6 +2056,16 @@ struct BurnDriver BurnDrvSailorMoonOh = {
 	L"Pretty Soldier Sailor Moon\0\u7F8E\u5C11\u5973\u6226\u58EB \u30BB\u30FC\u30E9\u30FC\u30E0\u30FC\u30F3 (ver. 95/03/21, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailormnohRomInfo, sailormnohRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
+	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvSailorMoonrot = {
+	"sailormnrot", "sailormn", NULL, NULL, "2022",
+	"Pretty Soldier Sailor Moon (Reign of Terror, Hack)\0", NULL, "Zombie Master", "Cave",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, sailormnrotRomInfo, sailormnrotRomName, NULL, NULL, NULL, NULL, sailormnInputInfo, NULL,
 	sailormnInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

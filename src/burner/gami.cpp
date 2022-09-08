@@ -855,16 +855,21 @@ INT32 GameInpInit()
 	nAnalogSpeed = 0x0100;
 
 	// check if game needs clear opposites
+	// SOCD cleaner
 	bClearOpposites = false;
 	const char* clearOppositesGameList[] = {
-		"umk3", "umk3p", "umk3uc", "umk3uk", "dbz2", "jojo"
+		"umk3", "umk3p", "umk3uc", "umk3uk",
+		"dbz2", "jojo", "jchan", "jchan2",
+		NULL
 	};
 	const char* gameName = BurnDrvGetTextA(DRV_NAME);
-	for (UINT32 i = 0; i < 6; i++) {
+	UINT32 i = 0;
+	while (clearOppositesGameList[i]) {
 		if (strstr(gameName, clearOppositesGameList[i]) == gameName) {
 			bClearOpposites = true;
 			break;
 		}
+		i++;
 	}
 
 	return 0;

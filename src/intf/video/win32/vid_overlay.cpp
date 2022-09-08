@@ -1036,7 +1036,6 @@ void VidOverlayRender(const RECT &dest, int gameWidth, int gameHeight, int scan_
 		if (!enabled) {
 			enabled = true;
 			VidOverlayAddChatLine(_T("System"), _T("Chat history will be saved to fightcade/chat_history.txt"));
-			VidOverlaySaveChatHistory(NULL);
 		}
 	}
 
@@ -1609,9 +1608,6 @@ void VidOverlaySaveChatHistory(const wchar_t *text)
 				fwprintf(f, text);
 				fclose(f);
 			}
-		}
-		else {
-			DeleteFile(_T("fightcade/chat_history.txt"));
 		}
 	}
 }

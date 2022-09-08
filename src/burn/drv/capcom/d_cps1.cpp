@@ -4995,6 +4995,38 @@ static struct BurnRomInfo Captcommb2RomDesc[] = {
 STD_ROM_PICK(Captcommb2)
 STD_ROM_FN(Captcommb2)
 
+// Captain Commando Readjusted, hacked by GameHackFan 
+// source: https://gamehackfan.github.io/captre/
+
+static struct BurnRomInfo CaptreRomDesc[] = {
+	{ "cce_re.10f",    0x200000, 0x591ea997, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cc-5re.3a",     0x080000, 0xd78482a8, BRF_GRA | CPS1_TILES },
+	{ "cc-7re.5a",     0x080000, 0xfe4f474d, BRF_GRA | CPS1_TILES },
+	{ "cc-1re.4a",     0x080000, 0xe45c8021, BRF_GRA | CPS1_TILES },
+	{ "cc-3re.6a",     0x080000, 0x0d7f9314, BRF_GRA | CPS1_TILES },
+	{ "cc-6re.7a",     0x080000, 0xbd687ae8, BRF_GRA | CPS1_TILES },
+	{ "cc-8re.9a",     0x080000, 0xf222c02e, BRF_GRA | CPS1_TILES },
+	{ "cc-2re.8a",     0x080000, 0x8296149a, BRF_GRA | CPS1_TILES },
+	{ "cc-4re.10a",    0x080000, 0xa7b9288e, BRF_GRA | CPS1_TILES },
+
+	{ "cc_09.11a",     0x010000, 0x698e8b58, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cc_18.11c",     0x020000, 0x6de2c2db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "cc_19.12c",     0x020000, 0xb99091ae, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	A_BOARD_PLDS
+
+{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
+{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
+{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Captre)
+STD_ROM_FN(Captre)
+
 static struct BurnRomInfo CawingRomDesc[] = {
 	{ "cae_30a.11f",   0x020000, 0x91fceacd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cae_35a.11h",   0x020000, 0x3ef03083, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -14658,6 +14690,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "captcommjr1" , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommb"   , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommb2"  , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
+	{ "captre"      , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "cawing"      , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingr1"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingu"     , CPS_B_05    , mapper_CA22B , 0, NULL                },
@@ -14689,6 +14722,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dynwarjr"    , CPS_B_21_DEF, mapper_TK22B , 0, NULL                },
 	{ "ffight"      , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightae"    , CPS_B_21_DEF, mapper_S224B , 0, NULL                },
+	{ "ffightaemgc" , CPS_B_21_DEF, mapper_S224B , 0, NULL                },
 	{ "ffighta"     , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu"     , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightu1"    , CPS_B_04    , mapper_S224B , 0, NULL                },
@@ -19528,6 +19562,16 @@ struct BurnDriver BurnDrvCpsCaptcommb2 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsCaptre = {
+	"captre", "captcomm", NULL, NULL, "2022",
+	"Captain Commando Readjusted (Hack, v1.0)\0", NULL, "GameHackFan", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, CaptreRomInfo, CaptreRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsCawing = {
 	"cawing", NULL, NULL, NULL, "1990",
 	"Carrier Air Wing (U.S. navy 901012 etc)\0", NULL, "Capcom", "CPS1",
@@ -23252,6 +23296,56 @@ struct BurnDriver BurnDrvCpsFfightae = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightaeRomInfo, FfightaeRomName, NULL, NULL, NULL, NULL, FfightaeInputInfo, FfightaeDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Final Fight 30th Anniversary Edition (Mad Gear's City Hack), hacked by ZombieMaster with the FFAEE Editor
+// Edtior Link: https://gamehackfan.github.io/ffaee
+//
+// PM ZombieMaster on discord for more info about this rom
+//
+// Some of the extra features:
+// Haggar dynamite scene bug fixed.
+// Holly Wood / El Gado / Rolento imortal bug fixed.
+// New locks added to some stages.
+// Some of the original locks were changed.
+// All enemies and objects of all stages were changed.
+// All lifebar colors now have progress.
+// Same type of enemy can spawn with an aggressive or deffensive behavior.
+// Ring andore colors were remaped so they can spawn outside the ring without having a bugged pallete.
+// Many more changes.
+
+static struct BurnRomInfo FfightaemgcRomDesc[] = {
+	{ "ff-23m.8h",     0x080000, 0xc16be586, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ff-22m.7h",     0x080000, 0x4994c1c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "ff-5m.7a",      0x080000, 0x91a909bd, BRF_GRA | CPS1_TILES },
+	{ "ff-7m.9a",      0x080000, 0x89f8b4cd, BRF_GRA | CPS1_TILES },
+	{ "ff-1m.3a",      0x080000, 0xd5469303, BRF_GRA | CPS1_TILES },
+	{ "ff-3m.5a",      0x080000, 0x0c6302bf, BRF_GRA | CPS1_TILES },
+
+	{ "ff_09.12b",     0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "ff_18.11c",     0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ff_19.12c",     0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	A_BOARD_PLDS
+
+{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
+{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
+};
+
+STD_ROM_PICK(Ffightaemgc)
+STD_ROM_FN(Ffightaemgc)
+
+
+struct BurnDriver BurnDrvCpsFfightaemgc = {
+	"ffightaemgc", "ffight", NULL, NULL, "2022",
+	"Final Fight 30th Anniversary Edition (Mad Gear's City Hack)\0", NULL, "ZombieMaster", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, FfightaemgcRomInfo, FfightaemgcRomName, NULL, NULL, NULL, NULL, FfightaeInputInfo, FfightaeDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

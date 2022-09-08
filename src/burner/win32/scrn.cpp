@@ -3179,7 +3179,6 @@ int ScrnSize()
 	}
 
 	int nScrnWidth, nScrnHeight;
-	int nWorkWidth, nWorkHeight;
 	int nBmapWidth = nVidImageWidth, nBmapHeight = nVidImageHeight;
 	int nGameAspectX = 4, nGameAspectY = 3;
 	int nMaxSize;
@@ -3220,8 +3219,6 @@ int ScrnSize()
 
 	nScrnWidth = SystemWorkArea.right - SystemWorkArea.left;
 	nScrnHeight = SystemWorkArea.bottom - SystemWorkArea.top;
-	nWorkWidth = RealWorkArea.right - RealWorkArea.left;
-	nWorkHeight = RealWorkArea.bottom - RealWorkArea.top;
 
 	if (nVidSelect == 2 && nVidBlitterOpt[2] & 0x0100) {								// The Software effects blitter uses a fixed size
 		nMaxSize = 9;
@@ -3311,34 +3308,35 @@ int ScrnSize()
 		
 	RECT rect = { 0,0, w,h };
 	VidImageSize(&rect, nBmapWidth, nBmapHeight);
+	RECT rectPrev = rect;
 	AdjustWindowRectEx(&rect, nWindowStyles, bMenuEnabled, nWindowExStyles);
-	
-	int x = nWindowPosX;
-	int y = nWindowPosY;
+
 	w = rect.right - rect.left;
 	h = rect.bottom - rect.top;
+	int bw = w - (rectPrev.right - rectPrev.left);
+	int bh = h - (rectPrev.bottom - rectPrev.top);
 
 	// clamp size
-	if (w > (SystemWorkArea.right - SystemWorkArea.left)) {
-		int rw = SystemWorkArea.right - SystemWorkArea.left;
-		w = rw;
-		h = (h * rw) / w;
+	if (w > (RealWorkArea.right - RealWorkArea.left)) {
+		w = RealWorkArea.right - RealWorkArea.left;
+		h = bh + (w - bw) * nVidScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nVidScrnAspectY * nGameAspectX);
 	}
-	if (h > (SystemWorkArea.bottom - SystemWorkArea.top)) {
-		int rh = SystemWorkArea.bottom - SystemWorkArea.top;
-		h = rh;
-		w = (w * rh) / h;
+	if (h > (RealWorkArea.bottom - RealWorkArea.top)) {
+		h = RealWorkArea.bottom - RealWorkArea.top;
+		w = bw + (h - bh) * nVidScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectY);
 	}
 
+	int x = nWindowPosX;
+	int y = nWindowPosY;
 	if (nMaxSize > 9) {
 		// Find the midpoint for the window
-		x = (SystemWorkArea.left + SystemWorkArea.right - w) / 2;
+		x = (RealWorkArea.left + RealWorkArea.right - w) / 2;
 		y = 0;
 	}	else {
-		if (x < SystemWorkArea.left || y < SystemWorkArea.top|| x + w > SystemWorkArea.right || y + h > SystemWorkArea.bottom) 
+		if (x < RealWorkArea.left || y < RealWorkArea.top|| x + w > RealWorkArea.right || y + h > RealWorkArea.bottom) 
 		// Find the midpoint for the window
-		x = (SystemWorkArea.left + SystemWorkArea.right - w) / 2;
-		y = (SystemWorkArea.bottom + SystemWorkArea.top - h) / 2;
+		x = (RealWorkArea.left + RealWorkArea.right - w) / 2;
+		y = (RealWorkArea.bottom + RealWorkArea.top - h) / 2;
 	}
 
 	MenuUpdate();

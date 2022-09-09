@@ -1044,8 +1044,6 @@ static void predraw_roz()
 
 static void draw_roz(clip_struct clip, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 priority)
 {
-	predraw_roz();
-
 	UINT16 *src = BurnBitmapGetBitmap(1);
 
 	starty += 32 * incyy; // clipy
@@ -1139,6 +1137,8 @@ static void DrvDrawBegin()
 	}
 
 	drawn = 0;
+
+	predraw_roz();
 }
 
 static void DrvDrawTo(INT32 lineto)

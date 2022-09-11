@@ -66,6 +66,7 @@ static INT32 vblank_bit = 0;
 static INT32 irq_line = 1;
 static INT32 blitter_bit = 0;
 static INT32 main_cpu_cycles = 12000000 / 60;
+static INT32 main_cpu_hz = 12000000;
 static INT32 ymf278bint = 0;
 static INT32 has_zoom = 0;
 
@@ -3044,19 +3045,6 @@ static void __fastcall vmetal_write_word(UINT32 address, UINT16 data)
 	bprintf(0, _T("ww %x  %x\n"), address, data);
 }
 
-
-static UINT8 __fastcall vmetal_read_byte(UINT32 address)
-{
-	switch (address)
-	{
-		case 0x400001:
-			return MSM6295Read(0);
-	}
-	bprintf(0, _T("rb %x\n"), address);
-
-	return 0;
-}
-
 #define read_dip(dip) (((DrvDips[0] & (1 << (dip-1))) ? 0x40 : 0) | ((DrvDips[1] & (1 << (dip-1))) ? 0x80 : 0))
 
 static UINT16 __fastcall vmetal_read_word(UINT32 address)
@@ -3107,6 +3095,16 @@ static UINT16 __fastcall vmetal_read_word(UINT32 address)
 
 		case 0x31fffc:
 			return read_dip(1);
+
+		case 0x30fffe:
+		case 0x317ffe:
+		case 0x31bffe:
+		case 0x31dffe:
+		case 0x31effe:
+		case 0x31f7fe:
+		case 0x31fbfe:
+		case 0x31fdfe:
+			return 0xffff;
 	}
 
 	bprintf(0, _T("rw %x\n"), address);
@@ -3115,6 +3113,21 @@ static UINT16 __fastcall vmetal_read_word(UINT32 address)
 }
 
 #undef read_dip
+
+static UINT8 __fastcall vmetal_read_byte(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x400001:
+			return MSM6295Read(0);
+	}
+
+	return vmetal_read_word(address & ~1) >> ((~address & 1) * 8);
+
+	bprintf(0, _T("rb %x\n"), address);
+
+	return 0;
+}
 
 static void z80_bankswitch(INT32 data)
 {
@@ -3179,7 +3192,7 @@ static void pGstrik2_roz_callback(INT32 , UINT16 *ram, INT32 *code, INT32 *color
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	SekSetIRQLine(2, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-	SekRun(100); // lame hack for overlapped irq's causing the ymf278b timer to die
+	SekRun(1); // lame hack for overlapped irq's causing the ymf278b timer to die (msgogo intro)
 }
 
 static void blzntrndFMIRQHandler(INT32, INT32 nStatus)
@@ -3298,7 +3311,7 @@ static INT32 MemIndex()
 
 static void metro_common_map_ram(UINT32 chip_address, INT32 main_ram_address, INT32 has_8bpp, INT32 has_16x16)
 {
-	i4x00_init(chip_address, DrvGfxROM, DrvGfxROM0, graphics_length, metro_irqcause_w, metro_irqcause_r, metro_soundlatch_w, has_8bpp, has_16x16);
+	i4x00_init(main_cpu_hz, chip_address, DrvGfxROM, DrvGfxROM0, graphics_length, metro_irqcause_w, metro_irqcause_r, metro_soundlatch_w, has_8bpp, has_16x16);
 
 	if (main_ram_address == -1) return;
 
@@ -3924,6 +3937,7 @@ static void lastfortMapCallback()
 static INT32 lastfortInit()
 {
 	main_cpu_cycles = 12000000 / 58;
+	main_cpu_hz = 12000000;
 
 	return common_type1_init(4100, 0x200000, 1, lastfortMapCallback, NULL, 2/*udp*/);
 }
@@ -3940,6 +3954,7 @@ static void lastforgMapCallback()
 static INT32 lastforgInit()
 {
 	main_cpu_cycles = 12000000 / 58;
+	main_cpu_hz = 12000000;
 
 	return common_type1_init(4100, 0x200000, 2, lastforgMapCallback, NULL, 2/*udp*/);
 }
@@ -3983,6 +3998,9 @@ static void pururunMapCallback()
 
 static INT32 pururunInit()
 {
+	main_cpu_cycles = (INT32)((double)12000000 / 58.2328);
+	main_cpu_hz = 12000000;
+
 	return common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
 }
 
@@ -4036,6 +4054,7 @@ static void daitoridMapCallback()
 static INT32 daitoridInit()
 {
 	main_cpu_cycles = 16000000 / 58;
+	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, daitoridMapCallback, NULL, 5/*udp + ym2151*/);
 
@@ -4047,6 +4066,7 @@ static INT32 daitoridInit()
 static INT32 puzzliaInit()
 {
 	main_cpu_cycles = 16000000 / 58;
+	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
 
@@ -4089,6 +4109,7 @@ static void balcubeRomCallback()
 static INT32 msgogoInit()
 {
 	main_cpu_cycles = 16000000 / 60;
+	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 4, msgogoMapCallback, balcubeRomCallback, 3/*ymf278b*/);
 
@@ -4120,6 +4141,7 @@ static void balcubeMapCallback()
 static INT32 balcubeInit()
 {
 	main_cpu_cycles = 16000000 / 60;
+	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 4, balcubeMapCallback, balcubeRomCallback, 3/*ymf278b*/);
 
@@ -4142,6 +4164,7 @@ static void bangballMapCallback()
 static INT32 bangballInit()
 {
 	main_cpu_cycles = 16000000 / 60;
+	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x400000, 4, bangballMapCallback, balcubeRomCallback, 3/*ymf278b*/);
 
@@ -4173,6 +4196,7 @@ static void batlbublRomCallback()
 static INT32 batlbublInit()
 {
 	main_cpu_cycles = 16000000 / 60;
+	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x800000, 4, batlbublMapCallback, batlbublRomCallback, 3/*ymf278b*/);
 
@@ -4251,6 +4275,7 @@ static INT32 DrvExit()
 	sound_system = 0;
 	has_zoom = 0;
 	main_cpu_cycles = 12000000 / 60;
+	main_cpu_hz = 12000000;
 	ymf278bint = 0;
 	bangballmode = 0;
 
@@ -4279,7 +4304,7 @@ static INT32 Z80Frame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 240;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -4291,17 +4316,19 @@ static INT32 Z80Frame()
 		INT32 previous_cycles = SekTotalCycles();
 		CPU_RUN(0, Sek);
 
-		if ((i % 28) == 26) {
+		if ((i % 32) == 0) {
 			requested_int[4] = 1;
 			update_irq_state();
 		}
 
-		if (i == 236) {
+		if (i == 37) { // (16000000 / 1000000) * 2500 / (16000000/58/256)
+			requested_int[5] = 0;
+		}
+
+		if (i == nInterleave-1) {
 			requested_int[vblank_bit] = 1;
 			requested_int[5] = 1;
 			update_irq_state();
-			SekRun(500);
-			requested_int[5] = 0;
 		}
 
 		if (i4x00_blitter_timer > 0) {
@@ -4351,7 +4378,7 @@ static INT32 NoZ80Frame()
 	if (sound_system == 2 || sound_system == 5) upd7810NewFrame();
 
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 240;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { main_cpu_cycles, main_cpu_cycles };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -4363,20 +4390,19 @@ static INT32 NoZ80Frame()
 		CPU_RUN(0, Sek);
 
 		if (sound_system == 2 || sound_system == 5) {
-			upd7810Run((nCyclesTotal[1] / nInterleave));
+			CPU_RUN(1, upd7810);
 		}
 
-		if (i == 0 && requested_int[5] == 1) {
+		if (i == 37 && requested_int[5] == 1) {
 			requested_int[5] = 0;
 		}
 
-		if ((i % 28) == 0) {
+		if ((i % 32) == 0) {
 			requested_int[4] = 1;
 			update_irq_state();
 		}
 
-		if (i == 236)
-		{
+		if (i == nInterleave-1) {
 			requested_int[vblank_bit] = 1;
 			requested_int[5] = 1;
 			update_irq_state();
@@ -4465,7 +4491,7 @@ static INT32 YMF278bFrame()
 
 	SekNewFrame();
 
-	INT32 nInterleave = 240;
+	INT32 nInterleave = 240; // msgogo borks at 256
 	INT32 nCyclesTotal[1] = { main_cpu_cycles };
 
 	SekOpen(0);

@@ -1332,10 +1332,11 @@ struct BurnDriver BurnDrvAvengrgsj = {
 	320, 240, 4, 3
 };
 
-// Avengers In Galactic Storm (Playable Boss/Assist Hack)
+// Avengers In Galactic Storm (Playable Boss)
+// https://www.romhacking.net/hacks/7050/
 
 static struct BurnRomInfo avengrgsbhRomDesc[] = {
-	{ "sfbh_00-0.7k",			0x080000, 0x6aa15730, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "sfbh_00-0.7k",			0x080000, 0x83eae27c, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "sfbh_01-0.7l",			0x080000, 0x6ef1380a, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "mcg-00.1j",				0x200000, 0x99129d9a, 2 | BRF_GRA },           //  2 Sprites
@@ -1365,7 +1366,7 @@ STD_ROM_FN(avengrgsbh)
 
 struct BurnDriver BurnDrvAvengrgsbh = {
 	"avengrgsbh", "avengrgs", NULL, NULL, "2022",
-	"Avengers In Galactic Storm (Playable Boss / Assist Mod, Hack)\0", NULL, "hack", "DECO MLC",
+	"Avengers In Galactic Storm (Playable Boss, Hack)\0", NULL, "hack", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, avengrgsbhRomInfo, avengrgsbhRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,

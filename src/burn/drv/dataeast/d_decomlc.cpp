@@ -1269,7 +1269,7 @@ static struct BurnRomInfo avengrgsRomDesc[] = {
 	{ "mcg-13.9k",			0x200000, 0x92301551, 4 | BRF_GRA },           // 16
 	{ "mcg-14.6a",			0x200000, 0xc0d8b5f0, 4 | BRF_GRA },           // 17
 
-	{ "avengrgs.nv",		0x000080, 0xc0e84b4e, 0 | BRF_PRG | BRF_OPT }, // 18 Default Settings
+	{ "avengrgs.nv",		0x000080, 0xc0e84b4e, 5 | BRF_PRG }, // 18 Default Settings
 };
 
 STD_ROM_PICK(avengrgs)
@@ -1316,7 +1316,7 @@ static struct BurnRomInfo avengrgsjRomDesc[] = {
 	{ "mcg-13.9k",			0x200000, 0x92301551, 4 | BRF_GRA },           // 16
 	{ "mcg-14.6a",			0x200000, 0xc0d8b5f0, 4 | BRF_GRA },           // 17
 
-	{ "avengrgsj.nv",		0x000080, 0x7ea70843, 0 | BRF_PRG | BRF_OPT }, // 18 Default Settings
+	{ "avengrgsj.nv",		0x000080, 0x7ea70843, 5 | BRF_PRG }, // 18 Default Settings
 };
 
 STD_ROM_PICK(avengrgsj)
@@ -1332,6 +1332,46 @@ struct BurnDriver BurnDrvAvengrgsj = {
 	320, 240, 4, 3
 };
 
+// Avengers In Galactic Storm (Playable Boss/Assist Hack)
+
+static struct BurnRomInfo avengrgsbhRomDesc[] = {
+	{ "sfbh_00-0.7k",			0x080000, 0x6aa15730, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "sfbh_01-0.7l",			0x080000, 0x6ef1380a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mcg-00.1j",				0x200000, 0x99129d9a, 2 | BRF_GRA },           //  2 Sprites
+	{ "mcg-02.1f",				0x200000, 0x29af9866, 2 | BRF_GRA },           //  3
+	{ "mcg-01.1d",				0x200000, 0x3638861b, 2 | BRF_GRA },           //  4
+	{ "mcg-03.7m",				0x200000, 0x4a0c965f, 2 | BRF_GRA },           //  5
+	{ "mcg-08.7p",				0x200000, 0xc253943e, 2 | BRF_GRA },           //  6
+	{ "mcg-09.7n",				0x200000, 0x8fb9870b, 2 | BRF_GRA },           //  7
+	{ "mcg-04.3j",				0x200000, 0xa4954c0e, 2 | BRF_GRA },           //  8
+	{ "mcg-06.3f",				0x200000, 0x01571cf6, 2 | BRF_GRA },           //  9
+	{ "mcg-05.3d",				0x200000, 0x182c2b49, 2 | BRF_GRA },           // 10
+	{ "mcg-07.8m",				0x200000, 0xd09a3635, 2 | BRF_GRA },           // 11
+	{ "mcg-10.8p",				0x200000, 0x1383f524, 2 | BRF_GRA },           // 12
+	{ "mcg-11.8n",				0x200000, 0x8f7fc281, 2 | BRF_GRA },           // 13
+
+	{ "sf_02-0.6j",				0x080000, 0xc98585dd, 3 | BRF_GRA },           // 14 Sprite Look-up Table
+
+	{ "mcg-12.5a",				0x200000, 0xbef9b28f, 4 | BRF_GRA },           // 15 YMZ280b Samples
+	{ "mcg-13.9k",				0x200000, 0x92301551, 4 | BRF_GRA },           // 16
+	{ "mcg-14.6a",				0x200000, 0xc0d8b5f0, 4 | BRF_GRA },           // 17
+
+	{ "avengrgs.nv",			0x000080, 0xc0e84b4e, 5 | BRF_PRG }, // 18 Default Settings
+};
+
+STD_ROM_PICK(avengrgsbh)
+STD_ROM_FN(avengrgsbh)
+
+struct BurnDriver BurnDrvAvengrgsbh = {
+	"avengrgsbh", "avengrgs", NULL, NULL, "2022",
+	"Avengers In Galactic Storm (Playable Boss / Assist Mod, Hack)\0", NULL, "hack", "DECO MLC",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, avengrgsbhRomInfo, avengrgsbhRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
+	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
 
 // Skull Fang (World)
 
@@ -1351,7 +1391,7 @@ static struct BurnRomInfo skullfngRomDesc[] = {
 	{ "mch-06.6a",			0x200000, 0xb2efe4ae, 4 | BRF_SND },           //  9 YMZ280b Samples
 	{ "mch-07.11j",			0x200000, 0xbc1a50a1, 4 | BRF_SND },           // 10
 
-	{ "skullfng.eeprom",		0x000080, 0x240d882e, 0 | BRF_PRG | BRF_OPT }, // 11 Default Settings
+	{ "skullfng.eeprom",		0x000080, 0x240d882e, 5 | BRF_PRG }, // 11 Default Settings
 };
 
 STD_ROM_PICK(skullfng)
@@ -1391,7 +1431,7 @@ static struct BurnRomInfo skullfngjRomDesc[] = {
 	{ "mch-06.6a",			0x200000, 0xb2efe4ae, 4 | BRF_GRA },           //  9 YMZ280b Samples
 	{ "mch-07.11j",			0x200000, 0xbc1a50a1, 4 | BRF_GRA },           // 10
 
-	{ "skullfng.eeprom",		0x000080, 0x240d882e, 0 | BRF_PRG | BRF_OPT }, // 11 Default Settings
+	{ "skullfng.eeprom",		0x000080, 0x240d882e, 5 | BRF_PRG }, // 11 Default Settings
 };
 
 STD_ROM_PICK(skullfngj)
@@ -1426,7 +1466,7 @@ static struct BurnRomInfo skullfngaRomDesc[] = {
 	{ "mch-06.6a",			0x200000, 0xb2efe4ae, 4 | BRF_GRA },           //  9 YMZ280b Samples
 	{ "mch-07.11j",			0x200000, 0xbc1a50a1, 4 | BRF_GRA },           // 10
 
-	{ "skullfng.eeprom",		0x000080, 0x240d882e, 0 | BRF_PRG | BRF_OPT }, // 11 Default Settings
+	{ "skullfng.eeprom",		0x000080, 0x240d882e, 5 | BRF_PRG }, // 11 Default Settings
 };
 
 STD_ROM_PICK(skullfnga)
@@ -1460,7 +1500,7 @@ static struct BurnRomInfo stadhr96RomDesc[] = {
 
 	{ "mcm-06.6a",			0x400000, 0xfbc178f3, 4 | BRF_GRA },           //  9 YMZ280b Samples
 
-	{ "eeprom-stadhr96.bin",	0x000080, 0x77861793, 0 | BRF_PRG | BRF_OPT }, // 10 Default Settings
+	{ "eeprom-stadhr96.bin",	0x000080, 0x77861793, 5 | BRF_PRG }, // 10 Default Settings
 };
 
 STD_ROM_PICK(stadhr96)
@@ -1499,7 +1539,7 @@ static struct BurnRomInfo stadhr96uRomDesc[] = {
 
 	{ "mcm-06.6a",			0x400000, 0xfbc178f3, 4 | BRF_GRA },           //  9 YMZ280b Samples
 
-	{ "eeprom-stadhr96u.bin",	0x000080, 0x71d796ba, 0 | BRF_PRG | BRF_OPT }, // 10 Default Settings
+	{ "eeprom-stadhr96u.bin",	0x000080, 0x71d796ba, 5 | BRF_PRG }, // 10 Default Settings
 };
 
 STD_ROM_PICK(stadhr96u)
@@ -1533,7 +1573,7 @@ static struct BurnRomInfo stadhr96jRomDesc[] = {
 
 	{ "mcm-06.6a",			0x400000, 0xfbc178f3, 4 | BRF_GRA },           //  9 YMZ280b Samples
 
-	{ "eeprom-stadhr96j.bin",	0x000080, 0xcf98098f, 0 | BRF_PRG | BRF_OPT }, // 10 Default Settings
+	{ "eeprom-stadhr96j.bin",	0x000080, 0xcf98098f, 5 | BRF_PRG }, // 10 Default Settings
 };
 
 STD_ROM_PICK(stadhr96j)
@@ -1566,7 +1606,7 @@ static struct BurnRomInfo hoops96RomDesc[] = {
 
 	{ "mce-05.6a",			0x400000, 0xe7a9355a, 4 | BRF_GRA },           //  8 YMZ280b Samples
 
-	{ "hoops.nv",			0x000080, 0x67b18457, 0 | BRF_PRG | BRF_OPT }, //  9 Default Settings
+	{ "hoops.nv",			0x000080, 0x67b18457, 5 | BRF_PRG }, //  9 Default Settings
 };
 
 STD_ROM_PICK(hoops96)
@@ -1604,7 +1644,7 @@ static struct BurnRomInfo hoops95RomDesc[] = {
 
 	{ "mce-05.6a",			0x400000, 0xe7a9355a, 4 | BRF_GRA },           //  8 YMZ280b Samples
 
-	{ "hoops.nv",			0x000080, 0x67b18457, 0 | BRF_PRG | BRF_OPT }, //  9 Default Settings
+	{ "hoops.nv",			0x000080, 0x67b18457, 5 | BRF_PRG }, //  9 Default Settings
 };
 
 STD_ROM_PICK(hoops95)
@@ -1637,7 +1677,7 @@ static struct BurnRomInfo ddream95RomDesc[] = {
 
 	{ "mce-05.6a",			0x400000, 0xe7a9355a, 4 | BRF_GRA },           //  8 YMZ280b Samples
 
-	{ "hoops.nv",			0x000080, 0x67b18457, 0 | BRF_PRG | BRF_OPT }, //  9 Default Settings
+	{ "hoops.nv",			0x000080, 0x67b18457, 5 | BRF_PRG }, //  9 Default Settings
 };
 
 STD_ROM_PICK(ddream95)

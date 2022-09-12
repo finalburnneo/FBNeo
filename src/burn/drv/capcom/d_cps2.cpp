@@ -485,6 +485,46 @@ static struct BurnInputInfo EcofghtrInputList[] = {
 
 STDINPUTINFO(Ecofghtr)
 
+static struct BurnInputInfo Ffightaec2InputList[] = {
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020 + 4, "p1 coin"   },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp020 + 0, "p1 start"  },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001 + 3, "p1 up"     },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001 + 2, "p1 down"   },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001 + 1, "p1 left"   },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001 + 0, "p1 right"  },
+	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001 + 4, "p1 fire 1" },
+	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001 + 5, "p1 fire 2" },
+	{"P1 Special"       , BIT_DIGITAL  , CpsInp001 + 6, "p1 fire 3" },
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp020 + 5, "p2 coin"   },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp020 + 1, "p2 start"  },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000 + 3, "p2 up"     },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000 + 2, "p2 down"   },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000 + 1, "p2 left"   },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000 + 0, "p2 right"  },
+	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000 + 4, "p2 fire 1" },
+	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000 + 5, "p2 fire 2" },
+	{"P2 Special"       , BIT_DIGITAL  , CpsInp000 + 6, "p2 fire 3" },
+
+	{"P3 Coin"          , BIT_DIGITAL  , CpsInp020 + 6, "p3 coin"   },
+	{"P3 Start"         , BIT_DIGITAL  , CpsInp020 + 2, "p3 start"  },
+	{"P3 Up"            , BIT_DIGITAL  , CpsInp011 + 3, "p3 up"     },
+	{"P3 Down"          , BIT_DIGITAL  , CpsInp011 + 2, "p3 down"   },
+	{"P3 Left"          , BIT_DIGITAL  , CpsInp011 + 1, "p3 left"   },
+	{"P3 Right"         , BIT_DIGITAL  , CpsInp011 + 0, "p3 right"  },
+	{"P3 Attack"        , BIT_DIGITAL  , CpsInp011 + 4, "p3 fire 1" },
+	{"P3 Jump"          , BIT_DIGITAL  , CpsInp011 + 5, "p3 fire 2" },
+	{"P3 Special"       , BIT_DIGITAL  , CpsInp011 + 6, "p3 fire 3" },
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp021 + 1, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp021 + 2, "service"   },
+	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "p1 fire 7" },
+	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "p1 fire 8" },
+};
+
+STDINPUTINFO(Ffightaec2)
+
 static struct BurnInputInfo GigawingInputList[] = {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
 	{"P1 Start"         , BIT_DIGITAL  , CpsInp020+0, "p1 start"  },
@@ -1888,31 +1928,31 @@ STD_ROM_PICK(Cybotsu)
 STD_ROM_FN(Cybotsu)
 
 static struct BurnRomInfo CybotsamRomDesc[] = {
-	{ "cybe.03",       0x080000, 0x52e1a8a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "cybe.04",       0x080000, 0x627be72a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "cyb.05",        0x080000, 0xec40408e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "cyb.06",        0x080000, 0x1ad0bed2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "cyb.07",        0x080000, 0x6245a39a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "cyb.08",        0x080000, 0x4b48e223, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "cyb.09",        0x080000, 0xe15238f6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "cyb.10",        0x080000, 0xbbfd041e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cybam.03",        0x080000, 0x52e1a8a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cybam.04",        0x080000, 0x627be72a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.05",          0x080000, 0xec40408e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.06",          0x080000, 0x1ad0bed2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.07",          0x080000, 0x6245a39a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.08",          0x080000, 0x4b48e223, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.09",          0x080000, 0xe15238f6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cybam.10",        0x080000, 0xbbfd041e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "cyb.13m",       0x400000, 0xf0dce192, CPS2_GFX | BRF_GRA },
-	{ "cyb.15m",       0x400000, 0x187aa39c, CPS2_GFX | BRF_GRA },
-	{ "cyb.17m",       0x400000, 0x8a0e4b12, CPS2_GFX | BRF_GRA },
-	{ "cyb.19m",       0x400000, 0x34b62612, CPS2_GFX | BRF_GRA },
-	{ "cyb.14m",       0x400000, 0xc1537957, CPS2_GFX | BRF_GRA },
-	{ "cyb.16m",       0x400000, 0x15349e86, CPS2_GFX | BRF_GRA },
-	{ "cyb.18m",       0x400000, 0xd83e977d, CPS2_GFX | BRF_GRA },
-	{ "cyb.20m",       0x400000, 0x77cdad5c, CPS2_GFX | BRF_GRA },
+	{ "cyb.13m",         0x400000, 0xf0dce192, CPS2_GFX | BRF_GRA },
+	{ "cyb.15m",         0x400000, 0x187aa39c, CPS2_GFX | BRF_GRA },
+	{ "cyb.17m",         0x400000, 0x8a0e4b12, CPS2_GFX | BRF_GRA },
+	{ "cyb.19m",         0x400000, 0x34b62612, CPS2_GFX | BRF_GRA },
+	{ "cyb.14m",         0x400000, 0xc1537957, CPS2_GFX | BRF_GRA },
+	{ "cyb.16m",         0x400000, 0x15349e86, CPS2_GFX | BRF_GRA },
+	{ "cyb.18m",         0x400000, 0xd83e977d, CPS2_GFX | BRF_GRA },
+	{ "cyb.20m",         0x400000, 0x77cdad5c, CPS2_GFX | BRF_GRA },
 
-	{ "cyb.01",        0x020000, 0x9c0fb079, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "cyb.02",        0x020000, 0x51cb0c4e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "cyb.01",          0x020000, 0x9c0fb079, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "cyb.02",          0x020000, 0x51cb0c4e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
-	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+	{ "cyb.11m",         0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
+	{ "cyb.12m",         0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
 	
-	{ "cybots.key",    0x000014, 0x9bbcbef3, CPS2_ENCRYPTION_KEY },
+	{ "cybots.key",      0x000014, 0x9bbcbef3, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Cybotsam)
@@ -2963,31 +3003,31 @@ STD_ROM_PICK(Vampjr1)
 STD_ROM_FN(Vampjr1)
 
 static struct BurnRomInfo VampjbhRomDesc[] = {
-	{ "vamj.03",        0x080000, 0x55c1be82, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vamj.04",        0x080000, 0x9c12017e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vamj.05a",       0x080000, 0x6c497e92, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vamj.06a",       0x080000, 0xf1bbecb6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vamj.07a",       0x080000, 0x1067ad84, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vamj.08a",       0x080000, 0x4b89f41f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vamj.09a",       0x080000, 0xfc0a4aac, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vamj.10a",       0x080000, 0x9270c26b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamjbh.03",        0x080000, 0x55c1be82, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamjbh.04",        0x080000, 0x9c12017e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.05a",         0x080000, 0x6c497e92, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.06a",         0x080000, 0xf1bbecb6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.07a",         0x080000, 0x1067ad84, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.08a",         0x080000, 0x4b89f41f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.09a",         0x080000, 0xfc0a4aac, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vamj.10a",         0x080000, 0x9270c26b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "vam.13m",        0x400000, 0xc51baf99, CPS2_GFX | BRF_GRA },
-	{ "vam.15m",        0x400000, 0x3ce83c77, CPS2_GFX | BRF_GRA },
-	{ "vam.17m",        0x400000, 0x4f2408e0, CPS2_GFX | BRF_GRA },
-	{ "vam.19m",        0x400000, 0x9ff60250, CPS2_GFX | BRF_GRA },
-	{ "vam.14m",        0x100000, 0xbd87243c, CPS2_GFX | BRF_GRA },
-	{ "vam.16m",        0x100000, 0xafec855f, CPS2_GFX | BRF_GRA },
-	{ "vam.18m",        0x100000, 0x3a033625, CPS2_GFX | BRF_GRA },
-	{ "vam.20m",        0x100000, 0x2bff6a89, CPS2_GFX | BRF_GRA },
+	{ "vam.13m",          0x400000, 0xc51baf99, CPS2_GFX | BRF_GRA },
+	{ "vam.15m",          0x400000, 0x3ce83c77, CPS2_GFX | BRF_GRA },
+	{ "vam.17m",          0x400000, 0x4f2408e0, CPS2_GFX | BRF_GRA },
+	{ "vam.19m",          0x400000, 0x9ff60250, CPS2_GFX | BRF_GRA },
+	{ "vam.14m",          0x100000, 0xbd87243c, CPS2_GFX | BRF_GRA },
+	{ "vam.16m",          0x100000, 0xafec855f, CPS2_GFX | BRF_GRA },
+	{ "vam.18m",          0x100000, 0x3a033625, CPS2_GFX | BRF_GRA },
+	{ "vam.20m",          0x100000, 0x2bff6a89, CPS2_GFX | BRF_GRA },
 
-	{ "vam.01",         0x020000, 0x64b685d5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "vam.02",         0x020000, 0xcf7c97c7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vam.01",           0x020000, 0x64b685d5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vam.02",           0x020000, 0xcf7c97c7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "vam.11m",        0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
-	{ "vam.12m",        0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	{ "vam.11m",         0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
+	{ "vam.12m",         0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
 
-	{ "vampj.key",      0x000014, 0x8418cc6f, CPS2_ENCRYPTION_KEY },
+	{ "vampj.key",       0x000014, 0x8418cc6f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vampjbh)
@@ -4007,31 +4047,31 @@ STD_ROM_PICK(Mshu)
 STD_ROM_FN(Mshu)
 
 static struct BurnRomInfo MshbhRomDesc[] = {
-	{ "mshe.03e",      0x080000, 0xbd951414, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mshe.04e",      0x080000, 0xadbd5707, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "msh.05",        0x080000, 0x6a091b9e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "msh.06b",       0x080000, 0x803e3fa4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "msh.07a",       0x080000, 0xc45f8e27, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "msh.08a",       0x080000, 0x9ca6f12c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "msh.09a",       0x080000, 0x82ec27af, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "msh.10b",       0x080000, 0x8d931196, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshe.03e",       0x080000, 0xbd951414, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshbh.04e",      0x080000, 0xadbd5707, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.05",         0x080000, 0x6a091b9e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.06b",        0x080000, 0x803e3fa4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.07a",        0x080000, 0xc45f8e27, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.08a",        0x080000, 0x9ca6f12c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.09a",        0x080000, 0x82ec27af, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.10b",        0x080000, 0x8d931196, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "msh.13m",       0x400000, 0x09d14566, CPS2_GFX | BRF_GRA },
-	{ "msh.15m",       0x400000, 0xee962057, CPS2_GFX | BRF_GRA },
-	{ "msh.17m",       0x400000, 0x604ece14, CPS2_GFX | BRF_GRA },
-	{ "msh.19m",       0x400000, 0x94a731e8, CPS2_GFX | BRF_GRA },
-	{ "msh.14m",       0x400000, 0x4197973e, CPS2_GFX | BRF_GRA },
-	{ "msh.16m",       0x400000, 0x438da4a0, CPS2_GFX | BRF_GRA },
-	{ "msh.18m",       0x400000, 0x4db92d94, CPS2_GFX | BRF_GRA },
-	{ "msh.20m",       0x400000, 0xa2b0c6c0, CPS2_GFX | BRF_GRA },
+	{ "msh.13m",        0x400000, 0x09d14566, CPS2_GFX | BRF_GRA },
+	{ "msh.15m",        0x400000, 0xee962057, CPS2_GFX | BRF_GRA },
+	{ "msh.17m",        0x400000, 0x604ece14, CPS2_GFX | BRF_GRA },
+	{ "msh.19m",        0x400000, 0x94a731e8, CPS2_GFX | BRF_GRA },
+	{ "msh.14m",        0x400000, 0x4197973e, CPS2_GFX | BRF_GRA },
+	{ "msh.16m",        0x400000, 0x438da4a0, CPS2_GFX | BRF_GRA },
+	{ "msh.18m",        0x400000, 0x4db92d94, CPS2_GFX | BRF_GRA },
+	{ "msh.20m",        0x400000, 0xa2b0c6c0, CPS2_GFX | BRF_GRA },
 
-	{ "msh.01",        0x020000, 0xc976e6f9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "msh.02",        0x020000, 0xce67d0d9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "msh.01",         0x020000, 0xc976e6f9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "msh.02",         0x020000, 0xce67d0d9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
-	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	{ "msh.11m",        0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
+	{ "msh.12m",        0x200000, 0xde092570, CPS2_QSND | BRF_SND },
 
-	{ "msh.key",       0x000014, 0xb494368e, CPS2_ENCRYPTION_KEY },
+	{ "msh.key",        0x000014, 0xb494368e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshbh)
@@ -4380,31 +4420,31 @@ STD_ROM_PICK(Mshvsfu1)
 STD_ROM_FN(Mshvsfu1)
 
 static struct BurnRomInfo MsvsfbhRomDesc[] = {
-	{ "mvsj.03i",      0x080000, 0x54ecd389, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsj.04i",      0x080000, 0x6031012f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.05h",       0x080000, 0x77870dc3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.06a",       0x080000, 0x959f3030, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.07b",       0x080000, 0x7f915bdb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.08a",       0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.09b",       0x080000, 0x3ba08818, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.10b",       0x080000, 0xcf0dba98, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsbh.03i",      0x080000, 0x54ecd389, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsbh.04i",      0x080000, 0x6031012f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.05h",        0x080000, 0x77870dc3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.06a",        0x080000, 0x959f3030, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.07b",        0x080000, 0x7f915bdb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.08a",        0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.09b",        0x080000, 0x3ba08818, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.10b",        0x080000, 0xcf0dba98, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "mvs.13m",       0x400000, 0x29b05fd9, CPS2_GFX | BRF_GRA },
-	{ "mvs.15m",       0x400000, 0xfaddccf1, CPS2_GFX | BRF_GRA },
-	{ "mvs.17m",       0x400000, 0x97aaf4c7, CPS2_GFX | BRF_GRA },
-	{ "mvs.19m",       0x400000, 0xcb70e915, CPS2_GFX | BRF_GRA },
-	{ "mvs.14m",       0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
-	{ "mvs.16m",       0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
-	{ "mvs.18m",       0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
-	{ "mvs.20m",       0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
+	{ "mvs.13m",        0x400000, 0x29b05fd9, CPS2_GFX | BRF_GRA },
+	{ "mvs.15m",        0x400000, 0xfaddccf1, CPS2_GFX | BRF_GRA },
+	{ "mvs.17m",        0x400000, 0x97aaf4c7, CPS2_GFX | BRF_GRA },
+	{ "mvs.19m",        0x400000, 0xcb70e915, CPS2_GFX | BRF_GRA },
+	{ "mvs.14m",        0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
+	{ "mvs.16m",        0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
+	{ "mvs.18m",        0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
+	{ "mvs.20m",        0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
 
-	{ "mvs.01",        0x020000, 0x68252324, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "mvs.02",        0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvs.01",         0x020000, 0x68252324, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvs.02",         0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
-	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	{ "mvs.11m",        0x400000, 0x86219770, CPS2_QSND | BRF_SND },
+	{ "mvs.12m",        0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
 
-	{ "mshvsfj.key",   0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
+	{ "mshvsfj.key",    0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Msvsfbh)
@@ -4721,31 +4761,31 @@ STD_ROM_PICK(Mvscur1)
 STD_ROM_FN(Mvscur1)
 
 static struct BurnRomInfo MvscbhRomDesc[] = {
-	{ "mvcu.03d",      0x080000, 0xe557a885, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvcu.04d",      0x080000, 0x05e4ba51, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvc.05a",       0x080000, 0x2d8c8e86, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvc.06a",       0x080000, 0x8528e1f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvc.07",        0x080000, 0xc3baa32b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvc.08",        0x080000, 0xbc002fcd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvc.09",        0x080000, 0xc67b26df, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvc.10",        0x080000, 0x0fdd1e26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcbh.03d",      0x080000, 0xe557a885, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcbh.04d",      0x080000, 0x05e4ba51, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.05a",        0x080000, 0x2d8c8e86, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.06a",        0x080000, 0x8528e1f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.07",         0x080000, 0xc3baa32b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.08",         0x080000, 0xbc002fcd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.09",         0x080000, 0xc67b26df, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.10",         0x080000, 0x0fdd1e26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "mvc.13m",       0x400000, 0xfa5f74bc, CPS2_GFX | BRF_GRA },
-	{ "mvc.15m",       0x400000, 0x71938a8f, CPS2_GFX | BRF_GRA },
-	{ "mvc.17m",       0x400000, 0x92741d07, CPS2_GFX | BRF_GRA },
-	{ "mvc.19m",       0x400000, 0xbcb72fc6, CPS2_GFX | BRF_GRA },
-	{ "mvc.14m",       0x400000, 0x7f1df4e4, CPS2_GFX | BRF_GRA },
-	{ "mvc.16m",       0x400000, 0x90bd3203, CPS2_GFX | BRF_GRA },
-	{ "mvc.18m",       0x400000, 0x67aaf727, CPS2_GFX | BRF_GRA },
-	{ "mvc.20m",       0x400000, 0x8b0bade8, CPS2_GFX | BRF_GRA },
+	{ "mvc.13m",        0x400000, 0xfa5f74bc, CPS2_GFX | BRF_GRA },
+	{ "mvc.15m",        0x400000, 0x71938a8f, CPS2_GFX | BRF_GRA },
+	{ "mvc.17m",        0x400000, 0x92741d07, CPS2_GFX | BRF_GRA },
+	{ "mvc.19m",        0x400000, 0xbcb72fc6, CPS2_GFX | BRF_GRA },
+	{ "mvc.14m",        0x400000, 0x7f1df4e4, CPS2_GFX | BRF_GRA },
+	{ "mvc.16m",        0x400000, 0x90bd3203, CPS2_GFX | BRF_GRA },
+	{ "mvc.18m",        0x400000, 0x67aaf727, CPS2_GFX | BRF_GRA },
+	{ "mvc.20m",        0x400000, 0x8b0bade8, CPS2_GFX | BRF_GRA },
 
-	{ "mvc.01",        0x020000, 0x41629e95, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "mvc.02",        0x020000, 0x963abf6b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvc.01",         0x020000, 0x41629e95, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvc.02",         0x020000, 0x963abf6b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
-	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	{ "mvc.11m",        0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
+	{ "mvc.12m",        0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
 
-	{ "mvscu.key",     0x000014, 0xa83db333, CPS2_ENCRYPTION_KEY },
+	{ "mvscu.key",      0x000014, 0xa83db333, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscbh)
@@ -8419,31 +8459,31 @@ STD_ROM_PICK(Xmcotau)
 STD_ROM_FN(Xmcotau)
 
 static struct BurnRomInfo XmcotabhRomDesc[] = {
-	{ "xmnj.03b",      0x080000, 0xbd2f0b84, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmnj.04b",      0x080000, 0x5de40342, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmn.05",        0x080000, 0xc3ed62a2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmn.06",        0x080000, 0xf03c52e1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmn.07",        0x080000, 0x325626b1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmn.08",        0x080000, 0x7194ea10, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmn.09",        0x080000, 0xae946df3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmn.10",        0x080000, 0x32a6be1d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmnbh.03b",      0x080000, 0xbd2f0b84, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmnbh.04b",      0x080000, 0x5de40342, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.05",         0x080000, 0xc3ed62a2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.06",         0x080000, 0xf03c52e1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.07",         0x080000, 0x325626b1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.08",         0x080000, 0x7194ea10, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.09",         0x080000, 0xae946df3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.10",         0x080000, 0x32a6be1d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "xmn.13m",       0x400000, 0xbf4df073, CPS2_GFX | BRF_GRA },
-	{ "xmn.15m",       0x400000, 0x4d7e4cef, CPS2_GFX | BRF_GRA },
-	{ "xmn.17m",       0x400000, 0x513eea17, CPS2_GFX | BRF_GRA },
-	{ "xmn.19m",       0x400000, 0xd23897fc, CPS2_GFX | BRF_GRA },
-	{ "xmn.14m",       0x400000, 0x778237b7, CPS2_GFX | BRF_GRA },
-	{ "xmn.16m",       0x400000, 0x67b36948, CPS2_GFX | BRF_GRA },
-	{ "xmn.18m",       0x400000, 0x015a7c4c, CPS2_GFX | BRF_GRA },
-	{ "xmn.20m",       0x400000, 0x9dde2758, CPS2_GFX | BRF_GRA },
+	{ "xmn.13m",        0x400000, 0xbf4df073, CPS2_GFX | BRF_GRA },
+	{ "xmn.15m",        0x400000, 0x4d7e4cef, CPS2_GFX | BRF_GRA },
+	{ "xmn.17m",        0x400000, 0x513eea17, CPS2_GFX | BRF_GRA },
+	{ "xmn.19m",        0x400000, 0xd23897fc, CPS2_GFX | BRF_GRA },
+	{ "xmn.14m",        0x400000, 0x778237b7, CPS2_GFX | BRF_GRA },
+	{ "xmn.16m",        0x400000, 0x67b36948, CPS2_GFX | BRF_GRA },
+	{ "xmn.18m",        0x400000, 0x015a7c4c, CPS2_GFX | BRF_GRA },
+	{ "xmn.20m",        0x400000, 0x9dde2758, CPS2_GFX | BRF_GRA },
 
-	{ "xmn.01a",       0x020000, 0x40f479ea, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "xmn.02a",       0x020000, 0x39d9b5ad, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xmn.01a",        0x020000, 0x40f479ea, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xmn.02a",        0x020000, 0x39d9b5ad, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
-	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	{ "xmn.11m",        0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
+	{ "xmn.12m",        0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
 
-	{ "xmcotaj.key",   0x000014, 0xd278b4ac, CPS2_ENCRYPTION_KEY },
+	{ "xmcotaj.key",    0x000014, 0xd278b4ac, CPS2_ENCRYPTION_KEY },
 };
 
 
@@ -12806,62 +12846,62 @@ STD_ROM_PICK(Sfa3xl)
 STD_ROM_FN(Sfa3xl)
 
 static struct BurnRomInfo Sfa3sp2RomDesc[] = {
-	{ "sz3e.03c",      0x080000, 0x41b961b4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3e.04c",      0x080000, 0x5ad3f721, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.05c",       0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.06c",       0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.07c",       0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.08c",       0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.09c",       0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.10b",       0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3sp2.03c",      0x080000, 0x41b961b4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3e.04c",        0x080000, 0x5ad3f721, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05c",         0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06c",         0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07c",         0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08c",         0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09c",         0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10b",         0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sz3.13m",       0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
-	{ "sz3.15m",       0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
-	{ "sz3.17m",       0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
-	{ "sz3.19m",       0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
-	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
-	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
-	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
-	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+	{ "sz3.13m",         0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",         0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",         0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",         0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",         0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",         0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",         0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",         0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
 
-	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.01",          0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",          0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
-	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	{ "sz3.11m",         0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",         0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
 
-	{ "sfa3.key",      0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
+	{ "sfa3.key",        0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3sp2)
 STD_ROM_FN(Sfa3sp2)
 
 static struct BurnRomInfo Sfa3aismRomDesc[] = {
-	{ "sz3e.03c",      0x080000, 0xca8b6871, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3e.04c",      0x080000, 0x5ad3f721, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.05c",       0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.06c",       0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.07c",       0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.08c",       0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.09c",       0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.10b",       0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3aism.03c",      0x080000, 0xca8b6871, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3e.04c",         0x080000, 0x5ad3f721, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05c",          0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06c",          0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07c",          0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08c",          0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09c",          0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10b",          0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sz3.13m",       0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
-	{ "sz3.15m",       0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
-	{ "sz3.17m",       0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
-	{ "sz3.19m",       0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
-	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
-	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
-	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
-	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+	{ "sz3.13m",          0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",          0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",          0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",          0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",          0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",          0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",          0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",          0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
 
-	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.01",           0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",           0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
-	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	{ "sz3.11m",          0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",          0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
 
-	{ "sfa3.key",      0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
+	{ "sfa3.key",         0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3aism)
@@ -13269,31 +13309,31 @@ STD_ROM_PICK(Vsavd)
 STD_ROM_FN(Vsavd)
 
 static struct BurnRomInfo VsavaeRomDesc[] = {
-	{ "vm3e.03d",      0x080000, 0xa5ae2f72, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vm3e.04d",      0x080000, 0x21b40ea2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vm3.05a",       0x080000, 0x4118e00f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vm3.06a",       0x080000, 0x2f4fd3a9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vm3.07b",       0x080000, 0xcbda91b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vm3.08a",       0x080000, 0x6ca47259, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vm3.09b",       0x080000, 0xf4a339e3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "vm3.10b",       0x080000, 0xadb43778, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3ae.03d",       0x080000, 0xa5ae2f72, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3e.04d",        0x080000, 0x21b40ea2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.05a",         0x080000, 0x4118e00f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.06a",         0x080000, 0x2f4fd3a9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.07b",         0x080000, 0xcbda91b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.08a",         0x080000, 0x6ca47259, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3.09b",         0x080000, 0xf4a339e3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3ae.10b",       0x080000, 0xadb43778, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "vm3.13m",       0x400000, 0xfd8a11eb, CPS2_GFX | BRF_GRA },
-	{ "vm3.15m",       0x400000, 0xdd1e7d4e, CPS2_GFX | BRF_GRA },
-	{ "vm3.17m",       0x400000, 0x6b89445e, CPS2_GFX | BRF_GRA },
-	{ "vm3.19m",       0x400000, 0x3830fdc7, CPS2_GFX | BRF_GRA },
-	{ "vm3.14m",       0x400000, 0xc1a28e6c, CPS2_GFX | BRF_GRA },
-	{ "vm3.16m",       0x400000, 0x194a7304, CPS2_GFX | BRF_GRA },
-	{ "vm3.18m",       0x400000, 0xdf9a9f47, CPS2_GFX | BRF_GRA },
-	{ "vm3.20m",       0x400000, 0xc22fc3d9, CPS2_GFX | BRF_GRA },
+	{ "vm3.13m",         0x400000, 0xfd8a11eb, CPS2_GFX | BRF_GRA },
+	{ "vm3.15m",         0x400000, 0xdd1e7d4e, CPS2_GFX | BRF_GRA },
+	{ "vm3.17m",         0x400000, 0x6b89445e, CPS2_GFX | BRF_GRA },
+	{ "vm3.19m",         0x400000, 0x3830fdc7, CPS2_GFX | BRF_GRA },
+	{ "vm3.14m",         0x400000, 0xc1a28e6c, CPS2_GFX | BRF_GRA },
+	{ "vm3.16m",         0x400000, 0x194a7304, CPS2_GFX | BRF_GRA },
+	{ "vm3.18m",         0x400000, 0xdf9a9f47, CPS2_GFX | BRF_GRA },
+	{ "vm3.20m",         0x400000, 0xc22fc3d9, CPS2_GFX | BRF_GRA },
 
-	{ "vm3.01",        0x020000, 0xf778769b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "vm3.02",        0x020000, 0xcc09faa1, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vm3.01",          0x020000, 0xf778769b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vm3.02",          0x020000, 0xcc09faa1, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
-	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	{ "vm3.11m",         0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
+	{ "vm3.12m",         0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
 
-	{ "vsav.key",      0x000014, 0xa6e3b164, CPS2_ENCRYPTION_KEY },
+	{ "vsav.key",        0x000014, 0xa6e3b164, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsavae)
@@ -14103,6 +14143,39 @@ struct BurnDriver BurnDrvCpsXmvsfu1d = {
 };
 
 // other bootlegs
+
+// Final Fight Anniversary Edition (CPS2 hardware)
+// Grego and Gnawtor
+static struct BurnRomInfo Ffightaec2RomDesc[] = {
+	{ "ff-23m.8h",     0x080000, 0xb598d599, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ff-22m.7h",     0x080000, 0x3615cfb9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	
+	{ "ff-5m.7a",      0x400000, 0x3f4028c5, CPS2_GFX | BRF_GRA },
+	{ "ff-7m.9a",      0x400000, 0xbe3858b0, CPS2_GFX | BRF_GRA },
+	{ "ff-1m.3a",      0x400000, 0xed622314, CPS2_GFX | BRF_GRA },
+	{ "ff-3m.5a",      0x400000, 0xd65b53e9, CPS2_GFX | BRF_GRA },
+	
+	{ "sz3.01",        0x020000, 0x7ee68d38, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       0x400000, 0x71af8d5a, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ffightaec2)
+STD_ROM_FN(Ffightaec2)
+
+struct BurnDriver BurnDrvCpsFfightaec2 = {
+	"ffightaec2", NULL, NULL, NULL, "2022",
+	"Final Fight Anniversary Edition (CPS2 hardware)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, Ffightaec2RomInfo, Ffightaec2RomName, NULL, NULL, NULL, NULL, Ffightaec2InputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
 
 // Progear No Arashi (010117 Japan, decrypted set)
 static struct BurnRomInfo ProgearjblRomDesc[] = {

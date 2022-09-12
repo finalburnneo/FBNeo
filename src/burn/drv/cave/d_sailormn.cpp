@@ -1583,7 +1583,7 @@ STD_ROM_FN(sailormnoh)
 
 
 static struct BurnRomInfo sailormnrotRomDesc[] = {
-	{ "bpsm945a.u45", 0x080000, 0xdaf0db76, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "bpsmrot.u45",  0x080000, 0xdaf0db76, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "bpsm.u46",     0x200000, 0x32084e80, BRF_ESS | BRF_PRG }, //  1
 
 	{ "bpsm945a.u9",  0x080000, 0x438de548, BRF_ESS | BRF_PRG }, //  2 Z80 code

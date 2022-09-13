@@ -32588,3 +32588,41 @@ struct BurnDriver BurnDrvMSX_bufonadas = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// SpaceCat (HB)
+
+static struct BurnRomInfo MSX_spacecatRomDesc[] = {
+	{ "SpaceCat v1.0 (2022)(Platty Soft).rom",	262144, 0xc1d30a04, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_spacecat, MSX_spacecat, msx_msx)
+STD_ROM_FN(MSX_spacecat)
+
+struct BurnDriver BurnDrvMSX_spacecat = {
+	"msx_spacecat", NULL, "msx_msx", NULL, "2022",
+	"SpaceCat (HB)\0", NULL, "Platty Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_ACTION, 0,
+	MSXGetZipName, MSX_spacecatRomInfo, MSX_spacecatRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// WashMan (HB, v1.9) (HB)
+
+static struct BurnRomInfo MSX_washmanRomDesc[] = {
+	{ "WashMan v1.9 (2022)(GameCast Ent.).rom",	65536, 0xff444199, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_washman, MSX_washman, msx_msx)
+STD_ROM_FN(MSX_washman)
+
+struct BurnDriver BurnDrvMSX_washman = {
+	"msx_washman", NULL, "msx_msx", NULL, "2022",
+	"WashMan (HB, v1.9)\0", NULL, "GameCast Entertainment", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_washmanRomInfo, MSX_washmanRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

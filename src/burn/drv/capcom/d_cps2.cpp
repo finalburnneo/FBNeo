@@ -485,6 +485,46 @@ static struct BurnInputInfo EcofghtrInputList[] = {
 
 STDINPUTINFO(Ecofghtr)
 
+static struct BurnInputInfo Ffightaec2InputList[] = {
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp020+0, "p1 start"  },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+	{"P1 Special"       , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp020+5, "p2 coin"   },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp020+1, "p2 start"  },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+	{"P2 Special"       , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+	
+	{"P3 Coin"          , BIT_DIGITAL  , CpsInp020+6, "p3 coin"   },
+	{"P3 Start"         , BIT_DIGITAL  , CpsInp020+2, "p3 start"  },
+	{"P3 Up"            , BIT_DIGITAL  , CpsInp011+3, "p3 up"     },
+	{"P3 Down"          , BIT_DIGITAL  , CpsInp011+2, "p3 down"   },
+	{"P3 Left"          , BIT_DIGITAL  , CpsInp011+1, "p3 left"   },
+	{"P3 Right"         , BIT_DIGITAL  , CpsInp011+0, "p3 right"  },
+	{"P3 Attack"        , BIT_DIGITAL  , CpsInp011+4, "p3 fire 1" },
+	{"P3 Jump"          , BIT_DIGITAL  , CpsInp011+5, "p3 fire 2" },
+	{"P3 Special"       , BIT_DIGITAL  , CpsInp011+6, "p3 fire 3" },
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp021+1, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp021+2, "service"   },
+	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "p1 fire 7" },
+	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "p1 fire 8" },
+};
+
+STDINPUTINFO(Ffightaec2)
+
 static struct BurnInputInfo GigawingInputList[] = {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
 	{"P1 Start"         , BIT_DIGITAL  , CpsInp020+0, "p1 start"  },
@@ -14201,11 +14241,11 @@ STD_ROM_PICK(Ffightaec2)
 STD_ROM_FN(Ffightaec2)
 
 struct BurnDriver BurnDrvCpsFfightaec2 = {
-	"ffightaec2", NULL, NULL, NULL, "1998",
+	"ffightaec2", NULL, NULL, NULL, "2022",
 	"Final Fight Anniversary Edition (CPS2 hardware)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
-	NULL, Ffightaec2RomInfo, Ffightaec2RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, Ffightaec2RomInfo, Ffightaec2RomName, NULL, NULL, NULL, NULL, Ffightaec2InputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

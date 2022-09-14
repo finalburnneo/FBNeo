@@ -122,8 +122,7 @@ int ConfigAppLoad()
 		VAR(nVidScanIntensity);
 		VAR(bMonitorAutoCheck);
 		VAR(bKeypadVolume);
-		VAR(bEnableSOCD);
-		VAR(bHitboxSOCD);
+		VAR(nEnableSOCD);
 		VAR(bForce60Hz);
 		VAR(bAlwaysDrawFrames);
 		VAR(bShowFPS);
@@ -470,12 +469,6 @@ int ConfigAppSave()
 	VAR64(nVidBlitterOpt[4]);
 	_ftprintf(h, _T("\n// If non-zero, attempt to auto-detect the monitor resolution and aspect ratio\n"));
 	VAR(bMonitorAutoCheck);
-	_ftprintf(h, _T("\n// If non-zero, keypad +/-/* will be used for volume shortcuts\n"));
-	VAR(bKeypadVolume);
-	_ftprintf(h, _T("\n// If non-zero, force SOCD on all games\n"));
-	VAR(bEnableSOCD);
-	_ftprintf(h, _T("\n// If non-zero, use Hitbox style for SOCD\n"));
-	VAR(bHitboxSOCD);
 	_ftprintf(h, _T("\n// If non-zero, force all games to use a 60Hz refresh rate\n"));
 	VAR(bForce60Hz);
 	_ftprintf(h, _T("\n// If zero, skip frames when needed to keep the emulation running at full speed\n"));
@@ -737,6 +730,12 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n"));
 	VAR(nAutoFireRate);
+
+	_ftprintf(h, _T("\n// If non-zero, keypad +/-/* will be used for volume shortcuts\n"));
+	VAR(bKeypadVolume);
+
+	_ftprintf(h, _T("\n// SOCD setting (0 = disabled, 1 = regular, 2 = Hitbox Style)\n"));
+	VAR(nEnableSOCD);
 
 	_ftprintf(h, _T("\n// If non-zero, enable high score saving support.\n"));
 	VAR(EnableHiscores);

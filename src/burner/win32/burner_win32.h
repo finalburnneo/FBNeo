@@ -116,8 +116,7 @@ extern bool bQuietLoading;
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;
 extern bool bKeypadVolume;
-extern bool bEnableSOCD;
-extern bool bHitboxSOCD;
+extern int nEnableSOCD;
 
 // Used for the load/save dialog in commdlg.h
 extern TCHAR szChoice[MAX_PATH];					// File chosen by the user

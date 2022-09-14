@@ -1131,9 +1131,15 @@ BEGIN
     	    MENUITEM "Very Fast",					MENU_INPUT_AUTOFIRE_RATE_4
     	END
         */
-    	MENUITEM SEPARATOR
         MENUITEM "Map game inputs...\tF5",				MENU_INPUT, GRAYED
         MENUITEM "Set dipswitches...",						MENU_DIPSW, GRAYED
+        MENUITEM SEPARATOR
+        POPUP "SOCD Cleaner"
+        BEGIN
+                MENUITEM "Disabled",					MENU_DISABLE_SOCD
+                MENUITEM "Regular SOCD\t(U+D=N, L+R=N)",					MENU_ENABLE_SOCD
+                MENUITEM "HitBox SOCD\t(U+D=U, L+R=N)",					MENU_HITBOX_SOCD
+        END
     END
     POPUP "Misc"
     BEGIN
@@ -1149,8 +1155,6 @@ BEGIN
            //MENUITEM "Scan ROMs at start-up (if needed)",	MENU_AUTOSCANGAMELIST
            MENUITEM "Hide ROM Warnings",		MENU_HIDE_ROM_WARNINGS
            MENUITEM "Keypad Volume Shortcuts",		MENU_KEYPAD_VOLUME
-		   MENUITEM "Enable SOCD",					MENU_ENABLE_SOCD
-           MENUITEM "HitBox SOCD",					MENU_HITBOX_SOCD
            MENUITEM SEPARATOR
            POPUP "Set application process priority"
            BEGIN

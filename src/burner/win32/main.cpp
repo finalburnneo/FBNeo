@@ -54,8 +54,7 @@ static bool bNumlockStatus;
 
 bool bMonitorAutoCheck = true;
 bool bKeypadVolume = true;
-bool bEnableSOCD = false;
-bool bHitboxSOCD = false;
+int nEnableSOCD = 0;
 
 // Used for the load/save dialog in commdlg.h (savestates, input replay, wave logging)
 TCHAR szChoice[MAX_PATH] = _T("");

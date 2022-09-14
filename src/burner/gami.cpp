@@ -856,7 +856,7 @@ INT32 GameInpInit()
 
 	// check if game needs clear opposites
 	// SOCD cleaner
-	bClearOpposites = false;
+	bClearOpposites = bEnableSOCD;
 	const char* clearOppositesGameList[] = {
 		"umk3", "umk3p", "umk3uc", "umk3uk",
 		"dbz2", "jojo", "jchan", "jchan2",

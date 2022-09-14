@@ -122,6 +122,7 @@ int ConfigAppLoad()
 		VAR(nVidScanIntensity);
 		VAR(bMonitorAutoCheck);
 		VAR(bKeypadVolume);
+		VAR(bEnableSOCD);
 		VAR(bHitboxSOCD);
 		VAR(bForce60Hz);
 		VAR(bAlwaysDrawFrames);
@@ -471,6 +472,8 @@ int ConfigAppSave()
 	VAR(bMonitorAutoCheck);
 	_ftprintf(h, _T("\n// If non-zero, keypad +/-/* will be used for volume shortcuts\n"));
 	VAR(bKeypadVolume);
+	_ftprintf(h, _T("\n// If non-zero, force SOCD on all games\n"));
+	VAR(bEnableSOCD);
 	_ftprintf(h, _T("\n// If non-zero, use Hitbox style for SOCD\n"));
 	VAR(bHitboxSOCD);
 	_ftprintf(h, _T("\n// If non-zero, force all games to use a 60Hz refresh rate\n"));

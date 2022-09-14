@@ -1149,7 +1149,8 @@ BEGIN
            //MENUITEM "Scan ROMs at start-up (if needed)",	MENU_AUTOSCANGAMELIST
            MENUITEM "Hide ROM Warnings",		MENU_HIDE_ROM_WARNINGS
            MENUITEM "Keypad Volume Shortcuts",		MENU_KEYPAD_VOLUME
-           MENUITEM "HitBox style SOCD",			MENU_HITBOX_SOCD
+		   MENUITEM "Enable SOCD",					MENU_ENABLE_SOCD
+           MENUITEM "HitBox SOCD",					MENU_HITBOX_SOCD
            MENUITEM SEPARATOR
            POPUP "Set application process priority"
            BEGIN

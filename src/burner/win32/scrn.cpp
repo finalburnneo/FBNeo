@@ -1903,6 +1903,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bKeypadVolume = !bKeypadVolume;
 			break;
 
+		case MENU_ENABLE_SOCD:
+			bEnableSOCD = !bEnableSOCD;
+			break;
+
 		case MENU_HITBOX_SOCD:
 			bHitboxSOCD = !bHitboxSOCD;
 			break;

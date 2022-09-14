@@ -729,7 +729,8 @@
 #define MENU_CLRMAME_PRO_XML_FDS_ONLY       10736
 #define MENU_HIDE_ROM_WARNINGS				10750
 #define MENU_KEYPAD_VOLUME					10751
-#define MENU_HITBOX_SOCD					10752
+#define MENU_ENABLE_SOCD					10752
+#define MENU_HITBOX_SOCD					10753
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

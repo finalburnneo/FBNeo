@@ -1111,6 +1111,7 @@ DRV		BurnDrvAvengera;
 DRV		BurnDrvAvengers;
 DRV		BurnDrvAvengerc;
 DRV		BurnDrvAvengrgsj;
+DRV		BurnDrvAvengrgsbh;
 DRV		BurnDrvAvengrgs;
 DRV		BurnDrvAvspirit;
 DRV		BurnSpecAvespacial2;
@@ -5743,6 +5744,7 @@ DRV		BurnSpecFrankensteinjr;
 DRV		BurnDrvcv_frantic;
 DRV		BurnDrvcv_ffreddy;
 DRV		BurnSpecfp128k;
+DRV		BurnSpecFpengo2;
 DRV		BurnDrvgg_fray;
 DRV		BurnSpecfred;
 DRV		BurnDrvgg_fredcoupj;
@@ -6792,6 +6794,7 @@ DRV		BurnDrvGuwanges;
 DRV		BurnDrvsg1k_guzzler;
 DRV		BurnDrvsg1k_guzzlert;
 DRV		BurnDrvGuzzler;
+DRV		BurnSpecGvolcano;
 DRV		BurnDrvPbancho;
 DRV		BurnDrvmd_gynoug;
 DRV		BurnDrvmd_gynougj;
@@ -10184,6 +10187,7 @@ DRV		BurnDrvcv_mtrapa;
 DRV		BurnDrvcv_mtrap;
 DRV		BurnDrvsg1k_castlet;
 DRV		BurnSpecMrhair2;
+DRV		BurnSpecMrhair3;
 DRV		BurnSpecMrheli;
 DRV		BurnSpecMrheli128rm;
 DRV		BurnDrvcv_mrchin;
@@ -14591,6 +14595,7 @@ DRV		BurnDrvSpctrek;
 DRV		BurnDrvMSX_spacetrb;
 DRV		BurnDrvMSX_spacewlk;
 DRV		BurnDrvCHF_spacewar;
+DRV		BurnDrvMSX_spacecat;
 DRV		BurnDrvnes_spacegulls;
 DRV		BurnDrvSparkman;
 DRV		BurnDrvMSX_sparkie;
@@ -16157,6 +16162,7 @@ DRV		BurnDrvTattass;
 DRV		BurnDrvMSX_tawarakn;
 DRV		BurnDrvMSX_tawaraknb;
 DRV		BurnDrvMSX_tawarakna;
+DRV		BurnDrvTaxidriv;
 DRV		BurnDrvsms_tazmars;
 DRV		BurnDrvgg_tazmars;
 DRV		BurnDrvgg_tazmarsp14;
@@ -18900,6 +18906,8 @@ DRV		BurnDrvsg1k_zippyrac;
 DRV		BurnDrvsg1k_zippyract;
 DRV		BurnDrvZoar;
 DRV		BurnDrvZodiack;
+DRV		BurnSpecZombmalle;
+DRV		BurnSpecZombmalls;
 DRV		BurnDrvnes_zombiecalavera;
 DRV		BurnSpeczcalavera;
 DRV		BurnDrvcv_zcalavera;
@@ -20084,6 +20092,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAvengers,			// Avengers (US, revision C)
 	&BurnDrvAvengerc,			// Avengers (US, unknown revision)
 	&BurnDrvAvengrgsj,			// Avengers In Galactic Storm (Japan)
+	&BurnDrvAvengrgsbh,			// Avengers In Galactic Storm (Playable Boss, Hack)
 	&BurnDrvAvengrgs,			// Avengers In Galactic Storm (US)
 	&BurnDrvAvspirit,			// Avenging Spirit
 	&BurnSpecAvespacial2,		// Aventura Espacial, La - En los Dominios del Cerebelo (Spanish) (48K)
@@ -24716,6 +24725,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_frantic,			// Frantic (HB)
 	&BurnDrvcv_ffreddy,			// Frantic Freddy
 	&BurnSpecfp128k,			// Frantic Pengo (128K) (HB)
+	&BurnSpecFpengo2,			// Frantic Pengo 2 (128K) (HB)
 	&BurnDrvgg_fray,			// Fray - Shugyou Hen (Jpn)
 	&BurnSpecfred,				// Fred (48K)
 	&BurnDrvgg_fredcoupj,		// Fred Couples' Golf (Jpn)
@@ -25765,6 +25775,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_guzzler,		// Guzzler (Jpn, OMV)
 	&BurnDrvsg1k_guzzlert,		// Guzzler (Tw)
 	&BurnDrvGuzzler,			// Guzzler
+	&BurnSpecGvolcano,			// GVolcano (128K) (HB)
 	&BurnDrvPbancho,			// Gyakuten!! Puzzle Bancho (Japan)
 	&BurnDrvmd_gynoug,			// Gynoug (Euro)
 	&BurnDrvmd_gynougj,			// Gynoug (Jpn)
@@ -29157,6 +29168,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_mtrap,			// Mousetrap
 	&BurnDrvsg1k_castlet,		// Mowang migong ~ The Castle (Tw)
 	&BurnSpecMrhair2,			// Mr Hair & The Fly (128K) (HB)
+	&BurnSpecMrhair3,			// Mr Hairs A Very Hairy RemiX (128K) (HB)
 	&BurnSpecMrheli,			// Mr Heli (48K)
 	&BurnSpecMrheli128rm,		// Mr Heli Remastered (128K) (Graphics Hack)
 	&BurnDrvcv_mrchin,			// Mr. Chin (HB)
@@ -33564,6 +33576,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_spacetrb,		// Space Trouble (Jpn)
 	&BurnDrvMSX_spacewlk,		// Space Walk (Euro)
 	&BurnDrvCHF_spacewar,		// Space War
+	&BurnDrvMSX_spacecat,		// SpaceCat (HB)
 	&BurnDrvnes_spacegulls,		// Spacegulls (HB, v1.1)
 	&BurnDrvSparkman,			// Spark Man (v2.0, set 1)
 	&BurnDrvMSX_sparkie,		// Sparkie (Jpn)
@@ -34190,7 +34203,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSfiii3n,			// Street Fighter III 3rd Strike: Fight for the Future (Japan 990608, NO CD)
 	&BurnDrvSfiii3ur1,			// Street Fighter III 3rd Strike: Fight for the Future (USA 990512)
 	&BurnDrvSfiii3u,			// Street Fighter III 3rd Strike: Fight for the Future (USA 990608)
-	&BurnDrvSfiii3ws,			// Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220903)
+	&BurnDrvSfiii3ws,			// Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220908)
 	&BurnDrvSfiii3th,			// Street Fighter III 3rd Strike: Fight for the Future | re:THIRD update
 	&BurnDrvSfiiia,				// Street Fighter III: New Generation (Asia 970204)
 	&BurnDrvSfiiin,				// Street Fighter III: New Generation (Asia 970204, NO CD, bios set 1)
@@ -35130,6 +35143,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_tawarakn,		// Tawara-kun (Jpn)
 	&BurnDrvMSX_tawaraknb,		// Tawara-kun (Jpn, Alt 2)
 	&BurnDrvMSX_tawarakna,		// Tawara-kun (Jpn, Alt)
+	&BurnDrvTaxidriv,			// Taxi Driver
 	&BurnDrvsms_tazmars,		// Taz in Escape from Mars (Bra)
 	&BurnDrvgg_tazmars,			// Taz in Escape from Mars (Euro, USA)
 	&BurnDrvgg_tazmarsp14,		// Taz in Escape from Mars (Prototype, 19940511)
@@ -37873,6 +37887,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_zippyract,		// Zippy Race (Tw)
 	&BurnDrvZoar,				// Zoar
 	&BurnDrvZodiack,			// Zodiack
+	&BurnSpecZombmalle,			// Zombi Mall (English) (48K) (HB)
+	&BurnSpecZombmalls,			// Zombi Mall (Spanish) (48K) (HB)
 	&BurnDrvnes_zombiecalavera,	// Zombie Calavera (HB)
 	&BurnSpeczcalavera,			// Zombie Calavera Prologue (48K) (HB)
 	&BurnDrvcv_zcalavera,		// Zombie Calavera Prologue (HB)

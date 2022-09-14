@@ -6761,6 +6761,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fpengo2" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Frantic Pengo 2 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Frantic Pengo 2 128K (2022)(Gabriele Amore).tap" size="55197" crc="91f7e148"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="fred" romof="spectrum">
 		<description>Fred (48K)</description>
 		<year>1984</year>
@@ -7743,6 +7754,17 @@
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Gutz 48K (1988)(Ocean).tap" size="43037" crc="ad8a6a47"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gvolcano" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>GVolcano (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>xavisan</manufacturer>
+		<rom name="GVolcano 128K (2022)(xavisan).tap" size="39024" crc="0b6fe4c5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11316,6 +11338,17 @@
 		<year>2021</year>
 		<manufacturer>BitmapSoft</manufacturer>
 		<rom name="Mr Hair &amp; THE FLY (2021)(BitmapSoft).tap" size="48426" crc="a78da9b2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mrhair3" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Mr Hairs A Very Hairy RemiX (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Chopz</manufacturer>
+		<rom name="Mr Hairs A Very Hairy RemiX 128K (2022)(Chopz).tap" size="47052" crc="055ed60b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -18355,6 +18388,26 @@
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Zenji 48K (1984)(Activision).tap" size="23232" crc="62e604e5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zombmalle" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Zombi Mall (English) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Zombi Mall EN (2022)(The Mojon Twins).tap" size="44766" crc="c0591dbf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zombmalls" cloneof="zombmalle" romof="zombmalle">
+		<comment>Homebrew</comment>
+		<description>Zombi Mall (Spanish) (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Zombi Mall ES (2022)(The Mojon Twins).tap" size="44764" crc="5deb94ed"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

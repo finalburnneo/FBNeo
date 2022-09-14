@@ -3,7 +3,7 @@ extern INT32 i4x00_blitter_timer;
 extern UINT8 DrvRecalc;
 
 void i4x00_reset();
-void i4x00_init(UINT32 address, UINT8 *gfx8, UINT8 *gfx4, UINT32 gfxlen, void (*irqcausewrite)(UINT16), UINT16 (*irqcauseread)(), void (*soundlatch)(UINT16), INT32 has_8bpp, INT32 has_16bpp);
+void i4x00_init(INT32 cpu_speed, UINT32 address, UINT8 *gfx8, UINT8 *gfx4, UINT32 gfxlen, void (*irqcausewrite)(UINT16), UINT16 (*irqcauseread)(), void (*soundlatch)(UINT16), INT32 has_8bpp, INT32 has_16bpp);
 void i4x00_set_blazing(); // blzntrnd
 void i4x00_set_offsets(INT32 layer0, INT32 layer1, INT32 layer2);
 void i4x00_set_extrachip_callback(void (*callback)());

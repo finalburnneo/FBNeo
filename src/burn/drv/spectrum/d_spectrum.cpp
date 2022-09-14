@@ -36935,3 +36935,98 @@ struct BurnDriver BurnSpecWaldolifes = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Frantic Pengo 2 (128K) (HB)
+
+static struct BurnRomInfo SpecFpengo2RomDesc[] = {
+	{ "Frantic Pengo 2 128K (2022)(Gabriele Amore).tap", 55197, 0x91f7e148, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecFpengo2, SpecFpengo2, Spec128)
+STD_ROM_FN(SpecFpengo2)
+
+struct BurnDriver BurnSpecFpengo2 = {
+	"spec_fpengo2", NULL, "spec_spec128", NULL, "2022",
+	"Frantic Pengo 2 (128K) (HB)\0", NULL, "Gabriele Amore", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecFpengo2RomInfo, SpecFpengo2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// GVolcano (128K) (HB)
+
+static struct BurnRomInfo SpecGvolcanoRomDesc[] = {
+	{ "GVolcano 128K (2022)(xavisan).tap", 39024, 0x0b6fe4c5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGvolcano, SpecGvolcano, Spec128)
+STD_ROM_FN(SpecGvolcano)
+
+struct BurnDriver BurnSpecGvolcano = {
+	"spec_gvolcano", NULL, "spec_spec128", NULL, "2022",
+	"GVolcano (128K) (HB)\0", NULL, "xavisan", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecGvolcanoRomInfo, SpecGvolcanoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mr Hairs A Very Hairy RemiX (128K) (HB)
+
+static struct BurnRomInfo SpecMrhair3RomDesc[] = {
+	{ "Mr Hairs A Very Hairy RemiX 128K (2022)(Chopz).tap", 47052, 0x055ed60b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMrhair3, SpecMrhair3, Spec128)
+STD_ROM_FN(SpecMrhair3)
+
+struct BurnDriver BurnSpecMrhair3 = {
+	"spec_mrhair3", NULL, "spec_spec128", NULL, "2022",
+	"Mr Hairs A Very Hairy RemiX (128K) (HB)\0", NULL, "Chopz", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMrhair3RomInfo, SpecMrhair3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Zombi Mall (English) (48K) (HB)
+
+static struct BurnRomInfo SpecZombmalleRomDesc[] = {
+	{ "Zombi Mall EN (2022)(The Mojon Twins).tap", 44766, 0xc0591dbf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZombmalle, SpecZombmalle, Spectrum)
+STD_ROM_FN(SpecZombmalle)
+
+struct BurnDriver BurnSpecZombmalle = {
+	"spec_zombmalle", NULL, "spec_spectrum", NULL, "2022",
+	"Zombi Mall (English) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecZombmalleRomInfo, SpecZombmalleRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Zombi Mall (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecZombmallsRomDesc[] = {
+	{ "Zombi Mall ES (2022)(The Mojon Twins).tap", 44764, 0x5deb94ed, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZombmalls, SpecZombmalls, Spectrum)
+STD_ROM_FN(SpecZombmalls)
+
+struct BurnDriver BurnSpecZombmalls = {
+	"spec_zombmalls", "spec_zombmalle", "spec_spectrum", NULL, "2022",
+	"Zombi Mall (Spanish) (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecZombmallsRomInfo, SpecZombmallsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

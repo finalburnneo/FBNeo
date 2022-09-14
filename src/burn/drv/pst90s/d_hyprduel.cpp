@@ -516,8 +516,8 @@ static INT32 HyprduelInit()
 	SekMapHandler(1, 						0xc00400, 0xc007ff, MAP_WRITE);
 	SekSetWriteWordHandler(1,				hyperduel_main_sync_write_word);
 	SekSetWriteByteHandler(1,				hyperduel_main_sync_write_byte);
-	
-	i4x00_init(0x400000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
+
+	i4x00_init(10000000, 0x400000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
 
 	SekClose();
 
@@ -592,9 +592,9 @@ static INT32 MagerrorInit()
 	SekSetWriteByteHandler(0,				hyperduel_main_write_byte);
 	SekSetReadWordHandler(0,				hyperduel_main_read_word);
 	SekSetReadByteHandler(0,				hyperduel_main_read_byte);
-	
-	i4x00_init(0x800000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
-	
+
+	i4x00_init(10000000, 0x800000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
+
 	SekClose();
 
 	SekInit(1, 0x68000);

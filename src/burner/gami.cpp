@@ -860,7 +860,8 @@ INT32 GameInpInit()
 		bClearOpposites = true;
 	}
 	const char* clearOppositesGameList[] = {
-		"umk3", "umk3p", "umk3uc", "umk3uk",
+		"umk3", "umk3p", "umk3uc", "umk3uk", "umk3te",
+		"mk2", "mk2p", "mk2ute",
 		"dbz2", "jojo", "jchan", "jchan2",
 		NULL
 	};
@@ -1966,7 +1967,7 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite)
 
 void GameInpClearOpposites(bool bCopy)
 {
-	if (kNetVersion >= NET_VERSION_SOCD && bClearOpposites) {
+	if (kNetVersion >= NET_VERSION_SOCD) {
 		if (nEnableSOCD == 2) {
 			// Hitbox SOCD cleaner
 			struct GameInp* pgi = GameInp;
@@ -1993,8 +1994,9 @@ void GameInpClearOpposites(bool bCopy)
 					}
 				}
 			}
-		} else {
-			// Hitbox SOCD cleaner
+		}
+		if (nEnableSOCD == 1 || bClearOpposites) {
+			// Regular SOCD cleaner
 			struct GameInp* pgi = GameInp;
 			for (int i = 0; i < 2; i++) {
 				int *nPlayer = InpDirections[i];

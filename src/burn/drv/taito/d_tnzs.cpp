@@ -547,7 +547,7 @@ static struct BurnDIPInfo PlumppopDIPList[]=
 
 	TNZS_LIVES_DIPSETTING(0x0e)
 
-	TNZS_ALLOWCONTINUE_DIPSETTING(0x0c, 0x80)
+	TNZS_ALLOWCONTINUE_DIPSETTING(0x0e, 0x80)
 };
 
 STDDIPINFO(Plumppop)
@@ -1712,7 +1712,7 @@ static void assemble_inputs()
 	}
 
 	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(0, DrvAxis[0], DrvAxis[1], 0x6, 0x2f);
+	BurnTrackballFrame(0, DrvAxis[0], DrvAxis[1], 0x6, 0x3f);
 	BurnTrackballUpdate(0);
 }
 

@@ -862,7 +862,7 @@ INT32 GameInpInit()
 	const char* clearOppositesGameList[] = {
 		"umk3", "umk3p", "umk3uc", "umk3uk", "umk3te",
 		"mk2", "mk2p", "mk2ute",
-		"dbz2", "jojo", "jchan", "jchan2", "dankuga",
+		"dbz2", "jojo", "jchan", "jchan2", "dankuga", "kaiserkn",
 		NULL
 	};
 	const char* gameName = BurnDrvGetTextA(DRV_NAME);

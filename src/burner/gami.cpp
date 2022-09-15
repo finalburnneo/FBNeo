@@ -856,9 +856,6 @@ INT32 GameInpInit()
 
 	// check if game needs clear opposites
 	// SOCD cleaner
-	if (nEnableSOCD > 0) {
-		bClearOpposites = true;
-	}
 	const char* clearOppositesGameList[] = {
 		"umk3", "umk3p", "umk3uc", "umk3uk", "umk3te",
 		"mk2", "mk2p", "mk2ute",
@@ -1967,7 +1964,7 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite)
 
 void GameInpClearOpposites(bool bCopy)
 {
-	if (kNetVersion >= NET_VERSION_SOCD) {
+	if (kNetVersion >= NET_VERSION_SOCD && (bClearOpposites || nEnableSOCD > 0)) {
 		if (nEnableSOCD == 2) {
 			// Hitbox SOCD cleaner
 			struct GameInp* pgi = GameInp;
@@ -1994,8 +1991,7 @@ void GameInpClearOpposites(bool bCopy)
 					}
 				}
 			}
-		}
-		if (nEnableSOCD == 1 || bClearOpposites) {
+		} else {
 			// Regular SOCD cleaner
 			struct GameInp* pgi = GameInp;
 			for (int i = 0; i < 2; i++) {

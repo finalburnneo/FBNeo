@@ -355,7 +355,7 @@ BEGIN
 	IDS_ERR_LOAD_REQUEST		"Error loading %.32hs, requested by %.128s.\nThe emulation will likely suffer problems."
 	IDS_ERR_LOAD_NOHDDDATA		"No HDD data was found, the game will not run!"
 
-	IDS_ERR_BURN_INIT			"There was a problem starting '%.128s'.\n"
+	IDS_ERR_BURN_INIT			"There was a problem starting '%.128s'.\nYou are probably using an outdated rom file.\n"
 
 	IDS_ERR_UI_NOSUPPORT		"%.32s is not supported by %.32s."
 	IDS_ERR_UI_WINDOW			"Couldn't create main window."

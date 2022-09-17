@@ -939,7 +939,7 @@ struct BurnDriver BurnDrvShadfrceu = {
 };
 
 
-// Shadow Force (Japan, Version 2)
+// Shadow Force - Henshin Ninja (Japan, Version 2)
 
 static struct BurnRomInfo shadfrcejRomDesc[] = {
 	{ "32j12-01.34",  0x040000, 0x38fdbe1d, BRF_ESS | BRF_PRG },	// 68000 code 
@@ -969,7 +969,7 @@ STD_ROM_FN(shadfrcej)
 
 struct BurnDriver BurnDrvShadfrcej = {
 	"shadfrcej", "shadfrce", NULL, NULL, "1993",
-	"Shadow Force (Japan, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Shadow Force - Henshin Ninja (Japan, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrcejRomInfo, shadfrcejRomName, NULL, NULL, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,

@@ -689,6 +689,8 @@ static INT32 DrvDoReset()
 	m_p1_old_val = m_p2_old_val = 0;
 	m_p1_res = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1160,7 +1162,7 @@ struct BurnDriver BurnDrvBagman = {
 	"bagman", NULL, NULL, NULL, "1982",
 	"Bagman\0", NULL, "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagmanRomInfo, bagmanRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1198,7 +1200,7 @@ struct BurnDriver BurnDrvBagnard = {
 	"bagnard", "bagman", NULL, NULL, "1982",
 	"Le Bagnard (set 1)\0", NULL, "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagnardRomInfo, bagnardRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1236,7 +1238,7 @@ struct BurnDriver BurnDrvBagnarda = {
 	"bagnarda", "bagman", NULL, NULL, "1982",
 	"Le Bagnard (set 2)\0", NULL, "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagnardaRomInfo, bagnardaRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1276,7 +1278,7 @@ struct BurnDriver BurnDrvBagnardi = {
 	"bagnardi", "bagman", NULL, NULL, "1982",
 	"Le Bagnard (Itisa, Spain)\0", NULL, "Valadon Automation (Itisa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagnardiRomInfo, bagnardiRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1314,7 +1316,7 @@ struct BurnDriver BurnDrvBagnardio = {
 	"bagnardio", "bagman", NULL, NULL, "1982",
 	"Le Bagnard (Itisa, Spain, older)\0", NULL, "Valadon Automation (Itisa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagnardioRomInfo, bagnardioRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1352,7 +1354,7 @@ struct BurnDriver BurnDrvBagmans = {
 	"bagmans", "bagman", NULL, NULL, "1982",
 	"Bagman (Stern Electronics, revision A5)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagmansRomInfo, bagmansRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmansDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1390,7 +1392,7 @@ struct BurnDriver BurnDrvBagmans4 = {
 	"bagmans4", "bagman", NULL, NULL, "1982",
 	"Bagman (Stern Electronics, revision A4)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagmans4RomInfo, bagmans4RomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1428,7 +1430,7 @@ struct BurnDriver BurnDrvBagmans3 = {
 	"bagmans3", "bagman", NULL, NULL, "1982",
 	"Bagman (Stern Electronics, revision A3)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagmans3RomInfo, bagmans3RomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1469,7 +1471,7 @@ struct BurnDriver BurnDrvBagmanj = {
 	"bagmanj", "bagman", NULL, NULL, "1982",
 	"Bagman (Taito)\0", NULL, "Valadon Automation (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bagmanjRomInfo, bagmanjRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BagmanDIPInfo,
 	BagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1518,7 +1520,7 @@ struct BurnDriver BurnDrvSbagman = {
 	"sbagman", NULL, NULL, NULL, "1984",
 	"Super Bagman (version 5)\0", NULL, "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, sbagmanRomInfo, sbagmanRomName, NULL, NULL, NULL, NULL, SbagmanInputInfo, SbagmanDIPInfo,
 	SbagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1560,7 +1562,7 @@ struct BurnDriver BurnDrvSbagman2 = {
 	"sbagman2", "sbagman", NULL, NULL, "1984",
 	"Super Bagman (version 3?)\0", NULL, "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, sbagman2RomInfo, sbagman2RomName, NULL, NULL, NULL, NULL, SbagmanInputInfo, SbagmanDIPInfo,
 	SbagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1603,7 +1605,7 @@ struct BurnDriver BurnDrvSbagmans = {
 	"sbagmans", "sbagman", NULL, NULL, "1984",
 	"Super Bagman (Stern Electronics)\0", NULL, "Valadon Automation (Stern Electronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, sbagmansRomInfo, sbagmansRomName, NULL, NULL, NULL, NULL, SbagmanInputInfo, SbagmanDIPInfo,
 	SbagmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1649,7 +1651,7 @@ struct BurnDriver BurnDrvSbagmani = {
 	"sbagmani", "sbagman", NULL, NULL, "1984",
 	"Super Bagman (Itisa, Spain)\0", NULL, "Valadon Automation (Itisa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, sbagmaniRomInfo, sbagmaniRomName, NULL, NULL, NULL, NULL, SbagmanInputInfo, SbagmanDIPInfo,
 	SbagmaniInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1685,7 +1687,7 @@ struct BurnDriver BurnDrvPickin = {
 	"pickin", NULL, NULL, NULL, "1983",
 	"Pickin'\0", NULL, "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, pickinRomInfo, pickinRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, PickinDIPInfo,
 	PickinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1724,7 +1726,7 @@ struct BurnDriver BurnDrvBotanic = {
 	"botanic", NULL, NULL, NULL, "1983",
 	"Botanic (English / Spanish)\0", NULL, "Itisa", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, botanicRomInfo, botanicRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BotaniciDIPInfo,
 	BotanicInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1762,7 +1764,7 @@ struct BurnDriver BurnDrvBotanicf = {
 	"botanicf", "botanic", NULL, NULL, "1984",
 	"Botanic (French)\0", NULL, "Itisa (Valadon Automation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, botanicfRomInfo, botanicfRomName, NULL, NULL, NULL, NULL, BagmanInputInfo, BotanicfDIPInfo,
 	BotanicfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1798,7 +1800,7 @@ struct BurnDriver BurnDrvSquaitsa = {
 	"squaitsa", NULL, NULL, NULL, "1984",
 	"Squash (Itisa)\0", NULL, "Itisa", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, squaitsaRomInfo, squaitsaRomName, NULL, NULL, NULL, NULL, SquaitsaInputInfo, SquaitsaDIPInfo,
 	SquaitsaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

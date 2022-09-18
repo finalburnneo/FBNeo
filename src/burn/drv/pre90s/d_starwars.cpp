@@ -922,8 +922,6 @@ static INT32 DrvInit(INT32 game_select)
 
 	M6809SetWriteHandler(starwars_main_write);
 	M6809SetReadHandler(starwars_main_read);
-	M6809SetReadOpHandler(starwars_main_read);
-	M6809SetReadOpArgHandler(starwars_main_read);
 	M6809Close();
 
 	M6809Init(1);

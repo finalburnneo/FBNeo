@@ -1117,11 +1117,7 @@ INT32 TUnitInit()
 		M6809Open(0);
 		M6809MapMemory(DrvSoundProgRAM, 0x0000, 0x1fff, MAP_RAM);
 		MKsound_bankswitch(0);
-		// _all_ ROM is dished out in the handler, had to do it this way
-		// because of the hidden prot ram. (and the separate op/oparg/read handlers..)
 		M6809SetReadHandler(MKSoundRead);
-		M6809SetReadOpHandler(MKSoundRead);
-		M6809SetReadOpArgHandler(MKSoundRead);
 		M6809SetWriteHandler(MKSoundWrite);
 		M6809Close();
 

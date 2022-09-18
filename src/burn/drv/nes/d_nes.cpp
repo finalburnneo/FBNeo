@@ -21420,6 +21420,40 @@ struct BurnDriver BurnDrvnes_eeeck = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_micromages2RomDesc[] = {
+	{ "Micro Mages - Second Quest (2022)(Morphcat Games).nes",          40976, 0xbbc0ef28, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_micromages2)
+STD_ROM_FN(nes_micromages2)
+
+struct BurnDriver BurnDrvnes_micromages2 = {
+	"nes_micromages2", NULL, NULL, NULL, "2022",
+	"Micro Mages - Second Quest (HB)\0", NULL, "Morphcat Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_micromages2RomInfo, nes_micromages2RomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_roniustaleRomDesc[] = {
+	{ "Roniu's Tale (2022)(Mega Cat Studios).nes",          262160, 0xd1d75042, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_roniustale)
+STD_ROM_FN(nes_roniustale)
+
+struct BurnDriver BurnDrvnes_roniustale = {
+	"nes_roniustale", NULL, NULL, NULL, "2022",
+	"Roniu's Tale (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_roniustaleRomInfo, nes_roniustaleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_advpanzer2RomDesc[] = {
 	{ "Adventures of Panzer 2, The v1.1 (2022)(PixelCraft).nes",          524304, 0x29750f4f, BRF_ESS | BRF_PRG },
 };
@@ -21880,7 +21914,7 @@ struct BurnDriver BurnDrvnes_awakening = {
 };
 
 static struct BurnRomInfo nes_nemulesisRomDesc[] = {
-	{ "neMULEsis (4.27.22)(John Vanderhoef).nes",          524304, 0xd33b8949, BRF_ESS | BRF_PRG },
+	{ "neMULEsis v8.28.22 (2022)(John Vanderhoef).nes",          524304, 0x1aca9507, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nemulesis)
@@ -21888,7 +21922,7 @@ STD_ROM_FN(nes_nemulesis)
 
 struct BurnDriver BurnDrvnes_nemulesis = {
 	"nes_nemulesis", NULL, NULL, NULL, "2021-22",
-	"neMULEsis (HB)\0", NULL, "John Vanderhoef", "Miscellaneous",
+	"neMULEsis (HB, v8.28.22)\0", NULL, "John Vanderhoef", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_nemulesisRomInfo, nes_nemulesisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

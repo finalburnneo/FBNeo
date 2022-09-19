@@ -29628,6 +29628,25 @@ struct BurnDriver BurnDrvnes_tetristpg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tetris Two Player Mod - Next On Top
+// https://www.romhacking.net/hacks/5076/
+static struct BurnRomInfo nes_tetristpnRomDesc[] = {
+	{ "Tetris Two Player Mod Next On Top (2021)(ejona86).nes",          49168, 0xa9ff4861, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tetristpn)
+STD_ROM_FN(nes_tetristpn)
+
+struct BurnDriver BurnDrvnes_tetristpn = {
+	"nes_tetristpn", "nes_tetris", NULL, NULL, "2021",
+	"Tetris Two Player Mod Next On Top (Hack)\0", NULL, "ejona86", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_tetristpnRomInfo, nes_tetristpnRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_tetris2RomDesc[] = {
 	{ "Tetris 2 (USA).nes",          262160, 0xb6c0718b, BRF_ESS | BRF_PRG },
 };

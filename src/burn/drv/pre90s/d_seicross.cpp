@@ -399,6 +399,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	flipscreen = 0;
 	portb_data = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -797,7 +799,7 @@ struct BurnDriver BurnDrvFriskyt = {
 	"friskyt", NULL, NULL, NULL, "1981",
 	"Frisky Tom (set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, friskytRomInfo, friskytRomName, NULL, NULL, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
 	friskytInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -832,7 +834,7 @@ struct BurnDriver BurnDrvFriskyta = {
 	"friskyta", "friskyt", NULL, NULL, "1981",
 	"Frisky Tom (set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, friskytaRomInfo, friskytaRomName, NULL, NULL, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
 	friskytInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -872,7 +874,7 @@ struct BurnDriver BurnDrvFriskytb = {
 	"friskytb", "friskyt", NULL, NULL, "1981",
 	"Frisky Tom (set 3, encrypted)\0", "Broken, please use parent romset!", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, friskytbRomInfo, friskytbRomName, NULL, NULL, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
 	friskytbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -914,7 +916,7 @@ struct BurnDriver BurnDrvRadrad = {
 	"radrad", NULL, NULL, NULL, "1982",
 	"Radical Radial (US)\0", NULL, "Nichibutsu USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, radradRomInfo, radradRomName, NULL, NULL, NULL, NULL, RadradInputInfo, RadradDIPInfo,
 	radradInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -952,7 +954,7 @@ struct BurnDriver BurnDrvRadradj = {
 	"radradj", "radrad", NULL, NULL, "1982",
 	"Radical Radial (Japan)\0", NULL, "Logitec Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, radradjRomInfo, radradjRomName, NULL, NULL, NULL, NULL, RadradInputInfo, RadradDIPInfo,
 	radradInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -994,7 +996,7 @@ struct BurnDriver BurnDrvSeicross = {
 	"seicross", NULL, NULL, NULL, "1984",
 	"Seicross (set 1)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, seicrossRomInfo, seicrossRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1032,7 +1034,7 @@ struct BurnDriver BurnDrvSeicrossa = {
 	"seicrossa", "seicross", NULL, NULL, "1984",
 	"Seicross (set 2)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, seicrossaRomInfo, seicrossaRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1069,7 +1071,7 @@ struct BurnDriver BurnDrvSectrzon = {
 	"sectrzon", "seicross", NULL, NULL, "1984",
 	"Sector Zone (set 1)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sectrzonRomInfo, sectrzonRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1106,7 +1108,7 @@ struct BurnDriver BurnDrvSectrzont = {
 	"sectrzont", "seicross", NULL, NULL, "1984",
 	"Sector Zone (set 2, Tecfri hardware)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sectrzontRomInfo, sectrzontRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1146,7 +1148,7 @@ struct BurnDriver BurnDrvSectrzona = {
 	"sectrzona", "seicross", NULL, NULL, "1984",
 	"Sector Zone (set 3)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sectrzonaRomInfo, sectrzonaRomName, NULL, NULL, NULL, NULL, SeicrossInputInfo, SeicrossDIPInfo,
 	seicrossInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x40,
 	224, 256, 3, 4

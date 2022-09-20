@@ -1790,7 +1790,7 @@ struct BurnDriver BurnDrvHalleyscja = {
 };
 
 
-// Halley's Comet (Japan, prototype)
+// Halley's Comet (Japan, Prototype)
 
 static struct BurnRomInfo halleyscjpRomDesc[] = {
 	{ "p_0_19f8.30",	0x4000, 0x10acefe8, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
@@ -1820,9 +1820,9 @@ STD_ROM_FN(halleyscjp)
 
 struct BurnDriver BurnDrvHalleyscjp = {
 	"halleyscjp", "halleysc", NULL, NULL, "1985",
-	"Halley's Comet (Japan, prototype)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Halley's Comet (Japan, Prototype)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, halleyscjpRomInfo, halleyscjpRomName, NULL, NULL, NULL, NULL, HalleysInputInfo, HalleysDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4

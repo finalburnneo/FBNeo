@@ -8693,3 +8693,37 @@ struct BurnDriver BurnDrvkovplus12dw = {
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+
+// Knights of Valour Plus - New Biography of Heroes
+
+static struct BurnRomInfo kovplusqRomDesc[] = {
+	{ "qyxz_p0603_119.u1",	0x0600000, 0x9e4c21bb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "qyxz_t0600.u11",		0x0800000, 0x1f2a486c, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "qyxz_a0600.u2",		0x0800000, 0x82616975, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "qyxz_a0601.u4",		0x0800000, 0xd756a6f2, 3 | BRF_GRA },			//  3
+	{ "qyxz_a0602.u6",		0x0800000, 0x5092a3c3, 3 | BRF_GRA },			//  4
+	{ "qyxz_a0603.u9",		0x0800000, 0x7baf3f06, 3 | BRF_GRA },			//  5
+
+	{ "qyxz_b0600.u5",		0x0800000, 0xe39a14b6, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "qyxz_b0601.u7",		0x0800000, 0xf778a641, 4 | BRF_GRA },			//  7
+
+	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },			//  8 Samples
+
+	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovplusq, kovplusq, pgm)
+STD_ROM_FN(kovplusq)
+
+struct BurnDriver BurnDrvkovplusq = {
+	"kovplusq", "kovplus", "pgm", NULL, "2021",
+	"Knights of Valour Plus - New Biography of Heroes (V120)\0", NULL, "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, kovplusqRomInfo, kovplusqRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};

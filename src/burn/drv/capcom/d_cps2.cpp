@@ -8397,8 +8397,8 @@ STD_ROM_PICK(Xmcotajr)
 STD_ROM_FN(Xmcotajr)
 
 static struct BurnRomInfo XmcotanRomDesc[] = {
-    { "xmne.03f",      0x080000, 0x64F16726, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-    { "xmne.04f",      0x080000, 0x2429CEFB, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+    { "xmne.03f",      0x080000, 0x4b896d47, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+    { "xmne.04f",      0x080000, 0x2429cefb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
     { "xmne.05b",      0x080000, 0x87b0ed0f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
     { "xmn.06a",       0x080000, 0x1b86a328, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
     { "xmn.07a",       0x080000, 0x2c142a44, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11628,10 +11628,10 @@ struct BurnDriver BurnDrvCpsXmcotajr = {
 };
 
 struct BurnDriver BurnDrvCpsXmcotan = {
-    "xmcotan", "xmcota", NULL, NULL, "2021",
-    "X-Men Children Of The Atom: Uncanny Edition\0", NULL, "Capcom", "CPS2",
+    "xmcotan", "xmcota", NULL, NULL, "2022",
+    "X-Men Children Of The Atom: Uncanny Edition\0", NULL, "hack", "CPS2",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+    BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
     NULL, XmcotanRomInfo, XmcotanRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
     XmcotaInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
     &CpsRecalcPal, 0x1000, 384, 224, 4, 3

@@ -1634,16 +1634,12 @@ static INT32 DrvInit()
 	M6809Open(0);
 	M6809SetWriteHandler(main_write);
 	M6809SetReadHandler(main_read);
-	M6809SetReadOpHandler(main_read);
-	M6809SetReadOpArgHandler(main_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
 	M6809SetWriteHandler(sub_write);
 	M6809SetReadHandler(sub_read);
-	M6809SetReadOpHandler(sub_read);
-	M6809SetReadOpArgHandler(sub_read);
 	M6809Close();
 
 	M6809Init(2);

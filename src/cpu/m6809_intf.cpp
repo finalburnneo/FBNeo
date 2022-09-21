@@ -37,16 +37,6 @@ static void M6809WriteByteDummyHandler(UINT16, UINT8)
 {
 }
 
-static UINT8 M6809ReadOpDummyHandler(UINT16)
-{
-	return 0;
-}
-
-static UINT8 M6809ReadOpArgDummyHandler(UINT16)
-{
-	return 0;
-}
-
 // ## M6809CPUPush() / M6809CPUPop() ## internal helpers for sending signals to other m6809's
 struct m6809pstack {
 	INT32 nHostCPU;
@@ -224,8 +214,6 @@ INT32 M6809Init(INT32 cpu)
 		for (INT32 i = 0; i < MAX_CPU; i++) {
 			m6809CPUContext[i].ReadByte = M6809ReadByteDummyHandler;
 			m6809CPUContext[i].WriteByte = M6809WriteByteDummyHandler;
-			m6809CPUContext[i].ReadOp = M6809ReadOpDummyHandler;
-			m6809CPUContext[i].ReadOpArg = M6809ReadOpArgDummyHandler;
 			m6809CPUContext[i].nCyclesTotal = 0;
 
 			for (INT32 j = 0; j < (0x0100 * 3); j++) {
@@ -238,8 +226,6 @@ INT32 M6809Init(INT32 cpu)
 	
 	m6809CPUContext[cpu].ReadByte = M6809ReadByteDummyHandler;
 	m6809CPUContext[cpu].WriteByte = M6809WriteByteDummyHandler;
-	m6809CPUContext[cpu].ReadOp = M6809ReadOpDummyHandler;
-	m6809CPUContext[cpu].ReadOpArg = M6809ReadOpArgDummyHandler;
 
 	CpuCheatRegister(cpu, &M6809Config);
 
@@ -446,26 +432,6 @@ void M6809SetWriteHandler(void (*pHandler)(UINT16, UINT8))
 	m6809CPUContext[nActiveCPU].WriteByte = pHandler;
 }
 
-void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16))
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetReadOpHandler called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadOpHandler called when no CPU open\n"));
-#endif
-
-	m6809CPUContext[nActiveCPU].ReadOp = pHandler;
-}
-
-void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16))
-{
-#if defined FBNEO_DEBUG
-	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetReadOpArgHandler called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadOpArgHandler called when no CPU open\n"));
-#endif
-
-	m6809CPUContext[nActiveCPU].ReadOpArg = pHandler;
-}
-
 UINT8 M6809ReadByte(UINT16 Address)
 {
 	// check mem map
@@ -507,8 +473,8 @@ UINT8 M6809ReadOp(UINT16 Address)
 	}
 	
 	// check handler
-	if (m6809CPUContext[nActiveCPU].ReadOp != NULL) {
-		return m6809CPUContext[nActiveCPU].ReadOp(Address);
+	if (m6809CPUContext[nActiveCPU].ReadByte != NULL) {
+		return m6809CPUContext[nActiveCPU].ReadByte(Address);
 	}
 	
 	return 0;
@@ -523,8 +489,8 @@ UINT8 M6809ReadOpArg(UINT16 Address)
 	}
 	
 	// check handler
-	if (m6809CPUContext[nActiveCPU].ReadOpArg != NULL) {
-		return m6809CPUContext[nActiveCPU].ReadOpArg(Address);
+	if (m6809CPUContext[nActiveCPU].ReadByte != NULL) {
+		return m6809CPUContext[nActiveCPU].ReadByte(Address);
 	}
 	
 	return 0;

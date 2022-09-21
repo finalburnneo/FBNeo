@@ -2,20 +2,16 @@
 
 typedef UINT8 (*pReadByteHandler)(UINT16 a);
 typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);
-typedef UINT8 (*pReadOpHandler)(UINT16 a);
-typedef UINT8 (*pReadOpArgHandler)(UINT16 a);
 
 struct M6809Ext {
 
 	m6809_Regs reg;
-	
+
 	UINT8* pMemMap[0x100 * 3];
 
 	pReadByteHandler ReadByte;
 	pWriteByteHandler WriteByte;
-	pReadOpHandler ReadOp;
-	pReadOpArgHandler ReadOpArg;
-	
+
 	INT32 nCyclesTotal;
 };
 
@@ -42,8 +38,6 @@ INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType);
 INT32 M6809UnmapMemory(UINT16 nStart, UINT16 nEnd, INT32 nType);
 void M6809SetReadHandler(UINT8 (*pHandler)(UINT16));
 void M6809SetWriteHandler(void (*pHandler)(UINT16, UINT8));
-void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16));
-void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6809Scan(INT32 nAction);
 UINT16 M6809GetPC();
 UINT16 M6809GetPrevPC();

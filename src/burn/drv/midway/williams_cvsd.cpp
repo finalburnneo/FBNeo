@@ -203,8 +203,6 @@ void williams_cvsd_init(UINT8 *prgrom, INT32 prot_start, INT32 prot_end, INT32 s
 	bankswitch(0);
 	M6809SetWriteHandler(cvsd_write);
 	M6809SetReadHandler(cvsd_read);
-	M6809SetReadOpHandler(cvsd_read); // rom dished out in read handler!
-	M6809SetReadOpArgHandler(cvsd_read); // ""
 	M6809Close();
 
 	pia_init();

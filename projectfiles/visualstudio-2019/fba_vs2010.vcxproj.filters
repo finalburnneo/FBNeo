@@ -4713,6 +4713,12 @@
     <ClCompile Include="..\..\src\burner\inputbuf.cpp">
       <Filter>burner</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_halleys.cpp">
+      <Filter>Burn\drv\taito</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

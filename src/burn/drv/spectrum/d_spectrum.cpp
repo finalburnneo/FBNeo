@@ -37030,3 +37030,156 @@ struct BurnDriver BurnSpecZombmalls = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Hakkenkast - Dungeon 1 (128K) (HB)
+
+static struct BurnRomInfo SpecHakken128aRomDesc[] = {
+	{ "Hakkenkast - Dungeon 1 128K (2022)(Minilop).tap", 49643, 0xbec43b92, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken128a, SpecHakken128a, Spec128)
+STD_ROM_FN(SpecHakken128a)
+
+struct BurnDriver BurnSpecHakken128a = {
+	"spec_hakken128a", NULL, "spec_spec128", NULL, "2022",
+	"Hakkenkast - Dungeon 1 (128K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken128aRomInfo, SpecHakken128aRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hakkenkast - Dungeon 1 (48K) (HB)
+
+static struct BurnRomInfo SpecHakken48aRomDesc[] = {
+	{ "Hakkenkast - Dungeon 1 48K (2022)(Minilop).tap", 46005, 0x083b55be, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken48a, SpecHakken48a, Spectrum)
+STD_ROM_FN(SpecHakken48a)
+
+struct BurnDriver BurnSpecHakken48a = {
+	"spec_hakken48a", "spec_hakken128a", "spec_spectrum", NULL, "2022",
+	"Hakkenkast - Dungeon 1 (48K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken48aRomInfo, SpecHakken48aRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hakkenkast - Dungeon 2 (128K) (HB)
+
+static struct BurnRomInfo SpecHakken128bRomDesc[] = {
+	{ "Hakkenkast - Dungeon 2 128K (2022)(Minilop).tap", 49420, 0xaf1c0ee4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken128b, SpecHakken128b, Spec128)
+STD_ROM_FN(SpecHakken128b)
+
+struct BurnDriver BurnSpecHakken128b = {
+	"spec_hakken128b", NULL, "spec_spec128", NULL, "2022",
+	"Hakkenkast - Dungeon 2 (128K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken128bRomInfo, SpecHakken128bRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hakkenkast - Dungeon 2 (48K) (HB)
+
+static struct BurnRomInfo SpecHakken48bRomDesc[] = {
+	{ "Hakkenkast - Dungeon 2 48K (2022)(Minilop).tap", 46126, 0xa2fc72df, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken48b, SpecHakken48b, Spectrum)
+STD_ROM_FN(SpecHakken48b)
+
+struct BurnDriver BurnSpecHakken48b = {
+	"spec_hakken48b", "spec_hakken128b", "spec_spectrum", NULL, "2022",
+	"Hakkenkast - Dungeon 2 (48K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken48bRomInfo, SpecHakken48bRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+
+// Hakkenkast - Dungeon 3 (128K) (HB)
+
+static struct BurnRomInfo SpecHakken128cRomDesc[] = {
+	{ "Hakkenkast - Dungeon 3 128K (2022)(Minilop).tap", 49845, 0x2595e9dc, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken128c, SpecHakken128c, Spec128)
+STD_ROM_FN(SpecHakken128c)
+
+struct BurnDriver BurnSpecHakken128c = {
+	"spec_hakken128c", NULL, "spec_spec128", NULL, "2022",
+	"Hakkenkast - Dungeon 3 (128K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken128cRomInfo, SpecHakken128cRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hakkenkast - Dungeon 3 (48K) (HB)
+
+static struct BurnRomInfo SpecHakken48cRomDesc[] = {
+	{ "Hakkenkast - Dungeon 3 48K (2022)(Minilop).tap", 46019, 0x614c37f6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken48c, SpecHakken48c, Spectrum)
+STD_ROM_FN(SpecHakken48c)
+
+struct BurnDriver BurnSpecHakken48c = {
+	"spec_hakken48c", "spec_hakken128c", "spec_spectrum", NULL, "2022",
+	"Hakkenkast - Dungeon 3 (48K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken48cRomInfo, SpecHakken48cRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hakkenkast - Dungeon 4 (128K) (HB)
+
+static struct BurnRomInfo SpecHakken128dRomDesc[] = {
+	{ "Hakkenkast - Dungeon 4 128K (2022)(Minilop).tap", 49395, 0x5f2756d0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken128d, SpecHakken128d, Spec128)
+STD_ROM_FN(SpecHakken128d)
+
+struct BurnDriver BurnSpecHakken128d = {
+	"spec_hakken128d", NULL, "spec_spec128", NULL, "2022",
+	"Hakkenkast - Dungeon 4 (128K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken128dRomInfo, SpecHakken128dRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Hakkenkast - Dungeon 4 (48K) (HB)
+
+static struct BurnRomInfo SpecHakken48dRomDesc[] = {
+	{ "Hakkenkast - Dungeon 4 48K (2022)(Minilop).tap", 46072, 0x3ad9cea9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecHakken48d, SpecHakken48d, Spectrum)
+STD_ROM_FN(SpecHakken48d)
+
+struct BurnDriver BurnSpecHakken48d = {
+	"spec_hakken48d", "spec_hakken128d", "spec_spectrum", NULL, "2022",
+	"Hakkenkast - Dungeon 4 (48K) (HB)\0", "Use Q, A and Space to set options", "Minilop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecHakken48dRomInfo, SpecHakken48dRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

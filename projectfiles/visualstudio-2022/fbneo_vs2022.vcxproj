@@ -618,6 +618,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_shangkid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_artmagic.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_btoads.cpp" />
@@ -657,6 +658,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_gladiatr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_halleys.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_lsasquad.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_nycaptor.cpp" />

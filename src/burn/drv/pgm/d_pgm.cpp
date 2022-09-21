@@ -486,6 +486,19 @@ static struct BurnDIPInfo theglad100DIPList[] = {
 	{0x2E,  0x01, 0x07, 0x06, "World"							},
 };
 
+static struct BurnDIPInfo theglad104DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x06, NULL								},
+
+	{0,		0xFE, 0,	7,    "Region (Fake)"					},
+	{0x2E,	0x01, 0x07,	0x00, "China"							},
+	{0x2E,	0x01, 0x07,	0x01, "Taiwan"							},
+	{0x2E,	0x01, 0x07,	0x02, "Japan"							},
+	{0x2E,	0x01, 0x07,	0x03, "Korea"							},
+	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"						},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"				},
+	{0x2E,  0x01, 0x07, 0x06, "World"							},
+};
+
 static struct BurnDIPInfo thegladpcbDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x02, NULL								},
 
@@ -728,6 +741,7 @@ STDDIPINFOEXT(ddp2t,     	pgm,	ddp2t			)
 STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c			)
 STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
+STDDIPINFOEXT(theglad104,	pgm,	theglad104 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
 STDDIPINFOEXT(happy6hk,		pgm,	happy6hk	 	)
 STDDIPINFOEXT(drgw3,        pgm,    drgw3           )
@@ -4633,6 +4647,47 @@ struct BurnDriver BurnDrvTheglad = {
 	L"The Gladiator - Road of The Sword\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2 (V101, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, thegladRomInfo, thegladRomName, NULL, NULL, NULL, NULL, pgmInputInfo, thegladDIPInfo,
+	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// The Gladiator - Road Of The Sword / Shen Jian (V104)
+
+/* IGS PCB-0361-02-F0 MADE IN TAIWAN
+   IGS PCB-0421-00-F0-A MADE IN TAIWAN
+   SCREEN VER PIC: 04/02/03 09:39:46 V104 */
+
+static struct BurnRomInfo theglad104RomDesc[] = {
+	{ "v100_u6.u6",					0x0080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "igs_t04601w64m.u33",			0x0800000, 0xe5dab371, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "igs_a04601w64m.u2",			0x0800000, 0xd9b2e004, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "igs_a04602w64m.u4",			0x0800000, 0x14f22308, 3 | BRF_GRA },			//  3
+	{ "igs_a04603w64m.u6",			0x0800000, 0x8f621e17, 3 | BRF_GRA },			//  4
+
+	{ "igs_b04601w64m.u11",			0x0800000, 0xee72bccf, 4 | BRF_GRA },			//  5 Sprite Masks & Color Indexes
+	{ "igs_b04602w32m.u12",			0x0400000, 0x7dba9c38, 4 | BRF_GRA },			//  6
+
+	{ "igs_w04601b64m.u1",			0x0800000, 0x5f15ddb3, 5 | BRF_SND },			//  7 Samples
+
+//	{ "theglad_igs027a.bin",		0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "theglad_igs027a_execute_only_area",	    0x0000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "theglad_igs027a_v100_overseas.bin",      0x0003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
+
+	{ "v104_u26.u26",				0x0200000, 0x81b5df6d, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+};
+
+STDROMPICKEXT(theglad104, theglad104, pgm)
+STD_ROM_FN(theglad104)
+
+struct BurnDriver BurnDrvTheglad104 = {
+	"theglad104", "theglad", "pgm", NULL, "2003",
+	"The Gladiator - Road Of The Sword / Shen Jian (V104)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"The Gladiator - Road of The Sword\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2 (V104)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, theglad104RomInfo, theglad104RomName, NULL, NULL, NULL, NULL, pgmInputInfo, theglad104DIPInfo,
 	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -8635,6 +8690,40 @@ struct BurnDriver BurnDrvkovplus12dw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, kovplus12dwRomInfo, kovplus12dwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
+	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Knights of Valour Plus - New Biography of Heroes
+
+static struct BurnRomInfo kovplusqRomDesc[] = {
+	{ "qyxz_p0603_119.u1",	0x0600000, 0x9e4c21bb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "qyxz_t0600.u11",		0x0800000, 0x1f2a486c, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "qyxz_a0600.u2",		0x0800000, 0x82616975, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "qyxz_a0601.u4",		0x0800000, 0xd756a6f2, 3 | BRF_GRA },			//  3
+	{ "qyxz_a0602.u6",		0x0800000, 0x5092a3c3, 3 | BRF_GRA },			//  4
+	{ "qyxz_a0603.u9",		0x0800000, 0x7baf3f06, 3 | BRF_GRA },			//  5
+
+	{ "qyxz_b0600.u5",		0x0800000, 0xe39a14b6, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "qyxz_b0601.u7",		0x0800000, 0xf778a641, 4 | BRF_GRA },			//  7
+
+	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },			//  8 Samples
+
+	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovplusq, kovplusq, pgm)
+STD_ROM_FN(kovplusq)
+
+struct BurnDriver BurnDrvkovplusq = {
+	"kovplusq", "kovplus", "pgm", NULL, "2021",
+	"Knights of Valour Plus - New Biography of Heroes (V120)\0", NULL, "Hack", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, kovplusqRomInfo, kovplusqRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

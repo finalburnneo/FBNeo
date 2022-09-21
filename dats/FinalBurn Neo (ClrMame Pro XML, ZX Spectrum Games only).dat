@@ -7797,6 +7797,90 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="hakken128a" romof="spec128">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 1 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 1 128K (2022)(Minilop).tap" size="49643" crc="bec43b92"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hakken48a" cloneof="hakken128a" romof="hakken128a">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 1 (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 1 48K (2022)(Minilop).tap" size="46005" crc="083b55be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hakken128b" romof="spec128">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 2 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 2 128K (2022)(Minilop).tap" size="49420" crc="af1c0ee4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hakken48b" cloneof="hakken128b" romof="hakken128b">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 2 (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 2 48K (2022)(Minilop).tap" size="46126" crc="a2fc72df"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hakken128c" romof="spec128">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 3 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 3 128K (2022)(Minilop).tap" size="49845" crc="2595e9dc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hakken48c" cloneof="hakken128c" romof="hakken128c">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 3 (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 3 48K (2022)(Minilop).tap" size="46019" crc="614c37f6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hakken128d" romof="spec128">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 4 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 4 128K (2022)(Minilop).tap" size="49395" crc="5f2756d0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hakken48d" cloneof="hakken128d" romof="hakken128d">
+		<comment>Homebrew, Use Q, A and Space to set options</comment>
+		<description>Hakkenkast - Dungeon 4 (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Minilop</manufacturer>
+		<rom name="Hakkenkast - Dungeon 4 48K (2022)(Minilop).tap" size="46072" crc="3ad9cea9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hknight" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Hallowed Knight (48K) (HB, v1.4)</description>

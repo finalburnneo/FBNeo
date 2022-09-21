@@ -10543,6 +10543,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="micromages2">
+		<comment>Homebrew</comment>
+		<description>Micro Mages - Second Quest (HB)</description>
+		<year>2022</year>
+		<manufacturer>Morphcat Games</manufacturer>
+		<rom name="Micro Mages - Second Quest (2022)(Morphcat Games).nes" size="40976" crc="bbc0ef28"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="miedow">
 		<comment>Homebrew</comment>
 		<description>Miedow (HB)</description>
@@ -11214,10 +11223,10 @@
 	</game>
 	<game name="nemulesis">
 		<comment>Homebrew</comment>
-		<description>neMULEsis (HB)</description>
+		<description>neMULEsis (HB, v8.28.22)</description>
 		<year>2021-22</year>
 		<manufacturer>John Vanderhoef</manufacturer>
-		<rom name="neMULEsis (4.27.22)(John Vanderhoef).nes" size="524304" crc="d33b8949"/>
+		<rom name="neMULEsis v8.28.22 (2022)(John Vanderhoef).nes" size="524304" crc="1aca9507"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13299,6 +13308,15 @@
 		<year>2008</year>
 		<manufacturer>DvD Translations</manufacturer>
 		<rom name="Romancia (T-Eng).nes" size="131088" crc="c0785ed4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="roniustale">
+		<comment>Homebrew</comment>
+		<description>Roniu's Tale (HB)</description>
+		<year>2022</year>
+		<manufacturer>Mega Cat Studios</manufacturer>
+		<rom name="Roniu's Tale (2022)(Mega Cat Studios).nes" size="262160" crc="d1d75042"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

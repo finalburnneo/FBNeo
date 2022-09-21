@@ -11408,7 +11408,7 @@ struct BurnDriver BurnDrvCpsSsf2xjr1r = {
 };
 
 struct BurnDriver BurnDrvCpsSsf2tnl = {
-	"ssf2tnl", NULL, NULL, NULL, "1994",
+	"ssf2tnl", NULL, NULL, NULL, "2022",
 	"Super Street Fighter II Turbo - New Legacy (Hack by Born2SPD)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,

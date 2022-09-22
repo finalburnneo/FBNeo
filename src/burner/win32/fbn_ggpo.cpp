@@ -498,6 +498,7 @@ void QuarkInit(TCHAR *tconnect)
 		sscanf(connect, "quark:served,%[^,],%[^,],%d,%d,%d", game, quarkid, &port, &delay, &ranked);
 		iRanked = ranked;
 		iPlayer = atoi(&quarkid[strlen(quarkid) - 1]);
+		if (nVidRunahead == 3 && delay < 2) {delay = 2;}
 		iDelay = delay;
 		iSeed = GetHash(quarkid, strlen(quarkid) - 2);
 		ggpo = ggpo_client_connect(&cb, game, quarkid, port);

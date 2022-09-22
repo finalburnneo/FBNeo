@@ -1523,7 +1523,7 @@ static void rtype2_main_cpu_map()
 
 static void hharryu_main_cpu_map()
 {
-	VezInit(0, V30_TYPE);
+	VezInit(0, Kengo ? V35_TYPE : V30_TYPE);
 
 	VezOpen(0);
 	VezMapArea(0x00000, 0x7ffff, 0, DrvV30ROM + 0x000000);
@@ -3728,10 +3728,10 @@ STD_ROM_FN(ltswords)
 
 static INT32 kengoInit()
 {
+	Kengo = 1;
 	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 5, 0);
 
 	if (nRet == 0) {
-		Kengo = 1;
 		Clock_16mhz = 1;
 		VezOpen(0);
 		VezSetDecode((UINT8 *)&gunforce_decryption_table);

@@ -1201,6 +1201,12 @@
     <ClInclude Include="..\..\src\burner\win32\scrn.h">
       <Filter>burner\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\intf\video\scalers\crt.h">
+      <Filter>interfaces\video\scalers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\burner\inputbuf.h">
+      <Filter>burner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4694,6 +4700,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\atari\d_marblmd2.cpp">
       <Filter>Burn\drv\atari</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_sderby.cpp">
+      <Filter>Burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\intf\video\scalers\crt.cpp">
+      <Filter>interfaces\video\scalers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burner\inputbuf.cpp">
+      <Filter>burner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_halleys.cpp">
+      <Filter>Burn\drv\taito</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,8 @@ static int nNormalFrac = 0;					// Extra fraction we did
 static bool bAppDoStep = 0;
 static bool bAppDoFast = 0;
 static bool bAppDoFasttoggled = 0;
+static bool bAppDoRewind = 0;
+
 static int nFastSpeed = 6;
 
 // SlowMo T.A. feature
@@ -98,6 +100,8 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 				MenuUpdateSlowMo();
 			}
 		}
+
+		// Rewind handled in RunFrame()!
 
 		for (int hotkey_num = 0; hotkey_debounces[hotkey_num].macroSystemLuaHotkey_ref != NULL; hotkey_num++) {
 			// Use the reference to the hotkey variable in order to update our stored value
@@ -270,6 +274,10 @@ int RunFrame(int bDraw, int bPause)
 		} else {								// frame skipping
 			pBurnDraw = NULL;					// Make sure no image is drawn
 			BurnDrvFrame();
+		}
+
+		if (kNetGame == 0) {                    // Rewind Implementation
+			StateRewindDoFrame(macroSystemRewind || bAppDoRewind, macroSystemRewindCancel, bRunPause);
 		}
 
 		if (bShowFPS) {
@@ -453,6 +461,7 @@ static int RunExit()
 
 	bAppDoFast = 0;
 	bAppDoFasttoggled = 0;
+	bAppDoRewind = 0;
 
 	return 0;
 }
@@ -705,6 +714,10 @@ int RunMessageLoop()
 
 								break;
 							}
+							case VK_PRIOR: {
+								bAppDoRewind = 1;
+								break;
+							}
 							case VK_F1: {
 								bool bOldAppDoFast = bAppDoFast;
 
@@ -767,6 +780,11 @@ int RunMessageLoop()
 						switch (Msg.wParam) {
 							case VK_MENU:
 								continue;
+
+							case VK_PRIOR:
+								bAppDoRewind = 0;
+								break;
+
 							case VK_F1: {
 								bool bOldAppDoFast = bAppDoFast;
 

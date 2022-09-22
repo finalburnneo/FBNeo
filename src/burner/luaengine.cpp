@@ -217,7 +217,7 @@ int FBA_LuaFrameSkip() {
 
 // fba.hardreset()
 static int fba_hardreset(lua_State *L) {
-	StartFromReset(NULL);
+	StartFromReset(NULL, false);
 	return 1;
 }
 

@@ -7,7 +7,7 @@ depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o
 			media.o memcard.o menu.o misc_win32.o neocdlist.o neocdsel.o numdial.o paletteviewer.o placeholder.o popup_win32.o \
 			progress.o replay.o res.o roms.o run.o scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
 			\
-			conc.o cong.o dat.o dynhuff.o gamc.o gami.o image.o ioapi.o misc.o nvram.o sshot.o state.o statec.o unzip.o zipfn.o \
+			conc.o cong.o dat.o inputbuf.o gamc.o gami.o image.o ioapi.o misc.o nvram.o sshot.o state.o statec.o unzip.o zipfn.o \
 			luaconsole.o luaengine.o luasav.o \
 			\
 			lapi.o lauxlib.o lbaselib.o lcode.o ldblib.o ldebug.o ldo.o ldump.o lfunc.o lgc.o linit.o liolib.o llex.o \
@@ -25,7 +25,7 @@ depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o
 			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
 			vid_softfx.o vid_support.o \
 			\
-			2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
+			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
 			\
 			aud_dsound3.o aud_xaudio2.o cd_img.o ddraw_core.o dinput_core.o directx9_core.o dsound_core.o \
 			inp_dinput.o prf_performance_counter.o vid_d3d.o vid_ddraw.o vid_ddrawfx.o vid_effect.o vid_directx9.o vid_directx_support.o

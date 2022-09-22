@@ -904,12 +904,12 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
-int StartFromReset(TCHAR *szDriverName)
+int StartFromReset(TCHAR *szDriverName, bool bLoadSram)
 {
 	if (!bDrvOkay || (szDriverName && _tcscmp(szDriverName, BurnDrvGetText(DRV_NAME))) ) {
-		bSramLoad = false;
+		bSramLoad = bLoadSram;
 		BurnerLoadDriver(szDriverName);
-		bSramLoad = true;
+		bSramLoad = true; // back to default
 		return 1;
 	}
 	//if(nBurnDrvActive < 1) return 0;
@@ -924,7 +924,7 @@ int StartFromReset(TCHAR *szDriverName)
 	SplashDestroy(1);
 	StopReplay();
 
-	DrvInit(nOldDrvSelect, false);	// Init the game driver, without loading SRAM
+	DrvInit(nOldDrvSelect, bLoadSram);	// Init the game driver, load SRAM?
 	MenuEnableItems();
 	bAltPause = 0;
 	AudSoundPlay();			// Restart sound
@@ -2268,6 +2268,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_INPUT_AUTOFIRE_RATE_5: nAutoFireRate =  4; break;
 		case MENU_INPUT_AUTOFIRE_RATE_6: nAutoFireRate =  2; break;
 
+		case MENU_INPUT_REWIND_ENABLED: bRewindEnabled = !bRewindEnabled; break;
+		case MENU_INPUT_REWIND_128MB: nRewindMemory = 128; break;
+		case MENU_INPUT_REWIND_256MB: nRewindMemory = 256; break;
+		case MENU_INPUT_REWIND_512MB: nRewindMemory = 512; break;
+		case MENU_INPUT_REWIND_768MB: nRewindMemory = 768; break;
+		case MENU_INPUT_REWIND_1GB: nRewindMemory = 1024; break;
+
 		case MENU_PRIORITY_REALTIME: // bad idea, this will freeze the entire system.
 			break;
 		case MENU_PRIORITY_HIGH:
@@ -2786,7 +2793,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_ENHANCED_SOFT_4XBR_A:
 				case MENU_ENHANCED_SOFT_4XBR_B:
 				case MENU_ENHANCED_SOFT_4XBR_C:
-				case MENU_ENHANCED_SOFT_DDT3X: {
+				case MENU_ENHANCED_SOFT_DDT3X:
+				case MENU_ENHANCED_SOFT_CRTx22:
+				case MENU_ENHANCED_SOFT_CRTx33:
+				case MENU_ENHANCED_SOFT_CRTx44: {
 					nVidBlitterOpt[nVidSelect] &= 0x0FFFFFFF;
 					nVidBlitterOpt[nVidSelect] |= 0x03000000 + ((long long)(id - MENU_ENHANCED_SOFT_STRETCH) << 32);
 					POST_INITIALISE_MESSAGE;
@@ -2905,6 +2915,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_SOFTFX_SOFT_4XBR_B:
 				case MENU_SOFTFX_SOFT_4XBR_C:
 				case MENU_SOFTFX_SOFT_DDT3X:
+				case MENU_SOFTFX_SOFT_CRTx22:
+				case MENU_SOFTFX_SOFT_CRTx33:
+				case MENU_SOFTFX_SOFT_CRTx44:
 					nVidBlitterOpt[nVidSelect] &= ~0xFF;
 					nVidBlitterOpt[nVidSelect] |= id - MENU_SOFTFX_SOFT_STRETCH;
 					POST_INITIALISE_MESSAGE;
@@ -3107,6 +3120,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_DX9_ALT_SOFT_4XBR_B:
 				case MENU_DX9_ALT_SOFT_4XBR_C:
 				case MENU_DX9_ALT_SOFT_DDT3X:
+				case MENU_DX9_ALT_SOFT_CRTx22:
+				case MENU_DX9_ALT_SOFT_CRTx33:
+				case MENU_DX9_ALT_SOFT_CRTx44:
 					nVidBlitterOpt[nVidSelect] &= ~0xFF;
 					nVidBlitterOpt[nVidSelect] |= id - MENU_DX9_ALT_SOFT_STRETCH;
 					POST_INITIALISE_MESSAGE;

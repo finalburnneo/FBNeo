@@ -954,7 +954,7 @@ struct BurnDriver BurnDrvFixeightu = {
 };
 
 
-// FixEight (Japan, Taito license)
+// FixEight - Jigoku no Eiyuu Densetsu (Japan, Taito license)
 
 static struct BurnRomInfo fixeightjtRomDesc[] = {
 	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
@@ -975,7 +975,7 @@ static INT32 fixeightjtInit() { return DrvInit(0x0e); }
 
 struct BurnDriver BurnDrvFixeightjt = {
 	"fixeightjt", "fixeight", NULL, NULL, "1992",
-	"FixEight (Japan, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight - Jigoku no Eiyuu Densetsu (Japan, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeightjtRomInfo, fixeightjtRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,
@@ -984,7 +984,7 @@ struct BurnDriver BurnDrvFixeightjt = {
 };
 
 
-// FixEight (Japan)
+// FixEight - Jigoku no Eiyuu Densetsu (Japan)
 
 static struct BurnRomInfo fixeightjRomDesc[] = {
 	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
@@ -1005,7 +1005,7 @@ static INT32 fixeightjInit() { return DrvInit(0x0f); }
 
 struct BurnDriver BurnDrvFixeightj = {
 	"fixeightj", "fixeight", NULL, NULL, "1992",
-	"FixEight (Japan)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight - Jigoku no Eiyuu Densetsu (Japan)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeightjRomInfo, fixeightjRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,

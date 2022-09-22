@@ -78,46 +78,46 @@ static INT32 (*pStartDraw)() = NULL;
 static INT32 (*pDrawScanline)(INT32) = NULL;
 
 static struct BurnInputInfo CaptavenInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 fire 2"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p4 coin"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p4 coin"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Captaven)
@@ -260,39 +260,39 @@ static struct BurnDIPInfo FghthistDIPList[]=
 STDDIPINFO(Fghthist)
 
 static struct BurnInputInfo NslasherInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy2 + 15,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p3 left"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p3 fire 2"	},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p3 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"	},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"	}, // + 3!
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // + 3!
 };
 
 STDINPUTINFO(Nslasher)
@@ -314,37 +314,37 @@ static struct BurnDIPInfo NslasherDIPList[]=
 STDDIPINFO(Nslasher)
 
 static struct BurnInputInfo TattassInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 4"},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 9,	"p1 fire 5"},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy2 + 10,	"p1 fire 6"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
+	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 4"	},
+	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 9,	"p1 fire 5"	},
+	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy2 + 10,	"p1 fire 6"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 4"},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 5"},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 6"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
+	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 4"	},
+	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 5"	},
+	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 6"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"},
-	{"Service Mode",		BIT_DIGITAL,	DrvJoy2 + 3,	"diag"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"	}, // + 3!
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 3,	"diag"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // + 3!
 };
 
 STDINPUTINFO(Tattass)
@@ -363,25 +363,25 @@ STDDIPINFO(Tattass)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo DragngunInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    "mouse x-axis"	),
 	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,    "mouse y-axis"	),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
 	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,    "p2 x-axis"	),
 	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,    "p2 y-axis"	),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"	}, // + 3!
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 4,	"dip"	},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // + 3!
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 4,	"dip"		},
 };
 
 STDINPUTINFO(Dragngun)
@@ -528,7 +528,7 @@ void deco32_z80_sound_init(UINT8 *rom, UINT8 *ram)
 	ZetClose();
 
 	BurnYM2151Init(3580000);
-	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetIrqHandler(&deco32_z80_YM2151_irq_handler);
 	BurnYM2151SetPortHandler(DrvYM2151WritePort);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.40, BURN_SND_ROUTE_LEFT);
@@ -537,7 +537,7 @@ void deco32_z80_sound_init(UINT8 *rom, UINT8 *ram)
 	MSM6295Init(0, (32220000 / 32) / 132, 1);
 	MSM6295Init(1, (32220000 / 16) / 132, 1);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 0.35, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.25, BURN_SND_ROUTE_BOTH);
 }
 
 void deco32_z80_sound_exit()
@@ -1945,7 +1945,7 @@ static INT32 NslasherCommonInit(INT32 has_z80, UINT32 speedhack)
 	}
 	else
 	{
-		deco16SoundInit(DrvHucROM, DrvHucRAM, 3580000, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
+		deco16SoundInit(DrvHucROM, DrvHucRAM, 3580000, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.25);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
 	}
@@ -2532,6 +2532,8 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 							colour |= (BURN_ENDIAN_SWAP_INT32(ace_ram[0]) == 0x17) ? 0xa0 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
 						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1) && !(colour&0x80))
 							colour |= 0xe0; // level 2 carriage buggy
+						if (layerID && (sprite >= 0x728 && sprite <= 0x79f))
+							colour |= 0x80; // Hong Hua (Girl hero) "special"
 						if (layerID && (sprite == 0x7e0 || sprite == 0x7e4 || sprite == 0x7e8 || sprite == 0x7ec ||
 										sprite == 0x7f0 || sprite == 0x7f4 || sprite == 0x7f8 || sprite == 0x7fc ||
 										sprite == 0x800 || sprite == 0x804)) {
@@ -3860,7 +3862,7 @@ struct BurnDriver BurnDrvCaptaven = {
 	"captaven", NULL, NULL, NULL, "1991",
 	"Captain America and The Avengers (Asia Rev 1.4)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, captavenRomInfo, captavenRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3910,7 +3912,7 @@ struct BurnDriver BurnDrvCaptavena = {
 	"captavena", "captaven", NULL, NULL, "1991",
 	"Captain America and The Avengers (Asia Rev 1.0)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, captavenaRomInfo, captavenaRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3961,7 +3963,7 @@ struct BurnDriver BurnDrvCaptavene = {
 	"captavene", "captaven", NULL, NULL, "1991",
 	"Captain America and The Avengers (UK Rev 1.4)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, captaveneRomInfo, captaveneRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4011,7 +4013,7 @@ struct BurnDriver BurnDrvCaptavenu = {
 	"captavenu", "captaven", NULL, NULL, "1991",
 	"Captain America and The Avengers (US Rev 1.9)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, captavenuRomInfo, captavenuRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4061,7 +4063,7 @@ struct BurnDriver BurnDrvCaptavenuu = {
 	"captavenuu", "captaven", NULL, NULL, "1991",
 	"Captain America and The Avengers (US Rev 1.6)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, captavenuuRomInfo, captavenuuRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4111,7 +4113,7 @@ struct BurnDriver BurnDrvCaptavenua = {
 	"captavenua", "captaven", NULL, NULL, "1991",
 	"Captain America and The Avengers (US Rev 1.4)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, captavenuaRomInfo, captavenuaRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4161,7 +4163,7 @@ struct BurnDriver BurnDrvCaptavenj = {
 	"captavenj", "captaven", NULL, NULL, "1991",
 	"Captain America and The Avengers (Japan Rev 0.2)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, captavenjRomInfo, captavenjRomName, NULL, NULL, NULL, NULL, CaptavenInputInfo, CaptavenDIPInfo,
 	CaptavenInit, DrvExit, DrvFrame, CaptavenDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4207,7 +4209,7 @@ struct BurnDriver BurnDrvFghthist = {
 	"fghthist", NULL, NULL, NULL, "1993",
 	"Fighter's History (World ver 43-09, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistRomInfo, fghthistRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4253,7 +4255,7 @@ struct BurnDriver BurnDrvFghthista = {
 	"fghthista", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (World ver 43-07, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistaRomInfo, fghthistaRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4299,7 +4301,7 @@ struct BurnDriver BurnDrvFghthistb = {
 	"fghthistb", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (World ver 43-05, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistbRomInfo, fghthistbRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistbInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4345,7 +4347,7 @@ struct BurnDriver BurnDrvFghthistu = {
 	"fghthistu", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (US ver 42-09, DE-0396-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistuRomInfo, fghthistuRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistuInit, DrvExit, DrvZ80Frame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4391,7 +4393,7 @@ struct BurnDriver BurnDrvFghthistua = {
 	"fghthistua", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (US ver 42-06, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistuaRomInfo, fghthistuaRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistuaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4437,7 +4439,7 @@ struct BurnDriver BurnDrvFghthistub = {
 	"fghthistub", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (US ver 42-05, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistubRomInfo, fghthistubRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistubInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4483,7 +4485,7 @@ struct BurnDriver BurnDrvFghthistuc = {
 	"fghthistuc", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (US ver 42-03, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistucRomInfo, fghthistucRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistucInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4524,7 +4526,7 @@ struct BurnDriver BurnDrvFghthistj = {
 	"fghthistj", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (Japan ver 41-07, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistjRomInfo, fghthistjRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4570,7 +4572,7 @@ struct BurnDriver BurnDrvFghthistja = {
 	"fghthistja", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (Japan ver 41-05, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistjaRomInfo, fghthistjaRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistjaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4616,7 +4618,7 @@ struct BurnDriver BurnDrvFghthistjb = {
 	"fghthistjb", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (Japan ver 41-04, DE-0380-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistjbRomInfo, fghthistjbRomName, NULL, NULL, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
 	FghthistjbInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4907,7 +4909,7 @@ struct BurnDriver BurnDrvTattass = {
 	"tattass", NULL, NULL, NULL, "1994",
 	"Tattoo Assassins (US prototype)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, tattassRomInfo, tattassRomName, NULL, NULL, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4989,7 +4991,7 @@ struct BurnDriver BurnDrvTattassa = {
 	"tattassa", "tattass", NULL, NULL, "1994",
 	"Tattoo Assassins (Asia prototype)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -5065,7 +5067,7 @@ struct BurnDriver BurnDrvDragngun = {
 	"dragngun", NULL, NULL, NULL, "1993",
 	"Dragon Gun (US)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, dragngunRomInfo, dragngunRomName, NULL, NULL, NULL, NULL, DragngunInputInfo, DragngunDIPInfo,
 	DragngunInit, DrvExit, DrvFrame, DragngunDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -5133,7 +5135,7 @@ struct BurnDriver BurnDrvDragngunj = {
 	"dragngunj", "dragngun", NULL, NULL, "1993",
 	"Dragon Gun (Japan)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, dragngunjRomInfo, dragngunjRomName, NULL, NULL, NULL, NULL, DragngunInputInfo, DragngunDIPInfo,
 	DragngunInit, DrvExit, DrvFrame, DragngunDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

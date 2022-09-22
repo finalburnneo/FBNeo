@@ -36,6 +36,8 @@ static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 static HoldCoin<2> hold_coin;
 
+static INT32 is_type_d;
+
 // cpu speed changing
 static INT32 DriverClock; // selected cpu clockrate
 static INT32 nPrevBurnCPUSpeedAdjust;
@@ -380,8 +382,12 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvMainRAM		= Next; Next += 0x1000000;
-	DrvCacheRAM		= Next; Next += 0x1000000;
+	if (is_type_d) {
+		DrvMainRAM		= Next; Next += 0x1000000;
+	} else {
+		DrvMainRAM		= Next; Next +=  0x800000;
+	}
+	DrvCacheRAM		= Next; Next += 0x0004000;
 
 	RamEnd			= Next;
 
@@ -390,14 +396,14 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvLoadRoms(INT32 &type_d)
+static INT32 DrvLoadRoms()
 {
 	struct BurnRomInfo ri;
 	BurnDrvGetRomInfo(&ri, 0);
 
 	if (BurnLoadRom(DrvMainROM,  0, 1)) return 1;
 	if (ri.nLen == 0x200000) memcpy (DrvMainROM + 0x200000, DrvMainROM, 0x200000);
-	if (ri.nLen >= 0x400000) type_d = 1;
+	//if (ri.nLen >= 0x400000) type_d = 1;
 
 	if (BurnLoadRom(DrvFlashROM, 1, 1)) return 1;
 
@@ -457,12 +463,14 @@ static void init_speedhack()
 
 static INT32 DrvInit()
 {
-	INT32 is_type_d = 0;
+	struct BurnRomInfo ri;
+	BurnDrvGetRomInfo(&ri, 0);
+	if (ri.nLen >= 0x400000) is_type_d = 1;
 
 	BurnAllocMemIndex();
 	GenericTilesInit();
 
-	if (DrvLoadRoms(is_type_d)) { return 1; }
+	if (DrvLoadRoms()) { return 1; }
 
 	Sh3Init(0, SH3_CLOCK, 0, 0, 0, 0, 0, 1, 0, 1, 0);
 	Sh3Open(0);
@@ -474,7 +482,7 @@ static INT32 DrvInit()
 	} else {
 		Sh3MapMemory(DrvMainRAM,	0xc000000, 	0xcffffff,	MAP_RAM);
 	}
-	Sh3MapMemory(DrvCacheRAM,		0xf0000000,	0xf0ffffff,	MAP_RAM);
+	Sh3MapMemory(DrvCacheRAM,		0xf0000000,	0xf0003fff,	MAP_RAM); // this 16k cache area used as ram
 
 	Sh3SetReadByteHandler (0, main_read_byte);
 	Sh3SetReadWordHandler (0, main_read_word);
@@ -513,6 +521,8 @@ static INT32 DrvExit()
 
 	BurnFreeMemIndex();
 	GenericTilesExit();
+
+	is_type_d = 0;
 
 	return 0;
 }

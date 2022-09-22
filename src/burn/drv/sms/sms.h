@@ -77,6 +77,7 @@ typedef struct
 	UINT8 hlatch;
 	UINT8 memctrl;
 	UINT8 ioctrl;
+	INT32 paddle_ff[2];
 	INT32 cyc;
 
 	struct {

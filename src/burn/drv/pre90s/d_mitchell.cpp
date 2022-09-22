@@ -672,15 +672,15 @@ static struct BurnRomInfo PompingwRomDesc[] = {
 	{ "pwj_06.11h",    0x08000, 0x4a0a6426, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "pwj_07.13h",    0x20000, 0xa9402420, BRF_ESS | BRF_PRG }, //	 1
 	
-	{ "pw_02.1e",      0x20000, 0x4b5992e4, BRF_GRA },	     //  2	Characters
-	{ "pw_03.2e",      0x20000, 0x79a8ed08, BRF_GRA },	     //  3
+	{ "pwj_02.1e",     0x20000, 0x4b5992e4, BRF_GRA },	     //  2	Characters
+	{ "pwj_03.2e",     0x20000, 0x79a8ed08, BRF_GRA },	     //  3
 	{ "pwj_04.1g",     0x20000, 0x01e49081, BRF_GRA },	     //  4
-	{ "pw_05.2g",      0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
+	{ "pwj_05.2g",     0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
 	
-	{ "pw_10.2k",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
-	{ "pw_9.1k",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
+	{ "pwj_10.2k",     0x20000, 0x83a81c02, BRF_GRA },	     //  6	Sprites
+	{ "pwj_9.1k",      0x20000, 0x6b628232, BRF_GRA },	     //  7
 	
-	{ "pw_01.1d",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
+	{ "pwj_01.1d",     0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
 };
 
 STD_ROM_PICK(Pompingw)

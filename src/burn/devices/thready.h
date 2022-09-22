@@ -6,9 +6,13 @@
 #define THREADY_0THREAD 3 // neither of the above.. (no threading!)
 
 #define STARTUP_FRAMES 180
+#define THREADY_CHECK_CB_TIME 0
 
 #if defined(WIN32)
 #define THREADY THREADY_WINDOWS
+#if !defined(UNICODE) && defined(BUILD_WIN32)
+#define UNICODE
+#endif
 #include "windows.h"
 #endif
 
@@ -25,7 +29,7 @@
 #endif
 
 #if (THREADY == THREADY_WINDOWS)
-long unsigned int __stdcall ThreadyProc(void*);
+static long unsigned int __stdcall ThreadyProc(void*);
 
 struct threadystruct
 {
@@ -44,6 +48,7 @@ struct threadystruct
 		thready_ok = 0;
 		ok_to_thread = 0;
 		ok_to_wait = 0;
+		startup_frame = 0;
 
 		our_callback = thread_callback;
 
@@ -93,7 +98,7 @@ struct threadystruct
 		SCAN_VAR(startup_frame);
 	}
 
-	void reset() {
+	void reset() { // only call this if using for epic12
 		startup_frame = STARTUP_FRAMES;
 	}
 
@@ -126,12 +131,20 @@ struct threadystruct
 
 static threadystruct thready;
 
-long unsigned int __stdcall ThreadyProc(void*) {
+static long unsigned int __stdcall ThreadyProc(void*) {
 	do {
 		DWORD dwWaitResult = WaitForSingleObject(thready.our_event, INFINITE);
 
 		if (dwWaitResult == WAIT_OBJECT_0 && thready.end_thread == 0) {
+#if THREADY_CHECK_CB_TIME
+			time_t begin_time = clock();
+#endif
 			thready.our_callback();
+#if THREADY_CHECK_CB_TIME
+			time_t end_time = clock();
+			double duration = (double)(end_time - begin_time) / CLOCKS_PER_SEC;
+			bprintf(0, _T("thready: callback took %2.3f seconds\n"), duration);
+#endif
 			SetEvent(thready.wait_event);
 		} else {
 			SetEvent(thready.wait_event);

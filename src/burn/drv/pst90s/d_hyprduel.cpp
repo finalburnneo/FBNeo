@@ -449,6 +449,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+	
 	return 0;
 }
 
@@ -514,8 +516,8 @@ static INT32 HyprduelInit()
 	SekMapHandler(1, 						0xc00400, 0xc007ff, MAP_WRITE);
 	SekSetWriteWordHandler(1,				hyperduel_main_sync_write_word);
 	SekSetWriteByteHandler(1,				hyperduel_main_sync_write_byte);
-	
-	i4x00_init(0x400000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
+
+	i4x00_init(10000000, 0x400000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
 
 	SekClose();
 
@@ -590,9 +592,9 @@ static INT32 MagerrorInit()
 	SekSetWriteByteHandler(0,				hyperduel_main_write_byte);
 	SekSetReadWordHandler(0,				hyperduel_main_read_word);
 	SekSetReadByteHandler(0,				hyperduel_main_read_byte);
-	
-	i4x00_init(0x800000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
-	
+
+	i4x00_init(10000000, 0x800000, DrvGfxROM[0], DrvGfxROM[1], 0x400000, irq_cause_write, irq_cause_read, NULL, 1, 0);
+
 	SekClose();
 
 	SekInit(1, 0x68000);
@@ -802,7 +804,7 @@ struct BurnDriver BurnDrvHyprduel = {
 	"hyprduel", NULL, NULL, NULL, "1993",
 	"Hyper Duel (Japan set 1)\0", NULL, "Technosoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hyprduelRomInfo, hyprduelRomName, NULL, NULL, NULL, NULL, HyprduelInputInfo, HyprduelDIPInfo,
 	HyprduelInit, DrvExit, DrvFrame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
@@ -830,7 +832,7 @@ struct BurnDriver BurnDrvHyprduel2 = {
 	"hyprduel2", "hyprduel", NULL, NULL, "1993",
 	"Hyper Duel (Japan set 2)\0", NULL, "Technosoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hyprduel2RomInfo, hyprduel2RomName, NULL, NULL, NULL, NULL, HyprduelInputInfo, HyprduelDIPInfo,
 	HyprduelInit, DrvExit, DrvFrame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

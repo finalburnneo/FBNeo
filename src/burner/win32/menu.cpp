@@ -6,6 +6,8 @@
 // #include <winable.h>
 #endif
 
+#define FILTER_LAST             37 // last filter in vid_softfx.h/.cpp
+
 int nOtherRes = 0;
 
 HMENU hMenu = NULL;
@@ -707,7 +709,7 @@ void MenuUpdate()
 			CheckMenuItem(hMenu, MENU_SOFTFX, nVidBlitterOpt[nVidSelect] & 0x02000000 ? MF_CHECKED : MF_UNCHECKED);
 
 			var = ((unsigned long long)nVidBlitterOpt[nVidSelect] >> 32) + MENU_ENHANCED_SOFT_STRETCH;
-			CheckMenuRadioItem(hMenu, MENU_ENHANCED_SOFT_STRETCH, MENU_ENHANCED_SOFT_STRETCH + 34, var, MF_BYCOMMAND);
+			CheckMenuRadioItem(hMenu, MENU_ENHANCED_SOFT_STRETCH, MENU_ENHANCED_SOFT_STRETCH + FILTER_LAST, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_ENHANCED_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x04000000) ? MF_CHECKED : MF_UNCHECKED);
 			if (nVidBlitterOpt[nVidSelect] & 0x00100000) {
 				var = MENU_3DPROJECTION;
@@ -738,7 +740,7 @@ void MenuUpdate()
 			break;
 		case 2:
 			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_SOFTFX_SOFT_STRETCH;
-			CheckMenuRadioItem(hMenu, MENU_SOFTFX_SOFT_STRETCH, MENU_SOFTFX_SOFT_STRETCH + 34, var, MF_BYCOMMAND);
+			CheckMenuRadioItem(hMenu, MENU_SOFTFX_SOFT_STRETCH, MENU_SOFTFX_SOFT_STRETCH + FILTER_LAST, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_SOFTFX_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_SOFT_DIRECTACCESS, !(nVidBlitterOpt[nVidSelect] & 0x0200) ? MF_CHECKED : MF_UNCHECKED);
 			break;
@@ -779,7 +781,7 @@ void MenuUpdate()
 			break;
 		case 4:
 			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_DX9_ALT_SOFT_STRETCH;
-			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_SOFT_STRETCH, MENU_DX9_ALT_SOFT_STRETCH + 34, var, MF_BYCOMMAND);
+			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_SOFT_STRETCH, MENU_DX9_ALT_SOFT_STRETCH + FILTER_LAST, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_POINT, MENU_DX9_ALT_POINT + 1, MENU_DX9_ALT_POINT + bVidDX9Bilinear, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_HARDWAREVERTEX, (bVidHardwareVertex) ? MF_CHECKED : MF_UNCHECKED);
@@ -1092,7 +1094,17 @@ void MenuUpdate()
 	if (nAutoFireRate == 24) var = MENU_INPUT_AUTOFIRE_RATE_1;
 	CheckMenuRadioItem(hMenu, MENU_INPUT_AUTOFIRE_RATE_1, MENU_INPUT_AUTOFIRE_RATE_6, var, MF_BYCOMMAND);
 
-	MenuUpdateVolume(); // called in run.cpp by alt+ / alt-
+	// Rewind
+	CheckMenuItem(hMenu, MENU_INPUT_REWIND_ENABLED, bRewindEnabled ? MF_CHECKED : MF_UNCHECKED);
+
+	if (nRewindMemory == 128)  var = MENU_INPUT_REWIND_128MB;
+	if (nRewindMemory == 256)  var = MENU_INPUT_REWIND_256MB;
+	if (nRewindMemory == 512)  var = MENU_INPUT_REWIND_512MB;
+	if (nRewindMemory == 768)  var = MENU_INPUT_REWIND_768MB;
+	if (nRewindMemory == 1024) var = MENU_INPUT_REWIND_1GB;
+	CheckMenuRadioItem(hMenu, MENU_INPUT_REWIND_128MB, MENU_INPUT_REWIND_1GB, var, MF_BYCOMMAND);
+
+	MenuUpdateVolume(); // also called in run.cpp by alt+ / alt-
 
 #ifdef BUILD_A68K
 	CheckMenuItem(hMenu, MENU_ASSEMBLYCORE, bBurnUseASMCPUEmulation ? MF_CHECKED : MF_UNCHECKED);

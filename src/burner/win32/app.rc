@@ -806,7 +806,9 @@ BEGIN
     EDITTEXT        IDC_FILENAME,55,10,189,14,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_BROWSE,249,10,18,14
     EDITTEXT        IDC_METADATA,55,30,189,37,ES_AUTOHSCROLL
-    CONTROL         "Record From Power-On",IDC_REPLAYRESET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,55,79,106,14
+//    CONTROL         "Record From Power-On",IDC_REPLAYRESET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,55,79,106,14
+	CONTROL         "Record From Power-On", IDC_REPLAYRESET, "Button", BS_AUTOCHECKBOX | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 5, 78, 93, 14
+	CONTROL         "w/NVRAM", IDC_REPLAYNVRAM, "Button", BS_AUTOCHECKBOX | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 103, 78, 53, 14
 END
 
 IDD_CHOOSEMONITOR DIALOGEX 0, 0, 242, 77
@@ -1097,6 +1099,16 @@ BEGIN
     	    MENUITEM "Very Fast",					MENU_INPUT_AUTOFIRE_RATE_5
     	    MENUITEM "Very Faster",					MENU_INPUT_AUTOFIRE_RATE_6
     	END
+		MENUITEM SEPARATOR
+    	POPUP "&Rewind Settings"
+    	BEGIN
+    	    MENUITEM "Enabled",						MENU_INPUT_REWIND_ENABLED
+    	    MENUITEM "128MB",						MENU_INPUT_REWIND_128MB
+    	    MENUITEM "256MB",						MENU_INPUT_REWIND_256MB
+    	    MENUITEM "512MB",						MENU_INPUT_REWIND_512MB
+    	    MENUITEM "768MB",						MENU_INPUT_REWIND_768MB
+    	    MENUITEM "1GB",							MENU_INPUT_REWIND_1GB
+    	END
     	MENUITEM SEPARATOR
         MENUITEM "Map game inputs...\tF5",				MENU_INPUT, GRAYED
         MENUITEM "Set dipswitches...\tCtrl+F5",				MENU_DIPSW, GRAYED
@@ -1311,6 +1323,9 @@ BEGIN
 						MENUITEM "4xBR Semi-Rounded",					MENU_ENHANCED_SOFT_4XBR_B
 						MENUITEM "4xBR Rounded",						MENU_ENHANCED_SOFT_4XBR_C
 						MENUITEM "DDT3x",	        					MENU_ENHANCED_SOFT_DDT3X
+						MENUITEM "CRT 2x2",                             MENU_ENHANCED_SOFT_CRTx22
+						MENUITEM "CRT 3x3",                             MENU_ENHANCED_SOFT_CRTx33
+						MENUITEM "CRT 4x4",                             MENU_ENHANCED_SOFT_CRTx44
                         MENUITEM SEPARATOR
                         MENUITEM "Force image to SoftFX size",          MENU_ENHANCED_SOFT_AUTOSIZE
                 END
@@ -1390,6 +1405,9 @@ BEGIN
 				MENUITEM "4xBR Semi-Rounded\t(16-bit only)",			MENU_SOFTFX_SOFT_4XBR_B
 				MENUITEM "4xBR Rounded\t(16-bit only)",					MENU_SOFTFX_SOFT_4XBR_C
 				MENUITEM "DDT3x\t(16-bit only)",            	        MENU_SOFTFX_SOFT_DDT3X
+				MENUITEM "CRT 2x2\t(32-bit only)",                      MENU_SOFTFX_SOFT_CRTx22
+				MENUITEM "CRT 3x3\t(32-bit only)",                      MENU_SOFTFX_SOFT_CRTx33
+				MENUITEM "CRT 4x4\t(32-bit only)",                      MENU_SOFTFX_SOFT_CRTx44
                 MENUITEM SEPARATOR
                 MENUITEM "&Force image to SoftFX size",                 MENU_SOFTFX_SOFT_AUTOSIZE
                 POPUP "Buffering &method"
@@ -1500,6 +1518,9 @@ BEGIN
 			MENUITEM "4xBR Semi-Rounded",						MENU_DX9_ALT_SOFT_4XBR_B
 			MENUITEM "4xBR Rounded",							MENU_DX9_ALT_SOFT_4XBR_C
 			MENUITEM "DDT3x",	        					    MENU_DX9_ALT_SOFT_DDT3X
+			MENUITEM "CRT 2x2",                             	MENU_DX9_ALT_SOFT_CRTx22
+			MENUITEM "CRT 3x3",                             	MENU_DX9_ALT_SOFT_CRTx33
+			MENUITEM "CRT 4x4",                             	MENU_DX9_ALT_SOFT_CRTx44
 			MENUITEM SEPARATOR
 			MENUITEM "Force image to SoftFX size",          	MENU_DX9_ALT_SOFT_AUTOSIZE
         END

@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\src\burner\burner.h" />
     <ClInclude Include="..\..\src\burner\dynhuff.h" />
     <ClInclude Include="..\..\src\burner\gameinp.h" />
+    <ClInclude Include="..\..\src\burner\inputbuf.h" />
     <ClInclude Include="..\..\src\burner\ioapi.h" />
     <ClInclude Include="..\..\src\burner\luaengine.h" />
     <ClInclude Include="..\..\src\burner\luasav.h" />
@@ -404,6 +405,7 @@
     <ClInclude Include="..\..\src\intf\input\inp_keys.h" />
     <ClInclude Include="..\..\src\intf\input\win32\dinput_core.h" />
     <ClInclude Include="..\..\src\intf\interface.h" />
+    <ClInclude Include="..\..\src\intf\video\scalers\crt.h" />
     <ClInclude Include="..\..\src\intf\video\scalers\hq2xs.h" />
     <ClInclude Include="..\..\src\intf\video\scalers\hq3xs.h" />
     <ClInclude Include="..\..\src\intf\video\scalers\hq_shared32.h" />
@@ -428,6 +430,7 @@
     <ClCompile Include="..\..\src\burner\gamc.cpp" />
     <ClCompile Include="..\..\src\burner\gami.cpp" />
     <ClCompile Include="..\..\src\burner\image.cpp" />
+    <ClCompile Include="..\..\src\burner\inputbuf.cpp" />
     <ClCompile Include="..\..\src\burner\ioapi.c" />
     <ClCompile Include="..\..\src\burner\luaengine.cpp" />
     <ClCompile Include="..\..\src\burner\luasav.cpp" />
@@ -616,6 +619,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_shangkid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_artmagic.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_btoads.cpp" />
@@ -639,6 +643,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ngp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_pasha2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_rabbit.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_sderby.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_seibuspi.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_shangha3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp" />
@@ -654,6 +659,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_gladiatr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_groundfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_gunbuster.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_halleys.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_lsasquad.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_nycaptor.cpp" />
@@ -727,6 +733,7 @@
     <ClCompile Include="..\..\src\dep\libs\lua\lzio.c" />
     <ClCompile Include="..\..\src\dep\libs\lua\print.c" />
     <ClCompile Include="..\..\src\intf\cd\win32\cd_img.cpp" />
+    <ClCompile Include="..\..\src\intf\video\scalers\crt.cpp" />
     <ClCompile Include="..\..\src\intf\video\scalers\xbr32.cpp" />
     <ClCompile Include="generated\m68kops.c" />
     <CustomBuild Include="..\..\src\burn\drv\capcom\ctv_make.cpp">

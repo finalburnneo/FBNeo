@@ -909,6 +909,13 @@ int tms32010Run(int cycles)
 	return cycles;
 }
 
+int tms32010Idle(int cycles)
+{
+	R.total_cycles + cycles;
+
+	return cycles;
+}
+
 UINT32 tms32010TotalCycles()
 {
 	return R.total_cycles + (R.cycles_start - R.icount);

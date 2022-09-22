@@ -3275,8 +3275,8 @@ INT32 MegadriveInit()
 		RamMisc->SRamActive = 0;
 	}
 
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "forgottn") || strstr(BurnDrvGetTextA(DRV_NAME), "ustrike")) {
-		bprintf(0, _T("Forced 3-button mode for Forgotten Worlds, Urban Strike!\n"));
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "forgottn") || strstr(BurnDrvGetTextA(DRV_NAME), "ustrike") || strstr(BurnDrvGetTextA(DRV_NAME), "kotm")) {
+		bprintf(0, _T("Forced 3-button mode for Forgotten Worlds, Urban Strike, KOTM!\n"));
 		bForce3Button = 1;
 	}
 

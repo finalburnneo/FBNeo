@@ -1778,6 +1778,38 @@ static struct BurnRomInfo brapboyspRomDesc[] = {
 STD_ROM_PICK(brapboysp)
 STD_ROM_FN(brapboysp)
 
+static struct BurnRomInfo brapboysp2RomDesc[] = {
+	{ "rb-030n.u61",		0x020000, 0x632269b0, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "rb-031n.u62",		0x020000, 0x99623650, BRF_ESS | BRF_PRG }, //  1
+
+	{ "rb-040n.u33",		0x020000, 0x313b7a6d, BRF_ESS | BRF_PRG }, //  2 MCU Data
+
+	{ "rb-020.c2",			0x100000, 0xce220d38, BRF_GRA },	       //  3 Sprites
+	{ "rb-021.u76",			0x100000, 0x74001407, BRF_GRA },	       //  4
+	{ "rb-022.u77",			0x100000, 0xcb3f42dc, BRF_GRA },	       //  5
+	{ "rb-023.u78",			0x100000, 0x0e6530c5, BRF_GRA },	       //  6
+	{ "rb-024.u79",			0x080000, 0x65fa6447, BRF_GRA },	       //  7
+	{ "rb-25n.c3",			0x040000, 0x065d9bb5, BRF_GRA },	       //  8
+	{ "rb-26n.c4",			0x040000, 0x8fac668b, BRF_GRA },	       //  9
+
+	{ "rb-010.u65",			0x100000, 0xffd73f87, BRF_GRA },	       // 10 Tiles (scrambled)
+	{ "rb-011.u66",			0x100000, 0xd9325f78, BRF_GRA },	       // 11
+	{ "rb-012.u67",			0x100000, 0xbfdbe0d1, BRF_GRA },	       // 12
+	{ "rb-013.u68",			0x100000, 0x28c37fe8, BRF_GRA },	       // 13
+
+	{ "rb-000.u43",			0x080000, 0x58ad1a62, BRF_SND },	       // 14 Samples
+	{ "rb-003.u101",		0x080000, 0x2cac25d7, BRF_SND },	       // 15
+
+	{ "rb-001.u44",			0x100000, 0x7cf774b3, BRF_SND },	       // 16 Samples
+	{ "rb-002.u45",			0x100000, 0xe4b30444, BRF_SND },	       // 17
+
+	{ "rb-27n.c5",			0x040000, 0xfb9ed35f, BRF_GRA },	       // 18 Sprites (Extra)
+	{ "rb-28n.c7",			0x040000, 0x13acdcab, BRF_GRA },	       // 19
+};
+
+STD_ROM_PICK(brapboysp2)
+STD_ROM_FN(brapboysp2)
+
 static struct BurnRomInfo brapboyspjRomDesc[] = {
 	{ "rb-004.u61",			0x020000, 0x5432442c, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "rb-005.u62",			0x020000, 0x118b3cfb, BRF_ESS | BRF_PRG }, //  1
@@ -5883,6 +5915,114 @@ static INT32 BrapboysInit()
 	return 0;
 }
 
+static INT32 Brapboysp2Init()
+{
+	static const UINT16 brapboys_default_eeprom[64] = {
+		0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+		0x0000, 0x0005, 0x0006, 0x2030, 0x0003, 0x6818, 0x0101, 0x0101,
+		0x0101, 0x0001, 0x0004, 0x0008, 0x4B41, 0x4E45, 0x4B4F, 0x2020,
+		0x4265, 0x2052, 0x6170, 0x2042, 0x6F79, 0x7300, 0x3030, 0x302E,
+		0x3038, 0x10FF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
+		0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
+		0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
+		0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x0035, 0xFFFF, 0xFFFF, 0xFFFF
+	};
+
+	INT32 nRet = 0, nLen;
+
+	Kaneko16NumSprites = 0x10000;
+	Kaneko16NumTiles = 0x8000;
+	Kaneko16NumTiles2 = 0;
+
+	Kaneko16VideoInit();
+	Kaneko16SpriteXOffset = 0;
+	Kaneko16SpriteFlipType = 1;
+
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	ShogwarrMemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	ShogwarrMemIndex();
+
+	Kaneko16TempGfx = (UINT8*)BurnMalloc(0x800000);
+
+	// Load and byte-swap 68000 Program roms
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00000, 1, 2); if (nRet != 0) return 1;
+
+	nRet = BurnLoadRom(Kaneko16McuRom, 2, 1); if (nRet != 0) return 1;
+
+	// Load and Decode Sprite Roms
+	memset (Kaneko16TempGfx, 0xff, 0x800000);
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0200000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0300000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0400000,  7, 1); if (nRet != 0) return 1;
+	memcpy (Kaneko16TempGfx + 0x0480000, Kaneko16TempGfx + 0x0400000, 0x0080000);
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0500000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0540000,  9, 1); if (nRet != 0) return 1;
+
+	BurnLoadRom(Kaneko16TempGfx + 0x580000, 18, 1); // brapboysp2
+	BurnLoadRom(Kaneko16TempGfx + 0x5c0000, 19, 1); 
+
+	GfxDecode(Kaneko16NumSprites, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Sprites);
+
+	// Load and Decode Tile Roms
+	memset(Kaneko16TempGfx, 0, 0x400000);
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0200000, 12, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0300000, 13, 1); if (nRet != 0) return 1;
+	UnscrambleTiles(0x400000);
+	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
+
+	BurnFree(Kaneko16TempGfx);
+
+	nRet = BurnLoadRom(MSM6295ROMData + 0x000000, 14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(MSM6295ROMData + 0x080000, 15, 1); if (nRet != 0) return 1;
+	memcpy (MSM6295ROM + 0x000000, MSM6295ROMData,  0x30000);
+
+	nRet = BurnLoadRom(MSM6295ROMData2 + 0x000000, 16, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 17, 1); if (nRet != 0) return 1;
+	memcpy (MSM6295ROM + 0x100000, MSM6295ROMData2,  0x20000);
+
+	memcpy (Kaneko16NVRam, brapboys_default_eeprom, 0x80);
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Kaneko16Rom          , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Kaneko16Ram          , 0x100000, 0x10ffff, MAP_RAM);
+	SekMapMemory(Kaneko16MCURam	  , 0x200000, 0x20ffff, MAP_RAM);
+	SekMapMemory(Kaneko16PaletteRam   , 0x380000, 0x380fff, MAP_RAM);
+	SekMapMemory(Kaneko16SpriteRam    , 0x580000, 0x581fff, MAP_RAM);
+	SekMapMemory(Kaneko16Video1Ram    , 0x600000, 0x600fff, MAP_RAM);
+	SekMapMemory(Kaneko16Video0Ram    , 0x601000, 0x601fff, MAP_RAM);
+	SekMapMemory(Kaneko16VScrl1Ram    , 0x602000, 0x602fff, MAP_RAM);
+	SekMapMemory(Kaneko16VScrl0Ram    , 0x603000, 0x603fff, MAP_RAM);
+	SekMapMemory((UINT8*)Kaneko16Layer0Regs    , 0x800000, 0x80001f, MAP_WRITE);
+	SekMapMemory((UINT8*)Kaneko16SpriteRegs    , 0x900000, 0x90001f, MAP_WRITE);
+	SekSetReadByteHandler(0, ShogwarrReadByte);
+	SekSetReadWordHandler(0, ShogwarrReadWord);
+	SekSetWriteByteHandler(0, ShogwarrWriteByte);
+	SekSetWriteWordHandler(0, ShogwarrWriteWord);
+	SekClose();
+
+	MSM6295Init(0, (16000000 / 8) / 165, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+
+	MSM6295Init(1, (16000000 / 8) / 165, 1);
+	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+
+	Brapboys = 1;
+
+	ShogwarrDoReset();
+
+	return 0;
+}
+
 static INT32 Kaneko16Exit()
 {
 	SekExit();
@@ -7878,11 +8018,21 @@ struct BurnDriver BurnDrvBrapboys = {
 
 struct BurnDriver BurnDrvBrapboysp = {
 	"brapboysp", "brapboys", NULL, NULL, "1992",
-	"B.Rap Boys Special (World)\0", NULL, "Kaneko", "Kaneko16",
+	"B.Rap Boys Special (World, newer)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_KANEKO16, GBF_SCRFIGHT, 0,
 	NULL, brapboyspRomInfo, brapboyspRomName, NULL, NULL, NULL, NULL, BrapboysInputInfo, BrapboysDIPInfo,
 	BrapboysInit, GtmrMachineExit, ShogwarrFrame, ShogwarrFrameRender, ShogwarrScan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvBrapboysp2 = {
+	"brapboysp2", "brapboys", NULL, NULL, "1992",
+	"B.Rap Boys Special (World, older)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_KANEKO16, GBF_SCRFIGHT, 0,
+	NULL, brapboysp2RomInfo, brapboysp2RomName, NULL, NULL, NULL, NULL, BrapboysInputInfo, BrapboysDIPInfo,
+	Brapboysp2Init, GtmrMachineExit, ShogwarrFrame, ShogwarrFrameRender, ShogwarrScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 

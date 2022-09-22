@@ -220,9 +220,10 @@
 #define IDC_FILENAME                    20260
 #define IDC_BROWSE                      20261
 #define IDC_REPLAYRESET                 20262
-#define IDC_REPLAYTIME                  20263
-#define IDC_SHOWMOVEMENT                20264
-#define IDC_STARTPAUSED                 20265
+#define IDC_REPLAYNVRAM                 20263
+#define IDC_REPLAYTIME                  20264
+#define IDC_SHOWMOVEMENT                20265
+#define IDC_STARTPAUSED                 20266
 
 #define IDC_STATIC_SYS                  	20300
 #define IDC_STATIC_OPT                  	20301
@@ -567,6 +568,13 @@
 #define MENU_ASPECTWIDEVERP					10276
 #define MENU_ASPECTWIDELCDVERP				10277
 
+#define MENU_INPUT_REWIND_ENABLED           10280
+#define MENU_INPUT_REWIND_128MB             10281
+#define MENU_INPUT_REWIND_256MB             10282
+#define MENU_INPUT_REWIND_512MB             10283
+#define MENU_INPUT_REWIND_768MB             10284
+#define MENU_INPUT_REWIND_1GB               10285
+
 #define MENU_AUTOPAUSE                 	 	10300
 #define MENU_PROCESSINPUT					10301
 #define MENU_DISPLAYINDICATOR				10302
@@ -790,6 +798,9 @@
 #define MENU_ENHANCED_SOFT_4XBR_B			11233
 #define MENU_ENHANCED_SOFT_4XBR_C			11234
 #define MENU_ENHANCED_SOFT_DDT3X            11235
+#define MENU_ENHANCED_SOFT_CRTx22           11236
+#define MENU_ENHANCED_SOFT_CRTx33           11237
+#define MENU_ENHANCED_SOFT_CRTx44           11238
 #define MENU_ENHANCED_SOFT_AUTOSIZE			11290
 
 #define MENU_SOFTFX_SOFT_STRETCH			11301
@@ -827,6 +838,9 @@
 #define MENU_SOFTFX_SOFT_4XBR_B				11333
 #define MENU_SOFTFX_SOFT_4XBR_C				11334
 #define MENU_SOFTFX_SOFT_DDT3X              11335
+#define MENU_SOFTFX_SOFT_CRTx22             11336
+#define MENU_SOFTFX_SOFT_CRTx33             11337
+#define MENU_SOFTFX_SOFT_CRTx44             11338
 #define MENU_SOFTFX_SOFT_AUTOSIZE			11390
 #define MENU_SOFT_DIRECTACCESS				11391
 
@@ -865,6 +879,9 @@
 #define MENU_DX9_ALT_SOFT_4XBR_B			11433
 #define MENU_DX9_ALT_SOFT_4XBR_C			11434
 #define MENU_DX9_ALT_SOFT_DDT3X             11435
+#define MENU_DX9_ALT_SOFT_CRTx22            11436
+#define MENU_DX9_ALT_SOFT_CRTx33            11437
+#define MENU_DX9_ALT_SOFT_CRTx44            11438
 #define MENU_DX9_ALT_HARD_FX_NONE           11450
 #define MENU_DX9_ALT_HARD_FX_CRT_APERTURE   11451
 #define MENU_DX9_ALT_HARD_FX_CRT_CALIGARI   11452

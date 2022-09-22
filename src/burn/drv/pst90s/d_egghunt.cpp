@@ -24,6 +24,7 @@ static UINT8 gfx_bank;
 static UINT8 oki_bank;
 
 static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy1f[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
@@ -40,6 +41,7 @@ static struct BurnInputInfo EgghuntInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 2"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1f + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
 	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 up"		},
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 down"	},
@@ -57,25 +59,26 @@ STDINPUTINFO(Egghunt)
 
 static struct BurnDIPInfo EgghuntDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x61, NULL					},
-	{0x11, 0xff, 0xff, 0x7f, NULL					},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0x7f, NULL					},
+	{0x01, 0xff, 0xff, 0x7f, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Debug Mode"			},
-	{0x10, 0x01, 0x01, 0x01, "Off"					},
-	{0x10, 0x01, 0x01, 0x00, "On"					},
+	{0x00, 0x01, 0x01, 0x01, "Off"					},
+	{0x00, 0x01, 0x01, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    3, "Credits per Player"	},
-	{0x10, 0x01, 0x60, 0x60, "1"					},
-	{0x10, 0x01, 0x60, 0x40, "2"					},
-	{0x10, 0x01, 0x60, 0x00, "3"					},
+	{0x00, 0x01, 0x60, 0x60, "1"					},
+	{0x00, 0x01, 0x60, 0x40, "2"					},
+	{0x00, 0x01, 0x60, 0x00, "3"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x10, 0x01, 0x80, 0x80, "Off"					},
-	{0x10, 0x01, 0x80, 0x00, "On"					},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Censor Pictures"		},
-	{0x11, 0x01, 0x80, 0x00, "No"					},
-	{0x11, 0x01, 0x80, 0x80, "Yes"					},
+	{0x01, 0x01, 0x80, 0x00, "No"					},
+	{0x01, 0x01, 0x80, 0x80, "Yes"					},
 };
 
 STDDIPINFO(Egghunt)
@@ -195,7 +198,7 @@ static INT32 DrvDoReset()
 	ZetReset(1);
 
 	set_oki_bank(0);
-	MSM6295Reset(0);
+	MSM6295Reset();
 
 	oki_bank = 0;
 	ram_bank = 0;
@@ -307,7 +310,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	MSM6295Init(0, 1056000 / 132, 0);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);
@@ -324,8 +327,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
-	MSM6295Exit(0);
-	MSM6295ROM = NULL;
+	MSM6295Exit();
 
 	ZetExit();
 
@@ -374,8 +376,9 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+		DrvJoy1[7] |= DrvJoy1f[7]; // P2 coin, mirrored to P1 coin
 
+		memset (DrvInputs, 0xff, sizeof(DrvInputs));
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -400,7 +403,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -263,6 +263,17 @@ static struct BurnDIPInfo euroRedeartnDIPList[] = {
 #endif
 };
 
+static struct BurnDIPInfo asiaRedeartnDIPList[] = {
+
+	// Defaults
+	{0x1B,	0xFF, 0xFF,	0x58, NULL},
+#if LESS_ACCURATE
+	{0x1C,  0xFF, 0xFF, 0x01, NULL},
+#else
+	{0x1C,  0xFF, 0xFF, 0x00, NULL},
+#endif
+};
+
 static struct BurnDIPInfo japanwarzardDIPList[] = {
 
 	// Defaults
@@ -281,6 +292,7 @@ STDDIPINFOEXT(usa, region, usaRegion)
 STDDIPINFOEXT(jojoba, jojobaRegion, japanRegion)
 STDDIPINFOEXT(jojobane, jojobaRegion, euroRegion)
 STDDIPINFOEXT(redearth, redeartnRegion, euroRedeartn)
+STDDIPINFOEXT(redearthn, redeartnRegion, asiaRedeartn)
 STDDIPINFOEXT(warzard, redeartnRegion, japanwarzard)
 STDDIPINFOEXT(sfiiiwidehispanic, sfiiiwide, hispanicRegion)
 STDDIPINFOEXT(sfiiiwidejapan, sfiiiwide, japanRegion)
@@ -1282,6 +1294,21 @@ static struct BurnRomInfo warzardRomDesc[] = {
 STD_ROM_PICK(warzard)
 STD_ROM_FN(warzard)
 
+// -----------------------------------------
+// Red Earth / War-Zard (Asia 961121, NO CD)
+// -----------------------------------------
+static struct BurnRomInfo redearthnRomDesc[] = {
+
+	{ "redearth_asia_nocd.29f400.u2",		0x080000, 0x7a4f0851, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+#if !defined ROM_VERIFY
+	REDEARTH_961121_FLASH
+#endif
+};
+
+STD_ROM_PICK(redearthn)
+STD_ROM_FN(redearthn)
+
 // -----------------------------
 // Red Earth / War-Zard (961023)
 // -----------------------------
@@ -1339,6 +1366,21 @@ static struct BurnRomInfo warzardr1RomDesc[] = {
 
 STD_ROM_PICK(warzardr1)
 STD_ROM_FN(warzardr1)
+
+// -----------------------------------------
+// Red Earth / War-Zard (Asia 961023, NO CD)
+// -----------------------------------------
+static struct BurnRomInfo redearthnr1RomDesc[] = {
+
+	{ "redearth_asia_nocd.29f400.u2",		0x080000, 0x7a4f0851, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+#if !defined ROM_VERIFY
+	REDEARTH_961023_FLASH
+#endif
+};
+
+STD_ROM_PICK(redearthnr1)
+STD_ROM_FN(redearthnr1)
 
 // ------------------------------------------------------------------------------------
 
@@ -1909,6 +1951,16 @@ struct BurnDriver BurnDrvWarzard = {
 	384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvRedearthn = {
+	"redearthn", "redearth", NULL, NULL, "1996",
+	"Red Earth / War-Zard (Asia 961121, NO CD)\0", NULL, "Capcom", "CPS-3",
+	L"Red Earth\0War-Zard (Asia 961121, NO CD)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
+	NULL, redearthnRomInfo, redearthnRomName, NULL, NULL, NULL, NULL, cps3InputInfo, redearthnDIPInfo,
+	redearthInit, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvRedearthr1 = {
 	"redearthr1", "redearth", NULL, NULL, "1996",
 	"Red Earth / War-Zard (Euro 961023)\0", NULL, "Capcom", "CPS-3",
@@ -1928,6 +1980,17 @@ struct BurnDriver BurnDrvWarzardr1 = {
 	redearthInit, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };
+
+struct BurnDriver BurnDrvRedearthnr1 = {
+	"redearthnr1", "redearth", NULL, NULL, "1996",
+	"Red Earth / War-Zard (Asia 961023, NO CD)\0", NULL, "Capcom", "CPS-3",
+	L"Red Earth\0War-Zard (Asia 961023, NO CD)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
+	NULL, redearthnr1RomInfo, redearthnr1RomName, NULL, NULL, NULL, NULL, cps3InputInfo, redearthnDIPInfo,
+	redearthInit, cps3Exit, cps3Frame, DrvCps3Draw, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
 
 // CPS-3 Hacks
 
@@ -2064,17 +2127,17 @@ struct BurnDriver BurnDrvSfiii3th = {
 };
 
 // -------------------------------------------------------------------------
-// Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220701)
+// Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220908)
 // -------------------------------------------------------------------------
 
 static struct BurnRomInfo sfiii3wsRomDesc[] = {
 
 	{ "sfiii3_japan_nocd.29f400.u2",	0x080000, 0x1edc6366, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
-	{ "sfiii3ws-simm1.0",				0x200000, 0xc1c25038, BRF_ESS | BRF_PRG },
-	{ "sfiii3ws-simm1.1",				0x200000, 0x284a0c1c, BRF_ESS | BRF_PRG },
-	{ "sfiii3ws-simm1.2",				0x200000, 0x3ab2c9c2, BRF_ESS | BRF_PRG },
-	{ "sfiii3ws-simm1.3",				0x200000, 0xdffd42b2, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.0",				0x200000, 0x16843828, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.1",				0x200000, 0x0d084fbc, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.2",				0x200000, 0x3f6d1f52, BRF_ESS | BRF_PRG },
+	{ "sfiii3ws-simm1.3",				0x200000, 0x3ff7516b, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.0",					0x200000, 0x06eb969e, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.1",					0x200000, 0xe7039f82, BRF_ESS | BRF_PRG },
 	{ "sfiii3-simm2.2",					0x200000, 0x645c96f7, BRF_ESS | BRF_PRG },
@@ -2118,7 +2181,7 @@ STD_ROM_FN(sfiii3ws)
 
 struct BurnDriver BurnDrvSfiii3ws = {
 	"sfiii3ws", "sfiii3", NULL, NULL, "2022",
-	"Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220701)\0", NULL, "hack", "CPS-3",
+	"Street Fighter III 3rd Strike: Fight for the Future (Widescreen 20220908)\0", NULL, "Bank Bank", "CPS-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiii3wsRomInfo, sfiii3wsRomName, NULL, NULL, NULL, NULL, cps3InputInfo, japanDIPInfo,

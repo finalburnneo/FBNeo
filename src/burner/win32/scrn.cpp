@@ -99,6 +99,7 @@ void DeActivateChat()
 	bEditActive = false;
 	DestroyWindow(hwndChat);
 	hwndChat = NULL;
+	SetFocus(hScrnWnd);
 }
 
 int ActivateChat()

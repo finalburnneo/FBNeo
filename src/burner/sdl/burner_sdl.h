@@ -52,6 +52,7 @@ extern int gameSelectedFromFilter;
 
 #ifdef BUILD_SDL2
 extern SDL_Window* sdlWindow;
+extern int nJoystickCount;
 #endif
 extern TCHAR* GetIsoPath();
 

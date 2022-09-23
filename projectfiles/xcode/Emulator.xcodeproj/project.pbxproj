@@ -968,6 +968,8 @@
 		FE1B283F23561A7A0065200C /* gamc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B235A23561A740065200C /* gamc.cpp */; };
 		FE1B287A23561A7A0065200C /* un7z.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239C23561A740065200C /* un7z.cpp */; };
 		FE1B287B23561A7A0065200C /* sshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B239E23561A750065200C /* sshot.cpp */; };
+		FE1B907F28DD807C008A0113 /* d_halleys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B907E28DD807C008A0113 /* d_halleys.cpp */; };
+		FE1B908128DD809B008A0113 /* d_taxidriv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1B908028DD809B008A0113 /* d_taxidriv.cpp */; };
 		FE1E0C7B244C2BD600C774C3 /* d_galpani3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7A244C2BD500C774C3 /* d_galpani3.cpp */; };
 		FE1E0C7E245333E600C774C3 /* i4x00.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7C245333E500C774C3 /* i4x00.cpp */; };
 		FE1E0C802453340600C774C3 /* d_hyprduel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE1E0C7F2453340600C774C3 /* d_hyprduel.cpp */; };
@@ -2571,6 +2573,8 @@
 		FE1B239E23561A750065200C /* sshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sshot.cpp; sourceTree = "<group>"; };
 		FE1B287E23561D1A0065200C /* tchar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tchar.h; sourceTree = "<group>"; };
 		FE1B287F235626280065200C /* burner_macos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = burner_macos.h; sourceTree = "<group>"; };
+		FE1B907E28DD807C008A0113 /* d_halleys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_halleys.cpp; sourceTree = "<group>"; };
+		FE1B908028DD809B008A0113 /* d_taxidriv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_taxidriv.cpp; sourceTree = "<group>"; };
 		FE1E0C7A244C2BD500C774C3 /* d_galpani3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = d_galpani3.cpp; sourceTree = "<group>"; };
 		FE1E0C7C245333E500C774C3 /* i4x00.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i4x00.cpp; sourceTree = "<group>"; };
 		FE1E0C7D245333E500C774C3 /* i4x00.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i4x00.h; sourceTree = "<group>"; };
@@ -4381,6 +4385,7 @@
 				FE5560FC258E84A400A19F2D /* d_gladiatr.cpp */,
 				FE1B20CE23561A6C0065200C /* d_groundfx.cpp */,
 				FE1B20E923561A6C0065200C /* d_gunbuster.cpp */,
+				FE1B907E28DD807C008A0113 /* d_halleys.cpp */,
 				FE1B20C723561A6C0065200C /* d_jollyjgr.cpp */,
 				FE1B20AC23561A6C0065200C /* d_ksayakyu.cpp */,
 				FE1B20CC23561A6C0065200C /* d_lkage.cpp */,
@@ -4653,6 +4658,7 @@
 				FE1B217723561A6E0065200C /* d_tagteam.cpp */,
 				FE1B215623561A6D0065200C /* d_tail2nose.cpp */,
 				FE1B210923561A6D0065200C /* d_tankbust.cpp */,
+				FE1B908028DD809B008A0113 /* d_taxidriv.cpp */,
 				FE1B21A223561A6E0065200C /* d_tbowl.cpp */,
 				FE1B21AE23561A6E0065200C /* d_tceptor.cpp */,
 				FE1B20FF23561A6D0065200C /* d_tecmo.cpp */,
@@ -5728,6 +5734,7 @@
 				FE1B259123561A760065200C /* d_brkthru.cpp in Sources */,
 				FE1B264023561A770065200C /* cps_run.cpp in Sources */,
 				FE1B25AF23561A760065200C /* k055555.cpp in Sources */,
+				FE1B907F28DD807C008A0113 /* d_halleys.cpp in Sources */,
 				FE1B27A523561A790065200C /* burn_ym2413.cpp in Sources */,
 				FE1B248823561A750065200C /* vid_interface.cpp in Sources */,
 				FE1B26B723561A770065200C /* d_foodf.cpp in Sources */,
@@ -6555,6 +6562,7 @@
 				FE1B25C123561A760065200C /* d_mikie.cpp in Sources */,
 				FE1B27E323561A790065200C /* namco_c45.cpp in Sources */,
 				FE1B245D23561A750065200C /* gzclose.c in Sources */,
+				FE1B908128DD809B008A0113 /* d_taxidriv.cpp in Sources */,
 				FE1B279C23561A790065200C /* redbaron.cpp in Sources */,
 				FE1B26CF23561A780065200C /* d_capbowl.cpp in Sources */,
 				FE1B271F23561A780065200C /* d_sstrangr.cpp in Sources */,

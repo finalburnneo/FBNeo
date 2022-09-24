@@ -15,14 +15,13 @@
 
 #include "burner.h"
 
-INT32 Init_Joysticks(int p1_use_joystick);
 INT32 display_set_controls();
 
 int  nAppVirtualFps = 0;         // App fps * 100
 bool bRunPause = 0;
 bool bAppFullscreen = 0;
 bool bAlwaysProcessKeyboardInput = 0;
-int  usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
+int usemenu = 0, usejoy = 0, vsync = 1, dat = 0;
 bool bSaveconfig = 1;
 bool bIntegerScale = false;
 bool bAlwaysMenu = false;
@@ -33,8 +32,9 @@ bool bShowClones = true;
 int gameSelectedFromFilter = -1;
 TCHAR szAppBurnVer[16];
 char videofiltering[3];
+bool gamefound = 0;
+const char* romname = NULL;
 
-bool do_reload_game = false;	// To reload game when buttons mapping changed
 #ifdef BUILD_SDL2
 SDL_Window* sdlWindow = NULL;
 #endif
@@ -47,63 +47,55 @@ int parseSwitches(int argc, char* argv[])
 {
 	for (int i = 1; i < argc; i++)
 	{
-		if (*argv[i] != '-')
+		if (*argv[i] != '-' && !gamefound)
 		{
-			continue;
+			romname = argv[i];
+			gamefound = 1;
 		}
-
-		if (strcmp(argv[i] + 1, "joy") == 0)
+		if (strcmp(argv[i], "-joy") == 0)
 		{
-			set_commandline_option(usejoy, 1)
+			set_commandline_option_not_config(usejoy, 1);
 		}
-
-		if (strcmp(argv[i] + 1, "menu") == 0)
+		else if (strcmp(argv[i], "-menu") == 0)
 		{
-			set_commandline_option_not_config(usemenu, 1)
-
+			set_commandline_option_not_config(usemenu, 1);
 		}
-
-		if (strcmp(argv[i] + 1, "novsync") == 0)
+		else if (strcmp(argv[i], "-novsync") == 0)
 		{
-			set_commandline_option(vsync, 0)
+			set_commandline_option(vsync, 0);
 		}
-
-		if (strcmp(argv[i] + 1, "integerscale") == 0)
+		else if (strcmp(argv[i], "-integerscale") == 0)
 		{
-			set_commandline_option(bIntegerScale, 1)
+			set_commandline_option(bIntegerScale, 1);
 		}
-
-		if (strcmp(argv[i] + 1, "dat") == 0)
+		else if (strcmp(argv[i], "-dat") == 0)
 		{
-			set_commandline_option_not_config(dat, 1)
+			set_commandline_option_not_config(dat, 1);
 		}
-
-		if (strcmp(argv[i] + 1, "fullscreen") == 0)
+		else if (strcmp(argv[i], "-fullscreen") == 0)
 		{
-			set_commandline_option(bAppFullscreen, 1)
+			set_commandline_option(bAppFullscreen, 1);
 		}
-
-		if (strcmp(argv[i] + 1, "nearest") == 0)
+		else if (strcmp(argv[i], "-nearest") == 0)
 		{
-			set_commandline_option_string(videofiltering, "0", 3)
+			set_commandline_option_string(videofiltering, "0", 3);
 		}
-
-		if (strcmp(argv[i] + 1, "linear") == 0)
+		else if (strcmp(argv[i], "-linear") == 0)
 		{
-			set_commandline_option_string(videofiltering, "1", 3)
+			set_commandline_option_string(videofiltering, "1", 3);
 		}
-
-		if (strcmp(argv[i] + 1, "best") == 0)
+		else if (strcmp(argv[i], "-best") == 0)
 		{
-			set_commandline_option_string(videofiltering, "2", 3)
+			set_commandline_option_string(videofiltering, "2", 3);
 		}
-		if (strcmp(argv[i] + 1, "autosave") == 0)
+		else if (strcmp(argv[i], "-autosave") == 0)
 		{
 			bDrvSaveAll = 1;
 		}
-		if (strcmp(argv[i] + 1, "cd") == 0)
+		else if (strcmp(argv[i], "-cd") == 0)
 		{
-			_tcscpy(CDEmuImage, argv[i + 1]);
+			i++;
+			_tcscpy(CDEmuImage, argv[i]);
 		}
 	}
 	return 0;
@@ -227,27 +219,23 @@ void generateDats()
 
 void DoGame(int gameToRun)
 {
-	do {
-		do_reload_game = false;
-		if (!DrvInit(gameToRun, 0))
-		{
-			MediaInit();
-			if (usejoy) Init_Joysticks(1);	// This will ignore inputs defined in *.ini and use joysticks for all players
-			display_set_controls();
-			RunMessageLoop();
-		}
-		else
-		{
-			printf("There was an error loading your selected game.\n");
-		}
+	if (!DrvInit(gameToRun, 0))
+	{
+		MediaInit();
+		display_set_controls();
+		RunMessageLoop();
+	}
+	else
+	{
+		printf("There was an error loading your selected game.\n");
+	}
 
-		if (bSaveconfig)
-		{
-			ConfigAppSave();
-		}
-		DrvExit();
-		MediaExit();
-	} while (do_reload_game);
+	if (bSaveconfig)
+	{
+		ConfigAppSave();
+	}
+	DrvExit();
+	MediaExit();
 }
 
 void bye(void)
@@ -275,9 +263,7 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 
 int main(int argc, char* argv[])
 {
-	const char* romname = NULL;
 	UINT32      i = 0;
-	bool gamefound = 0;
 	int fail = 0;
 	atexit(bye);
 	// TODO: figure out if we can use hardware Gamma until then, force software gamma
@@ -296,22 +282,18 @@ int main(int argc, char* argv[])
 		// public version
 		_stprintf(szAppBurnVer, _T("%x.%x.%x"), nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF);
 	}
+	printf("FBNeo v%s\n", szAppBurnVer);
+
 
 	// set default videofiltering
 	snprintf(videofiltering, 3, "0");
 
-	printf("FBNeo v%s\n", szAppBurnVer);
-
-	for (int i = 1; i < argc; i++)
-	{
-		if (*argv[i] != '-' && !gamefound)
-		{
-			romname = argv[i];
-			gamefound = 1;
-		}
-	}
-
 	parseSwitches(argc, argv);
+
+	// Do these bits before override via ConfigAppLoad
+	bCheatsAllowed = 1;
+	nAudDSPModule[0] = 0;
+	EnableHiscores = 1;
 
 	if ((romname == NULL) && !usemenu && !bAlwaysMenu && !dat)
 	{
@@ -324,11 +306,6 @@ int main(int argc, char* argv[])
 		printf("Usage is restricted by the license at https://raw.githubusercontent.com/finalburnneo/FBNeo/master/src/license.txt\n");
 		return 0;
 	}
-
-	// Do these bits before override via ConfigAppLoad
-	bCheatsAllowed = 1;
-	nAudDSPModule[0] = 0;
-	EnableHiscores = 1;
 
 #ifdef BUILD_SDL
 	SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
@@ -382,7 +359,7 @@ int main(int argc, char* argv[])
 
 	// create a default ini if one is not valid
 	fail = ConfigAppLoad();
-	if ((fail) && (bSaveconfig)) ConfigAppSave();		// for SDL2 this will also create folders in ~/.local/share/fbneo/
+	if (fail && bSaveconfig) ConfigAppSave();		// for SDL2 this will also create folders in ~/.local/share/fbneo/
 
 	ComputeGammaLUT();
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
@@ -403,9 +380,13 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	if (usemenu || bAlwaysMenu)
+	if (dat)
 	{
+		generateDats();
+	}
 #ifdef BUILD_SDL2
+	else if (usemenu || bAlwaysMenu)
+	{
 		bool quit = 0;
 
 		while (!quit)
@@ -425,12 +406,8 @@ int main(int argc, char* argv[])
 				break;
 			}
 		}
+	}
 #endif
-	}
-	else if (dat)
-	{
-		generateDats();
-	}
 	else
 	{
 		if (i == nBurnDrvCount)
@@ -441,7 +418,6 @@ int main(int argc, char* argv[])
 
 		DoGame(i);
 	}
-
 	return 0;
 }
 

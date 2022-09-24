@@ -1767,12 +1767,45 @@ static UINT32 MacroNameToNum(TCHAR* szName)
 }
 
 // ---------------------------------------------------------------------------
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+extern int usejoy;
+extern INT32 MapJoystick(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice);
+#endif
 
 static INT32 GameInpAutoOne(struct GameInp* pgi, char* szi)
 {
 	for (INT32 i = 0; i < nMaxPlayers; i++) {
 		INT32 nSlide = nPlayerDefaultControls[i] >> 4;
 		switch (nPlayerDefaultControls[i] & 0x0F) {
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+			case 0:
+				// Trying to avoing calling another function to map an already mapped input
+				if (usejoy) {
+					if (GamcAnalogJoy(pgi, szi, i, 0, nSlide) && MapJoystick(pgi, szi, i, 1) && GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, 0);
+				} else if (GamcAnalogKey(pgi, szi, i, nSlide) && GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, -1);
+				break;
+			case 1:
+				if (GamcAnalogJoy(pgi, szi, i, usejoy, nSlide)) {
+					if (usejoy) {
+						if (MapJoystick(pgi, szi, i, 2) && GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, 1);
+					} else if (GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, 0);
+				}
+				break;
+			case 2:
+				if (GamcAnalogJoy(pgi, szi, i, usejoy + 1, nSlide)) {
+					if (usejoy) {
+						if (MapJoystick(pgi, szi, i, 3) && GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, 2);
+					} else if (GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, 1);
+				}
+				break;
+			case 3:
+				if (GamcAnalogJoy(pgi, szi, i, usejoy + 2, nSlide)) {
+					if (usejoy) {
+						if (MapJoystick(pgi, szi, i, 4) && GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, 3);
+					} else if (GamcMisc(pgi, szi, i)) GamcPlayer(pgi, szi, i, 2);
+				}
+				break;
+#else
 			case 0:										// Keyboard
 				GamcAnalogKey(pgi, szi, i, nSlide);
 				GamcPlayer(pgi, szi, i, -1);
@@ -1793,6 +1826,7 @@ static INT32 GameInpAutoOne(struct GameInp* pgi, char* szi)
 				GamcPlayer(pgi, szi, i, 2);
 				GamcMisc(pgi, szi, i);
 				break;
+#endif
 			case 4:										// X-Arcade left side
 				GamcMisc(pgi, szi, i);
 				GamcPlayerHotRod(pgi, szi, i, 0x10, nSlide);
@@ -2077,8 +2111,8 @@ INT32 ConfigGameLoadHardwareDefaults()
 {
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	TCHAR *szFolderName = NULL;
-	szFolderName = SDL_GetPrefPath(NULL, "fbneo");		// Get fbneo folder path
 	TCHAR szFileName[MAX_PATH] = _T("");
+	szFolderName = SDL_GetPrefPath(NULL, "fbneo");		// Get fbneo folder path
 #else
 	TCHAR *szFileName = _T("");
 #endif
@@ -2121,6 +2155,18 @@ INT32 GameInpDefault()
 	struct BurnInputInfo bii;
 	UINT32 i;
 
+#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+	TCHAR *szSDLconfigPath = NULL;
+	szSDLconfigPath = SDL_GetPrefPath("fbneo", "config");
+	for (INT32 nPlayer = 0; nPlayer < 4; nPlayer++) {
+		_stprintf(szPlayerDefaultIni[nPlayer], _T("%sp%ddefaults.ini"), szSDLconfigPath, nPlayer + 1);
+	}
+	SDL_free(szSDLconfigPath);
+
+	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
+		GameInputAutoIni(nPlayer, szPlayerDefaultIni[nPlayer], false);
+	}
+#else
 	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
 
 		if ((nPlayerDefaultControls[nPlayer] & 0x0F) != 0x0F) {
@@ -2129,9 +2175,11 @@ INT32 GameInpDefault()
 
 		GameInputAutoIni(nPlayer, szPlayerDefaultIni[nPlayer], false);
 	}
+#endif
 
 	// Fill all inputs still undefined
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
+
 		if (pgi->nInput) {											// Already defined - leave it alone
 			continue;
 		}
@@ -2156,6 +2204,7 @@ INT32 GameInpDefault()
             continue; // NOTE: prevents 'GameInpAutoOne' from being called
         }
 #endif
+
 		GameInpAutoOne(pgi, bii.szInfo);
 	}
 

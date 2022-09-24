@@ -8,11 +8,12 @@
 
 static int FBKtoSDL[512] = { 0 };
 static int SDLtoFBK[512] = { -1 };
+
 static int nInitedSubsytems = 0;
 static SDL_Joystick* JoyList[MAX_JOYSTICKS];
 static SDL_GameController *GCList[MAX_JOYSTICKS];
 static int* JoyPrevAxes = NULL;
-static int nJoystickCount = 0;						// Number of joysticks connected to this machine
+/* static */ int nJoystickCount = 0;						// Number of joysticks connected to this machine
 int buttons [4][8]= { {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,-1,-1,-1,-1} }; // 4 joysticks buttons 0 -5 and start / select
 
 void setup_kemaps(void)
@@ -268,6 +269,16 @@ void setup_kemaps(void)
 	SDLtoFBK[SDL_SCANCODE_AUDIOFASTFORWARD] = -1;
 };
 
+int getFBKfromScancode(int key)
+{
+	return SDLtoFBK[key];
+}
+
+SDL_Scancode getScancodefromFBK(int key)
+{
+	return (SDL_Scancode)FBKtoSDL[key];
+}
+
 // Sets up one Joystick (for example the range of the joystick's axes)
 static int SDLinpJoystickInit(int i)
 {
@@ -393,7 +404,7 @@ int SDLinpInit()
 }
 
 static unsigned char bKeyboardRead = 0;
-const Uint8* SDLinpKeyboardState;
+const Uint8* SDLinpKeyboardState = NULL;
 
 static unsigned char bJoystickRead = 0;
 
@@ -474,16 +485,12 @@ int SDLinpJoyAxis(int i, int nAxis)
 // Read the keyboard
 static int ReadKeyboard()
 {
-	int numkeys;
-
 	if (bKeyboardRead) {							// already read this frame - ready to go
 		return 0;
 	}
 
-	SDLinpKeyboardState = SDL_GetKeyboardState(&numkeys);
-	if (SDLinpKeyboardState == NULL) {
-		return 1;
-	}
+	if (SDLinpKeyboardState == NULL) SDLinpKeyboardState = SDL_GetKeyboardState(NULL);	// Maybe SDLinpKeyboardState was not initialized?
+	if (SDLinpKeyboardState == NULL) return 1;
 	// The keyboard has been successfully Read this frame
 	bKeyboardRead = 1;
 

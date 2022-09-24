@@ -20210,10 +20210,10 @@ static struct BurnRomInfo kof98bc2k2RomDesc[] = {
 
 	{ "98al-c1.c1",    0x800000, 0x379654a5, 3 | BRF_GRA },           //  3 Sprite data
 	{ "98al-c2.c2",    0x800000, 0x9c71fa3d, 3 | BRF_GRA },           //  4
-	{ "98al-c3.c3",    0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
-	{ "98al-c4.c4",    0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
-	{ "98al-c5.c5",    0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
-	{ "98al-c6.c6",    0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
+	{ "242-c3.c3",     0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",     0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5.c5", 	   0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
+	{ "242-c6.c6", 	   0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
 	{ "98al-c7.c7",    0x800000, 0x39494428, 3 | BRF_GRA },           //  9
 	{ "98al-c8.c8",    0x800000, 0xd471c78c, 3 | BRF_GRA },           // 10
 

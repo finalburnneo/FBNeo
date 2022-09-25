@@ -12344,6 +12344,7 @@ DRV		BurnDrvPbobble2x;
 DRV		BurnDrvPbobble3u;
 DRV		BurnDrvPbobble3j;
 DRV		BurnDrvPbobble3;
+DRV		BurnDrvPbobble3rc;
 DRV		BurnDrvPbobble4u;
 DRV		BurnDrvPbobble4j;
 DRV		BurnDrvPbobble4;
@@ -31347,6 +31348,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPbobble3u,			// Puzzle Bobble 3 (Ver 2.1A 1996/09/27)
 	&BurnDrvPbobble3j,			// Puzzle Bobble 3 (Ver 2.1J 1996/09/27)
 	&BurnDrvPbobble3,			// Puzzle Bobble 3 (Ver 2.1O 1996/09/27)
+	&BurnDrvPbobble3rc,			// Puzzle Bobble 3 Recarbonated
 	&BurnDrvPbobble4u,			// Puzzle Bobble 4 (Ver 2.04A 1997/12/19)
 	&BurnDrvPbobble4j,			// Puzzle Bobble 4 (Ver 2.04J 1997/12/19)
 	&BurnDrvPbobble4,			// Puzzle Bobble 4 (Ver 2.04O 1997/12/19)

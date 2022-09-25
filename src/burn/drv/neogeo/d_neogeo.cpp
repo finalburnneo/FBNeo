@@ -20217,7 +20217,7 @@ static struct BurnRomInfo kof98bc2k2RomDesc[] = {
 	{ "98al-c7.c7",    0x800000, 0x39494428, 3 | BRF_GRA },           //  9
 	{ "98al-c8.c8",    0x800000, 0xd471c78c, 3 | BRF_GRA },           // 10
 
-	{ "98al-m1.m1",    0x040000, 0x4ef7016b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-m1.m1",     0x040000, 0x4ef7016b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "242-v1.v1",     0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
 	{ "242-v2.v2",     0x400000, 0xcc11106e, 5 | BRF_SND },           // 17

@@ -1523,7 +1523,7 @@ static void rtype2_main_cpu_map()
 
 static void hharryu_main_cpu_map()
 {
-	VezInit(0, Kengo ? V35_TYPE : V30_TYPE);
+	VezInit(0, V35_TYPE); // cosmiccop / kengo v35
 
 	VezOpen(0);
 	VezMapArea(0x00000, 0x7ffff, 0, DrvV30ROM + 0x000000);

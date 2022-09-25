@@ -857,13 +857,14 @@ void gui_init()
 		return;
 	}
 
-	if( SDL_NumJoysticks() < 1 )
+	nJoystickCount = SDL_NumJoysticks();
+	if( nJoystickCount < 1 )
 	{
 		printf( "Warning: No joysticks connected!\n" );
 	}
 	else
 	{
-		for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+		for (int i = 0; i < nJoystickCount; ++i) {
 			gJoystick = SDL_JoystickOpen(i);
 			if (gJoystick) {
 				if (SDL_IsGameController(i)) {

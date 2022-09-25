@@ -75,7 +75,7 @@ int ConfigAppLoad()
 
 	CreateConfigName(szConfig);
 
-	if ((f = fopen(szConfig, "rt")) == NULL)
+	if ((f = _tfopen(szConfig, _T("rt"))) == NULL)
 	{
 		return 1;
 	}
@@ -193,7 +193,7 @@ int ConfigAppSave()
 
 	CreateConfigName(szConfig);
 
-	if ((f = fopen(szConfig, "wt")) == NULL)
+	if ((f = _tfopen(szConfig, _T("wt"))) == NULL)
 	{
 		return 1;
 	}

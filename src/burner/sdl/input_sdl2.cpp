@@ -4,10 +4,6 @@
 */
 
 
-//static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog);
-static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameInp* pgi, char* szi);
-//INT32 display_set_controls();
-INT32 MapJoystick(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice);
 extern int buttons [4][8];
 
 #define KEY(x) { pgi->nInput = GIT_SWITCH; pgi->Input.Switch.nCode = (UINT16)(x); }
@@ -60,6 +56,85 @@ static bool usesStreetFighterLayout()
    return  bStreetFighterLayout;
 }
 
+INT32 MapJoystick(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
+{
+	if (nDevice == 0) return 0; // using keyboard for this player
+	nDevice--;
+	INT32 nJoyBase = 0x4000;
+	nJoyBase |= nDevice << 8;
+
+	bStreetFighterLayout = usesStreetFighterLayout();
+	char szPlay[4][4]={"p1 ", "p2 ", "p3 ", "p4 "};
+
+	if (_strnicmp(szPlay[nPlayer & 3], szi, 3)) {
+		 return 1; // Not our player
+	} else {
+		szi += 3;
+		if (strcmp(szi, "up") == 0) {
+			KEY(nJoyBase + 0x02);
+		} else if (strcmp(szi, "down") == 0) {
+			KEY(nJoyBase + 0x03);
+		} else if (strcmp(szi, "left") == 0) {
+			KEY(nJoyBase + 0x00);
+		} else if (strcmp(szi, "right") == 0) {
+			KEY(nJoyBase + 0x01);
+		} else if (strcmp(szi, "coin") == 0) {
+			if (buttons[nDevice][6] > -1) {
+				KEY(nJoyBase + 0x80 + buttons[nDevice][6]);
+			} else {
+				KEY(nJoyBase + 0x86); // joystick not mapped or is not plugged, use fbneo default settings
+			}
+		} else if (strcmp(szi, "start") == 0) {
+			if (buttons[nDevice][7] > -1) {
+				KEY(nJoyBase + 0x80 + buttons[nDevice][7]);
+			} else {
+				KEY(nJoyBase + 0x87); // joystick not mapped or is not plugged, use fbneo default settings
+			}
+		} else if (strncmp(szi, "fire ", 5) == 0) {
+			szi += 5;
+			INT32 nButton = strtol(szi, NULL, 0);
+
+			if (nButton > 0) nButton--;
+			if (buttons[nDevice][nButton] != -1) {
+				if (bStreetFighterLayout) {
+					switch (nButton)
+					{
+						case 0:
+							KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
+							break;
+						case 1:
+							KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
+							break;
+						case 2:
+							KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
+							break;
+						case 3:
+							KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
+							break;
+						case 4:
+							KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
+							break;
+						case 5:
+							KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
+							break;
+					}
+				} else KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]);
+			} else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or is not plugged, use fbneo default settings
+		} else return 1; // Nothing mapped
+	}
+	return 0;
+}
+
+static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameInp* pgi, char* szi)
+{
+	GamcPlayer(pgi, szi, nPlayer, nPcDev - 1);
+	// nPcDev == 0 is Keyboard, nPcDev == 1 is joy0, etc.
+	if (nPcDev) GamcAnalogJoy(pgi, szi, nPlayer, nPcDev - 1, nAnalog);
+	else GamcAnalogKey(pgi, szi, nPlayer, nAnalog);
+	GamcMisc(pgi, szi, nPlayer);
+	MapJoystick(pgi, szi, nPlayer, nPcDev);
+}
+
 static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog)
 {
    struct GameInp* pgi = NULL;
@@ -81,162 +156,6 @@ static int GameInpConfig(int nPlayer, int nPcDev, int nAnalog)
       GameInpConfigOne(nPlayer, nPcDev, nAnalog, pgi, pgi->Macro.szName);
    }
    GameInpCheckLeftAlt();
-   return 0;
-}
-
-static void GameInpConfigOne(int nPlayer, int nPcDev, int nAnalog, struct GameInp* pgi, char* szi)
-{
-	GamcPlayer(pgi, szi, nPlayer, nPcDev - 1);
-	// nPcDev == 0 is Keyboard, nPcDev == 1 is joy0, etc.
-	if (nPcDev) GamcAnalogJoy(pgi, szi, nPlayer, nPcDev - 1, nAnalog);
-	else GamcAnalogKey(pgi, szi, nPlayer, nAnalog);
-	GamcMisc(pgi, szi, nPlayer);
-	MapJoystick(pgi, szi, nPlayer, nPcDev);
-}
-
-INT32 MapJoystick(struct GameInp* pgi, char* szi, INT32 nPlayer, INT32 nDevice)
-{
-   INT32 nJoyBase = 0;
-   if (nDevice == 0) return 0; // using keyboard for this player
-   nDevice--;
-   nJoyBase = 0x4000;
-   nJoyBase |= nDevice << 8;
-   bStreetFighterLayout = usesStreetFighterLayout();
-   switch (nPlayer)
-   {
-   case 0:
-      if (strcmp(szi, "p1 coin" ) == 0 )
-      {
-         if ( buttons[nDevice][6] != -1) KEY(nJoyBase + 0x80 +  buttons[nDevice][6]);
-         return 0;
-      }
-      if (strcmp(szi, "p1 start") == 0 )
-      {
-         if ( buttons[nDevice][7] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][7]);
-         return 0;
-      }
-
-      if (strncmp(szi, "p1 fire ", 7) == 0)
-      {
-         char* szb = szi + 7;
-         INT32 nButton = strtol(szb, NULL, 0);
-         if (nButton >= 1)
-         {
-            nButton--;
-         }
-         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
-         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
-         {
-            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
-            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
-            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
-            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
-            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
-            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
-         }
-         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
-      }
-      break;
-   case 1:
-      if (strcmp(szi, "p2 coin" ) == 0 )
-      {
-         if ( buttons[nDevice][6] != -1) KEY(nJoyBase + 0x80 +  buttons[nDevice][6]);
-         return 0;
-      }
-      if (strcmp(szi, "p2 start") == 0 )
-      {
-         if ( buttons[nDevice][7] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][7]);
-         return 0;
-      }
-
-      if (strncmp(szi, "p2 fire ", 7) == 0)
-      {
-         char* szb = szi + 7;
-         INT32 nButton = strtol(szb, NULL, 0);
-         if (nButton >= 1)
-         {
-            nButton--;
-         }
-         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
-         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
-         {
-            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
-            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
-            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
-            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
-            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
-            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
-         }
-         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
-      }
-      break;
-   case 2:
-      if (strcmp(szi, "p3 coin" ) == 0 )
-      {
-         if ( buttons[nDevice][6] != -1) KEY(nJoyBase + 0x80 +  buttons[nDevice][6]);
-         return 0;
-      }
-      if (strcmp(szi, "p3 start") == 0 )
-      {
-         if ( buttons[nDevice][7] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][7]);
-         return 0;
-      }
-
-      if (strncmp(szi, "p3 fire ", 7) == 0)
-      {
-         char* szb = szi + 7;
-         INT32 nButton = strtol(szb, NULL, 0);
-         if (nButton >= 1)
-         {
-            nButton--;
-         }
-         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
-         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
-         {
-            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
-            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
-            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
-            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
-            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
-            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
-         }
-         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
-      }
-      break;
-   case 3:
-      if (strcmp(szi, "p4 coin" ) == 0 )
-      {
-         if ( buttons[nDevice][6] != -1) KEY(nJoyBase + 0x80 +  buttons[nDevice][6]);
-         return 0;
-      }
-      if (strcmp(szi, "p4 start") == 0 )
-      {
-         if ( buttons[nDevice][7] != -1) KEY(nJoyBase + 0x80 + buttons[nDevice][7]);
-         return 0;
-      }
-
-      if (strncmp(szi, "p4 fire ", 7) == 0)
-      {
-         char* szb = szi + 7;
-         INT32 nButton = strtol(szb, NULL, 0);
-         if (nButton >= 1)
-         {
-            nButton--;
-         }
-         if (buttons[nDevice][nButton] != -1 && !bStreetFighterLayout) { KEY(nJoyBase + 0x80 + buttons[nDevice][nButton]); }
-         else if (buttons[nDevice][nButton] != -1 && bStreetFighterLayout)
-         {
-            if (nButton == 0) KEY(nJoyBase + 0x80 + buttons[nDevice][2]);
-            if (nButton == 1) KEY(nJoyBase + 0x80 + buttons[nDevice][3]);
-            if (nButton == 2) KEY(nJoyBase + 0x80 + buttons[nDevice][4]);
-            if (nButton == 3) KEY(nJoyBase + 0x80 + buttons[nDevice][0]);
-            if (nButton == 4) KEY(nJoyBase + 0x80 + buttons[nDevice][1]);
-            if (nButton == 5) KEY(nJoyBase + 0x80 + buttons[nDevice][5]);
-         }
-         else KEY(nJoyBase + 0x80 + nButton); // joystick not mapped or isint plugged  use fba default settings
-      }
-      break;
-   }
    return 0;
 }
 
@@ -262,7 +181,7 @@ INT32 display_set_controls()
    return 0;
 }
 
-
+/*
 INT32 Init_Joysticks(int p_one_use_joystick)
 {
 	if (p_one_use_joystick) {
@@ -279,3 +198,4 @@ INT32 Init_Joysticks(int p_one_use_joystick)
 	}
 	return 0;
 }
+*/

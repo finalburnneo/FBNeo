@@ -4073,6 +4073,41 @@ struct BurnDriver BurnDrvFatfurspa = {
 	0x1000, 320, 224, 4, 3
 };
 
+// Fatal Fury Special (Optional Hidden Character Third Edition)
+
+static struct BurnRomInfo fatfurspbsRomDesc[] = {
+	{ "058-p1bs.p1",  0x100000, 0x8cd18f7f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "058-p2.sp2",   0x080000, 0xd7c71a6b, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "058-s1.s1",    0x020000, 0x2df03197, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "058-c1.c1",    0x200000, 0x044ab13c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "058-c2.c2",    0x200000, 0x11e6bf96, 3 | BRF_GRA },           //  4
+	{ "058-c3.c3",    0x200000, 0x6f7938d5, 3 | BRF_GRA },           //  5
+	{ "058-c4.c4",    0x200000, 0x4ad066ff, 3 | BRF_GRA },           //  6
+	{ "058-c5.c5",    0x200000, 0x49c5e0bf, 3 | BRF_GRA },           //  7
+	{ "058-c6.c6",    0x200000, 0x8ff1f43d, 3 | BRF_GRA },           //  8
+
+	{ "058-m1.m1",    0x020000, 0xccc5186e, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "058-v1.v1",    0x200000, 0x55d7ce84, 5 | BRF_SND },           // 10 Sound data
+	{ "058-v2.v2",    0x200000, 0xee080b10, 5 | BRF_SND },           // 11
+	{ "058-v3.v3",    0x100000, 0xf9eb3d4a, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(fatfurspbs, fatfurspbs, neogeo)
+STD_ROM_FN(fatfurspbs)
+
+struct BurnDriver BurnDrvFatfurspbs = {
+	"fatfurspbs", "fatfursp", "neogeo", NULL, "1993",
+	"Fatal Fury Special (Optional Hidden Character Third Edition)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_FATFURY,
+	NULL, fatfurspbsRomInfo, fatfurspbsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // Savage Reign / Fu'un Mokushiroku - kakutou sousei
 /* MVS AND AES VERSION? */
 

@@ -5788,6 +5788,246 @@ static struct BurnRomInfo DinoreRomDesc[] = {
 STD_ROM_PICK(Dinore)
 STD_ROM_FN(Dinore)
 
+// Cadillacs and Dinosaurs X5 Enemies (Hack)
+// Hacked By zhyxxxx
+// Version 2016-01-10
+
+static struct BurnRomInfo dinox5RomDesc[] = {
+	{ "dinox5_23a.8f",    0x080000, 0x230f774b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_22a.7f",       0x080000, 0x9278aa12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dinox5_21a.6f",    0x080000, 0x416142c7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd-1m.3a",         0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd-3m.5a",         0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd-2m.4a",         0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd-4m.6a",         0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd-5m.7a",         0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd-7m.9a",         0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd-6m.8a",         0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd-8m.10a",        0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",          0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",         0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",         0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",         0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",         0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+};
+
+STD_ROM_PICK(dinox5)
+STD_ROM_FN(dinox5)
+
+// Cadillacs and Dinosaurs - Ares Edition (Hack)
+// Version 2020-08-06
+
+static struct BurnRomInfo dinoaresRomDesc[] = {
+	{ "cdes273.8f",    0x080000, 0xc49bb3a0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes273.7f",    0x080000, 0xefeb3970, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes273.6f",    0x080000, 0x5edc274b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes272.5f",    0x080000, 0xab67f2ee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd-2m.4a",      0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd-4m.6a",      0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd-5m.7a",      0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd-7m.9a",      0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd-6m.8a",      0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd-8m.10a",     0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",       0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",      0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",      0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",      0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",      0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",	   0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(dinoares)
+STD_ROM_FN(dinoares)
+
+// Cadillacs and Dinosaurs Chaos X3 (Hack)
+
+static struct BurnRomInfo dinocx3RomDesc[] = {
+	{ "cdes50.8f",     0x200000, 0x69154d38, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_22a.7f",    0x080000, 0x9278aa12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_21a.6f",    0x080000, 0x66d23de2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd-2m.4a",      0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd-4m.6a",      0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd-5m.7a",      0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd-7m.9a",      0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd-6m.8a",      0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd-8m.10a",     0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",       0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",      0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",      0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",      0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",      0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",	   0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(dinocx3)
+STD_ROM_FN(dinocx3)
+
+// Cadillacs and Dinosaurs Chaos Unparalleled (Hack)
+
+static struct BurnRomInfo dinocunpRomDesc[] = {
+	{ "cdes159.8f",    0x080000, 0x2327d53e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes159.7f",    0x080000, 0x8890573f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes159.6f",    0x080000, 0x9ce27308, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd-2m.4a",      0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd-4m.6a",      0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd-5m.7a",      0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd-7m.9a",      0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd-6m.8a",      0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd-8m.10a",     0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",       0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",      0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",      0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",      0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",      0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",	   0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(dinocunp)
+STD_ROM_FN(dinocunp)
+
+// Cadillacs and Dinosaurs - Punishment Edition (Hack)
+// Version 2018-08-23
+// Hacked By MamePlus
+
+static struct BurnRomInfo dinopuniRomDesc[] = {
+	{ "cdes204.23",    0x080000, 0xb5725410, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes204.22",    0x080000, 0xaea0e3ba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes69.6f",     0x080000, 0x40c8621c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd-2m.4a",      0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd-4m.6a",      0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd-5m.7a",      0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd-7m.9a",      0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd-6m.8a",      0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd-8m.10a",     0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",       0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",      0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",      0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",      0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",      0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",	   0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(dinopuni)
+STD_ROM_FN(dinopuni)
+
+// Cadillacs and Dinosaurs - '99 Jurassic Plus (Hack)
+// Version 2017-11-13
+
+static struct BurnRomInfo jurass99pRomDesc[] = {
+	{ "cdes73.10f",    0x200000, 0x66b16979, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_23a.8f",    0x080000, 0x8f4e585e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_22a.7f",    0x080000, 0x9278aa12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_21a.6f",    0x080000, 0x66d23de2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd1s64.3a",     0x080000, 0x8318c1de, BRF_GRA | CPS1_TILES },
+	{ "cd3s64.5a",     0x080000, 0x2461424d, BRF_GRA | CPS1_TILES },
+	{ "cd2s64.4a",     0x080000, 0x6cbac29d, BRF_GRA | CPS1_TILES },
+	{ "cd4s64.6a",     0x080000, 0x2aa8bdd3, BRF_GRA | CPS1_TILES },
+	{ "cd5s73.7a",     0x080000, 0x91888b4f, BRF_GRA | CPS1_TILES },
+	{ "cd5s73.9a",     0x080000, 0xcb47177d, BRF_GRA | CPS1_TILES },
+	{ "cd5s73.8a",     0x080000, 0x1b335cb9, BRF_GRA | CPS1_TILES },
+	{ "cd5s73.10a",    0x080000, 0xa16fa3cf, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",       0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",      0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",      0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",      0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",      0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",	   0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(jurass99p)
+STD_ROM_FN(jurass99p)
+
+// Cadillacs and Dinosaurs - Matchless Bullets (Hack)
+// Version 2017-09-02
+
+static struct BurnRomInfo dinombullRomDesc[] = {
+	{ "cdes125.8f",    0x080000, 0x73458377, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes125.7f",    0x080000, 0x3a43dea1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "dino08h2.21",   0x080000, 0xc2a0f051, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "cd-1m.3a",      0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "cd-3m.5a",      0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "cd-2m.4a",      0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "cd-4m.6a",      0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "cd-5m.7a",      0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "cd-7m.9a",      0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "cd-6m.8a",      0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "cd-8m.10a",     0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",       0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",      0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",      0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",      0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",      0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",	   0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(dinombull)
+STD_ROM_FN(dinombull)
+
+// Dinosaur Hunter - Challenge Edition (Hack, Ver.2017-11-16)
+// Version 2017-11-16
+
+static struct BurnRomInfo dinohcedRomDesc[] = {
+	{ "cdes111.8f",   0x080000, 0xa5c8cd20, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes111.7f",   0x080000, 0x3a8ed567, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cdes111.6f",   0x080000, 0x74c155b8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "u1",           0x080000, 0xa01a9fb5, BRF_GRA | CPS1_TILES },
+ 	{ "u2",           0x080000, 0xbdf02c17, BRF_GRA | CPS1_TILES },
+	{ "u3",           0x080000, 0x058beefa, BRF_GRA | CPS1_TILES },
+	{ "u4",           0x080000, 0x5028a9f1, BRF_GRA | CPS1_TILES },
+	{ "u5",           0x080000, 0xd77f89ea, BRF_GRA | CPS1_TILES },
+	{ "u6",           0x080000, 0xbfbcb034, BRF_GRA | CPS1_TILES },
+	{ "u7",           0x080000, 0xa2544d4e, BRF_GRA | CPS1_TILES },
+	{ "u8",           0x080000, 0x8869bbb1, BRF_GRA | CPS1_TILES },
+
+	{ "cd_q.5k",      0x020000, 0x605fdb0b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "cd-q1.1k",     0x080000, 0x60927775, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q2.2k",     0x080000, 0x770f4c47, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q3.3k",     0x080000, 0x2f273ffc, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "cd-q4.4k",     0x080000, 0x2c67821d, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "dino.key",	  0x000080, 0x230b6eb0, BRF_OPT },
+};
+
+STD_ROM_PICK(dinohced)
+STD_ROM_FN(dinohced)
+
 
 static struct BurnRomInfo DynwarRomDesc[] = {
 	{ "30.11f",        0x020000, 0xf9ec6d68, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -14716,6 +14956,14 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinotpic"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinohunt"    , CPS_B_21_DEF, mapper_CD63B , 0, NULL                },
 	{ "dinore"		, CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "jurass99p"   , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinox5"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinoares"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinocx3"     , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinocunp"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinopuni"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+	{ "dinombull"   , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
+    { "dinohced"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dynwar"      , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwara"     , CPS_B_02    , mapper_TK22B , 0, NULL                },
 	{ "dynwarj"     , CPS_B_02    , mapper_TK22B , 0, NULL                },
@@ -19828,6 +20076,86 @@ struct BurnDriver BurnDrvCpsDinore = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinoreRomInfo, DinoreRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinox5 = {
+	"dinox5", "dino", NULL, NULL, "2016",
+	"Cadillacs and Dinosaurs X5 Enemies (Hack, Ver.2016-01-10)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, dinox5RomInfo, dinox5RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinoares = {
+	"dinoares", "dino", NULL, NULL, "2020",
+	"Cadillacs and Dinosaurs - Ares Edition (Hack, Ver.2020-08-06)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, dinoaresRomInfo, dinoaresRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinocx3 = {
+	"dinocx3", "dino", NULL, NULL, "20??",
+	"Cadillacs and Dinosaurs Chaos X3 (Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, dinocx3RomInfo, dinocx3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinocunp = {
+	"dinocunp", "dino", NULL, NULL, "20??",
+	"Cadillacs and Dinosaurs Chaos Unparalleled (Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, dinocunpRomInfo, dinocunpRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinopuni = {
+	"dinopuni", "dino", NULL, NULL, "2018",
+	"Cadillacs and Dinosaurs - Punishment Edition (Hack, Ver.2018-08-23)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, dinopuniRomInfo, dinopuniRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsJurass99p = {
+	"jurass99p", "dino", NULL, NULL, "2017",
+	"Cadillacs and Dinosaurs - '99 Jurassic Plus (Hack, Ver.2017-11-13)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, jurass99pRomInfo, jurass99pRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinombull = {
+	"dinombull", "dino", NULL, NULL, "2017",
+	"Cadillacs and Dinosaurs - Matchless Bullets (Hack, Ver.2017-09-02)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, dinombullRomInfo, dinombullRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinohced = {
+	"dinohced", "dino", NULL, NULL, "2017",
+	"Dinosaur Hunter - Challenge Edition (Hack, Ver.2017-11-16)\0", NULL, "Hack", "CPS1 / QSound",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, dinohcedRomInfo, dinohcedRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

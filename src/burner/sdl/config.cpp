@@ -93,12 +93,12 @@ int ConfigAppLoad()
 	{
 		// Get rid of the linefeed and carriage return at the end
 		int nLen = strlen(szLine);
-		if (szLine[nLen - 1] == 10)
+		if (nLen > 0 && szLine[nLen - 1] == 10)
 		{
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
-		if (szLine[nLen - 1] == 13)
+		if (nLen > 0 && szLine[nLen - 1] == 13)
 		{
 			szLine[nLen - 1] = 0;
 			nLen--;

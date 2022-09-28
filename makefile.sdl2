@@ -286,7 +286,7 @@ endif
 
 ifdef SANITIZE
 ifndef SYMBOL
-symbol =1
+SYMBOL =1
 endif
 CFLAGS   += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict
 CXXFLAGS += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict

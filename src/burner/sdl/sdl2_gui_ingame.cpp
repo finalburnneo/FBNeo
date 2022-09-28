@@ -692,11 +692,11 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 
 			// Get rid of the linefeed and carriage return at the end
 			nLen = strlen(szLine);
-			if (szLine[nLen - 1] == 10) {
+			if (nLen > 0 && szLine[nLen - 1] == 10) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
-			if (szLine[nLen - 1] == 13) {
+			if (nLen > 0 && szLine[nLen - 1] == 13) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
@@ -764,11 +764,11 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 
 			// Get rid of the linefeed and carriage return at the end
 			nLen = strlen(szLine);
-			if (szLine[nLen - 1] == 10) {
+			if (nLen > 0 && szLine[nLen - 1] == 10) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
-			if (szLine[nLen - 1] == 13) {
+			if (nLen > 0 && szLine[nLen - 1] == 13) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
@@ -822,11 +822,11 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 
 			// Get rid of the linefeed and carriage return at the end
 			nLen = strlen(szLine);
-			if (szLine[nLen - 1] == 10) {
+			if (nLen > 0 && szLine[nLen - 1] == 10) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
-			if (szLine[nLen - 1] == 13) {
+			if (nLen > 0 && szLine[nLen - 1] == 13) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
@@ -1082,11 +1082,11 @@ int InitHardwareDefaultInputs()
 
 			// Get rid of the linefeed and carriage return at the end
 			nLen = strlen(szLine);
-			if (szLine[nLen - 1] == 10) {
+			if (nLen > 0 && szLine[nLen - 1] == 10) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
-			if (szLine[nLen - 1] == 13) {
+			if (nLen > 0 && szLine[nLen - 1] == 13) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
@@ -1136,11 +1136,11 @@ int InitHardwareDefaultInputs()
 
 			// Get rid of the linefeed and carriage return at the end
 			nLen = strlen(szLine);
-			if (szLine[nLen - 1] == 10) {
+			if (nLen > 0 && szLine[nLen - 1] == 10) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
-			if (szLine[nLen - 1] == 13) {
+			if (nLen > 0 && szLine[nLen - 1] == 13) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
@@ -1187,11 +1187,11 @@ int InitHardwareDefaultInputs()
 
 			// Get rid of the linefeed and carriage return at the end
 			nLen = strlen(szLine);
-			if (szLine[nLen - 1] == 10) {
+			if (nLen > 0 && szLine[nLen - 1] == 10) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}
-			if (szLine[nLen - 1] == 13) {
+			if (nLen > 0 && szLine[nLen - 1] == 13) {
 				szLine[nLen - 1] = 0;
 				nLen--;
 			}

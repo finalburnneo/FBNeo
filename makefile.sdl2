@@ -284,16 +284,21 @@ ifdef INCLUDE_SWITCHRES
 	DEF := $(DEF) -DINCLUDE_SWITCHRES
 endif
 
-ifdef	SYMBOL
+ifdef SANITIZE
+ifndef SYMBOL
+symbol =1
+endif
+CFLAGS   += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict
+CXXFLAGS += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict
+endif
 
+ifdef SYMBOL
 	CFLAGS   += -ggdb3 -fno-omit-frame-pointer
 	CXXFLAGS += -ggdb3 -fno-omit-frame-pointer
 	ASFLAGS  += -g
 	DEF	 := $(DEF) -D_DEBUG
-
-ifdef SANITIZE
-  CFLAGS   += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict
-  CXXFLAGS += -fsanitize=address -fsanitize=undefined -fsanitize=bounds-strict
+else
+	LDFLAGS	 += -s
 endif
 
 ifdef PROFILE
@@ -301,9 +306,6 @@ ifdef PROFILE
 	CXXFLAGS += -pg
 endif
 
-else
-	LDFLAGS	 += -s
-endif
 
 ifdef BUILD_NATIVE
 	CFLAGS	 += -march=native -mtune=native

@@ -18717,7 +18717,7 @@ struct BurnDriver BurnDrvmslug2dg = {
 	0x1000, 304, 224, 4, 3
 };
 
-// FBA4DROID/GOTVG  Metal Slug 3 (Multifunction Hack 20190119)
+// FBA4DROID/GOTVG Metal Slug 3 (Multifunction Hack 20190119)
 // Fixed the max attack bars in mslug3g have not been visible (s1) by alicemsu (20220614)
 static struct BurnRomInfo mslug3gRomDesc[] = {
 	{ "256-ph1.bin",    0x100000, 0xb23bd9b7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -18731,10 +18731,10 @@ static struct BurnRomInfo mslug3gRomDesc[] = {
 	{ "ms3n_c4.rom",    0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
 	{ "ms3n_c5.rom",    0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
 	{ "ms3n_c6.rom",    0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
-	{ "ms3n_c7.rom",    0x800000, 0xed559fac, 3 | BRF_GRA },           // 9
+	{ "ms3n_c7.rom",    0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
 	{ "ms3n_c8.rom",    0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
 
-	{ "256-m1.bin",     0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "256-m1.m1",      0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
 	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
@@ -18759,23 +18759,23 @@ static struct BurnRomInfo mslug3cRomDesc[] = {
 	{ "256-ph1.bin",    0x100000, 0x05c99714, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2.bin",    0x400000, 0xb948a472, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "ms3n_s1.rom",    0x020000, 0x8458fff9, 2 | BRF_GRA },
+	{ "ms3n_s1.rom",    0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "ms3n_c1.rom",    0x800000, 0x3540398c, 3 | BRF_GRA },		 //  2 Sprite data
-	{ "ms3n_c2.rom",    0x800000, 0xbdd220f0, 3 | BRF_GRA },		 //  3
-	{ "ms3n_c3.rom",    0x800000, 0xbfaade82, 3 | BRF_GRA },		 //  4
-	{ "ms3n_c4.rom",    0x800000, 0x1463add6, 3 | BRF_GRA },		 //  5
-	{ "ms3n_c5.rom",    0x800000, 0x48ca7f28, 3 | BRF_GRA },		 //  6
-	{ "ms3n_c6.rom",    0x800000, 0x806eb36f, 3 | BRF_GRA },		 //  7
-	{ "ms3n_c7.rom",    0x800000, 0xed559fac, 3 | BRF_GRA },		 //  8
-	{ "ms3n_c8.rom",    0x800000, 0x1c52378b, 3 | BRF_GRA },		 //  9
+	{ "ms3n_c1.rom",    0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms3n_c2.rom",    0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "ms3n_c3.rom",    0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "ms3n_c4.rom",    0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "ms3n_c5.rom",    0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "ms3n_c6.rom",    0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "ms3n_c7.rom",    0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
+	{ "ms3n_c8.rom",    0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
 
-	{ "256-m1.bin",     0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "256-m1.m1",      0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "ms3n_v1.rom",    0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data
-	{ "ms3n_v2.rom",    0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12
-	{ "ms3n_v3.rom",    0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13
-	{ "ms3n_v4.rom",    0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14
+	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",		0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",		0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(mslug3c, mslug3c, neogeo)
@@ -18843,7 +18843,7 @@ static struct BurnRomInfo mslug3lwRomDesc[] = {
 	{ "256-c3.rom",     0x1000000, 0x5d78a51c, 3 | BRF_GRA },           //  5
 	{ "256-c4.rom",     0x1000000, 0x45478437, 3 | BRF_GRA },           //  6
 
-	{ "256-m1.bin",     0x080000,  0xeaeec116, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "256-m1.m1",      0x080000,  0xeaeec116, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
 	{ "256-v1.v1",    	0x400000,  0xf2690241, 5 | BRF_SND },           //  8 Sound data
 	{ "256-v2.v2",    	0x400000,  0x7e2a10bd, 5 | BRF_SND },           //  9

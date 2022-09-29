@@ -46,6 +46,7 @@
     <ClInclude Include="..\..\src\burn\burn_sound.h" />
     <ClInclude Include="..\..\src\burn\cheat.h" />
     <ClInclude Include="..\..\src\burn\devices\6821pia.h" />
+    <ClInclude Include="..\..\src\burn\devices\6840ptm.h" />
     <ClInclude Include="..\..\src\burn\devices\8255ppi.h" />
     <ClInclude Include="..\..\src\burn\devices\8257dma.h" />
     <ClInclude Include="..\..\src\burn\devices\atariic.h" />
@@ -499,6 +500,7 @@
     <ClCompile Include="..\..\src\burn\cheat.cpp" />
     <ClCompile Include="..\..\src\burn\debug_track.cpp" />
     <ClCompile Include="..\..\src\burn\devices\6821pia.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\6840ptm.cpp" />
     <ClCompile Include="..\..\src\burn\devices\8255ppi.cpp" />
     <ClCompile Include="..\..\src\burn\devices\8257dma.cpp" />
     <ClCompile Include="..\..\src\burn\devices\atariic.cpp" />

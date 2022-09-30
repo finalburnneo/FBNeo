@@ -21420,6 +21420,57 @@ struct BurnDriver BurnDrvnes_eeeck = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_leglutlivrRomDesc[] = {
+	{ "Leggite Luta Livre Remaster (2022)(John Vanderhoef).nes",          524304, 0x73bf3d14, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_leglutlivr)
+STD_ROM_FN(nes_leglutlivr)
+
+struct BurnDriver BurnDrvnes_leglutlivr = {
+	"nes_leglutlivr", NULL, NULL, NULL, "2021-22",
+	"Leggite Luta Livre Remaster (HB)\0", NULL, "John Vanderhoef", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_leglutlivrRomInfo, nes_leglutlivrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mogminesRomDesc[] = {
+	{ "Mogura Mines (2022)(8Bitalo).nes",          524304, 0xf8d0825d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mogmines)
+STD_ROM_FN(nes_mogmines)
+
+struct BurnDriver BurnDrvnes_mogmines = {
+	"nes_mogmines", NULL, NULL, NULL, "2022",
+	"Mogura Mines (HB)\0", NULL, "8Bitalo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_mogminesRomInfo, nes_mogminesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_zombhuntbobRomDesc[] = {
+	{ "Zombiehunter Bob (2022)(board-b).nes",          524304, 0x00927241, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zombhuntbob)
+STD_ROM_FN(nes_zombhuntbob)
+
+struct BurnDriver BurnDrvnes_zombhuntbob = {
+	"nes_zombhuntbob", NULL, NULL, NULL, "2022",
+	"Zombiehunter Bob (HB)\0", NULL, "board-b", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_zombhuntbobRomInfo, nes_zombhuntbobRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_micromages2RomDesc[] = {
 	{ "Micro Mages - Second Quest (2022)(Morphcat Games).nes",          40976, 0xbbc0ef28, BRF_ESS | BRF_PRG },
 };
@@ -24286,10 +24337,10 @@ STD_ROM_PICK(nes_leglutliv)
 STD_ROM_FN(nes_leglutliv)
 
 struct BurnDriver BurnDrvnes_leglutliv = {
-	"nes_leglutliv", NULL, NULL, NULL, "2021",
+	"nes_leglutliv", "nes_leglutlivr", NULL, NULL, "2021",
 	"Leggite Luta Livre (HB)\0", NULL, "John Vanderhoef", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_leglutlivRomInfo, nes_leglutlivRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

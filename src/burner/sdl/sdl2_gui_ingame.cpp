@@ -228,7 +228,8 @@ struct playerInputInfo {
 	bool autoFire;
 };
 
-struct playerInputInfo PlayerDefaultInputs[4][34] = {
+#define MAX_DEFAULT_INPUTS 34
+struct playerInputInfo PlayerDefaultInputs[4][MAX_DEFAULT_INPUTS] = {
 	{
 		{"p1 start", "", "", GIT_SWITCH, FBK_1, -1, false},
 		{"p1 select", "", "", GIT_SWITCH, FBK_3, -1, false},
@@ -452,13 +453,13 @@ int getPlayerGameInputs(UINT8 playernum, UINT16 previouscount)
 
 		if (i == totalcount) {		// End of array, is unknown input? Add to end of array anyway...
 			playerControlsList[i].nInput = GIT_SWITCH;
-			snprintf(playerControlsList[i].szInfo, 23, "%s", bii.szInfo);
+			snprintf(playerControlsList[i].szInfo, 24, "%s", bii.szInfo);
 			playerControlsList[i].MenuText[0] = '\0';
 			playerControlsList[i].nCode = pgi->Input.Switch.nCode;
 			playerControlsList[i].autoFire = false;
 			totalcount++;
 		}
-		snprintf(playerControlsList[i].szName, 31, "%s", bii.szName);
+		snprintf(playerControlsList[i].szName, 32, "%s", bii.szName);
 		playerControlsList[i].inpIndex = j;
 	}
 
@@ -488,8 +489,8 @@ int getPlayerMacros(UINT8 playernum, UINT16 previouscount)
 
 		if (i == totalcount) {		// End of array, is unknown macro? Add to end of array anyway...
 			playerControlsList[i].nInput = GIT_MACRO_AUTO;
-			snprintf(playerControlsList[i].szInfo, 23, "%s", pgi->Macro.szName);
-			snprintf(playerControlsList[i].szName, 31, "(macro) %s", pgi->Macro.szName);
+			snprintf(playerControlsList[i].szInfo, 24, "%s", pgi->Macro.szName);
+			snprintf(playerControlsList[i].szName, 32, "(macro) %s", pgi->Macro.szName);
 			playerControlsList[i].MenuText[0] = '\0';
 			if (pgi->Macro.nMode && pgi->Macro.Switch.nCode) playerControlsList[i].nCode = pgi->Macro.Switch.nCode;		// Is it enabled?
 			else playerControlsList[i].nCode = 0;
@@ -670,8 +671,8 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 	UINT16 totalcount = 0;
 	// Copy default array to inputs list
 	while (PlayerDefaultInputs[selectedPlayer][totalcount].nInput) {
-		snprintf(playerControlsList[totalcount].szInfo, 23, "%s", PlayerDefaultInputs[selectedPlayer][totalcount].szInfo);
-		snprintf(playerControlsList[totalcount].szName, 31, "%s", PlayerDefaultInputs[selectedPlayer][totalcount].szInfo);
+		snprintf(playerControlsList[totalcount].szInfo, 24, "%s", PlayerDefaultInputs[selectedPlayer][totalcount].szInfo);
+		snprintf(playerControlsList[totalcount].szName, 32, "%s", PlayerDefaultInputs[selectedPlayer][totalcount].szInfo);
 		playerControlsList[totalcount].MenuText[0] = '\0';
 		playerControlsList[totalcount].nInput = GIT_SWITCH;
 		playerControlsList[totalcount].nCode = PlayerDefaultInputs[selectedPlayer][totalcount].nCode;
@@ -724,8 +725,8 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
 					} else {		// End of array, is unknown input? Add to end of array anyway...
 						playerControlsList[i].nInput = GIT_SWITCH;
-						snprintf(playerControlsList[i].szInfo, 23, "%s", szQuote);
-						snprintf(playerControlsList[i].szName, 31, "%s", szQuote);
+						snprintf(playerControlsList[i].szInfo, 24, "%s", szQuote);
+						snprintf(playerControlsList[i].szName, 32, "%s", szQuote);
 						playerControlsList[i].MenuText[0] = '\0';
 						szQuote = LabelCheck(szEnd, "switch");
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
@@ -745,8 +746,8 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 	// Now add macros to playerControlsList
 	i = 0;
 	while (PlayerDefaultMacros[selectedPlayer][i].nInput) {
-		snprintf(playerControlsList[totalcount].szInfo, 23, "%s", PlayerDefaultMacros[selectedPlayer][i].szInfo);
-		snprintf(playerControlsList[totalcount].szName, 31, "(macro) %s", PlayerDefaultMacros[selectedPlayer][i].szInfo);
+		snprintf(playerControlsList[totalcount].szInfo, 24, "%s", PlayerDefaultMacros[selectedPlayer][i].szInfo);
+		snprintf(playerControlsList[totalcount].szName, 32, "(macro) %s", PlayerDefaultMacros[selectedPlayer][i].szInfo);
 		playerControlsList[totalcount].MenuText[0] = '\0';
 		playerControlsList[totalcount].nInput = GIT_MACRO_AUTO;
 		playerControlsList[totalcount].nCode = PlayerDefaultMacros[selectedPlayer][i].nCode;
@@ -796,8 +797,8 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
 					} else {		// End of array, is unknown macro? Add to end of array anyway...
 						playerControlsList[i].nInput = GIT_MACRO_AUTO;
-						snprintf(playerControlsList[i].szInfo, 23, "%s", szQuote);
-						snprintf(playerControlsList[i].szName, 31, "(macro) %s", szQuote);
+						snprintf(playerControlsList[i].szInfo, 24, "%s", szQuote);
+						snprintf(playerControlsList[i].szName, 32, "(macro) %s", szQuote);
 						playerControlsList[i].MenuText[0] = '\0';
 						szQuote = LabelCheck(szEnd, "switch");
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
@@ -851,8 +852,8 @@ int InitPlayerDefaultInputs(UINT8 selectedPlayer)
 
 					if (i == totalcount) {		// End of array, is unknown macro? Add to end of array anyway...
 						playerControlsList[i].nInput = GIT_MACRO_AUTO;
-						snprintf(playerControlsList[i].szInfo, 23, "%s", szQuote);
-						snprintf(playerControlsList[i].szName, 31, "(macro) %s", szQuote);
+						snprintf(playerControlsList[i].szInfo, 24, "%s", szQuote);
+						snprintf(playerControlsList[i].szName, 32, "(macro) %s", szQuote);
 						playerControlsList[i].MenuText[0] = '\0';
 						playerControlsList[i].nCode = 0;
 						playerControlsList[i].inpIndex = -1;
@@ -898,21 +899,23 @@ int SavePlayerDefaultMapping()
 					}
 					break;
 				case GIT_MACRO_AUTO:
-					if (playerControlsList[i].nCode > 0) fprintf(h, "macro \"%s\" switch 0x%.2X\n", playerControlsList[i].szInfo, playerControlsList[i].nCode);
-					else fprintf(h, "macro \"%s\" undefined\n", playerControlsList[i].szInfo);
-					if (playerControlsList[i].autoFire) fprintf(h, "afire \"%s\"\n", playerControlsList[i].szInfo);
+					if (playerControlsList[i].nCode > 0) {
+						fprintf(h, "macro \"%s\" switch 0x%.2X\n", playerControlsList[i].szInfo, playerControlsList[i].nCode);
+						if (playerControlsList[i].autoFire) fprintf(h, "afire \"%s\"\n", playerControlsList[i].szInfo);
+					} else fprintf(h, "macro \"%s\" undefined\n", playerControlsList[i].szInfo);
 					if (playerControlsList[i].inpIndex > -1) {
-	//					GameInp[playerControlsList[i].inpIndex].nInput = GIT_MACRO_AUTO;
+//						GameInp[playerControlsList[i].inpIndex].nInput = GIT_MACRO_AUTO;
 						if (playerControlsList[i].nCode > 0) GameInp[playerControlsList[i].inpIndex].Macro.nMode = 1;
 						else GameInp[playerControlsList[i].inpIndex].Macro.nMode = 0;
-						GameInp[playerControlsList[i].inpIndex].Macro.Switch.nCode = PlayerDefaultInputs[selectedPlayer][i].nCode;
+						GameInp[playerControlsList[i].inpIndex].Macro.Switch.nCode = playerControlsList[i].nCode;
 						if (playerControlsList[i].autoFire) GameInp[playerControlsList[i].inpIndex].Macro.nSysMacro = 15;
+						else if (strncmp(playerControlsList[i].szInfo, "System SlowMo", 13)) GameInp[playerControlsList[i].inpIndex].Macro.nSysMacro = 0;
 						else GameInp[playerControlsList[i].inpIndex].Macro.nSysMacro = 1;
 					}
 					break;
 			}
+			i++;
 		}
-		i++;
 
 		fprintf(h, "\n");
 		fclose(h);
@@ -932,6 +935,7 @@ int ResetPlayerDefaultsMenuSelected()
 int PlayerDefaultsMenuSelected()
 {
 	selectedPlayer =  current_selected_item + 6 - mappingmenucount;
+	if (keepsearchinghwcfg) selectedPlayer--;
 	snprintf(MenuTitle, TITLELENGTH, "Defaults for %s", playerNames[selectedPlayer]);
 	current_menu = DEFAULTPLAYERINPUTSMENU;
 	current_selected_item = 0;
@@ -985,17 +989,19 @@ int SaveHardwareDefaultMapping()
 					}
 					break;
 				case GIT_MACRO_AUTO:
-					if (playerControlsList[i].nCode > 0) fprintf(h, "macro  \"%s\" switch 0x%.2X\n", playerControlsList[i].szInfo, playerControlsList[i].nCode);
-					else fprintf(h, "macro \"%s\" undefined\n", playerControlsList[i].szInfo);
+					if (playerControlsList[i].nCode > 0) {
+						fprintf(h, "macro \"%s\" switch 0x%.2X\n", playerControlsList[i].szInfo, playerControlsList[i].nCode);
+						if (playerControlsList[i].autoFire) fprintf(h, "afire \"%s\"\n", playerControlsList[i].szInfo);
+					} else fprintf(h, "macro \"%s\" undefined\n", playerControlsList[i].szInfo);
 					if (playerControlsList[i].inpIndex > -1) {
 //						GameInp[playerControlsList[i].inpIndex].nInput = GIT_MACRO_AUTO;
 						if (playerControlsList[i].nCode > 0) GameInp[playerControlsList[i].inpIndex].Macro.nMode = 1;
 						else GameInp[playerControlsList[i].inpIndex].Macro.nMode = 0;
 						GameInp[playerControlsList[i].inpIndex].Macro.Switch.nCode = playerControlsList[i].nCode;
 						if (playerControlsList[i].autoFire) GameInp[playerControlsList[i].inpIndex].Macro.nSysMacro = 15;
+						else if (strncmp(playerControlsList[i].szInfo, "System SlowMo", 13)) GameInp[playerControlsList[i].inpIndex].Macro.nSysMacro = 0;
 						else GameInp[playerControlsList[i].inpIndex].Macro.nSysMacro = 1;
 					}
-					if (playerControlsList[i].autoFire) fprintf(h, "afire \"%s\"\n", playerControlsList[i].szInfo);
 					break;
 			}
 			i++;
@@ -1013,9 +1019,9 @@ int UpdatePlayerInputsMappingMenu()
 {
 	int i = 0;
 	while (playerControlsList[i].nInput) {
-		if (playerControlsList[i].nCode > 0) snprintf(playerControlsList[i].MenuText, 40, "%s %s", (playerControlsList[i].nInput == GIT_MACRO_AUTO ? "[ ]" : ">>>"), InputCodeDesc(playerControlsList[i].nCode));
-		else if (playerControlsList[i].nCode == 0) snprintf(playerControlsList[i].MenuText, 40, "%s none", (playerControlsList[i].nInput == GIT_MACRO_AUTO ? "[ ]" : ">>>"));
-		else snprintf(playerControlsList[i].MenuText, 40, "%s PRESS KEY/BUTTON or MOVE JOY/DPAD", (playerControlsList[i].nInput == GIT_MACRO_AUTO ? "[ ]" : ">>>"));
+		if (playerControlsList[i].nCode > 0) snprintf(playerControlsList[i].MenuText, 41, "%s %s", (playerControlsList[i].nInput == GIT_MACRO_AUTO ? "[ ]" : ">>>"), InputCodeDesc(playerControlsList[i].nCode));
+		else if (playerControlsList[i].nCode == 0) snprintf(playerControlsList[i].MenuText, 41, "%s none", (playerControlsList[i].nInput == GIT_MACRO_AUTO ? "[ ]" : ">>>"));
+		else snprintf(playerControlsList[i].MenuText, 41, "%s PRESS KEY/BUTTON or MOVE JOY/DPAD", (playerControlsList[i].nInput == GIT_MACRO_AUTO ? "[ ]" : ">>>"));
 		if (playerControlsList[i].autoFire && (playerControlsList[i].nInput == GIT_MACRO_AUTO)) playerControlsList[i].MenuText[1] = 'X';
 		mappingPlayerInputsMenu[i * 2 + 2] = (MenuItem){playerControlsList[i].MenuText, GetNewKeyButtonJoyToMap, NULL};
 		i++;
@@ -1110,8 +1116,8 @@ int InitHardwareDefaultInputs()
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
 					} else {		// End of array, is unknown input? Add to end of array anyway...
 						playerControlsList[i].nInput = GIT_SWITCH;
-						snprintf(playerControlsList[i].szInfo, 23, "%s", szQuote);
-						snprintf(playerControlsList[i].szName, 31, "%s", szQuote);
+						snprintf(playerControlsList[i].szInfo, 24, "%s", szQuote);
+						snprintf(playerControlsList[i].szName, 32, "%s", szQuote);
 						playerControlsList[i].MenuText[0] = '\0';
 						szQuote = LabelCheck(szEnd, "switch");
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
@@ -1164,8 +1170,8 @@ int InitHardwareDefaultInputs()
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
 					} else {		// End of array, is unknown macro? Add to end of array anyway...
 						playerControlsList[i].nInput = GIT_MACRO_AUTO;
-						snprintf(playerControlsList[i].szInfo, 23, "%s", szQuote);
-						snprintf(playerControlsList[i].szName, 31, "(macro) %s", szQuote);
+						snprintf(playerControlsList[i].szInfo, 24, "%s", szQuote);
+						snprintf(playerControlsList[i].szName, 32, "(macro) %s", szQuote);
 						playerControlsList[i].MenuText[0] = '\0';
 						szQuote = LabelCheck(szEnd, "switch");
 						if (szQuote) playerControlsList[i].nCode = (UINT16)strtol(szQuote, NULL, 0);
@@ -1212,8 +1218,8 @@ int InitHardwareDefaultInputs()
 
 					if (i == totalcount) {		// End of array, is unknown macro? Add to end of array anyway...
 						playerControlsList[i].nInput = GIT_MACRO_AUTO;
-						snprintf(playerControlsList[i].szInfo, 23, "%s", szQuote);
-						snprintf(playerControlsList[i].szName, 31, "(macro) %s", szQuote);
+						snprintf(playerControlsList[i].szInfo, 24, "%s", szQuote);
+						snprintf(playerControlsList[i].szName, 32, "(macro) %s", szQuote);
 						playerControlsList[i].MenuText[0] = '\0';
 						playerControlsList[i].nCode = 0;
 						playerControlsList[i].inpIndex = -1;
@@ -1573,7 +1579,7 @@ int MappingMenuSelected()
 		}
 	}
 	if (!keepsearchinghwcfg) {
-		snprintf(tempHardwareMenuText, 40, "Defaults for %s", gamehw_cfg[gamehw_cfg_index].system);
+		snprintf(tempHardwareMenuText, 41, "Defaults for %s", gamehw_cfg[gamehw_cfg_index].system);
 		playerAndJoystickMenu[mappingmenucount] = (MenuItem){tempHardwareMenuText, MappingHardwareDefaultsSelected, NULL};
 		mappingmenucount++;
 	}

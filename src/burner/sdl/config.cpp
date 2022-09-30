@@ -183,11 +183,6 @@ int ConfigAppLoad()
 // Write out the config file for the whole application
 int ConfigAppSave()
 {
-
-#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
-	InitSupportPaths();
-#endif
-
 	char  szConfig[MAX_PATH];
 	FILE* f;
 

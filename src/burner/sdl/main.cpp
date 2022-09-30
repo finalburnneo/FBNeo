@@ -35,6 +35,8 @@ char videofiltering[3];
 bool gamefound = 0;
 const char* romname = NULL;
 
+extern void InitSupportPaths();
+
 #ifdef BUILD_SDL2
 SDL_Window* sdlWindow = NULL;
 #endif
@@ -359,8 +361,13 @@ int main(int argc, char* argv[])
 
 	// create a default ini if one is not valid
 	fail = ConfigAppLoad();
-	if (fail && bSaveconfig) ConfigAppSave();		// for SDL2 this will also create folders in ~/.local/share/fbneo/
-
+	if (fail && bSaveconfig)
+	{
+		#if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
+		InitSupportPaths();
+		#endif
+		ConfigAppSave();		// for SDL2 this will also create folders in ~/.local/share/fbneo/
+	}
 	ComputeGammaLUT();
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	bprintf = AppDebugPrintf;

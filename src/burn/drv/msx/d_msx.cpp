@@ -32589,10 +32589,10 @@ struct BurnDriver BurnDrvMSX_bufonadas = {
 	272, 228, 4, 3
 };
 
-// Shadow of the Pig (HB, v1.2)
+// Shadow of the Pig (HB, v1.3)
 
 static struct BurnRomInfo MSX_shadowpigRomDesc[] = {
-	{ "Shadow of the Pig v1.2 (2022)(TheGeps).rom",	32768, 0x93530a29, BRF_PRG | BRF_ESS },
+	{ "Shadow of the Pig v1.3 (2022)(TheGeps).rom",	32768, 0x3caea035, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_shadowpig, MSX_shadowpig, msx_msx)
@@ -32600,7 +32600,7 @@ STD_ROM_FN(MSX_shadowpig)
 
 struct BurnDriver BurnDrvMSX_shadowpig = {
 	"msx_shadowpig", NULL, "msx_msx", NULL, "2022",
-	"Shadow of the Pig (HB, v1.2)\0", NULL, "TheGeps", "MSX",
+	"Shadow of the Pig (HB, v1.3)\0", NULL, "TheGeps", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_shadowpigRomInfo, MSX_shadowpigRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

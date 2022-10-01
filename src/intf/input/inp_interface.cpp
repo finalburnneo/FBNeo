@@ -7,6 +7,7 @@
 
 UINT32 nInputSelect = 0;
 bool bInputOkay = false;
+INT32 nInputIntfMouseDivider = 1;
 
 static bool bCinpOkay;
 
@@ -297,6 +298,11 @@ INT32 InputMake(bool bCopy)
 			}
 			case GIT_MOUSEAXIS:	{					// Mouse axis
 				INT32 nMouse = CinpMouseAxis(pgi->Input.MouseAxis.nMouse, pgi->Input.MouseAxis.nAxis) * nAnalogSpeed;
+
+				if (pgi->Input.MouseAxis.nAxis != 2) { // X/Y axis only, exclude wheel
+					nMouse /= nInputIntfMouseDivider;
+				}
+
 				// Clip axis to 16 bits (signed)
 				if (nMouse < -32768) {
 					nMouse = -32768;
@@ -505,7 +511,7 @@ INT32 InputFind(const INT32 nFlags)
 				INT32 nMouseDelta = CinpMouseAxis((nInputCode >> 8) & 0x3F, (nInputCode >> 1) & 0x07);
 				if (nFind == -1 || ((nInputCode & 1) ? nMouseDelta > 0 : nMouseDelta < 0)) {
 					nDelay++;
-					if (nDelay > 128) {
+					if (nDelay > 64) {
 						return -1;
 					}
 				} else {

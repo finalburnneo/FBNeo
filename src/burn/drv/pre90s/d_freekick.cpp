@@ -1350,7 +1350,7 @@ static INT32 DrvFrame()
 
 	{
 		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
-		BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x1f);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x3f);
 		BurnTrackballUDLR(0, DrvJoy2[3], DrvJoy2[2], DrvJoy1[3], DrvJoy1[2]);
 		BurnTrackballUpdate(0);
 	}

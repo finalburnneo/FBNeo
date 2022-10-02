@@ -32589,6 +32589,44 @@ struct BurnDriver BurnDrvMSX_bufonadas = {
 	272, 228, 4, 3
 };
 
+// My Sacred Place (HB)
+
+static struct BurnRomInfo MSX_sacredplaceRomDesc[] = {
+	{ "My Sacred Place (2022)(Mario Cavalcanti).rom",	49152, 0x56840614, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sacredplace, MSX_sacredplace, msx_msx)
+STD_ROM_FN(MSX_sacredplace)
+
+struct BurnDriver BurnDrvMSX_sacredplace = {
+	"msx_sacredplace", NULL, "msx_msx", NULL, "2022",
+	"My Sacred Place (HB)\0", NULL, "Mario Cavalcanti - Clube MSX", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_STRATEGY, 0,
+	MSXGetZipName, MSX_sacredplaceRomInfo, MSX_sacredplaceRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Sacred Valley (HB)
+
+static struct BurnRomInfo MSX_sacredvalleyRomDesc[] = {
+	{ "Sacred Valley (2022)(Visualedu, Bitcaffe).rom",	65536, 0x0882e69c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sacredvalley, MSX_sacredvalley, msx_msx)
+STD_ROM_FN(MSX_sacredvalley)
+
+struct BurnDriver BurnDrvMSX_sacredvalley = {
+	"msx_sacredvalley", NULL, "msx_msx", NULL, "2022",
+	"Sacred Valley (HB)\0", NULL, "Visualedu, Bitcaffe", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_sacredvalleyRomInfo, MSX_sacredvalleyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Shadow of the Pig (HB, v1.3)
 
 static struct BurnRomInfo MSX_shadowpigRomDesc[] = {

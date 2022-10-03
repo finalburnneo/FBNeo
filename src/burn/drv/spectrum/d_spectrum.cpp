@@ -36936,6 +36936,25 @@ struct BurnDriver BurnSpecWaldolifes = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Don Quixote (16K) (HB)
+
+static struct BurnRomInfo SpecDonquixoteRomDesc[] = {
+	{ "Don Quixote 16K (2022)(Zosya Entertainment).tap", 12842, 0xa341a789, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDonquixote, SpecDonquixote, Spectrum)
+STD_ROM_FN(SpecDonquixote)
+
+struct BurnDriver BurnSpecDonquixote = {
+	"spec_donquixote", NULL, "spec_spectrum", NULL, "2022",
+	"Don Quixote (16K) (HB)\0", NULL, "Zosya Entertainment", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecDonquixoteRomInfo, SpecDonquixoteRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Frantic Pengo 2 (128K) (HB)
 
 static struct BurnRomInfo SpecFpengo2RomDesc[] = {

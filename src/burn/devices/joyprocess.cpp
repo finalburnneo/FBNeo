@@ -71,12 +71,11 @@ INT16 AnalogDeadZone(INT16 anaval)
 
 	anaval = abs(anaval);
 
-	// < 160 is usually "noise" with modern gamepad thumbsticks
-	// (mouse movements are usually above 200)
-	if (anaval < 160) {
+	// < 4, hopefully a good value for mouse / analog [thumb]stick
+	if (anaval < 4) {
 		anaval = 0;
 	} else {
-		anaval -= 160;
+		anaval -= 4;
 	}
 
 	return (negative) ? -anaval : anaval;

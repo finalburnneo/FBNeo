@@ -1968,11 +1968,11 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 		INT32 nLen = _tcslen(szLine);
 
 		// Get rid of the linefeed and carriage return at the end
-		if (szLine[nLen - 1] == 10) {
+		if (nLen > 0 && szLine[nLen - 1] == 10) {
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}
-		if (szLine[nLen - 1] == 13)
+		if (nLen > 0 && szLine[nLen - 1] == 13)
 		{
 			szLine[nLen - 1] = 0;
 			nLen--;

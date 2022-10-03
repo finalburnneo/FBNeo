@@ -46,6 +46,7 @@
     <ClInclude Include="..\..\src\burn\burn_sound.h" />
     <ClInclude Include="..\..\src\burn\cheat.h" />
     <ClInclude Include="..\..\src\burn\devices\6821pia.h" />
+    <ClInclude Include="..\..\src\burn\devices\6840ptm.h" />
     <ClInclude Include="..\..\src\burn\devices\8255ppi.h" />
     <ClInclude Include="..\..\src\burn\devices\8257dma.h" />
     <ClInclude Include="..\..\src\burn\devices\atariic.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="..\..\src\burn\devices\mb87078.h" />
     <ClInclude Include="..\..\src\burn\devices\mermaid.h" />
     <ClInclude Include="..\..\src\burn\devices\midcsd.h" />
+    <ClInclude Include="..\..\src\burn\devices\midcvsd.h" />
     <ClInclude Include="..\..\src\burn\devices\midsat.h" />
     <ClInclude Include="..\..\src\burn\devices\midsg.h" />
     <ClInclude Include="..\..\src\burn\devices\midssio.h" />
@@ -499,6 +501,7 @@
     <ClCompile Include="..\..\src\burn\cheat.cpp" />
     <ClCompile Include="..\..\src\burn\debug_track.cpp" />
     <ClCompile Include="..\..\src\burn\devices\6821pia.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\6840ptm.cpp" />
     <ClCompile Include="..\..\src\burn\devices\8255ppi.cpp" />
     <ClCompile Include="..\..\src\burn\devices\8257dma.cpp" />
     <ClCompile Include="..\..\src\burn\devices\atariic.cpp" />
@@ -523,6 +526,7 @@
     <ClCompile Include="..\..\src\burn\devices\mb87078.cpp" />
     <ClCompile Include="..\..\src\burn\devices\mermaid.cpp" />
     <ClCompile Include="..\..\src\burn\devices\midcsd.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\midcvsd.cpp" />
     <ClCompile Include="..\..\src\burn\devices\midsat.cpp" />
     <ClCompile Include="..\..\src\burn\devices\midsg.cpp" />
     <ClCompile Include="..\..\src\burn\devices\midssio.cpp" />
@@ -612,6 +616,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_magmax.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr68.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mjkjidai.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_redclash.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_senjyo.cpp" />

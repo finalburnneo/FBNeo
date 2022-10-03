@@ -131,6 +131,7 @@ static bool gui_show = false;
 
 // FBNEO stubs
 unsigned ArcadeJoystick;
+INT32 nInputIntfMouseDivider = 1;
 
 int bDrvOkay;
 int bRunPause;

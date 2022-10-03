@@ -11138,6 +11138,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sacredplace" romof="msx">
+		<comment>Homebrew</comment>
+		<description>My Sacred Place (HB)</description>
+		<year>2022</year>
+		<manufacturer>Mario Cavalcanti - Clube MSX</manufacturer>
+		<rom name="My Sacred Place (2022)(Mario Cavalcanti).rom" size="49152" crc="56840614"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mystical" romof="msx">
 		<description>Mystical (Euro)</description>
 		<year>1991</year>
@@ -13615,6 +13627,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sacredvalley" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Sacred Valley (HB)</description>
+		<year>2022</year>
+		<manufacturer>Visualedu, Bitcaffe</manufacturer>
+		<rom name="Sacred Valley (2022)(Visualedu, Bitcaffe).rom" size="65536" crc="0882e69c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="safarix" romof="msx">
 		<description>Safari X (Jpn)</description>
 		<year>1985</year>
@@ -13927,6 +13951,18 @@
 		<year>1984</year>
 		<manufacturer>Toshiba EMI</manufacturer>
 		<rom name="sewer sam (japan).rom" size="32768" crc="925c0aee"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="shadowpig" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Shadow of the Pig (HB, v1.3)</description>
+		<year>2022</year>
+		<manufacturer>TheGeps</manufacturer>
+		<rom name="Shadow of the Pig v1.3 (2022)(TheGeps).rom" size="32768" crc="3caea035"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

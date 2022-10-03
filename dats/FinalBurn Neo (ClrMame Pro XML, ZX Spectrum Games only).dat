@@ -5406,6 +5406,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="donquixote" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Don Quixote (16K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Don Quixote 16K (2022)(Zosya Entertainment).tap" size="12842" crc="a341a789"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dkong" romof="spectrum">
 		<description>Donkey Kong (48K)</description>
 		<year>1986</year>

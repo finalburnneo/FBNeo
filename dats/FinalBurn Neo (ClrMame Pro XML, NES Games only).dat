@@ -9260,12 +9260,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="leglutliv">
+	<game name="leglutliv" cloneof="leglutlivr" romof="leglutlivr">
 		<comment>Homebrew</comment>
 		<description>Leggite Luta Livre (HB)</description>
 		<year>2021</year>
 		<manufacturer>John Vanderhoef</manufacturer>
 		<rom name="Leggite Luta Livre (2021)(John Vanderhoef).nes" size="524304" crc="bcbc972c"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="leglutlivr">
+		<comment>Homebrew</comment>
+		<description>Leggite Luta Livre Remaster (HB)</description>
+		<year>2021-22</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="Leggite Luta Livre Remaster (2022)(John Vanderhoef).nes" size="524304" crc="73bf3d14"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10799,6 +10808,15 @@
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Moero!! Pro Tennis (Japan).nes" size="262160" crc="f891e3e5"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mogmines">
+		<comment>Homebrew</comment>
+		<description>Mogura Mines (HB)</description>
+		<year>2022</year>
+		<manufacturer>8Bitalo</manufacturer>
+		<rom name="Mogura Mines (2022)(8Bitalo).nes" size="524304" crc="f8d0825d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -17806,6 +17824,15 @@
 		<year>1991</year>
 		<manufacturer>Meldac</manufacturer>
 		<rom name="Zombie Nation (USA).nes" size="262160" crc="29685f24"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zombhuntbob">
+		<comment>Homebrew</comment>
+		<description>Zombiehunter Bob (HB)</description>
+		<year>2022</year>
+		<manufacturer>board-b</manufacturer>
+		<rom name="Zombiehunter Bob (2022)(board-b).nes" size="524304" crc="00927241"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

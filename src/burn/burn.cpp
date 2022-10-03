@@ -673,6 +673,8 @@ extern "C" INT32 BurnDrvInit()
 	}
 #endif
 
+	BurnSetMouseDivider(1);
+
 	BurnSetRefreshRate(60.0);
 
 	BurnCacheSizeAspect_Internal();
@@ -862,6 +864,19 @@ INT32 BurnSetRefreshRate(double dFrameRate)
 	nBurnSoundLen = (nBurnSoundRate * 100 + (nBurnFPS >> 1)) / nBurnFPS;
 
 	return 0;
+}
+
+// Bring the mouse x/y delta's down to a usable rate for, ex. Trackball emulation
+void BurnSetMouseDivider(INT32 nDivider)
+{
+	if (nDivider == 0) {
+
+		nDivider = 1;
+	}
+
+	nInputIntfMouseDivider = nDivider;
+
+	bprintf(0, _T("BurnSetMouseDivider() @ %d\n"), nDivider);
 }
 
 inline static INT32 BurnClearSize(INT32 w, INT32 h)

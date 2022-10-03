@@ -53,7 +53,7 @@ void BurnerDoGameListLocalisation()
 
 			// Get rid of the linefeed at the end
 			int nLen = strlen(szTemp);
-			if (szTemp[nLen - 1] == 10) {
+			if (nLen > 0 && szTemp[nLen - 1] == 10) {
 				szTemp[nLen - 1] = 0;
 				nLen--;
 			}

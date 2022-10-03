@@ -256,6 +256,15 @@ static INT32 pgmGetRoms(bool bLoad)
 
 		nPGMExternalARMLen = (PGMUSER0Load - PGMUSER0) + 0x100000;
 
+		if (bDoIpsPatch) {
+			nPGM68KROMLen <<= 1;
+			nPGMTileROMLen += 0x800000;
+			nPGMSPRColROMLen += 0x800000 << 2;
+			nPGMSPRMaskROMLen += 0x800000 << 2;
+			nPGMSNDROMLen += 0x800000;
+			nPGMExternalARMLen <<= 1;
+		}
+
 	//	bprintf (0, _T("68k: %x, tile: %x, sprmask: %x, sndrom: %x, arm7: %x\n"), nPGM68KROMLen, nPGMTileROMLen, nPGMSPRMaskROMLen, nPGMSNDROMLen, nPGMExternalARMLen);
 	}
 

@@ -79,10 +79,13 @@ struct BurnDriver {
 
 // burn.cpp
 INT32 BurnSetRefreshRate(double dRefreshRate);
+void BurnSetMouseDivider(INT32 nDivider);
 INT32 BurnByteswap(UINT8* pMem, INT32 nLen);
 void BurnNibbleExpand(UINT8 *source, UINT8 *dst, INT32 length, INT32 swap, UINT8 nxor);
 INT32 BurnClearScreen();
 
+// from intf/input/inp_interface.cpp
+extern INT32 nInputIntfMouseDivider;
 
 // recording / netgame helper
 #ifndef __LIBRETRO__

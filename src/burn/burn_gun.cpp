@@ -573,6 +573,10 @@ void BurnTrackballInit(INT32 nNumPlayers)
 	BurnTrackballSetVelocityCurve(0);
 
 	BurnGunInit(nNumPlayers, false);
+
+	// When using trackball device, we set the mouse axis deltas to a more
+	// usable rate. (when mouse is mapped to the tb input)
+	BurnSetMouseDivider(10);
 }
 
 void BurnTrackballInit(INT32 nNumPlayers, INT32 nDefault)

@@ -15667,8 +15667,8 @@ struct BurnDriver BurnDrvMSlug2t = {
 // Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)
 
 static struct BurnRomInfo mslugxsrfRomDesc[] = {
-	{ "250-p1srf.bin",	0x100000, 0xaed327fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2srf.bin",  0x400000, 0x4389f47d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1srf.p1",	0x100000, 0xaed327fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2srf.ep1",  0x400000, 0x4389f47d, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1.s1",    	0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -15691,7 +15691,7 @@ STD_ROM_FN(mslugxsrf)
 
 struct BurnDriver BurnDrvMSlugxsrf = {
 	"mslugxsrf", "mslugx", "neogeo", NULL, "2020",
-	"Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)\0", NULL, "SNK", "Neo Geo MVS",
+	"Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxsrfRomInfo, mslugxsrfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22180,11 +22180,11 @@ struct BurnDriver BurnDrvmslug5x = {
 };
 
 // Metal Slug 5 (Extend Ver. 2022, Hack)
-// Hack by WillNie & 下水道的美yin鱼 - 20220925 (v1.1)
+// Hack by WillNie & 下水道的美yin鱼 - 20221002 (v1.2)
 static struct BurnRomInfo mslug5exRomDesc[] = {
 	/* Encrypted */
 	{ "268-p1cex.p1",	0x400000, 0xf5851c94, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2cex.p2",	0x400000, 0x9b229989, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p2cex.p2",	0x400000, 0x5b721a3f, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22231,4 +22231,243 @@ struct BurnDriver BurnDrvmslug5ex = {
 	NULL, mslug5exRomInfo, mslug5exRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug5exInit, mslug5exExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 2 - Super Vehicle-001/II (Gun Storage, Hack)
+// GOTVG 20151111
+static struct BurnRomInfo mslug2pRomDesc[] = {
+	{ "241-p1p.p1",		0x100000, 0xfe803784, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2.sp2",		0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "241-s1.s1",		0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "241-c1.c1",		0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",		0x800000, 0xe5806221, 3 | BRF_GRA },           //  4
+	{ "241-c3.c3",		0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5
+	{ "241-c4.c4",		0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6
+
+	{ "241-m1.m1",		0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+
+	{ "241-v1.v1",		0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",		0x400000, 0xecb16799, 5 | BRF_SND },           //  9
+};
+
+STDROMPICKEXT(mslug2p, mslug2p, neogeo)
+STD_ROM_FN(mslug2p)
+
+struct BurnDriver BurnDrvmslug2p = {
+	"mslug2p", "mslug2", "neogeo", NULL, "2015",
+	"Metal Slug 2 - Super Vehicle-001/II (Gun Storage, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug2pRomInfo, mslug2pRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 2 - Super Vehicle-001/II (1v2 Mode, Hack)
+// GOTVG 20190511
+static struct BurnRomInfo mslug21v2RomDesc[] = {
+	{ "241-p11v2.p1",	0x100000, 0xc3efed6c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2.sp2",		0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "241-s1.s1",		0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "241-c1.c1",		0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",		0x800000, 0xe5806221, 3 | BRF_GRA },           //  4
+	{ "241-c3.c3",		0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5
+	{ "241-c4.c4",		0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6
+
+	{ "241-m1.m1",		0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+
+	{ "241-v1.v1",		0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",		0x400000, 0xecb16799, 5 | BRF_SND },           //  9
+};
+
+STDROMPICKEXT(mslug21v2, mslug21v2, neogeo)
+STD_ROM_FN(mslug21v2)
+
+struct BurnDriver BurnDrvmslug21v2 = {
+	"mslug21v2", "mslug2", "neogeo", NULL, "2019",
+	"Metal Slug 2 - Super Vehicle-001/II (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug21v2RomInfo, mslug21v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X - Super Vehicle-001 (Multi Vehicle, Hack)
+// GOTVG 20130515
+static struct BurnRomInfo mslugxc1RomDesc[] = {
+	{ "250-p1c1.p1",	0x100000, 0xe74f36c2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2c1.ep1",	0x400000, 0xe954b8aa, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",		0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",    	0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",    	0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",    	0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",    	0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",    	0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",    	0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",    	0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",    	0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",    	0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",    	0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugxc1, mslugxc1, neogeo)
+STD_ROM_FN(mslugxc1)
+
+struct BurnDriver BurnDrvmslugxc1 = {
+	"mslugxc1", "mslugx", "neogeo", NULL, "2013",
+	"Metal Slug X - Super Vehicle-001 (Multi Vehicle, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugxc1RomInfo, mslugxc1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X - Super Vehicle-001 (1v2 Mode, Hack)
+// GOTVG 20190511
+static struct BurnRomInfo mslugx1v2RomDesc[] = {
+	{ "250-p11v2.p1",	0x100000, 0x0cf1f95b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2.ep1",		0x400000, 0xe954b8aa, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",		0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",    	0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",    	0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",    	0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",    	0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",    	0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",    	0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",    	0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",    	0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",    	0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",    	0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx1v2, mslugx1v2, neogeo)
+STD_ROM_FN(mslugx1v2)
+
+struct BurnDriver BurnDrvmslugx1v2 = {
+	"mslugx1v2", "mslugx", "neogeo", NULL, "2019",
+	"Metal Slug X - Super Vehicle-001 (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx1v2RomInfo, mslugx1v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X - Super Vehicle-001 (2R, Hack)
+// GOTVG 20200426
+static struct BurnRomInfo mslugx2rRomDesc[] = {
+	{ "250-p12r.p1",	0x100000, 0x721f11aa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p22r.ep1",	0x400000, 0x4f875278, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",		0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",    	0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",    	0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",    	0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",    	0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",    	0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",    	0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",    	0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",    	0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",    	0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",    	0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx2r, mslugx2r, neogeo)
+STD_ROM_FN(mslugx2r)
+
+struct BurnDriver BurnDrvmslugx2r = {
+	"mslugx2r", "mslugx", "neogeo", NULL, "2020",
+	"Metal Slug X - Super Vehicle-001 (2R, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx2rRomInfo, mslugx2rRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X - Super Vehicle-001 (2R Green Blue, Hack)
+// GOTVG 20200419
+static struct BurnRomInfo mslugx2rebRomDesc[] = {
+	{ "250-p12reb.p1",	0x100000, 0xdba3f1a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p22reb.ep1",	0x400000, 0x3866eb68, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",		0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",    	0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",    	0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",    	0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",    	0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",    	0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",    	0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",    	0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",    	0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",    	0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",    	0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx2reb, mslugx2reb, neogeo)
+STD_ROM_FN(mslugx2reb)
+
+struct BurnDriver BurnDrvmslugx2reb = {
+	"mslugx2reb", "mslugx", "neogeo", NULL, "2020",
+	"Metal Slug X - Super Vehicle-001 (2R Green Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx2rebRomInfo, mslugx2rebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X - Super Vehicle-001 (2R 1v2 Mode, Hack)
+// GOTVG 20200519
+static struct BurnRomInfo mslugx2r1v2RomDesc[] = {
+	{ "250-p12r1v2.p1",		0x100000, 0xd13fd368, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p22r1v2.ep1",	0x400000, 0x730e94a2, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",			0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",    		0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",    		0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",    		0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",    		0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",    		0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",    		0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",    		0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",    		0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",    		0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",    		0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx2r1v2, mslugx2r1v2, neogeo)
+STD_ROM_FN(mslugx2r1v2)
+
+struct BurnDriver BurnDrvmslugx2r1v2 = {
+	"mslugx2r1v2", "mslugx", "neogeo", NULL, "2020",
+	"Metal Slug X - Super Vehicle-001 (2R 1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx2r1v2RomInfo, mslugx2r1v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };

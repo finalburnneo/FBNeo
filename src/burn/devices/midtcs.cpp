@@ -133,6 +133,11 @@ static const pia6821_interface pia_intf = {
 	tcs_irq, tcs_irq
 };
 
+static INT32 DACSync()
+{
+	return (INT32)(float)(nBurnSoundLen * (M6809TotalCycles() / (2000000 / (nBurnFPS / 100.0000))));
+}
+
 void tcs_init(INT32 cpunum, INT32 pianum, INT32 dacnum, UINT8 *rom, UINT8 *ram)
 {
 	cpu_select = cpunum;
@@ -152,7 +157,7 @@ void tcs_init(INT32 cpunum, INT32 pianum, INT32 dacnum, UINT8 *rom, UINT8 *ram)
 	if (pia_select == 0) pia_init();
 	pia_config(pia_select, PIA_ALTERNATE_ORDERING, &pia_intf);
 	
-	DACInit(dacnum, 0, 0, M6809TotalCycles, 2000000);
+	DACInit(dacnum, 0, 0, DACSync);
     DACSetRoute(dacnum, 1.00, BURN_SND_ROUTE_BOTH);
     DACDCBlock(1);
 

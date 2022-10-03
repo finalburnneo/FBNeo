@@ -11,3 +11,5 @@ void soundsgood_exit();
 void soundsgood_scan(INT32 nAction, INT32 *pnMin);
 INT32 soundsgood_reset_status();
 INT32 soundsgood_initialized();
+
+void soundsgood_set_antipop_mask(UINT16 nMask);

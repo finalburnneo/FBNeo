@@ -7799,35 +7799,70 @@ struct BurnDriver BurnDrvEspgalbl = {
 
 // 西游释厄传 - 群魔乱舞 (版本 208, 修改版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
 // More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=695504&fromuid=150233
-// Last update 2020-07-05 (p05301n_v208.rom)
+// Last update 20200705
 
 static struct BurnRomInfo oldsplusnrRomDesc[] = {
-	{ "p05301n_v208.rom",			0x0400000, 0xce6893ae, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v-208cn.u10",			0x0400000, 0xce6893ae, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t05301.rom",					0x0800000, 0x8257bbb0, 2 | BRF_GRA },			//  1 Tile data
+	{ "igs_t05301w064.u2",		0x0800000, 0x8257bbb0, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a05301n.rom",				0x0800000, 0x3d3125ff, 3 | BRF_GRA },	 		//  2 Sprite Color Data
-	{ "a05302n.rom",				0x0800000, 0x4ed9028c, 3 | BRF_GRA },			//  3
-	{ "a05303.rom",					0x0800000, 0x13475d85, 3 | BRF_GRA },			//  4
-	{ "a05304.rom",					0x0800000, 0xf03ef7a6, 3 | BRF_GRA },			//  5
+	{ "igs_a05301nw064.u3",		0x0800000, 0x3d3125ff, 3 | BRF_GRA },	 		//  2 Sprite Color Data
+	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 3 | BRF_GRA },			//  3
+	{ "igs_a05303w064.u6",		0x0800000, 0x13475d85, 3 | BRF_GRA },			//  4
+	{ "igs_a05304w064.u8",		0x0800000, 0xf03ef7a6, 3 | BRF_GRA },			//  5
 
-	{ "b05301n.rom",				0x0800000, 0x13702bbf, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "b05302n.rom",				0x0800000, 0xb9f75120, 4 | BRF_GRA },			//  7
+	{ "igs_b05301nw064.u9",		0x0800000, 0x13702bbf, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "igs_b05302nw064.u11",	0x0800000, 0xb9f75120, 4 | BRF_GRA },			//  7
 
-	{ "m05301.rom",					0x0400000, 0x86ec83bc, 5 | BRF_SND },			//  8 Samples
+	{ "igs_w05301b032.u5",		0x0400000, 0x86ec83bc, 5 | BRF_SND },			//  8 Samples
 
-	{ "oldsplus_igs027a.bin",		0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(oldsplusnr, oldsplusnr, pgm)
 STD_ROM_FN(oldsplusnr)
 
 struct BurnDriver BurnDrvoldsplusnr = {
-	"oldsplusnr", "oldsplus", "pgm", NULL, "2020-07-05",
-	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0", "Incomplete Dump", "Hack", "PolyGameMaster",
-	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u7248\u672c 208, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
+	"oldsplusnr", "oldsplus", "pgm", NULL, "2020",
+	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0", "Incomplete Dump", "hack", "PolyGameMaster",
+	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u7248\u672c 208)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, oldsplusnrRomInfo, oldsplusnrRomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldsplusnrDIPInfo,
+	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// 西游释厄传 - 群魔乱舞 (版本 211, 修改版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)
+// More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=707290
+
+static struct BurnRomInfo oldsplusnr211RomDesc[] = {
+	{ "v-211cn.u10",			0x0400000, 0x296a8c3a, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "igs_t05301naw064.u2",	0x0800000, 0x9019665b, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "igs_a05301naw064.u3",	0x0800000, 0x5291d22c, 3 | BRF_GRA },	 		//  2 Sprite Color Data
+	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 3 | BRF_GRA },			//  3
+	{ "igs_a05303naw064.u6",	0x0800000, 0x5f75eca2, 3 | BRF_GRA },			//  4
+	{ "igs_a05304naw064.u8",	0x0800000, 0x365015f9, 3 | BRF_GRA },			//  5
+
+	{ "igs_b05301naw064.u9",	0x0800000, 0xe5286686, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "igs_b05302naw064.u11",	0x0800000, 0x383a24e2, 4 | BRF_GRA },			//  7
+
+	{ "igs_w05301nab032.u5",	0x0400000, 0x6adb13ed, 5 | BRF_SND },			//  8 Samples
+
+	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(oldsplusnr211, oldsplusnr211, pgm)
+STD_ROM_FN(oldsplusnr211)
+
+struct BurnDriver BurnDrvoldsplusnr211 = {
+	"oldsplusnr211", "oldsplus", "pgm", NULL, "2021",
+	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)\0", "Incomplete Dump", "hack", "PolyGameMaster",
+	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u7248\u672c 211)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
+	NULL, oldsplusnr211RomInfo, oldsplusnr211RomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldsplusnrDIPInfo,
 	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -8660,13 +8695,13 @@ struct BurnDriver BurnDrvkov2dzxx = {
 };
 
 
-// Knights of Valour Plus 2012 (Wu Shuang Edition)
-// GOTVG 2022/05/09
+// Knights of Valour Plus 2012 - Warriors
+// GOTVG 2022/07/27
 
 static struct BurnRomInfo kovplus12dwRomDesc[] = {
-	{ "12dw_p0603_119.u1",	0x0400000, 0x574dca7a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "12dw_p0603_119.u1",	0x0400000, 0x59b7a7b1, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "12dw_t0600.u11",		0x0800000, 0x253503e6, 2 | BRF_GRA },			//  1 Tile data
+	{ "12dw_t0600.u11",		0x0800000, 0x364aec7e, 2 | BRF_GRA },			//  1 Tile data
 
 	{ "12dw_a0600.u2",		0x0800000, 0x5bd7ea9f, 3 | BRF_GRA },			//  2 Sprite Color Data
 	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  3
@@ -8686,7 +8721,7 @@ STD_ROM_FN(kovplus12dw)
 
 struct BurnDriver BurnDrvkovplus12dw = {
 	"kovplus12dw", "kovplus", "pgm", NULL, "2022",
-	"Knights of Valour Plus 2012 (Wu Shuang Edition)\0", NULL, "Hack", "PolyGameMaster",
+	"Knights of Valour Plus 2012 - Warriors\0", NULL, "hack", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, kovplus12dwRomInfo, kovplus12dwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,

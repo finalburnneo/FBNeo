@@ -427,12 +427,6 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 				if (ri.nLen==0) continue;
 
-				char szMergeNameBuffer[255];
-				char szMergeNameBuffer2[255];
-
-				memset(szMergeNameBuffer, 0, 255);
-				memset(szMergeNameBuffer2, 0, 255);
-
 				if (nRet==0)
 				{
 					struct BurnRomInfo riTmp;
@@ -478,21 +472,11 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 							if (nRetTmp==0)
 							{
-								if (riTmp.nLen && riTmp.nCrc==nCrc /*&& !strcmp(szPossibleName, szPossibleNameTmp)*/)
+								if (riTmp.nLen && riTmp.nCrc==nCrc && !strcmp(szPossibleName, szPossibleNameTmp))
 								{
 									// This file is from a parent set
 									nMerged|=1;
 									nRetTmp++;
-
-									// Storing parent's rom name for later
-									ReplaceAmpersand(szMergeNameBuffer, szPossibleNameTmp);
-									strcpy(szMergeNameBuffer2, szMergeNameBuffer);
-									memset(szMergeNameBuffer, 0, 255);
-									ReplaceLessThan(szMergeNameBuffer, szMergeNameBuffer2);
-									memset(szMergeNameBuffer2, 0, 255);
-									strcpy(szMergeNameBuffer2, szMergeNameBuffer);
-									memset(szMergeNameBuffer, 0, 255);
-									ReplaceGreaterThan(szMergeNameBuffer, szMergeNameBuffer2);
 								}
 							}
 						}
@@ -528,9 +512,9 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 				{
 					// Files from parent/boardROMs
 					if (ri.nType & BRF_NODUMP) {
-						fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" status=\"nodump\"/>\n", szPossibleNameBuffer, szMergeNameBuffer, ri.nLen);
+						fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" status=\"nodump\"/>\n", szPossibleNameBuffer, szPossibleNameBuffer, ri.nLen);
 					} else {
-						fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, szMergeNameBuffer, ri.nLen, ri.nCrc);
+						fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, szPossibleNameBuffer, ri.nLen, ri.nCrc);
 					}
 				}
 			}

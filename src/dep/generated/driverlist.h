@@ -18695,6 +18695,7 @@ DRV		BurnDrvXexex;
 DRV		BurnDrvXexexj;
 DRV		BurnDrvnes_xexyz;
 DRV		BurnDrvoldsplusnr;
+DRV		BurnDrvoldsplusnr211;
 DRV		BurnDrvnes_xiaohonmao;
 DRV		BurnDrvnes_xiaomali;
 DRV		BurnDrvmd_xiaomo;
@@ -27330,7 +27331,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkovplus20tx,		// Knights of Valour Plus - Qun Xiong Luan Wu 2020 (Hack)
 	&BurnDrvKovplus,			// Knights of Valour Plus - Sangoku Senki Plus (V119)
 	&BurnDrvKovplusa,			// Knights of Valour Plus - Sangoku Senki Plus (V119, Korea)
-	&BurnDrvkovplus12dw,		// Knights of Valour Plus 2012 (Wu Shuang Edition)
+	&BurnDrvkovplus12dw,		// Knights of Valour Plus 2012 - Warriors
 	&BurnDrvkovytzyce,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Qing Ban (2020-A, hack)
 	&BurnDrvkovytzyws,			// Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)
 	&BurnDrvkovshpzqhl,			// Knights of Valour Super Heroes Plus (The Best Firepower In 2020, 2020-02-06)
@@ -37726,6 +37727,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXexexj,				// Xexex (ver JAA)
 	&BurnDrvnes_xexyz,			// Xexyz (USA)
 	&BurnDrvoldsplusnr,			// Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
+	&BurnDrvoldsplusnr211,		// Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)
 	&BurnDrvnes_xiaohonmao,		// Xiao Hong Mao - Little Red Hood (Unl)
 	&BurnDrvnes_xiaomali,		// Xiao Ma Li (Unl) [no comment, NOT WORKING]
 	&BurnDrvmd_xiaomo,			// Xiao Monv - Magic Girl (Tw) (Unl)

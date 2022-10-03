@@ -1210,6 +1210,9 @@
     <ClInclude Include="..\..\src\burn\devices\6840ptm.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\midcvsd.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4721,6 +4724,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\devices\6840ptm.cpp">
       <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\midcvsd.cpp">
+      <Filter>Burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr68.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

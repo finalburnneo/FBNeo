@@ -13,6 +13,9 @@ static INT32 csd_is_intialized = 0;
 static UINT16 *csd_ram = NULL;
 extern INT32 ssio_spyhunter;
 
+static INT32 pia_select;
+static INT32 cpu_select;
+
 // muting & pop-supression logic
 struct anti_pop {
     UINT16 lastdacvalue;
@@ -76,7 +79,7 @@ static void csd_portb_w(UINT16, UINT8 data)
     if (!ml.booting)
         DACWrite16Signed(0, 0x4000 + (dacvalue << 6));
 
-    if (~pia_get_ddr_b(0) & 0x30) csd_status = (data >> 4) & 3;
+    if (~pia_get_ddr_b(pia_select) & 0x30) csd_status = (data >> 4) & 3;
 }
 
 static void csd_irq(int state)
@@ -91,17 +94,14 @@ void csd_reset_write(int state)
 	csd_in_reset = state;
 
 	if (state) {
-		INT32 cpu_active = SekGetActive();
-		if (cpu_active == -1) SekOpen(0);
-		SekReset();
-		if (cpu_active == -1) SekClose();
+		SekReset(cpu_select);
 	}
 }
 
 static void __fastcall csd_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0x1fff8) == 0x18000) {
-		pia_write(0, (address / 2) & 3, data & 0xff);
+		pia_write(pia_select, (address / 2) & 3, data & 0xff);
 		return;
 	}
 }
@@ -109,7 +109,7 @@ static void __fastcall csd_write_word(UINT32 address, UINT16 data)
 static void __fastcall csd_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0x1fff8) == 0x18000) {
-		pia_write(0, (address / 2) & 3, data);
+		pia_write(pia_select, (address / 2) & 3, data);
 		return;
 	}
 }
@@ -117,7 +117,7 @@ static void __fastcall csd_write_byte(UINT32 address, UINT8 data)
 static UINT16 __fastcall csd_read_word(UINT32 address)
 {
 	if ((address & 0x1fff8) == 0x18000) {
-		UINT8 ret = pia_read(0, (address / 2) & 3);
+		UINT8 ret = pia_read(pia_select, (address / 2) & 3);
 		return ret | (ret << 8);
 	}
 
@@ -127,7 +127,7 @@ static UINT16 __fastcall csd_read_word(UINT32 address)
 static UINT8 __fastcall csd_read_byte(UINT32 address)
 {
 	if ((address & 0x1fff8) == 0x18000) {
-		return pia_read(0, (address / 2) & 3);
+		return pia_read(pia_select, (address / 2) & 3);
 	}
 
 	return 0;
@@ -137,8 +137,8 @@ void csd_data_write(UINT16 data)
 {
 	if (csd_is_intialized == 0) return;
 
-    pia_set_input_b(0, data & 0x0f);
-    pia_set_input_ca1(0, ~data & 0x10);
+    pia_set_input_b(pia_select, data & 0x0f);
+    pia_set_input_ca1(pia_select, ~data & 0x10);
 }
 
 UINT8 csd_status_read()
@@ -164,12 +164,12 @@ void csd_reset()
 {
 	if (csd_is_intialized == 0) return;
 
-	SekOpen(0);
+	SekOpen(cpu_select);
 	SekReset();
 	DACReset();
 	SekClose();
 
-	pia_reset();
+	if (pia_select == 0) pia_reset();
 
 	csd_status = 0;
 	csd_in_reset = 0;
@@ -189,11 +189,14 @@ static const pia6821_interface pia_intf = {
 	csd_irq, csd_irq
 };
 
-void csd_init(UINT8 *rom, UINT8 *ram)
+void csd_init(INT32 m68knum, INT32 pianum, UINT8 *rom, UINT8 *ram)
 {
-    csd_ram = (UINT16*)ram;
-	SekInit(0, 0x68000);
-	SekOpen(0);
+	pia_select = pianum;
+	cpu_select = m68knum;
+
+	csd_ram = (UINT16*)ram;
+	SekInit(cpu_select, 0x68000);
+	SekOpen(cpu_select);
 	SekMapMemory(rom,			0x000000, 0x007fff, MAP_ROM);
 	SekMapMemory(ram,			0x01c000, 0x01cfff, MAP_RAM);
 	SekSetWriteWordHandler(0,	csd_write_word);
@@ -202,8 +205,8 @@ void csd_init(UINT8 *rom, UINT8 *ram)
 	SekSetReadByteHandler(0,	csd_read_byte);
 	SekClose();
 
-	pia_init();
-	pia_config(0, PIA_ALTERNATE_ORDERING, &pia_intf);
+	if (pia_select == 0) pia_init();
+	pia_config(pia_select, PIA_ALTERNATE_ORDERING, &pia_intf);
 	
 	DACInit(0, 0, 1, SekTotalCycles, 8000000);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -216,8 +219,8 @@ void csd_exit()
 {
 	if (csd_is_intialized == 0) return;
 
-	SekExit();
-	pia_init();
+	if (cpu_select == 0) SekExit();
+	if (pia_select == 0) pia_init();
 	DACExit();
     csd_is_intialized = 0;
     csd_ram = NULL;
@@ -229,9 +232,9 @@ void csd_scan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE)
 	{
-		SekScan(nAction);
+		if (cpu_select == 0) SekScan(nAction);
 		DACScan(nAction, pnMin);
-		pia_scan(nAction, pnMin);
+		if (pia_select == 0) pia_scan(nAction, pnMin);
 
 		SCAN_VAR(csd_status);
 		SCAN_VAR(csd_in_reset);

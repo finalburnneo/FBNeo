@@ -1007,7 +1007,7 @@ static void sound_system_init(INT32 sound_system)
 
 		case 2:
 		{
-			csd_init(Drv68KROM, Drv68KRAM);
+			csd_init(0, 0, Drv68KROM, Drv68KRAM);
 			ssio_init(DrvZ80ROM1, DrvZ80RAM1, DrvSndPROM);
 		}
 		break;
@@ -1018,7 +1018,7 @@ static void sound_system_init(INT32 sound_system)
 		}
 		break;
 
-        case 4: csd_init(Drv68KROM, Drv68KRAM); break;
+        case 4: csd_init(0, 0, Drv68KROM, Drv68KRAM); break;
 	}
 
 	ssio_inputs = DrvInputs;

@@ -49,7 +49,7 @@ int ConfigAppLoad()
 		int nLen = _tcslen(szLine);
 
 		// Get rid of the linefeed at the end
-		if (szLine[nLen - 1] == 10) {
+		if (nLen > 0 && szLine[nLen - 1] == 10) {
 			szLine[nLen - 1] = 0;
 			nLen--;
 		}

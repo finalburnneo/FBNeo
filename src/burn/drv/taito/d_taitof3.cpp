@@ -1302,7 +1302,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 
 	TaitoF3SoundInit(1);
 	TaitoF3SoundIRQConfig((TaitoDip[0] & 2) ? 0 : 1);
-	bprintf(0, _T("Music Speed: %S\n"), (TaitoDip[0] & 2) ? "Slow" : "Fast");
+	//bprintf(0, _T("Music Speed: %S\n"), (TaitoDip[0] & 2) ? "Slow" : "Fast");
 
 	EEPROMInit(&eeprom_interface_93C46);
 	EEPROMIgnoreErrMessage(1);

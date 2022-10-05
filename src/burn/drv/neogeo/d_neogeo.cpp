@@ -21812,7 +21812,7 @@ static struct BurnRomInfo mslugxc2RomDesc[] = {
 	{ "250-c5.c5",		0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
 	{ "250-c6.c6",		0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
 
-	{ "250-m1.m1",		0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 codef
+	{ "250-m1.m1",		0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
 	{ "250-v1.v1",		0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
 	{ "250-v2.v2",		0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 

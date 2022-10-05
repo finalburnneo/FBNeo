@@ -1300,16 +1300,16 @@
 		<description>Bang Bead (Prototype?)</description>
 		<year>2000</year>
 		<manufacturer>Visco</manufacturer>
-		<rom name="259-p1.bin" size="2097152" crc="88a37f8b"/>
+		<rom name="259-p1.bin" merge="259-p1.p1" size="2097152" crc="88a37f8b"/>
 		<rom name="259-s1p.bin" size="131072" crc="bb50fb2d"/>
 		<rom name="259-c1p.bin" size="2097152" crc="e3919e44"/>
 		<rom name="259-c2p.bin" size="2097152" crc="baf5a320"/>
 		<rom name="259-c3p.bin" size="1048576" crc="c8e52157"/>
 		<rom name="259-c4p.bin" size="1048576" crc="69fa8e60"/>
-		<rom name="259-m1.bin" size="131072" crc="85668ee9"/>
+		<rom name="259-m1.bin" merge="259-m1.m1" size="131072" crc="85668ee9"/>
 		<rom name="259-v1p.bin" size="2097152" crc="e97b9385"/>
 		<rom name="259-v2p.bin" size="2097152" crc="b0cbd70a"/>
-		<rom name="259-v3p.bin" size="1048576" crc="97528fe9"/>
+		<rom name="259-v3p.bin" merge="259-v2.v2" size="1048576" crc="97528fe9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -2192,7 +2192,7 @@
 		<manufacturer>SNK</manufacturer>
 		<rom name="018_p1_1f28.podd" size="524288" crc="f7d15752"/>
 		<rom name="018_p2_3217.peven" size="524288" crc="ffae22fb"/>
-		<rom name="018_s1_4491.s1" size="131072" crc="6799ea0d"/>
+		<rom name="018_s1_4491.s1" merge="018-s1.s1" size="131072" crc="6799ea0d"/>
 		<rom name="018_c1_2505.c1" size="524288" crc="3a441c6a"/>
 		<rom name="018_c2_3f55.c2" size="524288" crc="bb72404b"/>
 		<rom name="018_c3_a20d.c3" size="524288" crc="87bffd2f"/>
@@ -3198,10 +3198,10 @@
 		<rom name="5003-c7a.bin" size="8388608" crc="ad2d72b3"/>
 		<rom name="5003-c8a.bin" size="8388608" crc="8c3fc1b5"/>
 		<rom name="5003-m1a.bin" size="131072" crc="a37cc447"/>
-		<rom name="262-v1-08-e0.bin" size="4194304" crc="83d49ecf"/>
+		<rom name="262-v1-08-e0.bin" merge="262-v1-08-e0.v1" size="4194304" crc="83d49ecf"/>
 		<rom name="5003-v2a.bin" size="4194304" crc="2b498449"/>
-		<rom name="262-v3-08-e0.bin" size="4194304" crc="2ae38dbe"/>
-		<rom name="262-v4-08-e0.bin" size="4194304" crc="26ec4dd9"/>
+		<rom name="262-v3-08-e0.bin" merge="262-v3-08-e0.v3" size="4194304" crc="2ae38dbe"/>
+		<rom name="262-v4-08-e0.bin" merge="262-v4-08-e0.v4" size="4194304" crc="26ec4dd9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -5657,7 +5657,7 @@
 		<manufacturer>SNK</manufacturer>
 		<rom name="p1" size="524288" crc="c42125b4"/>
 		<rom name="p2" size="524288" crc="5a4db1f3"/>
-		<rom name="s1" size="131072" crc="a6d83d53"/>
+		<rom name="s1" merge="020-s1.s1" size="131072" crc="a6d83d53"/>
 		<rom name="c11" size="524288" crc="7a5158b3"/>
 		<rom name="c12" size="524288" crc="41e67a5a"/>
 		<rom name="c13" size="524288" crc="5f80c0d0"/>
@@ -5669,8 +5669,8 @@
 		<rom name="m1" size="131072" crc="32a108cf"/>
 		<rom name="v11" size="524288" crc="8cc44140"/>
 		<rom name="v12" size="524288" crc="415c61cd"/>
-		<rom name="v13" size="524288" crc="4a9e6f03"/>
-		<rom name="v21" size="524288" crc="7abf113d"/>
+		<rom name="v13" merge="020-v12.v12" size="524288" crc="4a9e6f03"/>
+		<rom name="v21" merge="020-v21.v21" size="524288" crc="7abf113d"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -6710,7 +6710,7 @@
 		<rom name="lnsq-c4.bin" size="8388608" crc="d8c3a758"/>
 		<rom name="lnsq-c5.bin" size="8388608" crc="75500b82"/>
 		<rom name="lnsq-c6.bin" size="8388608" crc="670ac13b"/>
-		<rom name="246-m1.bin" size="131072" crc="d0604ad1"/>
+		<rom name="246-m1.bin" merge="246-m1.m1" size="131072" crc="d0604ad1"/>
 		<rom name="lnsq-v1.bin" size="4194304" crc="4408ebc3"/>
 		<rom name="lnsq-v2.bin" size="4194304" crc="3d953975"/>
 		<rom name="lnsq-v3.bin" size="2097152" crc="437d1d8e"/>
@@ -6874,7 +6874,7 @@
 		<manufacturer>SNK</manufacturer>
 		<rom name="024_p1_5937.podd" size="524288" crc="8e6008ee"/>
 		<rom name="024_p2_8d37.peven" size="524288" crc="6d9ee90f"/>
-		<rom name="024_s1_22fe.s1" size="131072" crc="5cef5cc6"/>
+		<rom name="024_s1_22fe.s1" merge="024-s1.s1" size="131072" crc="5cef5cc6"/>
 		<rom name="024_c1_b764.c1" size="524288" crc="677749ec"/>
 		<rom name="024_c2_1951.c2" size="524288" crc="104d7b59"/>
 		<rom name="024_c3_0f63.c3" size="524288" crc="b0965a74"/>
@@ -9045,7 +9045,7 @@
 		<year>2021</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="263-p1c.p1" size="1048576" crc="81fd4ae9"/>
-		<rom name="263-p2c.sp2" size="4194304" crc="fdb7aed8"/>
+		<rom name="263-p2c.sp2" merge="263-p2.sp2" size="4194304" crc="fdb7aed8"/>
 		<rom name="263-c1.c1" merge="263-c1.c1" size="8388608" crc="84865f8a"/>
 		<rom name="263-c2.c2" merge="263-c2.c2" size="8388608" crc="81df97f2"/>
 		<rom name="263-c3.c3" merge="263-c3.c3" size="8388608" crc="1a343323"/>
@@ -9511,17 +9511,17 @@
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="ms5-p1b.bin" size="5242880" crc="d05853ea"/>
-		<rom name="268-c1c.bin" size="8388608" crc="ab7c389a"/>
-		<rom name="268-c2c.bin" size="8388608" crc="3560881b"/>
-		<rom name="268-c3c.bin" size="8388608" crc="3af955ea"/>
-		<rom name="268-c4c.bin" size="8388608" crc="c329c373"/>
-		<rom name="268-c5c.bin" size="8388608" crc="959c8177"/>
-		<rom name="268-c6c.bin" size="8388608" crc="010a831b"/>
-		<rom name="268-c7c.bin" size="8388608" crc="6d72a969"/>
-		<rom name="268-c8c.bin" size="8388608" crc="551d720e"/>
-		<rom name="268-m1h.bin" size="524288" crc="4a5a6e0e"/>
-		<rom name="268-v1c.bin" size="8388608" crc="ae31d60c"/>
-		<rom name="268-v2c.bin" size="8388608" crc="c40613ed"/>
+		<rom name="268-c1c.bin" merge="268-c1c.c1" size="8388608" crc="ab7c389a"/>
+		<rom name="268-c2c.bin" merge="268-c2c.c2" size="8388608" crc="3560881b"/>
+		<rom name="268-c3c.bin" merge="268-c3c.c3" size="8388608" crc="3af955ea"/>
+		<rom name="268-c4c.bin" merge="268-c4c.c4" size="8388608" crc="c329c373"/>
+		<rom name="268-c5c.bin" merge="268-c5c.c5" size="8388608" crc="959c8177"/>
+		<rom name="268-c6c.bin" merge="268-c6c.c6" size="8388608" crc="010a831b"/>
+		<rom name="268-c7c.bin" merge="268-c7c.c7" size="8388608" crc="6d72a969"/>
+		<rom name="268-c8c.bin" merge="268-c8c.c8" size="8388608" crc="551d720e"/>
+		<rom name="268-m1h.bin" merge="268-m1.m1" size="524288" crc="4a5a6e0e"/>
+		<rom name="268-v1c.bin" merge="268-v1c.v1" size="8388608" crc="ae31d60c"/>
+		<rom name="268-v2c.bin" merge="268-v2c.v2" size="8388608" crc="c40613ed"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -10181,7 +10181,7 @@
 		<rom name="268-c6c.c6" merge="268-c6c.c6" size="8388608" crc="010a831b"/>
 		<rom name="268-c7c.c7" merge="268-c7c.c7" size="8388608" crc="6d72a969"/>
 		<rom name="268-c8c.c8" merge="268-c8c.c8" size="8388608" crc="551d720e"/>
-		<rom name="268-m1.bin" size="524288" crc="4a5a6e0e"/>
+		<rom name="268-m1.bin" merge="268-m1.m1" size="524288" crc="4a5a6e0e"/>
 		<rom name="268-v1c.v1" merge="268-v1c.v1" size="8388608" crc="ae31d60c"/>
 		<rom name="268-v2c.v2" merge="268-v2c.v2" size="8388608" crc="c40613ed"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -13374,12 +13374,12 @@
 		<year>1994</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="u7" size="524288" crc="ac1e9ef3"/>
-		<rom name="us1" size="131072" crc="9caae538"/>
-		<rom name="uc5" size="524288" crc="e89ad494"/>
-		<rom name="uc6" size="524288" crc="4b42d7eb"/>
-		<rom name="um1" size="131072" crc="f424368a"/>
-		<rom name="u8" size="1048576" crc="0840cbc4"/>
-		<rom name="u9" size="524288" crc="0a548948"/>
+		<rom name="us1" merge="d96-04.s1" size="131072" crc="9caae538"/>
+		<rom name="uc5" merge="d96-02.c5" size="524288" crc="e89ad494"/>
+		<rom name="uc6" merge="d96-03.c6" size="524288" crc="4b42d7eb"/>
+		<rom name="um1" merge="d96-06.m1" size="131072" crc="f424368a"/>
+		<rom name="u8" merge="d96-01.v3" size="1048576" crc="0840cbc4"/>
+		<rom name="u9" merge="d96-05.v4" size="524288" crc="0a548948"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -18965,21 +18965,21 @@
 		<description>The King of Fighters '96 (bootleg / hack)</description>
 		<year>1996</year>
 		<manufacturer>bootleg</manufacturer>
-		<rom name="214-p1.bin" size="1048576" crc="52755d74"/>
-		<rom name="214-p2.bin" size="2097152" crc="002ccb73"/>
-		<rom name="214-s1.bin" size="131072" crc="1254cbdb"/>
-		<rom name="214-c1.bin" size="4194304" crc="7ecf4aa2"/>
-		<rom name="214-c2.bin" size="4194304" crc="05b54f37"/>
-		<rom name="214-c3.bin" size="4194304" crc="64989a65"/>
-		<rom name="214-c4.bin" size="4194304" crc="afbea515"/>
-		<rom name="214-c5.bin" size="4194304" crc="2a3bbd26"/>
-		<rom name="214-c6.bin" size="4194304" crc="44d30dc7"/>
-		<rom name="214-c7.bin" size="4194304" crc="3687331b"/>
-		<rom name="214-c8.bin" size="4194304" crc="fa1461ad"/>
-		<rom name="214-m1.bin" size="131072" crc="dabc427c"/>
-		<rom name="214-v1.bin" size="4194304" crc="63f7b045"/>
-		<rom name="214-v2.bin" size="4194304" crc="25929059"/>
-		<rom name="214-v3.bin" size="2097152" crc="92a2257d"/>
+		<rom name="214-p1.bin" merge="214-p1.p1" size="1048576" crc="52755d74"/>
+		<rom name="214-p2.bin" merge="214-p2.sp2" size="2097152" crc="002ccb73"/>
+		<rom name="214-s1.bin" merge="214-s1.s1" size="131072" crc="1254cbdb"/>
+		<rom name="214-c1.bin" merge="214-c1.c1" size="4194304" crc="7ecf4aa2"/>
+		<rom name="214-c2.bin" merge="214-c2.c2" size="4194304" crc="05b54f37"/>
+		<rom name="214-c3.bin" merge="214-c3.c3" size="4194304" crc="64989a65"/>
+		<rom name="214-c4.bin" merge="214-c4.c4" size="4194304" crc="afbea515"/>
+		<rom name="214-c5.bin" merge="214-c5.c5" size="4194304" crc="2a3bbd26"/>
+		<rom name="214-c6.bin" merge="214-c6.c6" size="4194304" crc="44d30dc7"/>
+		<rom name="214-c7.bin" merge="214-c7.c7" size="4194304" crc="3687331b"/>
+		<rom name="214-c8.bin" merge="214-c8.c8" size="4194304" crc="fa1461ad"/>
+		<rom name="214-m1.bin" merge="214-m1.m1" size="131072" crc="dabc427c"/>
+		<rom name="214-v1.bin" merge="214-v1.v1" size="4194304" crc="63f7b045"/>
+		<rom name="214-v2.bin" merge="214-v2.v2" size="4194304" crc="25929059"/>
+		<rom name="214-v3.bin" merge="214-v3.v3" size="2097152" crc="92a2257d"/>
 		<rom name="kof96m_ep1.rom" size="524288" crc="e5f2fb43"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
@@ -19031,20 +19031,20 @@
 		<rom name="214cn-p2.bin" size="2097152" crc="0edface5"/>
 		<rom name="214cn-p3.bin" size="5242880" crc="8724a441"/>
 		<rom name="214cn-s1.bin" size="131072" crc="f917527a"/>
-		<rom name="214-c1.bin" size="4194304" crc="7ecf4aa2"/>
-		<rom name="214-c2.bin" size="4194304" crc="05b54f37"/>
-		<rom name="214-c3.bin" size="4194304" crc="64989a65"/>
-		<rom name="214-c4.bin" size="4194304" crc="afbea515"/>
-		<rom name="214-c5.bin" size="4194304" crc="2a3bbd26"/>
-		<rom name="214-c6.bin" size="4194304" crc="44d30dc7"/>
-		<rom name="214-c7.bin" size="4194304" crc="3687331b"/>
-		<rom name="214-c8.bin" size="4194304" crc="fa1461ad"/>
+		<rom name="214-c1.bin" merge="214-c1.c1" size="4194304" crc="7ecf4aa2"/>
+		<rom name="214-c2.bin" merge="214-c2.c2" size="4194304" crc="05b54f37"/>
+		<rom name="214-c3.bin" merge="214-c3.c3" size="4194304" crc="64989a65"/>
+		<rom name="214-c4.bin" merge="214-c4.c4" size="4194304" crc="afbea515"/>
+		<rom name="214-c5.bin" merge="214-c5.c5" size="4194304" crc="2a3bbd26"/>
+		<rom name="214-c6.bin" merge="214-c6.c6" size="4194304" crc="44d30dc7"/>
+		<rom name="214-c7.bin" merge="214-c7.c7" size="4194304" crc="3687331b"/>
+		<rom name="214-c8.bin" merge="214-c8.c8" size="4194304" crc="fa1461ad"/>
 		<rom name="214cn-c9.bin" size="4194304" crc="a9f811d2"/>
 		<rom name="214cn-c10.bin" size="4194304" crc="1147406a"/>
-		<rom name="214-m1.bin" size="131072" crc="dabc427c"/>
-		<rom name="214-v1.bin" size="4194304" crc="63f7b045"/>
-		<rom name="214-v2.bin" size="4194304" crc="25929059"/>
-		<rom name="214-v3.bin" size="2097152" crc="92a2257d"/>
+		<rom name="214-m1.bin" merge="214-m1.m1" size="131072" crc="dabc427c"/>
+		<rom name="214-v1.bin" merge="214-v1.v1" size="4194304" crc="63f7b045"/>
+		<rom name="214-v2.bin" merge="214-v2.v2" size="4194304" crc="25929059"/>
+		<rom name="214-v3.bin" merge="214-v3.v3" size="2097152" crc="92a2257d"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -19399,14 +19399,14 @@
 		<rom name="232cn-s1.bin" size="131072" crc="de5ad278"/>
 		<rom name="232cn-c1.bin" size="8388608" crc="8c3d2c0c"/>
 		<rom name="232cn-c2.bin" size="8388608" crc="43ce69ae"/>
-		<rom name="232-c3.bin" size="8388608" crc="581d6618"/>
-		<rom name="232-c4.bin" size="8388608" crc="49bb1e68"/>
-		<rom name="232-c5.bin" size="4194304" crc="34fc4e51"/>
-		<rom name="232-c6.bin" size="4194304" crc="4ff4d47b"/>
-		<rom name="232-m1.bin" size="131072" crc="45348747"/>
-		<rom name="232-v1.bin" size="4194304" crc="22a2b5b5"/>
-		<rom name="232-v2.bin" size="4194304" crc="2304e744"/>
-		<rom name="232-v3.bin" size="4194304" crc="759eb954"/>
+		<rom name="232-c3.bin" merge="232-c3.c3" size="8388608" crc="581d6618"/>
+		<rom name="232-c4.bin" merge="232-c4.c4" size="8388608" crc="49bb1e68"/>
+		<rom name="232-c5.bin" merge="232-c5.c5" size="4194304" crc="34fc4e51"/>
+		<rom name="232-c6.bin" merge="232-c6.c6" size="4194304" crc="4ff4d47b"/>
+		<rom name="232-m1.bin" merge="232-m1.m1" size="131072" crc="45348747"/>
+		<rom name="232-v1.bin" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
+		<rom name="232-v2.bin" merge="232-v2.v2" size="4194304" crc="2304e744"/>
+		<rom name="232-v3.bin" merge="232-v3.v3" size="4194304" crc="759eb954"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -20110,14 +20110,14 @@
 		<rom name="232xt-s1.bin" size="131072" crc="d6fe166f"/>
 		<rom name="232xt-c1.bin" size="8388608" crc="d504bf4a"/>
 		<rom name="232xt-c2.bin" size="8388608" crc="942ea708"/>
-		<rom name="232-c3.bin" size="8388608" crc="581d6618"/>
-		<rom name="232-c4.bin" size="8388608" crc="49bb1e68"/>
+		<rom name="232-c3.bin" merge="232-c3.c3" size="8388608" crc="581d6618"/>
+		<rom name="232-c4.bin" merge="232-c4.c4" size="8388608" crc="49bb1e68"/>
 		<rom name="232xt-c5.bin" size="8388608" crc="c1bd2375"/>
 		<rom name="232xt-c6.bin" size="8388608" crc="a7c8506a"/>
-		<rom name="232-m1.bin" size="131072" crc="45348747"/>
-		<rom name="232-v1.bin" size="4194304" crc="22a2b5b5"/>
-		<rom name="232-v2.bin" size="4194304" crc="2304e744"/>
-		<rom name="232-v3.bin" size="4194304" crc="759eb954"/>
+		<rom name="232-m1.bin" merge="232-m1.m1" size="131072" crc="45348747"/>
+		<rom name="232-v1.bin" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
+		<rom name="232-v2.bin" merge="232-v2.v2" size="4194304" crc="2304e744"/>
+		<rom name="232-v3.bin" merge="232-v3.v3" size="4194304" crc="759eb954"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -20233,10 +20233,10 @@
 		<rom name="orochi-c61.bin" size="2097152" crc="188e351a"/>
 		<rom name="orochi-c52.bin" size="2097152" crc="d4eec50a"/>
 		<rom name="orochi-c62.bin" size="2097152" crc="031b1ad5"/>
-		<rom name="orochi-m1.bin" size="131072" crc="45348747"/>
-		<rom name="orochi-v1.bin" size="4194304" crc="22a2b5b5"/>
-		<rom name="orochi-v2.bin" size="4194304" crc="2304e744"/>
-		<rom name="orochi-v3.bin" size="4194304" crc="759eb954"/>
+		<rom name="orochi-m1.bin" merge="232-m1.m1" size="131072" crc="45348747"/>
+		<rom name="orochi-v1.bin" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
+		<rom name="orochi-v2.bin" merge="232-v2.v2" size="4194304" crc="2304e744"/>
+		<rom name="orochi-v3.bin" merge="232-v3.v3" size="4194304" crc="759eb954"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -20343,18 +20343,18 @@
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="kf97-p1a.bin" size="1048576" crc="035911c5"/>
-		<rom name="232-p2.bin" size="4194304" crc="158b23f6"/>
+		<rom name="232-p2.bin" merge="232-p2.sp2" size="4194304" crc="158b23f6"/>
 		<rom name="kf97-s1a.bin" size="131072" crc="4ee2149a"/>
-		<rom name="232-c1.bin" size="8388608" crc="5f8bf0a1"/>
-		<rom name="232-c2.bin" size="8388608" crc="e4d45c81"/>
-		<rom name="232-c3.bin" size="8388608" crc="581d6618"/>
-		<rom name="232-c4.bin" size="8388608" crc="49bb1e68"/>
-		<rom name="232-c5.bin" size="4194304" crc="34fc4e51"/>
-		<rom name="232-c6.bin" size="4194304" crc="4ff4d47b"/>
-		<rom name="232-m1.bin" size="131072" crc="45348747"/>
-		<rom name="232-v1.bin" size="4194304" crc="22a2b5b5"/>
-		<rom name="232-v2.bin" size="4194304" crc="2304e744"/>
-		<rom name="232-v3.bin" size="4194304" crc="759eb954"/>
+		<rom name="232-c1.bin" merge="232-c1.c1" size="8388608" crc="5f8bf0a1"/>
+		<rom name="232-c2.bin" merge="232-c2.c2" size="8388608" crc="e4d45c81"/>
+		<rom name="232-c3.bin" merge="232-c3.c3" size="8388608" crc="581d6618"/>
+		<rom name="232-c4.bin" merge="232-c4.c4" size="8388608" crc="49bb1e68"/>
+		<rom name="232-c5.bin" merge="232-c5.c5" size="4194304" crc="34fc4e51"/>
+		<rom name="232-c6.bin" merge="232-c6.c6" size="4194304" crc="4ff4d47b"/>
+		<rom name="232-m1.bin" merge="232-m1.m1" size="131072" crc="45348747"/>
+		<rom name="232-v1.bin" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
+		<rom name="232-v2.bin" merge="232-v2.v2" size="4194304" crc="2304e744"/>
+		<rom name="232-v3.bin" merge="232-v3.v3" size="4194304" crc="759eb954"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -20532,8 +20532,8 @@
 		<rom name="242-s1ae.bin" size="131072" crc="f1fee5c0"/>
 		<rom name="242-c1ae.bin" size="8388608" crc="0319cfc9"/>
 		<rom name="242-c2ae.bin" size="8388608" crc="553f6714"/>
-		<rom name="242-c3.bin" size="8388608" crc="22127b4f"/>
-		<rom name="242-c4.bin" size="8388608" crc="0b4fa044"/>
+		<rom name="242-c3.bin" merge="242-c3.c3" size="8388608" crc="22127b4f"/>
+		<rom name="242-c4.bin" merge="242-c4.c4" size="8388608" crc="0b4fa044"/>
 		<rom name="242-c5ae.bin" size="8388608" crc="71641718"/>
 		<rom name="242-c6ae.bin" size="8388608" crc="982ba2b3"/>
 		<rom name="242-c7ae.bin" size="8388608" crc="8d495552"/>
@@ -20543,10 +20543,10 @@
 		<rom name="242-c92ae.bin" size="8388608" crc="e893277f"/>
 		<rom name="242-c93ae.bin" size="8388608" crc="f165589e"/>
 		<rom name="242-m1ae.bin" size="262144" crc="9ade0528"/>
-		<rom name="242-v1.bin" size="4194304" crc="b9ea8051"/>
-		<rom name="242-v2.bin" size="4194304" crc="cc11106e"/>
-		<rom name="242-v3.bin" size="4194304" crc="044ea4e1"/>
-		<rom name="242-v4.bin" size="4194304" crc="7985ea30"/>
+		<rom name="242-v1.bin" merge="242-v1.v1" size="4194304" crc="b9ea8051"/>
+		<rom name="242-v2.bin" merge="242-v2.v2" size="4194304" crc="cc11106e"/>
+		<rom name="242-v3.bin" merge="242-v3.v3" size="4194304" crc="044ea4e1"/>
+		<rom name="242-v4.bin" merge="242-v4.v4" size="4194304" crc="7985ea30"/>
 		<rom name="242-v5ae.bin" size="4194304" crc="afdd9660"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
@@ -21860,8 +21860,8 @@
 		<rom name="kof99ae_m1.bin" size="131072" crc="f847e188"/>
 		<rom name="kof99ae_v1.bin" size="4194304" crc="ceaa3bae"/>
 		<rom name="kof99ae_v2.bin" size="4194304" crc="07d70650"/>
-		<rom name="kof99ae_v3.bin" size="4194304" crc="821901da"/>
-		<rom name="kof99ae_v4.bin" size="2097152" crc="b49e6178"/>
+		<rom name="kof99ae_v3.bin" merge="251-v3.v3" size="4194304" crc="821901da"/>
+		<rom name="kof99ae_v4.bin" merge="251-v4.v4" size="2097152" crc="b49e6178"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -22105,11 +22105,11 @@
 		<rom name="kf99sr-c6.bin" size="8388608" crc="238b3e71"/>
 		<rom name="kf99sr-c7.bin" size="8388608" crc="65de862c"/>
 		<rom name="kf99sr-c8.bin" size="8388608" crc="3ff457fe"/>
-		<rom name="kf99sr-m1.bin" size="131072" crc="5e74539c"/>
-		<rom name="kf99sr-v1.bin" size="4194304" crc="ef2eecc8"/>
-		<rom name="kf99sr-v2.bin" size="4194304" crc="73e211ca"/>
-		<rom name="kf99sr-v3.bin" size="4194304" crc="821901da"/>
-		<rom name="kf99sr-v4.bin" size="2097152" crc="b49e6178"/>
+		<rom name="kf99sr-m1.bin" merge="251-m1.m1" size="131072" crc="5e74539c"/>
+		<rom name="kf99sr-v1.bin" merge="251-v1.v1" size="4194304" crc="ef2eecc8"/>
+		<rom name="kf99sr-v2.bin" merge="251-v2.v2" size="4194304" crc="73e211ca"/>
+		<rom name="kf99sr-v3.bin" merge="251-v3.v3" size="4194304" crc="821901da"/>
+		<rom name="kf99sr-v4.bin" merge="251-v4.v4" size="2097152" crc="b49e6178"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -23038,19 +23038,19 @@
 		<rom name="2k1-p1p.bin" size="1048576" crc="758529a7"/>
 		<rom name="262-pg2.bin" size="4194304" crc="91eea062"/>
 		<rom name="2k1-s1p.bin" size="131072" crc="088657e6"/>
-		<rom name="262-c1-08-e0.bin" size="8388608" crc="99cc785a"/>
-		<rom name="262-c2-08-e0.bin" size="8388608" crc="50368cbf"/>
-		<rom name="262-c3-08-e0.bin" size="8388608" crc="fb14ff87"/>
-		<rom name="262-c4-08-e0.bin" size="8388608" crc="4397faf8"/>
-		<rom name="262-c5-08-e0.bin" size="8388608" crc="91f24be4"/>
-		<rom name="262-c6-08-e0.bin" size="8388608" crc="a31e4403"/>
-		<rom name="262-c7-08-e0.bin" size="8388608" crc="54d9d1ec"/>
-		<rom name="262-c8-08-e0.bin" size="8388608" crc="59289a6b"/>
-		<rom name="265-262-m1.bin" size="262144" crc="a7f8119f"/>
-		<rom name="262-v1-08-e0.bin" size="4194304" crc="83d49ecf"/>
-		<rom name="262-v2-08-e0.bin" size="4194304" crc="003f1843"/>
-		<rom name="262-v3-08-e0.bin" size="4194304" crc="2ae38dbe"/>
-		<rom name="262-v4-08-e0.bin" size="4194304" crc="26ec4dd9"/>
+		<rom name="262-c1-08-e0.bin" merge="262-c1-08-e0.c1" size="8388608" crc="99cc785a"/>
+		<rom name="262-c2-08-e0.bin" merge="262-c2-08-e0.c2" size="8388608" crc="50368cbf"/>
+		<rom name="262-c3-08-e0.bin" merge="262-c3-08-e0.c3" size="8388608" crc="fb14ff87"/>
+		<rom name="262-c4-08-e0.bin" merge="262-c4-08-e0.c4" size="8388608" crc="4397faf8"/>
+		<rom name="262-c5-08-e0.bin" merge="262-c5-08-e0.c5" size="8388608" crc="91f24be4"/>
+		<rom name="262-c6-08-e0.bin" merge="262-c6-08-e0.c6" size="8388608" crc="a31e4403"/>
+		<rom name="262-c7-08-e0.bin" merge="262-c7-08-e0.c7" size="8388608" crc="54d9d1ec"/>
+		<rom name="262-c8-08-e0.bin" merge="262-c8-08-e0.c8" size="8388608" crc="59289a6b"/>
+		<rom name="265-262-m1.bin" merge="265-262-m1.m1" size="262144" crc="a7f8119f"/>
+		<rom name="262-v1-08-e0.bin" merge="262-v1-08-e0.v1" size="4194304" crc="83d49ecf"/>
+		<rom name="262-v2-08-e0.bin" merge="262-v2-08-e0.v2" size="4194304" crc="003f1843"/>
+		<rom name="262-v3-08-e0.bin" merge="262-v3-08-e0.v3" size="4194304" crc="2ae38dbe"/>
+		<rom name="262-v4-08-e0.bin" merge="262-v4-08-e0.v4" size="4194304" crc="26ec4dd9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -23100,19 +23100,19 @@
 		<rom name="2k1-p1a.bin" size="1048576" crc="f8a71b6f"/>
 		<rom name="262-pg2.bin" size="4194304" crc="91eea062"/>
 		<rom name="2k1-s1a.bin" size="131072" crc="50986eeb"/>
-		<rom name="262-c1-08-e0.bin" size="8388608" crc="99cc785a"/>
-		<rom name="262-c2-08-e0.bin" size="8388608" crc="50368cbf"/>
-		<rom name="262-c3-08-e0.bin" size="8388608" crc="fb14ff87"/>
-		<rom name="262-c4-08-e0.bin" size="8388608" crc="4397faf8"/>
-		<rom name="262-c5-08-e0.bin" size="8388608" crc="91f24be4"/>
-		<rom name="262-c6-08-e0.bin" size="8388608" crc="a31e4403"/>
-		<rom name="262-c7-08-e0.bin" size="8388608" crc="54d9d1ec"/>
-		<rom name="262-c8-08-e0.bin" size="8388608" crc="59289a6b"/>
-		<rom name="265-262-m1.bin" size="262144" crc="a7f8119f"/>
-		<rom name="262-v1-08-e0.bin" size="4194304" crc="83d49ecf"/>
-		<rom name="262-v2-08-e0.bin" size="4194304" crc="003f1843"/>
-		<rom name="262-v3-08-e0.bin" size="4194304" crc="2ae38dbe"/>
-		<rom name="262-v4-08-e0.bin" size="4194304" crc="26ec4dd9"/>
+		<rom name="262-c1-08-e0.bin" merge="262-c1-08-e0.c1" size="8388608" crc="99cc785a"/>
+		<rom name="262-c2-08-e0.bin" merge="262-c2-08-e0.c2" size="8388608" crc="50368cbf"/>
+		<rom name="262-c3-08-e0.bin" merge="262-c3-08-e0.c3" size="8388608" crc="fb14ff87"/>
+		<rom name="262-c4-08-e0.bin" merge="262-c4-08-e0.c4" size="8388608" crc="4397faf8"/>
+		<rom name="262-c5-08-e0.bin" merge="262-c5-08-e0.c5" size="8388608" crc="91f24be4"/>
+		<rom name="262-c6-08-e0.bin" merge="262-c6-08-e0.c6" size="8388608" crc="a31e4403"/>
+		<rom name="262-c7-08-e0.bin" merge="262-c7-08-e0.c7" size="8388608" crc="54d9d1ec"/>
+		<rom name="262-c8-08-e0.bin" merge="262-c8-08-e0.c8" size="8388608" crc="59289a6b"/>
+		<rom name="265-262-m1.bin" merge="265-262-m1.m1" size="262144" crc="a7f8119f"/>
+		<rom name="262-v1-08-e0.bin" merge="262-v1-08-e0.v1" size="4194304" crc="83d49ecf"/>
+		<rom name="262-v2-08-e0.bin" merge="262-v2-08-e0.v2" size="4194304" crc="003f1843"/>
+		<rom name="262-v3-08-e0.bin" merge="262-v3-08-e0.v3" size="4194304" crc="2ae38dbe"/>
+		<rom name="262-v4-08-e0.bin" merge="262-v4-08-e0.v4" size="4194304" crc="26ec4dd9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -23733,9 +23733,9 @@
 		<rom name="265ps2-c8.bin" size="8388608" crc="a5e35d11"/>
 		<rom name="265ps2-c9.bin" size="8388608" crc="aa8bbc97"/>
 		<rom name="265ps2-c10.bin" size="8388608" crc="9832713d"/>
-		<rom name="265-m1.bin" size="131072" crc="85aaa632"/>
-		<rom name="265-v1.bin" size="8388608" crc="15e8f3f5"/>
-		<rom name="265-v2.bin" size="8388608" crc="da41d6f9"/>
+		<rom name="265-m1.bin" merge="265-m1.m1" size="131072" crc="85aaa632"/>
+		<rom name="265-v1.bin" merge="265-v1.v1" size="8388608" crc="15e8f3f5"/>
+		<rom name="265-v2.bin" merge="265-v2.v2" size="8388608" crc="da41d6f9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -24206,19 +24206,19 @@
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k2-p1p.bin" size="1048576" crc="3ab03781"/>
-		<rom name="265-p2.bin" size="4194304" crc="327266b8"/>
+		<rom name="265-p2.bin" merge="265-p2.sp2" size="4194304" crc="327266b8"/>
 		<rom name="2k2-s1pb.bin" size="131072" crc="2072d5e9"/>
-		<rom name="265-c1.bin" size="8388608" crc="2b65a656"/>
-		<rom name="265-c2.bin" size="8388608" crc="adf18983"/>
-		<rom name="265-c3.bin" size="8388608" crc="875e9fd7"/>
-		<rom name="265-c4.bin" size="8388608" crc="2da13947"/>
-		<rom name="265-c5.bin" size="8388608" crc="61bd165d"/>
-		<rom name="265-c6.bin" size="8388608" crc="03fdd1eb"/>
-		<rom name="265-c7.bin" size="8388608" crc="1a2749d8"/>
-		<rom name="265-c8.bin" size="8388608" crc="ab0bb549"/>
-		<rom name="265-m1.bin" size="131072" crc="85aaa632"/>
-		<rom name="265-v1.bin" size="8388608" crc="15e8f3f5"/>
-		<rom name="265-v2.bin" size="8388608" crc="da41d6f9"/>
+		<rom name="265-c1.bin" merge="265-c1.c1" size="8388608" crc="2b65a656"/>
+		<rom name="265-c2.bin" merge="265-c2.c2" size="8388608" crc="adf18983"/>
+		<rom name="265-c3.bin" merge="265-c3.c3" size="8388608" crc="875e9fd7"/>
+		<rom name="265-c4.bin" merge="265-c4.c4" size="8388608" crc="2da13947"/>
+		<rom name="265-c5.bin" merge="265-c5.c5" size="8388608" crc="61bd165d"/>
+		<rom name="265-c6.bin" merge="265-c6.c6" size="8388608" crc="03fdd1eb"/>
+		<rom name="265-c7.bin" merge="265-c7.c7" size="8388608" crc="1a2749d8"/>
+		<rom name="265-c8.bin" merge="265-c8.c8" size="8388608" crc="ab0bb549"/>
+		<rom name="265-m1.bin" merge="265-m1.m1" size="131072" crc="85aaa632"/>
+		<rom name="265-v1.bin" merge="265-v1.v1" size="8388608" crc="15e8f3f5"/>
+		<rom name="265-v2.bin" merge="265-v2.v2" size="8388608" crc="da41d6f9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -24326,19 +24326,19 @@
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k2-p1pc.bin" size="1048576" crc="ebedae17"/>
-		<rom name="265-p2.bin" size="4194304" crc="327266b8"/>
+		<rom name="265-p2.bin" merge="265-p2.sp2" size="4194304" crc="327266b8"/>
 		<rom name="2k2-s1pc.bin" size="131072" crc="fecbb589"/>
-		<rom name="265-c1.bin" size="8388608" crc="2b65a656"/>
-		<rom name="265-c2.bin" size="8388608" crc="adf18983"/>
-		<rom name="265-c3.bin" size="8388608" crc="875e9fd7"/>
-		<rom name="265-c4.bin" size="8388608" crc="2da13947"/>
-		<rom name="265-c5.bin" size="8388608" crc="61bd165d"/>
-		<rom name="265-c6.bin" size="8388608" crc="03fdd1eb"/>
-		<rom name="265-c7.bin" size="8388608" crc="1a2749d8"/>
-		<rom name="265-c8.bin" size="8388608" crc="ab0bb549"/>
-		<rom name="265-m1.bin" size="131072" crc="85aaa632"/>
-		<rom name="265-v1.bin" size="8388608" crc="15e8f3f5"/>
-		<rom name="265-v2.bin" size="8388608" crc="da41d6f9"/>
+		<rom name="265-c1.bin" merge="265-c1.c1" size="8388608" crc="2b65a656"/>
+		<rom name="265-c2.bin" merge="265-c2.c2" size="8388608" crc="adf18983"/>
+		<rom name="265-c3.bin" merge="265-c3.c3" size="8388608" crc="875e9fd7"/>
+		<rom name="265-c4.bin" merge="265-c4.c4" size="8388608" crc="2da13947"/>
+		<rom name="265-c5.bin" merge="265-c5.c5" size="8388608" crc="61bd165d"/>
+		<rom name="265-c6.bin" merge="265-c6.c6" size="8388608" crc="03fdd1eb"/>
+		<rom name="265-c7.bin" merge="265-c7.c7" size="8388608" crc="1a2749d8"/>
+		<rom name="265-c8.bin" merge="265-c8.c8" size="8388608" crc="ab0bb549"/>
+		<rom name="265-m1.bin" merge="265-m1.m1" size="131072" crc="85aaa632"/>
+		<rom name="265-v1.bin" merge="265-v1.v1" size="8388608" crc="15e8f3f5"/>
+		<rom name="265-v2.bin" merge="265-v2.v2" size="8388608" crc="da41d6f9"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -25112,7 +25112,7 @@
 		<rom name="234-c4.c4" merge="234-c4.c4" size="8388608" crc="3d60b037"/>
 		<rom name="234-c5.c5" merge="234-c5.c5" size="4194304" crc="1ba80cee"/>
 		<rom name="234-c6.c6" merge="234-c6.c6" size="4194304" crc="beafd091"/>
-		<rom name="0234-m1.m1" size="131072" crc="087628ea"/>
+		<rom name="0234-m1.m1" merge="234-m1.m1" size="131072" crc="087628ea"/>
 		<rom name="234-v1.v1" merge="234-v1.v1" size="4194304" crc="ed66b76f"/>
 		<rom name="234-v2.v2" merge="234-v2.v2" size="4194304" crc="a0e7f6e2"/>
 		<rom name="234-v3.v3" merge="234-v3.v3" size="4194304" crc="a506e1e2"/>
@@ -26340,7 +26340,7 @@
 		<manufacturer>SNK</manufacturer>
 		<rom name="p1" size="524288" crc="0adb5eee"/>
 		<rom name="p2" size="524288" crc="31129194"/>
-		<rom name="s1" size="131072" crc="9fea5758"/>
+		<rom name="s1" merge="051-s1.s1" size="131072" crc="9fea5758"/>
 		<rom name="c1" size="524288" crc="97a3183b"/>
 		<rom name="c2" size="524288" crc="f637667a"/>
 		<rom name="c3" size="524288" crc="b017d2d1"/>
@@ -26349,7 +26349,7 @@
 		<rom name="c6" size="524288" crc="5bc32495"/>
 		<rom name="c7" size="524288" crc="28a0a127"/>
 		<rom name="c8" size="524288" crc="439c9036"/>
-		<rom name="m1" size="131072" crc="8e69f29a"/>
+		<rom name="m1" merge="051-m1.m1" size="131072" crc="8e69f29a"/>
 		<rom name="v1" size="1048576" crc="7e9af736"/>
 		<rom name="v2" size="1048576" crc="503a9c51"/>
 		<rom name="v3" size="1048576" crc="dfa8d079"/>

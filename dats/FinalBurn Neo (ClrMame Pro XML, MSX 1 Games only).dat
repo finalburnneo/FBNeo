@@ -1423,6 +1423,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ballbuster" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Balloon Buster (HB)</description>
+		<year>2022</year>
+		<manufacturer>Hakogame</manufacturer>
+		<rom name="Balloon Buster (2022)(Hakogame).rom" size="131072" crc="d8975d68"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="balloonpunch" romof="msx">
 		<description>Balloon Punch</description>
 		<year>1989</year>
@@ -4513,6 +4525,18 @@
 		<year>2020</year>
 		<manufacturer>Oniric Factor</manufacturer>
 		<rom name="Diana - Cave Adventure (2020)(Oniric Factor).rom" size="32768" crc="58105468"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dicedtour" romof="msx">
+		<comment>Homebrew</comment>
+		<description>DICED Tournament (HB)</description>
+		<year>2022</year>
+		<manufacturer>Mi-Chi, Def Danny</manufacturer>
+		<rom name="DICED Tournament (2022)(Mi-Chi, Def Danny).rom" size="335872" crc="ac93d42c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

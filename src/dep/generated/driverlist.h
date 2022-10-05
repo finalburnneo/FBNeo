@@ -1251,6 +1251,7 @@ DRV		BurnDrvpce_ballistx;
 DRV		BurnDrvtg_ballistx;
 DRV		BurnDrvbace;
 DRV		BurnDrvBallbros;
+DRV		BurnDrvMSX_ballbuster;
 DRV		BurnDrvnes_balloonfight;
 DRV		BurnDrvnes_balloonmonster;
 DRV		BurnDrvMSX_balloonpunch;
@@ -3998,6 +3999,7 @@ DRV		BurnDrvDiamond;
 DRV		BurnDrvmd_diathieves;
 DRV		BurnDrvMSX_diana;
 DRV		BurnDrvDicegame;
+DRV		BurnDrvMSX_dicedtour;
 DRV		BurnDrvsms_dicktr;
 DRV		BurnDrvmd_dicktrs;
 DRV		BurnDrvnes_dicktracy;
@@ -20283,6 +20285,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtg_ballistx,		// Ballistix
 	&BurnDrvbace,				// Balloon Ace
 	&BurnDrvBallbros,			// Balloon Brothers
+	&BurnDrvMSX_ballbuster,		// Balloon Buster (HB)
 	&BurnDrvnes_balloonfight,	// Balloon Fight (USA)
 	&BurnDrvnes_balloonmonster,	// Balloon Monster (Unl)
 	&BurnDrvMSX_balloonpunch,	// Balloon Punch
@@ -23030,6 +23033,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_diathieves,		// Diamond Thieves (HB)
 	&BurnDrvMSX_diana,			// Diana's Cave Adventure (HB)
 	&BurnDrvDicegame,			// Dice - The Dice Game!
+	&BurnDrvMSX_dicedtour,		// DICED Tournament (HB)
 	&BurnDrvsms_dicktr,			// Dick Tracy (Euro, USA, Bra)
 	&BurnDrvmd_dicktrs,			// Dick Tracy (Hack, Spanish)
 	&BurnDrvnes_dicktracy,		// Dick Tracy (USA)

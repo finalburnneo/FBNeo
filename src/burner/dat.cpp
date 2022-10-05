@@ -454,7 +454,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 							if (nRetTmp==0)
 							{
-								if (riTmp.nLen && riTmp.nCrc==nCrc && !strcmp(szPossibleName, szPossibleNameTmp))
+								if (riTmp.nLen && riTmp.nCrc==nCrc /*&& !strcmp(szPossibleName, szPossibleNameTmp)*/)
 								{
 									// This file is from a boardROM
 									nMerged|=2;
@@ -488,7 +488,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 							if (nRetTmp==0)
 							{
-								if (riTmp.nLen && riTmp.nCrc==nCrc && !strcmp(szPossibleName, szPossibleNameTmp))
+								if (riTmp.nLen && riTmp.nCrc==nCrc /*&& !strcmp(szPossibleName, szPossibleNameTmp)*/)
 								{
 									// This file is from a parent set
 									nMerged|=1;

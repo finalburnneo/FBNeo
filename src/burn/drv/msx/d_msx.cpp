@@ -32665,3 +32665,40 @@ struct BurnDriver BurnDrvMSX_spacecat = {
 	272, 228, 4, 3
 };
 
+// Balloon Buster (HB)
+
+static struct BurnRomInfo MSX_ballbusterRomDesc[] = {
+	{ "Balloon Buster (2022)(Hakogame).rom",	131072, 0xd8975d68, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ballbuster, MSX_ballbuster, msx_msx)
+STD_ROM_FN(MSX_ballbuster)
+
+struct BurnDriver BurnDrvMSX_ballbuster = {
+	"msx_ballbuster", NULL, "msx_msx", NULL, "2022",
+	"Balloon Buster (HB)\0", NULL, "Hakogame", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_BREAKOUT, 0,
+	MSXGetZipName, MSX_ballbusterRomInfo, MSX_ballbusterRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// DICED Tournament (HB)
+
+static struct BurnRomInfo MSX_dicedtourRomDesc[] = {
+	{ "DICED Tournament (2022)(Mi-Chi, Def Danny).rom",	335872, 0xac93d42c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_dicedtour, MSX_dicedtour, msx_msx)
+STD_ROM_FN(MSX_dicedtour)
+
+struct BurnDriver BurnDrvMSX_dicedtour = {
+	"msx_dicedtour", NULL, "msx_msx", NULL, "2022",
+	"DICED Tournament (HB)\0", NULL, "Mi-Chi, Def Danny", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_CASINO, 0,
+	MSXGetZipName, MSX_dicedtourRomInfo, MSX_dicedtourRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

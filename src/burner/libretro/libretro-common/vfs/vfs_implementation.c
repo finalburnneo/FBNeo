@@ -26,7 +26,7 @@
 #include <errno.h>
 #include <sys/types.h>
 
-#include <string/stdstring.h>
+#include <string/stdstring.h> /* string_is_empty */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -248,19 +248,6 @@ int64_t retro_vfs_file_seek_internal(
 libretro_vfs_implementation_file *retro_vfs_file_open_impl(
       const char *path, unsigned mode, unsigned hints)
 {
-#if defined(VFS_FRONTEND) || defined(HAVE_CDROM)
-   int                             path_len = (int)strlen(path);
-#endif
-#ifdef VFS_FRONTEND
-   const char                 *dumb_prefix  = "vfsonly://";
-   size_t                   dumb_prefix_siz = STRLEN_CONST("vfsonly://");
-   int                      dumb_prefix_len = (int)dumb_prefix_siz;
-#endif
-#ifdef HAVE_CDROM
-   const char *cdrom_prefix                 = "cdrom://";
-   size_t cdrom_prefix_siz                  = STRLEN_CONST("cdrom://");
-   int cdrom_prefix_len                     = (int)cdrom_prefix_siz;
-#endif
    int                                flags = 0;
    const char                     *mode_str = NULL;
    libretro_vfs_implementation_file *stream = 
@@ -285,9 +272,18 @@ libretro_vfs_implementation_file *retro_vfs_file_open_impl(
    stream->scheme                 = VFS_SCHEME_NONE;
 
 #ifdef VFS_FRONTEND
-   if (path_len >= dumb_prefix_len)
-      if (!memcmp(path, dumb_prefix, dumb_prefix_len))
-         path             += dumb_prefix_siz;
+   if (     path
+         && path[0] == 'v'
+         && path[1] == 'f'
+         && path[2] == 's'
+         && path[3] == 'o'
+         && path[4] == 'n'
+         && path[5] == 'l'
+         && path[6] == 'y'
+         && path[7] == ':'
+         && path[8] == '/'
+         && path[9] == '/')
+         path             += sizeof("vfsonly://")-1;
 #endif
 
 #ifdef HAVE_CDROM
@@ -304,13 +300,19 @@ libretro_vfs_implementation_file *retro_vfs_file_open_impl(
    stream->cdrom.last_frame[0]    = '\0';
    stream->cdrom.last_frame_valid = false;
 
-   if (path_len > cdrom_prefix_len)
+   if (     path
+         && path[0] == 'c'
+         && path[1] == 'd'
+         && path[2] == 'r'
+         && path[3] == 'o'
+         && path[4] == 'm'
+         && path[5] == ':'
+         && path[6] == '/'
+         && path[7] == '/'
+         && path[8] != '\0')
    {
-      if (!memcmp(path, cdrom_prefix, cdrom_prefix_len))
-      {
-         path             += cdrom_prefix_siz;
-         stream->scheme    = VFS_SCHEME_CDROM;
-      }
+      path             += sizeof("cdrom://")-1;
+      stream->scheme    = VFS_SCHEME_CDROM;
    }
 #endif
 
@@ -389,13 +391,12 @@ libretro_vfs_implementation_file *retro_vfs_file_open_impl(
       else
 #endif
       {
-         fp = (FILE*)fopen_utf8(path, mode_str);
-
-         if (!fp)
+         if (!(fp = (FILE*)fopen_utf8(path, mode_str)))
             goto error;
 
          stream->fp  = fp;
       }
+
       /* Regarding setvbuf:
        *
        * https://www.freebsd.org/cgi/man.cgi?query=setvbuf&apropos=0&sektion=0&manpath=FreeBSD+11.1-RELEASE&arch=default&format=html
@@ -419,13 +420,10 @@ libretro_vfs_implementation_file *retro_vfs_file_open_impl(
 #elif defined(WIIU)
       if (stream->scheme != VFS_SCHEME_CDROM)
       {
-         const int bufsize = 128*1024;
+         const int bufsize = 128 * 1024;
          stream->buf = (char*)memalign(0x40, bufsize);
          if (stream->fp)
             setvbuf(stream->fp, stream->buf, _IOFBF, bufsize);
-      }
-      if (stream->scheme != VFS_SCHEME_CDROM)
-      {
          stream->buf = (char*)calloc(1, 0x4000);
          if (stream->fp)
             setvbuf(stream->fp, stream->buf, _IOFBF, 0x4000);
@@ -465,10 +463,8 @@ libretro_vfs_implementation_file *retro_vfs_file_open_impl(
 
          retro_vfs_file_seek_internal(stream, 0, SEEK_SET);
 
-         stream->mapped = (uint8_t*)mmap((void*)0,
-               stream->mapsize, PROT_READ,  MAP_SHARED, stream->fd, 0);
-
-         if (stream->mapped == MAP_FAILED)
+         if ((stream->mapped = (uint8_t*)mmap((void*)0,
+               stream->mapsize, PROT_READ,  MAP_SHARED, stream->fd, 0)) == MAP_FAILED)
             stream->hints &= ~RETRO_VFS_FILE_ACCESS_HINT_FREQUENT_ACCESS;
       }
 #endif
@@ -527,9 +523,7 @@ int retro_vfs_file_close_impl(libretro_vfs_implementation_file *stream)
    }
 
    if (stream->fd > 0)
-   {
       close(stream->fd);
-   }
 #ifdef HAVE_CDROM
 end:
    if (stream->cdrom.cue_buf)
@@ -564,18 +558,20 @@ int64_t retro_vfs_file_size_impl(libretro_vfs_implementation_file *stream)
 
 int64_t retro_vfs_file_truncate_impl(libretro_vfs_implementation_file *stream, int64_t length)
 {
-   if (!stream)
-      return -1;
-
 #ifdef _WIN32
-   if (_chsize(_fileno(stream->fp), length) != 0)
-      return -1;
+   if (stream && _chsize(_fileno(stream->fp), length) == 0)
+   {
+	   stream->size = length;
+	   return 0;
+   }
 #elif !defined(VITA) && !defined(PSP) && !defined(PS2) && !defined(ORBIS) && (!defined(SWITCH) || defined(HAVE_LIBNX))
-   if (ftruncate(fileno(stream->fp), (off_t)length) != 0)
-      return -1;
+   if (stream && ftruncate(fileno(stream->fp), (off_t)length) == 0)
+   {
+      stream->size = length;
+      return 0;
+   }
 #endif
-
-   return 0;
+   return -1;
 }
 
 int64_t retro_vfs_file_tell_impl(libretro_vfs_implementation_file *stream)
@@ -614,21 +610,7 @@ int64_t retro_vfs_file_tell_impl(libretro_vfs_implementation_file *stream)
 int64_t retro_vfs_file_seek_impl(libretro_vfs_implementation_file *stream,
       int64_t offset, int seek_position)
 {
-   int whence = -1;
-   switch (seek_position)
-   {
-      case RETRO_VFS_SEEK_POSITION_START:
-         whence = SEEK_SET;
-         break;
-      case RETRO_VFS_SEEK_POSITION_CURRENT:
-         whence = SEEK_CUR;
-         break;
-      case RETRO_VFS_SEEK_POSITION_END:
-         whence = SEEK_END;
-         break;
-   }
-
-   return retro_vfs_file_seek_internal(stream, offset, whence);
+   return retro_vfs_file_seek_internal(stream, offset, seek_position);
 }
 
 int64_t retro_vfs_file_read_impl(libretro_vfs_implementation_file *stream,
@@ -666,26 +648,41 @@ int64_t retro_vfs_file_read_impl(libretro_vfs_implementation_file *stream,
 
 int64_t retro_vfs_file_write_impl(libretro_vfs_implementation_file *stream, const void *s, uint64_t len)
 {
+   int64_t pos = 0;
+   size_t result = -1;
+
    if (!stream)
       return -1;
 
    if ((stream->hints & RFILE_HINT_UNBUFFERED) == 0)
    {
-      return fwrite(s, 1, (size_t)len, stream->fp);
-   }
+      pos = retro_vfs_file_tell_impl(stream);
+      result = fwrite(s, 1, (size_t)len, stream->fp);
 
+      if (result != -1 && pos + result > stream->size)
+         stream->size = pos + result;
+
+      return result;
+   }
 #ifdef HAVE_MMAP
    if (stream->hints & RETRO_VFS_FILE_ACCESS_HINT_FREQUENT_ACCESS)
       return -1;
 #endif
-   return write(stream->fd, s, (size_t)len);
+
+   pos = retro_vfs_file_tell_impl(stream);
+   result = write(stream->fd, s, (size_t)len);
+
+   if (result != -1 && pos + result > stream->size)
+      stream->size = pos + result;
+
+   return result;
 }
 
 int retro_vfs_file_flush_impl(libretro_vfs_implementation_file *stream)
 {
-   if (!stream)
-      return -1;
-   return fflush(stream->fp) == 0 ? 0 : -1;
+   if (stream && fflush(stream->fp) == 0)
+      return 0;
+   return -1;
 }
 
 int retro_vfs_file_remove_impl(const char *path)
@@ -701,9 +698,7 @@ int retro_vfs_file_remove_impl(const char *path)
    if (!path || !*path)
       return -1;
 #if defined(_WIN32_WINNT) && _WIN32_WINNT < 0x0500
-   path_local = utf8_to_local_string_alloc(path);
-
-   if (path_local)
+   if ((path_local = utf8_to_local_string_alloc(path)))
    {
       int ret = remove(path_local);
       free(path_local);
@@ -712,9 +707,7 @@ int retro_vfs_file_remove_impl(const char *path)
          return 0;
    }
 #else
-   path_wide = utf8_to_utf16_string_alloc(path);
-
-   if (path_wide)
+   if ((path_wide = utf8_to_utf16_string_alloc(path)))
    {
       int ret = _wremove(path_wide);
       free(path_wide);
@@ -723,12 +716,11 @@ int retro_vfs_file_remove_impl(const char *path)
          return 0;
    }
 #endif
-   return -1;
 #else
    if (remove(path) == 0)
       return 0;
-   return -1;
 #endif
+   return -1;
 }
 
 int retro_vfs_file_rename_impl(const char *old_path, const char *new_path)
@@ -814,7 +806,7 @@ int retro_vfs_stat_impl(const char *path, int32_t *size)
    tmp                       = strdup(path);
    len                       = strlen(tmp);
    if (tmp[len-1] == '/')
-      tmp[len-1] = '\0';
+      tmp[len-1]             = '\0';
 
    dir_ret                   = sceIoGetstat(tmp, &buf);
    free(tmp);
@@ -890,12 +882,10 @@ int retro_vfs_stat_impl(const char *path, int32_t *size)
    if (string_is_empty(path))
       return 0;
 
-   path_buf = strdup(path);
-   if (!path_buf)
+   if (!(path_buf = strdup(path)))
       return 0;
 
-   len = strlen(path_buf);
-   if (len > 0)
+   if ((len = strlen(path_buf)) > 0)
       if (path_buf[len - 1] == '/')
          path_buf[len - 1] = '\0';
 
@@ -1035,7 +1025,6 @@ libretro_vfs_implementation_dir *retro_vfs_opendir_impl(
       const char *name, bool include_hidden)
 {
 #if defined(_WIN32)
-   unsigned path_len;
    char path_buf[1024];
    size_t copied      = 0;
 #if defined(LEGACY_WIN32)
@@ -1046,28 +1035,25 @@ libretro_vfs_implementation_dir *retro_vfs_opendir_impl(
 #endif
    libretro_vfs_implementation_dir *rdir;
 
-   /*Reject null or empty string paths*/
+   /* Reject NULL or empty string paths*/
    if (!name || (*name == 0))
       return NULL;
 
    /*Allocate RDIR struct. Tidied later with retro_closedir*/
-   rdir = (libretro_vfs_implementation_dir*)calloc(1, sizeof(*rdir));
-   if (!rdir)
+   if (!(rdir = (libretro_vfs_implementation_dir*)
+            calloc(1, sizeof(*rdir))))
       return NULL;
 
    rdir->orig_path       = strdup(name);
 
 #if defined(_WIN32)
-   path_buf[0]           = '\0';
-   path_len              = strlen(name);
-
    copied                = strlcpy(path_buf, name, sizeof(path_buf));
 
    /* Non-NT platforms don't like extra slashes in the path */
-   if (name[path_len - 1] != '\\')
-      path_buf[copied++]   = '\\';
+   if (path_buf[copied - 1] != '\\')
+      path_buf [copied++]  = '\\';
 
-   path_buf[copied]        = '*';
+   path_buf[copied  ]      = '*';
    path_buf[copied+1]      = '\0';
 
 #if defined(LEGACY_WIN32)
@@ -1178,8 +1164,7 @@ bool retro_vfs_dirent_is_dir_impl(libretro_vfs_implementation_dir *rdir)
       return false;
 #endif
    /* dirent struct doesn't have d_type, do it the slow way ... */
-   path[0] = '\0';
-   fill_pathname_join(path, rdir->orig_path, retro_vfs_dirent_get_name_impl(rdir), sizeof(path));
+   fill_pathname_join_special(path, rdir->orig_path, retro_vfs_dirent_get_name_impl(rdir), sizeof(path));
    if (stat(path, &buf) < 0)
       return false;
    return S_ISDIR(buf.st_mode);

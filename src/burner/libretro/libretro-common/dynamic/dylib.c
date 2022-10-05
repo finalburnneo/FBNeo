@@ -75,7 +75,7 @@ static void set_dl_error(void)
  *
  * Platform independent dylib loading.
  *
- * Returns: library handle on success, otherwise NULL.
+ * @return Library handle on success, otherwise NULL.
  **/
 dylib_t dylib_load(const char *path)
 {
@@ -150,21 +150,19 @@ function_t dylib_proc(dylib_t lib, const char *proc)
 
 #ifdef _WIN32
    HMODULE mod = (HMODULE)lib;
-#ifndef __WINRT__
-   if (!mod)
-      mod = GetModuleHandle(NULL);
-#else
-   /* GetModuleHandle is not available on UWP */
    if (!mod)
    {
+#ifdef __WINRT__
+      /* GetModuleHandle is not available on UWP */
       /* It's not possible to lookup symbols in current executable
        * on UWP. */
       DebugBreak();
       return NULL;
-   }
+#else
+      mod = GetModuleHandle(NULL);
 #endif
-   sym = (function_t)GetProcAddress(mod, proc);
-   if (!sym)
+   }
+   if (!(sym = (function_t)GetProcAddress(mod, proc)))
    {
       set_dl_error();
       return NULL;
@@ -174,7 +172,8 @@ function_t dylib_proc(dylib_t lib, const char *proc)
    void *ptr_sym = NULL;
    sym = NULL;
 
-   if (lib) {
+   if (lib)
+   {
      sceKernelDlsym((SceKernelModule)lib, proc, &ptr_sym);
      memcpy(&sym, &ptr_sym, sizeof(void*));
    }

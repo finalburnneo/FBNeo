@@ -60,7 +60,8 @@ typedef struct socket_target
    enum socket_protocol prot;
 } socket_target_t;
 
-int socket_init(void **address, uint16_t port, const char *server, enum socket_type type);
+int socket_init(void **address, uint16_t port, const char *server,
+      enum socket_type type, int family);
 
 int socket_next(void **address);
 
@@ -100,7 +101,7 @@ ssize_t socket_receive_all_nonblocking(int fd, bool *error,
 
 bool socket_bind(int fd, void *data);
 
-int socket_connect(int fd, void *data, bool timeout_enable);
+int socket_connect(int fd, void *data);
 
 bool socket_connect_with_timeout(int fd, void *data, int timeout);
 

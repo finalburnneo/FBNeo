@@ -20,60 +20,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef LIBRETRO_SDK_NET_COMPAT_H__
-#define LIBRETRO_SDK_NET_COMPAT_H__
+#ifndef _LIBRETRO_SDK_NET_COMPAT_H
+#define _LIBRETRO_SDK_NET_COMPAT_H
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
+#include <stdint.h>
 #include <boolean.h>
 #include <retro_inline.h>
-#include <stdint.h>
 
-#if defined(_WIN32) && !defined(_XBOX)
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0501
+#include <errno.h>
+
+#ifndef _WIN32
+#include <sys/time.h>
+#include <unistd.h>
 #endif
 
+#include <retro_common_api.h>
+
+#if defined(_WIN32) && !defined(_XBOX)
 #define WIN32_LEAN_AND_MEAN
 
 #include <winsock2.h>
 #include <windows.h>
 #include <ws2tcpip.h>
 
-#ifndef MSG_NOSIGNAL
-#define MSG_NOSIGNAL 0
-#endif
-
-#if _WIN32_WINNT >= 0x0600
+#if defined(_WIN32_WINNT) && _WIN32_WINNT >= 0x0600
 #define NETWORK_HAVE_POLL 1
 #endif
 
 #elif defined(_XBOX)
 #define NOD3D
+
 #include <xtl.h>
 #include <io.h>
 
-#elif defined(GEKKO)
-#include <network.h>
+#ifndef SO_KEEPALIVE
+#define SO_KEEPALIVE 0 /* verify if correct */
+#endif
 
-#define NETWORK_HAVE_POLL 1
-
-#define pollfd pollsd
-
-#define socket(a,b,c) net_socket(a,b,c)
-#define getsockopt(a,b,c,d,e) net_getsockopt(a,b,c,d,e)
-#define setsockopt(a,b,c,d,e) net_setsockopt(a,b,c,d,e)
-#define bind(a,b,c) net_bind(a,b,c)
-#define listen(a,b) net_listen(a,b)
-#define accept(a,b,c) net_accept(a,b,c)
-#define connect(a,b,c) net_connect(a,b,c)
-#define send(a,b,c,d) net_send(a,b,c,d)
-#define sendto(a,b,c,d,e,f) net_sendto(a,b,c,d,e,f)
-#define recv(a,b,c,d) net_recv(a,b,c,d)
-#define recvfrom(a,b,c,d,e,f) net_recvfrom(a,b,c,d,e,f)
-#define select(a,b,c,d,e) net_select(a,b,c,d,e)
+#define socklen_t unsigned int
 
 #elif defined(VITA)
 #include <psp2/net/net.h>
@@ -117,11 +101,13 @@
 #define POLLHUP  SCE_NET_EPOLLHUP
 #define POLLNVAL 0
 
-#define sockaddr_in SceNetSockaddrIn
 #define sockaddr SceNetSockaddr
+#define sockaddr_in SceNetSockaddrIn
+#define in_addr SceNetInAddr
 #define socklen_t unsigned int
 
 #define socket(a,b,c) sceNetSocket("unknown",a,b,c)
+#define getsockname sceNetGetsockname
 #define getsockopt sceNetGetsockopt
 #define setsockopt sceNetSetsockopt
 #define bind sceNetBind
@@ -136,7 +122,196 @@
 #define ntohl sceNetNtohl
 #define htons sceNetHtons
 #define ntohs sceNetNtohs
+#define inet_ntop sceNetInetNtop
+#define inet_pton sceNetInetPton
 
+#elif defined(GEKKO)
+#include <network.h>
+
+#define NETWORK_HAVE_POLL 1
+
+#define pollfd pollsd
+
+#define socket(a,b,c) net_socket(a,b,c)
+#define getsockopt(a,b,c,d,e) net_getsockopt(a,b,c,d,e)
+#define setsockopt(a,b,c,d,e) net_setsockopt(a,b,c,d,e)
+#define bind(a,b,c) net_bind(a,b,c)
+#define listen(a,b) net_listen(a,b)
+#define accept(a,b,c) net_accept(a,b,c)
+#define connect(a,b,c) net_connect(a,b,c)
+#define send(a,b,c,d) net_send(a,b,c,d)
+#define sendto(a,b,c,d,e,f) net_sendto(a,b,c,d,e,f)
+#define recv(a,b,c,d) net_recv(a,b,c,d)
+#define recvfrom(a,b,c,d,e,f) net_recvfrom(a,b,c,d,e,f)
+#define select(a,b,c,d,e) net_select(a,b,c,d,e)
+#define gethostbyname(a) net_gethostbyname(a)
+
+#else
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+
+#include <netinet/in.h>
+#ifndef __PSL1GHT__
+#include <netinet/tcp.h>
+#endif
+
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <fcntl.h>
+
+#if !defined(__PSL1GHT__) && defined(__PS3__)
+#include <netex/libnetctl.h>
+#include <netex/errno.h>
+#else
+#include <signal.h>
+#endif
+
+#if defined(__PSL1GHT__)
+#include <net/poll.h>
+
+#define NETWORK_HAVE_POLL 1
+
+#elif defined(WIIU)
+#define WIIU_RCVBUF 0x40000
+#define WIIU_SNDBUF 0x40000
+
+#elif !defined(__PS3__)
+#include <poll.h>
+
+#define NETWORK_HAVE_POLL 1
+
+#endif
+#endif
+
+#ifndef MSG_NOSIGNAL
+#define MSG_NOSIGNAL 0
+#endif
+
+#if defined(AF_INET6) && !defined(HAVE_SOCKET_LEGACY) && !defined(_3DS)
+#define HAVE_INET6 1
+#endif
+
+#ifdef NETWORK_HAVE_POLL
+#ifdef GEKKO
+#define NET_POLL_FD(sockfd, sockfds)    (sockfds)->socket  = (sockfd)
+#else
+#define NET_POLL_FD(sockfd, sockfds)    (sockfds)->fd      = (sockfd)
+#endif
+#define NET_POLL_EVENT(sockev, sockfds) (sockfds)->events |= (sockev)
+#define NET_POLL_HAS_EVENT(sockev, sockfds) ((sockfds)->revents & (sockev))
+#endif
+
+RETRO_BEGIN_DECLS
+
+/* Compatibility layer for legacy or incomplete BSD socket implementations.
+ * Only for IPv4. Mostly useful for the consoles which do not support
+ * anything reasonably modern on the socket API side of things. */
+#ifdef HAVE_SOCKET_LEGACY
+#define sockaddr_storage sockaddr_in
+
+#ifdef AI_PASSIVE
+#undef AI_PASSIVE
+#endif
+#ifdef AI_CANONNAME
+#undef AI_CANONNAME
+#endif
+#ifdef AI_NUMERICHOST
+#undef AI_NUMERICHOST
+#endif
+#ifdef AI_NUMERICSERV
+#undef AI_NUMERICSERV
+#endif
+
+#ifdef NI_NUMERICHOST
+#undef NI_NUMERICHOST
+#endif
+#ifdef NI_NUMERICSERV
+#undef NI_NUMERICSERV
+#endif
+#ifdef NI_NOFQDN
+#undef NI_NOFQDN
+#endif
+#ifdef NI_NAMEREQD
+#undef NI_NAMEREQD
+#endif
+#ifdef NI_DGRAM
+#undef NI_DGRAM
+#endif
+
+#define AI_PASSIVE     1
+#define AI_CANONNAME   2
+#define AI_NUMERICHOST 4
+#define AI_NUMERICSERV 8
+
+#define NI_NUMERICHOST 1
+#define NI_NUMERICSERV 2
+#define NI_NOFQDN      4
+#define NI_NAMEREQD    8
+#define NI_DGRAM       16
+
+#ifndef __PS3__
+struct addrinfo
+{
+   int ai_flags;
+   int ai_family;
+   int ai_socktype;
+   int ai_protocol;
+   socklen_t ai_addrlen;
+   struct sockaddr *ai_addr;
+   char *ai_canonname;
+   struct addrinfo *ai_next;
+};
+#endif
+
+/* gai_strerror() not used, so we skip that. */
+
+#else
+/* Ensure that getaddrinfo and getnameinfo flags are always defined. */
+#ifndef AI_PASSIVE
+#define AI_PASSIVE 0
+#endif
+#ifndef AI_CANONNAME
+#define AI_CANONNAME 0
+#endif
+#ifndef AI_NUMERICHOST
+#define AI_NUMERICHOST 0
+#endif
+#ifndef AI_NUMERICSERV
+#define AI_NUMERICSERV 0
+#endif
+
+#ifndef NI_NUMERICHOST
+#define NI_NUMERICHOST 0
+#endif
+#ifndef NI_NUMERICSERV
+#define NI_NUMERICSERV 0
+#endif
+#ifndef NI_NOFQDN
+#define NI_NOFQDN 0
+#endif
+#ifndef NI_NAMEREQD
+#define NI_NAMEREQD 0
+#endif
+#ifndef NI_DGRAM
+#define NI_DGRAM 0
+#endif
+
+#endif
+
+#if defined(_XBOX)
+struct hostent
+{
+   char *h_name;
+   char **h_aliases;
+   int  h_addrtype;
+   int  h_length;
+   char **h_addr_list;
+   char *h_addr;
+   char *h_end;
+};
+
+#elif defined(VITA)
 struct pollfd
 {
    int fd;
@@ -153,169 +328,85 @@ struct hostent
    int  h_length;
    char **h_addr_list;
    char *h_addr;
+   char *h_end;
 };
 
-struct SceNetInAddr inet_aton(const char *ip_addr);
-
-#else
-#include <sys/select.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-
-#ifndef __PSL1GHT__
-#include <netinet/tcp.h>
 #endif
 
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <fcntl.h>
-
-#if !defined(__PSL1GHT__) && defined(__PS3__)
-#include <netex/libnetctl.h>
-#include <netex/errno.h>
-#else
-#include <signal.h>
-#endif
-
-
-#if defined(__PSL1GHT__)
-#include <net/poll.h>
-
-#define NETWORK_HAVE_POLL 1
-
-#elif !defined(WIIU) && !defined(__PS3__)
-#include <poll.h>
-
-#define NETWORK_HAVE_POLL 1
-
-#endif
-#endif
-
-#include <errno.h>
-
-static INLINE bool isagain(int bytes)
+static INLINE bool isagain(int val)
 {
 #if defined(_WIN32)
-   return (bytes == SOCKET_ERROR) && (WSAGetLastError() == WSAEWOULDBLOCK);
-#elif !defined(__PSL1GHT__) && defined(__PS3__) 
+   return (val == SOCKET_ERROR) && (WSAGetLastError() == WSAEWOULDBLOCK);
+#elif !defined(__PSL1GHT__) && defined(__PS3__)
    return (sys_net_errno == SYS_NET_EAGAIN) || (sys_net_errno == SYS_NET_EWOULDBLOCK);
 #elif defined(VITA)
-   return (bytes == SCE_NET_ERROR_EAGAIN) || (bytes == SCE_NET_ERROR_EWOULDBLOCK);
+   return (val == SCE_NET_ERROR_EAGAIN) || (val == SCE_NET_ERROR_EWOULDBLOCK);
 #elif defined(WIIU)
-   return (bytes == -1) && (socketlasterr() == SO_SUCCESS || socketlasterr() == SO_EWOULDBLOCK);
+   return (val == -1) && (socketlasterr() == SO_SUCCESS || socketlasterr() == SO_EWOULDBLOCK);
 #else
-   return (bytes < 0) && (errno == EAGAIN || errno == EWOULDBLOCK);
+   return (val < 0) && (errno == EAGAIN || errno == EWOULDBLOCK);
 #endif
 }
 
-static INLINE bool isinprogress(int bytes)
+static INLINE bool isinprogress(int val)
 {
 #if defined(_WIN32)
-   return (bytes == SOCKET_ERROR) && (WSAGetLastError() == WSAEWOULDBLOCK);
-#elif !defined(__PSL1GHT__) && defined(__PS3__) 
+   return (val == SOCKET_ERROR) && (WSAGetLastError() == WSAEWOULDBLOCK);
+#elif !defined(__PSL1GHT__) && defined(__PS3__)
    return (sys_net_errno == SYS_NET_EINPROGRESS);
 #elif defined(VITA)
-   return (bytes == SCE_NET_ERROR_EINPROGRESS);
+   return (val == SCE_NET_ERROR_EINPROGRESS);
 #elif defined(WIIU)
-   return (bytes == -1) && (socketlasterr() == SO_SUCCESS || socketlasterr() == SO_EWOULDBLOCK);
+   return (val == -1) && (socketlasterr() == SO_EINPROGRESS);
 #else
-   return (bytes < 0) && (errno == EINPROGRESS);
+   return (val < 0) && (errno == EINPROGRESS);
 #endif
 }
 
-#ifdef WIIU
-#define WIIU_RCVBUF (128 * 2 * 1024)
-#define WIIU_SNDBUF (128 * 2 * 1024)
+#if defined(_WIN32) && !defined(_XBOX)
+#if !defined(_WIN32_WINNT) || _WIN32_WINNT < 0x0600
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+int inet_pton(int af, const char *src, void *dst);
 #endif
 
-#ifdef _XBOX
-#define socklen_t int
+#elif defined(_XBOX)
+struct hostent *gethostbyname(const char *name);
 
-#ifndef h_addr
-#define h_addr h_addr_list[0] /* for backward compatibility */
-#endif
+#elif defined(VITA)
+char *inet_ntoa(struct in_addr in);
+int inet_aton(const char *cp, struct in_addr *inp);
+uint32_t inet_addr(const char *cp);
 
-#ifndef SO_KEEPALIVE
-#define SO_KEEPALIVE 0 /* verify if correct */
-#endif
-#endif
+struct hostent *gethostbyname(const char *name);
 
-#ifndef MSG_NOSIGNAL
-#define MSG_NOSIGNAL 0
-#endif
-
-#ifndef _WIN32
-#include <sys/time.h>
-#include <unistd.h>
-#endif
-
-#ifdef NETWORK_HAVE_POLL
-#ifdef GEKKO
-#define NET_POLL_FD(sockfd, sockfds)    (sockfds)->socket  = (sockfd)
-#else
-#define NET_POLL_FD(sockfd, sockfds)    (sockfds)->fd      = (sockfd)
-#endif
-#define NET_POLL_EVENT(sockev, sockfds) (sockfds)->events |= (sockev)
-#define NET_POLL_HAS_EVENT(sockev, sockfds) ((sockfds)->revents & (sockev))
-#endif
-
-/* Compatibility layer for legacy or incomplete BSD socket implementations.
- * Only for IPv4. Mostly useful for the consoles which do not support
- * anything reasonably modern on the socket API side of things. */
-
-#ifdef HAVE_SOCKET_LEGACY
-
-#define sockaddr_storage sockaddr_in
-#define addrinfo addrinfo_retro__
-
-struct addrinfo
-{
-   int ai_flags;
-   int ai_family;
-   int ai_socktype;
-   int ai_protocol;
-   size_t ai_addrlen;
-   struct sockaddr *ai_addr;
-   char *ai_canonname;
-   struct addrinfo *ai_next;
-};
-
-#ifndef AI_PASSIVE
-#define AI_PASSIVE 1
-#endif
-
-/* gai_strerror() not used, so we skip that. */
+#elif defined(GEKKO)
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+int inet_pton(int af, const char *src, void *dst);
 
 #endif
-
-uint16_t inet_htons(uint16_t hostshort);
-
-int inet_ptrton(int af, const char *src, void *dst);
 
 int getaddrinfo_retro(const char *node, const char *service,
       struct addrinfo *hints, struct addrinfo **res);
 
 void freeaddrinfo_retro(struct addrinfo *res);
 
+int getnameinfo_retro(const struct sockaddr *addr, socklen_t addrlen,
+      char *host, socklen_t hostlen, char *serv, socklen_t servlen, int flags);
+
+bool addr_6to4(struct sockaddr_storage *addr);
+
+bool ipv4_is_lan_address(const struct sockaddr_in *addr);
+bool ipv4_is_cgnat_address(const struct sockaddr_in *addr);
+
 /**
  * network_init:
  *
  * Platform specific socket library initialization.
  *
- * Returns: true (1) if successful, otherwise false (0).
+ * @return true if successful, otherwise false.
  **/
 bool network_init(void);
 
-/**
- * network_deinit:
- *
- * Deinitialize platform specific socket libraries.
- **/
-void network_deinit(void);
-
-const char *inet_ntop_compat(int af, const void *src, char *dst, socklen_t cnt);
-
-bool udp_send_packet(const char *host, uint16_t port, const char *msg);
+RETRO_END_DECLS
 
 #endif

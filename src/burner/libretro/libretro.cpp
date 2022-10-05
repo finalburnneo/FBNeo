@@ -205,7 +205,7 @@ static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
 	va_list vp;
 
 	// some format specifiers don't translate well into the retro logs, replace them
-	szFormat = string_replace_substring(szFormat, "%S", "%s");
+	szFormat = string_replace_substring(szFormat, "%S", strlen("%S"), "%s", strlen("%s"));
 
 	// retro logs prefer ending with \n
 	// 2021-10-26: disabled it's causing overflow in a few cases, find a better way to do this...

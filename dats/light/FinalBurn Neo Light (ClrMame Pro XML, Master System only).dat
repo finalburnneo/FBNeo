@@ -1608,7 +1608,7 @@
 		<description>F-16 Fighter (Euro, USA, Sega Card)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="f-16 fighter (euro, usa).bin" merge="mpr-12643.ic1" size="32768" crc="eaebf323"/>
+		<rom name="f-16 fighter (euro, usa).bin" size="32768" crc="eaebf323"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2009,7 +2009,7 @@
 		<description>Ghost House (Euro, USA, Bra, Sega Card)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="ghost house (euro, usa, bra).bin" merge="mpr-12586.ic1" size="32768" crc="f1f8ff2d"/>
+		<rom name="ghost house (euro, usa, bra).bin" size="32768" crc="f1f8ff2d"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4972,7 +4972,7 @@
 		<description>Super Tennis (Euro, USA, Sega Card)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="super tennis (euro, usa).bin" merge="mpr-12584.ic1" size="32768" crc="914514e3"/>
+		<rom name="super tennis (euro, usa).bin" size="32768" crc="914514e3"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5098,7 +5098,7 @@
 		<description>Teddy Boy (Euro, USA, Bra, Sega Card)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="teddy boy (euro, usa, bra).bin" merge="mpr-12668.ic1" size="32768" crc="2728faa3"/>
+		<rom name="teddy boy (euro, usa, bra).bin" size="32768" crc="2728faa3"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5422,7 +5422,7 @@
 		<description>TransBot (Euro, USA, Bra, Sega Card)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="transbot (euro, usa, bra).bin" merge="mpr-12552.ic1" size="32768" crc="4bc42857"/>
+		<rom name="transbot (euro, usa, bra).bin" size="32768" crc="4bc42857"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

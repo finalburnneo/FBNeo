@@ -971,7 +971,7 @@ static bool open_archive()
 			BurnDrvGetRomInfo(&ri, i);
 			if(!(ri.nType & BRF_OPT))
 			{
-				static char prev[1024];
+				static char prev[2048];
 				strcpy(prev, text_missing_files);
 				BurnDrvGetRomName(&rom_name, i, 0);
 				sprintf(text_missing_files, "%s\nROM with name %s and CRC 0x%08x is missing", prev, rom_name, ri.nCrc);

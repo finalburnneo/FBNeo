@@ -4731,6 +4731,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr68.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_zwackery.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

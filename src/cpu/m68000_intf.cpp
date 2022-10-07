@@ -1069,6 +1069,15 @@ void SekNewFrame()
 	nSekCyclesTotal = 0;
 }
 
+void SekCyclesBurnRun(INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetCyclesBurnRun called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetCyclesBurnRun called when no CPU open\n"));
+#endif
+	m68k_ICount -= nCycles;
+}
+
 void SekSetCyclesScanline(INT32 nCycles)
 {
 #if defined FBNEO_DEBUG

@@ -34,7 +34,7 @@ static void csd_porta_w(UINT16, UINT8 data)
         dacvalue = (data << 2) | (dacvalue & 3);
     }
 
-    if (ssio_spyhunter) {
+	if (ssio_spyhunter) {
         // csd_ram[0x30/2] continuously counts down as music is playing
         // if its stopped, or 0 - nothing is playing.  Let's zero-out the dac
         // so that we don't get loud clicks or pops before or after the music.
@@ -84,7 +84,7 @@ static void csd_portb_w(UINT16, UINT8 data)
 
 static void csd_irq(int state)
 {
-	SekSetIRQLine(4, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	SekSetIRQLine(cpu_select, 4, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 void csd_reset_write(int state)
@@ -101,7 +101,7 @@ void csd_reset_write(int state)
 static void __fastcall csd_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0x1fff8) == 0x18000) {
-		pia_write(pia_select, (address / 2) & 3, data & 0xff);
+		pia_write(pia_select, (address / 2) & 3, (data >> 8) & 0xff);
 		return;
 	}
 }
@@ -137,8 +137,8 @@ void csd_data_write(UINT16 data)
 {
 	if (csd_is_intialized == 0) return;
 
-    pia_set_input_b(pia_select, data & 0x0f);
-    pia_set_input_ca1(pia_select, ~data & 0x10);
+	pia_set_input_b(pia_select, data & 0x0f);
+	pia_set_input_ca1(pia_select, ~data & 0x10);
 }
 
 UINT8 csd_status_read()
@@ -175,12 +175,12 @@ void csd_reset()
 	csd_in_reset = 0;
     dacvalue = 0;
 
-    // pop-suppression
-    ml.lastdacvalue = 0;
-    ml.ending = 0;
-    ml.mute = 0;
-    ml.booting = (ssio_spyhunter) ? 1 : 0;
-    ml.cm30ctr = 0;
+	// pop-suppression
+	ml.lastdacvalue = 0;
+	ml.ending = 0;
+	ml.mute = 0;
+	ml.booting = (ssio_spyhunter) ? 1 : 0;
+	ml.cm30ctr = 0;
 }
 
 static const pia6821_interface pia_intf = {
@@ -210,7 +210,7 @@ void csd_init(INT32 m68knum, INT32 pianum, UINT8 *rom, UINT8 *ram)
 	
 	DACInit(0, 0, 1, SekTotalCycles, 8000000);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-    DACDCBlock(1);
+	DACDCBlock(1);
 
 	csd_is_intialized = 1;
 }

@@ -1265,7 +1265,7 @@ static void DmaSlow(INT32 len)
 	dma_xfers += len;
 
 	INT32 dmab = CheckDMA();
-	m68k_ICount -= dmab;
+	SekCyclesBurnRun(dmab);
 
 #ifdef CYCDBUG
 //	bprintf(0, _T("dma @ ln %d cyc %d, burnt: %d.\n"), Scanline, SekCyclesLine(), dmab);

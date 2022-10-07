@@ -230,6 +230,9 @@ inline static INT32 SekCurrentScanline()
 	return SekTotalCycles() / nSekCyclesScanline;
 }
 
+// Call this from a handler to decrease m68k_ICount
+void SekCyclesBurnRun(INT32 nCycles);
+
 // Mask off address bits (usually top, default is 0xffffff)
 void SekSetAddressMask(UINT32 nAddressMask);
 

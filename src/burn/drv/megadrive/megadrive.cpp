@@ -53,7 +53,6 @@ static INT32 SekCyclesDoneFrameF() { return ( (SekCycleCnt - SekCycleCntDELTA) -
 #define SekCyclesDone()         ( SekCycleCnt - m68k_ICount )
 #define SekCyclesLine()         ( (SekCyclesDone() - line_base_cycles) )
 #define SekCyclesBurn(c)        { SekCycleCnt += c; }
-#define SekCyclesBurnRun(c)     { m68k_ICount -= c; }
 #define SekEndRun(after)        { SekCycleCnt -= m68k_ICount - (after); m68k_ICount = after; }
 
 static void SekRunM68k(INT32 cyc)

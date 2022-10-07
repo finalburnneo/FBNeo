@@ -32702,3 +32702,60 @@ struct BurnDriver BurnDrvMSX_dicedtour = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// 1937 (English) (HB)
+
+static struct BurnRomInfo MSX_1937enRomDesc[] = {
+	{ "1937 EN (2022)(joesg).rom",	32768, 0xde7bd684, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_1937en, MSX_1937en, msx_msx)
+STD_ROM_FN(MSX_1937en)
+
+struct BurnDriver BurnDrvMSX_1937en = {
+	"msx_1937en", NULL, "msx_msx", NULL, "2022",
+	"1937 (English) (HB)\0", "Redefine keys to use controller", "joesg", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_1937enRomInfo, MSX_1937enRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// 1937 (Spanish) (HB)
+
+static struct BurnRomInfo MSX_1937esRomDesc[] = {
+	{ "1937 ES (2022)(joesg).rom",	32768, 0x17ea63f5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_1937es, MSX_1937es, msx_msx)
+STD_ROM_FN(MSX_1937es)
+
+struct BurnDriver BurnDrvMSX_1937es = {
+	"msx_1937es", "msx_1937en", "msx_msx", NULL, "2022",
+	"1937 (Spanish) (HB)\0", "Redefine keys to use controller", "joesg", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_1937esRomInfo, MSX_1937esRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Circus Mystery, The (HB, v1.4)
+
+static struct BurnRomInfo MSX_circusmystRomDesc[] = {
+	{ "Circus Mystery, The v1.4 (2022)(DTenso Games).rom",	32768, 0x8128907a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_circusmyst, MSX_circusmyst, msx_msx)
+STD_ROM_FN(MSX_circusmyst)
+
+struct BurnDriver BurnDrvMSX_circusmyst = {
+	"msx_circusmyst", NULL, "msx_msx", NULL, "2022",
+	"Circus Mystery, The (HB, v1.4)\0", NULL, "DTenso Games", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_circusmystRomInfo, MSX_circusmystRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

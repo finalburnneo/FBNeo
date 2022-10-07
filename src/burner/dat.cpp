@@ -102,7 +102,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	INT32 nRet=0;
 	UINT32 nOldSelect=0;
 	UINT32 nGameSelect=0;
-	UINT32 nParentSelect,nBoardROMSelect;
+	UINT32 nParentSelect,nBoardROMSelect,nParentBoardROMSelect;
 
 	fprintf(fDat, "<?xml version=\"1.0\"?>\n");
 	fprintf(fDat, "<!DOCTYPE datafile PUBLIC \"-//FinalBurn Neo//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">\n\n");
@@ -156,9 +156,10 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	{
 		char sgName[32];
 		char spName[32];
+		char spbName[32];
 		char sbName[32];
 		char ssName[32];
-		UINT32 i=0;
+		UINT32 i, j=0;
 		INT32 nPass=0;
 
 		nBurnDrvActive=nGameSelect;									// Switch to driver nGameSelect
@@ -254,6 +255,8 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		bprintf(PRINT_IMPORTANT, _T("DAT(FIRSTPART): Processing %S.\n"), sgName);
 #endif
 
+		nParentBoardROMSelect=-1U;
+
 		// Check to see if the game has a parent
 		if (BurnDrvGetTextA(DRV_PARENT))
 		{
@@ -267,6 +270,21 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 					if (!strcmp(spName, BurnDrvGetTextA(DRV_NAME)))
 					{
 						nParentSelect=i;
+						// Look for parent's BoardROM, store it for later usage
+						if (BurnDrvGetTextA(DRV_BOARDROM))
+						{
+							strcpy(spbName, BurnDrvGetTextA(DRV_BOARDROM));
+							for (j=0;j<nBurnDrvCount;j++)
+							{
+								nBurnDrvActive=j;
+								if (!strcmp(sbName, BurnDrvGetTextA(DRV_NAME)))
+								{
+									nParentBoardROMSelect=j;
+									break;
+								}
+							}
+						}
+						nBurnDrvActive=i;								// restore driver select
 						break;
 					}
 				}
@@ -414,9 +432,9 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			{
 				INT32 nRetTmp=0;
 				struct BurnRomInfo ri;
-				INT32 nLen; UINT32 nCrc;
+				UINT32 nCrc;
 				char *szPossibleName=NULL;
-				INT32 j, nMerged=0;
+				INT32 nMerged=0;
 
 				memset(&ri,0,sizeof(ri));
 
@@ -427,14 +445,21 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 				if (ri.nLen==0) continue;
 
+				char szMergeNameBuffer[255];
+				char szMergeNameBuffer2[255];
+
+				memset(szMergeNameBuffer, 0, 255);
+				memset(szMergeNameBuffer2, 0, 255);
+
 				if (nRet==0)
 				{
 					struct BurnRomInfo riTmp;
 					char *szPossibleNameTmp;
-					nLen=ri.nLen; nCrc=ri.nCrc;
+					nCrc=ri.nCrc;
 
 					// Check for files from boardROMs
-					if (nBoardROMSelect!=nGameSelect && nBoardROMSelect!=-1U) {
+					// On clones, only merge boardROMS if they are shared with parent
+					if (nBoardROMSelect!=nGameSelect && nBoardROMSelect!=-1U && (nParentSelect==nGameSelect || nParentBoardROMSelect==nBoardROMSelect)) {
 						nBurnDrvActive=nBoardROMSelect;
 						nRetTmp=0;
 
@@ -448,11 +473,21 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 							if (nRetTmp==0)
 							{
-								if (riTmp.nLen && riTmp.nCrc==nCrc && !strcmp(szPossibleName, szPossibleNameTmp))
+								if (riTmp.nLen && riTmp.nCrc==nCrc)
 								{
 									// This file is from a boardROM
 									nMerged|=2;
 									nRetTmp++;
+
+									// Storing parent's rom name for later
+									ReplaceAmpersand(szMergeNameBuffer, szPossibleNameTmp);
+									strcpy(szMergeNameBuffer2, szMergeNameBuffer);
+									memset(szMergeNameBuffer, 0, 255);
+									ReplaceLessThan(szMergeNameBuffer, szMergeNameBuffer2);
+									memset(szMergeNameBuffer2, 0, 255);
+									strcpy(szMergeNameBuffer2, szMergeNameBuffer);
+									memset(szMergeNameBuffer, 0, 255);
+									ReplaceGreaterThan(szMergeNameBuffer, szMergeNameBuffer2);
 								}
 							}
 						}
@@ -472,11 +507,21 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 							if (nRetTmp==0)
 							{
-								if (riTmp.nLen && riTmp.nCrc==nCrc && !strcmp(szPossibleName, szPossibleNameTmp))
+								if (riTmp.nLen && riTmp.nCrc==nCrc)
 								{
 									// This file is from a parent set
 									nMerged|=1;
 									nRetTmp++;
+
+									// Storing parent's rom name for later
+									ReplaceAmpersand(szMergeNameBuffer, szPossibleNameTmp);
+									strcpy(szMergeNameBuffer2, szMergeNameBuffer);
+									memset(szMergeNameBuffer, 0, 255);
+									ReplaceLessThan(szMergeNameBuffer, szMergeNameBuffer2);
+									memset(szMergeNameBuffer2, 0, 255);
+									strcpy(szMergeNameBuffer2, szMergeNameBuffer);
+									memset(szMergeNameBuffer, 0, 255);
+									ReplaceGreaterThan(szMergeNameBuffer, szMergeNameBuffer2);
 								}
 							}
 						}
@@ -501,20 +546,15 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 				ReplaceGreaterThan(szPossibleNameBuffer, szPossibleNameBuffer2);
 
 				// File info
-				if (nPass==1 && !nMerged) {
+				if (nPass==1) {
 					if (ri.nType & BRF_NODUMP) {
 						fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" status=\"nodump\"/>\n", szPossibleNameBuffer, ri.nLen);
 					} else {
-						fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, ri.nLen, ri.nCrc);
-					}
-				}
-				if (nPass==1 && nMerged)
-				{
-					// Files from parent/boardROMs
-					if (ri.nType & BRF_NODUMP) {
-						fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" status=\"nodump\"/>\n", szPossibleNameBuffer, szPossibleNameBuffer, ri.nLen);
-					} else {
-						fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, szPossibleNameBuffer, ri.nLen, ri.nCrc);
+						if (nMerged) {
+							fprintf(fDat, "\t\t<rom name=\"%s\" merge=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, szMergeNameBuffer, ri.nLen, ri.nCrc);
+						} else {
+							fprintf(fDat, "\t\t<rom name=\"%s\" size=\"%d\" crc=\"%08x\"/>\n", szPossibleNameBuffer, ri.nLen, ri.nCrc);
+						}
 					}
 				}
 			}

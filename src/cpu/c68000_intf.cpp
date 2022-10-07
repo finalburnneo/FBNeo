@@ -769,6 +769,23 @@ void SekNewFrame()
 	nSekCyclesTotal = 0;
 }
 
+void SekCyclesBurnRun(INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetCyclesBurnRun called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetCyclesBurnRun called when no CPU open\n"));
+#endif
+#ifdef EMU_C68K
+		if ((nSekCpuCore == SEK_CORE_C68K) && nSekCPUType[nSekActive] == 0x68000) {
+			c68k[nSekActive].cycles -= nCycles;
+		} else {
+#endif
+			m68k_ICount -= nCycles;
+#ifdef EMU_C68K
+		}
+#endif
+}
+
 void SekSetCyclesScanline(INT32 nCycles)
 {
 #if defined FBNEO_DEBUG

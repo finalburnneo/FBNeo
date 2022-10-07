@@ -304,7 +304,7 @@ static void __fastcall rpunch_main_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0x0fc000) == 0x80000) {
 		*((UINT16*)(DrvVidRAM + (address & 0x3ffe))) = data;
-		m68k_ICount -= 4 * 2; // 4 cyc/byte penalty writing to vram
+		SekCyclesBurnRun(4 * 2); // 4 cyc/byte penalty writing to vram
 		return;
 	}
 
@@ -340,7 +340,7 @@ static void __fastcall rpunch_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0x0fc000) == 0x80000) {
 		DrvVidRAM[(address & 0x3fff) ^ 1] = data;
-		m68k_ICount -= 4 * 1;
+		SekCyclesBurnRun(4 * 1);
 		return;
 	}
 

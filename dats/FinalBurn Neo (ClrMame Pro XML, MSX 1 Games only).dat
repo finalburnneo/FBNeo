@@ -67,6 +67,30 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="1937en" romof="msx">
+		<comment>Homebrew, Redefine keys to use controller</comment>
+		<description>1937 (English) (HB)</description>
+		<year>2022</year>
+		<manufacturer>joesg</manufacturer>
+		<rom name="1937 EN (2022)(joesg).rom" size="32768" crc="de7bd684"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="1937es" cloneof="1937en" romof="1937en">
+		<comment>Homebrew, Redefine keys to use controller</comment>
+		<description>1937 (Spanish) (HB)</description>
+		<year>2022</year>
+		<manufacturer>joesg</manufacturer>
+		<rom name="1937 ES (2022)(joesg).rom" size="32768" crc="17ea63f5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="1942" romof="msx">
 		<description>1942 (Jpn)</description>
 		<year>1986</year>
@@ -3502,6 +3526,18 @@
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="circus charlie (japan).rom" size="16384" crc="83b8d8f3"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="circusmyst" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Circus Mystery, The (HB, v1.4)</description>
+		<year>2022</year>
+		<manufacturer>DTenso Games</manufacturer>
+		<rom name="Circus Mystery, The v1.4 (2022)(DTenso Games).rom" size="32768" crc="8128907a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

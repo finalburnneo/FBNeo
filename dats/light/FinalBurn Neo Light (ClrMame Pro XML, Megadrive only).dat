@@ -1027,9 +1027,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="arrows" cloneof="arrow" romof="arrow">
+		<comment>Hack</comment>
 		<description>Arrow Flash (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Renovation</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="arrow flash (hack, spanish).bin" size="524288" crc="06421584"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1071,15 +1072,16 @@
 		<comment>Hack</comment>
 		<description>Art of Fighting (Hack, Enhanced Colors)</description>
 		<year>2015</year>
-		<manufacturer>Sega - Pyron</manufacturer>
+		<manufacturer>Pyron</manufacturer>
 		<rom name="art of fighting (enhanced colors).md" size="2097152" crc="f28b2502"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="aofs" cloneof="aof" romof="aof">
+		<comment>Hack</comment>
 		<description>Art Of Fighting (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>SNK</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="art of fighting (hack, spanish).bin" size="2097152" crc="60ffdc60"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4040,7 +4042,7 @@
 		<comment>Prototype</comment>
 		<description>Combat Aces (Prototype)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<manufacturer>Chuck Peavey</manufacturer>
 		<rom name="combat aces (beta).bin" size="524288" crc="84560d5a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4054,9 +4056,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="combatcas" cloneof="combatca" romof="combatca">
+		<comment>Hack</comment>
 		<description>Combat Cars (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Accolade</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="combat cars (hack, spanish).bin" size="1048576" crc="ea3af06f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4256,9 +4259,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="contras" cloneof="contra" romof="contra">
+		<comment>Hack</comment>
 		<description>Contra - Hard Corps (Hack, Spanish)</description>
 		<year>2013</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>pepodmc</manufacturer>
 		<rom name="contra - hard corps (hack, spanish).bin" size="2097152" crc="d421f78d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5474,9 +5478,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ariels" cloneof="ariel" romof="ariel">
+		<comment>Hack</comment>
 		<description>Disney's Ariel the Little Mermaid (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="ariel (hack, spanish).bin" size="524288" crc="599a1bfb"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7500,8 +7505,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="fastfur5" cloneof="combatca" romof="combatca">
+		<comment>Hack</comment>
 		<description>Forsazh 5 Bystraya ~ Fast and the Furious 5 Quick (Rus)</description>
-		<year>199?</year>
+		<year>201?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="fast and the furious 5 (unl).bin" size="1093632" crc="29f4d87a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -8703,6 +8709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="homeap" cloneof="homea" romof="homea">
+		<comment>Prototype</comment>
 		<description>Home Alone (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -15130,9 +15137,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="probots" cloneof="contra" romof="contra">
+		<comment>Hack</comment>
 		<description>Probotector (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Konami</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="probotector (hack, spanish).bin" size="2097152" crc="47abdaa3"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22897,9 +22905,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="wardners" cloneof="wardner" romof="wardner">
+		<comment>Hack</comment>
 		<description>Wardner (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Mentrix Software</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="wardner (hack, spanish).bin" size="524288" crc="87b219a0"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22915,7 +22924,7 @@
 	<game name="wardnerj" cloneof="wardner" romof="wardner">
 		<description>Wardner no Mori Special (Jpn)</description>
 		<year>1991</year>
-		<manufacturer>Visco</manufacturer>
+		<manufacturer>Visco Corp.</manufacturer>
 		<rom name="wardner no mori special (jpn).bin" size="524288" crc="80f1035c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22938,14 +22947,16 @@
 		<driver status="good"/>
 	</game>
 	<game name="warlocks" cloneof="warlock" romof="warlock">
+		<comment>Hack</comment>
 		<description>Warlock (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Acclaim</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="warlock (hack, spanish).bin" size="2097152" crc="b899bb1b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="warlockp" cloneof="warlock" romof="warlock">
+		<comment>Prototype</comment>
 		<description>Warlock (USA, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -22978,9 +22989,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="warsongs" cloneof="warsong" romof="warsong">
+		<comment>Hack</comment>
 		<description>Warsong (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Luceid</manufacturer>
 		<rom name="warsong (hack, spanish).bin" size="524288" crc="4d9d3607"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -23003,8 +23015,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="waterwld">
+		<comment>Prototype</comment>
 		<description>WaterWorld (Euro, Prototype)</description>
-		<year>1995?</year>
+		<year>199?</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="waterworld (euro) (prototype).bin" size="2097152" crc="51c80498"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>

@@ -2381,6 +2381,8 @@ DRV		BurnDrvCpsDinou;
 DRV		BurnDrvCpsDino;
 DRV		BurnDrvCpsDinoa;
 DRV		BurnDrvCpsDinore;
+DRV		BurnDrvCpsDinotj;
+DRV		BurnDrvCpsDinotw;
 DRV		BurnDrvCpsDinosyn;
 DRV		BurnDrvCpsDinopic;
 DRV		BurnDrvCpsDinopic2;
@@ -2493,8 +2495,11 @@ DRV		BurnDrvCpsCaptcomm;
 DRV		BurnDrvCpsCaptcommb;
 DRV		BurnDrvCpsCaptcommb2;
 DRV		BurnDrvCpsCaptcommb3;
+DRV		BurnDrvCpsCaptcommpjy;
 DRV		BurnDrvCpsCaptcommp4;
-DRV		BurnDrvCpsCaptcommr1pwx;
+DRV		BurnDrvCpsCaptcommpmy;
+DRV		BurnDrvCpsCaptcomm2y;
+DRV		BurnDrvCpsCaptcommpwx;
 DRV		BurnDrvCpsCaptre;
 DRV		BurnSpecCaptaindrexx;
 DRV		BurnSpecCaptaindynamo;
@@ -9308,9 +9313,9 @@ DRV		BurnDrvMartmast;
 DRV		BurnDrvMarmatcp;
 DRV		BurnDrvMarmatsc;
 DRV		BurnDrvMSX_martianoids;
-DRV		BurnDrvMarvlandj;
-DRV		BurnDrvmd_marvlandj;
 DRV		BurnDrvMarvland;
+DRV		BurnDrvmd_marvlandj;
+DRV		BurnDrvMarvlandup;
 DRV		BurnDrvmd_marvland;
 DRV		BurnDrvCpsMsha;
 DRV		BurnDrvCpsMshbr1;
@@ -16411,6 +16416,7 @@ DRV		BurnDrvnes_tenchiwokurau;
 DRV		BurnDrvCpsWofj;
 DRV		BurnDrvCpsWofch;
 DRV		BurnDrvCpsWofjh;
+DRV		BurnDrvCpsWofdr2020;
 DRV		BurnDrvCpsWofjdr;
 DRV		BurnDrvCpswofchp;
 DRV		BurnDrvnes_tenchwokuriij;
@@ -21448,6 +21454,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsDino,			// Cadillacs & Dinosaurs (930201 World)
 	&BurnDrvCpsDinoa,			// Cadillacs & Dinosaurs (930223 Asia TW)
 	&BurnDrvCpsDinore,			// Cadillacs & Dinosaurs Readjusted (Hack, v1.2)
+	&BurnDrvCpsDinotj,			// Cadillacs & Dinotjsaurs (Tian Jiang, Hack)
+	&BurnDrvCpsDinotw,			// Cadillacs & Dinotwsaurs (Tian Wang, Hack)
 	&BurnDrvCpsDinosyn,			// Cadillacs and Dinosaurs (30th-Anniversary, Hack)
 	&BurnDrvCpsDinopic,			// Cadillacs and Dinosaurs (bootleg set 1 (with PIC16c57), 930201 etc)
 	&BurnDrvCpsDinopic2,		// Cadillacs and Dinosaurs (bootleg set 2 (with PIC16c57), 930201 etc)
@@ -21560,8 +21568,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsCaptcommb,		// Captain Commando (bootleg set 1, 911014 other country)
 	&BurnDrvCpsCaptcommb2,		// Captain Commando (bootleg set 2 (with 2xMSM5205), 911014 other country) [unemulated graphics, NOT WORKING]
 	&BurnDrvCpsCaptcommb3,		// Captain Commando (bootleg set 3 (with YM2151 + 2xMSM5205), 911014 other country)
+	&BurnDrvCpsCaptcommpjy,		// Captain Commando (Elite Competition)
 	&BurnDrvCpsCaptcommp4,		// Captain Commando (Enhanced edition 1 V 4, Hack)
-	&BurnDrvCpsCaptcommr1pwx,	// Captain Commando (Unlimited Bullet)
+	&BurnDrvCpsCaptcommpmy,		// Captain Commando (Incubus)
+	&BurnDrvCpsCaptcomm2y,		// Captain Commando (Second Master)
+	&BurnDrvCpsCaptcommpwx,		// Captain Commando (Unlimited Bullet)
 	&BurnDrvCpsCaptre,			// Captain Commando Readjusted (Hack, v1.0)
 	&BurnSpecCaptaindrexx,		// Captain Drexx (128K) (HB)
 	&BurnSpecCaptaindynamo,		// Captain Dynamo (128K)
@@ -28375,9 +28386,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMarmatcp,			// Martial Masters - Community Patch (Hack)
 	&BurnDrvMarmatsc,			// Martial Masters - Secret Characters (Hack)
 	&BurnDrvMSX_martianoids,	// Martianoids (Euro)
-	&BurnDrvMarvlandj,			// Marvel Land (Japan)
+	&BurnDrvMarvland,			// Marvel Land (Japan)
 	&BurnDrvmd_marvlandj,		// Marvel Land (Jpn)
-	&BurnDrvMarvland,			// Marvel Land (US, prototype?)
+	&BurnDrvMarvlandup,			// Marvel Land (US, prototype?)
 	&BurnDrvmd_marvland,		// Marvel Land (USA)
 	&BurnDrvCpsMsha,			// Marvel Super Heroes (951024 Asia)
 	&BurnDrvCpsMshbr1,			// Marvel Super Heroes (951024 Brazil)
@@ -35478,6 +35489,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsWofj,			// Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan)
 	&BurnDrvCpsWofch,			// Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer, 921031 Japan)
 	&BurnDrvCpsWofjh,			// Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)
+	&BurnDrvCpsWofdr2020,		// Tenchi wo Kurau II - Sekiheki no Tatakai (Master 2020, Hack)
 	&BurnDrvCpsWofjdr,			// Tenchi wo Kurau II - Sekiheki no Tatakai (Master Edition)
 	&BurnDrvCpswofchp,			// Tenchi wo Kurau II - Sekiheki no Tatakai (PS/SS Version)
 	&BurnDrvnes_tenchwokuriij,	// Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)

@@ -4563,7 +4563,7 @@ struct BurnDriver BurnDrvPheliosj = {
 
 // Marvel Land (US, prototype?)
 
-static struct BurnRomInfo marvlandRomDesc[] = {
+static struct BurnRomInfo marvlandupRomDesc[] = {
 	{ "mv2_mpr0",		0x20000, 0xd8b14fee, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
 	{ "mv2_mpr1",		0x20000, 0x29ff2738, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
@@ -4603,8 +4603,8 @@ static struct BurnRomInfo marvlandRomDesc[] = {
 	{ "mv1-voi1.bin",	0x80000, 0xde5cac09, 0x0a | BRF_SND },           // 25 C140 Samples Samples
 };
 
-STD_ROM_PICK(marvland)
-STD_ROM_FN(marvland)
+STD_ROM_PICK(marvlandup)
+STD_ROM_FN(marvlandup)
 
 static void marvland_key_write(UINT8 offset, UINT16 data)
 {
@@ -4632,12 +4632,12 @@ static INT32 MarvlandInit()
 	return Namcos2Init(marvland_key_write, marvland_key_read);
 }
 
-struct BurnDriver BurnDrvMarvland = {
-	"marvland", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvMarvlandup = {
+	"marvlandup", "marvland", NULL, NULL, "1989",
 	"Marvel Land (US, prototype?)\0", "Bad music - use the Japan version", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, marvlandRomInfo, marvlandRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, marvlandupRomInfo, marvlandupRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	MarvlandInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
@@ -4645,7 +4645,7 @@ struct BurnDriver BurnDrvMarvland = {
 
 // Marvel Land (Japan)
 
-static struct BurnRomInfo marvlandjRomDesc[] = {
+static struct BurnRomInfo marvlandRomDesc[] = {
 	{ "mv1-mpr0.bin",	0x10000, 0x8369120f, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
 	{ "mv1-mpr1.bin",	0x10000, 0x6d5442cc, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
@@ -4683,15 +4683,15 @@ static struct BurnRomInfo marvlandjRomDesc[] = {
 	{ "mv1-voi1.bin",	0x80000, 0xde5cac09, 0x0a | BRF_SND },           // 23 C140 Samples Samples
 };
 
-STD_ROM_PICK(marvlandj)
-STD_ROM_FN(marvlandj)
+STD_ROM_PICK(marvland)
+STD_ROM_FN(marvland)
 
-struct BurnDriver BurnDrvMarvlandj = {
-	"marvlandj", "marvland", NULL, NULL, "1989",
+struct BurnDriver BurnDrvMarvland = {
+	"marvland", NULL, NULL, NULL, "1989",
 	"Marvel Land (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, marvlandjRomInfo, marvlandjRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, marvlandRomInfo, marvlandRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	MarvlandInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };

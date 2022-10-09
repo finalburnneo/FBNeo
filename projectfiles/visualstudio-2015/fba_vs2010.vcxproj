@@ -640,6 +640,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_inufuku.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_kickgoal.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_ladyfrog.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_legionna.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_limenko.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ms32.cpp" />

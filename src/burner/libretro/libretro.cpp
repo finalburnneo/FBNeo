@@ -884,105 +884,115 @@ static bool open_archive()
 		locate_archive(g_find_list_path, rom_name);
 	}
 
-	for (unsigned z = 0; z < g_find_list_path.size(); z++)
+	if (g_find_list_path.size() > 0)
 	{
-		if (ZipOpen((char*)g_find_list_path[z].path.c_str()) != 0)
+		for (unsigned z = 0; z < g_find_list_path.size(); z++)
 		{
-			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed to open archive %s\n", g_find_list_path[z].path.c_str());
-			return false;
+			if (ZipOpen((char*)g_find_list_path[z].path.c_str()) != 0)
+			{
+				HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed to open archive %s\n", g_find_list_path[z].path.c_str());
+				return false;
+			}
+
+			ZipEntry *list = NULL;
+			int count;
+			ZipGetList(&list, &count);
+
+			// Try to map the ROMs FBNeo wants to ROMs we find inside our pretty archives ...
+			for (unsigned i = 0; i < nRomCount; i++)
+			{
+				if (pRomFind[i].nState == STAT_OK)
+					continue;
+
+				struct BurnRomInfo ri;
+				memset(&ri, 0, sizeof(ri));
+				BurnDrvGetRomInfo(&ri, i);
+
+				if (ri.nType == 0 || ri.nLen == 0 || ri.nCrc == 0)
+				{
+					pRomFind[i].nState = STAT_OK;
+					continue;
+				}
+
+				char *real_rom_name;
+				uint32_t real_rom_crc;
+				int index = find_rom_by_crc(ri.nCrc, list, count, &real_rom_name);
+
+				BurnDrvGetRomName(&rom_name, i, 0);
+
+				bool unknown_crc = false;
+
+				if (index < 0 && g_find_list_path[z].ignoreCrc && bPatchedRomsetsEnabled)
+				{
+					index = find_rom_by_name(rom_name, list, count, &real_rom_crc);
+					if (index >= 0)
+						unknown_crc = true;
+				}
+
+				if (index >= 0)
+				{
+					if (unknown_crc)
+						HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with unknown crc 0x%08x and name %s from archive %s\n", real_rom_crc, rom_name, g_find_list_path[z].path.c_str());
+					else
+						HandleMessage(RETRO_LOG_INFO, "[FBNeo] Using ROM with known crc 0x%08x and name %s from archive %s\n", ri.nCrc, real_rom_name, g_find_list_path[z].path.c_str());
+				}
+				else
+				{
+					continue;
+				}
+
+				if (bIsNeogeoCartGame)
+					set_neogeo_bios_availability(list[index].szName, list[index].nCrc, (g_find_list_path[z].ignoreCrc && bPatchedRomsetsEnabled));
+
+				// Yay, we found it!
+				pRomFind[i].nZip = z;
+				pRomFind[i].nPos = index;
+				pRomFind[i].nState = STAT_OK;
+
+				if (list[index].nLen < ri.nLen)
+					pRomFind[i].nState = STAT_SMALL;
+				else if (list[index].nLen > ri.nLen)
+					pRomFind[i].nState = STAT_LARGE;
+			}
+
+			free_archive_list(list, count);
+			ZipClose();
 		}
 
-		ZipEntry *list = NULL;
-		int count;
-		ZipGetList(&list, &count);
+		if (bIsNeogeoCartGame)
+			set_neo_system_bios();
 
-		// Try to map the ROMs FBNeo wants to ROMs we find inside our pretty archives ...
+		// Going over every rom to see if they are properly loaded before we continue ...
+		bool ret = true;
 		for (unsigned i = 0; i < nRomCount; i++)
 		{
-			if (pRomFind[i].nState == STAT_OK)
-				continue;
-
-			struct BurnRomInfo ri;
-			memset(&ri, 0, sizeof(ri));
-			BurnDrvGetRomInfo(&ri, i);
-
-			if (ri.nType == 0 || ri.nLen == 0 || ri.nCrc == 0)
+			if (pRomFind[i].nState != STAT_OK)
 			{
-				pRomFind[i].nState = STAT_OK;
-				continue;
+				struct BurnRomInfo ri;
+				memset(&ri, 0, sizeof(ri));
+				BurnDrvGetRomInfo(&ri, i);
+				if(!(ri.nType & BRF_OPT))
+				{
+					static char prev[2048];
+					strcpy(prev, text_missing_files);
+					BurnDrvGetRomName(&rom_name, i, 0);
+					sprintf(text_missing_files, "%s\nROM with name %s and CRC 0x%08x is missing", prev, rom_name, ri.nCrc);
+					log_cb(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required\n", i, rom_name, ri.nCrc);
+					ret = false;
+				}
 			}
-
-			char *real_rom_name;
-			uint32_t real_rom_crc;
-			int index = find_rom_by_crc(ri.nCrc, list, count, &real_rom_name);
-
-			BurnDrvGetRomName(&rom_name, i, 0);
-
-			bool unknown_crc = false;
-
-			if (index < 0 && g_find_list_path[z].ignoreCrc && bPatchedRomsetsEnabled)
-			{
-				index = find_rom_by_name(rom_name, list, count, &real_rom_crc);
-				if (index >= 0)
-					unknown_crc = true;
-			}
-
-			if (index >= 0)
-			{
-				if (unknown_crc)
-					HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with unknown crc 0x%08x and name %s from archive %s\n", real_rom_crc, rom_name, g_find_list_path[z].path.c_str());
-				else
-					HandleMessage(RETRO_LOG_INFO, "[FBNeo] Using ROM with known crc 0x%08x and name %s from archive %s\n", ri.nCrc, real_rom_name, g_find_list_path[z].path.c_str());
-			}
-			else
-			{
-				continue;
-			}
-
-			if (bIsNeogeoCartGame)
-				set_neogeo_bios_availability(list[index].szName, list[index].nCrc, (g_find_list_path[z].ignoreCrc && bPatchedRomsetsEnabled));
-
-			// Yay, we found it!
-			pRomFind[i].nZip = z;
-			pRomFind[i].nPos = index;
-			pRomFind[i].nState = STAT_OK;
-
-			if (list[index].nLen < ri.nLen)
-				pRomFind[i].nState = STAT_SMALL;
-			else if (list[index].nLen > ri.nLen)
-				pRomFind[i].nState = STAT_LARGE;
 		}
 
-		free_archive_list(list, count);
-		ZipClose();
+		BurnExtLoadRom = archive_load_rom;
+		return ret;
 	}
-
-	if (bIsNeogeoCartGame)
-		set_neo_system_bios();
-
-	// Going over every rom to see if they are properly loaded before we continue ...
-	bool ret = true;
-	for (unsigned i = 0; i < nRomCount; i++)
+	else
 	{
-		if (pRomFind[i].nState != STAT_OK)
-		{
-			struct BurnRomInfo ri;
-			memset(&ri, 0, sizeof(ri));
-			BurnDrvGetRomInfo(&ri, i);
-			if(!(ri.nType & BRF_OPT))
-			{
-				static char prev[2048];
-				strcpy(prev, text_missing_files);
-				BurnDrvGetRomName(&rom_name, i, 0);
-				sprintf(text_missing_files, "%s\nROM with name %s and CRC 0x%08x is missing", prev, rom_name, ri.nCrc);
-				log_cb(RETRO_LOG_ERROR, "[FBNeo] ROM at index %d with name %s and CRC 0x%08x is required\n", i, rom_name, ri.nCrc);
-				ret = false;
-			}
-		}
+		sprintf(text_missing_files, "\nNone of those archives was found in your paths");
+		log_cb(RETRO_LOG_ERROR, "[FBNeo] None of those archives was found in your paths\n");
 	}
 
-	BurnExtLoadRom = archive_load_rom;
-	return ret;
+	return false;
 }
 
 static void SetRotation()
@@ -1812,16 +1822,15 @@ static bool retro_load_game_common()
 				bios_name = BurnDrvGetTextA(DRV_BOARDROM);
 			}
 			sprintf(s2, "Verify the following romsets : %s%s%s%s%s\n", rom_name, sp1, parent_name, sp2, bios_name);
-			const char* s3 = "To fix this, read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo.\n";
 #ifdef INCLUDE_7Z_SUPPORT
-			const char* s4 = "\n";
+			const char* s3 = "\n";
 #else
-			const char* s4 = "Note that 7z support is disabled for your platform.\n\n";
+			const char* s3 = "Note that 7z archive support is disabled for your platform.\n\n";
 #endif
-			const char* s5 = "THIS IS NOT A BUG SO PLEASE DON'T WASTE EVERYONE'S TIME BY REPORTING THIS !\n";
+			const char* s4 = "THIS IS NOT A BUG ! If you don't understand what this message means,\nthen you need to read the arcade and FBNeo documentations at https://docs.libretro.com/.\n";
 
 			static char uguiText[4096];
-			sprintf(uguiText, "%s%s%s\n\n%s%s%s", s1, s2, text_missing_files, s3, s4, s5);
+			sprintf(uguiText, "%s%s%s\n\n%s%s", s1, s2, text_missing_files, s3, s4);
 			SetUguiError(uguiText);
 
 			goto end;
@@ -1919,7 +1928,7 @@ static bool retro_load_game_common()
 #else
 		const char* s2 = "Note that your device's limitations prevent you from running a full FBNeo build.\nSo the support for this romset might have been removed.\n\n";
 #endif
-		const char* s3 = "Read https://docs.libretro.com/library/fbneo/#building-romsets-for-fbneo";
+		const char* s3 = "THIS IS NOT A BUG ! If you don't understand what this message means,\nthen you need to read the arcade and FBNeo documentations at https://docs.libretro.com/.\n";
 
 		static char uguiText[4096];
 		sprintf(uguiText, "%s%s%s", s1, s2, s3);

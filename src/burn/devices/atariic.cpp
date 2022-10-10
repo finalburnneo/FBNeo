@@ -100,7 +100,7 @@ void AtariEEPROMLoad(UINT8 *src)
 
 	for (INT32 i = 0; i < atari_eeprom_size; i+=2)
 	{
-		*((UINT16*)(atari_eeprom + i)) = BURN_ENDIAN_SWAP_INT16(src[i] | 0xff00);
+		*((UINT16*)(atari_eeprom + i)) = BURN_ENDIAN_SWAP_INT16(src[i/2] | 0xff00);
 	}
 }
 

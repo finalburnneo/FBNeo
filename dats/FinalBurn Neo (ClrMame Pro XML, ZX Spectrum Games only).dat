@@ -10710,6 +10710,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mecki" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Mecki (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Mecki 128K (2022)(Sebastian Braunert).tap" size="39887" crc="e872c62d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="megaapocalypse" romof="spec128">
 		<description>Mega Apocalypse (128K)</description>
 		<year>1988</year>
@@ -12780,6 +12791,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pidentity128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Pi-Dentity (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Pi-Dentity 128K (2020)(Sebastian Braunert).tap" size="70659" crc="b6aed3dd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pidentity48" cloneof="pidentity128" romof="pidentity128">
+		<comment>Homebrew</comment>
+		<description>Pi-Dentity (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Pi-Dentity 48K (2020)(Sebastian Braunert).tap" size="43464" crc="ecdc9c1c"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pillars" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Pillars (128K) (HB)</description>
@@ -12809,6 +12841,28 @@
 		<manufacturer>Sagittarian Software</manufacturer>
 		<rom name="Pinball 16K (1983)(Sagittarian).tap" size="16187" crc="26267d3e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pinkpillsa" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Pink Pills - no timer last (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Pink Pills 128 K - no timer last (2021)(Sebastian Braunert).tap" size="56284" crc="330b371c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pinkpillsb" cloneof="pinkpillsa" romof="pinkpillsa">
+		<comment>Homebrew</comment>
+		<description>Pink Pills - timer last (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Sebastian Braunert</manufacturer>
+		<rom name="Pink Pills 128 K - timer last (2021)(Sebastian Braunert).tap" size="55882" crc="a88fe5f4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

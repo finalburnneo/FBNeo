@@ -8525,6 +8525,7 @@ DRV		BurnDrvLadybugg;
 DRV		BurnDrvLadybugb;
 DRV		BurnDrvcv_ladybug;
 DRV		BurnDrvLadybug;
+DRV		BurnDrvLadyfrog;
 DRV		BurnDrvLadykill;
 DRV		BurnDrvLadymstr;
 DRV		BurnDrvLadymstr2;
@@ -9445,6 +9446,7 @@ DRV		BurnDrvnes_mechaatt;
 DRV		BurnDrvMechatt;
 DRV		BurnSpecMwarena;
 DRV		BurnSpecMwcentip;
+DRV		BurnSpecMecki;
 DRV		BurnDrvmd_medalc;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvMmmbanc;			// no comment [NOT WORKING]
@@ -11764,6 +11766,8 @@ DRV		BurnDrvPy2k2100;
 DRV		BurnDrvPy2k2;
 DRV		BurnDrvPhozon;
 DRV		BurnDrvPhozons;
+DRV		BurnSpecPidentity128;
+DRV		BurnSpecPidentity48;
 DRV		BurnDrvPickin;
 DRV		BurnDrvMSX_pickinx;
 DRV		BurnDrvMSX_picopico;
@@ -11804,6 +11808,8 @@ DRV		BurnDrvPpmast93;
 DRV		BurnDrvmd_pink;
 DRV		BurnDrvmd_pinks;
 DRV		BurnDrvmd_pinkp;
+DRV		BurnSpecPinkpillsa;
+DRV		BurnSpecPinkpillsb;
 DRV		BurnDrvPinkswtsb;
 DRV		BurnDrvPinkswtsa;
 DRV		BurnDrvPinkswts;
@@ -17244,6 +17250,8 @@ DRV		BurnDrvTdfeverj;
 DRV		BurnDrvTdfever;
 DRV		BurnDrvTdfever2b;
 DRV		BurnDrvTdfever2;
+DRV		BurnDrvToucheme;
+DRV		BurnDrvTouchemea;
 DRV		BurnDrvTturfu;
 DRV		BurnDrvTturf;
 DRV		BurnDrvmd_toughman;
@@ -27598,6 +27606,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLadybugb,			// Lady Bug (bootleg set 1)
 	&BurnDrvcv_ladybug,			// Lady Bug
 	&BurnDrvLadybug,			// Lady Bug
+	&BurnDrvLadyfrog,			// Lady Frog
 	&BurnDrvLadykill,			// Lady Killer
 	&BurnDrvLadymstr,			// Lady Master of Kung Fu (set 1, newer)
 	&BurnDrvLadymstr2,			// Lady Master of Kung Fu (set 2, older)
@@ -28518,6 +28527,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMechatt,			// Mechanized Attack (World)
 	&BurnSpecMwarena,			// Mechwars Arena (48K) (HB)
 	&BurnSpecMwcentip,			// Mechwars Centipede (48K) (HB)
+	&BurnSpecMecki,				// Mecki (128K) (HB)
 	&BurnDrvmd_medalc,			// Medal City (Jpn, SegaNet)
 #if defined FBNEO_DEBUG
 	&BurnDrvMmmbanc,			// Medal Mahjong Moukari Bancho (2007/06/05 MASTER VER.) [no comment, NOT WORKING]
@@ -30837,6 +30847,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPy2k2,				// Photo Y2K 2 (VM101XX, China)
 	&BurnDrvPhozon,				// Phozon (Japan)
 	&BurnDrvPhozons,			// Phozon (Sidam)
+	&BurnSpecPidentity128,		// Pi-Dentity (128K) (HB)
+	&BurnSpecPidentity48,		// Pi-Dentity (48K) (HB)
 	&BurnDrvPickin,				// Pickin'
 	&BurnDrvMSX_pickinx,		// PickinX (HB)
 	&BurnDrvMSX_picopico,		// Pico Pico (Jpn)
@@ -30877,6 +30889,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_pink,			// Pink Goes to Hollywood (Euro, USA)
 	&BurnDrvmd_pinks,			// Pink Goes to Hollywood (Hack, Spanish)
 	&BurnDrvmd_pinkp,			// Pink Goes to Hollywood (USA, Prototype)
+	&BurnSpecPinkpillsa,		// Pink Pills - no timer last (128K) (HB)
+	&BurnSpecPinkpillsb,		// Pink Pills - timer last (128K) (HB)
 	&BurnDrvPinkswtsb,			// Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER.)
 	&BurnDrvPinkswtsa,			// Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER...)
 	&BurnDrvPinkswts,			// Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER....)
@@ -36317,6 +36331,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTdfever,			// TouchDown Fever (US) [no comment, NOT WORKING]
 	&BurnDrvTdfever2b,			// TouchDown Fever 2 (bootleg) [no comment, NOT WORKING]
 	&BurnDrvTdfever2,			// TouchDown Fever 2 [no comment, NOT WORKING]
+	&BurnDrvToucheme,			// Touche Me (set 1)
+	&BurnDrvTouchemea,			// Touche Me (set 2, harder)
 	&BurnDrvTturfu,				// Tough Turf (set 1, US, 8751 317-0099)
 	&BurnDrvTturf,				// Tough Turf (set 2, Japan, 8751 317-0104)
 	&BurnDrvmd_toughman,		// Toughman Contest (Euro, USA)

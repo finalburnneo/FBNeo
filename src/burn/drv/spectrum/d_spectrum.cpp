@@ -37221,3 +37221,98 @@ struct BurnDriver BurnSpecYokaimonk = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Mecki (128K) (HB)
+
+static struct BurnRomInfo SpecMeckiRomDesc[] = {
+	{ "Mecki 128K (2022)(Sebastian Braunert).tap", 39887, 0xe872c62d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMecki, SpecMecki, Spec128)
+STD_ROM_FN(SpecMecki)
+
+struct BurnDriver BurnSpecMecki = {
+	"spec_mecki", NULL, "spec_spec128", NULL, "2022",
+	"Mecki (128K) (HB)\0", NULL, "Sebastian Braunert", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecMeckiRomInfo, SpecMeckiRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pi-Dentity (128K) (HB)
+
+static struct BurnRomInfo SpecPidentity128RomDesc[] = {
+	{ "Pi-Dentity 128K (2020)(Sebastian Braunert).tap", 70659, 0xb6aed3dd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPidentity128, SpecPidentity128, Spec128)
+STD_ROM_FN(SpecPidentity128)
+
+struct BurnDriver BurnSpecPidentity128 = {
+	"spec_pidentity128", NULL, "spec_spec128", NULL, "2020",
+	"Pi-Dentity (128K) (HB)\0", NULL, "Sebastian Braunert", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecPidentity128RomInfo, SpecPidentity128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pi-Dentity (48K) (HB)
+
+static struct BurnRomInfo SpecPidentity48RomDesc[] = {
+	{ "Pi-Dentity 48K (2020)(Sebastian Braunert).tap", 43464, 0xecdc9c1c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPidentity48, SpecPidentity48, Spectrum)
+STD_ROM_FN(SpecPidentity48)
+
+struct BurnDriver BurnSpecPidentity48 = {
+	"spec_pidentity48", "spec_pidentity128", "spec_spectrum", NULL, "2020",
+	"Pi-Dentity (48K) (HB)\0", NULL, "Sebastian Braunert", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecPidentity48RomInfo, SpecPidentity48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pink Pills - no timer last (128K) (HB)
+
+static struct BurnRomInfo SpecPinkpillsaRomDesc[] = {
+	{ "Pink Pills 128 K - no timer last (2021)(Sebastian Braunert).tap", 56284, 0x330b371c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPinkpillsa, SpecPinkpillsa, Spec128)
+STD_ROM_FN(SpecPinkpillsa)
+
+struct BurnDriver BurnSpecPinkpillsa = {
+	"spec_pinkpillsa", NULL, "spec_spec128", NULL, "2021",
+	"Pink Pills - no timer last (128K) (HB)\0", NULL, "Sebastian Braunert", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecPinkpillsaRomInfo, SpecPinkpillsaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pink Pills - timer last (128K) (HB)
+
+static struct BurnRomInfo SpecPinkpillsbRomDesc[] = {
+	{ "Pink Pills 128 K - timer last (2021)(Sebastian Braunert).tap", 55882, 0xa88fe5f4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPinkpillsb, SpecPinkpillsb, Spec128)
+STD_ROM_FN(SpecPinkpillsb)
+
+struct BurnDriver BurnSpecPinkpillsb = {
+	"spec_pinkpillsb", "spec_pinkpillsa", "spec_spec128", NULL, "2021",
+	"Pink Pills - timer last (128K) (HB)\0", NULL, "Sebastian Braunert", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecPinkpillsbRomInfo, SpecPinkpillsbRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

@@ -10630,6 +10630,7 @@ DRV		BurnDrvNbajamr1;
 DRV		BurnDrvNbajamr2;
 DRV		BurnDrvNbajam;
 DRV		BurnDrvgg_nbajam;
+DRV		BurnDrvNbajamre;
 DRV		BurnDrvNbajamten;
 DRV		BurnDrvNbajamte1;
 DRV		BurnDrvNbajamte2a;
@@ -29711,6 +29712,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvNbajamr2,			// NBA Jam (rev 2.00 2/10/93)
 	&BurnDrvNbajam,				// NBA Jam (rev 3.01 4/07/93)
 	&BurnDrvgg_nbajam,			// NBA Jam (USA, v1.1)
+	&BurnDrvNbajamre,			// NBA Jam Rewind (Hack, v1.1)
 	&BurnDrvNbajamten,			// NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)
 	&BurnDrvNbajamte1,			// NBA Jam TE (rev 1.0 1/17/94)
 	&BurnDrvNbajamte2a,			// NBA Jam TE (rev 2.0 1/28/94)

@@ -16,6 +16,23 @@ static INT32 atari_eeprom_unlocked;
 
 static UINT8 *atari_slapstic_rom;
 
+static UINT16 __fastcall atari_eeprom_read_word(UINT32 address)
+{
+	if (atari_eeprom_initialized == 0) {
+		bprintf (0, _T("atari_eeprom_read_word(%x) called without being initialized!\n"), address);
+	}
+
+	return atari_eeprom[(address & atari_eeprom_addrmask) >> 1] | 0xff00;
+}
+
+static UINT8 __fastcall atari_eeprom_read_byte(UINT32 address)
+{
+	if (atari_eeprom_initialized == 0) {
+		bprintf (0, _T("atari_eeprom_read_byte(%x) called without being initialized!\n"), address);
+	}
+
+	return atari_eeprom[(address & atari_eeprom_addrmask) >> 1];
+}
 
 static void __fastcall atari_eeprom_write_word(UINT32 address, UINT16 data)
 {
@@ -25,20 +42,20 @@ static void __fastcall atari_eeprom_write_word(UINT32 address, UINT16 data)
 
 	if (atari_eeprom_unlocked)
 	{
-		*((UINT16*)(atari_eeprom + (address & atari_eeprom_addrmask))) = BURN_ENDIAN_SWAP_INT16(data | 0xff00);
+		atari_eeprom[(address & atari_eeprom_addrmask) >> 1] = data & 0xff;
 		atari_eeprom_unlocked = 0;
 	}
 }
 
 static void __fastcall atari_eeprom_write_byte(UINT32 address, UINT8 data)
-{	
+{
 	if (atari_eeprom_initialized == 0) {
 		bprintf (0, _T("atari_eeprom_write_byte(%x, %2.2x) called without being initialized!\n"), address, data);
 	}
 
 	if (atari_eeprom_unlocked )
 	{
-		*((UINT16*)(atari_eeprom + (address & atari_eeprom_addrmask))) = BURN_ENDIAN_SWAP_INT16(data | 0xff00);
+		atari_eeprom[(address & atari_eeprom_addrmask) >> 1] = data;
 		atari_eeprom_unlocked = 0;
 	}
 }
@@ -61,12 +78,12 @@ void AtariEEPROMReset()
 void AtariEEPROMInit(INT32 size)
 {
 	atari_eeprom_initialized = 1;
-	atari_eeprom_size = size;
+	atari_eeprom_size = size; // size in 16-bit space, 0x1000 here would mean logical 0x800 eeprom size, since the high byte is discarded.
 	atari_eeprom_addrmask = (atari_eeprom_size - 1) & ~1;
 
-	atari_eeprom = (UINT8*)BurnMalloc(atari_eeprom_size);
+	atari_eeprom = (UINT8*)BurnMalloc(atari_eeprom_size / 2);
 
-	memset (atari_eeprom, 0xff, atari_eeprom_size);
+	memset (atari_eeprom, 0xff, atari_eeprom_size / 2);
 }
 
 void AtariEEPROMInstallMap(INT32 map_handler, UINT32 address_start, UINT32 address_end)
@@ -78,6 +95,8 @@ void AtariEEPROMInstallMap(INT32 map_handler, UINT32 address_start, UINT32 addre
 
 	if (((address_end+1)-address_start) > atari_eeprom_size)
 	{
+		bprintf (0, _T("AtariEEPROM: funky configuration? size: %4.4x, address_start: %6.6x, address_end: %6.6x\n"), atari_eeprom_size, address_start, address_end);
+
 		address_end = address_start + (address_end & (atari_eeprom_size - 1));
 	}
 
@@ -85,10 +104,11 @@ void AtariEEPROMInstallMap(INT32 map_handler, UINT32 address_start, UINT32 addre
 
 	//bprintf (0, _T("atarieeprom size: %4.4x, address_start: %6.6x, address_end: %6.6x\n"), atari_eeprom_size, address_start, address_end);
 
-	SekMapMemory(atari_eeprom, 				address_start, address_end, MAP_ROM);
-	SekMapHandler(map_handler,				address_start, address_end, MAP_WRITE);
+	SekMapHandler(map_handler,				address_start, address_end, MAP_RAM);
 	SekSetWriteWordHandler(map_handler,		atari_eeprom_write_word);
 	SekSetWriteByteHandler(map_handler,		atari_eeprom_write_byte);
+	SekSetReadWordHandler(map_handler,		atari_eeprom_read_word);
+	SekSetReadByteHandler(map_handler,		atari_eeprom_read_byte);
 }
 
 void AtariEEPROMLoad(UINT8 *src)
@@ -98,9 +118,9 @@ void AtariEEPROMLoad(UINT8 *src)
 		return;
 	}
 
-	for (INT32 i = 0; i < atari_eeprom_size; i+=2)
+	for (INT32 i = 0; i < atari_eeprom_size/2; i++)
 	{
-		*((UINT16*)(atari_eeprom + i)) = BURN_ENDIAN_SWAP_INT16(src[i] | 0xff00);
+		atari_eeprom[i] = src[i];
 	}
 }
 
@@ -116,7 +136,7 @@ INT32 AtariEEPROMScan(INT32 nAction, INT32 *)
 
 	if (nAction & ACB_NVRAM) {
 		ba.Data		= atari_eeprom;
-		ba.nLen		= atari_eeprom_size;
+		ba.nLen		= atari_eeprom_size / 2;
 		ba.nAddress	= atari_eeprom_address_start;
 		ba.szName	= "NV RAM";
 		BurnAcb(&ba);

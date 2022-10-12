@@ -9619,6 +9619,7 @@ DRV		BurnDrvmslug;
 DRV		BurnDrvmslug21v2;
 DRV		BurnDrvmslug2dd;
 DRV		BurnDrvmslug2r;
+DRV		BurnDrvmslug2eg;
 DRV		BurnDrvmslug2fm;
 DRV		BurnDrvmslug2p;
 DRV		BurnDrvmslug2dg;
@@ -9647,7 +9648,6 @@ DRV		BurnDrvmslug3unity;
 DRV		BurnDrvmslug41v2;
 DRV		BurnDrvmslug4a;
 DRV		BurnDrvmslug4dd;
-DRV		BurnDrvmslug4ar;
 DRV		BurnDrvmslug4c;
 DRV		BurnDrvmslug4ki;
 DRV		BurnDrvmslug4lw;
@@ -9663,8 +9663,8 @@ DRV		BurnDrvmslug51v2;
 DRV		BurnDrvmslug5b;
 DRV		BurnDrvmslug5b2;
 DRV		BurnDrvmslug5dd;
-DRV		BurnDrvmslug5c;
 DRV		BurnDrvmslug5mg;
+DRV		BurnDrvmslug5c;
 DRV		BurnDrvmslug5dbj;
 DRV		BurnDrvmslug5ex;
 DRV		BurnDrvmslug5es;
@@ -12834,13 +12834,13 @@ DRV		BurnDrvRmpgwt11;
 DRV		BurnDrvRmpgwt;
 DRV		BurnDrvsms_rampart;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvRampartj;		// no comment [NOT WORKING]
-DRV		BurnDrvRampart2p;		// no comment [NOT WORKING]
-DRV		BurnDrvRampart2pa;		// no comment [NOT WORKING]
+DRV		BurnDrvRampartj;		// no comment
+DRV		BurnDrvRampart2p;		// no comment
+DRV		BurnDrvRampart2pa;		// no comment
 #endif
 DRV		BurnDrvmd_rampartj;
 #if defined FBNEO_DEBUG
-DRV		BurnDrvRampart;			// no comment [NOT WORKING]
+DRV		BurnDrvRampart;			// no comment
 #endif
 DRV		BurnDrvmd_rampart;
 DRV		BurnDrvnes_rampart;
@@ -16746,9 +16746,10 @@ DRV		BurnDrvkof2000ps2;
 DRV		BurnDrvkof2000bc;
 DRV		BurnDrvkof2000sp;
 DRV		BurnDrvkof2kxxx;
+DRV		BurnDrvkof2001ab;
 DRV		BurnDrvkof2001h;
 DRV		BurnDrvkof2001;
-DRV		BurnDrvkf2k1pkz;
+DRV		BurnDrvkof2001pkz;
 DRV		BurnDrvkf2k1pls;
 DRV		BurnDrvkf2k1pa;
 DRV		BurnDrvkof2k1rp;
@@ -28693,29 +28694,30 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetlsavr,			// Metal Saver
 	&BurnDrvnes_metalslagloj,	// Metal Slader Glory (Japan)
 	&BurnDrvnes_metalslaglo,	// Metal Slader Glory (T-Eng)
-	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack, 20180430)
+	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack)
 	&BurnDrvngpc_mslug1st,		// Metal Slug - 1st Mission (World)
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
 	&BurnDrvngpc_mslug2nd,		// Metal Slug - 2nd Mission (World)
 	&BurnDrvmslug,				// Metal Slug - Super Vehicle-001
 	&BurnDrvmslug21v2,			// Metal Slug 2 - Super Vehicle-001/II (1v2 Mode, Hack)
 	&BurnDrvmslug2dd,			// Metal Slug 2 - Super Vehicle-001/II (Early Summer Starry Sky, Hack)
-	&BurnDrvmslug2r,			// Metal Slug 2 - Super Vehicle-001/II (Enemies Reset, Hack)
-	&BurnDrvmslug2fm,			// Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2 Ver.2 20210415, hack by CZXINc)
+	&BurnDrvmslug2r,			// Metal Slug 2 - Super Vehicle-001/II (Enemy Remake, Hack)
+	&BurnDrvmslug2eg,			// Metal Slug 2 - Super Vehicle-001/II (Extraction Green Turbo, Hack)
+	&BurnDrvmslug2fm,			// Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2, Hack)
 	&BurnDrvmslug2p,			// Metal Slug 2 - Super Vehicle-001/II (Gun Storage, Hack)
-	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack, 20170509)
+	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack)
 	&BurnDrvMSlug2,				// Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)
 	&BurnDrvmslug2ct,			// Metal Slug 2 - Super Vehicle-001/II (Survival, Hack)
 	&BurnDrvMSlug2t,			// Metal Slug 2 - Super Vehicle-001/II (Turbo)
 	&BurnDrvmslug2unity,		// Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)
 	&BurnDrvmslug31v2,			// Metal Slug 3 (1v2 Mode, Hack)
 	&BurnDrvmslug3dd,			// Metal Slug 3 (Early Summer Starry Sky, Hack)
-	&BurnDrvmslug3c,			// Metal Slug 3 (Enemies Reset, Hack)
+	&BurnDrvmslug3c,			// Metal Slug 3 (Enemy Remake, Hack)
 	&BurnDrvmslug3eb,			// Metal Slug 3 (Green Blue, Hack)
 	&BurnDrvmslug3i,			// Metal Slug 3 (Infinite Fire Power, Hack)
 	&BurnDrvmslug3ki,			// Metal Slug 3 (Komorebi, Hack)
 	&BurnDrvmslug3lw,			// Metal Slug 3 (Last Bullet Remix, Hack)
-	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack, 20190119)
+	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack)
 	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
@@ -28729,11 +28731,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug41v2,			// Metal Slug 4 (1v2 Mode, Hack)
 	&BurnDrvmslug4a,			// Metal Slug 4 (20th Anniversary)
 	&BurnDrvmslug4dd,			// Metal Slug 4 (Early Summer Starry Sky, Hack)
-	&BurnDrvmslug4ar,			// Metal Slug 4 (Enemies Reset Fusion 20th Anniversary, Hack)
-	&BurnDrvmslug4c,			// Metal Slug 4 (Enemies Reset, Hack)
+	&BurnDrvmslug4c,			// Metal Slug 4 (Enemy Remake, Hack)
 	&BurnDrvmslug4ki,			// Metal Slug 4 (Komorebi, Hack)
 	&BurnDrvmslug4lw,			// Metal Slug 4 (Last Bullet Remix, Hack)
-	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack, 20171225)
+	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
 	&BurnDrvmslug4ammor,		// Metal Slug 4 (Random Ammunition, Hack)
@@ -28745,20 +28746,20 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg, set 1)
 	&BurnDrvmslug5b2,			// Metal Slug 5 (bootleg, set 2)
 	&BurnDrvmslug5dd,			// Metal Slug 5 (Early Summer Starry Sky, Hack)
-	&BurnDrvmslug5c,			// Metal Slug 5 (Enemies Reset, Hack)
-	&BurnDrvmslug5mg,			// Metal Slug 5 (Enemy Demons, Hack)
+	&BurnDrvmslug5mg,			// Metal Slug 5 (Enemy Magic, Hack)
+	&BurnDrvmslug5c,			// Metal Slug 5 (Enemy Remake, Hack)
 	&BurnDrvmslug5dbj,			// Metal Slug 5 (Enemy Soldier Enhanced, Hack)
 	&BurnDrvmslug5ex,			// Metal Slug 5 (Extend Ver. 2022, Hack)
 	&BurnDrvmslug5es,			// Metal Slug 5 (Extremely Simplified, Hack)
 	&BurnDrvmslug5f,			// Metal Slug 5 (Fierce Battle, Hack)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
 	&BurnDrvmslug5ki,			// Metal Slug 5 (Komorebi, Hack)
-	&BurnDrvmslug5d,			// Metal Slug 5 (Multifunction Hack, 20170523)
+	&BurnDrvmslug5d,			// Metal Slug 5 (Multifunction Hack)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
 	&BurnDrvmslug5sgf,			// Metal Slug 5 (Remake Final FC2 Version, Hack)
 	&BurnDrvmslug5sg,			// Metal Slug 5 (Stone Turtle, Hack)
-	&BurnDrvmslug5w,			// Metal Slug 5 (The New War, Hack)
+	&BurnDrvmslug5w,			// Metal Slug 5 (The New Campaign, Hack)
 	&BurnDrvmslug5zh,			// Metal Slug 5 (Vehicle Summon, Hack)
 	&BurnDrvmslug5x,			// Metal Slug 5 (X Final Ver, Hack)
 	&BurnDrvms5plus,			// Metal Slug 5 Plus (bootleg)
@@ -28769,9 +28770,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslugx2r1v2,		// Metal Slug X - Super Vehicle-001 (2R 1v2 Mode, Hack)
 	&BurnDrvmslugx2reb,			// Metal Slug X - Super Vehicle-001 (2R Green Blue, Hack)
 	&BurnDrvmslugx2r,			// Metal Slug X - Super Vehicle-001 (2R, Hack)
-	&BurnDrvMSlugxsrf,			// Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, hack)
-	&BurnDrvmslugxc2,			// Metal Slug X - Super Vehicle-001 (Enemies Reset, Hack)
-	&BurnDrvmslugxlb,			// Metal Slug X - Super Vehicle-001 (Extreme Zone, Hack)
+	&BurnDrvMSlugxsrf,			// Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, Hack)
+	&BurnDrvmslugxc2,			// Metal Slug X - Super Vehicle-001 (Enemy Remake, Hack)
+	&BurnDrvmslugxlb,			// Metal Slug X - Super Vehicle-001 (Extreme Space, Hack)
 	&BurnDrvmslugxeb,			// Metal Slug X - Super Vehicle-001 (Green Blue, Hack)
 	&BurnDrvmslugxc1,			// Metal Slug X - Super Vehicle-001 (Multi Vehicle, Hack)
 	&BurnDrvMSlugx,				// Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)
@@ -31916,13 +31917,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRmpgwt,				// Rampage: World Tour (rev 1.3)
 	&BurnDrvsms_rampart,		// Rampart (Euro)
 #if defined FBNEO_DEBUG
-	&BurnDrvRampartj,			// Rampart (Japan, Joystick) [no comment, NOT WORKING]
-	&BurnDrvRampart2p,			// Rampart (Joystick, bigger ROMs) [no comment, NOT WORKING]
-	&BurnDrvRampart2pa,			// Rampart (Joystick, smaller ROMs) [no comment, NOT WORKING]
+	&BurnDrvRampartj,			// Rampart (Japan, Joystick) [no comment]
+	&BurnDrvRampart2p,			// Rampart (Joystick, bigger ROMs) [no comment]
+	&BurnDrvRampart2pa,			// Rampart (Joystick, smaller ROMs) [no comment]
 #endif
 	&BurnDrvmd_rampartj,		// Rampart (Jpn, Kor)
 #if defined FBNEO_DEBUG
-	&BurnDrvRampart,			// Rampart (Trackball) [no comment, NOT WORKING]
+	&BurnDrvRampart,			// Rampart (Trackball) [no comment]
 #endif
 	&BurnDrvmd_rampart,			// Rampart (USA)
 	&BurnDrvnes_rampart,		// Rampart (USA)
@@ -35828,9 +35829,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2000bc,			// The King of Fighters 2000 - Imitate BC 14 System (Hack By Aillis)
 	&BurnDrvkof2000sp,			// The King of Fighters 2000 - Special Edition (Final Version, Hack)
 	&BurnDrvkof2kxxx,			// The King of Fighters 2000 SP XXX (Hack, Ver. 2016-01-04)
+	&BurnDrvkof2001ab,			// The King of Fighters 2001 (All Boss)
 	&BurnDrvkof2001h,			// The King of Fighters 2001 (NGH-2621)
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)
-	&BurnDrvkf2k1pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition)
+	&BurnDrvkof2001pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition)
 	&BurnDrvkf2k1pls,			// The King of Fighters 2001 Plus (set 1, bootleg / hack)
 	&BurnDrvkf2k1pa,			// The King of Fighters 2001 Plus (set 2, bootleg / hack)
 	&BurnDrvkof2k1rp,			// The King of Fighters 2001 Remix Pro v1.02 Final (Hack By Jason, Kim & Raymonose)

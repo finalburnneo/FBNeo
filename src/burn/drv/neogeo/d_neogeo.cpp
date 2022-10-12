@@ -18385,7 +18385,7 @@ static struct BurnRomInfo mslug5wRomDesc[] = {
 	{ "268-c7w.bin",    0x800000, 0xbdb9a887, 3 | BRF_GRA },           //  9
 	{ "268-c8w.bin",    0x800000, 0x6f8ac6fb, 3 | BRF_GRA },           // 10
 
-	{ "268-m1.m1",      0x080000, 0x464c72ad, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "268-m1w.bin",    0x080000, 0x464c72ad, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "268-v1w.bin",    0x400000, 0xa8e12a92, 5 | BRF_SND },           // 12 Sound data
 	{ "268-v2w.bin",    0x400000, 0x0608cba3, 5 | BRF_SND },           // 13

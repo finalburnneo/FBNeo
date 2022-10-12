@@ -18374,7 +18374,7 @@ static struct BurnRomInfo mslug5wRomDesc[] = {
 	{ "268-p1w.bin",    0x100000, 0xb0c126da, 1 | BRF_PRG | BRF_ESS }, //  0 68K code
 	{ "268-p2w.bin",    0x400000, 0xf06c589a, 1 | BRF_PRG | BRF_ESS }, //  1
 	
-	{ "268-s1d.s1",     0x020000, 0x64952683, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "268-c1d.c1",     0x800000, 0xe8239365, 3 | BRF_GRA },           //  3 Sprite data
 	{ "268-c2d.c2",     0x800000, 0x89b21d4c, 3 | BRF_GRA },           //  4
@@ -18906,8 +18906,8 @@ static struct BurnRomInfo mslug4lwRomDesc[] = {
 
 	{ "263-s1d.bin",    0x020000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "263-c1.bin",     0x800000, 0x361ddda6, 3 | BRF_GRA },           //  3 Sprite data
-	{ "263-c2.bin",     0x800000, 0x15d192c4, 3 | BRF_GRA },           //  4
+	{ "263-c1d.bin",    0x800000, 0x361ddda6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "263-c2d.bin",    0x800000, 0x15d192c4, 3 | BRF_GRA },           //  4
 	{ "263-c3lw.bin",   0x800000, 0xe296612c, 3 | BRF_GRA },           //  5
 	{ "263-c4lw.bin",   0x800000, 0xc22e3ad0, 3 | BRF_GRA },           //  6
 	{ "263-c5lw.bin",   0x400000, 0x288cd91f, 3 | BRF_GRA },           //  7

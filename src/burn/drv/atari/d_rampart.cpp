@@ -1,4 +1,4 @@
-// FB Alpha Atari Rampart driver module
+// FB Neo Atari Rampart driver module
 // Based on MAME driver by Aaron Giles
 
 #include "tiles_generic.h"
@@ -8,6 +8,7 @@
 #include "burn_ym2413.h"
 #include "msm6295.h"
 #include "watchdog.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -19,6 +20,7 @@ static UINT8 *DrvSndROM;
 static UINT8 *DrvMobRAM;
 static UINT8 *DrvBmpRAM;
 static UINT8 *DrvPalRAM;
+static UINT8 *DrvEEPROM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -28,37 +30,45 @@ static INT32 vblank;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoyF[1]; // p3 fake coin
 static UINT16 DrvInputs[3];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
+static ButtonToggle Diag;
+
+static INT16 Analog[6];
+
+static INT32 has_trackball = 0;
+static INT32 is_rampartj = 0;
+
+static INT32 nCyclesExtra[1];
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo RampartInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 9,	"p1 fire 2"	},
 
-	// fake analog palceholder
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy2 + 12,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy2 + 12,	"p1 fire 6"	},
+	A("P1 Trackball X", BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 fire 2"	},
 
-	// fake analog palceholder
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 5"	},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 6"	},
+	A("P2 Trackball X", BIT_ANALOG_REL, &Analog[2],		"p2 x-axis"),
+	A("P2 Trackball Y", BIT_ANALOG_REL, &Analog[3],		"p2 y-axis"),
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoyF + 0,	"p3 coin"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy1 + 10,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p3 fire 2"	},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy1 + 0,	"p3 fire 3"	},
-	{"P3 Button 4",		BIT_DIGITAL,	DrvJoy2 + 10,	"p3 fire 4"	},
 
-	// fake analog palceholder
-	{"P3 Button 5",		BIT_DIGITAL,	DrvJoy2 + 12,	"p3 fire 5"	},
-	{"P3 Button 6",		BIT_DIGITAL,	DrvJoy2 + 12,	"p3 fire 6"	},
+	A("P3 Trackball X", BIT_ANALOG_REL, &Analog[4],		"p3 x-axis"),
+	A("P3 Trackball Y", BIT_ANALOG_REL, &Analog[5],		"p3 y-axis"),
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 11,	"diag"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
@@ -82,6 +92,7 @@ static struct BurnInputInfo Ramprt2pInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 fire 2"	},
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoyF + 0,	"p3 coin"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"	},
 	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"	},
@@ -92,6 +103,7 @@ static struct BurnInputInfo Ramprt2pInputList[] = {
 	{"P3 Button 4",		BIT_DIGITAL,	DrvJoy2 + 10,	"p3 fire 4"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 11,	"diag"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
@@ -118,6 +130,7 @@ static struct BurnInputInfo RampartjInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 fire 2"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 11,	"diag"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
@@ -126,37 +139,28 @@ STDINPUTINFO(Rampartj)
 
 static struct BurnDIPInfo RampartDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x0c, NULL				},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x12, 0x01, 0x08, 0x00, "On"				},
-	{0x12, 0x01, 0x08, 0x08, "Off"				},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0x04, NULL				},
 };
 
 STDDIPINFO(Rampart)
 
 static struct BurnDIPInfo Ramprt2pDIPList[]=
 {
-	{0x18, 0xff, 0xff, 0x0c, NULL				},
+	DIP_OFFSET(0x1a)
+	{0x00, 0xff, 0xff, 0x04, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Players"			},
-	{0x18, 0x01, 0x04, 0x00, "2"				},
-	{0x18, 0x01, 0x04, 0x04, "3"				},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x18, 0x01, 0x08, 0x00, "On"				},
-	{0x18, 0x01, 0x08, 0x08, "Off"				},
+	{0x00, 0x01, 0x04, 0x00, "2"				},
+	{0x00, 0x01, 0x04, 0x04, "3"				},
 };
 
 STDDIPINFO(Ramprt2p)
 
 static struct BurnDIPInfo RampartjDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x0c, NULL				},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x12, 0x01, 0x08, 0x00, "On"				},
-	{0x12, 0x01, 0x08, 0x08, "Off"				},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0x04, NULL				},
 };
 
 STDDIPINFO(Rampartj)
@@ -186,8 +190,8 @@ static void __fastcall rampart_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x640000:
-		//	atarigen_set_ym2413_vol(((data >> 1) & 7) * 100 / 7);
-		//	atarigen_set_oki6295_vol((data & 0x0020) ? 100 : 0);
+			MSM6295SetRoute(0, (data & 0x20) ? 1.0 : 0.0, BURN_SND_ROUTE_BOTH);
+			BurnYM2413SetAllRoutes(((data >> 1) & 7) / 7.0, BURN_SND_ROUTE_BOTH);
 		return;
 
 		case 0x720000:
@@ -227,8 +231,10 @@ static void __fastcall rampart_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x640000:
-		//	atarigen_set_ym2413_vol(((data >> 1) & 7) * 100 / 7);
-		//	atarigen_set_oki6295_vol((data & 0x0020) ? 100 : 0);
+			if (address & 1) {
+				MSM6295SetRoute(0, (data & 0x20) ? 1.0 : 0.0, BURN_SND_ROUTE_BOTH);
+				BurnYM2413SetAllRoutes(((data >> 1) & 7) / 7.0, BURN_SND_ROUTE_BOTH);
+			}
 		return;
 
 		case 0x720000:
@@ -257,12 +263,34 @@ static UINT16 __fastcall rampart_read_word(UINT32 address)
 			return DrvInputs[1];
 
 		case 0x6c0000: // trackball for most sets!!
+			if (has_trackball) {
+				UINT16 ret  = BurnTrackballRead(1, 1) << 0; // p2 y
+				       ret |= BurnTrackballRead(2, 1) << 8; // p3 y
+				return ret;
+			}
 			return DrvInputs[2];
 
 		case 0x6c0002:
+			if (has_trackball) {
+				UINT16 ret  = BurnTrackballRead(1, 0) << 0; // p2 x
+				       ret |= BurnTrackballRead(2, 0) << 8; // p3 x
+				return ret;
+			}
+			return 0xffff;
 		case 0x6c0004:
+			if (has_trackball) {
+				UINT16 ret  = BurnTrackballRead(0, 1); // p1 y
+				       ret |= 0xff00;
+				return ret;
+			}
+			return 0xffff;
 		case 0x6c0006:
-			return 0; // trackball
+			if (has_trackball) {
+				UINT16 ret  = BurnTrackballRead(0, 0); // p1 x
+				       ret |= 0xff00;
+				return ret;
+			}
+			return 0xffff;
 	}
 
 	bprintf (0, _T("MRW: %5.5x\n"), address);
@@ -272,43 +300,7 @@ static UINT16 __fastcall rampart_read_word(UINT32 address)
 
 static UINT8 __fastcall rampart_read_byte(UINT32 address)
 {
-	switch (address)
-	{
-		case 0x460000:
-		case 0x460001:
-			return MSM6295Read(0);
-
-		case 0x640000:
-			return (DrvInputs[0] >> 8) | (vblank ? 0x8 : 0);
-
-		case 0x640001:
-			return DrvInputs[0];
-
-		case 0x640002:
-			return DrvInputs[1] >> 8;
-
-		case 0x640003:
-			return DrvInputs[1];
-
-		// trackball for most sets!
-		case 0x6c0000:
-			return DrvInputs[2] >> 8;
-
-		case 0x6c0001:
-			return DrvInputs[2];
-
-		case 0x6c0002:
-		case 0x6c0003:
-		case 0x6c0004:
-		case 0x6c0005:
-		case 0x6c0006:
-		case 0x6c0007:
-			return 0; // trackball
-	}
-
-	bprintf (0, _T("MRB %5.5x\n"), address);
-
-	return 0;
+	return rampart_read_word(address & ~1) >> ((~address & 1) * 8);
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -328,6 +320,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnYM2413Reset();
 	MSM6295Reset(0);
 
+	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
+
 	return 0;
 }
 
@@ -340,7 +334,9 @@ static INT32 MemIndex()
 	DrvGfxROM0			= Next; Next += 0x040000;
 
 	MSM6295ROM			= Next;
-	DrvSndROM			= Next; Next += 0x0400009;
+	DrvSndROM			= Next; Next += 0x040000;
+
+	DrvEEPROM           = Next; Next += 0x000800;
 
 	DrvPalette			= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
@@ -421,12 +417,7 @@ static INT32 DrvInit(INT32 japan, INT32 joystick)
 		0,					/* callback routine for special entries */
 	};
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -453,7 +444,7 @@ static INT32 DrvInit(INT32 japan, INT32 joystick)
 		if (BurnLoadRom(DrvSndROM  + 0x000000,  k++, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM  + 0x020000,  k++, 1)) return 1;
 
-		if (BurnLoadRom(DrvBmpRAM  + 0x000000,  k++, 1)) return 1; // tmp memory
+		if (BurnLoadRom(DrvEEPROM  + 0x000000,  k++, 1)) return 1;
 
 		DrvGfxDecode();
 	}
@@ -476,10 +467,10 @@ static INT32 DrvInit(INT32 japan, INT32 joystick)
 
 	AtariEEPROMInit(0x1000);
 	AtariEEPROMInstallMap(2, 0x500000, 0x500fff);
-	AtariEEPROMLoad(DrvBmpRAM); // tmp memory
+	AtariEEPROMLoad(DrvEEPROM);
 	SekClose();
 
-	BurnWatchdogInit(DrvDoReset, 180);
+	BurnWatchdogInit(DrvDoReset, 480);
 
 	BurnYM2413Init(3579545);
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
@@ -492,6 +483,8 @@ static INT32 DrvInit(INT32 japan, INT32 joystick)
 
 	AtariMoInit(0, &modesc);
 
+	BurnTrackballInit(3);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -503,6 +496,8 @@ static INT32 DrvExit()
 
 	SekExit();
 
+	BurnTrackballExit();
+
 	BurnYM2413Exit();
 	MSM6295Exit();
 
@@ -510,7 +505,10 @@ static INT32 DrvExit()
 	AtariSlapsticExit();
 	AtariEEPROMExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
+
+	has_trackball = 0;
+	is_rampartj = 0;
 
 	return 0;
 }
@@ -585,20 +583,37 @@ static INT32 DrvFrame()
 	}
 
 	{
-		DrvInputs[0] = (DrvInputs[0] & ~0x0804) | ((DrvDips[0] & 0x04) << 0);;
-		DrvInputs[1] = (DrvInputs[1] & ~0x0800) | ((DrvDips[0] & 0x08) << 8);
-		DrvInputs[2] = 0;
+		Diag.Toggle(DrvJoy2[11]);
+		DrvJoy2[2] |= (is_rampartj == 0) ? DrvJoyF[0] : 0; // p3 fake coin, all sets but rampartj
+
+		DrvInputs[0] = 0xf7fb | (DrvDips[0] & 0x04);
+		DrvInputs[1] = 0xffff;
+		DrvInputs[2] = 0x0000; // active high
 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		if (has_trackball) {
+			BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x3f);
+			BurnTrackballUpdate(0);
+
+			BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
+			BurnTrackballFrame(1, Analog[2], Analog[3], 0x00, 0x3f);
+			BurnTrackballUpdate(1);
+
+			BurnTrackballConfig(2, AXIS_REVERSED, AXIS_REVERSED);
+			BurnTrackballFrame(2, Analog[4], Analog[5], 0x00, 0x3f);
+			BurnTrackballUpdate(2);
+		}
 	}
 
 	INT32 nInterleave = 262;
-//	INT32 nCyclesTotal[1] = { (INT32)(7159090 / 59.92) }; // 59.92HZ
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesTotal[1] = { (INT32)(7159090 / 59.92) }; // 59.92HZ
+	INT32 nCyclesDone[1] = { nCyclesExtra[0] };
 
 	vblank = 0;
 
@@ -606,15 +621,20 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(456);
+		CPU_RUN(0, Sek);
 
-		if ((i & 0x3f) == 0x1f) {
+		if ((i & 0x3f) == 0) {
 			SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		}
+
+		if ((i & 0x3f) == 0 && has_trackball) {
+			BurnTrackballUpdate(0);
+			BurnTrackballUpdate(1);
+			BurnTrackballUpdate(2);
 		}
 
 		if (i == 239) {
 			vblank = 1;
-			SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 
 			if (pBurnDraw) {
 				BurnDrvRedraw();
@@ -623,6 +643,8 @@ static INT32 DrvFrame()
 	}
 
 	SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2413Render(pBurnSoundOut, nBurnSoundLen);
@@ -657,6 +679,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AtariSlapsticScan(nAction, pnMin);
 		AtariMoScan(nAction, pnMin);
+
+		BurnTrackballScan();
+
+		Diag.Scan();
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	AtariEEPROMScan(nAction, pnMin);
@@ -693,14 +721,16 @@ STD_ROM_FN(rampart)
 
 static INT32 RampartInit()
 {
-	return DrvInit(0,0);
+	has_trackball = 1;
+
+	return DrvInit(0, 0);
 }
 
 struct BurnDriverD BurnDrvRampart = {
 	"rampart", NULL, NULL, NULL, "1990",
 	"Rampart (Trackball)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_STRATEGY, 0,
 	NULL, rampartRomInfo, rampartRomName, NULL, NULL, NULL, NULL, RampartInputInfo, RampartDIPInfo,
 	RampartInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -735,14 +765,14 @@ STD_ROM_FN(rampart2p)
 
 static INT32 Rampart2pInit()
 {
-	return DrvInit(0,1);
+	return DrvInit(0, 1);
 }
 
 struct BurnDriverD BurnDrvRampart2p = {
 	"rampart2p", "rampart", NULL, NULL, "1990",
 	"Rampart (Joystick, bigger ROMs)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 3, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_STRATEGY, 0,
 	NULL, rampart2pRomInfo, rampart2pRomName, NULL, NULL, NULL, NULL, Ramprt2pInputInfo, Ramprt2pDIPInfo,
 	Rampart2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -789,7 +819,7 @@ struct BurnDriverD BurnDrvRampart2pa = {
 	"rampart2pa", "rampart", NULL, NULL, "1990",
 	"Rampart (Joystick, smaller ROMs)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_STRATEGY, 0,
 	NULL, rampart2paRomInfo, rampart2paRomName, NULL, NULL, NULL, NULL, Ramprt2pInputInfo, Ramprt2pDIPInfo,
 	Rampart2paInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -828,6 +858,8 @@ STD_ROM_FN(rampartj)
 
 static INT32 RampartjInit()
 {
+	is_rampartj = 1;
+
 	return DrvInit(1, 1);
 }
 
@@ -835,7 +867,7 @@ struct BurnDriverD BurnDrvRampartj = {
 	"rampartj", "rampart", NULL, NULL, "1990",
 	"Rampart (Japan, Joystick)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_ACTION | GBF_STRATEGY, 0,
 	NULL, rampartjRomInfo, rampartjRomName, NULL, NULL, NULL, NULL, RampartjInputInfo, RampartjDIPInfo,
 	RampartjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3

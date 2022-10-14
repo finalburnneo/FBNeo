@@ -21420,6 +21420,23 @@ struct BurnDriver BurnDrvnes_eeeck = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_gremlinsRomDesc[] = {
+	{ "Gremlins GlobalHack (2016)(pacnsacdave).nes",          262160, 0xf6d5d3e3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_gremlins)
+STD_ROM_FN(nes_gremlins)
+
+struct BurnDriver BurnDrvnes_gremlins = {
+	"nes_gremlins", "nes_hudsonhawk", NULL, NULL, "2016",
+	"Gremlins (GlobalHack)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_gremlinsRomInfo, nes_gremlinsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_leglutlivrRomDesc[] = {
 	{ "Leggite Luta Livre Remaster (2022)(John Vanderhoef).nes",          524304, 0x73bf3d14, BRF_ESS | BRF_PRG },
 };
@@ -21433,6 +21450,23 @@ struct BurnDriver BurnDrvnes_leglutlivr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_leglutlivrRomInfo, nes_leglutlivrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_megamanxRomDesc[] = {
+	{ "Mega Man Age of Wily GlobalHack (2015)(pacnsacdave).nes",          524304, 0x9414c14f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_megamanx)
+STD_ROM_FN(nes_megamanx)
+
+struct BurnDriver BurnDrvnes_megamanx = {
+	"nes_megamanx", "nes_megaman", NULL, NULL, "2015",
+	"Mega Man Age of Wily (GlobalHack)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_megamanxRomInfo, nes_megamanxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -21451,6 +21485,57 @@ struct BurnDriver BurnDrvnes_mogmines = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mogminesRomInfo, nes_mogminesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_snrRomDesc[] = {
+	{ "Swords and Runes (2014)(Sole Goose Productions).nes",          524304, 0x6f596f4b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_snr)
+STD_ROM_FN(nes_snr)
+
+struct BurnDriver BurnDrvnes_snr = {
+	"nes_snr", NULL, NULL, NULL, "2014",
+	"Swords and Runes (HB)\0", NULL, "Sole Goose Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RPG | GBF_STRATEGY, 0,
+	NESGetZipName, nes_snrRomInfo, nes_snrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_snrleRomDesc[] = {
+	{ "Swords and Runes LE (2014)(Sole Goose Productions).nes",          24592, 0xea0b4a06, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_snrle)
+STD_ROM_FN(nes_snrle)
+
+struct BurnDriver BurnDrvnes_snrle = {
+	"nes_snrle", "nes_snr", NULL, NULL, "2014",
+	"Swords and Runes Limited Edition (HB)\0", NULL, "Sole Goose Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RPG | GBF_STRATEGY, 0,
+	NESGetZipName, nes_snrleRomInfo, nes_snrleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_snr3RomDesc[] = {
+	{ "Swords and Runes III (2020)(Sole Goose Productions).nes",          524304, 0x5738826e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_snr3)
+STD_ROM_FN(nes_snr3)
+
+struct BurnDriver BurnDrvnes_snr3 = {
+	"nes_snr3", NULL, NULL, NULL, "2020",
+	"Swords and Runes III (HB)\0", NULL, "Sole Goose Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RPG | GBF_STRATEGY, 0,
+	NESGetZipName, nes_snr3RomInfo, nes_snr3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -23437,7 +23522,7 @@ STD_ROM_FN(nes_etdx)
 
 struct BurnDriver BurnDrvnes_etdx = {
 	"nes_etdx", "nes_et", NULL, NULL, "2019",
-	"E.T. - The Extra Terrestrial DX (HB)\0", NULL, "Khan Games -pacnsacdave", "Miscellaneous",
+	"E.T. - The Extra Terrestrial DX (HB)\0", NULL, "Khan Games - pacnsacdave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_etdxRomInfo, nes_etdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

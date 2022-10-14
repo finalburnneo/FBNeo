@@ -20237,7 +20237,7 @@ struct BurnDriver BurnDrvMslug21v2 = {
 
 static struct BurnRomInfo mslug2egRomDesc[] = {
 	{ "241-p1eg.p1",    0x100000, 0xbb312904, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "241-p2eg.sp2",   0x200000, 0x33f806c2, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "241-p2eg.sp2",   0x300000, 0xabf37360, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "241-s1eg.s1",    0x020000, 0xd983067f, 2 | BRF_GRA },           //  2 Text layer tiles
 	

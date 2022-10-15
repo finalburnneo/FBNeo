@@ -468,18 +468,9 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 		} \
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nAddress = (pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].bRelAddress) ? nAddress : nAddress + i;	\
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nExtended = nAttrib; \
-		if (IS_MIDWAY && k > 0) { /* multi-byte needs swapping on tms34010 (cheat data is BE cpu is LE *guess*) -dink */ \
-			INT32 swap = 0; \
-			switch (k) { \
-				case 1: swap = 1; break; \
-				case 2: \
-				case 3: swap = 3; break; \
-			}\
-			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-((i^swap)*8))) & 0xff;	\
-		} else {\
-			pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-(i*8))) & 0xff;	\
-		} \
+		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nValue = (nValue >> ((k*8)-(i*8))) & 0xff;	\
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nMultiByte = i;	\
+		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nTotalByte = k+1;	\
 		nCurrentAddress++;	\
 	}	\
 
@@ -640,6 +631,9 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 			OptionName(_T("Disabled"));
 
 			if (nAddress) {
+				if ((flags & 0x80018) == 0 && nAttrib != 0xffffffff) {
+					pCurrentCheat->bWriteWithMask = 1; // nAttrib field is the mask
+				}
 				if (flags & 0x1) {
 					pCurrentCheat->bOneShot = 1; // apply once and stop
 				}
@@ -692,6 +686,9 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *name)
 			n++;
 			nCurrentAddress = 0;
 
+			if ((flags & 0x80018) == 0 && nAttrib != 0xffffffff) {
+				pCurrentCheat->bWriteWithMask = 1; // nAttrib field is the mask
+			}
 			if (flags & 0x1) {
 				pCurrentCheat->bOneShot = 1; // apply once and stop
 			}

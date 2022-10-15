@@ -4830,7 +4830,7 @@
 		<comment>Hack, Homebrew</comment>
 		<description>E.T. - The Extra Terrestrial DX (HB)</description>
 		<year>2019</year>
-		<manufacturer>Khan Games -pacnsacdave</manufacturer>
+		<manufacturer>Khan Games - pacnsacdave</manufacturer>
 		<rom name="E.T. The Extra Terrestrial DX (2019)(pacnsacdave).nes" size="524304" crc="ac82d2b4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -6838,6 +6838,15 @@
 		<year>1992</year>
 		<manufacturer>THQ</manufacturer>
 		<rom name="Great Waldo Search, The (USA).nes" size="262160" crc="404c5ef2"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="gremlins" cloneof="hudsonhawk" romof="hudsonhawk">
+		<comment>Hack</comment>
+		<description>Gremlins (GlobalHack)</description>
+		<year>2016</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Gremlins GlobalHack (2016)(pacnsacdave).nes" size="262160" crc="f6d5d3e3"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10235,6 +10244,15 @@
 		<year>1994</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Mega Man 6 (USA).nes" size="524304" crc="1efcac48"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="megamanx" cloneof="megaman" romof="megaman">
+		<comment>Hack</comment>
+		<description>Mega Man Age of Wily (GlobalHack)</description>
+		<year>2015</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Mega Man Age of Wily GlobalHack (2015)(pacnsacdave).nes" size="524304" crc="9414c14f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15397,6 +15415,33 @@
 		<year>1992</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Sword Master (USA).nes" size="262160" crc="6ccd5c11"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="snr">
+		<comment>Homebrew</comment>
+		<description>Swords and Runes (HB)</description>
+		<year>2014</year>
+		<manufacturer>Sole Goose Productions</manufacturer>
+		<rom name="Swords and Runes (2014)(Sole Goose Productions).nes" size="524304" crc="6f596f4b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="snr3">
+		<comment>Homebrew</comment>
+		<description>Swords and Runes III (HB)</description>
+		<year>2020</year>
+		<manufacturer>Sole Goose Productions</manufacturer>
+		<rom name="Swords and Runes III (2020)(Sole Goose Productions).nes" size="524304" crc="5738826e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="snrle" cloneof="snr" romof="snr">
+		<comment>Homebrew</comment>
+		<description>Swords and Runes Limited Edition (HB)</description>
+		<year>2014</year>
+		<manufacturer>Sole Goose Productions</manufacturer>
+		<rom name="Swords and Runes LE (2014)(Sole Goose Productions).nes" size="24592" crc="ea0b4a06"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

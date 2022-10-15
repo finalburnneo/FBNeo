@@ -6538,6 +6538,7 @@ DRV		BurnDrvcv_gorf;
 DRV		BurnDrvMSX_ggeftsdp;
 DRV		BurnDrvgorkans;
 DRV		BurnDrvGotcha;
+DRV		BurnDrvGotya;
 DRV		BurnDrvnes_gotcha;
 DRV		BurnDrvsms_gotris;
 DRV		BurnDrvsms_gotrisfv;
@@ -6660,6 +6661,7 @@ DRV		BurnDrvgg_greendog;
 DRV		BurnDrvmd_greendog;
 DRV		BurnDrvmd_greendogs;
 DRV		BurnSpecGrellandfalla;
+DRV		BurnDrvnes_gremlins;
 DRV		BurnSpecGremlinsadv;
 DRV		BurnDrvMSX_gremlins2;
 DRV		BurnSpecGremlins2;
@@ -9494,6 +9496,7 @@ DRV		BurnDrvnes_megaman3rev;
 DRV		BurnDrvnes_megaman4;
 DRV		BurnDrvnes_megaman5;
 DRV		BurnDrvnes_megaman6;
+DRV		BurnDrvnes_megamanx;
 DRV		BurnDrvnes_megamancx;
 DRV		BurnDrvmd_mmworld;
 DRV		BurnDrvmd_mmworld2;
@@ -16082,6 +16085,9 @@ DRV		BurnSpecSwordsamurai;
 DRV		BurnDrvmd_vermil;
 DRV		BurnDrvmd_vermils;
 DRV		BurnSpecSwordslayer;
+DRV		BurnDrvnes_snr;
+DRV		BurnDrvnes_snr3;
+DRV		BurnDrvnes_snrle;
 DRV		BurnDrvnes_swordandser;
 DRV		BurnDrvmd_sydvaliss;
 DRV		BurnDrvmd_sydvalis;
@@ -16631,6 +16637,7 @@ DRV		BurnDrvRagtimea;
 DRV		BurnDrvRagtime;
 DRV		BurnDrvmd_waldo;
 DRV		BurnDrvGuiness;
+DRV		BurnDrvThehand;
 DRV		BurnDrvMSX_heist;
 DRV		BurnDrvmd_humans;
 DRV		BurnDrvThehustlj;
@@ -25621,6 +25628,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_ggeftsdp,		// Gorgeous Gemma in Escape from the Space Disposal Planet (HB)
 	&BurnDrvgorkans,			// Gorkans
 	&BurnDrvGotcha,				// Got-cha Mini Game Festival
+	&BurnDrvGotya,				// Got-Ya (12/24/1981, prototype?)
 	&BurnDrvnes_gotcha,			// Gotcha! - The Sport! (USA)
 	&BurnDrvsms_gotris,			// Gotris (HB, v0.8)
 	&BurnDrvsms_gotrisfv,		// Gotris (HB, v1.2p)
@@ -25743,6 +25751,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_greendog,		// Greendog - The Beached Surfer Dude! (Euro, USA)
 	&BurnDrvmd_greendogs,		// Greendog - The Beached Surfer Dude! (Hack, Spanish)
 	&BurnSpecGrellandfalla,		// Grell and Falla (128K)
+	&BurnDrvnes_gremlins,		// Gremlins (GlobalHack)
 	&BurnSpecGremlinsadv,		// Gremlins - The Adventure (48K)
 	&BurnDrvMSX_gremlins2,		// Gremlins 2 - La Nueva Generacion (Spanish)
 	&BurnSpecGremlins2,			// Gremlins 2 - The New Batch (48K)
@@ -28577,6 +28586,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_megaman4,		// Mega Man 4 (USA) (Rev A)
 	&BurnDrvnes_megaman5,		// Mega Man 5 (USA)
 	&BurnDrvnes_megaman6,		// Mega Man 6 (USA)
+	&BurnDrvnes_megamanx,		// Mega Man Age of Wily (GlobalHack)
 	&BurnDrvnes_megamancx,		// Mega Man CX (USA)
 	&BurnDrvmd_mmworld,			// Mega Marble World (HB, v1.90)
 	&BurnDrvmd_mmworld2,		// Mega Marble World 2 (HB, v1.03)
@@ -35165,6 +35175,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_vermil,			// Sword of Vermilion (Euro, USA)
 	&BurnDrvmd_vermils,			// Sword of Vermilion (Hack, Spanish)
 	&BurnSpecSwordslayer,		// Sword Slayer (128K)
+	&BurnDrvnes_snr,			// Swords and Runes (HB)
+	&BurnDrvnes_snr3,			// Swords and Runes III (HB)
+	&BurnDrvnes_snrle,			// Swords and Runes Limited Edition (HB)
 	&BurnDrvnes_swordandser,	// Swords and Serpents (USA)
 	&BurnDrvmd_sydvaliss,		// Syd of Valis (Hack, Spanish)
 	&BurnDrvmd_sydvalis,		// Syd of Valis (USA)
@@ -35714,6 +35727,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRagtime,			// The Great Ragtime Show (Japan v1.5, 92.12.07)
 	&BurnDrvmd_waldo,			// The Great Waldo Search (USA)
 	&BurnDrvGuiness,			// The Guiness (Japan)
+	&BurnDrvThehand,			// The Hand
 	&BurnDrvMSX_heist,			// The Heist (Jpn)
 	&BurnDrvmd_humans,			// The Humans (USA)
 	&BurnDrvThehustlj,			// The Hustler (Japan, program code J)

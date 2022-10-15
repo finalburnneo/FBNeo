@@ -751,13 +751,13 @@ struct BurnDriver BurnDrvUnkpacgc = {
 
 static struct BurnRomInfo unkpacgdRomDesc[] = {
 	// only the first program ROM differs from unkpacgc and only slightly
-	{ "2",	0x2000, 0x4a545bf6, BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "1",	0x2000, 0xb107ad7e, BRF_ESS | BRF_PRG }, //  1
+	{ "2.bin",	0x2000, 0x4a545bf6, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "1.bin",	0x2000, 0xb107ad7e, BRF_ESS | BRF_PRG }, //  1
 
 	// these are different: they change the characters from pacman related to car racing related
-	{ "3",	0x2000, 0xce47a9da, BRF_GRA },           //  2 Graphics
-	{ "4",	0x2000, 0x9a404e8c, BRF_GRA },           //  3
-	{ "5",	0x2000, 0x32d8d105, BRF_GRA },           //  4
+	{ "3.bin",	0x2000, 0xce47a9da, BRF_GRA },           //  2 Graphics
+	{ "4.bin",	0x2000, 0x9a404e8c, BRF_GRA },           //  3
+	{ "5.bin",	0x2000, 0x32d8d105, BRF_GRA },           //  4
 };
 
 STD_ROM_PICK(unkpacgd)

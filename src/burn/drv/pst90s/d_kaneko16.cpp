@@ -1779,10 +1779,10 @@ STD_ROM_PICK(brapboysp)
 STD_ROM_FN(brapboysp)
 
 static struct BurnRomInfo brapboysp2RomDesc[] = {
-	{ "rb-030n.u61",		0x020000, 0x632269b0, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "rb-031n.u62",		0x020000, 0x99623650, BRF_ESS | BRF_PRG }, //  1
+	{ "rb-30n.u61",			0x020000, 0x632269b0, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "rb-31n.u62",			0x020000, 0x99623650, BRF_ESS | BRF_PRG }, //  1
 
-	{ "rb-040n.u33",		0x020000, 0x313b7a6d, BRF_ESS | BRF_PRG }, //  2 MCU Data
+	{ "rb-40n.u33",			0x020000, 0x313b7a6d, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
 	{ "rb-020.c2",			0x100000, 0xce220d38, BRF_GRA },	       //  3 Sprites
 	{ "rb-021.u76",			0x100000, 0x74001407, BRF_GRA },	       //  4

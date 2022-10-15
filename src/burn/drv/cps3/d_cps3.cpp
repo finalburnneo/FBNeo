@@ -1372,11 +1372,30 @@ STD_ROM_FN(warzardr1)
 // -----------------------------------------
 static struct BurnRomInfo redearthnr1RomDesc[] = {
 
-	{ "redearth_asia_nocd.29f400.u2",		0x080000, 0x7a4f0851, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "redearth_asia_nocd.29f400.u2",	0x080000, 0x7a4f0851, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-#if !defined ROM_VERIFY
-	REDEARTH_961023_FLASH
-#endif
+	{ "redearthr1-simm1.0",				0x200000, 0x65bac346, BRF_ESS | BRF_PRG }, \
+	{ "redearthr1-simm1.1",				0x200000, 0xa8ec4aae, BRF_ESS | BRF_PRG }, \
+	{ "redearthr1-simm1.2",				0x200000, 0x2caf8995, BRF_ESS | BRF_PRG }, \
+	{ "redearthr1-simm1.3",				0x200000, 0x13ebc21d, BRF_ESS | BRF_PRG }, \
+	{ "redearth-simm3.0",				0x200000, 0x83350cc5, BRF_GRA }, \
+	{ "redearth-simm3.1",				0x200000, 0x56734de6, BRF_GRA }, \
+	{ "redearth-simm3.2",				0x200000, 0x800ea0f1, BRF_GRA }, \
+	{ "redearth-simm3.3",				0x200000, 0x97e9146c, BRF_GRA }, \
+	{ "redearth-simm3.4",				0x200000, 0x0cb1d648, BRF_GRA }, \
+	{ "redearth-simm3.5",				0x200000, 0x7a1099f0, BRF_GRA }, \
+	{ "redearth-simm3.6",				0x200000, 0xaeff8f54, BRF_GRA }, \
+	{ "redearth-simm3.7",				0x200000, 0xf770acd0, BRF_GRA }, \
+	{ "redearth-simm4.0",				0x200000, 0x301e56f2, BRF_GRA }, \
+	{ "redearth-simm4.1",				0x200000, 0x2048e103, BRF_GRA }, \
+	{ "redearth-simm4.2",				0x200000, 0xc9433455, BRF_GRA }, \
+	{ "redearth-simm4.3",				0x200000, 0xc02171a8, BRF_GRA }, \
+	{ "redearth-simm4.4",				0x200000, 0x2ddbf276, BRF_GRA }, \
+	{ "redearth-simm4.5",				0x200000, 0xfea820a6, BRF_GRA }, \
+	{ "redearth-simm4.6",				0x200000, 0xc7528df1, BRF_GRA }, \
+	{ "redearth-simm4.7",				0x200000, 0x2449cf3b, BRF_GRA }, \
+	{ "redearth-simm5.0",				0x200000, 0x424451b9, BRF_GRA }, \
+	{ "redearth-simm5.1",				0x200000, 0x9b8cb56b, BRF_GRA },
 };
 
 STD_ROM_PICK(redearthnr1)
@@ -2196,38 +2215,38 @@ struct BurnDriver BurnDrvSfiii3ws = {
 static struct BurnRomInfo jojobanrbRomDesc[] = {
 	{ "jojoba_japan_nocd.29f400.u2",	0x080000, 0x4dab19f5, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
-	{ "jojobanrb-simm1.0",			0x200000, 0x3b75c72e, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm1.1",			0x200000, 0x9f0d57f6, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm1.2",			0x200000, 0x480184c2, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm1.3",			0x200000, 0x2ddb747c, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm2.0",			0x200000, 0x7d618904, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm2.1",			0x200000, 0x882f76a0, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm2.2",			0x200000, 0x58ed6139, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm2.3",			0x200000, 0x64c19159, BRF_ESS | BRF_PRG }, 
-	{ "jojobanrb-simm3.0",			0x200000, 0xc579314a, BRF_GRA }, 
-	{ "jojobanrb-simm3.1",			0x200000, 0x2dc0682d, BRF_GRA }, 
-	{ "jojobanrb-simm3.2",			0x200000, 0xeb3470ff, BRF_GRA }, 
-	{ "jojobanrb-simm3.3",			0x200000, 0xb9d1fb4f, BRF_GRA }, 
-	{ "jojobanrb-simm3.4",			0x200000, 0xbb8a7b4d, BRF_GRA }, 
-	{ "jojobanrb-simm3.5",			0x200000, 0xb5e2a429, BRF_GRA }, 
-	{ "jojoba-simm3.6",			0x200000, 0xa10ec5af, BRF_GRA }, 
-	{ "jojoba-simm3.7",			0x200000, 0x0bd0de7a, BRF_GRA }, 
-	{ "jojoba-simm4.0",			0x200000, 0x6ea14adc, BRF_GRA }, 
-	{ "jojoba-simm4.1",			0x200000, 0x8f4c42fb, BRF_GRA }, 
-	{ "jojoba-simm4.2",			0x200000, 0xef0586d1, BRF_GRA }, 
-	{ "jojoba-simm4.3",			0x200000, 0x93ccc470, BRF_GRA }, 
-	{ "jojoba-simm4.4",			0x200000, 0x3d9ec7d2, BRF_GRA }, 
-	{ "jojoba-simm4.5",			0x200000, 0x03e66850, BRF_GRA }, 
-	{ "jojoba-simm4.6",			0x200000, 0x01606ac3, BRF_GRA }, 
-	{ "jojoba-simm4.7",			0x200000, 0x36392b87, BRF_GRA }, 
-	{ "jojoba-simm5.0",			0x200000, 0x2ef8c60c, BRF_GRA }, 
-	{ "jojoba-simm5.1",			0x200000, 0xcf7d7ca6, BRF_GRA }, 
-	{ "jojoba-simm5.2",			0x200000, 0xb7815bfa, BRF_GRA }, 
-	{ "jojoba-simm5.3",			0x200000, 0x9bfec049, BRF_GRA }, 
-	{ "jojobanrb-simm5.4",			0x200000, 0xf475f126, BRF_GRA }, 
-	{ "jojobanrb-simm5.5",			0x200000, 0xb028b441, BRF_GRA }, 
-	{ "jojoba-simm5.6",			0x200000, 0x4fb32906, BRF_GRA }, 
-	{ "jojoba-simm5.7",			0x200000, 0x8c8be520, BRF_GRA }
+	{ "jojobanrb-simm1.0",				0x200000, 0x3b75c72e, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm1.1",				0x200000, 0x9f0d57f6, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm1.2",				0x200000, 0x480184c2, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm1.3",				0x200000, 0x2ddb747c, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm2.0",				0x200000, 0x7d618904, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm2.1",				0x200000, 0x882f76a0, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm2.2",				0x200000, 0x58ed6139, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm2.3",				0x200000, 0x64c19159, BRF_ESS | BRF_PRG }, 
+	{ "jojobanrb-simm3.0",				0x200000, 0xc579314a, BRF_GRA }, 
+	{ "jojobanrb-simm3.1",				0x200000, 0x2dc0682d, BRF_GRA }, 
+	{ "jojobanrb-simm3.2",				0x200000, 0xeb3470ff, BRF_GRA }, 
+	{ "jojobanrb-simm3.3",				0x200000, 0xb9d1fb4f, BRF_GRA }, 
+	{ "jojobanrb-simm3.4",				0x200000, 0xbb8a7b4d, BRF_GRA }, 
+	{ "jojobanrb-simm3.5",				0x200000, 0xb5e2a429, BRF_GRA }, 
+	{ "jojoba-simm3.6",					0x200000, 0xa10ec5af, BRF_GRA }, 
+	{ "jojoba-simm3.7",					0x200000, 0x0bd0de7a, BRF_GRA }, 
+	{ "jojoba-simm4.0",					0x200000, 0x6ea14adc, BRF_GRA }, 
+	{ "jojoba-simm4.1",					0x200000, 0x8f4c42fb, BRF_GRA }, 
+	{ "jojoba-simm4.2",					0x200000, 0xef0586d1, BRF_GRA }, 
+	{ "jojoba-simm4.3",					0x200000, 0x93ccc470, BRF_GRA }, 
+	{ "jojoba-simm4.4",					0x200000, 0x3d9ec7d2, BRF_GRA }, 
+	{ "jojoba-simm4.5",					0x200000, 0x03e66850, BRF_GRA }, 
+	{ "jojoba-simm4.6",					0x200000, 0x01606ac3, BRF_GRA }, 
+	{ "jojoba-simm4.7",					0x200000, 0x36392b87, BRF_GRA }, 
+	{ "jojoba-simm5.0",					0x200000, 0x2ef8c60c, BRF_GRA }, 
+	{ "jojoba-simm5.1",					0x200000, 0xcf7d7ca6, BRF_GRA }, 
+	{ "jojoba-simm5.2",					0x200000, 0xb7815bfa, BRF_GRA }, 
+	{ "jojoba-simm5.3",					0x200000, 0x9bfec049, BRF_GRA }, 
+	{ "jojobanrb-simm5.4",				0x200000, 0xf475f126, BRF_GRA }, 
+	{ "jojobanrb-simm5.5",				0x200000, 0xb028b441, BRF_GRA }, 
+	{ "jojoba-simm5.6",					0x200000, 0x4fb32906, BRF_GRA }, 
+	{ "jojoba-simm5.7",					0x200000, 0x8c8be520, BRF_GRA }
 };
 
 STD_ROM_PICK(jojobanrb)

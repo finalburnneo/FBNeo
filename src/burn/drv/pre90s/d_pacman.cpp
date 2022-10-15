@@ -6732,14 +6732,14 @@ struct BurnDriver BurnDrvponpokov = {
 // Pac-Man PCB conversion kit. Includes a small daughtercard (2 roms + 4 PLDs, plugs in through the Z80 socket), 2 roms + 2 BPROMs
 
 static struct BurnRomInfo theglobpRomDesc[] = {
-	{ "u_2_the_glob_pg02284_eagle.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "u_3_the_glob_pg02284_eagle.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "u 2 the glob pg02284 eagle.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "u 3 the glob pg02284 eagle.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "5_e_the_glob_pg02284_eagle.5e",      0x1000, 0x53688260, 2 | BRF_GRA },				//  2 Graphics
-	{ "5_f_the_glob_pg02284_eagle.5f",      0x1000, 0x051f59c7, 2 | BRF_GRA },				//  3
+	{ "5 e the glob pg02284 eagle.5e",      0x1000, 0x53688260, 2 | BRF_GRA },				//  2 Graphics
+	{ "5 f the glob pg02284 eagle.5f",      0x1000, 0x051f59c7, 2 | BRF_GRA },				//  3
 
-	{ "7_f_the_glob.7f",      				0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Proms
-	{ "4_a_the_glob.4a",      				0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
+	{ "7 f the glob.7f",      				0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Proms
+	{ "4 a the glob.4a",      				0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
 
 	{ "82s126.1m",    						0x0100, 0xa9cc86bf, 4 | BRF_SND },				//  6 Sound Prom
 	{ "82s126.3m"  ,  						0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
@@ -6815,14 +6815,14 @@ struct BurnDriver BurnDrvtheglobpb = {
 // Super Glob (Pac-Man hardware)
 
 static struct BurnRomInfo sprglobpRomDesc[] = {
-	{ "u_2_the_glob_pg02284_eagle.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "u_3_the_glob_pg02284_eagle.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "u 2 the glob pg02284 eagle.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "u 3 the glob pg02284 eagle.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
 
 	{ "5e_2532.dat",  						0x1000, 0x1aa16109, 2 | BRF_GRA },				//  2 Graphics
 	{ "5f_2532.dat",  						0x1000, 0xafe72a89, 2 | BRF_GRA },				//  3
 
-	{ "7_f_the_glob.7f",      				0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Prom
-	{ "4_a_the_glob.4a",      				0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
+	{ "7 f the glob.7f",      				0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Prom
+	{ "4 a the glob.4a",      				0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
 
 	{ "82s126.1m",    						0x0100, 0xa9cc86bf, 4 | BRF_SND },				//  6 Sound Prom
 	{ "82s126.3m"  ,  						0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)

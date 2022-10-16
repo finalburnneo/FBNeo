@@ -37491,7 +37491,7 @@ struct BurnDriver BurnSpecCrimesb = {
 // Drift! 2K22 (128K) (HB)
 
 static struct BurnRomInfo SpecDrift2k22RomDesc[] = {
-	{ "Drift! 2K22 (2022)(Zosya Ent.).tap", 82830, 0x11b98254, BRF_ESS | BRF_PRG },
+	{ "Drift! 2K22 (2022)(Zosya Ent.).tap", 82851, 0x8a50263e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecDrift2k22, SpecDrift2k22, Spec128)

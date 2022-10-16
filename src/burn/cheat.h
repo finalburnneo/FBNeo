@@ -8,7 +8,7 @@ struct CheatAddressInfo {
 	INT32 nCPU;
 	INT32 nAddress;
 	INT32 nMultiByte; // byte number for this address
-	INT32 nTotalByte; // total bytes for this address,  "0, 1, 2, 3"  =  8, 16, 24, 32bit
+	INT32 nTotalByte; // total bytes for this address,  "1, 2, 3, 4"  (..or  8, 16, 24, 32bit)
 	UINT32 nValue;
 	UINT32 nExtended;
 	UINT32 nOriginalValue;

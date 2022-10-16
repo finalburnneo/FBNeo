@@ -392,14 +392,14 @@ INT32 CheatApply()
 									case 4: addressXor = 3; break;
 								}
 							}
-							////xxxxxxxxxxxxxxxxdink
+
 							//bprintf(0, _T("byte size %x  byte number %x.\n"), pAddressInfo->nTotalByte, pAddressInfo->nMultiByte);
 							//bprintf(0, _T("address/value:  %x  %x  (xor: %x)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, addressXor);
 
 							UINT8 byteToWrite = pAddressInfo->nValue;
 
 							if (pCurrentCheat->bWriteWithMask) {
-								//bprintf(0, _T("write with mask!  %x\n"),pAddressInfo->nExtended);
+								//bprintf(0, _T("write with mask!  %x\n"), pAddressInfo->nExtended);
 								byteToWrite =  (byteToWrite & pAddressInfo->nExtended);
 								byteToWrite |= (cheat_subptr->read(pAddressInfo->nAddress ^ addressXor) & ~pAddressInfo->nExtended);
 							}

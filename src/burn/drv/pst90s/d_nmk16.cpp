@@ -6651,7 +6651,7 @@ struct BurnDriver BurnDrvTdragon2a = {
 };
 
 
-// Big Bang (9th Nov. 1993)
+// Big Bang (9th Nov. 1993, set 1)
 
 static struct BurnRomInfo bigbangRomDesc[] = {
 	{ "eprom.3",		0x080000, 0x28e5957a, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6678,13 +6678,50 @@ STD_ROM_FN(bigbang)
 
 struct BurnDriver BurnDrvBigbang = {
 	"bigbang", "tdragon2", NULL, NULL, "1993",
-	"Big Bang (9th Nov. 1993)\0", NULL, "NMK", "NMK16",
+	"Big Bang (9th Nov. 1993, set 1)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, bigbangRomInfo, bigbangRomName, NULL, NULL, NULL, NULL, Tdragon2InputInfo, Tdragon2DIPInfo,
 	Tdragon2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };
+
+
+// Big Bang (9th Nov. 1993, set 2)
+
+static struct BurnRomInfo bigbangaRomDesc[] = {
+	{ "3.u117",			0x080000, 0xc79966d1, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+
+	{ "5.bin",			0x020000, 0xb870be61, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 code
+
+	{ "1.bin",			0x020000, 0xd488aafa, 3 | BRF_GRA },           //  2 Characters
+
+	{ "ww930914.2",		0x200000, 0xf968c65d, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "ww930917.7",		0x200000, 0xb98873cb, 5 | BRF_GRA },           //  4 Sprites
+	{ "ww930918.8",		0x200000, 0xbaee84b2, 5 | BRF_GRA },           //  5
+
+	{ "ww930916.4",		0x200000, 0x07c35fe6, 6 | BRF_SND },           //  6 OKI1 Samples
+
+	{ "ww930915.3",		0x200000, 0x82025bab, 7 | BRF_SND },           //  7 OKI2 Samples
+
+	{ "9.bpr",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8 Unused proms
+	{ "10.bpr",			0x000100, 0xe6ead349, 0 | BRF_OPT },           //  9
+};
+
+STD_ROM_PICK(bigbanga)
+STD_ROM_FN(bigbanga)
+
+struct BurnDriver BurnDrvBigbanga = {
+	"bigbanga", "tdragon2", NULL, NULL, "1993",
+	"Big Bang (9th Nov. 1993, set 2)\0", NULL, "NMK", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, bigbangaRomInfo, bigbangaRomName, NULL, NULL, NULL, NULL, Tdragon2InputInfo, Tdragon2DIPInfo,
+	Tdragon2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
+	224, 384, 3, 4
+};
+
 
 static INT32 Tdragon3Init()
 {
@@ -8233,6 +8270,9 @@ static struct BurnRomInfo sabotenbRomDesc[] = {
 	{ "ic30.sb6",		0x100000, 0x288407af, 6 | BRF_SND },           //  5 OKI1 Samples
 
 	{ "ic27.sb7",		0x100000, 0x43e33a7e, 7 | BRF_SND },           //  6 OKI2 Samples
+	
+	{ "8.ic37",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
+	{ "9.ic51",			0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
 };
 
 STD_ROM_PICK(sabotenb)
@@ -8292,6 +8332,9 @@ static struct BurnRomInfo sabotenbaRomDesc[] = {
 	{ "ic30.sb6",	0x100000, 0x288407af, 6 | BRF_SND },           //  5 OKI1 Samples
 
 	{ "ic27.sb7",	0x100000, 0x43e33a7e, 7 | BRF_SND },           //  6 OKI2 Samples
+	
+	{ "8.ic37",		0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  7 Unused proms
+	{ "9.ic51",		0x000100, 0x435653a2, 0 | BRF_OPT },           //  8
 };
 
 STD_ROM_PICK(sabotenba)

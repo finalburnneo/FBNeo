@@ -7,7 +7,8 @@ extern bool bCheatsAllowed;
 struct CheatAddressInfo {
 	INT32 nCPU;
 	INT32 nAddress;
-	INT32 nMultiByte;
+	INT32 nMultiByte; // byte number for this address
+	INT32 nTotalByte; // total bytes for this address,  "1, 2, 3, 4"  (..or  8, 16, 24, 32bit)
 	UINT32 nValue;
 	UINT32 nExtended;
 	UINT32 nOriginalValue;
@@ -36,6 +37,7 @@ struct CheatInfo {
 	INT32 bWatchMode;                           // Display value on screen
 	INT32 bWaitForModification;                 // Wait for Modification before changing
 	INT32 bModified;                            // Wrote cheat?
+	INT32 bWriteWithMask;                       // Use nExtended field as mask
 
 	TCHAR szCheatName[CHEAT_MAX_NAME];
 	struct CheatOption* pOption[CHEAT_MAX_OPTIONS];

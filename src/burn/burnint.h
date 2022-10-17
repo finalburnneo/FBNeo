@@ -163,8 +163,10 @@ struct cpu_core_config {
 	void (*reset)();		// reset cpu
 
 	UINT64 nMemorySize;		// how large is our memory range?
-	UINT32 nAddressXor;		// fix endianness for some cpus
+	UINT32 nAddressFlags;	// fix endianness for some cpus
 };
+
+#define MB_CHEAT_ENDI_SWAP 0x8000 // multibyte cheat needs swap on cheat-write
 
 void CpuCheatRegister(INT32 type, cpu_core_config *config);
 

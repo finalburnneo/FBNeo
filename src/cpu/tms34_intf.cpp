@@ -120,7 +120,7 @@ cpu_core_config TMS34010Config =
 	TMS34010RunEnd,
 	TMS34010Reset,
 	0x100000000ULL,
-	0
+	MB_CHEAT_ENDI_SWAP // 0x8000 - LE but needs address swap when writing multibyte cheats
 };
 // end cheat-engine hook-up
 

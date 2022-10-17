@@ -37336,10 +37336,10 @@ struct BurnDriver BurnSpecHakken48d = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Yokai Monk (128K) (HB, v1.7)
+// Yokai Monk (128K) (HB, v1.8)
 
 static struct BurnRomInfo SpecYokaimonkRomDesc[] = {
-	{ "Yokai Monk v1.7 128K (2022)(Poe Games).tap", 43126, 0xd26c2045, BRF_ESS | BRF_PRG },
+	{ "Yokai Monk v1.8 128K (2022)(Poe Games).tap", 43185, 0x8b1fc9fa, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecYokaimonk, SpecYokaimonk, Spec128)
@@ -37347,7 +37347,7 @@ STD_ROM_FN(SpecYokaimonk)
 
 struct BurnDriver BurnSpecYokaimonk = {
 	"spec_yokaimonk", NULL, "spec_spec128", NULL, "2022",
-	"Yokai Monk (128K) (HB, v1.7)\0", NULL, "Poe Games", "ZX Spectrum",
+	"Yokai Monk (128K) (HB, v1.8)\0", NULL, "Poe Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecYokaimonkRomInfo, SpecYokaimonkRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

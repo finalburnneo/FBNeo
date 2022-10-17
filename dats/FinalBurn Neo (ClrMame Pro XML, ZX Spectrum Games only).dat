@@ -4249,6 +4249,26 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="crimesa" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Crimenes Ilustrados - La Escena (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>BasicGames</manufacturer>
+		<rom name="Crimenes Ilustrados - La Escena (2022)(BasicGames).tap" size="38892" crc="a46bf600"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crimesb" cloneof="crimesa" romof="crimesa">
+		<comment>Homebrew</comment>
+		<description>Crimenes Ilustrados - La Solucion (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>BasicGames</manufacturer>
+		<rom name="Crimenes Ilustrados - La Solucion (2022)(BasicGames).tap" size="48147" crc="8d86b600"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="criticmass" romof="spectrum">
 		<description>Critical Mass (48K)</description>
 		<year>1985</year>
@@ -5700,6 +5720,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="drift2k22" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Drift! 2K22 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Drift! 2K22 (2022)(Zosya Ent.).tap" size="82851" crc="8a50263e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="driller" romof="spectrum">
 		<description>Driller (48K)</description>
 		<year>1987</year>
@@ -7000,6 +7031,15 @@
 		<year>1984</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="Galaxian 48K (1984)(Atarisoft).tap" size="20304" crc="10276234"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="galivan" romof="spectrum">
+		<description>Galivan - Cosmo Police (48K)</description>
+		<year>1986</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Galivan - Cosmo Police 48K (1986)(Ocean).tap" size="49664" crc="6987e5d8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9659,6 +9699,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pingpong" romof="spectrum">
+		<description>Konami's Ping Pong (48K)</description>
+		<year>1986</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Konami's Ping Pong 48K (1986)(Imagine).tap" size="39121" crc="d484a79a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="kong" romof="spectrum">
 		<description>Kong (Ocean) (48K)</description>
 		<year>1984</year>
@@ -10267,6 +10316,16 @@
 		<year>2012</year>
 		<manufacturer>Bob's Stuff</manufacturer>
 		<rom name="LumASCII (2012)(Bob's Stuff).tap" size="47917" crc="f29c2da7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lunacrabs" romof="spectrum">
+		<comment>1: left - 0: right - 9: fire</comment>
+		<description>Luna Crabs (16K)</description>
+		<year>1983</year>
+		<manufacturer>Micromega</manufacturer>
+		<rom name="Luna Crabs 16K (1983)(Micromega).tap" size="16574" crc="ffd2fb0b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11443,6 +11502,17 @@
 		<year>2021</year>
 		<manufacturer>BitmapSoft</manufacturer>
 		<rom name="Mr Hair &amp; THE FLY (2021)(BitmapSoft).tap" size="48426" crc="a78da9b2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mrhairkk" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Mr Hair and the Kitty Katacombs (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Chopz</manufacturer>
+		<rom name="Mr Hair and the Kitty Katacombs (2022)(Chopz).tap" size="38129" crc="d1e9ecea"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13241,6 +13311,15 @@
 		<rom name="Psycho Pigs U.X.B. (1988)(U.S. Gold).tap" size="50190" crc="3632f18a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="psychosold" romof="spectrum">
+		<description>Psycho Soldier (48K)</description>
+		<year>1987</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Psycho Soldier 48K (1987)(Imagine).tap" size="85352" crc="4c6cacaa"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15978,6 +16057,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="steeleagle" romof="spec128">
+		<description>Steel Eagle (128K)</description>
+		<year>1990</year>
+		<manufacturer>Players Premier</manufacturer>
+		<rom name="Steel Eagle 128K (1990)(Players Premier).tap" size="52632" crc="0d55bee6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="steg" romof="spec128">
 		<description>Steg the Slug (128K)</description>
 		<year>1992</year>
@@ -15985,6 +16074,24 @@
 		<rom name="Steg (1992)(Codemasters).tap" size="51271" crc="15a4d49e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stomp" romof="spectrum">
+		<description>Stomp (48K)</description>
+		<year>1985</year>
+		<manufacturer>DK'Tronics</manufacturer>
+		<rom name="Stomp 48K (1985)(DK'Tronics).tap" size="9669" crc="52926196"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stonkers" romof="spectrum">
+		<description>Stonkers (48K)</description>
+		<year>1983</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Stonkers 48K (1983)(Imagine).tap" size="47132" crc="8e2bfa6f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

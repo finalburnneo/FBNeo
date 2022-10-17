@@ -281,7 +281,7 @@ static void set_pcm_bank()
 		if (pcmbank_previous != ((UINT32)ioselect[0] & 0x77)) {
 			INT32 bank0 = ((ioselect[0] >> 0) & 7) << 20;
 			INT32 bank1 = ((ioselect[0] >> 4) & 7) << 20;
-	
+
 			pcmbank_previous = ioselect[0] & 0x77;
 			memcpy (DrvSndROM + 0x200000, DrvSndBanks + bank0, 0x100000);
 			memcpy (DrvSndROM + 0x300000, DrvSndBanks + bank1, 0x100000);
@@ -558,9 +558,9 @@ UINT32 __fastcall ps4hack_read_long(UINT32 a)
 		UINT32 pc = Sh2GetPC(0);
 
 		if (pc == speedhack_pc[0]) {
-			Sh2StopRun();
+			Sh2BurnUntilInt(0);
 		} else if (pc == speedhack_pc[1]) {
-			Sh2StopRun();
+			Sh2BurnUntilInt(0);
 		}
 	}
 
@@ -607,13 +607,13 @@ static INT32 MemIndex(INT32 gfx_len)
 	DrvSprRAM		= Next; Next += 0x0003800;
 	DrvPalRAM		= Next; Next += 0x0002008;
 
-	DrvBrightVal		= Next; Next += 0x0000002;
+	DrvBrightVal	= Next; Next += 0x0000002 + 2; // round up (u32 alignment)
 	ioselect		= Next; Next += 0x0000004;
 
 	RamEnd			= Next;
 
 	pTempDraw		= (UINT16 *)Next; Next += 320 * 256 * sizeof(INT16);
-	DrvPalette		= (UINT32   *)Next; Next += 0x1002 * sizeof(INT32);
+	DrvPalette		= (UINT32 *)Next; Next += 0x1002 * sizeof(INT32);
 
 	tile_bank		= (UINT16 *)(DrvVidRegs + 0x0008);
 

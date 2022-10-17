@@ -1292,7 +1292,7 @@ static struct BurnRomInfo PdriftjRomDesc[] = {
 
 	{ "epr-11753.ic102",  0x10000, 0xe81f5748, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
-	{ "mpr-11894.ic107",  0x40000, 0xb1e573f2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11894.ic107",  0x40000, 0xb1e573f2, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11893.ic106",  0x40000, 0x58b40f19, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11892.ic105",  0x40000, 0x3248a758, SYS16_ROM_PCMDATA | BRF_SND },
 

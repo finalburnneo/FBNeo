@@ -18481,8 +18481,10 @@ STD_ROM_FN(kof99eur)
 static INT32 Kof99TimePatchInit() // We need this patch to get timer working properly!
 {
  	INT32 nRet = NeoInit();
-	UINT8* ROM = (UINT8*)Neo68KROMActive;
-	ROM[0x2ABE9] = 0x65;
+
+	if (0 == nRet)
+		Neo68KROMActive[0x02abe9] = 0x65;
+
 	return nRet;
 }
 
@@ -18881,8 +18883,8 @@ struct BurnDriver BurnDrvkof2001pkz = {
 // 20221005
 
 static struct BurnRomInfo kof2001abRomDesc[] = {
-	{ "262-p1ab-08-e0.p1",	0x100000, 0x633bb64b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "262-p2ab-08-e0.sp2",	0x500000, 0x1bb69042, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "262-p1ab-08-e0.p1",		0x100000, 0x633bb64b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262-p2ab-08-e0.sp2",		0x500000, 0x1bb69042, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -18897,15 +18899,15 @@ static struct BurnRomInfo kof2001abRomDesc[] = {
 	{ "262-c9ab-08-e0.c9",		0x800000, 0x7d1a4a6e, 3 | BRF_GRA },           // 10
 	{ "262-c10ab-08-e0.c10",	0x800000, 0x61ba2805, 3 | BRF_GRA },           // 11
 	{ "262-c11ab-08-e0.c11",	0x800000, 0x1ca31bb7, 3 | BRF_GRA },           // 12
-	{ "262-c12ab-08-e0.c12",	0x800000, 0x01ed9f46, 3 | BRF_GRA },           //  9
+	{ "262-c12ab-08-e0.c12",	0x800000, 0x01ed9f46, 3 | BRF_GRA },           // 13
 
 	/* Encrypted */
-	{ "265-262-m1ab.m1",		0x040000, 0xbd71e1f2, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code
+	{ "265-262-m1ab.m1",		0x040000, 0xbd71e1f2, 4 | BRF_ESS | BRF_PRG }, // 14 Z80 code
 
-	{ "262-v1-08-e0.v1",		0x400000, 0x83d49ecf, 5 | BRF_SND },           // 13 Sound data
-	{ "262-v2-08-e0.v2",		0x400000, 0x003f1843, 5 | BRF_SND },           // 14
-	{ "262-v3-08-e0.v3",		0x400000, 0x2ae38dbe, 5 | BRF_SND },           // 15
-	{ "262-v4ab-08-e0.v4",		0x400000, 0x55602d94, 5 | BRF_SND },           // 16
+	{ "262-v1-08-e0.v1",		0x400000, 0x83d49ecf, 5 | BRF_SND },           // 15 Sound data
+	{ "262-v2-08-e0.v2",		0x400000, 0x003f1843, 5 | BRF_SND },           // 16
+	{ "262-v3-08-e0.v3",		0x400000, 0x2ae38dbe, 5 | BRF_SND },           // 17
+	{ "262-v4ab-08-e0.v4",		0x400000, 0x55602d94, 5 | BRF_SND },           // 18
 };
 
 STDROMPICKEXT(kof2001ab, kof2001ab, neogeo)
@@ -21847,7 +21849,7 @@ struct BurnDriver BurnDrvmslug21v2 = {
 // 20210916
 static struct BurnRomInfo mslug2egRomDesc[] = {
 	{ "241-p1eg.p1",	0x100000, 0xbb312904, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "241-p2eg.sp2",	0x200000, 0x33f806c2, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "241-p2eg.sp2",	0x300000, 0xabf37360, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "241-s1eg.s1",	0x020000, 0xd983067f, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -23603,4 +23605,102 @@ struct BurnDriver BurnDrvkof97evn = {
 	NULL, kof97evnRomInfo, kof97evnRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters '99 - Fluent and Refreshing
+// GOTVG 20221002
+static struct BurnRomInfo kof99skRomDesc[] = {
+	/* Encrypted */
+	{ "sk.neo-sma",		0x040000, 0x246fe840, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "251-p1sk.p1",	0x400000, 0x4031b191, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2sk.p2",	0x400000, 0xe429e1fe, 1 | BRF_ESS | BRF_PRG }, //  2
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "251-c1.c1",		0x800000, 0x0f9e93fe, 3 | BRF_GRA },           //  3 Sprite data
+	{ "251-c2.c2",		0x800000, 0xe71e2ea3, 3 | BRF_GRA },           //  4
+	{ "251-c3.c3",		0x800000, 0x238755d2, 3 | BRF_GRA },           //  5
+	{ "251-c4.c4",		0x800000, 0x438c8b22, 3 | BRF_GRA },           //  6
+	{ "251-c5.c5",		0x800000, 0x0b0abd0a, 3 | BRF_GRA },           //  7
+	{ "251-c6.c6",		0x800000, 0x65bbf281, 3 | BRF_GRA },           //  8
+	{ "251-c7.c7",		0x800000, 0xff65f62e, 3 | BRF_GRA },           //  9
+	{ "251-c8.c8",		0x800000, 0x8d921c68, 3 | BRF_GRA },           // 10
+
+	{ "251-m1.m1",		0x020000, 0x5e74539c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "251-v1.v1",		0x400000, 0xef2eecc8, 5 | BRF_SND },           // 12 Sound data
+	{ "251-v2.v2",		0x400000, 0x73e211ca, 5 | BRF_SND },           // 13
+	{ "251-v3.v3",		0x400000, 0x821901da, 5 | BRF_SND },           // 14
+	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof99sk, kof99sk, neogeo)
+STD_ROM_FN(kof99sk)
+
+static INT32 kof99WOPInit()
+{
+	nNeoProtectionXor = 0x00;
+	NeoCallbackActive->pInitialise = kof99SMADecrypt;
+
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvkof99sk = {
+	"kof99sk", "kof99", "neogeo", NULL, "2022",
+	"The King of Fighters '99 - Fluent and Refreshing\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99skRomInfo, kof99skRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof99WOPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters '99 - Evolution
+// GOTVG 20221016
+static struct BurnRomInfo kof99jhRomDesc[] = {
+	/* Encrypted */
+	{ "pl.neo-sma",		0x040000, 0xeb34c057, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "251-p1pl.p1",	0x400000, 0xf163729d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2pl.p2",	0x400000, 0x03570b47, 1 | BRF_ESS | BRF_PRG }, //  2
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "251-c1pl.c1",	0x800000, 0x317c6a74, 3 | BRF_GRA },           //  3 Sprite data
+	{ "251-c2pl.c2",	0x800000, 0x6ef5f6fd, 3 | BRF_GRA },           //  4
+	{ "251-c3pl.c3",	0x800000, 0x0973cf42, 3 | BRF_GRA },           //  5
+	{ "251-c4pl.c4",	0x800000, 0x62d8e371, 3 | BRF_GRA },           //  6
+	{ "251-c5pl.c5",	0x800000, 0x70586850, 3 | BRF_GRA },           //  7
+	{ "251-c6pl.c6",	0x800000, 0x49e10689, 3 | BRF_GRA },           //  8
+	{ "251-c7pl.c7",	0x800000, 0x4db968df, 3 | BRF_GRA },           //  9
+	{ "251-c8pl.c8",	0x800000, 0xe78cc768, 3 | BRF_GRA },           // 10
+
+	{ "251-m1.m1",		0x020000, 0x5e74539c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "251-v1.v1",		0x400000, 0xef2eecc8, 5 | BRF_SND },           // 12 Sound data
+	{ "251-v2.v2",		0x400000, 0x73e211ca, 5 | BRF_SND },           // 13
+	{ "251-v3.v3",		0x400000, 0x821901da, 5 | BRF_SND },           // 14
+	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof99jh, kof99jh, neogeo)
+STD_ROM_FN(kof99jh)
+
+static INT32 kof99WOPTPInit()
+{
+	INT32 nRet = kof99WOPInit();
+
+	if (0 == nRet)
+		Neo68KROMActive[0x02abe9] = 0x65; // Time Patch
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvkof99jh = {
+	"kof99jh", "kof99", "neogeo", NULL, "2022",
+	"The King of Fighters '99 - Evolution\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99jhRomInfo, kof99jhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof99WOPTPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };

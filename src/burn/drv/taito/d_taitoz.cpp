@@ -3339,6 +3339,8 @@ static struct BurnRomInfo SpacegunRomDesc[] = {
 	{ "pal16l8-c57-13.72", 0x000104, 0x1369f23e, BRF_OPT },
 	{ "pal16r4-c57-14.96", 0x000104, 0x75e1bf61, BRF_OPT },
 	
+	{ "93c46.ic93", 	   0x000080, 0x4900416b, BRF_OPT },
+	
 };
 
 STD_ROM_PICK(Spacegun)
@@ -3373,6 +3375,8 @@ static struct BurnRomInfo SpacegunuRomDesc[] = {
 	{ "pal16l8-c57-13.72", 0x000104, 0x1369f23e, BRF_OPT },
 	{ "pal16r4-c57-14.96", 0x000104, 0x75e1bf61, BRF_OPT },
 	
+	{ "93c46.ic93", 	   0x000080, 0x4900416b, BRF_OPT },
+	
 };
 
 STD_ROM_PICK(Spacegunu)
@@ -3406,6 +3410,8 @@ static struct BurnRomInfo SpacegunjRomDesc[] = {
 	{ "pal20l8-c57-12.61", 0x000144, 0xdebddb13, BRF_OPT },
 	{ "pal16l8-c57-13.72", 0x000104, 0x1369f23e, BRF_OPT },
 	{ "pal16r4-c57-14.96", 0x000104, 0x75e1bf61, BRF_OPT },
+	
+	{ "93c46.ic93", 	   0x000080, 0x4900416b, BRF_OPT },
 	
 };
 

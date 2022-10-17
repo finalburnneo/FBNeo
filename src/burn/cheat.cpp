@@ -228,6 +228,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 						pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
 
 						bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
+
 						if (pCurrentCheat->bWatchMode) {
 							bprintf(0, _T("Watch memory @ 0x%X (0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
 						} else
@@ -371,7 +372,7 @@ INT32 CheatApply()
 							UINT32 addr = 0;
 
 							for (INT32 i = 0; i < (pAddressInfo->nRelAddressBits + 1); i++) {
-								if (cheat_subptr->nAddressXor) { // big endian
+								if (cheat_subptr->nAddressFlags & 3) { // big endian
 									addr |= cheat_subptr->read(pAddressInfo->nAddress + (pAddressInfo->nRelAddressBits - i)) << (i * 8);
 								} else {
 									addr |= cheat_subptr->read(pAddressInfo->nAddress + i) << (i * 8);
@@ -381,7 +382,29 @@ INT32 CheatApply()
 							cheat_subptr->write(addr + pAddressInfo->nMultiByte + pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
 						} else {
 							// Normal cheat write
-							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+							INT32 addressXor = 0;
+							if (cheat_subptr->nAddressFlags & MB_CHEAT_ENDI_SWAP) {
+								// LE CPU's Require address swaps with multi-byte writes (tms34xxx, v60)
+								// (because cheat loader (burner/conc.cpp) stores everything in BE format)
+								switch (pAddressInfo->nTotalByte) {
+									case 2: addressXor = 1; break;
+									case 3:
+									case 4: addressXor = 3; break;
+								}
+							}
+
+							//bprintf(0, _T("byte size %x  byte number %x.\n"), pAddressInfo->nTotalByte, pAddressInfo->nMultiByte);
+							//bprintf(0, _T("address/value:  %x  %x  (xor: %x)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, addressXor);
+
+							UINT8 byteToWrite = pAddressInfo->nValue;
+
+							if (pCurrentCheat->bWriteWithMask) {
+								//bprintf(0, _T("write with mask!  %x\n"), pAddressInfo->nExtended);
+								byteToWrite =  (byteToWrite & pAddressInfo->nExtended);
+								byteToWrite |= (cheat_subptr->read(pAddressInfo->nAddress ^ addressXor) & ~pAddressInfo->nExtended);
+							}
+
+							cheat_subptr->write(pAddressInfo->nAddress ^ addressXor, byteToWrite);
 							//bprintf(0, _T("normal cheat write %x -> %x\n"), pAddressInfo->nAddress, pAddressInfo->nValue);
 						}
 						pCurrentCheat->bModified = 1;

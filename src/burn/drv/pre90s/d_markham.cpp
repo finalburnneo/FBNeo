@@ -1286,7 +1286,7 @@ static struct BurnRomInfo guinessRomDesc[] = {
 	{ "tvg8.92",			0x2000, 0x1b265360, 3 | BRF_GRA },           //  7
 	{ "tvg9.94",			0x2000, 0x776c7ca6, 3 | BRF_GRA },           //  8
 
-	{ "=tvg12.15",			0x2000, 0xa82c923d, 4 | BRF_GRA },           //  9 Tiles
+	{ "tvg12.15",			0x2000, 0xa82c923d, 4 | BRF_GRA },           //  9 Tiles
 	{ "tvg11.15",			0x2000, 0xd432c96f, 4 | BRF_GRA },           // 10
 	{ "tvg10.15",			0x2000, 0xa53959d6, 4 | BRF_GRA },           // 11
 

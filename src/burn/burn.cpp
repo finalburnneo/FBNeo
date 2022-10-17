@@ -850,7 +850,9 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 // NOTE: Make sure this is called before any soundcore init!
 INT32 BurnSetRefreshRate(double dFrameRate)
 {
-	if (bForce60Hz) {
+	if (bForce60Hz && dFrameRate > 50.00) {
+		// Force 60hz w/ games that are near 60hz & avoid breaking
+		// vector (30-42hz), 30hz Midway, NES/MSX/Spectrum 50hz PAL mode.
 		dFrameRate = 60.00;
 	}
 

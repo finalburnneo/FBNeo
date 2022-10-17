@@ -483,7 +483,7 @@ cpu_core_config v60Config =
 	v60RunEnd,
 	v60Reset,
 	0x1000000,
-	0
+	MB_CHEAT_ENDI_SWAP // 0x8000 - LE but needs address swap when writing multibyte cheats
 };
 
 struct cpu_info {

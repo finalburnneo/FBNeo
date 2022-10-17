@@ -5023,26 +5023,26 @@ struct BurnDriver BurnDrvOscarj1 = {
 // Psycho-Nics Oscar (Japan revision 2)
 
 static struct BurnRomInfo oscarj2RomDesc[] = {
-	{ "du10-2",		0x08000, 0x114e898d, 1 }, //  0 maincpu
-	{ "ed09",		0x10000, 0xe2d4bba9, 1 }, //  1
+	{ "du10-2.h12",		0x08000, 0x114e898d, 1 }, //  0 maincpu
+	{ "du09.h10",		0x10000, 0xe2d4bba9, 1 }, //  1
 
-	{ "du11",		0x10000, 0xff45c440, 2 }, //  2 sub
+	{ "du11.h16",		0x10000, 0xff45c440, 2 }, //  2 sub
 
-	{ "ed12",		0x08000, 0x432031c5, 3 }, //  3 audiocpu
+	{ "du12.k5",		0x08000, 0x432031c5, 3 }, //  3 audiocpu
 
-	{ "ed08",		0x04000, 0x308ac264, 4 }, //  4 gfx1
+	{ "du08.e5",		0x04000, 0x308ac264, 4 }, //  4 gfx1
 
-	{ "ed04",		0x10000, 0x416a791b, 5 }, //  5 gfx2
-	{ "ed05",		0x10000, 0xfcdba431, 5 }, //  6
-	{ "ed06",		0x10000, 0x7d50bebc, 5 }, //  7
-	{ "ed07",		0x10000, 0x8fdf0fa5, 5 }, //  8
+	{ "du04.a11",		0x10000, 0x416a791b, 5 }, //  5 gfx2
+	{ "du05.a14",		0x10000, 0xfcdba431, 5 }, //  6
+	{ "du06.a16",		0x10000, 0x7d50bebc, 5 }, //  7
+	{ "du07.a20",		0x10000, 0x8fdf0fa5, 5 }, //  8
 
-	{ "ed01",		0x10000, 0xd3a58e9e, 6 }, //  9 gfx3
-	{ "ed03",		0x10000, 0x4fc4fb0f, 6 }, // 10
-	{ "ed00",		0x10000, 0xac201f2d, 6 }, // 11
-	{ "ed02",		0x10000, 0x7ddc5651, 6 }, // 12
+	{ "du01.a3",		0x10000, 0xd3a58e9e, 6 }, //  9 gfx3
+	{ "du03.a6",		0x10000, 0x4fc4fb0f, 6 }, // 10
+	{ "du00.a1",		0x10000, 0xac201f2d, 6 }, // 11
+	{ "du02.a5",		0x10000, 0x7ddc5651, 6 }, // 12
 
-	{ "du-13.bin",		0x00200, 0xbea1f87e, 8 }, // 14 proms
+	{ "du-13.c8",		0x00200, 0xbea1f87e, 8 }, // 14 proms
 };
 
 STD_ROM_PICK(oscarj2)

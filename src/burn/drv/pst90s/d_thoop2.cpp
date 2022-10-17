@@ -684,6 +684,12 @@ static struct BurnRomInfo thoop2RomDesc[] = {
 	{ "th2-h12.h12",			0x400000, 0xb25c2d3e, 3 | BRF_GRA },           //  4
 
 	{ "th2-c1.c1",				0x100000, 0x8fac8c30, 4 | BRF_SND },           //  5 Samples
+	
+	{ "pal16r8-1.b16",  		0x000104, 0x27b1ca8b, 0 | BRF_OPT },		   //  6 Plds
+	{ "pal20l8-2.b23", 			0x000144, 0x87e5e6ab, 0 | BRF_OPT },
+	{ "pal16r4-3.e2", 			0x000104, 0x0488f37b, 0 | BRF_OPT },
+	{ "pal20l8-4.h15", 			0x000144, 0x49053906, 0 | BRF_OPT },
+	{ "palce16v8-5.h21", 		0x000117, 0xb651bc3b, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(thoop2)
@@ -713,6 +719,12 @@ static struct BurnRomInfo thoop2aRomDesc[] = {
 	{ "th2-h12.h12",			0x400000, 0xb25c2d3e, 3 | BRF_GRA },           //  4
 
 	{ "th2-c1.c1",				0x100000, 0x8fac8c30, 4 | BRF_SND },           //  5 Samples
+	
+	{ "pal16r8-1.b16",  		0x000104, 0x27b1ca8b, 0 | BRF_OPT },		   //  6 Plds
+	{ "pal20l8-2.b23", 			0x000144, 0x87e5e6ab, 0 | BRF_OPT },
+	{ "pal16r4-3.e2", 			0x000104, 0x0488f37b, 0 | BRF_OPT },
+	{ "pal20l8-4.h15", 			0x000144, 0x49053906, 0 | BRF_OPT },
+	{ "palce16v8-5.h21", 		0x000117, 0xb651bc3b, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(thoop2a)

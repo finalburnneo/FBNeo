@@ -726,7 +726,7 @@ static INT32 RampartInit()
 	return DrvInit(0, 0);
 }
 
-struct BurnDriverD BurnDrvRampart = {
+struct BurnDriver BurnDrvRampart = {
 	"rampart", NULL, NULL, NULL, "1990",
 	"Rampart (Trackball)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -768,7 +768,7 @@ static INT32 Rampart2pInit()
 	return DrvInit(0, 1);
 }
 
-struct BurnDriverD BurnDrvRampart2p = {
+struct BurnDriver BurnDrvRampart2p = {
 	"rampart2p", "rampart", NULL, NULL, "1990",
 	"Rampart (Joystick, bigger ROMs)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -815,7 +815,7 @@ static INT32 Rampart2paInit()
 	return DrvInit(1, 1);
 }
 
-struct BurnDriverD BurnDrvRampart2pa = {
+struct BurnDriver BurnDrvRampart2pa = {
 	"rampart2pa", "rampart", NULL, NULL, "1990",
 	"Rampart (Joystick, smaller ROMs)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -863,7 +863,7 @@ static INT32 RampartjInit()
 	return DrvInit(1, 1);
 }
 
-struct BurnDriverD BurnDrvRampartj = {
+struct BurnDriver BurnDrvRampartj = {
 	"rampartj", "rampart", NULL, NULL, "1990",
 	"Rampart (Japan, Joystick)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

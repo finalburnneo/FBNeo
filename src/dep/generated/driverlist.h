@@ -12845,15 +12845,11 @@ DRV		BurnDrvnes_rampage;
 DRV		BurnDrvRmpgwt11;
 DRV		BurnDrvRmpgwt;
 DRV		BurnDrvsms_rampart;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvRampartj;		// no comment
-DRV		BurnDrvRampart2p;		// no comment
-DRV		BurnDrvRampart2pa;		// no comment
-#endif
+DRV		BurnDrvRampartj;
+DRV		BurnDrvRampart2p;
+DRV		BurnDrvRampart2pa;
 DRV		BurnDrvmd_rampartj;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvRampart;			// no comment
-#endif
+DRV		BurnDrvRampart;
 DRV		BurnDrvmd_rampart;
 DRV		BurnDrvnes_rampart;
 DRV		BurnSpecranarama;
@@ -31950,15 +31946,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRmpgwt11,			// Rampage: World Tour (rev 1.1)
 	&BurnDrvRmpgwt,				// Rampage: World Tour (rev 1.3)
 	&BurnDrvsms_rampart,		// Rampart (Euro)
-#if defined FBNEO_DEBUG
-	&BurnDrvRampartj,			// Rampart (Japan, Joystick) [no comment]
-	&BurnDrvRampart2p,			// Rampart (Joystick, bigger ROMs) [no comment]
-	&BurnDrvRampart2pa,			// Rampart (Joystick, smaller ROMs) [no comment]
-#endif
+	&BurnDrvRampartj,			// Rampart (Japan, Joystick)
+	&BurnDrvRampart2p,			// Rampart (Joystick, bigger ROMs)
+	&BurnDrvRampart2pa,			// Rampart (Joystick, smaller ROMs)
 	&BurnDrvmd_rampartj,		// Rampart (Jpn, Kor)
-#if defined FBNEO_DEBUG
-	&BurnDrvRampart,			// Rampart (Trackball) [no comment]
-#endif
+	&BurnDrvRampart,			// Rampart (Trackball)
 	&BurnDrvmd_rampart,			// Rampart (USA)
 	&BurnDrvnes_rampart,		// Rampart (USA)
 	&BurnSpecranarama,			// Ranarama (48K)
@@ -37952,7 +37944,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecYogigreatescape,	// Yogi's Great Escape (48K)
 	&BurnDrvYoukaidk2,			// Yokai Douchuuki (Japan, new version (YD2, Rev B))
 	&BurnDrvYoukaidk1,			// Yokai Douchuuki (Japan, old version (YD1))
-	&BurnSpecYokaimonk,			// Yokai Monk (128K) (HB, v1.7)
+	&BurnSpecYokaimonk,			// Yokai Monk (128K) (HB, v1.8)
 	&BurnDrvcv_yolk,			// Yolks on You, The (Prototype)
 	&BurnDrvsg1k_homemjt,		// Yon-nin Mahjong (Tw)
 	&BurnSpecYopparaien,		// Yopparai Sarariiman (English) (48K) (HB)

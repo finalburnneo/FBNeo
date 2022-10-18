@@ -18558,10 +18558,10 @@
 	</game>
 	<game name="yokaimonk" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Yokai Monk (128K) (HB, v1.7)</description>
+		<description>Yokai Monk (128K) (HB, v1.8)</description>
 		<year>2022</year>
 		<manufacturer>Poe Games</manufacturer>
-		<rom name="Yokai Monk v1.7 128K (2022)(Poe Games).tap" size="43126" crc="d26c2045"/>
+		<rom name="Yokai Monk v1.8 128K (2022)(Poe Games).tap" size="43185" crc="8b1fc9fa"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

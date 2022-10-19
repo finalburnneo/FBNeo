@@ -32759,3 +32759,117 @@ struct BurnDriver BurnDrvMSX_circusmyst = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Corridor Runner (HB)
+
+static struct BurnRomInfo MSX_corrunnerRomDesc[] = {
+	{ "Corridor Runner (2022)(Aburi Games).rom",	32768, 0xc175e20d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_corrunner, MSX_corrunner, msx_msx)
+STD_ROM_FN(MSX_corrunner)
+
+struct BurnDriver BurnDrvMSX_corrunner = {
+	"msx_corrunner", NULL, "msx_msx", NULL, "2022",
+	"Corridor Runner (HB)\0", NULL, "Aburi Games", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_corrunnerRomInfo, MSX_corrunnerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Guntus (HB)
+
+static struct BurnRomInfo MSX_guntusRomDesc[] = {
+	{ "Guntus (2022)(Inufuto).rom",	11733, 0x54722d30, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_guntus, MSX_guntus, msx_msx)
+STD_ROM_FN(MSX_guntus)
+
+struct BurnDriver BurnDrvMSX_guntus = {
+	"msx_guntus", NULL, "msx_msx", NULL, "2022",
+	"Guntus (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_guntusRomInfo, MSX_guntusRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// MuhonMourn 3 (HB, v1.1)
+
+static struct BurnRomInfo MSX_muhmourn3RomDesc[] = {
+	{ "Muhonmourn 3 v1.1 (2022)(hoge1e3).rom",	753664, 0x65211244, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_muhmourn3, MSX_muhmourn3, msx_msx)
+STD_ROM_FN(MSX_muhmourn3)
+
+struct BurnDriver BurnDrvMSX_muhmourn3 = {
+	"msx_muhmourn3", NULL, "msx_msx", NULL, "2022",
+	"MuhonMourn 3 (HB, v1.1)\0", NULL, "hoge1e3", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_ACTION, 0,
+	MSXGetZipName, MSX_muhmourn3RomInfo, MSX_muhmourn3RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Penguin Catcher (HB, v1.1)
+
+static struct BurnRomInfo MSX_pengcatchRomDesc[] = {
+	{ "Penguin Catcher v1.1 (2022) (_NetNomad).rom",	753664, 0xa27d13e6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pengcatch, MSX_pengcatch, msx_msx)
+STD_ROM_FN(MSX_pengcatch)
+
+struct BurnDriver BurnDrvMSX_pengcatch = {
+	"msx_pengcatch", NULL, "msx_msx", NULL, "2022",
+	"Penguin Catcher (HB, v1.1)\0", NULL, "_NetNomad", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_ACTION, 0,
+	MSXGetZipName, MSX_pengcatchRomInfo, MSX_pengcatchRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Pon Pon (HB, v1.51)
+
+static struct BurnRomInfo MSX_ponponRomDesc[] = {
+	{ "Pon Pon v1.51 (2022)(Hiromasa Tanaka).rom",	16384, 0x6a176438, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ponpon, MSX_ponpon, msx_msx)
+STD_ROM_FN(MSX_ponpon)
+
+struct BurnDriver BurnDrvMSX_ponpon = {
+	"msx_ponpon", NULL, "msx_msx", NULL, "2022",
+	"Pon Pon (HB, v1.51)\0", NULL, "Hiromasa Tanaka", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_ponponRomInfo, MSX_ponponRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Storm Rescue (HB)
+
+static struct BurnRomInfo MSX_stormrescueRomDesc[] = {
+	{ "StormRescue (2022)(Renato Murta).rom",	753664, 0xddc22cfc, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_stormrescue, MSX_stormrescue, msx_msx)
+STD_ROM_FN(MSX_stormrescue)
+
+struct BurnDriver BurnDrvMSX_stormrescue = {
+	"msx_stormrescue", NULL, "msx_msx", NULL, "2022",
+	"Storm Rescue (HB)\0", NULL, "Renato Murta", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_ACTION, 0,
+	MSXGetZipName, MSX_stormrescueRomInfo, MSX_stormrescueRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

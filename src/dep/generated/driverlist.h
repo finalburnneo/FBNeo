@@ -3288,6 +3288,7 @@ DRV		BurnSpecCoreycb;
 DRV		BurnSpecCoronaenc;
 DRV		BurnDrvmd_corporat;
 DRV		BurnDrvnes_correbenny;
+DRV		BurnDrvMSX_corrunner;
 DRV		BurnSpeccorsarios1;
 DRV		BurnSpeccorsarios2;
 DRV		BurnDrvMSX_corsarios;
@@ -6808,6 +6809,7 @@ DRV		BurnDrvmd_gunstarj;
 DRV		BurnDrvmd_gunstarjs;
 DRV		BurnDrvmd_gunstarc;
 DRV		BurnDrvmd_gunstaru;
+DRV		BurnDrvMSX_guntus;
 DRV		BurnDrvMSX_gurulogic;
 DRV		BurnDrvgururin;
 DRV		BurnDrvGussun;
@@ -10379,6 +10381,7 @@ DRV		BurnDrvmd_muhammad;
 DRV		BurnDrvmd_muhammadu;
 DRV		BurnDrvmd_muhammadup;
 DRV		BurnDrvSemibase;
+DRV		BurnDrvMSX_muhmourn3;
 DRV		BurnDrvNmg5;
 DRV		BurnDrvNmg5a;
 DRV		BurnDrvNmg5e;
@@ -11621,6 +11624,7 @@ DRV		BurnDrvMSX_pengadvk2;
 DRV		BurnDrvMSX_pengadvk1;
 DRV		BurnDrvPenbros;
 DRV		BurnDrvMSX_penguincafe;
+DRV		BurnDrvMSX_pengcatch;
 DRV		BurnDrvsms_pengland;
 DRV		BurnDrvMSX_pengmind;
 DRV		BurnDrvMSX_pengrace;
@@ -12020,6 +12024,7 @@ DRV		BurnDrvPollux;
 DRV		BurnDrvPolluxa;
 DRV		BurnDrvPolluxa2;
 DRV		BurnDrvPompingw;
+DRV		BurnDrvMSX_ponpon;
 DRV		BurnDrvponpokov;
 DRV		BurnDrvponpoko;
 DRV		BurnDrvMSX_poogaboo;
@@ -15085,6 +15090,7 @@ DRV		BurnSpecStopvirus;
 DRV		BurnSpecStopvirusaf;
 DRV		BurnDrvStmbladej;
 DRV		BurnDrvStmblade;
+DRV		BurnDrvMSX_stormrescue;
 DRV		BurnSpecstormbringer;
 DRV		BurnDrvMSX_stormbringer;
 DRV		BurnSpecStormfinch;
@@ -22389,6 +22395,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecCoronaenc,			// Corona Encantada, La (Spanish) (128K) (HB)
 	&BurnDrvmd_corporat,		// Corporation (Euro)
 	&BurnDrvnes_correbenny,		// Corre Benny (Spain)
+	&BurnDrvMSX_corrunner,		// Corridor Runner (HB)
 	&BurnSpeccorsarios1,		// Corsarios (Part 1 of 2) (128K)
 	&BurnSpeccorsarios2,		// Corsarios (Part 2 of 2) (128K)
 	&BurnDrvMSX_corsarios,		// Corsarios (Spanish)
@@ -25909,6 +25916,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_gunstarjs,		// Gunstar Heroes (Jpn, Sample)
 	&BurnDrvmd_gunstarc,		// Gunstar Heroes (T-Chi)
 	&BurnDrvmd_gunstaru,		// Gunstar Heroes (USA)
+	&BurnDrvMSX_guntus,			// Guntus (HB)
 	&BurnDrvMSX_gurulogic,		// Guru Logic (HB, v2)
 	&BurnDrvgururin,			// Gururin
 	&BurnDrvGussun,				// Gussun Oyoyo (Japan)
@@ -29480,6 +29488,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_muhammadu,		// Muhammad Ali Heavyweight Boxing (USA)
 	&BurnDrvmd_muhammadup,		// Muhammad Ali Heavyweight Boxing (USA, Prototype)
 	&BurnDrvSemibase,			// MuHanSeungBu (SemiCom Baseball) (Korea)
+	&BurnDrvMSX_muhmourn3,		// MuhonMourn 3 (HB, v1.1)
 	&BurnDrvNmg5,				// Multi 5 / New Multi Game 5 (set 1)
 	&BurnDrvNmg5a,				// Multi 5 / New Multi Game 5 (set 2)
 	&BurnDrvNmg5e,				// Multi 5 / New Multi Game 5 (set 3, earlier)
@@ -30722,6 +30731,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_pengadvk1,		// Penguin Adventure - Yume Tairiku Adventure (Kor, Zemina)
 	&BurnDrvPenbros,			// Penguin Brothers (Japan)
 	&BurnDrvMSX_penguincafe,	// Penguin Cafe (HB)
+	&BurnDrvMSX_pengcatch,		// Penguin Catcher (HB, v1.1)
 	&BurnDrvsms_pengland,		// Penguin Land (Euro, USA)
 	&BurnDrvMSX_pengmind,		// Penguin Mind (HB)
 	&BurnDrvMSX_pengrace,		// Penguin Race (HB)
@@ -31121,6 +31131,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPolluxa,			// Pollux (set 2)
 	&BurnDrvPolluxa2,			// Pollux (set 3)
 	&BurnDrvPompingw,			// Pomping World (Japan)
+	&BurnDrvMSX_ponpon,			// Pon Pon (HB, v1.51)
 	&BurnDrvponpokov,			// Ponpoko (Venture Line)
 	&BurnDrvponpoko,			// Ponpoko
 	&BurnDrvMSX_poogaboo,		// Poogaboo (Spanish)
@@ -34186,6 +34197,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecStopvirusaf,		// Stop Virus (Axel F bgm) (128K) (HB)
 	&BurnDrvStmbladej,			// Storm Blade (Japan)
 	&BurnDrvStmblade,			// Storm Blade (US)
+	&BurnDrvMSX_stormrescue,	// Storm Rescue (HB)
 	&BurnSpecstormbringer,		// Stormbringer (128K)
 	&BurnDrvMSX_stormbringer,	// Stormbringer (Euro)
 	&BurnSpecStormfinch,		// Stormfinch (128K) (HB)

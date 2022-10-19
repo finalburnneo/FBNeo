@@ -3854,6 +3854,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="corrunner" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Corridor Runner (HB)</description>
+		<year>2022</year>
+		<manufacturer>Aburi Games</manufacturer>
+		<rom name="Corridor Runner (2022)(Aburi Games).rom" size="32768" crc="c175e20d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="corsarios" romof="msx">
 		<description>Corsarios (Spanish)</description>
 		<year>1989</year>
@@ -6964,6 +6976,18 @@
 		<year>1990</year>
 		<manufacturer>Prosoft</manufacturer>
 		<rom name="prosoft_gunsmoke_(1990)(prosoft).rom" size="32768" crc="1318dba7"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="guntus" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Guntus (HB)</description>
+		<year>2022</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Guntus (2022)(Inufuto).rom" size="11733" crc="54722d30"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11142,6 +11166,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="muhmourn3" romof="msx">
+		<comment>Homebrew</comment>
+		<description>MuhonMourn 3 (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>hoge1e3</manufacturer>
+		<rom name="Muhonmourn 3 v1.1 (2022)(hoge1e3).rom" size="753664" crc="65211244"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mundoper" romof="msx">
 		<description>Mundo Perdido, El (Spanish)</description>
 		<year>1988</year>
@@ -12266,6 +12302,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pengcatch" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Penguin Catcher (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>_NetNomad</manufacturer>
+		<rom name="Penguin Catcher v1.1 (2022) (_NetNomad).rom" size="753664" crc="a27d13e6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pengmind" romof="msx">
 		<comment>Homebrew</comment>
 		<description>Penguin Mind (HB)</description>
@@ -12744,6 +12792,18 @@
 		<year>1987</year>
 		<manufacturer>Methodic Solutions</manufacturer>
 		<rom name="Police Academy II (1987)(Methodic Solutions)(NL)[RUN'CAS-'].cas" size="46944" crc="24b47702"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ponpon" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Pon Pon (HB, v1.51)</description>
+		<year>2022</year>
+		<manufacturer>Hiromasa Tanaka</manufacturer>
+		<rom name="Pon Pon v1.51 (2022)(Hiromasa Tanaka).rom" size="16384" crc="6a176438"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15093,6 +15153,18 @@
 		<year>1985</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bousoutokkyuusosa.rom" size="16384" crc="b6063493"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stormrescue" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Storm Rescue (HB)</description>
+		<year>2022</year>
+		<manufacturer>Renato Murta</manufacturer>
+		<rom name="StormRescue (2022)(Renato Murta).rom" size="753664" crc="ddc22cfc"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

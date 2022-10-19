@@ -721,8 +721,9 @@ enum NetVersion
 	NET_VERSION_MIDWAY_FIXES = 8,
 	NET_VERSION_UMK3UC_FRAMERATE = 9,
 	NET_VERSION_SOCD = 10,
+	NET_VERSION_NORMAL_FRAMERATE = 11,
 	// Current version
-	NET_VERSION	= 10,
+	NET_VERSION	= 11,
 };
 
 #ifdef __cplusplus

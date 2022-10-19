@@ -49,6 +49,7 @@ void SetBurnFPS(const char *name, int version)
 	// UMK3UC at 60fps rate
 	if (kNetVersion >= NET_VERSION_UMK3UC_FRAMERATE) {
 		if (!strcmp(name, "umk3uc")) {
+			bForce60Hz = 1;
 			return;
 		}
 	}
@@ -62,6 +63,13 @@ void SetBurnFPS(const char *name, int version)
 			return;
 		}
 	}
+
+	// disable force 60Hz
+	if (kNetVersion >= NET_VERSION_NORMAL_FRAMERATE) {
+		bForce60Hz = 0;
+		return;
+	}
+
 }
 
 bool __cdecl ggpo_on_client_event_callback(GGPOClientEvent *info)
@@ -475,7 +483,7 @@ void QuarkInit(TCHAR *tconnect)
 	kNetLua = 0;
 	kNetSpectator = 0;
 	kNetQuarkId[0] = 0;
-	bForce60Hz = 1;
+	bForce60Hz = 0;
 	iRanked = 0;
 	iPlayer = 0;
 	iDelay = 0;

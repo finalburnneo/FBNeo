@@ -14877,7 +14877,7 @@ struct BurnDriver BurnDrvbrkrevext = {
 };
 
 // 19YY NGCD ADK World port to MVS
-// EKORZ September 20, 2022
+// EKORZ October 20, 2022
 
 static struct BurnRomInfo _19yyRomDesc[] = {
 	{ "19yy-p1.p1",   0x200000, 0x59374c47, 1 | BRF_ESS | BRF_PRG }, //  0 68K code

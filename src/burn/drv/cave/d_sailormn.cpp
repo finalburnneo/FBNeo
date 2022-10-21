@@ -653,8 +653,11 @@ static INT32 DrvFrame()
 // and then afterwards to set up all the pointers
 static INT32 MemIndex()
 {
+	// The Rom01 length of sailormnffj is 0x100000.
+	INT32 Rom01Len = (bDoIpsPatch || (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "sailormnffj"))) ? 0x100000 : 0x080000;
+
 	UINT8* Next; Next = Mem;
-	Rom01			= Next; Next += 0x080000;		// 68K program
+	Rom01			= Next; Next += Rom01Len;		// 68K program
 	Rom02			= Next; Next += 0x200000;
 	RomZ80			= Next; Next += 0x080000;
 	CaveSpriteROM	= Next; Next += 0x800000;

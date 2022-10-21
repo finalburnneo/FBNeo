@@ -31879,7 +31879,7 @@ struct BurnDriver BurnDrvnes_kartfighter = {
 // Super Kart Fighter Hack
 
 static struct BurnRomInfo nes_skartfighterRomDesc[] = {
-	{ "Super Kart Fighter Hack (2022) (Streetwize).nes",          393232, 0xe2c84ed7, BRF_ESS | BRF_PRG },
+	{ "Super Kart Fighter Hack (2022) (Streetwize).nes",          393232, 0x4212c73e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_skartfighter)

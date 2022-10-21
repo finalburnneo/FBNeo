@@ -14877,7 +14877,7 @@ struct BurnDriver BurnDrvbrkrevext = {
 };
 
 // 19YY NGCD ADK World port to MVS
-// EKORZ August 23, 2022
+// EKORZ October 20, 2022
 
 static struct BurnRomInfo _19yyRomDesc[] = {
 	{ "19yy-p1.p1",   0x200000, 0x59374c47, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -14887,10 +14887,10 @@ static struct BurnRomInfo _19yyRomDesc[] = {
 	{ "19yy-c1.c1",   0x400000, 0x622719d5, 3 | BRF_GRA },           //  2 Sprite data
 	{ "19yy-c2.c2",   0x400000, 0x41b07be5, 3 | BRF_GRA },           //  3
 
-	{ "19yy-m1.m1",   0x020000, 0x636d8ac8, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "19yy-m1.m1",   0x020000, 0x8e05762a, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
-	{ "19yy-v1.v1",   0x400000, 0x7bb79a6a, 5 | BRF_SND },           //  7 Sound data
-	{ "19yy-v2.v2",   0x200000, 0x1908a7ce, 5 | BRF_SND },           //  8
+	{ "19yy-v1.v1",   0x800000, 0x944146c2, 5 | BRF_SND },           //  7 Sound data
+	{ "19yy-v2.v2",   0x800000, 0xa4bafe45, 5 | BRF_SND },           //  8
 };
 
 STDROMPICKEXT(_19yy, _19yy, neogeo)

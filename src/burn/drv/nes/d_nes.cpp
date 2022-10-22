@@ -21416,6 +21416,42 @@ struct BurnDriver BurnDrvnes_eeeck = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Sara Parker's Pool Challenge
+static struct BurnRomInfo nes_spoolchalRomDesc[] = {
+	{ "Sara Parker's Pool Challenge (2010)(RetroUSB).nes",          98320, 0x5a34e197, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spoolchal)
+STD_ROM_FN(nes_spoolchal)
+
+struct BurnDriver BurnDrvnes_spoolchal = {
+	"nes_spoolchal", "nes_rpoolchal", NULL, NULL, "2010",
+	"Sara Parker's Pool Challenge\0", NULL, "retroUSB", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_spoolchalRomInfo, nes_spoolchalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Robert Byrne's Pool Challenge (Prototype)
+static struct BurnRomInfo nes_rpoolchalRomDesc[] = {
+	{ "Robert Byrne's Pool Challenge Prototype (1996)(Odyssey Software).nes",          98320, 0x9b273e2b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rpoolchal)
+STD_ROM_FN(nes_rpoolchal)
+
+struct BurnDriver BurnDrvnes_rpoolchal = {
+	"nes_rpoolchal", NULL, NULL, NULL, "1996",
+	"Robert Byrne's Pool Challenge (Prototype)\0", NULL, "Odyssey Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_rpoolchalRomInfo, nes_rpoolchalRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)

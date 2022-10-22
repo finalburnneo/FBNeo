@@ -868,7 +868,7 @@ static INT32 gameInit()
 
 	// Find out first rom's size
 	BurnDrvGetRomInfo(&ri, 0);
-	nRom01Len = ri.nLen;
+	nRom01Len = (bDoIpsPatch) ? 0x100000 : ri.nLen;
 
 	BurnSetRefreshRate(CAVE_REFRESHRATE);
 

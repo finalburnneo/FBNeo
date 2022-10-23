@@ -23838,6 +23838,196 @@ struct BurnDriver BurnSpecStonkers = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Cavelon (48K)
+
+static struct BurnRomInfo SpecCavelonRomDesc[] = {
+	{ "Cavelon 48K (1984)(Ocean).tap", 33603, 0xdf2fa332, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCavelon, SpecCavelon, Spectrum)
+STD_ROM_FN(SpecCavelon)
+
+struct BurnDriver BurnSpecCavelon = {
+	"spec_cavelon", NULL, "spec_spectrum", NULL, "1984",
+	"Cavelon (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecCavelonRomInfo, SpecCavelonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Chinese Juggler, The (48K)
+
+static struct BurnRomInfo SpecChinjugglerRomDesc[] = {
+	{ "Chinese Juggler, The 48K (1984)(Ocean).tap", 44449, 0xc5956b3f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecChinjuggler, SpecChinjuggler, Spectrum)
+STD_ROM_FN(SpecChinjuggler)
+
+struct BurnDriver BurnSpecChinjuggler = {
+	"spec_chinjuggler", NULL, "spec_spectrum", NULL, "1984",
+	"Chinese Juggler, The (48K)\0", "Press 'J' to use controller", "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecChinjugglerRomInfo, SpecChinjugglerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Gilligan's Gold (48K)
+
+static struct BurnRomInfo SpecGillgoldRomDesc[] = {
+	{ "Gilligan's Gold 48K (1984)(Ocean).tap", 45750, 0x8623c1a1, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGillgold, SpecGillgold, Spectrum)
+STD_ROM_FN(SpecGillgold)
+
+struct BurnDriver BurnSpecGillgold = {
+	"spec_gillgold", NULL, "spec_spectrum", NULL, "1984",
+	"Gilligan's Gold (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecGillgoldRomInfo, SpecGillgoldRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Knight Rider (48K)
+
+static struct BurnRomInfo SpecKnightriderRomDesc[] = {
+	{ "Knight Rider 48K (1986)(Ocean).tap", 49152, 0xdf4e4c85, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecKnightrider, SpecKnightrider, Spectrum)
+STD_ROM_FN(SpecKnightrider)
+
+struct BurnDriver BurnSpecKnightrider = {
+	"spec_knightrider", NULL, "spec_spectrum", NULL, "1986",
+	"Knight Rider (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT | GBF_RACING, 0,
+	SpectrumGetZipName, SpecKnightriderRomInfo, SpecKnightriderRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Moon Alert! (48K)
+
+static struct BurnRomInfo SpecMoonalertRomDesc[] = {
+	{ "Moon Alert! 48K (1984)(Ocean).tap", 47090, 0x01a888bf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMoonalert, SpecMoonalert, Spectrum)
+STD_ROM_FN(SpecMoonalert)
+
+struct BurnDriver BurnSpecMoonalert = {
+	"spec_moonalert", NULL, "spec_spectrum", NULL, "1984",
+	"Moon Alert! (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecMoonalertRomInfo, SpecMoonalertRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Phantom Club (48K)
+
+static struct BurnRomInfo SpecPhantclubRomDesc[] = {
+	{ "Phantom Club 48K (1988)(Ocean).tap", 51960, 0xda40ea75, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPhantclub, SpecPhantclub, Spectrum)
+STD_ROM_FN(SpecPhantclub)
+
+struct BurnDriver BurnSpecPhantclub = {
+	"spec_phantclub", NULL, "spec_spectrum", NULL, "1988",
+	"Phantom Club (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecPhantclubRomInfo, SpecPhantclubRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Pogo (48K)
+
+static struct BurnRomInfo SpecPogoRomDesc[] = {
+	{ "Pogo 48K (1984)(Ocean).tap", 42355, 0x858e042e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPogo, SpecPogo, Spectrum)
+STD_ROM_FN(SpecPogo)
+
+struct BurnDriver BurnSpecPogo = {
+	"spec_pogo", NULL, "spec_spectrum", NULL, "1984",
+	"Pogo (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecPogoRomInfo, SpecPogoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Red Heat (48K)
+
+static struct BurnRomInfo SpecRedheatRomDesc[] = {
+	{ "Red Heat 48K (1989)(Ocean).tap", 119068, 0x4d1c484b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRedheat, SpecRedheat, Spectrum)
+STD_ROM_FN(SpecRedheat)
+
+struct BurnDriver BurnSpecRedheat = {
+	"spec_redheat", NULL, "spec_spectrum", NULL, "1989",
+	"Red Heat (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SCRFIGHT, 0,
+	SpectrumGetZipName, SpecRedheatRomInfo, SpecRedheatRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Return of the Jedi (128K)
+
+static struct BurnRomInfo SpecRetofjediRomDesc[] = {
+	{ "Return of the Jedi 128K (1989)(Domark).tap", 37222, 0xdccfc93b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRetofjedi, SpecRetofjedi, Spec128)
+STD_ROM_FN(SpecRetofjedi)
+
+struct BurnDriver BurnSpecRetofjedi = {
+	"spec_retofjedi", NULL, "spec_spec128", NULL, "1989",
+	"Return of the Jedi (128K)\0", NULL, "Domark", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecRetofjediRomInfo, SpecRetofjediRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Street Hawk (48K)
+
+static struct BurnRomInfo SpecStreethawkRomDesc[] = {
+	{ "Street Hawk 48K (1986)(Ocean).tap", 47745, 0x37c623ad, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStreethawk, SpecStreethawk, Spectrum)
+STD_ROM_FN(SpecStreethawk)
+
+struct BurnDriver BurnSpecStreethawk = {
+	"spec_streethawk", NULL, "spec_spectrum", NULL, "1986",
+	"Street Hawk (48K)\0", NULL, "Ocean", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_VERSHOOT, 0,
+	SpectrumGetZipName, SpecStreethawkRomInfo, SpecStreethawkRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 

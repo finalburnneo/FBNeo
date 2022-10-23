@@ -18995,46 +18995,46 @@ struct BurnDriver BurnDrvkof2001pkz = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The King of Fighters 2001 (All Boss)
-// 20221005
+// The King of Fighters 2001 Ultimate
+// Ver 1.01 - 20221021
 
-static struct BurnRomInfo kof2001abRomDesc[] = {
-	{ "262-p1ab-08-e0.p1",		0x100000, 0x633bb64b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "262-p2ab-08-e0.sp2",		0x500000, 0x1bb69042, 1 | BRF_ESS | BRF_PRG }, //  1
+static struct BurnRomInfo kof2001ultRomDesc[] = {
+	{ "262-p1ult-08-e0.p1",		0x100000, 0x0d1be003, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262-p2ult-08-e0.sp2",	0x500000, 0x02c377ab, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
-	{ "262-c1ab-08-e0.c1",		0x800000, 0xde322745, 3 | BRF_GRA },           //  2 Sprite data
-	{ "262-c2ab-08-e0.c2",		0x800000, 0x266df0a3, 3 | BRF_GRA },           //  3
-	{ "262-c3ab-08-e0.c3",		0x800000, 0xbf60e575, 3 | BRF_GRA },           //  4
-	{ "262-c4ab-08-e0.c4",		0x800000, 0x1a2450fe, 3 | BRF_GRA },           //  5
-	{ "262-c5ab-08-e0.c5",		0x800000, 0x45159560, 3 | BRF_GRA },           //  6
-	{ "262-c6ab-08-e0.c6",		0x800000, 0x3ff10428, 3 | BRF_GRA },           //  7
-	{ "262-c7ab-08-e0.c7",		0x800000, 0x2689a993, 3 | BRF_GRA },           //  8
-	{ "262-c8ab-08-e0.c8",		0x800000, 0x14d07532, 3 | BRF_GRA },           //  9
-	{ "262-c9ab-08-e0.c9",		0x800000, 0x7d1a4a6e, 3 | BRF_GRA },           // 10
-	{ "262-c10ab-08-e0.c10",	0x800000, 0x61ba2805, 3 | BRF_GRA },           // 11
-	{ "262-c11ab-08-e0.c11",	0x800000, 0x1ca31bb7, 3 | BRF_GRA },           // 12
-	{ "262-c12ab-08-e0.c12",	0x800000, 0x01ed9f46, 3 | BRF_GRA },           // 13
+	{ "262-c1ult-08-e0.c1",		0x800000, 0xde322745, 3 | BRF_GRA },           //  2 Sprite data
+	{ "262-c2ult-08-e0.c2",		0x800000, 0x266df0a3, 3 | BRF_GRA },           //  3
+	{ "262-c3ult-08-e0.c3",		0x800000, 0xbf60e575, 3 | BRF_GRA },           //  4
+	{ "262-c4ult-08-e0.c4",		0x800000, 0x1a2450fe, 3 | BRF_GRA },           //  5
+	{ "262-c5ult-08-e0.c5",		0x800000, 0x45159560, 3 | BRF_GRA },           //  6
+	{ "262-c6ult-08-e0.c6",		0x800000, 0x3ff10428, 3 | BRF_GRA },           //  7
+	{ "262-c7ult-08-e0.c7",		0x800000, 0x2689a993, 3 | BRF_GRA },           //  8
+	{ "262-c8ult-08-e0.c8",		0x800000, 0x14d07532, 3 | BRF_GRA },           //  9
+	{ "262-c9ult-08-e0.c9",		0x800000, 0x7d1a4a6e, 3 | BRF_GRA },           // 10
+	{ "262-c10ult-08-e0.c10",	0x800000, 0x61ba2805, 3 | BRF_GRA },           // 11
+	{ "262-c11ult-08-e0.c11",	0x800000, 0x1ca31bb7, 3 | BRF_GRA },           // 12
+	{ "262-c12ult-08-e0.c12",	0x800000, 0x01ed9f46, 3 | BRF_GRA },           // 13
 
 	/* Encrypted */
-	{ "265-262-m1ab.m1",		0x040000, 0xbd71e1f2, 4 | BRF_ESS | BRF_PRG }, // 14 Z80 code
+	{ "265-262-m1ult.m1",		0x040000, 0xbd71e1f2, 4 | BRF_ESS | BRF_PRG }, // 14 Z80 code
 
 	{ "262-v1-08-e0.v1",		0x400000, 0x83d49ecf, 5 | BRF_SND },           // 15 Sound data
 	{ "262-v2-08-e0.v2",		0x400000, 0x003f1843, 5 | BRF_SND },           // 16
 	{ "262-v3-08-e0.v3",		0x400000, 0x2ae38dbe, 5 | BRF_SND },           // 17
-	{ "262-v4ab-08-e0.v4",		0x400000, 0x55602d94, 5 | BRF_SND },           // 18
+	{ "262-v4ult-08-e0.v4",		0x400000, 0x55602d94, 5 | BRF_SND },           // 18
 };
 
-STDROMPICKEXT(kof2001ab, kof2001ab, neogeo)
-STD_ROM_FN(kof2001ab)
+STDROMPICKEXT(kof2001ult, kof2001ult, neogeo)
+STD_ROM_FN(kof2001ult)
 
-struct BurnDriver BurnDrvkof2001ab = {
-	"kof2001ab", "kof2001", "neogeo", NULL, "2022",
-	"The King of Fighters 2001 (All Boss)\0", "hack only enable in AES mode", "hack", "Neo Geo MVS",
+struct BurnDriver BurnDrvkof2001ult = {
+	"kof2001ult", "kof2001", "neogeo", NULL, "2022",
+	"The King of Fighters 2001 Ultimate\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof2001abRomInfo, kof2001abRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
+	NULL, kof2001ultRomInfo, kof2001ultRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	kof2001Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -23108,11 +23108,11 @@ struct BurnDriver BurnDrvmslug5mg = {
 };
 
 // Metal Slug 5 (Stone Turtle, Hack)
-// GOTVG 20221010
+// GOTVG 20221017
 static struct BurnRomInfo mslug5sgRomDesc[] = {
 	/* Encrypted */
-	{ "268-p1csg.p1",	0x400000, 0xe8fc2328, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2ces.p2",	0x400000, 0x8fbf1c85, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p1csg.p1",	0x400000, 0x713cbdc3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2ces.p2",	0x400000, 0xa962a3e1, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

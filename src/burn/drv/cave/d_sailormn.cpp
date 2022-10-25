@@ -12,8 +12,10 @@ static UINT8 DrvJoy1[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy2[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT16 DrvInput[2] = {0x0000, 0x0000};
 
-static UINT8 *Mem = NULL, *MemEnd = NULL;
-static UINT8 *RamStart, *RamEnd;
+static UINT8 *AllMem;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
+static UINT8 *MemEnd;
 static UINT8 *Rom01, *Rom02, *RomZ80;
 static UINT8 *Ram01, *Ram02, *Ram03, *RamZ80;
 static UINT8 *DefEEPROM;
@@ -41,6 +43,8 @@ static INT32 nCyclesExtra[2];
 static INT32 agalletamode = 0;
 static INT32 nWhichGame;	// 0 - sailormn/sailormno
 							// 1 - agallet
+
+static INT32 nRom01Len = 0;
 
 
 static struct BurnInputInfo sailormnInputList[] = {
@@ -452,8 +456,10 @@ static INT32 DrvExit()
 
 	SekExit();				// Deallocate 68000s
 
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 	agalletamode = 0;
+
+	nRom01Len = 0;
 
 	return 0;
 }
@@ -464,7 +470,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	memset (RamStart, 0, RamEnd - RamStart);
+	memset (AllRam, 0, RamEnd - AllRam);
 
 	if (agalletamode)
 		agalletamode = 0x2002;
@@ -653,8 +659,8 @@ static INT32 DrvFrame()
 // and then afterwards to set up all the pointers
 static INT32 MemIndex()
 {
-	UINT8* Next; Next = Mem;
-	Rom01			= Next; Next += 0x080000;		// 68K program
+	UINT8* Next; Next = AllMem;
+	Rom01			= Next; Next += nRom01Len;		// 68K program
 	Rom02			= Next; Next += 0x200000;
 	RomZ80			= Next; Next += 0x080000;
 	CaveSpriteROM	= Next; Next += 0x800000;
@@ -667,7 +673,7 @@ static INT32 MemIndex()
 	}
 	MSM6295ROM		= Next; Next += 0x400000;		// MSM6295 ADPCM data
 	DefEEPROM               = Next; Next += 0x000080;
-	RamStart		= Next;
+	AllRam		= Next;
 	Ram01			= Next; Next += 0x010002;		// CPU #0 work RAM
 	Ram02			= Next; Next += 0x008000;		//
 	Ram03			= Next; Next += 0x004002;		//
@@ -816,8 +822,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 
 		memset(&ba, 0, sizeof(ba));
-    	ba.Data		= RamStart;
-		ba.nLen		= RamEnd - RamStart;
+    	ba.Data		= AllRam;
+		ba.nLen		= RamEnd - AllRam;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
 
@@ -858,19 +864,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 static INT32 gameInit()
 {
-	INT32 nLen;
+	struct BurnRomInfo ri;
+
+	// Find out first rom's size
+	BurnDrvGetRomInfo(&ri, 0);
+	nRom01Len = (bDoIpsPatch) ? 0x100000 : ri.nLen;
 
 	BurnSetRefreshRate(CAVE_REFRESHRATE);
 
-	// Find out how much memory is needed
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
-		return 1;
-	}
-	memset(Mem, 0, nLen);										// blank all memory
-	MemIndex();													// Index the allocated memory
+	BurnAllocMemIndex();
 
 	if (nWhichGame) {
 		// Load the roms into memory

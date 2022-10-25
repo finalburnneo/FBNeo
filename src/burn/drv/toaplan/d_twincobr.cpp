@@ -229,6 +229,65 @@ STDDIPINFO(Twincobru)
 
 static struct BurnDIPInfo KtigerDIPList[]=
 {
+	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x14, 0xff, 0xff, 0x00, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Invulnerability"	},
+	{0x13, 0x01, 0x01, 0x01, "On"			},
+	{0x13, 0x01, 0x01, 0x00, "Off"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x13, 0x01, 0x02, 0x00, "Off"			},
+	{0x13, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x13, 0x01, 0x04, 0x00, "Off"			},
+	{0x13, 0x01, 0x04, 0x04, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x13, 0x01, 0x08, 0x08, "Off"			},
+	{0x13, 0x01, 0x08, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x13, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
+	{0x13, 0x01, 0x30, 0x00, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0x30, 0x30, "2 Coins 3 Credits"	},
+	{0x13, 0x01, 0x30, 0x10, "1 Coin  2 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x13, 0x01, 0xc0, 0x80, "2 Coins 1 Credits"	},
+	{0x13, 0x01, 0xc0, 0x00, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0xc0, 0xc0, "2 Coins 3 Credits"	},
+	{0x13, 0x01, 0xc0, 0x40, "1 Coin  2 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x14, 0x01, 0x03, 0x01, "Easy"			},
+	{0x14, 0x01, 0x03, 0x00, "Normal"		},
+	{0x14, 0x01, 0x03, 0x02, "Hard"			},
+	{0x14, 0x01, 0x03, 0x03, "Very Hard"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x14, 0x01, 0x0c, 0x00, "50k 200k 150k+"	},
+	{0x14, 0x01, 0x0c, 0x04, "70k 270k 200k+"	},
+	{0x14, 0x01, 0x0c, 0x08, "50k Only"		},
+	{0x14, 0x01, 0x0c, 0x0c, "100k Only"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x14, 0x01, 0x30, 0x30, "2"			},
+	{0x14, 0x01, 0x30, 0x00, "3"			},
+	{0x14, 0x01, 0x30, 0x20, "4"			},
+	{0x14, 0x01, 0x30, 0x10, "5"			},
+
+	{0   , 0xfe, 0   ,    2, "Dip Switch Display"	},
+	{0x14, 0x01, 0x40, 0x00, "Off"			},
+	{0x14, 0x01, 0x40, 0x40, "On"			},
+};
+
+STDDIPINFO(Ktiger)
+
+
+static struct BurnDIPInfo KtigeraDIPList[]=
+{
 	{0x13, 0xff, 0xff, 0x01, NULL			},
 	{0x14, 0xff, 0xff, 0x80, NULL			},
 
@@ -287,7 +346,7 @@ static struct BurnDIPInfo KtigerDIPList[]=
 	{0x14, 0x01, 0x80, 0x80, "Yes"			},
 };
 
-STDDIPINFO(Ktiger)
+STDDIPINFO(Ktigera)
 
 
 static struct BurnDIPInfo FsharkDIPList[]=
@@ -1503,13 +1562,13 @@ struct BurnDriver BurnDrvTwincobru = {
 };
 
 
-// Kyukyoku Tiger (Japan)
+// Kyukyoku Tiger (Japan, 2 player cooperative)
 
 static struct BurnRomInfo ktigerRomDesc[] = {
 	{ "b30_01.7j",		0x10000, 0x07f64d13, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
 	{ "b30_03.7h",		0x10000, 0x41be6978, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "b30_02.8j",		0x08000, 0x1d63e9c4, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "b30_04.8h",		0x08000, 0x03957a30, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "b30_02.8j",		0x08000, 0x321e2be6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b30_04.8h",		0x08000, 0xc3f960ff, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "b30_05.4f",		0x08000, 0x1a8f1e10, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
 
@@ -1550,8 +1609,8 @@ static INT32 ktigerInit()
 }
 
 struct BurnDriver BurnDrvKtiger = {
-	"ktiger", "twincobr", NULL, NULL, "1987",
-	"Kyukyoku Tiger (Japan)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
+	"ktiger", "twincobr", NULL, NULL, "2021",
+	"Kyukyoku Tiger (Japan, 2 player cooperative)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, ktigerRomInfo, ktigerRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, KtigerDIPInfo,
@@ -1560,13 +1619,13 @@ struct BurnDriver BurnDrvKtiger = {
 };
 
 
-// Kyukyoku Tiger (Japan, 2 Players)
+// Kyukyoku Tiger (Japan, 2 player alternate)
 
-static struct BurnRomInfo ktiger2pRomDesc[] = {
+static struct BurnRomInfo ktigeraRomDesc[] = {
 	{ "b30_01.7j",		0x10000, 0x07f64d13, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
 	{ "b30_03.7h",		0x10000, 0x41be6978, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "b30_02_2p.8j",	0x08000, 0x321e2be6, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "b30_04_2p.8h",	0x08000, 0xc3f960ff, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "b30_02.8j",		0x08000, 0x1d63e9c4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b30_04.8h",		0x08000, 0x03957a30, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "b30_05.4f",		0x08000, 0x1a8f1e10, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
 
@@ -1598,15 +1657,15 @@ static struct BurnRomInfo ktiger2pRomDesc[] = {
 	{ "82s123.b24",		0x00020, 0x4fb5df2a, 0 | BRF_OPT },           // 25
 };
 
-STD_ROM_PICK(ktiger2p)
-STD_ROM_FN(ktiger2p)
+STD_ROM_PICK(ktigera)
+STD_ROM_FN(ktigera)
 
-struct BurnDriver BurnDrvktiger2p = {
-	"ktiger2p", "twincobr", NULL, NULL, "2021",
-	"Kyukyoku Tiger (Japan, 2 Players)\0", NULL, "M2 Co., Ltd.", "Miscellaneous",
+struct BurnDriver BurnDrvKtigera = {
+	"ktigera", "twincobr", NULL, NULL, "1987",
+	"Kyukyoku Tiger (Japan, 2 player alternate)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, ktiger2pRomInfo, ktiger2pRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, TwincobruDIPInfo,
+	NULL, ktigeraRomInfo, ktigeraRomName, NULL, NULL, NULL, NULL, TwincobrInputInfo, KtigeraDIPInfo,
 	ktigerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };

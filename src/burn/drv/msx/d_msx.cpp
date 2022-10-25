@@ -32763,7 +32763,7 @@ struct BurnDriver BurnDrvMSX_circusmyst = {
 // Corridor Runner (HB)
 
 static struct BurnRomInfo MSX_corrunnerRomDesc[] = {
-	{ "Corridor Runner (2022)(Aburi Games).rom",	32768, 0xc175e20d, BRF_PRG | BRF_ESS },
+	{ "Corridor Runner (2022)(Aburi Games).rom",	32768, 0x56428423, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_corrunner, MSX_corrunner, msx_msx)

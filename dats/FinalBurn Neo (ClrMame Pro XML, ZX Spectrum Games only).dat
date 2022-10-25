@@ -3292,6 +3292,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cavelon" romof="spectrum">
+		<description>Cavelon (48K)</description>
+		<year>1984</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Cavelon 48K (1984)(Ocean).tap" size="33603" crc="df2fa332"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cavit" romof="spectrum">
 		<comment>Homebrew, AY Sound support</comment>
 		<description>Cavit (48K) (HB)</description>
@@ -3503,6 +3512,16 @@
 		<year>1985</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Chiller 48K (1985)(Mastertronic).tap" size="23016" crc="8ade8ac6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chinjuggler" romof="spectrum">
+		<comment>Press 'J' to use controller</comment>
+		<description>Chinese Juggler, The (48K)</description>
+		<year>1984</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Chinese Juggler, The 48K (1984)(Ocean).tap" size="44449" crc="c5956b3f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7370,6 +7389,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gillgold" romof="spectrum">
+		<description>Gilligan's Gold (48K)</description>
+		<year>1984</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Gilligan's Gold 48K (1984)(Ocean).tap" size="45750" crc="8623c1a1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gimmebright" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Gimme Bright (48K) (HB, v2.0)</description>
@@ -9668,6 +9696,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="knightrider" romof="spectrum">
+		<description>Knight Rider (48K)</description>
+		<year>1986</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Knight Rider 48K (1986)(Ocean).tap" size="49152" crc="df4e4c85"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="knighttyme" romof="spec128">
 		<comment>Options menu = A, Z, Space</comment>
 		<description>Knight Tyme (128K)</description>
@@ -11252,6 +11289,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="moonalert" romof="spectrum">
+		<description>Moon Alert! (48K)</description>
+		<year>1984</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Moon Alert! 48K (1984)(Ocean).tap" size="47090" crc="01a888bf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mooncrst" romof="spectrum">
 		<description>Moon Cresta (48K)</description>
 		<year>1985</year>
@@ -12813,6 +12859,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="phantclub" romof="spectrum">
+		<description>Phantom Club (48K)</description>
+		<year>1988</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Phantom Club 48K (1988)(Ocean).tap" size="51960" crc="da40ea75"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="phantomas" romof="spectrum">
 		<comment>6, 7 and Enter to select control type</comment>
 		<description>Phantomas (48K)</description>
@@ -13008,6 +13063,15 @@
 		<rom name="Plotting (1990)(Ocean)[128K].z80" size="40883" crc="dd65a0b5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pogo" romof="spectrum">
+		<description>Pogo (48K)</description>
+		<year>1984</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Pogo 48K (1984)(Ocean).tap" size="42355" crc="858e042e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13772,6 +13836,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="redheat" romof="spectrum">
+		<description>Red Heat (48K)</description>
+		<year>1989</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Red Heat 48K (1989)(Ocean).tap" size="119068" crc="4d1c484b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="redplanet" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Red Planet (English) (48K) (HB)</description>
@@ -14026,6 +14099,16 @@
 		<year>2011</year>
 		<manufacturer>Climacus</manufacturer>
 		<rom name="Retroinvaders 128K (2011)(Climacus).tap" size="80004" crc="1e3cf16c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="retofjedi" romof="spec128">
+		<description>Return of the Jedi (128K)</description>
+		<year>1989</year>
+		<manufacturer>Domark</manufacturer>
+		<rom name="Return of the Jedi 128K (1989)(Domark).tap" size="37222" crc="dccfc93b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -16221,6 +16304,15 @@
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Street Gang Football (1989)(Codemasters).tap" size="43537" crc="580c88d2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="streethawk" romof="spectrum">
+		<description>Street Hawk (48K)</description>
+		<year>1986</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Street Hawk 48K (1986)(Ocean).tap" size="47745" crc="37c623ad"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

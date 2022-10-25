@@ -8349,9 +8349,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="greendogs" cloneof="greendog" romof="greendog">
+		<comment>Hack</comment>
 		<description>Greendog - The Beached Surfer Dude! (Hack, Spanish)</description>
 		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="greendog - the beached surfer dude! (hack, spanish).bin" size="524288" crc="e0abaaeb"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8366,9 +8367,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="grindsts" cloneof="grindst" romof="grindst">
+		<comment>Hack</comment>
 		<description>Grind Stormer (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Tengen</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="grind stormer (hack, spanish).bin" size="1048576" crc="bd764c90"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8382,9 +8384,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="growls" cloneof="growl" romof="growl">
+		<comment>Hack</comment>
 		<description>Growl (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="growl (hack, spanish).bin" size="524288" crc="95308c0a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12351,6 +12354,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="muhammadup" cloneof="muhammad" romof="muhammad">
+		<comment>Prototype</comment>
 		<description>Muhammad Ali Heavyweight Boxing (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Virgin Games</manufacturer>
@@ -12509,16 +12513,18 @@
 		<driver status="good"/>
 	</game>
 	<game name="nba2k" cloneof="nbaact" romof="nbaact">
+		<comment>Hack</comment>
 		<description>NBA 2000 (Rus)</description>
-		<year>199?</year>
+		<year>2000</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="nba 2000 (unl).bin" size="2097152" crc="2cef6950"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="nba2k5" cloneof="nbaact95" romof="nbaact95">
+		<comment>Hack</comment>
 		<description>NBA 2005 (Rus)</description>
-		<year>199?</year>
+		<year>2005</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="nba 2005 (unl).bin" size="2097152" crc="e8610238"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -12533,6 +12539,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p25" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941118)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12541,6 +12548,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p24" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941123-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12549,6 +12557,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p23" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941202-B)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12557,6 +12566,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p22" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941209)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12565,6 +12575,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p21" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941215)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12573,6 +12584,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p20" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941222-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12581,6 +12593,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p19" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941224-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12589,6 +12602,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p18" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941229)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12597,6 +12611,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p17" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941230)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12605,6 +12620,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p16" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19941231)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12613,6 +12629,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p15" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950103)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12621,6 +12638,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p14" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950108)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12629,6 +12647,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p13" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950112)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12637,6 +12656,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p12" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950115-A)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12645,6 +12665,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p11" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950121)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12653,6 +12674,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p10" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950122-B)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12661,6 +12683,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p09" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950124-B)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12669,6 +12692,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p08" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950127-A)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12677,6 +12701,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p07" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950127-B)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12685,6 +12710,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p05" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950128)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12693,6 +12719,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p06" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950128-A)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12701,6 +12728,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p04" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950130)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12709,6 +12737,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p02" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950201)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12717,6 +12746,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p03" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950201, Alt)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12725,6 +12755,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaact95p01" cloneof="nbaact95" romof="nbaact95">
+		<comment>Prototype</comment>
 		<description>NBA Action '95 (Prototype, 19950202)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -12733,6 +12764,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp3" cloneof="nbaact" romof="nbaact">
+		<comment>Prototype</comment>
 		<description>NBA Action (Prototype, 19940104)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12741,6 +12773,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp2" cloneof="nbaact" romof="nbaact">
+		<comment>Prototype</comment>
 		<description>NBA Action (Prototype, 19940116)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12749,6 +12782,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbaactp1" cloneof="nbaact" romof="nbaact">
+		<comment>Prototype</comment>
 		<description>NBA Action (Prototype, 19940127, Broken - C08 missing)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -13732,8 +13766,8 @@
 	</game>
 	<game name="ondal" cloneof="mystdef" romof="mystdef">
 		<description>On Dal Jang Goon (Kor)</description>
-		<year>1990?</year>
-		<manufacturer>Sega</manufacturer>
+		<year>1990</year>
+		<manufacturer>Sega - Samsung</manufacturer>
 		<rom name="on dal jang goon (kor).bin" size="524288" crc="67ccb1ca"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14040,6 +14074,14 @@
 		<year>1991</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="mpr-14392.bin" size="262144" crc="74bba09b"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pacman">
+		<description>Pac-Man</description>
+		<year>2018</year>
+		<manufacturer>BNEI</manufacturer>
+		<rom name="Pac-Man (2018)(BNEI).bin" size="262144" crc="0e75af51"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16010,6 +16052,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rrash3imp" cloneof="rrash3" romof="rrash3">
+		<comment>Hack</comment>
+		<description>Road 3 Rash Improvement (Hack, v1.02)</description>
+		<year>2022</year>
+		<manufacturer>Ti</manufacturer>
+		<rom name="Road Rash 3 Improvement v1.02 (2022)(Ti).bin" size="2097152" crc="62486344"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="roadrash">
 		<description>Road Rash (Euro, USA)</description>
 		<year>1991</year>
@@ -16057,6 +16108,24 @@
 		<year>1993</year>
 		<manufacturer>Electronic Arts Victor</manufacturer>
 		<rom name="road rash ii (jpn).bin" size="1048576" crc="9a5723b6"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rrash2imp" cloneof="rrash2" romof="rrash2">
+		<comment>Hack</comment>
+		<description>Road Rash II Improvement (Hack, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>Ti</manufacturer>
+		<rom name="Road Rash II Improvement v1.2 (2022)(Ti).bin" size="1179648" crc="71a5bf77"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="roadrashimp" cloneof="roadrash" romof="roadrash">
+		<comment>Hack</comment>
+		<description>Road Rash Improvement (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Ti</manufacturer>
+		<rom name="Road Rash Improvement (2022)(Ti).bin" size="1048576" crc="39ad4dc0"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

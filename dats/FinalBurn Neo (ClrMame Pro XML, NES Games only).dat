@@ -13043,6 +13043,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="rpoolchal">
+		<comment>Prototype</comment>
+		<description>Robert Byrne's Pool Challenge (Prototype)</description>
+		<year>1996</year>
+		<manufacturer>Odyssey Software</manufacturer>
+		<rom name="Robert Byrne's Pool Challenge Prototype (1996)(Odyssey Software).nes" size="98320" crc="9b273e2b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="robinhoo">
 		<description>Robin Hood - Prince of Thieves (USA)</description>
 		<year>1991</year>
@@ -13574,6 +13583,15 @@
 		<year>2014</year>
 		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Sansara Naga (T-eng).nes" size="655376" crc="84d7b375"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="spoolchal" cloneof="rpoolchal" romof="rpoolchal">
+		<comment>Hack</comment>
+		<description>Sara Parker's Pool Challenge</description>
+		<year>2010</year>
+		<manufacturer>retroUSB</manufacturer>
+		<rom name="Sara Parker's Pool Challenge (2010)(RetroUSB).nes" size="98320" crc="5a34e197"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

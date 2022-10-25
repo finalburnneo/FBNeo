@@ -994,8 +994,7 @@ static void ics2115_reg_write(UINT8 data, bool msb) {
 
 #if !defined INTERPOLATE_AS_HARDWARE
 
-			voice.int_fc = (UINT32)((UINT64)(voice.osc.fc) * 0x8000 * m_sample_rate / nBurnSoundRate >> 13);
-
+			voice.int_fc = (UINT32)((UINT64)(voice.osc.fc) * 0x8000 * m_sample_rate / output_sample_rate >> 13);
 			/* if (voice.int_fc > (1 << 14))
 				bprintf(0, _T("    ICS2115 voice %02X skipping samples (fc: %08X)!\n"), m_osc_select, voice.osc.fc); */
 

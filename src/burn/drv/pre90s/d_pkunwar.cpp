@@ -287,65 +287,127 @@ STDDIPINFO(Ninjakun)
 
 static struct BurnDIPInfo Raiders5DIPList[]=
 {
-	{0x0e, 0xff, 0xff, 0xfe, NULL		},
-	{0x0f, 0xff, 0xff, 0xff, NULL		},
+	{0x0e, 0xff, 0xff, 0xfe, NULL                             },
+	{0x0f, 0xff, 0xff, 0xff, NULL                             },
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0e, 0x01, 0x01, 0x00, "Upright"		},
-	{0x0e, 0x01, 0x01, 0x01, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"                        },
+	{0x0e, 0x01, 0x01, 0x00, "Upright"                        },
+	{0x0e, 0x01, 0x01, 0x01, "Cocktail"                       },
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x0e, 0x01, 0x06, 0x00, "2"		},
-	{0x0e, 0x01, 0x06, 0x06, "3"		},
-	{0x0e, 0x01, 0x06, 0x04, "4"		},
-	{0x0e, 0x01, 0x06, 0x02, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"                          },
+	{0x0e, 0x01, 0x06, 0x00, "2"                              },
+	{0x0e, 0x01, 0x06, 0x06, "3"                              },
+	{0x0e, 0x01, 0x06, 0x04, "4"                              },
+	{0x0e, 0x01, 0x06, 0x02, "5"                              },
 
-	{0   , 0xfe, 0   ,    2, "1st Bonus"		},
-	{0x0e, 0x01, 0x08, 0x08, "30000"		},
-	{0x0e, 0x01, 0x08, 0x00, "40000"		},
+	{0   , 0xfe, 0   ,    2, "1st Bonus"                      },
+	{0x0e, 0x01, 0x08, 0x08, "30000"                          },
+	{0x0e, 0x01, 0x08, 0x00, "40000"                          },
 
-	{0   , 0xfe, 0   ,    4, "2nd Bonus"		},
-	{0x0e, 0x01, 0x30, 0x30, "Every 50000"		},
-	{0x0e, 0x01, 0x30, 0x20, "Every 70000"		},
-	{0x0e, 0x01, 0x30, 0x10, "Every 90000"		},
-	{0x0e, 0x01, 0x30, 0x00, "None"		},
+	{0   , 0xfe, 0   ,    4, "2nd Bonus"                      },
+	{0x0e, 0x01, 0x30, 0x30, "Every 50000"                    },
+	{0x0e, 0x01, 0x30, 0x20, "Every 70000"                    },
+	{0x0e, 0x01, 0x30, 0x10, "Every 90000"                    },
+	{0x0e, 0x01, 0x30, 0x00, "None"                           },
 
-	{0   , 0xfe, 0   ,    2, "Exercise"		},
-	{0x0e, 0x01, 0x40, 0x00, "Off"		},
-	{0x0e, 0x01, 0x40, 0x40, "On"		},
+	{0   , 0xfe, 0   ,    2, "Exercise"                       },
+	{0x0e, 0x01, 0x40, 0x00, "Off"                            },
+	{0x0e, 0x01, 0x40, 0x40, "On"                             },
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x0e, 0x01, 0x80, 0x80, "Normal"		},
-	{0x0e, 0x01, 0x80, 0x00, "Hard"		},
+	{0   , 0xfe, 0   ,    2, "Difficulty"                     },
+	{0x0e, 0x01, 0x80, 0x80, "Normal"                         },
+	{0x0e, 0x01, 0x80, 0x00, "Hard"                           },
 
-	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x0f, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
-	{0x0f, 0x01, 0x07, 0x05, "3 Coins 1 Credits"		},
-	{0x0f, 0x01, 0x07, 0x00, "4 Coins 2 Credits"		},
-	{0x0f, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
-	{0x0f, 0x01, 0x07, 0x01, "3 Coins 2 Credits"		},
-	{0x0f, 0x01, 0x07, 0x02, "2 Coins 2 Credits"		},
-	{0x0f, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
-	{0x0f, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
+	{0   , 0xfe, 0   ,    8, "Coinage"                        },
+	{0x0f, 0x01, 0x07, 0x04, "4 Coins 1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x05, "3 Coins 1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x00, "4 Coins 2 Credits"              },
+	{0x0f, 0x01, 0x07, 0x06, "2 Coins 1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x01, "3 Coins 2 Credits"              },
+	{0x0f, 0x01, 0x07, 0x02, "2 Coins 2 Credits"              },
+	{0x0f, 0x01, 0x07, 0x07, "1 Coin  1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x03, "1 Coin  2 Credits"              },
 
-	{0   , 0xfe, 0   ,    2, "High Score Names"		},
-	{0x0f, 0x01, 0x08, 0x00, "3 Letters"		},
-	{0x0f, 0x01, 0x08, 0x08, "8 Letters"		},
+	{0   , 0xfe, 0   ,    2, "High Score Names"               },
+	{0x0f, 0x01, 0x08, 0x00, "3 Letters"                      },
+	{0x0f, 0x01, 0x08, 0x08, "8 Letters"                      },
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x0f, 0x01, 0x10, 0x00, "No"		},
-	{0x0f, 0x01, 0x10, 0x10, "Yes"		},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"                 },
+	{0x0f, 0x01, 0x10, 0x00, "No"                             },
+	{0x0f, 0x01, 0x10, 0x10, "Yes"                            },
 
-	{0   , 0xfe, 0   ,    0, "Free Play"		},
-	{0x0f, 0x01, 0x40, 0x40, "Off"		},
-	{0x0f, 0x01, 0x40, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    0, "Free Play"                      },
+	{0x0f, 0x01, 0x40, 0x40, "Off"                            },
+	{0x0f, 0x01, 0x40, 0x00, "On"                             },
 
-	{0   , 0xfe, 0   ,    2, "Unlimited Lives (If Free Play)"		},
-	{0x0f, 0x01, 0x80, 0x80, "Off"		},
-	{0x0f, 0x01, 0x80, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Unlimited Lives (If Free Play)" },
+	{0x0f, 0x01, 0x80, 0x80, "Off"                            },
+	{0x0f, 0x01, 0x80, 0x00, "On"                             },
 };
 
 STDDIPINFO(Raiders5)
+
+static struct BurnDIPInfo Raiders5taDIPList[] =
+{
+	{0x0e, 0xff, 0xff, 0xfe, NULL                             },
+	{0x0f, 0xff, 0xff, 0xff, NULL                             },
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"                        },
+	{0x0e, 0x01, 0x01, 0x00, "Upright"                        },
+	{0x0e, 0x01, 0x01, 0x01, "Cocktail"                       },
+
+	{0   , 0xfe, 0   ,    4, "Lives"                          },
+	{0x0e, 0x01, 0x06, 0x00, "2"                              },
+	{0x0e, 0x01, 0x06, 0x06, "3"                              },
+	{0x0e, 0x01, 0x06, 0x04, "4"                              },
+	{0x0e, 0x01, 0x06, 0x02, "5"                              },
+
+	{0   , 0xfe, 0   ,    2, "1st Bonus"                      },
+	{0x0e, 0x01, 0x08, 0x08, "30000"                          },
+	{0x0e, 0x01, 0x08, 0x00, "40000"                          },
+
+	{0   , 0xfe, 0   ,    4, "2nd Bonus"                      },
+	{0x0e, 0x01, 0x30, 0x30, "Every 50000"                    },
+	{0x0e, 0x01, 0x30, 0x20, "Every 70000"                    },
+	{0x0e, 0x01, 0x30, 0x10, "Every 90000"                    },
+	{0x0e, 0x01, 0x30, 0x00, "None"                           },
+
+	{0   , 0xfe, 0   ,    2, "Swap Controls + Flip Screen"    },
+	{0x0e, 0x01, 0x40, 0x00, "On"                             },
+	{0x0e, 0x01, 0x40, 0x40, "off"                            },
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"                     },
+	{0x0e, 0x01, 0x80, 0x80, "Normal"                         },
+	{0x0e, 0x01, 0x80, 0x00, "Hard"                           },
+
+	{0   , 0xfe, 0   ,    8, "Coinage"                        },
+	{0x0f, 0x01, 0x07, 0x04, "4 Coins 1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x05, "3 Coins 1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x00, "4 Coins 2 Credits"              },
+	{0x0f, 0x01, 0x07, 0x06, "2 Coins 1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x01, "3 Coins 2 Credits"              },
+	{0x0f, 0x01, 0x07, 0x02, "2 Coins 2 Credits"              },
+	{0x0f, 0x01, 0x07, 0x07, "1 Coin  1 Credits"              },
+	{0x0f, 0x01, 0x07, 0x03, "1 Coin  2 Credits"              },
+
+	{0   , 0xfe, 0   ,    2, "High Score Names"               },
+	{0x0f, 0x01, 0x08, 0x00, "3 Letters"                      },
+	{0x0f, 0x01, 0x08, 0x08, "8 Letters"                      },
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"                 },
+	{0x0f, 0x01, 0x10, 0x00, "No"                             },
+	{0x0f, 0x01, 0x10, 0x10, "Yes"                            },
+
+	{0   , 0xfe, 0   ,    0, "Free Play"                      },
+	{0x0f, 0x01, 0x40, 0x40, "Off"                            },
+	{0x0f, 0x01, 0x40, 0x00, "On"                             },
+
+	{0   , 0xfe, 0   ,    2, "Unlimited Lives (If Free Play)" },
+	{0x0f, 0x01, 0x80, 0x80, "Off"                            },
+	{0x0f, 0x01, 0x80, 0x00, "On"                             },
+};
+
+STDDIPINFO(Raiders5ta)
 
 static UINT8 __fastcall raiders5_main_read(UINT16 address)
 {
@@ -1653,7 +1715,7 @@ struct BurnDriver BurnDrvpkunwar = {
 };
 
 
-// Penguin-Kun Wars (Japan)
+// Penguin-Kun Wars (Japan, set 1)
 
 static struct BurnRomInfo pkunwarjRomDesc[] = {
 	{ "pgunwar.6",		0x4000, 0x357f3ef3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1673,13 +1735,43 @@ STD_ROM_FN(pkunwarj)
 
 struct BurnDriver BurnDrvpkunwarj = {
 	"pkunwarj", "pkunwar", NULL, NULL, "1985",
-	"Penguin-Kun Wars (Japan)\0", NULL, "UPL", "Miscellaneous",
+	"Penguin-Kun Wars (Japan, set 1)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, pkunwarjRomInfo, pkunwarjRomName, NULL, NULL, NULL, NULL, PkunwarInputInfo, PkunwarDIPInfo,
 	PkunwarInit, DrvExit, PkunwarFrame, PkunwarDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
 };
+
+
+// Penguin-Kun Wars (Japan, set 2)
+
+static struct BurnRomInfo pkunwarjaRomDesc[] = {
+	{ "peng_wars_1_red.7a",	0x4000, 0x9dfdf1b2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "peng_wars_2_red.7b",	0x4000, 0xbc286b8c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3_red.5b",			0x2000, 0x56faebea, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "1_yellow.7h",		0x4000, 0x428d3b92, 2 | BRF_GRA },           //  3 Graphics
+	{ "2_yellow.7k",		0x4000, 0xce1da7bc, 2 | BRF_GRA },           //  4
+	{ "3_yellow.7l",		0x4000, 0xa2a43443, 2 | BRF_GRA },           //  5
+	{ "4_yellow.7m",		0x4000, 0x061dfca8, 2 | BRF_GRA },           //  6
+
+	{ "tbp18s030n.1f",		0x0020, 0xaf0fc5e2, 3 | BRF_GRA },           //  7 Color Prom
+};
+
+STD_ROM_PICK(pkunwarja)
+STD_ROM_FN(pkunwarja)
+
+struct BurnDriver BurnDrvpkunwarja = {
+	"pkunwarja", "pkunwar", NULL, NULL, "1985",
+	"Penguin-Kun Wars (Japan, set 2)\0", NULL, "UPL", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, pkunwarjaRomInfo, pkunwarjaRomName, NULL, NULL, NULL, NULL, PkunwarInputInfo, PkunwarDIPInfo,
+	PkunwarInit, DrvExit, PkunwarFrame, PkunwarDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 192, 4, 3
+};
+
 
 // Nova 2001 (Japan)
 
@@ -1807,6 +1899,7 @@ struct BurnDriver BurnDrvNinjakun = {
 	256, 192, 4, 3
 };
 
+
 // Raiders5
 
 static struct BurnRomInfo raiders5RomDesc[] = {
@@ -1834,7 +1927,8 @@ struct BurnDriver BurnDrvRaiders5 = {
 	256, 192, 4, 3
 };
 
-// Raiders5 (Japan)
+
+// Raiders5 (Japan, set 1)
 
 static struct BurnRomInfo raiders5tRomDesc[] = {
 	{ "raiders1.4c",	0x4000, 0x4e2d5679, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1853,10 +1947,39 @@ STD_ROM_FN(raiders5t)
 
 struct BurnDriver BurnDrvRaidrs5t = {
 	"raiders5t", "raiders5", NULL, NULL, "1985",
-	"Raiders5 (Japan)\0", NULL, "UPL (Taito license)", "Miscellaneous",
+	"Raiders5 (Japan, set 1)\0", NULL, "UPL (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, raiders5tRomInfo, raiders5tRomName, NULL, NULL, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
+	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
+	256, 192, 4, 3
+};
+
+
+// Raiders5 (Japan, set 2, bootleg?)
+
+static struct BurnRomInfo raiders5taRomDesc[] = {
+	{ "1.4c",	0x4000, 0xe6264952, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.4d",	0x4000, 0x06f7c5b0, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "2.4d",	0x4000, 0x06f7c5b0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "3.11f",	0x4000, 0x30041d58, 3 | BRF_GRA },           //  3 Foreground & Sprites
+	{ "4.11g",	0x4000, 0xe441931c, 3 | BRF_GRA },           //  4
+
+	// single byte different in unused area at 2fff ee -> 2e, possibly bitrot although more than a single bit changed
+	{ "5.11n",	0x4000, 0xfb532e4d, 4 | BRF_GRA },           //  5 Backgrounds
+};
+
+STD_ROM_PICK(raiders5ta)
+STD_ROM_FN(raiders5ta)
+
+struct BurnDriver BurnDrvRaidrs5ta = {
+	"raiders5ta", "raiders5", NULL, NULL, "1985",
+	"Raiders5 (Japan, set 2, bootleg?)\0", NULL, "UPL (Taito license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, raiders5taRomInfo, raiders5taRomName, NULL, NULL, NULL, NULL, Raiders5InputInfo, Raiders5taDIPInfo,
 	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };

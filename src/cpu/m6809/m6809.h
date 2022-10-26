@@ -32,6 +32,8 @@ typedef struct
 	UINT8   nmi_state;
 
 	int (*irq_callback)(int irqline);
+	int (*insn_callback)(int cycles);
+
 } m6809_Regs;
 
 enum
@@ -53,6 +55,7 @@ int m6809_execute(int cycles);
 void m6809_set_irq_line(int irqline, int state);
 void m6809_get_context(void *dst);
 void m6809_set_context(void *src);
+void m6809_set_callback(int (*cb)(int));
 UINT16 m6809_get_pc();
 UINT16 m6809_get_prev_pc();
 void m6809_end_timeslice();

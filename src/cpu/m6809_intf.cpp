@@ -412,6 +412,16 @@ INT32 M6809UnmapMemory(UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 }
 
+void M6809SetCallback(int (*cb)(int))
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetCallback called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetCallback called when no CPU open\n"));
+#endif
+
+	m6809_set_callback(cb);
+}
+
 void M6809SetReadHandler(UINT8 (*pHandler)(UINT16))
 {
 #if defined FBNEO_DEBUG

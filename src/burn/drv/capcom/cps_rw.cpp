@@ -585,17 +585,15 @@ INT32 CpsRwGetInp()
 	if (Ghouls) {
 		static UINT8 nPrevInp000, nPrevInp001;
 
-		if ((Inp000 & 0x03) && (Inp000 & 0x0C)) {
-			Inp000 ^= (nPrevInp000 & 0x0F);
-		} else {
-			nPrevInp000 = Inp000;
+		if (Inp000 & (Inp000 - 1)) {
+			Inp000 = nPrevInp000;
 		}
+		nPrevInp000 = Inp000;
 
-		if ((Inp001 & 0x03) && (Inp001 & 0x0C)) {
-			Inp001 ^= (nPrevInp001 & 0x0F);
-		} else {
-			nPrevInp001 = Inp001;
+		if (Inp001 & (Inp001 - 1)) {
+			Inp001 = nPrevInp001;
 		}
+		nPrevInp001 = Inp001;
 	}
 
 	if (nMaxPlayers > 2) {

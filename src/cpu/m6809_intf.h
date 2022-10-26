@@ -38,6 +38,7 @@ INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType);
 INT32 M6809UnmapMemory(UINT16 nStart, UINT16 nEnd, INT32 nType);
 void M6809SetReadHandler(UINT8 (*pHandler)(UINT16));
 void M6809SetWriteHandler(void (*pHandler)(UINT16, UINT8));
+void M6809SetCallback(int (*cb)(int));
 INT32 M6809Scan(INT32 nAction);
 UINT16 M6809GetPC();
 UINT16 M6809GetPrevPC();

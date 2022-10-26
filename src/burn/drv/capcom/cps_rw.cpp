@@ -585,12 +585,12 @@ INT32 CpsRwGetInp()
 	if (Ghouls) {
 		static UINT8 nPrevInp000, nPrevInp001;
 
-		if (Inp000 & (Inp000 - 1)) {
+		if ((Inp000 & 0xf) & ((Inp000 & 0xf) - 1)) {
 			Inp000 = nPrevInp000;
 		}
 		nPrevInp000 = Inp000;
 
-		if (Inp001 & (Inp001 - 1)) {
+		if ((Inp001 & 0xf) & ((Inp001 & 0xf) - 1)) {
 			Inp001 = nPrevInp001;
 		}
 		nPrevInp001 = Inp001;

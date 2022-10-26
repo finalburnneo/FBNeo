@@ -73,6 +73,7 @@
 //#include "debugger.h"
 #include "burnint.h"
 #include "m6809.h"
+#include <stddef.h>
 
 /* Enable big switch statement for the main opcodes */
 #ifndef BIG_SWITCH
@@ -422,6 +423,12 @@ void m6809_init(int (*irqcallback)(int))
 //	state_save_register_item("m6809", index, m6809.nmi_state);
 
 	m6809.irq_callback = irqcallback;
+	m6809.insn_callback = NULL;
+}
+
+void m6809_set_callback(int (*cb)(int))
+{
+	m6809.insn_callback = cb;
 }
 
 void m6809_reset(void)
@@ -443,9 +450,7 @@ void m6809_reset(void)
 
 void m6809_reset_hard(void)
 {
-	int (*irq_callback)(int irqline) = m6809.irq_callback;
-	memset(&m6809, 0, sizeof(m6809));
-	m6809.irq_callback = irq_callback;
+	memset(&m6809, 0, STRUCT_SIZE_HELPER(m6809_Regs, nmi_state));
 
 	m6809_reset();
 }
@@ -550,6 +555,8 @@ int m6809_execute(int cycles)	/* NS 970908 */
 		do
 		{
 			pPPC = pPC;
+
+			INT32 pICOUNT = m6809_ICount;
 
 //			debugger_instruction_hook(Machine, PCD);
 
@@ -819,6 +826,9 @@ int m6809_execute(int cycles)	/* NS 970908 */
             (*m6809_main[m6809.ireg])();
             m6809_ICount -= cycles1[m6809.ireg];
 #endif
+
+			if (m6809.insn_callback)
+				m6809.insn_callback(pICOUNT - m6809_ICount);
 
 		} while( m6809_ICount > 0 && !m6809.end_run);
 

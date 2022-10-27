@@ -89,6 +89,7 @@ static UINT8 m_sound_banks[4];
 static UINT8 m_sound_volume[0x10];
 static INT32 *m_mixer_buffer_left;
 static INT32 *m_mixer_buffer_right;
+static INT32 m_sound_cache_length;
 static sound_cache_entry *m_sound_cache;
 static sound_cache_entry *m_sound_cache_end;
 static sound_cache_entry *m_sound_cache_max;
@@ -115,6 +116,7 @@ static INT32 exidy440_samples_len;
 
 // forwards
 static void play_cvsd(int ch);
+static void cache_cvsd(int ch); // for state-ing
 static void stop_cvsd(int ch);
 static void decode_and_filter_cvsd(UINT8 *input, int bytes, int maskbits, int frequency, INT16 *output);
 static void stream_update(INT16 **streams, INT32 samples);
@@ -135,11 +137,19 @@ void exidy440_scan(INT32 nAction, INT32 *pnMin)
 	SCAN_VAR(m_m6844_interrupt);
 	SCAN_VAR(m_m6844_chain);
 
-	//SCAN_VAR(m_sound_channel);
+	for (INT32 i = 0; i < 4; i++) {
+		SCAN_VAR(m_sound_channel[i].offset);
+		SCAN_VAR(m_sound_channel[i].remaining);
+	}
+
 	SCAN_VAR(m_channel_frequency);
 
 	if (nAction & ACB_WRITE) {
 		reset_sound_cache();
+		cache_cvsd(0);
+		cache_cvsd(1);
+		cache_cvsd(2);
+		cache_cvsd(3);
 	}
 }
 
@@ -190,6 +200,7 @@ void exidy440_init(UINT8 *samples_rom, INT32 samples_len, INT32 (*pCPUCyclesCB)(
 	/* allocate the sample cache */
 	INT32 length = samples_len * 16 + MAX_CACHE_ENTRIES * sizeof(sound_cache_entry);
 	m_sound_cache = (sound_cache_entry *)BurnMalloc(length);
+	m_sound_cache_length = length;
 
 	/* determine the hard end of the cache and reset */
 	m_sound_cache_max = (sound_cache_entry *)((UINT8 *)m_sound_cache + length);
@@ -609,6 +620,8 @@ void exidy440_m6844_write(INT32 offset, UINT8 data)
 
 static void reset_sound_cache()
 {
+	memset(m_sound_cache, 0, m_sound_cache_length);
+
 	m_sound_cache_end = m_sound_cache;
 }
 
@@ -708,6 +721,34 @@ static void play_cvsd(int ch)
 
 	/* channels 2 and 3 play twice as slow, so we need to count twice as many samples */
 	if (ch & 2) channel->remaining *= 2;
+}
+
+static void cache_cvsd(int ch) // for state-ing
+{
+	sound_channel_data *channel = &m_sound_channel[ch];
+	int address = m_m6844_channel[ch].start_address;
+	int length = m_m6844_channel[ch].start_counter;
+	INT16 *base;
+
+	if (channel->remaining <= 0) // time to leave
+		return;
+
+	/* add the bank number to the address */
+	if (m_sound_banks[ch] & 1)
+		address += 0x00000;
+	else if (m_sound_banks[ch] & 2)
+		address += 0x08000;
+	else if (m_sound_banks[ch] & 4)
+		address += 0x10000;
+	else if (m_sound_banks[ch] & 8)
+		address += 0x18000;
+
+	/* compute the base address in the converted samples array */
+	base = find_or_add_to_sound_cache(address, length, channel_bits[ch], m_channel_frequency[ch]);
+	if (!base)
+		return;
+
+	channel->base = base;
 }
 
 

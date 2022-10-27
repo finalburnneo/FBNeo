@@ -11,9 +11,13 @@ CPSINPSET
 CPSINPSET
 #undef  INP
 
+// forgottn dials
 UINT16 CpsInp055 = 0;
 UINT16 CpsInp05d = 0;
 UINT8 CpsDigUD[4] = {0, 0, 0, 0};
+static INT32 nDial055, nDial05d;
+
+// puzloop paddles
 UINT16 CpsInpPaddle1 = 0;
 UINT16 CpsInpPaddle2 = 0;
 static INT32 ReadPaddle = 0;
@@ -21,8 +25,13 @@ INT32 CpsPaddle1Value = 0;
 INT32 CpsPaddle2Value = 0;
 INT32 CpsPaddle1 = 0;
 INT32 CpsPaddle2 = 0;
-static INT32 nDial055, nDial05d;
+
+// ghouls 4-way
+static UINT8 nPrevInp000, nPrevInp001;
+
 UINT8 fFakeDip = 0;
+
+static INT32 nRasterLine;
 
 INT32 PangEEP = 0;
 INT32 Forgottn = 0;
@@ -52,6 +61,30 @@ CPSINPEX
 CPSINPEX
 #undef  INP
 
+void CpsRwScan()
+{
+	if (Pzloop2) {
+		SCAN_VAR(ReadPaddle);
+		SCAN_VAR(CpsPaddle1Value);
+		SCAN_VAR(CpsPaddle2Value);
+		SCAN_VAR(CpsPaddle1);
+		SCAN_VAR(CpsPaddle2);
+	}
+
+	if (Forgottn) {
+		SCAN_VAR(nDial055);
+		SCAN_VAR(nDial05d);
+	}
+
+	if (Ghouls) {
+		SCAN_VAR(nPrevInp000);
+		SCAN_VAR(nPrevInp001);
+	}
+
+	SCAN_VAR(n664001);
+	SCAN_VAR(nCalc);
+	SCAN_VAR(nRasterLine);
+}
 
 // Read input port 0x000-0x1ff
 static UINT8 CpsReadPort(const UINT32 ia)
@@ -147,8 +180,6 @@ static UINT8 CpsReadPort(const UINT32 ia)
 		}
 
 		if (ia >= 0x0100 && ia < 0x0200) {
-			static INT32 nRasterLine;
-
 //			bprintf(PRINT_NORMAL, _T("  - port 0x%02X (%3i)\n"), ia & 255, SekCurrentScanline());
 
 			// The linecounters seem to return the line at which the last IRQ triggered by this counter is scheduled minus the current line
@@ -583,18 +614,28 @@ INT32 CpsRwGetInp()
 
 	// Ghouls uses a 4-way stick
 	if (Ghouls) {
-		static UINT8 nPrevInp000, nPrevInp001;
-
-		if ((Inp000 & 0x03) && (Inp000 & 0x0C)) {
-			Inp000 ^= (nPrevInp000 & 0x0F);
-		} else {
+		if (fFakeDip & 1) {
+			if ((Inp000 & 0xf) & ((Inp000 & 0xf) - 1)) {
+				Inp000 = (Inp000 & ~0xf) | (nPrevInp000 & 0xf);
+			}
 			nPrevInp000 = Inp000;
-		}
 
-		if ((Inp001 & 0x03) && (Inp001 & 0x0C)) {
-			Inp001 ^= (nPrevInp001 & 0x0F);
-		} else {
+			if ((Inp001 & 0xf) & ((Inp001 & 0xf) - 1)) {
+				Inp001 = (Inp001 & ~0xf) | (nPrevInp001 & 0xf);
+			}
 			nPrevInp001 = Inp001;
+		} else {
+			if ((Inp000 & 0x03) && (Inp000 & 0x0C)) {
+				Inp000 ^= (nPrevInp000 & 0x0F);
+			} else {
+				nPrevInp000 = Inp000;
+			}
+
+			if ((Inp001 & 0x03) && (Inp001 & 0x0C)) {
+				Inp001 ^= (nPrevInp001 & 0x0F);
+			} else {
+				nPrevInp001 = Inp001;
+			}
 		}
 	}
 

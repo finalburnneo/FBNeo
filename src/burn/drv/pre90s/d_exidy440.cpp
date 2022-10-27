@@ -1,7 +1,5 @@
 // FinalBurn Neo Exidy 440 hardware driver module
 // Based on MAME driver by Aaron Giles
-// todo:
-//   sound, sounds dies on stating
 
 // todo: dink, post-driver
 //   make dtimer a class, with sync. functions, incl. cycles_to()

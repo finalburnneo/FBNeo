@@ -5708,6 +5708,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="firenicell" cloneof="firenice" romof="firenice">
+		<comment>Hack</comment>
+		<description>Fire 'n Ice - The Lost Levels (Hack, v1.1)</description>
+		<year>2021</year>
+		<manufacturer>Renaldo</manufacturer>
+		<rom name="Fire 'n Ice - The Lost Levels v1.1 (2021)(Renaldo).nes" size="262160" crc="99e61dff"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="firerescue">
 		<comment>Homebrew</comment>
 		<description>Fire and Rescue (HB, v1.1)</description>
@@ -6292,6 +6301,15 @@
 		<year>2020</year>
 		<manufacturer>Namco - BNEI</manufacturer>
 		<rom name="gaplus (bnei).nes" size="262160" crc="60811720"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="garbpailkids">
+		<comment>Homebrew</comment>
+		<description>Garbage Pail Kids Mad Mike and the Quest for Stale Gum (HB)</description>
+		<year>2022</year>
+		<manufacturer>iam8bit</manufacturer>
+		<rom name="Garbage Pail Kids Mad Mike and the Quest for Stale Gum (2022)(iam8bit).nes" size="526080" crc="3d110c09"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11046,6 +11064,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="mrmaycl">
+		<comment>Homebrew</comment>
+		<description>Mr. Maymunshines Christmas Land (HB)</description>
+		<year>2020</year>
+		<manufacturer>Calgames</manufacturer>
+		<rom name="Mr. Maymunshines Christmas Land (2020)(Calgames).nes" size="524304" crc="36fe2a47"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="mrsplash">
 		<comment>Homebrew, No one player mode</comment>
 		<description>Mr. Splash (HB)</description>
@@ -11365,6 +11392,15 @@
 		<year>1990</year>
 		<manufacturer>LJN</manufacturer>
 		<rom name="Nightmare on Elm Street, A (USA).nes" size="131088" crc="2a83ddc5"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="nightelmstreetdmk">
+		<comment>Homebrew</comment>
+		<description>Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (HB)</description>
+		<year>1999-2022</year>
+		<manufacturer>Fista Productions</manufacturer>
+		<rom name="Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (1999-2022)(Fista Productions).nes" size="524304" crc="7c6b0b6c"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11729,6 +11765,24 @@
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Operation Wolf (USA).nes" size="262160" crc="80704705"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="orebodybt">
+		<comment>Homebrew</comment>
+		<description>Orebody - Binder's Tale (HB, v1.x)</description>
+		<year>2022</year>
+		<manufacturer>John Vanderhoef</manufacturer>
+		<rom name="Orebody - Binder's Tale (2022)(John Vanderhoef).nes" size="524304" crc="45e91f5a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="orebodysr">
+		<comment>Homebrew</comment>
+		<description>Orebody - Sand Ripples (HB)</description>
+		<year>2022</year>
+		<manufacturer>Orebody Inc.</manufacturer>
+		<rom name="Orebody - Sand Ripples (2022)(Orebody Inc.).nes" size="40976" crc="b7917a5f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14525,6 +14579,15 @@
 		<year>1991</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Squashed (USA) (Proto).nes" size="262160" crc="daad65e0"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="squirchaser">
+		<comment>Homebrew</comment>
+		<description>Squirell Chaser (HB)</description>
+		<year>2022</year>
+		<manufacturer>Brad Hammond</manufacturer>
+		<rom name="Squirell Chaser (2022)(Brad Hammond).nes" size="524304" crc="3a48f1bd"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

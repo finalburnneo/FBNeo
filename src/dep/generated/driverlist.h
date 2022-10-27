@@ -5555,6 +5555,7 @@ DRV		BurnDrvmd_nemo;
 DRV		BurnDrvFinehour;
 DRV		BurnDrvFinger;
 DRV		BurnDrvnes_firenice;
+DRV		BurnDrvnes_firenicell;
 DRV		BurnSpecFireforget;
 DRV		BurnDrvsms_fireforg;
 DRV		BurnDrvsms_fireice;
@@ -6134,6 +6135,7 @@ DRV		BurnDrvGaplus;
 DRV		BurnDrvGaplusa;
 DRV		BurnDrvGaplust;
 DRV		BurnDrvnes_gaplus;
+DRV		BurnDrvnes_garbpailkids;
 DRV		BurnDrvnes_gardenwar;
 DRV		BurnDrvGardia;
 #if defined FBNEO_DEBUG
@@ -10331,6 +10333,7 @@ DRV		BurnDrvMrkougb2;
 DRV		BurnDrvMrkougar2;
 DRV		BurnDrvMrkougar;
 DRV		BurnDrvmrlo;
+DRV		BurnDrvnes_mrmaycl;
 DRV		BurnDrvMSX_mrmole;
 DRV		BurnDrvmd_mrnutz;
 DRV		BurnDrvmd_mrnutzs;
@@ -10953,6 +10956,7 @@ DRV		BurnDrvmd_ncircp;
 DRV		BurnDrvnitdbl;
 DRV		BurnDrvnitd;
 DRV		BurnDrvnes_nightonelmstra;
+DRV		BurnDrvnes_nightelmstreetdmk;
 DRV		BurnSpecNighthallowen;
 DRV		BurnDrvnes_nightshade;
 DRV		BurnDrvmd_nikkan;
@@ -11245,6 +11249,8 @@ DRV		BurnDrvOrdyneje;
 DRV		BurnDrvOrdyne;
 DRV		BurnDrvpce_ordyne;
 DRV		BurnDrvtg_ordyne;
+DRV		BurnDrvnes_orebodybt;
+DRV		BurnDrvnes_orebodysr;
 DRV		BurnSpecOrganicmatter;
 DRV		BurnDrvsg1k_orguss;
 DRV		BurnSpecOrgames;
@@ -14934,6 +14940,7 @@ DRV		BurnDrvcv_squares;
 DRV		BurnDrvSquaitsa;
 DRV		BurnDrvSquash;
 DRV		BurnDrvnes_squashed;
+DRV		BurnDrvnes_squirchaser;
 DRV		BurnDrvmd_squirrel;
 DRV		BurnDrvcv_squishem;
 DRV		BurnDrvMSX_squishem;
@@ -24700,6 +24707,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFinehour,			// Finest Hour (Japan)
 	&BurnDrvFinger,				// Finger (bootleg of Stinger)
 	&BurnDrvnes_firenice,		// Fire 'n Ice (USA)
+	&BurnDrvnes_firenicell,		// Fire 'n Ice - The Lost Levels (Hack, v1.1)
 	&BurnSpecFireforget,		// Fire and Forget (128K)
 	&BurnDrvsms_fireforg,		// Fire and Forget II (Euro)
 	&BurnDrvsms_fireice,		// Fire and Ice (Bra)
@@ -25279,6 +25287,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGaplusa,			// Gaplus (GP2)
 	&BurnDrvGaplust,			// Gaplus (Tecfri PCB)
 	&BurnDrvnes_gaplus,			// Gaplus
+	&BurnDrvnes_garbpailkids,	// Garbage Pail Kids Mad Mike and the Quest for Stale Gum (HB)
 	&BurnDrvnes_gardenwar,		// Garden War (Unl)
 	&BurnDrvGardia,				// Gardia (317-0006)
 #if defined FBNEO_DEBUG
@@ -29476,6 +29485,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMrkougar2,			// Mr. Kougar (earlier)
 	&BurnDrvMrkougar,			// Mr. Kougar
 	&BurnDrvmrlo,				// Mr. Lo!
+	&BurnDrvnes_mrmaycl,		// Mr. Maymunshines Christmas Land (HB)
 	&BurnDrvMSX_mrmole,			// Mr. Mole (HB)
 	&BurnDrvmd_mrnutz,			// Mr. Nutz (Euro)
 	&BurnDrvmd_mrnutzs,			// Mr. Nutz (Hack, Spanish)
@@ -30098,6 +30108,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnitdbl,				// Nightmare in the Dark (bootleg)
 	&BurnDrvnitd,				// Nightmare in the Dark
 	&BurnDrvnes_nightonelmstra,	// Nightmare on Elm Street, A (USA)
+	&BurnDrvnes_nightelmstreetdmk,// Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (HB)
 	&BurnSpecNighthallowen,		// Nightmare on Halloween (48K) (HB)
 	&BurnDrvnes_nightshade,		// Nightshade (USA)
 	&BurnDrvmd_nikkan,			// Nikkan Sports Pro Yakyuu Van (Jpn)
@@ -30390,6 +30401,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOrdyne,				// Ordyne (World)
 	&BurnDrvpce_ordyne,			// Ordyne
 	&BurnDrvtg_ordyne,			// Ordyne
+	&BurnDrvnes_orebodybt,		// Orebody - Binder's Tale (HB, v1.x)
+	&BurnDrvnes_orebodysr,		// Orebody - Sand Ripples (HB)
 	&BurnSpecOrganicmatter,		// Organic Matter (48K) (HB)
 	&BurnDrvsg1k_orguss,		// Orguss (Euro, Jpn)
 	&BurnSpecOrgames,			// Oriental Games (128K)
@@ -34079,6 +34092,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSquaitsa,			// Squash (Itisa)
 	&BurnDrvSquash,				// Squash (ver. 1.0, checksum 015aef61)
 	&BurnDrvnes_squashed,		// Squashed (USA) (Prototype)
+	&BurnDrvnes_squirchaser,	// Squirell Chaser (HB)
 	&BurnDrvmd_squirrel,		// Squirrel King (Tw) (Unl)
 	&BurnDrvcv_squishem,		// Squish 'em Sam!
 	&BurnDrvMSX_squishem,		// Squish'em (Jpn)

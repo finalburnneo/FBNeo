@@ -21456,6 +21456,108 @@ struct BurnDriver BurnDrvnes_rpoolchal = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_garbpailkidsRomDesc[] = {
+	{ "Garbage Pail Kids Mad Mike and the Quest for Stale Gum (2022)(iam8bit).nes",          526080, 0x3d110c09, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_garbpailkids)
+STD_ROM_FN(nes_garbpailkids)
+
+struct BurnDriver BurnDrvnes_garbpailkids = {
+	"nes_garbpailkids", NULL, NULL, NULL, "2022",
+	"Garbage Pail Kids Mad Mike and the Quest for Stale Gum (HB)\0", NULL, "iam8bit", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_garbpailkidsRomInfo, nes_garbpailkidsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mrmayclRomDesc[] = {
+	{ "Mr. Maymunshines Christmas Land (2020)(Calgames).nes",          524304, 0x36fe2a47, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mrmaycl)
+STD_ROM_FN(nes_mrmaycl)
+
+struct BurnDriver BurnDrvnes_mrmaycl = {
+	"nes_mrmaycl", NULL, NULL, NULL, "2020",
+	"Mr. Maymunshines Christmas Land (HB)\0", NULL, "Calgames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_mrmayclRomInfo, nes_mrmayclRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_nightelmstreetdmkRomDesc[] = {
+	{ "Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (1999-2022)(Fista Productions).nes",          524304, 0x7c6b0b6c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nightelmstreetdmk)
+STD_ROM_FN(nes_nightelmstreetdmk)
+
+struct BurnDriver BurnDrvnes_nightelmstreetdmk = {
+	"nes_nightelmstreetdmk", NULL, NULL, NULL, "1999-2022",
+	"Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (HB)\0", NULL, "Fista Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_nightelmstreetdmkRomInfo, nes_nightelmstreetdmkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_orebodybtRomDesc[] = {
+	{ "Orebody - Binder's Tale (2022)(John Vanderhoef).nes",          524304, 0x45e91f5a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_orebodybt)
+STD_ROM_FN(nes_orebodybt)
+
+struct BurnDriver BurnDrvnes_orebodybt = {
+	"nes_orebodybt", NULL, NULL, NULL, "2022",
+	"Orebody - Binder's Tale (HB, v1.x)\0", NULL, "John Vanderhoef", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_orebodybtRomInfo, nes_orebodybtRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_orebodysrRomDesc[] = {
+	{ "Orebody - Sand Ripples (2022)(Orebody Inc.).nes",          40976, 0xb7917a5f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_orebodysr)
+STD_ROM_FN(nes_orebodysr)
+
+struct BurnDriver BurnDrvnes_orebodysr = {
+	"nes_orebodysr", NULL, NULL, NULL, "2022",
+	"Orebody - Sand Ripples (HB)\0", NULL, "Orebody Inc.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_orebodysrRomInfo, nes_orebodysrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_squirchaserRomDesc[] = {
+	{ "Squirell Chaser (2022)(Brad Hammond).nes",          524304, 0x3a48f1bd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_squirchaser)
+STD_ROM_FN(nes_squirchaser)
+
+struct BurnDriver BurnDrvnes_squirchaser = {
+	"nes_squirchaser", NULL, NULL, NULL, "2022",
+	"Squirell Chaser (HB)\0", NULL, "Brad Hammond", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_squirchaserRomInfo, nes_squirchaserRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_gremlinsRomDesc[] = {
 	{ "Gremlins GlobalHack (2016)(pacnsacdave).nes",          262160, 0xf6d5d3e3, BRF_ESS | BRF_PRG },
 };
@@ -35029,8 +35131,25 @@ struct BurnDriver BurnDrvnes_firenice = {
 	"nes_firenice", NULL, NULL, NULL, "1993",
 	"Fire 'n Ice (USA)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE | GBF_PLATFORM, 0,
 	NESGetZipName, nes_fireniceRomInfo, nes_fireniceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_firenicellRomDesc[] = {
+	{ "Fire 'n Ice - The Lost Levels v1.1 (2021)(Renaldo).nes",          262160, 0x99e61dff, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_firenicell)
+STD_ROM_FN(nes_firenicell)
+
+struct BurnDriver BurnDrvnes_firenicell = {
+	"nes_firenicell", "nes_firenice", NULL, NULL, "2021",
+	"Fire 'n Ice - The Lost Levels (Hack, v1.1)\0", NULL, "Renaldo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PUZZLE | GBF_PLATFORM, 0,
+	NESGetZipName, nes_firenicellRomInfo, nes_firenicellRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -448,6 +448,7 @@ static struct BurnInputInfo GhoulsInputList[] =
 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+	{"Dip D"            , BIT_DIPSWITCH, &fFakeDip  , "dip"       },
 };
 
 STDINPUTINFO(Ghouls)
@@ -2544,7 +2545,8 @@ static struct BurnDIPInfo GhoulsDIPList[]=
 	{0x12, 0xff, 0xff, 0x00, NULL                     },
 	{0x13, 0xff, 0xff, 0x00, NULL                     },
 	{0x14, 0xff, 0xff, 0x00, NULL                     },
-	
+	{0x15, 0xff, 0xff, 0x00, NULL                     }, // fake
+
 	// Dip A
 	CPS1_COINAGE_1(0x12)
 
@@ -2580,10 +2582,14 @@ static struct BurnDIPInfo GhoulsDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x14, 0x01, 0x40, 0x40, "No"                     },
 	{0x14, 0x01, 0x40, 0x00, "Yes"                    },
-	
+
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x14, 0x01, 0x80, 0x00, "Game"                   },
 	{0x14, 0x01, 0x80, 0x80, "Test"                   },
+
+	{0   , 0xfe, 0   , 2   , "4-Way Mode"             },
+	{0x15, 0x01, 0x01, 0x00, "Normal"                 },
+	{0x15, 0x01, 0x01, 0x01, "Alternate"              },
 };
 
 STDDIPINFO(Ghouls)
@@ -2594,7 +2600,8 @@ static struct BurnDIPInfo GhoulsuDIPList[]=
 	{0x12, 0xff, 0xff, 0x00, NULL                     },
 	{0x13, 0xff, 0xff, 0x00, NULL                     },
 	{0x14, 0xff, 0xff, 0x00, NULL                     },
-	
+	{0x15, 0xff, 0xff, 0x00, NULL                     }, // fake
+
 	// Dip A
 	CPS1_COINAGE_1(0x12)
 
@@ -2638,6 +2645,10 @@ static struct BurnDIPInfo GhoulsuDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x14, 0x01, 0x80, 0x00, "Game"                   },
 	{0x14, 0x01, 0x80, 0x80, "Test"                   },
+
+	{0   , 0xfe, 0   , 2   , "4-Way Mode"             },
+	{0x15, 0x01, 0x01, 0x00, "Normal"                 },
+	{0x15, 0x01, 0x01, 0x01, "Alternate"              },
 };
 
 STDDIPINFO(Ghoulsu)
@@ -2648,7 +2659,8 @@ static struct BurnDIPInfo DaimakaiDIPList[]=
 	{0x12, 0xff, 0xff, 0x00, NULL                     },
 	{0x13, 0xff, 0xff, 0x00, NULL                     },
 	{0x14, 0xff, 0xff, 0x00, NULL                     },
-	
+	{0x15, 0xff, 0xff, 0x00, NULL                     }, // fake
+
 	// Dip A
 	CPS1_COINAGE_1(0x12)
 
@@ -2692,6 +2704,10 @@ static struct BurnDIPInfo DaimakaiDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x14, 0x01, 0x80, 0x00, "Game"                   },
 	{0x14, 0x01, 0x80, 0x80, "Test"                   },
+
+	{0   , 0xfe, 0   , 2   , "4-Way Mode"             },
+	{0x15, 0x01, 0x01, 0x00, "Normal"                 },
+	{0x15, 0x01, 0x01, 0x01, "Alternate"              },
 };
 
 STDDIPINFO(Daimakai)

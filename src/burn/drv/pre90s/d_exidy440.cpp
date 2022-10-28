@@ -62,6 +62,7 @@ static INT32 claypign = 0;
 static INT32 topsecex = 0;
 static INT32 hitnmiss = 0;
 static INT32 whodunit = 0;
+static INT32 cheyenne = 0;
 
 static INT32 lastline = 0;
 static INT32 scanline = 0;
@@ -1033,6 +1034,11 @@ static INT32 DrvLoadRoms(INT32 banks_start)
 				pLoad[0] = DrvM6809ROM[0] + banks_start;
 			}
 
+			// cheyenne special case
+			if ((ri.nType & 0xf) == 1 && cheyenne && (pLoad[0] - DrvM6809ROM[0]) == 0x2e000) {
+				pLoad[0] = DrvM6809ROM[0] + 0x38000;
+			}
+
 			continue;
 		}
 	}
@@ -1113,6 +1119,7 @@ static INT32 DrvExit()
 	topsecex = 0;
 	hitnmiss = 0;
 	whodunit = 0;
+	cheyenne = 0;
 
 	return 0;
 }
@@ -1565,6 +1572,8 @@ STD_ROM_FN(cheyenne)
 
 static INT32 CheyenneInit()
 {
+	cheyenne = 1;
+
 	return DrvInit(0x10000);
 }
 

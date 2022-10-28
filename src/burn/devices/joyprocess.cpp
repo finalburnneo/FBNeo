@@ -20,14 +20,21 @@ void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, I
 
 	if (flags & INPUT_4WAY) {
 		playernum &= 3; // just incase.
-		if(*input != DrvInputPrev[playernum]) {
+		if (*input != DrvInputPrev[playernum]) {
 			fourway[playernum] = *input & udrlmask;
 
-			if((fourway[playernum] & rl) && (fourway[playernum] & ud))
-				fourway[playernum] ^= (fourway[playernum] & (DrvInputPrev[playernum] & udrlmask));
+			if ((flags & INPUT_4WAY_ALT) == INPUT_4WAY_ALT) {
+				// INPUT_4WAY_ALT: hold last direction bit until diagnoal is released
+				if ((fourway[playernum] & rl) && (fourway[playernum] & ud))
+					fourway[playernum] = DrvInputPrev[playernum] & udrlmask;
+			} else {
+				// INPUT_4WAY: cancels previous frame's direction bit when diagonal is pressed
+				if ((fourway[playernum] & rl) && (fourway[playernum] & ud))
+					fourway[playernum] ^= (fourway[playernum] & (DrvInputPrev[playernum] & udrlmask));
 
-			if((fourway[playernum] & rl) && (fourway[playernum] & ud))
-				fourway[playernum] &= ud | ud; // diagonals aren't allowed w/INPUT_4WAY
+				if ((fourway[playernum] & rl) && (fourway[playernum] & ud))
+					fourway[playernum] &= ud; // when frame starts on diagonal, mask it out (super rare, but not impossible)
+			}
 		}
 
 		DrvInputPrev[playernum] = *input;

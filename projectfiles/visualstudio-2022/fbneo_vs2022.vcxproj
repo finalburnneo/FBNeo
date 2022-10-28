@@ -197,6 +197,7 @@
     <ClInclude Include="..\..\src\burn\snd\downsample.h" />
     <ClInclude Include="..\..\src\burn\snd\es5506.h" />
     <ClInclude Include="..\..\src\burn\snd\es8712.h" />
+    <ClInclude Include="..\..\src\burn\snd\exidy440_snd.h" />
     <ClInclude Include="..\..\src\burn\snd\flower.h" />
     <ClInclude Include="..\..\src\burn\snd\flt_rc.h" />
     <ClInclude Include="..\..\src\burn\snd\fm.h" />
@@ -610,6 +611,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_berzerk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_deadang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exerion.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exidy440.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exterm.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_gotya.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
@@ -676,6 +678,7 @@
     <ClCompile Include="..\..\src\burn\snd\burn_ymf271.cpp" />
     <ClCompile Include="..\..\src\burn\snd\c352.cpp" />
     <ClCompile Include="..\..\src\burn\snd\digitalk.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\exidy440_snd.cpp" />
     <ClCompile Include="..\..\src\burn\snd\i5000.cpp" />
     <ClCompile Include="..\..\src\burn\snd\multipcm.cpp" />
     <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />

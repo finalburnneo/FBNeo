@@ -1213,6 +1213,9 @@
     <ClInclude Include="..\..\src\burn\devices\midcvsd.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\snd\exidy440_snd.h">
+      <Filter>Burn\snd</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4739,6 +4742,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_gotya.cpp">
       <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_exidy440.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\exidy440_snd.cpp">
+      <Filter>Burn\snd</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,8 @@ void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, I
 				// INPUT_4WAY_ALT: hold last direction bit until diagnoal is released
 				if ((fourway[playernum] & rl) && (fourway[playernum] & ud))
 					fourway[playernum] = DrvInputPrev[playernum] & udrlmask;
+				else
+					DrvInputPrev[playernum] = *input;
 			} else {
 				// INPUT_4WAY: cancels previous frame's direction bit when diagonal is pressed
 				if ((fourway[playernum] & rl) && (fourway[playernum] & ud))
@@ -34,12 +36,12 @@ void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, I
 
 				if ((fourway[playernum] & rl) && (fourway[playernum] & ud))
 					fourway[playernum] &= ud; // when frame starts on diagonal, mask it out (super rare, but not impossible)
+
+				DrvInputPrev[playernum] = *input;
 			}
 		}
 
-		DrvInputPrev[playernum] = *input;
-
-		*input = fourway[playernum] | (DrvInputPrev[playernum] & othermask); // add back the unprocessed/other bits
+		*input = fourway[playernum] | (*input & othermask); // add back the unprocessed/other bits
 	}
 
 	if (flags & INPUT_CLEAROPPOSITES) {

@@ -62,6 +62,7 @@ static INT32 claypign = 0;
 static INT32 topsecex = 0;
 static INT32 hitnmiss = 0;
 static INT32 whodunit = 0;
+static INT32 cheyenne = 0;
 
 static INT32 lastline = 0;
 static INT32 scanline = 0;
@@ -1033,6 +1034,11 @@ static INT32 DrvLoadRoms(INT32 banks_start)
 				pLoad[0] = DrvM6809ROM[0] + banks_start;
 			}
 
+			// cheyenne special case
+			if ((ri.nType & 0xf) == 1 && cheyenne && (pLoad[0] - DrvM6809ROM[0]) == 0x2e000) {
+				pLoad[0] = DrvM6809ROM[0] + 0x38000;
+			}
+
 			continue;
 		}
 	}
@@ -1113,6 +1119,7 @@ static INT32 DrvExit()
 	topsecex = 0;
 	hitnmiss = 0;
 	whodunit = 0;
+	cheyenne = 0;
 
 	return 0;
 }
@@ -1491,7 +1498,7 @@ struct BurnDriver BurnDrvCrossbow = {
 	"crossbow", NULL, NULL, NULL, "1983",
 	"Crossbow (version 2.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, crossbowRomInfo, crossbowRomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, CrossbowDIPInfo,
 	CrossbowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
@@ -1565,6 +1572,8 @@ STD_ROM_FN(cheyenne)
 
 static INT32 CheyenneInit()
 {
+	cheyenne = 1;
+
 	return DrvInit(0x10000);
 }
 
@@ -1572,7 +1581,7 @@ struct BurnDriver BurnDrvCheyenne = {
 	"cheyenne", NULL, NULL, NULL, "1984",
 	"Cheyenne (version 1.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cheyenneRomInfo, cheyenneRomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, CheyenneDIPInfo,
 	CheyenneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -1647,7 +1656,7 @@ struct BurnDriver BurnDrvCombat = {
 	"combat", NULL, NULL, NULL, "1985",
 	"Combat (version 3.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, combatRomInfo, combatRomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, CombatDIPInfo,
 	CombatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -1722,7 +1731,7 @@ struct BurnDriver BurnDrvCatch22 = {
 	"catch22", "combat", NULL, NULL, "1985",
 	"Catch-22 (version 8.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, catch22RomInfo, catch22RomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, Catch22DIPInfo,
 	Catch22Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -1795,7 +1804,7 @@ struct BurnDriver BurnDrvCracksht = {
 	"cracksht", NULL, NULL, NULL, "1985",
 	"Crackshot (version 2.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, crackshtRomInfo, crackshtRomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, CrackshtDIPInfo,
 	CrackshtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -1857,7 +1866,7 @@ struct BurnDriver BurnDrvClaypign = {
 	"claypign", NULL, NULL, NULL, "1986",
 	"Clay Pigeon (version 2.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, claypignRomInfo, claypignRomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, ClaypignDIPInfo,
 	ClaypignInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -1937,7 +1946,7 @@ struct BurnDriver BurnDrvChiller = {
 	"chiller", NULL, NULL, NULL, "1986",
 	"Chiller (version 3.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, chillerRomInfo, chillerRomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, ChillerDIPInfo,
 	ChillerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2026,7 +2035,7 @@ struct BurnDriver BurnDrvTopsecex = {
 	"topsecex", NULL, NULL, NULL, "1986",
 	"Top Secret (Exidy) (version 1.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT | GBF_ACTION, 0,
 	NULL, topsecexRomInfo, topsecexRomName, NULL, NULL, NULL, NULL, TopsecexInputInfo, TopsecexDIPInfo,
 	TopsecexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 238, 4, 3
@@ -2109,7 +2118,7 @@ struct BurnDriver BurnDrvHitnmiss = {
 	"hitnmiss", NULL, NULL, NULL, "1987",
 	"Hit 'n Miss (version 3.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, hitnmissRomInfo, hitnmissRomName, NULL, NULL, NULL, NULL, HitnmissInputInfo, HitnmissDIPInfo,
 	HitnmissInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2179,7 +2188,7 @@ struct BurnDriver BurnDrvHitnmiss2 = {
 	"hitnmiss2", "hitnmiss", NULL, NULL, "1987",
 	"Hit 'n Miss (version 2.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, hitnmiss2RomInfo, hitnmiss2RomName, NULL, NULL, NULL, NULL, HitnmissInputInfo, HitnmissDIPInfo,
 	Hitnmiss2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2267,7 +2276,7 @@ struct BurnDriver BurnDrvWhodunit = {
 	"whodunit", NULL, NULL, NULL, "1988",
 	"Who Dunit (version 9.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, whodunitRomInfo, whodunitRomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, WhodunitDIPInfo,
 	WhodunitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2347,7 +2356,7 @@ struct BurnDriver BurnDrvWhodunit8 = {
 	"whodunit8", "whodunit", NULL, NULL, "1988",
 	"Who Dunit (version 8.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, whodunit8RomInfo, whodunit8RomName, NULL, NULL, NULL, NULL, CrossbowInputInfo, WhodunitDIPInfo,
 	WhodunitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2437,7 +2446,7 @@ struct BurnDriver BurnDrvShowdown = {
 	"showdown", NULL, NULL, NULL, "1988",
 	"Showdown (version 5.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, showdownRomInfo, showdownRomName, NULL, NULL, NULL, NULL, ShowdownInputInfo, ShowdownDIPInfo,
 	ShowdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2513,7 +2522,7 @@ struct BurnDriver BurnDrvShowdown4 = {
 	"showdown4", "showdown", NULL, NULL, "1988",
 	"Showdown (version 4.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, showdown4RomInfo, showdown4RomName, NULL, NULL, NULL, NULL, ShowdownInputInfo, ShowdownDIPInfo,
 	ShowdownInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2599,7 +2608,7 @@ struct BurnDriver BurnDrvYukon = {
 	"yukon", NULL, NULL, NULL, "1989",
 	"Yukon (version 2.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, yukonRomInfo, yukonRomName, NULL, NULL, NULL, NULL, ShowdownInputInfo, ShowdownDIPInfo,
 	YukonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3
@@ -2671,7 +2680,7 @@ struct BurnDriver BurnDrvYukon1 = {
 	"yukon1", "yukon", NULL, NULL, "1989",
 	"Yukon (version 1.0)\0", NULL, "Exidy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, yukon1RomInfo, yukon1RomName, NULL, NULL, NULL, NULL, ShowdownInputInfo, ShowdownDIPInfo,
 	YukonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 240, 4, 3

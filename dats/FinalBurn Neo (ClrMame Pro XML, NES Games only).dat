@@ -14584,10 +14584,10 @@
 	</game>
 	<game name="squirchaser">
 		<comment>Homebrew</comment>
-		<description>Squirell Chaser (HB)</description>
+		<description>Squirrel Chaser (HB)</description>
 		<year>2022</year>
 		<manufacturer>Brad Hammond</manufacturer>
-		<rom name="Squirell Chaser (2022)(Brad Hammond).nes" size="524304" crc="3a48f1bd"/>
+		<rom name="Squirrel Chaser (2022)(Brad Hammond).nes" size="524304" crc="3a48f1bd"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

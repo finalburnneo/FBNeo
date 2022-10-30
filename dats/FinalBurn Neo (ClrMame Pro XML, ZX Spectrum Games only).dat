@@ -814,6 +814,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aaf" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Alien Astro Frenzy (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Vintage Software</manufacturer>
+		<rom name="Alien Astro Frenzy (2021)(Vintage Software).z80" size="27028" crc="4c32aff8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="alienevolution" romof="spec128">
 		<description>Alien Evolution (128K)</description>
 		<year>1987</year>
@@ -2368,6 +2378,28 @@
 		<manufacturer>Genesis Soft</manufacturer>
 		<rom name="Bloody ES (1987)(Genesis Soft).tap" size="28033" crc="ae89fdd6"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bloodpaws1" romof="spec128">
+		<comment>Set 'Sinclair' to use controller</comment>
+		<description>Bloody Paws - Part 1 (Spanish) (128K)</description>
+		<year>1990</year>
+		<manufacturer>G.LL. Software</manufacturer>
+		<rom name="Bloody Paws ES Part1 (1990)(G.LL.).tap" size="35835" crc="65d44dab"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bloodpaws2" cloneof="bloodpaws1" romof="bloodpaws1">
+		<comment>Set 'Sinclair' to use controller</comment>
+		<description>Bloody Paws - Part 2 (Spanish) (128K)</description>
+		<year>1990</year>
+		<manufacturer>G.LL. Software</manufacturer>
+		<rom name="Bloody Paws ES Part2 (1990)(G.LL.).tap" size="37263" crc="97af0b3a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4087,6 +4119,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="csa" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Cosmic Space Attack (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Vintage Software</manufacturer>
+		<rom name="Cosmic Space Attack (2021)(Vintage Software).z80" size="26629" crc="90ba6366"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cosmicwartoad" romof="spectrum">
 		<description>Cosmic Wartoad (48K)</description>
 		<year>1985</year>
@@ -4244,6 +4286,16 @@
 		<rom name="Crazy Cars II (1988)(Titus).tap" size="41208" crc="0b4a0be1"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crazyhouse" romof="spectrum">
+		<comment>Set 'Cursor' to use controller</comment>
+		<description>Crazy House (48K)</description>
+		<year>1990</year>
+		<manufacturer>Bulldog Software</manufacturer>
+		<rom name="Crazy House (1990)(Bulldog).z80" size="18580" crc="876275b0"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13936,6 +13988,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="regulus" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Regulus (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Proxima Software</manufacturer>
+		<rom name="Regulus (2022)(Proxima Software).tap" size="40638" crc="f40c4211"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="relic" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Reliquia, La (English) (128K) (HB)</description>
@@ -15551,6 +15613,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sonicboom" romof="spec128">
+		<description>Sonic Boom (128K) (HB)</description>
+		<year>1990</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Sonic Boom 128K (1990)(Activision).tap" size="89195" crc="8fff430d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sophia" romof="spec128">
 		<comment>Homebrew, Use SPACE and ENTER to choose options</comment>
 		<description>Sophia (128K) (HB)</description>
@@ -15794,6 +15866,16 @@
 		<year>1983</year>
 		<manufacturer>Your Computer</manufacturer>
 		<rom name="Spectrum Cross 16K (1983)(Your Computer).tap" size="8210" crc="f16574c6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spekkuman" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Spekku-man (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Grongy, Art-top, AER</manufacturer>
+		<rom name="Spekku-man 48K (2022)(Grongy, Art-top, AER).tap" size="15062" crc="03510436"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17739,6 +17821,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="turbodriver" romof="spectrum">
+		<description>Turbo Driver (16K)</description>
+		<year>1983</year>
+		<manufacturer>B.O.S. Software</manufacturer>
+		<rom name="Turbo Driver (1983)(B.O.S. Software).tap" size="7006" crc="59b6a725"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="turbogirl" romof="spectrum">
 		<comment>Press SPACE to jump</comment>
 		<description>Turbo Girl (48K)</description>
@@ -17845,6 +17936,15 @@
 		<rom name="Twinlight 128K (2017)(Retrosouls).tap" size="93039" crc="8d52e8f6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="twister" romof="spectrum">
+		<description>Twister (48K)</description>
+		<year>1986</year>
+		<manufacturer>System 3</manufacturer>
+		<rom name="Twister 48K (1986)(System 3).tap" size="25904" crc="3a54f2c8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17995,6 +18095,17 @@
 		<year>2020</year>
 		<manufacturer>Poe Games</manufacturer>
 		<rom name="Vampire Vengeance v1.1 (2020)(Poe Games).tap" size="58059" crc="2796871d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vectornauts" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Vectornauts, The (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Dom Reardon</manufacturer>
+		<rom name="Vectornauts, The 128K (2018)(Dom Reardon).tap" size="43878" crc="79bd68c7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -18538,6 +18649,16 @@
 		<year>1985</year>
 		<manufacturer>Quicksilva</manufacturer>
 		<rom name="Yabba Dabba Doo! 48K (1985)(Quicksilva).tap" size="45016" crc="c13ebf67"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yaks" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>YAKS - Yet Another Krappy Shooter (16K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Krappygamez</manufacturer>
+		<rom name="YAKS - Yet Another Krappy Shooter 16K (2022)(Krappygamez).tap" size="13963" crc="2ebe7e38"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

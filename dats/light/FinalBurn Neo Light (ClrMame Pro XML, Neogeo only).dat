@@ -12343,15 +12343,15 @@
 		<description>Metal Slug X - Super Vehicle-001 (Survival, Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1sc.p1" size="1048576" crc="d8c467bd"/>
-		<rom name="250-p2sc.ep1" size="4194304" crc="d2e02a46"/>
+		<rom name="250-p1sc.p1" size="1048576" crc="50f85ace"/>
+		<rom name="250-p2sc.ep1" size="4194304" crc="78c72782"/>
 		<rom name="250-s1sc.s1" size="131072" crc="03bce893"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
 		<rom name="250-c3.c3" merge="250-c3.c3" size="8388608" crc="fd602019"/>
 		<rom name="250-c4.c4" merge="250-c4.c4" size="8388608" crc="31354513"/>
-		<rom name="250-c5sc.c5" size="8388608" crc="9a9422e4"/>
-		<rom name="250-c6sc.c6" size="8388608" crc="ef116b50"/>
+		<rom name="250-c5sc.c5" size="8388608" crc="74aaf349"/>
+		<rom name="250-c6sc.c6" size="8388608" crc="93f39d40"/>
 		<rom name="250-m1.m1" merge="250-m1.m1" size="131072" crc="fd42a842"/>
 		<rom name="250-v1.v1" merge="250-v1.v1" size="4194304" crc="c79ede73"/>
 		<rom name="250-v2.v2" merge="250-v2.v2" size="4194304" crc="ea9aabe1"/>

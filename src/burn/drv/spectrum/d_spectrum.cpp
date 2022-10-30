@@ -24123,22 +24123,22 @@ struct BurnDriver BurnSpecTwister = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Turbo Driver
+// Turbo Driver (16K)
 
 static struct BurnRomInfo SpecTurbodriverRomDesc[] = {
 	{ "Turbo Driver (1983)(B.O.S. Software).tap", 7006, 0x59b6a725, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecTurbodriver, SpecTurbodriver, Spec128)
+STDROMPICKEXT(SpecTurbodriver, SpecTurbodriver, Spectrum)
 STD_ROM_FN(SpecTurbodriver)
 
 struct BurnDriver BurnSpecTurbodriver = {
-	"spec_turbodriver", NULL, "spec_spec128", NULL, "1983",
-	"Turbo Driver\0", NULL, "B.O.S. Software", "ZX Spectrum",
+	"spec_turbodriver", NULL, "spec_spectrum", NULL, "1983",
+	"Turbo Driver (16K)\0", NULL, "B.O.S. Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_RACING, 0,
 	SpectrumGetZipName, SpecTurbodriverRomInfo, SpecTurbodriverRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

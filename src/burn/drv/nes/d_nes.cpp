@@ -21542,7 +21542,7 @@ struct BurnDriver BurnDrvnes_orebodysr = {
 };
 
 static struct BurnRomInfo nes_squirchaserRomDesc[] = {
-	{ "Squirell Chaser (2022)(Brad Hammond).nes",          524304, 0x3a48f1bd, BRF_ESS | BRF_PRG },
+	{ "Squirrel Chaser (2022)(Brad Hammond).nes",          524304, 0x3a48f1bd, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_squirchaser)
@@ -21550,7 +21550,7 @@ STD_ROM_FN(nes_squirchaser)
 
 struct BurnDriver BurnDrvnes_squirchaser = {
 	"nes_squirchaser", NULL, NULL, NULL, "2022",
-	"Squirell Chaser (HB)\0", NULL, "Brad Hammond", "Miscellaneous",
+	"Squirrel Chaser (HB)\0", NULL, "Brad Hammond", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_squirchaserRomInfo, nes_squirchaserRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

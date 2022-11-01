@@ -1216,6 +1216,9 @@
     <ClInclude Include="..\..\src\burn\snd\exidy440_snd.h">
       <Filter>Burn\snd</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\pic8259.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4748,6 +4751,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\exidy440_snd.cpp">
       <Filter>Burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\pic8259.cpp">
+      <Filter>Burn\devices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

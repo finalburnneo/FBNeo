@@ -934,6 +934,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mojontwiapuche" cloneof="mojontwichewri" romof="mojontwichewri">
+		<comment>Homebrew</comment>
+		<description>Apuntalo, Cheril (HB)</description>
+		<year>2018</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Apuntalo, Cheril (2018)(The Mojon Twins).nes" size="131088" crc="2fe76a4a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="archriv">
 		<description>Arch Rivals - A Basketbrawl! (USA)</description>
 		<year>1990</year>
@@ -2519,7 +2528,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="castleexcellent">
+	<game name="castleexcellent" cloneof="castlequest" romof="castlequest">
 		<description>Castle Excellent (Japan)</description>
 		<year>1986</year>
 		<manufacturer>ASCII</manufacturer>
@@ -2540,6 +2549,31 @@
 		<year>1990</year>
 		<manufacturer>Seta</manufacturer>
 		<rom name="Castle of Dragon (USA).nes" size="131088" crc="1c24cc9d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="cstlquestj" cloneof="cstlquest" romof="cstlquest">
+		<description>Castle Quest (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Castle Quest (J)(1990)(Hudson Soft).nes" size="262160" crc="95dc4334"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="cstlquest">
+		<comment>Hack</comment>
+		<description>Castle Quest (T-Eng)</description>
+		<year>2012</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Castle Quest T-Eng (2012)(Stardust Crusaders).nes" size="262160" crc="faabff04"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="castlequest">
+		<description>Castlequest (USA)</description>
+		<year>1989</year>
+		<manufacturer>Nexoft - ASCII</manufacturer>
+		<rom name="Castlequest (U)(1989)(Nexoft).nes" size="65552" crc="5dbb7c78"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

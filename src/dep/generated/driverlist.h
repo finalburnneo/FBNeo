@@ -768,6 +768,7 @@ DRV		BurnDrvpce_appgateb;
 DRV		BurnDrvfds_appletowmon;
 DRV		BurnDrvAppoooh;
 DRV		BurnSpecApulija13;
+DRV		BurnDrvnes_mojontwiapuche;
 DRV		BurnDrvmd_aqrenk;
 DRV		BurnSpecAquaplane;
 DRV		BurnDrvMSX_aquasos;
@@ -2600,9 +2601,12 @@ DRV		BurnDrvmd_castlills;
 DRV		BurnDrvsms_castlillu;
 DRV		BurnDrvsms_castlills;
 DRV		BurnSpecCastleofsorrow;
+DRV		BurnDrvnes_cstlquestj;
+DRV		BurnDrvnes_cstlquest;
 DRV		BurnDrvMSX_castle;
 DRV		BurnDrvMSX_castlek;
 DRV		BurnDrvcv_castle;
+DRV		BurnDrvnes_castlequest;
 DRV		BurnDrvnes_castlevaniac;
 DRV		BurnDrvnes_castlevania;
 DRV		BurnDrvmd_cvaniaec;
@@ -19932,6 +19936,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_appletowmon,	// Apple Town Monogatari - Little Computer People (Japan)
 	&BurnDrvAppoooh,			// Appoooh
 	&BurnSpecApulija13,			// Apulija-13 (128K) (HB, v2.01)
+	&BurnDrvnes_mojontwiapuche,	// Apuntalo, Cheril (HB)
 	&BurnDrvmd_aqrenk,			// Aq Renkan Awa (Chi) (Unl)
 	&BurnSpecAquaplane,			// Aqua Plane (48K)
 	&BurnDrvMSX_aquasos,		// Aqua Polis SOS (Jpn)
@@ -21764,9 +21769,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_castlillu,		// Castle of Illusion Starring Mickey Mouse (USA)
 	&BurnDrvsms_castlills,		// Castle of Illusion Starring Mickey Mouse (USA, Display Unit Sample)
 	&BurnSpecCastleofsorrow,	// Castle Of Sorrow (48K) (HB)
+	&BurnDrvnes_cstlquestj,		// Castle Quest (Japan)
+	&BurnDrvnes_cstlquest,		// Castle Quest (T-Eng)
 	&BurnDrvMSX_castle,			// Castle, The (Jpn)
 	&BurnDrvMSX_castlek,		// Castle, The (Kor)
 	&BurnDrvcv_castle,			// Castle, The (SGM) (HB)
+	&BurnDrvnes_castlequest,	// Castlequest (USA)
 	&BurnDrvnes_castlevaniac,	// Castlevania (Hack, Spanish v1.0)
 	&BurnDrvnes_castlevania,	// Castlevania (USA)
 	&BurnDrvmd_cvaniaec,		// Castlevania - Bloodlines (Hack, Enhanced Colors)

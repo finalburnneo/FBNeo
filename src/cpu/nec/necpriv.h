@@ -74,6 +74,8 @@ struct _nec_state_t
 	UINT32  cycles_total;
 	INT32  cycles_remaining;
 	INT8	stop_run;
+
+	UINT8 (*getvector_cb)();
 };
 
 typedef enum { DS1, PS, SS_, DS0 } SREGS;

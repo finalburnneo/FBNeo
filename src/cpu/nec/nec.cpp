@@ -110,6 +110,7 @@
 //#include "state.h"
 #include "nec_intf.h"
 #include "bitswap.h"
+#include <stddef.h>
 
 #define INPUT_LINE_NMI	0x20 // nmi
 
@@ -212,6 +213,13 @@ static UINT8 fetchop(nec_state_t *nec_state)
 
 /***************************************************************************/
 
+void nec_set_vector_callback(UINT8 (*cb)())
+{
+	nec_state_t *nec_state = sChipsPtr;
+
+	nec_state->getvector_cb = cb;
+}
+
 int nec_reset()
 {
 	nec_state_t *nec_state = sChipsPtr;
@@ -255,8 +263,9 @@ static void nec_interrupt(nec_state_t *nec_state, unsigned int_num, INTSOURCES s
 	i_pushf(nec_state);
 	nec_state->TF = nec_state->IF = 0;
 
-	if (source == INT_IRQ)	/* get vector */
-		int_num = nec_state->vector;
+	if (source == INT_IRQ) {	/* get vector */
+		int_num = (nec_state->getvector_cb) ? nec_state->getvector_cb() : nec_state->vector;
+	}
 
 	dest_off = read_mem_word(int_num*4);
 	dest_seg = read_mem_word(int_num*4+2);
@@ -298,6 +307,20 @@ static void external_int(nec_state_t *nec_state)
 #include "necinstr.c"
 
 /*****************************************************************************/
+
+void nec_set_irq_line(int state) // for use with vector callback
+{
+	nec_state_t *nec_state = sChipsPtr;
+
+	nec_state->irq_state = state;
+	if (state == CLEAR_LINE)
+		nec_state->pending_irq &= ~INT_IRQ;
+	else
+	{
+		nec_state->pending_irq |= INT_IRQ;
+		nec_state->halted = 0;
+	}
+}
 
 void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 {
@@ -437,6 +460,14 @@ int nec_execute(int cycles)
 		prev_ICount = nec_state->icount;
 		nec_instruction[fetchop(nec_state)](nec_state);
 		do_prefetch(nec_state, prev_ICount);
+#if 0
+		extern int counter;
+		if (counter ==-1) {
+			if ((prev_ICount - nec_state->icount) > 1000) {
+				bprintf(0, _T("huge cyc. jump  @  %x\n"),(Sreg(PS)<<4)+nec_state->ip);
+			}
+		}
+#endif
 	}
 
 	cycles = cycles - nec_state->icount;
@@ -514,7 +545,7 @@ void necScan(int cpu, int nAction)
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = (unsigned char*)nec_state;
-		ba.nLen	  = sizeof(nec_state_t);
+		ba.nLen	  = STRUCT_SIZE_HELPER(nec_state_t, stop_run);
 		ba.szName = szText;
 		BurnAcb(&ba);
 	}

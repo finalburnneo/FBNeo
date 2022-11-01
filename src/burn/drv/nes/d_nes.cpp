@@ -26272,6 +26272,23 @@ struct BurnDriver BurnDrvnes_mojontwichewri = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_mojontwiapucheRomDesc[] = {
+	{ "Apuntalo, Cheril (2018)(The Mojon Twins).nes",          131088, 0x2fe76a4a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mojontwiapuche)
+STD_ROM_FN(nes_mojontwiapuche)
+
+struct BurnDriver BurnDrvnes_mojontwiapuche = {
+	"nes_mojontwiapuche", "nes_mojontwichewri", NULL, NULL, "2018",
+	"Apuntalo, Cheril (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_mojontwiapucheRomInfo, nes_mojontwiapucheRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_saturnsmashRomDesc[] = {
 	{ "Saturn Smash (HB).nes",          65552, 0xabc36edb, BRF_ESS | BRF_PRG },
 };
@@ -30398,10 +30415,10 @@ STD_ROM_PICK(nes_castleexcellent)
 STD_ROM_FN(nes_castleexcellent)
 
 struct BurnDriver BurnDrvnes_castleexcellent = {
-	"nes_castleexcellent", NULL, NULL, NULL, "1986",
+	"nes_castleexcellent", "nes_castlequest", NULL, NULL, "1986",
 	"Castle Excellent (Japan)\0", NULL, "ASCII", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_castleexcellentRomInfo, nes_castleexcellentRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -30437,6 +30454,57 @@ struct BurnDriver BurnDrvnes_castleofdragon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_castleofdragonRomInfo, nes_castleofdragonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_castlequestRomDesc[] = {
+	{ "Castlequest (U)(1989)(Nexoft).nes",          65552, 0x5dbb7c78, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castlequest)
+STD_ROM_FN(nes_castlequest)
+
+struct BurnDriver BurnDrvnes_castlequest = {
+	"nes_castlequest", NULL, NULL, NULL, "1989",
+	"Castlequest (USA)\0", NULL, "Nexoft - ASCII", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_castlequestRomInfo, nes_castlequestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_cstlquestRomDesc[] = {
+	{ "Castle Quest T-Eng (2012)(Stardust Crusaders).nes",          262160, 0xfaabff04, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cstlquest)
+STD_ROM_FN(nes_cstlquest)
+
+struct BurnDriver BurnDrvnes_cstlquest = {
+	"nes_cstlquest", NULL, NULL, NULL, "2012",
+	"Castle Quest (T-Eng)\0", NULL, "Stardust Crusaders", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_cstlquestRomInfo, nes_cstlquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_cstlquestjRomDesc[] = {
+	{ "Castle Quest (J)(1990)(Hudson Soft).nes",          262160, 0x95dc4334, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cstlquestj)
+STD_ROM_FN(nes_cstlquestj)
+
+struct BurnDriver BurnDrvnes_cstlquestj = {
+	"nes_cstlquestj", "nes_cstlquest", NULL, NULL, "1990",
+	"Castle Quest (Japan)\0", NULL, "Hudson Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_cstlquestjRomInfo, nes_cstlquestjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

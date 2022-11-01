@@ -67,6 +67,9 @@ INT32 VezRun(INT32 nCycles);
 #define NEC_INPUT_LINE_POLL  20
 
 void VezSetIRQLineAndVector(const INT32 line, const INT32 vector, const INT32 status);
+void nec_set_vector_callback(UINT8 (*cb)());
+void nec_set_irq_line(int state); // for use with vector callback
+
 
 void VezCheatWrite(UINT32 a, UINT8 d); // cheat core
 

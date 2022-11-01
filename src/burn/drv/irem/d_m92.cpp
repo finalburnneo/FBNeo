@@ -10,6 +10,7 @@
 #include "irem_cpu.h"
 #include "iremga20.h"
 #include "stddef.h"
+#include "pic8259.h"
 
 static UINT8 *Mem = NULL;
 static UINT8 *MemEnd = NULL;
@@ -55,7 +56,6 @@ static UINT8 DrvJoy4[8];
 static UINT8 DrvInput[9];
 static UINT8 DrvReset = 0;
 
-static INT32 m92_irq_vectorbase;
 static INT32 m92_main_bank;
 
 static INT32 graphics_mask[2] = { 0, 0 };
@@ -685,9 +685,9 @@ STDDIPINFO(Rtypeleo)
 
 static struct BurnDIPInfo InthuntDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xaf, NULL					},
-	{0x13, 0xff, 0xff, 0xfd, NULL					},
-	{0x14, 0xff, 0xff, 0xf0, NULL					},
+	{0x12, 0xff, 0xff, 0xbf, NULL					},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
+	{0x14, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x12, 0x01, 0x03, 0x02, "2"					},
@@ -1339,6 +1339,7 @@ static void __fastcall m92WriteByte(UINT32 address, UINT8 data)
 		case 0xf9008:
 			m92_sprite_buffer_busy = 0;
 			m92_sprite_buffer_timer = 1;
+			pic8259_set_irq_line(1, 0);
 			return;
 
 		case 0xf9800:
@@ -1370,13 +1371,20 @@ static UINT8 __fastcall m92ReadPort(UINT32 port)
 		case 0x06: return ~DrvInput[2];	// player 3
 		case 0x07: return ~DrvInput[3];	// player 4
 
-		case 0x08: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[0];
-		case 0x09: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[1];
+		case 0x08: pic8259_set_irq_line(3, 0); return sound_status[0];
+		case 0x09: pic8259_set_irq_line(3, 0); return sound_status[1];
 
 		case 0x18: return (m92_kludge == 3) ? MSM6295Read(0) : 0; // ppan
 
-//		default:
-//			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of port %x\n"), port);
+		case 0x40:
+		case 0x42:
+			return pic8259_read((port & 3) / 2);
+		case 0x41:
+		case 0x43:
+			return 0;
+
+		default:
+			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of port %x\n"), port);
 	}
 	return 0;
 }
@@ -1455,14 +1463,12 @@ static void __fastcall m92WritePort(UINT32 port, UINT8 data)
 			return;
 
 		case 0x40:
+		case 0x42:
+			pic8259_write((port & 3) / 2, data);
+			return;
 		case 0x41:
-		case 0x43: // IRQ controller init (ignored)
-		return;
-		case 0x42: // get vectorbase from IRQ controller init - first write on port 0x42
-			if (m92_irq_vectorbase == 0) {
-				m92_irq_vectorbase = data << 2;
-			}
-		return;
+		case 0x43:
+			return; // hi bytes of pic8529 (ignored)
 
 		case 0x80: pf_control[0][0] = data; set_pf_scroll(0); return;
 		case 0x81: pf_control[0][1] = data; set_pf_scroll(0); return;
@@ -1498,14 +1504,15 @@ static void __fastcall m92WritePort(UINT32 port, UINT8 data)
 			return;
 		case 0x9f: pf_control[3][7] = data;
 			m92_raster_irq_position = ((pf_control[3][7]<<8) | pf_control[3][6]) - 128;
+			pic8259_set_irq_line(2, 0);
 			return;
 
 		case 0xc0:
 		case 0xc1:// sound reset
 			return;
 
-		//default:
-		//	bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to port %x\n"), data, port);
+//		default:
+//			bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to port %x\n"), data, port);
 	}
 }
 
@@ -1561,7 +1568,7 @@ static void __fastcall m92SndWriteByte(UINT32 address, UINT8 data)
 			sound_status[0] = data;
 			VezClose();
 			VezOpen(0);
-			VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_ACK);
+			pic8259_set_irq_line(3, 1);
 			VezClose();
 			VezOpen(1);
 			return;
@@ -1576,6 +1583,7 @@ static INT32 DrvDoReset()
 	memset (RamStart, 0, RamEnd - RamStart);
 
 	VezOpen(0);
+	pic8259_reset();
 	if (m92_banks) m92MainBank(0);
 	VezReset();
 	VezClose();
@@ -1594,7 +1602,6 @@ static INT32 DrvDoReset()
 
 	if (m92_kludge == 1) sound_status[0] = 0x80;
 
-	m92_irq_vectorbase = 0;
 	m92_sprite_buffer_busy = 0x80;
 	m92_sprite_buffer_timer = 0;
 	PalBank	= 0;
@@ -1762,6 +1769,11 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 		VezInit(1, V35_TYPE, 14318180 /*before divider*/);
 
 		VezOpen(0);
+
+		// interrupt controller
+		pic8259_init(nec_set_irq_line);
+		nec_set_vector_callback(pic8259_inta_cb);
+
 		if (type == 0) { // lethalh
 			VezMapArea(0x00000, 0x7ffff, 0, DrvV33ROM + 0x00000);
 			VezMapArea(0x00000, 0x7ffff, 2, DrvV33ROM + 0x00000);
@@ -1784,7 +1796,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 		VezMapArea(0xe0000, 0xeffff, 2, DrvV33RAM);
 		VezMapArea(0xf8000, 0xf87ff, 0, DrvSprRAM);
 		VezMapArea(0xf8000, 0xf87ff, 1, DrvSprRAM);
-		VezMapArea(0xff800, 0xfffff, 0, DrvV33ROM + 0x7f800);
+		VezMapArea(0xff800, 0xfffff, 0, DrvV33ROM + 0x7f800);  // vectors?
 		VezMapArea(0xff800, 0xfffff, 2, DrvV33ROM + 0x7f800);
 		VezSetReadHandler(m92ReadByte);
 		VezSetWriteHandler(m92WriteByte);
@@ -1810,8 +1822,6 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 
 	graphics_mask[0] = ((gfxlen1 * 2) - 1) / (8 * 8);
 	graphics_mask[1] = ((gfxlen2 * 2) - 1) / (16 * 16);
-
-	m92_irq_vectorbase = 0x00;
 
 	BurnYM2151Init(3579545);
 	YM2151SetIrqHandler(0, &m92YM2151IRQHandler);
@@ -1839,6 +1849,7 @@ static INT32 DrvExit()
 	MSM6295Exit(0); // ppan
 
 	VezExit();
+	pic8259_exit();
 
 	BurnFree(Mem);
 	
@@ -2086,24 +2097,19 @@ static void scanline_interrupts(INT32 scanline)
 	if (m92_sprite_buffer_timer) {
 		memcpy (DrvSprBuf, DrvSprRAM, 0x800);
 		m92_sprite_buffer_busy = 0x80;
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, CPU_IRQSTATUS_ACK);
-		nCyclesDone[0] += VezRun(10);
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, CPU_IRQSTATUS_NONE);
+		pic8259_set_irq_line(1, 1);
 
 		m92_sprite_buffer_timer = 0;
 	}
 
 	if (scanline == m92_raster_irq_position) {
-
 		if (scanline>=8 && scanline < 248 && nPrevScreenPos != (scanline-8)+1) {
 			if (nPrevScreenPos >= 0 && nPrevScreenPos <= 239)
 				DrawLayers(nPrevScreenPos, (scanline-8)+1);
 			nPrevScreenPos = (scanline-8)+1;
 		}
 
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, CPU_IRQSTATUS_ACK);
-		nCyclesDone[0] += VezRun((m92_kludge & 4) ? 20 : 10); // nbbatman: gets rid of flashes in intro sequence
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, CPU_IRQSTATUS_NONE);
+		pic8259_set_irq_line(2, 1);
 	}
 
 	if (scanline == 248) // vblank
@@ -2117,10 +2123,9 @@ static void scanline_interrupts(INT32 scanline)
 			DrvDraw();
 		}
 
-		if (m92_kludge & 4) nCyclesDone[0] += VezRun(1200); // nbbatman: gets rid of flash after IREM logo fades out
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, CPU_IRQSTATUS_ACK);
-		nCyclesDone[0] += VezRun(10);
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, CPU_IRQSTATUS_NONE);
+		pic8259_set_irq_line(0, 1);
+	} else {
+		pic8259_set_irq_line(0, 0);
 	}
 }
 
@@ -2260,6 +2265,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		iremga20_scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);
 
+		pic8259_scan(nAction);
+
 		SCAN_VAR(PalBank);
 
 		SCAN_VAR(m92_raster_irq_position);
@@ -2267,19 +2274,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m92_sprite_list);
 		SCAN_VAR(m92_sprite_buffer_busy);
 		SCAN_VAR(m92_sprite_buffer_timer);
-		SCAN_VAR(m92_irq_vectorbase);
 		SCAN_VAR(m92_main_bank);
 
 		if (nAction & ACB_WRITE) {
 			VezOpen(0);
 			if (m92_banks) m92MainBank(m92_main_bank);
 			VezClose();
-#if 0
-			// if fm dies on state load: put this back or find out why this bad kludge is needed in the first place and fix it.
-			VezOpen(1);
-			m92YM2151IRQHandler(0); // get fm sound going again on state load
-			VezClose();
-#endif
 		}
 
 		if (m92_kludge == 3) { // ppan

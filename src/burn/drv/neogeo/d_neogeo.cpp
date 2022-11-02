@@ -18254,7 +18254,7 @@ struct BurnDriver BurnDrvkof98pfe = {
 };
 
 // The King of Fighters '98 - Easy Combo King (GOTVG Version, hack)
-/* Hacked by gunloc941 - Build 2019-02-17 */
+/* Hack by gunloc941 - GOTVG 20190217 */
 
 static struct BurnRomInfo kof98eckgRomDesc[] = {
 	/* P1 Encrypted */
@@ -18294,24 +18294,24 @@ struct BurnDriver BurnDrvkof98eckg = {
 };
 
 // The King of Fighters '98 - Easy Combo King (YZKOF Version, hack)
-/* Hacked by gunloc941 - YZKOF Build 2020-04-09 */
+/* Hack by gunloc941 - YZKOF 20220906 */
 
 static struct BurnRomInfo kof98eckyRomDesc[] = {
-	{ "242-pn1ecky.p1",	0x100000, 0x0ced4a93, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "242-p2ecky.sp2",	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1ecky.p1",	0x200000, 0x15977d59, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2ecky.sp2",	0x400000, 0x85c20b47, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "242-s1ecky.s1", 	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1ecky.s1", 	0x020000, 0x8ce81ec5, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242-c1ecky.c1", 	0x800000, 0xd528dab9, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242-c2ecky.c2", 	0x800000, 0x73556130, 3 | BRF_GRA },           //  4
+	{ "242-c1ecky.c1", 	0x800000, 0x57c6ebc7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2ecky.c2", 	0x800000, 0x653bd259, 3 | BRF_GRA },           //  4
 	{ "242-c3ecky.c3", 	0x800000, 0x4091bca0, 3 | BRF_GRA },           //  5
 	{ "242-c4ecky.c4",	0x800000, 0x56918bab, 3 | BRF_GRA },           //  6
 	{ "242-c5ecky.c5",	0x800000, 0x76252bdc, 3 | BRF_GRA },           //  7
 	{ "242-c6ecky.c6",	0x800000, 0x13d5b9b7, 3 | BRF_GRA },           //  8
-	{ "242-c7ecky.c7",	0x800000, 0x1b3a6aa9, 3 | BRF_GRA },           //  9
-	{ "242-c8ecky.c8",	0x800000, 0xef3390ca, 3 | BRF_GRA },           // 10
+	{ "242-c7ecky.c7",	0x800000, 0x6258e866, 3 | BRF_GRA },           //  9
+	{ "242-c8ecky.c8",	0x800000, 0xa246cef2, 3 | BRF_GRA },           // 10
 
-	{ "242-mg1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-m1ecky.m1",	0x040000, 0x4803f2dc, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "242-v1ecky.v1",	0x400000, 0xb5650f76, 5 | BRF_SND },           // 16 Sound data
 	{ "242-v2ecky.v2",	0x400000, 0xb43b83ee, 5 | BRF_SND },           // 17
@@ -18323,12 +18323,12 @@ STDROMPICKEXT(kof98ecky, kof98ecky, neogeo)
 STD_ROM_FN(kof98ecky)
 
 struct BurnDriver BurnDrvkof98ecky = {
-	"kof98ecky", "kof98", "neogeo", NULL, "2020",
+	"kof98ecky", "kof98", "neogeo", NULL, "2022",
 	"The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98eckyRomInfo, kof98eckyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	kof98Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -18996,11 +18996,11 @@ struct BurnDriver BurnDrvkof2001pkz = {
 };
 
 // The King of Fighters 2001 Ultimate
-// Ver 1.01 - 20221021
+// Ver 1.02 - 20221023
 
 static struct BurnRomInfo kof2001ultRomDesc[] = {
-	{ "262-p1ult-08-e0.p1",		0x100000, 0x0d1be003, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "262-p2ult-08-e0.sp2",	0x500000, 0x02c377ab, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "262-p1ult-08-e0.p1",		0x100000, 0x54bd89e8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262-p2ult-08-e0.sp2",	0x500000, 0x1bb69042, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22276,10 +22276,10 @@ struct BurnDriver BurnDrvmslugx2r1v2 = {
 };
 
 // Metal Slug X - Super Vehicle-001 (Survival, Hack)
-// GOTVG 20221023
+// GOTVG 20221031
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",	0x100000, 0x50f85ace, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",	0x400000, 0x78c72782, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",	0x100000, 0xd2913eee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",	0x400000, 0x01f48336, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -22287,8 +22287,8 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-c2.c2",		0x800000, 0x31679821, 3 | BRF_GRA },           //  4
 	{ "250-c3.c3",		0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
 	{ "250-c4.c4",		0x800000, 0x31354513, 3 | BRF_GRA },           //  6
-	{ "250-c5sc.c5",	0x800000, 0x74aaf349, 3 | BRF_GRA },           //  7
-	{ "250-c6sc.c6",	0x800000, 0x93f39d40, 3 | BRF_GRA },           //  8
+	{ "250-c5sc.c5",	0x800000, 0x8dd6a022, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",	0x800000, 0xf8de0291, 3 | BRF_GRA },           //  8
 
 	{ "250-m1.m1",    	0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 

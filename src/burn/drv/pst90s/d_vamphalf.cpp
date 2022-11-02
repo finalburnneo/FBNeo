@@ -1622,7 +1622,7 @@ struct BurnDriver BurnDrvPoosho = {
 };
 
 
-// New Cross Pang
+// New Cross Pang (set 1)
 
 static struct BurnRomInfo newxpangRomDesc[] = {
 	{ "rom2.bin",				0x080000, 0x6d69c799, 1 | BRF_PRG | BRF_ESS }, //  0 EX116T Code
@@ -1648,11 +1648,46 @@ static INT32 NewxpangInit()
 
 struct BurnDriver BurnDrvNewxpang = {
 	"newxpang", NULL, NULL, NULL, "1999",
-	"New Cross Pang\0", NULL, "F2 System", "Miscellaneous",
+	"New Cross Pang (set 1)\0", NULL, "F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, newxpangRomInfo, newxpangRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	NewxpangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	320, 236, 4, 3
+};
+
+
+// New Cross Pang (set 2)
+
+static struct BurnRomInfo newxpangaRomDesc[] = {
+	{ "rom2.bin",				0x080000, 0x325c2c4f, 1 | BRF_PRG | BRF_ESS }, //  0 EX116T Code
+
+	{ "roml00.bin",				0x200000, 0x4f8253d3, 2 | BRF_GRA },           //  1 Sprites
+	{ "romu00.bin",				0x200000, 0x0ac8f8e4, 2 | BRF_GRA },           //  2
+	{ "roml01.bin",				0x200000, 0x66e6e05e, 2 | BRF_GRA },           //  3
+	{ "romu01.bin",				0x200000, 0x73907b33, 2 | BRF_GRA },           //  4
+
+	{ "vrom1.bin",				0x040000, 0x0f339d68, 3 | BRF_SND },           //  5 Samples
+};
+
+STD_ROM_PICK(newxpanga)
+STD_ROM_FN(newxpanga)
+
+static INT32 NewxpangaInit()
+{
+//	speedhack_address = 0x906f4;
+//	speedhack_pc = 0x984a;
+
+	return CommonInit(TYPE_E116T, jmpbreak_io_write, jmpbreak_io_read, sound_type_0_init, 0, 0);
+}
+
+struct BurnDriver BurnDrvNewxpanga = {
+	"newxpanga", "newxpang", NULL, NULL, "1999",
+	"New Cross Pang (set 2)\0", NULL, "F2 System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, newxpangaRomInfo, newxpangaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
+	NewxpangaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
 };
 

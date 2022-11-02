@@ -1,4 +1,4 @@
-// FB Alpha Oli-Boo-Chu driver module
+// FB Neo Oli-Boo-Chu driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -554,35 +554,35 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Oli-Boo-Chu
+// Oli-Boo-Chu (USA)
 
 static struct BurnRomInfo olibochuRomDesc[] = {
-	{ "1b.3n",	0x1000, 0xbf17f4f4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "2b.3lm",	0x1000, 0x63833b0d, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3b.3k",	0x1000, 0xa4038e8b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4b.3j",	0x1000, 0xaad4bec4, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "5b.3h",	0x1000, 0x66efa79f, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "6b.3f",	0x1000, 0x1123d1ef, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "7c.3e",	0x1000, 0x89c26fb4, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "8b.3d",	0x1000, 0xaf19e5a5, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "obc_1b.n3",	0x1000, 0xbf17f4f4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "obc_2b.m3",	0x1000, 0x63833b0d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "obc_3b.k3",	0x1000, 0xa4038e8b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "obc_4b.j3",	0x1000, 0xaad4bec4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "obc_5b.h3",	0x1000, 0x66efa79f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "obc_6b.f3",	0x1000, 0x1123d1ef, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "obc_7c.e3",	0x1000, 0x89c26fb4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "obc_8b.d3",	0x1000, 0xaf19e5a5, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "17.4j",	0x1000, 0x57f07402, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 #1 Code
-	{ "18.4l",	0x1000, 0x0a903e9c, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "obc_17.j4",	0x1000, 0x57f07402, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 #1 Code
+	{ "obc_18.l4",	0x1000, 0x0a903e9c, 2 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "15.1k",	0x1000, 0xfb5dd281, 3 | BRF_SND },           // 10 Samples?
-	{ "16.1m",	0x1000, 0xc07614a5, 3 | BRF_SND },           // 11
+	{ "obc_15.k1",	0x1000, 0xfb5dd281, 3 | BRF_SND },           // 10 Samples?
+	{ "obc_16.m1",	0x1000, 0xc07614a5, 3 | BRF_SND },           // 11
 
-	{ "13.6n",	0x1000, 0xb4fcf9af, 4 | BRF_GRA },           // 12 Characters
-	{ "14.4n",	0x1000, 0xaf54407e, 4 | BRF_GRA },           // 13
+	{ "obc_13.n6",	0x1000, 0xb4fcf9af, 4 | BRF_GRA },           // 12 Characters
+	{ "obc_14.n4",	0x1000, 0xaf54407e, 4 | BRF_GRA },           // 13
 
-	{ "9.6a",	0x1000, 0xfa69e16e, 5 | BRF_GRA },           // 14 Sprites
-	{ "10.2a",	0x1000, 0x10359f84, 5 | BRF_GRA },           // 15
-	{ "11.4a",	0x1000, 0x1d968f5f, 5 | BRF_GRA },           // 16
-	{ "12.2a",	0x1000, 0xd8f0c157, 5 | BRF_GRA },           // 17
+	{ "obc_9.a6",	0x1000, 0xfa69e16e, 5 | BRF_GRA },           // 14 Sprites
+	{ "obc_10.a2",	0x1000, 0x10359f84, 5 | BRF_GRA },           // 15
+	{ "obc_11.a4",	0x1000, 0x1d968f5f, 5 | BRF_GRA },           // 16
+	{ "obc_12.b2",	0x1000, 0xd8f0c157, 5 | BRF_GRA },           // 17
 
-	{ "c-1",	0x0020, 0xe488e831, 6 | BRF_GRA },           // 18 Color data
-	{ "c-2",	0x0100, 0x698a3ba0, 6 | BRF_GRA },           // 19
-	{ "c-3",	0x0100, 0xefc4e408, 6 | BRF_GRA },           // 20
+	{ "c-1.n2",		0x0020, 0xe488e831, 6 | BRF_GRA },           // 18 Color data
+	{ "c-2.k6",		0x0100, 0x698a3ba0, 6 | BRF_GRA },           // 19
+	{ "c-3.d6",		0x0100, 0xefc4e408, 6 | BRF_GRA },           // 20
 };
 
 STD_ROM_PICK(olibochu)
@@ -590,7 +590,7 @@ STD_ROM_FN(olibochu)
 
 struct BurnDriver BurnDrvOlibochu = {
 	"olibochu", NULL, NULL, NULL, "1981",
-	"Oli-Boo-Chu\0", NULL, "Irem / GDI", "Miscellaneous",
+	"Oli-Boo-Chu (USA)\0", NULL, "Irem / GDI", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
 	NULL, olibochuRomInfo, olibochuRomName, NULL, NULL, NULL, NULL, OlibochuInputInfo, OlibochuDIPInfo,

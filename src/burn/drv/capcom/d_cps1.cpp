@@ -25063,7 +25063,7 @@ struct BurnDriver BurnDrvCpsCaptcommpwx = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Captain Commando (Second Master)
+// Captain Commando (Er Ye)
 // Hack by JingGai
 // GOTVG 20220307
 
@@ -25098,7 +25098,7 @@ STD_ROM_FN(Captcomm2y)
 
 struct BurnDriver BurnDrvCpsCaptcomm2y = {
 	"captcomm2y", "captcomm", NULL, NULL, "2022",
-	"Captain Commando (Second Master)\0", NULL, "hack", "CPS1",
+	"Captain Commando (Er Ye)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcomm2yRomInfo, Captcomm2yRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, Captcomm3PDIPInfo,
@@ -25428,10 +25428,10 @@ struct BurnDriver BurnDrvCpsDinotj = {
 
 // Cadillacs and Dinosaurs (Tian Wang, Hack)
 // Hack by NGS
-// GOTVG 20221002
+// GOTVG 20221027
 
 static struct BurnRomInfo DinotwRomDesc[] = {
-	{ "cde_tw.bin",		0x200000, 0x8fb29da4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cde_tw.bin",		0x200000, 0xc21436ef, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cd-1m.3a",		0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
 	{ "cd-3m.5a",		0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },

@@ -6,6 +6,37 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
+void resnet_maketab_332(UINT32 *tab, INT32 tabsize, UINT8 *prom,  INT32 rg0, INT32 rg1, INT32 rg2, INT32 b0, INT32 b1)
+{
+	INT32 resistances_rg[3] = { rg0, rg1, rg2 };
+	INT32 resistances_b [2] = { b0, b1 };
+	double rweights[3], gweights[3], bweights[2];
+
+	compute_resistor_weights(0, 255, -1.0,
+							 3, &resistances_rg[0], rweights, 0, 0,
+							 3, &resistances_rg[0], gweights, 0, 0,
+							 2, &resistances_b[0],  bweights, 0, 0);
+
+	for (INT32 i = 0; i < tabsize; i++)
+	{
+		INT32 bit0 = (prom[i] >> 0) & 0x01;
+		INT32 bit1 = (prom[i] >> 1) & 0x01;
+		INT32 bit2 = (prom[i] >> 2) & 0x01;
+		INT32 r = combine_3_weights(rweights, bit0, bit1, bit2);
+
+		bit0 = (prom[i] >> 3) & 0x01;
+		bit1 = (prom[i] >> 4) & 0x01;
+		bit2 = (prom[i] >> 5) & 0x01;
+		INT32 g = combine_3_weights(gweights, bit0, bit1, bit2);
+
+		bit0 = (prom[i] >> 6) & 0x01;
+		bit1 = (prom[i] >> 7) & 0x01;
+		INT32 b = combine_2_weights(bweights, bit0, bit1);
+
+		tab[i] = BurnHighCol(r,g,b,0);
+	}
+}
+
 double compute_resistor_weights(INT32 minval, INT32 maxval, double scaler, INT32 count_1, const INT32 * resistances_1, double * weights_1, INT32 pulldown_1, INT32 pullup_1, INT32 count_2, const INT32 * resistances_2, double * weights_2, INT32 pulldown_2, INT32 pullup_2, INT32 count_3, const INT32 * resistances_3, double * weights_3, INT32 pulldown_3, INT32 pullup_3)
 {
 	INT32 networks_no;

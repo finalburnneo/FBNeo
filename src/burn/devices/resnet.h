@@ -145,9 +145,6 @@ struct res_net_decode_info {
 	UINT16  mask[3 * RES_NET_MAX_COMP];
 };
 
-/* quick r3,b3,g2 palpromtabulator */
-void resnet_maketab_332(UINT32 *tab, INT32 tabsize, UINT8 *prom,  INT32 rg0, INT32 rg1, INT32 rg2, INT32 b0, INT32 b1);
-
 /* return a single value for one channel */
 
 INT32 compute_res_net(INT32 inputs, INT32 channel, const res_net_info &di);

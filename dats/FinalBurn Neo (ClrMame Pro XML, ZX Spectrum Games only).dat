@@ -7335,6 +7335,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gherbground" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Gherbert Groundhog in Save the Date (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>PuttyCAD &amp; Psychic Parrot</manufacturer>
+		<rom name="Gherbert Groundhog in Save the Date (2022)(PuttyCAD &amp; Psychic Parrot).tap" size="45411" crc="13f11e02"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gcastle" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Ghost Castle (48K) (HB)</description>
@@ -9498,6 +9508,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jonathan" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Jonathan - Trick or Treat (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>ZXAMAZE</manufacturer>
+		<rom name="Jonathan - Trick or Treat 48K (2022)(ZXAMAZE).tap" size="37147" crc="4b1299bf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jumpjupiter" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Jumpin' Jupiter (48K) (HB)</description>
@@ -10464,6 +10484,28 @@
 		<year>2021</year>
 		<manufacturer>Hicks</manufacturer>
 		<rom name="Mabus Mania ES (2021)(Hicks).tap" size="44200" crc="3d70ab7b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mabusdxen" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Mabus Mania Deluxe (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Hicks</manufacturer>
+		<rom name="Mabus Mania Deluxe EN (2022)(Hicks).tap" size="45631" crc="d08040f8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mabusdxes" cloneof="mabusdxen" romof="mabusdxen">
+		<comment>Homebrew</comment>
+		<description>Mabus Mania Deluxe (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Hicks</manufacturer>
+		<rom name="Mabus Mania Deluxe ES (2022)(Hicks).tap" size="45631" crc="7c9ceb00"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -12519,6 +12561,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="phrehab" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>PAC - HIC Rehab (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Pac - Hic Rehab 128k (2022)(Daniel Isoba).tap" size="30767" crc="170729dc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pacland" romof="spec128">
 		<comment>ENTER to add coins, 1 or 2 to play</comment>
 		<description>Pac-Land (128K)</description>
@@ -13787,6 +13840,28 @@
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Ramire the Vampire Rewamp Part3 (2016)(Mojon Twins).tap" size="44938" crc="a65f4290"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ramiro3en" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Ramiro el Vampiro III (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Ramiro El Vampiro III EN (2022)(The Mojon Twins).tap" size="42853" crc="55fc67f2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ramiro3es" cloneof="ramiro3en" romof="ramiro3en">
+		<comment>Homebrew</comment>
+		<description>Ramiro el Vampiro III (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Ramiro El Vampiro III ES (2022)(The Mojon Twins).tap" size="42874" crc="ba4b626e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

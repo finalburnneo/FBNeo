@@ -12343,15 +12343,15 @@
 		<description>Metal Slug X - Super Vehicle-001 (Survival, Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1sc.p1" size="1048576" crc="50f85ace"/>
-		<rom name="250-p2sc.ep1" size="4194304" crc="78c72782"/>
+		<rom name="250-p1sc.p1" size="1048576" crc="d2913eee"/>
+		<rom name="250-p2sc.ep1" size="4194304" crc="01f48336"/>
 		<rom name="250-s1sc.s1" size="131072" crc="03bce893"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
 		<rom name="250-c3.c3" merge="250-c3.c3" size="8388608" crc="fd602019"/>
 		<rom name="250-c4.c4" merge="250-c4.c4" size="8388608" crc="31354513"/>
-		<rom name="250-c5sc.c5" size="8388608" crc="74aaf349"/>
-		<rom name="250-c6sc.c6" size="8388608" crc="93f39d40"/>
+		<rom name="250-c5sc.c5" size="8388608" crc="8dd6a022"/>
+		<rom name="250-c6sc.c6" size="8388608" crc="f8de0291"/>
 		<rom name="250-m1.m1" merge="250-m1.m1" size="131072" crc="fd42a842"/>
 		<rom name="250-v1.v1" merge="250-v1.v1" size="4194304" crc="c79ede73"/>
 		<rom name="250-v2.v2" merge="250-v2.v2" size="4194304" crc="ea9aabe1"/>
@@ -23055,20 +23055,20 @@
 	<game name="kof98ecky" cloneof="kof98" romof="kof98">
 		<comment>Hack</comment>
 		<description>The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)</description>
-		<year>2020</year>
+		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="242-pn1ecky.p1" size="1048576" crc="0ced4a93"/>
-		<rom name="242-p2ecky.sp2" size="4194304" crc="ef36876a"/>
-		<rom name="242-s1ecky.s1" size="131072" crc="5a498ed2"/>
-		<rom name="242-c1ecky.c1" size="8388608" crc="d528dab9"/>
-		<rom name="242-c2ecky.c2" size="8388608" crc="73556130"/>
+		<rom name="242-p1ecky.p1" size="2097152" crc="15977d59"/>
+		<rom name="242-p2ecky.sp2" size="4194304" crc="85c20b47"/>
+		<rom name="242-s1ecky.s1" size="131072" crc="8ce81ec5"/>
+		<rom name="242-c1ecky.c1" size="8388608" crc="57c6ebc7"/>
+		<rom name="242-c2ecky.c2" size="8388608" crc="653bd259"/>
 		<rom name="242-c3ecky.c3" size="8388608" crc="4091bca0"/>
 		<rom name="242-c4ecky.c4" size="8388608" crc="56918bab"/>
 		<rom name="242-c5ecky.c5" size="8388608" crc="76252bdc"/>
 		<rom name="242-c6ecky.c6" size="8388608" crc="13d5b9b7"/>
-		<rom name="242-c7ecky.c7" size="8388608" crc="1b3a6aa9"/>
-		<rom name="242-c8ecky.c8" size="8388608" crc="ef3390ca"/>
-		<rom name="242-mg1.m1" size="262144" crc="4e7a6b1b"/>
+		<rom name="242-c7ecky.c7" size="8388608" crc="6258e866"/>
+		<rom name="242-c8ecky.c8" size="8388608" crc="a246cef2"/>
+		<rom name="242-m1ecky.m1" size="262144" crc="4803f2dc"/>
 		<rom name="242-v1ecky.v1" size="4194304" crc="b5650f76"/>
 		<rom name="242-v2ecky.v2" size="4194304" crc="b43b83ee"/>
 		<rom name="242-v3ecky.v3" size="4194304" crc="59c53922"/>
@@ -25241,8 +25241,8 @@
 		<description>The King of Fighters 2001 Ultimate</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="262-p1ult-08-e0.p1" size="1048576" crc="0d1be003"/>
-		<rom name="262-p2ult-08-e0.sp2" size="5242880" crc="02c377ab"/>
+		<rom name="262-p1ult-08-e0.p1" size="1048576" crc="54bd89e8"/>
+		<rom name="262-p2ult-08-e0.sp2" size="5242880" crc="1bb69042"/>
 		<rom name="262-c1ult-08-e0.c1" size="8388608" crc="de322745"/>
 		<rom name="262-c2ult-08-e0.c2" size="8388608" crc="266df0a3"/>
 		<rom name="262-c3ult-08-e0.c3" size="8388608" crc="bf60e575"/>

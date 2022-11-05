@@ -1981,6 +1981,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="blobland">
+		<comment>Homebrew</comment>
+		<description>Blob Land (HB)</description>
+		<year>2020</year>
+		<manufacturer>Wendel Scardua</manufacturer>
+		<rom name="Blob Land (2020)(Wendel Scardua).nes" size="40976" crc="89b129ef"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="blobman">
 		<description>Blob Man (Unl)</description>
 		<year>2007</year>
@@ -2562,7 +2571,7 @@
 	</game>
 	<game name="cstlquest">
 		<comment>Hack</comment>
-		<description>Castle Quest (T-Eng)</description>
+		<description>Castle Quest (T-Eng, v2.01)</description>
 		<year>2012</year>
 		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Castle Quest T-Eng (2012)(Stardust Crusaders).nes" size="262160" crc="faabff04"/>
@@ -5161,7 +5170,7 @@
 	</game>
 	<game name="explodingfist">
 		<comment>Prototype</comment>
-		<description>Exploding Fist (USA, Prototype)</description>
+		<description>Exploding Fist (USA) (Prototype)</description>
 		<year>1990</year>
 		<manufacturer>Tradewest</manufacturer>
 		<rom name="Exploding Fist (USA, Prototype).nes" size="65552" crc="c52ea831"/>
@@ -6011,7 +6020,7 @@
 	</game>
 	<game name="freefall">
 		<comment>Prototype</comment>
-		<description>Free Fall (USA) (Proto)</description>
+		<description>Free Fall (USA) (Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Color Dreams</manufacturer>
 		<rom name="Free Fall (USA) (Proto).nes" size="131088" crc="913ec888"/>
@@ -6096,7 +6105,7 @@
 	</game>
 	<game name="fullquiet">
 		<comment>Homebrew, Prototype</comment>
-		<description>Full Quiet (Test Cart Prototype) (HB)</description>
+		<description>Full Quiet (Test Cart) (HB, Prototype)</description>
 		<year>2021</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Full Quiet (Test Cart)(2021)(Retrotainment Games).nes" size="524304" crc="03055116"/>
@@ -7232,6 +7241,15 @@
 		<year>2019</year>
 		<manufacturer>M. Stave</manufacturer>
 		<rom name="Haunted House Adventure (2019)(M. Stave).nes" size="524304" crc="d0c3acbc"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hbcpball">
+		<comment>Homebrew</comment>
+		<description>HBC Phutball (HB)</description>
+		<year>2022</year>
+		<manufacturer>Wendel Scardua</manufacturer>
+		<rom name="HBC Phutball (2022)(Wendel Scardua).nes" size="65552" crc="b2f98884"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8858,6 +8876,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="kirbyshlw" cloneof="kirbysadv" romof="kirbysadv">
+		<comment>Hack</comment>
+		<description>Kirby's Halloween Adventure (Hack, v1.4)</description>
+		<year>2021</year>
+		<manufacturer>Kirb-Star</manufacturer>
+		<rom name="Kirby's Halloween Adventure (2021)(Kirb-Star).nes" size="786448" crc="9332bf75"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="kiterdai">
 		<description>Kiteretsu Daihyakka (Japan)</description>
 		<year>1990</year>
@@ -10199,6 +10226,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="maurimursu">
+		<comment>Homebrew</comment>
+		<description>Mauri Mursu's Hangover (HB)</description>
+		<year>2022</year>
+		<manufacturer>Nervanti</manufacturer>
+		<rom name="Mauri Mursu's Hangover (2022)(Nervanti).nes" size="524304" crc="a5fac69c"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="mawthornej" cloneof="mawthorne" romof="mawthorne">
 		<comment>Homebrew</comment>
 		<description>Mawthorne (Japan) (HB)</description>
@@ -10703,6 +10739,15 @@
 		<year>2021</year>
 		<manufacturer>FG Software</manufacturer>
 		<rom name="Mine Mayhem (2021)(Vectrex28).nes" size="65552" crc="c6b47cca"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mkmadness">
+		<comment>Homebrew</comment>
+		<description>Minekart Madness (HB)</description>
+		<year>2022</year>
+		<manufacturer>Matt Hughson</manufacturer>
+		<rom name="Minekart Madness (2022)(Matt Hughson).nes" size="65552" crc="165519c7"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12979,6 +13024,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ravensgate">
+		<comment>Homebrew</comment>
+		<description>Ravens Gate (HB)</description>
+		<year>2022</year>
+		<manufacturer>MercuryBD</manufacturer>
+		<rom name="Ravens Gate (2022)(MercuryBD).nes" size="65552" crc="3911f904"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="redarremerii" cloneof="gargosqueii" romof="gargosqueii">
 		<description>Red Arremer II (Japan)</description>
 		<year>1992</year>
@@ -13802,7 +13856,7 @@
 	</game>
 	<game name="secretties">
 		<comment>Prototype</comment>
-		<description>Secret Ties (USA) (Proto)</description>
+		<description>Secret Ties (USA) (Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Vic Tokai</manufacturer>
 		<rom name="Secret Ties (USA) (Proto).nes" size="262160" crc="9e131010"/>
@@ -14826,6 +14880,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="steelmoons">
+		<comment>Homebrew</comment>
+		<description>Steel Moons (HB)</description>
+		<year>2022</year>
+		<manufacturer>Mazionach</manufacturer>
+		<rom name="Steel Moons (2022)(Mazionach).nes" size="65552" crc="3dc97b51"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="steinsgate">
 		<comment>Homebrew</comment>
 		<description>Steins Gate (HB)</description>
@@ -15589,6 +15652,15 @@
 		<year>1989</year>
 		<manufacturer>Tradewest</manufacturer>
 		<rom name="Taboo - The Sixth Sense (USA).nes" size="65552" crc="e057b507"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tactus">
+		<comment>Homebrew, Prototype</comment>
+		<description>Tactus (HB, Prototype)</description>
+		<year>2022</year>
+		<manufacturer>zeta134</manufacturer>
+		<rom name="Tactus Prototype (2022)(zeta0134).nes" size="65552" crc="51876b54"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16393,7 +16465,7 @@
 	</game>
 	<game name="titanwarriors">
 		<comment>Prototype</comment>
-		<description>Titan Warriors (USA) (Proto)</description>
+		<description>Titan Warriors (USA) (Prototype)</description>
 		<year>1988</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Titan Warriors (USA) (Proto).nes" size="131088" crc="b06f1c46"/>

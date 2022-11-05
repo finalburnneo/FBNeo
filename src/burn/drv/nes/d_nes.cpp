@@ -21456,6 +21456,125 @@ struct BurnDriver BurnDrvnes_rpoolchal = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_bloblandRomDesc[] = {
+	{ "Blob Land (2020)(Wendel Scardua).nes",          40976, 0x89b129ef, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blobland)
+STD_ROM_FN(nes_blobland)
+
+struct BurnDriver BurnDrvnes_blobland = {
+	"nes_blobland", NULL, NULL, NULL, "2020",
+	"Blob Land (HB)\0", NULL, "Wendel Scardua", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_bloblandRomInfo, nes_bloblandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_hbcpballRomDesc[] = {
+	{ "HBC Phutball (2022)(Wendel Scardua).nes",          65552, 0xb2f98884, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hbcpball)
+STD_ROM_FN(nes_hbcpball)
+
+struct BurnDriver BurnDrvnes_hbcpball = {
+	"nes_hbcpball", NULL, NULL, NULL, "2022",
+	"HBC Phutball (HB)\0", NULL, "Wendel Scardua", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_hbcpballRomInfo, nes_hbcpballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_maurimursuRomDesc[] = {
+	{ "Mauri Mursu's Hangover (2022)(Nervanti).nes",          524304, 0xa5fac69c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_maurimursu)
+STD_ROM_FN(nes_maurimursu)
+
+struct BurnDriver BurnDrvnes_maurimursu = {
+	"nes_maurimursu", NULL, NULL, NULL, "2022",
+	"Mauri Mursu's Hangover (HB)\0", NULL, "Nervanti", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_maurimursuRomInfo, nes_maurimursuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mkmadnessRomDesc[] = {
+	{ "Minekart Madness (2022)(Matt Hughson).nes",          65552, 0x165519c7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mkmadness)
+STD_ROM_FN(nes_mkmadness)
+
+struct BurnDriver BurnDrvnes_mkmadness = {
+	"nes_mkmadness", NULL, NULL, NULL, "2022",
+	"Minekart Madness (HB)\0", NULL, "Matt Hughson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_mkmadnessRomInfo, nes_mkmadnessRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ravensgateRomDesc[] = {
+	{ "Ravens Gate (2022)(MercuryBD).nes",          65552, 0x3911f904, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ravensgate)
+STD_ROM_FN(nes_ravensgate)
+
+struct BurnDriver BurnDrvnes_ravensgate = {
+	"nes_ravensgate", NULL, NULL, NULL, "2022",
+	"Ravens Gate (HB)\0", NULL, "MercuryBD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_ravensgateRomInfo, nes_ravensgateRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_steelmoonsRomDesc[] = {
+	{ "Steel Moons (2022)(Mazionach).nes",          65552, 0x3dc97b51, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_steelmoons)
+STD_ROM_FN(nes_steelmoons)
+
+struct BurnDriver BurnDrvnes_steelmoons = {
+	"nes_steelmoons", NULL, NULL, NULL, "2022",
+	"Steel Moons (HB)\0", NULL, "Mazionach", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_steelmoonsRomInfo, nes_steelmoonsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tactusRomDesc[] = {
+	{ "Tactus Prototype (2022)(zeta0134).nes",          65552, 0x51876b54, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tactus)
+STD_ROM_FN(nes_tactus)
+
+struct BurnDriver BurnDrvnes_tactus = {
+	"nes_tactus", NULL, NULL, NULL, "2022",
+	"Tactus (HB, Prototype)\0", NULL, "zeta134", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_tactusRomInfo, nes_tactusRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_garbpailkidsRomDesc[] = {
 	{ "Garbage Pail Kids Mad Mike and the Quest for Stale Gum (2022)(iam8bit).nes",          526080, 0x3d110c09, BRF_ESS | BRF_PRG },
 };
@@ -21924,7 +22043,7 @@ STD_ROM_FN(nes_fullquiet)
 
 struct BurnDriver BurnDrvnes_fullquiet = {
 	"nes_fullquiet", NULL, NULL, NULL, "2021",
-	"Full Quiet (Test Cart Prototype) (HB)\0", NULL, "Retrotainment Games", "Miscellaneous",
+	"Full Quiet (Test Cart) (HB, Prototype)\0", NULL, "Retrotainment Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_fullquietRomInfo, nes_fullquietRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -30484,7 +30603,7 @@ STD_ROM_FN(nes_cstlquest)
 
 struct BurnDriver BurnDrvnes_cstlquest = {
 	"nes_cstlquest", NULL, NULL, NULL, "2012",
-	"Castle Quest (T-Eng)\0", NULL, "Stardust Crusaders", "Miscellaneous",
+	"Castle Quest (T-Eng, v2.01)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_cstlquestRomInfo, nes_cstlquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34262,7 +34381,7 @@ STD_ROM_FN(nes_explodingfist)
 
 struct BurnDriver BurnDrvnes_explodingfist = {
 	"nes_explodingfist", NULL, NULL, NULL, "1990",
-	"Exploding Fist (USA, Prototype)\0", NULL, "Tradewest", "Miscellaneous",
+	"Exploding Fist (USA) (Prototype)\0", NULL, "Tradewest", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 3, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_explodingfistRomInfo, nes_explodingfistRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
@@ -35657,7 +35776,7 @@ STD_ROM_FN(nes_freefall)
 
 struct BurnDriver BurnDrvnes_freefall = {
 	"nes_freefall", NULL, NULL, NULL, "199?",
-	"Free Fall (USA) (Proto)\0", NULL, "Color Dreams", "Miscellaneous",
+	"Free Fall (USA) (Prototype)\0", NULL, "Color Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_freefallRomInfo, nes_freefallRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -39914,6 +40033,23 @@ struct BurnDriver BurnDrvnes_kirbysadv = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kirbysadvRomInfo, nes_kirbysadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_kirbyshlwRomDesc[] = {
+	{ "Kirby's Halloween Adventure (2021)(Kirb-Star).nes",          786448, 0x9332bf75, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kirbyshlw)
+STD_ROM_FN(nes_kirbyshlw)
+
+struct BurnDriver BurnDrvnes_kirbyshlw = {
+	"nes_kirbyshlw", "nes_kirbysadv", NULL, NULL, "2021",
+	"Kirby's Halloween Adventure (Hack, v1.4)\0", NULL, "Kirb-Star", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_kirbyshlwRomInfo, nes_kirbyshlwRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -46404,7 +46540,7 @@ STD_ROM_FN(nes_secretties)
 
 struct BurnDriver BurnDrvnes_secretties = {
 	"nes_secretties", NULL, NULL, NULL, "1991",
-	"Secret Ties (USA) (Proto)\0", NULL, "Vic Tokai", "Miscellaneous",
+	"Secret Ties (USA) (Prototype)\0", NULL, "Vic Tokai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_secrettiesRomInfo, nes_secrettiesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -50184,7 +50320,7 @@ STD_ROM_FN(nes_titanwarriors)
 
 struct BurnDriver BurnDrvnes_titanwarriors = {
 	"nes_titanwarriors", NULL, NULL, NULL, "1988",
-	"Titan Warriors (USA) (Proto)\0", NULL, "Capcom", "Miscellaneous",
+	"Titan Warriors (USA) (Prototype)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_titanwarriorsRomInfo, nes_titanwarriorsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

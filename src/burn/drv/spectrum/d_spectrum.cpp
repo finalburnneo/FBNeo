@@ -37943,3 +37943,136 @@ struct BurnDriver BurnSpecYaks = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Gherbert Groundhog in Save the Date (48K) (HB)
+
+static struct BurnRomInfo SpecGherbgroundRomDesc[] = {
+	{ "Gherbert Groundhog in Save the Date (2022)(PuttyCAD & Psychic Parrot).tap", 45411, 0x13f11e02, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGherbground, SpecGherbground, Spectrum)
+STD_ROM_FN(SpecGherbground)
+
+struct BurnDriver BurnSpecGherbground = {
+	"spec_gherbground", NULL, "spec_spectrum", NULL, "2022",
+	"Gherbert Groundhog in Save the Date (48K) (HB)\0", NULL, "PuttyCAD & Psychic Parrot", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecGherbgroundRomInfo, SpecGherbgroundRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Jonathan - Trick or Treat (48K) (HB)
+
+static struct BurnRomInfo SpecJonathanRomDesc[] = {
+	{ "Jonathan - Trick or Treat 48K (2022)(ZXAMAZE).tap", 37147, 0x4b1299bf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJonathan, SpecJonathan, Spectrum)
+STD_ROM_FN(SpecJonathan)
+
+struct BurnDriver BurnSpecJonathan = {
+	"spec_jonathan", NULL, "spec_spectrum", NULL, "2022",
+	"Jonathan - Trick or Treat (48K) (HB)\0", NULL, "ZXAMAZE", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecJonathanRomInfo, SpecJonathanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mabus Mania Deluxe (English) (128K) (HB)
+
+static struct BurnRomInfo SpecMabusdxenRomDesc[] = {
+	{ "Mabus Mania Deluxe EN (2022)(Hicks).tap", 45631, 0xd08040f8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMabusdxen, SpecMabusdxen, Spec128)
+STD_ROM_FN(SpecMabusdxen)
+
+struct BurnDriver BurnSpecMabusdxen = {
+	"spec_mabusdxen", NULL, "spec_spec128", NULL, "2022",
+	"Mabus Mania Deluxe (English) (128K) (HB)\0", NULL, "Hicks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMabusdxenRomInfo, SpecMabusdxenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Mabus Mania Deluxe (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecMabusdxesRomDesc[] = {
+	{ "Mabus Mania Deluxe ES (2022)(Hicks).tap", 45631, 0x7c9ceb00, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMabusdxes, SpecMabusdxes, Spec128)
+STD_ROM_FN(SpecMabusdxes)
+
+struct BurnDriver BurnSpecMabusdxes = {
+	"spec_mabusdxes", "spec_mabusdxen", "spec_spec128", NULL, "2022",
+	"Mabus Mania Deluxe (Spanish) (128K) (HB)\0", NULL, "Hicks", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecMabusdxesRomInfo, SpecMabusdxesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// PAC - HIC Rehab (128K) (HB)
+
+static struct BurnRomInfo SpecPhrehabRomDesc[] = {
+	{ "Pac - Hic Rehab 128k (2022)(Daniel Isoba).tap", 30767, 0x170729dc, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecPhrehab, SpecPhrehab, Spec128)
+STD_ROM_FN(SpecPhrehab)
+
+struct BurnDriver BurnSpecPhrehab = {
+	"spec_phrehab", NULL, "spec_spec128", NULL, "2022",
+	"PAC - HIC Rehab (128K) (HB)\0", NULL, "Daniel Isoba", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE, 0,
+	SpectrumGetZipName, SpecPhrehabRomInfo, SpecPhrehabRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ramiro el Vampiro III (English) (128K) (HB)
+
+static struct BurnRomInfo SpecRamiro3enRomDesc[] = {
+	{ "Ramiro El Vampiro III EN (2022)(The Mojon Twins).tap", 42853, 0x55fc67f2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRamiro3en, SpecRamiro3en, Spec128)
+STD_ROM_FN(SpecRamiro3en)
+
+struct BurnDriver BurnSpecRamiro3en = {
+	"spec_ramiro3en", NULL, "spec_spec128", NULL, "2022",
+	"Ramiro el Vampiro III (English) (128K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecRamiro3enRomInfo, SpecRamiro3enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ramiro el Vampiro III (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecRamiro3esRomDesc[] = {
+	{ "Ramiro El Vampiro III ES (2022)(The Mojon Twins).tap", 42874, 0xba4b626e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRamiro3es, SpecRamiro3es, Spec128)
+STD_ROM_FN(SpecRamiro3es)
+
+struct BurnDriver BurnSpecRamiro3es = {
+	"spec_ramiro3es", "spec_ramiro3en", "spec_spec128", NULL, "2022",
+	"Ramiro el Vampiro III (Spanish) (128K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecRamiro3esRomInfo, SpecRamiro3esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

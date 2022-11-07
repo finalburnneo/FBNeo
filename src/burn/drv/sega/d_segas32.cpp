@@ -4360,6 +4360,24 @@ static INT32 DrvFrame()
 	{
 		INT32 cyc = v60TotalCycles();
 
+		if (i == 224) {
+			if (pBurnDraw) {
+				BurnDrvRedraw();
+			}
+			signal_v60_irq(MAIN_IRQ_VBSTART);
+
+			if (system32_prot_vblank)
+				system32_prot_vblank();
+		}
+
+		if (i == 0) {
+			signal_v60_irq(MAIN_IRQ_VBSTOP);
+		}
+
+		if (i == 1) {
+			update_sprites();
+		}
+
 		do {
 			delayed_int = 0;
 			CPU_RUN(0, v60);
@@ -4388,22 +4406,6 @@ static INT32 DrvFrame()
 		if (use_v25) CPU_RUN(1, Vez);
 
 		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
-
-		if (i == 223) {
-			signal_v60_irq(MAIN_IRQ_VBSTART);
-
-			if (system32_prot_vblank)
-				system32_prot_vblank();
-		}
-
-		if (i == 261) {
-			signal_v60_irq(MAIN_IRQ_VBSTOP);
-			update_sprites();
-		}
-	}
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[2]);

@@ -32684,10 +32684,10 @@ struct BurnDriver BurnDrvMSX_ballbuster = {
 	272, 228, 4, 3
 };
 
-// DICED Tournament (HB)
+// DICED Tournament (HB, v1.12)
 
 static struct BurnRomInfo MSX_dicedtourRomDesc[] = {
-	{ "DICED Tournament (2022)(Mi-Chi, Def Danny).rom",	335872, 0xac93d42c, BRF_PRG | BRF_ESS },
+	{ "DICED Tournament v1.12 (2022)(Mi-Chi, Def Danny).rom",	335872, 0x3d530e48, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_dicedtour, MSX_dicedtour, msx_msx)
@@ -32695,7 +32695,7 @@ STD_ROM_FN(MSX_dicedtour)
 
 struct BurnDriver BurnDrvMSX_dicedtour = {
 	"msx_dicedtour", NULL, "msx_msx", NULL, "2022",
-	"DICED Tournament (HB)\0", NULL, "Mi-Chi, Def Danny", "MSX",
+	"DICED Tournament (HB, v1.12)\0", NULL, "Mi-Chi, Def Danny", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_CASINO, 0,
 	MSXGetZipName, MSX_dicedtourRomInfo, MSX_dicedtourRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,

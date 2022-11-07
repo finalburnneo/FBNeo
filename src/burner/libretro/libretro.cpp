@@ -1184,6 +1184,18 @@ void retro_run()
 	bool bEmulateAudio = true;
 	bool bPresentAudio = true;
 
+	if (gui_show && nGameWidth > 0 && nGameHeight > 0)
+	{
+		gui_draw();
+		video_cb(gui_get_framebuffer(), nGameWidth, nGameHeight, nGameWidth * sizeof(unsigned));
+		audio_batch_cb(pAudBuffer, nBurnSoundLen);
+		// Some users are having trouble leaving the error screen due to configuration (?)
+		// Let's implement a workaround so that pressing any button will exit the core
+		if (input_cb(0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_MASK))
+			environ_cb(RETRO_ENVIRONMENT_SHUTDOWN, NULL);
+		return;
+	}
+
 #ifndef FBNEO_DEBUG
 	// Setting RA's video or audio driver to null will disable video/audio bits,
 	// however that's a problem because i do batch run with video/audio disabled to detect asan issues 
@@ -1224,14 +1236,6 @@ void retro_run()
 #endif
 
 	bool bSkipFrame = false;
-
-	if (gui_show && nGameWidth > 0 && nGameHeight > 0)
-	{
-		gui_draw();
-		video_cb(gui_get_framebuffer(), nGameWidth, nGameHeight, nGameWidth * sizeof(unsigned));
-		audio_batch_cb(pAudBuffer, nBurnSoundLen);
-		return;
-	}
 
 	InputMake();
 

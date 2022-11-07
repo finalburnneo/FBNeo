@@ -5,7 +5,7 @@
 
 bool bStreetFighterLayout = false;
 
-static retro_input_state_t input_cb;
+retro_input_state_t input_cb;
 static retro_input_poll_t poll_cb;
 
 static unsigned nDiagInputComboStartFrame = 0;

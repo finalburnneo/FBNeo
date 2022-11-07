@@ -24,6 +24,8 @@ struct AxiBind
 	}
 };
 
+extern retro_input_state_t input_cb;
+
 #define MAX_PLAYERS         6                // highest number of supported players is 6 for xmen6p and a few other games
 #define MAX_AXISES          6                // libretro supports 6 analog axises (2 analog button + 2 analog sticks), 4 would probably be sufficient for FBNeo though
 #define MAX_KEYBINDS        255              // max number of inputs/macros we can assign

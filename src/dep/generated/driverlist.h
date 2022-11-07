@@ -16966,6 +16966,7 @@ DRV		BurnDrvSimpsons2p3;
 DRV		BurnDrvSimpsons4pa;
 DRV		BurnDrvSimpsons;
 DRV		BurnDrvSimpsons4pe;
+DRV		BurnDrvSimpsons4pe2;
 DRV		BurnDrvmd_smurfs;
 DRV		BurnDrvmd_smurfstw;
 DRV		BurnDrvSrumbler;
@@ -23216,7 +23217,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_diathieves,		// Diamond Thieves (HB)
 	&BurnDrvMSX_diana,			// Diana's Cave Adventure (HB)
 	&BurnDrvDicegame,			// Dice - The Dice Game!
-	&BurnDrvMSX_dicedtour,		// DICED Tournament (HB)
+	&BurnDrvMSX_dicedtour,		// DICED Tournament (HB, v1.12)
 	&BurnDrvsms_dicktr,			// Dick Tracy (Euro, USA, Bra)
 	&BurnDrvmd_dicktrs,			// Dick Tracy (Hack, Spanish)
 	&BurnDrvnes_dicktracy,		// Dick Tracy (USA)
@@ -36151,6 +36152,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSimpsons4pa,		// The Simpsons (4 Players Asia)
 	&BurnDrvSimpsons,			// The Simpsons (4 Players World, set 1)
 	&BurnDrvSimpsons4pe,		// The Simpsons (4 Players World, set 2)
+	&BurnDrvSimpsons4pe2,		// The Simpsons (4 Players World, set 3)
 	&BurnDrvmd_smurfs,			// The Smurfs (Euro, Rev. A)
 	&BurnDrvmd_smurfstw,		// The Smurfs Travel the World (Euro)
 	&BurnDrvSrumbler,			// The Speed Rumbler (set 1)

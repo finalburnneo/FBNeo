@@ -4491,6 +4491,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(nExtraCycles);
 
+		SCAN_VAR(sonic_delta);
+
 		BurnRandomScan(nAction);
 	}
 

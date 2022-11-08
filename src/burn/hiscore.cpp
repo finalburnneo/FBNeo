@@ -1,6 +1,6 @@
 #include "burnint.h"
 
-// A hiscore.dat support module for FBA - written by Treble Winner, Feb 2009
+// A hiscore.dat support module for FB Neo - written by Barry Manilow, Feb 2009
 // Updates & fixes by dink and iq_132
 
 #define MAX_CONFIG_LINE_SIZE 		48
@@ -16,6 +16,7 @@ UINT32 nHiscoreNumRanges;
 struct _HiscoreMemRange
 {
 	UINT32 Loaded, nCpu, Address, NumBytes, StartValue, EndValue, ApplyNextFrame, Applied;
+	UINT32 NoConfirm; // avoid confirm check / re-apply area if it fails check
 	UINT8 *Data;
 };
 
@@ -215,7 +216,20 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 						HiscoreMemRange[nHiscoreNumRanges].Applied = 0;
 						HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 						memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
-						
+
+						// NoConfirm "feature"
+						// dbreed @ 88959
+						// the last address range in hiscore.dat is the game's animation timer/
+						// this area will never write-confirm because it's always changing.  We'll only
+						// confirm the StartValue/EndValue in memory @ bootup, but not confirm that the value has stuck
+						// a frame after it has been written, since this is impossible.
+
+						if (!strcmp(name, "dbreed") && HiscoreMemRange[nHiscoreNumRanges].Address == 0x88959) {
+							bprintf(0, _T("-- dbreed noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+						// end NoConfirm "feature"
+
 #if 1 && defined FBNEO_DEBUG
 						bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded (New Format) - CPU %i (%S), Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, cCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
 #endif
@@ -488,6 +502,7 @@ void HiscoreApply()
 	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
 		if (HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_ATTEMPTED) {
 			INT32 Confirmed = 1;
+
 			cpu_open(HiscoreMemRange[i].nCpu);
 
 			for (UINT32 j = 0; j < HiscoreMemRange[i].NumBytes; j++) {
@@ -497,10 +512,10 @@ void HiscoreApply()
 			}
 			cheat_subptr->close();
 			
-			if (Confirmed == 1) {
+			if (Confirmed == 1 || HiscoreMemRange[i].NoConfirm) {
 				HiscoreMemRange[i].Applied = APPLIED_STATE_CONFIRMED;
 #if 1 && defined FBNEO_DEBUG
-				bprintf(PRINT_IMPORTANT, _T("Applied Hi Score Memory Range %i on frame number %i\n"), i, GetCurrentFrame());
+				bprintf(PRINT_IMPORTANT, _T("Applied Hi Score Memory Range %i on frame number %i %s\n"), i, GetCurrentFrame(), (HiscoreMemRange[i].NoConfirm) ? _T("(no confirm)") : _T(""));
 #endif
 			} else {
 				HiscoreMemRange[i].Applied = APPLIED_STATE_NONE;

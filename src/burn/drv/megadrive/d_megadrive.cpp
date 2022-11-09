@@ -19334,6 +19334,42 @@ struct BurnDriver BurnDrvmd_megamanrb = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Mega Man - The Wily Wars Fixer Upper (Hack, v1.0.5)
+static struct BurnRomInfo md_megamanfixRomDesc[] = {
+	{ "Mega Man - The Wily Wars Fixer Upper (2022) (Josephine Lithius).bin", 2097152, 0x0831020b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megamanfix)
+STD_ROM_FN(md_megamanfix)
+
+struct BurnDriver BurnDrvmd_megamanfix = {
+	"md_megamanrb", "md_megaman", NULL, NULL, "2022",
+	"Mega Man - The Wily Wars Fixer Upper (Hack, v1.0.5)\0", NULL, "Josephine Lithius", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_megamanfixRomInfo, md_megamanfixRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Rockman Mega World Fixer Upper (Hack, v1.0.5)
+static struct BurnRomInfo md_rockmanfixRomDesc[] = {
+	{ "Rockman Mega World Fixer Upper (2022)(Josephine Lithius).bin", 2097152, 0x4a2058bd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rockmanfix)
+STD_ROM_FN(md_rockmanfix)
+
+struct BurnDriver BurnDrvmd_rockmanfix = {
+	"md_rockmanfix", "md_megaman", NULL, NULL, "2022",
+	"Rockman Mega World Fixer Upper (Hack, v1.0.5)\0", NULL, "Josephine Lithius", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_rockmanfixRomInfo, md_rockmanfixRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mega SWIV (Euro)
 static struct BurnRomInfo md_megaswivRomDesc[] = {
 	{ "mega swiv (euro).bin", 0x100000, 0x78c2f046, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

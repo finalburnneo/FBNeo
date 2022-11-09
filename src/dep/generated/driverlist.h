@@ -9527,7 +9527,9 @@ DRV		BurnDrvCpsMegaman;
 DRV		BurnDrvCpsMmancp2u;
 DRV		BurnDrvmd_megamaneu;
 DRV		BurnDrvmd_megamans;
+DRV		BurnDrvmd_megamanrb;
 DRV		BurnDrvmd_megaman;
+DRV		BurnDrvmd_megamanfix;
 DRV		BurnDrvnes_megaman2;
 DRV		BurnDrvCpsMegaman2a;
 DRV		BurnDrvCpsMegamn2d;
@@ -13310,6 +13312,7 @@ DRV		BurnDrvnes_rockm5mp;
 DRV		BurnDrvnes_rockm6;
 DRV		BurnDrvmd_rockman;
 DRV		BurnDrvmd_rockman1;
+DRV		BurnDrvmd_rockmanfix;
 DRV		BurnDrvmd_rockmnx3;
 DRV		BurnDrvCpsRmancp2j;
 DRV		BurnSpecRocky;
@@ -28713,7 +28716,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsMmancp2u,		// Mega Man - The Power Battle (951006 USA, SAMPLE Version)
 	&BurnDrvmd_megamaneu,		// Mega Man - The Wily Wars (Euro)
 	&BurnDrvmd_megamans,		// Mega Man - The Wily Wars (Hack, Spanish)
+	&BurnDrvmd_megamanrb,		// Mega Man - The Wily Wars (Retro-bit)
 	&BurnDrvmd_megaman,			// Mega Man - The Wily Wars (USA)
+	&BurnDrvmd_megamanfix,		// Mega Man - The Wily Wars Fixer Upper (Hack, v1.0.5)
 	&BurnDrvnes_megaman2,		// Mega Man 2 (USA)
 	&BurnDrvCpsMegaman2a,		// Mega Man 2 - the power fighters (960708 Asia)
 	&BurnDrvCpsMegamn2d,		// Mega Man 2 - the power fighters (960708 USA Phoenix Edition)
@@ -32496,6 +32501,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_rockm6,			// Rockman 6 - Shijou Saidai no Tatakai!! (Japan)
 	&BurnDrvmd_rockman,			// Rockman Mega World (Jpn)
 	&BurnDrvmd_rockman1,		// Rockman Mega World (Jpn, Alt)
+	&BurnDrvmd_rockmanfix,		// Rockman Mega World Fixer Upper (Hack, v1.0.5)
 	&BurnDrvmd_rockmnx3,		// Rockman X3
 	&BurnDrvCpsRmancp2j,		// Rockman: The Power Battle (950922 Japan)
 	&BurnSpecRocky,				// Rocky (48K)

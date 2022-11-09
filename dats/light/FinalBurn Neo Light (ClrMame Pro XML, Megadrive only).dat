@@ -11261,11 +11261,28 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="megamanrb" cloneof="megaman" romof="megaman">
+		<description>Mega Man - The Wily Wars (Retro-bit)</description>
+		<year>2021</year>
+		<manufacturer>Capcom - Retro-bit</manufacturer>
+		<rom name="Mega Man - The Wily Wars (2021)(Retro-bit).bin" size="2097152" crc="0831020b"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="megaman">
 		<description>Mega Man - The Wily Wars (USA)</description>
 		<year>1994</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="mega man - the wily wars (usa).bin" size="2097152" crc="0cd405db"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="megamanrb" cloneof="megaman" romof="megaman">
+		<comment>Hack</comment>
+		<description>Mega Man - The Wily Wars Fixer Upper (Hack, v1.0.5)</description>
+		<year>2022</year>
+		<manufacturer>Josephine Lithius</manufacturer>
+		<rom name="Mega Man - The Wily Wars Fixer Upper (2022) (Josephine Lithius).bin" size="2097152" crc="0831020b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16324,6 +16341,15 @@
 		<year>1994</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="rockman mega world (jpn) (alt).bin" size="2097152" crc="85c956ef"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rockmanfix" cloneof="megaman" romof="megaman">
+		<comment>Hack</comment>
+		<description>Rockman Mega World Fixer Upper (Hack, v1.0.5)</description>
+		<year>2022</year>
+		<manufacturer>Josephine Lithius</manufacturer>
+		<rom name="Rockman Mega World Fixer Upper (2022)(Josephine Lithius).bin" size="2097152" crc="4a2058bd"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -22285,9 +22311,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="twocrudes" cloneof="twocrude" romof="twocrude">
+		<comment>Hack</comment>
 		<description>Two Crude Dudes (Hack, Spanish)</description>
-		<year>2020</year>
-		<manufacturer>Data East</manufacturer>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
 		<rom name="two crude dudes (hack, spanish).bin" size="1048576" crc="4d359802"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22391,9 +22418,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultqixs" cloneof="ultqix" romof="ultqix">
+		<comment>Hack</comment>
 		<description>Ultimate Qix (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="ultimate qix (hack, spanish).bin" size="262144" crc="94f99786"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22415,9 +22443,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultsoccrp" cloneof="ultsoccr" romof="ultsoccr">
+		<comment>Prototype</comment>
 		<description>Ultimate Soccer (Euro, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="world soccer (prototype).bin" size="1048576" crc="9d451f72"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

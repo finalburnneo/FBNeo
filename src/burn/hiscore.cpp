@@ -218,6 +218,10 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 						memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 
 						// NoConfirm "feature"
+
+						// TODO: If another game needs this (someday?), we'll make a callback from the driver-side
+						// to keep kludges from piling up in here
+
 						// dbreed @ 88959
 						// the last address range in hiscore.dat is the game's animation timer/
 						// this area will never write-confirm because it's always changing.  We'll only

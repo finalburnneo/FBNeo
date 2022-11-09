@@ -1180,6 +1180,64 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 	return 0;
 }
 
+// Sometimes we have different setnames than other emu's, the table below
+// will translate our set to their set to keep hiscore.dat/arcadedb happy
+// NOTE: asciiz version repeated in burn/hiscore.cpp
+
+struct game_replace_entry {
+	TCHAR fb_name[80];
+	TCHAR mame_name[80];
+};
+
+static game_replace_entry replace_table[] = {
+	{ _T("vsraidbbay"),			_T("bnglngby")		},
+	{ _T("vsrbibbal"),			_T("rbibb")			},
+	{ _T("vsbattlecity"),		_T("btlecity")		},
+	{ _T("vscastlevania"),		_T("cstlevna")		},
+	{ _T("vsclucluland"),		_T("cluclu")		},
+	{ _T("vsdrmario"),			_T("drmario")		},
+	{ _T("vsduckhunt"),			_T("duckhunt")		},
+	{ _T("vsexcitebike"),		_T("excitebk")		},
+	{ _T("vsfreedomforce"),		_T("vsfdf")			},
+	{ _T("vsgoonies"),			_T("goonies")		},
+	{ _T("vsgradius"),			_T("vsgradus")		},
+	{ _T("vsgumshoe"),			_T("vsgshoe")		},
+	{ _T("vshogansalley"),		_T("hogalley")		},
+	{ _T("vsiceclimber"),		_T("iceclimb")		},
+	{ _T("vsmachrider"),		_T("nvs_machrider")	},
+	{ _T("vsmightybomjack"),	_T("nvs_mightybj")	},
+	{ _T("vsninjajkun"),		_T("jajamaru")		},
+	{ _T("vspinball"),			_T("vspinbal")		},
+	{ _T("vsplatoon"),			_T("nvs_platoon")	},
+	{ _T("vsslalom"),			_T("vsslalom")		},
+	{ _T("vssoccer"),			_T("vssoccer")		},
+	{ _T("vsstarluster"),		_T("starlstr")		},
+	{ _T("vssmgolf"),			_T("smgolf")		},
+	{ _T("vssmgolfla"),			_T("ladygolf")		},
+	{ _T("vssmb"),				_T("suprmrio")		},
+	{ _T("vssuperskykid"),		_T("vsskykid")		},
+	{ _T("vssuperxevious"),		_T("supxevs")		},
+	{ _T("vstetris"),			_T("vstetris")		},
+	{ _T("vstkoboxing"),		_T("tkoboxng")		},
+	{ _T("vstopgun"),			_T("topgun")		},
+	{ _T("\0"), 				_T("\0")			}
+};
+
+static TCHAR *fbn_to_mame(TCHAR *name)
+{
+	TCHAR *game = name; // default to passed name
+
+	// Check the above table to see if we should use an alias
+	for (INT32 i = 0; replace_table[i].fb_name[0] != '\0'; i++) {
+		if (!_tcscmp(replace_table[i].fb_name, name)) {
+			game = replace_table[i].mame_name;
+			break;
+		}
+	}
+
+	return game;
+}
+
 static unsigned __stdcall DoShellExThread(void *arg)
 {
 	ShellExecute(NULL, _T("open"), (TCHAR*)arg, NULL, NULL, SW_SHOWNORMAL);
@@ -1193,7 +1251,7 @@ static void ViewEmma()
 	unsigned ThreadID = 0;
 	static TCHAR szShellExURL[MAX_PATH];
 
-	_stprintf(szShellExURL, _T("http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=%s"), BurnDrvGetText(DRV_NAME));
+	_stprintf(szShellExURL, _T("http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=%s"), fbn_to_mame(BurnDrvGetText(DRV_NAME)));
 
 	hThread = (HANDLE)_beginthreadex(NULL, 0, DoShellExThread, (void*)szShellExURL, 0, &ThreadID);
 }

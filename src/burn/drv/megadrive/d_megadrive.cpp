@@ -19336,7 +19336,7 @@ struct BurnDriver BurnDrvmd_megamanrb = {
 
 // Mega Man - The Wily Wars Fixer Upper (Hack, v1.0.5)
 static struct BurnRomInfo md_megamanfixRomDesc[] = {
-	{ "Mega Man - The Wily Wars Fixer Upper (2022) (Josephine Lithius).bin", 2097152, 0xf884af5a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Man - The Wily Wars Fixer Upper (2022) (Josephine Lithius).bin", 2097152, 0x82b377f4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_megamanfix)

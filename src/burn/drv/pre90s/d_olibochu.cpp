@@ -25,6 +25,7 @@ static UINT8 DrvRecalc;
 static UINT16 sound_command;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
+static UINT8 Palette;		// Fake Dip
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -53,60 +54,80 @@ static struct BurnInputInfo OlibochuInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	&Palette,		"dip"		},
 };
 
 STDINPUTINFO(Olibochu)
 
-static struct BurnDIPInfo OlibochuDIPList[]=
+static struct BurnDIPInfo OlibochuDIPList[] =
 {
-	{0x0e, 0xff, 0xff, 0xff, NULL					},
-	{0x0f, 0xff, 0xff, 0xff, NULL					},
-	{0x10, 0xff, 0xff, 0xff, NULL					},
-
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x0e, 0x01, 0x03, 0x00, "2"					},
-	{0x0e, 0x01, 0x03, 0x03, "3"					},
-	{0x0e, 0x01, 0x03, 0x02, "4"					},
-	{0x0e, 0x01, 0x03, 0x01, "5"					},
-
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x0e, 0x01, 0x0c, 0x0c, "5000"					},
-	{0x0e, 0x01, 0x0c, 0x08, "10000"				},
-	{0x0e, 0x01, 0x0c, 0x04, "15000"				},
-	{0x0e, 0x01, 0x0c, 0x00, "None"					},
-
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x0e, 0x01, 0x40, 0x00, "Upright"				},
-	{0x0e, 0x01, 0x40, 0x40, "Cocktail"				},
-
-	{0   , 0xfe, 0   ,    2, "Cross Hatch Pattern"	},
-	{0x0e, 0x01, 0x80, 0x80, "Off"					},
-	{0x0e, 0x01, 0x80, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "Stop Mode (Cheat)"	},
-	{0x10, 0x01, 0x01, 0x01, "Off"					},
-	{0x10, 0x01, 0x01, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    8, "Coin A"				},
-	{0x10, 0x01, 0x0e, 0x00, "4 Coins 1 Credits"	},
-	{0x10, 0x01, 0x0e, 0x02, "3 Coins 1 Credits"	},
-	{0x10, 0x01, 0x0e, 0x04, "2 Coins 1 Credits"	},
-	{0x10, 0x01, 0x0e, 0x0e, "1 Coin  1 Credits"	},
-	{0x10, 0x01, 0x0e, 0x0c, "1 Coin  2 Credits"	},
-	{0x10, 0x01, 0x0e, 0x0a, "1 Coin  3 Credits"	},
-	{0x10, 0x01, 0x0e, 0x08, "1 Coin  4 Credits"	},
-	{0x10, 0x01, 0x0e, 0x06, "1 Coin  5 Credits"	},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x10, 0x01, 0x10, 0x10, "Off"					},
-	{0x10, 0x01, 0x10, 0x00, "On"					},
-
-	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x10, 0x01, 0x20, 0x20, "Off"					},
-	{0x10, 0x01, 0x20, 0x00, "On"					},
+	{0x11, 0xff, 0xff, 0x01, NULL                    },
 };
 
-STDDIPINFO(Olibochu)
+static struct BurnDIPInfo PunchkidDIPList[] =
+{
+	{0x11, 0xff, 0xff, 0x00, NULL                    },
+};
+
+static struct BurnDIPInfo CommonDIPList[] =
+{
+	{0x0e, 0xff, 0xff, 0xff, NULL                    },
+	{0x0f, 0xff, 0xff, 0xff, NULL                    },
+	{0x10, 0xff, 0xff, 0xff, NULL                    },
+
+	{0   , 0xfe, 0   ,    4, "Lives"                 },
+	{0x0e, 0x01, 0x03, 0x00, "2"                     },
+	{0x0e, 0x01, 0x03, 0x03, "3"                     },
+	{0x0e, 0x01, 0x03, 0x02, "4"                     },
+	{0x0e, 0x01, 0x03, 0x01, "5"                     },
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"            },
+	{0x0e, 0x01, 0x0c, 0x0c, "5000"                  },
+	{0x0e, 0x01, 0x0c, 0x08, "10000"                 },
+	{0x0e, 0x01, 0x0c, 0x04, "15000"                 },
+	{0x0e, 0x01, 0x0c, 0x00, "None"                  },
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"               },
+	{0x0e, 0x01, 0x40, 0x00, "Upright"               },
+	{0x0e, 0x01, 0x40, 0x40, "Cocktail"              },
+
+	{0   , 0xfe, 0   ,    2, "Cross Hatch Pattern"   },
+	{0x0e, 0x01, 0x80, 0x80, "Off"                   },
+	{0x0e, 0x01, 0x80, 0x00, "On"                    },
+
+	{0   , 0xfe, 0   ,    2, "Freeze (Cheat)"        }, // Freeze: press P1 start to stop, P2 start to continue
+	{0x10, 0x01, 0x01, 0x01, "Off"                   },
+	{0x10, 0x01, 0x01, 0x00, "On"                    },
+
+	{0   , 0xfe, 0   ,    8, "Coin A"                },
+	{0x10, 0x01, 0x0e, 0x00, "4 Coins 1 Credits"     },
+	{0x10, 0x01, 0x0e, 0x02, "3 Coins 1 Credits"     },
+	{0x10, 0x01, 0x0e, 0x04, "2 Coins 1 Credits"     },
+	{0x10, 0x01, 0x0e, 0x0e, "1 Coin  1 Credits"     },
+	{0x10, 0x01, 0x0e, 0x0c, "1 Coin  2 Credits"     },
+	{0x10, 0x01, 0x0e, 0x0a, "1 Coin  3 Credits"     },
+	{0x10, 0x01, 0x0e, 0x08, "1 Coin  4 Credits"     },
+	{0x10, 0x01, 0x0e, 0x06, "1 Coin  5 Credits"     },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"          },
+	{0x10, 0x01, 0x10, 0x10, "Off"                   },
+	{0x10, 0x01, 0x10, 0x00, "On"                    },
+
+	{0   , 0xfe, 0   ,    2, "Invincibility (Cheat)" },
+	{0x10, 0x01, 0x20, 0x20, "Off"                   },
+	{0x10, 0x01, 0x20, 0x00, "On"                    },
+
+	{0   , 0xfe, 0   ,    2, "Level Select (Cheat)"  }, // Level Select: enable to select round at game start (turn off to start game)
+	{0x10, 0x01, 0x40, 0x40, "Off"                   },
+	{0x10, 0x01, 0x40, 0x00, "On"                    },
+
+	{0   , 0xfe, 0   ,    2, "Palette"               }, // change the default
+	{0x11, 0x01, 0x01, 0x01, "Oli-Boo-Chu"           },
+	{0x11, 0x01, 0x01, 0x00, "Punching Kid"          },
+};
+
+STDDIPINFOEXT(Olibochu, Common, Olibochu)
+STDDIPINFOEXT(Punchkid, Common, Punchkid)
 
 static inline void update_soundlatch()
 {
@@ -377,9 +398,11 @@ static void DrvPaletteInit()
 		pal[i] = BurnHighCol(r,g,b,0);
 	}
 
+	INT32 bank = (Palette & 1) ? 0x10 : 0x00;
+
 	for (INT32 i = 0; i < 0x200; i++)
 	{
-		DrvPalette[i] = pal[(DrvColPROM[0x020 + i] & 0x0f) | ((~i >> 4) & 0x10)];
+		DrvPalette[i] = pal[(DrvColPROM[0x020 + i] & 0x0f) | ((~i >> 4) & bank)];
 	}
 }
 
@@ -554,6 +577,51 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
+// Punching Kid (Japan)
+
+static struct BurnRomInfo punchkidRomDesc[] = {
+	{ "pka_1.n3",	0x1000, 0x18f1fa10, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "pka_2.m3",	0x1000, 0x7766d9be, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pka_3.k3",	0x1000, 0xbb90e21b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pka_4.j3",	0x1000, 0xce18a851, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "pka_5.h3",	0x1000, 0x426c8254, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "pka_6.f3",	0x1000, 0x288b223e, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "pka_7.e3",	0x1000, 0xc689e057, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "pka_8.d3",	0x1000, 0x61c118e0, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "pka_17.j4",	0x1000, 0x57f07402, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 #1 Code
+	{ "pka_18.l4",	0x1000, 0x0a903e9c, 2 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "pka_15.k1",	0x1000, 0xfb5dd281, 3 | BRF_SND },           // 10 Samples?
+	{ "pka_16.m1",	0x1000, 0xc07614a5, 3 | BRF_SND },           // 11
+
+	{ "pka_13.n6",	0x1000, 0x388f2bfd, 4 | BRF_GRA },           // 12 Characters
+	{ "pka_14.n4",	0x1000, 0xb5bf456f, 4 | BRF_GRA },           // 13
+
+	{ "pka_9.a6",	0x1000, 0xfa69e16e, 5 | BRF_GRA },           // 14 Sprites
+	{ "pka_10.a2",	0x1000, 0x10359f84, 5 | BRF_GRA },           // 15
+	{ "pka_11.a4",	0x1000, 0x1d968f5f, 5 | BRF_GRA },           // 16
+	{ "pka_12.b2",	0x1000, 0xd8f0c157, 5 | BRF_GRA },           // 17
+
+	{ "c-1.n2",		0x0020, 0xe488e831, 6 | BRF_GRA },           // 18 Color data
+	{ "c-2.k6",		0x0100, 0x698a3ba0, 6 | BRF_GRA },           // 19
+	{ "c-3.d6",		0x0100, 0xefc4e408, 6 | BRF_GRA },           // 20
+};
+
+STD_ROM_PICK(punchkid)
+STD_ROM_FN(punchkid)
+
+struct BurnDriver BurnDrvPunchkid = {
+	"punchkid", NULL, NULL, NULL, "1981",
+	"Punching Kid (Japan)\0", NULL, "Irem", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
+	NULL, punchkidRomInfo, punchkidRomName, NULL, NULL, NULL, NULL, OlibochuInputInfo, PunchkidDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	240, 256, 3, 4
+};
+
+
 // Oli-Boo-Chu (USA)
 
 static struct BurnRomInfo olibochuRomDesc[] = {
@@ -589,10 +657,10 @@ STD_ROM_PICK(olibochu)
 STD_ROM_FN(olibochu)
 
 struct BurnDriver BurnDrvOlibochu = {
-	"olibochu", NULL, NULL, NULL, "1981",
-	"Oli-Boo-Chu (USA)\0", NULL, "Irem / GDI", "Miscellaneous",
+	"olibochu", "punchkid", NULL, NULL, "1981",
+	"Oli-Boo-Chu (USA)\0", NULL, "Irem (GDI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
 	NULL, olibochuRomInfo, olibochuRomName, NULL, NULL, NULL, NULL, OlibochuInputInfo, OlibochuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4

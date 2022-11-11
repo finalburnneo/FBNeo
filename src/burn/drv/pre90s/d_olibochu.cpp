@@ -1,9 +1,12 @@
 // FB Neo Oli-Boo-Chu driver module
 // Based on MAME driver by Nicola Salmoria
+// Sound emulation: hap
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include "hc55516.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -13,24 +16,29 @@ static UINT8 *DrvZ80ROM0;
 static UINT8 *DrvZ80ROM1;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
+static UINT8 *DrvSamROM;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvVidRAM;
-static UINT8 *DrvUnkRAM;
+static UINT8 *DrvSprRAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT16 sound_command;
+static UINT16 sound_command_prev;
+static UINT16 sample_address;
+static UINT8 sample_latch;
 static UINT8 soundlatch;
+static UINT8 soundlatch1;
 static UINT8 flipscreen;
 static UINT8 Palette;		// Fake Dip
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[4];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
@@ -54,7 +62,7 @@ static struct BurnInputInfo OlibochuInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip D",		BIT_DIPSWITCH,	&Palette,		"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Olibochu)
@@ -129,15 +137,29 @@ static struct BurnDIPInfo CommonDIPList[] =
 STDDIPINFOEXT(Olibochu, Common, Olibochu)
 STDDIPINFOEXT(Punchkid, Common, Punchkid)
 
+static UINT8 leading0bits(UINT32 val)
+{
+	INT32 count;
+	for (count = 0; INT32(val) >= 0; count++) val <<= 1;
+	return count;
+}
+
 static inline void update_soundlatch()
 {
-	for (INT32 i = 15; i >= 0; i--)
+	UINT8 c;
+	UINT16 hi = sound_command & 0xffc0;
+	UINT16 lo = sound_command & 0x003f;
+
+	// soundcmd low bits (edge-triggered) = soundlatch d4-d7
+	if (lo && lo != (sound_command_prev & 0x3f))
 	{
-		if (sound_command & (1 << i)) {
-			soundlatch = i ^ 0xf;
-			break;
-		}
+		c = leading0bits(lo) - 26;
+		soundlatch1 = c & 0xf;
 	}
+
+	// soundcmd high bits = soundlatch d0-d3
+	for (c = 0; c < 16 && !BIT(hi, c); c++) { ; }
+	soundlatch = (16 - c) & 0xf;
 }
 
 static void __fastcall olibochu_main_write(UINT16 address, UINT8 data)
@@ -150,6 +172,7 @@ static void __fastcall olibochu_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa801:
+			sound_command_prev = sound_command;
 			sound_command = (sound_command & 0xff00) | (data << 0);
 			update_soundlatch();
 		return;
@@ -196,7 +219,15 @@ static void __fastcall olibochu_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x7004:
+			sample_latch = data;
+		return;
 		case 0x7006:
+			if (data & 0x80) {
+				soundlatch1 = 0;
+				sample_address = sample_latch * 0x20 * 8;
+			}
+
+			hc55516_mute_w(~data & 0x80);
 		return;
 	}
 }
@@ -206,10 +237,18 @@ static UINT8 __fastcall olibochu_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x7000:
-			return soundlatch;
+			return (soundlatch & 0xf) | ((soundlatch1 << 4) & 0xf0);
 	}
 
 	return 0;
+}
+
+static void cvsd_tick()
+{
+	hc55516_digit_w(BIT(DrvSamROM[sample_address / 8], ~sample_address & 7));
+	sample_address = (sample_address + 1) & 0xffff;
+	hc55516_clock_w(0);
+	hc55516_clock_w(1);
 }
 
 static tilemap_callback( bg )
@@ -217,7 +256,7 @@ static tilemap_callback( bg )
 	INT32 attr = DrvVidRAM[offs + 0x400];
 	INT32 code = DrvVidRAM[offs] + ((attr & 0x20) << 3);
 
-	TILE_SET_INFO(0, code, attr, TILE_FLIPYX(attr >> 6));
+	TILE_SET_INFO(0, code, attr | 0x20, TILE_FLIPYX(attr >> 6) | TILE_GROUP((attr & 0x20) >> 5));
 }
 
 static INT32 DrvDoReset()
@@ -233,10 +272,17 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	AY8910Reset(0);
+	hc55516_reset();
+	hc55516_mute_w(1);
 
-	soundlatch = 0;
-	sound_command = 0;
 	flipscreen = 0;
+
+	sound_command = 0;
+	sound_command_prev = 0;
+	sample_address = 0;
+	sample_latch = 0;
+	soundlatch = 0;
+	soundlatch1 = 0;
 
 	return 0;
 }
@@ -253,6 +299,8 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000220;
 
+	DrvSamROM       = Next; Next += 0x002000;
+
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -260,7 +308,7 @@ static INT32 MemIndex()
 	DrvZ80RAM0		= Next; Next += 0x001000;
 	DrvZ80RAM1		= Next; Next += 0x000400;
 	DrvVidRAM		= Next; Next += 0x000800;
-	DrvUnkRAM		= Next; Next += 0x001000;
+	DrvSprRAM		= Next; Next += 0x001000;
 
 	RamEnd			= Next;
 
@@ -295,12 +343,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x0000,  0, 1)) return 1;
@@ -315,8 +358,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM1 + 0x0000,  8, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM1 + 0x1000,  9, 1)) return 1;
 
-//		if (BurnLoadRom(DrvSamROM  + 0x0000, 10, 1)) return 1;
-//		if (BurnLoadRom(DrvSamROM  + 0x0000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvSamROM  + 0x0000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvSamROM  + 0x1000, 11, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x0000, 12, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x2000, 13, 1)) return 1;
@@ -337,7 +380,7 @@ static INT32 DrvInit()
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvVidRAM,			0x8000, 0x87ff, MAP_RAM);
-	ZetMapMemory(DrvUnkRAM,			0x9000, 0x9fff, MAP_RAM); // 9000-903f and 9800-983f
+	ZetMapMemory(DrvSprRAM,			0x9000, 0x9fff, MAP_RAM); // 9000-903f and 9800-983f
 	ZetMapMemory(DrvZ80RAM0,		0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(olibochu_main_write);
 	ZetSetReadHandler(olibochu_main_read);
@@ -351,13 +394,20 @@ static INT32 DrvInit()
 	ZetSetReadHandler(olibochu_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, 0);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910Init(0, 3072000 / 2, 0);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3072000);
+
+	hc55516_init(ZetTotalCycles, 3072000);
+	hc55516_volume(0.65);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x8000, 0x80, 0x1f);
+	GenericTilemapSetTransparent(0, 0);
 	GenericTilemapSetOffsets(0, 0, -8);
+
+	Palette = DrvDips[3]; // get default!
 
 	DrvDoReset();
 
@@ -369,8 +419,9 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	ZetExit();
 	AY8910Exit(0);
+	hc55516_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -406,26 +457,11 @@ static void DrvPaletteInit()
 	}
 }
 
-#define RenderTile(func, rend_to, code, sx, sy, color, bit, trans, offs, rom)   \
-	if (flipy) {                                                                \
-    	if (flipx) {                                                            \
-            	func ## _FlipXY_Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);  \
-			} else {                                                                        \
-	            func ## _FlipY_Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);   \
-			}                                                                               \
-		} else {                                                                            \
-			if (flipx) {                                                                    \
-	            func ## _FlipX_Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);   \
-			} else {                                                                        \
-	            func ## _Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);         \
-			}                                                                               \
-		}
-
 static void draw_sprites_16x16()
 {
-	UINT8 *spriteram = DrvZ80RAM0 + 0x400;
+	UINT8 *spriteram = DrvSprRAM;
 
-	for (INT32 offs = 0; offs < 0x20; offs += 4)
+	for (INT32 offs = 0x20 - 4; offs >= 0; offs -= 4)
 	{
 		INT32 attr = spriteram[offs + 1];
 		INT32 code = spriteram[offs];
@@ -445,15 +481,15 @@ static void draw_sprites_16x16()
 
 		sy -= 8;
 
-		RenderTile(Render16x16Tile_Mask, pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM1)
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 2, 0, 0x100, DrvGfxROM1);
 	}
 }
 
 static void draw_sprites_8x8()
 {
-	UINT8 *spriteram = DrvZ80RAM0 + 0x440;
+	UINT8 *spriteram = DrvSprRAM + 0x800;
 
-	for (INT32 offs = 0; offs < 0x40; offs += 4)
+	for (INT32 offs = 0x40 - 4; offs >= 0; offs -= 4)
 	{
 		INT32 attr = spriteram[offs + 1];
 		INT32 code = spriteram[offs];
@@ -473,7 +509,7 @@ static void draw_sprites_8x8()
 
 		sy -= 8;
 
-		RenderTile(Render8x8Tile_Mask, pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM0)
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 2, 0, 0, DrvGfxROM0);
 	}
 }
 
@@ -485,10 +521,12 @@ static INT32 DrvDraw()
 	}
 
 	BurnTransferClear();
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_FORCEOPAQUE);
 
-	if (nBurnLayer & 2) draw_sprites_16x16();
-	if (nBurnLayer & 4) draw_sprites_8x8();
+	if (nSpriteEnable & 1) draw_sprites_8x8();
+	if (nSpriteEnable & 2) draw_sprites_16x16();
+
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
 
 	BurnTransferCopy(DrvPalette);
 
@@ -501,6 +539,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 3);
 
@@ -509,23 +549,28 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		if (Palette != DrvDips[3]) {
+			Palette = DrvDips[3];
+			DrvRecalc = 1;
+		}
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 4000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 3072000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 
-		if (i == 0) {
+		if (i == 128) {
 			ZetSetVector(0xcf);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 
-		if (i == 248) {
+		if (i == 255) {
 			ZetSetVector(0xd7);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -533,13 +578,15 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		CPU_RUN(1, Zet);
+		cvsd_tick();
+		if (i == 128 || i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		hc55516_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -567,9 +614,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
+		hc55516_scan(nAction, pnMin);
 
-		SCAN_VAR(soundlatch);
 		SCAN_VAR(sound_command);
+		SCAN_VAR(sound_command_prev);
+		SCAN_VAR(sample_address);
+		SCAN_VAR(sample_latch);
+		SCAN_VAR(soundlatch);
+		SCAN_VAR(soundlatch1);
 		SCAN_VAR(flipscreen);
 	}
 

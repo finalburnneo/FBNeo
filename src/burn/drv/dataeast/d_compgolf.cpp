@@ -1,4 +1,4 @@
-// FB Alpha Competition Golf Final Round driver module
+// FB Neo Competition Golf Final Round driver module
 // Based on MAME driver by Angelo Salese, Pierpaolo Prazzoli, and Bryan McPhail
 
 #include "tiles_generic.h"

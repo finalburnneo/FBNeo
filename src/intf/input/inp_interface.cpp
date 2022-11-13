@@ -233,6 +233,18 @@ INT32 InputMake(bool bCopy)
 		if (pgi->Input.pVal == NULL) {
 			continue;
 		}
+		if (bResetDrv) {
+			struct BurnInputInfo bii;
+			memset(&bii, 0, sizeof(bii));
+			BurnDrvGetInputInfo(&bii, i);
+
+			if (0 == strcmp(bii.szName, "Reset")) {
+				// Click the reset key
+				*(pgi->Input.pVal) = 1;
+				bResetDrv = false;
+				break;
+			}
+		}
 
 		switch (pgi->nInput) {
 			case 0:									// Undefined

@@ -1216,6 +1216,14 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			} else {
 				SetPauseMode(0);
 			}
+
+			break;
+
+		case MENU_RESET:
+			if (bRunPause)
+				SetPauseMode(0);
+
+			bResetDrv = true;
 			break;
 
 		case MENU_INPUT:

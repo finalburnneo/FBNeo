@@ -873,6 +873,7 @@ BEGIN
 		MENUITEM "Start Neo Geo CDZ...\tCtrl+Shift+F6",	MENU_START_NEOGEO_CD
 		MENUITEM SEPARATOR
         MENUITEM "Exit game\tCtrl+F4",					MENU_QUIT, GRAYED
+        MENUITEM "Reset game",							MENU_RESET, GRAYED
         MENUITEM "Pause game\tPause",					MENU_PAUSE, GRAYED
 		MENUITEM SEPARATOR
         MENUITEM "Adjust CPU speed...",					MENU_SETCPUCLOCK, GRAYED

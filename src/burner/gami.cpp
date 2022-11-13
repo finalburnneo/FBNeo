@@ -17,6 +17,7 @@ INT32 nFireButtons = 0;
 
 bool bStreetFighterLayout = false;
 bool bLeftAltkeyMapped = false;
+bool bResetDrv = false;
 
 // These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
 UINT8 macroSystemPause = 0;
@@ -166,6 +167,7 @@ INT32 GameInpBlank(INT32 bDipSwitch)
 		struct BurnInputInfo bii;
 		memset(&bii, 0, sizeof(bii));
 		BurnDrvGetInputInfo(&bii, i);
+
 		if (bDipSwitch == 0 && (bii.nType & BIT_GROUP_CONSTANT)) {		// Don't blank the dip switches
 			continue;
 		}

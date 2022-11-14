@@ -233,13 +233,20 @@ INT32 InputMake(bool bCopy)
 		if (pgi->Input.pVal == NULL) {
 			continue;
 		}
-		if (bResetDrv) {
-			if (pgi->nIdent == GK_RESET) {
-				// Click the reset key
+
+		if (pgi->nIdent == GK_RESET) {
+			static int bLastReset = 0;
+
+			if (bResetDrv) {
+				// Click the reset key (from UI)
 				*(pgi->Input.pVal) = 1;
 				bResetDrv = false;
-				break;
 			}
+
+			if (!*(pgi->Input.pVal) && bLastReset) { // latch on reset button up
+				//bprintf(0, _T("hit reset %d\n"), nCurrentFrame);
+			}
+			bLastReset = *(pgi->Input.pVal);
 		}
 
 		switch (pgi->nInput) {

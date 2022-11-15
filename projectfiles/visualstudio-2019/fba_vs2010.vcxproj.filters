@@ -4761,6 +4761,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_fcombat.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_compgolf.cpp">
+      <Filter>Burn\drv\dataeast</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

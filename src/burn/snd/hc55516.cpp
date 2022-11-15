@@ -43,6 +43,7 @@ static double  m_decay;
 static double  m_leak;
 
 static INT32   m_clock = 0; // always 0 for sw-driven clock
+static INT32   m_mute;
 
 static double  volume = 1.0;
 
@@ -126,6 +127,8 @@ void hc55516_reset()
 	m_new_digit = 0;
 	m_shiftreg = 0;
 
+	m_mute = 0;
+
 	m_curr_sample = 0;
 	m_next_sample = 0;
 
@@ -149,6 +152,8 @@ void hc55516_scan(INT32 nAction, INT32 *)
 	SCAN_VAR(m_digit);
 	SCAN_VAR(m_new_digit);
 	SCAN_VAR(m_shiftreg);
+
+	SCAN_VAR(m_mute);
 
 	SCAN_VAR(m_curr_sample);
 	SCAN_VAR(m_next_sample);
@@ -196,10 +201,20 @@ static inline INT32 current_clock_state()
 	return ((UINT64)m_update_count * m_clock * 2 / SAMPLE_RATE) & 0x01;
 }
 
+void hc55516_mute_w(INT32 state)
+{
+	m_mute = state;
+}
+
 
 static void process_digit()
 {
 	double integrator = m_integrator, temp;
+
+	if (m_mute) {
+		m_next_sample = 0;
+		return;
+	}
 
 	/* shift the bit into the shift register */
 	m_shiftreg = (m_shiftreg << 1) | m_digit;

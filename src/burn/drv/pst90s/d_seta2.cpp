@@ -944,11 +944,11 @@ STD_ROM_FN(grdianssy)
 
 // Denjin Makai II (LBS Edition, Hack)
 // Hack by Bindi
-// GOTVG 20220813
+// GOTVG 20221014
 
 static struct BurnRomInfo grdianslbsRomDesc[] = {
-	{ "u2_lbs.bin",		0x080000, 0x4ba593ea, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u3_lbs.bin",		0x080000, 0x49fefc4d, BRF_ESS | BRF_PRG },
+	{ "u2_lbs.bin",		0x080000, 0xa2e89715, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "u3_lbs.bin",		0x080000, 0xdf5b58bc, BRF_ESS | BRF_PRG },
 	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 

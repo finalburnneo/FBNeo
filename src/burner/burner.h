@@ -103,6 +103,7 @@ extern INT32 nFireButtons;
 
 extern bool bStreetFighterLayout;
 extern bool bLeftAltkeyMapped;
+extern bool bResetDrv;
 
 INT32 GameInpInit();
 INT32 GameInpExit();

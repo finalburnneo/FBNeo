@@ -11605,6 +11605,22 @@ static struct BurnRomInfo Moonal2bRomDesc[] = {
 STD_ROM_PICK(Moonal2b)
 STD_ROM_FN(Moonal2b)
 
+static struct BurnRomInfo Galactica2RomDesc[] = {
+	{ "a_2_galactica_cirsa",	0x00800, 0xc561235e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "b_2_galactica_cirsa",	0x00800, 0x0b3c3cae, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "c_2_galactica_cirsa",	0x00800, 0xb2170d3b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "f_2_galactica_cirsa",	0x00800, 0x51c95126, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g_2_galactica_cirsa",	0x01000, 0x16b9d56d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "h_2_galactica_cirsa",	0x00800, 0x6babd14e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "i_2_galactica_cirsa",	0x00800, 0x0997e81b, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "74s288n",				0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galactica2)
+STD_ROM_FN(Galactica2)
+
 static struct BurnRomInfo ThepitmRomDesc[] = {
 	{ "1.bin",         0x00800, 0x0f78d6ea, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.bin",         0x00800, 0xebacc6eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -12350,7 +12366,7 @@ struct BurnDriver BurnDrvMoonqsr = {
 
 struct BurnDriver BurnDrvMoonal2 = {
 	"moonal2", NULL, NULL, NULL, "1980",
-	"Moon Alien Part 2\0", NULL, "Nichibutsu", "Galaxian",
+	"Moon Alien Part 2\0", NULL, "Namco / Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Moonal2RomInfo, Moonal2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, Moonal2DIPInfo,
@@ -12360,10 +12376,20 @@ struct BurnDriver BurnDrvMoonal2 = {
 
 struct BurnDriver BurnDrvMoonal2b = {
 	"moonal2b", "moonal2", NULL, NULL, "1980",
-	"Moon Alien Part 2 (older version)\0", NULL, "Nichibutsu", "Galaxian",
+	"Moon Alien Part 2 (older version)\0", NULL, "Namco / Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Moonal2bRomInfo, Moonal2bRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, Moonal2DIPInfo,
+	Moonal2Init, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalactica2 = {
+	"galactica2", "moonal2", NULL, NULL, "1980",
+	"Galactica-2 (Moon Alien Part 2 bootleg)\0", NULL, "bootleg (Cirsa)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galactica2RomInfo, Galactica2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, Moonal2DIPInfo,
 	Moonal2Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

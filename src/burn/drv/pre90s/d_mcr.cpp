@@ -1,4 +1,4 @@
-// FB Alpha Midway MCR driver module
+// FB Neo Midway MCR driver module
 // Based on MAME driver by Aaron Giles
 
 /*
@@ -2229,7 +2229,7 @@ struct BurnDriver BurnDrvTronger = {
 };
 
 
-// Domino Man
+// Domino Man (set 1)
 
 static struct BurnRomInfo dominoRomDesc[] = {
 	{ "dmanpg0.bin",	0x2000, 0x3bf3bb1c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -2267,13 +2267,50 @@ static INT32 DominoInit()
 
 struct BurnDriver BurnDrvDomino = {
 	"domino", NULL, "midssio", NULL, "1982",
-	"Domino Man\0", NULL, "Bally Midway", "Miscellaneous",
+	"Domino Man (set 1)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, dominoRomInfo, dominoRomName, NULL, NULL, NULL, NULL, DominoInputInfo, DominoDIPInfo,
 	DominoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3
 };
+
+
+// Domino Man (set 2)
+
+static struct BurnRomInfo dominoaRomDesc[] = {
+	{ "d2",		0x2000, 0xc7b6331e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "d3",		0x2000, 0x81115c86, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "d4",		0x2000, 0x5cf32c55, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "d5",		0x2000, 0x4f89b68c, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "a7",		0x1000, 0xfa982dcc, 2 | BRF_PRG | BRF_ESS }, //  4 ssio:cpu
+	{ "a8",		0x1000, 0x72839019, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "a9",		0x1000, 0xad760da7, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "a10",	0x1000, 0x958c7287, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "g3",		0x2000, 0x9163007f, 3 | BRF_GRA },           //  8 gfx1
+	{ "g4",		0x2000, 0x28615c56, 3 | BRF_GRA },           //  9
+
+	{ "e1",		0x2000, 0x0b1f9f9e, 4 | BRF_GRA },           // 10 gfx2
+	{ "d1",		0x2000, 0x16aa4b9b, 4 | BRF_GRA },           // 11
+	{ "b1",		0x2000, 0x4a8e76b8, 4 | BRF_GRA },           // 12
+	{ "a1",		0x2000, 0x1f39257e, 4 | BRF_GRA },           // 13
+};
+
+STDROMPICKEXT(dominoa, dominoa, Ssioprom)
+STD_ROM_FN(dominoa)
+
+struct BurnDriver BurnDrvDominoa = {
+	"dominoa", "domino", "midssio", NULL, "1982",
+	"Domino Man (set 2)\0", NULL, "Bally Midway", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PUZZLE, 0,
+	NULL, dominoaRomInfo, dominoaRomName, NULL, NULL, NULL, NULL, DominoInputInfo, DominoDIPInfo,
+	DominoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	512, 480, 4, 3
+};
+
 
 
 // Wacko

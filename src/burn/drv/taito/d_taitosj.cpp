@@ -278,14 +278,14 @@ static struct BurnInputInfo SpacecrInputList[] = {
 	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	   },
 	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	   },
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	   },
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 continue"  },
+	{"P1 Continue",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"  },
 
 	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	   },
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	   },
 	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	   },
 	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	   },
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	   },
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 continue"  },
+	{"P2 Continue",         BIT_DIGITAL,    DrvJoy2 + 5,    "p2 fire 2"    },
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		   },
 	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		   },

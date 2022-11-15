@@ -278,7 +278,7 @@ static struct BurnInputInfo SpacecrInputList[] = {
 	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	   },
 	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	   },
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	   },
-	{"P1 Continue",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"  },
+	{"P1 Continue",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"    },
 
 	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	   },
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	   },

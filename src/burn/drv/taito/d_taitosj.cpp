@@ -273,25 +273,25 @@ static struct BurnInputInfo KikstartInputList[] = {
 STDINPUTINFO(Kikstart)
 	
 static struct BurnInputInfo SpacecrInputList[] = {
-	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	   },
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	   },
-	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	   },
-	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	   },
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	   },
-	{"P1 Continue",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"    },
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
+	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Continue",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2" },
 
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	   },
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	   },
-	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	   },
-	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	   },
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	   },
-	{"P2 Continue",         BIT_DIGITAL,    DrvJoy2 + 5,    "p2 fire 2"    },
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
+	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Continue",         BIT_DIGITAL,    DrvJoy2 + 5,    "p2 fire 2" },
 
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		   },
-	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		   },
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		   },
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		   },
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		   },
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Spacecr)

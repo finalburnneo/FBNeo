@@ -597,6 +597,7 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\ctv.cpp" />
     <ClCompile Include="..\..\src\burn\drv\cave\d_cv1k.cpp" />
     <ClCompile Include="..\..\src\burn\drv\channelf\d_channelf.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\dataeast\d_compgolf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_liberate.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_pcktgal.cpp" />
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_sshangha.cpp" />

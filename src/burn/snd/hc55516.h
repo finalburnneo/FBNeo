@@ -17,6 +17,7 @@ void hc55516_volume(double vol);
 
 void hc55516_clock_w(INT32 state);
 void hc55516_digit_w(INT32 digit);
+void hc55516_mute_w(INT32 state);
 INT32 hc55516_clock_state_r();
 
 void hc55516_update(INT16 *inputs, INT32 sample_len);

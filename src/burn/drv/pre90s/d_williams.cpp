@@ -220,7 +220,7 @@ static struct BurnInputInfo StargateInputList[] = {
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
 	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
-	{"High Score reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"diag"		},
+	{"High Score reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
 

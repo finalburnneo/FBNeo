@@ -234,6 +234,15 @@ INT32 InputMake(bool bCopy)
 			continue;
 		}
 
+		if (pgi->nIdent == GK_RESET) {
+			if (bResetDrv) {
+				// Click the reset key (from UI)
+				*(pgi->Input.pVal) = 1;
+				bResetDrv = false;
+				break;
+			}
+		}
+
 		switch (pgi->nInput) {
 			case 0:									// Undefined
 				pgi->Input.nVal = 0;

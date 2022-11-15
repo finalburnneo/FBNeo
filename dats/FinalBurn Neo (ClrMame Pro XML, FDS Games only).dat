@@ -838,11 +838,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kamenridbla" romof="fdsbios">
+	<game name="kamenridbla" cloneof="kamenridblaen" romof="kamenridblaen">
 		<description>Kamen Rider Black - Taiketsu Shadow Moon (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Kamen Rider Black - Taiketsu Shadow Moon (Japan).fds" size="131016" crc="0db848ea"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="kamenridblaen" romof="fdsbios">
+		<comment>Hack</comment>
+		<description>Kamen Rider Black - Taiketsu Shadow Moon (T-Eng)</description>
+		<year>2022</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Kamen Rider Black - Taiketsu Shadow Moon T-Eng (2022)(BlackPaladin).fds" size="131016" crc="0ca67b03"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

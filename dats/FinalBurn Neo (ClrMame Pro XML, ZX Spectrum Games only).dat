@@ -578,6 +578,39 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="advsjane2" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Adventures of Jane Jelly 2, The: the Treasure of Hotmarmalade (128K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Adventures of Jane Jelly 2, The - The Treasure of Hotmarmalade (2017)(Jaime Grilo).tap" size="43600" crc="8df0aa08"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advsjane3" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Adventures of Jane Jelly 3, The: the Egg Diamond (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Adventures of Jane Jelly 3, The - The Egg Diamond (2018)(Jaime Grilo).tap" size="46363" crc="a93a3d40"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advsjane" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Adventures of Jane Jelly, The: the Treasure of Zedin (128K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Adventures of Jane Jelly, The - The Treasure of Zedin (2017)(Jaime Grilo).tap" size="42992" crc="7079b65b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aerial" romof="spectrum">
 		<comment>Homebrew, AY Sound support</comment>
 		<description>Aerial (48K) (HB)</description>
@@ -1403,6 +1436,16 @@
 		<year>1983</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Atic Atac (1983)(Ultimate Play The Game).z80" size="35220" crc="56520bdf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="atlantis" romof="spectrum">
+		<comment>Press 'B' to use controller and 'S' to start game</comment>
+		<description>Atlantis (48K)</description>
+		<year>1985</year>
+		<manufacturer>Anirog</manufacturer>
+		<rom name="Atlantis 48K (1985)(Anirog).tap" size="27049" crc="460ac502"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5459,6 +5502,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dogsbody" romof="spectrum">
+		<description>Dogsbody to the Rescue (48K)</description>
+		<year>1985</year>
+		<manufacturer>Bug-Byte</manufacturer>
+		<rom name="Dogsbody to the Rescue 48K (1985)(Bug-Byte).tap" size="49460" crc="aad92250"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dominator" romof="spectrum">
 		<description>Dominator (48K)</description>
 		<year>1987</year>
@@ -6912,6 +6964,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="frenzy" romof="spectrum">
+		<comment>To play properly, invert 'up' and 'down' inputs</comment>
+		<description>Frenzy (16K)</description>
+		<year>1982</year>
+		<manufacturer>Quicksilva</manufacturer>
+		<rom name="Frenzy 16K (1982)(Quicksilva).z80" size="7770" crc="434c69e1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="frightmare" romof="spec128">
 		<description>Frightmare (128K)</description>
 		<year>1988</year>
@@ -7709,6 +7771,15 @@
 		<year>1986</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Goonies, The (1986)(U.S. Gold).tap" size="48377" crc="9ed8efdf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gothik" romof="spectrum">
+		<description>Gothik (48K)</description>
+		<year>1987</year>
+		<manufacturer>Firebird</manufacturer>
+		<rom name="Gothik 48K (1987)(Firebird).tap" size="37854" crc="77774db3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12572,6 +12643,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pachic" romof="spectrum">
+		<description>Pac Hic (48K)</description>
+		<year>1986</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Pac Hic (1986)(Daniel Isoba).tap" size="45730" crc="42bb1258"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pacland" romof="spec128">
 		<comment>ENTER to add coins, 1 or 2 to play</comment>
 		<description>Pac-Land (128K)</description>
@@ -13332,6 +13412,16 @@
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Prince Clumsy (1990)(Codemasters).z80" size="36725" crc="c5ab98f3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="prisriot" romof="spec128">
+		<description>Prison Riot (128K)</description>
+		<year>1990</year>
+		<manufacturer>Players Premier</manufacturer>
+		<rom name="Prison Riot 128K (1990)(Players Premier).tap" size="64518" crc="b760f8bd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17582,6 +17672,15 @@
 		<rom name="Tiny Dungeons 128K (2022)(RetroSouls).tap" size="81973" crc="a35f23f6"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tirnanog" romof="spectrum">
+		<description>Tir Na Nog (48K)</description>
+		<year>1984</year>
+		<manufacturer>Gargoyle Games</manufacturer>
+		<rom name="Tir Na Nog 48K (1984)(Gargoyle Games).tap" size="46565" crc="8f5492ed"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

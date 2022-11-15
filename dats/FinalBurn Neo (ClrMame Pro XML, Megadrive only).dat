@@ -11277,12 +11277,12 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="megamanrb" cloneof="megaman" romof="megaman">
+	<game name="megamanfix" cloneof="megaman" romof="megaman">
 		<comment>Hack</comment>
 		<description>Mega Man - The Wily Wars Fixer Upper (Hack, v1.0.5)</description>
 		<year>2022</year>
 		<manufacturer>Josephine Lithius</manufacturer>
-		<rom name="Mega Man - The Wily Wars Fixer Upper (2022) (Josephine Lithius).bin" size="2097152" crc="0831020b"/>
+		<rom name="Mega Man - The Wily Wars Fixer Upper (2022) (Josephine Lithius).bin" size="2097152" crc="82b377f4"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

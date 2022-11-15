@@ -2791,6 +2791,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="cmbr4wl">
+		<comment>Homebrew</comment>
+		<description>Chibi Monster Br4wl (HB)</description>
+		<year>2022</year>
+		<manufacturer>dalecoop Studio</manufacturer>
+		<rom name="Chibi Monster Br4wl (2022)(dalecoop Studio).nes" size="524304" crc="0eaa7806"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="chiisobaj" cloneof="chiisoba" romof="chiisoba">
 		<description>Chiisana Obake - Acchi Socchi Kocchi (Japan)</description>
 		<year>1992</year>
@@ -7088,6 +7097,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="guntner">
+		<comment>Homebrew</comment>
+		<description>GunTneR (HB)</description>
+		<year>2022</year>
+		<manufacturer>langel</manufacturer>
+		<rom name="GunTneR (2022)(langel).nes" size="24592" crc="170e5f53"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="gyrodine">
 		<description>Gyrodine (Japan)</description>
 		<year>1986</year>
@@ -7317,6 +7335,15 @@
 		<year>2007</year>
 		<manufacturer>KingMike</manufacturer>
 		<rom name="Heisei Tensai Bakabon (T-Eng).nes" size="393232" crc="c41628ef"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="heist">
+		<comment>Homebrew</comment>
+		<description>Heist (HB)</description>
+		<year>2022</year>
+		<manufacturer>Johnybot</manufacturer>
+		<rom name="Heist (2022)(Johnybot).nes" size="40976" crc="75c942f5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7887,6 +7914,15 @@
 		<year>1989</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="Ironsword - Wizards &amp; Warriors II (USA).nes" size="262160" crc="be2e7055"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="irritship">
+		<comment>Homebrew</comment>
+		<description>Irritating Ship (HB)</description>
+		<year>2022</year>
+		<manufacturer>Fiskbit</manufacturer>
+		<rom name="Irritating Ship (2022)(Fiskbit).nes" size="40976" crc="acab29f4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -10751,6 +10787,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mkmadnessmmc1" cloneof="mkmadness" romof="mkmadness">
+		<comment>Homebrew</comment>
+		<description>Minekart Madness (HB, MMC1 ver.)</description>
+		<year>2022</year>
+		<manufacturer>Matt Hughson</manufacturer>
+		<rom name="Minekart Madness mmc1 (2022)(Matt Hughson).nes" size="262160" crc="14297e1e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="minelsagj" cloneof="minelsag" romof="minelsag">
 		<description>Minelvaton Saga - Ragon no Fukkatsu (Japan)</description>
 		<year>1987</year>
@@ -13026,10 +13071,19 @@
 	</game>
 	<game name="ravensgate">
 		<comment>Homebrew</comment>
-		<description>Ravens Gate (HB)</description>
+		<description>Raven's Gate (HB)</description>
 		<year>2022</year>
 		<manufacturer>MercuryBD</manufacturer>
 		<rom name="Ravens Gate (2022)(MercuryBD).nes" size="65552" crc="3911f904"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ravensgatemmc1" cloneof="ravensgate" romof="ravensgate">
+		<comment>Homebrew</comment>
+		<description>Raven's Gate (HB, MMC1 ver.)</description>
+		<year>2022</year>
+		<manufacturer>MercuryBD</manufacturer>
+		<rom name="Raven's Gate mmc1 (2022)(MercuryBD).nes" size="262160" crc="d2389326"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13903,6 +13957,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="sensecity">
+		<comment>Homebrew</comment>
+		<description>Senseless City (HB)</description>
+		<year>2022</year>
+		<manufacturer>Rani Baker</manufacturer>
+		<rom name="Senseless City (2022)(Rani Baker).nes" size="40976" crc="70c92e3b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="sgthel">
 		<comment>Homebrew</comment>
 		<description>Sgt. Helmet - Training Day (HB)</description>
@@ -14412,10 +14475,10 @@
 	</game>
 	<game name="solonokagi2h" cloneof="firenice" romof="firenice">
 		<comment>Hack, 100 new levels</comment>
-		<description>Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.1)</description>
-		<year>2021</year>
+		<description>Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.4)</description>
+		<year>2022</year>
 		<manufacturer>FoxyShadow</manufacturer>
-		<rom name="Solomon no Kagi 2 - Kitsune Attacks! Hack v1.1 (2021)(FoxyShadow).nes" size="262160" crc="a85d178a"/>
+		<rom name="Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.4).nes" size="262160" crc="1c1c1b8c"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16119,6 +16182,15 @@
 		<year>1984</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Tennis (USA).nes" size="24592" crc="5f457c00"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tenseconds">
+		<comment>Homebrew</comment>
+		<description>Tense Conds (HB)</description>
+		<year>2022</year>
+		<manufacturer>Wendel Scardua</manufacturer>
+		<rom name="Tense Conds (2022)(Wendel Scardua).nes" size="65552" crc="3e385cb0"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

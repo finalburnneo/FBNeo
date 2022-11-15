@@ -1198,6 +1198,7 @@ static void __fastcall taitosj_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xf000) == 0xd000) address &= ~0x00f0;
+	if ((address & 0xf800) == 0x8800) address &= ~0x07fe;
 
 	switch (address)
 	{
@@ -1290,13 +1291,17 @@ static UINT8 __fastcall taitosj_main_read(UINT16 address)
 	}
 
 	if ((address & 0xf000) == 0xd000) address &= ~0x00f0;
+	if ((address & 0xf800) == 0x8800) address &= ~0x07fe;
 
 	switch (address)
 	{
 		case 0x8800:
-			sync_mcu();
-			zaccept = 1;
-			return toz80;
+			if (has_mcu) {
+				sync_mcu();
+				zaccept = 1;
+				return toz80;
+			}
+			return 0x00;
 
 		case 0x8801:
 			if (has_mcu) {

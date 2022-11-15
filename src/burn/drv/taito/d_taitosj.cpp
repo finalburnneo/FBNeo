@@ -82,7 +82,7 @@ static UINT8 DrvJoyF0[8];
 static UINT8 DrvJoyF1[8];
 static UINT8 DrvDips[4];
 static UINT8 DrvReset;
-static UINT8 DrvInputs[7];
+static UINT8 DrvInputs[8];
 static UINT8 kikstart_gears[2];
 
 static struct BurnInputInfo TwoButtonInputList[] = {
@@ -271,6 +271,30 @@ static struct BurnInputInfo KikstartInputList[] = {
 };
 
 STDINPUTINFO(Kikstart)
+	
+static struct BurnInputInfo SpacecrInputList[] = {
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	   },
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	   },
+	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	   },
+	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	   },
+	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	   },
+	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 continue"  },
+
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	   },
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	   },
+	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	   },
+	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	   },
+	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	   },
+	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 continue"  },
+
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		   },
+	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		   },
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		   },
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		   },
+	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		   },
+};
+
+STDINPUTINFO(Spacecr)
 
 #define COMMON_COIN_DIPS(offs)							\
 	{0   , 0xfe, 0   ,   16, "Coin A"				},	\
@@ -2624,7 +2648,7 @@ struct BurnDriver BurnDrvSpacecr = {
 	"Space Cruiser\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, spacecrRomInfo, spacecrRomName, NULL, NULL, NULL, NULL, TwoButtonLRInputInfo, SpacecrDIPInfo,
+	NULL, spacecrRomInfo, spacecrRomName, NULL, NULL, NULL, NULL, SpacecrInputInfo, SpacecrDIPInfo,
 	spacecrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

@@ -1,4 +1,4 @@
-// FB Alpha Cross Pang driver module
+// FB Neo Cross Pang driver module
 // Based on MAME driver by Pierpaolo Prazzoli and David Haywood
 
 #include "tiles_generic.h"
@@ -40,9 +40,10 @@ static UINT16 *bg_scroll_y;
 
 static UINT8 DrvRecalc;
 
-static INT32 bestri = 0;
-static INT32 bestria = 0;
-static INT32 pitapat = 0;
+static INT32 bestri		= 0;
+static INT32 bestria	= 0;
+static INT32 pitapat	= 0;
+static INT32 pitapata	= 0;
 
 static struct BurnInputInfo CrospangInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 8,	"p1 coin"	},
@@ -234,26 +235,49 @@ static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 		}
 	} else if (bestria == 1) {
 		switch (address)
-		{
+			{
 			case 0x100006:
 				*fg_scroll_x = BURN_ENDIAN_SWAP_INT16(((data ^ 0x0000) + 32) & 0x1ff);
-			return;
+				return;
 
 			case 0x100008:
 				*fg_scroll_y = BURN_ENDIAN_SWAP_INT16(((data ^ 0xff54) +  7) & 0x1ff);
-			return;
+				return;
 
 			case 0x10000a:
 				*bg_scroll_x = BURN_ENDIAN_SWAP_INT16(((data ^ 0x0000) - 60) & 0x1ff);
-			return;
+				return;
 
 			case 0x10000c:
 				*bg_scroll_y = BURN_ENDIAN_SWAP_INT16(((data ^ 0xfeaa) +  7) & 0x1ff);
-			return;
+				return;
 
 			case 0x270000:
 				*soundlatch = data & 0xff;
-			return;
+				return;
+		}
+	} else if (pitapata == 1) {
+		switch (address)
+			{
+			case 0x100002:
+				*bg_scroll_x = BURN_ENDIAN_SWAP_INT16((data + 4) & 0x1ff);
+				return;
+
+			case 0x100004:
+				*fg_scroll_y = BURN_ENDIAN_SWAP_INT16((data + 8) & 0x1ff);
+				return;
+
+			case 0x100006:
+				*fg_scroll_x = BURN_ENDIAN_SWAP_INT16((data + 0) & 0x1ff);
+				return;
+
+			case 0x100008:
+				*bg_scroll_y = BURN_ENDIAN_SWAP_INT16((data + 8) & 0x1ff);
+				return;
+
+			case 0x270000:
+				*soundlatch = data & 0xff;
+				return;
 		}
 	} else {
 		switch (address)
@@ -519,7 +543,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	SekMapMemory(Drv68KRAM,		0x320000, 0x32ffff, MAP_RAM); // crospang, heuksun
 	SekMapMemory(Drv68KRAM,		0x3a0000, 0x3affff, MAP_RAM); // bestri
 	SekMapMemory(Drv68KRAM,		0x340000, 0x34ffff, MAP_RAM); // bestria
-	SekMapMemory(Drv68KRAM,		0x300000, 0x30ffff, MAP_RAM); // pitapat
+	SekMapMemory(Drv68KRAM,		0x300000, 0x30ffff, MAP_RAM); // pitapat, pitapata
 	SekSetWriteByteHandler(0,	crospang_write_byte);
 	SekSetWriteWordHandler(0,	crospang_write_word);
 	SekSetReadByteHandler(0,	crospang_read_byte);
@@ -564,6 +588,7 @@ static INT32 DrvExit()
 	bestri = 0;
 	bestria = 0;
 	pitapat = 0;
+	pitapata = 0;
 
 	return 0;
 }
@@ -688,7 +713,7 @@ static INT32 DrvFrame()
 		DrvInputs[2] = (DrvDips[1] << 8) | DrvDips[0];
 	}
 
-	INT32 nTotalCycles[2] = { (pitapat) ? (14318181 / 60) : (7159090 / 60), 3579545 / 60 };
+	INT32 nTotalCycles[2] = { (pitapat | pitapata) ? (14318181 / 60) : (7159090 / 60), 3579545 / 60 };
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -902,7 +927,7 @@ struct BurnDriver BurnDrvBestria = {
 };
 
 
-// Pitapat Puzzle
+// Pitapat Puzzle (set 1)
 
 static struct BurnRomInfo pitapatRomDesc[] = {
 	{ "ua02",	0x40000, 0xb3d3ac7e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -933,10 +958,50 @@ static INT32 pitapatInit()
 
 struct BurnDriver BurnDrvPitapat = {
 	"pitapat", NULL, NULL, NULL, "1997",
-	"Pitapat Puzzle\0", NULL, "F2 System", "Miscellaneous",
+	"Pitapat Puzzle (set 1)\0", NULL, "F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pitapatRomInfo, pitapatRomName, NULL, NULL, NULL, NULL, PitapatInputInfo, PitapatDIPInfo,
 	pitapatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
+
+
+// Pitapat Puzzle (set 2)
+
+static struct BurnRomInfo pitapataRomDesc[] = {
+	{ "ua02",	0x40000, 0x742652cb, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ua03",	0x40000, 0x936bd573, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "us02",	0x10000, 0xc7cc05fa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "us08",	0x40000, 0x8d8fe72a, 3 | BRF_SND },           //  3 Oki Samples
+
+	{ "uc07",	0x80000, 0xfa2ff22b, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "uc08",	0x80000, 0x3108a9f2, 4 | BRF_GRA },           //  5
+
+	{ "ud14",	0x40000, 0x92e23e92, 5 | BRF_GRA },           //  6 Sprites
+	{ "ud15",	0x40000, 0x7d3d6dba, 5 | BRF_GRA },           //  7
+	{ "ud16",	0x40000, 0x5c09dff8, 5 | BRF_GRA },           //  8
+	{ "ud17",	0x40000, 0xd4c67e2e, 5 | BRF_GRA },           //  9
+};
+
+STD_ROM_PICK(pitapata)
+STD_ROM_FN(pitapata)
+
+static INT32 pitapataInit()
+{
+	pitapata = 1;
+
+	return DrvInit(pitapatLoadRoms);
+}
+
+struct BurnDriver BurnDrvPitapata = {
+	"pitapata", "pitapat", NULL, NULL, "1997",
+	"Pitapat Puzzle (set 2)\0", NULL, "F2 System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, pitapataRomInfo, pitapataRomName, NULL, NULL, NULL, NULL, PitapatInputInfo, PitapatDIPInfo,
+	pitapataInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

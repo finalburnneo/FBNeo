@@ -22276,10 +22276,10 @@ struct BurnDriver BurnDrvmslugx2r1v2 = {
 };
 
 // Metal Slug X - Super Vehicle-001 (Survival, Hack)
-// GOTVG 20221031
+// GOTVG 20221115
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",	0x100000, 0xd2913eee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",	0x400000, 0x01f48336, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",	0x100000, 0x9bd3e306, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",	0x400000, 0x019e8acb, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -23108,11 +23108,11 @@ struct BurnDriver BurnDrvmslug5mg = {
 };
 
 // Metal Slug 5 (Stone Turtle, Hack)
-// GOTVG 20221017
+// GOTVG 20221115
 static struct BurnRomInfo mslug5sgRomDesc[] = {
 	/* Encrypted */
-	{ "268-p1csg.p1",	0x400000, 0x713cbdc3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2ces.p2",	0x400000, 0xa962a3e1, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p1csg.p1",	0x400000, 0x1f5cad74, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2csg.p2",	0x400000, 0xf56088ce, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

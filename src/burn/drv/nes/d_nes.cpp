@@ -920,6 +920,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xc9f3f439) ? ALT_TIMING : 0; // vs. freedom force
 	NESMode |= (ROMCRC == 0x53eb8950) ? ALT_TIMING : 0; // freedom force
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
+	NESMode |= (ROMCRC == 0xe39e0be2) ? ALT_TIMING2 : 0; // laser invasion
 	NESMode |= (ROMCRC == 0x70eac605) ? ALT_TIMING : 0; // deblock
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
@@ -3850,7 +3851,8 @@ static void mapper5_ppu_clk(UINT16 address)
 	}
 
 	switch (pixel) {
-		case  16: mmc5_lineadvance(); break;
+		case   1: if (~NESMode & ALT_TIMING2) mmc5_lineadvance(); break; // castelvania iii
+		case  16: if (NESMode & ALT_TIMING2) mmc5_lineadvance(); break; // laser invasion prefers cycle 16 (grr..)
 		case 257: mmc5_mapchr(CHR_SPRITE); break; // sprite bank switch
 		case 321: mmc5_mapchr(CHR_TILE); break; // bg bank switch
 	}

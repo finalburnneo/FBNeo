@@ -1882,34 +1882,34 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	// Handle Coleco
 	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO) {
 		if (strcmp("1", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_Y, description);
-		}
-		if (strcmp("2", description) == 0) {
-			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_X, description);
-		}
-		if (strcmp("3", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L, description);
 		}
-		if (strcmp("4", description) == 0) {
+		if (strcmp("2", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R, description);
 		}
-		if (strcmp("5", description) == 0) {
+		if (strcmp("3", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L2, description);
 		}
-		if (strcmp("6", description) == 0) {
+		if (strcmp("4", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R2, description);
 		}
-		if (strcmp("7", description) == 0) {
+		if (strcmp("5", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
 		}
-		if (strcmp("8", description) == 0) {
+		if (strcmp("6", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R3, description);
 		}
+		if (strcmp("7", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "7 / 8");
+		}
+		if (strcmp("8", description) == 0) {
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "7 / 8");
+		}
 		if (strcmp("9", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_POS, "0 / 9");
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_POS, "0 / 9");
 		}
 		if (strcmp("0", description) == 0) {
-			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, JOY_NEG, "0 / 9");
+			GameInpDigital2RetroInpAnalogRight(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, JOY_NEG, "0 / 9");
 		}
 		if (strcmp("*", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_SELECT, description);
@@ -2831,6 +2831,27 @@ static void RefreshControllers()
 		bControllersSetOnce = true;
 	}
 }
+
+#ifdef FBNEO_DEBUG
+void debuginputs()
+{
+	// keys debug
+	struct GameInp *pgi2zz = GameInp;
+ 
+	for (int i = 0; i < nGameInpCount; i++, pgi2zz++) {
+ 
+		if (pgi2zz->Input.pVal == NULL) {
+			continue;
+		}
+ 
+		struct BurnInputInfo bii;
+		memset(&bii, 0, sizeof(bii));
+		BurnDrvGetInputInfo(&bii, i);
+ 
+		bprintf(0, _T("name %S  val %x \n"), bii.szName, *(pgi2zz->Input.pVal));
+	}
+}
+#endif
 
 void InputMake(void)
 {

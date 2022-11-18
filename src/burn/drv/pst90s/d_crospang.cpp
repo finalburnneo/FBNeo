@@ -235,7 +235,7 @@ static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 		}
 	} else if (bestria == 1) {
 		switch (address)
-			{
+		{
 			case 0x100006:
 				*fg_scroll_x = BURN_ENDIAN_SWAP_INT16(((data ^ 0x0000) + 32) & 0x1ff);
 				return;
@@ -258,7 +258,7 @@ static void __fastcall crospang_write_word(UINT32 address, UINT16 data)
 		}
 	} else if (pitapata == 1) {
 		switch (address)
-			{
+		{
 			case 0x100002:
 				*bg_scroll_x = BURN_ENDIAN_SWAP_INT16((data + 4) & 0x1ff);
 				return;

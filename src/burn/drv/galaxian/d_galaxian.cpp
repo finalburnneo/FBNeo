@@ -12038,14 +12038,29 @@ static INT32 MoonqsrInit()
 	return nRet;
 }
 
+static void ReloadTilesSharedRoms()
+{
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
+	BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
+	memcpy(GalTempRom + 0x0800, GalTempRom + 0x0000, 0x800);
+	memcpy(GalTempRom + 0x1800, GalTempRom + 0x1000, 0x800);
+	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
+	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
+	BurnFree(GalTempRom);
+}
+
 static INT32 Moonal2Init()
 {
 	INT32 nRet;
 	
 	GalPostLoadCallbackFunction = MapMooncrst;
+	GalTilesSharedRomSize = 0x1000;
 	
 	nRet = GalInit();
-	
+
+	ReloadTilesSharedRoms();
+
 	return nRet;
 }
 

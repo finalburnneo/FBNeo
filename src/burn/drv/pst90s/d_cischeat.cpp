@@ -583,7 +583,7 @@ static struct BurnDIPInfo WildpltDIPList[]=
 
 STDDIPINFO(Wildplt)
 
-static struct BurnDIPInfo ScudhammDIPList[]=
+static struct BurnDIPInfo ScudhammaDIPList[]=
 {
 	{0x0b, 0xff, 0xff, 0x3f, NULL						},
 	{0x0c, 0xff, 0xff, 0x07, NULL						},
@@ -619,7 +619,18 @@ static struct BurnDIPInfo ScudhammDIPList[]=
 	{0x0c, 0x01, 0x07, 0x00, "Free Play"				},
 };
 
-STDDIPINFO(Scudhamm)
+STDDIPINFO(Scudhamma)
+
+static struct BurnDIPInfo ScudhammDIPList[] =
+{
+	{0x0c, 0xff, 0xff, 0x0f, NULL						},
+
+	{0   , 0xfe, 0   ,    2, "Win Up"					},
+	{0x0c, 0x01, 0x08, 0x08, "Off"						},
+	{0x0c, 0x01, 0x08, 0x00, "On"						},
+};
+
+STDDIPINFOEXT(Scudhamm, Scudhamma, Scudhamm)
 
 static struct BurnDIPInfo Armchmp2DIPList[]=
 {
@@ -3385,9 +3396,51 @@ struct BurnDriver BurnDrvWildplt = {
 };
 
 
-// Scud Hammer
+// Scud Hammer (ver 1.4)
 
 static struct BurnRomInfo scudhammRomDesc[] = {
+	{ "scud_hammer_cf-92128b-3_ver.1.4.bin",	0x40000, 0x4747370e, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
+	{ "scud_hammer_cf-92128b-4_ver.1.4.bin",	0x40000, 0x7a04955c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "5",										0x80000, 0x714c115e, 1 | BRF_GRA },           //  2 Background Layer 0 Tiles
+
+	{ "6",										0x20000, 0xb39aab63, 3 | BRF_GRA },           //  3 Background Layer 2 Tiles
+
+	{ "1.bot",									0x80000, 0x46450d73, 4 | BRF_GRA },           //  4 Sprites
+	{ "2.bot",									0x80000, 0xfb7b66dd, 4 | BRF_GRA },           //  5
+	{ "3.bot",									0x80000, 0x7d45960b, 4 | BRF_GRA },           //  6
+	{ "4.bot",									0x80000, 0x393b6a22, 4 | BRF_GRA },           //  7
+	{ "5.bot",									0x80000, 0x7a3c33ad, 4 | BRF_GRA },           //  8
+	{ "6.bot",									0x80000, 0xd19c4bf7, 4 | BRF_GRA },           //  9
+	{ "7.bot",									0x80000, 0x9e5edf59, 4 | BRF_GRA },           // 10
+	{ "8.bot",									0x80000, 0x4980051e, 4 | BRF_GRA },           // 11
+	{ "9.bot",									0x80000, 0xc1b301f1, 4 | BRF_GRA },           // 12
+	{ "10.bot",									0x80000, 0xdab4528f, 4 | BRF_GRA },           // 13
+
+	{ "2.l",									0x80000, 0x889311da, 1 | BRF_SND },           // 14 MSM #0 Samples
+	{ "2.h",									0x80000, 0x347928fc, 1 | BRF_SND },           // 15
+
+	{ "1.l",									0x80000, 0x3c94aa90, 2 | BRF_SND },           // 16 MSM #1 Samples
+	{ "1.h",									0x80000, 0x5caee787, 2 | BRF_SND },           // 17
+};
+
+STD_ROM_PICK(scudhamm)
+STD_ROM_FN(scudhamm)
+
+struct BurnDriver BurnDrvScudhamm = {
+	"scudhamm", NULL, NULL, NULL, "1994",
+	"Scud Hammer (ver 1.4)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, scudhammRomInfo, scudhammRomName, NULL, NULL, NULL, NULL, ScudhammInputInfo, ScudhammDIPInfo,
+	ScudhammInit, DrvExit, Single68KFrame, ScudhammDraw, DrvScan, &DrvRecalc, 0x4000,
+	224, 256, 3, 4
+};
+
+
+// Scud Hammer (older version?)
+
+static struct BurnRomInfo scudhammaRomDesc[] = {
 	{ "3",						0x40000, 0xa908e7bd, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
 	{ "4",						0x40000, 0x981c8b02, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -3413,15 +3466,15 @@ static struct BurnRomInfo scudhammRomDesc[] = {
 	{ "1.h",					0x80000, 0x5caee787, 2 | BRF_SND },           // 17
 };
 
-STD_ROM_PICK(scudhamm)
-STD_ROM_FN(scudhamm)
+STD_ROM_PICK(scudhamma)
+STD_ROM_FN(scudhamma)
 
-struct BurnDriver BurnDrvScudhamm = {
-	"scudhamm", NULL, NULL, NULL, "1994",
-	"Scud Hammer\0", NULL, "Jaleco", "Miscellaneous",
+struct BurnDriver BurnDrvScudhamma = {
+	"scudhamma", "scudhamm", NULL, NULL, "1994",
+	"Scud Hammer (older version?)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, scudhammRomInfo, scudhammRomName, NULL, NULL, NULL, NULL, ScudhammInputInfo, ScudhammDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, scudhammaRomInfo, scudhammaRomName, NULL, NULL, NULL, NULL, ScudhammInputInfo, ScudhammaDIPInfo,
 	ScudhammInit, DrvExit, Single68KFrame, ScudhammDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 256, 3, 4
 };

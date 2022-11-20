@@ -22139,7 +22139,7 @@ struct BurnDriver BurnDrvnes_8bitxmas21 = {
 };
 
 static struct BurnRomInfo nes_8bitxmas22RomDesc[] = {
-	{ "8-bit XMAS 2021 (2022)(RetroUSB).nes",          131088, 0x81bbc4a5, BRF_ESS | BRF_PRG },
+	{ "8-bit XMAS 2022 (2022)(RetroUSB).nes",          131088, 0x81bbc4a5, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_8bitxmas22)

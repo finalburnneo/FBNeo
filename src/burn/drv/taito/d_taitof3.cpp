@@ -1664,6 +1664,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_cpu_in_reset);
 		if (f3_game == ARKRETRN) BurnTrackballScan();
 
+		EEPROMScan(nAction, pnMin);
+
 		if (nAction & ACB_WRITE) {
 			for (INT32 i = 0; i < 0x2000; i+=4) {
 				DrvVRAMExpand(i);

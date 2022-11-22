@@ -39784,6 +39784,25 @@ struct BurnDriver BurnDrvnes_kartfighter = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Kart Fighter Hack
+
+static struct BurnRomInfo nes_skartfighterRomDesc[] = {
+	{ "Super Kart Fighter Hack (2022) (Streetwize).nes",          393232, 0x4212c73e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_skartfighter)
+STD_ROM_FN(nes_skartfighter)
+
+struct BurnDriver BurnDrvnes_skartfighter = {
+	"nes_skartfighter", "NULL", NULL, NULL, "2022",
+	"Super Kart Fighter (Hack)\0", NULL, "Streetwize", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_skartfighterRomInfo, nes_skartfighterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_kerokerkernodajRomDesc[] = {
 	{ "Kero Kero Keroppi no Daibouken (Japan).nes",          65552, 0x32592407, BRF_ESS | BRF_PRG },
 };

@@ -17,6 +17,7 @@ extern int bMediaExit;
 int nRollbackFrames = 0;
 int nRollbackCount = 0;
 
+static char pGameName[MAX_PATH];
 static bool bDirect = false;
 static bool bReplaySupport = false;
 static bool bReplayStarted = false;
@@ -42,24 +43,30 @@ void SetBurnFPS(const char *name, int version)
 {
 	if (kNetVersion < NET_VERSION_60FPS) {
 		// Version 1: use old framerate (59.94fps)
+		bForce60Hz = 1;
 		nBurnFPS = 5994;
 		return;
 	}
 
-	// UMK3UC at 60fps rate
-	if (kNetVersion >= NET_VERSION_UMK3UC_FRAMERATE) {
-		if (!strcmp(name, "umk3uc")) {
-			return;
-		}
-	}
+	if (kNetVersion < NET_VERSION_DISABLE_FORCE_60HZ) {
+		bForce60Hz = 1;
 
-	// MK Framerate at original rate (54fps)
-	if (kNetVersion >= NET_VERSION_MK_FRAMERATE) {
-		if (!strcmp(name, "mk") || !strcmp(name, "mk2") || !strcmp(name, "mk2p") || !strcmp(name, "mk3") ||
-			!strcmp(name, "umk3") || !strcmp(name, "umk3p") || !strcmp(name, "umk3uc") || !strcmp(name, "umk3uk") ||
-			!strcmp(name, "wwfman")) {
-			bForce60Hz = 0;
-			return;
+		// UMK3UC at 60fps rate
+		if (kNetVersion >= NET_VERSION_UMK3UC_FRAMERATE) {
+			if (!strcmp(name, "umk3uc")) {
+				bForce60Hz = 1;
+				return;
+			}
+		}
+
+		// MK Framerate at original rate (54fps)
+		if (kNetVersion >= NET_VERSION_MK_FRAMERATE) {
+			if (!strcmp(name, "mk") || !strcmp(name, "mk2") || !strcmp(name, "mk2p") || !strcmp(name, "mk3") ||
+				!strcmp(name, "umk3") || !strcmp(name, "umk3p") || !strcmp(name, "umk3uc") || !strcmp(name, "umk3uk") ||
+				!strcmp(name, "wwfman")) {
+				bForce60Hz = 0;
+				return;
+			}
 		}
 	}
 }
@@ -94,8 +101,10 @@ bool __cdecl ggpo_on_client_event_callback(GGPOClientEvent *info)
 		VidSSetSystemMessage(_T(""));
 		if (kNetSpectator) {
 			kNetVersion = strlen(info->u.matchinfo.blurb) > 0 ? atoi(info->u.matchinfo.blurb) : NET_VERSION;
+			SetBurnFPS(pGameName, kNetVersion);
+			MediaInit();
+			DrvInit(nBurnDrvActive, true);
 		}
-		SetBurnFPS(BurnDrvGetTextA(DRV_NAME), kNetVersion);
 		TCHAR szUser1[128];
 		TCHAR szUser2[128];
 		VidOverlaySetGameInfo(ANSIToTCHAR(info->u.matchinfo.p1, szUser1, 128), ANSIToTCHAR(info->u.matchinfo.p2, szUser2, 128), kNetSpectator, iRanked, iPlayer);
@@ -187,16 +196,36 @@ bool __cdecl ggpo_begin_game_callback(char *name)
 	WIN32_FIND_DATA fd;
 	TCHAR tfilename[MAX_PATH];
 	TCHAR tname[MAX_PATH];
+
+	strcpy(pGameName, name);
 	ANSIToTCHAR(name, tname, MAX_PATH);
 	SetBurnFPS(name, kNetVersion);
 
-	// ranked savestate
-	if (iRanked) {
-		_stprintf(tfilename, _T("savestates\\%s_fbneo_ranked.fs"), tname);
+	if (!kNetSpectator)
+	{
+		// ranked savestate
+		if (iRanked) {
+			_stprintf(tfilename, _T("savestates\\%s_fbneo_ranked.fs"), tname);
+			if (FindFirstFile(tfilename, &fd) != INVALID_HANDLE_VALUE) {
+				// Load our save-state file (freeplay, event mode, etc.)
+				BurnStateLoad(tfilename, 1, &DrvInitCallback);
+				// detector
+				DetectorLoad(name, false, iSeed);
+				// if playing a direct game, we never get match information, so put anonymous
+				if (bDirect) {
+					VidOverlaySetGameInfo(_T("Player1#0,0"), _T("Player2#0,0"), false, iRanked, iPlayer);
+					VidSSetGameInfo(_T("Player1#0,0"), _T("Player2#0,0"), false, iRanked, iPlayer);
+				}
+				return 0;
+			}
+		}
+
+		// regular savestate
+		_stprintf(tfilename, _T("savestates\\%s_fbneo.fs"), tname);
 		if (FindFirstFile(tfilename, &fd) != INVALID_HANDLE_VALUE) {
 			// Load our save-state file (freeplay, event mode, etc.)
 			BurnStateLoad(tfilename, 1, &DrvInitCallback);
-			// detector
+			// load detector
 			DetectorLoad(name, false, iSeed);
 			// if playing a direct game, we never get match information, so put anonymous
 			if (bDirect) {
@@ -207,28 +236,16 @@ bool __cdecl ggpo_begin_game_callback(char *name)
 		}
 	}
 
-	// regular savestate
-	_stprintf(tfilename, _T("savestates\\%s_fbneo.fs"), tname);
-	if (FindFirstFile(tfilename, &fd) != INVALID_HANDLE_VALUE) {
-		// Load our save-state file (freeplay, event mode, etc.)
-		BurnStateLoad(tfilename, 1, &DrvInitCallback);
-		// load detector
-		DetectorLoad(name, false, iSeed);
-		// if playing a direct game, we never get match information, so put anonymous
-		if (bDirect) {
-			VidOverlaySetGameInfo(_T("Player1#0,0"), _T("Player2#0,0"), false, iRanked, iPlayer);
-			VidSSetGameInfo(_T("Player1#0,0"), _T("Player2#0,0"), false, iRanked, iPlayer);
-		}
-		return 0;
-	}
-
 	// no savestate
 	UINT32 i;
 	for (i = 0; i < nBurnDrvCount; i++) {
 		nBurnDrvActive = i;
 		if ((_tcscmp(BurnDrvGetText(DRV_NAME), tname) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
-			MediaInit();
-			DrvInit(i, true);
+			if (!kNetSpectator)
+			{
+				MediaInit();
+				DrvInit(i, true);
+			}
 			// load game detector
 			DetectorLoad(name, false, iSeed);
 			// if playing a direct game, we never get match information, so play anonymous
@@ -475,7 +492,7 @@ void QuarkInit(TCHAR *tconnect)
 	kNetLua = 0;
 	kNetSpectator = 0;
 	kNetQuarkId[0] = 0;
-	bForce60Hz = 1;
+	bForce60Hz = 0;
 	iRanked = 0;
 	iPlayer = 0;
 	iDelay = 0;

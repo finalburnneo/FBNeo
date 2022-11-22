@@ -122,6 +122,7 @@ int ConfigAppLoad()
 		VAR(nVidScanIntensity);
 		VAR(bMonitorAutoCheck);
 		VAR(bKeypadVolume);
+		VAR(bFixDiagonals);
 		VAR(nEnableSOCD);
 		VAR(bForce60Hz);
 		VAR(bAlwaysDrawFrames);
@@ -733,6 +734,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, keypad +/-/* will be used for volume shortcuts\n"));
 	VAR(bKeypadVolume);
+
+	_ftprintf(h, _T("\n// If non-zero, will fix diagonals for missing inputs\n"));
+	VAR(bFixDiagonals);
 
 	_ftprintf(h, _T("\n// SOCD setting (0 = disabled, 1 = regular, 2 = Hitbox Style)\n"));
 	VAR(nEnableSOCD);

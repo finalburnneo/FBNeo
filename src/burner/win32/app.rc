@@ -1134,6 +1134,7 @@ BEGIN
         MENUITEM "Map game inputs...\tF5",				MENU_INPUT, GRAYED
         MENUITEM "Set dipswitches...",						MENU_DIPSW, GRAYED
         MENUITEM SEPARATOR
+		MENUITEM "Fix missing diagonals",				MENU_FIX_DIAGONALS
         POPUP "SOCD Cleaner"
         BEGIN
                 MENUITEM "Disabled",					MENU_DISABLE_SOCD

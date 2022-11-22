@@ -18,8 +18,51 @@ INT32 nFireButtons = 0;
 bool bStreetFighterLayout = false;
 bool bLeftAltkeyMapped = false;
 
-INT32 InpDirections[2][4] = {}; // Up, Down, Left, Right
-bool bClearOpposites = false;
+enum {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	COUNT
+};
+
+static INT32 InpDirections[2][COUNT] = {};
+static INT32 InpDataPrev[2][COUNT] = {};
+static INT32 InpDataNext[2][COUNT] = {};
+static bool bClearOpposites = false;
+
+static int GetInpFrame(INT32 player, INT32 dir)
+{
+	return GameInp[InpDirections[player][dir]].Input.nVal;
+}
+
+static void SetInpFrame(INT32 player, INT32 dir, INT32 val, BOOL bCopy)
+{
+	GameInp[InpDirections[player][dir]].Input.nVal = val;
+	if (bCopy) {
+		*(GameInp[InpDirections[player][dir]].Input.pVal) = val;
+	}
+}
+
+static int GetInpPrev(INT32 player, INT32 dir)
+{
+	return InpDataPrev[player][dir];
+}
+
+static void SetInpPrev(INT32 player, INT32 dir, INT32 val)
+{
+	InpDataPrev[player][dir] = val;
+}
+
+static int GetInpNext(INT32 player, INT32 dir)
+{
+	return InpDataNext[player][dir];
+}
+
+static void SetInpNext(INT32 player, INT32 dir, INT32 val)
+{
+	InpDataNext[player][dir] = val;
+}
 
 // These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
 UINT8 macroSystemPause = 0;
@@ -836,14 +879,14 @@ INT32 GameInpInit()
 	struct BurnInputInfo bii;
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		BurnDrvGetInputInfo(&bii, i);
-		if (!_stricmp(bii.szName, "p1 up")) InpDirections[0][0] = i; else
-		if (!_stricmp(bii.szName, "p1 down")) InpDirections[0][1] = i; else
-		if (!_stricmp(bii.szName, "p1 left")) InpDirections[0][2] = i; else
-		if (!_stricmp(bii.szName, "p1 right")) InpDirections[0][3] = i; else
-		if (!_stricmp(bii.szName, "p2 up")) InpDirections[1][0] = i; else
-		if (!_stricmp(bii.szName, "p2 down")) InpDirections[1][1] = i; else
-		if (!_stricmp(bii.szName, "p2 left")) InpDirections[1][2] = i; else
-		if (!_stricmp(bii.szName, "p2 right")) InpDirections[1][3] = i;
+		if (!_stricmp(bii.szName, "p1 up")) InpDirections[0][UP] = i; else
+		if (!_stricmp(bii.szName, "p1 down")) InpDirections[0][DOWN] = i; else
+		if (!_stricmp(bii.szName, "p1 left")) InpDirections[0][LEFT] = i; else
+		if (!_stricmp(bii.szName, "p1 right")) InpDirections[0][RIGHT] = i; else
+		if (!_stricmp(bii.szName, "p2 up")) InpDirections[1][UP] = i; else
+		if (!_stricmp(bii.szName, "p2 down")) InpDirections[1][DOWN] = i; else
+		if (!_stricmp(bii.szName, "p2 left")) InpDirections[1][LEFT] = i; else
+		if (!_stricmp(bii.szName, "p2 right")) InpDirections[1][RIGHT] = i;
 	}
 
 	GameInpBlank(1);
@@ -854,8 +897,7 @@ INT32 GameInpInit()
 
 	nAnalogSpeed = 0x0100;
 
-	// check if game needs clear opposites
-	// SOCD cleaner
+	// check if game needs clear opposites (SOCD)
 	const char* clearOppositesGameList[] = {
 		"umk3", "umk3p", "umk3uc", "umk3uk", "umk3te",
 		"mk2", "mk2p", "mk2ute",
@@ -1876,33 +1918,33 @@ INT32 GameInpWrite(FILE* h)
 		_ftprintf(h, _T("%s\n"), InpToString(GameInp + i));
 	}
 
-	_ftprintf(h, _T("\n"));
+_ftprintf(h, _T("\n"));
 
-	struct GameInp* pgi = GameInp + nGameInpCount;
-	for (UINT32 i = 0; i < nMacroCount; i++, pgi++) {
-		INT32 nPad = 0;
+struct GameInp* pgi = GameInp + nGameInpCount;
+for (UINT32 i = 0; i < nMacroCount; i++, pgi++) {
+	INT32 nPad = 0;
 
-		if (pgi->nInput & GIT_GROUP_MACRO) {
-			switch (pgi->nInput) {
-				case GIT_MACRO_AUTO:									// Auto-assigned macros
-					_ftprintf(h, _T("macro  \"%hs\" "), pgi->Macro.szName);
-					break;
-				case GIT_MACRO_CUSTOM:									// Custom macros
-					_ftprintf(h, _T("custom \"%hs\" "), pgi->Macro.szName);
-					break;
-				default:												// Unknown -- ignore
-					continue;
-			}
-
-			nPad = 16 - strlen(pgi->Macro.szName);
-			for (INT32 j = 0; j < nPad; j++) {
-				_ftprintf(h, _T(" "));
-			}
-			_ftprintf(h, _T("%s\n"), InpMacroToString(pgi));
+	if (pgi->nInput & GIT_GROUP_MACRO) {
+		switch (pgi->nInput) {
+		case GIT_MACRO_AUTO:									// Auto-assigned macros
+			_ftprintf(h, _T("macro  \"%hs\" "), pgi->Macro.szName);
+			break;
+		case GIT_MACRO_CUSTOM:									// Custom macros
+			_ftprintf(h, _T("custom \"%hs\" "), pgi->Macro.szName);
+			break;
+		default:												// Unknown -- ignore
+			continue;
 		}
-	}
 
-	return 0;
+		nPad = 16 - strlen(pgi->Macro.szName);
+		for (INT32 j = 0; j < nPad; j++) {
+			_ftprintf(h, _T(" "));
+		}
+		_ftprintf(h, _T("%s\n"), InpMacroToString(pgi));
+	}
+}
+
+return 0;
 }
 
 // ---------------------------------------------------------------------------
@@ -1962,57 +2004,124 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite)
 	return AddCustomMacro(szVal, bOverWrite);
 }
 
+void GameInpUpdatePrev(bool bCopy)
+{
+	// Set prev data
+	for (INT32 i = 0; i < 2; i++) {
+		for (INT32 j = 0; j < 4; j++) {
+			SetInpPrev(i, j, GetInpFrame(i, j));
+		}
+	}
+}
+
+
+void GameInpUpdateNext(bool bCopy)
+{
+	// Fix from next frame
+	for (INT32 i = 0; i < 2; i++) {
+		for (INT32 j = 0; j < 4; j++) {
+			if (GetInpNext(i, j)) {
+				SetInpFrame(i, j, 1, bCopy);
+			}
+			SetInpNext(i, j, 0);
+		}
+	}
+}
+
 void GameInpClearOpposites(bool bCopy)
 {
 	if (kNetVersion >= NET_VERSION_SOCD && (bClearOpposites || nEnableSOCD > 0)) {
 		if (nEnableSOCD == 2) {
 			// Hitbox SOCD cleaner
-			struct GameInp* pgi = GameInp;
-			for (int i = 0; i < 2; i++) {
-				int *nPlayer = InpDirections[i];
+			for (INT32 i = 0; i < 2; i++) {
 				// D + U = U || (neutral if L or R)
-				if (pgi[nPlayer[0]].Input.nVal && pgi[nPlayer[1]].Input.nVal) {
-					if (pgi[nPlayer[2]].Input.nVal || pgi[nPlayer[3]].Input.nVal) {
-						pgi[nPlayer[0]].Input.nVal = 0;
-						if (bCopy)
-							*(pgi[nPlayer[0]].Input.pVal) = 0;
+				if (GetInpFrame(i, UP) && GetInpFrame(i, DOWN)) {
+					if (GetInpFrame(i, LEFT) || GetInpFrame(i, RIGHT)) {
+						SetInpFrame(i, UP, 0, bCopy);
 					}
-					pgi[nPlayer[1]].Input.nVal = 0;
-					if (bCopy)
-						*(pgi[nPlayer[1]].Input.pVal) = 0;
+					SetInpFrame(i, DOWN, 0, bCopy);
 				}
 				// L + R = neutral
-				if (pgi[nPlayer[2]].Input.nVal && pgi[nPlayer[3]].Input.nVal) {
-					pgi[nPlayer[2]].Input.nVal = 0;
-					pgi[nPlayer[3]].Input.nVal = 0;
-					if (bCopy) {
-						*(pgi[nPlayer[2]].Input.pVal) = 0;
-						*(pgi[nPlayer[3]].Input.pVal) = 0;
-					}
+				if (GetInpFrame(i, LEFT) && GetInpFrame(i, RIGHT)) {
+					SetInpFrame(i, LEFT, 0, bCopy);
+					SetInpFrame(i, RIGHT, 0, bCopy);
 				}
 			}
 		} else {
 			// Regular SOCD cleaner
-			struct GameInp* pgi = GameInp;
-			for (int i = 0; i < 2; i++) {
-				int *nPlayer = InpDirections[i];
+			for (INT32 i = 0; i < 2; i++) {
 				// D + U = neutral
-				if (pgi[nPlayer[0]].Input.nVal && pgi[nPlayer[1]].Input.nVal) {
-					pgi[nPlayer[0]].Input.nVal = 0;
-					pgi[nPlayer[1]].Input.nVal = 0;
-					if (bCopy) {
-						*(pgi[nPlayer[0]].Input.pVal) = 0;
-						*(pgi[nPlayer[1]].Input.pVal) = 0;
-					}
+				if (GetInpFrame(i, UP) && GetInpFrame(i, DOWN)) {
+					SetInpFrame(i, UP, 0, bCopy);
+					SetInpFrame(i, DOWN, 0, bCopy);
 				}
 				// L + R = neutral
-				if (pgi[nPlayer[2]].Input.nVal && pgi[nPlayer[3]].Input.nVal) {
-					pgi[nPlayer[2]].Input.nVal = 0;
-					pgi[nPlayer[3]].Input.nVal = 0;
-					if (bCopy) {
-						*(pgi[nPlayer[2]].Input.pVal) = 0;
-						*(pgi[nPlayer[3]].Input.pVal) = 0;
-					}
+				if (GetInpFrame(i, LEFT) && GetInpFrame(i, RIGHT)) {
+					SetInpFrame(i, LEFT, 0, bCopy);
+					SetInpFrame(i, RIGHT, 0, bCopy);
+				}
+			}
+		}
+	}
+}
+
+void GameInpFixDiagonals(bool bCopy)
+{
+	if (kNetVersion >= NET_VERSION_FIX_DIAGONALS && bFixDiagonals) {
+		for (INT32 i = 0; i < 2; i++) {
+			// D + L
+			if (GetInpFrame(i, DOWN) && GetInpFrame(i, LEFT)) {
+
+				if (GetInpPrev(i, DOWN) && GetInpPrev(i, RIGHT)) {
+					SetInpFrame(i, LEFT, 0, bCopy);
+					SetInpNext(i, DOWN, 1);
+					SetInpNext(i, LEFT, 1);
+				}
+				else if (GetInpPrev(i, UP) && GetInpPrev(i, LEFT)) {
+					SetInpFrame(i, DOWN, 0, bCopy);
+					SetInpNext(i, LEFT, 1);
+					SetInpNext(i, DOWN, 1);
+				}
+
+			}
+			// D + R
+			else if (GetInpFrame(i, DOWN) && GetInpFrame(i, RIGHT)) {
+				if (GetInpPrev(i, DOWN) && GetInpPrev(i, LEFT)) {
+					SetInpFrame(i, RIGHT, 0, bCopy);
+					SetInpNext(i, DOWN, 1);
+					SetInpNext(i, RIGHT, 1);
+				}
+				else if (GetInpPrev(i, UP) && GetInpPrev(i, RIGHT)) {
+					SetInpFrame(i, DOWN, 0, bCopy);
+					SetInpNext(i, RIGHT, 1);
+					SetInpNext(i, DOWN, 1);
+				}
+
+			}
+			// U + L
+			else if (GetInpFrame(i, UP) && GetInpFrame(i, LEFT)) {
+				if (GetInpPrev(i, UP) && GetInpPrev(i, RIGHT)) {
+					SetInpFrame(i, LEFT, 0, bCopy);
+					SetInpNext(i, UP, 1);
+					SetInpNext(i, LEFT, 1);
+				}
+				else if (GetInpPrev(i, DOWN) && GetInpPrev(i, LEFT)) {
+					SetInpFrame(i, UP, 0, bCopy);
+					SetInpNext(i, LEFT, 1);
+					SetInpNext(i, UP, 1);
+				}
+			}
+			// D + R
+			else if (GetInpFrame(i, UP) && GetInpFrame(i, RIGHT)) {
+				if (GetInpPrev(i, UP) && GetInpPrev(i, LEFT)) {
+					SetInpFrame(i, RIGHT, 0, bCopy);
+					SetInpNext(i, UP, 1);
+					SetInpNext(i, RIGHT, 1);
+				}
+				else if (GetInpPrev(i, DOWN) && GetInpPrev(i, RIGHT)) {
+					SetInpFrame(i, UP, 0, bCopy);
+					SetInpNext(i, RIGHT, 1);
+					SetInpNext(i, UP, 1);
 				}
 			}
 		}

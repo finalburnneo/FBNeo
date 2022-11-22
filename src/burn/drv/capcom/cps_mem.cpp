@@ -403,7 +403,6 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
-
 		ScanRam();
 
 		if (Cps == 2) {
@@ -417,7 +416,6 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 
 
 	if (nAction & ACB_DRIVER_DATA) {					// Scan volatile variables/registers/RAM
-
 		SekScan(nAction);								// Scan 68000 state
 
 		SCAN_VAR(nCpsCyclesExtra);
@@ -426,6 +424,11 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 		if (Cps1OverrideLayers) {
 			SCAN_VAR(nCps1Layers);
 			SCAN_VAR(nCps1LayerOffs);
+		}
+
+		extern int kNetVersion;
+		if (kNetVersion >= NET_VERSION_CPS_RW_SCAN) {
+			CpsRwScan();
 		}
 
 		if (nAction & ACB_WRITE) {						// Palette could have changed

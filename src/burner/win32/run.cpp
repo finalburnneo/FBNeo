@@ -133,6 +133,9 @@ static int GetInput(bool bCopy)
 	// get input
 	InputMake(bCopy);
 	GameInpClearOpposites(bCopy);
+	GameInpUpdateNext(bCopy);
+	GameInpFixDiagonals(bCopy);
+	GameInpUpdatePrev(bCopy);
 
 	if (!kNetGame) {
 		CheckSystemMacros();

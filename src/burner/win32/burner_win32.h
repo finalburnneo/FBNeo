@@ -116,6 +116,7 @@ extern bool bQuietLoading;
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;
 extern bool bKeypadVolume;
+extern bool bFixDiagonals;
 extern int nEnableSOCD;
 
 // Used for the load/save dialog in commdlg.h

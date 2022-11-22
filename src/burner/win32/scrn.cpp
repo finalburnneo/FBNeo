@@ -1904,6 +1904,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bKeypadVolume = !bKeypadVolume;
 			break;
 
+		case MENU_FIX_DIAGONALS:
+			bFixDiagonals = !bFixDiagonals;
+			break;
+
 		case MENU_DISABLE_SOCD:
 			nEnableSOCD = 0;
 			break;

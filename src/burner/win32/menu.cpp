@@ -1062,6 +1062,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_HIDE_ROM_WARNINGS, bHideROMWarnings ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_KEYPAD_VOLUME, bKeypadVolume ? MF_CHECKED : MF_UNCHECKED);
 
+	CheckMenuItem(hMenu, MENU_FIX_DIAGONALS, bFixDiagonals ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_DISABLE_SOCD, (nEnableSOCD == 0) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_ENABLE_SOCD, (nEnableSOCD == 1) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_HITBOX_SOCD, (nEnableSOCD == 2) ? MF_CHECKED : MF_UNCHECKED);

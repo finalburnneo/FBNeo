@@ -220,8 +220,6 @@ void cps3_flash_write(flash_chip * chip, UINT32 addr, UINT32 data)
 
 inline static void Cps3ClearOpposites(UINT16* nJoystickInputs)
 {
-	extern int kNetVersion;
-
 	if (cps3_clear_opposites) {
 		// p1 down + up = neutral
 		if ((*nJoystickInputs & 0x03) == 0x03) {

@@ -54,6 +54,7 @@ static bool bNumlockStatus;
 
 bool bMonitorAutoCheck = true;
 bool bKeypadVolume = true;
+bool bFixDiagonals = false;
 int nEnableSOCD = 0;
 
 // Used for the load/save dialog in commdlg.h (savestates, input replay, wave logging)

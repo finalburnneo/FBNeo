@@ -399,7 +399,7 @@ void Reinitialise();
 // ---------------------------------------------------------------------------
 // IPS Control
 
-#define IPS_USE_PROTECT		(1 <<  0)	// Control protection.
+#define IPS_NOT_PROTECT		(1 <<  0)	// Control protection.
 
 #define IPS_NEOP3_20000		(1 <<  1)	// Extra Rom
 #define IPS_NEOP3_40000		(1 <<  2)

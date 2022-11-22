@@ -1520,7 +1520,7 @@ static INT32 NeoSMAInit(void (*pInitCallback)(), pSekWriteWordHandler pBankswitc
 	NeoCallbackActive->pInitialise = pInitCallback;
 
 	// Control SMA protection in ips environment.
-	if (!bDoIpsPatch || (GetIpsDrvDefine() & IPS_USE_PROTECT)) {
+	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
 		NeoCallbackActive->pInstallHandlers = NeoSMAInstallHanders;
 		NeoCallbackActive->pBankswitch = NeoSMABankswitch;
 		NeoCallbackActive->pScan = NeoSMAScan;
@@ -1706,7 +1706,7 @@ static void NeoPVCInstallHandlers()
 static INT32 NeoPVCInit()
 {
 	// Control PVC protection in ips environment.
-	if (!bDoIpsPatch || (GetIpsDrvDefine() & IPS_USE_PROTECT)) {
+	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
 		PVCRAM = (UINT8*)BurnMalloc(0x2000);
 		if (!PVCRAM) return 1;
 

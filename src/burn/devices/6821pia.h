@@ -60,6 +60,8 @@ void pia_set_input_ca2(int which, int data);
 void pia_set_input_b(int which, int data);
 void pia_set_input_cb1(int which, int data);
 void pia_set_input_cb2(int which, int data);
+UINT8 pia_get_a(int which);
+UINT8 pia_get_b(int which);
 UINT8 pia_get_ddr_a(int which);
 UINT8 pia_get_ddr_b(int which);
 UINT8 pia_get_irq_a_state(int which);

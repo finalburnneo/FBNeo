@@ -80,7 +80,7 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		}
 	}
 	prevPause = macroSystemPause;
-	if (!kNetGame) {
+	if (!kNetGame || kNetSpectator) {
 		// FFWD
 		if (macroSystemFFWD) {
 			bAppDoFast = 1; prevFFWD = 1;
@@ -97,6 +97,8 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		} else {
 			prevFrame = 0;
 		}
+	}
+	if (!kNetGame) {
 		// Lua hotkeys
 		for (int hotkey_num = 0; hotkey_num <= hotkey_debounces.size() - 1; hotkey_num++) {
 			// Use the reference to the hotkey variable in order to update our stored value
@@ -137,7 +139,7 @@ static int GetInput(bool bCopy)
 	GameInpFixDiagonals(bCopy);
 	GameInpUpdatePrev(bCopy);
 
-	if (!kNetGame) {
+	if (!kNetGame || kNetSpectator) {
 		CheckSystemMacros();
 	}
 
@@ -398,7 +400,7 @@ int RunIdle()
 	}
 	bAppDoStep = 0;
 
-	if (kNetGame)
+	if (kNetGame && !kNetSpectator)
 	{
 		int skip = bAlwaysDrawFrames ? nSkipFrames : (nCount > nSkipFrames ? nCount : nSkipFrames);
 		// skip frames (for rift balance or auto frame skip)

@@ -298,6 +298,13 @@ static int fba_frameadvance(lua_State *L) {
 	return lua_yield(L, 0);
 }
 
+// fba.isreplay()
+//
+// Returns true when it's a fightcade replay
+static int fba_isreplay(lua_State *L) {
+	return kNetSpectator;
+}
+
 
 // fba.pause()
 //
@@ -3743,6 +3750,7 @@ static const struct luaL_reg fbalib [] = {
 	{"sourcename", fba_sourcename},
 	{"speedmode", fba_speedmode},
 	{"frameadvance", fba_frameadvance},
+	{"isreplay", fba_isreplay},
 	{"pause", fba_pause},
 	{"unpause", fba_unpause},
 	{"framecount", movie_framecount},

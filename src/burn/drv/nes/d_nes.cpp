@@ -32278,7 +32278,7 @@ STD_ROM_FN(nes_kartfighter)
 
 struct BurnDriver BurnDrvnes_kartfighter = {
 	"nes_kartfighter", NULL, NULL, NULL, "1989?",
-	"Kart Fighter (Unl)\0", NULL, "Nintendo", "Miscellaneous",
+	"Kart Fighter (Unl)\0", NULL, "Hummer Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_kartfighterRomInfo, nes_kartfighterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32289,14 +32289,14 @@ struct BurnDriver BurnDrvnes_kartfighter = {
 // Super Kart Fighter Hack
 
 static struct BurnRomInfo nes_skartfighterRomDesc[] = {
-	{ "Super Kart Fighter Hack (2022) (Streetwize).nes",          393232, 0x61dffc11, BRF_ESS | BRF_PRG },
+	{ "Super Kart Fighter Hack (2022) (Streetwize).nes",          393232, 0x4212c73e, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_skartfighter)
 STD_ROM_FN(nes_skartfighter)
 
 struct BurnDriver BurnDrvnes_skartfighter = {
-	"nes_skartfighter", "nes_kartfighter", NULL, NULL, "2022",
+	"nes_skartfighter", "NULL", NULL, NULL, "2022",
 	"Super Kart Fighter (Hack)\0", NULL, "Streetwize", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,

@@ -22138,6 +22138,23 @@ struct BurnDriver BurnDrvnes_8bitxmas21 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_8bitxmas22RomDesc[] = {
+	{ "8-bit XMAS 2022 (2022)(RetroUSB).nes",          131088, 0x81bbc4a5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_8bitxmas22)
+STD_ROM_FN(nes_8bitxmas22)
+
+struct BurnDriver BurnDrvnes_8bitxmas22 = {
+	"nes_8bitxmas22", NULL, NULL, NULL, "2022",
+	"8-bit XMAS 2022 (HB)\0", NULL, "retroUSB", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_8bitxmas22RomInfo, nes_8bitxmas22RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_dethcomplex2RomDesc[] = {
 	{ "Deth Complex 2 (2022)(T-bone).nes",          524304, 0xaf32771c, BRF_ESS | BRF_PRG },
 };

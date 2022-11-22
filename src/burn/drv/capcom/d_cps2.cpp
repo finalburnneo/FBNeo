@@ -519,8 +519,8 @@ static struct BurnInputInfo Ffightaec2InputList[] = {
 	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp021 + 1, "diag"      },
 	{"Service"          , BIT_DIGITAL  , CpsInp021 + 2, "service"   },
-	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "p1 fire 7" },
-	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "p1 fire 8" },
+	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "p1 fire 4" },
+	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "p1 fire 5" },
 };
 
 STDINPUTINFO(Ffightaec2)

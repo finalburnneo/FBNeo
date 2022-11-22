@@ -1,4 +1,4 @@
-// FB Alpha Neo Geo driver module
+// FBNeo Neo Geo driver module
 
 #include "neogeo.h"
 #include "bitswap.h"
@@ -5752,20 +5752,20 @@ struct BurnDriver BurnDrvMSlug2 = {
 };
 
 static struct BurnRomInfo mslug2fmRomDesc[] = {
-	{ "241-p1.p1",    0x100000, 0x487173F6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "241-p2.sp2",   0x200000, 0x37A118FC, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "241-p1fm.p1",    0x100000, 0x487173f6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2fm.sp2",   0x200000, 0x37a118fc, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "241-s1.s1",      0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
-	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
-	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
-	{ "241-c4.c4",    0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
+	{ "241-c1.c1",      0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",      0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
+	{ "241-c3.c3",      0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
+	{ "241-c4.c4",      0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
 
-	{ "241-m1.m1",    0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "241-m1.m1",      0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "241-v1.v1",    0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
-	{ "241-v2.v2",    0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
+	{ "241-v1.v1",      0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",      0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
 };
 
 STDROMPICKEXT(mslug2fm, mslug2fm, neogeo)
@@ -5773,7 +5773,7 @@ STD_ROM_FN(mslug2fm)
 
 struct BurnDriver BurnDrvMSlug2fm = {
 	"mslug2fm", "mslug2", "neogeo", NULL, "2015",
-	"Metal Slug 2 [Mslug2fm Ver.2 Fightcade 2] [Hack]\0", NULL, "Hack", "Neo Geo MVS",
+	"Metal Slug 2 (Friendly Fire Fightcade 2, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2fmRomInfo, mslug2fmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -5782,7 +5782,7 @@ struct BurnDriver BurnDrvMSlug2fm = {
 };
 
 static struct BurnRomInfo mslug2rRomDesc[] = {
-	{ "241-p1.p1",    0x100000, 0xF882D50D, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p1r.p1",   0x100000, 0xf882d50d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2.sp2",   0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -5803,7 +5803,7 @@ STD_ROM_FN(mslug2r)
 
 struct BurnDriver BurnDrvMSlug2r = {
 	"mslug2r", "mslug2", "neogeo", NULL, "2015",
-	"Metal Slug 2 [Enemy Remake] [Hack]\0", NULL, "Hack", "Neo Geo MVS",
+	"Metal Slug 2 (Enemy Remake, Hack)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2rRomInfo, mslug2rRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -5812,20 +5812,20 @@ struct BurnDriver BurnDrvMSlug2r = {
 };
 
 static struct BurnRomInfo mslug2ctRomDesc[] = {
-	{ "241-p1.p1",    0x100000, 0x78AD6864, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "241-p2.sp2",   0x200000, 0xFE36F353, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "241-p1ct.p1",    0x100000, 0x78ad6864, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2ct.sp2",   0x200000, 0xfe36f353, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "241-s1.s1",      0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
-	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
-	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
-	{ "241-c4.c4",    0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
+	{ "241-c1.c1",      0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",      0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
+	{ "241-c3.c3",      0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
+	{ "241-c4.c4",      0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
 
-	{ "241-m1.m1",    0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "241-m1.m1",      0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "241-v1.v1",    0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
-	{ "241-v2.v2",    0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
+	{ "241-v1.v1",      0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",      0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
 };
 
 STDROMPICKEXT(mslug2ct, mslug2ct, neogeo)
@@ -5833,7 +5833,7 @@ STD_ROM_FN(mslug2ct)
 
 struct BurnDriver BurnDrvMSlug2ct = {
 	"mslug2ct", "mslug2", "neogeo", NULL, "2015",
-	"Metal Slug 2 [Survival Version] [Hack]\0", NULL, "Hack", "Neo Geo MVS",
+	"Metal Slug 2 (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2ctRomInfo, mslug2ctRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -6419,132 +6419,132 @@ struct BurnDriver BurnDrvMSlugX = {
 };
 
 static struct BurnRomInfo mslugxebRomDesc[] = {
-	{ "250-p1.p1",    0x100000, 0x764D1BB1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2.ep1",   0x400000, 0xA51363D1, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "250-p1eb.p1",    0x100000, 0x764d1bb1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2eb.ep1",   0x400000, 0xa51363d1, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "250-s1.s1",    0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "250-c1.c1",    0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
-	{ "250-c2.c2",    0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
-	{ "250-c3.c3",    0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
-	{ "250-c4.c4",    0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
-	{ "250-c5.c5",    0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
-	{ "250-c6.c6",    0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
 
-	{ "250-m1.m1",    0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "250-v1.v1",    0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
-	{ "250-v2.v2",    0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
-	{ "250-v3.v3",    0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(mslugxeb, mslugxeb, neogeo)
 STD_ROM_FN(mslugxeb)
 
 struct BurnDriver BurnDrvMSlugXeb = {
-	"mslugxeb", "mslugx", "neogeo", NULL, "1999",
-	"Metal Slug X [Green Blue] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"mslugxeb", "mslugx", "neogeo", NULL, "2016",
+	"Metal Slug X (Blue Hack, 20130227)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxebRomInfo, mslugxebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
 static struct BurnRomInfo mslugxlbRomDesc[] = {
-	{ "250-p1.p1",    0x100000, 0x41fc71cc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2.ep1",   0x400000, 0x6A114E1A, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "250-p1lb.p1",    0x100000, 0x41fc71cc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2lb.ep1",   0x400000, 0x6a114e1a, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "250-s1.s1",    0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "250-c1.c1",    0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
-	{ "250-c2.c2",    0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
-	{ "250-c3.c3",    0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
-	{ "250-c4.c4",    0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
-	{ "250-c5.c5",    0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
-	{ "250-c6.c6",    0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
+	{ "250-c1lb.c1",    0x800000, 0xd52e8702, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2lb.c2",    0x800000, 0xedec334c, 3 | BRF_GRA },           //  4 
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
 
-	{ "250-m1.m1",    0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "250-v1.v1",    0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
-	{ "250-v2.v2",    0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
-	{ "250-v3.v3",    0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(mslugxlb, mslugxlb, neogeo)
 STD_ROM_FN(mslugxlb)
 
 struct BurnDriver BurnDrvMSlugXlb = {
-	"mslugxlb", "mslugx", "neogeo", NULL, "1999",
-	"Metal Slug X [Extreme Space Zone] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"mslugxlb", "mslugx", "neogeo", NULL, "2015",
+	"Metal Slug X (Extreme Space, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxlbRomInfo, mslugxlbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
 static struct BurnRomInfo mslugxc2RomDesc[] = {
-	{ "250-p1.p1",    0x100000, 0x81f1f60b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2.ep1",   0x400000, 0x5d1c52cd, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "250-p1.p1",      0x100000, 0x81f1f60b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2c2.ep1",   0x400000, 0x5d1c52cd, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "250-s1.s1",    0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "250-c1.c1",    0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
-	{ "250-c2.c2",    0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
-	{ "250-c3.c3",    0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
-	{ "250-c4.c4",    0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
-	{ "250-c5.c5",    0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
-	{ "250-c6.c6",    0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
 
-	{ "250-m1.m1",    0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "250-v1.v1",    0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
-	{ "250-v2.v2",    0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
-	{ "250-v3.v3",    0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(mslugxc2, mslugxc2, neogeo)
 STD_ROM_FN(mslugxc2)
 
 struct BurnDriver BurnDrvMSlugXc2 = {
-	"mslugxc2", "mslugx", "neogeo", NULL, "1999",
-	"Metal Slug X [Enemy Remastered] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"mslugxc2", "mslugx", "neogeo", NULL, "2013",
+	"Metal Slug X (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxc2RomInfo, mslugxc2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
 static struct BurnRomInfo mslugxsrfRomDesc[] = {
-	{ "250-p1.p1",    0x100000, 0xAED327FE, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2.ep1",   0x400000, 0x4389F47D, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "250-p1srf.p1",    0x100000, 0xaed327fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2srf.ep1",   0x400000, 0x4389f47d, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "250-s1.s1",    0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "250-s1.s1",       0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "250-c1.c1",    0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
-	{ "250-c2.c2",    0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
-	{ "250-c3.c3",    0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
-	{ "250-c4.c4",    0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
-	{ "250-c5.c5",    0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
-	{ "250-c6.c6",    0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
+	{ "250-c1.c1",       0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",       0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
+	{ "250-c3.c3",       0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
+	{ "250-c4.c4",       0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
+	{ "250-c5.c5",       0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
+	{ "250-c6.c6",       0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
 
-	{ "250-m1.m1",    0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "250-m1.m1",       0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "250-v1.v1",    0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
-	{ "250-v2.v2",    0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
-	{ "250-v3.v3",    0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
+	{ "250-v1.v1",       0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",       0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
+	{ "250-v3.v3",       0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(mslugxsrf, mslugxsrf, neogeo)
 STD_ROM_FN(mslugxsrf)
 
 struct BurnDriver BurnDrvMSlugXsrf = {
-	"mslugxsrf", "mslugx", "neogeo", NULL, "1999",
-	"Metal Slug X [AzStar Soda Remix FC2 Version] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"mslugxsrf", "mslugx", "neogeo", NULL, "2021",
+	"Metal Slug X (Azstar Soda Remix Fightcade 2 Hack, 20210212)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxsrfRomInfo, mslugxsrfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -13956,37 +13956,34 @@ struct BurnDriver BurnDrvmslug4 = {
 };
 
 static struct BurnRomInfo mslug4cRomDesc[] = {
-	/* There also exist carts where p1 label is pg1; the PG1 revision has a Japanese cart label, SN 02Jxxxxx
-	The P1 revision has a US/EUR cart label, SN 02Txxxxx ; Rom data on both is identical.
-	These carts were manufactured by Mega Enterprise, not SNK. */
-	{ "263-p1.p1",    0x100000, 0x81FD4AE9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.sp2",   0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "263-p1c.p1",    0x100000, 0xf8145f8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2.sp2",    0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-																	 /* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
-																	 /* Encrypted */
-	{ "263-c1.c1",    0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "263-c2.c2",    0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3 
-	{ "263-c3.c3",    0x800000, 0x1a343323, 3 | BRF_GRA },           //  4 
-	{ "263-c4.c4",    0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5 
-	{ "263-c5.c5",    0x800000, 0xa748854f, 3 | BRF_GRA },           //  6 
-	{ "263-c6.c6",    0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "263-c1.c1",     0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "263-c2.c2",     0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3 
+	{ "263-c3.c3",     0x800000, 0x1a343323, 3 | BRF_GRA },           //  4 
+	{ "263-c4.c4",     0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5 
+	{ "263-c5.c5",     0x800000, 0xa748854f, 3 | BRF_GRA },           //  6 
+	{ "263-c6.c6",     0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7 
 
-																	 /* Encrypted */
-	{ "263-m1.m1",    0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	/* Encrypted */
+	{ "263-m1.m1",     0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
-																	 /* Encrypted */
-	{ "263-v1.v1",    0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
-	{ "263-v2.v2",    0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10 
+	/* Encrypted */
+	{ "263-v1.v1",     0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
+	{ "263-v2.v2",     0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10 
 };
 
 STDROMPICKEXT(mslug4c, mslug4c, neogeo)
 STD_ROM_FN(mslug4c)
 
 struct BurnDriver BurnDrvmslug4c = {
-	"mslug4c", "mslug4", "neogeo", NULL, "2002",
-	"Metal Slug 4 [Enemy Reset] [Hack]\0", NULL, "Mega", "Neo Geo MVS",
+	"mslug4c", "mslug4", "neogeo", NULL, "2021",
+	"Metal Slug 4 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4cRomInfo, mslug4cRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug4Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -16737,7 +16734,6 @@ struct BurnDriver BurnDrvlasthope = {
 };
 
 // Metal Slug 2 Turbo (NGM-9410)
-/* MVS VERSION */
 
 static struct BurnRomInfo mslug2tRomDesc[] = {
 	{ "941-p1.p1",    0x100000, 0xdf5d6fbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -16761,9 +16757,9 @@ STD_ROM_FN(mslug2t)
 
 struct BurnDriver BurnDrvMSlug2t = {
 	"mslug2t", "mslug2", "neogeo", NULL, "2015",
-	"Metal Slug 2 Turbo (NGM-9410)\0", NULL, "Hack", "Neo Geo MVS",
+	"Metal Slug 2 (TURBO)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2tRomInfo, mslug2tRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -16772,24 +16768,24 @@ struct BurnDriver BurnDrvMSlug2t = {
 // Metal Slug 3 (Enhanced Violence Version)
 
 static struct BurnRomInfo mslug3vRomDesc[] = {
-	{ "256-pg1.p1",   0x100000, 0x47f9aeea, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
-	{ "256-pg2.p2",   0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
+	{ "256-pg1v.p1",   0x100000, 0x47f9aeea, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
+	{ "256-ph2.sp2",   0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
 	
-	{ "256-c1.c1",    0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
-	{ "256-c2.c2",    0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
-	{ "256-c3.c3",    0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
-	{ "256-c4.c4",    0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 				/ TC5364202
-	{ "256-c5.c5",    0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 				/ TC5364202
-	{ "256-c6.c6",    0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 				/ TC5364202	
-	{ "256-c7.c7",    0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 				/ TC5364202
-	{ "256-c8.c8",    0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 				/ TC5364202
+	{ "256-c1.c1",     0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
+	{ "256-c2.c2",     0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
+	{ "256-c3.c3",     0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
+	{ "256-c4.c4",     0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 				/ TC5364202
+	{ "256-c5.c5",     0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 				/ TC5364202
+	{ "256-c6.c6",     0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 				/ TC5364202	
+	{ "256-c7.c7",     0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 				/ TC5364202
+	{ "256-c8.c8",     0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 				/ TC5364202
 	
-	{ "256-m1.m1",    0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code		/ mask rom TC534000
+	{ "256-m1.m1",     0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code		/ mask rom TC534000
 		
-	{ "256-v1.v1",    0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data 	/ TC5332204
-	{ "256-v2.v2",    0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 				/ TC5332204
-	{ "256-v3.v3",    0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 				/ TC5332204
-	{ "256-v4.v4",    0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 				/ TC5332204
+	{ "256-v1.v1",     0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data 	/ TC5332204
+	{ "256-v2.v2",     0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 				/ TC5332204
+	{ "256-v3.v3",     0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 				/ TC5332204
+	{ "256-v4.v4",     0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 				/ TC5332204
 };
 
 STDROMPICKEXT(mslug3v, mslug3v, neogeo)
@@ -16797,7 +16793,7 @@ STD_ROM_FN(mslug3v)
 
 struct BurnDriver BurnDrvmslug3v = {
 	"mslug3v", "mslug3", "neogeo", NULL, "2012",
-	"Metal Slug 3 (NGH-2560) (Enhanced Violence Version hack by EEZEZY)\0", NULL, "SNK", "Neo Geo MVS",
+	"Metal Slug 3 (NGH-2560) (Enhanced Violence Version hack by EEZEZY)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3vRomInfo, mslug3vRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -18375,36 +18371,38 @@ struct BurnDriver BurnDrvneon = {
 // Metal Slug 5 (W)
 
 static struct BurnRomInfo mslug5wRomDesc[] = {
-	{ "268w.p1",	0x100000, 0xb0c126da, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "268lvf.p2",	0x400000, 0xf06c589a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "268-p1w.bin",    0x100000, 0xb0c126da, 1 | BRF_PRG | BRF_ESS }, //  0 68K code
+	{ "268-p2w.bin",    0x400000, 0xf06c589a, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "268l9a.c1",	0x800000, 0x5e2e9087, 3 | BRF_GRA },           //  2 sprites
-	{ "268l9a.c2",	0x800000, 0xd15770e3, 3 | BRF_GRA },           //  3
-	{ "268l9a.c3",	0x800000, 0x3e104b8f, 3 | BRF_GRA },           //  4
-	{ "268l9a.c4",	0x800000, 0x03f32dda, 3 | BRF_GRA },           //  5
-	{ "268l9a.c5",	0x800000, 0xfd3e0f24, 3 | BRF_GRA },           //  6
-	{ "268l9a.c6",	0x800000, 0x3c873aba, 3 | BRF_GRA },           //  7
-	{ "268l9a.c7",	0x800000, 0x0d070c3b, 3 | BRF_GRA },           //  8
-	{ "268l9a.c8",	0x800000, 0x09751dd8, 3 | BRF_GRA },           //  9
+	{ "268-c1d.c1",     0x800000, 0xe8239365, 3 | BRF_GRA },           //  3 Sprite data
+	{ "268-c2d.c2",     0x800000, 0x89b21d4c, 3 | BRF_GRA },           //  4
+	{ "268-c3d.c3",     0x800000, 0x3cda13a0, 3 | BRF_GRA },           //  5
+	{ "268-c4d.c4",     0x800000, 0x9c00160d, 3 | BRF_GRA },           //  6
+	{ "268-c5w.bin",    0x800000, 0x483a986c, 3 | BRF_GRA },           //  7
+	{ "268-c6w.bin",    0x800000, 0xd918f796, 3 | BRF_GRA },           //  8
+	{ "268-c7w.bin",    0x800000, 0xbdb9a887, 3 | BRF_GRA },           //  9
+	{ "268-c8w.bin",    0x800000, 0x6f8ac6fb, 3 | BRF_GRA },           // 10
 
-	{ "268l9a.m1",  0x080000, 0x464c72ad, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "268-m1w.bin",    0x080000, 0x464c72ad, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "268l9a.v1",	0x400000, 0xa8e12a92, 5 | BRF_SND },           // 11 ymsnd
-	{ "268lvnc.v2",	0x400000, 0x0608cba3, 5 | BRF_SND },           // 12
-	{ "268nd.v3",	0x400000, 0x02fd519e, 5 | BRF_SND },           // 13
-	{ "268l9a.v4",	0x4002f0, 0x179cbca3, 5 | BRF_SND },           // 14 - weird size!!
+	{ "268-v1w.bin",    0x400000, 0xa8e12a92, 5 | BRF_SND },           // 12 Sound data
+	{ "268-v2w.bin",    0x400000, 0x0608cba3, 5 | BRF_SND },           // 13
+	{ "268-v3w.bin",    0x400000, 0x02fd519e, 5 | BRF_SND },           // 14
+	{ "268-v4w.bin",    0x4002f0, 0x179cbca3, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(mslug5w, mslug5w, neogeo)
 STD_ROM_FN(mslug5w)
 
 struct BurnDriver BurnDrvMslug5w = {
-	"mslug5w", "mslug5", "neogeo", NULL, "2003",
-	"Metal Slug 5 (W)\0", NULL, "C.B", "Miscellaneous",
+	"mslug5w", "mslug5", "neogeo", NULL, "2016",
+	"Metal Slug 5 (The New Campaign, Hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5wRomInfo, mslug5wRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	s1945pInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -18659,19 +18657,19 @@ struct BurnDriver BurnDrvkof10thd = {
 // GOTVG  Metal Slug - Super Vehicle-001 (Multifunction Hack 20180430)
 // mslugs18 in HBMAME.
 static struct BurnRomInfo mslugdgRomDesc[] = {
-	{ "201-p1.bin",    0x200000, 0x0a739521, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
+	{ "201-p1dg.bin",   0x200000, 0x0a739521, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "201-s1.s1",    0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+	{ "201-s1.s1",      0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "201-c1.c1",    0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332205
-	{ "201-c2.c2",    0x400000, 0x96f62574, 3 | BRF_GRA },           //  3 					/ TC5332205
-	{ "201-c3.c3",    0x400000, 0x5121456a, 3 | BRF_GRA },           //  4 					/ TC5332205
-	{ "201-c4.c4",    0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "201-c1.c1",      0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data
+	{ "201-c2.c2",      0x400000, 0x96f62574, 3 | BRF_GRA },           //  3
+	{ "201-c3.c3",      0x400000, 0x5121456a, 3 | BRF_GRA },           //  4
+	{ "201-c4.c4",      0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5
 
-	{ "201-m1.m1",    0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
+	{ "201-m1.m1",      0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
-	{ "201-v1.v1",    0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data		/ TC5332204
-	{ "201-v2.v2",    0x400000, 0x472cf9db, 5 | BRF_SND },           //  8 					/ TC5332204
+	{ "201-v1.v1",      0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data
+	{ "201-v2.v2",      0x400000, 0x472cf9db, 5 | BRF_SND },           //  8
 };
 
 STDROMPICKEXT(mslugdg, mslugdg, neogeo)
@@ -18679,9 +18677,9 @@ STD_ROM_FN(mslugdg)
 
 struct BurnDriver BurnDrvmslugdg = {
 	"mslugdg", "mslug", "neogeo", NULL, "2018",
-	"Metal Slug (Multifunction Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug (Multifunction Hack, 20180430)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugdgRomInfo, mslugdgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -18690,20 +18688,20 @@ struct BurnDriver BurnDrvmslugdg = {
 // GOTVG Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack 20170509)
 // mslug2s26 in HBMAME.
 static struct BurnRomInfo mslug2dgRomDesc[] = {
-	{ "241-p1.bin",   0x100000, 0x00c455e7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "241-p2.bin",   0x200000, 0x1bf6b12a, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "241-p1dg.bin",   0x100000, 0x00c455e7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2dg.bin",   0x200000, 0x1bf6b12a, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "241-s1.s1",      0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
-	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
-	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
-	{ "241-c4.c4",    0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
+	{ "241-c1.c1",      0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",      0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
+	{ "241-c3.c3",      0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
+	{ "241-c4.c4",      0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
 
-	{ "241-m1.m1",    0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "241-m1.m1",      0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "241-v1.v1",    0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
-	{ "241-v2.v2",    0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
+	{ "241-v1.v1",      0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",      0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
 };
 
 STDROMPICKEXT(mslug2dg, mslug2dg, neogeo)
@@ -18711,36 +18709,37 @@ STD_ROM_FN(mslug2dg)
 
 struct BurnDriver BurnDrvmslug2dg = {
 	"mslug2dg", "mslug2", "neogeo", NULL, "2017",
-	"Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 (Multifunction Hack, 20170509)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2dgRomInfo, mslug2dgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
-// FBA4DROID/GOTVG  Metal Slug 3 (Multifunction Hack 20190119)
+// FBA4DROID/GOTVG Metal Slug 3 (Multifunction Hack 20190119)
+// Fixed the max attack bars in mslug3g have not been visible (s1) by alicemsu (20220614)
 static struct BurnRomInfo mslug3gRomDesc[] = {
-	{ "256-ph1.bin",   0x100000, 0xb23bd9b7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2.bin",   0x400000, 0x8053a3fb, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1g.bin",   0x100000, 0xb23bd9b7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2g.bin",   0x400000, 0x8053a3fb, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "ms3n_s1.rom",    0x020000, 0x8458fff9, 2 | BRF_GRA },
+	{ "256-s1g.bin",    0x020000, 0xaf90d166, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "ms3n_c1.rom",  0x800000, 0x3540398c, 3 | BRF_GRA },		 //  2 Sprite data
-	{ "ms3n_c2.rom",  0x800000, 0xbdd220f0, 3 | BRF_GRA },		 //  3
-	{ "ms3n_c3.rom",  0x800000, 0xbfaade82, 3 | BRF_GRA },		 //  4
-	{ "ms3n_c4.rom",  0x800000, 0x1463add6, 3 | BRF_GRA },		 //  5
-	{ "ms3n_c5.rom",  0x800000, 0x48ca7f28, 3 | BRF_GRA },		 //  6
-	{ "ms3n_c6.rom",  0x800000, 0x806eb36f, 3 | BRF_GRA },		 //  7
-	{ "ms3n_c7.rom",  0x800000, 0xed559fac, 3 | BRF_GRA },		 //  8
-	{ "ms3n_c8.rom",  0x800000, 0x1c52378b, 3 | BRF_GRA },		 //  9
+	{ "ms3n_c1.rom",    0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms3n_c2.rom",    0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "ms3n_c3.rom",    0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "ms3n_c4.rom",    0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "ms3n_c5.rom",    0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "ms3n_c6.rom",    0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "ms3n_c7.rom",    0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
+	{ "ms3n_c8.rom",    0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
 
-	{ "256-m1.bin",   0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "256-m1.m1",      0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "ms3n_v1.rom",  0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data
-	{ "ms3n_v2.rom",  0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12
-	{ "ms3n_v3.rom",  0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13
-	{ "ms3n_v4.rom",  0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14
+	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",		0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",		0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(mslug3g, mslug3g, neogeo)
@@ -18748,35 +18747,35 @@ STD_ROM_FN(mslug3g)
 
 struct BurnDriver BurnDrvmslug3g = {
 	"mslug3g", "mslug3", "neogeo", NULL, "2019",
-	"Metal Slug 3 (Multifunction Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 3 (Multifunction Hack, 20190511)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3gRomInfo, mslug3gRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3hInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
 static struct BurnRomInfo mslug3cRomDesc[] = {
-	{ "256-ph1.bin",   0x100000, 0x05C99714, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2.bin",   0x400000, 0xB948A472, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1c.bin",   0x100000, 0x05c99714, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2c.bin",   0x400000, 0xb948a472, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "ms3n_s1.rom",    0x020000, 0x8458fff9, 2 | BRF_GRA },
+	{ "ms3n_s1.rom",    0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "ms3n_c1.rom",  0x800000, 0x3540398c, 3 | BRF_GRA },		 //  2 Sprite data
-	{ "ms3n_c2.rom",  0x800000, 0xbdd220f0, 3 | BRF_GRA },		 //  3
-	{ "ms3n_c3.rom",  0x800000, 0xbfaade82, 3 | BRF_GRA },		 //  4
-	{ "ms3n_c4.rom",  0x800000, 0x1463add6, 3 | BRF_GRA },		 //  5
-	{ "ms3n_c5.rom",  0x800000, 0x48ca7f28, 3 | BRF_GRA },		 //  6
-	{ "ms3n_c6.rom",  0x800000, 0x806eb36f, 3 | BRF_GRA },		 //  7
-	{ "ms3n_c7.rom",  0x800000, 0xed559fac, 3 | BRF_GRA },		 //  8
-	{ "ms3n_c8.rom",  0x800000, 0x1c52378b, 3 | BRF_GRA },		 //  9
+	{ "ms3n_c1.rom",    0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms3n_c2.rom",    0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "ms3n_c3.rom",    0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "ms3n_c4.rom",    0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "ms3n_c5.rom",    0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "ms3n_c6.rom",    0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "ms3n_c7.rom",    0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
+	{ "ms3n_c8.rom",    0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
 
-	{ "256-m1.bin",   0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "256-m1.m1",      0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "ms3n_v1.rom",  0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data
-	{ "ms3n_v2.rom",  0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12
-	{ "ms3n_v3.rom",  0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13
-	{ "ms3n_v4.rom",  0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14
+	{ "256-v1.v1",      0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",      0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",      0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",      0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(mslug3c, mslug3c, neogeo)
@@ -18784,38 +18783,38 @@ STD_ROM_FN(mslug3c)
 
 struct BurnDriver BurnDrvmslug3c = {
 	"mslug3c", "mslug3", "neogeo", NULL, "2019",
-	"Metal Slug 3 [Enemy Reset] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 3 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3cRomInfo, mslug3cRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3hInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 [Green Blue] [Hack]
+// Metal Slug 3 (Blue Hack, 20130227)
 static struct BurnRomInfo mslug3ebRomDesc[] = {
-	{ "green.neo-sma",  0x040000, 0x2a9935c2, 9 | BRF_ESS | BRF_PRG }, //  0 68K code		/ stored in the custom chip
-																	   /* The SMA for this release has a green colour marking; the older revision has a white colour marking */
-	{ "256-pg1.p1",   	0x400000, 0x6ec2e58d, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
-	{ "256-pg2.p2",   	0x400000, 0xca4eb0d3, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
+	{ "ms3eb.neo-sma",   0x040000, 0x2a9935c2, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	
+	{ "256-pg1eb.p1",    0x400000, 0x6ec2e58d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2eb.p2",    0x400000, 0xca4eb0d3, 1 | BRF_ESS | BRF_PRG }, //  2
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "256-c1.c1",       0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data
+	{ "256-c2.c2",       0x800000, 0x944c362c, 3 | BRF_GRA },           //  4
+	{ "256-c3.c3",       0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5
+	{ "256-c4.c4",       0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6
+	{ "256-c5.c5",       0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7
+	{ "256-c6.c6",       0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8
+	{ "256-c7.c7",       0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9
+	{ "256-c8.c8",       0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10
 
-																	   /* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
-																	   /* Encrypted */
-	{ "256-c1.c1",    	0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
-	{ "256-c2.c2",    	0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
-	{ "256-c3.c3",    	0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
-	{ "256-c4.c4",    	0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 				/ TC5364202
-	{ "256-c5.c5",    	0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 				/ TC5364202
-	{ "256-c6.c6",    	0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 				/ TC5364202	
-	{ "256-c7.c7",    	0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 				/ TC5364202
-	{ "256-c8.c8",    	0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 				/ TC5364202
+	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "256-m1.m1",    	0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code		/ mask rom TC534000
-
-	{ "256-v1.v1",    	0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data 	/ TC5332204
-	{ "256-v2.v2",    	0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 				/ TC5332204
-	{ "256-v3.v3",    	0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 				/ TC5332204
-	{ "256-v4.v4",    	0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 				/ TC5332204
+	{ "256-v1.v1",       0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",       0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",       0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",       0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(mslug3eb, mslug3eb, neogeo)
@@ -18823,104 +18822,68 @@ STD_ROM_FN(mslug3eb)
 
 struct BurnDriver BurnDrvmslug3eb = {
 	"mslug3eb", "mslug3", "neogeo", NULL, "2013",
-	"Metal Slug 3 [Green Blue] [Hack]\0", NULL, "SNK", "Neo Geo MVS",
+	"Metal Slug 3 (Blue Hack, 20130227)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3ebRomInfo, mslug3ebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug3Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 [The Last Warhear] [Hack]
-static struct BurnRomInfo mslug3rbRomDesc[] = {
-	{ "256-ph1.bin",   0x100000, 0xe575a406, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2.bin",   0x400000, 0x7eed7c81, 1 | BRF_ESS | BRF_PRG }, //  1 
-
-	{ "ms3n_s1.rom",    0x020000, 0x8458fff9, 2 | BRF_GRA },
-
-	{ "ms3n_c1.rom",  0x800000, 0x3540398c, 3 | BRF_GRA },		 //  2 Sprite data
-	{ "ms3n_c2.rom",  0x800000, 0xbdd220f0, 3 | BRF_GRA },		 //  3
-	{ "ms3n_c3.rom",  0x800000, 0xbfaade82, 3 | BRF_GRA },		 //  4
-	{ "ms3n_c4.rom",  0x800000, 0x1463add6, 3 | BRF_GRA },		 //  5
-	{ "ms3n_c5.rom",  0x800000, 0x48ca7f28, 3 | BRF_GRA },		 //  6
-	{ "ms3n_c6.rom",  0x800000, 0x806eb36f, 3 | BRF_GRA },		 //  7
-	{ "ms3n_c7.rom",  0x800000, 0xed559fac, 3 | BRF_GRA },		 //  8
-	{ "ms3n_c8.rom",  0x800000, 0x1c52378b, 3 | BRF_GRA },		 //  9
-
-	{ "256-m1.bin",   0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
-
-	{ "ms3n_v1.rom",  0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data
-	{ "ms3n_v2.rom",  0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12
-	{ "ms3n_v3.rom",  0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13
-	{ "ms3n_v4.rom",  0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14
-};
-
-STDROMPICKEXT(mslug3rb, mslug3rb, neogeo)
-STD_ROM_FN(mslug3rb)
-
-struct BurnDriver BurnDrvmslug3rb = {
-	"mslug3rb", "mslug3lw", "neogeo", NULL, "2017",
-	"Metal Slug 3 [The Last Warhear] [Hack]\0", NULL, "hack", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug3rbRomInfo, mslug3rbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3hInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 304, 224, 4, 3
-};
 
 // Metal Slug 3 (Last Bullet Remix Hack)
 static struct BurnRomInfo mslug3lwRomDesc[] = {
-	{ "256-p1.p1",   0x100000, 0xf804b927, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-p2.p2",   0x400000, 0xed558b74, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-p1lw.bin",   0x100000,  0xf804b927, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-p2lw.bin",   0x400000,  0x0af11b49, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "ms3n_s1.rom",    0x020000, 0x8458fff9, 2 | BRF_GRA },
+	{ "ms3n_s1.rom",    0x020000,  0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "256-c1.rom",  0x1000000, 0x1195f6b3, 3 | BRF_GRA },		 //  2 Sprite data
-	{ "256-c2.rom",  0x1000000, 0xfa28d925, 3 | BRF_GRA },		 //  3
-	{ "256-c3.rom",  0x1000000, 0x5d78a51c, 3 | BRF_GRA },		 //  4
-	{ "256-c4.rom",  0x1000000, 0x45478437, 3 | BRF_GRA },		 //  5
+	{ "256-c1.rom",     0x1000000, 0x1195f6b3, 3 | BRF_GRA },		    //  3 Sprite data
+	{ "256-c2.rom",     0x1000000, 0xfa28d925, 3 | BRF_GRA },           //  4
+	{ "256-c3.rom",     0x1000000, 0x5d78a51c, 3 | BRF_GRA },           //  5
+	{ "256-c4.rom",     0x1000000, 0x45478437, 3 | BRF_GRA },           //  6
 
-	{ "256-m1.bin",   0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "256-m1.m1",      0x080000,  0xeaeec116, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "ms3n_v1.rom",  0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data
-	{ "ms3n_v2.rom",  0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12
-	{ "ms3n_v3.rom",  0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13
-	{ "ms3n_v4.rom",  0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14
+	{ "256-v1.v1",    	0x400000,  0xf2690241, 5 | BRF_SND },           //  8 Sound data
+	{ "256-v2.v2",    	0x400000,  0x7e2a10bd, 5 | BRF_SND },           //  9
+	{ "256-v3.v3",    	0x400000,  0x0eaec17c, 5 | BRF_SND },           // 10
+	{ "256-v4.v4",    	0x400000,  0x9b4b22d4, 5 | BRF_SND },           // 11
 };
 
 STDROMPICKEXT(mslug3lw, mslug3lw, neogeo)
 STD_ROM_FN(mslug3lw)
 
 struct BurnDriver BurnDrvmslug3lw = {
-	"mslug3lw", NULL, "neogeo", NULL, "2017",
-	"Metal Slug 3 (Last Bullet Remix Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"mslug3lw", "mslug3", "neogeo", NULL, "2021",
+	"Metal Slug 3 (Last Bullet Remix, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3lwRomInfo, mslug3lwRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3hInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
 // GOTVG  Metal Slug 4 (Multifunction Hack 20171225)
 static struct BurnRomInfo mslug4dgRomDesc[] = {
-	{ "263-p1.bin",   0x100000, 0x36dfa877, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.bin",   0x400000, 0xcf6feb75, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p1dg.bin",   0x100000, 0x36dfa877, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2dg.bin",   0x400000, 0xcf6feb75, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "263.s1",    0x020000, 0xa9446774, 2 | BRF_GRA },
+	{ "263-s1d.bin",    0x020000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "263nd.c1",	0x800000, 0x361ddda6, 3 | BRF_GRA },
-	{ "263nd.c2",	0x800000, 0x15d192c4, 3 | BRF_GRA },
-	{ "263-c3.bin",	0x800000, 0xe296612c, 3 | BRF_GRA },
-	{ "263-c4.bin",	0x800000, 0xc22e3ad0, 3 | BRF_GRA },
-	{ "263-c5.bin",	0x400000, 0x288cd91f, 3 | BRF_GRA },
-	{ "263-c6.bin",	0x400000, 0xb015aeee, 3 | BRF_GRA },
+	{ "263-c1d.bin",    0x800000, 0x361ddda6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "263-c2d.bin",    0x800000, 0x15d192c4, 3 | BRF_GRA },           //  4
+	{ "263-c3lw.bin",   0x800000, 0xe296612c, 3 | BRF_GRA },           //  5
+	{ "263-c4lw.bin",   0x800000, 0xc22e3ad0, 3 | BRF_GRA },           //  6
+	{ "263-c5lw.bin",   0x400000, 0x288cd91f, 3 | BRF_GRA },           //  7
+	{ "263-c6lw.bin",   0x400000, 0xb015aeee, 3 | BRF_GRA },           //  8
 
-	{ "263nd.m1",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG },
+	{ "263-m1d.m1",     0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "263-v1.bin",	0x400000, 0x8cb5a9ef, 5 | BRF_SND },
-	{ "263-v2.bin",	0x400000, 0x94217b1e, 5 | BRF_SND },
-	{ "263-v3.bin",	0x400000, 0x7616fcec, 5 | BRF_SND },
-	{ "263-v4.bin",	0x400000, 0xc5967f91, 5 | BRF_SND }, 
+	{ "263-v1d.bin",    0x400000, 0x8cb5a9ef, 5 | BRF_SND },           // 10 Sound data
+	{ "263-v2d.bin",    0x400000, 0x94217b1e, 5 | BRF_SND },           // 11
+	{ "263-v3d.bin",    0x400000, 0x7616fcec, 5 | BRF_SND },           // 12
+	{ "263-v4d.bin",    0x400000, 0xc5967f91, 5 | BRF_SND },           // 13
 };
 
 STDROMPICKEXT(mslug4dg, mslug4dg, neogeo)
@@ -18928,9 +18891,9 @@ STD_ROM_FN(mslug4dg)
 
 struct BurnDriver BurnDrvmslug4dg = {
 	"mslug4dg", "mslug4", "neogeo", NULL, "2017",
-	"Metal Slug 4 (Multifunction Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 4 (Multifunction Hack, 20171225)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4dgRomInfo, mslug4dgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -18938,34 +18901,34 @@ struct BurnDriver BurnDrvmslug4dg = {
 
 // GOTVG  Metal Slug 4 (Last Bullet Hack)
 static struct BurnRomInfo mslug4lwRomDesc[] = {
-	{ "263-p1.bin", 0x100000, 0xAD713169, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.bin", 0x800000, 0x427EED0B, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p1lw.bin",   0x100000, 0xad713169, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2lw.bin",   0x800000, 0x427eed0b, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "263-s1.bin", 0x020000, 0xa9446774, 2 | BRF_GRA },
+	{ "263-s1d.bin",    0x020000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "263-c1.bin",	0x800000, 0x361ddda6, 3 | BRF_GRA },
-	{ "263-c2.bin",	0x800000, 0x15d192c4, 3 | BRF_GRA },
-	{ "263-c3.bin",	0x800000, 0xe296612c, 3 | BRF_GRA },
-	{ "263-c4.bin",	0x800000, 0xc22e3ad0, 3 | BRF_GRA },
-	{ "263-c5.bin",	0x400000, 0x288cd91f, 3 | BRF_GRA },
-	{ "263-c6.bin",	0x400000, 0xb015aeee, 3 | BRF_GRA },
+	{ "263-c1d.bin",    0x800000, 0x361ddda6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "263-c2d.bin",    0x800000, 0x15d192c4, 3 | BRF_GRA },           //  4
+	{ "263-c3lw.bin",   0x800000, 0xe296612c, 3 | BRF_GRA },           //  5
+	{ "263-c4lw.bin",   0x800000, 0xc22e3ad0, 3 | BRF_GRA },           //  6
+	{ "263-c5lw.bin",   0x400000, 0x288cd91f, 3 | BRF_GRA },           //  7
+	{ "263-c6lw.bin",   0x400000, 0xb015aeee, 3 | BRF_GRA },           //  8
 
-	{ "263-m1.bin", 0x020000, 0x49B1453E, 4 | BRF_ESS | BRF_PRG },
+	{ "263-m1lw.bin",   0x020000, 0x49b1453e, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "263-v1.bin",	0x400000, 0x8cb5a9ef, 5 | BRF_SND },
-	{ "263-v2.bin",	0x400000, 0xC9572C14, 5 | BRF_SND },
-	{ "263-v3.bin",	0x400000, 0xE7C14624, 5 | BRF_SND },
-	{ "263-v4.bin",	0x800000, 0xB1E5AC70, 5 | BRF_SND }, 
+	{ "263-v1d.bin",    0x400000, 0x8cb5a9ef, 5 | BRF_SND },           // 10 Sound data
+	{ "263-v2lw.bin",   0x400000, 0xc9572c14, 5 | BRF_SND },           // 11
+	{ "263-v3lw.bin",   0x400000, 0xe7c14624, 5 | BRF_SND },           // 12
+	{ "263-v4lw.bin",   0x800000, 0xb1e5ac70, 5 | BRF_SND },           // 13
 };
 
 STDROMPICKEXT(mslug4lw, mslug4lw, neogeo)
 STD_ROM_FN(mslug4lw)
 
 struct BurnDriver BurnDrvmslug4lw = {
-	"mslug4lw", NULL, "neogeo", NULL, "2020",
-	"Metal Slug 4 (Last Bullet Remix Hack)\0", NULL, "hack", "Neo Geo",
+	"mslug4lw", "mslug4", "neogeo", NULL, "2018",
+	"Metal Slug 4 (Last Bullet Remix, Hack 20180519)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4lwRomInfo, mslug4lwRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -18974,83 +18937,44 @@ struct BurnDriver BurnDrvmslug4lw = {
 // Metal Slug 4 (20th Anniversary GOTVG Hack)
 
 static struct BurnRomInfo mslug4aRomDesc[] = {
+	{ "263-p1a.bin",   0x100000, 0x1b5121b6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2a.bin",   0x400000, 0xf132898f, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "263-p1.bin",   0x100000, 0x61cdef09, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.bin",   0x400000, 0x87dc01b9, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-s1d.s1",    0x080000, 0x1eaa05e0, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "263-s1.bin",  0x080000, 0x1eaa05e0, 2 | BRF_GRA },
+	{ "263-c1d.c1",    0x800000, 0xa75ffcde, 3 | BRF_GRA },           //  3 Sprite data
+	{ "263-c2d.c2",    0x800000, 0x5ab0d12b, 3 | BRF_GRA },           //  4
+	{ "263-c3d.c3",    0x800000, 0x61af560c, 3 | BRF_GRA },           //  5
+	{ "263-c4d.c4",    0x800000, 0xf2c544fd, 3 | BRF_GRA },           //  6
+	{ "263-c5d.c5",    0x800000, 0x84c66c44, 3 | BRF_GRA },           //  7
+	{ "263-c6d.c6",    0x800000, 0x5ed018ab, 3 | BRF_GRA },           //  8
 
-	{ "263-c1.rom",    0x800000, 0xa75ffcde, 3 | BRF_GRA },           //  2 Sprite data
-	{ "263-c2.rom",    0x800000, 0x5ab0d12b, 3 | BRF_GRA },           //  3
-	{ "263-c3.rom",    0x800000, 0x61af560c, 3 | BRF_GRA },           //  4
-	{ "263-c4.rom",    0x800000, 0xf2c544fd, 3 | BRF_GRA },           //  5
-	{ "263-c5.rom",    0x800000, 0x84c66c44, 3 | BRF_GRA },           //  6
-	{ "263-c6.rom",    0x800000, 0x5ed018ab, 3 | BRF_GRA },           //  7
-																	  /* Encrypted */
-	{ "263-m1.bin",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
-																	  /* Encrypted */
-	{ "263-v1.v1",    0x800000, 0xfd6b982e, 5 | BRF_SND },           //  9 Sound data
-	{ "263-v2.v2",    0x800000, 0x20125227, 5 | BRF_SND },            // 10
+	{ "263-m1d.m1",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "263-v1d.v1",    0x800000, 0xfd6b982e, 5 | BRF_SND },           // 10 Sound data
+	{ "263-v2d.v2",    0x800000, 0x20125227, 5 | BRF_SND },           // 11
 };
 
 STDROMPICKEXT(mslug4a, mslug4a, neogeo)
 STD_ROM_FN(mslug4a)
 
 struct BurnDriver BurnDrvmslug4a = {
-	"mslug4a", NULL, "neogeo", NULL, "2021",
-	"Metal Slug 4 (20th Anniversary GOTVG Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"mslug4a", "mslug4", "neogeo", NULL, "2021",
+	"Metal Slug 4 (20th Anniversary, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, FBF_MSLUG,
 	NULL, mslug4aRomInfo, mslug4aRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
 
-
-// Metal Slug 4 [Enemy Reset Remastering] [Hack]
-
-static struct BurnRomInfo mslug4arRomDesc[] = {
-
-	{ "263-p1.bin",   0x100000, 0xF0C97843, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.bin",   0x400000, 0x1464718D, 1 | BRF_ESS | BRF_PRG }, //  1
-
-	{ "263-s1.bin",  0x080000, 0x1eaa05e0, 2 | BRF_GRA },
-
-	{ "263-c1.rom",    0x800000, 0xa75ffcde, 3 | BRF_GRA },           //  2 Sprite data
-	{ "263-c2.rom",    0x800000, 0x5ab0d12b, 3 | BRF_GRA },           //  3
-	{ "263-c3.rom",    0x800000, 0x61af560c, 3 | BRF_GRA },           //  4
-	{ "263-c4.rom",    0x800000, 0xf2c544fd, 3 | BRF_GRA },           //  5
-	{ "263-c5.rom",    0x800000, 0x84c66c44, 3 | BRF_GRA },           //  6
-	{ "263-c6.rom",    0x800000, 0x5ed018ab, 3 | BRF_GRA },           //  7
-
-																	  /* Encrypted */
-	{ "263-m1.bin",    0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
-
-																	  /* Encrypted */
-	{ "263-v1.v1",    0x800000, 0xfd6b982e, 5 | BRF_SND },           //  9 Sound data
-	{ "263-v2.v2",    0x800000, 0x20125227, 5 | BRF_SND },            // 10
-};
-
-STDROMPICKEXT(mslug4ar, mslug4ar, neogeo)
-STD_ROM_FN(mslug4ar)
-
-struct BurnDriver BurnDrvmslug4ar = {
-	"mslug4ar", "mslug4a", "neogeo", NULL, "2021",
-	"Metal Slug 4 [Enemy Reset Remastering] [Hack]\0", NULL, "hack", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, FBF_MSLUG,
-	NULL, mslug4arRomInfo, mslug4arRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
-};
-
 // GOTVG Metal Slug 5 (Multifunction Hack 20170523)
-// mslug5hp00 in HBMAME.
-static struct BurnRomInfo mslug5gRomDesc[] = {
-	{ "268-p1d.bin", 0x600000, 0x3be747ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+// mslug5hp00 in HBMAME. renamed from mslug5g
+static struct BurnRomInfo mslug5dRomDesc[] = {
+	{ "268-p1d.bin",    0x600000, 0x3be747ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "268d-c1.rom",	0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 sprites
 	{ "268d-c2.rom",	0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
@@ -19063,29 +18987,29 @@ static struct BurnRomInfo mslug5gRomDesc[] = {
 
 	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 ymsnd
+	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 Sound data
 	{ "268d-v2.rom",	0x400000, 0x077bd2f4, 5 | BRF_SND },           // 12
 	{ "268d-v3.rom",	0x400000, 0x39b14567, 5 | BRF_SND },           // 13
 	{ "268d-v4.rom",	0x400000, 0x969ff3b2, 5 | BRF_SND },           // 14
 };
 
-STDROMPICKEXT(mslug5g, mslug5g, neogeo)
-STD_ROM_FN(mslug5g)
+STDROMPICKEXT(mslug5d, mslug5d, neogeo)
+STD_ROM_FN(mslug5d)
 
-struct BurnDriver BurnDrvmslug5g = {
-	"mslug5g", "mslug5", "neogeo", NULL, "2017",
-	"Metal Slug 5 (Multifunction Hack)\0", NULL, "hack", "Neo Geo MVS",
+struct BurnDriver BurnDrvmslug5d = {
+	"mslug5d", "mslug5", "neogeo", NULL, "2017",
+	"Metal Slug 5 (Multifunction Hack, 20170523)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
-	NULL, mslug5gRomInfo, mslug5gRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, mslug5dRomInfo, mslug5dRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
 static struct BurnRomInfo mslug5cRomDesc[] = {
-	{ "268-p1d.bin", 0x600000, 0xE876D1E7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p1c.bin",    0x600000, 0xe876d1e7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "268d-c1.rom",	0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 sprites
 	{ "268d-c2.rom",	0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
@@ -19098,7 +19022,7 @@ static struct BurnRomInfo mslug5cRomDesc[] = {
 
 	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 ymsnd
+	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 Sound data
 	{ "268d-v2.rom",	0x400000, 0x077bd2f4, 5 | BRF_SND },           // 12
 	{ "268d-v3.rom",	0x400000, 0x39b14567, 5 | BRF_SND },           // 13
 	{ "268d-v4.rom",	0x400000, 0x969ff3b2, 5 | BRF_SND },           // 14
@@ -19108,19 +19032,19 @@ STDROMPICKEXT(mslug5c, mslug5c, neogeo)
 STD_ROM_FN(mslug5c)
 
 struct BurnDriver BurnDrvmslug5c = {
-	"mslug5c", "mslug5", "neogeo", NULL, "2003",
-	"Metal Slug 5 [Enemy Reset] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"mslug5c", "mslug5", "neogeo", NULL, "2019",
+	"Metal Slug 5 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5cRomInfo, mslug5cRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
 static struct BurnRomInfo mslug5xRomDesc[] = {
-	{ "268-p1d.bin",    0x600000, 0x110F25B1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p1x.bin",    0x600000, 0xafffcd5b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "268d-c1.rom",	0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 sprites
 	{ "268d-c2.rom",	0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
@@ -19133,7 +19057,7 @@ static struct BurnRomInfo mslug5xRomDesc[] = {
 
 	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 ymsnd
+	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 Sound data
 	{ "268d-v2.rom",	0x400000, 0x077bd2f4, 5 | BRF_SND },           // 12
 	{ "268d-v3.rom",	0x400000, 0x39b14567, 5 | BRF_SND },           // 13
 	{ "268d-v4.rom",	0x400000, 0x969ff3b2, 5 | BRF_SND },           // 14
@@ -19143,8 +19067,8 @@ STDROMPICKEXT(mslug5x, mslug5x, neogeo)
 STD_ROM_FN(mslug5x)
 
 struct BurnDriver BurnDrvmslug5x = {
-	"mslug5x", "mslug5", "neogeo", NULL, "2003",
-	"Metal Slug 5X [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"mslug5x", "mslug5", "neogeo", NULL, "2022",
+	"Metal Slug 5 (X Hack, 20220606)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5xRomInfo, mslug5xRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -19153,9 +19077,9 @@ struct BurnDriver BurnDrvmslug5x = {
 };
 
 static struct BurnRomInfo mslug5mgRomDesc[] = {
-	{ "268-p1d.bin", 0x600000, 0x1FC7DE70, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p1mg.bin",   0x600000, 0x1fc7de70, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "268d-c1.rom",	0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 sprites
 	{ "268d-c2.rom",	0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
@@ -19168,7 +19092,7 @@ static struct BurnRomInfo mslug5mgRomDesc[] = {
 
 	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 ymsnd
+	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 Sound data
 	{ "268d-v2.rom",	0x400000, 0x077bd2f4, 5 | BRF_SND },           // 12
 	{ "268d-v3.rom",	0x400000, 0x39b14567, 5 | BRF_SND },           // 13
 	{ "268d-v4.rom",	0x400000, 0x969ff3b2, 5 | BRF_SND },           // 14
@@ -19178,36 +19102,36 @@ STDROMPICKEXT(mslug5mg, mslug5mg, neogeo)
 STD_ROM_FN(mslug5mg)
 
 struct BurnDriver BurnDrvmslug5mg = {
-	"mslug5mg", "mslug5", "neogeo", NULL, "2003",
-	"Metal Slug 5 [Enemy Demons] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"mslug5mg", "mslug5", "neogeo", NULL, "2019",
+	"Metal Slug 5 (Enemy Magic, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5mgRomInfo, mslug5mgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
 // Metal Slug 5 [Remake Final Ver. Fightcade 2] [Hack]
 static struct BurnRomInfo mslug5sgfRomDesc[] = {
-	{ "268-p1d.bin",    0x600000, 0xb1fbb850, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p1sgf.bin",   0x600000, 0xb1fbb850, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },
+	{ "268d-s1.rom",     0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "268d-c1.rom",	0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 sprites
-	{ "268d-c2.rom",	0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
-	{ "268d-c3.rom",	0x800000, 0xd7beaeaf, 3 | BRF_GRA },           //  4
-	{ "268d-c4.rom",	0x800000, 0xe1b1131b, 3 | BRF_GRA },           //  5
-	{ "268d-c5.rom",	0x800000, 0x2fa1a5ad, 3 | BRF_GRA },           //  6
-	{ "268d-c6.rom",	0x800000, 0x6de89589, 3 | BRF_GRA },           //  7
-	{ "268d-c7.rom",	0x800000, 0x97bd0c0a, 3 | BRF_GRA },           //  8
-	{ "268d-c8.rom",	0x800000, 0xc0d5bc20, 3 | BRF_GRA },           //  9
+	{ "268d-c1.rom",     0x800000, 0x969c0d62, 3 | BRF_GRA },           //  2 sprites
+	{ "268d-c2.rom",     0x800000, 0xc69ae867, 3 | BRF_GRA },           //  3
+	{ "268d-c3.rom",     0x800000, 0xd7beaeaf, 3 | BRF_GRA },           //  4
+	{ "268d-c4.rom",     0x800000, 0xe1b1131b, 3 | BRF_GRA },           //  5
+	{ "268d-c5.rom",     0x800000, 0x2fa1a5ad, 3 | BRF_GRA },           //  6
+	{ "268d-c6.rom",     0x800000, 0x6de89589, 3 | BRF_GRA },           //  7
+	{ "268d-c7.rom",     0x800000, 0x97bd0c0a, 3 | BRF_GRA },           //  8
+	{ "268d-c8.rom",     0x800000, 0xc0d5bc20, 3 | BRF_GRA },           //  9
 
-	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "268d-m1.rom",     0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "268d-v1.rom",	0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 ymsnd
-	{ "268d-v2.rom",	0x400000, 0x077bd2f4, 5 | BRF_SND },           // 12
-	{ "268d-v3.rom",	0x400000, 0x39b14567, 5 | BRF_SND },           // 13
-	{ "268d-v4.rom",	0x400000, 0x969ff3b2, 5 | BRF_SND },           // 14
+	{ "268d-v1.rom",     0x400000, 0xc3540e0d, 5 | BRF_SND },           // 11 ymsnd
+	{ "268d-v2.rom",     0x400000, 0x077bd2f4, 5 | BRF_SND },           // 12
+	{ "268d-v3.rom",     0x400000, 0x39b14567, 5 | BRF_SND },           // 13
+	{ "268d-v4.rom",     0x400000, 0x969ff3b2, 5 | BRF_SND },           // 14
 };
 
 STDROMPICKEXT(mslug5sgf, mslug5sgf, neogeo)
@@ -19215,52 +19139,14 @@ STD_ROM_FN(mslug5sgf)
 
 struct BurnDriver BurnDrvmslug5sgf = {
 	"mslug5sgf", "mslug5", "neogeo", NULL, "2021",
-	"Metal Slug 5 [Remake Final Ver. Fightcade 2] [Hack]\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 5 (Remake Fightcade 2 Hack, 20211003)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5sgfRomInfo, mslug5sgfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
-};
-
-
-
-// Metal Slug 5 [New Campaign] [Hack]
-static struct BurnRomInfo mslug5wdRomDesc[] = {
-	{ "254-pw1.bin",	0x100000, 0xb0c126da, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "254-pw2.bin",	0x400000, 0xf06c589a, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },			// 2 Text layer tiles
-
-	{ "268d-c1.rom",	0x800000, 0xe8239365, 3 | BRF_GRA },           //  2 sprites
-	{ "268d-c2.rom",	0x800000, 0x89b21d4c, 3 | BRF_GRA },           //  3
-	{ "268d-c3.rom",	0x800000, 0x3cda13a0, 3 | BRF_GRA },           //  4
-	{ "268d-c4.rom",	0x800000, 0x9c00160d, 3 | BRF_GRA },           //  5
-	{ "ms5n_c5.rom",	0x800000, 0x483a986c, 3 | BRF_GRA },           //  6
-	{ "ms5n_c6.rom",	0x800000, 0xd918f796, 3 | BRF_GRA },           //  7
-	{ "ms5n_c7.rom",	0x800000, 0xbdb9a887, 3 | BRF_GRA },           //  8
-	{ "ms5n_c8.rom",	0x800000, 0x6f8ac6fb, 3 | BRF_GRA },           //  9
-
-	{ "254-m1.bin",  0x080000, 0x464c72ad, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
-
-	{ "254-v1.bin",	0x400000, 0xa8e12a92, 5 | BRF_SND },           // 11 Sound data
-	{ "254-v2.bin",	0x400000, 0x0608cba3, 5 | BRF_SND },           // 12
-	{ "254-v3.bin",	0x400000, 0x02fd519e, 5 | BRF_SND },           // 13
-	{ "254-v4.bin",	0x4002f0, 0x179cbca3, 5 | BRF_SND },           // 14 - weird size!!
-};
-
-STDROMPICKEXT(mslug5wd, mslug5wd, neogeo)
-STD_ROM_FN(mslug5wd)
-
-struct BurnDriver BurnDrvMslug5wd = {
-	"mslug5wd", "mslug5", "neogeo", NULL, "2003",
-	"Metal Slug 5 [New Campaign] [Hack]\0", NULL, "C.B", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, FBF_MSLUG,
-	NULL, mslug5wdRomInfo, mslug5wdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
 
 // The King of Fighters '97 - Random Combo Version 2010 (Hack)
 // *IVEX KOF 97 COMBO HACK WITH RANDOM SELECT* //
@@ -19881,19 +19767,19 @@ struct BurnDriver BurnDrvTeot = {
 // mslugunity - Metal Slug Unity (Timer added version)
 
 static struct BurnRomInfo mslugunityRomDesc[] = {
-	{ "201-p1.p1",    0x200000, 0xa3186dfd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code		/ TC5316200
+	{ "201-p1uni.p1",   0x200000, 0xa3186dfd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "201-s1.s1",    0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+	{ "201-s1.s1",      0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "201-c1.c1",    0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332205
-	{ "201-c2.c2",    0x400000, 0x96f62574, 3 | BRF_GRA },           //  3 					/ TC5332205
-	{ "201-c3.c3",    0x400000, 0x5121456a, 3 | BRF_GRA },           //  4 					/ TC5332205
-	{ "201-c4.c4",    0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "201-c1.c1",      0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data
+	{ "201-c2.c2",      0x400000, 0x96f62574, 3 | BRF_GRA },           //  3
+	{ "201-c3.c3",      0x400000, 0x5121456a, 3 | BRF_GRA },           //  4
+	{ "201-c4.c4",      0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5
 
-	{ "201-m1.m1",    0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
+	{ "201-m1.m1",      0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
-	{ "201-v1.v1",    0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data		/ TC5332204
-	{ "201-v2.v2",    0x400000, 0x472cf9db, 5 | BRF_SND },           //  8 					/ TC5332204
+	{ "201-v1.v1",      0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data
+	{ "201-v2.v2",      0x400000, 0x472cf9db, 5 | BRF_SND },           //  8
 };
 
 STDROMPICKEXT(mslugunity, mslugunity, neogeo)
@@ -19901,7 +19787,7 @@ STD_ROM_FN(mslugunity)
 
 struct BurnDriver BurnDrvmslugunity = {
 	"mslugunity", "mslug", "neogeo", NULL, "2021",
-	"Metal Slug Unity (Added Timer Ver. 2021-02-05)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug Unity (Added Timer, 20210205)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugunityRomInfo, mslugunityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -19913,20 +19799,20 @@ struct BurnDriver BurnDrvmslugunity = {
 // mslug2unity - Metal Slug 2 Unity (Timer added version)
 
 static struct BurnRomInfo mslug2unityRomDesc[] = {
-	{ "241-p1.bin",   0x100000, 0x1562cf23, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "241-p2.sp2",   0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "241-p1uni.bin",   0x100000, 0x1562cf23, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2.sp2",      0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "241-s1.s1",       0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
-	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
-	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
-	{ "241-c4.c4",    0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
+	{ "241-c1.c1",       0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",       0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
+	{ "241-c3.c3",       0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
+	{ "241-c4.c4",       0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
 
-	{ "241-m1.m1",    0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "241-m1.m1",       0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "241-v1.v1",    0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
-	{ "241-v2.v2",    0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
+	{ "241-v1.v1",       0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",       0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
 };
 
 STDROMPICKEXT(mslug2unity, mslug2unity, neogeo)
@@ -19934,7 +19820,7 @@ STD_ROM_FN(mslug2unity)
 
 struct BurnDriver BurnDrvmslug2unity = {
 	"mslug2unity", "mslug2", "neogeo", NULL, "2021",
-	"Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 Unity (Added Timer, 20210122)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2unityRomInfo, mslug2unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -19945,23 +19831,23 @@ struct BurnDriver BurnDrvmslug2unity = {
 // mslugxunity - Metal Slug X Unity (Timer added version)
 
 static struct BurnRomInfo mslugxunityRomDesc[] = {
-	{ "250-p1.p1",    0x100000, 0x36102d34, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2.ep1",   0x400000, 0x1fda2e12, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "250-p1uni.p1",   0x100000, 0x36102d34, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2.ep1",     0x400000, 0x1fda2e12, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "250-s1.s1",    0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "250-c1.c1",    0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
-	{ "250-c2.c2",    0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
-	{ "250-c3.c3",    0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
-	{ "250-c4.c4",    0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
-	{ "250-c5.c5",    0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
-	{ "250-c6.c6",    0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4 
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5 
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6 
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7 
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8 
 
-	{ "250-m1.m1",    0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "250-v1.v1",    0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
-	{ "250-v2.v2",    0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
-	{ "250-v3.v3",    0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11 
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(mslugxunity, mslugxunity, neogeo)
@@ -19969,9 +19855,9 @@ STD_ROM_FN(mslugxunity)
 
 struct BurnDriver BurnDrvmslugxunity = {
 	"mslugxunity", "mslugx", "neogeo", NULL, "2021",
-	"Metal Slug X - Super Vehicle-001 Unity (Added Timer Ver. 2021-01-23)\0", NULL, "SNK", "Neo Geo MVS",
+	"Metal Slug X Unity (Added Timer, 20210123)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxunityRomInfo, mslugxunityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -19981,27 +19867,27 @@ struct BurnDriver BurnDrvmslugxunity = {
 // mslug3unity - Metal Slug 3 Unity (Timer added version)
 
 static struct BurnRomInfo mslug3unityRomDesc[] = {
-	{ "green.neo-sma",  0x040000, 0x3c6c536b, 9 | BRF_ESS | BRF_PRG }, //  0 68K code		/ stored in the custom chip
+	{ "ms3unity.neo-sma",   0x040000, 0x3c6c536b, 9 | BRF_ESS | BRF_PRG }, //  0 68K code		/ stored in the custom chip
 	/* The SMA for this release has a green colour marking; the older revision has a white colour marking */
-	{ "256-pg1.p1",   	0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
-	{ "256-pg2.p2",   	0x400000, 0xea0c22b6, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
+	{ "256-pg1.p1",         0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
+	{ "256-pg2uni.p2",      0x400000, 0xea0c22b6, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
-	{ "256-c1.c1",    	0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
-	{ "256-c2.c2",    	0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
-	{ "256-c3.c3",    	0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
-	{ "256-c4.c4",    	0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 				/ TC5364202
-	{ "256-c5.c5",    	0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 				/ TC5364202
-	{ "256-c6.c6",    	0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 				/ TC5364202	
-	{ "256-c7.c7",    	0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 				/ TC5364202
-	{ "256-c8.c8",    	0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 				/ TC5364202
+	{ "256-c1.c1",          0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
+	{ "256-c2.c2",          0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
+	{ "256-c3.c3",          0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
+	{ "256-c4.c4",          0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 				/ TC5364202
+	{ "256-c5.c5",          0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 				/ TC5364202
+	{ "256-c6.c6",          0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 				/ TC5364202	
+	{ "256-c7.c7",          0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 				/ TC5364202
+	{ "256-c8.c8",          0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 				/ TC5364202
 
-	{ "256-m1.m1",    	0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code		/ mask rom TC534000
+	{ "256-m1.m1",          0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code		/ mask rom TC534000
 
-	{ "256-v1.v1",    	0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data 	/ TC5332204
-	{ "256-v2.v2",    	0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 				/ TC5332204
-	{ "256-v3.v3",    	0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 				/ TC5332204
-	{ "256-v4.v4",    	0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 				/ TC5332204
+	{ "256-v1.v1",          0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data 	/ TC5332204
+	{ "256-v2.v2",          0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 				/ TC5332204
+	{ "256-v3.v3",          0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 				/ TC5332204
+	{ "256-v4.v4",          0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 				/ TC5332204
 };
 
 STDROMPICKEXT(mslug3unity, mslug3unity, neogeo)
@@ -20009,9 +19895,9 @@ STD_ROM_FN(mslug3unity)
 
 struct BurnDriver BurnDrvmslug3unity = {
 	"mslug3unity", "mslug3", "neogeo", NULL, "2021",
-	"Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)\0", NULL, "SNK", "Neo Geo MVS",
+	"Metal Slug 3 Unity (Added Timer, 20210213)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3unityRomInfo, mslug3unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug3Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -20020,20 +19906,24 @@ struct BurnDriver BurnDrvmslug3unity = {
 // mslug4unity - Metal Slug 4 Unity (Timer added version)
 
 static struct BurnRomInfo mslug4unityRomDesc[] = {
-	{ "263-p1.p1",    0x100000, 0xef3501b6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2.sp2",   0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p1uni.p1",   0x100000, 0xef3501b6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2.sp2",     0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "263-c1.c1",    0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "263-c2.c2",    0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3
-	{ "263-c3.c3",    0x800000, 0x1a343323, 3 | BRF_GRA },           //  4
-	{ "263-c4.c4",    0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5
-	{ "263-c5.c5",    0x800000, 0xa748854f, 3 | BRF_GRA },           //  6
-	{ "263-c6.c6",    0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "263-c1.c1",      0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "263-c2.c2",      0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3
+	{ "263-c3.c3",      0x800000, 0x1a343323, 3 | BRF_GRA },           //  4
+	{ "263-c4.c4",      0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5
+	{ "263-c5.c5",      0x800000, 0xa748854f, 3 | BRF_GRA },           //  6
+	{ "263-c6.c6",      0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7
 
-	{ "263-m1.m1",    0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	/* Encrypted */
+	{ "263-m1.m1",      0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
-	{ "263-v1.v1",    0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
-	{ "263-v2.v2",    0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10
+	/* Encrypted */
+	{ "263-v1.v1",      0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
+	{ "263-v2.v2",      0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10
 };
 
 STDROMPICKEXT(mslug4unity, mslug4unity, neogeo)
@@ -20041,9 +19931,9 @@ STD_ROM_FN(mslug4unity)
 
 struct BurnDriver BurnDrvmslug4unity = {
 	"mslug4unity", "mslug4", "neogeo", NULL, "2021",
-	"Metal Slug 4 Unity (Added Timer Ver. 2021-01-30)\0", NULL, "Mega", "Neo Geo MVS",
+	"Metal Slug 4 Unity (Added Timer, 20210130)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4unityRomInfo, mslug4unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug4Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -20052,22 +19942,26 @@ struct BurnDriver BurnDrvmslug4unity = {
 // mslug5unity - Metal slug 5 Unity (Timer added version)
 
 static struct BurnRomInfo mslug5unityRomDesc[] = {
-	{ "268-p1cr.p1",   0x400000, 0xced9f5a8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2cr.p2",   0x400000, 0x1c08dbb6, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p1cruni.p1",   0x400000, 0xced9f5a8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2cruni.p2",   0x400000, 0x1c08dbb6, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "268-c1c.c1",    0x800000, 0xab7c389a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "268-c2c.c2",    0x800000, 0x3560881b, 3 | BRF_GRA },           //  3
-	{ "268-c3c.c3",    0x800000, 0x3af955ea, 3 | BRF_GRA },           //  4
-	{ "268-c4c.c4",    0x800000, 0xc329c373, 3 | BRF_GRA },           //  5
-	{ "268-c5c.c5",    0x800000, 0x959c8177, 3 | BRF_GRA },           //  6
-	{ "268-c6c.c6",    0x800000, 0x010a831b, 3 | BRF_GRA },           //  7
-	{ "268-c7c.c7",    0x800000, 0x6d72a969, 3 | BRF_GRA },           //  8
-	{ "268-c8c.c8",    0x800000, 0x551d720e, 3 | BRF_GRA },           //  9
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "268-c1c.c1",       0x800000, 0xab7c389a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "268-c2c.c2",       0x800000, 0x3560881b, 3 | BRF_GRA },           //  3
+	{ "268-c3c.c3",       0x800000, 0x3af955ea, 3 | BRF_GRA },           //  4
+	{ "268-c4c.c4",       0x800000, 0xc329c373, 3 | BRF_GRA },           //  5
+	{ "268-c5c.c5",       0x800000, 0x959c8177, 3 | BRF_GRA },           //  6
+	{ "268-c6c.c6",       0x800000, 0x010a831b, 3 | BRF_GRA },           //  7
+	{ "268-c7c.c7",       0x800000, 0x6d72a969, 3 | BRF_GRA },           //  8
+	{ "268-c8c.c8",       0x800000, 0x551d720e, 3 | BRF_GRA },           //  9
 
-	{ "268-m1.bin",   0x080000, 0x4a5a6e0e, 4 | BRF_ESS | BRF_PRG },
+	/* Encrypted */
+	{ "268-m1.m1",        0x080000, 0x4a5a6e0e, 4 | BRF_ESS | BRF_PRG },
 
-	{ "268-v1c.v1",    0x800000, 0xae31d60c, 5 | BRF_SND },           // 11 Sound data
-	{ "268-v2c.v2",    0x800000, 0xc40613ed, 5 | BRF_SND },           // 12
+	/* Encrypted */
+	{ "268-v1c.v1",       0x800000, 0xae31d60c, 5 | BRF_SND },           // 11 Sound data
+	{ "268-v2c.v2",       0x800000, 0xc40613ed, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(mslug5unity, mslug5unity, neogeo)
@@ -20075,9 +19969,9 @@ STD_ROM_FN(mslug5unity)
 
 struct BurnDriver BurnDrvmslug5unity = {
 	"mslug5unity", "mslug5", "neogeo", NULL, "2021",
-	"Metal Slug 5 Unity (Added Timer Ver. 2021-04-23)\0", NULL, "SNK Playmore", "Neo Geo MVS",
+	"Metal Slug 5 Unity (Added Timer, 20210423)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5unityRomInfo, mslug5unityRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug5Init, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -20130,8 +20024,8 @@ static struct BurnRomInfo kof2kxxxRomDesc[] = {
 	{ "257xxx-p1.p1",    0x100000, 0xb88cd5eb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "257xxx-p2.sp2",   0x400000, 0x1a10f2be, 1 | BRF_ESS | BRF_PRG }, //  1
 
-																		/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
-																		/* Encrypted */
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "257xxx-c1.c1",    0x800000, 0x3006a5e4, 3 | BRF_GRA },           //  2 Sprite data
 	{ "257xxx-c2.c2",    0x800000, 0x366fd118, 3 | BRF_GRA },           //  3
 	{ "257xxx-c3.c3",    0x800000, 0x5b16d7e3, 3 | BRF_GRA },           //  4
@@ -20141,8 +20035,10 @@ static struct BurnRomInfo kof2kxxxRomDesc[] = {
 	{ "257xxx-c7.c7",    0x800000, 0x8c6b22b3, 3 | BRF_GRA },           //  8
 	{ "257xxx-c8.c8",    0x800000, 0x6223bd1d, 3 | BRF_GRA },           //  9
 
+	/* Encrypted */
 	{ "257-m1.m1",       0x040000, 0x4b749113, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "257-v1.v1",       0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
 	{ "257-v2.v2",       0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12
 	{ "257-v3.v3",       0x400000, 0x4605036a, 5 | BRF_SND },           // 13
@@ -20272,3 +20168,886 @@ struct BurnDriver BurnDrvkof98bc2k2 = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// GOTVG Mslug hacks part 2
+// Metal Slug 2 (Gun Storage, Hack)
+static struct BurnRomInfo mslug2pRomDesc[] = {
+	{ "241-p1p.p1",   0x100000, 0xfe803784, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2.sp2",   0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
+	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
+	{ "241-c4.c4",    0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
+
+	{ "241-m1.m1",    0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+
+	{ "241-v1.v1",    0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",    0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
+};
+
+STDROMPICKEXT(mslug2p, mslug2p, neogeo)
+STD_ROM_FN(mslug2p)
+
+struct BurnDriver BurnDrvMSlug2p = {
+	"mslug2p", "mslug2", "neogeo", NULL, "2015",
+	"Metal Slug 2 (Gun Storage, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug2pRomInfo, mslug2pRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 2 (1v2 Mode, Hack)
+static struct BurnRomInfo mslug21v2RomDesc[] = {
+	{ "241-p11v2.p1",   0x100000, 0xc3efed6c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2.sp2",     0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "241-s1.s1",      0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "241-c1.c1",      0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",      0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
+	{ "241-c3.c3",      0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
+	{ "241-c4.c4",      0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6 
+
+	{ "241-m1.m1",      0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+
+	{ "241-v1.v1",      0x400000, 0x99ec20e8, 5 | BRF_SND },           //  8 Sound data
+	{ "241-v2.v2",      0x400000, 0xecb16799, 5 | BRF_SND },           //  9 
+};
+
+STDROMPICKEXT(mslug21v2, mslug21v2, neogeo)
+STD_ROM_FN(mslug21v2)
+
+struct BurnDriver BurnDrvMslug21v2 = {
+	"mslug21v2", "mslug2", "neogeo", NULL, "2015",
+	"Metal Slug 2 (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug21v2RomInfo, mslug21v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 2 (Extraction Green Turbo, Hack)
+// 20210916
+
+static struct BurnRomInfo mslug2egRomDesc[] = {
+	{ "241-p1eg.p1",    0x100000, 0xbb312904, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "241-p2eg.sp2",   0x300000, 0xabf37360, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "241-s1eg.s1",    0x020000, 0xd983067f, 2 | BRF_GRA },           //  2 Text layer tiles
+	
+	{ "241-c1.c1",      0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "241-c2.c2",      0x800000, 0xe5806221, 3 | BRF_GRA },           //  4
+	{ "241-c3.c3",      0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5
+	{ "241-c4.c4",      0x800000, 0x7d3e306f, 3 | BRF_GRA },           //  6
+	{ "241-c5eg.c5",    0x800000, 0xcae9af4f, 3 | BRF_GRA },           //  7
+	{ "241-c6eg.c6",    0x800000, 0x7cf51055, 3 | BRF_GRA },           //  8
+
+	{ "241-m1.m1",		0x020000, 0x94520ebd, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "241-v1.v1",      0x400000, 0x99ec20e8, 5 | BRF_SND },           // 10 Sound data
+	{ "241-v2.v2",      0x400000, 0xecb16799, 5 | BRF_SND },           // 11
+};
+
+STDROMPICKEXT(mslug2eg, mslug2eg, neogeo)
+STD_ROM_FN(mslug2eg)
+
+struct BurnDriver BurnDrvMSlug2eg = {
+	"mslug2eg", "mslug2", "neogeo", NULL, "2021",
+	"Metal Slug 2 (Extraction Green Turbo, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug2egRomInfo, mslug2egRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+// Metal Slug X (Multi Vehicle, Hack)
+static struct BurnRomInfo mslugxc1RomDesc[] = {
+	{ "250-p1c1.p1",    0x100000, 0xe74f36c2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2c1.ep1",   0x400000, 0xe954b8aa, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugxc1, mslugxc1, neogeo)
+STD_ROM_FN(mslugxc1)
+
+struct BurnDriver BurnDrvMSlugXc1 = {
+	"mslugxc1", "mslugx", "neogeo", NULL, "2013",
+	"Metal Slug X (Multi Vehicle, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugxc1RomInfo, mslugxc1RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X (1v2 Mode, Hack)
+static struct BurnRomInfo mslugx1v2RomDesc[] = {
+	{ "250-p11v2.p1",   0x100000, 0x0cf1f95b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2.ep1",     0x400000, 0x1fda2e12, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx1v2, mslugx1v2, neogeo)
+STD_ROM_FN(mslugx1v2)
+
+struct BurnDriver BurnDrvMSlugX1v2 = {
+	"mslugx1v2", "mslugx", "neogeo", NULL, "2019",
+	"Metal Slug X (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx1v2RomInfo, mslugx1v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X (2R, Hack)
+static struct BurnRomInfo mslugx2rRomDesc[] = {
+	{ "250-p12r.p1",    0x100000, 0x721f11aa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p22r.ep1",   0x400000, 0x4f875278, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx2r, mslugx2r, neogeo)
+STD_ROM_FN(mslugx2r)
+
+struct BurnDriver BurnDrvMSlugX2r = {
+	"mslugx2r", "mslugx", "neogeo", NULL, "2020",
+	"Metal Slug X (2R, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx2rRomInfo, mslugx2rRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X (2R Blue, Hack)
+static struct BurnRomInfo mslugx2rebRomDesc[] = {
+	{ "250-p12reb.p1",    0x100000, 0xdba3f1a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p22reb.ep1",   0x400000, 0x3866eb68, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",        0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",        0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",        0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",        0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",        0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",        0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",        0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",        0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",        0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",        0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",        0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx2reb, mslugx2reb, neogeo)
+STD_ROM_FN(mslugx2reb)
+
+struct BurnDriver BurnDrvMSlugX2reb = {
+	"mslugx2reb", "mslugx", "neogeo", NULL, "2020",
+	"Metal Slug X (2R Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx2rebRomInfo, mslugx2rebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X (2R 1v2 Mode, Hack)
+static struct BurnRomInfo mslugx2r1v2RomDesc[] = {
+	{ "250-p12r1v2.p1",    0x100000, 0xd13fd368, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p22r1v2.ep1",   0x400000, 0x730e94a2, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",         0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",         0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",         0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",         0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",         0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",         0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",         0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",         0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",         0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",         0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",         0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugx2r1v2, mslugx2r1v2, neogeo)
+STD_ROM_FN(mslugx2r1v2)
+
+struct BurnDriver BurnDrvMSlugX2r1v2 = {
+	"mslugx2r1v2", "mslugx", "neogeo", NULL, "2020",
+	"Metal Slug X (2R 1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugx2r1v2RomInfo, mslugx2r1v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug X (Survival, Hack)
+static struct BurnRomInfo mslugxscRomDesc[] = {
+	{ "250-p1sc.p1",    0x100000, 0xd2913eee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",   0x400000, 0x01f48336, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1sc.s1",    0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5sc.c5",    0x800000, 0x8dd6a022, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",    0x800000, 0xf8de0291, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugxsc, mslugxsc, neogeo)
+STD_ROM_FN(mslugxsc)
+
+struct BurnDriver BurnDrvmslugxsc = {
+	"mslugxsc", "mslugx", "neogeo", NULL, "2021",
+	"Metal Slug X (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugxscRomInfo, mslugxscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+// Metal Slug 3 (Onimusha Samanosuke, Hack)
+static struct BurnRomInfo mslug3gwRomDesc[] = {
+	{ "256-ph1gw.bin",   0x100000, 0xfafde0b4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2.sp2",     0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
+	
+	{ "ms3n_c1.rom",     0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms3n_c2.rom",     0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "ms3n_c3.rom",     0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "ms3n_c4.rom",     0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "ms3n_c5.rom",     0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "ms3n_c6.rom",     0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "ms3n_c7.rom",     0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
+	{ "ms3n_c8.rom",     0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
+
+	{ "256-m1gw.bin",    0x080000, 0xc84d22f2, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "256-v1.v1",       0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",       0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",       0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4gw.bin",    0x400000, 0xb45d9a3b, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(mslug3gw, mslug3gw, neogeo)
+STD_ROM_FN(mslug3gw)
+
+struct BurnDriver BurnDrvmslug3gw = {
+	"mslug3gw", "mslug3", "neogeo", NULL, "2016",
+	"Metal Slug 3 (Onimusha Samanosuke, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3gwRomInfo, mslug3gwRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (Infinite Fire Power, Hack)
+static struct BurnRomInfo mslug3iRomDesc[] = {
+	{ "ms3i.neo-sma",   0x040000, 0x3a631f79, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "256-pg1.p1",     0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2i.p2",    0x400000, 0x3a040bcc, 1 | BRF_ESS | BRF_PRG }, //  2
+	
+	/* Encrypted */
+	{ "256-c1.c1",      0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3
+	{ "256-c2.c2",      0x800000, 0x944c362c, 3 | BRF_GRA },           //  4
+	{ "256-c3.c3",      0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5
+	{ "256-c4.c4",      0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6
+	{ "256-c5.c5",      0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7
+	{ "256-c6.c6",      0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8
+	{ "256-c7.c7",      0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9
+	{ "256-c8.c8",      0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10
+	
+	{ "256-m1.m1",      0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+		
+	{ "256-v1.v1",      0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",      0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",      0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",      0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(mslug3i, mslug3i, neogeo)
+STD_ROM_FN(mslug3i)
+
+struct BurnDriver BurnDrvmslug3i = {
+	"mslug3i", "mslug3", "neogeo", NULL, "2021",
+	"Metal Slug 3 (Infinite Fire Power, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3iRomInfo, mslug3iRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug3Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (SE Special Edition, Hack)
+static struct BurnRomInfo mslug3seRomDesc[] = {
+	{ "256-ph1se.bin",   0x100000, 0x46330db5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2.sp2",     0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
+	
+	{ "ms3n_c1.rom",     0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms3n_c2.rom",     0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "ms3n_c3.rom",     0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "ms3n_c4.rom",     0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "ms3n_c5.rom",     0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "ms3n_c6.rom",     0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "ms3n_c7.rom",     0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
+	{ "ms3n_c8.rom",     0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
+
+	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "256-v1.v1",       0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",       0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",       0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",       0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(mslug3se, mslug3se, neogeo)
+STD_ROM_FN(mslug3se)
+
+struct BurnDriver BurnDrvmslug3se = {
+	"mslug3se", "mslug3", "neogeo", NULL, "2016",
+	"Metal Slug 3 (SE Special Edition, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3seRomInfo, mslug3seRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (Vehicle Summon, Hack)
+static struct BurnRomInfo mslug3zhRomDesc[] = {
+	{ "256-ph1zh.bin",   0x100000, 0x257fa6b9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2zh.bin",   0x400000, 0xbadc753c, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
+	
+	{ "ms3n_c1.rom",     0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms3n_c2.rom",     0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "ms3n_c3.rom",     0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "ms3n_c4.rom",     0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "ms3n_c5.rom",     0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "ms3n_c6.rom",     0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "ms3n_c7.rom",     0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
+	{ "ms3n_c8.rom",     0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
+
+	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "256-v1.v1",       0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",       0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",       0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",       0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(mslug3zh, mslug3zh, neogeo)
+STD_ROM_FN(mslug3zh)
+
+struct BurnDriver BurnDrvmslug3zh = {
+	"mslug3zh", "mslug3", "neogeo", NULL, "2017",
+	"Metal Slug 3 (Vehicle Summon, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3zhRomInfo, mslug3zhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (Shop Edition, Hack)
+static struct BurnRomInfo mslug3sdRomDesc[] = {
+	{ "256-ph1sd.bin",   0x100000, 0xe1e21cc4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2sd.bin",   0x400000, 0x7343335b, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
+	
+	{ "ms3n_c1.rom",     0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "ms3n_c2.rom",     0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "ms3n_c3.rom",     0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "ms3n_c4.rom",     0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "ms3n_c5.rom",     0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "ms3n_c6.rom",     0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "ms3n_c7.rom",     0x800000, 0xed559fac, 3 | BRF_GRA },           //  9
+	{ "ms3n_c8.rom",     0x800000, 0x1c52378b, 3 | BRF_GRA },           // 10
+
+	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "256-v1.v1",       0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",       0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",       0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",       0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(mslug3sd, mslug3sd, neogeo)
+STD_ROM_FN(mslug3sd)
+
+struct BurnDriver BurnDrvmslug3sd = {
+	"mslug3sd", "mslug3", "neogeo", NULL, "2017",
+	"Metal Slug 3 (Shop Edition, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3sdRomInfo, mslug3sdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (1v2 Mode, Hack)
+static struct BurnRomInfo mslug31v2RomDesc[] = {
+	{ "ms31v2.neo-sma",   0x040000, 0x1c090500, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "256-pg1.p1",       0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg21v2.p2",    0x400000, 0x45db3f1d, 1 | BRF_ESS | BRF_PRG }, //  2
+	
+	/* Encrypted */
+	{ "256-c1.c1",        0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data
+	{ "256-c2.c2",        0x800000, 0x944c362c, 3 | BRF_GRA },           //  4
+	{ "256-c3.c3",        0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5
+	{ "256-c4.c4",        0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6
+	{ "256-c5.c5",        0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7
+	{ "256-c6.c6",        0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8
+	{ "256-c7.c7",        0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9
+	{ "256-c8.c8",        0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10
+	
+	{ "256-m1.m1",        0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+		
+	{ "256-v1.v1",        0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",        0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",        0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4.v4",        0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(mslug31v2, mslug31v2, neogeo)
+STD_ROM_FN(mslug31v2)
+
+struct BurnDriver BurnDrvmslug31v2 = {
+	"mslug31v2", "mslug3", "neogeo", NULL, "2019",
+	"Metal Slug 3 (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug31v2RomInfo, mslug31v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug3Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+// Metal Slug 4 (Random Ammunition, Hack)
+static struct BurnRomInfo mslug4ammorRomDesc[] = {
+	{ "263-p1amr.bin",   0x100000, 0x21b68d31, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "263-p2lw.bin",    0x800000, 0x427eed0b, 1 | BRF_ESS | BRF_PRG },  //  1
+	
+	{ "263-s1d.bin",     0x020000, 0xa9446774, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "263-c1d.bin",     0x800000, 0x361ddda6, 3 | BRF_GRA },            //  3 Sprite data
+	{ "263-c2d.bin",     0x800000, 0x15d192c4, 3 | BRF_GRA },            //  4
+	{ "263-c3lw.bin",    0x800000, 0xe296612c, 3 | BRF_GRA },            //  5
+	{ "263-c4lw.bin",    0x800000, 0xc22e3ad0, 3 | BRF_GRA },            //  6
+	{ "263-c5lw.bin",    0x400000, 0x288cd91f, 3 | BRF_GRA },            //  7
+	{ "263-c6lw.bin",    0x400000, 0xb015aeee, 3 | BRF_GRA },            //  8
+
+	{ "263-m1lw.bin",    0x020000, 0x49b1453e, 4 | BRF_ESS | BRF_PRG },  //  9 Z80 code
+
+	{ "263-v1d.bin",     0x400000, 0x8cb5a9ef, 5 | BRF_SND },            // 10 Sound data
+	{ "263-v2lw.bin",    0x400000, 0xc9572c14, 5 | BRF_SND },            // 11
+	{ "263-v3lw.bin",    0x400000, 0xe7c14624, 5 | BRF_SND },            // 12
+	{ "263-v4lw.bin",    0x800000, 0xb1e5ac70, 5 | BRF_SND },            // 13
+};
+
+STDROMPICKEXT(mslug4ammor, mslug4ammor, neogeo)
+STD_ROM_FN(mslug4ammor)
+
+struct BurnDriver BurnDrvmslug4ammor = {
+	"mslug4ammor", "mslug4", "neogeo", NULL, "2018",
+	"Metal Slug 4 (Random Ammunition, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug4ammorRomInfo, mslug4ammorRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 4LW (Body Armor Removed, Hack)
+static struct BurnRomInfo mslug4lwqRomDesc[] = {
+	{ "263-p1lwq.bin",   0x100000, 0x9ebe335e, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "263-p2lw.bin",    0x800000, 0x427eed0b, 1 | BRF_ESS | BRF_PRG },  //  1
+	
+	{ "263-s1d.bin",     0x020000, 0xa9446774, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "263-c1d.bin",     0x800000, 0x361ddda6, 3 | BRF_GRA },            //  3 Sprite data
+	{ "263-c2d.bin",     0x800000, 0x15d192c4, 3 | BRF_GRA },            //  4
+	{ "263-c3lw.bin",    0x800000, 0xe296612c, 3 | BRF_GRA },            //  5
+	{ "263-c4lw.bin",    0x800000, 0xc22e3ad0, 3 | BRF_GRA },            //  6
+	{ "263-c5lw.bin",    0x400000, 0x288cd91f, 3 | BRF_GRA },            //  7
+	{ "263-c6lw.bin",    0x400000, 0xb015aeee, 3 | BRF_GRA },            //  8
+
+	{ "263-m1lw.bin",    0x020000, 0x49b1453e, 4 | BRF_ESS | BRF_PRG },  //  9 Z80 code
+
+	{ "263-v1d.bin",     0x400000, 0x8cb5a9ef, 5 | BRF_SND },            // 10 Sound data
+	{ "263-v2lw.bin",    0x400000, 0xc9572c14, 5 | BRF_SND },            // 11
+	{ "263-v3lw.bin",    0x400000, 0xe7c14624, 5 | BRF_SND },            // 12
+	{ "263-v4lw.bin",    0x800000, 0xb1e5ac70, 5 | BRF_SND },            // 13
+};
+
+STDROMPICKEXT(mslug4lwq, mslug4lwq, neogeo)
+STD_ROM_FN(mslug4lwq)
+
+struct BurnDriver BurnDrvmslug4lwq = {
+	"mslug4lwq", "mslug4", "neogeo", NULL, "2020",
+	"Metal Slug 4LW (Body Armor Removed, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug4lwqRomInfo, mslug4lwqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 4 (The Longest Battle, Hack)
+static struct BurnRomInfo mslug4qRomDesc[] = {
+	{ "263-p1q.bin",    0x100000, 0x461579ae, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "263-p2q.bin",    0x400000, 0xa4d2e871, 1 | BRF_ESS | BRF_PRG },  //  1
+	
+	{ "263-s1d.s1",     0x080000, 0x1eaa05e0, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "263-c1d.c1",     0x800000, 0xa75ffcde, 3 | BRF_GRA },            //  3 Sprite data
+	{ "263-c2d.c2",     0x800000, 0x5ab0d12b, 3 | BRF_GRA },            //  4
+	{ "263-c3d.c3",     0x800000, 0x61af560c, 3 | BRF_GRA },            //  5
+	{ "263-c4d.c4",     0x800000, 0xf2c544fd, 3 | BRF_GRA },            //  6
+	{ "263-c5d.c5",     0x800000, 0x84c66c44, 3 | BRF_GRA },            //  7
+	{ "263-c6d.c6",     0x800000, 0x5ed018ab, 3 | BRF_GRA },            //  8
+
+	{ "263-m1d.m1",     0x020000, 0xef5db532, 4 | BRF_ESS | BRF_PRG },  //  9 Z80 code
+
+	{ "263-v1d.v1",     0x800000, 0xfd6b982e, 5 | BRF_SND },            // 10 Sound data
+	{ "263-v2d.v2",     0x800000, 0x20125227, 5 | BRF_SND },            // 11
+};
+
+STDROMPICKEXT(mslug4q, mslug4q, neogeo)
+STD_ROM_FN(mslug4q)
+
+struct BurnDriver BurnDrvmslug4q = {
+	"mslug4q", "mslug4", "neogeo", NULL, "2022",
+	"Metal Slug 4 (The Longest Battle, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug4qRomInfo, mslug4qRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+static struct BurnRomInfo mslug41v2RomDesc[] = {
+	{ "263-p11v2.p1",   0x100000, 0xdddca463, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "263-p2.sp2",     0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* Encrypted */
+	{ "263-c1.c1",      0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "263-c2.c2",      0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3
+	{ "263-c3.c3",      0x800000, 0x1a343323, 3 | BRF_GRA },           //  4
+	{ "263-c4.c4",      0x800000, 0x942cfb44, 3 | BRF_GRA },           //  5
+	{ "263-c5.c5",      0x800000, 0xa748854f, 3 | BRF_GRA },           //  6
+	{ "263-c6.c6",      0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7
+
+	/* Encrypted */
+	{ "263-m1.m1",      0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	/* Encrypted */
+	{ "263-v1.v1",      0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
+	{ "263-v2.v2",      0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10
+};
+
+STDROMPICKEXT(mslug41v2, mslug41v2, neogeo)
+STD_ROM_FN(mslug41v2)
+
+struct BurnDriver BurnDrvmslug41v2 = {
+	"mslug41v2", "mslug4", "neogeo", NULL, "2019",
+	"Metal Slug 4 (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug41v2RomInfo, mslug41v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug4Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
+// Metal Slug 5 (Enemy Soldier Enhanced, Hack)
+static struct BurnRomInfo mslug5dbjRomDesc[] = {
+	{ "268-p1dbj.bin",   0x600000, 0x1527c4dd, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+
+	{ "268d-s1.rom",     0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "268d-c1.rom",     0x800000, 0x969c0d62, 3 | BRF_GRA },            //  3 Sprite data
+	{ "268d-c2.rom",     0x800000, 0xc69ae867, 3 | BRF_GRA },            //  4
+	{ "268d-c3.rom",     0x800000, 0xd7beaeaf, 3 | BRF_GRA },            //  5
+	{ "268d-c4.rom",     0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  6
+	{ "268d-c5.rom",     0x800000, 0x2fa1a5ad, 3 | BRF_GRA },            //  7
+	{ "268d-c6.rom",     0x800000, 0x6de89589, 3 | BRF_GRA },            //  8
+	{ "268d-c7.rom",     0x800000, 0x97bd0c0a, 3 | BRF_GRA },            //  9
+	{ "268d-c8.rom",     0x800000, 0xc0d5bc20, 3 | BRF_GRA },            // 10
+
+	{ "268d-m1.rom",     0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 11 Z80 code
+
+	{ "268d-v1.rom",     0x400000, 0xc3540e0d, 5 | BRF_SND },            // 12 Sound data
+	{ "268d-v2.rom",     0x400000, 0x077bd2f4, 5 | BRF_SND },            // 13
+	{ "268d-v3.rom",     0x400000, 0x39b14567, 5 | BRF_SND },            // 14
+	{ "268d-v4.rom",     0x400000, 0x969ff3b2, 5 | BRF_SND },            // 15
+};
+
+STDROMPICKEXT(mslug5dbj, mslug5dbj, neogeo)
+STD_ROM_FN(mslug5dbj)
+
+struct BurnDriver BurnDrvmslug5dbj = {
+	"mslug5dbj", "mslug5", "neogeo", NULL, "2020",
+	"Metal Slug 5 (Enemy Soldier Enhanced, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5dbjRomInfo, mslug5dbjRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 5 (Extremely Simplified, Hack)
+static struct BurnRomInfo mslug5esRomDesc[] = {
+	{ "268-p1es.bin",   0x600000, 0x74216018, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "268d-c1.rom",    0x800000, 0x969c0d62, 3 | BRF_GRA },            //  3 Sprite data
+	{ "268d-c2.rom",    0x800000, 0xc69ae867, 3 | BRF_GRA },            //  4
+	{ "268d-c3.rom",    0x800000, 0xd7beaeaf, 3 | BRF_GRA },            //  5
+	{ "268d-c4.rom",    0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  6
+	{ "268d-c5.rom",    0x800000, 0x2fa1a5ad, 3 | BRF_GRA },            //  7
+	{ "268d-c6.rom",    0x800000, 0x6de89589, 3 | BRF_GRA },            //  8
+	{ "268d-c7.rom",    0x800000, 0x97bd0c0a, 3 | BRF_GRA },            //  9
+	{ "268d-c8.rom",    0x800000, 0xc0d5bc20, 3 | BRF_GRA },            // 10
+
+	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 11 Z80 code
+
+	{ "268d-v1.rom",    0x400000, 0xc3540e0d, 5 | BRF_SND },            // 12 Sound data
+	{ "268d-v2.rom",    0x400000, 0x077bd2f4, 5 | BRF_SND },            // 13
+	{ "268d-v3.rom",    0x400000, 0x39b14567, 5 | BRF_SND },            // 14
+	{ "268d-v4.rom",    0x400000, 0x969ff3b2, 5 | BRF_SND },            // 15
+};
+
+STDROMPICKEXT(mslug5es, mslug5es, neogeo)
+STD_ROM_FN(mslug5es)
+
+struct BurnDriver BurnDrvmslug5es = {
+	"mslug5es", "mslug5", "neogeo", NULL, "2022",
+	"Metal Slug 5 (Extremely Simplified, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5esRomInfo, mslug5esRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 5 (Stone Turtle, Hack)
+static struct BurnRomInfo mslug5sgRomDesc[] = {
+	{ "268-p1sg.bin",   0x600000, 0xf92bbfd1, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "268d-c1.rom",    0x800000, 0x969c0d62, 3 | BRF_GRA },            //  3 Sprite data
+	{ "268d-c2.rom",    0x800000, 0xc69ae867, 3 | BRF_GRA },            //  4
+	{ "268d-c3.rom",    0x800000, 0xd7beaeaf, 3 | BRF_GRA },            //  5
+	{ "268d-c4.rom",    0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  6
+	{ "268d-c5.rom",    0x800000, 0x2fa1a5ad, 3 | BRF_GRA },            //  7
+	{ "268d-c6.rom",    0x800000, 0x6de89589, 3 | BRF_GRA },            //  8
+	{ "268d-c7.rom",    0x800000, 0x97bd0c0a, 3 | BRF_GRA },            //  9
+	{ "268d-c8.rom",    0x800000, 0xc0d5bc20, 3 | BRF_GRA },            // 10
+
+	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 11 Z80 code
+
+	{ "268d-v1.rom",    0x400000, 0xc3540e0d, 5 | BRF_SND },            // 12 Sound data
+	{ "268d-v2.rom",    0x400000, 0x077bd2f4, 5 | BRF_SND },            // 13
+	{ "268d-v3.rom",    0x400000, 0x39b14567, 5 | BRF_SND },            // 14
+	{ "268d-v4.rom",    0x400000, 0x969ff3b2, 5 | BRF_SND },            // 15
+};
+
+STDROMPICKEXT(mslug5sg, mslug5sg, neogeo)
+STD_ROM_FN(mslug5sg)
+
+struct BurnDriver BurnDrvmslug5sg = {
+	"mslug5sg", "mslug5", "neogeo", NULL, "2022",
+	"Metal Slug 5 (Stone Turtle, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5sgRomInfo, mslug5sgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 5 (Vehicle Summon, Hack)
+static struct BurnRomInfo mslug5zhRomDesc[] = {
+	{ "268-p1zh.bin",   0x600000, 0xdc057a7a, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+
+	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "268d-c1.rom",    0x800000, 0x969c0d62, 3 | BRF_GRA },            //  3 Sprite data
+	{ "268d-c2.rom",    0x800000, 0xc69ae867, 3 | BRF_GRA },            //  4
+	{ "268d-c3.rom",    0x800000, 0xd7beaeaf, 3 | BRF_GRA },            //  5
+	{ "268d-c4.rom",    0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  6
+	{ "268d-c5.rom",    0x800000, 0x2fa1a5ad, 3 | BRF_GRA },            //  7
+	{ "268d-c6.rom",    0x800000, 0x6de89589, 3 | BRF_GRA },            //  8
+	{ "268d-c7.rom",    0x800000, 0x97bd0c0a, 3 | BRF_GRA },            //  9
+	{ "268d-c8.rom",    0x800000, 0xc0d5bc20, 3 | BRF_GRA },            // 10
+
+	{ "268d-m1.rom",    0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 11 Z80 code
+
+	{ "268d-v1.rom",    0x400000, 0xc3540e0d, 5 | BRF_SND },            // 12 Sound data
+	{ "268d-v2.rom",    0x400000, 0x077bd2f4, 5 | BRF_SND },            // 13
+	{ "268d-v3.rom",    0x400000, 0x39b14567, 5 | BRF_SND },            // 14
+	{ "268d-v4.rom",    0x400000, 0x969ff3b2, 5 | BRF_SND },            // 15
+};
+
+STDROMPICKEXT(mslug5zh, mslug5zh, neogeo)
+STD_ROM_FN(mslug5zh)
+
+struct BurnDriver BurnDrvmslug5zh = {
+	"mslug5zh", "mslug5", "neogeo", NULL, "2018",
+	"Metal Slug 5 (Vehicle Summon, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5zhRomInfo, mslug5zhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 5 (1v2 Mode, Hack)
+static struct BurnRomInfo mslug51v2RomDesc[] = {
+	{ "268-p11v2.bin",   0x600000, 0x953d6e11, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+
+	{ "268d-s1.rom",     0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "268d-c1.rom",     0x800000, 0x969c0d62, 3 | BRF_GRA },            //  3 Sprite data
+	{ "268d-c2.rom",     0x800000, 0xc69ae867, 3 | BRF_GRA },            //  4
+	{ "268d-c3.rom",     0x800000, 0xd7beaeaf, 3 | BRF_GRA },            //  5
+	{ "268d-c4.rom",     0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  6
+	{ "268d-c5.rom",     0x800000, 0x2fa1a5ad, 3 | BRF_GRA },            //  7
+	{ "268d-c6.rom",     0x800000, 0x6de89589, 3 | BRF_GRA },            //  8
+	{ "268d-c7.rom",     0x800000, 0x97bd0c0a, 3 | BRF_GRA },            //  9
+	{ "268d-c8.rom",     0x800000, 0xc0d5bc20, 3 | BRF_GRA },            // 10
+
+	{ "268d-m1.rom",     0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 11 Z80 code
+
+	{ "268d-v1.rom",     0x400000, 0xc3540e0d, 5 | BRF_SND },            // 12 Sound data
+	{ "268d-v2.rom",     0x400000, 0x077bd2f4, 5 | BRF_SND },            // 13
+	{ "268d-v3.rom",     0x400000, 0x39b14567, 5 | BRF_SND },            // 14
+	{ "268d-v4.rom",     0x400000, 0x969ff3b2, 5 | BRF_SND },            // 15
+};
+
+STDROMPICKEXT(mslug51v2, mslug51v2, neogeo)
+STD_ROM_FN(mslug51v2)
+
+struct BurnDriver BurnDrvmslug51v2 = {
+	"mslug51v2", "mslug5", "neogeo", NULL, "2018",
+	"Metal Slug 5 (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug51v2RomInfo, mslug51v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 5 (Extend Ver, Hack)
+static struct BurnRomInfo mslug5extRomDesc[] = {
+	{ "268-p1ext.bin",   0x600000, 0x7ff5364b, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+
+	{ "268d-s1.rom",     0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "268d-c1.rom",     0x800000, 0x969c0d62, 3 | BRF_GRA },            //  3 Sprite data
+	{ "268d-c2.rom",     0x800000, 0xc69ae867, 3 | BRF_GRA },            //  4
+	{ "268d-c3.rom",     0x800000, 0xd7beaeaf, 3 | BRF_GRA },            //  5
+	{ "268d-c4.rom",     0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  6
+	{ "268d-c5.rom",     0x800000, 0x2fa1a5ad, 3 | BRF_GRA },            //  7
+	{ "268d-c6.rom",     0x800000, 0x6de89589, 3 | BRF_GRA },            //  8
+	{ "268d-c7.rom",     0x800000, 0x97bd0c0a, 3 | BRF_GRA },            //  9
+	{ "268d-c8.rom",     0x800000, 0xc0d5bc20, 3 | BRF_GRA },            // 10
+
+	{ "268d-m1.rom",     0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 11 Z80 code
+
+	{ "268d-v1.rom",     0x400000, 0xc3540e0d, 5 | BRF_SND },            // 12 Sound data
+	{ "268d-v2.rom",     0x400000, 0x077bd2f4, 5 | BRF_SND },            // 13
+	{ "268d-v3.rom",     0x400000, 0x39b14567, 5 | BRF_SND },            // 14
+	{ "268d-v4.rom",     0x400000, 0x969ff3b2, 5 | BRF_SND },            // 15
+};
+
+STDROMPICKEXT(mslug5ext, mslug5ext, neogeo)
+STD_ROM_FN(mslug5ext)
+
+struct BurnDriver BurnDrvmslug5ext = {
+	"mslug5ext", "mslug5", "neogeo", NULL, "2018",
+	"Metal Slug 5 (Extend Ver, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5extRomInfo, mslug5extRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+

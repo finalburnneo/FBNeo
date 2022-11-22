@@ -48,17 +48,16 @@ void SetBurnFPS(const char *name, int version)
 		return;
 	}
 
+	// UMK3UC at 60fps rate
+	if (kNetVersion >= NET_VERSION_UMK3UC_FRAMERATE) {
+		if (!strcmp(name, "umk3uc")) {
+			bForce60Hz = 1;
+			return;
+		}
+	}
+
 	if (kNetVersion < NET_VERSION_DISABLE_FORCE_60HZ) {
 		bForce60Hz = 1;
-
-		// UMK3UC at 60fps rate
-		if (kNetVersion >= NET_VERSION_UMK3UC_FRAMERATE) {
-			if (!strcmp(name, "umk3uc")) {
-				bForce60Hz = 1;
-				return;
-			}
-		}
-
 		// MK Framerate at original rate (54fps)
 		if (kNetVersion >= NET_VERSION_MK_FRAMERATE) {
 			if (!strcmp(name, "mk") || !strcmp(name, "mk2") || !strcmp(name, "mk2p") || !strcmp(name, "mk3") ||

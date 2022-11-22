@@ -4,11 +4,21 @@
 #define MAX_NODES			1024
 #define MAX_ACTIVE_PATCHES	1024
 
+#define IPS_OFFSET_016		0x1000000
+#define IPS_OFFSET_032		0x2000000
+#define IPS_OFFSET_048		0x3000000
+#define IPS_OFFSET_064		0x4000000
+#define IPS_OFFSET_080		0x5000000
+#define IPS_OFFSET_096		0x6000000
+#define IPS_OFFSET_112		0x7000000
+#define IPS_OFFSET_128		0x8000000
+#define IPS_OFFSET_144		0x9000000
+
 static HWND hIpsDlg			= NULL;
 static HWND hParent			= NULL;
 static HWND hIpsList		= NULL;
 
-int nIpsSelectedLanguage		= 0;
+int nIpsSelectedLanguage	= 0;
 static TCHAR szFullName[1024];
 static TCHAR szLanguages[NUM_LANGUAGES][32];
 static TCHAR szLanguageCodes[NUM_LANGUAGES][6];
@@ -27,7 +37,9 @@ static HBITMAP hPreview		= NULL;
 
 static TCHAR szDriverName[32];
 
-INT32 nIpsMaxFileLen = 0;
+static int nRomOffset		= 0;
+
+INT32 nIpsMaxFileLen		= 0;
 
 TCHAR szIpsActivePatches[MAX_ACTIVE_PATCHES][MAX_PATH];
 
@@ -796,15 +808,17 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 			}
 
 			while (Size--) {
-				if (!readonly) mem8 = base + Offset; // When in the read-only state, the only thing is to get nIpsMaxFileLen, thus avoiding memory out-of-bounds.
+				// When in the read-only state, the only thing is to get nIpsMaxFileLen, thus avoiding memory out-of-bounds.
+				if (!readonly) mem8 = base + Offset + nRomOffset;
                 Offset++;
-                if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
                 if (readonly) {
                     if (!bRLE) fgetc(f);
                 } else {
-                    *mem8 = bRLE ? ch : fgetc(f);
+					*mem8 = bRLE ? ch : fgetc(f);
                 }
 			}
+
+			if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
 		}
 	}
 
@@ -850,6 +864,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bo
     char* p = NULL;
 	char* rom_name = NULL;
 	char* ips_name = NULL;
+	char* ips_offs = NULL;
 	FILE* fp = NULL;
 	unsigned long nIpsSize;
 
@@ -888,12 +903,40 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bo
 				if (_stricmp(rom_name, game_name))
 					continue;
 
-                ips_name = strtok(NULL, "\r\n");
+                ips_name = strtok(NULL, "\t\r\n");
 
 				if (ips_name[0] == '\t') ips_name++;
 
 				if (!ips_name)
 					continue;
+
+				nRomOffset = 0; // Reset to 0
+
+				if (NULL != (ips_offs = strtok(NULL, " \t\r\n"))) {
+					if (ips_offs[0] == '\t') ips_offs++;
+
+					if (0 == strcmp(ips_offs, "IPS_OFFSET_016")) {
+						nRomOffset = IPS_OFFSET_016;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_032")) {
+						nRomOffset = IPS_OFFSET_032;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_048")) {
+						nRomOffset = IPS_OFFSET_048;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_064")) {
+						nRomOffset = IPS_OFFSET_064;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_080")) {
+						nRomOffset = IPS_OFFSET_080;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_096")) {
+						nRomOffset = IPS_OFFSET_096;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_112")) {
+						nRomOffset = IPS_OFFSET_112;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_128")) {
+						nRomOffset = IPS_OFFSET_128;
+					} else if (0 == strcmp(ips_offs, "IPS_OFFSET_144")) {
+						nRomOffset = IPS_OFFSET_144;
+					} else {
+						nRomOffset = 0;
+					}
+				}
 
                 // remove crc portion, and end quote/spaces from ips name
                 char *c = stristr_int(ips_name, "crc");
@@ -981,8 +1024,8 @@ UINT32 GetIpsDrvDefine()
 					if (NULL == (tmp = strtok(NULL, " \t\r\n")))
 						break;
 
-					if (0 == strcmp(tmp, "IPS_USE_PROTECT")) {
-						nRet |= IPS_USE_PROTECT;
+					if (0 == strcmp(tmp, "IPS_NOT_PROTECT")) {
+						nRet |= IPS_NOT_PROTECT;
 						continue;
 					}
 

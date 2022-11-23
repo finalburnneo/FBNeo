@@ -1355,6 +1355,12 @@ static int jitterArrayPos = 0;
 static int jitterPingAvg = 0;
 static int jitterAvg = 0;
 
+static int nLastRollbackCount = 0;
+static UINT32 nLastRollbackFrames = 0;
+static UINT32 nRollbackRealtime = 0;
+static UINT32 nLastRollbackAt = 0;
+static UINT32 nMaxRollback=0;
+
 void VidOverlaySetStats(double fps, int ping, int delay)
 {
 	wchar_t buf[64];
@@ -1362,11 +1368,25 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 		swprintf(buf, 64, _T("%2.2ffps"), fps);
 	}
 	else {
-		// average rollback
-		float nRollbackAvg = 0;
-		if (nRollbackFrames > 0 && nRollbackCount > 0) {
-			nRollbackAvg = (float)nRollbackFrames / nRollbackCount;
+		// rollback frames
+		nMaxRollback = 3 + ((ping/2)/(100000/nBurnFPS));
+		if (nLastRollbackFrames > 0 && nLastRollbackCount > 0) {
+			if (nRollbackCount > nLastRollbackCount) {
+				nRollbackRealtime = (nRollbackFrames-nLastRollbackFrames)/(nRollbackCount-nLastRollbackCount);
+				nLastRollbackAt = nFramesEmulated;
+				if ( nRollbackRealtime > nMaxRollback) {
+					if (nFramesEmulated > 1000 && nRollbackRealtime > 0) {
+						VidOverlaySetWarning(120, false);
+					}
+				}
+
+			} else if (nFramesEmulated > nLastRollbackAt + 600) {
+				nRollbackRealtime = 0;
+			}
 		}
+		nLastRollbackCount = nRollbackCount;
+		nLastRollbackFrames = nRollbackFrames;
+
 		// jitter
 		if (ping > 0 && nFramesEmulated > 600) {
 			int pingSum = 0;
@@ -1389,9 +1409,9 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 			VidOverlaySetWarning(120, false);
 
 		if (bShowFPS == 1)
-			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d %dms"), fps, delay, nVidRunahead, ping);
+			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d p%dms r%df"), fps, delay, nVidRunahead, ping, nRollbackRealtime);
 		else if (bShowFPS == 2)
-			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d %dms/j%dms (%2.1f)"), fps, delay, nVidRunahead, ping, jitterAvg, nRollbackAvg);
+			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d p%dms/j%dms r%df"), fps, delay, nVidRunahead, ping, jitterAvg, nRollbackRealtime);
 	}
 
 	// send warning if fps went down the thresold

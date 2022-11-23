@@ -39794,7 +39794,7 @@ STD_ROM_PICK(nes_skartfighter)
 STD_ROM_FN(nes_skartfighter)
 
 struct BurnDriver BurnDrvnes_skartfighter = {
-	"nes_skartfighter", "NULL", NULL, NULL, "2022",
+	"nes_skartfighter", "nes_kartfighter", NULL, NULL, "2022",
 	"Super Kart Fighter (Hack)\0", NULL, "Streetwize", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,

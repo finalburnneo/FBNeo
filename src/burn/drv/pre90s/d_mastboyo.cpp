@@ -1,4 +1,4 @@
-// FB Alpha Master Boy (original) driver module
+// FB Neo Master Boy (original) driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"
@@ -127,7 +127,7 @@ static tilemap_callback( bg )
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
 	bankswitch(1);
@@ -175,7 +175,7 @@ static INT32 DrvGfxDecode()
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM, 0x4000);
+	memcpy(tmp, DrvGfxROM, 0x4000);
 
 	GfxDecode(0x0200, 4, 8, 8, Plane, XOffs, YOffs, 0x100, tmp, DrvGfxROM);
 
@@ -212,7 +212,7 @@ static INT32 DrvInit(INT32 which)
 		}
 
 		DrvGfxDecode();
-	} else {
+	} else if (which == 1) {
 		memset (DrvZ80ROM, 0xff, 0x90000);
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x00000, 0, 1)) return 1;
@@ -233,6 +233,27 @@ static INT32 DrvInit(INT32 which)
 
 		if (BurnLoadRom(DrvColPROM + 0x00100, 9, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00000, 10, 1)) return 1;
+
+		for (INT32 i = 0; i < 0x100; i++) {
+			DrvColPROM[i] = (DrvColPROM[i] & 0xf) | (DrvColPROM[0x100 + i] << 4);
+		}
+
+		DrvGfxDecode();
+	} else {
+		memset(DrvZ80ROM, 0xff, 0x90000);
+
+		if (BurnLoadRom(DrvZ80ROM  + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x50000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x58000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x60000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x68000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x70000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x78000, 6, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM  + 0x00000, 7, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM + 0x00100, 8, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00000, 9, 1)) return 1;
 
 		for (INT32 i = 0; i < 0x100; i++) {
 			DrvColPROM[i] = (DrvColPROM[i] & 0xf) | (DrvColPROM[0x100 + i] << 4);
@@ -460,7 +481,7 @@ struct BurnDriver BurnDrvMastboyoa = {
 	256, 224, 4, 3
 };
 
-// Master Boy (1987, Z80 hardware, Ichi-Funtel)
+// Master Boy (1987, Z80 hardware, Ichi-Funtel, set 1)
 
 static struct BurnRomInfo mastboyobRomDesc[] = {
 	{ "mb_p1.ic14",			0x04000, 0x9ff8d386, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -482,10 +503,47 @@ STD_ROM_FN(mastboyob)
 
 struct BurnDriver BurnDrvMastboyob = {
 	"mastboyob", "mastboyo", NULL, NULL, "1987",
-	"Master Boy (1987, Z80 hardware, Ichi-Funtel)\0", NULL, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
+	"Master Boy (1987, Z80 hardware, Ichi-Funtel, set 1)\0", NULL, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, mastboyobRomInfo, mastboyobRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Master Boy (1987, Z80 hardware, Ichi-Funtel, set 2)
+
+static struct BurnRomInfo mastboyocRomDesc[] = {
+	{ "ic14-mb-pt-27128.bin",	0x04000, 0x3a42c74d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "ic13-mb-1-27256.bin",	0x08000, 0xefb4b2f9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ic12-mb-2-27256.bin",	0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ic11-mb-3-27256.bin",	0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ic10-mb-4-27256.bin",	0x08000, 0x266e7d37, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ic9-mb-5-27256.bin",		0x08000, 0x40b07eeb, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ic8-mb-6-27256.bin",		0x08000, 0x3a214efd, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "ic36-fij-27128.bin",		0x04000, 0xbdd0f821, 2 | BRF_GRA },           //  7 Graphics
+
+	{ "h_82s129.ic39",			0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  8 Color data
+	{ "l_82s129.ic40",			0x00100, 0x4d061216, 3 | BRF_GRA },           //  9
+
+	{ "d_82s129.ic23",			0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           // 10 Unused PROM
+};
+
+STD_ROM_PICK(mastboyoc)
+STD_ROM_FN(mastboyoc)
+
+static INT32 mastboyocInit()
+{
+	return DrvInit(2);
+}
+
+struct BurnDriver BurnDrvMastboyoc = {
+	"mastboyoc", "mastboyo", NULL, NULL, "1987",
+	"Master Boy (1987, Z80 hardware, Ichi-Funtel, set 2)\0", NULL, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	NULL, mastboyocRomInfo, mastboyocRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	mastboyocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

@@ -252,6 +252,7 @@ static INT32 nCycles68KSync;
 
 UINT8 *Neo68KROM[MAX_SLOT] = { NULL, }, *Neo68KROMActive = NULL;
 UINT8 *NeoVector[MAX_SLOT] = { NULL, }, *NeoVectorActive = NULL;
+UINT8 *NeoBiosVector[MAX_SLOT] = { NULL, }, *NeoBiosVectorActive = NULL;
 UINT8 *Neo68KFix[MAX_SLOT] = { NULL, };
 UINT8 *NeoZ80ROM[MAX_SLOT] = { NULL, }, *NeoZ80ROMActive = NULL;
 
@@ -405,6 +406,7 @@ static INT32 ROMIndex()
 	} else {
 		Neo68KROM[0]		= Next; Next += nCodeSize[0];
 		NeoVector[0]		= Next; Next += 0x000400;				// Copy of 68K cartridge ROM with boardROM vector table
+		NeoBiosVector[0]	= Next; Next += 0x000400;				// Copy of 68K boardROM with cartridge ROM vector table
 		Neo68KBIOS			= Next; Next += 0x080000;				// 68K boardROM
 
 		NeoZ80ROM[0]		= Next; Next += 0x080000;
@@ -921,8 +923,10 @@ static void MapVectorTable(bool bMapBoardROM)
 
 	if (!bMapBoardROM && Neo68KROMActive) {
 		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0003FF, MAP_ROM);
+		SekMapMemory(Neo68KBIOS, 0xc00000, 0xc003FF, MAP_ROM);
 	} else {
 		SekMapMemory(NeoVectorActive, 0x000000, 0x0003FF, MAP_ROM);
+		SekMapMemory(NeoBiosVectorActive, 0xc00000, 0xc003FF, MAP_ROM);
 	}
 }
 
@@ -963,6 +967,7 @@ void NeoMap68KFix()
 
 		if (Neo68KROM[nNeoActiveSlot]) {
 			memcpy(NeoVector[nNeoActiveSlot] + 0x80, Neo68KFix[nNeoActiveSlot] + 0x80, 0x0380);
+			memcpy(NeoBiosVector[nNeoActiveSlot], Neo68KFix[nNeoActiveSlot], 0x080);
 		}
 	}
 
@@ -975,8 +980,10 @@ void NeoUpdateVector()
 	for (INT32 i = 0; i < MAX_SLOT; i++) {
 		if (NeoVector[i]) {
 			memcpy(NeoVector[i] + 0x00, Neo68KBIOS, 0x0080);
+			memcpy(NeoBiosVector[i], Neo68KBIOS, 0x0400);
 			if (Neo68KROM[i]) {
 				memcpy(NeoVector[i] + 0x80, Neo68KFix[i] + 0x80, 0x0380);
+				memcpy(NeoBiosVector[i], Neo68KFix[i], 0x080);
 			}
 		}
 	}
@@ -1130,6 +1137,7 @@ static void NeoMapActiveCartridge()
 	}
 
 	NeoVectorActive = NeoVector[nNeoActiveSlot];
+	NeoBiosVectorActive = NeoBiosVector[nNeoActiveSlot];
 
 	if (Neo68KROM[nNeoActiveSlot] == NULL) {
 
@@ -4292,6 +4300,11 @@ INT32 NeoInit()
 			return 1;
 		}
 		memset(NeoVector[nNeoActiveSlot], 0, 0x0400);
+		NeoBiosVector[nNeoActiveSlot] = (UINT8*)BurnMalloc(0x0400);
+		if (NeoBiosVector[nNeoActiveSlot] == NULL) {
+			return 1;
+		}
+		memset(NeoBiosVector[nNeoActiveSlot], 0, 0x0400);	
 	}
 
 	// Allocate all memory needed for ROM
@@ -4367,6 +4380,7 @@ INT32 NeoCDInit()
 
 	Neo68KROMActive = Neo68KROM[0];
 	NeoVectorActive = NeoVector[0];
+	NeoBiosVectorActive = NeoBiosVector[0];
 	NeoZ80ROMActive = NeoZ80ROM[0];
 
 	Neo68KFix[0] = Neo68KROM[0];
@@ -4441,6 +4455,7 @@ INT32 NeoExit()
 			BurnFree(NeoSpriteROM[nNeoActiveSlot]);						// Sprite ROM
 			BurnFree(Neo68KROM[nNeoActiveSlot]);						// 68K ROM
 			BurnFree(NeoVector[nNeoActiveSlot]);						// 68K vectors
+			BurnFree(NeoBiosVector[nNeoActiveSlot]);					// 68K bios vectors
 			BurnFree(NeoZ80ROM[nNeoActiveSlot]);						// Z80 ROM
 			BurnFree(YM2610ADPCMAROM[nNeoActiveSlot]);
 			BurnFree(YM2610ADPCMBROM[nNeoActiveSlot]);
@@ -4464,6 +4479,7 @@ INT32 NeoExit()
 
 	nNeoActiveSlot = 0;
 	NeoVectorActive = NULL;
+	NeoBiosVectorActive = NULL;
 	Neo68KROMActive = NULL;
 	NeoZ80ROMActive = NULL;
 

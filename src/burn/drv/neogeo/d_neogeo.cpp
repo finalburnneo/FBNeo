@@ -2081,7 +2081,7 @@ static void __fastcall ridheroLinkWrite(UINT32 sekAddress, UINT8 byteValue)
 
 	switch (sekAddress)
 	{
-		case 0x200000:
+		case 0x200001:
 		{
 			switch (byteValue & 0xf0) // command
 			{

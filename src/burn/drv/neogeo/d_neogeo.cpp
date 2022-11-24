@@ -2049,13 +2049,89 @@ static struct BurnRomInfo ridheroRomDesc[] = {
 STDROMPICKEXT(ridhero, ridhero, neogeo)
 STD_ROM_FN(ridhero)
 
+// Very incomplete simulation of system link - just enough to make AES mode work correctly. When this is properly emulated, please remove! 
+static UINT8 ridheroLinkStatus = 0;
+
+// Dip 0 bits 5,4,3 are important for this, bit 5 sets whether to use the link or not, 4 & 3 inverted is the machine ID (~dip & 0x18)
+
+static UINT8 __fastcall ridheroLinkRead(UINT32 sekAddress)
+{
+	UINT8 ret = 0;
+
+	switch (sekAddress)
+	{
+		case 0x200000: // status read? always read to D4
+			ridheroLinkStatus ^= 0x08;
+			ret = ridheroLinkStatus;
+			break;
+			
+		case 0x200001: // result read? always read to D1
+			ret = 0; // returning 0x80 gives us more
+			break;
+	}
+
+//	bprintf (0, _T("Link Read: %5.5x %2.2x PC(%5.5x)\n"), sekAddress, ret, SekGetPC(-1));
+
+	return ret;
+}
+
+static void __fastcall ridheroLinkWrite(UINT32 sekAddress, UINT8 byteValue)
+{
+//	bprintf (0, _T("Link Write: %5.5x, %2.2x PC(%5.5x)\n"), sekAddress, byteValue, SekGetPC(-1));
+
+	switch (sekAddress)
+	{
+		case 0x200000:
+		{
+			switch (byteValue & 0xf0) // command
+			{
+				case 0x00: // ?
+				case 0x10: // send my cabinet ID#
+				case 0x20: // request partner cabinet ID# ?
+					// $b10a tests (result & 0xfc) and branches if it is zero
+				case 0x40: // ?
+				case 0x50: // ?
+				case 0x70: // prepare to receive my Cabinet ID# ?
+				case 0xb0: // ?
+				case 0xc0: // c0-ff ?
+				return;
+			}		
+		}
+		return;
+	}
+}
+
+static void ridheroInstallHandlers()
+{
+	SekMapHandler(7,    0x200000,    0x200001,  MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler(7,  ridheroLinkRead);
+	SekSetWriteByteHandler(7, ridheroLinkWrite);
+}
+
+static INT32 ridheroScan(INT32 nAction, INT32*)
+{
+	if (nAction & ACB_MEMORY_RAM) {
+		SCAN_VAR(ridheroLinkStatus);
+	}
+
+	return 0;
+}
+
+static INT32 ridheroInit()
+{
+	NeoCallbackActive->pInstallHandlers = ridheroInstallHandlers;
+	NeoCallbackActive->pScan = ridheroScan;
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvRidhero = {
 	"ridhero", NULL, "neogeo", NULL, "1990",
 	"Riding Hero (NGM-006)(NGH-006)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
 	NULL, ridheroRomInfo, ridheroRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ridheroInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -2094,7 +2170,7 @@ struct BurnDriver BurnDrvRidheroh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
 	NULL, ridherohRomInfo, ridherohRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ridheroInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

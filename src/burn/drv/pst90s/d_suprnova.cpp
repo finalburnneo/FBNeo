@@ -7,6 +7,7 @@
 #include "sh2_intf.h"
 #include "lowpass2.h"
 #include "burn_gun.h"
+#include "dtimer.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -909,135 +910,6 @@ static UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
 #endif
 }
 
-// simple timer system -dink 2019, v2.1 (2022-upgreydde ver.)
-struct dtimer
-{
-	INT32 running;
-	UINT32 time_trig;
-	UINT32 time_current;
-	INT32 timer_param;
-	INT32 timer_prescaler;
-	UINT32 prescale_counter;
-	INT32 retrig;
-	void (*timer_exec)(int);
-
-	void scan() {
-		SCAN_VAR(running);
-		SCAN_VAR(time_trig);
-		SCAN_VAR(time_current);
-		SCAN_VAR(timer_param);
-		SCAN_VAR(timer_prescaler);
-		SCAN_VAR(prescale_counter);
-		SCAN_VAR(retrig);
-	}
-
-	void start(UINT32 trig_at, INT32 tparam, INT32 run_now, INT32 retrigger) {
-		running = run_now;
-		if (tparam != -1) timer_param = tparam;
-		time_trig = trig_at;
-		time_current = 0;
-		//prescale_counter = 0; <-- not here!
-		retrig = retrigger;
-		//if (counter) bprintf(0, _T("timer %d START:  %d  cycles - running: %d\n"), timer_param, time_trig, running);
-		//if (counter) bprintf(0, _T("timer %d   running %d - timeleft  %d  time_trig %d  time_current %d\n"), timer_param, running, time_trig - time_current, time_trig, time_current);
-	}
-
-	void init(INT32 tparam, void (*callback)(int)) {
-		config(tparam, callback);
-		reset();
-	}
-
-	void config(INT32 tparam, void (*callback)(int)) {
-		timer_param = tparam;
-		timer_exec = callback;
-		timer_prescaler = 1;// * ratio_multi;
-	}
-
-	void set_prescaler(INT32 prescale) {
-		timer_prescaler = prescale;
-	}
-
-	void run_prescale(INT32 cyc) {
-		prescale_counter += cyc;// * m_ratio;
-		while (prescale_counter >= timer_prescaler) {
-			prescale_counter -= timer_prescaler;
-
-			// note: we can't optimize this, f.ex:
-			//run(prescale_counter / timer_prescaler); prescale_counter %= timer_prescaler;
-			// why? when the timer hits, the prescaler can & will change.
-
-			// note2:
-			//run(1);  this is just the contents of run(1) from below
-			if (running) {
-				time_current += 1;
-
-				if (time_current >= time_trig) { // should be while (retrig needs this, not used by sh4)
-					//if (counter) bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
-
-					if (retrig == 0) {
-						running = 0;
-						//time_trig = -1;
-						//stop();
-						//break;
-					}
-					if (timer_exec) {
-						timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
-					}
-					//time_current -= time_trig;
-				}
-			}
-		}
-	}
-
-	void run(INT32 cyc) {
-		if (running) {
-			time_current += cyc;
-
-			if (time_current >= time_trig) {
-				//bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
-
-				if (retrig == 0) {
-					running = 0;
-					//time_trig = -1;
-					//stop();
-					//break;
-				}
-				if (timer_exec) {
-					timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
-				}
-				time_current -= time_trig;
-
-				//if (running == 0) break;
-			}
-		}
-	}
-
-	void reset() {
-		stop();
-		prescale_counter = 0; // this must be free-running (only reset here!)
-	}
-	void stop() {
-		if (retrig == 0) { running = 0; }
-		time_current = 0;
-	}
-	INT32 isrunning() {
-		return running;
-	}
-	UINT32 timeleft() {
-		return time_trig - time_current;
-	}
-
-	INT32 msec_to_cycles(INT32 mhz, double msec) {
-		return ((double)((double)mhz / 1000) * msec);
-	}
-	INT32 usec_to_cycles(INT32 mhz, double usec) {
-		return ((double)((double)mhz / 1000000) * usec);
-	}
-	INT32 nsec_to_cycles(INT32 mhz, double nsec) {
-		return ((double)((double)mhz / 1000000000) * nsec);
-	}
-};
-
 static void irq_cb(INT32 t_param)
 {
 	Sh2SetIRQLine(t_param, CPU_IRQSTATUS_HOLD);
@@ -1240,10 +1112,10 @@ static INT32 DrvInit(INT32 bios)
 
 	// should be 8ms, using 8.13ms to correct music looping in sengekis
 	irqtimers[1].init(11, irq_cb);
-	irqtimers[1].start(irqtimers[1].msec_to_cycles(28636000, 8.13), -1, 1, 1);
+	irqtimers[1].start(msec_to_cycles(28636000, 8.13), -1, 1, 1);
 
 	irqtimers[2].init(15, irq_cb);
-	irqtimers[2].start(irqtimers[2].msec_to_cycles(28636000, 2), -1, 1, 1);
+	irqtimers[2].start(msec_to_cycles(28636000, 2), -1, 1, 1);
 
 	{
 		if (DrvLoad(1)) return 1;

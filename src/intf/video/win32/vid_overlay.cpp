@@ -1364,7 +1364,7 @@ static UINT32 nMaxRollback=0;
 void VidOverlaySetStats(double fps, int ping, int delay)
 {
 	wchar_t buf[64];
-	if (game_spectator || ping == 0) {
+	if (game_spectator || ping == 0 || ping > 40000 || ping < 0) {
 		swprintf(buf, 64, _T("%2.2ffps"), fps);
 	}
 	else {
@@ -1376,7 +1376,7 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 				nLastRollbackAt = nFramesEmulated;
 				if ( nRollbackRealtime > nMaxRollback) {
 					if (nFramesEmulated > 1000 && nRollbackRealtime > 0) {
-						VidOverlaySetWarning(120, false);
+						VidOverlaySetWarning(180, false);
 					}
 				}
 
@@ -1647,8 +1647,198 @@ void VidDebug(const wchar_t *text, float a, float b)
 #endif
 }
 
+#define TURBOARRAYSIZE 60
+#define MIN_TURBO_CERTAINTY 25
+static int P1LP_Array[TURBOARRAYSIZE] = {};
+static int P1MP_Array[TURBOARRAYSIZE] = {};
+static int P1HP_Array[TURBOARRAYSIZE] = {};
+static int P1LK_Array[TURBOARRAYSIZE] = {};
+static int P1MK_Array[TURBOARRAYSIZE] = {};
+static int P1HK_Array[TURBOARRAYSIZE] = {};
+static int P2LP_Array[TURBOARRAYSIZE] = {};
+static int P2MP_Array[TURBOARRAYSIZE] = {};
+static int P2HP_Array[TURBOARRAYSIZE] = {};
+static int P2LK_Array[TURBOARRAYSIZE] = {};
+static int P2MK_Array[TURBOARRAYSIZE] = {};
+static int P2HK_Array[TURBOARRAYSIZE] = {};
+static int turboArrayPos = 0;
+static int p1_turbo_warning = 0;
+static int p2_turbo_warning = 0;
+static int p1_turbo_certainty = 0;
+static int p2_turbo_certainty = 0;
+static int p1_max_tps[6]={0, 0, 0, 0, 0, 0};
+static int p2_max_tps[6]={0, 0, 0, 0, 0, 0};
+
+void DetectTurbo()
+{
+
+	UINT32 P1LP=0, P1MP=0, P1HP=0, P1LK=0, P1MK=0, P1HK=0;
+	UINT32 P2LP=0, P2MP=0, P2HP=0, P2LK=0, P2MK=0, P2HK=0;
+
+	enum {
+		LP=0,
+		MP=1,
+		HP=2,
+		LK=3,
+		MK=4,
+		HK=5,
+	};
+
+	// read all inputs
+	struct BurnInputInfo bii;
+	memset(&bii, 0, sizeof(bii));
+	for (unsigned int i = 0; i < nGameInpCount; i++) {
+		BurnDrvGetInputInfo(&bii, i);
+		struct GameInp *pgi = &GameInp[i];
+		if (pgi->nInput == GIT_SWITCH && pgi->Input.pVal) {
+			int value = *pgi->Input.pVal;
+
+			// P1 inputs
+			if (!strcmp(bii.szInfo, "p1 fire 1")) P1LP = value << INPUT_LP;
+			if (!strcmp(bii.szInfo, "p1 fire 2")) P1MP = value << INPUT_MP;
+			if (!strcmp(bii.szInfo, "p1 fire 3")) P1HP = value << INPUT_HP;
+			if (!strcmp(bii.szInfo, "p1 fire 4")) P1LK = value << INPUT_LK;
+			if (!strcmp(bii.szInfo, "p1 fire 5")) P1MK = value << INPUT_MK;
+			if (!strcmp(bii.szInfo, "p1 fire 6")) P1HK = value << INPUT_HK;
+
+			// P2 inputs
+			if (!strcmp(bii.szInfo, "p2 fire 1")) P2LP = value << INPUT_LP;
+			if (!strcmp(bii.szInfo, "p2 fire 2")) P2MP = value << INPUT_MP;
+			if (!strcmp(bii.szInfo, "p2 fire 3")) P2HP = value << INPUT_HP;
+			if (!strcmp(bii.szInfo, "p2 fire 4")) P2LK = value << INPUT_LK;
+			if (!strcmp(bii.szInfo, "p2 fire 5")) P2MK = value << INPUT_MK;
+			if (!strcmp(bii.szInfo, "p2 fire 6")) P2HK = value << INPUT_HK;
+		}
+	}
+
+	P1LP_Array[turboArrayPos]=P1LP;
+	P1MP_Array[turboArrayPos]=P1MP;
+	P1HP_Array[turboArrayPos]=P1HP;
+	P1LK_Array[turboArrayPos]=P1LK;
+	P1MK_Array[turboArrayPos]=P1MK;
+	P1HK_Array[turboArrayPos]=P1HK;
+
+	P2LP_Array[turboArrayPos]=P2LP;
+	P2MP_Array[turboArrayPos]=P2MP;
+	P2HP_Array[turboArrayPos]=P2HP;
+	P2LK_Array[turboArrayPos]=P2LK;
+	P2MK_Array[turboArrayPos]=P2MK;
+	P2HK_Array[turboArrayPos]=P2HK;
+
+	//TCHAR szTemp[128];
+	//_sntprintf(szTemp, 128, _T("P1: %d %d %d, P2: %d %d %d"), P1LP, P1MP, P1HP, P2LP, P2MP, P2HP);
+	//VidOverlayAddChatLine(_T("inputs:"), szTemp);
+
+	turboArrayPos++;
+	if (turboArrayPos >= TURBOARRAYSIZE) turboArrayPos=0;
+
+	int p1_tps[6]={0, 0, 0, 0, 0, 0};
+	int p2_tps[6]={0, 0, 0, 0, 0, 0};
+	for (int i = 1; i < TURBOARRAYSIZE; i++) {
+		if (P1LP_Array[i] !=0 && P1LP_Array[i-1] == 0) p1_tps[LP]++;
+		if (P1MP_Array[i] !=0 && P1MP_Array[i-1] == 0) p1_tps[MP]++;
+		if (P1HP_Array[i] !=0 && P1HP_Array[i-1] == 0) p1_tps[HP]++;
+		if (P1LK_Array[i] !=0 && P1LK_Array[i-1] == 0) p1_tps[LK]++;
+		if (P1MK_Array[i] !=0 && P1MK_Array[i-1] == 0) p1_tps[MK]++;
+		if (P1HK_Array[i] !=0 && P1HK_Array[i-1] == 0) p1_tps[HK]++;
+
+		if (P2LP_Array[i] !=0 && P2LP_Array[i-1] == 0) p2_tps[LP]++;
+		if (P2MP_Array[i] !=0 && P2MP_Array[i-1] == 0) p2_tps[MP]++;
+		if (P2HP_Array[i] !=0 && P2HP_Array[i-1] == 0) p2_tps[HP]++;
+		if (P2LK_Array[i] !=0 && P2LK_Array[i-1] == 0) p2_tps[LK]++;
+		if (P2MK_Array[i] !=0 && P2MK_Array[i-1] == 0) p2_tps[MK]++;
+		if (P2HK_Array[i] !=0 && P2HK_Array[i-1] == 0) p2_tps[HK]++;
+	}
+
+	TCHAR szWarn1[128];
+	TCHAR szWarn2[128];
+	int p1_buttons_with_turbo = 0;
+	int p2_buttons_with_turbo = 0;
+
+	for (int i=0; i < 6; i++) {
+		if (p1_tps[i] >= 14) {
+			p1_buttons_with_turbo++;
+			if (p1_tps[i] > p1_max_tps[i]) p1_max_tps[i]=p1_tps[i];
+			if (p1_tps[i] > 15) {
+				if (p1_tps[i] > p1_turbo_warning) {
+					p1_turbo_warning=p1_tps[i];
+					if (p1_tps[i] >= 20) {
+						if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_tps[i] == p1_max_tps[i]) {
+							_sntprintf(szWarn1, 128, _T("Turbo/Autofire detected on Player1 button%d: %dtps"), i+1, p1_tps[i]);
+							VidOverlayAddChatLine(_T("System"), szWarn1);
+							p1_max_tps[i] += 2; // prevent the message from showing again if the autofire is at a fixed rate
+						}
+					} else {
+						if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_tps[i] == p1_max_tps[i]) {
+							_sntprintf(szWarn1, 128, _T("Possible Turbo/Autofire detected on Player1 button%d: %dtps"), i+1, p1_tps[i]);
+							VidOverlayAddChatLine(_T("System"), szWarn1);
+							p1_max_tps[i]++;
+						}
+					}
+				}
+			}
+			else if (p1_buttons_with_turbo >= 2) {
+				p1_turbo_warning=15;
+			}
+		}
+		if (p2_tps[i] >= 14) {
+			p2_buttons_with_turbo++;
+			if (p2_tps[i] > p2_max_tps[i]) p2_max_tps[i]=p2_tps[i];
+			if (p2_tps[i] > 15) {
+				if (p2_tps[i] > p2_turbo_warning) {
+					p2_turbo_warning=p2_tps[i];
+					if (p2_tps[i] >= 20) {
+						if (p2_turbo_certainty >= MIN_TURBO_CERTAINTY && p2_tps[i] == p2_max_tps[i]) {
+							_sntprintf(szWarn2, 128, _T("Turbo/Autofire detected on Player2 button%d: %dtps"), i+1, p2_tps[i]);
+							VidOverlayAddChatLine(_T("System"), szWarn2);
+							p2_max_tps[i] += 2;
+						}
+					} else {
+						if (p2_turbo_certainty >= MIN_TURBO_CERTAINTY && p2_tps[i] == p2_max_tps[i]) {
+							_sntprintf(szWarn2, 128, _T("Possible Turbo/Autofire detected on Player2 button%d: %dtps"), i+1, p2_tps[i]);
+							VidOverlayAddChatLine(_T("System"), szWarn2);
+							p2_max_tps[i]++;
+						}
+					}
+				}
+			}
+			else if (p2_buttons_with_turbo >= 2) {
+				p2_turbo_warning=15;
+			}
+		}
+	}
+
+	if (turboArrayPos == 0) {
+		if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) p1_turbo_certainty += p1_turbo_warning - 14;
+		if (p2_turbo_warning > 14 && p2_turbo_certainty < MIN_TURBO_CERTAINTY) p2_turbo_certainty += p2_turbo_warning - 14;
+#if 0
+		if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) {
+			_sntprintf(szWarn1, 128, _T("p1_turbo_certainty=%d"), p1_turbo_certainty);
+			VidOverlayAddChatLine(_T("System"), szWarn1);
+		}
+		if (p2_turbo_warning > 14 && p2_turbo_certainty < MIN_TURBO_CERTAINTY) {
+			_sntprintf(szWarn2, 128, _T("p2_turbo_certainty=%d"), p2_turbo_certainty);
+			VidOverlayAddChatLine(_T("System"), szWarn2);
+		}
+#endif
+		if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_turbo_certainty < 1000) {
+			p1_turbo_certainty = 1000;
+			VidOverlayAddChatLine(_T("System"), _T("Possible Turbo/Autofire detected on Player1"));
+			if (game_ranked && !game_spectator) QuarkSendChatCmd("0", 'X');
+		}
+		if (p2_turbo_certainty >= MIN_TURBO_CERTAINTY && p2_turbo_certainty < 1000) {
+			p2_turbo_certainty = 1000;
+			VidOverlayAddChatLine(_T("System"), _T("Possible Turbo/Autofire detected on Player2"));
+			if (game_ranked && !game_spectator) QuarkSendChatCmd("1", 'X');
+		}
+		p1_turbo_warning=0;
+		p2_turbo_warning=0;
+	}
+}
+
 void VidDisplayInputs(int slot, int state)
 {
+	if (slot==1) DetectTurbo();
 	if (bVidShowInputs)
 	{
 		INT32 inputs[2] = {};

@@ -78,6 +78,8 @@ static UINT32 Vblokbrk = 0;
 
 static class LowPass2 *LP1 = NULL, *LP2 = NULL;
 
+static dtimer irqtimers[3];
+
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -915,8 +917,6 @@ static void irq_cb(INT32 t_param)
 	Sh2SetIRQLine(t_param, CPU_IRQSTATUS_HOLD);
 }
 
-static dtimer irqtimers[3];
-
 #ifdef LSB_FIRST
 static void BurnSwapEndian(UINT8 *src, INT32 len)
 {
@@ -1002,9 +1002,7 @@ static INT32 DrvDoReset()
 	}
 	Sh2Close();
 
-	irqtimers[0].reset();
-	irqtimers[1].reset();
-	irqtimers[2].reset();
+	timerReset();
 
 	YMZ280BReset();
 
@@ -1107,14 +1105,15 @@ static INT32 DrvInit(INT32 bios)
 	memset(AllMem, 0, nLen);
 	MemIndex(nGfxLen0);
 
-	irqtimers[0].init(9, irq_cb);
+	timerInit();
+	timerAdd(irqtimers[0], 9, irq_cb);
 	irqtimers[0].start(1824, -1, 1, 1); // 1834 = 1 line @ 262 lpf!
 
 	// should be 8ms, using 8.13ms to correct music looping in sengekis
-	irqtimers[1].init(11, irq_cb);
+	timerAdd(irqtimers[1], 11, irq_cb);
 	irqtimers[1].start(msec_to_cycles(28636000, 8.13), -1, 1, 1);
 
-	irqtimers[2].init(15, irq_cb);
+	timerAdd(irqtimers[2], 15, irq_cb);
 	irqtimers[2].start(msec_to_cycles(28636000, 2), -1, 1, 1);
 
 	{
@@ -1199,6 +1198,8 @@ static INT32 DrvExit()
 	Sh2Exit();
 	YMZ280BExit();
 	YMZ280BROM = NULL;
+
+	timerExit();
 
 	BurnFree(AllMem);
 
@@ -1745,9 +1746,7 @@ static INT32 DrvFrame()
 		nCyclesDone += ran;
 
 		// run timers
-		irqtimers[0].run(ran);
-		irqtimers[1].run(ran);
-		irqtimers[2].run(ran);
+		timerRun(ran);
 
 		if ((i & 7) == 0) {
 			// Render sound segment
@@ -1808,9 +1807,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		Sh2Scan(nAction);
-		irqtimers[0].scan();
-		irqtimers[1].scan();
-		irqtimers[2].scan();
+		timerScan();
 		YMZ280BScan(nAction, pnMin);
 
 		BurnTrackballScan(); // vblokbrk / sarukani paddle

@@ -59,6 +59,7 @@
     <ClInclude Include="..\..\src\burn\devices\c169.h" />
     <ClInclude Include="..\..\src\burn\devices\decobsmt.h" />
     <ClInclude Include="..\..\src\burn\devices\ds2404.h" />
+    <ClInclude Include="..\..\src\burn\devices\dtimer.h" />
     <ClInclude Include="..\..\src\burn\devices\earom.h" />
     <ClInclude Include="..\..\src\burn\devices\eeprom.h" />
     <ClInclude Include="..\..\src\burn\devices\gaelco_crypt.h" />
@@ -516,6 +517,7 @@
     <ClCompile Include="..\..\src\burn\devices\c169.cpp" />
     <ClCompile Include="..\..\src\burn\devices\decobsmt.cpp" />
     <ClCompile Include="..\..\src\burn\devices\ds2404.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\dtimer.cpp" />
     <ClCompile Include="..\..\src\burn\devices\earom.cpp" />
     <ClCompile Include="..\..\src\burn\devices\eeprom.cpp" />
     <ClCompile Include="..\..\src\burn\devices\gaelco_crypt.cpp" />

@@ -1219,6 +1219,9 @@
     <ClInclude Include="..\..\src\burn\devices\pic8259.h">
       <Filter>Burn\devices</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\devices\dtimer.h">
+      <Filter>Burn\devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -4763,6 +4766,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\dataeast\d_compgolf.cpp">
       <Filter>Burn\drv\dataeast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\dtimer.cpp">
+      <Filter>Burn\devices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

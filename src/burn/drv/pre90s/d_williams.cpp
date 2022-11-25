@@ -1,4 +1,4 @@
-// FB Alpha Williams Games driver module
+// FB Neo Williams Games driver module
 // Based on MAME driver by Aaron Giles
 
 // Works:
@@ -1989,6 +1989,9 @@ static struct BurnRomInfo defenderjRomDesc[] = {
 	{ "df4-1.c1",			0x0800, 0x65f4efd1, 1 | BRF_PRG | BRF_ESS }, //  9
 
 	{ "df12.i3",			0x0800, 0xf122d9c9, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
+
+	{ "df11.k3",			0x0200, 0x25de5d85, 0 | BRF_OPT },           // 11 Address Decoder
+	{ "df12.f3",			0x0200, 0xc3f45f70, 0 | BRF_OPT },           // 12
 };
 
 STD_ROM_PICK(defenderj)
@@ -2172,6 +2175,40 @@ struct BurnDriver BurnDrvDefcmnd = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, defcmndRomInfo, defcmndRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
 	DefenderWhiteInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	292, 240, 4, 3
+};
+
+
+// Defense (Defender bootleg)
+
+static struct BurnRomInfo defensebRomDesc[] = {
+	{ "1.d9",			0x1000, 0x8c04602b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "2.c9",			0x1000, 0x89b75984, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.d8",			0x1000, 0x94f51e9b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "10.c4",			0x0800, 0x12e2bd1c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "7.d5",			0x0800, 0x88881cc6, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "9.d4",			0x0800, 0x252605c9, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "6.c6",			0x0800, 0x9deaf6d9, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.c5",			0x0800, 0x339e092e, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "5.d6",			0x0800, 0xa543b167, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "4.c7",			0x0800, 0x65f4efd1, 1 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "12.f3.snd",		0x0800, 0xf122d9c9, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
+
+	{ "mmi6341.a1",		0x0200, 0x25de5d85, 0 | BRF_OPT },           // 11 Address Decoder
+	{ "mmi6341.l1",		0x0200, 0xc3f45f70, 0 | BRF_OPT },           // 12
+};
+
+STD_ROM_PICK(defenseb)
+STD_ROM_FN(defenseb)
+
+struct BurnDriver BurnDrvDefenseb = {
+	"defenseb", "defender", NULL, NULL, "198?",
+	"Defense (Defender bootleg)\0", NULL, "bootleg", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, defensebRomInfo, defensebRomName, NULL, NULL, NULL, NULL, DefenderInputInfo, NULL,
+	DefenceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };
 

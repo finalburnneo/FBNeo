@@ -1,4 +1,4 @@
-// FB Alpha JR. Pacman driver module
+// FB Neo JR. Pacman driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -601,21 +601,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Jr. Pac-Man (11/9/83)
 
 static struct BurnRomInfo jrpacmanRomDesc[] = {
-	{ "jrp8d.8d",		0x2000, 0xe3fa972e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "jrp8e.8e",		0x2000, 0xec889e94, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "jrp8h.8h",		0x2000, 0x35f1fc6e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "jrp8j.8j",		0x2000, 0x9737099e, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "jrp8k.8k",		0x2000, 0x5252dd97, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "jr.pac-man_8d_11-9-83.8d",	0x2000, 0xe3fa972e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "jr.pac-man_8e_11-9-83.8e",	0x2000, 0xec889e94, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jr.pac-man_8h_11-9-83.8h",	0x2000, 0x35f1fc6e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jr.pac-man_8j_11-9-83.8j",	0x2000, 0x9737099e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "jr.pac-man_8k_11-9-83.8k",	0x2000, 0x5252dd97, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "jrp2c.2c",		0x2000, 0x0527ff9b, 2 | BRF_GRA },           //  5 gfx1
-	{ "jrp2e.2e",		0x2000, 0x73477193, 2 | BRF_GRA },           //  6
+	{ "jr.pac-man_2c_11-9-83.2c",	0x2000, 0x0527ff9b, 2 | BRF_GRA },           //  5 gfx1
+	{ "jr.pac-man_2e_11-9-83.2e",	0x2000, 0x73477193, 2 | BRF_GRA },           //  6
 
-	{ "a290-27axv-bxhd.9e",	0x0100, 0x029d35c4, 3 | BRF_GRA },           //  7 proms
-	{ "a290-27axv-cxhd.9f",	0x0100, 0xeee34a79, 3 | BRF_GRA },           //  8
-	{ "a290-27axv-axhd.9p",	0x0100, 0x9f6ea9d8, 3 | BRF_GRA },           //  9
+	{ "a290-27axv-bxhd.9e",			0x0100, 0x029d35c4, 3 | BRF_GRA },           //  7 proms
+	{ "a290-27axv-cxhd.9f",			0x0100, 0xeee34a79, 3 | BRF_GRA },           //  8
+	{ "a290-27axv-axhd.9p",			0x0100, 0x9f6ea9d8, 3 | BRF_GRA },           //  9
 
-	{ "a290-27axv-dxhd.7p",	0x0100, 0xa9cc86bf, 4 | BRF_GRA },           // 10 namco
-	{ "a290-27axv-exhd.5s",	0x0100, 0x77245b66, 4 | BRF_GRA },           // 11
+	{ "a290-27axv-dxhd.7p",			0x0100, 0xa9cc86bf, 4 | BRF_GRA },           // 10 namco
+	{ "a290-27axv-exhd.5s",			0x0100, 0x77245b66, 4 | BRF_GRA },           // 11
 };
 
 STD_ROM_PICK(jrpacman)
@@ -635,21 +635,21 @@ struct BurnDriver BurnDrvJrpacman = {
 // Jr. Pac-Man (speedup hack)
 
 static struct BurnRomInfo jrpacmanfRomDesc[] = {
-	{ "fast_jr.8d",		0x2000, 0x461e8b57, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "jrp8e.8e",		0x2000, 0xec889e94, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "jrp8h.8h",		0x2000, 0x35f1fc6e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "jrp8j.8j",		0x2000, 0x9737099e, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "jrp8k.8k",		0x2000, 0x5252dd97, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "fast_jr.8d",					0x2000, 0x461e8b57, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "jr.pac-man_8e_11-9-83.8e",	0x2000, 0xec889e94, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jr.pac-man_8h_11-9-83.8h",	0x2000, 0x35f1fc6e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jr.pac-man_8j_11-9-83.8j",	0x2000, 0x9737099e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "jr.pac-man_8k_11-9-83.8k",	0x2000, 0x5252dd97, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "jrp2c.2c",		0x2000, 0x0527ff9b, 2 | BRF_GRA },           //  5 gfx1
-	{ "jrp2e.2e",		0x2000, 0x73477193, 2 | BRF_GRA },           //  6
+	{ "jr.pac-man_2c_11-9-83.2c",	0x2000, 0x0527ff9b, 2 | BRF_GRA },           //  5 gfx1
+	{ "jr.pac-man_2e_11-9-83.2e",	0x2000, 0x73477193, 2 | BRF_GRA },           //  6
 
-	{ "a290-27axv-bxhd.9e",	0x0100, 0x029d35c4, 3 | BRF_GRA },           //  7 proms
-	{ "a290-27axv-cxhd.9f",	0x0100, 0xeee34a79, 3 | BRF_GRA },           //  8
-	{ "a290-27axv-axhd.9p",	0x0100, 0x9f6ea9d8, 3 | BRF_GRA },           //  9
+	{ "a290-27axv-bxhd.9e",			0x0100, 0x029d35c4, 3 | BRF_GRA },           //  7 proms
+	{ "a290-27axv-cxhd.9f",			0x0100, 0xeee34a79, 3 | BRF_GRA },           //  8
+	{ "a290-27axv-axhd.9p",			0x0100, 0x9f6ea9d8, 3 | BRF_GRA },           //  9
 
-	{ "a290-27axv-dxhd.7p",	0x0100, 0xa9cc86bf, 4 | BRF_GRA },           // 10 namco
-	{ "a290-27axv-exhd.5s",	0x0100, 0x77245b66, 4 | BRF_GRA },           // 11
+	{ "a290-27axv-dxhd.7p",			0x0100, 0xa9cc86bf, 4 | BRF_GRA },           // 10 namco
+	{ "a290-27axv-exhd.5s",			0x0100, 0x77245b66, 4 | BRF_GRA },           // 11
 };
 
 STD_ROM_PICK(jrpacmanf)
@@ -659,7 +659,7 @@ struct BurnDriver BurnDrvJrpacmanf = {
 	"jrpacmanf", "jrpacman", NULL, NULL, "1983",
 	"Jr. Pac-Man (speedup hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, jrpacmanfRomInfo, jrpacmanfRomName, NULL, NULL, NULL, NULL, JrpacmanInputInfo, JrpacmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

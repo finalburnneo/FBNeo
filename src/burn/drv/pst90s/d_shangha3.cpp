@@ -1,4 +1,4 @@
-// FB Alpha Shanghai 3 / Hebereke no Popoon / Blocken driver module
+// FB Neo Shanghai 3 / Hebereke no Popoon / Blocken driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -1010,12 +1010,12 @@ struct BurnDriver BurnDrvShangha3 = {
 // Shanghai III (US)
 
 static struct BurnRomInfo shangha3uRomDesc[] = {
-	{ "ic3.ic3",							0x080000, 0x53ef4988, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "ic2.ic2",							0x080000, 0xfdea0232, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "s3u_ic3_v1.0.ic3",					0x080000, 0x53ef4988, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "s3u_ic2_v1.0.ic2",					0x080000, 0xfdea0232, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "s3j_char-a1.ic43",					0x200000, 0x2dbf9d17, 2 | BRF_GRA },           //  2 Graphics
 
-	{ "ic75.ic75",							0x080000, 0xa8136d8c, 3 | BRF_SND },           //  3 Samples
+	{ "s3j_ic75v1.0.ic75",					0x080000, 0xa8136d8c, 3 | BRF_SND },           //  3 Samples
 };
 
 STD_ROM_PICK(shangha3u)

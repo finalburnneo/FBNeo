@@ -54,6 +54,7 @@ extern INT32 nM6800Count;
 extern INT32 nM6800CyclesTotal;
 
 void M6800Reset();
+void M6800Reset(INT32 nCPU);
 #define HD63701Reset		M6800Reset
 #define M6803Reset			M6800Reset
 #define M6801Reset			M6800Reset
@@ -85,12 +86,14 @@ void M6800Exit();
 #define NSC8105Exit			M6800Exit
 
 void M6800SetIRQLine(INT32 vector, INT32 status);
+void M6800SetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
 #define M6801SetIRQLine		M6800SetIRQLine
 #define HD63701SetIRQLine	M6800SetIRQLine
 #define M6803SetIRQLine		M6800SetIRQLine
 #define NSC8105SetIRQLine	M6800SetIRQLine
 
 INT32 M6800Run(INT32 cycles);
+INT32 M6800Run(INT32 nCPU, INT32 nCycles);
 #define M6801Run			M6800Run
 #define HD63701Run			M6800Run
 #define M6803Run			M6800Run
@@ -164,6 +167,7 @@ inline static INT32 M6800TotalCycles()
 
 	return nM6800CyclesTotal + m6800_get_segmentcycles();
 }
+INT32 M6800TotalCycles(INT32 nCPU);
 #define HD63701TotalCycles		M6800TotalCycles
 #define M6803TotalCycles		M6800TotalCycles
 #define M6801TotalCycles		M6800TotalCycles
@@ -179,10 +183,23 @@ inline static INT32 M6800Idle(INT32 cycles)
 
 	return cycles;
 }
+INT32 M6800Idle(INT32 nCPU, INT32 nCycles);
 #define HD63701Idle		M6800Idle
 #define M6803Idle		M6800Idle
 #define M6801Idle		M6800Idle
 #define NSC8105Idle		M6800Idle
+
+void M6800CPUPush(INT32 nCPU);
+#define HD63701CPUPush		M6800CPUPush
+#define M6803CPUPush		M6800CPUPush
+#define M6801CPUPush		M6800CPUPush
+#define NSC8105CPUPush		M6800CPUPush
+
+void M6800CPUPop();
+#define HD63701CPUPop		M6800CPUPop
+#define M6803CPUPop			M6800CPUPop
+#define M6801CPUPop			M6800CPUPop
+#define NSC8105CPUPop		M6800CPUPop
 
 void M6800WriteRom(UINT32 Address, UINT8 Data); // cheat core
 UINT8 M6800CheatRead(UINT32 Address);

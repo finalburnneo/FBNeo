@@ -11280,8 +11280,8 @@
 		<description>Metal Slug 5 (Stone Turtle, Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="268-p1csg.p1" size="4194304" crc="713cbdc3"/>
-		<rom name="268-p2ces.p2" size="4194304" crc="a962a3e1"/>
+		<rom name="268-p1csg.p1" size="4194304" crc="1f5cad74"/>
+		<rom name="268-p2csg.p2" size="4194304" crc="f56088ce"/>
 		<rom name="268-c1c.c1" merge="268-c1c.c1" size="8388608" crc="ab7c389a"/>
 		<rom name="268-c2c.c2" merge="268-c2c.c2" size="8388608" crc="3560881b"/>
 		<rom name="268-c3c.c3" merge="268-c3c.c3" size="8388608" crc="3af955ea"/>
@@ -12343,8 +12343,8 @@
 		<description>Metal Slug X - Super Vehicle-001 (Survival, Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1sc.p1" size="1048576" crc="d2913eee"/>
-		<rom name="250-p2sc.ep1" size="4194304" crc="01f48336"/>
+		<rom name="250-p1sc.p1" size="1048576" crc="9bd3e306"/>
+		<rom name="250-p2sc.ep1" size="4194304" crc="019e8acb"/>
 		<rom name="250-s1sc.s1" size="131072" crc="03bce893"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>

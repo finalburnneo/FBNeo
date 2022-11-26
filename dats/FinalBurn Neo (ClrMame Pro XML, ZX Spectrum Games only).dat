@@ -3922,6 +3922,72 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="colonos3e1" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Colonos III - Part 1 (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Jose Manuel Gris</manufacturer>
+		<rom name="Colonos III Part1 EN (2022)(Jose Manuel Gris).tap" size="40239" crc="d479a589"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="colonos3e2" cloneof="colonos3e1" romof="colonos3e1">
+		<comment>Homebrew</comment>
+		<description>Colonos III - Part 2 (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Jose Manuel Gris</manufacturer>
+		<rom name="Colonos III Part2 EN (2022)(Jose Manuel Gris).tap" size="37801" crc="9d287b2d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="colonos3e3" cloneof="colonos3e1" romof="colonos3e1">
+		<comment>Homebrew</comment>
+		<description>Colonos III - Part 3 (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Jose Manuel Gris</manufacturer>
+		<rom name="Colonos III Part3 EN (2022)(Jose Manuel Gris).tap" size="37320" crc="5fec4b64"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="colonos3s1" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Colonos III - Parte 1 (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Jose Manuel Gris</manufacturer>
+		<rom name="Colonos III Parte1 ES (2022)(Jose Manuel Gris).tap" size="40344" crc="9faec737"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="colonos3s2" cloneof="colonos3s1" romof="colonos3s1">
+		<comment>Homebrew</comment>
+		<description>Colonos III - Parte 2 (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Jose Manuel Gris</manufacturer>
+		<rom name="Colonos III Parte2 ES (2022)(Jose Manuel Gris).tap" size="37808" crc="3f4195f8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="colonos3s3" cloneof="colonos3s1" romof="colonos3s1">
+		<comment>Homebrew</comment>
+		<description>Colonos III - Parte 3 (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Jose Manuel Gris</manufacturer>
+		<rom name="Colonos III Parte3 ES (2022)(Jose Manuel Gris).tap" size="37325" crc="9f90edc5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="colonoszx" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Colonos ZX (48K) (HB)</description>

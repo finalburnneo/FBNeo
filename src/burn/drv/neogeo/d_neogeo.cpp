@@ -103,39 +103,76 @@ static struct BurnInputInfo neoMVSInputList[] = {
 STDINPUTINFO(neoMVS)
 
 static struct BurnInputInfo neoForceAESInputList[] = {
-	{"P1 Start",	BIT_DIGITAL,	NeoButton1 + 0,	"p1 start"},		//	0
-	{"P1 Select",	BIT_DIGITAL,	NeoButton1 + 1,	"p1 select"},		//  1
+	{"P1 Start",	BIT_DIGITAL,	NeoButton1 + 0,	"p1 start"  },      //  0
+	{"P1 Select",	BIT_DIGITAL,	NeoButton1 + 1,	"p1 select" },      //  1
 
-	{"P1 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p1 up"},			//  2
-	{"P1 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p1 down"},			//  3
-	{"P1 Left",		BIT_DIGITAL,	NeoJoy1 + 2,	"p1 left"},			//	4
-	{"P1 Right",	BIT_DIGITAL,	NeoJoy1 + 3,	"p1 right"},		//	5
-	{"P1 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p1 fire 1"},		//	6
-	{"P1 Button B",	BIT_DIGITAL,	NeoJoy1 + 5,	"p1 fire 2"},		//	7
-	{"P1 Button C",	BIT_DIGITAL,	NeoJoy1 + 6,	"p1 fire 3"},		//	8
-	{"P1 Button D",	BIT_DIGITAL,	NeoJoy1 + 7,	"p1 fire 4"},		//	9
+	{"P1 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p1 up"     },      //  2
+	{"P1 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p1 down"   },      //  3
+	{"P1 Left",		BIT_DIGITAL,	NeoJoy1 + 2,	"p1 left"   },      //  4
+	{"P1 Right",	BIT_DIGITAL,	NeoJoy1 + 3,	"p1 right"  },      //  5
+	{"P1 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p1 fire 1" },      //  6
+	{"P1 Button B",	BIT_DIGITAL,	NeoJoy1 + 5,	"p1 fire 2" },      //  7
+	{"P1 Button C",	BIT_DIGITAL,	NeoJoy1 + 6,	"p1 fire 3" },      //  8
+	{"P1 Button D",	BIT_DIGITAL,	NeoJoy1 + 7,	"p1 fire 4" },      //  9
 
-	{"P2 Start",	BIT_DIGITAL,	NeoButton1 + 2,	"p2 start"},		//	A
-	{"P2 Select",	BIT_DIGITAL,	NeoButton1 + 3,	"p2 select"},		//	B
+	{"P2 Start",	BIT_DIGITAL,	NeoButton1 + 2,	"p2 start"  },      //  A
+	{"P2 Select",	BIT_DIGITAL,	NeoButton1 + 3,	"p2 select" },      //  B
 
-	{"P2 Up",		BIT_DIGITAL,	NeoJoy2 + 0,	"p2 up"},			//	C
-	{"P2 Down",		BIT_DIGITAL,	NeoJoy2 + 1,	"p2 down"},			//  D
-	{"P2 Left",		BIT_DIGITAL,	NeoJoy2 + 2,	"p2 left"},			//  E
-	{"P2 Right",	BIT_DIGITAL,	NeoJoy2 + 3,	"p2 right"},		//  F
-	{"P2 Button A",	BIT_DIGITAL,	NeoJoy2 + 4,	"p2 fire 1"},		// 10
-	{"P2 Button B",	BIT_DIGITAL,	NeoJoy2 + 5,	"p2 fire 2"},		// 11
-	{"P2 Button C",	BIT_DIGITAL,	NeoJoy2 + 6,	"p2 fire 3"},		// 12
-	{"P2 Button D",	BIT_DIGITAL,	NeoJoy2 + 7,	"p2 fire 4"},		// 13
+	{"P2 Up",		BIT_DIGITAL,	NeoJoy2 + 0,	"p2 up"     },      //  C
+	{"P2 Down",		BIT_DIGITAL,	NeoJoy2 + 1,	"p2 down"   },      //  D
+	{"P2 Left",		BIT_DIGITAL,	NeoJoy2 + 2,	"p2 left"   },      //  E
+	{"P2 Right",	BIT_DIGITAL,	NeoJoy2 + 3,	"p2 right"  },      //  F
+	{"P2 Button A",	BIT_DIGITAL,	NeoJoy2 + 4,	"p2 fire 1" },      // 10
+	{"P2 Button B",	BIT_DIGITAL,	NeoJoy2 + 5,	"p2 fire 2" },      // 11
+	{"P2 Button C",	BIT_DIGITAL,	NeoJoy2 + 6,	"p2 fire 3" },      // 12
+	{"P2 Button D",	BIT_DIGITAL,	NeoJoy2 + 7,	"p2 fire 4" },      // 13
 
-	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"},			// 14
-	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"},				// 15
-	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"},				// 16
+	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"     },      // 14
+	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"       },      // 15
+	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"       },      // 16
 
-	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"},				// 17
-	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"},				// 18
+	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"       },      // 17
+	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"       },      // 18
 };
 
 STDINPUTINFO(neoForceAES)
+
+static struct BurnInputInfo SantaBallInputList[] = {
+	{"P1 Start",	BIT_DIGITAL,	NeoButton1 + 0,	"p1 start"  },      //  0
+
+	{"P1 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p1 up"     },      //  1
+	{"P1 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p1 down"   },      //  2
+	{"P1 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p1 fire 1" },      //  3
+
+	{"P2 Up",		BIT_DIGITAL,	NeoJoy2 + 0,	"p2 up"     },      //  4
+	{"P2 Down",		BIT_DIGITAL,	NeoJoy2 + 1,	"p2 down"   },      //  5
+	{"P2 Button A",	BIT_DIGITAL,	NeoJoy2 + 4,	"p2 fire 1" },      //  6
+
+	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"     },      //  7
+	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"       },      //  8
+	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"       },      //  9
+
+	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"       },      //  A
+	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"       },      //  B
+};
+
+STDINPUTINFO(SantaBall)
+
+static struct BurnInputInfo NgmontstInputList[] = {
+	{"P1 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p1 up"     },      //  1
+	{"P1 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p1 down"   },      //  2
+	{"P1 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p1 fire 1" },      //  3
+	{"P1 Button B",	BIT_DIGITAL,	NeoJoy1 + 5,	"p1 fire 2" },      //  4
+
+	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"     },      //  5
+	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"       },      //  6
+	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"       },      //  7
+
+	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"       },      //  8
+	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"       },      //  9
+};
+
+STDINPUTINFO(Ngmontst)
 
 static struct BurnDIPInfo ms5pcbDIPList[] = {
 	// Offset
@@ -1005,6 +1042,33 @@ static struct BurnDIPInfo neoForceAESDIPList[] = {
 };
 
 STDDIPINFO(neoForceAES)
+
+static struct BurnDIPInfo SantaBallDIPList[] = {
+	// Offset
+	{0x08,	0xF0, 0x00,	0x00, NULL              }, // SantaBallInputList
+
+	// Defaults
+	{0x00,	0xFF, 0xFF,	0x40, NULL              },
+	{0x02,	0xFF, 0xFF,	0x91, NULL              }, // System [Development Kit]
+
+	// DIP 1
+	{0,		0xFE, 0,	2,	  "Autofire"        },
+	{0x00,	0x01, 0x04,	0x00, "Off"             },
+	{0x00,	0x01, 0x04,	0x04, "On"              },
+
+	// System - BIOS
+	{0,		0xFD, 0,	1,    "BIOS"            },
+	{0x02,	0x01, 0x3f,	0x11, "Development Kit" },
+};
+
+STDDIPINFO(SantaBall)
+
+static struct BurnDIPInfo NgmontstDIPList[] = {
+	// Offset
+	{0x06,	0xF0, 0x00,	0x00, NULL              }, // NgmontstInputList
+};
+
+STDDIPINFOEXT(Ngmontst, SantaBall, Ngmontst)
 
 // Rom information
 static struct BurnRomInfo neogeoRomDesc[] = {
@@ -23895,4 +23959,62 @@ struct BurnDriver BurnDrvkof99jh = {
 	NULL, kof99jhRomInfo, kof99jhRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	kof99WOPTPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
+};
+
+// SantaBall - Christmas Tennis Game
+// https://www.neohomebrew.com/projects/santaball-neo-geo-christmas-tennis-game.php
+
+static struct BurnRomInfo santaballRomDesc[] = {
+	{ "santaball-p1.p1",    0x100000, 0x2af7a77c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "santaball-s1.s1",    0x020000, 0xac031928, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "santaball-c1.c1",    0x100000, 0x1e271a9b, 3 | BRF_GRA },           //  2 Sprite data
+	{ "santaball-c2.c2",    0x100000, 0x1c7fd396, 3 | BRF_GRA },           //  3
+
+	{ "santaball-m1.m1",    0x010000, 0x37a8d679, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "santaball-v1.v1",    0x100000, 0xd0150804, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(santaball, santaball, neogeo)
+STD_ROM_FN(santaball)
+
+struct BurnDriver BurnDrvsantaball = {
+	"santaball", NULL, "neogeo", NULL, "2012",
+	"SantaBall - Christmas Tennis Game\0", NULL, "M.Priewe / NeoHomeBrew", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MINIGAMES, 0,
+	NULL, santaballRomInfo, santaballRomName, NULL, NULL, NULL, NULL, SantaBallInputInfo, SantaBallDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Monitor Test Patterns Tool (v1.3)
+// https://www.neohomebrew.com/projects/neo-geo-monitor-test-tool.php
+
+static struct BurnRomInfo ngmontstRomDesc[] = {
+	{ "ngmontst-p1.p1",    0x100000, 0x8a140722, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "ngmontst-s1.s1",    0x020000, 0xbb82ab71, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "ngmontst-c1.c1",    0x100000, 0x5c63f88a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "ngmontst-c2.c2",    0x100000, 0x3c7e0729, 3 | BRF_GRA },           //  3
+
+	{ "ngmontst-m1.m1",    0x010000, 0x6f41ac95, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "ngmontst-v1.v1",    0x200000, 0x0f88bd1a, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(ngmontst, ngmontst, neogeo)
+STD_ROM_FN(ngmontst)
+
+struct BurnDriver BurnDrvngmontst = {
+	"ngmontst", NULL, "neogeo", NULL, "2022",
+	"Monitor Test Patterns Tool (v1.3)\0", NULL, "M.Priewe / NeoHomeBrew", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, ngmontstRomInfo, ngmontstRomName, NULL, NULL, NULL, NULL, NgmontstInputInfo, NgmontstDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
 };

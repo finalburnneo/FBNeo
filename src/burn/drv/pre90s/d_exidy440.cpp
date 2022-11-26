@@ -1,13 +1,11 @@
 // FinalBurn Neo Exidy 440 hardware driver module
 // Based on MAME driver by Aaron Giles
 
-// todo: dink, post-driver
-//   make dtimer a class, with sync. functions, incl. cycles_to()
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "burn_gun.h"
 #include "exidy440_snd.h"
+#include "dtimer.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -455,195 +453,8 @@ static struct BurnDIPInfo TopsecexDIPList[]=
 
 STDDIPINFO(Topsecex)
 
-// simple timer system -dink 2019, v2.1.1 (2022-upgreydde ver.)
-struct dtimer
-{
-	INT32 running;
-	UINT32 time_trig;
-	UINT32 time_current;
-	INT32 timer_param;
-	INT32 timer_prescaler;
-	UINT32 prescale_counter;
-	INT32 retrig;
-	void (*timer_exec)(int);
-
-	void scan() {
-		SCAN_VAR(running);
-		SCAN_VAR(time_trig);
-		SCAN_VAR(time_current);
-		SCAN_VAR(timer_param);
-		SCAN_VAR(timer_prescaler);
-		SCAN_VAR(prescale_counter);
-		SCAN_VAR(retrig);
-	}
-
-	void start(UINT32 trig_at, INT32 tparam, INT32 run_now, INT32 retrigger) {
-		running = run_now;
-		if (tparam != -1) timer_param = tparam;
-		time_trig = trig_at;
-		time_current = 0;
-		//prescale_counter = 0; <-- not here!
-		retrig = retrigger;
-		//extern int counter;
-		//if (counter) bprintf(0, _T("timer %d START:  %d  cycles - running: %d\n"), timer_param, time_trig, running);
-		//if (counter) bprintf(0, _T("timer %d   running %d - timeleft  %d  time_trig %d  time_current %d\n"), timer_param, running, time_trig - time_current, time_trig, time_current);
-	}
-
-	void init(INT32 tparam, void (*callback)(int)) {
-		config(tparam, callback);
-		reset();
-	}
-
-	void config(INT32 tparam, void (*callback)(int)) {
-		timer_param = tparam;
-		timer_exec = callback;
-		timer_prescaler = 1;// * ratio_multi;
-	}
-
-	void set_prescaler(INT32 prescale) {
-		timer_prescaler = prescale;
-	}
-
-	void run_prescale(INT32 cyc) {
-		prescale_counter += cyc;// * m_ratio;
-		while (prescale_counter >= timer_prescaler) {
-			prescale_counter -= timer_prescaler;
-
-			// note: we can't optimize this, f.ex:
-			//run(prescale_counter / timer_prescaler); prescale_counter %= timer_prescaler;
-			// why? when the timer hits, the prescaler can & will change.
-			run(1);
-		}
-	}
-
-	void run(INT32 cyc) {
-		if (running) {
-			time_current += cyc;
-
-			if (time_current >= time_trig) {
-				//extern int counter;
-				//if (counter) bprintf(0, _T("timer %d hits @ %d  sekcyc %d\n"), timer_param, time_current, SekTotalCycles());
-
-				if (retrig == 0) {
-					running = 0;
-					//break;
-				}
-
-				time_current -= time_trig;
-
-				INT32 tc_restarted = time_current;
-
-				if (timer_exec) {
-					timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
-				}
-				if (retrig == 0 && running) {
-					// timer restarted from cb, restore accumulator
-					time_current = tc_restarted;
-				}
-				//if (running == 0) break;
-			}
-		}
-	}
-
-	void reset() {
-		stop();
-		prescale_counter = 0; // this must be free-running (only reset here!)
-	}
-	void stop() {
-		if (retrig == 0) { running = 0; }
-		time_current = 0;
-	}
-	INT32 isrunning() {
-		return running;
-	}
-	UINT32 timeleft() {
-		return time_trig - time_current;
-	}
-
-	INT32 msec_to_cycles(INT32 mhz, double msec) {
-		return ((double)((double)mhz / 1000) * msec);
-	}
-	INT32 usec_to_cycles(INT32 mhz, double usec) {
-		return ((double)((double)mhz / 1000000) * usec);
-	}
-	INT32 nsec_to_cycles(INT32 mhz, double nsec) {
-		return ((double)((double)mhz / 1000000000) * nsec);
-	}
-	INT32 clockscale_cycles(INT32 host_clock, INT32 cycles, INT32 clock_scaleto)
-	{
-		return (clock_scaleto) * (cycles * (1.0 / host_clock));
-	}
-};
-
 static dtimer beam_timer;
 static dtimer collision_timer;
-
-static const INT32 max_timers = 0x10;
-static dtimer *timer_array[max_timers];
-static INT32 timer_count;
-static INT32 timer_cycles;
-
-static void timerNewFrame()
-{
-	timer_cycles = 0;
-}
-
-static void timerInit()
-{
-	timer_count = 0;
-}
-
-static void timerExit()
-{
-	timerInit();
-}
-
-static void timerAdd(dtimer &timer)
-{
-	if (timer_count + 1 < max_timers) {
-		timer_array[timer_count++] = &timer;
-	} else {
-		bprintf(0, _T("timerAdd(): ran out of timer slots!\n"));
-	}
-}
-
-static void timerReset()
-{
-	for (INT32 i = 0; i < timer_count; i++) {
-		timer_array[i]->reset();
-	}
-}
-
-static INT32 timerRun(INT32 cyc)
-{
-	for (INT32 i = 0; i < timer_count; i++) {
-		timer_array[i]->run(cyc);
-	}
-
-	timer_cycles += cyc;
-
-	return cyc;
-}
-
-static INT32 timerIdle(INT32 cyc)
-{
-	timer_cycles += cyc;
-
-	return cyc;
-}
-
-static INT32 timerTotalCycles()
-{
-	return timer_cycles;
-}
-
-static void timerScan()
-{
-	for (INT32 i = 0; i < timer_count; i++) {
-		timer_array[i]->scan();
-	}
-}
-
 
 static void sync_sound()
 {
@@ -1079,10 +890,8 @@ static INT32 DrvInit(INT32 banks_start)
 	exidy440_init(DrvSndROM, DrvSndROMLen, M6809TotalCycles, 3244800 / 2);
 
 	timerInit();
-	beam_timer.init(0, beam_cb);
-	collision_timer.init(0, collision_cb);
-	timerAdd(beam_timer);
-	timerAdd(collision_timer);
+	timerAdd(beam_timer, 0, beam_cb);
+	timerAdd(collision_timer, 0, collision_cb);
 
 	if (topsecex) {
 		BurnTrackballInit(1);

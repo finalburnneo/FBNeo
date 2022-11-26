@@ -1,4 +1,4 @@
-// FB Alpha "Legendary Wings" driver module
+// FB Neo "Legendary Wings" driver module
 // Based on MAME driver by Paul Leaman
 
 #include "tiles_generic.h"
@@ -2412,6 +2412,60 @@ struct BurnDriver BurnDrvTrojanj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanjRomInfo, trojanjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
+	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 240, 4, 3
+};
+
+
+// Trojan (location test)
+
+static struct BurnRomInfo trojanltRomDesc[] = {
+	{ "tb04.10n",		0x8000, 0x52a4f8a1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tb06.13n",		0x8000, 0xef182e53, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tb05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "tb02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "tb01.3f",		0x8000, 0x83c715b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "tb03.8k",		0x4000, 0x581a2b4c, 4 | BRF_GRA },           //  5 Characters
+
+	{ "tb13.6b",		0x8000, 0x285a052b, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "tb09.6a",		0x8000, 0xaeb693f7, 5 | BRF_GRA },           //  7
+	{ "tb12.4b",		0x8000, 0xdfb0fe5c, 5 | BRF_GRA },           //  8
+	{ "tb08.4a",		0x8000, 0xd3a4c9d1, 5 | BRF_GRA },           //  9
+	{ "tb11.3b",		0x8000, 0x00f0f4fd, 5 | BRF_GRA },           // 10
+	{ "tb07.3a",		0x8000, 0xdff2ee02, 5 | BRF_GRA },           // 11
+	{ "tb14.8b",		0x8000, 0x14bfac18, 5 | BRF_GRA },           // 12
+	{ "tb10.8a",		0x8000, 0x71ba8a6d, 5 | BRF_GRA },           // 13
+
+	{ "tb18.7l",		0x8000, 0x862c4713, 6 | BRF_GRA },           // 14 Sprites
+	{ "tb16.3l",		0x8000, 0xd86f8cbd, 6 | BRF_GRA },           // 15
+	{ "tb17.5l",		0x8000, 0x12a73b3f, 6 | BRF_GRA },           // 16
+	{ "tb15.2l",		0x8000, 0xbb1a2769, 6 | BRF_GRA },           // 17
+	{ "tb22.7n",		0x8000, 0x39daafd4, 6 | BRF_GRA },           // 18
+	{ "tb20.3n",		0x8000, 0x94615d2a, 6 | BRF_GRA },           // 19
+	{ "tb21.5n",		0x8000, 0x66c642bd, 6 | BRF_GRA },           // 20
+	{ "tb19.2n",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
+
+	{ "tb25.15n",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "tb24.13n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+
+	{ "tb23.9n",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+
+	{ "tbp24s10.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
+	{ "mb7114e.1e",		0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(trojanlt)
+STD_ROM_FN(trojanlt)
+
+struct BurnDriver BurnDrvTrojanlt = {
+	"trojanlt", "trojan", NULL, NULL, "1986",
+	"Trojan (location test)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, trojanltRomInfo, trojanltRomName, NULL, NULL, NULL, NULL, DrvInputInfo, TrojanDIPInfo,
 	TrojanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

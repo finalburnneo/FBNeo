@@ -38266,3 +38266,117 @@ struct BurnDriver BurnSpecAdvsjane3 = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Colonos III - Part 1 (English) (128K) (HB)
+
+static struct BurnRomInfo SpecColonos3e1RomDesc[] = {
+	{ "Colonos III Part1 EN (2022)(Jose Manuel Gris).tap", 40239, 0xd479a589, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecColonos3e1, SpecColonos3e1, Spec128)
+STD_ROM_FN(SpecColonos3e1)
+
+struct BurnDriver BurnSpecColonos3e1 = {
+	"spec_colonos3e1", NULL, "spec_spec128", NULL, "2022",
+	"Colonos III - Part 1 (English) (128K) (HB)\0", NULL, "Jose Manuel Gris", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecColonos3e1RomInfo, SpecColonos3e1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Colonos III - Part 2 (English) (128K) (HB)
+
+static struct BurnRomInfo SpecColonos3e2RomDesc[] = {
+	{ "Colonos III Part2 EN (2022)(Jose Manuel Gris).tap", 37801, 0x9d287b2d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecColonos3e2, SpecColonos3e2, Spec128)
+STD_ROM_FN(SpecColonos3e2)
+
+struct BurnDriver BurnSpecColonos3e2 = {
+	"spec_colonos3e2", "spec_colonos3e1", "spec_spec128", NULL, "2022",
+	"Colonos III - Part 2 (English) (128K) (HB)\0", NULL, "Jose Manuel Gris", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
+	SpectrumGetZipName, SpecColonos3e2RomInfo, SpecColonos3e2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Colonos III - Part 3 (English) (128K) (HB)
+
+static struct BurnRomInfo SpecColonos3e3RomDesc[] = {
+	{ "Colonos III Part3 EN (2022)(Jose Manuel Gris).tap", 37320, 0x5fec4b64, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecColonos3e3, SpecColonos3e3, Spec128)
+STD_ROM_FN(SpecColonos3e3)
+
+struct BurnDriver BurnSpecColonos3e3 = {
+	"spec_colonos3e3", "spec_colonos3e1", "spec_spec128", NULL, "2022",
+	"Colonos III - Part 3 (English) (128K) (HB)\0", NULL, "Jose Manuel Gris", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
+	SpectrumGetZipName, SpecColonos3e3RomInfo, SpecColonos3e3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Colonos III - Parte 1 (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecColonos3s1RomDesc[] = {
+	{ "Colonos III Parte1 ES (2022)(Jose Manuel Gris).tap", 40344, 0x9faec737, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecColonos3s1, SpecColonos3s1, Spec128)
+STD_ROM_FN(SpecColonos3s1)
+
+struct BurnDriver BurnSpecColonos3s1 = {
+	"spec_colonos3s1", NULL, "spec_spec128", NULL, "2022",
+	"Colonos III - Parte 1 (Spanish) (128K) (HB)\0", NULL, "Jose Manuel Gris", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecColonos3s1RomInfo, SpecColonos3s1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Colonos III - Parte 2 (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecColonos3s2RomDesc[] = {
+	{ "Colonos III Parte2 ES (2022)(Jose Manuel Gris).tap", 37808, 0x3f4195f8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecColonos3s2, SpecColonos3s2, Spec128)
+STD_ROM_FN(SpecColonos3s2)
+
+struct BurnDriver BurnSpecColonos3s2 = {
+	"spec_colonos3s2", "spec_colonos3s1", "spec_spec128", NULL, "2022",
+	"Colonos III - Parte 2 (Spanish) (128K) (HB)\0", NULL, "Jose Manuel Gris", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
+	SpectrumGetZipName, SpecColonos3s2RomInfo, SpecColonos3s2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Colonos III - Parte 3 (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecColonos3s3RomDesc[] = {
+	{ "Colonos III Parte3 ES (2022)(Jose Manuel Gris).tap", 37325, 0x9f90edc5, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecColonos3s3, SpecColonos3s3, Spec128)
+STD_ROM_FN(SpecColonos3s3)
+
+struct BurnDriver BurnSpecColonos3s3 = {
+	"spec_colonos3s3", "spec_colonos3s1", "spec_spec128", NULL, "2022",
+	"Colonos III - Parte 3 (Spanish) (128K) (HB)\0", NULL, "Jose Manuel Gris", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
+	SpectrumGetZipName, SpecColonos3s3RomInfo, SpecColonos3s3RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

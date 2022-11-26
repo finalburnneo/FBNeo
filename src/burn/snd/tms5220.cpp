@@ -1600,6 +1600,20 @@ void tms5220_scan(INT32 nAction, INT32 *pnMin)
 	}
 }
 
+void tms5220_set_readyq_func(void (*cb)(INT32))
+{
+	tms5220_state *tms = our_chip;
+
+	tms->readyq_func = cb;
+}
+
+void tms5220_set_irq_func(void (*cb)(INT32))
+{
+	tms5220_state *tms = our_chip;
+
+	tms->irq_func = cb;
+}
+
 /**********************************************************************************************
 
      True timing

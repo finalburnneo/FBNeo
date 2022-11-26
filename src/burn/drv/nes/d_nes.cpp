@@ -920,6 +920,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xc9f3f439) ? ALT_TIMING : 0; // vs. freedom force
 	NESMode |= (ROMCRC == 0x53eb8950) ? ALT_TIMING : 0; // freedom force
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
+	NESMode |= (ROMCRC == 0xe39e0be2) ? ALT_TIMING2 : 0; // laser invasion
 	NESMode |= (ROMCRC == 0x70eac605) ? ALT_TIMING : 0; // deblock
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
@@ -3850,7 +3851,8 @@ static void mapper5_ppu_clk(UINT16 address)
 	}
 
 	switch (pixel) {
-		case  16: mmc5_lineadvance(); break;
+		case   1: if (~NESMode & ALT_TIMING2) mmc5_lineadvance(); break; // castelvania iii
+		case  16: if (NESMode & ALT_TIMING2) mmc5_lineadvance(); break; // laser invasion prefers cycle 16 (grr..)
 		case 257: mmc5_mapchr(CHR_SPRITE); break; // sprite bank switch
 		case 321: mmc5_mapchr(CHR_TILE); break; // bg bank switch
 	}
@@ -22136,6 +22138,23 @@ struct BurnDriver BurnDrvnes_8bitxmas21 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_8bitxmas22RomDesc[] = {
+	{ "8-bit XMAS 2022 (2022)(RetroUSB).nes",          131088, 0x81bbc4a5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_8bitxmas22)
+STD_ROM_FN(nes_8bitxmas22)
+
+struct BurnDriver BurnDrvnes_8bitxmas22 = {
+	"nes_8bitxmas22", NULL, NULL, NULL, "2022",
+	"8-bit XMAS 2022 (HB)\0", NULL, "retroUSB", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_8bitxmas22RomInfo, nes_8bitxmas22RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_dethcomplex2RomDesc[] = {
 	{ "Deth Complex 2 (2022)(T-bone).nes",          524304, 0xaf32771c, BRF_ESS | BRF_PRG },
 };
@@ -39761,6 +39780,23 @@ struct BurnDriver BurnDrvnes_kartfighter = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_kartfighterRomInfo, nes_kartfighterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_skartfighterRomDesc[] = {
+	{ "Super Kart Fighter Hack (2022) (Streetwize).nes",          393232, 0x4212c73e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_skartfighter)
+STD_ROM_FN(nes_skartfighter)
+
+struct BurnDriver BurnDrvnes_skartfighter = {
+	"nes_skartfighter", "nes_kartfighter", NULL, NULL, "2022",
+	"Super Kart Fighter (Hack)\0", NULL, "Mr. Streetwize", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_skartfighterRomInfo, nes_skartfighterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

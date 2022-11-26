@@ -1217,6 +1217,7 @@ static struct BurnRomInfo AstormudRomDesc[] = {
 STD_ROM_PICK(Astormud)
 STD_ROM_FN(Astormud)
 
+// adds (c) 1989 Elorg
 static struct BurnRomInfo BloxeedRomDesc[] = {
 	{ "epr-12911.a6",   0x20000, 0xa481581a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12910.a5",   0x20000, 0xdd1bc3bf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1236,6 +1237,27 @@ static struct BurnRomInfo BloxeedRomDesc[] = {
 
 STD_ROM_PICK(Bloxeed)
 STD_ROM_FN(Bloxeed)
+
+// Only shows (c) 1989 SEGA
+static struct BurnRomInfo BloxeedaRomDesc[] = {
+	{ "epr-12890.a6",   0x20000, 0xb0b85294, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12889.a5",   0x20000, 0x96c67e36, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "opr-12884.b1",   0x10000, 0xe024aa33, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-12885.b2",   0x10000, 0x8041b814, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-12886.b3",   0x10000, 0xde32285e, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "opr-12887.b11",  0x10000, 0xf0c0f49d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12891.a11",  0x10000, 0x90d31a8c, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12888.a4",   0x20000, 0x6f2fc63c, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "317-0139.key",   0x02000, 0x9aae84cb, SYS16_ROM_KEY | BRF_ESS | BRF_PRG},
+};
+
+
+STD_ROM_PICK(Bloxeeda)
+STD_ROM_FN(Bloxeeda)
 
 static struct BurnRomInfo BloxeeddRomDesc[] = {
 	{ "bootleg_epr-12911.a6",   0x20000, 0x2d634453, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3595,11 +3617,21 @@ struct BurnDriver BurnDrvAstormud = {
 };
 
 struct BurnDriver BurnDrvBloxeed = {
-	"bloxeed", NULL, NULL, NULL, "1990",
-	"Bloxeed (Japan, FD1094 317-0139)\0", NULL, "Sega", "System 18",
+	"bloxeed", NULL, NULL, NULL, "1989",
+	"Bloxeed (Japan, FD1094 317-0139)\0", NULL, "Sega / Elorg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PUZZLE, 0,
 	NULL, BloxeedRomInfo, BloxeedRomName, NULL, NULL, NULL, NULL, System18InputInfo, BloxeedDIPInfo,
+	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvBloxeeda = {
+	"bloxeeda", "bloxeed", NULL, NULL, "1989",
+	"Bloxeed (Japan, earlier) (FD1094 317-0139)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PUZZLE, 0,
+	NULL, BloxeedaRomInfo, BloxeedaRomName, NULL, NULL, NULL, NULL, System18InputInfo, BloxeedDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

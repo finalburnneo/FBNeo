@@ -1520,7 +1520,7 @@ static INT32 NeoSMAInit(void (*pInitCallback)(), pSekWriteWordHandler pBankswitc
 	NeoCallbackActive->pInitialise = pInitCallback;
 
 	// Control SMA protection in ips environment.
-	if (!bDoIpsPatch || (GetIpsDrvDefine() & IPS_USE_PROTECT)) {
+	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
 		NeoCallbackActive->pInstallHandlers = NeoSMAInstallHanders;
 		NeoCallbackActive->pBankswitch = NeoSMABankswitch;
 		NeoCallbackActive->pScan = NeoSMAScan;
@@ -1706,7 +1706,7 @@ static void NeoPVCInstallHandlers()
 static INT32 NeoPVCInit()
 {
 	// Control PVC protection in ips environment.
-	if (!bDoIpsPatch || (GetIpsDrvDefine() & IPS_USE_PROTECT)) {
+	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
 		PVCRAM = (UINT8*)BurnMalloc(0x2000);
 		if (!PVCRAM) return 1;
 
@@ -2049,13 +2049,89 @@ static struct BurnRomInfo ridheroRomDesc[] = {
 STDROMPICKEXT(ridhero, ridhero, neogeo)
 STD_ROM_FN(ridhero)
 
+// Very incomplete simulation of system link - just enough to make AES mode work correctly. When this is properly emulated, please remove! 
+static UINT8 ridheroLinkStatus = 0;
+
+// Dip 0 bits 5,4,3 are important for this, bit 5 sets whether to use the link or not, 4 & 3 inverted is the machine ID (~dip & 0x18)
+
+static UINT8 __fastcall ridheroLinkRead(UINT32 sekAddress)
+{
+	UINT8 ret = 0;
+
+	switch (sekAddress)
+	{
+		case 0x200000: // status read? always read to D4
+			ridheroLinkStatus ^= 0x08;
+			ret = ridheroLinkStatus;
+			break;
+			
+		case 0x200001: // result read? always read to D1
+			ret = 0; // returning 0x80 gives us more
+			break;
+	}
+
+//	bprintf (0, _T("Link Read: %5.5x %2.2x PC(%5.5x)\n"), sekAddress, ret, SekGetPC(-1));
+
+	return ret;
+}
+
+static void __fastcall ridheroLinkWrite(UINT32 sekAddress, UINT8 byteValue)
+{
+//	bprintf (0, _T("Link Write: %5.5x, %2.2x PC(%5.5x)\n"), sekAddress, byteValue, SekGetPC(-1));
+
+	switch (sekAddress)
+	{
+		case 0x200001:
+		{
+			switch (byteValue & 0xf0) // command
+			{
+				case 0x00: // ?
+				case 0x10: // send my cabinet ID#
+				case 0x20: // request partner cabinet ID# ?
+					// $b10a tests (result & 0xfc) and branches if it is zero
+				case 0x40: // ?
+				case 0x50: // ?
+				case 0x70: // prepare to receive my Cabinet ID# ?
+				case 0xb0: // ?
+				case 0xc0: // c0-ff ?
+				return;
+			}		
+		}
+		return;
+	}
+}
+
+static void ridheroInstallHandlers()
+{
+	SekMapHandler(7,    0x200000,    0x200001,  MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler(7,  ridheroLinkRead);
+	SekSetWriteByteHandler(7, ridheroLinkWrite);
+}
+
+static INT32 ridheroScan(INT32 nAction, INT32*)
+{
+	if (nAction & ACB_MEMORY_RAM) {
+		SCAN_VAR(ridheroLinkStatus);
+	}
+
+	return 0;
+}
+
+static INT32 ridheroInit()
+{
+	NeoCallbackActive->pInstallHandlers = ridheroInstallHandlers;
+	NeoCallbackActive->pScan = ridheroScan;
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvRidhero = {
 	"ridhero", NULL, "neogeo", NULL, "1990",
 	"Riding Hero (NGM-006)(NGH-006)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
 	NULL, ridheroRomInfo, ridheroRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ridheroInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -2094,7 +2170,7 @@ struct BurnDriver BurnDrvRidheroh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
 	NULL, ridherohRomInfo, ridherohRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ridheroInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -22276,10 +22352,10 @@ struct BurnDriver BurnDrvmslugx2r1v2 = {
 };
 
 // Metal Slug X - Super Vehicle-001 (Survival, Hack)
-// GOTVG 20221031
+// GOTVG 20221115
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",	0x100000, 0xd2913eee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",	0x400000, 0x01f48336, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",	0x100000, 0x9bd3e306, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",	0x400000, 0x019e8acb, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -23108,11 +23184,11 @@ struct BurnDriver BurnDrvmslug5mg = {
 };
 
 // Metal Slug 5 (Stone Turtle, Hack)
-// GOTVG 20221017
+// GOTVG 20221115
 static struct BurnRomInfo mslug5sgRomDesc[] = {
 	/* Encrypted */
-	{ "268-p1csg.p1",	0x400000, 0x713cbdc3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2ces.p2",	0x400000, 0xa962a3e1, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p1csg.p1",	0x400000, 0x1f5cad74, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2csg.p2",	0x400000, 0xf56088ce, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

@@ -7257,6 +7257,43 @@ struct BurnDriver BurnDrvKokoroj = {
 };
 
 
+// Soreike Kokology
+
+static struct BurnRomInfo kokorojaRomDesc[] = {
+	{ "epr-15524.ic8",				0x020000, 0x135640f6, 1 | BRF_PRG | BRF_ESS }, //  0 V60 #0 Code
+	{ "epr-15521.ic18",				0x080000, 0xb0a80786, 2 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-15520.ic9",				0x080000, 0xf2a87e48, 2 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "epr-15523.ic36",				0x020000, 0xba852239, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #0 Code
+	{ "mpr-15522.ic35",				0x080000, 0xfb68a351, 3 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "mpr-15526.ic14",				0x100000, 0xf6907c13, 1 | BRF_GRA },           //  5 Main Layer Tiles
+	{ "mpr-15525.ic5",				0x100000, 0x8c0c876f, 1 | BRF_GRA },           //  6
+
+	{ "mpr-15527.ic32",				0x200000, 0x132f91c6, 2 | BRF_GRA },           //  7 Main Sprites
+	{ "mpr-15529.ic30",				0x200000, 0xc1b826f7, 2 | BRF_GRA },           //  8
+	{ "mpr-15531.ic28",				0x200000, 0xd624e05f, 2 | BRF_GRA },           //  9
+	{ "mpr-15533.ic26",				0x200000, 0xaff0e9a8, 2 | BRF_GRA },           // 10
+	{ "mpr-15528.ic31",				0x200000, 0x2e4bc090, 2 | BRF_GRA },           // 11
+	{ "mpr-15530.ic29",				0x200000, 0x307877a8, 2 | BRF_GRA },           // 12
+	{ "mpr-15532.ic27",				0x200000, 0x923ba3e5, 2 | BRF_GRA },           // 13
+	{ "mpr-15534.ic25",				0x200000, 0x4fa5c56d, 2 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(kokoroja)
+STD_ROM_FN(kokoroja)
+
+struct BurnDriver BurnDrvKokoroja = {
+	"kokoroja", "kokoroj", NULL, NULL, "1992",
+	"Soreike Kokology\0", NULL, "Sega", "System 32",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM32, GBF_MISC, 0,
+	NULL, kokorojaRomInfo, kokorojaRomName, NULL, NULL, NULL, NULL, Kokoroj2InputInfo, Kokoroj2DIPInfo,
+	KokorojInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	416, 224, 4, 3
+};
+
+
 // Soreike Kokology Vol. 2 - Kokoro no Tanteikyoku
 
 static struct BurnRomInfo kokoroj2RomDesc[] = {

@@ -12,6 +12,9 @@ void tms5220_reset();
 void tms5220_scan(INT32 nAction, INT32 *pnMin);
 void tms5220_volume(double vol);
 
+void tms5220_set_readyq_func(void (*cb)(INT32));
+void tms5220_set_irq_func(void (*cb)(INT32));
+
 void tms5220_write(UINT8 data);
 void tms5220_rsq_w(UINT8 state);
 void tms5220_wsq_w(UINT8 state);

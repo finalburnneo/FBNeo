@@ -3348,6 +3348,42 @@ struct BurnDriver BurnDrvdkwizardry = {
 	224, 256, 3, 4
 };
 
+// Donkey Kong Hearthunt
+
+static struct BurnRomInfo dkhrthntRomDesc[] = {
+	{ "dkhrthnt.5et",	0x1000, 0xc9a84bae, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkhrthnt.5ct",	0x1000, 0xe55daf9e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkhrthnt.5bt",	0x1000, 0x34466de4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkhrthnt.5at",	0x1000, 0xd51b8307, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "hh_v_5h_b.bin",	0x0800, 0xc52ec836, 3 | BRF_GRA },           //  6 gfx1
+	{ "hh_v_3pt.bin",	0x0800, 0x655b1313, 3 | BRF_GRA },           //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 | BRF_GRA }, 			 //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 | BRF_GRA }, 			 //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 | BRF_GRA }, 			 // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 | BRF_GRA }, 			 // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 | BRF_GRA },           // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 | BRF_GRA },           // 13
+	{ "hh_v-5e.bpr",	0x0100, 0x15ea25d5, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkhrthnt)
+STD_ROM_FN(dkhrthnt)
+
+struct BurnDriver BurnDrvdkhrthnt = {
+	"dkhrthnt", "dkong", NULL, "dkong", "2022",
+	"Donkey Kong Hearthunt\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkhrthntRomInfo, dkhrthntRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
 
 // Donkey Kong Anniversary Edition
 

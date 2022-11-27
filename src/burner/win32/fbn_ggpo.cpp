@@ -45,7 +45,7 @@ void SetBurnFPS(const char *name, int version)
 		// Version 1: use old framerate (59.94fps)
 		bForce60Hz = 1;
 		nBurnFPS = 5994;
-		nAppVirtualFPS = nBurnFPS;
+		nAppVirtualFps = nBurnFPS;
 		return;
 	}
 
@@ -54,7 +54,7 @@ void SetBurnFPS(const char *name, int version)
 		if (!strcmp(name, "umk3uc")) {
 			bForce60Hz = 1;
 			nBurnFPS = 6000;
-			nAppVirtualFPS = nBurnFPS;
+			nAppVirtualFps = nBurnFPS;
 			return;
 		}
 	}
@@ -71,7 +71,7 @@ void SetBurnFPS(const char *name, int version)
 			}
 		}
 		nBurnFPS = 6000;
-		nAppVirtualFPS = nBurnFPS;
+		nAppVirtualFps = nBurnFPS;
 	}
 }
 
@@ -106,6 +106,12 @@ bool __cdecl ggpo_on_client_event_callback(GGPOClientEvent *info)
 		if (kNetSpectator) {
 			kNetVersion = strlen(info->u.matchinfo.blurb) > 0 ? atoi(info->u.matchinfo.blurb) : NET_VERSION;
 			SetBurnFPS(pGameName, kNetVersion);
+			if (bForce60Hz) {
+				bQuietLoading = true;
+				bAudOkay = 0;
+				MediaInit();
+				DrvInit(nBurnDrvActive, true);
+			}
 		}
 		TCHAR szUser1[128];
 		TCHAR szUser2[128];

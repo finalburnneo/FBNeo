@@ -45,6 +45,7 @@ void SetBurnFPS(const char *name, int version)
 		// Version 1: use old framerate (59.94fps)
 		bForce60Hz = 1;
 		nBurnFPS = 5994;
+		nAppVirtualFPS = nBurnFPS;
 		return;
 	}
 
@@ -52,6 +53,8 @@ void SetBurnFPS(const char *name, int version)
 	if (kNetVersion >= NET_VERSION_UMK3UC_FRAMERATE) {
 		if (!strcmp(name, "umk3uc")) {
 			bForce60Hz = 1;
+			nBurnFPS = 6000;
+			nAppVirtualFPS = nBurnFPS;
 			return;
 		}
 	}
@@ -67,6 +70,8 @@ void SetBurnFPS(const char *name, int version)
 				return;
 			}
 		}
+		nBurnFPS = 6000;
+		nAppVirtualFPS = nBurnFPS;
 	}
 }
 
@@ -101,8 +106,6 @@ bool __cdecl ggpo_on_client_event_callback(GGPOClientEvent *info)
 		if (kNetSpectator) {
 			kNetVersion = strlen(info->u.matchinfo.blurb) > 0 ? atoi(info->u.matchinfo.blurb) : NET_VERSION;
 			SetBurnFPS(pGameName, kNetVersion);
-			MediaInit();
-			DrvInit(nBurnDrvActive, true);
 		}
 		TCHAR szUser1[128];
 		TCHAR szUser2[128];
@@ -240,11 +243,8 @@ bool __cdecl ggpo_begin_game_callback(char *name)
 	for (i = 0; i < nBurnDrvCount; i++) {
 		nBurnDrvActive = i;
 		if ((_tcscmp(BurnDrvGetText(DRV_NAME), tname) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
-			if (!kNetSpectator)
-			{
-				MediaInit();
-				DrvInit(i, true);
-			}
+			MediaInit();
+			DrvInit(i, true);
 			// load game detector
 			DetectorLoad(name, false, iSeed);
 			// if playing a direct game, we never get match information, so play anonymous

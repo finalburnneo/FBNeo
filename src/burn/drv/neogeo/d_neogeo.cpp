@@ -158,22 +158,6 @@ static struct BurnInputInfo SantaBallInputList[] = {
 
 STDINPUTINFO(SantaBall)
 
-static struct BurnInputInfo NgmontstInputList[] = {
-	{"P1 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p1 up"     },      //  1
-	{"P1 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p1 down"   },      //  2
-	{"P1 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p1 fire 1" },      //  3
-	{"P1 Button B",	BIT_DIGITAL,	NeoJoy1 + 5,	"p1 fire 2" },      //  4
-
-	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"     },      //  5
-	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"       },      //  6
-	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"       },      //  7
-
-	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"       },      //  8
-	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"       },      //  9
-};
-
-STDINPUTINFO(Ngmontst)
-
 static struct BurnDIPInfo ms5pcbDIPList[] = {
 	// Offset
 	{0x19,	0xF0, 0x00,	0x00, NULL},
@@ -1062,13 +1046,6 @@ static struct BurnDIPInfo SantaBallDIPList[] = {
 };
 
 STDDIPINFO(SantaBall)
-
-static struct BurnDIPInfo NgmontstDIPList[] = {
-	// Offset
-	{0x06,	0xF0, 0x00,	0x00, NULL              }, // NgmontstInputList
-};
-
-STDDIPINFOEXT(Ngmontst, SantaBall, Ngmontst)
 
 // Rom information
 static struct BurnRomInfo neogeoRomDesc[] = {
@@ -23985,7 +23962,7 @@ struct BurnDriver BurnDrvsantaball = {
 	"SantaBall - Christmas Tennis Game\0", NULL, "M.Priewe / NeoHomeBrew", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MINIGAMES, 0,
-	NULL, santaballRomInfo, santaballRomName, NULL, NULL, NULL, NULL, SantaBallInputInfo, SantaBallDIPInfo,
+	NULL, santaballRomInfo, santaballRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -24014,7 +23991,7 @@ struct BurnDriver BurnDrvngmontst = {
 	"Monitor Test Patterns Tool (v1.3)\0", NULL, "M.Priewe / NeoHomeBrew", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
-	NULL, ngmontstRomInfo, ngmontstRomName, NULL, NULL, NULL, NULL, NgmontstInputInfo, NgmontstDIPInfo,
+	NULL, ngmontstRomInfo, ngmontstRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

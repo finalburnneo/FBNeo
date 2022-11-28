@@ -248,6 +248,7 @@ bool __cdecl ggpo_begin_game_callback(char *name)
 			} else {
 				bDelayLoad = true;
 			}
+			DetectorLoad(name, false, iSeed);
 			// if playing a direct game, we never get match information, so play anonymous
 			if (bDirect) {
 				VidOverlaySetGameInfo(_T("player 1#0,0"), _T("player 2#0,0"), false, iRanked, iPlayer);

@@ -248,6 +248,7 @@ int RunIdleDelay(int frames);
 int RunIdle();
 int RunFrame(int bDraw, int bPause, int bInput);
 int RunMessageLoop();
+int RunInit();
 int RunReset();
 void ToggleLayer(unsigned char thisLayer);
 

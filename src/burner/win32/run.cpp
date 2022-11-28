@@ -455,7 +455,7 @@ int RunReset()
 	return 0;
 }
 
-static int RunInit()
+int RunInit()
 {
 	AudSoundPlay();
 
@@ -464,7 +464,7 @@ static int RunInit()
 	return 0;
 }
 
-static int RunExit()
+int RunExit()
 {
 	// Stop sound if it was playing
 	AudSoundStop();

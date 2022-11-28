@@ -18,6 +18,7 @@ int nRollbackFrames = 0;
 int nRollbackCount = 0;
 
 static char pGameName[MAX_PATH];
+static bool bDelayLoad = false;
 static bool bDirect = false;
 static bool bReplaySupport = false;
 static bool bReplayStarted = false;
@@ -106,12 +107,6 @@ bool __cdecl ggpo_on_client_event_callback(GGPOClientEvent *info)
 		if (kNetSpectator) {
 			kNetVersion = strlen(info->u.matchinfo.blurb) > 0 ? atoi(info->u.matchinfo.blurb) : NET_VERSION;
 			SetBurnFPS(pGameName, kNetVersion);
-			if (bForce60Hz) {
-				bQuietLoading = true;
-				bAudOkay = 0;
-				MediaInit();
-				DrvInit(nBurnDrvActive, true);
-			}
 		}
 		TCHAR szUser1[128];
 		TCHAR szUser2[128];
@@ -217,7 +212,6 @@ bool __cdecl ggpo_begin_game_callback(char *name)
 			if (FindFirstFile(tfilename, &fd) != INVALID_HANDLE_VALUE) {
 				// Load our save-state file (freeplay, event mode, etc.)
 				BurnStateLoad(tfilename, 1, &DrvInitCallback);
-				// detector
 				DetectorLoad(name, false, iSeed);
 				// if playing a direct game, we never get match information, so put anonymous
 				if (bDirect) {
@@ -233,7 +227,6 @@ bool __cdecl ggpo_begin_game_callback(char *name)
 		if (FindFirstFile(tfilename, &fd) != INVALID_HANDLE_VALUE) {
 			// Load our save-state file (freeplay, event mode, etc.)
 			BurnStateLoad(tfilename, 1, &DrvInitCallback);
-			// load detector
 			DetectorLoad(name, false, iSeed);
 			// if playing a direct game, we never get match information, so put anonymous
 			if (bDirect) {
@@ -244,15 +237,17 @@ bool __cdecl ggpo_begin_game_callback(char *name)
 		}
 	}
 
-	// no savestate
+	// no savestate or replay
 	UINT32 i;
 	for (i = 0; i < nBurnDrvCount; i++) {
 		nBurnDrvActive = i;
 		if ((_tcscmp(BurnDrvGetText(DRV_NAME), tname) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
-			MediaInit();
-			DrvInit(i, true);
-			// load game detector
-			DetectorLoad(name, false, iSeed);
+			if (!kNetSpectator) {
+				MediaInit();
+				DrvInit(i, true);
+			} else {
+				bDelayLoad = true;
+			}
 			// if playing a direct game, we never get match information, so play anonymous
 			if (bDirect) {
 				VidOverlaySetGameInfo(_T("player 1#0,0"), _T("player 2#0,0"), false, iRanked, iPlayer);
@@ -273,11 +268,6 @@ bool __cdecl ggpo_advance_frame_callback(int flags)
 	RunFrame(0, 0, 0);
 	bSkipPerfmonUpdates = false;
 	return true;
-}
-
-
-void QuarkProcessEndOfFrame()
-{
 }
 
 static char gAcbBuffer[16 * 1024 * 1024];
@@ -328,7 +318,6 @@ void ComputeIncrementalChecksum(struct BurnArea *pba)
 static int QuarkLogAcb(struct BurnArea* pba)
 {
 	fprintf(gAcbLogFp, "%s:", pba->szName);
-
 	int col = 10, row = 30;
 	for (int i = 0; i < (int)pba->nLen; i++) {
 		if ((i % row) == 0)
@@ -391,6 +380,13 @@ bool __cdecl ggpo_save_game_state_callback(unsigned char **buffer, int *len, int
 
 bool __cdecl ggpo_load_game_state_callback(unsigned char *buffer, int len)
 {
+	if (bDelayLoad) {
+		DrvInit(nBurnDrvActive, true);
+		MediaInit();
+		RunInit();
+		bDelayLoad = false;
+	}
+
 	int *data = (int *)buffer;
 	if (data[0] == 'GGPO') {
 		int headersize = data[1];
@@ -588,7 +584,6 @@ void QuarkInit(TCHAR *tconnect)
 				if (FindFirstFile(tfilename, &fd) != INVALID_HANDLE_VALUE) {
 					BurnStateLoad(tfilename, 1, &DrvInitCallback);
 				}
-				// load game detector in editor mode
 				DetectorLoad(game, true, iSeed);
 				VidOverlaySetGameInfo(_T("Detector1#0,0,0"), _T("Detector2#0,0,0"), false, iRanked, iPlayer);
 				VidOverlaySetGameSpectators(0);

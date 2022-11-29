@@ -9130,3 +9130,21 @@ struct BurnDriver BurnDrvpce_splatthc = {
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
+
+// Dinoforce
+static struct BurnRomInfo pce_dinoforceRomDesc[] = {
+	{ "Dinoforce (J).pce", 0x080000, 0x334300b3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_dinoforce)
+STD_ROM_FN(pce_dinoforce)
+
+struct BurnDriver BurnDrvpce_dinoforce = {
+	"pce_dinoforce", NULL, NULL, NULL, "2022",
+	"Dinoforce\0", NULL, "Tokuhisa Tajima", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
+	PceGetZipName, pce_dinoforceRomInfo, pce_dinoforceRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};

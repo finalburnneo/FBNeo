@@ -124,7 +124,42 @@ Dip defs
 	{dipval, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"                  },			\
 	{dipval, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"                  },			\
 	{dipval, 0x01, 0xf0, 0x00, "Free Play (if coin A too) or 1C/1C" },
-	
+
+#define HANGON_COINAGE_NO_FREEPLAY(dipval)								\
+	{0   , 0xfe, 0   , 15  , "Coin A"                               },			\
+	{dipval, 0x01, 0x0f, 0x07, "4 Coins 1 Credit"                   },			\
+	{dipval, 0x01, 0x0f, 0x08, "3 Coins 1 Credit"                   },			\
+	{dipval, 0x01, 0x0f, 0x09, "2 Coins 1 Credit"                   },			\
+	{dipval, 0x01, 0x0f, 0x05, "2 Coins 1 Credit 5/3 6/4"           },			\
+	{dipval, 0x01, 0x0f, 0x04, "2 Coins 1 Credit 4/3"               },			\
+	{dipval, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"                   },			\
+	{dipval, 0x01, 0x0f, 0x01, "1 Coin  1 Credit 2/3"               },			\
+	{dipval, 0x01, 0x0f, 0x02, "1 Coin  1 Credit 4/5"               },			\
+	{dipval, 0x01, 0x0f, 0x03, "1 Coin  1 Credit 5/6"               },			\
+	{dipval, 0x01, 0x0f, 0x06, "2 Coins 3 Credits"                  },			\
+	{dipval, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"                  },			\
+	{dipval, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"                  },			\
+	{dipval, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"                  },			\
+	{dipval, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"                  },			\
+	{dipval, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"                  },			\
+												\
+	{0   , 0xfe, 0   , 15  , "Coin B"                               },			\
+	{dipval, 0x01, 0xf0, 0x70, "4 Coins 1 Credit"                   },			\
+	{dipval, 0x01, 0xf0, 0x80, "3 Coins 1 Credit"                   },			\
+	{dipval, 0x01, 0xf0, 0x90, "2 Coins 1 Credit"                   },			\
+	{dipval, 0x01, 0xf0, 0x50, "2 Coins 1 Credit 5/3 6/4"           },			\
+	{dipval, 0x01, 0xf0, 0x40, "2 Coins 1 Credit 4/3"               },			\
+	{dipval, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"                   },			\
+	{dipval, 0x01, 0xf0, 0x10, "1 Coin  1 Credit 2/3"               },			\
+	{dipval, 0x01, 0xf0, 0x20, "1 Coin  1 Credit 4/5"               },			\
+	{dipval, 0x01, 0xf0, 0x30, "1 Coin  1 Credit 5/6"               },			\
+	{dipval, 0x01, 0xf0, 0x60, "2 Coins 3 Credits"                  },			\
+	{dipval, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"                  },			\
+	{dipval, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"                  },			\
+	{dipval, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"                  },			\
+	{dipval, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"                  },			\
+	{dipval, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"                  },
+
 static struct BurnDIPInfo EndurorDIPList[]=
 {
 	// Default Values
@@ -171,7 +206,7 @@ static struct BurnDIPInfo HangonDIPList[]=
 	{0x0a, 0xff, 0xff, 0xfe, NULL                                 },
 
 	// Dip 1
-	HANGON_COINAGE(0x09)
+	HANGON_COINAGE_NO_FREEPLAY(0x09)
 
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
@@ -233,7 +268,7 @@ static struct BurnDIPInfo SharrierDIPList[]=
 	{0x0c, 0xff, 0xff, 0xfc, NULL                                 },
 
 	// Dip 1
-	HANGON_COINAGE(0x0b)
+	HANGON_COINAGE_NO_FREEPLAY(0x0b)
 
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                            },

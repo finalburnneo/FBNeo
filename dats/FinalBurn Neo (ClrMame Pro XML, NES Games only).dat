@@ -15218,7 +15218,7 @@
 		<description>Super Kart Fighter (Hack)</description>
 		<year>2022</year>
 		<manufacturer>Mr. Streetwize</manufacturer>
-		<rom name="Super Kart Fighter Hack (2022) (Streetwize).nes" size="393232" crc="4212c73e"/>
+		<rom name="Super Kart Fighter Hack (2022) (Streetwize).nes" size="393232" crc="ce36e36d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

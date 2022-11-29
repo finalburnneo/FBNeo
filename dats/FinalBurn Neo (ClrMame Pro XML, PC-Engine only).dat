@@ -564,6 +564,14 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dinoforce">
+		<description>Dinoforce</description>
+		<year>2022</year>
+		<manufacturer>Tokuhisa Tajima</manufacturer>
+		<rom name="Dinoforce (J).pce" size="524288" crc="334300b3"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dondoko">
 		<description>Don Doko Don!</description>
 		<year>1990</year>

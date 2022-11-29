@@ -4105,6 +4105,7 @@ DRV		BurnDrvDinorexu;
 DRV		BurnDrvDinorex;
 DRV		BurnDrvMSX_dinosour;
 DRV		BurnDrvsms_dinobash;
+DRV		BurnDrvpce_dinoforce;
 DRV		BurnDrvsms_dinodool;
 DRV		BurnDrvCpsDinohunt;
 DRV		BurnSpecCozumel;
@@ -4323,6 +4324,7 @@ DRV		BurnDrvDkcbarrel;
 DRV		BurnDrvdkduel;
 DRV		BurnDrvDkongf;
 DRV		BurnDrvDkfreerun;
+DRV		BurnDrvdkhrthnt;
 DRV		BurnDrvDkongx11;
 DRV		BurnDrvDkongx;
 DRV		BurnDrvDkongitd;
@@ -7656,6 +7658,9 @@ DRV		BurnDrvnes_jacknicgre18homachg;
 DRV		BurnDrvpce_nicklaus;
 DRV		BurnDrvmd_nicklaus;
 DRV		BurnDrvtg_nicklaus;
+DRV		BurnDrvJackrabt;
+DRV		BurnDrvJackrabt2;
+DRV		BurnDrvJackrabts;
 DRV		BurnDrvJack;
 DRV		BurnDrvJack2;
 DRV		BurnDrvJack3;
@@ -10093,9 +10098,12 @@ DRV		BurnDrvsg1k_monacogpb;
 DRV		BurnDrvsg1k_monacogpa;
 DRV		BurnDrvsg1k_monacogp;
 DRV		BurnDrvsg1k_monacogpt;
+DRV		BurnDrvMonymony;
+DRV		BurnDrvMonymony2;
 DRV		BurnDrvmiexchng;
 DRV		BurnDrvsms_monica;
 DRV		BurnDrvHeadonch;
+DRV		BurnDrvngmontst;
 DRV		BurnDrvMSX_monkeyac;
 DRV		BurnDrvMSX_monkeyacb;
 DRV		BurnDrvMSX_monkeyacc;
@@ -13655,6 +13663,7 @@ DRV		BurnDrv_3kokushi;
 DRV		BurnDrvSsanchan;
 DRV		BurnDrvnes_sansaranagaj;
 DRV		BurnDrvnes_sansaranaga;
+DRV		BurnDrvsantaball;
 DRV		BurnDrvpce_santatlantean;
 DRV		BurnSpecSanxion128;
 DRV		BurnSpecSanxion48;
@@ -23333,6 +23342,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDinorex,			// Dino Rex (World)
 	&BurnDrvMSX_dinosour,		// Dino Sourcers (Jpn)
 	&BurnDrvsms_dinobash,		// Dinobasher Starring Bignose the Caveman (Euro, Prototype)
+	&BurnDrvpce_dinoforce,		// Dinoforce
 	&BurnDrvsms_dinodool,		// Dinosaur Dooley, The (Kor)
 	&BurnDrvCpsDinohunt,		// Dinosaur Hunter (Chinese bootleg, 930223 Asia TW)
 	&BurnSpecCozumel,			// Diosa de Cozumel, La (Spanish) (48K)
@@ -23551,6 +23561,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvdkduel,				// Donkey Kong Duel
 	&BurnDrvDkongf,				// Donkey Kong Foundry (hack)
 	&BurnDrvDkfreerun,			// Donkey Kong Freerun Edition
+	&BurnDrvdkhrthnt,			// Donkey Kong Hearthunt
 	&BurnDrvDkongx11,			// Donkey Kong II - Jumpman Returns (hack, V1.1)
 	&BurnDrvDkongx,				// Donkey Kong II - Jumpman Returns (hack, V1.2)
 	&BurnDrvDkongitd,			// Donkey Kong In the Dark v1.02
@@ -26884,6 +26895,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_nicklaus,		// Jack Nicklaus' Greatest 18 Holes of Major Championship Golf
 	&BurnDrvmd_nicklaus,		// Jack Nicklaus' Power Challenge Golf (Euro, USA)
 	&BurnDrvtg_nicklaus,		// Jack Nicklaus' Turbo Golf
+	&BurnDrvJackrabt,			// Jack Rabbit (set 1)
+	&BurnDrvJackrabt2,			// Jack Rabbit (set 2)
+	&BurnDrvJackrabts,			// Jack Rabbit (special)
 	&BurnDrvJack,				// Jack the Giantkiller (set 1)
 	&BurnDrvJack2,				// Jack the Giantkiller (set 2)
 	&BurnDrvJack3,				// Jack the Giantkiller (set 3)
@@ -29321,9 +29335,12 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_monacogpa,		// Monaco GP (Jpn, v1)
 	&BurnDrvsg1k_monacogp,		// Monaco GP (Jpn, v2)
 	&BurnDrvsg1k_monacogpt,		// Monaco GP (Tw)
+	&BurnDrvMonymony,			// Money Money (set 1)
+	&BurnDrvMonymony2,			// Money Money (set 2)
 	&BurnDrvmiexchng,			// Money Puzzle Exchanger / Money Idol Exchanger
 	&BurnDrvsms_monica,			// Monica no Castelo do Dragao (Bra)
 	&BurnDrvHeadonch,			// Monita to Rimoko no Head On Channel (prototype, hack)
+	&BurnDrvngmontst,			// Monitor Test Patterns Tool (v1.3)
 	&BurnDrvMSX_monkeyac,		// Monkey Academy (Jpn)
 	&BurnDrvMSX_monkeyacb,		// Monkey Academy (Jpn, Alt 2)
 	&BurnDrvMSX_monkeyacc,		// Monkey Academy (Jpn, Alt 3)
@@ -32883,6 +32900,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSsanchan,			// Sanrin San Chan (Japan)
 	&BurnDrvnes_sansaranagaj,	// Sansara Naga (Japan)
 	&BurnDrvnes_sansaranaga,	// Sansara Naga (T-eng)
+	&BurnDrvsantaball,			// SantaBall - Christmas Tennis Game
 	&BurnDrvpce_santatlantean,	// Santatlantean (HB)
 	&BurnSpecSanxion128,		// Sanxion - The Spectrum Remix (128K)
 	&BurnSpecSanxion48,			// Sanxion - The Spectrum Remix (48K)

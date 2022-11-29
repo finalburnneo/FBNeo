@@ -1,4 +1,4 @@
-// FB Alpha Incredible technologies (32-bit blitter) driver module
+// FB Neo Incredible technologies (32-bit blitter) driver module
 // Based on MAME driver by Aaron Giles and Brian Troha
 
 #include "tiles_generic.h"
@@ -3815,8 +3815,8 @@ struct BurnDriver BurnDrvBloodstm = {
 // Blood Storm (v2.21)
 
 static struct BurnRomInfo bloodstm221RomDesc[] = {
-	{ "bld00_v21.u83",						0x040000, 0x01907aec, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "bld01_v21.u88",						0x040000, 0xeeae123e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bld00_v221.u83",						0x040000, 0x01907aec, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "bld01_v221.u88",						0x040000, 0xeeae123e, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "bldsnd_v10.u17",						0x020000, 0xdddeedbb, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 Code
 

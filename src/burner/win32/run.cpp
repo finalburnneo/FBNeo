@@ -793,7 +793,7 @@ int RunMessageLoop()
 										VidSKillTinyMsg();
 									}
 								} else if (!bEditActive) { // Backspace: toggles FPS
-									bShowFPS = (bShowFPS + 1) % (kNetGame ? 3 : 2);
+									bShowFPS = (bShowFPS + 1) % (kNetGame ? 4 : 2);
 									DisplayFPS();
 								}
 								break;

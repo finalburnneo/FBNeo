@@ -50,9 +50,9 @@ static float frame_width;
 static float frame_height;
 static float frame_ratio = 1;
 static int frame_time = 0;
-static int frame_warning = 0;
-static int frame_warning_sent = 0;
-static int frame_warning_count = 0;
+static int stats_line1_warning = 0;
+static int stats_line2_warning = 0;
+static int stats_line3_warning = 0;
 
 //------------------------------------------------------------------------------------------------------------------------------
 // test inputs
@@ -100,11 +100,10 @@ static bool show_chat = false;
 static int info_time = 0;
 static int chat_time = 0;
 static int volume_time = 0;
-static int warning_time = 0;
 
 enum
 {
-	CMD_FPSWARNING = 1,
+	CMD_DELAYRA = 1,
 };
 
 static bool CopyFileContents(const char *src, const char *dst)
@@ -700,13 +699,19 @@ void DetectorUpdate()
 	frame_time++;
 
 	// warnings
-	frame_warning--;
-	if (frame_warning < 0) {
-		frame_warning = 0;
+	stats_line1_warning--;
+	if (stats_line1_warning < 0) {
+		stats_line1_warning = 0;
 	}
-	frame_warning_sent--;
-	if (frame_warning_sent < 0) {
-		frame_warning_sent = 0;
+
+	stats_line2_warning--;
+	if (stats_line2_warning < 0) {
+		stats_line2_warning = 0;
+	}
+
+	stats_line3_warning--;
+	if (stats_line3_warning < 0) {
+		stats_line3_warning = 0;
 	}
 
 	bool detector_enabled = gameDetector.run_detector && !gameDetector.frame_end && (gameDetector.state != GameDetector::ST_NONE);
@@ -921,6 +926,15 @@ struct PlayerInfo {
 	int rank;
 };
 
+//------------------------------------------------------------------------------------------------------------------------------
+// jitter info
+//------------------------------------------------------------------------------------------------------------------------------
+#define PINGSIZE 10
+static int jitterPingArray[PINGSIZE] = {};
+static int jitterArray[PINGSIZE] = {};
+static int jitterArrayPos = 0;
+static int jitterPingAvg = 0;
+static int jitterAvg = 0;
 
 //------------------------------------------------------------------------------------------------------------------------------
 // overlay
@@ -937,7 +951,9 @@ static Text chat_names[CHAT_LINES];
 static Text chat_lines[CHAT_LINES];
 static Text chat_input;
 static Text system_message;
-static Text stats;
+static Text stats_line1;
+static Text stats_line2;
+static Text stats_line3;
 static Text info;
 static Text volume;
 static Text warning;
@@ -1097,13 +1113,16 @@ void VidOverlayRender(const RECT &dest, int gameWidth, int gameHeight, int scan_
 	}
 	else if (bShowFPS) {
 		// stats (fps & ping)
-		stats.col = (frame_warning >= 100) ? 0xffff0000 : 0xffffffff;
-		stats.Render(frame_width - 0.0035f, 0.003f, 1.f, FNT_MED, FONT_ALIGN_RIGHT);
-	}
-	
-	if (frame_time < warning_time) {
-		// warning
-		warning.Render(frame_width - 0.0035f, 0.003f + FNT_MED * FNT_SEP, 1.f, FNT_MED, FONT_ALIGN_RIGHT);
+		stats_line1.col = (stats_line1_warning >= 100) ? 0xffff0000 : 0xffffffff;
+		stats_line1.Render(frame_width - 0.0035f, 0.003f, 0.90f, FNT_MED, FONT_ALIGN_RIGHT);
+		if (bShowFPS > 1) {
+			stats_line2.col = (stats_line2_warning >= 100) ? 0xffff0000 : 0xffffffff;
+			stats_line2.Render((jitterAvg >= 10) ? frame_width - 0.0052f : frame_width - 0.0035f, 0.023f, 0.90, FNT_MED, FONT_ALIGN_RIGHT);
+		}
+		if (bShowFPS > 2) {
+			stats_line3.col = (stats_line3_warning >= 100) ? 0xffff0000 : 0xffffffff;
+			stats_line3.Render(frame_width - 0.0035f, 0.043f, 0.90, FNT_MED, FONT_ALIGN_RIGHT);
+		}
 	}
 
 	// text info
@@ -1344,110 +1363,144 @@ void VidOverlaySetSystemMessage(const wchar_t *text)
 	system_message.Set(text);
 }
 
+void SendToPeer(int runahead, int delay) {
+	char buffer[32];
+	sprintf(buffer, "%d,%d,%d,%d", CMD_DELAYRA, game_player, runahead, delay);
+	QuarkSendChatCmd(buffer, 'C');
+}
+
+static int op_delay = 0;
+static int op_runahead = 0;
+static int prev_runahead = -1;
+
 extern int nRollbackFrames;
 extern int nRollbackCount;
-
-// jitter detector
-#define PINGSIZE 10
-static int jitterPingArray[PINGSIZE] = {};
-static int jitterArray[PINGSIZE] = {};
-static int jitterArrayPos = 0;
-static int jitterPingAvg = 0;
-static int jitterAvg = 0;
 
 static int nLastRollbackCount = 0;
 static UINT32 nLastRollbackFrames = 0;
 static UINT32 nRollbackRealtime = 0;
 static UINT32 nLastRollbackAt = 0;
 static UINT32 nMaxRollback=0;
+static UINT32 nRollbacksIn1Cycle = 0;
+static UINT32 rollbackPct = 0;
+static UINT32 nLastCount = 0;
+static UINT32 nRollbacks1CycleAgo = 0;
 
 void VidOverlaySetStats(double fps, int ping, int delay)
 {
-	wchar_t buf[64];
-	if (game_spectator || ping == 0 || ping > 40000 || ping < 0) {
-		swprintf(buf, 64, _T("%2.2ffps"), fps);
+	wchar_t buf_line1[64];
+	wchar_t buf_line2[64];
+	wchar_t buf_line3[64];
+	if (game_spectator || ping <= 0 || ping > 40000) {
+		swprintf(buf_line1, 64, _T("%2.2f fps"), fps);
+		stats_line1.Set(buf_line1);
 	}
 	else {
-		// rollback frames
-		nMaxRollback = 3 + ((ping/2)/(100000/nBurnFPS));
-		if (nLastRollbackFrames > 0 && nLastRollbackCount > 0) {
-			if (nRollbackCount > nLastRollbackCount) {
-				nRollbackRealtime = (nRollbackFrames-nLastRollbackFrames)/(nRollbackCount-nLastRollbackCount);
-				nLastRollbackAt = nFramesEmulated;
-				if ( nRollbackRealtime > nMaxRollback) {
-					if (nFramesEmulated > 1000 && nRollbackRealtime > 0) {
-						VidOverlaySetWarning(180, false);
+		if (bShowFPS >= 1) {
+			// rollback frames
+			nMaxRollback = 3 + ((ping/2)/(100000/nBurnFPS));
+			if (nLastRollbackFrames > 0 && nLastRollbackCount > 0) {
+				if (nRollbackCount > nLastRollbackCount) {
+					nRollbackRealtime = (nRollbackFrames-nLastRollbackFrames)/(nRollbackCount-nLastRollbackCount);
+					nLastRollbackAt = nFramesEmulated;
+					if ( nRollbackRealtime > nMaxRollback) {
+						if (nFramesEmulated > 1000 && nRollbackRealtime > 0) {
+							VidOverlaySetWarning(180, 1);
+						}
 					}
+
+				} else if (nFramesEmulated > nLastRollbackAt + 600) {
+					nRollbackRealtime = 0;
 				}
-
-			} else if (nFramesEmulated > nLastRollbackAt + 600) {
-				nRollbackRealtime = 0;
 			}
+			nLastRollbackCount = nRollbackCount;
+			nLastRollbackFrames = nRollbackFrames;
+
+			swprintf(buf_line1, 64, _T(" %2.2f fps  |  Rollback %df "), fps, nRollbackRealtime);
+			stats_line1.Set(buf_line1);
 		}
-		nLastRollbackCount = nRollbackCount;
-		nLastRollbackFrames = nRollbackFrames;
+		if (bShowFPS >= 2) {
+			// jitter
+			if (ping > 0 && nFramesEmulated > 600) {
+				int pingSum = 0;
+				int jitterSum = 0;
+				jitterPingArray[jitterArrayPos] = ping;
+				if (jitterArrayPos > 0)
+					jitterArray[jitterArrayPos - 1] = abs(jitterPingArray[jitterArrayPos] - jitterPingArray[jitterArrayPos - 1]);
+				for (int i = 0; i < PINGSIZE; i++) {
+					pingSum += jitterArray[i];
+					if (i < PINGSIZE - 1) jitterSum += jitterArray[i];
+				}
+				jitterPingAvg = pingSum / PINGSIZE;
+				jitterAvg = jitterSum / (PINGSIZE - 1);
+				jitterArrayPos++;
+				if (jitterArrayPos > PINGSIZE) {
+					jitterArrayPos = 0;
+				}
+			}
+			if (jitterAvg > jitterPingAvg * 0.15 && jitterAvg > 10) VidOverlaySetWarning(120, 2);
 
-		// jitter
-		if (ping > 0 && nFramesEmulated > 600) {
-			int pingSum = 0;
-			int jitterSum = 0;
-			jitterPingArray[jitterArrayPos] = ping;
-			if (jitterArrayPos > 0)
-				jitterArray[jitterArrayPos - 1] = abs(jitterPingArray[jitterArrayPos] - jitterPingArray[jitterArrayPos - 1]);
-			for (int i = 0; i < PINGSIZE; i++) {
-				pingSum += jitterArray[i];
-				if (i < PINGSIZE - 1) jitterSum += jitterArray[i];
-			}
-			jitterPingAvg = pingSum / PINGSIZE;
-			jitterAvg = jitterSum / (PINGSIZE- 1);
-			jitterArrayPos++;
-			if (jitterArrayPos > PINGSIZE) {
-				jitterArrayPos = 0;
-			}
+			wchar_t buf_ping[30];
+			wchar_t buf_jitter[30];
+			if (ping < 1000) wsprintf(buf_ping, _T("Ping %dms  |"), ping);
+			else wsprintf(buf_ping, _T("Ping +999ms  |"));
+			if (jitterAvg < 10) wsprintf(buf_jitter, _T("  Jitter  %dms  "), jitterAvg);
+			else if (jitterAvg < 100) wsprintf(buf_jitter, _T("  Jitter %dms"), jitterAvg);
+			else wsprintf(buf_jitter, _T("Jitter +99ms"));
+			swprintf(buf_line2, 64, _T("%s%s"), buf_ping, buf_jitter);
+			stats_line2.Set(buf_line2);
 		}
-		if (jitterAvg > jitterPingAvg * 0.15 && jitterAvg > 10)
-			VidOverlaySetWarning(120, false);
+		if (bShowFPS >= 3) {
+			if (nFramesEmulated >= nLastCount + 600) {
+				nRollbacksIn1Cycle = nRollbackFrames - nRollbacks1CycleAgo;
+				nRollbacks1CycleAgo = nRollbackFrames;
+				rollbackPct = (100 * nRollbacksIn1Cycle)/(nFramesEmulated-nLastCount);
+				nLastCount = nFramesEmulated;
+			}
+			if (rollbackPct >= 50) VidOverlaySetWarning(120, 3);
 
-		if (bShowFPS == 1)
-			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d p%dms r%df"), fps, delay, nVidRunahead, ping, nRollbackRealtime);
-		else if (bShowFPS == 2)
-			swprintf(buf, 64, _T("%2.2ffps d%d-ra%d p%dms/j%dms r%df"), fps, delay, nVidRunahead, ping, jitterAvg, nRollbackRealtime);
+			//swprintf(buf_line3, 64, _T("Delay %d  | Runahead %d"), delay, nVidRunahead);
+			if (game_player == 0) swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d%d-ra%d   "), delay, nVidRunahead, op_delay, op_runahead);
+			else swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d%d-ra%d   "), op_delay, op_runahead, delay, nVidRunahead);
+			stats_line3.Set(buf_line3);
+		}
+
+		if (nRollbackCount > 1 && prev_runahead != nVidRunahead) {
+			prev_runahead = nVidRunahead;
+			SendToPeer(nVidRunahead, delay);
+		}
+
 	}
 
 	// send warning if fps went down the thresold
 	if (fps < ((nBurnFPS / 100) - 4)) {
 		if (nFramesEmulated > 2000) {
-			VidOverlaySetWarning(150, true);
+			VidOverlaySetWarning(150, 1);
 		}
 	}
 
-	stats.Set(buf);
 }
 
-void VidOverlaySetWarning(int warning, bool fpswarn)
+void VidOverlaySetWarning(int warning, int line)
 {
-	frame_warning+= warning;
-	if (frame_warning > WARNING_MAX) {
-		frame_warning = WARNING_MAX;
-	}
 
-	if (kNetGame && !kNetSpectator && frame_warning > WARNING_THRESHOLD) {
-		if (!frame_warning_sent) {
-			// only 3 warnings
-			if (frame_warning_count < WARNING_MSGCOUNT) {
-				/*
-				char buffer[32];
-				sprintf(buffer, "%d,%d", CMD_FPSWARNING, game_player);
-				QuarkSendChatCmd(buffer, 'C');
-				if (fpswarn)
-					VidOverlayAddChatLine(_T("FPS"), _T("WARNING"));
-				*/
-				// send next warning in 15 seconds
-				frame_warning_sent = 60 * 15;
-				frame_warning_count++;
-			}
+	if (line == 1) {
+		stats_line1_warning+= warning;
+		if (stats_line1_warning > WARNING_MAX) {
+			stats_line1_warning = WARNING_MAX;
+		}
+	} else if (line == 2) {
+		stats_line2_warning+= warning;
+		if (stats_line2_warning > WARNING_MAX) {
+			stats_line2_warning = WARNING_MAX;
+		}
+	} else if (line == 3) {
+		stats_line3_warning+= warning;
+		if (stats_line3_warning > WARNING_MAX) {
+			stats_line3_warning = WARNING_MAX;
 		}
 	}
+
 }
 
 void VidOverlayShowVolume(const wchar_t* text)
@@ -1462,15 +1515,13 @@ void VidOverlaySetChatInput(const wchar_t *text)
 	chat_time = frame_time + CHAT_FRAMES;
 	show_chat_input = true;
 	show_chat = true;
-	VidOverlaySetWarning(-10000, false);
+	VidOverlaySetWarning(-10000, 1);
+	VidOverlaySetWarning(-10000, 2);
+	VidOverlaySetWarning(-10000, 3);
 }
 
 void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 {
-	if (bVidMuteChat) {
-		return;
-	}
-
 	if (!wcscmp(name, _T("Command"))) {
 		int cmd;
 		int idx;
@@ -1478,21 +1529,16 @@ void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 			switch (cmd)
 			{
 				// warning command
-				case CMD_FPSWARNING:
-					if (swscanf(text, _T("%d,%d"), &cmd, &idx) == 2)
-					{
-						if (idx == game_player) {
-							warning.Set(_T("You are having framerate issues and netplay is being affected, try removing Runahead"));
-						}
-						else {
-							warning.Set(_T("Opponent is having framerate issues and netplay is being affected"));
-						}
-						warning_time = frame_time + WARNING_FRAMES;
-					}
+				case CMD_DELAYRA:
+					swscanf(text, _T("%d,%d,%d,%d"), &cmd, &idx, &op_delay, &op_runahead);
 					break;
 			}
 		}
 		// commands are not chat!
+		return;
+	}
+
+	if (bVidMuteChat) {
 		return;
 	}
 

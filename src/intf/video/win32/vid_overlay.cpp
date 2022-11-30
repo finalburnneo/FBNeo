@@ -1363,7 +1363,7 @@ void VidOverlaySetSystemMessage(const wchar_t *text)
 	system_message.Set(text);
 }
 
-void SendToPeer(int runahead, int delay) {
+void SendToPeer(int delay, int runahead) {
 	char buffer[32];
 	sprintf(buffer, "%d,%d,%d,%d", CMD_DELAYRA, game_player, delay, runahead);
 	QuarkSendChatCmd(buffer, 'C');
@@ -1372,6 +1372,7 @@ void SendToPeer(int runahead, int delay) {
 static int op_delay = 0;
 static int op_runahead = 0;
 static int prev_runahead = -1;
+static int bOpInfoRcvd = false;
 
 extern int nRollbackFrames;
 extern int nRollbackCount;
@@ -1388,11 +1389,14 @@ static UINT32 nRollbacks1CycleAgo = 0;
 
 void VidOverlaySetStats(double fps, int ping, int delay)
 {
+	if (bShowFPS <= 0) return;
+
 	wchar_t buf_line1[64];
 	wchar_t buf_line2[64];
 	wchar_t buf_line3[64];
-	if (game_spectator || ping <= 0 || ping > 40000) {
-		swprintf(buf_line1, 64, _T("%2.2f fps"), fps);
+	if ((game_spectator || ping <= 0 || ping > 40000) && (bShowFPS >= 1)) {
+		if (bShowFPS > 0 && bShowFPS < 3)swprintf(buf_line1, 64, _T("%2.2f fps"), fps);
+		else if (bShowFPS >= 3) swprintf(buf_line1, 64, _T("(ra%d) %2.2f fps"), nVidRunahead, fps);
 		stats_line1.Set(buf_line1);
 	}
 	else {
@@ -1460,7 +1464,7 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 			if (rollbackPct >= 50) VidOverlaySetWarning(120, 3);
 
 			//swprintf(buf_line3, 64, _T("Delay %d  | Runahead %d"), delay, nVidRunahead);
-			if (prev_runahead == -1) {
+			if (!bOpInfoRcvd) {
 				if (game_player == 0) swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d?-ra?    "), delay, nVidRunahead);
 				else swprintf(buf_line3, 64, _T("P1: d?-ra?  |  P2: d%d-ra%d   "), delay, nVidRunahead);
 			} else {
@@ -1472,7 +1476,7 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 
 		if (nRollbackCount > 0 && prev_runahead != nVidRunahead) {
 			prev_runahead = nVidRunahead;
-			SendToPeer(nVidRunahead, delay);
+			SendToPeer(delay, nVidRunahead);
 		}
 
 	}
@@ -1535,7 +1539,10 @@ void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 			{
 				// get delay & runahead from opponent
 				case CMD_DELAYRA:
-					if (idx != game_player) swscanf(text, _T("%d,%d,%d,%d"), &cmd, &idx, &op_delay, &op_runahead);
+					if (idx != game_player) {
+						swscanf(text, _T("%d,%d,%d,%d"), &cmd, &idx, &op_delay, &op_runahead);
+						bOpInfoRcvd = true;
+					}
 					break;
 			}
 		}

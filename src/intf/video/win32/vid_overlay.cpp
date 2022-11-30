@@ -1460,12 +1460,17 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 			if (rollbackPct >= 50) VidOverlaySetWarning(120, 3);
 
 			//swprintf(buf_line3, 64, _T("Delay %d  | Runahead %d"), delay, nVidRunahead);
-			if (game_player == 0) swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d%d-ra%d   "), delay, nVidRunahead, op_delay, op_runahead);
-			else swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d%d-ra%d   "), op_delay, op_runahead, delay, nVidRunahead);
+			if (prev_runahead == -1) {
+				if (game_player == 0) swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d?-ra?    "), delay, nVidRunahead);
+				else swprintf(buf_line3, 64, _T("P1: d?-ra?  |  P2: d%d-ra%d   "), delay, nVidRunahead);
+			} else {
+				if (game_player == 0) swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d%d-ra%d   "), delay, nVidRunahead, op_delay, op_runahead);
+				else swprintf(buf_line3, 64, _T("P1: d%d-ra%d  |  P2: d%d-ra%d   "), op_delay, op_runahead, delay, nVidRunahead);
+			}
 			stats_line3.Set(buf_line3);
 		}
 
-		if (nRollbackCount > 1 && prev_runahead != nVidRunahead) {
+		if (nRollbackCount > 0 && prev_runahead != nVidRunahead) {
 			prev_runahead = nVidRunahead;
 			SendToPeer(nVidRunahead, delay);
 		}

@@ -422,7 +422,7 @@ struct speedy_s {
 
 static speedy_s gamelist[] = {
 	{ {"mushisam", "mushisamb", "\0", }, 				0xc04a2aa, 0xc0024d8 },
-	{ {"ibara", "mushisama", "\0", }, 					0xc04a0aa, 0xc0022f0 },
+	{ {"ibara", "ibarao", "mushisama", "\0", }, 		0xc04a0aa, 0xc0022f0 },
 	{ {"espgal2", "\0", }, 								0xc05177a, 0xc002310 },
 	{ {"mushitam", "mushitama", "\0", }, 				0xc04a0da, 0xc0022f0 },
 	{ {"ibarablk", "ibarablka", "\0", }, 				0xc05176a, 0xc002310 },
@@ -947,10 +947,10 @@ struct BurnDriver BurnDrvFutariblj = {
 };
 
 
-// Ibara (2005/03/22 MASTER VER..)
+// Ibara (2005/03/22 MASTER VER.., '06. 3. 7 ver.)
 
 static struct BurnRomInfo ibaraRomDesc[] = {
-	{ "u4",				0x0200000, 0x8e6c155d, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+	{ "ibara_u4",		0x0200000, 0xd5fb6657, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
 
 	{ "u2",				0x8400000, 0x55840976, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
 
@@ -963,10 +963,35 @@ STD_ROM_FN(ibara)
 
 struct BurnDriver BurnDrvIbara = {
 	"ibara", NULL, NULL, NULL, "2005",
-	"Ibara (2005/03/22 MASTER VER..)\0", NULL, "Cave (AMI license)", "CA012",
-	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER..)\0", NULL, NULL, NULL,
+	"Ibara (2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, "Cave (AMI license)", "CA012",
+	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibaraRomInfo, ibaraRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	240, 320, 3, 4
+};
+
+
+// Ibara (2005/03/22 MASTER VER..)
+
+static struct BurnRomInfo ibaraoRomDesc[] = {
+	{ "ibarao_u4",		0x0200000, 0x8e6c155d, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+
+	{ "u2",				0x8400000, 0x55840976, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
+
+	{ "u23",			0x0400000, 0xee5e585d, 3 | BRF_SND },           //  2 YMZ770 Samples
+	{ "u24",			0x0400000, 0xf0aa3cb6, 3 | BRF_SND },           //  3
+};
+
+STD_ROM_PICK(ibarao)
+STD_ROM_FN(ibarao)
+
+struct BurnDriver BurnDrvIbarao = {
+	"ibarao", "ibara", NULL, NULL, "2005",
+	"Ibara (2005/03/22 MASTER VER..)\0", NULL, "Cave (AMI license)", "CA012",
+	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER..)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	NULL, ibaraoRomInfo, ibaraoRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
 };

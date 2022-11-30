@@ -768,6 +768,10 @@ void MenuUpdate()
 
 	CheckMenuItem(hMenu, MENU_OVERLAY, (bVidOverlay) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_BIG_OVERLAY, (bVidBigOverlay) ? MF_CHECKED : MF_UNCHECKED);
+
+	CheckMenuItem(hMenu, MENU_SHOW_FPS, (bShowFPS == 0) ? MF_UNCHECKED : MF_CHECKED);
+	CheckMenuItem(hMenu, MENU_SHOW_FULLFPS, (bShowFPS >= 3) ? MF_CHECKED : MF_UNCHECKED);
+
 	CheckMenuItem(hMenu, MENU_SHOW_INPUTS, (bVidShowInputs) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_UNRANKED_SCORES, (bVidUnrankedScores) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVE_OVERLAY_FILES, (bVidSaveOverlayFiles) ? MF_CHECKED : MF_UNCHECKED);

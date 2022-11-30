@@ -987,6 +987,8 @@ BEGIN
 				BEGIN
 						MENUITEM "Display overlay",										MENU_OVERLAY
 						MENUITEM "Display bigger overlay",						MENU_BIG_OVERLAY
+						MENUITEM "Display fps + stats",							MENU_SHOW_FPS
+						MENUITEM "Display full stats info",						MENU_SHOW_FULLFPS
 						MENUITEM "Display debug inputs",						MENU_SHOW_INPUTS
 						MENUITEM "Show scores in unranked matches",		MENU_UNRANKED_SCORES
 						MENUITEM "Save overlay data to files",				MENU_SAVE_OVERLAY_FILES

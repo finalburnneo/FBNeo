@@ -2435,6 +2435,14 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_SHOW_FPS:
+			bShowFPS = (bShowFPS > 0) ? 0: 1;
+			break;
+
+		case MENU_SHOW_FULLFPS:
+			bShowFPS = (bShowFPS > 1) ? 1: 3;
+			break;
+
 		case MENU_OVERLAY:
 			bVidOverlay = !bVidOverlay;
 			break;

@@ -795,6 +795,7 @@ int RunMessageLoop()
 								} else if (!bEditActive) { // Backspace: toggles FPS
 									bShowFPS = (bShowFPS + 1) % (kNetGame ? 4 : 2);
 									DisplayFPS();
+									MenuUpdate();
 								}
 								break;
 

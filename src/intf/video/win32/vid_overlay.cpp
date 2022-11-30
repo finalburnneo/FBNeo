@@ -1365,7 +1365,7 @@ void VidOverlaySetSystemMessage(const wchar_t *text)
 
 void SendToPeer(int runahead, int delay) {
 	char buffer[32];
-	sprintf(buffer, "%d,%d,%d,%d", CMD_DELAYRA, game_player, runahead, delay);
+	sprintf(buffer, "%d,%d,%d,%d", CMD_DELAYRA, game_player, delay, runahead);
 	QuarkSendChatCmd(buffer, 'C');
 }
 
@@ -1452,8 +1452,8 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 		}
 		if (bShowFPS >= 3) {
 			if (nFramesEmulated >= nLastCount + 600) {
-				nRollbacksIn1Cycle = nRollbackFrames - nRollbacks1CycleAgo;
-				nRollbacks1CycleAgo = nRollbackFrames;
+				nRollbacksIn1Cycle = nRollbackCount - nRollbacks1CycleAgo;
+				nRollbacks1CycleAgo = nRollbackCount;
 				rollbackPct = (100 * nRollbacksIn1Cycle)/(nFramesEmulated-nLastCount);
 				nLastCount = nFramesEmulated;
 			}
@@ -1525,12 +1525,12 @@ void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 	if (!wcscmp(name, _T("Command"))) {
 		int cmd;
 		int idx;
-		if (swscanf(text, _T("%d"), &cmd) == 1) {
+		if (swscanf(text, _T("%d,%d"), &cmd, &idx) == 2) {
 			switch (cmd)
 			{
-				// warning command
+				// get delay & runahead from opponent
 				case CMD_DELAYRA:
-					swscanf(text, _T("%d,%d,%d,%d"), &cmd, &idx, &op_delay, &op_runahead);
+					if (idx != game_player) swscanf(text, _T("%d,%d,%d,%d"), &cmd, &idx, &op_delay, &op_runahead);
 					break;
 			}
 		}

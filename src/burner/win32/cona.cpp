@@ -474,7 +474,7 @@ int ConfigAppSave()
 	VAR(bForce60Hz);
 	_ftprintf(h, _T("\n// If zero, skip frames when needed to keep the emulation running at full speed\n"));
 	VAR(bAlwaysDrawFrames);
-	_ftprintf(h, _T("\n// If non-zero, draw FPS on screen\n"));
+	_ftprintf(h, _T("\n// Show stats on screen (0=disabled,  1=FPS+rollback frames, 2=ping+jitter, 3=delay and runahead)\n"));
 	VAR(bShowFPS);
 
 	_ftprintf(h, _T("\n"));

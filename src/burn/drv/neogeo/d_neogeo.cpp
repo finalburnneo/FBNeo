@@ -137,27 +137,6 @@ static struct BurnInputInfo neoForceAESInputList[] = {
 
 STDINPUTINFO(neoForceAES)
 
-static struct BurnInputInfo SantaBallInputList[] = {
-	{"P1 Start",	BIT_DIGITAL,	NeoButton1 + 0,	"p1 start"  },      //  0
-
-	{"P1 Up",		BIT_DIGITAL,	NeoJoy1 + 0,	"p1 up"     },      //  1
-	{"P1 Down",		BIT_DIGITAL,	NeoJoy1 + 1,	"p1 down"   },      //  2
-	{"P1 Button A",	BIT_DIGITAL,	NeoJoy1 + 4,	"p1 fire 1" },      //  3
-
-	{"P2 Up",		BIT_DIGITAL,	NeoJoy2 + 0,	"p2 up"     },      //  4
-	{"P2 Down",		BIT_DIGITAL,	NeoJoy2 + 1,	"p2 down"   },      //  5
-	{"P2 Button A",	BIT_DIGITAL,	NeoJoy2 + 4,	"p2 fire 1" },      //  6
-
-	{"Reset",		BIT_DIGITAL,	&NeoReset,		"reset"     },      //  7
-	{"Dip 1",		BIT_DIPSWITCH,	NeoInput + 4,	"dip"       },      //  8
-	{"Dip 2",		BIT_DIPSWITCH,	NeoInput + 5,	"dip"       },      //  9
-
-	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"       },      //  A
-	{"Slots",		BIT_DIPSWITCH,	&nNeoNumSlots,	"dip"       },      //  B
-};
-
-STDINPUTINFO(SantaBall)
-
 static struct BurnDIPInfo ms5pcbDIPList[] = {
 	// Offset
 	{0x19,	0xF0, 0x00,	0x00, NULL},
@@ -1026,26 +1005,6 @@ static struct BurnDIPInfo neoForceAESDIPList[] = {
 };
 
 STDDIPINFO(neoForceAES)
-
-static struct BurnDIPInfo SantaBallDIPList[] = {
-	// Offset
-	{0x08,	0xF0, 0x00,	0x00, NULL              }, // SantaBallInputList
-
-	// Defaults
-	{0x00,	0xFF, 0xFF,	0x40, NULL              },
-	{0x02,	0xFF, 0xFF,	0x91, NULL              }, // System [Development Kit]
-
-	// DIP 1
-	{0,		0xFE, 0,	2,	  "Autofire"        },
-	{0x00,	0x01, 0x04,	0x00, "Off"             },
-	{0x00,	0x01, 0x04,	0x04, "On"              },
-
-	// System - BIOS
-	{0,		0xFD, 0,	1,    "BIOS"            },
-	{0x02,	0x01, 0x3f,	0x11, "Development Kit" },
-};
-
-STDDIPINFO(SantaBall)
 
 // Rom information
 static struct BurnRomInfo neogeoRomDesc[] = {
@@ -22506,7 +22465,6 @@ STDROMPICKEXT(mslug3c, mslug3c, neogeo)
 STD_ROM_FN(mslug3c)
 
 struct BurnDriver BurnDrvmslug3c = {
-	/* Encrypted */
 	"mslug3c", "mslug3", "neogeo", NULL, "2019",
 	"Metal Slug 3 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
@@ -22873,6 +22831,46 @@ struct BurnDriver BurnDrvmslug3ki = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3kiRomInfo, mslug3kiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug3WOPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (Survival, Hack)
+// 20221128
+static struct BurnRomInfo mslug3scRomDesc[] = {
+	/* Encrypted */
+	{ "ms3sc.neo-sma",	0x040000, 0x1cdb3209, 9 | BRF_ESS | BRF_PRG }, //  0 68K code     / stored in the custom chip
+	{ "256-pg1sc.p1",	0x400000, 0xb187e852, 1 | BRF_ESS | BRF_PRG }, //  1              / TC5332202
+	{ "256-pg2sc.p2",	0x400000, 0x8b40789d, 1 | BRF_ESS | BRF_PRG }, //  2              / TC5332202
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "256-c1sc.c1",	0x800000, 0x76b33c3a, 3 | BRF_GRA },           //  3 Sprite data  / TC5364202
+	{ "256-c2sc.c2",	0x800000, 0x7fbb3960, 3 | BRF_GRA },           //  4              / TC5364202
+	{ "256-c3sc.c3",	0x800000, 0xb2373b21, 3 | BRF_GRA },           //  5              / TC5364202
+	{ "256-c4sc.c4",	0x800000, 0x90fed94e, 3 | BRF_GRA },           //  6              / TC5364202
+	{ "256-c5sc.c5",	0x800000, 0x4b8f6cd9, 3 | BRF_GRA },           //  7              / TC5364202
+	{ "256-c6sc.c6",	0x800000, 0xe5b29797, 3 | BRF_GRA },           //  8              / TC5364202
+	{ "256-c7sc.c7",	0x800000, 0xeacb7339, 3 | BRF_GRA },           //  9              / TC5364202
+	{ "256-c8sc.c8",	0x800000, 0x5313e7a6, 3 | BRF_GRA },           // 10              / TC5364202
+
+	{ "256-m1.m1",		0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code     / mask rom TC534000
+
+	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data   / TC5332204
+	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13              / TC5332204
+	{ "256-v3.v3",		0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14              / TC5332204
+	{ "256-v4.v4",		0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15              / TC5332204
+};
+
+STDROMPICKEXT(mslug3sc, mslug3sc, neogeo)
+STD_ROM_FN(mslug3sc)
+
+struct BurnDriver BurnDrvmslug3sc = {
+	"mslug3sc", "mslug3", "neogeo", NULL, "2022",
+	"Metal Slug 3 (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3scRomInfo, mslug3scRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug3WOPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

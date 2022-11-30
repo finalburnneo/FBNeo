@@ -25065,10 +25065,10 @@ struct BurnDriver BurnDrvCpsCaptcommpwx = {
 
 // Captain Commando (Er Ye)
 // Hack by JingGai
-// GOTVG 20220307
+// GOTVG 20221124
 
 static struct BurnRomInfo Captcomm2yRomDesc[] = {
-	{ "cce_2y.bin",		0x300000, 0x39a93a19, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cce_2y.bin",		0x300000, 0xbe8dbe46, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cc-5m.3a",		0x080000, 0x7261d8ba, BRF_GRA | CPS1_TILES },
 	{ "cc-7m.5a",		0x080000, 0x6a60f949, BRF_GRA | CPS1_TILES },
@@ -25108,10 +25108,10 @@ struct BurnDriver BurnDrvCpsCaptcomm2y = {
 
 // Captain Commando (Elite Competition)
 // Hack by JingGai
-// GOTVG 20220119
+// GOTVG 20221121
 
 static struct BurnRomInfo CaptcommpjyRomDesc[] = {
-	{ "cce_pjy.bin",	0x300000, 0x972a94ec, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cce_pjy.bin",	0x300000, 0x3aa350c9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "cc-5m.3a",		0x080000, 0x7261d8ba, BRF_GRA | CPS1_TILES },
 	{ "cc-7m.5a",		0x080000, 0x6a60f949, BRF_GRA | CPS1_TILES },

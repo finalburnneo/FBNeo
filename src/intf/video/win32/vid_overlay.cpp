@@ -1114,7 +1114,7 @@ void VidOverlayRender(const RECT &dest, int gameWidth, int gameHeight, int scan_
 	else if (bShowFPS) {
 		// stats (fps & ping)
 		stats_line1.col = (stats_line1_warning >= 100) ? 0xffff0000 : 0xffffffff;
-		stats_line1.Render(frame_width - 0.0035f, 0.003f, 0.90f, FNT_MED, FONT_ALIGN_RIGHT);
+		stats_line1.Render((bShowFPS==2) ? frame_width - 0.0015f : frame_width - 0.0035f, 0.003f, 0.90f, FNT_MED, FONT_ALIGN_RIGHT);
 		if (bShowFPS > 1) {
 			stats_line2.col = (stats_line2_warning >= 100) ? 0xffff0000 : 0xffffffff;
 			stats_line2.Render((jitterAvg >= 10) ? frame_width - 0.0052f : frame_width - 0.0035f, 0.023f, 0.90, FNT_MED, FONT_ALIGN_RIGHT);
@@ -1395,8 +1395,8 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 	wchar_t buf_line2[64];
 	wchar_t buf_line3[64];
 	if ((game_spectator || ping <= 0 || ping > 40000) && (bShowFPS >= 1)) {
-		if (bShowFPS > 0 && bShowFPS < 3)swprintf(buf_line1, 64, _T("%2.2f fps"), fps);
-		else if (bShowFPS >= 3) swprintf(buf_line1, 64, _T("(ra%d) %2.2f fps"), nVidRunahead, fps);
+		if (game_spectator || (bShowFPS > 0 && bShowFPS < 3))swprintf(buf_line1, 64, _T("%2.2f fps"), fps);
+		else if (bShowFPS >= 3) swprintf(buf_line1, 64, _T("%2.2f fps  |  ra%d "), fps, nVidRunahead);
 		stats_line1.Set(buf_line1);
 	}
 	else {
@@ -1420,7 +1420,9 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 			nLastRollbackCount = nRollbackCount;
 			nLastRollbackFrames = nRollbackFrames;
 
-			swprintf(buf_line1, 64, _T(" %2.2f fps  |  Rollback %df "), fps, nRollbackRealtime);
+			if (bShowFPS == 1 ) swprintf(buf_line1, 64, _T(" %2.2f fps  |  d%d-ra%d "), fps, delay, nVidRunahead);
+			else if (bShowFPS == 2) swprintf(buf_line1, 64, _T(" %2.2f fps  |      d%d-ra%d        "), fps, delay, nVidRunahead);
+			else swprintf(buf_line1, 64, _T(" %2.2f fps  |  Rollback %df "), fps, nRollbackRealtime);
 			stats_line1.Set(buf_line1);
 		}
 		if (bShowFPS >= 2) {

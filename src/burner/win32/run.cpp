@@ -794,6 +794,9 @@ int RunMessageLoop()
 									}
 								} else if (!bEditActive) { // Backspace: toggles FPS
 									bShowFPS = (bShowFPS + 1) % (kNetGame ? 4 : 2);
+									VidOverlaySetWarning(-5000, 1);
+									VidOverlaySetWarning(-5000, 2);
+									VidOverlaySetWarning(-5000, 3);
 									DisplayFPS();
 									MenuUpdate();
 								}

@@ -15318,6 +15318,42 @@ struct BurnDriver BurnDrvnes_smbchredi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://www.romhacking.net/hacks/5245/
+static struct BurnRomInfo nes_starlightmarioRomDesc[] = {
+	{ "Starlight Mario (2020)(TPWC Hacks).nes",          40976, 0x7b64b618, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starlightmario)
+STD_ROM_FN(nes_starlightmario)
+
+struct BurnDriver BurnDrvnes_starlightmario = {
+	"nes_starlightmario", "nes_smb", NULL, NULL, "2020",
+	"Starlight Mario (Hack)\0", NULL, "TPWC Hacks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_starlightmarioRomInfo, nes_starlightmarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/hacks/7253/
+static struct BurnRomInfo nes_starlightmariouRomDesc[] = {
+	{ "Starlight Mario Underworld (2022)(TPWC Hacks).nes",          65552, 0xa7a313b5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starlightmariou)
+STD_ROM_FN(nes_starlightmariou)
+
+struct BurnDriver BurnDrvnes_starlightmariou = {
+	"nes_starlightmariou", "nes_smb", NULL, NULL, "2022",
+	"Starlight Mario Underworld (Hack)\0", NULL, "TPWC Hacks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_starlightmariouRomInfo, nes_starlightmariouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_smbendssmbha1RomDesc[] = {
 	{ "Super Mario Bros. Ende's SMB Hack 1 (Hack).nes",          40976, 0x1eeab4b1, BRF_ESS | BRF_PRG },
 };

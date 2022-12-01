@@ -1564,7 +1564,7 @@ void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 		if (!bMutedWarnSent) {
 			char buffer[16];
 			bMutedWarnSent = true;
-			sprintf(buffer, "%d,%d", CMD_DELAYRA, game_player);
+			sprintf(buffer, "%d,%d", CMD_CHATMUTED, game_player);
 			QuarkSendChatCmd(buffer, 'C');
 		}
 		return;

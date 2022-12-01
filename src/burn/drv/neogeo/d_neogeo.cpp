@@ -20438,10 +20438,10 @@ struct BurnDriver BurnDrvMSlugX2r1v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X (Survival, Hack)
+// Metal Slug X (Survival, Hack) 2022-12-01
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",    0x100000, 0xd2913eee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",   0x400000, 0x01f48336, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",    0x100000, 0xf53fe08f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",   0x400000, 0x20ce9f2f, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",    0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20449,8 +20449,8 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
 	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
 	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
-	{ "250-c5sc.c5",    0x800000, 0x8dd6a022, 3 | BRF_GRA },           //  7
-	{ "250-c6sc.c6",    0x800000, 0xf8de0291, 3 | BRF_GRA },           //  8
+	{ "250-c5sc.c5",    0x800000, 0xd29cc949, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",    0x800000, 0x81234ddb, 3 | BRF_GRA },           //  8
 
 	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 

@@ -2076,11 +2076,13 @@ void GameInpFixDiagonals(bool bCopy)
 					SetInpFrame(i, LEFT, 0, bCopy);
 					SetInpNext(i, DOWN, 1);
 					SetInpNext(i, LEFT, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("DR -> (D) -> DL"));
 				}
 				else if (GetInpPrev(i, UP) && GetInpPrev(i, LEFT)) {
 					SetInpFrame(i, DOWN, 0, bCopy);
 					SetInpNext(i, LEFT, 1);
 					SetInpNext(i, DOWN, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("UL -> (L) -> DL"));
 				}
 
 			}
@@ -2090,11 +2092,13 @@ void GameInpFixDiagonals(bool bCopy)
 					SetInpFrame(i, RIGHT, 0, bCopy);
 					SetInpNext(i, DOWN, 1);
 					SetInpNext(i, RIGHT, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("DL -> (D) -> DR"));
 				}
 				else if (GetInpPrev(i, UP) && GetInpPrev(i, RIGHT)) {
 					SetInpFrame(i, DOWN, 0, bCopy);
 					SetInpNext(i, RIGHT, 1);
 					SetInpNext(i, DOWN, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("UR -> (R) -> DR"));
 				}
 
 			}
@@ -2104,11 +2108,13 @@ void GameInpFixDiagonals(bool bCopy)
 					SetInpFrame(i, LEFT, 0, bCopy);
 					SetInpNext(i, UP, 1);
 					SetInpNext(i, LEFT, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("UR -> (U) -> UL"));
 				}
 				else if (GetInpPrev(i, DOWN) && GetInpPrev(i, LEFT)) {
 					SetInpFrame(i, UP, 0, bCopy);
 					SetInpNext(i, LEFT, 1);
 					SetInpNext(i, UP, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("DL -> (L) -> UL"));
 				}
 			}
 			// D + R
@@ -2117,11 +2123,13 @@ void GameInpFixDiagonals(bool bCopy)
 					SetInpFrame(i, RIGHT, 0, bCopy);
 					SetInpNext(i, UP, 1);
 					SetInpNext(i, RIGHT, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("UL -> (U) -> UR"));
 				}
 				else if (GetInpPrev(i, DOWN) && GetInpPrev(i, RIGHT)) {
 					SetInpFrame(i, UP, 0, bCopy);
 					SetInpNext(i, RIGHT, 1);
 					SetInpNext(i, UP, 1);
+					//VidOverlayAddChatLine(_T("System"), _T("DR -> (R) -> UR"));
 				}
 			}
 		}

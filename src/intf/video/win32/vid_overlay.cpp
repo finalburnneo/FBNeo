@@ -103,7 +103,8 @@ static int volume_time = 0;
 
 enum
 {
-	CMD_DELAYRA = 1,
+	CMD_CHATMUTED = 1,
+	CMD_DELAYRA = 2,
 };
 
 static bool CopyFileContents(const char *src, const char *dst)
@@ -1114,14 +1115,14 @@ void VidOverlayRender(const RECT &dest, int gameWidth, int gameHeight, int scan_
 	else if (bShowFPS) {
 		// stats (fps & ping)
 		stats_line1.col = (stats_line1_warning >= 100) ? 0xffff0000 : 0xffffffff;
-		stats_line1.Render((bShowFPS==2) ? frame_width - 0.0015f : frame_width - 0.0035f, 0.003f, 0.90f, FNT_MED, FONT_ALIGN_RIGHT);
+		stats_line1.Render((bShowFPS==2) ? frame_width - 0.0015f : frame_width - 0.0035f, 0.003f, 0.90f, FNT_MED*0.9, FONT_ALIGN_RIGHT);
 		if (bShowFPS > 1) {
 			stats_line2.col = (stats_line2_warning >= 100) ? 0xffff0000 : 0xffffffff;
-			stats_line2.Render((jitterAvg >= 10) ? frame_width - 0.0052f : frame_width - 0.0035f, 0.023f, 0.90, FNT_MED, FONT_ALIGN_RIGHT);
+			stats_line2.Render((jitterAvg >= 10) ? frame_width - 0.0052f : frame_width - 0.0035f, 0.023f, 0.90, FNT_MED*0.9, FONT_ALIGN_RIGHT);
 		}
 		if (bShowFPS > 2) {
 			stats_line3.col = (stats_line3_warning >= 100) ? 0xffff0000 : 0xffffffff;
-			stats_line3.Render(frame_width - 0.0035f, 0.043f, 0.90, FNT_MED, FONT_ALIGN_RIGHT);
+			stats_line3.Render(frame_width - 0.0035f, 0.043f, 0.90, FNT_MED*0.9, FONT_ALIGN_RIGHT);
 		}
 	}
 
@@ -1531,6 +1532,7 @@ void VidOverlaySetChatInput(const wchar_t *text)
 	VidOverlaySetWarning(-10000, 3);
 }
 
+bool bMutedWarnSent = false;
 void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 {
 	if (!wcscmp(name, _T("Command"))) {
@@ -1546,6 +1548,12 @@ void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 						bOpInfoRcvd = true;
 					}
 					break;
+				// opponent has ingame chat muted
+				case CMD_CHATMUTED:
+					if (idx != game_player) {
+						VidOverlayAddChatLine(_T("System"), _T("Your opponent has opted to disable ingame chat. Your message was not sent."));
+					}
+					break;
 			}
 		}
 		// commands are not chat!
@@ -1553,6 +1561,12 @@ void VidOverlayAddChatLine(const wchar_t *name, const wchar_t *text)
 	}
 
 	if (bVidMuteChat) {
+		if (!bMutedWarnSent) {
+			char buffer[16];
+			bMutedWarnSent = true;
+			sprintf(buffer, "%d,%d", CMD_DELAYRA, game_player);
+			QuarkSendChatCmd(buffer, 'C');
+		}
 		return;
 	}
 

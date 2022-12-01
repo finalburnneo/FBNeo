@@ -15330,7 +15330,7 @@ struct BurnDriver BurnDrvnes_starlightmario = {
 	"nes_starlightmario", "nes_smb", NULL, NULL, "2020",
 	"Starlight Mario (Hack)\0", NULL, "TPWC Hacks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_starlightmarioRomInfo, nes_starlightmarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -15348,8 +15348,26 @@ struct BurnDriver BurnDrvnes_starlightmariou = {
 	"nes_starlightmariou", "nes_smb", NULL, NULL, "2022",
 	"Starlight Mario Underworld (Hack)\0", NULL, "TPWC Hacks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_starlightmariouRomInfo, nes_starlightmariouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://mail.romhacking.net/hacks/6922/
+static struct BurnRomInfo nes_smbenRomDesc[] = {
+	{ "Super Mario Bros Enhanced (2022)(NesInvent).nes",          40976, 0xb1e5b547, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smben)
+STD_ROM_FN(nes_smben)
+
+struct BurnDriver BurnDrvnes_smben = {
+	"nes_smben", "nes_smb", NULL, NULL, "2022",
+	"Super Mario Bros. Enhanced (Hack)\0", NULL, "NesInvent", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smbenRomInfo, nes_smbenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23930,15 +23948,15 @@ struct BurnDriver BurnDrvnes_wampus = {
 };
 
 static struct BurnRomInfo nes_advpanzerRomDesc[] = {
-	{ "Adventures of Panzer, The v1.3 (2021)(PixelCraft).nes",          524304, 0x5ef4684d, BRF_ESS | BRF_PRG },
+	{ "Adventures of Panzer, The v1.5 (2021-22)(PixelCraft).nes",          524304, 0x93ba17c9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_advpanzer)
 STD_ROM_FN(nes_advpanzer)
 
 struct BurnDriver BurnDrvnes_advpanzer = {
-	"nes_advpanzer", NULL, NULL, NULL, "2021",
-	"Adventures of Panzer, The (HB, v1.3)\0", NULL, "PixelCraft", "Miscellaneous",
+	"nes_advpanzer", NULL, NULL, NULL, "2021-22",
+	"Adventures of Panzer, The (HB, v1.5)\0", NULL, "PixelCraft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_advpanzerRomInfo, nes_advpanzerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

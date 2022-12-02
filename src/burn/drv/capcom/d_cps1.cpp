@@ -24780,7 +24780,7 @@ struct BurnDriverX BurnDrvCpsSfzach = {
 
 // Street Fighter Zero (CPS Changer, 950727 Brazil)
 static struct BurnRomInfo SfzbchRomDesc[] = {
-	{ "sfbch23",       0x080000, 0x53699f68, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sfzbch23",      0x080000, 0x53699f68, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sfza22",        0x080000, 0x8d9b2480, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sfzch21",       0x080000, 0x5435225d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sfza20",        0x080000, 0x806e8f38, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },

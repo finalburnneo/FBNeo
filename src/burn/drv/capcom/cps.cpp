@@ -535,6 +535,38 @@ static INT32 CpsLoadOneBootlegSwap(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 n
 	return 0;
 }
 
+static INT32 CpsLoadOneGulunpa(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
+{
+	UINT8* Rom = NULL; INT32 nRomLen = 0;
+	UINT8* pt = NULL, * pr = NULL;
+	INT32 i;
+
+	LoadUp(&Rom, &nRomLen, nNum);
+	if (Rom == NULL) {
+		return 1;
+	}
+
+	// patch first byte of ROM 4 pending redump (corrupt top line of 0 character, 8x8 tile data should match between ROM pairs)
+	Rom[0] = 0xff;
+
+	nRomLen &= ~1;								// make sure even
+
+	for (i = 0, pt = Tile, pr = Rom; i < nRomLen; pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32*)pt) |= Pix;
+	}
+
+	BurnFree(Rom);
+	return 0;
+}
+
 static INT32 CpsLoadOneSf2ebbl(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 {
 	UINT8 *Rom = NULL; INT32 nRomLen=0;
@@ -1501,6 +1533,30 @@ INT32 CpsLoadTilesPang3r1a(INT32 nStart)
 	CpsLoadOne(CpsGfx + 0x000004, nStart + 6, 1, 2);
 	CpsLoadOne(CpsGfx + 0x200004, nStart + 7, 1, 2);
 	
+	return 0;
+}
+
+INT32 CpsLoadTilesPang3b2(INT32 nStart)
+{
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 0, 0, 0);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 1, 0, 1);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 2, 0, 2);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 3, 0, 3);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 4, 0, 0);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 5, 0, 1);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 6, 0, 2);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 7, 0, 3);
+
+	return 0;
+}
+
+INT32 CpsLoadTilesGulunpa(INT32 nStart)
+{
+	CpsLoadOne(CpsGfx +			0x000000, nStart + 0, 1, 0);
+	CpsLoadOne(CpsGfx +			0x000000, nStart + 1, 1, 2);
+	CpsLoadOne(CpsGfx +			0x000004, nStart + 2, 1, 0);
+	CpsLoadOneGulunpa(CpsGfx +	0x000004, nStart + 3, 1, 2);
+
 	return 0;
 }
 

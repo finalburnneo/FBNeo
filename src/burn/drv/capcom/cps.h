@@ -64,6 +64,8 @@ INT32 CpsLoadTilesSlampic(INT32 nStart);
 INT32 CpsLoadTilesKodb(INT32 nStart);
 INT32 CpsLoadTilesWonder3b(INT32 nStart);
 INT32 CpsLoadTilesPang3r1a(INT32 nStart);
+INT32 CpsLoadTilesPang3b2(INT32 nStart);
+INT32 CpsLoadTilesGulunpa(INT32 nStart);
 INT32 CpsLoadTilesPunisherb(INT32 nStart);
 INT32 CpsLoadTilesKnightsb2(INT32 nStart);
 INT32 CpsLoadTilesMtwinsb(INT32 nStart);

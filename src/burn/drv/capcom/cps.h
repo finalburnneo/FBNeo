@@ -256,7 +256,7 @@ CPSINPEX
 
 // For the Forgotten Worlds analog controls
 extern UINT16 CpsInp055, CpsInp05d;
-extern UINT16 CpsInpPaddle1, CpsInpPaddle2;
+extern INT16 CpsInpPaddle1, CpsInpPaddle2;
 extern UINT8 CpsDigUD[4];
 
 extern INT32 PangEEP;
@@ -267,6 +267,7 @@ extern INT32 Cawingb;
 extern INT32 Wofh;
 extern INT32 Sf2thndr;
 extern INT32 Pzloop2;
+extern INT32 Hkittymp;
 extern INT32 Sfa2ObjHack;
 extern INT32 Ssf2tb;
 extern INT32 Dinohunt;

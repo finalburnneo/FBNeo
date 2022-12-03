@@ -870,6 +870,26 @@ static struct BurnInputInfo PokonyanInputList[] =
 
 STDINPUTINFO(Pokonyan)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+
+static struct BurnInputInfo HkittympInputList[] =
+{
+ 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
+ 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
+	A("P1 Wheel"        , BIT_ANALOG_REL, &CpsInpPaddle1, "p1 x-axis"),
+ 	{"P1 Kitty"         , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+ 	{"P1 Keroppi"       , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+ 	{"P1 Badtz-Maru"    , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+ 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
+ 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
+ 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
+ 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+};
+
+STDINPUTINFO(Hkittymp)
+
 static struct BurnInputInfo PunisherInputList[] =
 {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
@@ -3597,6 +3617,69 @@ static struct BurnDIPInfo PokonyanDIPList[]=
 };
 
 STDDIPINFO(Pokonyan)
+
+// This dips struct is from Pokonyon and incorrect for Hkittymp(!)
+// (Game Mode works at least)
+static struct BurnDIPInfo HkittympDIPList[]=
+{
+	DIP_OFFSET(0x08)
+	// Defaults
+	{0x00, 0xff, 0xff, 0x01, NULL                     },
+	{0x01, 0xff, 0xff, 0x04, NULL                     },
+	{0x02, 0xff, 0xff, 0x00, NULL                     },
+
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x00, 0x01, 0x03, 0x03, "4 Coins 1 Credit"       },
+	{0x00, 0x01, 0x03, 0x02, "3 Coins 1 Credit"       },
+	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credit"       },
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  1 Credit"       },
+
+	// Dip B
+	{0   , 0xfe, 0   , 4   , "Demo Sounds"            },
+	{0x01, 0x01, 0x03, 0x03, "Off"                    },
+	{0x01, 0x01, 0x03, 0x02, "Every 4"                },
+	{0x01, 0x01, 0x03, 0x01, "Every 2"                },
+	{0x01, 0x01, 0x03, 0x00, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Prize Mode"             },
+	{0x01, 0x01, 0x04, 0x04, "Not Used"               },
+	{0x01, 0x01, 0x04, 0x00, "Used"                   },
+
+	{0   , 0xfe, 0   , 2   , "Credit Mode"            },
+	{0x01, 0x01, 0x08, 0x00, "Off"                    },
+	{0x01, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Max Stage"              },
+	{0x01, 0x01, 0x10, 0x10, "2"                      },
+	{0x01, 0x01, 0x10, 0x00, "3"                      },
+
+	{0   , 0xfe, 0   , 2   , "Card Check"             },
+	{0x01, 0x01, 0x20, 0x00, "Off"                    },
+	{0x01, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Unknown"                },
+	{0x01, 0x01, 0x80, 0x80, "1.0 sec"                },
+	{0x01, 0x01, 0x80, 0x00, "1.2 sec"                },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Body Check"             },
+	{0x02, 0x01, 0x02, 0x00, "Off"                    },
+	{0x02, 0x01, 0x02, 0x02, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Screen Stop"            },
+	{0x02, 0x01, 0x08, 0x00, "Off"                    },
+	{0x02, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0x02, 0x01, 0x10, 0x00, "Off"                    },
+	{0x02, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x02, 0x01, 0x80, 0x00, "Game"                   },
+	{0x02, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Hkittymp)
 
 static struct BurnDIPInfo PunisherDIPList[]=
 {
@@ -16597,6 +16680,7 @@ static INT32 DrvExit()
 	CpsDisableRowScroll = 0;
 	Dinohunt = 0;
 	Sf2thndr = 0;
+	Hkittymp = 0;
 	Port6SoundWrite = 0;
 	
 	Cps1QsHack = 0;
@@ -16612,6 +16696,13 @@ static INT32 TwelveMhzInit()
 {
 	nCPS68KClockspeed = 12000000;
 	
+	return DrvInit();
+}
+
+static INT32 HkittympInit()
+{
+	Hkittymp = 1;
+
 	return DrvInit();
 }
 
@@ -21774,9 +21865,9 @@ struct BurnDriver BurnDrvHkittymp = {
 	"hkittymp", NULL, NULL, NULL, "1996",
 	"Hello Kitty Magical Pumpkin (Japan 960712)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING /* needs 'wheel' emulation */ | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_MISC, 0,
-	NULL, HkittympRomInfo, HkittympRomName, NULL, NULL, NULL, NULL, PokonyanInputInfo, PokonyanDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_MINIGAMES, 0,
+	NULL, HkittympRomInfo, HkittympRomName, NULL, NULL, NULL, NULL, HkittympInputInfo, HkittympDIPInfo,
+	HkittympInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

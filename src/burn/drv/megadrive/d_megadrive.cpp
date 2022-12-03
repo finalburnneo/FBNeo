@@ -43746,3 +43746,23 @@ struct BurnDriver BurnDrvmd_sor2tnwoa = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Insane Pain (HB)
+
+static struct BurnRomInfo md_insanepainRomDesc[] = {
+	{ "Insane Pain (2022)(Blast Process Games).bin", 4194304, 0xe5487539, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_insanepain)
+STD_ROM_FN(md_insanepain)
+
+struct BurnDriver BurnDrvmd_insanepain = {
+	"md_insanepain", NULL, NULL, NULL, "2022",
+	"Insane Pain (HB)\0", NULL, "Blast Process Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_insanepainRomInfo, md_insanepainRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+

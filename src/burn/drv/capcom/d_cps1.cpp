@@ -7840,7 +7840,7 @@ static struct BurnRomInfo GulunpaRomDesc[] = {
 STD_ROM_PICK(Gulunpa)
 STD_ROM_FN(Gulunpa)
 
-static struct BurnRomInfo HkittympRomDesc[] = {
+static struct BurnRomInfo MpumpkinRomDesc[] = {
 	{ "mpa_23.8f",	0x080000, 0x38b9883a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "mpa_01.3a",	0x080000, 0x7c8c0c22, BRF_GRA | CPS1_TILES },
@@ -7871,8 +7871,8 @@ static struct BurnRomInfo HkittympRomDesc[] = {
 	{ "c632.ic1",	0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Hkittymp)
-STD_ROM_FN(Hkittymp)
+STD_ROM_PICK(Mpumpkin)
+STD_ROM_FN(Mpumpkin)
 
 static struct BurnRomInfo KnightsRomDesc[] = {
 	{ "kr_23e.8f",     0x080000, 0x1b3997eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -16034,7 +16034,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "daimakai"      , CPS_B_01    , mapper_DM22A , 0, NULL                },
 	{ "daimakair"     , CPS_B_21_DEF, mapper_DAM63B, 0, NULL                },
 	{ "daimakaib"     , CPS_B_21_DEF, mapper_DAM63B, 0, NULL                }, // game controls layers at 0x98000c
-	{ "hkittymp"      , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
+	{ "mpumpkin"      , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
 	{ "knights"       , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsu"      , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsj"      , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
@@ -16699,7 +16699,7 @@ static INT32 TwelveMhzInit()
 	return DrvInit();
 }
 
-static INT32 HkittympInit()
+static INT32 MpumpkinInit()
 {
 	Hkittymp = 1;
 
@@ -21861,13 +21861,13 @@ struct BurnDriver BurnDrvGulunpa = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvHkittymp = {
-	"hkittymp", NULL, NULL, NULL, "1996",
-	"Hello Kitty Magical Pumpkin (Japan 960712)\0", NULL, "Capcom", "CPS1",
+struct BurnDriver BurnDrvMpumpkin = {
+	"mpumpkin", NULL, NULL, NULL, "1996",
+	"Magical Pumpkin: Puroland de Daibouken (Japan 960712)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_MINIGAMES, 0,
-	NULL, HkittympRomInfo, HkittympRomName, NULL, NULL, NULL, NULL, HkittympInputInfo, HkittympDIPInfo,
-	HkittympInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, MpumpkinRomInfo, MpumpkinRomName, NULL, NULL, NULL, NULL, HkittympInputInfo, HkittympDIPInfo,
+	MpumpkinInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

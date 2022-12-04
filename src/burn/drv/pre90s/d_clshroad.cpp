@@ -159,13 +159,8 @@ static void __fastcall clshroad_main_write(UINT16 address, UINT8 data)
 	{
 		case 0xa000:
 			sound_reset = ~data & 1;
-			if (sound_reset ) {
-				INT32 active = ZetGetActive();
-				ZetClose();
-				ZetOpen(1);
-				ZetReset();
-				ZetClose();
-				ZetOpen(active);
+			if (sound_reset) {
+				ZetReset(1);
 			}
 		return;
 
@@ -265,6 +260,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -334,12 +331,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 game_select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game_select == 0) // firebatl
@@ -503,7 +495,7 @@ static INT32 DrvExit()
 	ZetExit();
 	wipingsnd_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -528,11 +520,7 @@ static void DrvSpriteDraw()
 		INT32 code	= (DrvSprRAM[i+3] & 0x3f) + (DrvSprRAM[i+2] << 6);
 		INT32 color	=  DrvSprRAM[i+7] & 0xf;
 
-		if (flipscreen) {
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code & 0xff, sx - 37, sy - 16, color, 4, 0xf, 0, DrvGfxROM0);
-		} else {
-			Render16x16Tile_Mask_Clip(pTransDraw, code & 0xff, sx - 37, (240 - sy) - 16, color, 4, 0xf, 0, DrvGfxROM0);
-		}
+		Draw16x16MaskTile(pTransDraw, code & 0xff, sx - 37, (240 - sy) - 16, flipscreen, flipscreen, color, 4, 0xf, 0, DrvGfxROM0);
 	}
 }
 
@@ -588,7 +576,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, Zet);
 		if (i == 240) {
 			if (irq_mask[0]) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
@@ -596,16 +584,14 @@ static INT32 DrvFrame()
 				BurnDrvRedraw();
 			}
 		}
-		INT32 nCycles = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(1);
 		if (sound_reset == 0) {
-			nCyclesDone[1] += ZetRun(nCycles - ZetTotalCycles());
-			if ((i & nSndIRQ) == nSndIRQ && irq_mask[1]) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); 
+			CPU_RUN(1, Zet);
+			if ((i & nSndIRQ) == nSndIRQ && irq_mask[1]) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		} else {
-			nCyclesDone[1] += (nCycles - ZetTotalCycles());
-			ZetIdle(nCycles - ZetTotalCycles());
+			CPU_IDLE(1, Zet);
 		}
 		ZetClose();
 	}
@@ -640,6 +626,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(sound_reset);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -713,7 +700,7 @@ struct BurnDriver BurnDrvFirebatl = {
 	"firebatl", NULL, NULL, NULL, "1984",
 	"Fire Battle\0", NULL, "Wood Place Inc. (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, firebatlRomInfo, firebatlRomName, NULL, NULL, NULL, NULL, FirebatlInputInfo, FirebatlDIPInfo,
 	FirebatlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4 
@@ -763,7 +750,7 @@ struct BurnDriver BurnDrvClshroad = {
 	"clshroad", NULL, NULL, NULL, "1986",
 	"Clash-Road\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, clshroadRomInfo, clshroadRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
 	ClshroadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -808,7 +795,7 @@ struct BurnDriver BurnDrvClshroadd = {
 	"clshroadd", "clshroad", NULL, NULL, "1986",
 	"Clash-Road (Data East license)\0", NULL, "Wood Place Inc. (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, clshroaddRomInfo, clshroaddRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
 	ClshroadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -862,7 +849,7 @@ struct BurnDriver BurnDrvClshroads = {
 	"clshroads", "clshroad", NULL, NULL, "1986",
 	"Clash-Road (Status license)\0", NULL, "Wood Place Inc. (Status Game Corp. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, clshroadsRomInfo, clshroadsRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
 	ClshroadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3

@@ -38380,3 +38380,79 @@ struct BurnDriver BurnSpecColonos3s3 = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Christmas Robin Simulator (48K) (HB)
+
+static struct BurnRomInfo SpecChristmasrsRomDesc[] = {
+	{ "Christmas Robin Simulator 48K (2022)(saucerbrain).tap", 22536, 0xcf6e38cd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecChristmasrs, SpecChristmasrs, Spectrum)
+STD_ROM_FN(SpecChristmasrs)
+
+struct BurnDriver BurnSpecChristmasrs = {
+	"spec_christmasrs", NULL, "spec_spectrum", NULL, "2022",
+	"Christmas Robin Simulator (48K) (HB)\0", NULL, "saucerbrain", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecChristmasrsRomInfo, SpecChristmasrsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Smelly Cat (English) (128K) (HB)
+
+static struct BurnRomInfo SpecSmellycatenRomDesc[] = {
+	{ "Smelly Cat EN 128K (2022)(flopping).tap", 35807, 0x5e0fac87, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSmellycaten, SpecSmellycaten, Spec128)
+STD_ROM_FN(SpecSmellycaten)
+
+struct BurnDriver BurnSpecSmellycaten = {
+	"spec_smellycaten", NULL, "spec_spec128", NULL, "2022",
+	"Smelly Cat (English) (128K) (HB)\0", NULL, "flopping", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecSmellycatenRomInfo, SpecSmellycatenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Smelly Cat (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecSmellycatesRomDesc[] = {
+	{ "Smelly Cat ES 128K (2022)(flopping).tap", 35807, 0x773033ce, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSmellycates, SpecSmellycates, Spec128)
+STD_ROM_FN(SpecSmellycates)
+
+struct BurnDriver BurnSpecSmellycates = {
+	"spec_smellycates", "spec_smellycaten", "spec_spec128", NULL, "2022",
+	"Smelly Cat (Spanish) (128K) (HB)\0", NULL, "flopping", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecSmellycatesRomInfo, SpecSmellycatesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tenebra (48K) (HB)
+
+static struct BurnRomInfo SpecTenebraRomDesc[] = {
+	{ "Tenebra 48K (2022)(Haplo).tap", 13084, 0x2f49b790, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTenebra, SpecTenebra, Spectrum)
+STD_ROM_FN(SpecTenebra)
+
+struct BurnDriver BurnSpecTenebra = {
+	"spec_tenebra", NULL, "spec_spectrum", NULL, "2022",
+	"Tenebra (48K) (HB)\0", NULL, "Haplo", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE, 0,
+	SpectrumGetZipName, SpecTenebraRomInfo, SpecTenebraRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

@@ -1,4 +1,4 @@
-// FB Alpha Asuka & Asuka driver module
+// FB Neo Asuka & Asuka driver module
 // Based on MAME driver by David Graves and Brian Troha
 
 #include "tiles_generic.h"
@@ -1339,7 +1339,7 @@ static INT32 CommonInit(void (*Cpu68KSetup)(), void (*CpuZ80Setup)(), void (*Sou
 
 	TaitoLoadRoms(true);
 
-	expand_graphics(TaitoChars, 0x80000);
+	expand_graphics(TaitoChars, TaitoCharRomSize);  // bonzeadvp2's TaitoCharRomSize is 0x060000, all others are 0x080000
 	expand_graphics(TaitoSpritesA, TaitoSpriteARomSize);
 
 	GenericTilesInit();
@@ -1998,7 +1998,7 @@ struct BurnDriver BurnDrvCadashp = {
 	"cadashp", "cadash", NULL, NULL, "1989",
 	"Cadash (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, cadashpRomInfo, cadashpRomName, NULL, NULL, NULL, NULL, CadashInputInfo, CadashjDIPInfo,
 	CadashInit, TaitoExit, CadashFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 240, 4, 3
@@ -2428,7 +2428,7 @@ struct BurnDriver BurnDrvEarthjkrp = {
 };
 
 
-// Bonze Adventure (World, Newer)
+// Bonze Adventure (World, newer)
 
 static struct BurnRomInfo bonzeadvRomDesc[] = {
 	{ "b41-09-1.17",		0x10000, 0xaf821fbc, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
@@ -2458,7 +2458,7 @@ static INT32 BonzeInit()
 
 struct BurnDriver BurnDrvBonzeadv = {
 	"bonzeadv", NULL, "cchip", NULL, "1988",
-	"Bonze Adventure (World, Newer)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Bonze Adventure (World, newer)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvRomInfo, bonzeadvRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, BonzeadvDIPInfo,
@@ -2467,7 +2467,7 @@ struct BurnDriver BurnDrvBonzeadv = {
 };
 
 
-// Bonze Adventure (World, Older)
+// Bonze Adventure (World, older)
 
 static struct BurnRomInfo bonzeadvoRomDesc[] = {
 	{ "b41-09.17",			0x10000, 0x06818710, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
@@ -2492,7 +2492,7 @@ STD_ROM_FN(bonzeadvo)
 
 struct BurnDriver BurnDrvBonzeadvo = {
 	"bonzeadvo", "bonzeadv", "cchip", NULL, "1988",
-	"Bonze Adventure (World, Older)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Bonze Adventure (World, older)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvoRomInfo, bonzeadvoRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, BonzeadvDIPInfo,
@@ -2535,7 +2535,7 @@ struct BurnDriver BurnDrvBonzeadvu = {
 };
 
 
-// Bonze Adventure (World, prototype)
+// Bonze Adventure (World, prototype, newer)
 
 static struct BurnRomInfo bonzeadvpRomDesc[] = {
 	{ "0l.ic17",			0x10000, 0x9e046e6f, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  0 68K Code
@@ -2572,10 +2572,69 @@ STD_ROM_FN(bonzeadvp)
 
 struct BurnDriver BurnDrvBonzeadvp = {
 	"bonzeadvp", "bonzeadv", "cchip", NULL, "1988",
-	"Bonze Adventure (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Bonze Adventure (World, prototype, newer)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, bonzeadvpRomInfo, bonzeadvpRomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
+	BonzeInit, TaitoExit, BonzeFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 224, 4, 3
+};
+
+
+// Bonze Adventure (World, prototype, older)
+
+static struct BurnRomInfo bonzeadvp2RomDesc[] = {
+	{ "prg 0h.ic17",			0x10000, 0xce530615, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  0 68K Code
+	{ "prg 0l.ic26",			0x10000, 0x048a0dcb, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  1
+	{ "prg 1h.ic16",			0x10000, 0xe5d63e9b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  2
+	{ "prg 1l europe.ic25",		0x10000, 0xd04b8e2b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  3
+	{ "map 0h ad2e.ic7",		0x10000, 0xca894028, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  4
+	{ "map 0l 676f.ic2",		0x10000, 0x956bc558, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  5
+	{ "map 1h 9cbd.ic8",		0x10000, 0x08a5320f, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  6
+	{ "map 1l 95f6.ic3",		0x10000, 0xf65988c0, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  7
+	{ "map 2h 0e7e.ic9",		0x10000, 0x4513dcf7, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  8
+	{ "map 2l a418.ic4",		0x10000, 0x106475e3, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },  //  9
+
+	{ "sound main 3-9.ic20",	0x10000, 0x2b4fc69a, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },           // 10 Z80 Code
+
+	// The TaitoCharRomSize of this set is only 0x060000, must be ...
+	{ "scn 0l 7fe0.ic2",		0x10000, 0xc6413f92, BRF_GRA | TAITO_CHARS_BYTESWAP },              // 11 Characters
+	{ "scn 0h 8711.ic7",		0x10000, 0x17466da0, BRF_GRA | TAITO_CHARS_BYTESWAP },              // 12
+	{ "scn 1l 2bde.ic3",		0x10000, 0xca459623, BRF_GRA | TAITO_CHARS_BYTESWAP },              // 13
+	{ "scn 1h 83b7.ic8",		0x10000, 0x35fde3c7, BRF_GRA | TAITO_CHARS_BYTESWAP },              // 14
+	{ "scn 2l db08.ic4",		0x10000, 0x2431e8db, BRF_GRA | TAITO_CHARS_BYTESWAP },              // 15
+	{ "scn 2h f411.ic9",		0x10000, 0x229debcf, BRF_GRA | TAITO_CHARS_BYTESWAP },              // 16
+
+	{ "obj 0l c67e.ic2",		0x10000, 0x2f9615a8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 17 Sprites
+	{ "obj 0h 6ce2.ic7",		0x10000, 0xd5bff0fd, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 18
+	{ "obj 1l ccf7.ic3",		0x10000, 0xc7a654d9, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 19
+	{ "obj 1h 7708.ic8",		0x10000, 0x81357279, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 20
+	{ "obj 2l 6096.ic4",		0x10000, 0x6dd67af8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 21
+	{ "obj 2h 818b.ic9",		0x10000, 0xd614732b, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 22
+	{ "obj 3l a355.ic5",		0x10000, 0x173ddd11, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 23
+	{ "obj 3h 3756.ic10",		0x10000, 0x981e66a9, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 24
+
+	{ "sound 0h 3-8.bin",		0x10000, 0x2996e756, BRF_SND | TAITO_YM2610A },                     // 25 YM2610 Samples
+	{ "sound 1h 3-8.bin",		0x10000, 0x780368ac, BRF_SND | TAITO_YM2610A },                     // 26
+	{ "sound 2h 3-8.bin",		0x10000, 0x8f3b9fa5, BRF_SND | TAITO_YM2610A },                     // 27
+	{ "sound 3h 3-8.bin",		0x10000, 0x1a8be621, BRF_SND | TAITO_YM2610A },                     // 28
+	{ "sound 0l 3-8.bin",		0x10000, 0x3711abfa, BRF_SND | TAITO_YM2610A },                     // 29
+	{ "sound 1l 3-8.bin",		0x10000, 0xf24a3d1a, BRF_SND | TAITO_YM2610A },                     // 30
+	{ "sound 2l 3-8.bin",		0x10000, 0x5987900c, BRF_SND | TAITO_YM2610A },                     // 31
+	{ "sound 3l 3-8.bin",		0x10000, 0xe8a6a9e6, BRF_SND | TAITO_YM2610A },                     // 32
+
+	{ "10-9 f3eb.ic43",			0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },      // 33 C-Chip (BAD DUMP)
+};
+
+STDROMPICKEXT(bonzeadvp2, bonzeadvp2, cchip)
+STD_ROM_FN(bonzeadvp2)
+
+struct BurnDriver BurnDrvBonzeadvp2 = {
+	"bonzeadvp2", "bonzeadv", "cchip", NULL, "1988",
+	"Bonze Adventure (World, prototype, older)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
+	NULL, bonzeadvp2RomInfo, bonzeadvp2RomName, NULL, NULL, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
 	BonzeInit, TaitoExit, BonzeFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };

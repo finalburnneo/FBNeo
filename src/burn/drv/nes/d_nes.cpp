@@ -15318,6 +15318,60 @@ struct BurnDriver BurnDrvnes_smbchredi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://www.romhacking.net/hacks/5245/
+static struct BurnRomInfo nes_starlightmarioRomDesc[] = {
+	{ "Starlight Mario (2020)(TPWC Hacks).nes",          40976, 0x7b64b618, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starlightmario)
+STD_ROM_FN(nes_starlightmario)
+
+struct BurnDriver BurnDrvnes_starlightmario = {
+	"nes_starlightmario", "nes_smb", NULL, NULL, "2020",
+	"Starlight Mario (Hack)\0", NULL, "TPWC Hacks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_starlightmarioRomInfo, nes_starlightmarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/hacks/7253/
+static struct BurnRomInfo nes_starlightmariouRomDesc[] = {
+	{ "Starlight Mario Underworld (2022)(TPWC Hacks).nes",          65552, 0xa7a313b5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_starlightmariou)
+STD_ROM_FN(nes_starlightmariou)
+
+struct BurnDriver BurnDrvnes_starlightmariou = {
+	"nes_starlightmariou", "nes_smb", NULL, NULL, "2022",
+	"Starlight Mario Underworld (Hack)\0", NULL, "TPWC Hacks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_starlightmariouRomInfo, nes_starlightmariouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://mail.romhacking.net/hacks/6922/
+static struct BurnRomInfo nes_smbenRomDesc[] = {
+	{ "Super Mario Bros Enhanced (2022)(NesInvent).nes",          40976, 0xb1e5b547, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smben)
+STD_ROM_FN(nes_smben)
+
+struct BurnDriver BurnDrvnes_smben = {
+	"nes_smben", "nes_smb", NULL, NULL, "2022",
+	"Super Mario Bros. Enhanced (Hack)\0", NULL, "NesInvent", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smbenRomInfo, nes_smbenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_smbendssmbha1RomDesc[] = {
 	{ "Super Mario Bros. Ende's SMB Hack 1 (Hack).nes",          40976, 0x1eeab4b1, BRF_ESS | BRF_PRG },
 };
@@ -15771,6 +15825,25 @@ struct BurnDriver BurnDrvnes_jackalem = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_jackalemRomInfo, nes_jackalemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Power Blade (T-Chi, v1.0)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=717589
+static struct BurnRomInfo nes_powerbladecRomDesc[] = {
+	{ "Power Blade (T-Chi, v1.0).nes",          393232, 0xa368fcee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_powerbladec)
+STD_ROM_FN(nes_powerbladec)
+
+struct BurnDriver BurnDrvnes_powerbladec = {
+	"nes_powerbladec", "nes_powerblade", NULL, NULL, "2022",
+	"Power Blade (T-Chi, v1.0)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_powerbladecRomInfo, nes_powerbladecRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23875,15 +23948,15 @@ struct BurnDriver BurnDrvnes_wampus = {
 };
 
 static struct BurnRomInfo nes_advpanzerRomDesc[] = {
-	{ "Adventures of Panzer, The v1.3 (2021)(PixelCraft).nes",          524304, 0x5ef4684d, BRF_ESS | BRF_PRG },
+	{ "Adventures of Panzer, The v1.5 (2021-22)(PixelCraft).nes",          524304, 0x93ba17c9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_advpanzer)
 STD_ROM_FN(nes_advpanzer)
 
 struct BurnDriver BurnDrvnes_advpanzer = {
-	"nes_advpanzer", NULL, NULL, NULL, "2021",
-	"Adventures of Panzer, The (HB, v1.3)\0", NULL, "PixelCraft", "Miscellaneous",
+	"nes_advpanzer", NULL, NULL, NULL, "2021-22",
+	"Adventures of Panzer, The (HB, v1.5)\0", NULL, "PixelCraft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_advpanzerRomInfo, nes_advpanzerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -35547,9 +35620,10 @@ struct BurnDriver BurnDrvnes_solonokagi2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5)
 // http://www.romhacking.net/hacks/5940/
 static struct BurnRomInfo nes_solonokagi2hRomDesc[] = {
-	{ "Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.4).nes",          262160, 0x1c1c1b8c, BRF_ESS | BRF_PRG },
+	{ "Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5).nes",          262160, 0xe8753077, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_solonokagi2h)
@@ -35557,7 +35631,7 @@ STD_ROM_FN(nes_solonokagi2h)
 
 struct BurnDriver BurnDrvnes_solonokagi2h = {
 	"nes_solonokagi2h", "nes_firenice", NULL, NULL, "2022",
-	"Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.4)\0", "100 new levels", "FoxyShadow", "Miscellaneous",
+	"Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5)\0", "100 new levels", "FoxyShadow", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE | GBF_PLATFORM, 0,
 	NESGetZipName, nes_solonokagi2hRomInfo, nes_solonokagi2hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

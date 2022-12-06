@@ -18,8 +18,8 @@ UINT8 CpsDigUD[4] = {0, 0, 0, 0};
 static INT32 nDial055, nDial05d;
 
 // puzloop paddles
-UINT16 CpsInpPaddle1 = 0;
-UINT16 CpsInpPaddle2 = 0;
+INT16 CpsInpPaddle1 = 0;
+INT16 CpsInpPaddle2 = 0;
 static INT32 ReadPaddle = 0;
 INT32 CpsPaddle1Value = 0;
 INT32 CpsPaddle2Value = 0;
@@ -41,6 +41,7 @@ INT32 Cawingb = 0;
 INT32 Wofh = 0;
 INT32 Sf2thndr = 0;
 INT32 Pzloop2 = 0;
+INT32 Hkittymp = 0;
 INT32 Ssf2tb = 0;
 INT32 Dinohunt = 0;
 INT32 Port6SoundWrite = 0;
@@ -63,6 +64,11 @@ CPSINPEX
 
 void CpsRwScan()
 {
+	if (Hkittymp) {
+		SCAN_VAR(CpsPaddle1Value);
+		SCAN_VAR(CpsPaddle1);
+	}
+
 	if (Pzloop2) {
 		SCAN_VAR(ReadPaddle);
 		SCAN_VAR(CpsPaddle1Value);
@@ -90,7 +96,7 @@ void CpsRwScan()
 static UINT8 CpsReadPort(const UINT32 ia)
 {
 	UINT8 d = 0xFF;
-	
+
 	if (ia == 0x000) {
 		d = (UINT8)~Inp000;
 		if (Pzloop2) {
@@ -110,6 +116,12 @@ static UINT8 CpsReadPort(const UINT32 ia)
 			} else {
 				d = CpsPaddle1;
 			}
+		}
+		if (Hkittymp) {
+			const UINT8 quadradic_sequence[4] = { 0, 1, 3, 2 };
+			d = quadradic_sequence[(CpsPaddle1 / 8) & 3];
+
+			d = (~d & 3) | (~Inp001 & ~3); // add bit 0,1 from quadradic encoder, rest from inputs
 		}
 		return d;
 	}
@@ -585,30 +597,42 @@ INT32 CpsRwGetInp()
 			CpsPaddle1Value = 0;
 			CpsPaddle2Value = 0;
 			if (CpsInpPaddle1) {
-				if (CpsInpPaddle1 > 0x8000) {
+				if (CpsInpPaddle1 > 0x3fe) {
 					CpsPaddle1Value = 2;
 				}
 	
-				if (CpsInpPaddle1 < 0x7fff) {
+				if (CpsInpPaddle1 < -0x3fe) {
 					CpsPaddle1Value = 1;
 				}
 			}
 			
 			if (CpsInpPaddle2) {
-				if (CpsInpPaddle2 > 0x8000) {
+				if (CpsInpPaddle2 > 0x3fe) {
 					CpsPaddle2Value = 2;
 				}
 	
-				if (CpsInpPaddle2 < 0x7fff) {
+				if (CpsInpPaddle2 < -0x3fe) {
 					CpsPaddle2Value = 1;
 				}
 			}
 		}
 		
-		CpsPaddle1 += (CpsInpPaddle1 >> 8) & 0xff;
-		CpsPaddle2 += (CpsInpPaddle2 >> 8) & 0xff;
+		CpsPaddle1 += CpsInpPaddle1 / 0x100;
+		CpsPaddle2 += CpsInpPaddle2 / 0x100;
 	}
-	
+
+	if (Hkittymp) {
+		// In new drivers I'd use my paddle device, but..
+		// This crude analog handling was in fb for probably 20 years now,
+		// Let's stay with it, just for fun! -dink
+
+		// Clamp at +- 0x400 (-0x400 to +0x3ff, range of typical analog thumbstick)
+		if (CpsInpPaddle1 >  0x3fe) CpsInpPaddle1 =  0x400;
+		if (CpsInpPaddle1 < -0x3fe) CpsInpPaddle1 = -0x400;
+
+		CpsPaddle1 += CpsInpPaddle1 / 0x80; // add +-8 maximum to paddle-accumulator
+	}
+
 	StopOpposite(&Inp000);
 	StopOpposite(&Inp001);
 

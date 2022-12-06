@@ -22352,10 +22352,10 @@ struct BurnDriver BurnDrvmslugx2r1v2 = {
 };
 
 // Metal Slug X - Super Vehicle-001 (Survival, Hack)
-// GOTVG 20221115
+// 20221204
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",	0x100000, 0x9bd3e306, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",	0x400000, 0x019e8acb, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",	0x100000, 0x5881293a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",	0x400000, 0x63c4c596, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -22363,8 +22363,8 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-c2.c2",		0x800000, 0x31679821, 3 | BRF_GRA },           //  4
 	{ "250-c3.c3",		0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
 	{ "250-c4.c4",		0x800000, 0x31354513, 3 | BRF_GRA },           //  6
-	{ "250-c5sc.c5",	0x800000, 0x8dd6a022, 3 | BRF_GRA },           //  7
-	{ "250-c6sc.c6",	0x800000, 0xf8de0291, 3 | BRF_GRA },           //  8
+	{ "250-c5sc.c5",	0x800000, 0xd29cc949, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",	0x800000, 0x81234ddb, 3 | BRF_GRA },           //  8
 
 	{ "250-m1.m1",    	0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
@@ -22836,23 +22836,23 @@ struct BurnDriver BurnDrvmslug3ki = {
 };
 
 // Metal Slug 3 (Survival, Hack)
-// 20221128
+// 20221203
 static struct BurnRomInfo mslug3scRomDesc[] = {
 	/* Encrypted */
-	{ "ms3sc.neo-sma",	0x040000, 0x1cdb3209, 9 | BRF_ESS | BRF_PRG }, //  0 68K code     / stored in the custom chip
+	{ "ms3sc.neo-sma",	0x040000, 0xecae944c, 9 | BRF_ESS | BRF_PRG }, //  0 68K code     / stored in the custom chip
 	{ "256-pg1sc.p1",	0x400000, 0xb187e852, 1 | BRF_ESS | BRF_PRG }, //  1              / TC5332202
-	{ "256-pg2sc.p2",	0x400000, 0x8b40789d, 1 | BRF_ESS | BRF_PRG }, //  2              / TC5332202
+	{ "256-pg2sc.p2",	0x400000, 0x80a52a8a, 1 | BRF_ESS | BRF_PRG }, //  2              / TC5332202
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
-	{ "256-c1sc.c1",	0x800000, 0x76b33c3a, 3 | BRF_GRA },           //  3 Sprite data  / TC5364202
-	{ "256-c2sc.c2",	0x800000, 0x7fbb3960, 3 | BRF_GRA },           //  4              / TC5364202
-	{ "256-c3sc.c3",	0x800000, 0xb2373b21, 3 | BRF_GRA },           //  5              / TC5364202
-	{ "256-c4sc.c4",	0x800000, 0x90fed94e, 3 | BRF_GRA },           //  6              / TC5364202
-	{ "256-c5sc.c5",	0x800000, 0x4b8f6cd9, 3 | BRF_GRA },           //  7              / TC5364202
-	{ "256-c6sc.c6",	0x800000, 0xe5b29797, 3 | BRF_GRA },           //  8              / TC5364202
-	{ "256-c7sc.c7",	0x800000, 0xeacb7339, 3 | BRF_GRA },           //  9              / TC5364202
-	{ "256-c8sc.c8",	0x800000, 0x5313e7a6, 3 | BRF_GRA },           // 10              / TC5364202
+	{ "256-c1sc.c1",	0x800000, 0xaf853e09, 3 | BRF_GRA },           //  3 Sprite data  / TC5364202
+	{ "256-c2sc.c2",	0x800000, 0x83831dc7, 3 | BRF_GRA },           //  4              / TC5364202
+	{ "256-c3sc.c3",	0x800000, 0x88da636e, 3 | BRF_GRA },           //  5              / TC5364202
+	{ "256-c4sc.c4",	0x800000, 0x48f04bbb, 3 | BRF_GRA },           //  6              / TC5364202
+	{ "256-c5sc.c5",	0x800000, 0x4625f693, 3 | BRF_GRA },           //  7              / TC5364202
+	{ "256-c6sc.c6",	0x800000, 0x5af3b6fa, 3 | BRF_GRA },           //  8              / TC5364202
+	{ "256-c7sc.c7",	0x800000, 0xe2771363, 3 | BRF_GRA },           //  9              / TC5364202
+	{ "256-c8sc.c8",	0x800000, 0xa4836cc3, 3 | BRF_GRA },           // 10              / TC5364202
 
 	{ "256-m1.m1",		0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code     / mask rom TC534000
 
@@ -23839,12 +23839,12 @@ struct BurnDriver BurnDrvkof97evn = {
 };
 
 // The King of Fighters '99 - Fluent and Refreshing
-// GOTVG 20221002
+// GOTVG 20221203
 static struct BurnRomInfo kof99skRomDesc[] = {
 	/* Encrypted */
-	{ "sk.neo-sma",		0x040000, 0x246fe840, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "251-p1sk.p1",	0x400000, 0x4031b191, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "251-p2sk.p2",	0x400000, 0xe429e1fe, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "sk.neo-sma",		0x040000, 0xea9a3451, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "251-p1sk.p1",	0x400000, 0x9fbc14f6, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2sk.p2",	0x400000, 0x05242429, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

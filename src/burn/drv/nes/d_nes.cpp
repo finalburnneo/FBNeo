@@ -838,10 +838,6 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 		Cart.Mapper = 262;
 	}
 
-	if (Cart.Crc == 0xd2f19ba1) { // Haradius Zero (flash-version)
-		Cart.Mapper = 303; // fake mapper#
-	}
-
 	Cart.CHRRam = (UINT8*)BurnMalloc(Cart.CHRRamSize);
 
 	if (Cart.CHRRomSize) {
@@ -914,7 +910,6 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x552a903a) ? BUS_CONFLICTS : 0; // Huge Insect
 	NESMode |= (ROMCRC == 0xb90a1ca1) ? NO_WORKRAM : 0; // Low G Man
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
-	NESMode |= (ROMCRC == 0xd2f19ba1) ? NO_WORKRAM : 0; // Haradius Zero
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)
 	NESMode |= (ROMCRC == 0xc9f3f439) ? ALT_TIMING : 0; // vs. freedom force
@@ -3349,85 +3344,171 @@ static void mapper262_write(UINT16 address, UINT8 data)
 	}
 }
 
-// mapper 303 - haradius zero (mmc3 + flash chip(prg,rw) + flash chip(chr,r)
-// dev notes: https://pastebin.com/9UH8yGg6
-#define mapper303_cmd           (mapper_regs[0x1f - 0x9])
-#define mapper303_busy          (mapper_regs16[0x1f - 0x0])
+// ---[ mapper 451: Haratyler HG (AMIC flashrom)
+#define mapper451_bank          (mapper_regs[0])
 
-static UINT8 mapper303_read(UINT16 address)
+// flashrom simulator
+#define flashrom_cmd            (mapper_regs[0x1f - 0x9]) // must not conflict with mmc3 for 406 (Haradius Zero)
+#define flashrom_busy           (mapper_regs16[0x00])
+#define flashrom_chiptype       (mapper_regs[0x1f - 0xa])
+enum { AMIC = 0, MXIC };
+
+static UINT8 flashrom_read(UINT16 address)
 {
-	if (mapper303_cmd == 0x90) { // flash chip "silicon-id" mode
-		return (address & 0x01) ? 0xa4 : 0xc2;
+	if (flashrom_cmd == 0x90) { // flash chip identification
+		//bprintf(0, _T("flashrom chip ID\n"));
+		if (flashrom_chiptype == AMIC) {
+			switch (address & 0x03) {
+				case 0x00: return 0x37; // manufacturer ID
+				case 0x01: return 0x86; // device ID
+				case 0x03: return 0x7f; // Continuation ID
+			}
+		} else if (flashrom_chiptype == MXIC) {
+			switch (address & 0x03) {
+				case 0x00: return 0xc2; // manufacturer ID
+				case 0x01: return 0xa4; // device ID
+			}
+		}
 	}
-	if (mapper303_busy != 0) { // flash chip "erasing sector or chip" mode (it takes time..)
-		mapper303_busy--;
-		if (mapper303_busy < 2) return 0x80;
-		return (mapper303_busy & 0x01) ? 0x40 : 0x00;
+
+	if (flashrom_busy > 0) { // flash chip program or "erasing sector or chip" mode (it takes time..)
+		flashrom_busy--;
+
+		UINT8 status = (flashrom_busy & 0x01) << 6; // toggle bit I
+		switch (flashrom_cmd) {
+			case 0x82: // embedded erase sector/chip
+				status |= (flashrom_busy & 0x01) << 2; // toggle bit II
+				status |= 1 << 3; // "erasing" status bit
+				break;
+			case 0xa0: // embedded program
+				status |= ~mapper_prg_read_int(address) & 0x80;
+				break;
+		}
+		//bprintf(0, _T("erase/pgm status  %x\n"), status);
+		return status;
 	}
 
 	return mapper_prg_read_int(address);
 }
 
-static void mapper303_prg_write(UINT16 address, UINT8 data)
+static void flashrom_prg_write(UINT16 address, UINT8 data)
 {
 	Cart.PRGRom[PRGMap[(address & ~0x8000) / 0x2000] + (address & 0x1fff)] = data;
 }
 
-static void flash303_write(UINT16 address, UINT8 data)
+static void flashrom_write(UINT16 address, UINT8 data)
 {
 	if (data == 0xf0) {
-		mapper303_cmd = 0;
+		// read array / reset
+		flashrom_cmd = 0;
+		flashrom_busy = 0;
 		return;
 	}
 
-	switch (mapper303_cmd) {
+	switch (flashrom_cmd) {
 		case 0x00:
 		case 0x80:
-			if (address == 0xd555 && data == 0xaa)
-				mapper303_cmd++;
+			if ((address & 0xfff) == 0x555 && data == 0xaa)
+				flashrom_cmd++;
 			break;
 		case 0x01:
 		case 0x81:
-			if (address == 0xaaaa && data == 0x55)
-				mapper303_cmd++;
+			if (((address & 0xfff) == 0x2aa ||
+				 (address & 0xfff) == 0xaaa) && data == 0x55)
+				flashrom_cmd++;
 			break;
 		case 0x02:
-			if (address == 0xd555)
-				mapper303_cmd = data;
+			if ((address & 0xfff) == 0x555)
+				flashrom_cmd = data;
 			break;
 		case 0x82: {
 			switch (data) {
 				case 0x10:
-					bprintf(0, _T("mapper 303: full flash erase not impl.\n"));
-					mapper303_busy = Cart.PRGRomSize / 0x100; // fake it
+					bprintf(0, _T("mapper %d: flashrom - full flash erase not impl. (will break game!)\n"), Cart.Mapper);
+					flashrom_busy = Cart.PRGRomSize / 0x100; // fake it
 					break;
 				case 0x30:
-					bprintf(0, _T("mapper 303: sector erase.  addr %x\n"), address);
+					bprintf(0, _T("mapper %d: flashrom - sector erase.  addr %x [%x]\n"), Cart.Mapper, address, (PRGMap[(address & ~0x8000) / 0x2000] & 0x7f0000));
 					for (INT32 i = 0; i < 0x10000; i++) {
 						Cart.PRGRom[(PRGMap[(address & ~0x8000) / 0x2000] & 0x7f0000) + i] = 0xff;
 					}
-					mapper303_busy = 0x10000 / 0x100;
+					flashrom_busy = 0xffff;
 					break;
 			}
 			break;
 		}
 		case 0xa0:
-			mapper303_prg_write(address, data);
-			mapper303_cmd = 0;
+			flashrom_prg_write(address, data);
+			flashrom_busy = 8;
+			flashrom_cmd = 0;
 			break;
 	}
 }
 
-static void mapper303_write(UINT16 address, UINT8 data)
+static void mapper451_scan()
 {
-	flash303_write(address, data);
+	ScanVar(&Cart.PRGRom[0x50000], 0x10000, "Mapper451 HighScore Sector");
+}
+
+static void mapper451_write(UINT16 address, UINT8 data)
+{
+	flashrom_write(address, data);
+
+	if (address & 0x8000) {
+        switch (address & 0xe000) {
+			case 0xa000: {
+				mapper4_mirror = ~address & 1;
+				mapper_map();
+				break;
+			}
+			case 0xc000: {
+				mapper4_irqlatch = (address & 0xff) - 1;
+				mapper4_irqreload = 0;
+				if ((address & 0xff) == 0xff) {
+					mapper4_irqlatch = 0;
+					mapper4_irqenable = 0;
+					M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+				} else {
+					mapper4_irqenable = 1;
+				}
+				break;
+			}
+			case 0xe000: {
+				mapper451_bank = address & 3;
+				mapper_map();
+				break;
+			}
+        }
+    }
+}
+
+static void mapper451_map()
+{
+	mapper_map_prg(8, 0, (0x00) );
+	mapper_map_prg(8, 1, (0x10 + (mapper451_bank & 1) + ((mapper451_bank & 2) << 2)) );
+	mapper_map_prg(8, 2, (0x20 + (mapper451_bank & 1) + ((mapper451_bank & 2) << 2)) );
+    mapper_map_prg(8, 3, (0x30) );
+
+	mapper_map_chr(8, 0, mapper451_bank & 1);
+
+	set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+// mapper 406 - haradius zero (mmc3 + MXIC flash chip(prg,rw) + MXIC flash chip(chr,r)
+// dev notes: https://pastebin.com/9UH8yGg6
+static void mapper406_write(UINT16 address, UINT8 data)
+{
+	flashrom_write(address, data);
 	mapper04_write((address & 0xfffe) | ((address >> 1) & 1), data);
 }
 
-static void mapper303_scan()
+static void mapper406_scan()
 {
-	ScanVar(&Cart.PRGRom[0x50000], 0x10000, "Mapper303 HighScore Sector");
+	ScanVar(&Cart.PRGRom[0x50000], 0x10000, "Mapper406 HighScore Sector");
 }
+
+#undef flashrom_cmd
+#undef flashrom_busy
 
 static UINT8 *mmc5_mask; // mmc3/mmc5 ppumask-sniffer // 0x18 = rendering
 
@@ -8146,7 +8227,7 @@ static INT32 mapper_init(INT32 mappernum)
 	mapper_ppu_clock = NULL; // called after busaddress change (see mapper09) (only in visible & prerender!)
 	mapper_ppu_clockall = NULL; // called every ppu clock
 	mapper_scan_cb = NULL; // savestate cb (see vrc6)
-	mapper_scan_cb_nvram = NULL; // savestate cb (nvram, mapper 303)
+	mapper_scan_cb_nvram = NULL; // savestate cb (nvram, mapper 406, 451)
 
 	mapper_prg_read = mapper_prg_read_int; // 8000-ffff (read)
 
@@ -9160,16 +9241,34 @@ static INT32 mapper_init(INT32 mappernum)
 			break;
 		}
 
-		case 303: { // Haradius Zero (mmc3 + 2xflash)
-			mapper_prg_read = mapper303_read;
-			mapper_write    = mapper303_write;
-			mapper_scan_cb_nvram = mapper303_scan;
+		case 406: { // Haradius Zero (mmc3 + 2xMXIC flash)
+			flashrom_chiptype = MXIC;
+
+			mapper_prg_read = flashrom_read;
+			mapper_write    = mapper406_write;
+			mapper_scan_cb_nvram = mapper406_scan;
 
 			mapper_map      = mapper04_map;
 			mapper_scanline = mapper04_scanline;
 			mapper4_mirror  = Cart.Mirroring;
 
 			mapper_map_prg( 8, 3, -1);
+			mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 451: { // Haratyler pseudo-mmc3 + AMIC flash
+			flashrom_chiptype = AMIC;
+
+			mapper_prg_read = flashrom_read;
+			mapper_write    = mapper451_write;
+			mapper_scan_cb_nvram = mapper451_scan;
+
+			mapper_map      = mapper451_map;
+			mapper_scanline = mapper04_scanline;
+			mapper4_mirror  = Cart.Mirroring;
+
 			mapper_map();
 			retval = 0;
 			break;
@@ -26313,7 +26412,7 @@ struct BurnDriver BurnDrvnes_amazorundie = {
 };
 
 static struct BurnRomInfo nes_haradiuszeroRomDesc[] = {
-	{ "Haradius Zero (HB).nes",          786448, 0xd2f19ba1, BRF_ESS | BRF_PRG },
+	{ "Haradius Zero (HB).nes",          786448, 0x5ae4ccff, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_haradiuszero)
@@ -26325,6 +26424,23 @@ struct BurnDriver BurnDrvnes_haradiuszero = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_haradiuszeroRomInfo, nes_haradiuszeroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_haratylerhgRomDesc[] = {
+	{ "Haratyler HG (2020)(Impact Soft).nes",          524304, 0xfd024bc4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_haratylerhg)
+STD_ROM_FN(nes_haratylerhg)
+
+struct BurnDriver BurnDrvnes_haratylerhg = {
+	"nes_haratylerhg", NULL, NULL, NULL, "2020-21",
+	"Haratyler HG (HB, v1.10)\0", NULL, "Impact Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_haratylerhgRomInfo, nes_haratylerhgRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -27570,6 +27686,7 @@ struct BurnDriver BurnDrvnes_justiceduel = {
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
 
 // Homebrew section end.
 

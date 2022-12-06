@@ -512,10 +512,10 @@
 	</game>
 	<game name="advpanzer">
 		<comment>Homebrew</comment>
-		<description>Adventures of Panzer, The (HB, v1.3)</description>
-		<year>2021</year>
+		<description>Adventures of Panzer, The (HB, v1.5)</description>
+		<year>2021-22</year>
 		<manufacturer>PixelCraft</manufacturer>
-		<rom name="Adventures of Panzer, The v1.3 (2021)(PixelCraft).nes" size="524304" crc="5ef4684d"/>
+		<rom name="Adventures of Panzer, The v1.5 (2021-22)(PixelCraft).nes" size="524304" crc="93ba17c9"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12461,6 +12461,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="powerbladec" cloneof="powerblade" romof="powerblade">
+		<description>Power Blade (T-Chi, v1.0)</description>
+		<year>2022</year>
+		<manufacturer>Ni You De Wu Cai Yu</manufacturer>
+		<rom name="Power Blade (T-Chi, v1.0).nes" size="393232" crc="a368fcee"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="powerblade">
 		<description>Power Blade (USA)</description>
 		<year>1991</year>
@@ -14484,10 +14492,10 @@
 	</game>
 	<game name="solonokagi2h" cloneof="firenice" romof="firenice">
 		<comment>Hack, 100 new levels</comment>
-		<description>Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.4)</description>
+		<description>Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5)</description>
 		<year>2022</year>
 		<manufacturer>FoxyShadow</manufacturer>
-		<rom name="Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.4).nes" size="262160" crc="1c1c1b8c"/>
+		<rom name="Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5).nes" size="262160" crc="e8753077"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14908,6 +14916,24 @@
 		<year>2018</year>
 		<manufacturer>chronix</manufacturer>
 		<rom name="Star Wars Easy (Hack).nes" size="262160" crc="964f462d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="starlightmario" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Starlight Mario (Hack)</description>
+		<year>2020</year>
+		<manufacturer>TPWC Hacks</manufacturer>
+		<rom name="Starlight Mario (2020)(TPWC Hacks).nes" size="40976" crc="7b64b618"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="starlightmariou" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Starlight Mario Underworld (Hack)</description>
+		<year>2022</year>
+		<manufacturer>TPWC Hacks</manufacturer>
+		<rom name="Starlight Mario Underworld (2022)(TPWC Hacks).nes" size="65552" crc="a7a313b5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15369,6 +15395,15 @@
 		<year>2004</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Bros. Ende's SMB Hack 1 (Hack).nes" size="40976" crc="1eeab4b1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smben" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Super Mario Bros. Enhanced (Hack)</description>
+		<year>2022</year>
+		<manufacturer>NesInvent</manufacturer>
+		<rom name="Super Mario Bros Enhanced (2022)(NesInvent).nes" size="40976" crc="b1e5b547"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

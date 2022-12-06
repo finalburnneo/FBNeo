@@ -3652,6 +3652,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="christmasrs" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Christmas Robin Simulator (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>saucerbrain</manufacturer>
+		<rom name="Christmas Robin Simulator 48K (2022)(saucerbrain).tap" size="22536" crc="cf6e38cd"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chronos" romof="spectrum">
 		<description>Chronos - A Tapestry of Time (48K)</description>
 		<year>1987</year>
@@ -15724,6 +15734,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="smellycaten" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Smelly Cat (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>flopping</manufacturer>
+		<rom name="Smelly Cat EN 128K (2022)(flopping).tap" size="35807" crc="5e0fac87"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smellycates" cloneof="smellycaten" romof="smellycaten">
+		<comment>Homebrew</comment>
+		<description>Smelly Cat (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>flopping</manufacturer>
+		<rom name="Smelly Cat ES 128K (2022)(flopping).tap" size="35807" crc="773033ce"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sbmr" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Smudge Bad Moonee Rising (48K) (HB)</description>
@@ -17301,6 +17333,16 @@
 		<year>1991</year>
 		<manufacturer>Aventuras A.D.</manufacturer>
 		<rom name="Templos Sagrados, Los - Parte 2 (1991)(Aventuras AD).tap" size="45936" crc="52e03e35"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tenebra" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Tenebra (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Haplo</manufacturer>
+		<rom name="Tenebra 48K (2022)(Haplo).tap" size="13084" crc="2f49b790"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

@@ -1132,7 +1132,7 @@
 	<game name="leynos" cloneof="trgearth" romof="trgearth">
 		<description>Assault Suit Leynos (Jpn)</description>
 		<year>1990</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Masaya</manufacturer>
 		<rom name="assault suit leynos (jpn).bin" size="524288" crc="81a2c800"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8901,9 +8901,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="indycruss" cloneof="indycrus" romof="indycrus">
+		<comment>Hack</comment>
 		<description>Indiana Jones and the Last Crusade (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>SU.S. Gold</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="indiana jones and the last crusade (hack, spanish).bin" size="1048576" crc="8c7871ad"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8925,10 +8926,20 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="insanepain">
+		<comment>Homebrew</comment>
+		<description>Insane Pain (HB)</description>
+		<year>2022</year>
+		<manufacturer>Blast Process Games</manufacturer>
+		<rom name="Insane Pain (2022)(Blast Process Games).bin" size="4194304" crc="e5487539"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="insectxs" cloneof="insectx" romof="insectx">
+		<comment>Hack</comment>
 		<description>Insector X (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sage's Creation</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="insector x (hack, spanish).bin" size="524288" crc="0a96a725"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8950,6 +8961,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp1" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -8958,6 +8970,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp9" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19931228)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -8966,6 +8979,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp8" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19940101)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -8974,6 +8988,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp7" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19940103)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -8982,6 +8997,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp6" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19940126)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -8990,6 +9006,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp5" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19940127)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -8998,6 +9015,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp4" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19940923-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -9006,6 +9024,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp3" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19941228-A)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -9014,6 +9033,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="instchp2" cloneof="instch" romof="instch">
+		<comment>Prototype</comment>
 		<description>Instruments of Chaos Starring Young Indiana Jones (Prototype, 19941229)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -12033,10 +12053,19 @@
 	</game>
 	<game name="miniplanets">
 		<comment>Homebrew</comment>
-		<description>Mini Planets (HB, Rev3)</description>
-		<year>2016</year>
+		<description>Miniplanets (HB, Rev03)</description>
+		<year>2016-17</year>
 		<manufacturer>Sik</manufacturer>
 		<rom name="Miniplanets (2017)(Sik)(Rev3).bin" size="262144" crc="8ea40d2f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="miniplanrmx">
+		<comment>Homebrew</comment>
+		<description>Miniplanets Remix (HB, Rev04)</description>
+		<year>2022</year>
+		<manufacturer>Sik</manufacturer>
+		<rom name="Miniplanets Remix (2022)(Sik)(Rev4).bin" size="524288" crc="6c531b9d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16869,9 +16898,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssonicbror2">
-		<description>Sega Sonic Bros. (Rev.2)</description>
-		<year>2018</year>
-		<manufacturer>2018 Dustin O'Dell</manufacturer>
+		<description>Sega Sonic Bros. (C2 Port, Rev.2)</description>
+		<year>1992-2018</year>
+		<manufacturer>Dustin O'Dell</manufacturer>
 		<rom name="SegaSonicBrosMDRev2.bin" size="786432" crc="91537567"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20235,7 +20264,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="srobowrs" cloneof="trgearth" romof="trgearth">
-		<description>Super Robot Wars (Rus)</description>
+		<comment>Hack</comment>
+		<description>Super Robot Wars (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="super robot wars (unl).bin" size="524288" crc="cfae2614"/>
@@ -20663,9 +20693,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="taikorisc" cloneof="taikoris" romof="taikoris">
+		<comment>Hack</comment>
 		<description>Taikou Risshiden (T-Chi)</description>
 		<year>2009</year>
-		<manufacturer>Koei</manufacturer>
+		<manufacturer>Xu Yong Sheng</manufacturer>
 		<rom name="taikou risshiden (T-Chi).bin" size="1310720" crc="185f7902"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20687,9 +20718,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="talespins" cloneof="talespin" romof="talespin">
+		<comment>Hack</comment>
 		<description>TaleSpin (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="talespin (hack, spanish).bin" size="524288" crc="4306e326"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20738,9 +20770,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="trgearths" cloneof="trgearth" romof="trgearth">
+		<comment>Hack</comment>
 		<description>Target Earth (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Dreamworks Games</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="target earth (hack, spanish).bin" size="524288" crc="85691cde"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20754,9 +20787,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="taskfhexs" cloneof="taskfhex" romof="taskfhex">
+		<comment>Hack</comment>
 		<description>Task Force Harrier EX (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Treco</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="task force harrier ex (hack, spanish).bin" size="1048576" crc="2f15e258"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22123,9 +22157,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="truxtons" cloneof="truxton" romof="truxton">
+		<comment>Hack</comment>
 		<description>Truxton (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="truxton (hack, spanish).bin" size="524288" crc="0c92ea14"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

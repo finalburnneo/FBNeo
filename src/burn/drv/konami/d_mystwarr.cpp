@@ -1972,6 +1972,8 @@ static void Metamrph_sprite_decode()
 
 static INT32 MystwarrInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 1;
 
 	GenericTilesInit();
@@ -2081,6 +2083,8 @@ static INT32 MystwarrInit()
 
 static INT32 MetamrphInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 2;
 
 	GenericTilesInit();
@@ -2194,6 +2198,8 @@ static INT32 MetamrphInit()
 
 static INT32 ViostormInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 3;
 
 	GenericTilesInit();
@@ -2292,6 +2298,8 @@ static INT32 ViostormInit()
 
 static INT32 MartchmpInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 4;
 
 	GenericTilesInit();
@@ -2443,6 +2451,8 @@ static void GaiapolisRozTilemapdraw()
 
 static INT32 GaiapolisInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 5;
 
 	GenericTilesInit();
@@ -2601,6 +2611,8 @@ static void DadandrnRozTilemapdraw()
 
 static INT32 DadandrnInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 6;
 
 	GenericTilesInit();

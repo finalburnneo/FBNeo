@@ -215,19 +215,6 @@ static double YM3526Volumes[1];
 static INT32 YM3526RouteDirs[1];
 
 // ----------------------------------------------------------------------------
-// Dummy functions
-
-static void YM3526UpdateDummy(INT16* , INT32)
-{
-	return;
-}
-
-static INT32 YM3526StreamCallbackDummy(INT32)
-{
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
 // Execute YM3526 for part of a frame
 
 static void YM3526Render(INT32 nSegmentLength)

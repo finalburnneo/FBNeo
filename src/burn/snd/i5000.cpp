@@ -104,7 +104,7 @@ void i5000sndInit(UINT8 *rom, INT32 clock, INT32 length)
 	sample_rate = clock / 0x400;
 
 	// for resampling
-	nSampleSize = (UINT32)sample_rate * (1 << 16) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT32)sample_rate * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition = 0;
 	nPosition = 0;
 

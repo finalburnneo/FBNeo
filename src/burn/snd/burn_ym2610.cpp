@@ -29,19 +29,6 @@ static double YM2610RightVolumes[3];
 INT32 bYM2610UseSeperateVolumes; // support custom Taito panning hardware
 
 // ----------------------------------------------------------------------------
-// Dummy functions
-
-static void YM2610UpdateDummy(INT16*, INT32)
-{
-	return;
-}
-
-static INT32 YM2610StreamCallbackDummy(INT32)
-{
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
 // Execute YM2610 for part of a frame
 
 static void AY8910Render(INT32 nSegmentLength)
@@ -419,16 +406,6 @@ INT32 BurnYM2610Init(INT32 nClockFrequency, UINT8* YM2610ADPCMAROM, INT32* nYM26
 	
 	BurnTimerInit(&YM2610TimerOver, GetTimeCallback);
 
-	if (nBurnSoundRate <= 0) {
-		BurnYM2610StreamCallback = YM2610StreamCallbackDummy;
-
-		BurnYM2610Update = YM2610UpdateDummy;
-
-		AY8910InitYM(0, nClockFrequency, 11025, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
-		YM2610Init(1, nClockFrequency, 11025, (void**)(&YM2610ADPCMAROM), nYM2610ADPCMASize, (void**)(&YM2610ADPCMBROM), nYM2610ADPCMBSize, &BurnOPNTimerCallback, IRQCallback);
-		return 0;
-	}
-
 	BurnYM2610StreamCallback = StreamCallback;
 
 	if (nFMInterpolation == 3) {
@@ -441,12 +418,14 @@ INT32 BurnYM2610Init(INT32 nClockFrequency, UINT8* YM2610ADPCMAROM, INT32* nYM26
 
 		BurnYM2610Update = YM2610UpdateResample;
 
-		nSampleSize = (UINT32)nBurnYM2610SoundRate * (1 << 16) / nBurnSoundRate;
+		if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYM2610SoundRate * (1 << 16) / nBurnSoundRate;
 	} else {
 		nBurnYM2610SoundRate = nBurnSoundRate;
 
 		BurnYM2610Update = YM2610UpdateNormal;
 	}
+
+	if (!nBurnYM2610SoundRate) nBurnYM2610SoundRate = 44100;
 
 	AY8910InitYM(0, nClockFrequency, nBurnYM2610SoundRate, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
 	YM2610Init(1, nClockFrequency, nBurnYM2610SoundRate, (void**)(&YM2610ADPCMAROM), nYM2610ADPCMASize, (void**)(&YM2610ADPCMBROM), nYM2610ADPCMBSize, &BurnOPNTimerCallback, IRQCallback);

@@ -436,15 +436,6 @@ INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 	
 	BurnTimerInitYM3526(&YM3526TimerOver, NULL);
 
-	if (nBurnSoundRate <= 0) {
-		BurnYM3526StreamCallback = YM3526StreamCallbackDummy;
-
-		BurnYM3526Update = YM3526UpdateDummy;
-
-		YM3526Init(1, nClockFrequency, 11025);
-		return 0;
-	}
-
 	BurnYM3526StreamCallback = StreamCallback;
 
 	if (nFMInterpolation == 3) {
@@ -457,13 +448,15 @@ INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 
 		BurnYM3526Update = YM3526UpdateResample;
 
-		nSampleSize = (UINT32)nBurnYM3526SoundRate * (1 << 16) / nBurnSoundRate;
+		if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYM3526SoundRate * (1 << 16) / nBurnSoundRate;
 		nFractionalPosition = 0;
 	} else {
 		nBurnYM3526SoundRate = nBurnSoundRate;
 
 		BurnYM3526Update = YM3526UpdateNormal;
 	}
+
+	if (!nBurnYM3526SoundRate) nBurnYM3526SoundRate = 44100;
 
 	YM3526Init(1, nClockFrequency, nBurnYM3526SoundRate);
 	YM3526SetIRQHandler(0, IRQCallback, 0);

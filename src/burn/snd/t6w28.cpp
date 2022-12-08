@@ -447,7 +447,7 @@ void t6w28Init(INT32 clock, INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ, INT32 nAdd)
 	soundbuf_l = (INT16*)BurnMalloc(our_freq * 2);
 	soundbuf_r = (INT16*)BurnMalloc(our_freq * 2);
 
-	nSampleSize = (UINT64)((UINT64)our_freq * (1 << 16)) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT64)((UINT64)our_freq * (1 << 16)) / nBurnSoundRate;
 	nPosition = 0;
 	nFractionalPosition = 0;
 }

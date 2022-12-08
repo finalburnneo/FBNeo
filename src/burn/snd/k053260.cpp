@@ -298,7 +298,7 @@ void K053260Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 	INT32 rate = clock / 32;
 	INT32 i;
 	
-	nUpdateStep = (INT32)(((float)rate / nBurnSoundRate) * 32768);
+	if (nBurnSoundRate) nUpdateStep = (INT32)(((float)rate / nBurnSoundRate) * 32768);
 
 	ic->mode = 0;
 	ic->rom = rom;

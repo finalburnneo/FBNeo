@@ -24,19 +24,6 @@ static double YM2612Volumes[2 * MAX_YM2612];
 static INT32 YM2612RouteDirs[2 * MAX_YM2612];
 
 // ----------------------------------------------------------------------------
-// Dummy functions
-
-static void YM2612UpdateDummy(INT16*, INT32)
-{
-	return;
-}
-
-static INT32 YM2612StreamCallbackDummy(INT32)
-{
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
 // Execute YM2612 for part of a frame
 
 static void YM2612Render(INT32 nSegmentLength)
@@ -325,15 +312,6 @@ INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 	BurnTimerInit(&YM2612TimerOver, GetTimeCallback);
 
-	if (nBurnSoundRate <= 0) {
-		BurnYM2612StreamCallback = YM2612StreamCallbackDummy;
-
-		BurnYM2612Update = YM2612UpdateDummy;
-
-		YM2612Init(num, nClockFrequency, 11025, &BurnOPNTimerCallback, IRQCallback);
-		return 0;
-	}
-
 	BurnYM2612StreamCallback = StreamCallback;
 
 	if (nFMInterpolation == 3) {
@@ -346,13 +324,15 @@ INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 		BurnYM2612Update = YM2612UpdateResample;
 
-		nSampleSize = (UINT32)nBurnYM2612SoundRate * (1 << 16) / nBurnSoundRate;
+		if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYM2612SoundRate * (1 << 16) / nBurnSoundRate;
 	} else {
 		nBurnYM2612SoundRate = nBurnSoundRate;
 
 		BurnYM2612Update = YM2612UpdateNormal;
 	}
-	
+
+	if (!nBurnYM2612SoundRate) nBurnYM2612SoundRate = 44100;
+
 	YM2612Init(num, nClockFrequency, nBurnYM2612SoundRate, &BurnOPNTimerCallback, IRQCallback);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * 2 * num * sizeof(INT16));

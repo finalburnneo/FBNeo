@@ -846,8 +846,8 @@ STD_SAMPLE_FN(Donpachi)
 
 struct BurnDriver BurnDrvDonpachi = {
 	"donpachi", NULL, NULL, "donpachi", "1995",
-	"DonPachi (US)\0", NULL, "Cave (Atlus license)", "Cave",
-	L"\u9996\u9818\u8702 DonPachi (US)\0", NULL, NULL, NULL,
+	"DonPachi (USA, ver. 1.12, 95/05/2x)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"\u9996\u9818\u8702 DonPachi (USA, ver. 1.12, 95/05/2x)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, donpachiRomInfo, donpachiRomName, NULL, NULL, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -856,8 +856,8 @@ struct BurnDriver BurnDrvDonpachi = {
 
 struct BurnDriver BurnDrvDonpachij = {
 	"donpachij", "donpachi", NULL, "donpachi", "1995",
-	"DonPachi (Japan)\0", NULL, "Cave (Atlus license)", "Cave",
-	L"\u9996\u9818\u8702 DonPachi (Japan)\0", NULL, NULL, NULL,
+	"DonPachi (Japan, ver. 1.01, 95/05/11)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"\u9996\u9818\u8702 DonPachi (Japan, ver. 1.01, 95/05/11)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, donpachijRomInfo, donpachijRomName, NULL, NULL, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -866,8 +866,8 @@ struct BurnDriver BurnDrvDonpachij = {
 
 struct BurnDriver BurnDrvDonpachijs = {
 	"donpachijs", "donpachi", NULL, "donpachi", "1995",
-	"DonPachi (Japan, Satsuei version)\0", NULL, "Cave (Atlus license)", "Cave",
-	L"\u9996\u9818\u8702 DonPachi (Japan, Satsuei version)\0", NULL, NULL, NULL,
+	"DonPachi (Japan, ver. 1.01, 95/05/11 Satsuei)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"\u9996\u9818\u8702 DonPachi (Japan, ver. 1.01, 95/05/11 Satsuei)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, donpachijsRomInfo, donpachijsRomName, NULL, NULL, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -876,8 +876,8 @@ struct BurnDriver BurnDrvDonpachijs = {
 
 struct BurnDriver BurnDrvDonpachikr = {
 	"donpachikr", "donpachi", NULL, "donpachi", "1995",
-	"DonPachi (Korea)\0", NULL, "Cave (Atlus license)", "Cave",
-	L"\u9996\u9818\u8702 DonPachi (Korea)\0", NULL, NULL, NULL,
+	"DonPachi (Korea, ver. 1.12, 95/05/2x)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"\u9996\u9818\u8702 DonPachi (Korea, ver. 1.12, 95/05/2x)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, donpachikrRomInfo, donpachikrRomName, NULL, NULL, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -886,8 +886,8 @@ struct BurnDriver BurnDrvDonpachikr = {
 
 struct BurnDriver BurnDrvDonpachihk = {
 	"donpachihk", "donpachi", NULL, "donpachi", "1995",
-	"DonPachi (Hong Kong)\0", NULL, "Cave (Atlus license)", "Cave",
-	L"\u9996\u9818\u8702 DonPachi (Hong Kong)\0", NULL, NULL, NULL,
+	"DonPachi (Hong Kong, ver. 1.10, 95/05/17)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"\u9996\u9818\u8702 DonPachi (Hong Kong, ver. 1.10, 95/05/17)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, donpachihkRomInfo, donpachihkRomName, NULL, NULL, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,

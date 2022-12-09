@@ -3779,7 +3779,7 @@ static struct BurnRomInfo hharryRomDesc[] = {
 	{ "m81_b-9h-.ic94",			0x00117, 0x8a3732ff, 0x00 | BRF_OPT },           // 16 PLDs
 	{ "m81_a-5l-.ic28",			0x00117, 0x56c29834, 0x00 | BRF_OPT },           // 17
 	{ "m81_a-2h-.ic2",			0x00117, 0x16ca7c50, 0x00 | BRF_OPT },           // 18
-	{ "gen=81=_a-7d-a.ic48",	0x00117, 0xad1a7942, 0x00 | BRF_OPT },           // 19
+	{ "gen=81=_a-7d-a.ic48",	0x00117, 0x92fe9eff, 0x00 | BRF_OPT },           // 19
 };
 
 STD_ROM_PICK(hharry)

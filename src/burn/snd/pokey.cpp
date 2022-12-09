@@ -746,7 +746,7 @@ void PokeyReset()
 
 		memset(p, 0, STRUCT_SIZE_HELPER(struct POKEYregisters, pokey_end_vars));
 
-		p->samplerate_24_8 = (intf.baseclock << 8) / nBurnSoundRate;
+		p->samplerate_24_8 = (nBurnSoundRate) ? (intf.baseclock << 8) / nBurnSoundRate : 1;
 		p->divisor[CHAN1] = 4;
 		p->divisor[CHAN2] = 4;
 		p->divisor[CHAN3] = 4;

@@ -270,7 +270,8 @@ INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROM
 	} else {
 		nBurnYMF278SoundRate = nClockFrequency / 768; // hw rate based on input clock (44100 @ STD clock)
 	}
-	nSampleSize = (UINT32)nBurnYMF278SoundRate * (1 << 16) / nBurnSoundRate;
+
+	if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYMF278SoundRate * (1 << 16) / nBurnSoundRate;
 	bYMF278BAddSignal = 0; // not used by any driver. (yet)
 
 	uses_timer = (IRQCallback != NULL);

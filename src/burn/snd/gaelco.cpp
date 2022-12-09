@@ -347,7 +347,7 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 	sample_buffer = (INT16 *)BurnMalloc(8000 * sizeof(INT16) * 2); // more than enough :)
 	memset(sample_buffer, 0, 8000 * sizeof(INT16) * 2);
 
-	nSampleSize = (UINT32)8000 * (1 << 16) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT32)8000 * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition = 0;
 	nPosition = 0;
 

@@ -216,12 +216,13 @@ static struct BurnDIPInfo DecocassDIPList[]=
 	{0x12, 0x01, 0xe0, 0x60, "E"			},
 	{0x12, 0x01, 0xe0, 0x40, "F"			},
 
-	{0   , 0xfe, 0   ,    5, "Bios Version"		},
+	{0   , 0xfe, 0   ,    6, "Bios Version"		},
 	{0x13, 0x01, 0x07, 0x00, "Japan A, Newer"	},
 	{0x13, 0x01, 0x07, 0x01, "Japan A, Older"	},
 	{0x13, 0x01, 0x07, 0x02, "USA B, Newer"		},
 	{0x13, 0x01, 0x07, 0x03, "USA B, Older"		},
-	{0x13, 0x01, 0x07, 0x04, "Bios D (Europe?)" },
+	{0x13, 0x01, 0x07, 0x04, "UK C"				},
+	{0x13, 0x01, 0x07, 0x05, "Europe D"			},
 };
 
 STDDIPINFO(Decocass)
@@ -369,7 +370,7 @@ STDDIPINFOEXT(Ctisland, Decocass, Ctisland)
 static struct BurnDIPInfo Ctisland3DIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x04, NULL			},
+	{0x13, 0xff, 0xff, 0x05, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
 	{0x12, 0x01, 0x01, 0x01, "3"			},
@@ -420,7 +421,7 @@ static struct BurnDIPInfo CtowerDIPList[]=
 	DIP_OFFSET(0x15)
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 	{0x01, 0xff, 0xff, 0x81, NULL			},
-	{0x02, 0xff, 0xff, 0x04, NULL			},
+	{0x02, 0xff, 0xff, 0x05, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -1307,6 +1308,20 @@ static struct BurnDIPInfo CflyballDIPList[]=
 };
 
 STDDIPINFOEXT(Cflyball,	Decocass,	Cflyball)
+
+static struct BurnDIPInfo CnebulaDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0x04, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x12, 0x01, 0x03, 0x03, "3"			},
+	{0x12, 0x01, 0x03, 0x02, "4"			},
+	{0x12, 0x01, 0x03, 0x01, "5"			},
+	{0x12, 0x01, 0x03, 0x00, "6"			},
+};
+
+STDDIPINFOEXT(Cnebula,	Decocass,	Cnebula)
 
 static struct BurnInputInfo CdsteljnInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
@@ -2668,7 +2683,7 @@ static INT32 DrvDoReset()
 	// call before cpu resets to catch vectors!
 	if (DrvDips[2] != 0xff) // widel multi
 	{
-		INT32 bios_sets = 5; // total bios sets supported
+		INT32 bios_sets = 6; // total bios sets supported
 		INT32 bios_select = ((DrvDips[2] % bios_sets) * 8) + 0x80;
 
 		if (BurnLoadRom(DrvMainBIOS, bios_select + 0, 1)) return 1; // main m6502 bios
@@ -2677,8 +2692,8 @@ static INT32 DrvDoReset()
 			if (BurnLoadRom(DrvMainBIOS + 0x800, bios_select + 1, 1)) return 1;
 		}
 
-		// split type uses 1k rather than 2k rom
-		if (BurnLoadRom(DrvSoundBIOS + ((DrvDips[2] & 1) ? 0x400 : 0), bios_select + 2, 1)) return 1;
+		// split type uses 1k rather than 2k rom (EU and UK excluded [4, 5])
+		if (BurnLoadRom(DrvSoundBIOS + (((DrvDips[2] & 1) && (DrvDips[2] < 4)) ? 0x400 : 0), bios_select + 2, 1)) return 1;
 
 		// load the mcu bios
 		if (BurnLoadRom(DrvMCUROM, 0x80 + (bios_sets * 8), 1)) return 1;
@@ -2928,6 +2943,9 @@ static INT32 DrvExit()
 	prot_read = NULL;
 	type1_inmap = 0;
 	type1_outmap = 0;
+
+	BurnFree(type1_map); // cnebula
+	type1_map = NULL;
 
 	burgertime_mode = 0;
 	skater_mode = 0;
@@ -3496,6 +3514,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(firsttime);
 		SCAN_VAR(tape_bot_eot);
+
+		if (burgertime_mode) {
+			SCAN_VAR(last01);
+			SCAN_VAR(last02);
+			SCAN_VAR(ignext);
+		}
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3564,19 +3588,31 @@ static struct BurnRomInfo decocassRomDesc[] = {
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9e
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9f
 
-	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa0 - BIOS "D" - ctisland3, ctower (Main M6502)
+	{ "v0c-.7e",		0x1000, 0x9f505709, BRF_BIOS | BRF_PRG }, // 0xa0 - BIOS "C" - cnebula (Main M6502)
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa1
 
-	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xa2 - BIOS "D" (Sound M6502)
+	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xa2 - BIOS "C" (Sound M6502)
 
-	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xa3 - BIOS "D" (prom)
-	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xa4 - BIOS "D" (prom)
-	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xa5 - BIOS "D" (prom)
+	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xa3 - BIOS "C" (prom)
+	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xa4 - BIOS "C" (prom)
+	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xa5 - BIOS "C" (prom)
 
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa6
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa7
 
-	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xa8 - MCU BIOS (Shared)
+	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa8 - BIOS "D" - ctisland3, ctower (Main M6502)
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa9
+
+	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xaa - BIOS "D" (Sound M6502)
+
+	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xab - BIOS "D" (prom)
+	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xac - BIOS "D" (prom)
+	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xad - BIOS "D" (prom)
+
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xae
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xaf
+
+	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xb0 - MCU BIOS (Shared)
 };
 
 STD_ROM_PICK(decocass)
@@ -3751,6 +3787,42 @@ struct BurnDriver BurnDrvCastfant = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, castfantRomInfo, castfantRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CastfantDIPInfo,
 	CastfantInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	240, 256, 3, 4
+};
+
+// Nebula (DECO Cassette) (UK)
+
+static struct BurnRomInfo cnebulaRomDesc[] = {
+	{ "nebula2.pro",	0x0020, 0x75cae001, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+
+	{ "nebula2.cas",	0x5c00, 0xef05ce36, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+};
+
+STDROMPICKEXT(cnebula, cnebula, decocass)
+STD_ROM_FN(cnebula)
+
+
+static INT32 CnebulaInit()
+{
+	UINT32 nebby = 0xeededdee;
+	UINT8 *nebby2 = (UINT8*)BurnMalloc(sizeof(nebby)*2);
+	for (INT32 i = 0; i < 8; i++) {
+		nebby2[7-i] = (((nebby<<(i*4)) & 0xf0000000) >> 28) ^ 0xf;
+		nebby2[i]  |= (i<<14)/nebby&3;
+	}
+
+	type1_map = nebby2;
+
+	return DecocassInit(decocass_type1_read, NULL);
+}
+
+struct BurnDriver BurnDrvCnebula = {
+	"cnebula", NULL, "decocass", NULL, "1981",
+	"Nebula (DECO Cassette) (UK)\0", NULL, "Data East Corporation", "Cassette System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	NULL, cnebulaRomInfo, cnebulaRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CnebulaDIPInfo,
+	CnebulaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
 

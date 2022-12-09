@@ -217,19 +217,6 @@ static double YM3812Volumes[1 * MAX_YM3812];
 static INT32 YM3812RouteDirs[1 * MAX_YM3812];
 
 // ----------------------------------------------------------------------------
-// Dummy functions
-
-static void YM3812UpdateDummy(INT16* , INT32)
-{
-	return;
-}
-
-static INT32 YM3812StreamCallbackDummy(INT32)
-{
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
 // Execute YM3812 for part of a frame
 
 static void YM3812Render(INT32 nSegmentLength)
@@ -477,15 +464,6 @@ INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallbac
 	
 	BurnTimerInitYM3812(&YM3812TimerOver, NULL);
 
-	if (nBurnSoundRate <= 0) {
-		BurnYM3812StreamCallback = YM3812StreamCallbackDummy;
-
-		BurnYM3812Update = YM3812UpdateDummy;
-
-		YM3812Init(num, nClockFrequency, 11025);
-		return 0;
-	}
-
 	BurnYM3812StreamCallback = StreamCallback;
 
 	if (nFMInterpolation == 3) {
@@ -498,13 +476,15 @@ INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallbac
 
 		BurnYM3812Update = YM3812UpdateResample;
 
-		nSampleSize = (UINT32)nBurnYM3812SoundRate * (1 << 16) / nBurnSoundRate;
+		if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYM3812SoundRate * (1 << 16) / nBurnSoundRate;
 		nFractionalPosition = 0;
 	} else {
 		nBurnYM3812SoundRate = nBurnSoundRate;
 
 		BurnYM3812Update = YM3812UpdateNormal;
 	}
+
+	if (!nBurnYM3812SoundRate) nBurnYM3812SoundRate = 44100;
 
 	YM3812Init(num, nClockFrequency, nBurnYM3812SoundRate);
 	YM3812SetIRQHandler(0, IRQCallback, 0);

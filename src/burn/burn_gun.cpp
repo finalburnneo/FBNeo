@@ -378,10 +378,7 @@ INT32 BurnTrackballGetVelocity(INT32 num, INT32 isB)
 {
 	if (num > MAX_GUNS - 1) return 0;
 
-	BurnDialINF dial;
-	BurnPaddleGetDial(dial, num, isB);
-
-	return dial.Velocity;
+	return DIAL_INC[(num*2) + ((isB) ? 1 : 0)];
 }
 
 INT32 BurnTrackballGetVelocity(INT32 dev)

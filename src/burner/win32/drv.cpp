@@ -315,7 +315,7 @@ int DrvExit()
 
 	bRunPause = 0;					// Don't pause when exitted
 
-	if (bAudOkay) {
+	if (bAudOkay && pBurnSoundOut) {
 		// Write silence into the sound buffer on exit, and for drivers which don't use pBurnSoundOut
 		memset(nAudNextSound, 0, nAudSegLen << 2);
 	}

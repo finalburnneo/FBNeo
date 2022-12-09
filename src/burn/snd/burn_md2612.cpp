@@ -25,19 +25,6 @@ static double MD2612Volumes[2];
 static INT32 MD2612RouteDirs[2];
 
 // ----------------------------------------------------------------------------
-// Dummy functions
-
-static void MD2612UpdateDummy(INT16*, INT32)
-{
-	return;
-}
-
-static INT32 MD2612StreamCallbackDummy(INT32)
-{
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
 // Execute MD2612 for part of a frame
 
 static void MD2612Render(INT32 nSegmentLength)
@@ -192,15 +179,6 @@ INT32 BurnMD2612Init(INT32 num, INT32 bIsPal, INT32 (*StreamCallback)(INT32), IN
 
 	DebugSnd_YM2612Initted = 1;
 
-	if (nBurnSoundRate <= 0) {
-		BurnMD2612StreamCallback = MD2612StreamCallbackDummy;
-
-		BurnMD2612Update = MD2612UpdateDummy;
-
-		MDYM2612Init();
-		return 0;
-	}
-
 	BurnMD2612StreamCallback = StreamCallback;
 
 	if (!StreamCallback) {
@@ -210,7 +188,7 @@ INT32 BurnMD2612Init(INT32 num, INT32 bIsPal, INT32 (*StreamCallback)(INT32), IN
 	// Megadrive's 2612 runs at 53267hz NTSC, 52781hz PAL
 	nBurnMD2612SoundRate = (bIsPal) ? 52781 : 53267;
 	BurnMD2612Update = MD2612UpdateResample;
-	nSampleSize = (UINT32)nBurnMD2612SoundRate * (1 << 16) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT32)nBurnMD2612SoundRate * (1 << 16) / nBurnSoundRate;
 	
 	MDYM2612Init();
 

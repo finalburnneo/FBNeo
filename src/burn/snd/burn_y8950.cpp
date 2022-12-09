@@ -216,19 +216,6 @@ static double Y8950Volumes[1 * MAX_Y8950];
 static INT32 Y8950RouteDirs[1 * MAX_Y8950];
 
 // ----------------------------------------------------------------------------
-// Dummy functions
-
-static void Y8950UpdateDummy(INT16* , INT32)
-{
-	return;
-}
-
-static int Y8950StreamCallbackDummy(INT32)
-{
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
 // Execute Y8950 for part of a frame
 
 static void Y8950Render(INT32 nSegmentLength)
@@ -475,15 +462,6 @@ INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT
 {
 	BurnTimerInitY8950(&Y8950TimerOver, NULL);
 
-	if (nBurnSoundRate <= 0) {
-		BurnY8950StreamCallback = Y8950StreamCallbackDummy;
-
-		BurnY8950Update = Y8950UpdateDummy;
-
-		Y8950Init(num, nClockFrequency, 11025);
-		return 0;
-	}
-
 	BurnY8950StreamCallback = StreamCallback;
 
 	if (nFMInterpolation == 3) {
@@ -496,13 +474,15 @@ INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT
 
 		BurnY8950Update = Y8950UpdateResample;
 
-		nSampleSize = (UINT32)nBurnY8950SoundRate * (1 << 16) / nBurnSoundRate;
+		if (nBurnSoundRate) nSampleSize = (UINT32)nBurnY8950SoundRate * (1 << 16) / nBurnSoundRate;
 		nFractionalPosition = 0;
 	} else {
 		nBurnY8950SoundRate = nBurnSoundRate;
 
 		BurnY8950Update = Y8950UpdateNormal;
 	}
+
+	if (!nBurnY8950SoundRate) nBurnY8950SoundRate = 44100;
 
 	Y8950Init(num, nClockFrequency, nBurnY8950SoundRate);
 	Y8950SetIRQHandler(0, IRQCallback, 0);

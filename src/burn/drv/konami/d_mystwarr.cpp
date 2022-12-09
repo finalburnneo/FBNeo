@@ -2278,10 +2278,10 @@ static INT32 ViostormInit()
 	K054539Init(0, 48000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-	K054539_set_gain(0, 0, 2.00);
+	/*K054539_set_gain(0, 0, 2.00);
 	K054539_set_gain(0, 1, 2.00);
 	K054539_set_gain(0, 2, 2.00);
-	K054539_set_gain(0, 3, 2.00);
+	K054539_set_gain(0, 3, 2.00);*/
 	K054539_set_gain(0, 4, 2.00);
 	K054539_set_gain(0, 5, 2.00);
 	K054539_set_gain(0, 6, 2.00);

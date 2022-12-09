@@ -39,19 +39,6 @@ static void stupid_timer_hack()
 }
 
 // ----------------------------------------------------------------------------
-// Dummy functions
-
-static void YM2203UpdateDummy(INT16*, INT32)
-{
-	return;
-}
-
-static INT32 YM2203StreamCallbackDummy(INT32)
-{
-	return 0;
-}
-
-// ----------------------------------------------------------------------------
 // Execute YM2203 for part of a frame
 
 static void AY8910Render(INT32 nSegmentLength)
@@ -610,17 +597,6 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	if (num > MAX_YM2203) num = MAX_YM2203;
 	
 	BurnTimerInit(&YM2203TimerOver, GetTimeCallback);
-	if (nBurnSoundRate <= 0) {
-		BurnYM2203StreamCallback = YM2203StreamCallbackDummy;
-
-		BurnYM2203Update = YM2203UpdateDummy;
-
-		for (INT32 i = 0; i < num; i++) {
-			AY8910InitYM(i, nClockFrequency, 11025, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
-		}
-		YM2203Init(num, nClockFrequency, 11025, &BurnOPNTimerCallback, IRQCallback);
-		return 0;
-	}
 
 	BurnYM2203StreamCallback = StreamCallback;
 
@@ -636,12 +612,14 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 			nBurnYM2203SoundRate = nBurnSoundRate;
 
 		BurnYM2203Update = YM2203UpdateResample;
-		nSampleSize = (UINT32)nBurnYM2203SoundRate * (1 << 16) / nBurnSoundRate;
+		if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYM2203SoundRate * (1 << 16) / nBurnSoundRate;
 
     } else {
 		nBurnYM2203SoundRate = nBurnSoundRate;
 		BurnYM2203Update = YM2203UpdateNormal;
 	}
+
+	if (!nBurnYM2203SoundRate) nBurnYM2203SoundRate = 44100;
 
 	for (INT32 i = 0; i < num; i++) {
 		AY8910InitYM(i, nClockFrequency, nBurnYM2203SoundRate, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);

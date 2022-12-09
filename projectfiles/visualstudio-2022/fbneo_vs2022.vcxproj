@@ -211,6 +211,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exterm.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_fcombat.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_gotya.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_gridlee.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_magmax.cpp" />

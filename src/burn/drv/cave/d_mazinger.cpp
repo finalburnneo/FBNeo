@@ -771,8 +771,8 @@ STD_ROM_FN(mazingerj)
 
 struct BurnDriver BurnDrvmazinger = {
 	"mazinger", NULL, NULL, NULL, "1994",
-	"Mazinger Z (World, ver. 94/06/27)\0", NULL, "Banpresto / Dynamic Pl. Toei Animation", "Cave",
-	L"Mazinger Z\0\u30DE\u30B8\u30F3\u30AC\u30FC \uFF3A (World, ver. 94/06/27)\0", NULL, NULL, NULL,
+	"Mazinger Z (World)\0", NULL, "Banpresto / Dynamic Pl. Toei Animation", "Cave",
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, mazingerRomInfo, mazingerRomName, NULL, NULL, NULL, NULL, mazingerInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -781,8 +781,8 @@ struct BurnDriver BurnDrvmazinger = {
 
 struct BurnDriver BurnDrvmazingerj = {
 	"mazingerj", "mazinger", NULL, NULL, "1994",
-	"Mazinger Z (Japan, ver. 94/06/27)\0", NULL, "Banpresto / Dynamic Pl. Toei Animation", "Cave",
-	L"Mazinger Z\0\u30DE\u30B8\u30F3\u30AC\u30FC \uFF3A (Japan, ver. 94/06/27)\0", NULL, NULL, NULL,
+	"Mazinger Z (Japan)\0", NULL, "Banpresto / Dynamic Pl. Toei Animation", "Cave",
+	L"Mazinger Z\0\u30de\u30b8\u30f3\u30ac\u30fc\uff3a (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, mazingerjRomInfo, mazingerjRomName, NULL, NULL, NULL, NULL, mazingerInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,

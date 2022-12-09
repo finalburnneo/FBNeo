@@ -681,7 +681,7 @@ STD_ROM_FN(korokoro)
 struct BurnDriver BurnDrvKorokoro = {
 	"korokoro", NULL, NULL, NULL, "1999",
 	"Koro Koro Quest (Japan)\0", NULL, "Takumi", "Cave",
-	NULL, NULL, NULL, NULL,
+	L"Koro Koro Quest\0\u30b3\u30ed\u30b3\u30ed\u30af\u30a8\u30b9\u30c8 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_MISC, 0,
 	NULL, korokoroRomInfo, korokoroRomName, NULL, NULL, NULL, NULL, KorokoroInputInfo, KorokoroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -709,7 +709,7 @@ STD_ROM_FN(crusherm)
 struct BurnDriver BurnDrvCrusherm = {
 	"crusherm", NULL, NULL, NULL, "1999",
 	"Crusher Makochan (Japan)\0", NULL, "Takumi", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	L"Crusher Mako-chan\0\u30af\u30e9\u30c3\u30b7\u30e3\u30fc\u30de\u30b3\u3061\u3083\u3093 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_MINIGAMES, 0,
 	NULL, crushermRomInfo, crushermRomName, NULL, NULL, NULL, NULL, KorokoroInputInfo, KorokoroDIPInfo,
 	crushermInit, DrvExit, DrvFrame, DrvDraw, DrvScan,

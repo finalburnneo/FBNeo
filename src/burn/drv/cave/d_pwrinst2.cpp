@@ -863,7 +863,7 @@ static INT32 DrvInit()
 
 	NMK112_init(0, MSM6295ROM, MSM6295ROM + 0x400000, 0x400000, 0x400000);
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pwrinst2")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pwrinst2a")) {
 		UINT16 *rom = (UINT16 *)Rom01;
 		rom[0xD46C/2] = 0xD482;	// kurara dash fix  0xd400 -> 0xd482
 	}
@@ -953,11 +953,11 @@ static INT32 PlegendsInit()
 
 // Rom information
 static struct BurnRomInfo pwrinst2RomDesc[] = {
-	{ "g02.u45",			0x080000, 0x7b33bc43, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "g02.u44",			0x080000, 0x8f6f6637, BRF_ESS | BRF_PRG }, //  1
-	{ "g02.u43",			0x080000, 0x178e3d24, BRF_ESS | BRF_PRG }, //  2
-	{ "g02.u42",			0x080000, 0xa0b4ee99, BRF_ESS | BRF_PRG }, //  3
-	
+	{ "g02.u45a",			0x080000, 0xddfff811, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "g02.u44a",			0x080000, 0x5561f620, BRF_ESS | BRF_PRG }, //  1
+	{ "g02.u43a",			0x080000, 0xc4fd5d62, BRF_ESS | BRF_PRG }, //  2
+	{ "g02.u42a",			0x080000, 0x56279c1c, BRF_ESS | BRF_PRG }, //  3
+
 	{ "g02.u3a",			0x020000, 0xebea5e1e, BRF_ESS | BRF_PRG }, //  4 Z80 Code
 
 	{ "g02.u61",			0x200000, 0x91e30398, BRF_GRA },           //  5 Sprite data
@@ -986,6 +986,41 @@ static struct BurnRomInfo pwrinst2RomDesc[] = {
 
 STD_ROM_PICK(pwrinst2)
 STD_ROM_FN(pwrinst2)
+
+static struct BurnRomInfo pwrinst2aRomDesc[] = {
+	{ "g02.u45",			0x080000, 0x7b33bc43, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "g02.u44",			0x080000, 0x8f6f6637, BRF_ESS | BRF_PRG }, //  1
+	{ "g02.u43",			0x080000, 0x178e3d24, BRF_ESS | BRF_PRG }, //  2
+	{ "g02.u42",			0x080000, 0xa0b4ee99, BRF_ESS | BRF_PRG }, //  3
+
+	{ "g02.u3a",			0x020000, 0xebea5e1e, BRF_ESS | BRF_PRG }, //  4 Z80 Code
+
+	{ "g02.u61",			0x200000, 0x91e30398, BRF_GRA },           //  5 Sprite data
+	{ "g02.u62",			0x200000, 0xd9455dd7, BRF_GRA },           //  6
+	{ "g02.u63",			0x200000, 0x4d20560b, BRF_GRA },           //  7
+	{ "g02.u64",			0x200000, 0xb17b9b6e, BRF_GRA },           //  8
+	{ "g02.u65",			0x200000, 0x08541878, BRF_GRA },           //  9
+	{ "g02.u66",			0x200000, 0xbecf2a36, BRF_GRA },           // 10
+	{ "g02.u67",			0x200000, 0x52fe2b8b, BRF_GRA },           // 11
+
+	{ "g02.u78",			0x200000, 0x1eca63d2, BRF_GRA },           // 12 Layer 0 Tile data
+	{ "g02.u81",			0x100000, 0x8a3ff685, BRF_GRA },           // 13 Layer 1 Tile data
+	{ "g02.u89",			0x100000, 0x373e1f73, BRF_GRA },           // 14 Layer 2 Tile data
+	{ "g02.82a",			0x080000, 0x4b3567d6, BRF_GRA },           // 15 Layer 3 Tile data
+
+	{ "g02.u53",			0x200000, 0xc4bdd9e0, BRF_SND },           // 16 MSM6295 #1 ADPCM data
+	{ "g02.u54",			0x200000, 0x1357d50e, BRF_SND },           // 17
+	{ "g02.u55",			0x200000, 0x2d102898, BRF_SND },           // 18 MSM6295 #2 ADPCM data
+	{ "g02.u56",			0x200000, 0x9ff50dda, BRF_SND },           // 19
+
+	{ "peel18cv8p-15.u7",	0x000155, 0xe02b2d2b, BRF_OPT },           // 20 PLDs
+	{ "peel18cv8p-15.u21",	0x000155, 0x7ca78400, BRF_OPT },           // 21
+	{ "peel18cv8p-15.u25",	0x000155, 0x61b414df, BRF_OPT },           // 22
+};
+
+
+STD_ROM_PICK(pwrinst2a)
+STD_ROM_FN(pwrinst2a)
 
 static struct BurnRomInfo pwrinst2jRomDesc[] = {
 	{ "g02j.u45",			0x080000, 0x42d0abd7, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -1135,10 +1170,20 @@ STD_ROM_FN(plegendsj)
 
 struct BurnDriver BurnDrvPwrinst2 = {
 	"pwrinst2", NULL, NULL, NULL, "1994",
-	"Power Instinct 2 (USA, ver. 94/04/08)\0", NULL, "Atlus", "Cave",
+	"Power Instinct 2 (US, Ver. 94.04.08, set 1)\0", NULL, "Atlus", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, pwrinst2RomInfo, pwrinst2RomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvPwrinst2a = {
+	"pwrinst2a", "pwrinst2", NULL, NULL, "1994",
+	"Power Instinct 2 (US, Ver. 94.04.08, set 2)\0", NULL, "Atlus", "Cave",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
+	NULL, pwrinst2aRomInfo, pwrinst2aRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

@@ -223,10 +223,13 @@ INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer)
 	BurnYM2151StreamCallback = NULL; // ""
 	bYM2151AddSignal = 0; // ""
 
+#if 0
+	// we need to init timers & other things, below, even if sound is disabled.
 	if (nBurnSoundRate <= 0) {
 		YM2151Init(1, nClockFrequency, 11025, NULL);
 		return 0;
 	}
+#endif
 
 	// Set YM2151 core samplerate to match the hardware
 	nBurnYM2151SoundRate = nClockFrequency >> 6;
@@ -247,7 +250,7 @@ INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer)
 	pBuffer = (INT16*)BurnMalloc(65536 * 2 * sizeof(INT16));
 	memset(pBuffer, 0, 65536 * 2 * sizeof(INT16));
 
-	nSampleSize = (UINT32)nBurnYM2151SoundRate * (1 << 16) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYM2151SoundRate * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition = 0;
 	nYM2151Position = 0;
 

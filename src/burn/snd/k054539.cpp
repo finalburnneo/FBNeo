@@ -340,7 +340,7 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 	info->clock = clock;
 
-	nSampleSize = (UINT32)48000 * (1 << 16) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT32)48000 * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition[chip] = 0;
 	nPosition[chip] = 0;
 

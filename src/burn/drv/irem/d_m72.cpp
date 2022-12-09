@@ -4725,7 +4725,7 @@ static struct BurnRomInfo loht_msRomDesc[] = {
 	{ "21_209_82s129an.ic12",		0x00100, 0x7922a7ab, 0x00 | BRF_OPT },           // 25
 	{ "1_105_82s123n.ic20",			0x00020, 0x14d72781, 0x00 | BRF_OPT },           // 26
 
-	{ "51_p0503_pal16r6.ic46",		0x00104, 0x6acdfafb, 0x00 | BRF_OPT },           // 27 PLDs
+	{ "51_p0503_pal16r6.ic46",		0x00104, 0x07eb86d2, 0x00 | BRF_OPT },           // 27 PLDs
 
 	// these were read protected
 	{ "5_5136_gal16v8-25lp.ic9",	0x00001, 0x00000000, 0x00 | BRF_NODUMP },        // 28

@@ -9415,17 +9415,17 @@
 		<description>Metal Slug 3 (Survival, Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="ms3sc.neo-sma" size="262144" crc="1cdb3209"/>
+		<rom name="ms3sc.neo-sma" size="262144" crc="ecae944c"/>
 		<rom name="256-pg1sc.p1" size="4194304" crc="b187e852"/>
-		<rom name="256-pg2sc.p2" size="4194304" crc="8b40789d"/>
-		<rom name="256-c1sc.c1" size="8388608" crc="76b33c3a"/>
-		<rom name="256-c2sc.c2" size="8388608" crc="7fbb3960"/>
-		<rom name="256-c3sc.c3" size="8388608" crc="b2373b21"/>
-		<rom name="256-c4sc.c4" size="8388608" crc="90fed94e"/>
-		<rom name="256-c5sc.c5" size="8388608" crc="4b8f6cd9"/>
-		<rom name="256-c6sc.c6" size="8388608" crc="e5b29797"/>
-		<rom name="256-c7sc.c7" size="8388608" crc="eacb7339"/>
-		<rom name="256-c8sc.c8" size="8388608" crc="5313e7a6"/>
+		<rom name="256-pg2sc.p2" size="4194304" crc="80a52a8a"/>
+		<rom name="256-c1sc.c1" size="8388608" crc="af853e09"/>
+		<rom name="256-c2sc.c2" size="8388608" crc="83831dc7"/>
+		<rom name="256-c3sc.c3" size="8388608" crc="88da636e"/>
+		<rom name="256-c4sc.c4" size="8388608" crc="48f04bbb"/>
+		<rom name="256-c5sc.c5" size="8388608" crc="4625f693"/>
+		<rom name="256-c6sc.c6" size="8388608" crc="5af3b6fa"/>
+		<rom name="256-c7sc.c7" size="8388608" crc="e2771363"/>
+		<rom name="256-c8sc.c8" size="8388608" crc="a4836cc3"/>
 		<rom name="256-m1.m1" merge="256-m1.m1" size="524288" crc="eaeec116"/>
 		<rom name="256-v1.v1" merge="256-v1.v1" size="4194304" crc="f2690241"/>
 		<rom name="256-v2.v2" merge="256-v2.v2" size="4194304" crc="7e2a10bd"/>
@@ -12405,15 +12405,15 @@
 		<description>Metal Slug X - Super Vehicle-001 (Survival, Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1sc.p1" size="1048576" crc="9bd3e306"/>
-		<rom name="250-p2sc.ep1" size="4194304" crc="019e8acb"/>
+		<rom name="250-p1sc.p1" size="1048576" crc="5881293a"/>
+		<rom name="250-p2sc.ep1" size="4194304" crc="63c4c596"/>
 		<rom name="250-s1sc.s1" size="131072" crc="03bce893"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
 		<rom name="250-c3.c3" merge="250-c3.c3" size="8388608" crc="fd602019"/>
 		<rom name="250-c4.c4" merge="250-c4.c4" size="8388608" crc="31354513"/>
-		<rom name="250-c5sc.c5" size="8388608" crc="8dd6a022"/>
-		<rom name="250-c6sc.c6" size="8388608" crc="f8de0291"/>
+		<rom name="250-c5sc.c5" size="8388608" crc="d29cc949"/>
+		<rom name="250-c6sc.c6" size="8388608" crc="81234ddb"/>
 		<rom name="250-m1.m1" merge="250-m1.m1" size="131072" crc="fd42a842"/>
 		<rom name="250-v1.v1" merge="250-v1.v1" size="4194304" crc="c79ede73"/>
 		<rom name="250-v2.v2" merge="250-v2.v2" size="4194304" crc="ea9aabe1"/>
@@ -23411,9 +23411,9 @@
 		<description>The King of Fighters '99 - Fluent and Refreshing</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="sk.neo-sma" size="262144" crc="246fe840"/>
-		<rom name="251-p1sk.p1" size="4194304" crc="4031b191"/>
-		<rom name="251-p2sk.p2" size="4194304" crc="e429e1fe"/>
+		<rom name="sk.neo-sma" size="262144" crc="ea9a3451"/>
+		<rom name="251-p1sk.p1" size="4194304" crc="9fbc14f6"/>
+		<rom name="251-p2sk.p2" size="4194304" crc="05242429"/>
 		<rom name="251-c1.c1" merge="251-c1.c1" size="8388608" crc="0f9e93fe"/>
 		<rom name="251-c2.c2" merge="251-c2.c2" size="8388608" crc="e71e2ea3"/>
 		<rom name="251-c3.c3" merge="251-c3.c3" size="8388608" crc="238755d2"/>

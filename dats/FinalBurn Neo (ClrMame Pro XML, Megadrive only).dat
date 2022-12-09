@@ -7298,8 +7298,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="nemo" cloneof="jpond" romof="jpond">
-		<description>Finding Nemo (Rus)</description>
-		<year>199?</year>
+		<comment>Hack</comment>
+		<description>Finding Nemo (Rus) (Unl)</description>
+		<year>200?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="finding nemo.bin" size="655360" crc="89b92f66"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -9188,9 +9189,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="jbdougkos" cloneof="jbdougko" romof="jbdougko">
+		<comment>Hack</comment>
 		<description>James 'Buster' Douglas Knockout Boxing (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="james 'buster' douglas knockout boxing (hack, spanish).bin" size="524288" crc="915c96b4"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9204,9 +9206,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="jb007s" cloneof="jb007" romof="jb007">
+		<comment>Hack</comment>
 		<description>James Bond 007 - The Duel (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Domark</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="james bond 007 - the duel (hack, spanish).bin" size="524288" crc="4daf3d0d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9229,16 +9232,17 @@
 	</game>
 	<game name="jpond">
 		<description>James Pond - Underwater Agent (Euro, USA)</description>
-		<year>1993</year>
+		<year>1991</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="james_pond_u1_jam03" size="524288" crc="d0e7b466"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="jponds" cloneof="jpond" romof="jpond">
+		<comment>Hack</comment>
 		<description>James Pond - Underwater Agent (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="james pond - underwater agent (hack, spanish).bin" size="524288" crc="442cd24e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9252,9 +9256,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="jpond3s" cloneof="jpond3" romof="jpond3">
+		<comment>Hack</comment>
 		<description>James Pond 3 - Operation Starfish (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="james pond 3 - operation starfish (hack, spanish).bin" size="2097152" crc="4803b7f3"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9268,25 +9273,27 @@
 		<driver status="good"/>
 	</game>
 	<game name="robocods" cloneof="robocod" romof="robocod">
+		<comment>Hack</comment>
 		<description>James Pond II - Codename Robocod (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="james pond II - codename robocod (hack, spanish).bin" size="524288" crc="4733a2ec"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="robocodj" cloneof="robocod" romof="robocod">
 		<description>James Pond II - Codename RoboCod (Jpn, Kor)</description>
-		<year>1993</year>
+		<year>1991</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="james pond ii - codename robocod (jpn, kor).bin" size="524288" crc="98794702"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="jammits" cloneof="jammit" romof="jammit">
+		<comment>Hack</comment>
 		<description>Jammit (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Virgin Interactive</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="jammit (hack, spanish).bin" size="2097152" crc="70c27091"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12273,10 +12280,19 @@
 	</game>
 	<game name="mkae" cloneof="mk" romof="mk">
 		<comment>Hack</comment>
-		<description>Mortal Kombat Arcade Edition (Hack)</description>
+		<description>Mortal Kombat Arcade Edition (Hack, v1.0a)</description>
 		<year>2021</year>
 		<manufacturer>Linkuei</manufacturer>
 		<rom name="Mortal Kombat Arcade Edition (Hack)(2021).bin" size="4194304" crc="aa8fb151"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mkaee" cloneof="mk" romof="mk">
+		<comment>Hack</comment>
+		<description>Mortal Kombat Arcade Edition Enhanced (Hack, v1.5)</description>
+		<year>2022</year>
+		<manufacturer>Rael G.C.</manufacturer>
+		<rom name="Mortal Kombat Arcade Edition Enhanced v1.5 (2022)(Rael G.C.).bin" size="4194304" crc="b884890b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

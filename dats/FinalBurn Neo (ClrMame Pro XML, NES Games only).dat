@@ -7197,7 +7197,16 @@
 		<description>Haradius Zero (HB, v1.2a)</description>
 		<year>2019</year>
 		<manufacturer>Impact Soft</manufacturer>
-		<rom name="Haradius Zero (HB).nes" size="786448" crc="d2f19ba1"/>
+		<rom name="Haradius Zero (HB).nes" size="786448" crc="5ae4ccff"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="haratylerhg">
+		<comment>Homebrew</comment>
+		<description>Haratyler HG (HB, v1.10)</description>
+		<year>2020-21</year>
+		<manufacturer>Impact Soft</manufacturer>
+		<rom name="Haratyler HG (2020)(Impact Soft).nes" size="524304" crc="fd024bc4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15284,15 +15293,6 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="smbdx" cloneof="smb" romof="smb">
-		<comment>Hack</comment>
-		<description>Super Mario Bros DX (Hack, v3.4)</description>
-		<year>2018</year>
-		<manufacturer>Flamephanter</manufacturer>
-		<rom name="super mario bros dx (2018)(flamephanter) v3.4.nes" size="40978" crc="004768e4"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="smbc" cloneof="smb" romof="smb">
 		<comment>Hack</comment>
 		<description>Super Mario Bros. (Hack, Spanish v1.0)</description>
@@ -15386,6 +15386,15 @@
 		<year>2020</year>
 		<manufacturer>U Retro</manufacturer>
 		<rom name="Super Mario Bros. Christmas Edition (Hack).nes" size="73744" crc="b293a7c4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smbdx" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Super Mario Bros. DX - Anniversary Edition (Hack, v4.0.a)</description>
+		<year>2022</year>
+		<manufacturer>Flamephanter</manufacturer>
+		<rom name="Super Mario Bros. DX - Anniversary Edition (Hack, v4.0.a).nes" size="40976" crc="016cb4d6"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

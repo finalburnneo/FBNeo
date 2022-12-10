@@ -3779,7 +3779,7 @@ static struct BurnRomInfo hharryRomDesc[] = {
 	{ "m81_b-9h-.ic94",			0x00117, 0x8a3732ff, 0x00 | BRF_OPT },           // 16 PLDs
 	{ "m81_a-5l-.ic28",			0x00117, 0x56c29834, 0x00 | BRF_OPT },           // 17
 	{ "m81_a-2h-.ic2",			0x00117, 0x16ca7c50, 0x00 | BRF_OPT },           // 18
-	{ "gen=81=_a-7d-a.ic48",	0x00117, 0xad1a7942, 0x00 | BRF_OPT },           // 19
+	{ "gen=81=_a-7d-a.ic48",	0x00117, 0x92fe9eff, 0x00 | BRF_OPT },           // 19
 };
 
 STD_ROM_PICK(hharry)
@@ -4725,7 +4725,7 @@ static struct BurnRomInfo loht_msRomDesc[] = {
 	{ "21_209_82s129an.ic12",		0x00100, 0x7922a7ab, 0x00 | BRF_OPT },           // 25
 	{ "1_105_82s123n.ic20",			0x00020, 0x14d72781, 0x00 | BRF_OPT },           // 26
 
-	{ "51_p0503_pal16r6.ic46",		0x00104, 0x6acdfafb, 0x00 | BRF_OPT },           // 27 PLDs
+	{ "51_p0503_pal16r6.ic46",		0x00104, 0x07eb86d2, 0x00 | BRF_OPT },           // 27 PLDs
 
 	// these were read protected
 	{ "5_5136_gal16v8-25lp.ic9",	0x00001, 0x00000000, 0x00 | BRF_NODUMP },        // 28

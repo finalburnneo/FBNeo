@@ -21647,6 +21647,57 @@ struct BurnDriver BurnDrvnes_rpoolchal = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_bobsixsevenRomDesc[] = {
+	{ "Bobby Six Seven (Rev2)(2022)(calgames).nes",          524304, 0x81920aa8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bobsixseven)
+STD_ROM_FN(nes_bobsixseven)
+
+struct BurnDriver BurnDrvnes_bobsixseven = {
+	"nes_bobsixseven", NULL, NULL, NULL, "2022",
+	"Bobby Six Seven: Time Travelling Detective (HB, Rev2)\0", NULL, "CalGames", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_bobsixsevenRomInfo, nes_bobsixsevenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_perkeleRomDesc[] = {
+	{ "PERKELE! Suomi 100 vuotta 5th anniversary edition (2022)(AasiPelit).nes",          393232, 0xbec64871, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_perkele)
+STD_ROM_FN(nes_perkele)
+
+struct BurnDriver BurnDrvnes_perkele = {
+	"nes_perkele", NULL, NULL, NULL, "2022",
+	"PERKELE! Suomi 100 vuotta - 5th anniversary edition (HB)\0", NULL, "AasiPelit", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_perkeleRomInfo, nes_perkeleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_rapidcyclingRomDesc[] = {
+	{ "Rapid Cycling (2022)(Game Losers).nes",          524304, 0x4abb94f0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rapidcycling)
+STD_ROM_FN(nes_rapidcycling)
+
+struct BurnDriver BurnDrvnes_rapidcycling = {
+	"nes_rapidcycling", NULL, NULL, NULL, "2022",
+	"Rapid Cycling (HB)\0", NULL, "Game Losers", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_rapidcyclingRomInfo, nes_rapidcyclingRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_cmbr4wlRomDesc[] = {
 	{ "Chibi Monster Br4wl (2022)(dalecoop Studio).nes",          524304, 0x0eaa7806, BRF_ESS | BRF_PRG },
 };
@@ -40019,7 +40070,7 @@ STD_ROM_FN(nes_kerokerkernoda)
 
 struct BurnDriver BurnDrvnes_kerokerkernoda = {
 	"nes_kerokerkernoda", NULL, NULL, NULL, "2016",
-	"Kero Kero Keroppi no Daibouken (T-eng)\0", NULL, "Gaijin Productions", "Miscellaneous",
+	"Kero Kero Keroppi no Daibouken (T-Eng)\0", NULL, "Gaijin Productions", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_kerokerkernodaRomInfo, nes_kerokerkernodaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -40053,7 +40104,7 @@ STD_ROM_FN(nes_kerokerkernoda2)
 
 struct BurnDriver BurnDrvnes_kerokerkernoda2 = {
 	"nes_kerokerkernoda2", NULL, NULL, NULL, "2016",
-	"Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng)\0", NULL, "The Spoony Bard", "Miscellaneous",
+	"Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-Eng)\0", NULL, "The Spoony Bard", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_kerokerkernoda2RomInfo, nes_kerokerkernoda2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -40061,18 +40112,35 @@ struct BurnDriver BurnDrvnes_kerokerkernoda2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_keropkernosplboRomDesc[] = {
+static struct BurnRomInfo nes_keropkernosplbojRomDesc[] = {
 	{ "Keroppi to Keroriinu no Splash Bomb! (Japan).nes",          163856, 0xcc6fbdae, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_keropkernosplboj)
+STD_ROM_FN(nes_keropkernosplboj)
+
+struct BurnDriver BurnDrvnes_keropkernosplboj = {
+	"nes_keropkernosplboj", "nes_keropkernosplbo", NULL, NULL, "1993",
+	"Keroppi to Keroriinu no Splash Bomb! (Japan)\0", NULL, "Character Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	NESGetZipName, nes_keropkernosplbojRomInfo, nes_keropkernosplbojRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_keropkernosplboRomDesc[] = {
+	{ "Keroppi to Keroriinu no Splash Bomb! T-Eng (2016)(Suicidal Translations).nes",          163856, 0xd7039620, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_keropkernosplbo)
 STD_ROM_FN(nes_keropkernosplbo)
 
 struct BurnDriver BurnDrvnes_keropkernosplbo = {
-	"nes_keropkernosplbo", NULL, NULL, NULL, "1993",
-	"Keroppi to Keroriinu no Splash Bomb! (Japan)\0", NULL, "Character Soft", "Miscellaneous",
+	"nes_keropkernosplbo", NULL, NULL, NULL, "2016",
+	"Keroppi to Keroriinu no Splash Bomb! (T-Eng)\0", NULL, "Suicidal Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
 	NESGetZipName, nes_keropkernosplboRomInfo, nes_keropkernosplboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

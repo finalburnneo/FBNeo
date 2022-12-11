@@ -152,6 +152,8 @@ static INT32 nCyclesSegment;
 UINT32 System16ClockSpeed = 0;
 UINT32 System16Z80ClockSpeed = 0;
 
+static INT32 System18Startup = 0;
+
 static INT32 nExtraCycles[4];
 
 INT32 System16YM2413IRQInterval;
@@ -403,6 +405,8 @@ static INT32 System16DoReset()
 	System16ColScroll = 0;
 	System16RowScroll = 0;
 	System16MCUData = 0;
+
+	System18Startup = 10;
 
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
 
@@ -3032,7 +3036,12 @@ INT32 System16BFrame()
 
 INT32 System18Frame()
 {
-	INT32 nInterleave = 800; // mwalk needs huge interleave
+	INT32 nInterleave = 100;
+
+	if (System18Startup > 0) {
+		System18Startup--;
+		nInterleave = 800; // mwalk needs huge interleave @ startup
+	}
 
 	if (HammerAway) nInterleave = 100;
 
@@ -3703,7 +3712,9 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
 			BurnYM3438Scan(nAction, pnMin);
 			RF5C68PCMScan(nAction, pnMin);
-			
+
+			SCAN_VAR(System18Startup);
+
 			if (nAction & ACB_WRITE) {
 				ZetOpen(0);
 				ZetMapArea(0xa000, 0xbfff, 0, System16Z80Rom + 0x10000 + RF5C68PCMBankAddress);

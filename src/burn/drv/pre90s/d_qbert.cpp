@@ -1767,8 +1767,6 @@ static void type1_sound_init()
 	M6502MapMemory(Drv6502ROM,		0xe000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(audio_write);
 	M6502SetReadHandler(audio_read);
-	M6502SetReadOpArgHandler(audio_read);
-	M6502SetReadOpHandler(audio_read);
 	M6502Close();
 
 	BurnSampleInit(0);

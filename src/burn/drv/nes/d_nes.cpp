@@ -10886,8 +10886,6 @@ static INT32 NESInit()
 	M6502Open(0);
 	M6502SetWriteHandler(cpu_bus_write);
 	M6502SetReadHandler(cpu_bus_read);
-	M6502SetReadOpArgHandler(cpu_bus_read);
-	M6502SetReadOpHandler(cpu_bus_read);
 	M6502Close();
 
 	ppu_init((NESMode & IS_PAL) ? 1 : 0);

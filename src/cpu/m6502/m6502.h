@@ -74,6 +74,8 @@ typedef struct
 
 	int 	(*irq_callback)(int irqline);	/* IRQ callback */
 
+	int     fetching_opcode; // true when fetching opcode (no stating necessary)
+
 }	m6502_Regs;
 
 #define M6502_CLEAR_LINE		0
@@ -146,6 +148,7 @@ UINT32 m6502_get_prev_pc();
 int m6502_releaseslice();
 int m6502_dec_icount(int todec);
 int m6502_get_segmentcycles();
+int m6502_get_fetch_status();
 
 void m65c02_init();
 void m65c02_reset();

@@ -343,21 +343,6 @@ static void missile_write(UINT16 address, UINT8 data)
 	bprintf (0, _T("Missed write! %4.4x, %2.2x\n"), address, data);
 }
 
-static UINT8 missile_readop(UINT16 address)
-{
-	if (address >= 0x5000) {
-		UINT8 op = DrvMainROM[address];
-
-		if (irq_state == 0 && (op & 0x1f) == 0x01) {
-			madsel_lastcycles = M6502TotalCycles();
-		}
-		return op;
-	}
-
-	bprintf(0, _T("Missed readop %x\n"), address);
-	return 0xff;
-}
-
 static UINT8 missile_read(UINT16 address)
 {
 	if (get_madsel()) {
@@ -373,6 +358,10 @@ static UINT8 missile_read(UINT16 address)
 
 	if (address >= 0x5000) {
 		ret = DrvMainROM[address];
+
+		if (irq_state == 0 && (ret & 0x1f) == 0x01 && M6502GetFetchStatus()) {
+			madsel_lastcycles = M6502TotalCycles();
+		}
 	}
 
 	if ((address & 0x7800) == 0x4000) {
@@ -501,8 +490,6 @@ static INT32 DrvInit()
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
 	M6502SetReadHandler(missile_read);
-	M6502SetReadOpHandler(missile_readop);
-	M6502SetReadOpArgHandler(missile_read);
 	M6502SetWriteHandler(missile_write);
 	M6502Close();
 

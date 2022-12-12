@@ -25576,7 +25576,7 @@ struct BurnDriver BurnDrvnes_nimnom = {
 
 // https://www.romhacking.net/hacks/144/
 static struct BurnRomInfo nes_smbdxRomDesc[] = {
-	{ "Super Mario Bros. DX - Anniversary Edition (Hack, v4.0.a).nes",          40976, 0x016cb4d6, BRF_ESS | BRF_PRG },
+	{ "Super Mario Bros. DX - Anniversary Edition (Hack, v4.2).nes",          40976, 0x03df519c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_smbdx)
@@ -25584,7 +25584,7 @@ STD_ROM_FN(nes_smbdx)
 
 struct BurnDriver BurnDrvnes_smbdx = {
 	"nes_smbdx", "nes_smb", NULL, NULL, "2022",
-	"Super Mario Bros. DX - Anniversary Edition (Hack, v4.0.a)\0", NULL, "Flamephanter", "Miscellaneous",
+	"Super Mario Bros. DX - Anniversary Edition (Hack, v4.2)\0", NULL, "Flamephanter", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smbdxRomInfo, nes_smbdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

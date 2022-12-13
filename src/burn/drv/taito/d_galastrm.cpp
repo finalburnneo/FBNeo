@@ -567,7 +567,8 @@ static void tc0610_draw_scanline(void *dest, INT32 scan_line, const poly_extent 
 
 static void tc0610_rotate_draw()
 {
-	struct rectangle clip = { 0, nScreenHeight-1, 0, nScreenWidth-1 };
+	struct rectangle clip;
+	clip.set(0, nScreenWidth-1, 0, nScreenHeight-1);
 
 	struct polygon
 	{

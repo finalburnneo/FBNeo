@@ -4665,7 +4665,7 @@ static INT32 AfegaInit(INT32 (*pLoadCallback)(), void (*pZ80Callback)(), INT32 p
 
 static INT32 NMK004Init(INT32 (*pLoadCallback)(), INT32 nCpuSpeed)
 {
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
 	BurnAllocMemIndex();
 
@@ -5899,7 +5899,7 @@ static INT32 NMK004Frame()
 	tlcs90NewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { nNMK004CpuSpeed / 56, 8000000 / 56 };
+	INT32 nCyclesTotal[2] = { (INT32)(nNMK004CpuSpeed / 56.18), (INT32)(8000000 / 56.18) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);

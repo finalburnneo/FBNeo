@@ -474,7 +474,7 @@ struct BurnDriver BurnDrvmd_lotust = {
 	"md_lotust", NULL, NULL, NULL, "1992",
 	"Lotus Turbo Challenge (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_lotustRomInfo, md_lotustRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18194,7 +18194,7 @@ struct BurnDriver BurnDrvmd_lotus2 = {
 	"md_lotus2", NULL, NULL, NULL, "1993",
 	"Lotus II (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_lotus2RomInfo, md_lotus2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18212,7 +18212,7 @@ struct BurnDriver BurnDrvmd_lotus2p = {
 	"md_lotus2p", "md_lotus2", NULL, NULL, "1993",
 	"Lotus II (USA, Prototype)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_lotus2pRomInfo, md_lotus2pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18230,7 +18230,7 @@ struct BurnDriver BurnDrvmd_m1abrams = {
 	"md_m1abrams", NULL, NULL, NULL, "1991",
 	"M-1 Abrams Battle Tank (Euro, USA)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
 	MegadriveGetZipName, md_m1abramsRomInfo, md_m1abramsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18266,7 +18266,7 @@ struct BurnDriver BurnDrvmd_madden94 = {
 	"md_madden94", NULL, NULL, NULL, "1994",
 	"Madden NFL '94 (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_madden94RomInfo, md_madden94RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18284,7 +18284,7 @@ struct BurnDriver BurnDrvmd_madden95 = {
 	"md_madden95", NULL, NULL, NULL, "1994",
 	"Madden NFL 95 (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_madden95RomInfo, md_madden95RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18302,7 +18302,7 @@ struct BurnDriver BurnDrvmd_madden96 = {
 	"md_madden96", NULL, NULL, NULL, "1995",
 	"Madden NFL 96 (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_madden96RomInfo, md_madden96RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18320,7 +18320,7 @@ struct BurnDriver BurnDrvmd_madden97 = {
 	"md_madden97", NULL, NULL, NULL, "1997",
 	"Madden NFL 97 (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_madden97RomInfo, md_madden97RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18338,7 +18338,7 @@ struct BurnDriver BurnDrvmd_madden98 = {
 	"md_madden98", NULL, NULL, NULL, "1997",
 	"Madden NFL 98 (USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_madden98RomInfo, md_madden98RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -18356,7 +18356,7 @@ struct BurnDriver BurnDrvmd_madoumon = {
 	"md_madoumon", NULL, NULL, NULL, "1996",
 	"Madou Monogatari I (Jpn)\0", NULL, "Compile", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_madoumonRomInfo, md_madoumonRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33649,7 +33649,7 @@ struct BurnDriver BurnDrvmd_sylvestr = {
 	"md_sylvestr", NULL, NULL, NULL, "1994",
 	"Sylvester & Tweety in Cagey Capers (Euro)\0", NULL, "Time Warner Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_sylvestrRomInfo, md_sylvestrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33667,7 +33667,7 @@ struct BurnDriver BurnDrvmd_sylvestru = {
 	"md_sylvestru", "md_sylvestr", NULL, NULL, "1993",
 	"Sylvester and Tweety in Cagey Capers (USA)\0", NULL, "Time Warner Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_sylvestruRomInfo, md_sylvestruRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33685,7 +33685,7 @@ struct BurnDriver BurnDrvmd_syndicat = {
 	"md_syndicat", NULL, NULL, NULL, "1994",
 	"Syndicate (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_ADV, 0,
 	MegadriveGetZipName, md_syndicatRomInfo, md_syndicatRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33703,7 +33703,7 @@ struct BurnDriver BurnDrvmd_term2 = {
 	"md_term2", NULL, NULL, NULL, "1991",
 	"T2 - Terminator 2 - Judgment Day (Euro, USA)\0", NULL, "Flying Edge", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_term2RomInfo, md_term2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33721,7 +33721,7 @@ struct BurnDriver BurnDrvmd_t2ag = {
 	"md_t2ag", NULL, NULL, NULL, "1992",
 	"T2 - The Arcade Game (Euro, USA)\0", NULL, "Acclaim Entertainment", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t2agRomInfo, md_t2agRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33739,7 +33739,7 @@ struct BurnDriver BurnDrvmd_t2agp = {
 	"md_t2agp", "md_t2ag", NULL, NULL, "1992",
 	"T2 - The Arcade Game (USA, Prototype)\0", NULL, "Acclaim Entertainment", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t2agpRomInfo, md_t2agpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33757,7 +33757,7 @@ struct BurnDriver BurnDrvmd_t2agj = {
 	"md_t2agj", "md_t2ag", NULL, NULL, "1994",
 	"T2 - The Arcade Game (Jpn)\0", NULL, "Acclaim Japan", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t2agjRomInfo, md_t2agjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40855,9 +40855,9 @@ STD_ROM_FN(md_majian)
 
 struct BurnDriver BurnDrvmd_majian = {
 	"md_majian", NULL, NULL, NULL, "199?",
-	"Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_MJLOVER, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_MJLOVER, GBF_MAHJONG, 0,
 	MegadriveGetZipName, md_majianRomInfo, md_majianRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40873,9 +40873,9 @@ STD_ROM_FN(md_majiana)
 
 struct BurnDriver BurnDrvmd_majiana = {
 	"md_majiana", "md_majian", NULL, NULL, "199?",
-	"Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi, Alt)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi, Alt) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_MJLOVER, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_MJLOVER, GBF_MAHJONG, 0,
 	MegadriveGetZipName, md_majianaRomInfo, md_majianaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42853,9 +42853,9 @@ STD_ROM_FN(md_t3ag)
 
 struct BurnDriver BurnDrvmd_t3ag = {
 	"md_t3ag", "md_t2ag", NULL, NULL, "199?",
-	"T3 - The Arcade Game (Rus)\0", NULL, "<unknown>", "Sega Megadrive",
+	"T3 - The Arcade Game (Rus) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t3agRomInfo, md_t3agRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -43961,17 +43961,17 @@ struct BurnDriver BurnDrvmd_bobcse = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Rocket Panda - Into the Unknown (HB)
+// Rocket Panda - Into the Unknown (HB, v3)
 static struct BurnRomInfo md_rpunknownRomDesc[] = {
-	{ "Rocket Panda - Into the Unknown (2021)(SpacePantsGames).bin", 781305, 0x2eaff372, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Rocket Panda Into the Unknown v3 (2022)(SpacePants Games).bin", 1876693, 0x70ce45df, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rpunknown)
 STD_ROM_FN(md_rpunknown)
 
 struct BurnDriver BurnDrvmd_rpunknown = {
-	"md_rpunknown", NULL, NULL, NULL, "2021",
-	"Rocket Panda - Into the Unknown (HB)\0", NULL, "SpacePants Games", "Sega Megadrive",
+	"md_rpunknown", NULL, NULL, NULL, "2021-22",
+	"Rocket Panda: Into the Unknown (HB, v3)\0", NULL, "SpacePants Games", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_rpunknownRomInfo, md_rpunknownRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -46434,20 +46434,20 @@ struct BurnDriver BurnDrvmd_gluf = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Madou Monogatari I (Hack, English)
+// Madou Monogatari I (Hack, English, v1.1)
 // http://www.romhacking.net/translations/5388/
 static struct BurnRomInfo md_madoumoneRomDesc[] = {
-	{ "madou monogatari i (english translation).bin", 4194304, 0xfac8d75d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Madou Monogatari I T-Eng v1.1 (2021)(LIPEMCO! Translations).bin", 4194304, 0xfac8d75d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_madoumone)
 STD_ROM_FN(md_madoumone)
 
 struct BurnDriver BurnDrvmd_madoumone = {
-	"md_madoumone", "md_madoumon", NULL, NULL, "2020",
-	"Madou Monogatari I (Hack, English)\0", NULL, "Compile", "Sega Megadrive",
+	"md_madoumone", "md_madoumon", NULL, NULL, "2021",
+	"Madou Monogatari I (Hack, English, v1.1)\0", NULL, "LIPEMCO! Translations", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_madoumoneRomInfo, md_madoumoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -51626,7 +51626,7 @@ struct BurnDriver Burnmd_Gun3in1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Magic Bubble
+// Magic Bubble (Tw) (Unl)
 static struct BurnRomInfo md_MagbubbleRomDesc[] = {
 	{ "Magic Bubble.md", 524288, 0x3ec61dc1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
@@ -51635,10 +51635,10 @@ STD_ROM_PICK(md_Magbubble)
 STD_ROM_FN(md_Magbubble)
 
 struct BurnDriver Burnmd_Magbubble = {
-	"md_magbubble", NULL, NULL, NULL, "199?",
-	"Magic Bubble\0", NULL, "Unlicensed", "Sega Megadrive",
+	"md_magbubble", NULL, NULL, NULL, "1993",
+	"Magic Bubble (Tw) (Unl)\0", NULL, "C&E Inc.", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_MagbubbleRomInfo, md_MagbubbleRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -52921,9 +52921,9 @@ STD_ROM_FN(md_t2ags)
 
 struct BurnDriver BurnDrvmd_t2ags = {
 	"md_t2ags", "md_t2ag", NULL, NULL, "2019",
-	"T2 - The Arcade Game (Hack, Spanish)\0", NULL, "Acclaim", "Sega Megadrive",
+	"T2 - The Arcade Game (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_t2agsRomInfo, md_t2agsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -53054,9 +53054,9 @@ STD_ROM_FN(md_term2s)
 
 struct BurnDriver BurnDrvmd_term2s = {
 "md_term2s", "md_term2", NULL, NULL, "2019",
-"T2 - Terminator 2 - Judgment Day (Hack, Spanish)\0", NULL, "Flying Edge", "Sega Megadrive",
+"T2 - Terminator 2 - Judgment Day (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
 NULL, NULL, NULL, NULL,
-BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_SCRFIGHT, 0,
 MegadriveGetZipName, md_term2sRomInfo, md_term2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 &bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

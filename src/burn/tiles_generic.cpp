@@ -6284,3 +6284,38 @@ void RenderPrioTransmaskSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color
 		sx -= width;
 	}
 }
+
+
+void RenderTransmaskSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 tmask, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height)
+{
+#if defined FBNEO_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderTransmaskSprite called without init\n"));
+#endif
+
+	if (sx < (nScreenWidthMin - (width - 1)) || sy < (nScreenHeightMin - (height - 1)) || sx >= nScreenWidthMax || sy >= nScreenHeightMax) return;
+
+	UINT8 *gfx_base = gfx + (code * width * height);
+
+	INT32 flipx = fx ? (width - 1) : 0;
+	INT32 flipy = fy ? (height - 1) : 0;
+
+	for (INT32 y = 0; y < height; y++, sy++)
+	{
+		if (sy < nScreenHeightMin || sy >= nScreenHeightMax) continue;
+
+		UINT16 *dst = dest + sy * nScreenWidth + sx;
+
+		for (INT32 x = 0; x < width; x++, sx++)
+		{
+			if (sx < nScreenWidthMin || sx >= nScreenWidthMax) continue;
+
+			INT32 pxl = gfx_base[(y ^ flipy) * width + (x ^ flipx)];
+
+			if ((tmask & (1 << pxl)) == 0) {
+				dst[x] = pxl + color;
+			}
+		}
+
+		sx -= width;
+	}
+}

@@ -10617,6 +10617,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lotus2p" cloneof="lotus2" romof="lotus2">
+		<comment>Prototype</comment>
 		<description>Lotus II (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -10641,17 +10642,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="majian">
-		<description>Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi)</description>
+		<description>Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="ma jiang qing ren - ji ma jiang zhi (chi) (unl).bin" size="1048576" crc="ddd02ba4"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="majiana" cloneof="majian" romof="majian">
-		<description>Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi, Alt)</description>
+		<description>Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi, Alt) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="mahjong lover (unl).bin" size="1048576" crc="f6c2cff2"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10731,10 +10732,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="madoumone" cloneof="madoumon" romof="madoumon">
-		<description>Madou Monogatari I (Hack, English)</description>
-		<year>2020</year>
-		<manufacturer>Compile</manufacturer>
-		<rom name="madou monogatari i (english translation).bin" size="4194304" crc="fac8d75d"/>
+		<comment>Hack</comment>
+		<description>Madou Monogatari I (Hack, English, v1.1)</description>
+		<year>2021</year>
+		<manufacturer>LIPEMCO! Translations</manufacturer>
+		<rom name="Madou Monogatari I T-Eng v1.1 (2021)(LIPEMCO! Translations).bin" size="4194304" crc="fac8d75d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10764,9 +10766,9 @@
 		<driver status="preliminary"/>
 	</game>
 	<game name="magbubble">
-		<description>Magic Bubble</description>
-		<year>199?</year>
-		<manufacturer>Unlicensed</manufacturer>
+		<description>Magic Bubble (Tw) (Unl)</description>
+		<year>1993</year>
+		<manufacturer>C&amp;E Inc.</manufacturer>
 		<rom name="Magic Bubble.md" size="524288" crc="3ec61dc1"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16366,10 +16368,10 @@
 	</game>
 	<game name="rpunknown">
 		<comment>Homebrew</comment>
-		<description>Rocket Panda - Into the Unknown (HB)</description>
-		<year>2021</year>
+		<description>Rocket Panda: Into the Unknown (HB, v3)</description>
+		<year>2021-22</year>
 		<manufacturer>SpacePants Games</manufacturer>
-		<rom name="Rocket Panda - Into the Unknown (2021)(SpacePantsGames).bin" size="781305" crc="2eaff372"/>
+		<rom name="Rocket Panda Into the Unknown v3 (2022)(SpacePants Games).bin" size="1876693" crc="70ce45df"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20637,9 +20639,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="term2s" cloneof="term2" romof="term2">
+		<comment>Hack</comment>
 		<description>T2 - Terminator 2 - Judgment Day (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Flying Edge</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="terminator 2 - judgment day (hack, spanish).bin" size="1048576" crc="df9e55de"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20653,9 +20656,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="t2ags" cloneof="t2ag" romof="t2ag">
+		<comment>Hack</comment>
 		<description>T2 - The Arcade Game (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Acclaim</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="t2 - the arcade game (hack, spanish).bin" size="1048576" crc="c1a8c2b5"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20669,6 +20673,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="t2agp" cloneof="t2ag" romof="t2ag">
+		<comment>Prototype</comment>
 		<description>T2 - The Arcade Game (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -20677,7 +20682,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="t3ag" cloneof="t2ag" romof="t2ag">
-		<description>T3 - The Arcade Game (Rus)</description>
+		<comment>Hack</comment>
+		<description>T3 - The Arcade Game (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="t3 - the arcade game (unl).bin" size="1048576" crc="d2b5ef77"/>

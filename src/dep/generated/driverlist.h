@@ -1934,6 +1934,7 @@ DRV		BurnDrvBbredux;
 DRV		BurnDrvBoblbobl;
 DRV		BurnSpecbobbybearing;
 DRV		BurnSpecBobbycarrot;
+DRV		BurnDrvnes_bobsixseven;
 DRV		BurnDrvnes_bobl;
 DRV		BurnDrvnes_boblv2;
 DRV		BurnDrvpce_bodycon2;
@@ -8163,6 +8164,7 @@ DRV		BurnDrvnes_kerokerkernoda2j;
 DRV		BurnDrvnes_kerokerkernoda2;
 DRV		BurnDrvKeroppij;
 DRV		BurnDrvKeroppi;
+DRV		BurnDrvnes_keropkernosplboj;
 DRV		BurnDrvnes_keropkernosplbo;
 DRV		BurnDrvKet1;
 DRV		BurnDrvKetbl;
@@ -9133,8 +9135,8 @@ DRV		BurnDrvMagicbubc;
 DRV		BurnDrvMagicbuba;
 DRV		BurnDrvMagicbubb;
 DRV		BurnDrvmd_mbubble;
-DRV		BurnDrvMagicbub;
 DRV		Burnmd_Magbubble;
+DRV		BurnDrvMagicbub;
 DRV		BurnSpecMcarpet;
 DRV		BurnDrvnes_magiccar100;
 DRV		BurnDrvnes_magicdarts;
@@ -11761,6 +11763,7 @@ DRV		BurnDrvPerfrman;
 DRV		BurnDrvPerfrmanu;
 DRV		BurnSpecpericodelgado;
 DRV		BurnSpecPerilsofwilly;
+DRV		BurnDrvnes_perkele;
 DRV		BurnDrvnes_perman;
 DRV		BurnDrvnes_permapar2;
 DRV		BurnDrvMSX_perspective;
@@ -12973,6 +12976,7 @@ DRV		BurnDrvmd_rangerx;
 DRV		BurnDrvmd_rangerxs;
 DRV		BurnDrvmd_rangerxu;
 DRV		BurnDrvmd_ransei;
+DRV		BurnDrvnes_rapidcycling;
 DRV		BurnDrvRapheroa;
 DRV		BurnDrvRaphero;
 DRV		BurnDrvsms_rastan;
@@ -21199,6 +21203,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBoblbobl,			// Bobble Bobble (bootleg of Bubble Bobble)
 	&BurnSpecbobbybearing,		// Bobby Bearing (48K)
 	&BurnSpecBobbycarrot,		// Bobby Carrot (128K) (HB)
+	&BurnDrvnes_bobsixseven,	// Bobby Six Seven: Time Travelling Detective (HB, Rev2)
 	&BurnDrvnes_bobl,			// BoBL (HB, v1.1)
 	&BurnDrvnes_boblv2,			// BoBL (HB, v1.2)
 	&BurnDrvpce_bodycon2,		// Body Conquest II
@@ -27423,12 +27428,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_kenseidj,		// Kenseiden (Jpn)
 	&BurnDrvgg_yaiba,			// Kenyuu Densetsu Yaiba (Jpn)
 	&BurnDrvnes_kerokerkernodaj,// Kero Kero Keroppi no Daibouken (Japan)
-	&BurnDrvnes_kerokerkernoda,	// Kero Kero Keroppi no Daibouken (T-eng)
+	&BurnDrvnes_kerokerkernoda,	// Kero Kero Keroppi no Daibouken (T-Eng)
 	&BurnDrvnes_kerokerkernoda2j,// Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (Japan)
-	&BurnDrvnes_kerokerkernoda2,// Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng)
+	&BurnDrvnes_kerokerkernoda2,// Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-Eng)
 	&BurnDrvKeroppij,			// Kero Kero Keroppi no Issyoni Asobou (Japan)
 	&BurnDrvKeroppi,			// Kero Kero Keroppi's Let's Play Together (USA, Version 2.0)
-	&BurnDrvnes_keropkernosplbo,// Keroppi to Keroriinu no Splash Bomb! (Japan)
+	&BurnDrvnes_keropkernosplboj,// Keroppi to Keroriinu no Splash Bomb! (Japan)
+	&BurnDrvnes_keropkernosplbo,// Keroppi to Keroriinu no Splash Bomb! (T-Eng)
 	&BurnDrvKet1,				// Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver.) (alt rom fill)
 	&BurnDrvKetbl,				// Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver., bootleg cartridge conversion)
 	&BurnDrvketarr10,			// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, hack by Trap15)
@@ -28322,8 +28328,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecMovie,				// M.O.V.I.E. (48K)
 	&BurnDrvnes_mule,			// M.U.L.E. (USA)
 	&BurnDrvnes_muscle,			// M.U.S.C.L.E. (USA)
-	&BurnDrvmd_majian,			// Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi)
-	&BurnDrvmd_majiana,			// Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi, Alt)
+	&BurnDrvmd_majian,			// Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi) (Unl)
+	&BurnDrvmd_majiana,			// Ma Jiang Qing Ren - Ji Ma Jiang Zhi (Chi, Alt) (Unl)
 	&BurnDrvmd_maqiao,			// Ma Qiao E Mo Ta - Devilish Mahjong Tower (Tw) (Unl)
 	&BurnSpecMabusen,			// Mabus Mania (English) (128K) (HB)
 	&BurnSpecMabuses,			// Mabus Mania (Spanish) (128K) (HB)
@@ -28370,7 +28376,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_madden97,		// Madden NFL 97 (Euro, USA)
 	&BurnDrvmd_madden98,		// Madden NFL 98 (USA)
 	&BurnDrvgg_madoumna,		// Madou Monogatari A - Dokidoki Vacation (Jpn)
-	&BurnDrvmd_madoumone,		// Madou Monogatari I (Hack, English)
+	&BurnDrvmd_madoumone,		// Madou Monogatari I (Hack, English, v1.1)
 	&BurnDrvmd_madoumon,		// Madou Monogatari I (Jpn)
 	&BurnDrvgg_madoumon,		// Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)
 	&BurnDrvgg_madoumone,		// Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)
@@ -28398,8 +28404,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMagicbuba,			// Magic Bubble (Adult version, YS-1302 PCB, set 1)
 	&BurnDrvMagicbubb,			// Magic Bubble (Adult version, YS-1302 PCB, set 2)
 	&BurnDrvmd_mbubble,			// Magic Bubble (Pirate) [no comment, NOT WORKING]
+	&Burnmd_Magbubble,			// Magic Bubble (Tw) (Unl)
 	&BurnDrvMagicbub,			// Magic Bubble
-	&Burnmd_Magbubble,			// Magic Bubble
 	&BurnSpecMcarpet,			// Magic Carpet (16K)
 	&BurnDrvnes_magiccar100,	// Magic Carpet 1001 (Unl)
 	&BurnDrvnes_magicdarts,		// Magic Darts (USA)
@@ -31026,6 +31032,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPerfrmanu,			// Performan (US)
 	&BurnSpecpericodelgado,		// Perico Delgado Maillot Amarillo (Spanish) (48K)
 	&BurnSpecPerilsofwilly,		// Perils of Willy (128K) (HB)
+	&BurnDrvnes_perkele,		// PERKELE! Suomi 100 vuotta - 5th anniversary edition (HB)
 	&BurnDrvnes_perman,			// Perman (Japan)
 	&BurnDrvnes_permapar2,		// Perman Part 2 - Himitsu Kessha Madoodan o Taose! (Japan)
 	&BurnDrvMSX_perspective,	// Perspective (Jpn, v1.1)
@@ -32238,6 +32245,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rangerxs,		// Ranger-X (Hack, Spanish)
 	&BurnDrvmd_rangerxu,		// Ranger-X (USA)
 	&BurnDrvmd_ransei,			// Ransei no Hasha (Jpn)
+	&BurnDrvnes_rapidcycling,	// Rapid Cycling (HB)
 	&BurnDrvRapheroa,			// Rapid Hero (Media Trading)
 	&BurnDrvRaphero,			// Rapid Hero (NMK)
 	&BurnDrvsms_rastan,			// Rastan (Euro, USA, Bra)
@@ -32619,7 +32627,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rockets,			// Rocket Knight Adventures (Hack, Spanish)
 	&BurnDrvmd_rocketj,			// Rocket Knight Adventures (Jpn)
 	&BurnDrvmd_rocketu,			// Rocket Knight Adventures (USA)
-	&BurnDrvmd_rpunknown,		// Rocket Panda - Into the Unknown (HB)
+	&BurnDrvmd_rpunknown,		// Rocket Panda: Into the Unknown (HB, v3)
 	&BurnDrvnes_rocketranger,	// Rocket Ranger (USA)
 	&BurnDrvnes_rocketeerthe,	// Rocketeer, The (USA)
 	&BurnDrvnes_rocketman,		// Rocketman (Unl)
@@ -35176,7 +35184,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_smb3mi,			// Super Mario Bros. 3Mix (Hack)
 	&BurnDrvmd_smb4md,			// Super Mario Bros. 4 MD
 	&BurnDrvnes_smbchredi,		// Super Mario Bros. Christmas Edition (Hack)
-	&BurnDrvnes_smbdx,			// Super Mario Bros. DX - Anniversary Edition (Hack, v4.0.a)
+	&BurnDrvnes_smbdx,			// Super Mario Bros. DX - Anniversary Edition (Hack, v4.2)
 	&BurnDrvnes_smbendssmbha1,	// Super Mario Bros. Ende's SMB (Hack)
 	&BurnDrvnes_smben,			// Super Mario Bros. Enhanced (Hack)
 	&BurnDrvnes_smbspeh,		// Super Mario Bros. Special (Hack, Triforce89)
@@ -35548,7 +35556,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_t2agj,			// T2 - The Arcade Game (Jpn)
 	&BurnDrvmd_t2agj,			// T2 - The Arcade Game (Jpn)
 	&BurnDrvmd_t2agp,			// T2 - The Arcade Game (USA, Prototype)
-	&BurnDrvmd_t3ag,			// T3 - The Arcade Game (Rus)
+	&BurnDrvmd_t3ag,			// T3 - The Arcade Game (Rus) (Unl)
 	&BurnDrvnes_taboo,			// Taboo - The Sixth Sense (USA)
 	&BurnDrvTacscan,			// Tac/Scan
 	&BurnDrvmd_cars,			// Tachki (Rus)

@@ -2108,6 +2108,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="bobsixseven">
+		<comment>Homebrew</comment>
+		<description>Bobby Six Seven: Time Travelling Detective (HB, Rev2)</description>
+		<year>2022</year>
+		<manufacturer>CalGames</manufacturer>
+		<rom name="Bobby Six Seven (Rev2)(2022)(calgames).nes" size="524304" crc="81920aa8"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="bobl" cloneof="boblv2" romof="boblv2">
 		<comment>Homebrew</comment>
 		<description>BoBL (HB, v1.1)</description>
@@ -8692,7 +8701,7 @@
 	</game>
 	<game name="kerokerkernoda">
 		<comment>Hack</comment>
-		<description>Kero Kero Keroppi no Daibouken (T-eng)</description>
+		<description>Kero Kero Keroppi no Daibouken (T-Eng)</description>
 		<year>2016</year>
 		<manufacturer>Gaijin Productions</manufacturer>
 		<rom name="Kero Kero Keroppi no Daibouken (T-eng).nes" size="65552" crc="0dfbda9c"/>
@@ -8709,18 +8718,27 @@
 	</game>
 	<game name="kerokerkernoda2">
 		<comment>Hack</comment>
-		<description>Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng)</description>
+		<description>Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-Eng)</description>
 		<year>2016</year>
 		<manufacturer>The Spoony Bard</manufacturer>
 		<rom name="Kero Kero Keroppi no Daibouken 2 - Donuts Ike wa Oosawagi! (T-eng).nes" size="262160" crc="8b3c7d79"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="keropkernosplbo">
+	<game name="keropkernosplboj" cloneof="keropkernosplbo" romof="keropkernosplbo">
 		<description>Keroppi to Keroriinu no Splash Bomb! (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Character Soft</manufacturer>
 		<rom name="Keroppi to Keroriinu no Splash Bomb! (Japan).nes" size="163856" crc="cc6fbdae"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="keropkernosplbo">
+		<comment>Hack</comment>
+		<description>Keroppi to Keroriinu no Splash Bomb! (T-Eng)</description>
+		<year>2016</year>
+		<manufacturer>Suicidal Translations</manufacturer>
+		<rom name="Keroppi to Keroriinu no Splash Bomb! T-Eng (2016)(Suicidal Translations).nes" size="163856" crc="d7039620"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12226,6 +12244,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="perkele">
+		<comment>Homebrew</comment>
+		<description>PERKELE! Suomi 100 vuotta - 5th anniversary edition (HB)</description>
+		<year>2022</year>
+		<manufacturer>AasiPelit</manufacturer>
+		<rom name="PERKELE! Suomi 100 vuotta 5th anniversary edition (2022)(AasiPelit).nes" size="393232" crc="bec64871"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="perman">
 		<description>Perman (Japan)</description>
 		<year>1990</year>
@@ -13092,6 +13119,15 @@
 		<year>1992</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Rampart (USA).nes" size="262160" crc="0cea6fca"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="rapidcycling">
+		<comment>Homebrew</comment>
+		<description>Rapid Cycling (HB)</description>
+		<year>2022</year>
+		<manufacturer>Game Losers</manufacturer>
+		<rom name="Rapid Cycling (2022)(Game Losers).nes" size="524304" crc="4abb94f0"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15391,10 +15427,10 @@
 	</game>
 	<game name="smbdx" cloneof="smb" romof="smb">
 		<comment>Hack</comment>
-		<description>Super Mario Bros. DX - Anniversary Edition (Hack, v4.0.a)</description>
+		<description>Super Mario Bros. DX - Anniversary Edition (Hack, v4.2)</description>
 		<year>2022</year>
 		<manufacturer>Flamephanter</manufacturer>
-		<rom name="Super Mario Bros. DX - Anniversary Edition (Hack, v4.0.a).nes" size="40976" crc="016cb4d6"/>
+		<rom name="Super Mario Bros. DX - Anniversary Edition (Hack, v4.2).nes" size="40976" crc="03df519c"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

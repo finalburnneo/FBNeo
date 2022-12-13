@@ -57,12 +57,7 @@
 /* opaque reference to the poly manager */
 struct poly_manager;
 
-
-struct rectangle
-{
-	INT32 min_y, max_y;
-	INT32 min_x, max_x;
-};
+#include "rectangle.h"
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))

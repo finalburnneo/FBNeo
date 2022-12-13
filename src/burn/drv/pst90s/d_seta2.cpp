@@ -10,6 +10,7 @@
 #include "burn_gun.h"
 #include "eeprom.h"
 #include "x1010.h"
+#include "rectangle.h"
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
@@ -3018,14 +3019,6 @@ static INT32 grdiansExit()
 
 	return 0;
 }
-
-struct rectangle
-{
-	INT32 min_x;
-	INT32 max_x;
-	INT32 min_y;
-	INT32 max_y;
-};
 
 inline static void drawgfx_line(const rectangle &cliprect, INT32 which_gfx, INT32 code, const UINT32 realcolor, INT32 flipx, INT32 flipy, INT32 base_sx, UINT32 xzoom, INT32 use_shadow, INT32 screenline, INT32 line, INT32 opaque)
 {

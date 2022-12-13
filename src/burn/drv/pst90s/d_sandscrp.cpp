@@ -463,6 +463,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	latch2_full = 0;
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -826,7 +828,7 @@ struct BurnDriver BurnDrvSandscrp = {
 	"sandscrp", NULL, NULL, NULL, "1992",
 	"Sand Scorpion\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, sandscrpRomInfo, sandscrpRomName, NULL, NULL, NULL, NULL, SandscrpInputInfo, SandscrpDIPInfo,
 	sandscrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -857,7 +859,7 @@ struct BurnDriver BurnDrvSandscrpa = {
 	"sandscrpa", "sandscrp", NULL, NULL, "1992",
 	"Sand Scorpion (Earlier)\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, sandscrpaRomInfo, sandscrpaRomName, NULL, NULL, NULL, NULL, SandscrpInputInfo, SandscrpDIPInfo,
 	sandscrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -891,7 +893,7 @@ struct BurnDriver BurnDrvSandscrpb = {
 	"sandscrpb", "sandscrp", NULL, NULL, "1992",
 	"Sand Scorpion (Chinese Title Screen, Revised Hardware)\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, sandscrpbRomInfo, sandscrpbRomName, NULL, NULL, NULL, NULL, SandscrpInputInfo, SandscrpDIPInfo,
 	sandscrpbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4

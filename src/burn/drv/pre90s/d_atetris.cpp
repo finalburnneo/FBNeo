@@ -317,8 +317,6 @@ static INT32 CommonInit(INT32 boot)
 	M6502MapMemory(DrvNVRAM,		0x2600, 0x27ff, MAP_ROM);
 	M6502MapMemory(Drv6502ROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(atetris_read);
-	M6502SetReadOpHandler(atetris_read);
-	M6502SetReadOpArgHandler(atetris_read);
 	M6502SetWriteHandler(atetris_write);
 	M6502Close();
 

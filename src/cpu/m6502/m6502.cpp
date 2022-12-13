@@ -45,6 +45,9 @@ static deco_function Cpu7Write[8] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, 
 
 extern INT32 M6502GetActive();
 
+static m6502_Regs m6502;
+#define m6502_ICount m6502.ICount
+
 #include "ops02.h"
 #include "ill02.h"
 
@@ -64,9 +67,6 @@ extern INT32 M6502GetActive();
 /****************************************************************************
  * The 6502 registers.
  ****************************************************************************/
-
-static m6502_Regs m6502;
-#define m6502_ICount m6502.ICount
 
 void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8))
 {
@@ -202,6 +202,11 @@ void m6502_set_context (void *src)
 		if (m6502.subtype == SUBTYPE_6510)  insnActive = insn6510;
 		change_pc(PCD);
 	}
+}
+
+int m6502_get_fetch_status()
+{
+	return m6502.fetching_opcode;
 }
 
 void m6502_set_irq_hold()

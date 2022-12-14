@@ -68,16 +68,7 @@ int Init_Network(void)
 	Kaillera_HDLL = LoadLibraryA("kailleraclient.dll");
 //#endif
 
-#ifdef BUILD_X86_ASM
-#define	kailleraGetVersion			"_kailleraGetVersion@4"
-#define	kailleraInit				"_kailleraInit@0"
-#define	kailleraShutdown			"_kailleraShutdown@0"
-#define	kailleraSetInfos			"_kailleraSetInfos@4"
-#define	kailleraSelectServerDialog	"_kailleraSelectServerDialog@4"
-#define	kailleraModifyPlayValues	"_kailleraModifyPlayValues@8"
-#define	kailleraChatSend			"_kailleraChatSend@4"
-#define	kailleraEndGame				"_kailleraEndGame@0"
-#else
+#ifdef BUILD_X64_EXE
 #define	kailleraGetVersion			"kailleraGetVersion"
 #define	kailleraInit				"kailleraInit"
 #define	kailleraShutdown			"kailleraShutdown"
@@ -86,6 +77,15 @@ int Init_Network(void)
 #define	kailleraModifyPlayValues	"kailleraModifyPlayValues"
 #define	kailleraChatSend			"kailleraChatSend"
 #define	kailleraEndGame				"kailleraEndGame"
+#else
+#define	kailleraGetVersion			"_kailleraGetVersion@4"
+#define	kailleraInit				"_kailleraInit@0"
+#define	kailleraShutdown			"_kailleraShutdown@0"
+#define	kailleraSetInfos			"_kailleraSetInfos@4"
+#define	kailleraSelectServerDialog	"_kailleraSelectServerDialog@4"
+#define	kailleraModifyPlayValues	"_kailleraModifyPlayValues@8"
+#define	kailleraChatSend			"_kailleraChatSend@4"
+#define	kailleraEndGame				"_kailleraEndGame@0"
 #endif
 
 	

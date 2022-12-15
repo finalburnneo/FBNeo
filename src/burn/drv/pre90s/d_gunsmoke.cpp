@@ -101,7 +101,7 @@ static struct BurnDIPInfo gunsmokeuDIPList[]=
 	{0x14, 0x01, 0x03, 0x00, "30k 100k 150k+"   },
 	{0x14, 0x01, 0x03, 0x02, "30k 100k"    	    },
 
-	{0   , 0xfe, 0   , 2   , "Lifes"            },
+	{0   , 0xfe, 0   , 2   , "Lives"            },
 	{0x14, 0x01, 0x04, 0x04, "3"     	        },
 	{0x14, 0x01, 0x04, 0x00, "5"    	        },
 };

@@ -632,6 +632,7 @@ void MenuUpdate()
 	CreateStateslotItems();
 
 	EnableMenuItem(hMenu, ID_LUA_OPEN, kNetLua ? MF_ENABLED | MF_BYCOMMAND : MF_GRAYED | MF_BYCOMMAND);
+	EnableMenuItem(hMenu, ID_LUA_TRAINING, kNetLua ? MF_ENABLED | MF_BYCOMMAND : MF_GRAYED | MF_BYCOMMAND);
 
 //	CreateCDItems();
 //	CheckMenuRadioItem(hMenu, MENU_CDIMAGE, MENU_CDIMAGE, MENU_CDIMAGE + nCDEmuSelect, MF_BYCOMMAND);

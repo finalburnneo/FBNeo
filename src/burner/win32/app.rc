@@ -881,6 +881,8 @@ BEGIN
         MENUITEM "Load game...\tF6",					MENU_LOAD
 				POPUP "Lua Scripting..."
 					BEGIN
+					MENUITEM "Fightcade Training Mode",					ID_LUA_TRAINING
+					MENUITEM SEPARATOR
 					MENUITEM "&New Lua Script Window...",					ID_LUA_OPEN
 					MENUITEM "&Close All Script Windows",					ID_LUA_CLOSE_ALL, GRAYED
 				END

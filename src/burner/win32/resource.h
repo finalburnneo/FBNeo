@@ -943,6 +943,7 @@
 
 #define ID_LUA_OPEN                 11812
 #define ID_LUA_CLOSE_ALL            11813
+#define ID_LUA_TRAINING             11814
 
 #define MENU_AVISTART								11827
 #define MENU_AVISTOP								11828

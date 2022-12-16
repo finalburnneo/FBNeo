@@ -887,6 +887,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
 			}
 			break;
+		case ID_LUA_TRAINING:
+			FBA_LoadLuaCode("fbneo-training-mode/fbneo-training-mode.lua");
+			break;
 
 		case MENU_STARTREPLAY:
 			if (UseDialogs()) {

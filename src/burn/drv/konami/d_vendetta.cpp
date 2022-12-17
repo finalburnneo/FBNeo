@@ -1,4 +1,4 @@
-// FB Alpha Vendetta / Crime Fighters 2 / Escape Kids driver module
+// FB Neo Vendetta / Crime Fighters 2 / Escape Kids driver module
 // Based on MAME driver by Ernesto Corvi
 
 #include "tiles_generic.h"
@@ -89,6 +89,15 @@ static struct BurnInputInfo Vendet4pInputList[] = {
 };
 
 STDINPUTINFO(Vendet4p)
+
+static struct BurnInputInfo VendettanInputList[] = {
+	{"Service 1"  ,		BIT_DIGITAL,	DrvJoy5 + 4,	"service"   },
+	{"Service 2"  ,		BIT_DIGITAL,	DrvJoy5 + 5,	"service2"  },
+	{"Service 3"  ,		BIT_DIGITAL,	DrvJoy5 + 6,	"service3"  },
+	{"Service 4"  ,		BIT_DIGITAL,	DrvJoy5 + 7,	"service4"  },
+};
+
+STDINPUTINFOEXT(Vendettan, Vendet4p, Vendettan)
 
 static struct BurnInputInfo VendettaInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
@@ -1218,24 +1227,24 @@ struct BurnDriver BurnDrvVendetta2pd = {
 // Crime Fighters 2 (Japan, 4 Players ver. N)
 
 static struct BurnRomInfo vendettanRomDesc[] = {
-	{ "081n01.17c",	0x040000, 0xfc766fab, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081n01.17c",			0x040000, 0xfc766fab, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",				0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",				0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",				0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",				0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",				0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",				0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",				0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",				0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },  //  9 EEPROM
+	{ "vendettaj.nv",		0x000080, 0x3550a54e, BRF_ESS | BRF_PRG },     //  9 EEPROM
 
-	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },   // 10 PLDs (BAD_DUMP / Bruteforced)
-	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },   // 11      (BAD_DUMP / Bruteforced)
+	{ "p1-pal16l8acn.17e",	0x000117, 0xeae70da3, 7 | BRF_OPT },           // 10 PLDs (BAD_DUMP / Bruteforced)
+	{ "p2-pal16l8acn.14e",	0x000117, 0xb84abb7d, 7 | BRF_OPT },           // 11      (BAD_DUMP / Bruteforced)
 };
 
 STD_ROM_PICK(vendettan)
@@ -1246,7 +1255,7 @@ struct BurnDriver BurnDrvVendettan = {
 	"Crime Fighters 2 (Japan, 4 Players ver. N)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendettanRomInfo, vendettanRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
+	NULL, vendettanRomInfo, vendettanRomName, NULL, NULL, NULL, NULL, VendettanInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };

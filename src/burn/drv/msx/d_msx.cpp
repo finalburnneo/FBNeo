@@ -32817,6 +32817,25 @@ struct BurnDriver BurnDrvMSX_muhmourn3 = {
 	272, 228, 4, 3
 };
 
+// Paco Time Attack (HB, v1.1)
+
+static struct BurnRomInfo MSX_pacotiatkRomDesc[] = {
+	{ "Paco Time Attack v1.1 (2022)(Physical Dreams).rom",	32768, 0x745d7a2d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pacotiatk, MSX_pacotiatk, msx_msx)
+STD_ROM_FN(MSX_pacotiatk)
+
+struct BurnDriver BurnDrvMSX_pacotiatk = {
+	"msx_pacotiatk", NULL, "msx_msx", NULL, "2022",
+	"Paco Time Attack (HB, v1.1)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_pacotiatkRomInfo, MSX_pacotiatkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Penguin Catcher (HB, v1.1)
 
 static struct BurnRomInfo MSX_pengcatchRomDesc[] = {

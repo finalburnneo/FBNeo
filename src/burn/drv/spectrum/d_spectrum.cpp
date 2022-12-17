@@ -38467,8 +38467,8 @@ STDROMPICKEXT(SpecDonume, SpecDonume, Spec128)
 STD_ROM_FN(SpecDonume)
 
 struct BurnDriver BurnSpecDonume = {
-	"spec_donume", NULL, "spec_spec128", NULL, "English",
-	"Donum (English) (128K) (HB)\0", NULL, "2022", "ZX Spectrum",
+	"spec_donume", NULL, "spec_spec128", NULL, "2022",
+	"Donum (English) (128K) (HB)\0", NULL, "Bitfans", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecDonumeRomInfo, SpecDonumeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -38486,8 +38486,8 @@ STDROMPICKEXT(SpecDonums, SpecDonums, Spec128)
 STD_ROM_FN(SpecDonums)
 
 struct BurnDriver BurnSpecDonums = {
-	"spec_donums", "spec_donume", "spec_spec128", NULL, "Spain",
-	"Donum (Spanish) (128K) (HB)\0", NULL, "2022", "ZX Spectrum",
+	"spec_donums", "spec_donume", "spec_spec128", NULL, "2022",
+	"Donum (Spanish) (128K) (HB)\0", NULL, "Bitfans", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecDonumsRomInfo, SpecDonumsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -38549,6 +38549,25 @@ struct BurnDriver BurnSpecLockdownzxween = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
 	SpectrumGetZipName, SpecLockdownzxweenRomInfo, SpecLockdownzxweenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// RINGO (128K) (HB)
+
+static struct BurnRomInfo SpecRingoRomDesc[] = {
+	{ "RINGO (2022)(RetroSouls).tap", 58931, 0x5d65b662, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRingo, SpecRingo, Spec128)
+STD_ROM_FN(SpecRingo)
+
+struct BurnDriver BurnSpecRingo = {
+	"spec_ringo", NULL, "spec_spec128", NULL, "2022",
+	"RINGO (128K) (HB)\0", NULL, "RetroSouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecRingoRomInfo, SpecRingoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

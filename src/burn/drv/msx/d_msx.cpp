@@ -32892,3 +32892,60 @@ struct BurnDriver BurnDrvMSX_stormrescue = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Choy-Lee-Fut Kung-Fu Warrior (Spanish)
+
+static struct BurnRomInfo MSX_choyleefutRomDesc[] = {
+	{ "Choy-Lee-Fut Kung-Fu Warrior ES (1990)(Positive)[RUN'CAS-'].cas",	39899, 0x59a62215, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_choyleefut, MSX_choyleefut, msx_msx)
+STD_ROM_FN(MSX_choyleefut)
+
+struct BurnDriver BurnDrvMSX_choyleefut = {
+	"msx_choyleefut", NULL, "msx_msx", NULL, "1990",
+	"Choy-Lee-Fut Kung-Fu Warrior (Spanish)\0", NULL, "Positive", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_VSFIGHT, 0,
+	MSXGetZipName, MSX_choyleefutRomInfo, MSX_choyleefutRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Crazy Factory (HB, v1.3)
+
+static struct BurnRomInfo MSX_crazyfactoryRomDesc[] = {
+	{ "Crazy Factory v1.3 (2020)(Oniric Factor).rom",	32768, 0x558498a6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_crazyfactory, MSX_crazyfactory, msx_msx)
+STD_ROM_FN(MSX_crazyfactory)
+
+struct BurnDriver BurnDrvMSX_crazyfactory = {
+	"msx_crazyfactory", NULL, "msx_msx", NULL, "2020",
+	"Crazy Factory (HB, v1.3)\0", NULL, "Oniric Factor", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_crazyfactoryRomInfo, MSX_crazyfactoryRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Risky Rick in Dangerous Traps (HB)
+
+static struct BurnRomInfo MSX_riskyrickRomDesc[] = {
+	{ "Risky Rick in Dangerous Traps (2019)(Easter Egg, ArcadeVision).rom",	49152, 0x62066159, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_riskyrick, MSX_riskyrick, msx_msx)
+STD_ROM_FN(MSX_riskyrick)
+
+struct BurnDriver BurnDrvMSX_riskyrick = {
+	"msx_riskyrick", NULL, "msx_msx", NULL, "2019",
+	"Risky Rick in Dangerous Traps (HB)\0", NULL, "Easter Egg, ArcadeVision", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_riskyrickRomInfo, MSX_riskyrickRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

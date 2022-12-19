@@ -50,7 +50,7 @@ void BurnTrackballInit(INT32 nNumPlayers, INT32 nDefault);
 #define AXIS_REVERSED 1
 
 // BurnTrackballFrame() is called at the beginning of a frame.  updates the analog positional status, etc.
-void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart, INT32 VelocityMax);
+void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart, INT32 VelocityMax, INT32 MaxScanlines = -1);
 
 // BurnTrackballUpdate() is called once per frame, sometimes more to translate the velocity to movement (Tempest uses this)
 void BurnTrackballUpdate(INT32 dev);
@@ -74,6 +74,11 @@ UINT16 BurnTrackballReadWord(INT32 dev, INT32 isB);
 UINT16 BurnTrackballReadWord(INT32 dev);
 INT32 BurnTrackballReadSigned(INT32 dev, INT32 isB);
 INT32 BurnTrackballReadSigned(INT32 dev);
+
+// Read scanline-interpolated value (
+UINT8 BurnTrackballReadInterpolated(INT32 dev, INT32 scanline);
+UINT8 BurnTrackballReadInterpolated(INT32 dev, INT32 isB, INT32 scanline);
+
 INT32 BurnTrackballGetDirection(INT32 num, INT32 isB); // -1 backwards (left, down), +1 forward (right, up), 0 idle
 INT32 BurnTrackballGetDirection(INT32 dev);
 INT32 BurnTrackballGetVelocity(INT32 num, INT32 isB);

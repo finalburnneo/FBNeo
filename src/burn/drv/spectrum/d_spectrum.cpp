@@ -38456,3 +38456,136 @@ struct BurnDriver BurnSpecTenebra = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Donum (English) (128K) (HB)
+
+static struct BurnRomInfo SpecDonumeRomDesc[] = {
+	{ "Donum (English)(2022)(Bitfans).tap", 115891, 0x1cb940e7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDonume, SpecDonume, Spec128)
+STD_ROM_FN(SpecDonume)
+
+struct BurnDriver BurnSpecDonume = {
+	"spec_donume", NULL, "spec_spec128", NULL, "2022",
+	"Donum (English) (128K) (HB)\0", NULL, "Bitfans", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecDonumeRomInfo, SpecDonumeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Donum (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecDonumsRomDesc[] = {
+	{ "Donum (Spain)(2022)(Bitfans).tap", 116754, 0x5dae657a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDonums, SpecDonums, Spec128)
+STD_ROM_FN(SpecDonums)
+
+struct BurnDriver BurnSpecDonums = {
+	"spec_donums", "spec_donume", "spec_spec128", NULL, "2022",
+	"Donum (Spanish) (128K) (HB)\0", NULL, "Bitfans", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecDonumsRomInfo, SpecDonumsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lockdown Town ZX (48K) (HB)
+
+static struct BurnRomInfo SpecLockdownzxRomDesc[] = {
+	{ "Lockdown Town ZX (2022)(PuttyCAD, Thin Soldiers).tap", 30174, 0x2ee0a21e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLockdownzx, SpecLockdownzx, Spectrum)
+STD_ROM_FN(SpecLockdownzx)
+
+struct BurnDriver BurnSpecLockdownzx = {
+	"spec_lockdownzx", NULL, "spec_spectrum", NULL, "2022",
+	"Lockdown Town ZX (48K) (HB)\0", NULL, "PuttyCAD, Thin Soldiers", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecLockdownzxRomInfo, SpecLockdownzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lockdown Town ZXMas (48K) (HB)
+
+static struct BurnRomInfo SpecLockdownzxmasRomDesc[] = {
+	{ "Lockdown Town ZXMas (2022)(PuttyCAD, Tin Soldiers).tap", 30591, 0x607f00ef, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLockdownzxmas, SpecLockdownzxmas, Spectrum)
+STD_ROM_FN(SpecLockdownzxmas)
+
+struct BurnDriver BurnSpecLockdownzxmas = {
+	"spec_lockdownzxmas", "spec_lockdownzx", "spec_spectrum", NULL, "2022",
+	"Lockdown Town ZXMas (48K) (HB)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecLockdownzxmasRomInfo, SpecLockdownzxmasRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lockdown Town ZXWeen (48K) (HB)
+
+static struct BurnRomInfo SpecLockdownzxweenRomDesc[] = {
+	{ "Lockdown Town ZXWeen (2022)(PuttyCAD, Tin Soldiers).tap", 30441, 0x4d6a99cf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLockdownzxween, SpecLockdownzxween, Spectrum)
+STD_ROM_FN(SpecLockdownzxween)
+
+struct BurnDriver BurnSpecLockdownzxween = {
+	"spec_lockdownzxween", "spec_lockdownzx", "spec_spectrum", NULL, "2022",
+	"Lockdown Town ZXWeen (48K) (HB)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE | GBF_ACTION, 0,
+	SpectrumGetZipName, SpecLockdownzxweenRomInfo, SpecLockdownzxweenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// RINGO (128K) (HB)
+
+static struct BurnRomInfo SpecRingoRomDesc[] = {
+	{ "RINGO (2022)(RetroSouls).tap", 58931, 0x5d65b662, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRingo, SpecRingo, Spec128)
+STD_ROM_FN(SpecRingo)
+
+struct BurnDriver BurnSpecRingo = {
+	"spec_ringo", NULL, "spec_spec128", NULL, "2022",
+	"RINGO (128K) (HB)\0", NULL, "RetroSouls", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecRingoRomInfo, SpecRingoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tournament Arkanoid (48K) (Hack)
+
+static struct BurnRomInfo SpecTourarkanoidRomDesc[] = {
+	{ "Tournament Arkanoid (2022)(Martyn Carrol).tap", 48367, 0x3790ec49, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTourarkanoid, SpecTourarkanoid, Spectrum)
+STD_ROM_FN(SpecTourarkanoid)
+
+struct BurnDriver BurnSpecTourarkanoid = {
+	"spec_tourarkanoid", NULL, "spec_spectrum", NULL, "2022",
+	"Tournament Arkanoid (48K) (Hack)\0", "A mod of the classic game 'Arkanoid'", "Martyn Carrol", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_BREAKOUT, 0,
+	SpectrumGetZipName, SpecTourarkanoidRomInfo, SpecTourarkanoidRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2SwapDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

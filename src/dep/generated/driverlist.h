@@ -9522,6 +9522,7 @@ DRV		BurnSpecMazania;
 DRV		BurnDrvCHF_mazea;
 DRV		BurnDrvCHF_maze;
 DRV		BurnDrvsms_mazehunt;
+DRV		BurnDrvMazeinv;
 DRV		BurnDrvcv_mazemaniac;
 DRV		BurnDrvMSX_Mazemax;
 DRV		BurnDrvMofflott;
@@ -18302,6 +18303,7 @@ DRV		BurnDrvnes_warioswoods;
 DRV		BurnDrvmd_warlock;
 DRV		BurnDrvmd_warlocks;
 DRV		BurnDrvmd_warlockp;
+DRV		BurnDrvWarlords;
 DRV		BurnDrvMSX_warpwarp;
 DRV		BurnDrvcv_warpwarp;
 DRV		BurnDrvWarpwarp;
@@ -28805,6 +28807,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCHF_mazea,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)
 	&BurnDrvCHF_maze,			// Maze / Jailbreak / Blind-man's-bluff / Trailblazer
 	&BurnDrvsms_mazehunt,		// Maze Hunter 3-D (Euro, USA, Bra)
+	&BurnDrvMazeinv,			// Maze Invaders (prototype)
 	&BurnDrvcv_mazemaniac,		// Maze Maniac (HB)
 	&BurnDrvMSX_Mazemax,		// Maze Max (French)
 	&BurnDrvMofflott,			// Maze of Flott (Japan)
@@ -37585,6 +37588,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_warlock,			// Warlock (Euro, USA)
 	&BurnDrvmd_warlocks,		// Warlock (Hack, Spanish)
 	&BurnDrvmd_warlockp,		// Warlock (USA, Prototype)
+	&BurnDrvWarlords,			// Warlords
 	&BurnDrvMSX_warpwarp,		// Warp & Warp (Jpn)
 	&BurnDrvcv_warpwarp,		// Warp & Warp (SGM) (HB)
 	&BurnDrvWarpwarp,			// Warp & Warp

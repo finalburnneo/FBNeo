@@ -161,7 +161,9 @@ void BurnPaddleReturn(BurnDialINF &dial, INT32 num, INT32 isB)
 
 // Trackball Helpers
 static INT32 TrackA[MAX_GUNS]; // trackball counters / main accumulator
+static INT32 TrackA_Prev[MAX_GUNS]; // value from previous frame
 static INT32 TrackB[MAX_GUNS];
+static INT32 TrackB_Prev[MAX_GUNS];
 static INT32 TrackDefault; // default value to load w/ ReadReset() (usually 0)
 
 static UINT8 CURVE[0x100];
@@ -176,7 +178,9 @@ static INT32 TrackStart[MAX_GUNS * 2]; // Start / Stop points
 static INT32 TrackStop[MAX_GUNS * 2];
 static INT32 UDLRSpeed[MAX_GUNS];
 
-void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart, INT32 VelocityMax)
+static INT32 Max_Scanlines;
+
+void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart, INT32 VelocityMax, INT32 MaxScanlines)
 {
 	BurnDialINF dial = { VelocityStart, VelocityMax, (VelocityStart + VelocityMax) / 2, 0, 0, 0 };
 
@@ -187,6 +191,8 @@ void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart
 	DIAL_VEL[(dev*2) + 1] = 0;
 	DIAL_VELx[(dev*2) + 0] = 0; // testing!
 	DIAL_VELx[(dev*2) + 1] = 0;
+
+	Max_Scanlines = MaxScanlines;
 
 	memset(&DrvJoyT[dev*4], 0, 4); 						// zero directional bytes
 
@@ -242,6 +248,9 @@ void BurnTrackballUpdate(INT32 dev)
 
 void BurnTrackballUpdatePortA(INT32 dev)
 {
+	if (Max_Scanlines > 0) {
+		TrackA_Prev[dev] = TrackA[dev];
+	}
 	// PortA (usually X-Axis)
 	if (DrvJoyT[(dev*4) + 0]) { // Backward
 		if (TrackRev[(dev*2) + 0])
@@ -274,6 +283,9 @@ void BurnTrackballUpdatePortA(INT32 dev)
 
 void BurnTrackballUpdatePortB(INT32 dev)
 {
+	if (Max_Scanlines > 0) {
+		TrackB_Prev[dev] = TrackB[dev];
+	}
 	// PortB (usually Y-Axis)
 	if (DrvJoyT[(dev*4) + 2]) { // Backward
 		if (TrackRev[(dev*2) + 1])
@@ -306,6 +318,10 @@ void BurnTrackballUpdatePortB(INT32 dev)
 
 void BurnTrackballUpdateSlither(INT32 dev)
 {
+	if (Max_Scanlines > 0) {
+		TrackA_Prev[dev] = TrackA[dev];
+		TrackB_Prev[dev] = TrackB[dev];
+	}
 	// simulate the divider circuit on down + right(V) for Slither (taito/d_qix.cpp)
 	static INT32 flippy[2] = { 0, 0 };
 	// PortA (usually X-Axis)
@@ -423,6 +439,27 @@ INT32 BurnTrackballReadSigned(INT32 dev, INT32 isB)
 		return TrackB[dev];
 	else
 		return TrackA[dev];
+}
+
+UINT8 BurnTrackballReadInterpolated(INT32 dev, INT32 scanline) // linear device #
+{
+	return BurnTrackballReadInterpolated(dev >> 1, dev & 1, scanline);
+}
+
+UINT8 BurnTrackballReadInterpolated(INT32 dev, INT32 isB, INT32 scanline) // 2 axis per device #
+{
+	INT32 now = 0;
+	INT32 prev = 0;
+
+	if (isB) {
+		now = TrackB[dev];
+		prev = TrackB_Prev[dev];
+	} else {
+		now = TrackA[dev];
+		prev = TrackA_Prev[dev];
+	}
+
+	return (prev + ((now - prev) * scanline / (Max_Scanlines-1))) & 0xff;
 }
 
 void BurnTrackballReadReset(INT32 dev)
@@ -607,7 +644,9 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 
 	// Trackball stuff (init)
 	memset(&TrackA, 0, sizeof(TrackA));
+	memset(&TrackA_Prev, 0, sizeof(TrackA_Prev));
 	memset(&TrackB, 0, sizeof(TrackB));
+	memset(&TrackB_Prev, 0, sizeof(TrackB_Prev));
 	memset(&DrvJoyT, 0, sizeof(DrvJoyT));
 	memset(&DIAL_INC, 0, sizeof(DIAL_INC));
 	memset(&TrackRev, 0, sizeof(TrackRev));
@@ -656,6 +695,8 @@ void BurnGunScan()
 		SCAN_VAR(BurnPaddleY);
 		SCAN_VAR(TrackA);
 		SCAN_VAR(TrackB);
+		SCAN_VAR(TrackA_Prev);
+		SCAN_VAR(TrackB_Prev);
 
 		SCAN_VAR(PaddleLast);
 

@@ -3488,6 +3488,17 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="choyleefut" romof="msx">
+		<description>Choy-Lee-Fut Kung-Fu Warrior (Spanish)</description>
+		<year>1990</year>
+		<manufacturer>Positive</manufacturer>
+		<rom name="Choy-Lee-Fut Kung-Fu Warrior ES (1990)(Positive)[RUN'CAS-'].cas" size="39899" crc="59a62215"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chubbygristle" romof="msx">
 		<description>Chubby Gristle (Euro)</description>
 		<year>1988</year>
@@ -3994,6 +4005,18 @@
 		<year>1988</year>
 		<manufacturer>Titus</manufacturer>
 		<rom name="crazy cars (europe).rom" size="32768" crc="de18372d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crazyfactory" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Crazy Factory (HB, v1.3)</description>
+		<year>2020</year>
+		<manufacturer>Oniric Factor</manufacturer>
+		<rom name="Crazy Factory v1.3 (2020)(Oniric Factor).rom" size="32768" crc="558498a6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12100,6 +12123,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pacotiatk" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Paco Time Attack (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Paco Time Attack v1.1 (2022)(Physical Dreams).rom" size="32768" crc="745d7a2d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="paipanic" romof="msx">
 		<description>Pai Panic (Jpn)</description>
 		<year>1983</year>
@@ -13424,6 +13459,18 @@
 		<year>1983</year>
 		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="rise out from dungeons (japan) (alt 1).rom" size="16384" crc="01043328"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="riskyrick" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Risky Rick in Dangerous Traps (HB)</description>
+		<year>2019</year>
+		<manufacturer>Easter Egg, ArcadeVision</manufacturer>
+		<rom name="Risky Rick in Dangerous Traps (2019)(Easter Egg, ArcadeVision).rom" size="49152" crc="62066159"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

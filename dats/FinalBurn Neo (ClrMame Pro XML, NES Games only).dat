@@ -3134,6 +3134,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="coinworld">
+		<comment>Homebrew</comment>
+		<description>Coin World (HB)</description>
+		<year>2021</year>
+		<manufacturer>CMYKSoft</manufacturer>
+		<rom name="Coin World (2021)(CMYKSoft).nes" size="40976" crc="6775b5d1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="coloradinosaur">
 		<description>Color A Dinosaur (USA)</description>
 		<year>1993</year>
@@ -6291,7 +6300,7 @@
 	</game>
 	<game name="ganbagoegai">
 		<comment>Hack</comment>
-		<description>Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng)</description>
+		<description>Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-Eng)</description>
 		<year>2017</year>
 		<manufacturer>Adventurous Translations</manufacturer>
 		<rom name="Ganbare Goemon Gaiden - Kieta Ougon Kiseru (T-eng).nes" size="524304" crc="a1c4c69e"/>
@@ -6308,7 +6317,7 @@
 	</game>
 	<game name="ganbagoegai2">
 		<comment>Hack</comment>
-		<description>Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng)</description>
+		<description>Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-Eng)</description>
 		<year>2019</year>
 		<manufacturer>Adventurous Translations</manufacturer>
 		<rom name="Ganbare Goemon Gaiden 2 - Tenka no Zaihou (T-eng).nes" size="524304" crc="3de94076"/>
@@ -8128,7 +8137,7 @@
 	</game>
 	<game name="jesus">
 		<comment>Hack</comment>
-		<description>Jesus - Kyoufu no Bio Monster (T-eng)</description>
+		<description>Jesus - Kyoufu no Bio Monster (T-Eng)</description>
 		<year>2016</year>
 		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Jesus - Kyoufu no Bio Monster (T-eng).nes" size="262160" crc="308c72f5"/>
@@ -8293,7 +8302,7 @@
 	</game>
 	<game name="joymechfight">
 		<comment>Hack</comment>
-		<description>Joy Mech Fight (T-eng)</description>
+		<description>Joy Mech Fight (T-Eng)</description>
 		<year>2016</year>
 		<manufacturer>AlanMidas</manufacturer>
 		<rom name="Joy Mech Fight (T-eng).nes" size="524304" crc="8bb8bc54"/>
@@ -8428,7 +8437,7 @@
 	</game>
 	<game name="juuouki">
 		<comment>Hack</comment>
-		<description>Juuouki (T-eng)</description>
+		<description>Juuouki (T-Eng)</description>
 		<year>2005</year>
 		<manufacturer>aka translations</manufacturer>
 		<rom name="Juuouki (T-eng).nes" size="262160" crc="b6cf6cbc"/>
@@ -8849,9 +8858,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingkon2">
-		<description>King Kong 2 - Ikari no Megaton Punch (T-eng)</description>
-		<year>1986</year>
-		<manufacturer>Konami</manufacturer>
+		<comment>Hack</comment>
+		<description>King Kong 2 - Ikari no Megaton Punch (T-Eng)</description>
+		<year>2016</year>
+		<manufacturer>DvD Translations</manufacturer>
 		<rom name="King Kong 2 - Ikari no Megaton Punch (T-eng).nes" size="262160" crc="9db6489a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -9148,7 +9158,7 @@
 	</game>
 	<game name="lagrangepoint">
 		<comment>Hack</comment>
-		<description>Lagrange Point (T-eng)</description>
+		<description>Lagrange Point (T-Eng)</description>
 		<year>2014</year>
 		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Lagrange Point (T-eng).nes" size="524304" crc="9e13caa2"/>
@@ -9726,9 +9736,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="lupinsan">
-		<description>Lupin Sansei - Pandora no Isan (T-eng)</description>
-		<year>1987</year>
-		<manufacturer>Namco</manufacturer>
+		<comment>Hack</comment>
+		<description>Lupin Sansei - Pandora no Isan (T-Eng)</description>
+		<year>2017</year>
+		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Lupin Sansei - Pandora no Isan (T-eng).nes" size="196624" crc="6054ca94"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -10000,7 +10011,7 @@
 	</game>
 	<game name="maharaja">
 		<comment>Hack</comment>
-		<description>Maharaja (T-eng)</description>
+		<description>Maharaja (T-Eng)</description>
 		<year>2009</year>
 		<manufacturer>snark</manufacturer>
 		<rom name="Maharaja (T-eng).nes" size="262160" crc="d6883037"/>
@@ -11076,7 +11087,7 @@
 	</game>
 	<game name="mooncrystal">
 		<comment>Hack</comment>
-		<description>Moon Crystal (T-eng)</description>
+		<description>Moon Crystal (T-Eng)</description>
 		<year>2000</year>
 		<manufacturer>Alex W. Jackson</manufacturer>
 		<rom name="Moon Crystal (T-eng).nes" size="524304" crc="e05b0f24"/>
@@ -11177,7 +11188,7 @@
 	</game>
 	<game name="motoccha">
 		<comment>Hack</comment>
-		<description>Motocross Champion (T-eng)</description>
+		<description>Motocross Champion (T-Eng)</description>
 		<year>2001</year>
 		<manufacturer>Suicidal Translations</manufacturer>
 		<rom name="Motocross Champion (T-eng).nes" size="262160" crc="c252e03a"/>
@@ -11209,9 +11220,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="mourysenmad">
-		<description>Mouryou Senki Madara (T-eng)</description>
-		<year>1990</year>
-		<manufacturer>Konami</manufacturer>
+		<comment>Hack</comment>
+		<description>Mouryou Senki Madara (T-Eng)</description>
+		<year>2016</year>
+		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="Mouryou Senki Madara (T-eng).nes" size="524304" crc="d9dcee07"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -11361,7 +11373,7 @@
 	</game>
 	<game name="nantebas">
 		<comment>Hack</comment>
-		<description>Nantettatte!! Baseball (T-eng)</description>
+		<description>Nantettatte!! Baseball (T-Eng)</description>
 		<year>2019</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Nantettatte!! Baseball (T-eng).nes" size="262160" crc="294713b4"/>
@@ -11403,7 +11415,7 @@
 	</game>
 	<game name="nekkekakden">
 		<comment>Hack</comment>
-		<description>Nekketsu Kakutou Densetsu (T-eng)</description>
+		<description>Nekketsu Kakutou Densetsu (T-Eng)</description>
 		<year>1998</year>
 		<manufacturer>oRdErEDchaos</manufacturer>
 		<rom name="Nekketsu Kakutou Densetsu (T-eng).nes" size="262160" crc="23d650f2"/>
@@ -11693,7 +11705,7 @@
 	</game>
 	<game name="ninjajaj">
 		<comment>Hack</comment>
-		<description>Ninja Jajamaru - Ginga Daisakusen (T-eng)</description>
+		<description>Ninja Jajamaru - Ginga Daisakusen (T-Eng)</description>
 		<year>2002</year>
 		<manufacturer>HTI</manufacturer>
 		<rom name="Ninja Jajamaru - Ginga Daisakusen (T-eng).nes" size="262160" crc="89ee0ed9"/>
@@ -11727,7 +11739,7 @@
 	</game>
 	<game name="ninjarahoi">
 		<comment>Hack</comment>
-		<description>Ninja Rahoi! (T-eng)</description>
+		<description>Ninja Rahoi! (T-Eng)</description>
 		<year>2014</year>
 		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Ninjara Hoi! (T-eng).nes" size="524304" crc="23dbc962"/>
@@ -12128,11 +12140,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="parasolhenbee">
+	<game name="parasolhenbeej" cloneof="parasolhenbee" romof="parasolhenbee">
 		<description>Parasol Henbee (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Epoch</manufacturer>
 		<rom name="Parasol Henbee (Japan).nes" size="262160" crc="edfab3a6"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="parasolhenbee">
+		<comment>Hack</comment>
+		<description>Parasol Henbee (T-Eng)</description>
+		<year>2016</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
+		<rom name="Parasol Henbee T-Eng (2016)(Zynk Oxhyde).nes" size="262160" crc="6e435769"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12361,6 +12382,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="pirates">
+		<description>Pirates! (USA)</description>
+		<year>1991</year>
+		<manufacturer>Ultra Games</manufacturer>
+		<rom name="Pirates! (USA)(1991)(Ultra Games).nes" size="262160" crc="64fc3667"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="pixelpoops">
 		<comment>Homebrew</comment>
 		<description>Pixel Poops Number Two (HB)</description>
@@ -12397,7 +12426,7 @@
 	</game>
 	<game name="plasmaball">
 		<comment>Hack</comment>
-		<description>Plasma Ball (T-eng)</description>
+		<description>Plasma Ball (T-Eng)</description>
 		<year>2019</year>
 		<manufacturer>MrRichard999</manufacturer>
 		<rom name="Plasma Ball (T-eng).nes" size="393232" crc="71cf9877"/>
@@ -12885,7 +12914,7 @@
 	</game>
 	<game name="questofkithe">
 		<comment>Hack</comment>
-		<description>Quest of Ki, The (T-eng)</description>
+		<description>Quest of Ki, The (T-Eng)</description>
 		<year>2019</year>
 		<manufacturer>Zynk Oxhyde</manufacturer>
 		<rom name="Quest of Ki, The (T-eng).nes" size="196624" crc="027c28bd"/>
@@ -13008,7 +13037,7 @@
 	</game>
 	<game name="radiasen">
 		<comment>Hack</comment>
-		<description>Radia Senki - Reimei Hen (T-eng)</description>
+		<description>Radia Senki - Reimei Hen (T-Eng)</description>
 		<year>1999</year>
 		<manufacturer>Dreamless, Jair, [cx]</manufacturer>
 		<rom name="Radia Senki - Reimei Hen (T-eng).nes" size="393232" crc="1d76af30"/>
@@ -13837,7 +13866,7 @@
 	</game>
 	<game name="sansaranaga">
 		<comment>Hack</comment>
-		<description>Sansara Naga (T-eng)</description>
+		<description>Sansara Naga (T-Eng)</description>
 		<year>2014</year>
 		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Sansara Naga (T-eng).nes" size="655376" crc="84d7b375"/>
@@ -14678,7 +14707,7 @@
 	</game>
 	<game name="speluii">
 		<comment>Hack</comment>
-		<description>Spelunker II - Yuusha e no Chousen (T-eng)</description>
+		<description>Spelunker II - Yuusha e no Chousen (T-Eng)</description>
 		<year>2003</year>
 		<manufacturer>Sarysa</manufacturer>
 		<rom name="Spelunker II - Yuusha e no Chousen (T-eng).nes" size="262160" crc="72a28744"/>
@@ -14923,7 +14952,7 @@
 	</game>
 	<game name="starwarst" cloneof="starwars" romof="starwars">
 		<comment>Hack</comment>
-		<description>Star Wars (Namco) (T-eng)</description>
+		<description>Star Wars (Namco) (T-Eng)</description>
 		<year>2005</year>
 		<manufacturer>Mukimuki &amp; Shinta</manufacturer>
 		<rom name="Star Wars (Namco) (T-eng).nes" size="262160" crc="8c04cec8"/>
@@ -15159,7 +15188,7 @@
 	</game>
 	<game name="sugorque">
 		<comment>Hack</comment>
-		<description>Sugoro Quest - Dice no Senshitachi (T-eng)</description>
+		<description>Sugoro Quest - Dice no Senshitachi (T-Eng)</description>
 		<year>2007</year>
 		<manufacturer>AlanMidas</manufacturer>
 		<rom name="Sugoro Quest - Dice no Senshitachi (T-eng).nes" size="262160" crc="d2cdeb7b"/>
@@ -15876,7 +15905,7 @@
 	</game>
 	<game name="taiyonoyuufir">
 		<comment>Hack</comment>
-		<description>Taiyou no Yuusha Firebird (T-eng)</description>
+		<description>Taiyou no Yuusha Firebird (T-Eng)</description>
 		<year>2016</year>
 		<manufacturer>Dragoon-X Translations</manufacturer>
 		<rom name="Taiyou no Yuusha Firebird (T-eng).nes" size="262160" crc="bfacf6de"/>
@@ -16532,9 +16561,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="timezone">
-		<description>Time Zone (T-eng)</description>
-		<year>1991</year>
-		<manufacturer>Sigma Enterprises</manufacturer>
+		<comment>Hack</comment>
+		<description>Time Zone (T-Eng)</description>
+		<year>2014</year>
+		<manufacturer>KingMike's Translations</manufacturer>
 		<rom name="Time Zone (T-eng).nes" size="262160" crc="4ffe1ceb"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -17270,7 +17300,7 @@
 	</game>
 	<game name="valkynobou">
 		<comment>Hack</comment>
-		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng)</description>
+		<description>Valkyrie no Bouken - Toki no Kagi Densetsu (T-Eng)</description>
 		<year>2001</year>
 		<manufacturer>Some Good Shit Translations</manufacturer>
 		<rom name="Valkyrie no Bouken - Toki no Kagi Densetsu (T-eng).nes" size="65552" crc="e901fdd7"/>
@@ -18017,7 +18047,7 @@
 	</game>
 	<game name="ys">
 		<comment>Hack</comment>
-		<description>Ys (T-eng)</description>
+		<description>Ys (T-Eng)</description>
 		<year>2000</year>
 		<manufacturer>David Mullen</manufacturer>
 		<rom name="Ys (T-eng).nes" size="262160" crc="9171e8b2"/>
@@ -18043,7 +18073,7 @@
 	</game>
 	<game name="ysii">
 		<comment>Hack</comment>
-		<description>Ys II - Ancient Ys Vanished - The Final Chapter (T-eng)</description>
+		<description>Ys II - Ancient Ys Vanished - The Final Chapter (T-Eng)</description>
 		<year>2000</year>
 		<manufacturer>David Mullen</manufacturer>
 		<rom name="Ys II - Ancient Ys Vanished - The Final Chapter (T-eng).nes" size="393232" crc="ab6b7ac1"/>
@@ -18060,7 +18090,7 @@
 	</game>
 	<game name="ysiii">
 		<comment>Hack</comment>
-		<description>Ys III - Wanderers from Ys (T-eng)</description>
+		<description>Ys III - Wanderers from Ys (T-Eng)</description>
 		<year>2005</year>
 		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Ys III - Wanderers from Ys (T-eng).nes" size="393232" crc="93328bf1"/>
@@ -18077,7 +18107,7 @@
 	</game>
 	<game name="yumepenmon">
 		<comment>Hack</comment>
-		<description>Yume Penguin Monogatari (T-eng)</description>
+		<description>Yume Penguin Monogatari (T-Eng)</description>
 		<year>2006</year>
 		<manufacturer>Vice Translations</manufacturer>
 		<rom name="Yume Penguin Monogatari (T-eng).nes" size="262160" crc="df92c173"/>

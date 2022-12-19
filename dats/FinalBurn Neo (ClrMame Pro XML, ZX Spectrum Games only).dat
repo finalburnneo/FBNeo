@@ -5685,6 +5685,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="donume" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Donum (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Bitfans</manufacturer>
+		<rom name="Donum (English)(2022)(Bitfans).tap" size="115891" crc="1cb940e7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="donums" cloneof="donume" romof="donume">
+		<comment>Homebrew</comment>
+		<description>Donum (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Bitfans</manufacturer>
+		<rom name="Donum (Spain)(2022)(Bitfans).tap" size="116754" crc="5dae657a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="doomdemo" romof="spec128">
 		<description>Doom (Demo) (128K)</description>
 		<year>1996</year>
@@ -10349,6 +10371,36 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="lockdownzx" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Lockdown Town ZX (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>PuttyCAD, Thin Soldiers</manufacturer>
+		<rom name="Lockdown Town ZX (2022)(PuttyCAD, Thin Soldiers).tap" size="30174" crc="2ee0a21e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lockdownzxmas" cloneof="lockdownzx" romof="lockdownzx">
+		<comment>Homebrew</comment>
+		<description>Lockdown Town ZXMas (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>PuttyCAD, Tin Soldiers</manufacturer>
+		<rom name="Lockdown Town ZXMas (2022)(PuttyCAD, Tin Soldiers).tap" size="30591" crc="607f00ef"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lockdownzxween" cloneof="lockdownzx" romof="lockdownzx">
+		<comment>Homebrew</comment>
+		<description>Lockdown Town ZXWeen (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>PuttyCAD, Tin Soldiers</manufacturer>
+		<rom name="Lockdown Town ZXWeen (2022)(PuttyCAD, Tin Soldiers).tap" size="30441" crc="4d6a99cf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="loderunn" romof="spec128">
 		<description>Lode Runner (128K)</description>
 		<year>1984</year>
@@ -14487,6 +14539,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ringo" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>RINGO (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>RetroSouls</manufacturer>
+		<rom name="RINGO (2022)(RetroSouls).tap" size="58931" crc="5d65b662"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rblaster" romof="spec128">
 		<description>Road Blasters (128K)</description>
 		<year>1988</year>
@@ -17927,6 +17990,16 @@
 		<rom name="Tourmaline (2016)(RetroSouls).tap" size="46613" crc="f573c97f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tourarkanoid" romof="spectrum">
+		<comment>Hack, A mod of the classic game 'Arkanoid'</comment>
+		<description>Tournament Arkanoid (48K) (Hack)</description>
+		<year>2022</year>
+		<manufacturer>Martyn Carrol</manufacturer>
+		<rom name="Tournament Arkanoid (2022)(Martyn Carrol).tap" size="48367" crc="3790ec49"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

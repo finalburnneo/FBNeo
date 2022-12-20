@@ -2036,9 +2036,6 @@ void GameInpClearOpposites(bool bCopy)
 			for (INT32 i = 0; i < 2; i++) {
 				// D + U = U || (neutral if L or R)
 				if (GetInpFrame(i, UP) && GetInpFrame(i, DOWN)) {
-					if (GetInpFrame(i, LEFT) || GetInpFrame(i, RIGHT)) {
-						SetInpFrame(i, UP, 0, bCopy);
-					}
 					SetInpFrame(i, DOWN, 0, bCopy);
 				}
 				// L + R = neutral

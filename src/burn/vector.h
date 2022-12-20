@@ -8,4 +8,5 @@ void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity);
 void vector_set_scale(INT32 x, INT32 y);
 void vector_set_offsets(INT32 x, INT32 y);
 void vector_set_clip(INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax);
+void vector_set_pix_cb(UINT32 (*cb)(INT32, INT32, UINT32));
 void vector_rescale(INT32 x, INT32 y);

@@ -15204,7 +15204,7 @@ struct BurnDriver BurnDrvmd_ddanpei = {
 	"md_ddanpei", NULL, NULL, NULL, "1992",
 	"Honoo no Toukyuuji - Dodge Danpei (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_ddanpeiRomInfo, md_ddanpeiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

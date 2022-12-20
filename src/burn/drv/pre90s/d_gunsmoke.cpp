@@ -951,7 +951,7 @@ static struct BurnRomInfo gunsmokeubRomDesc[] = {
 STD_ROM_PICK(gunsmokeub)
 STD_ROM_FN(gunsmokeub)
 
-struct BurnDriver BurnDrvGunsmokeua = {
+struct BurnDriver BurnDrvGunsmokeub = {
 	"gunsmokeub", "gunsmoke", NULL, NULL, "1985",
 	"Gun.Smoke (USA and Canada, 1985-11-15, set 1)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

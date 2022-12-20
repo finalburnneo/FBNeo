@@ -1,4 +1,4 @@
-// FB Alpha Mr. Jong driver module
+// FB Neo Mr. Jong driver module
 // Based on MAME driver by Takahiro Nogi (nogi@kt.rim.or.jp) 2000/03/20
 
 #include "tiles_generic.h"
@@ -249,7 +249,7 @@ static void DrawSprites()
 		sy = 240-DrvBgVidRAM[offs + 0];
 
 		if (flipscreen)	{
-			sx = 208 - sx;
+			sx = 192 - sx;
 			sy = 240 - sy;
 			flipx = !flipx;
 			flipy = !flipy;

@@ -1494,19 +1494,20 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bahamutse" cloneof="bahamuts" romof="bahamuts">
+		<comment>Hack</comment>
+		<description>Bahamut Senki (Hack, English)</description>
+		<year>2020</year>
+		<manufacturer>Sega - Supper</manufacturer>
+		<rom name="bahamut senki (j)(t-eng).bin" size="1048576" crc="89383a55"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bahamuts">
 		<description>Bahamut Senki (Jpn)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13677.bin" size="524288" crc="b1e268da"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bahamutse" cloneof="bahamuts" romof="bahamuts">
-		<description>Bahamut Senki (T-Eng)</description>
-		<year>2020</year>
-		<manufacturer>Sega - Supper</manufacturer>
-		<rom name="bahamut senki (j)(t-eng).bin" size="1048576" crc="89383a55"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5847,7 +5848,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dbzf" cloneof="dbz" romof="dbz">
-		<description>Dragon Ball Z - L'Appel du Destin (France)</description>
+		<description>Dragon Ball Z - L'Appel du Destin (French)</description>
 		<year>1994</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="dragon ball z - l'appel du destin (france).bin" size="2097152" crc="f035c737"/>
@@ -8649,25 +8650,26 @@
 		<driver status="good"/>
 	</game>
 	<game name="herculs2">
-		<description>Hercules 2</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Hercules 2 (Unl)</description>
+		<year>1999</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="hercules 2 (unl).bin" size="2097152" crc="292623db"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="herzog">
 		<description>Herzog Zwei (Euro, USA)</description>
-		<year>1990</year>
-		<manufacturer>Sega</manufacturer>
+		<year>1989</year>
+		<manufacturer>Technosoft</manufacturer>
 		<rom name="mpr-12929.ic1" size="524288" crc="a605b65b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="herzogs" cloneof="herzog" romof="herzog">
+		<comment>Hack</comment>
 		<description>Herzog Zwei (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>TechnoSoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="herzog zwei (hack, spanish).bin" size="524288" crc="7172837d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8746,10 +8748,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="hooks" cloneof="hook" romof="hook">
-		<description>Hook (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer>Sony Imagesoft</manufacturer>
-		<rom name="hook (hack, spanish).bin" size="1048576" crc="a2f81d5a"/>
+		<comment>Hack</comment>
+		<description>Hook (Hack, Spanish, v2.0)</description>
+		<year>2021</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="Hook (hack, spanish, v2.0)(2021)(Wave).bin" size="1048576" crc="9d347dde"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8770,9 +8773,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="huanle">
-		<description>Huan Le Tao Qi Shu - Smart Mouse (Chi)</description>
+		<description>Huan Le Tao Qi Shu - Smart Mouse (Chi) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>Ming Super Chip</manufacturer>
 		<rom name="huan le tao qi shu - smart mouse (chi) (unl).bin" size="524288" crc="decdf740"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10163,7 +10166,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="landstlkf" cloneof="landstlk" romof="landstlk">
-		<description>Landstalker - Le Tresor du Roi Nole (Fra)</description>
+		<description>Landstalker - Le Tresor du Roi Nole (French)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15976.ic1" size="2097152" crc="5de7d917"/>
@@ -11454,7 +11457,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="megalof" cloneof="megalo" romof="megalo">
-		<description>Mega-Lo-Mania (Fra)</description>
+		<description>Mega-Lo-Mania (French)</description>
 		<year>1992</year>
 		<manufacturer>Virgin Games</manufacturer>
 		<rom name="mega-lo-mania (france).bin" size="1048576" crc="3b3231ed"/>
@@ -15657,7 +15660,7 @@
 	</game>
 	<game name="ragnacenk" cloneof="soleil" romof="soleil">
 		<description>Ragnacenty (Kor)</description>
-		<year>1994</year>
+		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ragnacenty (kor).bin" size="2097152" crc="77b5b10b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -16368,10 +16371,10 @@
 	</game>
 	<game name="rpunknown">
 		<comment>Homebrew</comment>
-		<description>Rocket Panda: Into the Unknown (HB, v3)</description>
+		<description>Rocket Panda: Into the Unknown (HB, v4)</description>
 		<year>2021-22</year>
 		<manufacturer>SpacePants Games</manufacturer>
-		<rom name="Rocket Panda Into the Unknown v3 (2022)(SpacePants Games).bin" size="1876693" crc="70ce45df"/>
+		<rom name="Rocket Panda Into the Unknown v4 (2022)(SpacePants Games).bin" size="2097152" crc="70d33705"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17239,6 +17242,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ragnacenp" cloneof="soleil" romof="soleil">
+		<comment>Prototype</comment>
 		<description>Shin Souseiki Ragnacenty (Jpn, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -17247,9 +17251,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ragnacenc" cloneof="soleil" romof="soleil">
+		<comment>Hack</comment>
 		<description>Shin Souseiki Ragnacenty (T-Chi)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
+		<year>199?</year>
+		<manufacturer>Xu Yong Sheng</manufacturer>
 		<rom name="shin souseiki ragnacenty (T-Chi).bin" size="2097152" crc="a6dce438"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17658,11 +17663,11 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smartmouse">
+	<game name="smartmouse" cloneof="huanle" romof="huanle">
 		<comment>Homebrew</comment>
-		<description>Smart Mouse (HB)</description>
-		<year>199X</year>
-		<manufacturer>Chuanpu</manufacturer>
+		<description>Smart Mouse (HB, English)</description>
+		<year>2017</year>
+		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Smart Mouse (HB).bin" size="524288" crc="fb01c832"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17676,9 +17681,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="snakernrs" cloneof="snakernr" romof="snakernr">
+		<comment>Hack</comment>
 		<description>Snake Rattle n' Roll (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="snake rattle n' roll (hack, spanish).bin" size="524288" crc="3fc9a196"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17693,10 +17699,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="snowbross" cloneof="snowbros" romof="snowbros">
-		<description>Snow Bros. - Nick &amp; Tom (Hack, Spanish)</description>
-		<year>2018</year>
-		<manufacturer>Tengen</manufacturer>
-		<rom name="snow bros. - nick &amp; tom (hack, spanish).bin" size="1048576" crc="eeea9522"/>
+		<comment>Hack</comment>
+		<description>Snow Bros. - Nick &amp; Tom (Hack, Spanish, v2.0)</description>
+		<year>2022</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="snow bros. - nick &amp; tom (hack, spanish).bin" size="1048576" crc="9cd6b6df"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17717,6 +17724,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldeacep" cloneof="soldeace" romof="soldeace">
+		<comment>Prototype</comment>
 		<description>Sol-Deace (Prototype, 19920203)</description>
 		<year>1992</year>
 		<manufacturer>Renovation</manufacturer>
@@ -17758,7 +17766,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="soleilf" cloneof="soleil" romof="soleil">
-		<description>Soleil (Fra)</description>
+		<description>Soleil (French)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17513.ic1" size="2097152" crc="08dc1ead"/>
@@ -17766,7 +17774,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="soleilg" cloneof="soleil" romof="soleil">
-		<description>Soleil (Ger)</description>
+		<description>Soleil (German)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17514.ic1" size="2097152" crc="332b9ecd"/>
@@ -17774,7 +17782,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="soleils" cloneof="soleil" romof="soleil">
-		<description>Soleil (Spa)</description>
+		<description>Soleil (Spanish)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17512.ic1" size="2097152" crc="9ed4c323"/>

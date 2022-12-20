@@ -1,4 +1,4 @@
-// FB Alpha Sega Z80-3D system driver module
+// FB Neo Sega Z80-3D system driver module
 // Based on and large pieces copied from (video code & sound code) MAME driver by 
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 
@@ -12,6 +12,7 @@
 #include "8255ppi.h"
 #include "math.h"
 #include "burn_shift.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -2155,6 +2156,18 @@ static UINT32 buckrog_get_sprite_bits(sprite_info *sprinfo, UINT8 *plb)
 	return sprdata;
 }
 
+static inline UINT8 count_leading_zeros_32(UINT32 val)
+{
+	if (0 == val)
+		return 32U;
+
+	UINT8 count;
+	for (count = 0; INT32(val) >= 0; count++)
+		val <<= 1;
+
+	return count;
+}
+
 static void screen_update_buckrog()
 {
 	const UINT8 *pr5194 = &DrvColPROM[0x000];
@@ -2211,6 +2224,7 @@ static void screen_update_buckrog()
 				sprbits = buckrog_get_sprite_bits(&sprinfo, &plb);
 
 				/* the PLB bits go into an LS148 8-to-1 decoder and become MUX0-3 (PROM board SH 2/10) */
+				/*
 				if (plb == 0)
 					mux = 8;
 				else
@@ -2222,6 +2236,10 @@ static void screen_update_buckrog()
 						plb <<= 1;
 					}
 				}
+				*/
+				mux = count_leading_zeros_32(BITSWAP08(plb, 0, 1, 2, 3, 4, 5, 6, 7)) - 24;
+				if (8 == mux)
+					mux = 0x0f;
 
 				/* MUX then selects one of the Sprites and selects CD0-3 */
 				sprbits = (sprbits >> (mux & 0x07)) & 0x01010101;

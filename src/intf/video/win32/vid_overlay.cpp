@@ -1390,6 +1390,11 @@ static UINT32 nRollbacks1CycleAgo = 0;
 
 void VidOverlaySetStats(double fps, int ping, int delay)
 {
+	if (ping > 0 && nRollbackCount > 0 && prev_runahead != nVidRunahead) {
+		prev_runahead = nVidRunahead;
+		SendToPeer(delay, nVidRunahead);
+	}
+
 	if (bShowFPS <= 0) return;
 
 	wchar_t buf_line1[64];
@@ -1476,12 +1481,6 @@ void VidOverlaySetStats(double fps, int ping, int delay)
 			}
 			stats_line3.Set(buf_line3);
 		}
-
-		if (nRollbackCount > 0 && prev_runahead != nVidRunahead) {
-			prev_runahead = nVidRunahead;
-			SendToPeer(delay, nVidRunahead);
-		}
-
 	}
 
 	// send warning if fps went down the thresold

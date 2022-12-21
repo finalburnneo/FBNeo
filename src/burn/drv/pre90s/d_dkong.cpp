@@ -68,7 +68,7 @@ static UINT8 *nmi_mask;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
@@ -93,6 +93,7 @@ static double envelope_ctr;
 static INT32 decay;
 static INT32 braze_bank = 0; // for braze & drakton(epos) banking
 static UINT8 decrypt_counter = 0; // drakton (epos)
+static INT32 palette_type = -1;
 
 static INT32 hunch_prot_ctr = 0; // hunchback (s2650)
 static UINT8 hunchloopback = 0;
@@ -116,6 +117,7 @@ static struct BurnInputInfo DkongInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Dkong)
@@ -141,6 +143,7 @@ static struct BurnInputInfo Dkong3InputList[] = {
 	{"Service",	    BIT_DIGITAL,	DrvJoy1 + 7,	"service"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 };
 
 STDINPUTINFO(Dkong3)
@@ -159,6 +162,7 @@ static struct BurnInputInfo RadarscpInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Radarscp)
@@ -181,6 +185,7 @@ static struct BurnInputInfo PestplceInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Pestplce)
@@ -205,6 +210,7 @@ static struct BurnInputInfo HerodkInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Herodk)
@@ -212,6 +218,7 @@ STDINPUTINFO(Herodk)
 static struct BurnDIPInfo DkongDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x80, NULL			},
+	{0x0f, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x0e, 0x01, 0x03, 0x00, "3"			},
@@ -238,6 +245,11 @@ static struct BurnDIPInfo DkongDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0e, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0e, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x0f, 0x01, 0x03, 0x01, "New"						},
+	{0x0f, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x0f, 0x01, 0x03, 0x02, "Legacy"					},
 };
 
 STDDIPINFO(Dkong)
@@ -245,6 +257,7 @@ STDDIPINFO(Dkong)
 static struct BurnDIPInfo DkongfDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x80, NULL			},
+	{0x0f, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x0e, 0x01, 0x03, 0x00, "3"			},
@@ -271,6 +284,11 @@ static struct BurnDIPInfo DkongfDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0e, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0e, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x0f, 0x01, 0x03, 0x01, "New"						},
+	{0x0f, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x0f, 0x01, 0x03, 0x02, "Legacy"					},
 };
 
 STDDIPINFO(Dkongf)
@@ -278,6 +296,7 @@ STDDIPINFO(Dkongf)
 static struct BurnDIPInfo Dkong3bDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x00, NULL			},
+	{0x0f, 0xff, 0xff, 0x05, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
 	{0x0e, 0x01, 0x07, 0x02, "3 Coins 1 Credit"	},
@@ -292,6 +311,10 @@ static struct BurnDIPInfo Dkong3bDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0e, 0x01, 0x08, 0x00, "Upright"		},
 	{0x0e, 0x01, 0x08, 0x08, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"	},
+	{0x0f, 0x01, 0x07, 0x05, "New"		},
+	{0x0f, 0x01, 0x07, 0x06, "Legacy"	},
 };
 
 STDDIPINFO(Dkong3b)
@@ -300,6 +323,7 @@ static struct BurnDIPInfo Dkong3DIPList[]=
 {
 	{0x10, 0xff, 0xff, 0x00, NULL			},
 	{0x11, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0x05, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
 	{0x10, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
@@ -342,6 +366,10 @@ static struct BurnDIPInfo Dkong3DIPList[]=
 	{0x11, 0x01, 0xc0, 0x40, "(2)"				},
 	{0x11, 0x01, 0xc0, 0x80, "(3)"				},
 	{0x11, 0x01, 0xc0, 0xc0, "(4) Hard"			},
+
+	{0   , 0xfe, 0   ,    3, "Palette"	},
+	{0x12, 0x01, 0x07, 0x05, "New"		},
+	{0x12, 0x01, 0x07, 0x06, "Legacy"	},
 };
 
 STDDIPINFO(Dkong3)
@@ -349,6 +377,7 @@ STDDIPINFO(Dkong3)
 static struct BurnDIPInfo RadarscpDIPList[]=
 {
 	{0x0a, 0xff, 0xff, 0x80, NULL			},
+	{0x0b, 0xff, 0xff, 0x03, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x0a, 0x01, 0x03, 0x00, "3"			},
@@ -375,13 +404,56 @@ static struct BurnDIPInfo RadarscpDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0a, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0a, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"	},
+	{0x0b, 0x01, 0x03, 0x03, "New"		},
+	{0x0b, 0x01, 0x03, 0x02, "Legacy"	},
 };
 
 STDDIPINFO(Radarscp)
 
+static struct BurnDIPInfo Radarscp1DIPList[]=
+{
+	{0x0a, 0xff, 0xff, 0x80, NULL			},
+	{0x0b, 0xff, 0xff, 0x04, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0a, 0x01, 0x03, 0x00, "3"			},
+	{0x0a, 0x01, 0x03, 0x01, "4"			},
+	{0x0a, 0x01, 0x03, 0x02, "5"			},
+	{0x0a, 0x01, 0x03, 0x03, "6"			},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x0a, 0x01, 0x0c, 0x00, "7000"			},
+	{0x0a, 0x01, 0x0c, 0x04, "10000"		},
+	{0x0a, 0x01, 0x0c, 0x08, "15000"		},
+	{0x0a, 0x01, 0x0c, 0x0c, "20000"		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x0a, 0x01, 0x70, 0x70, "5 Coins 1 Credits"	},
+	{0x0a, 0x01, 0x70, 0x50, "4 Coins 1 Credits"	},
+	{0x0a, 0x01, 0x70, 0x30, "3 Coins 1 Credits"	},
+	{0x0a, 0x01, 0x70, 0x10, "2 Coins 1 Credits"	},
+	{0x0a, 0x01, 0x70, 0x00, "1 Coin  1 Credits"	},
+	{0x0a, 0x01, 0x70, 0x20, "1 Coin  2 Credits"	},
+	{0x0a, 0x01, 0x70, 0x40, "1 Coin  3 Credits"	},
+	{0x0a, 0x01, 0x70, 0x60, "1 Coin  4 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0a, 0x01, 0x80, 0x80, "Upright"		},
+	{0x0a, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"	},
+	{0x0b, 0x01, 0x07, 0x04, "New"		},
+	{0x0b, 0x01, 0x07, 0x02, "Legacy"	},
+};
+
+STDDIPINFO(Radarscp1)
+
 static struct BurnDIPInfo PestplceDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x20, NULL			},
+	{0x0f, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x0e, 0x01, 0x03, 0x00, "3"			},
@@ -407,7 +479,12 @@ static struct BurnDIPInfo PestplceDIPList[]=
 	{0x0e, 0x01, 0xc0, 0x00, "20000"		},
 	{0x0e, 0x01, 0xc0, 0x40, "30000"		},
 	{0x0e, 0x01, 0xc0, 0x80, "40000"		},
-	{0x0e, 0x01, 0xc0, 0xc0, "×"			},
+	{0x0e, 0x01, 0xc0, 0xc0, "None"			},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x0f, 0x01, 0x03, 0x01, "New"						},
+	{0x0f, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x0f, 0x01, 0x03, 0x02, "Legacy"					},
 };
 
 STDDIPINFO(Pestplce)
@@ -415,6 +492,7 @@ STDDIPINFO(Pestplce)
 static struct BurnDIPInfo HerbiedkDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x80, NULL			},
+	{0x0f, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
 	{0x0e, 0x01, 0x70, 0x70, "5 Coins 1 Credits"	},
@@ -429,6 +507,11 @@ static struct BurnDIPInfo HerbiedkDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0e, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0e, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x0f, 0x01, 0x03, 0x01, "New"						},
+	{0x0f, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x0f, 0x01, 0x03, 0x02, "Legacy"					},
 };
 
 STDDIPINFO(Herbiedk)
@@ -436,6 +519,7 @@ STDDIPINFO(Herbiedk)
 static struct BurnDIPInfo HunchbkdDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x80, NULL			},
+	{0x0f, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
 	{0x0e, 0x01, 0x02, 0x00, "3"			},
@@ -460,6 +544,11 @@ static struct BurnDIPInfo HunchbkdDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0e, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0e, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x0f, 0x01, 0x03, 0x01, "New"						},
+	{0x0f, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x0f, 0x01, 0x03, 0x02, "Legacy"					},
 };
 
 STDDIPINFO(Hunchbkd)
@@ -467,6 +556,7 @@ STDDIPINFO(Hunchbkd)
 static struct BurnDIPInfo HerodkDIPList[]=
 {
 	{0x10, 0xff, 0xff, 0x81, NULL			},
+	{0x11, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
 	{0x10, 0x01, 0x02, 0x00, "3"			},
@@ -491,6 +581,11 @@ static struct BurnDIPInfo HerodkDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x10, 0x01, 0x80, 0x80, "Upright"		},
 	{0x10, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x11, 0x01, 0x03, 0x01, "New"						},
+	{0x11, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x11, 0x01, 0x03, 0x02, "Legacy"					},
 };
 
 STDDIPINFO(Herodk)
@@ -498,6 +593,7 @@ STDDIPINFO(Herodk)
 static struct BurnDIPInfo DraktonDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x1d, NULL		},
+	{0x0f, 0xff, 0xff, 0x01, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x0e, 0x01, 0x01, 0x00, "Off"		},
@@ -526,6 +622,11 @@ static struct BurnDIPInfo DraktonDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0e, 0x01, 0x80, 0x00, "Upright"		},
 	{0x0e, 0x01, 0x80, 0x80, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x0f, 0x01, 0x03, 0x01, "New"						},
+	{0x0f, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x0f, 0x01, 0x03, 0x02, "Legacy"					},
 };
 
 STDDIPINFO(Drakton)
@@ -1242,7 +1343,7 @@ static INT32 MemIndex()
 
 	DrvRevMap		= (INT32*)Next; Next += 0x000200 * sizeof(INT32);
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0102 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0208 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -1274,29 +1375,90 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void dkongnewPaletteInit()
+#define TRS_J1  (1)
+#define RADARSCP_BCK_COL_OFFSET         256
+#define RADARSCP_GRID_COL_OFFSET        (RADARSCP_BCK_COL_OFFSET + 256)
+#define RADARSCP_STAR_COL               (RADARSCP_GRID_COL_OFFSET + 8)
+
+static const res_net_decode_info dkong_decode_info = {
+	2, 0, 255,
+	{ 256,  256,    0,    0,    0,    0},
+	{   1,   -2,    0,    0,    2,    0},
+	{0x07, 0x04, 0x03, 0x00, 0x03, 0x00}
+};
+
+static const res_net_info dkong_net_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_MB7052 | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON, 470, 0, 3, { 1000, 470, 220 } },
+	  { RES_NET_AMP_DARLINGTON, 470, 0, 3, { 1000, 470, 220 } },
+	  { RES_NET_AMP_EMITTER,    680, 0, 2, {  470, 220,   0 } } }
+};
+
+static const res_net_info dkong_net_bg_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_MB7052 | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON, 470, 0, 0, { 0 } },
+	  { RES_NET_AMP_DARLINGTON, 470, 0, 0, { 0 } },
+	  { RES_NET_AMP_EMITTER,    680, 0, 0, { 0 } } }
+};
+
+static const res_net_info radarscp_net_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_TTL | RES_NET_VIN_MB7052 | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON, 470 * TRS_J1, 470*(1-TRS_J1), 3, { 1000, 470, 220 } },
+	  { RES_NET_AMP_DARLINGTON, 470 * TRS_J1, 470*(1-TRS_J1), 3, { 1000, 470, 220 } },
+	  { RES_NET_AMP_EMITTER,    680 * TRS_J1, 680*(1-TRS_J1), 2, {  470, 220,   0 } } }
+};
+
+static const res_net_info radarscp_net_bck_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_TTL | RES_NET_VIN_MB7052 | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON, 470, 4700, 0, { 0 } },
+	  { RES_NET_AMP_DARLINGTON, 470, 4700, 0, { 0 } },
+	  { RES_NET_AMP_EMITTER,    470, 4700, 0, { 0 } } }
+};
+
+static const res_net_info radarscp_stars_net_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_TTL_OUT | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON, 4700, 470, 0, { 0 } },
+	  { RES_NET_AMP_DARLINGTON,    1,   0, 0, { 0 } },
+	  { RES_NET_AMP_EMITTER,       1,   0, 0, { 0 } } }
+};
+
+static const res_net_info radarscp_blue_net_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_VCC | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON,  470, 4700, 0, { 0 } },
+	  { RES_NET_AMP_DARLINGTON,  470, 4700, 0, { 0 } },
+	  { RES_NET_AMP_EMITTER,       0,    0, 8, { 128,64,32,16,8,4,2,1 } } }
+};
+
+static const res_net_info radarscp_grid_net_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_TTL_OUT | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON,    0,   0, 1, { 1 } },
+	  { RES_NET_AMP_DARLINGTON,    0,   0, 1, { 1 } },
+	  { RES_NET_AMP_EMITTER,       0,   0, 1, { 1 } } }
+};
+
+static const res_net_info radarscp1_net_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_TTL_OUT | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON, 0,      0, 4, { 39000, 20000, 10000, 4990 } },
+	  { RES_NET_AMP_DARLINGTON, 0,      0, 4, { 39000, 20000, 10000, 4990 } },
+	  { RES_NET_AMP_EMITTER,    0,      0, 4, { 39000, 20000, 10000, 4990 } } }
+};
+
+static const res_net_decode_info dkong3_decode_info = {
+	1, 0, 255,
+	{   0,   0, 256 },
+	{   4,   0,   0 },
+	{0x0F,0x0F,0x0F }
+};
+
+static const res_net_info dkong3_net_info = {
+	RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_MB7052 | RES_NET_MONITOR_SANYO_EZV20,
+	{ { RES_NET_AMP_DARLINGTON, 470,      0, 4, { 2200, 1000, 470, 220 } },
+	  { RES_NET_AMP_DARLINGTON, 470,      0, 4, { 2200, 1000, 470, 220 } },
+	  { RES_NET_AMP_DARLINGTON, 470,      0, 4, { 2200, 1000, 470, 220 } } }
+};
+
+static void dkongNewPaletteInit()
 {
-	static const res_net_decode_info dkong_decode_info = {
-		2, 0, 255,
-		{ 256,  256,    0,    0,    0,    0},
-		{   1,   -2,    0,    0,    2,    0},
-		{0x07, 0x04, 0x03, 0x00, 0x03, 0x00}
-	};
-
-	static const res_net_info dkong_net_info = {
-		RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_MB7052 |  RES_NET_MONITOR_SANYO_EZV20,
-		{ { RES_NET_AMP_DARLINGTON, 470, 0, 3, { 1000, 470, 220 } },
-		  { RES_NET_AMP_DARLINGTON, 470, 0, 3, { 1000, 470, 220 } },
-		  { RES_NET_AMP_EMITTER,    680, 0, 2, {  470, 220,   0 } } }
-	};
-
-	static const res_net_info dkong_net_bg_info = {
-		RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_MB7052 |  RES_NET_MONITOR_SANYO_EZV20,
-		{ { RES_NET_AMP_DARLINGTON, 470, 0, 0, { 0 } },
-		  { RES_NET_AMP_DARLINGTON, 470, 0, 0, { 0 } },
-		  { RES_NET_AMP_EMITTER,    680, 0, 0, { 0 } } }
-	};
-
 	compute_res_net_all(DrvPalette, DrvColPROM, dkong_decode_info, dkong_net_info);
 
 	for (INT32 i = 0; i < 256; i++) {
@@ -1308,6 +1470,107 @@ static void dkongnewPaletteInit()
 			DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}
 	}
+}
+
+static void radarscpPaletteInit()
+{
+	for (INT32 i = 0; i < 256; i++)
+	{
+		INT32 r = compute_res_net((DrvColPROM[i+256] >> 1) & 0x07, 0, radarscp_net_info);
+		INT32 g = compute_res_net(((DrvColPROM[i+256] << 2) & 0x04) | ((DrvColPROM[i] >> 2) & 0x03), 1, radarscp_net_info);
+		INT32 b = compute_res_net((DrvColPROM[i] >> 0) & 0x03, 2, radarscp_net_info);
+
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+	}
+
+	for (INT32 i = 0; i < 256; i++) {
+		if ((palette_type != 0x00) && !(i & 0x03)) {
+			INT32 r = compute_res_net(1, 0, radarscp_net_bck_info);
+			INT32 g = compute_res_net(1, 1, radarscp_net_bck_info);
+			INT32 b = compute_res_net(1, 2, radarscp_net_bck_info);
+
+			DrvPalette[i] = BurnHighCol(r, g, b, 0);
+		}
+	}
+
+	// note: the remaining part of this palette is currently unused
+	DrvPalette[RADARSCP_STAR_COL] = BurnHighCol(
+		compute_res_net(1, 0, radarscp_stars_net_info),
+		compute_res_net(0, 1, radarscp_stars_net_info),
+		compute_res_net(0, 2, radarscp_stars_net_info),
+		0
+	);
+
+	for (INT32 i = 0; i < 256; i++)
+	{
+		INT32 r = compute_res_net(0, 0, radarscp_blue_net_info);
+		INT32 g = compute_res_net(0, 1, radarscp_blue_net_info);
+		INT32 b = compute_res_net(i, 2, radarscp_blue_net_info);
+
+		DrvPalette[RADARSCP_BCK_COL_OFFSET + i] = BurnHighCol(r, g, b, 0);
+	}
+
+	for (INT32 i = 0; i < 8; i++)
+	{
+		INT32 r = compute_res_net(BIT(i, 0), 0, radarscp_grid_net_info);
+		INT32 g = compute_res_net(BIT(i, 1), 1, radarscp_grid_net_info);
+		INT32 b = compute_res_net(BIT(i, 2), 2, radarscp_grid_net_info);
+
+		DrvPalette[RADARSCP_GRID_COL_OFFSET + i] = BurnHighCol(r, g, b, 0);
+	}
+}
+
+static void radarscp1PaletteInit()
+{
+	for (INT32 i = 0; i < 256; i++)
+	{
+		INT32 r = compute_res_net(DrvColPROM[i+512], 0, radarscp1_net_info);
+		INT32 g = compute_res_net(DrvColPROM[i+256], 1, radarscp1_net_info);
+		INT32 b = compute_res_net(DrvColPROM[i], 2, radarscp1_net_info);
+
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+	}
+
+	for (INT32 i = 0; i < 256; i++) {
+		if (!(i & 0x03)) {
+			INT32 r = compute_res_net(0, 0, radarscp1_net_info);
+			INT32 g = compute_res_net(0, 1, radarscp1_net_info);
+			INT32 b = compute_res_net(0, 2, radarscp1_net_info);
+
+			DrvPalette[i] = BurnHighCol(r, g, b, 0);
+		}
+	}
+
+	// note: the remaining part of this palette is currently unused
+	DrvPalette[RADARSCP_STAR_COL] = BurnHighCol(
+		compute_res_net(1, 0, radarscp_stars_net_info),
+		compute_res_net(0, 1, radarscp_stars_net_info),
+		compute_res_net(0, 2, radarscp_stars_net_info),
+		0
+	);
+
+	for (INT32 i = 0; i < 256; i++)
+	{
+		INT32 r = compute_res_net(0, 0, radarscp_blue_net_info);
+		INT32 g = compute_res_net(0, 1, radarscp_blue_net_info);
+		INT32 b = compute_res_net(i, 2, radarscp_blue_net_info);
+
+		DrvPalette[RADARSCP_BCK_COL_OFFSET + i] = BurnHighCol(r, g, b, 0);
+	}
+
+	for (INT32 i = 0; i < 8; i++)
+	{
+		INT32 r = compute_res_net(BIT(i, 0), 0, radarscp_grid_net_info);
+		INT32 g = compute_res_net(BIT(i, 1), 1, radarscp_grid_net_info);
+		INT32 b = compute_res_net(BIT(i, 2), 2, radarscp_grid_net_info);
+
+		DrvPalette[RADARSCP_GRID_COL_OFFSET + i] = BurnHighCol(r, g, b, 0);
+	}
+}
+
+static void dkong3NewPaletteInit()
+{
+	compute_res_net_all(DrvPalette, DrvColPROM, dkong3_decode_info, dkong3_net_info);
 }
 
 static void dkongPaletteInit()
@@ -1330,6 +1593,10 @@ static void dkongPaletteInit()
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
+
+	// used by radarscp
+	DrvPalette[0x100] = BurnHighCol(0xff, 0, 0, 0); // red
+	DrvPalette[0x101] = BurnHighCol(0, 0, 0xff, 0); // blue
 }
 
 static void dkong3PaletteInit()
@@ -1355,6 +1622,25 @@ static void dkong3PaletteInit()
 		INT32 b = 255 - (0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3);
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+	}
+}
+
+static void update_palette_type(INT32 dip_offset)
+{
+	if (palette_type != (DrvDips[dip_offset]))
+	{
+		DrvRecalc = 1;
+		palette_type = DrvDips[dip_offset];
+		switch (palette_type)
+		{
+			case 0x00: DrvPaletteUpdate = radarscpPaletteInit;  break; // radarscpPaletteInit in conversion mode
+			case 0x01: DrvPaletteUpdate = dkongNewPaletteInit;  break;
+			case 0x02: DrvPaletteUpdate = dkongPaletteInit;     break;
+			case 0x03: DrvPaletteUpdate = radarscpPaletteInit;  break; // radarscpPaletteInit in normal mode
+			case 0x04: DrvPaletteUpdate = radarscp1PaletteInit; break;
+			case 0x05: DrvPaletteUpdate = dkong3NewPaletteInit; break;
+			case 0x06: DrvPaletteUpdate = dkong3PaletteInit;    break;
+		}
 	}
 }
 
@@ -1387,7 +1673,7 @@ static INT32 DrvGfxDecode()
 static ior_in_functs dkong_dma_read_functions[4] = { NULL, p8257ControlRead, NULL, NULL };
 static ior_out_functs dkong_dma_write_functions[4] = { p8257ControlWrite, NULL, NULL, NULL };
 
-static INT32 DrvInit(INT32 (*pRomLoadCallback)(), void (*pPaletteUpdate)(), UINT32 map_flags)
+static INT32 DrvInit(INT32 (*pRomLoadCallback)(), UINT32 map_flags)
 {
 	AllMem = NULL;
 	MemIndex();
@@ -1444,11 +1730,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), void (*pPaletteUpdate)(), UINT
 			if (pRomLoadCallback()) return 1;
 		}
 
-		if (pPaletteUpdate) {
-			DrvPaletteUpdate = pPaletteUpdate;
-
-			DrvPaletteUpdate();
-		}
+		update_palette_type(1);
+		DrvPaletteUpdate();
 
 		DrvGfxDecode();
 	}
@@ -1478,6 +1761,7 @@ static INT32 DrvExit()
 	radarscp1 = 0;
 	brazemode = 0;
 	draktonmode = 0;
+	palette_type = -1;
 
 	return 0;
 }
@@ -1546,7 +1830,7 @@ static INT32 Dkong3Init()
 		if (BurnLoadRom(DrvColPROM + 0x0100, 13, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x0200, 14, 1)) return 1;
 
-		DrvPaletteUpdate = dkong3PaletteInit;
+		update_palette_type(2);
 		DrvPaletteUpdate();
 		DrvGfxDecode();
 	}
@@ -1601,6 +1885,8 @@ static INT32 Dkong3Exit()
 	nesapuExit();
 
 	BurnFree(AllMem);
+
+	palette_type = -1;
 
 	return 0;
 }
@@ -1667,7 +1953,7 @@ static INT32 s2650DkongInit(INT32 (*pRomLoadCallback)())
 			if (pRomLoadCallback()) return 1;
 		}
 
-		DrvPaletteUpdate = dkongPaletteInit;
+		update_palette_type(1);
 
 		s2650RevMapConvert();
 		DrvGfxDecode();
@@ -1730,15 +2016,13 @@ static INT32 s2650DkongExit()
 	BurnFree(AllMem);
 
 	s2650_protection = 0;
+	palette_type = -1;
 
 	return 0;
 }
 
 static void draw_grid()
 {
-	DrvPalette[0x100] = BurnHighCol(0xff, 0, 0, 0); // red
-	DrvPalette[0x101] = BurnHighCol(0, 0, 0xff, 0); // blue
-
 	const UINT8 *table = DrvGfxROM2;
 	INT32 x,y,counter;
 
@@ -1906,6 +2190,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnDraw) {
+		update_palette_type(1);
 		BurnDrvRedraw();
 	}
 
@@ -1960,6 +2245,7 @@ static INT32 Dkong3Frame()
 	}
 
 	if (pBurnDraw) {
+		update_palette_type(2);
 		BurnDrvRedraw();
 	}
 
@@ -2016,6 +2302,7 @@ static INT32 s2650DkongFrame()
 	s2650Close();
 
 	if (pBurnDraw) {
+		update_palette_type(1);
 		BurnDrvRedraw();
 	}
 
@@ -2081,7 +2368,7 @@ static INT32 radarscpRomLoad()
 
 static INT32 radarscpInit()
 {
-	INT32 ret = DrvInit(radarscpRomLoad, dkongPaletteInit, 0);
+	INT32 ret = DrvInit(radarscpRomLoad, 0);
 
 	if (ret == 0)
 	{
@@ -2288,7 +2575,7 @@ static INT32 radarscp1RomLoad()
 
 static INT32 radarscp1Init()
 {
-	INT32 ret = DrvInit(radarscp1RomLoad, dkongPaletteInit, 0);
+	INT32 ret = DrvInit(radarscp1RomLoad, 0);
 
 	if (ret == 0)
 	{
@@ -2306,7 +2593,7 @@ struct BurnDriver BurnDrvRadarscp1 = {
 	"Radar Scope (TRS01)\0", "No sound / Gfx Issues", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
+	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, Radarscp1DIPInfo,
 	radarscp1Init, DrvExit, DrvFrame, radarscpDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -2381,7 +2668,7 @@ static INT32 dkongRomLoad()
 
 static INT32 dkongInit()
 {
-	return DrvInit(dkongRomLoad, dkongnewPaletteInit, 0);
+	return DrvInit(dkongRomLoad, 0);
 }
 
 struct BurnDriver BurnDrvDkong = {
@@ -3517,7 +3804,7 @@ static INT32 dkongxRomLoad()
 
 static INT32 dkongxInit()
 {
-	INT32 ret = DrvInit(dkongxRomLoad, dkongnewPaletteInit, 0);
+	INT32 ret = DrvInit(dkongxRomLoad, 0);
 
 	if (ret == 0)
 	{
@@ -3955,7 +4242,7 @@ static void dkongjrsamplevol(INT32 sam, double vol)
 
 static INT32 dkongjrInit()
 {
-	INT32 rc = DrvInit(dkongjrRomLoad, dkongPaletteInit, 0);
+	INT32 rc = DrvInit(dkongjrRomLoad, 0);
 	if (!rc) {
 		dkongjrsamplevol(1, 0.35); // land
 		dkongjrsamplevol(2, 0.35); // roar
@@ -4036,7 +4323,7 @@ static INT32 dkongjr2RomLoad()
 
 static INT32 dkongjr2Init()
 {
-	INT32 rc = DrvInit(dkongjr2RomLoad, dkongPaletteInit, 0);
+	INT32 rc = DrvInit(dkongjr2RomLoad, 0);
 	if (!rc) {
 		dkongjrsamplevol(1, 0.35); // land
 		dkongjrsamplevol(2, 0.35); // roar
@@ -4247,7 +4534,7 @@ static INT32 dkingjrRomLoad()
 
 static INT32 dkingjrInit()
 {
-	return DrvInit(dkingjrRomLoad, dkongPaletteInit, 0);
+	return DrvInit(dkingjrRomLoad, 0);
 }
 
 struct BurnDriver BurnDrvDkingjr = {
@@ -4299,7 +4586,7 @@ static INT32 dkongjreRomLoad()
 
 static INT32 dkongjreInit()
 {
-	return DrvInit(dkongjreRomLoad, dkongPaletteInit, 0);
+	return DrvInit(dkongjreRomLoad, 0);
 }
 
 struct BurnDriverD BurnDrvDkongjre = {
@@ -4391,7 +4678,7 @@ static INT32 pestplceRomLoad()
 
 static INT32 pestplceInit()
 {
-	return DrvInit(pestplceRomLoad, dkongPaletteInit, 1);
+	return DrvInit(pestplceRomLoad, 1);
 }
 
 struct BurnDriver BurnDrvPestplce = {
@@ -4532,7 +4819,7 @@ static INT32 dkong3bRomLoad()
 
 static INT32 dkong3bInit()
 {
-	return DrvInit(dkong3bRomLoad, dkong3PaletteInit, 1);
+	return DrvInit(dkong3bRomLoad, 1);
 }
 
 struct BurnDriver BurnDrvDkong3b = {
@@ -5000,7 +5287,7 @@ static INT32 draktonLoad()
 
 static INT32 draktonInit()
 {
-	INT32 ret = DrvInit(draktonLoad, dkongPaletteInit, 0);
+	INT32 ret = DrvInit(draktonLoad, 0);
 
 	if (ret == 0)
 	{
@@ -5053,7 +5340,7 @@ STD_ROM_FN(drktnjr)
 
 static INT32 drktnjrInit()
 {
-	INT32 ret = DrvInit(draktonLoad, dkongPaletteInit, 0);
+	INT32 ret = DrvInit(draktonLoad, 0);
 
 	if (ret == 0)
 	{

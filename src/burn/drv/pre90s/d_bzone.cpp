@@ -26,7 +26,6 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT32 nExtraCycles;
-static INT32 avgletsgo = 0;
 static UINT8 analog_data = 0;
 static INT32 input_select = 0;
 
@@ -36,6 +35,7 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
 static UINT8 DrvJoy5[8];
 static UINT8 DrvFakeInput[4];
+static UINT32 DrvFakeInputPrev;
 static UINT8 DrvDips[4];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
@@ -386,7 +386,6 @@ static void bzone_write(UINT16 address, UINT8 data)
 
 		case 0x1200:
 			avgdvg_go();
-			avgletsgo = 1;
 		return;
 
 		case 0x1400:
@@ -492,7 +491,6 @@ static void redbaron_write(UINT16 address, UINT8 data)
 
 		case 0x1200:
 			avgdvg_go();
-			avgletsgo = 1;
 		return;
 
 		case 0x1400:
@@ -597,7 +595,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	earom_reset();
 
-	avgletsgo = 0;
 	analog_data = 0;
 	nExtraCycles = 0;
 	input_select = 0;
@@ -647,16 +644,25 @@ static void DrvM6502NewFrame()
 	drv_cycles = M6502TotalCycles();
 }
 
+static UINT32 bzone_pix_cb(INT32 x, INT32 y, UINT32 color)
+{
+	const INT32 hud_end[2] = { 92, 92 * 1080 / 480 }; // hud_end[1] is 100pix scaled to the new size
+	INT32 hud = hud_end[DrvDips[3] & 1];
+
+	if (y < hud) {
+		color &= 0x00ff0000;    // mask out all but red
+	}
+	if (y > hud) {
+		color &= 0x0000ff00;    // mask out all but green
+	}
+	return color;
+}
+
 static INT32 BzoneInit()
 {
 	BurnSetRefreshRate(60.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -698,6 +704,7 @@ static INT32 BzoneInit()
 	bzone_sound_init(DrvM6502TotalCycles, 1512000);
 
 	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x5000, M6502TotalCycles, 580, 400);
+	vector_set_pix_cb(bzone_pix_cb);
 
 	DrvDoReset(1);
 
@@ -708,12 +715,7 @@ static INT32 BradleyInit()
 {
 	BurnSetRefreshRate(60.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6502ROM  + 0x4000,  0, 1)) return 1;
@@ -763,12 +765,7 @@ static INT32 RedbaronInit()
 {
 	BurnSetRefreshRate(60.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (redbarona) {
@@ -840,7 +837,7 @@ static INT32 DrvExit()
 
 	earom_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	redbarona = 0;
 	bradley = 0;
@@ -851,12 +848,20 @@ static INT32 DrvExit()
 static void DrvPaletteInit()
 {
     for (INT32 i = 0; i < 0x20; i++) // color
-	{		
+	{
 		for (INT32 j = 0; j < 256; j++) // intensity
 		{
-			INT32 c = (0xff * j) / 0xff;
+			INT32 r = (0xff * j) / 0xff;
+			INT32 g = r;
+			INT32 b = r;
 
-			DrvPalette[i * 256 + j] = (c << 16) | (c << 8) | c; // must be 32bit palette! -dink (see vector.cpp)
+			if (redbaron) {
+				r = (0x67 * j) / 0xff;
+				g = (0xe0 * j) / 0xff;
+				b = (0xe0 * j) / 0xff;
+			}
+
+			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)
 		}
 	}
 }
@@ -894,14 +899,17 @@ static INT32 DrvFrame()
 		}
 
 		// hack to map 8-ways to the 8 different combinations
-		if      (DrvFakeInput[0] && DrvFakeInput[2]) { DrvJoy2[0] = 0; DrvJoy2[1] = 1; }
-		else if (DrvFakeInput[0] && DrvFakeInput[3]) { DrvJoy2[3] = 1; DrvJoy2[2] = 0; }
-		else if (DrvFakeInput[1] && DrvFakeInput[2]) { DrvJoy2[0] = 1; DrvJoy2[1] = 0; }
-		else if (DrvFakeInput[1] && DrvFakeInput[3]) { DrvJoy2[3] = 0; DrvJoy2[2] = 1; }
+		if      (DrvFakeInput[0] && DrvFakeInput[2]) { DrvJoy2[0] = 0; DrvJoy2[1] = 1; DrvJoy2[3] = 0; DrvJoy2[2] = 0; }
+		else if (DrvFakeInput[0] && DrvFakeInput[3]) { DrvJoy2[3] = 1; DrvJoy2[2] = 0; DrvJoy2[0] = 0; DrvJoy2[1] = 0; }
+		else if (DrvFakeInput[1] && DrvFakeInput[2]) { DrvJoy2[0] = 1; DrvJoy2[1] = 0; DrvJoy2[3] = 0; DrvJoy2[2] = 0; }
+		else if (DrvFakeInput[1] && DrvFakeInput[3]) { DrvJoy2[3] = 0; DrvJoy2[2] = 1; DrvJoy2[0] = 0; DrvJoy2[1] = 0; }
 		else if (DrvFakeInput[0]) { DrvJoy2[3] = 1; DrvJoy2[1] = 1; }
 		else if (DrvFakeInput[1]) { DrvJoy2[2] = 1; DrvJoy2[0] = 1; }
 		else if (DrvFakeInput[2]) { DrvJoy2[2] = 1; DrvJoy2[1] = 1; }
 		else if (DrvFakeInput[3]) { DrvJoy2[3] = 1; DrvJoy2[0] = 1; }
+		else if (DrvFakeInputPrev) { DrvJoy2[0] = DrvJoy2[1] = DrvJoy2[2] = DrvJoy2[3] = 0; }
+
+		memcpy(&DrvFakeInputPrev, DrvFakeInput, 4);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -1004,7 +1012,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		bzone_sound_scan(nAction, pnMin);
 
 		SCAN_VAR(nExtraCycles);
-		SCAN_VAR(avgletsgo);
 		SCAN_VAR(analog_data);
 		SCAN_VAR(input_select);
 		SCAN_VAR(x_target);

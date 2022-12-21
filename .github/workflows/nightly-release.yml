@@ -288,22 +288,22 @@ jobs:
           asset_path: Linux SDL 1.2.zip
           asset_content_type: application/zip
 
-  build_macos:
-    name: macOS
-    needs: nightly_release
-    runs-on: macOS-latest
-    env:
-      DEVELOPER_DIR: /Applications/Xcode.app
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Build FBNeo
-        run: |
-             cd projectfiles/xcode
-             xcodebuild ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Debug
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: macOS
-          path: "projectfiles/xcode/build/Debug/FinalBurn Neo.app"
+#  build_macos:
+#    name: macOS
+#    needs: nightly_release
+#    runs-on: macOS-latest
+#    env:
+#      DEVELOPER_DIR: /Applications/Xcode.app
+#    steps:
+#      - uses: actions/checkout@v2
+#
+#      - name: Build FBNeo
+#        run: |
+#             cd projectfiles/xcode
+#             xcodebuild ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO -target Emulator -configuration Debug
+#
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: macOS
+#          path: "projectfiles/xcode/build/Debug/FinalBurn Neo.app"

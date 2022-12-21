@@ -1721,7 +1721,7 @@ void VidDebug(const wchar_t *text, float a, float b)
 }
 
 #define TURBOARRAYSIZE 60
-#define MIN_TURBO_CERTAINTY 25
+#define MIN_TURBO_CERTAINTY 32
 static int P1LP_Array[TURBOARRAYSIZE] = {};
 static int P1MP_Array[TURBOARRAYSIZE] = {};
 static int P1HP_Array[TURBOARRAYSIZE] = {};
@@ -1744,6 +1744,8 @@ static int p2_max_tps[6]={0, 0, 0, 0, 0, 0};
 
 void DetectTurbo()
 {
+
+	bool debug_turbo = false;
 
 	UINT32 P1LP=0, P1MP=0, P1HP=0, P1LK=0, P1MK=0, P1HK=0;
 	UINT32 P2LP=0, P2MP=0, P2HP=0, P2LK=0, P2MK=0, P2HK=0;
@@ -1829,7 +1831,7 @@ void DetectTurbo()
 	int p2_buttons_with_turbo = 0;
 
 	for (int i=0; i < 6; i++) {
-		if (p1_tps[i] >= 14) {
+		if (p1_tps[i] > 14) {
 			p1_buttons_with_turbo++;
 			if (p1_tps[i] > p1_max_tps[i]) p1_max_tps[i]=p1_tps[i];
 			if (p1_tps[i] > 15) {
@@ -1843,8 +1845,10 @@ void DetectTurbo()
 						}
 					} else {
 						if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_tps[i] == p1_max_tps[i]) {
-							//_sntprintf(szWarn1, 128, _T("Possible Turbo/Autofire detected on Player1 button%d: %dtps"), i+1, p1_tps[i]);
-							//VidOverlayAddChatLine(_T("System"), szWarn1);
+							if (debug_turbo) {
+								_sntprintf(szWarn1, 128, _T("Possible Turbo/Autofire detected on Player1 button%d: %dtps"), i+1, p1_tps[i]);
+								VidOverlayAddChatLine(_T("System"), szWarn1);
+							}
 							p1_max_tps[i]++;
 						}
 					}
@@ -1854,7 +1858,7 @@ void DetectTurbo()
 				p1_turbo_warning=15;
 			}
 		}
-		if (p2_tps[i] >= 14) {
+		if (p2_tps[i] > 14) {
 			p2_buttons_with_turbo++;
 			if (p2_tps[i] > p2_max_tps[i]) p2_max_tps[i]=p2_tps[i];
 			if (p2_tps[i] > 15) {
@@ -1868,8 +1872,10 @@ void DetectTurbo()
 						}
 					} else {
 						if (p2_turbo_certainty >= MIN_TURBO_CERTAINTY && p2_tps[i] == p2_max_tps[i]) {
-							//_sntprintf(szWarn2, 128, _T("Possible Turbo/Autofire detected on Player2 button%d: %dtps"), i+1, p2_tps[i]);
-							//VidOverlayAddChatLine(_T("System"), szWarn2);
+							if (debug_turbo) {
+								_sntprintf(szWarn2, 128, _T("Possible Turbo/Autofire detected on Player2 button%d: %dtps"), i+1, p2_tps[i]);
+								VidOverlayAddChatLine(_T("System"), szWarn2);
+							}
 							p2_max_tps[i]++;
 						}
 					}
@@ -1884,16 +1890,16 @@ void DetectTurbo()
 	if (turboArrayPos == 0) {
 		if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) p1_turbo_certainty += p1_turbo_warning - 14;
 		if (p2_turbo_warning > 14 && p2_turbo_certainty < MIN_TURBO_CERTAINTY) p2_turbo_certainty += p2_turbo_warning - 14;
-#if 0
-		if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) {
-			_sntprintf(szWarn1, 128, _T("p1_turbo_certainty=%d"), p1_turbo_certainty);
-			VidOverlayAddChatLine(_T("System"), szWarn1);
+		if (debug_turbo) {
+			if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) {
+				_sntprintf(szWarn1, 128, _T("p1_turbo_certainty=%d"), p1_turbo_certainty);
+				VidOverlayAddChatLine(_T("System"), szWarn1);
+			}
+			if (p2_turbo_warning > 14 && p2_turbo_certainty < MIN_TURBO_CERTAINTY) {
+				_sntprintf(szWarn2, 128, _T("p2_turbo_certainty=%d"), p2_turbo_certainty);
+				VidOverlayAddChatLine(_T("System"), szWarn2);
+			}
 		}
-		if (p2_turbo_warning > 14 && p2_turbo_certainty < MIN_TURBO_CERTAINTY) {
-			_sntprintf(szWarn2, 128, _T("p2_turbo_certainty=%d"), p2_turbo_certainty);
-			VidOverlayAddChatLine(_T("System"), szWarn2);
-		}
-#endif
 		if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_turbo_certainty < 1000) {
 			p1_turbo_certainty = 1000;
 			VidOverlayAddChatLine(_T("System"), _T("Possible Turbo/Autofire detected on Player1 (or heavy button mashing)"));

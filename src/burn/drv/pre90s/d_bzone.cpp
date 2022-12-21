@@ -26,7 +26,6 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT32 nExtraCycles;
-static INT32 avgletsgo = 0;
 static UINT8 analog_data = 0;
 static INT32 input_select = 0;
 
@@ -386,7 +385,6 @@ static void bzone_write(UINT16 address, UINT8 data)
 
 		case 0x1200:
 			avgdvg_go();
-			avgletsgo = 1;
 		return;
 
 		case 0x1400:
@@ -492,7 +490,6 @@ static void redbaron_write(UINT16 address, UINT8 data)
 
 		case 0x1200:
 			avgdvg_go();
-			avgletsgo = 1;
 		return;
 
 		case 0x1400:
@@ -597,7 +594,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	earom_reset();
 
-	avgletsgo = 0;
 	analog_data = 0;
 	nExtraCycles = 0;
 	input_select = 0;
@@ -647,16 +643,25 @@ static void DrvM6502NewFrame()
 	drv_cycles = M6502TotalCycles();
 }
 
+static UINT32 bzone_pix_cb(INT32 x, INT32 y, UINT32 color)
+{
+	const INT32 hud_end[2] = { 100, 100 * 1080 / 480 }; // hud_end[1] is 100pix scaled to the new size
+	INT32 hud = hud_end[DrvDips[3] & 1];
+
+	if (y < hud) {
+		color &= 0x00ff0000;    // mask out all but red
+	}
+	if (y > hud) {
+		color &= 0x0000ff00;    // mask out all but green
+	}
+	return color;
+}
+
 static INT32 BzoneInit()
 {
 	BurnSetRefreshRate(60.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -698,6 +703,7 @@ static INT32 BzoneInit()
 	bzone_sound_init(DrvM6502TotalCycles, 1512000);
 
 	avgdvg_init(USE_AVG_BZONE, DrvVectorRAM, 0x5000, M6502TotalCycles, 580, 400);
+	vector_set_pix_cb(bzone_pix_cb);
 
 	DrvDoReset(1);
 
@@ -708,12 +714,7 @@ static INT32 BradleyInit()
 {
 	BurnSetRefreshRate(60.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6502ROM  + 0x4000,  0, 1)) return 1;
@@ -763,12 +764,7 @@ static INT32 RedbaronInit()
 {
 	BurnSetRefreshRate(60.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (redbarona) {
@@ -840,7 +836,7 @@ static INT32 DrvExit()
 
 	earom_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	redbarona = 0;
 	bradley = 0;
@@ -1004,7 +1000,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		bzone_sound_scan(nAction, pnMin);
 
 		SCAN_VAR(nExtraCycles);
-		SCAN_VAR(avgletsgo);
 		SCAN_VAR(analog_data);
 		SCAN_VAR(input_select);
 		SCAN_VAR(x_target);

@@ -838,7 +838,7 @@ static void __fastcall radarscp_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x7c80:
-			*grid_color = data; // ?
+			*grid_color = (data & 0x07) ^ 0x07;
 		return;
 
 		case 0x7d81:
@@ -1493,7 +1493,6 @@ static void radarscpPaletteInit()
 		}
 	}
 
-	// note: the remaining part of this palette is currently unused
 	DrvPalette[RADARSCP_STAR_COL] = BurnHighCol(
 		compute_res_net(1, 0, radarscp_stars_net_info),
 		compute_res_net(0, 1, radarscp_stars_net_info),
@@ -1501,6 +1500,7 @@ static void radarscpPaletteInit()
 		0
 	);
 
+	/* note: Oscillating background isn't implemented yet */
 	for (INT32 i = 0; i < 256; i++)
 	{
 		INT32 r = compute_res_net(0, 0, radarscp_blue_net_info);
@@ -1541,7 +1541,6 @@ static void radarscp1PaletteInit()
 		}
 	}
 
-	// note: the remaining part of this palette is currently unused
 	DrvPalette[RADARSCP_STAR_COL] = BurnHighCol(
 		compute_res_net(1, 0, radarscp_stars_net_info),
 		compute_res_net(0, 1, radarscp_stars_net_info),
@@ -1549,6 +1548,7 @@ static void radarscp1PaletteInit()
 		0
 	);
 
+	/* note: Oscillating background isn't implemented yet */
 	for (INT32 i = 0; i < 256; i++)
 	{
 		INT32 r = compute_res_net(0, 0, radarscp_blue_net_info);
@@ -1595,8 +1595,9 @@ static void dkongPaletteInit()
 	}
 
 	// used by radarscp
-	DrvPalette[0x100] = BurnHighCol(0xff, 0, 0, 0); // red
-	DrvPalette[0x101] = BurnHighCol(0, 0, 0xff, 0); // blue
+	DrvPalette[RADARSCP_STAR_COL]        = BurnHighCol(0xff, 0, 0, 0); // red
+	for (INT32 i = 0; i < 8; i++)
+		DrvPalette[RADARSCP_GRID_COL_OFFSET + i] = BurnHighCol(0, 0, 0xff, 0); // blue
 }
 
 static void dkong3PaletteInit()
@@ -2040,10 +2041,10 @@ static void draw_grid()
 			if (table[counter] & 0x80)	/* star */
 			{
 				if (rand() & 1)	/* noise coming from sound board */
-					pTransDraw[(y) * nScreenWidth + x] = 0x100;
+					pTransDraw[(y) * nScreenWidth + x] = RADARSCP_STAR_COL;
 			}
-			else if (*grid_enable)			/* radar */
-				pTransDraw[(y) * nScreenWidth + x] = 0x101;
+			else if (*grid_enable && !(table[counter] & 0x80))			/* radar */
+				pTransDraw[(y) * nScreenWidth + x] = (RADARSCP_GRID_COL_OFFSET + *grid_color);
 		}
 
 		counter++;

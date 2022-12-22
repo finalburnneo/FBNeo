@@ -327,6 +327,12 @@ static void __fastcall PgmVideoControllerWriteWord(UINT32 sekAddress, UINT16 wor
 
 static void __fastcall PgmVideoControllerWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
+	switch (sekAddress & 0x0f000)
+	{
+		case 0x0000:
+			return PGMSprBuf[(sekAddress >> 1) & 0x7ff] >> ((~sekAddress & 1) * 8);
+	}
+
 	bprintf (0, _T("VideoController Write Byte: %5.5x, %2.2x PC(%5.5x)\n"), sekAddress, byteValue, SekGetPC(-1));
 }
 

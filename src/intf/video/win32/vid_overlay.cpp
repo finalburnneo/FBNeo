@@ -1917,7 +1917,6 @@ void DetectTurbo()
 
 void VidDisplayInputs(int slot, int state)
 {
-	if (slot==1) DetectTurbo();
 	if (bVidShowInputs)
 	{
 		INT32 inputs[2] = {};

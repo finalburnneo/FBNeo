@@ -28,3 +28,4 @@ bool VidOverlayCanReset();
 
 void VidDebug(const wchar_t *text, float a, float b);
 void VidDisplayInputs(int slot, int state);
+void DetectTurbo();

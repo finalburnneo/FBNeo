@@ -263,6 +263,7 @@ int RunFrame(int bDraw, int bPause, int bInput)
 				}
 				VidDisplayInputs(1, 4);
 			}
+			DetectTurbo();
 		} else {
 			if (nReplayStatus == 2) {
 				GetInput(false);					// Update burner inputs, but not game inputs

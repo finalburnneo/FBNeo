@@ -657,7 +657,7 @@ void QuarkSendChatCmd(char *text, char cmd)
 {
 	char buffer[1024]; // command chat
 	buffer[0] = cmd;
-	strcpy(&buffer[1], text);
+	strncpy(&buffer[1], text, 1023);
 	ggpo_client_chat(ggpo, buffer);
 }
 

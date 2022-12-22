@@ -190,16 +190,18 @@ void install_protection_asic27a_kovsh()
 }
 
 /*
-	This is how the internal arm7 rom calculates the hash for the following games:
+	The internal ARM7 ROM hash checks either the 68K ROM (if there is no External ARM7 ROM) 
+	or the external ROM to ensure that it not been modified. If the hash check fails,
+	the internal ARM7 writes junk to the encryption xor table.
 
 struct define_hash
 {
 	unsigned int start_address;
 	unsigned short add_or_xor;
-	unsigned short length;
+	unsigned int length;
 };
 
-// kovsh
+// kovsh - 68K ROM - checked while encrypted
 static define_hash hash_regions_kovsh[0x0d] = {	// table in asic @ $2144
 	{ 0x00000, 0x0002, 0x1000 },
 	{ 0x48000, 0x0001, 0x8000 },
@@ -216,7 +218,7 @@ static define_hash hash_regions_kovsh[0x0d] = {	// table in asic @ $2144
 	{ 0x39abe, 0, 0 }	// address to find stored hash
 };
 
-// photoy2k
+// photoy2k - 68K ROM - checked while encrypted
 static define_hash hash_regions_photoy2k[0x11] = { // table in asic @ 17c0
 	{ 0x010000, 0x0001, 0x5000 },
 	{ 0x030000, 0x0002, 0x5000 },
@@ -237,24 +239,61 @@ static define_hash hash_regions_photoy2k[0x11] = { // table in asic @ 17c0
 	{ 0x1f0000, 0, 0 } // address to find stored hash
 };
 
-void verify_hash_function()
+// martmast - External ARM7 ROM - checked after decryption
+static define_hash hash_regions_martmast[16+1] = { // table in asic @ 3508
+	{ 0x000000, 0x0001, 0x0500 },
+	{ 0x020000, 0x0002, 0x0500 },
+	{ 0x040000, 0x0001, 0x0500 },
+	{ 0x060000, 0x0002, 0x0500 },
+	{ 0x080000, 0x0001, 0x0500 },
+	{ 0x0a0000, 0x0002, 0x0500 },
+	{ 0x0c0000, 0x0001, 0x0500 },
+	{ 0x0e0000, 0x0002, 0x0500 },
+	{ 0x100000, 0x0001, 0x0500 },
+	{ 0x110000, 0x0002, 0x0500 },
+	{ 0x120000, 0x0001, 0x0500 },
+	{ 0x130000, 0x0002, 0x0500 },
+	{ 0x140000, 0x0001, 0x0500 },
+	{ 0x150000, 0x0002, 0x0500 },
+	{ 0x160000, 0x0001, 0x0500 },
+	{ 0x170000, 0x0002, 0x0500 },
+	{ 0x1fff00, 0, 0 }		// address to find stored hash
+};
+
+// ddp2 - checked after decryption
+static define_hash hash_regions_ddp2[1 + 1] = {
+	{ 0x00000, 0x0001, 0x1fff8 },
+	{ 0x1fffc, 0, 0 }
+};
+
+// kov2 & kov2p - checked after decryption
+static define_hash hash_regions_kov2[1 + 1] = {
+	{ 0x000000, 0x0001, 0x1ffffc },
+	{ 0x1ffffc, 0, 0 }
+};
+
+//	These do not do hash checks
+//		Dragon World 2001
+//		Dragon World Pretty Chance
+
+void verify_hash_function(unsigned char *src, define_hash *ptr)
 {
 	int i, j;
-	unsigned short shash = 0, hash = 0, value, *rom = (unsigned short*)PGM68KROM;
-	define_hash *ptr = hash_regions_kovsh;
-	int entries = sizeof(hash_regions_kovsh)/sizeof(define_hash);
+	unsigned short shash = 0, hash = 0, value, *rom = (unsigned short*)src;
 
-	for (i = 0; i < entries-1; i++, hash += shash)
+	while (1)
 	{
 		for (j = 0, shash = 0; j < ptr->length; j+=2)
 		{
 			value = rom[(ptr->start_address + j)/2];
 			shash = (ptr->add_or_xor == 1) ? (shash + value) : (shash ^ value);
 		}
-			ptr++;
+		ptr++;
+		hash += shash;
+		if (ptr->length == 0) break;
 	}
 	
-	printf ("Calculated: %4.4x, Correct: %4.4x\n", hash, *((unsigned short*)(src + ptr->start_address)));
+	printf ("Calculated: %4.4x, Correct: %4.4x\n", hash, rom[ptr->start_address/2]);
 }
 */
 

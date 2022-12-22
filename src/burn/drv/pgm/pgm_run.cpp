@@ -963,9 +963,14 @@ static void pgm_sprite_buffer()
 	{
 		UINT16 *ram16 = (UINT16*)PGM68KRAM;
 		
+		UINT16 mask[5] = { 0xffff, 0xfbff, 0x7fff, 0xffff, 0xffff }; // The sprite buffer hardware masks these bits!
+		
 		for (INT32 i = 0; i < 0xa00/2; i+= 10/2)
 		{
-			memcpy (PGMSprBuf + (i / (10 / 2)) * (16 / 2), ram16 + i, 10); // 16 bytes per buffered sprite, 10 per pre-buffer
+			for (INT32 j = 0; j < 10 / 2; j++)
+			{
+				PGMSprBuf[(i / (10 / 2)) * (16 / 2) + j] = ram16[i + j] & mask[j];
+			} 
 
 			if ((ram16[i+4] & 0x7fff) == 0) break; // verified on hardware
 		}

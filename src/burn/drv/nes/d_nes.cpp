@@ -21641,6 +21641,42 @@ struct BurnDriver BurnDrvnes_rpoolchal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Titanic (T-Eng, v2.1)
+static struct BurnRomInfo nes_titanicRomDesc[] = {
+	{ "Titanic (T-Eng, v2.1)(2022(pacnsacdave).nes",          524304, 0x4f0bef8a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_titanic)
+STD_ROM_FN(nes_titanic)
+
+struct BurnDriver BurnDrvnes_titanic = {
+	"nes_titanic", NULL, NULL, NULL, "2022",
+	"Titanic (T-Eng, v2.1)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_titanicRomInfo, nes_titanicRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Titanic (China) (Unl)
+static struct BurnRomInfo nes_titaniccRomDesc[] = {
+	{ "Titanic (Unl)(Chi)(2005)(Shenzhen Nanjing Technology).nes",          524304, 0xc63a373f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_titanicc)
+STD_ROM_FN(nes_titanicc)
+
+struct BurnDriver BurnDrvnes_titanicc = {
+	"nes_titanicc", "nes_titanic", NULL, NULL, "2005",
+	"Titanic (China) (Unl)\0", NULL, "Shenzhen Nanjing Technology", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
+	NESGetZipName, nes_titaniccRomInfo, nes_titaniccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
@@ -50563,7 +50599,7 @@ STD_ROM_FN(nes_thunderbolt2)
 
 struct BurnDriver BurnDrvnes_thunderbolt2 = {
 	"nes_thunderbolt2", NULL, NULL, NULL, "1993",
-	"Thunderbolt 2 (Chi)\0", NULL, "Gamtec", "Miscellaneous",
+	"Thunderbolt 2 (China)\0", NULL, "Gamtec", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_thunderbolt2RomInfo, nes_thunderbolt2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

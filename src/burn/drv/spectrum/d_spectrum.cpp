@@ -38589,3 +38589,98 @@ struct BurnDriver BurnSpecTourarkanoid = {
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
+
+// Chispy (English) (128K) (HB)
+
+static struct BurnRomInfo SpecChispyeRomDesc[] = {
+	{ "Chispy 128K EN (2022)(xavisan).tap", 43965, 0x93b9fa2a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecChispye, SpecChispye, Spec128)
+STD_ROM_FN(SpecChispye)
+
+struct BurnDriver BurnSpecChispye = {
+	"spec_chispye", NULL, "spec_spec128", NULL, "2022",
+	"Chispy (English) (128K) (HB)\0", NULL, "xavisan", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecChispyeRomInfo, SpecChispyeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Chispy (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecChispysRomDesc[] = {
+	{ "Chispy 128K ES (2022)(xavisan).tap", 43995, 0xc2c964b0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecChispys, SpecChispys, Spec128)
+STD_ROM_FN(SpecChispys)
+
+struct BurnDriver BurnSpecChispys = {
+	"spec_chispys", "spec_chispye", "spec_spec128", NULL, "2022",
+	"Chispy (Spanish) (128K) (HB)\0", NULL, "xavisan", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecChispysRomInfo, SpecChispysRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Dig Dug Doug (128K) (HB)
+
+static struct BurnRomInfo SpecDigdugdougRomDesc[] = {
+	{ "Dig Dug Doug 128K (2022)(Gabriele Amore).tap", 48202, 0x008a28be, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDigdugdoug, SpecDigdugdoug, Spec128)
+STD_ROM_FN(SpecDigdugdoug)
+
+struct BurnDriver BurnSpecDigdugdoug = {
+	"spec_digdugdoug", NULL, "spec_spec128", NULL, "2022",
+	"Dig Dug Doug (128K) (HB)\0", NULL, "Gabriele Amore", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecDigdugdougRomInfo, SpecDigdugdougRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Speccy Quiz (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecSpeccyquizRomDesc[] = {
+	{ "Speccy Quiz 128K ES (2022)(Amebatron Software).tap", 44628, 0x9c3eb564, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSpeccyquiz, SpecSpeccyquiz, Spec128)
+STD_ROM_FN(SpecSpeccyquiz)
+
+struct BurnDriver BurnSpecSpeccyquiz = {
+	"spec_speccyquiz", NULL, "spec_spec128", NULL, "2022",
+	"Speccy Quiz (Spanish) (128K) (HB)\0", NULL, "Amebatron Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_QUIZ, 0,
+	SpectrumGetZipName, SpecSpeccyquizRomInfo, SpecSpeccyquizRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Turbo the Tortoise 30th Anniversary Edition (128K) (Hack)
+
+static struct BurnRomInfo SpecTurbothetortoise30thRomDesc[] = {
+	{ "Turbo The Tortoise 30th Anniversary Edition (2022)(BiNMaN).tap", 74519, 0x0e488dba, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTurbothetortoise30th, SpecTurbothetortoise30th, Spec128)
+STD_ROM_FN(SpecTurbothetortoise30th)
+
+struct BurnDriver BurnSpecTurbothetortoise30th = {
+	"spec_turbothetortoise30th", NULL, "spec_spec128", NULL, "2022",
+	"Turbo the Tortoise 30th Anniversary Edition (128K) (Hack)\0", NULL, "BiNMaN", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecTurbothetortoise30thRomInfo, SpecTurbothetortoise30thRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};

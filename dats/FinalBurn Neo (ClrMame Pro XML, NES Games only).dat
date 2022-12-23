@@ -16513,7 +16513,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="thunderbolt2">
-		<description>Thunderbolt 2 (Chi)</description>
+		<description>Thunderbolt 2 (China)</description>
 		<year>1993</year>
 		<manufacturer>Gamtec</manufacturer>
 		<rom name="Thunderbolt 2 (Ch).nes" size="262160" crc="ce1813c9"/>
@@ -16669,6 +16669,23 @@
 		<year>1988</year>
 		<manufacturer>Capcom</manufacturer>
 		<rom name="Titan Warriors (USA) (Proto).nes" size="131088" crc="b06f1c46"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="titanicc" cloneof="titanic" romof="titanic">
+		<description>Titanic (China) (Unl)</description>
+		<year>2005</year>
+		<manufacturer>Shenzhen Nanjing Technology</manufacturer>
+		<rom name="Titanic (Unl)(Chi)(2005)(Shenzhen Nanjing Technology).nes" size="524304" crc="c63a373f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="titanic">
+		<comment>Hack</comment>
+		<description>Titanic (T-Eng, v2.1)</description>
+		<year>2022</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Titanic (T-Eng, v2.1)(2022(pacnsacdave).nes" size="524304" crc="4f0bef8a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

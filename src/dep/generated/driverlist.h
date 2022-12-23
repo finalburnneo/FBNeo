@@ -17286,7 +17286,9 @@ DRV		BurnSpecTirnanog;
 DRV		BurnDrvnes_titan;
 DRV		BurnDrvtitanpac;
 DRV		BurnDrvnes_titanwarriors;
+DRV		BurnDrvnes_titanicc;
 DRV		BurnDrvMSX_titanic;
+DRV		BurnDrvnes_titanic;
 DRV		BurnSpectitanictopo1;
 DRV		BurnSpectitanictopo2;
 DRV		BurnSpecTitblinky;
@@ -36472,7 +36474,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_thndbolt,		// Thunderbolt (Jpn)
 	&BurnDrvMSX_thndboltb,		// Thunderbolt (Jpn, Alt 2)
 	&BurnDrvMSX_thndbolta,		// Thunderbolt (Jpn, Alt)
-	&BurnDrvnes_thunderbolt2,	// Thunderbolt 2 (Chi)
+	&BurnDrvnes_thunderbolt2,	// Thunderbolt 2 (China)
 	&BurnDrvmd_tbolt2,			// Thunderbolt II (Prototype)
 	&BurnDrvmd_tbolt2a,			// Thunderbolt II (Unprotected, Prototype)
 	&BurnDrvnes_thundercade,	// Thundercade (USA)
@@ -36572,7 +36574,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_titan,			// Titan (Japan)
 	&BurnDrvtitanpac,			// Titan (Pac-Man hack)
 	&BurnDrvnes_titanwarriors,	// Titan Warriors (USA) (Prototype)
+	&BurnDrvnes_titanicc,		// Titanic (China) (Unl)
 	&BurnDrvMSX_titanic,		// Titanic (Spanish)
+	&BurnDrvnes_titanic,		// Titanic (T-Eng, v2.1)
 	&BurnSpectitanictopo1,		// Titanic - Part 1 (Spanish) (48K)
 	&BurnSpectitanictopo2,		// Titanic - Part 2 (Spanish) (48K)
 	&BurnSpecTitblinky,			// Titanic Blinky (48K)

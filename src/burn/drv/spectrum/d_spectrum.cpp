@@ -38666,21 +38666,3 @@ struct BurnDriver BurnSpecSpeccyquiz = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Turbo the Tortoise 30th Anniversary Edition (128K) (Hack)
-
-static struct BurnRomInfo SpecTurbothetortoise30thRomDesc[] = {
-	{ "Turbo The Tortoise 30th Anniversary Edition (2022)(BiNMaN).tap", 74519, 0x0e488dba, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecTurbothetortoise30th, SpecTurbothetortoise30th, Spec128)
-STD_ROM_FN(SpecTurbothetortoise30th)
-
-struct BurnDriver BurnSpecTurbothetortoise30th = {
-	"spec_turbothetortoise30th", NULL, "spec_spec128", NULL, "2022",
-	"Turbo the Tortoise 30th Anniversary Edition (128K) (Hack)\0", NULL, "BiNMaN", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecTurbothetortoise30thRomInfo, SpecTurbothetortoise30thRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};

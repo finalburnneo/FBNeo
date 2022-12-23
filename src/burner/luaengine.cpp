@@ -12,6 +12,9 @@
 using std::min;
 using std::max;
 
+#include "ggponet.h"
+extern GGPOSession *ggpo;
+
 #ifdef __linux
 #include <unistd.h>
 #include <sys/types.h>
@@ -305,6 +308,19 @@ static int fba_isreplay(lua_State *L) {
 	return kNetSpectator;
 }
 
+// fba.takeover()
+//
+// Finishes a fightcade replay and returns inputs to the user
+static int fba_takeover(lua_State *L) {
+	if (kNetSpectator) {
+		ggpo_close_session(ggpo);
+		kNetGame = 0;
+		kNetSpectator = 0;
+		kNetLua = 1;
+		return true;
+	}
+	return false;
+}
 
 // fba.pause()
 //
@@ -3751,6 +3767,7 @@ static const struct luaL_reg fbalib [] = {
 	{"speedmode", fba_speedmode},
 	{"frameadvance", fba_frameadvance},
 	{"isreplay", fba_isreplay},
+	{"takeover", fba_takeover},
 	{"pause", fba_pause},
 	{"unpause", fba_unpause},
 	{"framecount", movie_framecount},

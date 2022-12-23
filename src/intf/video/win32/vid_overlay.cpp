@@ -1018,7 +1018,7 @@ void VidOverlayEnd()
 
 void VidOverlayQuit()
 {
-	if (game_ranked && gameDetector.state == GameDetector::ST_WAIT_WINNER) {
+	if (kNetGame && game_ranked && gameDetector.state == GameDetector::ST_WAIT_WINNER) {
 		QuarkSendChatCmd("quit", 'S');
 	}
 }

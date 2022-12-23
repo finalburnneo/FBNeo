@@ -1888,8 +1888,16 @@ void DetectTurbo()
 	}
 
 	if (turboArrayPos == 0) {
-		if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) p1_turbo_certainty += p1_turbo_warning - 14;
-		if (p2_turbo_warning > 14 && p2_turbo_certainty < MIN_TURBO_CERTAINTY) p2_turbo_certainty += p2_turbo_warning - 14;
+		if (p1_turbo_certainty < MIN_TURBO_CERTAINTY && p1_turbo_warning > 14) {
+			if (p1_turbo_warning < 16) p1_turbo_certainty += 1;
+			else if (p1_turbo_warning < 19) p1_turbo_certainty += p1_turbo_warning - 10;
+			else p1_turbo_certainty += p1_turbo_warning;
+		}
+		if (p2_turbo_certainty < MIN_TURBO_CERTAINTY && p2_turbo_warning > 14) {
+			if (p2_turbo_warning < 16) p2_turbo_certainty += 1;
+			else if (p2_turbo_warning < 19) p2_turbo_certainty += p2_turbo_warning - 10;
+			else p2_turbo_certainty += p2_turbo_warning;
+		}
 		if (debug_turbo) {
 			if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) {
 				_sntprintf(szWarn1, 128, _T("p1_turbo_certainty=%d"), p1_turbo_certainty);

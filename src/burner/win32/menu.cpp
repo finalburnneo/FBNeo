@@ -1413,6 +1413,14 @@ void MenuEnableItems()
 			EnableMenuItem(hMenu, MENU_PAUSE,			MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_ENABLECHEAT,		MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_SNAPFACT,		MF_GRAYED | MF_BYCOMMAND);
+			if (!kNetSpectator) { // changing the blitter while playing causes desync
+				EnableMenuItem(hMenu, MENU_BLITTER_1,                   MF_GRAYED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_BLITTER_2,                   MF_GRAYED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_BLITTER_3,                   MF_GRAYED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_BLITTER_4,                   MF_GRAYED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_BLITTER_5,                   MF_GRAYED | MF_BYCOMMAND);
+				EnableMenuItem(hMenu, MENU_AVISTART,                   MF_GRAYED | MF_BYCOMMAND);
+			}
 		} else {
 			EnableMenuItem(hMenu, MENU_LOAD,			MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_STARTNET,		MF_ENABLED | MF_BYCOMMAND);

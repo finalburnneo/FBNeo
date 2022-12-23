@@ -360,6 +360,12 @@ static UINT16 __fastcall PgmVideoControllerReadWord(UINT32 sekAddress)
 
 static UINT8 __fastcall PgmVideoControllerReadByte(UINT32 sekAddress)
 {
+	switch (sekAddress & 0x0f000)
+	{
+		case 0x0000:
+			return PGMSprBuf[(sekAddress >> 1) & 0x7ff] >> ((~sekAddress & 1) * 8);
+	}
+
 	bprintf (0, _T("VideoController Read Byte: %5.5x, PC(%5.5x)\n"), sekAddress, SekGetPC(-1));
 
 	return 0;
@@ -963,9 +969,14 @@ static void pgm_sprite_buffer()
 	{
 		UINT16 *ram16 = (UINT16*)PGM68KRAM;
 		
+		UINT16 mask[5] = { 0xffff, 0xfbff, 0x7fff, 0xffff, 0xffff }; // The sprite buffer hardware masks these bits!
+		
 		for (INT32 i = 0; i < 0xa00/2; i+= 10/2)
 		{
-			memcpy (PGMSprBuf + (i / (10 / 2)) * (16 / 2), ram16 + i, 10); // 16 bytes per buffered sprite, 10 per pre-buffer
+			for (INT32 j = 0; j < 10 / 2; j++)
+			{
+				PGMSprBuf[(i / (10 / 2)) * (16 / 2) + j] = ram16[i + j] & mask[j];
+			} 
 
 			if ((ram16[i+4] & 0x7fff) == 0) break; // verified on hardware
 		}

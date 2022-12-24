@@ -1721,7 +1721,6 @@ void VidDebug(const wchar_t *text, float a, float b)
 }
 
 #define TURBOARRAYSIZE 60
-#define MIN_TURBO_CERTAINTY 32
 static int P1LP_Array[TURBOARRAYSIZE] = {};
 static int P1MP_Array[TURBOARRAYSIZE] = {};
 static int P1HP_Array[TURBOARRAYSIZE] = {};
@@ -1829,6 +1828,8 @@ void DetectTurbo()
 	TCHAR szWarn2[128];
 	int p1_buttons_with_turbo = 0;
 	int p2_buttons_with_turbo = 0;
+	int MIN_TURBO_CERTAINTY = 160;
+	if (game_ranked) MIN_TURBO_CERTAINTY=32;
 
 	for (int i=0; i < 6; i++) {
 		if (p1_tps[i] > 14) {
@@ -1841,7 +1842,7 @@ void DetectTurbo()
 						if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_tps[i] == p1_max_tps[i]) {
 							_sntprintf(szWarn1, 128, _T("Turbo/Autofire detected on Player1 button%d: %dtps"), i+1, p1_tps[i]);
 							VidOverlayAddChatLine(_T("System"), szWarn1);
-							p1_max_tps[i] += 2; // prevent the message from showing again if the autofire is at a fixed rate
+							p1_max_tps[i] += 3; // prevent the message from showing again if the autofire is at a fixed rate
 						}
 					} else {
 						if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_tps[i] == p1_max_tps[i]) {
@@ -1868,7 +1869,7 @@ void DetectTurbo()
 						if (p2_turbo_certainty >= MIN_TURBO_CERTAINTY && p2_tps[i] == p2_max_tps[i]) {
 							_sntprintf(szWarn2, 128, _T("Turbo/Autofire detected on Player2 button%d: %dtps"), i+1, p2_tps[i]);
 							VidOverlayAddChatLine(_T("System"), szWarn2);
-							p2_max_tps[i] += 2;
+							p2_max_tps[i] += 3;
 						}
 					} else {
 						if (p2_turbo_certainty >= MIN_TURBO_CERTAINTY && p2_tps[i] == p2_max_tps[i]) {
@@ -1890,13 +1891,15 @@ void DetectTurbo()
 	if (turboArrayPos == 0) {
 		if (p1_turbo_certainty < MIN_TURBO_CERTAINTY && p1_turbo_warning > 14) {
 			if (p1_turbo_warning < 16) p1_turbo_certainty += 1;
-			else if (p1_turbo_warning < 19) p1_turbo_certainty += p1_turbo_warning - 10;
-			else p1_turbo_certainty += p1_turbo_warning;
+			else if (p1_turbo_warning < 18) p1_turbo_certainty += p1_turbo_warning - 12;
+			else if (p1_turbo_warning < 21) p1_turbo_certainty += p1_turbo_warning;
+			else p1_turbo_certainty += p1_turbo_warning * 2;
 		}
 		if (p2_turbo_certainty < MIN_TURBO_CERTAINTY && p2_turbo_warning > 14) {
 			if (p2_turbo_warning < 16) p2_turbo_certainty += 1;
-			else if (p2_turbo_warning < 19) p2_turbo_certainty += p2_turbo_warning - 10;
-			else p2_turbo_certainty += p2_turbo_warning;
+			else if (p2_turbo_warning < 18) p2_turbo_certainty += p2_turbo_warning - 12;
+			else if (p2_turbo_warning < 21) p2_turbo_certainty += p2_turbo_warning;
+			else p2_turbo_certainty += p2_turbo_warning * 2;
 		}
 		if (debug_turbo) {
 			if (p1_turbo_warning > 14 && p1_turbo_certainty < MIN_TURBO_CERTAINTY) {

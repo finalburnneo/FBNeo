@@ -24392,7 +24392,7 @@ struct BurnDriver BurnSpecPunkstar = {
 // Turbo the Tortoise - 30th Anniversary Edition (128K)
 
 static struct BurnRomInfo SpecTurbothetortoise30thRomDesc[] = {
-	{ "Turbo The Tortoise 30th Anniversary Edition (2022)(BiNMaN).tap", 74768, 0xe9568574, BRF_ESS | BRF_PRG },
+	{ "Turbo The Tortoise 30th Anniversary Edition (2022)(BiNMaN).tap", 74768, 0x0207ae31, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTurbothetortoise30th, SpecTurbothetortoise30th, Spec128)

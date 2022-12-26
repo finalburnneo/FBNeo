@@ -1536,18 +1536,9 @@ static void radarscp1PaletteInit()
 
 	for (INT32 i = 0; i < 256; i++) {
 		if (!(i & 0x03)) {
-#if 0
-			// the following (correct) code makes the game hardly playable
-			// with a blinding white bgcolor
 			INT32 r = compute_res_net(0, 0, radarscp1_net_info);
 			INT32 g = compute_res_net(0, 1, radarscp1_net_info);
 			INT32 b = compute_res_net(0, 2, radarscp1_net_info);
-#else
-			// workaround using code from parent romset
-			INT32 r = compute_res_net(1, 0, radarscp_net_bck_info);
-			INT32 g = compute_res_net(1, 1, radarscp_net_bck_info);
-			INT32 b = compute_res_net(1, 2, radarscp_net_bck_info);
-#endif
 
 			DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}
@@ -2034,35 +2025,53 @@ static INT32 s2650DkongExit()
 	return 0;
 }
 
-static void draw_grid()
+static void radarscp_draw_background()
 {
+	UINT16 *bg_bits = BurnBitmapGetBitmap(1);
 	const UINT8 *table = DrvGfxROM2;
-	INT32 x,y,counter;
 
-	counter = (radarscp1) ? 0x000 : 0x400; //flip_screen ? 0x000 : 0x400;
+	INT32 counter = 0;
+	INT32 offset = (radarscp1) ? 0x000 : 0x400; //flip_screen ? 0x000 : 0x400;
 
-	x = 0;
-	y = 0;
+	INT32 y = 0;
 
+	// TODO : implement the CD4049 responsible for handling oscillating background and star's noise
 	while (y < nScreenHeight)
 	{
-		x = 4 * (table[counter] & 0x7f);
-
-		if (x >= 0 && x < nScreenWidth)
+		INT32 x = 0;
+		while (x < nScreenWidth)
 		{
-			if (table[counter] & 0x80)	/* star */
+			if ((counter < 0x800) && (x == 4 * (table[counter|offset] & 0x7f)))
 			{
-				if (rand() & 1)	/* noise coming from sound board */
-					pTransDraw[(y) * nScreenWidth + x] = RADARSCP_STAR_COL;
+				if ( (rand() & 1) && (table[counter|offset] & 0x80) )    /* star */
+					bg_bits[(y) * nScreenWidth + x] = RADARSCP_STAR_COL;
+				else if (*grid_enable && !(table[counter|offset] & 0x80))           /* radar */
+					bg_bits[(y) * nScreenWidth + x] = (RADARSCP_GRID_COL_OFFSET + *grid_color);
+				else
+					bg_bits[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET;
+				counter++;
 			}
-			else if (*grid_enable && !(table[counter] & 0x80))			/* radar */
-				pTransDraw[(y) * nScreenWidth + x] = (RADARSCP_GRID_COL_OFFSET + *grid_color);
+			else
+				bg_bits[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET;
+			x++;
 		}
+		while ((counter < 0x800) && (x < 4 * (table[counter|offset] & 0x7f)))
+			counter++;
+		y++;
+	}
 
-		counter++;
-
-		if (x >= 4 * (table[counter] & 0x7f))
-			y++;
+	y = 0;
+	while (y < nScreenHeight)
+	{
+		INT32 x = 0;
+		while (x < nScreenWidth)
+		{
+			UINT8 draw_ok = !(pTransDraw[(y) * nScreenWidth + x] & 0x01) && !(pTransDraw[(y) * nScreenWidth + x] & 0x02);
+			if (draw_ok)
+				pTransDraw[(y) * nScreenWidth + x] = bg_bits[(y) * nScreenWidth + x];
+			x++;
+		}
+		y++;
 	}
 }
 
@@ -2078,7 +2087,7 @@ static void draw_sprites(UINT32 code_mask, UINT32 mask_bank, UINT32 shift_bits, 
 			INT32 sx    = DrvSprRAM[offs + 3] - 8;
 			INT32 attr  = DrvSprRAM[offs + ((swap) ? 1 : 2)];
 			INT32 code  = (DrvSprRAM[offs + ((swap) ? 2 : 1)] & code_mask) + ((attr & mask_bank) << shift_bits);
-			INT32 sy    =(240 - DrvSprRAM[offs + 0] + 7) + yoffset;
+			INT32 sy    = (240 - DrvSprRAM[offs + 0] + 7) + yoffset;
 			INT32 color = (attr & 0x0f) + (*palette_bank * 0x10);
 			INT32 flipx = attr & 0x80;
 			INT32 flipy = DrvSprRAM[offs + 1] & ((swap) ? 0x40 : 0x80);
@@ -2103,13 +2112,9 @@ static void draw_layer()
 		INT32 code = DrvVidRAM[offs] + (*gfx_bank * 256);
 		INT32 color;
 		if (radarscp1)
-		{
 			color = (DrvColPROM[0x300 + (offs & 0x1f)] & 0x0f) | (*palette_bank<<4);
-		}
 		else
-		{
 			color = (DrvColPROM[0x200 + (offs & 0x1f) + ((offs / 0x80) * 0x20)] & 0x0f) + (*palette_bank * 0x10);
-		}
 
 		Draw8x8Tile(pTransDraw, code, sx, sy - 16, 0, 0, color, 2, 0, DrvGfxROM0);
 	}
@@ -2140,8 +2145,8 @@ static INT32 radarscpDraw()
 
 	BurnTransferClear();
 	if (nBurnLayer & 1) draw_layer();
-	if (nBurnLayer & 2) draw_grid();
 	if (nSpriteEnable & 1) draw_sprites(0x7f, 0x40, 1, 0);
+	if (nBurnLayer & 2) radarscp_draw_background();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2398,6 +2403,8 @@ static INT32 radarscpInit()
 		ZetClose();
 	}
 
+	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight, false); // background bitmap
+
 	return ret;
 }
 
@@ -2607,6 +2614,8 @@ static INT32 radarscp1Init()
 		ZetClose();
 		radarscp1 = 1;
 	}
+
+	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight, false); // background bitmap
 
 	return ret;
 }

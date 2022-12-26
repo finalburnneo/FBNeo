@@ -1595,6 +1595,9 @@ static void dkongPaletteInit()
 		INT32 b = 255 - (0x55 * bit0 + 0xaa * bit1);
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+
+		// used by radarscp
+		DrvPalette[RADARSCP_BCK_COL_OFFSET + i] = BurnHighCol(0, 0, 0, 0); // black
 	}
 
 	// used by radarscp

@@ -443,9 +443,12 @@ static struct BurnDIPInfo Radarscp1DIPList[]=
 	{0x0a, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0a, 0x01, 0x80, 0x00, "Cocktail"		},
 
+#if 0
+	// note : legacy palette never worked properly for this one
 	{0   , 0xfe, 0   ,    3, "Palette"	},
 	{0x0b, 0x01, 0x07, 0x04, "New"		},
 	{0x0b, 0x01, 0x07, 0x02, "Legacy"	},
+#endif
 };
 
 STDDIPINFO(Radarscp1)
@@ -1338,7 +1341,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x010000;
 	DrvGfxROM2		= Next; Next += 0x000800;
 
-	DrvColPROM		= Next; Next += 0x000300;
+	DrvColPROM		= Next; Next += 0x000400;
 	DrvMapROM		= Next; Next += 0x000200; // for s2650 sets
 
 	DrvRevMap		= (INT32*)Next; Next += 0x000200 * sizeof(INT32);
@@ -1533,9 +1536,18 @@ static void radarscp1PaletteInit()
 
 	for (INT32 i = 0; i < 256; i++) {
 		if (!(i & 0x03)) {
+#if 0
+			// the following (correct) code makes the game hardly playable
+			// with a blinding white bgcolor
 			INT32 r = compute_res_net(0, 0, radarscp1_net_info);
 			INT32 g = compute_res_net(0, 1, radarscp1_net_info);
 			INT32 b = compute_res_net(0, 2, radarscp1_net_info);
+#else
+			// workaround using code from parent romset
+			INT32 r = compute_res_net(1, 0, radarscp_net_bck_info);
+			INT32 g = compute_res_net(1, 1, radarscp_net_bck_info);
+			INT32 b = compute_res_net(1, 2, radarscp_net_bck_info);
+#endif
 
 			DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}
@@ -2088,8 +2100,16 @@ static void draw_layer()
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = (offs / 0x20) * 8;
 
-		INT32 code  = DrvVidRAM[offs] + (*gfx_bank * 256);
-		INT32 color =(DrvColPROM[0x200 + (offs & 0x1f) + ((offs / 0x80) * 0x20)] & 0x0f) + (*palette_bank * 0x10);
+		INT32 code = DrvVidRAM[offs] + (*gfx_bank * 256);
+		INT32 color;
+		if (radarscp1)
+		{
+			color = (DrvColPROM[0x300 + (offs & 0x1f)] & 0x0f) | (*palette_bank<<4);
+		}
+		else
+		{
+			color = (DrvColPROM[0x200 + (offs & 0x1f) + ((offs / 0x80) * 0x20)] & 0x0f) + (*palette_bank * 0x10);
+		}
 
 		Draw8x8Tile(pTransDraw, code, sx, sy - 16, 0, 0, color, 2, 0, DrvGfxROM0);
 	}
@@ -2481,7 +2501,7 @@ static INT32 Dkong3Scan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvRadarscp = {
 	"radarscp", NULL, NULL, NULL, "1980",
-	"Radar Scope (TRS02, rev. D)\0", "No sound", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS02, rev. D)\0", "No sound / wrong bgcolor", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscpRomInfo, radarscpRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
@@ -2521,7 +2541,7 @@ STD_ROM_FN(radarscpc)
 
 struct BurnDriver BurnDrvRadarscpc = {
 	"radarscpc", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS02?, rev. C)\0", "No sound", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS02?, rev. C)\0", "No sound / wrong bgcolor", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscpcRomInfo, radarscpcRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
@@ -2558,7 +2578,7 @@ static struct BurnRomInfo radarscp1RomDesc[] = {
 
 	{ "trs-s__4h.4h",	0x0800, 0xd1f1b48c, 3 }, // 16 m58819 speech
 
-	{ "trs01v1d.bin",	0x0100, 0x1b828315, 8 }, // 17 unused proms
+	{ "trs01v1d.bin",	0x0100, 0x1b828315, 8 }, // 17 undumped prom, this one is from parent set
 };
 
 STD_ROM_PICK(radarscp1)
@@ -2570,6 +2590,8 @@ static INT32 radarscp1RomLoad()
 
 	// load gfx4
 	// load speech
+
+	if (BurnLoadRom(DrvColPROM + 0x0300, 17, 1)) return 1;
 
 	return 0;
 }
@@ -2591,7 +2613,7 @@ static INT32 radarscp1Init()
 
 struct BurnDriver BurnDrvRadarscp1 = {
 	"radarscp1", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS01)\0", "No sound / Gfx Issues", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS01)\0", "No sound / wrong bgcolor", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, Radarscp1DIPInfo,

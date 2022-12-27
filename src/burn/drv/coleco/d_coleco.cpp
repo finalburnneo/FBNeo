@@ -9716,7 +9716,7 @@ struct BurnDriver BurnDrvcv_xyzolog = {
     272, 228, 4, 3
 };
 
-// Asteroids
+// Asteroids (SGM) (HB)
 
 static struct BurnRomInfo cv_AsteroidsRomDesc[] = {
 	{ "Asteroids (2021)(Team Pixelboy).rom", 32768, 0x94bcf1d1, BRF_ESS | BRF_PRG },
@@ -9727,15 +9727,15 @@ STD_ROM_FN(cv_Asteroids)
 
 struct BurnDriver BurnDrvcv_Asteroids = {
 	"cv_asteroids", NULL, "cv_coleco", NULL, "2021",
-	"Asteroids (SGM) (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
+	"Asteroids (SGM) (HB)\0", "SGM - Super Game Module", "Team Pixelboy", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SHOOT, 0,
 	CVGetZipName, cv_AsteroidsRomInfo, cv_AsteroidsRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-// Clock
+// Clock (HB)
 
 static struct BurnRomInfo cv_ClockRomDesc[] = {
 	{ "Clock (2021)(Team Pixelboy).rom", 8192, 0xb2f28b90, BRF_ESS | BRF_PRG },
@@ -9746,15 +9746,15 @@ STD_ROM_FN(cv_Clock)
 
 struct BurnDriver BurnDrvcv_Clock = {
 	"cv_clock", NULL, "cv_coleco", NULL, "2021",
-	"Clock\0", NULL, "Team Pixelboy", "ColecoVision",
+	"Clock (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_ClockRomInfo, cv_ClockRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
 
-// Star Castle
+// Star Castle (HB)
 
 static struct BurnRomInfo cv_StarcastleRomDesc[] = {
 	{ "Star Castle (2021)(Team Pixelboy).rom", 32768, 0xb48b9d51, BRF_ESS | BRF_PRG },
@@ -9765,11 +9765,10 @@ STD_ROM_FN(cv_Starcastle)
 
 struct BurnDriver BurnDrvcv_Starcastle = {
 	"cv_starcastle", NULL, "cv_coleco", NULL, "2021",
-	"Star Castle (SGM) (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
+	"Star Castle (HB)\0", NULL, "Team Pixelboy", "ColecoVision",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_COLECO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_SHOOT, 0,
 	CVGetZipName, cv_StarcastleRomInfo, cv_StarcastleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
-

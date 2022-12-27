@@ -591,7 +591,7 @@ struct BurnDriver BurnDrvpce_blodia = {
 	"pce_blodia", NULL, NULL, NULL, "1990",
 	"Blodia\0", NULL, "Hudson Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PUZZLE, 0,
 	PceGetZipName, pce_blodiaRomInfo, pce_blodiaRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -611,7 +611,7 @@ struct BurnDriver BurnDrvpce_bodycon2 = {
 	"pce_bodycon2", NULL, NULL, NULL, "1993",
 	"Body Conquest II\0", NULL, "Games Express", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RPG, 0,
 	PceGetZipName, pce_bodycon2RomInfo, pce_bodycon2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -751,7 +751,7 @@ struct BurnDriver BurnDrvpce_breakin = {
 	"pce_breakin", NULL, NULL, NULL, "1989",
 	"Break In\0", NULL, "Naxat Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_PCENGINE_PCENGINE, GBF_SPORTSMISC, 0,
 	PceGetZipName, pce_breakinRomInfo, pce_breakinRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -791,7 +791,7 @@ struct BurnDriver BurnDrvpce_bullfght = {
 	"pce_bullfght", NULL, NULL, NULL, "1989",
 	"Bull Fight - Ring no Haja\0", NULL, "Cream", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
 	PceGetZipName, pce_bullfghtRomInfo, pce_bullfghtRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -811,7 +811,7 @@ struct BurnDriver BurnDrvpce_burnangl = {
 	"pce_burnangl", NULL, NULL, NULL, "1990",
 	"Burning Angels\0", NULL, "Naxat Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_VERSHOOT, 0,
 	PceGetZipName, pce_burnanglRomInfo, pce_burnanglRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -831,7 +831,7 @@ struct BurnDriver BurnDrvpce_cyberx = {
 	"pce_cyberx", NULL, NULL, NULL, "1989",
 	"Busou Keiji - Cyber Cross\0", NULL, "Face", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	PceGetZipName, pce_cyberxRomInfo, pce_cyberxRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -851,7 +851,7 @@ struct BurnDriver BurnDrvpce_cadash = {
 	"pce_cadash", NULL, NULL, NULL, "1991",
 	"Cadash\0", "Bad graphics", "Taito", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_SCRFIGHT | GBF_RPG, 0,
 	PceGetZipName, pce_cadashRomInfo, pce_cadashRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -871,7 +871,7 @@ struct BurnDriver BurnDrvpce_champwrs = {
 	"pce_champwrs", NULL, NULL, NULL, "1990",
 	"Champion Wrestler\0", NULL, "Taito", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
 	PceGetZipName, pce_champwrsRomInfo, pce_champwrsRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -911,7 +911,7 @@ struct BurnDriver BurnDrvpce_chikuden = {
 	"pce_chikuden", NULL, NULL, NULL, "1990",
 	"Chikudenya Toubei - Kubikiri Yakata Yori\0", NULL, "Naxat Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ADV, 0,
 	PceGetZipName, pce_chikudenRomInfo, pce_chikudenRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -931,7 +931,7 @@ struct BurnDriver BurnDrvpce_chikuden1 = {
 	"pce_chikuden1", "pce_chikuden", NULL, NULL, "1990",
 	"Chikudenya Toubei - Kubikiri Yakata Yori (Alt)\0", NULL, "Naxat Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ADV, 0,
 	PceGetZipName, pce_chikuden1RomInfo, pce_chikuden1RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3311,7 +3311,7 @@ struct BurnDriver BurnDrvpce_mesopot = {
 	"pce_mesopot", NULL, NULL, NULL, "1991",
 	"Mesopotamia\0", NULL, "Atlus", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ACTION, 0,
 	PceGetZipName, pce_mesopotRomInfo, pce_mesopotRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3331,7 +3331,7 @@ struct BurnDriver BurnDrvpce_metlstok = {
 	"pce_metlstok", NULL, NULL, NULL, "1991",
 	"Metal Stoker\0", NULL, "Face", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RUNGUN, 0,
 	PceGetZipName, pce_metlstokRomInfo, pce_metlstokRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3371,7 +3371,7 @@ struct BurnDriver BurnDrvpce_momogdn = {
 	"pce_momogdn", NULL, NULL, NULL, "1992",
 	"Momotarou Densetsu Gaiden Dai 1 Shuu\0", NULL, "Hudson Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RPG, 0,
 	PceGetZipName, pce_momogdnRomInfo, pce_momogdnRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3391,7 +3391,7 @@ struct BurnDriver BurnDrvpce_momo2 = {
 	"pce_momo2", NULL, NULL, NULL, "1990",
 	"Momotarou Densetsu II\0", NULL, "Hudson Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RPG, 0,
 	PceGetZipName, pce_momo2RomInfo, pce_momo2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3411,7 +3411,7 @@ struct BurnDriver BurnDrvpce_momotrbo = {
 	"pce_momotrbo", NULL, NULL, NULL, "1990",
 	"Momotarou Densetsu Turbo\0", NULL, "Hudson Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_RPG, 0,
 	PceGetZipName, pce_momotrboRomInfo, pce_momotrboRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3431,7 +3431,7 @@ struct BurnDriver BurnDrvpce_momoktsg = {
 	"pce_momoktsg", NULL, NULL, NULL, "1990",
 	"Momotarou Katsugeki\0", NULL, "Hudson Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
 	PceGetZipName, pce_momoktsgRomInfo, pce_momoktsgRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3451,7 +3451,7 @@ struct BurnDriver BurnDrvpce_mnstprow = {
 	"pce_mnstprow", NULL, NULL, NULL, "1991",
 	"Monster Pro Wres\0", NULL, "ASK", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_VSFIGHT, 0,
 	PceGetZipName, pce_mnstprowRomInfo, pce_mnstprowRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3471,7 +3471,7 @@ struct BurnDriver BurnDrvpce_moritash = {
 	"pce_moritash", NULL, NULL, NULL, "1991",
 	"Morita Shougi PC\0", NULL, "NEC Avenue", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_PCENGINE, GBF_STRATEGY, 0,
 	PceGetZipName, pce_moritashRomInfo, pce_moritashRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3491,7 +3491,7 @@ struct BurnDriver BurnDrvpce_motoroad = {
 	"pce_motoroad", NULL, NULL, NULL, "1989",
 	"Moto Roader\0", NULL, "NCS", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_RACING, 0,
 	PceGetZipName, pce_motoroadRomInfo, pce_motoroadRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3511,7 +3511,7 @@ struct BurnDriver BurnDrvpce_motorod2 = {
 	"pce_motorod2", NULL, NULL, NULL, "1991",
 	"Moto Roader II\0", NULL, "Masiya", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_RACING, 0,
 	PceGetZipName, pce_motorod2RomInfo, pce_motorod2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3531,7 +3531,7 @@ struct BurnDriver BurnDrvpce_motorod2a = {
 	"pce_motorod2a", "pce_motorod2", NULL, NULL, "1991",
 	"Moto Roader II (Alt)\0", NULL, "Masiya", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_RACING, 0,
 	PceGetZipName, pce_motorod2aRomInfo, pce_motorod2aRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3551,7 +3551,7 @@ struct BurnDriver BurnDrvpce_mrheli = {
 	"pce_mrheli", NULL, NULL, NULL, "1989",
 	"Mr. Heli no Daibouken\0", NULL, "Irem", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
 	PceGetZipName, pce_mrheliRomInfo, pce_mrheliRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -3571,7 +3571,7 @@ struct BurnDriver BurnDrvpce_mrheli1 = {
 	"pce_mrheli1", "pce_mrheli", NULL, NULL, "1989",
 	"Mr. Heli no Daibouken (Alt)\0", NULL, "Irem", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
 	PceGetZipName, pce_mrheli1RomInfo, pce_mrheli1RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -6851,7 +6851,7 @@ struct BurnDriver BurnDrvtg_bravoman = {
 	"tg_bravoman", NULL, NULL, NULL, "1990",
 	"Bravoman\0", NULL, "NEC", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_TG16, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	TgGetZipName, tg_bravomanRomInfo, tg_bravomanRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -6871,7 +6871,7 @@ struct BurnDriver BurnDrvtg_cadash = {
 	"tg_cadash", NULL, NULL, NULL, "1991",
 	"Cadash\0", "Bad graphics", "Working Designs", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_TG16, GBF_SCRFIGHT | GBF_RPG, 0,
 	TgGetZipName, tg_cadashRomInfo, tg_cadashRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -6891,7 +6891,7 @@ struct BurnDriver BurnDrvtg_forevbox = {
 	"tg_forevbox", NULL, NULL, NULL, "1991",
 	"Champions Forever Boxing\0", "Bad sound", "NEC", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_TG16, GBF_VSFIGHT, 0,
 	TgGetZipName, tg_forevboxRomInfo, tg_forevboxRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -6911,7 +6911,7 @@ struct BurnDriver BurnDrvtg_chewman = {
 	"tg_chewman", NULL, NULL, NULL, "1990",
 	"Chew Man Fu\0", NULL, "NEC", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_TG16, GBF_MAZE | GBF_ACTION, 0,
 	TgGetZipName, tg_chewmanRomInfo, tg_chewmanRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -6931,7 +6931,7 @@ struct BurnDriver BurnDrvtg_chinawar = {
 	"tg_chinawar", NULL, NULL, NULL, "1989",
 	"China Warrior\0", NULL, "NEC", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_TG16, GBF_SCRFIGHT, 0,
 	TgGetZipName, tg_chinawarRomInfo, tg_chinawarRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -7551,7 +7551,7 @@ struct BurnDriver BurnDrvtg_miltrymd = {
 	"tg_miltrymd", NULL, NULL, NULL, "1989",
 	"Military Madness\0", NULL, "NEC", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PCENGINE_TG16, GBF_STRATEGY, 0,
 	TgGetZipName, tg_miltrymdRomInfo, tg_miltrymdRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -7571,7 +7571,7 @@ struct BurnDriver BurnDrvtg_motoroad = {
 	"tg_motoroad", NULL, NULL, NULL, "1989",
 	"Moto Roader\0", NULL, "NEC", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_RACING, 0,
 	TgGetZipName, tg_motoroadRomInfo, tg_motoroadRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -8951,7 +8951,7 @@ STD_ROM_PICK(pce_bubblegme)
 STD_ROM_FN(pce_bubblegme)
 
 struct BurnDriver BurnDrvpce_bubblegme = {
-	"pce_bubblegme", "pce_bubblegm", NULL, NULL, "2008-2022",
+	"pce_bubblegme", "pce_bubblegm", NULL, NULL, "2022",
 	"Bubblegum Crash! - Knight Sabers 2034 (Hack, English)\0", NULL, "Dave Shadoff, filler", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ADV, 0,
@@ -9145,6 +9145,42 @@ struct BurnDriver BurnDrvpce_dinoforce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_HORSHOOT, 0,
 	PceGetZipName, pce_dinoforceRomInfo, pce_dinoforceRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+// Mashin Eiyuuden Wataru
+static struct BurnRomInfo pce_mashwataruRomDesc[] = {
+	{ "Mashin Eiyuuden Wataru (Japan)(1988)(Hudson Soft).pce", 0x040000, 0x2f8935aa, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_mashwataru)
+STD_ROM_FN(pce_mashwataru)
+
+struct BurnDriver BurnDrvpce_mashwataru = {
+	"pce_mashwataru", NULL, NULL, NULL, "1988",
+	"Mashin Eiyuuden Wataru\0", NULL, "Hudson Soft", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM | GBF_ADV, 0,
+	PceGetZipName, pce_mashwataruRomInfo, pce_mashwataruRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
+
+// Mashin Eiyuuden Wataru (Hack, English)
+static struct BurnRomInfo pce_mashwatarueRomDesc[] = {
+	{ "Mashin Eiyuuden Wataru (English v1.0)(2022)(Stardust Crusaders).pce", 0x080000, 0x53e14cb5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_mashwatarue)
+STD_ROM_FN(pce_mashwatarue)
+
+struct BurnDriver BurnDrvpce_mashwatarue = {
+	"pce_mashwatarue", "pce_mashwataru", NULL, NULL, "2022",
+	"Mashin Eiyuuden Wataru (Hack, English)\0", NULL, "Stardust Crusaders", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM | GBF_ADV, 0,
+	PceGetZipName, pce_mashwatarueRomInfo, pce_mashwatarueRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };

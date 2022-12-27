@@ -1346,7 +1346,7 @@ static INT32 MemIndex()
 
 	DrvRevMap		= (INT32*)Next; Next += 0x000200 * sizeof(INT32);
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0208 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0210 * sizeof(UINT32); // 0x209 colors, padded to 0x210
 
 	AllRam			= Next;
 

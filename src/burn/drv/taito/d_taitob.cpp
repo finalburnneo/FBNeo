@@ -2050,6 +2050,12 @@ static INT32 DrvFrame()
 	}
 
 	TaitoMakeInputsFunction();
+	
+	// @FC
+	extern int kNetGame, kNetSpectator, kNetVersion;
+	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strcmp(BurnDrvGetTextA(DRV_NAME), "pbobble") && (kNetGame || kNetSpectator)) {
+		TC0220IOCDip[0] = 0xff;
+	}
 
 	SekOpen(0);
 	ZetOpen(0);

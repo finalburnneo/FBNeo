@@ -725,8 +725,9 @@ enum NetVersion
 	NET_VERSION_FIX_DIAGONALS = 12,
 	NET_VERSION_DISABLE_FORCE_60HZ = 12,
 	NET_VERSION_CPS_RW_SCAN = 12,
+	NET_VERSION_ONLINE_DIPS = 13,
 	// Current version
-	NET_VERSION	= 12,
+	NET_VERSION	= 13,
 };
 
 #ifdef __cplusplus

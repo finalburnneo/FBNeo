@@ -680,6 +680,13 @@ static INT32 DrvFrame()
 	}
 
 	{
+		// @FC
+		extern int kNetGame, kNetSpectator, kNetVersion;
+		if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strcmp(BurnDrvGetTextA(DRV_NAME), "wwfsstar") && (kNetGame || kNetSpectator)) {
+			DrvDips[0] = 0xff;
+			DrvDips[1] = 0xff;
+		}
+		
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= DrvJoy1[i] << i;

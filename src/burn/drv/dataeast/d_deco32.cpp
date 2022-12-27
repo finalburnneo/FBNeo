@@ -3524,11 +3524,20 @@ static INT32 DrvFrame()
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
 
-		// @FC
-		extern int kNetGame, kNetSpectator;
+		// @FC - captaven
+		extern int kNetGame, kNetSpectator, kNetVersion;
 		if (kNetGame || kNetSpectator) {
-			DrvDips[1] = 0xfe;
-			DrvDips[4] = 0x04;
+			if(kNetVersion >= NET_VERSION_ONLINE_DIPS && !strcmp(BurnDrvGetTextA(DRV_NAME), "captaven")){
+				DrvDips[0] = 0xff;
+				DrvDips[1] = 0x7f;
+				DrvDips[2] = 0xff;
+				DrvDips[3] = 0x00;
+			}
+			// @FC - all others
+			else {
+				DrvDips[1] = 0xfe;
+				DrvDips[4] = 0x04;
+			}
 		}
 
 		if (game_select == 1 || game_select == 2 || game_select == 3) {

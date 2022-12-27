@@ -1954,6 +1954,15 @@ static INT32 DrvFrame()
 	nCyclesTotal[0] = 12000000 / 60;
 	nCyclesTotal[1] = 3579545 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
+	
+	// @FC
+	extern int kNetGame, kNetSpectator, kNetVersion;
+	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strncmp(BurnDrvGetTextA(DRV_NAME), "ddragon3", 8) && (kNetGame || kNetSpectator)) {
+		DrvDip[0] = 0xff;
+		DrvDip[1] = 0xff;
+		DrvDip[2] = 0xff;
+		DrvDip[3] = 0xff;
+	}
 
 	SekNewFrame();
 	ZetNewFrame();

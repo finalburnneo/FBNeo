@@ -2218,7 +2218,6 @@ static void radarscp_step(INT32 line_cnt)
 
 static void radarscp_draw_background()
 {
-	UINT16 *bg_bits = BurnBitmapGetBitmap(1);
 	const UINT8 *table  = DrvGfxROM2;
 	const UINT8 *htable = DrvGfxROM3;
 
@@ -2227,8 +2226,7 @@ static void radarscp_draw_background()
 
 	while (scanline < 264)
 	{
-		// note: why is the background effect centered differently from mame ? -barbudreadmon
-		INT32 y = (scanline-((264-nScreenHeight)/2));
+		INT32 y = scanline-((264-nScreenHeight)/2);
 		radarscp_step(scanline);
 		if (y < 0 || y >= nScreenHeight)
 			counter = 0;
@@ -2236,39 +2234,26 @@ static void radarscp_draw_background()
 		INT32 x = 0;
 		while (x < nScreenWidth)
 		{
+			UINT8 draw_ok = !(pTransDraw[(y) * nScreenWidth + x] & 0x01) && !(pTransDraw[(y) * nScreenWidth + x] & 0x02) && (y >= 0 && y < nScreenHeight);
+			if (radarscp1) /*  Check again from schematics */
+				draw_ok = draw_ok  && !((htable[ (!rflip_sig<<7) | (x>>2)] >>2) & 0x01);
 			if ((counter < 0x800) && (x == 4 * (table[counter|offset] & 0x7f)))
 			{
-				if ( star_ff && (table[counter|offset] & 0x80) && (y >= 0 && y < nScreenHeight))    /* star */
-					bg_bits[(y) * nScreenWidth + x] = RADARSCP_STAR_COL;
-				else if (grid_sig && !(table[counter|offset] & 0x80) && (y >= 0 && y < nScreenHeight))           /* radar */
-					bg_bits[(y) * nScreenWidth + x] = (RADARSCP_GRID_COL_OFFSET + *grid_color);
-				else if (y >= 0 && y < nScreenHeight)
-					bg_bits[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET + blue_level;
+				if ( star_ff && (table[counter|offset] & 0x80) && draw_ok)    /* star */
+					pTransDraw[(y) * nScreenWidth + x] = RADARSCP_STAR_COL;
+				else if (grid_sig && !(table[counter|offset] & 0x80) && draw_ok)           /* radar */
+					pTransDraw[(y) * nScreenWidth + x] = (RADARSCP_GRID_COL_OFFSET + *grid_color);
+				else if (draw_ok)
+					pTransDraw[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET + blue_level;
 				counter++;
 			}
-			else if (y >= 0 && y < nScreenHeight)
-				bg_bits[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET + blue_level;
+			else if (draw_ok)
+				pTransDraw[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET + blue_level;
 			x++;
 		}
 		while ((counter < 0x800) && (x < 4 * (table[counter|offset] & 0x7f)))
 			counter++;
 		scanline++;
-	}
-
-	INT32 y = 0;
-	while (y < nScreenHeight)
-	{
-		INT32 x = 0;
-		while (x < nScreenWidth)
-		{
-			UINT8 draw_ok = !(pTransDraw[(y) * nScreenWidth + x] & 0x01) && !(pTransDraw[(y) * nScreenWidth + x] & 0x02);
-			if (radarscp1) /*  Check again from schematics */
-				draw_ok = draw_ok  && !((htable[ (!rflip_sig<<7) | (x>>2)] >>2) & 0x01);
-			if (draw_ok)
-				pTransDraw[(y) * nScreenWidth + x] = bg_bits[(y) * nScreenWidth + x];
-			x++;
-		}
-		y++;
 	}
 }
 
@@ -2600,8 +2585,6 @@ static INT32 radarscpInit()
 		ZetClose();
 	}
 
-	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight, false); // background bitmap
-
 	return ret;
 }
 
@@ -2707,7 +2690,7 @@ static INT32 Dkong3Scan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvRadarscp = {
 	"radarscp", NULL, NULL, NULL, "1980",
-	"Radar Scope (TRS02, rev. D)\0", "No sound / wrong bgcolor", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS02, rev. D)\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscpRomInfo, radarscpRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
@@ -2747,7 +2730,7 @@ STD_ROM_FN(radarscpc)
 
 struct BurnDriver BurnDrvRadarscpc = {
 	"radarscpc", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS02?, rev. C)\0", "No sound / wrong bgcolor", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS02?, rev. C)\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscpcRomInfo, radarscpcRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
@@ -2814,14 +2797,12 @@ static INT32 radarscp1Init()
 		radarscp1 = 1;
 	}
 
-	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight, false); // background bitmap
-
 	return ret;
 }
 
 struct BurnDriver BurnDrvRadarscp1 = {
 	"radarscp1", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS01)\0", "No sound / wrong bgcolor", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS01)\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, Radarscp1DIPInfo,

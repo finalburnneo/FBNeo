@@ -43729,6 +43729,24 @@ struct BurnDriver BurnDrvmd_sonic3kbrc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+//Teenage Mutant Ninja Turtles - Shredder's Re-Revenge (USA) (Hack By Savok/PPI-Akiko)
+static struct BurnRomInfo md_tmntsrrRomDesc[] = {
+	{ "TMNT_Shredders_ReRevenge.md", 0x3E007C, 0x31A4C1DB, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmntsrr)
+STD_ROM_FN(md_tmntsrr)
+
+struct BurnDriver BurnDrvmd_tmntsrr = {
+	"md_tmntsrr", "md_sor2", NULL, NULL, "1992",
+	"Teenage Mutant Ninja Turtles - Shredder's Re-Revenge (USA) (Hack By Savok/PPI-Akiko)\0", NULL, "2022 Savok", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_tmntsrrRomInfo, md_tmntsrrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Streets of Rage 2 - The Ninja Warriors Once Again (V.02905) (Hack By Savok)
 static struct BurnRomInfo md_sor2tnwoaRomDesc[] = {
 	{ "Sor2TheNinjaWarriorsOnceAgain.bin", 0x2E7422, 0x1D6747E9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

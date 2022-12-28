@@ -2,6 +2,7 @@ void konamiWrite(UINT16 address, UINT8 data);
 UINT8 konamiRead(UINT16 address);
 UINT8 konamiFetch(UINT16 address);
 
+UINT32 konamiGetPC(INT32);
 void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type);
 
 void konamiSetIrqCallbackHandler(INT32 (*callback)(INT32));

@@ -435,6 +435,11 @@ void konamiReset()
 	change_pc(PC);    /* TS 971002 */
 }
 
+int konami_get_pc()
+{
+	return PC;
+}
+
 #if 0
 static void konami_exit(void)
 {

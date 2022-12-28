@@ -26,7 +26,7 @@ static UINT8 DrvRecalc;
 static UINT8 flipscreen;
 static UINT16 scrollx;
 
-static UINT32 YFlipping = 0; // shtrider has a weird screen layout
+static UINT32 is_shtrider = 0; // shtrider has a weird screen layout
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -441,7 +441,7 @@ static INT32 DrvInit(void (*pRomCallback)(), INT32 soundromsmall, INT32 gfxtype)
 	GenericTilemapSetOffsets(0, -8, 0);
 	GenericTilemapSetTransSplit(0, 0, 0xff, 0x00);
 	GenericTilemapSetTransSplit(0, 1, 0x3f, 0xc0);
-	if (YFlipping) GenericTilemapSetFlip(TMAP_GLOBAL, TMAP_FLIPY);
+	if (is_shtrider) GenericTilemapSetFlip(TMAP_GLOBAL, TMAP_FLIPY);
 	DrvDoReset();
 
 	return 0;
@@ -449,9 +449,9 @@ static INT32 DrvInit(void (*pRomCallback)(), INT32 soundromsmall, INT32 gfxtype)
 
 static INT32 travrusaInit() { return DrvInit(NULL, 1, 0); }
 static INT32 motoraceInit() { return DrvInit(motoraceDecode, 1, 0); }
-static INT32 shtriderInit() { YFlipping = 1; return DrvInit(NULL, 0, 1); }
-static INT32 shtrideraInit() { YFlipping = 1; return DrvInit(shtrideraDecode, 0, 1); }
-static INT32 shtriderbInit() { YFlipping = 1; return DrvInit(NULL, 0, 0); }
+static INT32 shtriderInit() { is_shtrider = 1; return DrvInit(NULL, 0, 1); }
+static INT32 shtrideraInit() { is_shtrider = 1; return DrvInit(shtrideraDecode, 0, 1); }
+static INT32 shtriderbInit() { is_shtrider = 1; return DrvInit(NULL, 0, 0); }
 
 static INT32 DrvExit()
 {
@@ -463,7 +463,7 @@ static INT32 DrvExit()
 
 	BurnFreeMemIndex();
 
-	YFlipping = 0;
+	is_shtrider = 0;
 
 	return 0;
 }
@@ -504,7 +504,7 @@ static void DrvPaletteInit()
 
 static void draw_sprites()
 {
-	if (YFlipping) {
+	if (is_shtrider) {
 		GenericTilesSetClip(0, 240, 64, 256); // shtrider
 	} else {
 		GenericTilesSetClip(0, 240,  0, 192); // everything else
@@ -520,7 +520,7 @@ static void draw_sprites()
 		int flipy = attr & 0x80;
 		int color = attr & 0x0f;
 
-		if (YFlipping) {
+		if (is_shtrider) {
 			sy = 240 - sy;
 			flipy = !flipy;
 		}
@@ -586,7 +586,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		switch (i) {
-			case 0: ZetSetIRQLine(0, CPU_IRQSTATUS_ACK); break;
+			case 0: ZetSetIRQLine(0, (is_shtrider) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_HOLD); break;
 			case 7: ZetSetIRQLine(0, CPU_IRQSTATUS_NONE); break;
 		}
 

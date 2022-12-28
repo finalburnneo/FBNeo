@@ -38,6 +38,7 @@ static UINT8 *DrvSndROM1;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
+static UINT8 *DrvGfxROM3;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvMapROM;
 static UINT8 *DrvZ80RAM;
@@ -98,6 +99,43 @@ static INT32 palette_type = -1;
 static INT32 hunch_prot_ctr = 0; // hunchback (s2650)
 static UINT8 hunchloopback = 0;
 static UINT8 main_fo = 0;
+
+// radar scope
+#define TRS_J1  (1)
+#define RADARSCP_BCK_COL_OFFSET         256
+#define RADARSCP_GRID_COL_OFFSET        (RADARSCP_BCK_COL_OFFSET + 256)
+#define RADARSCP_STAR_COL               (RADARSCP_GRID_COL_OFFSET + 8)
+
+#define RC1     (2.2e3 * 22e-6) /*  22e-6; */
+#define RC17    (33e-6 * 1e3 * (0*4.7+1.0/(1.0/10.0+1.0/20.0+0.0/0.3)))
+#define RC2     (10e3 * 33e-6)
+#define RC31    (18e3 * 33e-6)
+#define RC32    ((18e3 + 68e3) * 33e-6)
+#define RC4     (90e3 * 0.47e-6)
+#define dt      (1./60./(double) (264))
+#define period2 (((INT64)(6144000) * ( 33L * 68L )) / (INT32)10000000L / 3)  /*  period/2 in pixel ... */
+
+static const double cd4049_vl = 1.5/5.0;
+static const double cd4049_vh = 3.5/5.0;
+static const double cd4049_al = 0.01;
+static const double cd4049_b = (log(0.0 - log(cd4049_al)) - log(0.0 - log((1.0-cd4049_al))) ) / log(cd4049_vh/cd4049_vl);
+static const double cd4049_a = log(0.0 - log(cd4049_al)) - cd4049_b * log(cd4049_vh);
+static UINT8 sig30Hz;
+static UINT8 lfsr_5I;
+static UINT8 grid_sig;
+static UINT8 rflip_sig;
+static UINT8 star_ff;
+static UINT8 blue_level;
+static double cv1;
+static double cv2;
+static double cv3;
+static double cv4;
+static double vg1;
+static double vg2;
+static double vg3;
+static double vc17;
+static INT32 pixelcnt;
+static INT32 death_mode;
 
 static struct BurnInputInfo DkongInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
@@ -443,9 +481,12 @@ static struct BurnDIPInfo Radarscp1DIPList[]=
 	{0x0a, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0a, 0x01, 0x80, 0x00, "Cocktail"		},
 
+#if 0
+	// note : legacy palette never worked properly for this one
 	{0   , 0xfe, 0   ,    3, "Palette"	},
 	{0x0b, 0x01, 0x07, 0x04, "New"		},
 	{0x0b, 0x01, 0x07, 0x02, "Legacy"	},
+#endif
 };
 
 STDDIPINFO(Radarscp1)
@@ -662,6 +703,7 @@ static void __fastcall dkong_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x7c00:
 			*soundlatch = data ^ 0x0f;
+			//bprintf(0, _T("sh1: %x  %x\n"), address, data);
 		return;
 
 		case 0x7c80:
@@ -671,6 +713,10 @@ static void __fastcall dkong_main_write(UINT16 address, UINT8 data)
 		case 0x7d00:
 		case 0x7d01:
 		case 0x7d02:
+			if (address == 0x7d02) {
+				death_mode = data & 1;
+				//bprintf(0, _T("death mode: %x\n"), death_mode);
+			}
 			dkong_sh1_write(address & 3, data);
 		return;
 
@@ -843,6 +889,7 @@ static void __fastcall radarscp_main_write(UINT16 address, UINT8 data)
 
 		case 0x7d81:
 			*grid_enable = data & 0x01;
+			//bprintf(0, _T("grid_enable   %x\n"), data&1);
 		return;
 	}
 
@@ -1305,6 +1352,24 @@ static INT32 DrvDoReset()
 	decay = 0;
 	decrypt_counter = 0x09;
 
+	// radar scope
+	sig30Hz = 0;
+	lfsr_5I = 0;
+	grid_sig = 0;
+	rflip_sig = 0;
+	star_ff = 0;
+	blue_level = 0;
+	cv1 = 0;
+	cv2 = 0;
+	cv3 = 0;
+	cv4 = 0;
+	vg1 = 0;
+	vg2 = 0;
+	vg3 = 0;
+	vc17 = 0;
+	pixelcnt = 0;
+	death_mode = 0;
+
 	if (brazemode) {
 		ZetOpen(0);
 		braze_bankswitch(0);
@@ -1337,13 +1402,14 @@ static INT32 MemIndex()
 	DrvGfxROM0		= Next; Next += 0x008000;
 	DrvGfxROM1		= Next; Next += 0x010000;
 	DrvGfxROM2		= Next; Next += 0x000800;
+	DrvGfxROM3		= Next; Next += 0x000100;
 
-	DrvColPROM		= Next; Next += 0x000300;
+	DrvColPROM		= Next; Next += 0x000400;
 	DrvMapROM		= Next; Next += 0x000200; // for s2650 sets
 
 	DrvRevMap		= (INT32*)Next; Next += 0x000200 * sizeof(INT32);
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0208 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0209 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -1374,11 +1440,6 @@ static INT32 MemIndex()
 
 	return 0;
 }
-
-#define TRS_J1  (1)
-#define RADARSCP_BCK_COL_OFFSET         256
-#define RADARSCP_GRID_COL_OFFSET        (RADARSCP_BCK_COL_OFFSET + 256)
-#define RADARSCP_STAR_COL               (RADARSCP_GRID_COL_OFFSET + 8)
 
 static const res_net_decode_info dkong_decode_info = {
 	2, 0, 255,
@@ -1592,6 +1653,9 @@ static void dkongPaletteInit()
 		INT32 b = 255 - (0x55 * bit0 + 0xaa * bit1);
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+
+		// used by radarscp
+		DrvPalette[RADARSCP_BCK_COL_OFFSET + i] = BurnHighCol(0, 0, 0, 0); // black
 	}
 
 	// used by radarscp
@@ -2022,35 +2086,174 @@ static INT32 s2650DkongExit()
 	return 0;
 }
 
-static void draw_grid()
+inline double CD4049(double x)
 {
-	const UINT8 *table = DrvGfxROM2;
-	INT32 x,y,counter;
+	if (x>0)
+		return exp(-cd4049_a * pow(x,cd4049_b));
+	else
+		return 1.0;
+}
 
-	counter = (radarscp1) ? 0x000 : 0x400; //flip_screen ? 0x000 : 0x400;
+static void radarscp_step(INT32 line_cnt)
+{
+	/* Condensator is illegible in schematics for TRS2 board.
+	 * TRS1 board states 3.3u.
+	 */
 
-	x = 0;
-	y = 0;
+	double vg3i;
+	double diff;
+	INT32 sig;
 
-	while (y < nScreenHeight)
+	/* vsync is divided by 2 by a LS161
+	 * The resulting 30 Hz signal clocks a LFSR (LS164) operating as a
+	 * random number generator.
+	 */
+
+	if ( line_cnt == 0)
 	{
-		x = 4 * (table[counter] & 0x7f);
+		sig30Hz = (1-sig30Hz);
+		if (sig30Hz)
+			lfsr_5I = (rand() > RAND_MAX/2);
+	}
 
-		if (x >= 0 && x < nScreenWidth)
+	/* sound2 mixes in a 30Hz noise signal.
+	 * With the current model this has no real effect
+	 * Included for completeness
+	 */
+
+	/* Now mix with SND02 (sound 2) line - on 74ls259, bit2 */
+	rflip_sig = death_mode & lfsr_5I;
+
+	/* blue background generation */
+
+	line_cnt += (256 - 8) + 1; // offset 8 needed to match monitor pictures
+	if (line_cnt>511)
+		line_cnt -= 264;
+
+	sig = rflip_sig ^ ((line_cnt & 0x80)>>7);
+
+	if (radarscp1)
+		rflip_sig = !rflip_sig;
+
+	if  (sig) /*  128VF */
+		diff = (0.0 - cv1);
+	else
+		diff = (4.8 - cv1);
+	diff = diff - diff*exp(0.0 - (1.0/RC1 * dt) );
+	cv1 += diff;
+
+	diff = (cv1 - cv2 - vg1);
+	diff = diff - diff*exp(0.0 - (1.0/RC2 * dt) );
+	cv2 += diff;
+
+	// FIXME: use the inverse function
+	// Solve the amplifier by iteration
+	for (INT32 j=1; j<=11; j++)// 11% = 1/75 / (1/75+1/10)
+	{
+		double f = (double) j / 100.0;
+		vg1 = (cv1 - cv2)*(1-f) + f * vg2;
+		vg2 = 5*CD4049(vg1/5);
+	}
+	// FIXME: use the inverse function
+	// Solve the amplifier by iteration 50% = both resistors equal
+	for (INT32 j=10; j<=20; j++)
+	{
+		double f = (double) j / 40.0;
+		vg3i = (1.0-f) * vg2 + f * vg3;
+		vg3 = 5*CD4049(vg3i/5);
+	}
+
+	diff = (vg3 - vc17);
+	diff = diff - diff*exp(0.0 - (1.0/RC17 * dt) );
+	vc17 += diff;
+
+	double vo = (vg3 - vc17);
+	vo = vo + 20.0 / (20.0+10.0) * 5;
+
+	// Transistor is marked as OMIT in TRS-02 schems.
+	//vo = vo - 0.7;
+
+
+	//double vo = (vg3o - vg3)/4.7 + 5.0/16.0;
+	//vo = vo / (1.0 / 4.7 + 1.0 / 16.0 + 1.0 / 30.0 );
+	//printf("%f %f\n", vg3, vc17);
+
+	blue_level = (INT32)(vo/5.0*255);
+
+	/*
+	 * Grid signal
+	 *
+	 * MAME is mixing this with ANS line (bit 5) from Port B of 8039,
+	 * but as far as i could tell the bit is always set, so let's ignore it for now -barbudreadmon
+	 */
+	if (*grid_enable)
+	{
+		diff = (0.0 - cv3);
+		diff = diff - diff*exp(0.0 - (1.0/RC32 * dt) );
+	}
+	else
+	{
+		diff = (5.0 - cv3);
+		diff = diff - diff*exp(0.0 - (1.0/RC31 * dt) );
+	}
+	cv3 += diff;
+
+	diff = (vg2 - 0.8 * cv3 - cv4);
+	diff = diff - diff*exp(0.0 - (1.0/RC4 * dt) );
+	cv4 += diff;
+
+	if (CD4049(CD4049((vg2 - cv4)/5.0))>2.4/5.0) /* TTL - Level */
+		grid_sig = 0;
+	else
+		grid_sig = 1;
+
+	/* stars */
+	pixelcnt += 384;
+	if (pixelcnt > period2 )
+	{
+		star_ff = !star_ff;
+		pixelcnt = pixelcnt - period2;
+	}
+}
+
+static void radarscp_draw_background()
+{
+	const UINT8 *table  = DrvGfxROM2;
+	const UINT8 *htable = DrvGfxROM3;
+
+	INT32 counter = 0;
+	INT32 scanline = 0;
+
+	while (scanline < 264)
+	{
+		INT32 y = scanline-((264-nScreenHeight)/2);
+		radarscp_step(scanline);
+		if (y < 0 || y >= nScreenHeight)
+			counter = 0;
+		INT32 offset = (rflip_sig) ? 0x000 : 0x400; //flip_screen ? 0x000 : 0x400;
+		INT32 x = 0;
+		while (x < nScreenWidth)
 		{
-			if (table[counter] & 0x80)	/* star */
+			UINT8 draw_ok = !(pTransDraw[(y) * nScreenWidth + x] & 0x01) && !(pTransDraw[(y) * nScreenWidth + x] & 0x02) && (y >= 0 && y < nScreenHeight);
+			if (radarscp1) /*  Check again from schematics */
+				draw_ok = draw_ok  && !((htable[ (!rflip_sig<<7) | (x>>2)] >>2) & 0x01);
+			if ((counter < 0x800) && (x == 4 * (table[counter|offset] & 0x7f)))
 			{
-				if (rand() & 1)	/* noise coming from sound board */
+				if ( star_ff && (table[counter|offset] & 0x80) && draw_ok)    /* star */
 					pTransDraw[(y) * nScreenWidth + x] = RADARSCP_STAR_COL;
+				else if (grid_sig && !(table[counter|offset] & 0x80) && draw_ok)           /* radar */
+					pTransDraw[(y) * nScreenWidth + x] = (RADARSCP_GRID_COL_OFFSET + *grid_color);
+				else if (draw_ok)
+					pTransDraw[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET + blue_level;
+				counter++;
 			}
-			else if (*grid_enable && !(table[counter] & 0x80))			/* radar */
-				pTransDraw[(y) * nScreenWidth + x] = (RADARSCP_GRID_COL_OFFSET + *grid_color);
+			else if (draw_ok)
+				pTransDraw[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET + blue_level;
+			x++;
 		}
-
-		counter++;
-
-		if (x >= 4 * (table[counter] & 0x7f))
-			y++;
+		while ((counter < 0x800) && (x < 4 * (table[counter|offset] & 0x7f)))
+			counter++;
+		scanline++;
 	}
 }
 
@@ -2066,7 +2269,7 @@ static void draw_sprites(UINT32 code_mask, UINT32 mask_bank, UINT32 shift_bits, 
 			INT32 sx    = DrvSprRAM[offs + 3] - 8;
 			INT32 attr  = DrvSprRAM[offs + ((swap) ? 1 : 2)];
 			INT32 code  = (DrvSprRAM[offs + ((swap) ? 2 : 1)] & code_mask) + ((attr & mask_bank) << shift_bits);
-			INT32 sy    =(240 - DrvSprRAM[offs + 0] + 7) + yoffset;
+			INT32 sy    = (240 - DrvSprRAM[offs + 0] + 7) + yoffset;
 			INT32 color = (attr & 0x0f) + (*palette_bank * 0x10);
 			INT32 flipx = attr & 0x80;
 			INT32 flipy = DrvSprRAM[offs + 1] & ((swap) ? 0x40 : 0x80);
@@ -2088,8 +2291,12 @@ static void draw_layer()
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = (offs / 0x20) * 8;
 
-		INT32 code  = DrvVidRAM[offs] + (*gfx_bank * 256);
-		INT32 color =(DrvColPROM[0x200 + (offs & 0x1f) + ((offs / 0x80) * 0x20)] & 0x0f) + (*palette_bank * 0x10);
+		INT32 code = DrvVidRAM[offs] + (*gfx_bank * 256);
+		INT32 color;
+		if (radarscp1)
+			color = (DrvColPROM[0x300 + (offs & 0x1f)] & 0x0f) | (*palette_bank<<4);
+		else
+			color = (DrvColPROM[0x200 + (offs & 0x1f) + ((offs / 0x80) * 0x20)] & 0x0f) + (*palette_bank * 0x10);
 
 		Draw8x8Tile(pTransDraw, code, sx, sy - 16, 0, 0, color, 2, 0, DrvGfxROM0);
 	}
@@ -2120,8 +2327,8 @@ static INT32 radarscpDraw()
 
 	BurnTransferClear();
 	if (nBurnLayer & 1) draw_layer();
-	if (nBurnLayer & 2) draw_grid();
 	if (nSpriteEnable & 1) draw_sprites(0x7f, 0x40, 1, 0);
+	if (nBurnLayer & 2) radarscp_draw_background();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2430,6 +2637,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(hunchloopback);
 		SCAN_VAR(main_fo);
 
+		SCAN_VAR(death_mode);
+
 		SCAN_VAR(nExtraCycles);
 
 		if (nAction & ACB_WRITE) {
@@ -2558,7 +2767,7 @@ static struct BurnRomInfo radarscp1RomDesc[] = {
 
 	{ "trs-s__4h.4h",	0x0800, 0xd1f1b48c, 3 }, // 16 m58819 speech
 
-	{ "trs01v1d.bin",	0x0100, 0x1b828315, 8 }, // 17 unused proms
+	{ "trs01v1d.bin",	0x0100, 0x1b828315, 8 }, // 17 undumped prom, this one is from parent set
 };
 
 STD_ROM_PICK(radarscp1)
@@ -2568,8 +2777,10 @@ static INT32 radarscp1RomLoad()
 {
 	if (radarscpRomLoad()) return 1;
 
-	// load gfx4
 	// load speech
+
+	if (BurnLoadRom(DrvGfxROM3 + 0x0000, 15, 1)) return 1;
+	if (BurnLoadRom(DrvColPROM + 0x0300, 17, 1)) return 1;
 
 	return 0;
 }
@@ -2591,7 +2802,7 @@ static INT32 radarscp1Init()
 
 struct BurnDriver BurnDrvRadarscp1 = {
 	"radarscp1", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS01)\0", "No sound / Gfx Issues", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS01)\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, Radarscp1DIPInfo,
@@ -5367,4 +5578,3 @@ struct BurnDriver BurnDrvDrktnjr = {
 	drktnjrInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
-

@@ -15256,9 +15256,9 @@ struct BurnDriver BurnDrvmd_dinho98 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Futbol Argentino '98 (Bootleg)
+// Futbol Argentino '98 - Version 2022 (Bootleg) (Hack)
 static struct BurnRomInfo md_arg98RomDesc[] = {
-	{ "Futbol Argentino 98 (Twin Eagles Group).bin", 0x200000, 0x74ca4060, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Futbol Argentino 98 - Version 2022 (Hack).bin", 0x200000, 0x68AA2492, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_arg98)
@@ -15266,7 +15266,7 @@ STD_ROM_FN(md_arg98)
 
 struct BurnDriver BurnDrvmd_arg98 = {
 	"md_arg98", "md_issdx", NULL, NULL, "199?",
-	"Futbol Argentino '98 (Bootleg)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"Futbol Argentino '98 - Version 2022 (Hack)\0", NULL, "<unlicensed>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_SPORTSFOOTBALL, 0,
 	MegadriveGetZipName, md_arg98RomInfo, md_arg98RomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,

@@ -178,7 +178,7 @@ static INT32 TrackStart[MAX_GUNS * 2]; // Start / Stop points
 static INT32 TrackStop[MAX_GUNS * 2];
 static INT32 UDLRSpeed[MAX_GUNS];
 
-static INT32 Max_Scanlines;
+static INT32 Max_Scanlines; // for interpolated reading
 
 void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart, INT32 VelocityMax, INT32 MaxScanlines)
 {
@@ -217,6 +217,11 @@ void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart
 		DIAL_VELx[(dev*2) + 1] = (dial.Velocity*5) / 2;
 		//bprintf(0, _T("VELO B: %d\n"), CURVE[dial.Velocity]);
 	}
+
+	if (Max_Scanlines > 0) {
+		TrackA_Prev[dev] = TrackA[dev];
+		TrackB_Prev[dev] = TrackB[dev];
+	}
 }
 
 // Theory of bLogarithmicCurve-mode:
@@ -248,9 +253,6 @@ void BurnTrackballUpdate(INT32 dev)
 
 void BurnTrackballUpdatePortA(INT32 dev)
 {
-	if (Max_Scanlines > 0) {
-		TrackA_Prev[dev] = TrackA[dev];
-	}
 	// PortA (usually X-Axis)
 	if (DrvJoyT[(dev*4) + 0]) { // Backward
 		if (TrackRev[(dev*2) + 0])
@@ -283,9 +285,6 @@ void BurnTrackballUpdatePortA(INT32 dev)
 
 void BurnTrackballUpdatePortB(INT32 dev)
 {
-	if (Max_Scanlines > 0) {
-		TrackB_Prev[dev] = TrackB[dev];
-	}
 	// PortB (usually Y-Axis)
 	if (DrvJoyT[(dev*4) + 2]) { // Backward
 		if (TrackRev[(dev*2) + 1])
@@ -318,10 +317,6 @@ void BurnTrackballUpdatePortB(INT32 dev)
 
 void BurnTrackballUpdateSlither(INT32 dev)
 {
-	if (Max_Scanlines > 0) {
-		TrackA_Prev[dev] = TrackA[dev];
-		TrackB_Prev[dev] = TrackB[dev];
-	}
 	// simulate the divider circuit on down + right(V) for Slither (taito/d_qix.cpp)
 	static INT32 flippy[2] = { 0, 0 };
 	// PortA (usually X-Axis)

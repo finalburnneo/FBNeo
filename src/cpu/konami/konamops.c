@@ -10,6 +10,12 @@ HNZVC
 # = CCr directly affected by instruction
 @ = special - carry set if bit 7 is set
 
+
+// fixed lsrd_di, asld_di, asrd_di         dec 27, 2022
+// not fixed: rord_di, rold_di & lsrd_ix to rold_ix (in order)
+// doing a quick test in every konami-cpu game showed that they were not used
+// though, anything is possible, like the paradious parallax clouds using lsrd_di
+// in later levels.  thanks hap! :)
 */
 
 #ifdef NEW
@@ -3416,16 +3422,18 @@ KONAMI_INLINE void absd( void )
 /* LSRD direct -0*-* */
 KONAMI_INLINE void lsrd_di( void )
 {
-	UINT8 t;
+	PAIR t;
+	UINT8 count = A;
 
-	DIRBYTE( t );
+	DIRWORD( t );
 
-	while ( t-- ) {
+	while ( count-- ) {
 		CLR_NZC;
-		CC |= (D & CC_C);
-		D >>= 1;
-		SET_Z16(D);
+		CC |= (t.w.l & CC_C);
+		t.w.l >>= 1;
+		SET_NZ16(t.w.l);
 	}
+	WM16(EAD, &t);
 }
 
 /* RORD direct -**-* */
@@ -3449,32 +3457,39 @@ KONAMI_INLINE void rord_di( void )
 /* ASRD direct ?**-* */
 KONAMI_INLINE void asrd_di( void )
 {
-	UINT8 t;
+	PAIR t;
+	UINT8 count = A;
 
-	DIRBYTE(t);
+	DIRWORD(t);
 
-	while ( t-- ) {
+	while ( count-- ) {
 		CLR_NZC;
-		CC |= (D & CC_C);
-		D = (D & 0x8000) | (D >> 1);
-		SET_NZ16(D);
+		CC |= (t.w.l & CC_C);
+		t.w.l = (t.w.l & 0x8000) | (t.w.l >> 1);
+		SET_NZ16(t.w.l);
 	}
+
+	WM16(EAD, &t);
 }
 
 /* ASLD direct ?**** */
 KONAMI_INLINE void asld_di( void )
 {
-	UINT32	r;
-	UINT8	t;
+	UINT8 count = A;
+	PAIR t;
+	PAIR next;
 
-	DIRBYTE( t );
+	DIRWORD( t );
+	next = t;
 
-	while ( t-- ) {
-		r = D << 1;
+	while ( count-- ) {
+		next.w.l = t.w.l << 1;
 		CLR_NZVC;
-		SET_FLAGS16(D,D,r);
-		D = r;
+		SET_FLAGS16(t.w.l, t.w.l, next.w.l);
+		t = next;
 	}
+
+	WM16(EAD, &t);
 }
 
 /* ROLD direct -**-* */

@@ -3622,6 +3622,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chispye" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Chispy (English) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>xavisan</manufacturer>
+		<rom name="Chispy 128K EN (2022)(xavisan).tap" size="43965" crc="93b9fa2a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chispys" cloneof="chispye" romof="chispye">
+		<comment>Homebrew</comment>
+		<description>Chispy (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>xavisan</manufacturer>
+		<rom name="Chispy 128K ES (2022)(xavisan).tap" size="43995" crc="c2c964b0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="chopdef" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Chopper Defence (48K) (HB, v1.2)</description>
@@ -5122,6 +5144,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="demonslair" romof="spectrum">
+		<comment>Set 'd: sinclair.II' to use controller</comment>
+		<description>Demonslair (48K)</description>
+		<year>1987</year>
+		<manufacturer>Gadtek Games</manufacturer>
+		<rom name="Demonslair 48K (1987)(Gadtek Games).tap" size="42898" crc="cb570271"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="denizen" romof="spec128">
 		<description>Denizen (128K)</description>
 		<year>1988</year>
@@ -5271,6 +5303,17 @@
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Di-Lithium Lift 16K (1983)(Hewson Consultants).tap" size="8878" crc="c04e50e2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="digdugdoug" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Dig Dug Doug (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Dig Dug Doug 128K (2022)(Gabriele Amore).tap" size="48202" crc="008a28be"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -6425,6 +6468,15 @@
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Exolon 48K (1987)(Hewson Consultants).tap" size="44921" crc="edd68b67"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fistplus" romof="spectrum">
+		<description>Exploding Fist+ (48K)</description>
+		<year>1988</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Exploding Fist+ 48K (1988)(Firebird).tap" size="52905" crc="d096a4be"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -7876,7 +7928,7 @@
 	<game name="gothik" romof="spectrum">
 		<description>Gothik (48K)</description>
 		<year>1987</year>
-		<manufacturer>Firebird</manufacturer>
+		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Gothik 48K (1987)(Firebird).tap" size="37854" crc="77774db3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -10922,6 +10974,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="manollo" romof="spectrum">
+		<description>Manollo - El Cavernicola (Spanish) (48K)</description>
+		<year>1988</year>
+		<manufacturer>Iber Software</manufacturer>
+		<rom name="Manollo - El Cavernicola ES 48K (1988)(Iber Software).tap" size="39236" crc="594d3ab5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="marauder" romof="spec128">
 		<description>Marauder (128K)</description>
 		<year>1988</year>
@@ -10993,10 +11054,30 @@
 		<driver status="good"/>
 	</game>
 	<game name="mask" romof="spec128">
-		<description>Mask (48K-128K)</description>
+		<description>MASK (48K-128K)</description>
 		<year>1987</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Mask (1987)(Gremlin).z80" size="92283" crc="cdd8c4b1"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mask2" romof="spec128">
+		<description>MASK II (128K)</description>
+		<year>1987</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="MASK II 128K (1987)(Gremlin Graphics).tap" size="79774" crc="972b746c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mask3" romof="spec128">
+		<description>MASK III - VENOM Strikes Back (128K)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="MASK III - VENOM Strikes Back 128K (1988)(Gremlin Graphics).tap" size="51714" crc="afcf673d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11848,10 +11929,10 @@
 	</game>
 	<game name="mrhairkk" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Mr Hair and the Kitty Katacombs (128K) (HB)</description>
+		<description>Mr Hair and the Kitty Katakombs (128K) (HB)</description>
 		<year>2022</year>
 		<manufacturer>Chopz</manufacturer>
-		<rom name="Mr Hair and the Kitty Katacombs (2022)(Chopz).tap" size="38129" crc="d1e9ecea"/>
+		<rom name="Mr Hair and the Kitty Katakombs (2022)(Chopz).tap" size="48063" crc="cf8e1e19"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13468,7 +13549,7 @@
 	<game name="postmortem" romof="spectrum">
 		<description>Post Mortem (Spanish) (48K)</description>
 		<year>1987</year>
-		<manufacturer>Iber Soft</manufacturer>
+		<manufacturer>Iber Software</manufacturer>
 		<rom name="Post Mortem 48K ES (1988)(Iber Soft).z80" size="39261" crc="fbdeb9b7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13738,6 +13819,15 @@
 		<rom name="Pumpkin Poe (2020)(Ariel Endaraues).tap" size="39685" crc="64d9129d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="punkstar" romof="spectrum">
+		<description>Punk Star (Spanish) (48K)</description>
+		<year>1988</year>
+		<manufacturer>Genesis Soft</manufacturer>
+		<rom name="Punk Star ES 48K (1988)(Genesis Soft).tap" size="27136" crc="ca188147"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15859,6 +15949,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="snowund128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Snowed Under  (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Highrise, Gabriele Amore</manufacturer>
+		<rom name="Snowed Under  128K (2021)(Highrise).tap" size="56461" crc="f90c37b5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="snowund48" cloneof="snowund128" romof="snowund128">
+		<comment>Homebrew</comment>
+		<description>Snowed Under (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Highrise, Gabriele Amore</manufacturer>
+		<rom name="Snowed Under 48K (2021)(Highrise).tap" size="44322" crc="7e180aaa"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="soccerpinball" romof="spec128">
 		<comment>Z = left flipper, M = right flipper, Space = shoot</comment>
 		<description>Soccer Pinball (128K)</description>
@@ -16183,6 +16294,17 @@
 		<manufacturer>Climacus</manufacturer>
 		<rom name="Speccy Bros 48K (2012)(Climacus).tap" size="34325" crc="5dd530b2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="speccyquiz" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Speccy Quiz (Spanish) (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Amebatron Software</manufacturer>
+		<rom name="Speccy Quiz 128K ES (2022)(Amebatron Software).tap" size="44628" crc="9c3eb564"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18219,6 +18341,16 @@
 		<year>1992</year>
 		<manufacturer>Hi-Tec Software</manufacturer>
 		<rom name="Turbo the Tortoise (1992)(Hi-Tec Software).tap" size="74768" crc="55513db0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="turbothetortoise30th" cloneof="turbothetortoise" romof="turbothetortoise">
+		<description>Turbo the Tortoise - 30th Anniversary Edition (128K)</description>
+		<year>2022</year>
+		<manufacturer>BiNMaN</manufacturer>
+		<rom name="Turbo The Tortoise 30th Anniversary Edition (2022)(BiNMaN).tap" size="74768" crc="0207ae31"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

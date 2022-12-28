@@ -230,6 +230,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="asteroids" romof="coleco">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Asteroids (SGM) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Team Pixelboy</manufacturer>
+		<rom name="Asteroids (2021)(Team Pixelboy).rom" size="32768" crc="94bcf1d1"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="astrododge" romof="coleco">
 		<comment>Homebrew</comment>
 		<description>Astro Dodge (HB)</description>
@@ -933,6 +946,19 @@
 		<year>1984-2011</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Circus Charlie (2011)(Team Pixelboy).rom" size="32768" crc="be3ef785"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="clock" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Clock (HB)</description>
+		<year>2021</year>
+		<manufacturer>Team Pixelboy</manufacturer>
+		<rom name="Clock (2021)(Team Pixelboy).rom" size="8192" crc="b2f28b90"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4572,6 +4598,19 @@
 		<manufacturer>Interphase</manufacturer>
 		<rom name="squishem.1" size="8192" crc="2614d406"/>
 		<rom name="squishem.2" size="8192" crc="b1ce0286"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="starcastle" romof="coleco">
+		<comment>Homebrew</comment>
+		<description>Star Castle (HB)</description>
+		<year>2021</year>
+		<manufacturer>Team Pixelboy</manufacturer>
+		<rom name="Star Castle (2021)(Team Pixelboy).rom" size="32768" crc="b48b9d51"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

@@ -298,7 +298,7 @@
 	<game name="bubblegme" cloneof="bubblegm" romof="bubblegm">
 		<comment>Hack</comment>
 		<description>Bubblegum Crash! - Knight Sabers 2034 (Hack, English)</description>
-		<year>2008-2022</year>
+		<year>2022</year>
 		<manufacturer>Dave Shadoff, filler</manufacturer>
 		<rom name="Bubblegum Crash! - Knight Sabers 2034 (T-Eng)(2022)(Dave Shadoff).pce" size="786432" crc="704b6916"/>
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
@@ -1417,6 +1417,23 @@
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="maerchen maze (japan).pce" size="262144" crc="a15a1f37"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mashwatarue" cloneof="mashwataru" romof="mashwataru">
+		<comment>Hack</comment>
+		<description>Mashin Eiyuuden Wataru (Hack, English)</description>
+		<year>2022</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Mashin Eiyuuden Wataru (English v1.0)(2022)(Stardust Crusaders).pce" size="524288" crc="53e14cb5"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mashwataru">
+		<description>Mashin Eiyuuden Wataru</description>
+		<year>1988</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Mashin Eiyuuden Wataru (Japan)(1988)(Hudson Soft).pce" size="262144" crc="2f8935aa"/>
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

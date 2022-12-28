@@ -737,7 +737,7 @@ static void __fastcall dkong_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x7d82:
-			*flipscreen = ~data & 0x01;
+			*flipscreen = data & 0x01;
 		return;
 
 		case 0x7d83:
@@ -2226,18 +2226,19 @@ static void radarscp_draw_background()
 
 	while (scanline < 264)
 	{
-		INT32 y = scanline-((264-nScreenHeight)/2);
+		INT32 y = 239-scanline;
 		radarscp_step(scanline);
-		if (y < 0 || y >= nScreenHeight)
+		if (scanline <= 16 || scanline >= 240)
 			counter = 0;
-		INT32 offset = (rflip_sig) ? 0x000 : 0x400; //flip_screen ? 0x000 : 0x400;
-		INT32 x = 0;
-		while (x < nScreenWidth)
+		INT32 offset = (*flipscreen ^ rflip_sig) ? 0x000 : 0x400;
+		INT32 col = 0;
+		while (col < 384)
 		{
-			UINT8 draw_ok = !(pTransDraw[(y) * nScreenWidth + x] & 0x01) && !(pTransDraw[(y) * nScreenWidth + x] & 0x02) && (y >= 0 && y < nScreenHeight);
+			INT32 x = 255-col;
+			UINT8 draw_ok = !(pTransDraw[(y) * nScreenWidth + x] & 0x01) && !(pTransDraw[(y) * nScreenWidth + x] & 0x02) && (y >= 0 && y < nScreenHeight && x >= 0 && x < nScreenWidth);
 			if (radarscp1) /*  Check again from schematics */
-				draw_ok = draw_ok  && !((htable[ (!rflip_sig<<7) | (x>>2)] >>2) & 0x01);
-			if ((counter < 0x800) && (x == 4 * (table[counter|offset] & 0x7f)))
+				draw_ok = draw_ok  && !((htable[ (!rflip_sig<<7) | (col>>2)] >>2) & 0x01);
+			if ((counter < 0x800) && (col == 4 * (table[counter|offset] & 0x7f)))
 			{
 				if ( star_ff && (table[counter|offset] & 0x80) && draw_ok)    /* star */
 					pTransDraw[(y) * nScreenWidth + x] = RADARSCP_STAR_COL;
@@ -2249,9 +2250,9 @@ static void radarscp_draw_background()
 			}
 			else if (draw_ok)
 				pTransDraw[(y) * nScreenWidth + x] = RADARSCP_BCK_COL_OFFSET + blue_level;
-			x++;
+			col++;
 		}
-		while ((counter < 0x800) && (x < 4 * (table[counter|offset] & 0x7f)))
+		while ((counter < 0x800) && (col < 4 * (table[counter|offset] & 0x7f)))
 			counter++;
 		scanline++;
 	}

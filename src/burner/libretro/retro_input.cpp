@@ -793,6 +793,15 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 	}
 
+	// Space Duel
+	if ((parentrom && strcmp(parentrom, "spacduel") == 0) ||
+		(drvname && strcmp(drvname, "spacduel") == 0)
+	) {
+		if (strcmp("Select", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R3, description);
+		}
+	}
+
 	// Out Run
 	// Super Hang-On
 	// Turbo Out Run

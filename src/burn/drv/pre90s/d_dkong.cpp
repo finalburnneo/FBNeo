@@ -135,7 +135,6 @@ static double vg2;
 static double vg3;
 static double vc17;
 static INT32 pixelcnt;
-static INT32 death_mode;
 
 static struct BurnInputInfo DkongInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
@@ -713,10 +712,6 @@ static void __fastcall dkong_main_write(UINT16 address, UINT8 data)
 		case 0x7d00:
 		case 0x7d01:
 		case 0x7d02:
-			if (address == 0x7d02) {
-				death_mode = data & 1;
-				//bprintf(0, _T("death mode: %x\n"), death_mode);
-			}
 			dkong_sh1_write(address & 3, data);
 		return;
 
@@ -1368,7 +1363,6 @@ static INT32 DrvDoReset()
 	vg3 = 0;
 	vc17 = 0;
 	pixelcnt = 0;
-	death_mode = 0;
 
 	if (brazemode) {
 		ZetOpen(0);
@@ -2122,7 +2116,7 @@ static void radarscp_step(INT32 line_cnt)
 	 */
 
 	/* Now mix with SND02 (sound 2) line - on 74ls259, bit2 */
-	rflip_sig = death_mode & lfsr_5I;
+	rflip_sig = sample_state[2] & lfsr_5I;
 
 	/* blue background generation */
 
@@ -2186,7 +2180,7 @@ static void radarscp_step(INT32 line_cnt)
 	 * MAME is mixing this with ANS line (bit 5) from Port B of 8039,
 	 * but as far as i could tell the bit is always set, so let's ignore it for now -barbudreadmon
 	 */
-	if (*grid_enable)
+	if (*grid_enable) // && BIT(i8039_p[2], 5) ?
 	{
 		diff = (0.0 - cv3);
 		diff = diff - diff*exp(0.0 - (1.0/RC32 * dt) );
@@ -2637,8 +2631,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(hunch_prot_ctr); // hunchback (s2650)
 		SCAN_VAR(hunchloopback);
 		SCAN_VAR(main_fo);
-
-		SCAN_VAR(death_mode);
 
 		SCAN_VAR(nExtraCycles);
 

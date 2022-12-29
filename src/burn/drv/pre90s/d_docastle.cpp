@@ -834,7 +834,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 264;
-	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[3] = { 3900000 / 60, 4000000 / 60, 4000000 / 60 }; /* 3.9 MHz for the main CPU to make dip switches work in docastle and dorunrun */
 	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	ZetIdle(0, nExtraCycles[0]); // With CPU_RUN_SYNCINT() we must pre-load the cpu core's cycle counter with the roll-over cycles.

@@ -2861,7 +2861,7 @@ static struct BurnRomInfo dbreedm72RomDesc[] = {
 
 	{ "db_c-v0.ic44",	0x20000, 0x312f7282, 0x05 | BRF_SND },              // 16 DAC Samples
 
-	{ "db_c-pr-b.ic1",	0x01000, 0x00000000, 0x07 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "db_c-pr-b.ic1",	0x01000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",	0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 18 Proms
 	{ "m72_a-9l-.ic75",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 19
@@ -2980,7 +2980,7 @@ static struct BurnRomInfo bchopperRomDesc[] = {
 
 	{ "mh_c-v0-b.ic44",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },              // 22 DAC Samples
 
-	{ "mh_c-pr-b.ic1",		0x10000, 0x00000000, 0x07 | BRF_PRG | BRF_NODUMP }, // 23 i8751 microcontroller
+	{ "mh_c-pr-b.ic1",		0x10000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 23 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",		0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 24 Proms
 	{ "m72_a-9l-.ic75",		0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 25
@@ -3963,7 +3963,7 @@ static struct BurnRomInfo dkgensanm72RomDesc[] = {
 
 	{ "gen-vo.bin",				0x20000, 0xd8595c66, 0x05 | BRF_SND },              // 16 DAC Samples
 
-	{ "dkgenm72_i8751.mcu",		0x10000, 0x00000000, 0x07 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "dkgenm72_i8751.mcu",		0x10000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",			0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 18 Proms
 	{ "m72_a-9l-.ic75",			0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 19
@@ -4265,7 +4265,7 @@ static struct BurnRomInfo gallopm72RomDesc[] = {
 
 	{ "cc-c-v0.ic44",	0x20000, 0x6247bade, 0x05 | BRF_SND },              // 16 DAC Samples
 	
-	{ "cc_c-pr-.ic1", 	0x10000, 0x00000000, 0x07 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "cc_c-pr-.ic1", 	0x10000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",	0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 18 Proms
 	{ "m72_a-9l-.ic75",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 19

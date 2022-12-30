@@ -2920,6 +2920,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="buccaneer" romof="spectrum">
+		<description>Buccaneer (48K)</description>
+		<year>1985</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Buccaneer 48K (1985)(Firebird).tap" size="49414" crc="9fdacef2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="buckrogers" romof="spectrum">
 		<description>Buck Rogers - Planet of Zoom (48K)</description>
 		<year>1984</year>
@@ -3271,6 +3280,17 @@
 		<year>2017</year>
 		<manufacturer>Gabriele Amore</manufacturer>
 		<rom name="CastleCapers (2017)(Gabriele Amore).tap" size="36751" crc="db772c7c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="castlescape" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Castle Escape (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>IrataHack</manufacturer>
+		<rom name="Castle Escape 128K (2022)(IrataHack).tap" size="42131" crc="447f175d"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -5586,6 +5606,16 @@
 		<rom name="DJ Puff (1992)(Codemasters).z80" size="66937" crc="38340567"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="doomrevenge" romof="spectrum">
+		<comment>The Amazing Spider-Man and Captain America in Dr. Doom's Revenge!</comment>
+		<description>Doctor Doom's Revenge (48K)</description>
+		<year>1989</year>
+		<manufacturer>Empire</manufacturer>
+		<rom name="Doctor Doom's Revenge 48K (1989)(Empire).tap" size="197516" crc="5f1b6cfc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8135,6 +8165,27 @@
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="H.A.T.E. - Hostile All Terrain Encounter (1989)(Vortex Software).tap" size="42128" crc="0fcfc02e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="heroret128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>H.E.R.O. Returns (128K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Gusivision</manufacturer>
+		<rom name="H.E.R.O. Returns 128K (2020)(Gusivision).tap" size="72143" crc="61365fea"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="heroret48" cloneof="heroret128" romof="heroret128">
+		<comment>Homebrew</comment>
+		<description>H.E.R.O. Returns (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Gusivision</manufacturer>
+		<rom name="H.E.R.O. Returns 48K (2020)(Gusivision).tap" size="47067" crc="ba38117a"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11916,11 +11967,32 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mowyadv128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Mowy Adventures - Beer Quest (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Mowy Entertainment</manufacturer>
+		<rom name="Mowy Adventures - Beer Quest 128K (2021)(Mowy Entertainment).tap" size="60776" crc="9db853c6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mowyadv48" cloneof="mowyadv128" romof="mowyadv128">
+		<comment>Homebrew</comment>
+		<description>Mowy Adventures - Beer Quest (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Mowy Entertainment</manufacturer>
+		<rom name="Mowy Adventures - Beer Quest 48K (2021)(Mowy Entertainment).tap" size="40708" crc="48654617"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mrhair2" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Mr Hair &amp; The Fly (128K) (HB)</description>
 		<year>2021</year>
-		<manufacturer>BitmapSoft</manufacturer>
+		<manufacturer>Bitmap Soft</manufacturer>
 		<rom name="Mr Hair &amp; THE FLY (2021)(BitmapSoft).tap" size="48426" crc="a78da9b2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -12068,6 +12140,27 @@
 		<rom name="Mutan Zone (1989)(Opera Soft)(es)(Part 2 of 2)(128k).z80" size="44529" crc="24ee7c22"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mmmanor128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Mystery of Markham Manor, The (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Taskmaster Software</manufacturer>
+		<rom name="Mystery of Markham Manor, The 128K (2022)(Taskmaster Software).tap" size="113688" crc="763a7416"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mmmanor48" cloneof="mmmanor128" romof="mmmanor128">
+		<comment>Homebrew</comment>
+		<description>Mystery of Markham Manor, The (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Taskmaster Software</manufacturer>
+		<rom name="Mystery of Markham Manor, The 48K (2022)(Taskmaster Software).tap" size="44391" crc="cbd1d7da"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15278,6 +15371,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="savageprincess" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Savage Princess (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Bitmap Soft</manufacturer>
+		<rom name="Savage Princess 48K (2020)(BitmapSoft).tap" size="41563" crc="6edbd594"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="savekonga" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Saving Kong - Crazy Kong City II (bgm Dizziness) (128K) (HB)</description>
@@ -16389,6 +16492,24 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spirits" romof="spectrum">
+		<description>Spirits (Spanish) (48K)</description>
+		<year>1987</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Spirits ES 48K (1987)(Topo Soft).tap" size="49605" crc="901fbdaa"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spirits30th" cloneof="spirits" romof="spirits">
+		<description>Spirits - 30th Anniversary (Spanish) (48K)</description>
+		<year>2017</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Spirits ES 30th anniversary 48K (1987-2017)(Topo Soft).tap" size="57855" crc="521f32f4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="splattr" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>splATTR (128K) (HB)</description>
@@ -16983,6 +17104,17 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Summer Games II (1988)(U.S. Gold).tap" size="189121" crc="dbe0691e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="summersanta" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Summer Santa 2022 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Paul Jenkinson</manufacturer>
+		<rom name="Summer Santa 2022 128K (2022)(Paul Jenkinson).tap" size="39765" crc="f44f3e0c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18046,6 +18178,26 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="toofy" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Toofy in Fan Land (48K) (HB)</description>
+		<year>2012</year>
+		<manufacturer>Paul Jenkinson</manufacturer>
+		<rom name="Toofy in Fan Land 48K (2012)(Paul Jenkinson).tap" size="35803" crc="c3588e5a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="toofy2" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Toofy's Winter Nuts (48K) (HB)</description>
+		<year>2013</year>
+		<manufacturer>Paul Jenkinson</manufacturer>
+		<rom name="Toofy's Winter Nuts (2013)(Paul Jenkinson).tap" size="39747" crc="aea85a8d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="topcat" romof="spectrum">
 		<description>Top Cat in Beverly Hills Cats (48K) (HB)</description>
 		<year>1991</year>
@@ -18834,6 +18986,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="wellsfargo" romof="spectrum">
+		<description>Wells &amp; Fargo (Spanish) (48K)</description>
+		<year>1988</year>
+		<manufacturer>Topo Soft</manufacturer>
+		<rom name="Wells and Fargo ES 48K (1988)(Topo Soft).tap" size="64570" crc="74b64095"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="werewolves" romof="spectrum">
 		<comment>O/P: select icon - H: pause - R: restart</comment>
 		<description>Werewolves of London (48K)</description>
@@ -19000,6 +19161,26 @@
 		<year>1985</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="World Series Basketball (1985)(Imagine).z80" size="40058" crc="611090db"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wwsp1" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>World War Simulator - PART 1, The (48K) (HB)</description>
+		<year>2012</year>
+		<manufacturer>Retrobytes Productions</manufacturer>
+		<rom name="World War Simulator - PART 1, The 48K (2012)(Retrobytes Productions).tap" size="36335" crc="893ed613"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wwsp2" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>World War Simulator - PART 2, The (48K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Retrobytes Productions</manufacturer>
+		<rom name="World War Simulator - PART 2, The ES 48K (2018)(Retrobytes Productions).tap" size="51254" crc="a6e457e1"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

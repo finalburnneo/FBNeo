@@ -2980,7 +2980,7 @@ static struct BurnRomInfo bchopperRomDesc[] = {
 
 	{ "mh_c-v0-b.ic44",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },              // 22 DAC Samples
 
-	{ "mh_c-pr-b.ic1",		0x10000, 0x00000000, 0x07 | BRF_OPT | BRF_NODUMP }, // 23 i8751 microcontroller
+	{ "mh_c-pr-b.ic1",		0x10000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 23 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",		0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 24 Proms
 	{ "m72_a-9l-.ic75",		0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 25

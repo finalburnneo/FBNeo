@@ -785,6 +785,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	ResetRozDirty();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2030,7 +2032,7 @@ struct BurnDriver BurnDrvNebulray = {
 	"nebulray", NULL, "namcoc75", NULL, "1994",
 	"Nebulas Ray (World, NR2)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nebulrayRomInfo, nebulrayRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	NebulrayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
@@ -2073,7 +2075,7 @@ struct BurnDriver BurnDrvNebulrayj = {
 	"nebulrayj", "nebulray", "namcoc75", NULL, "1994",
 	"Nebulas Ray (Japan, NR1)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nebulrayjRomInfo, nebulrayjRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	NebulrayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4
@@ -2112,7 +2114,7 @@ struct BurnDriver BurnDrvPtblank = {
 	"ptblank", NULL, "namcoc75", NULL, "1994",
 	"Point Blank (World, GN2 Rev B, set 1)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ptblankRomInfo, ptblankRomName, NULL, NULL, NULL, NULL, GunbuletInputInfo, GunbuletDIPInfo,
 	PtblankInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2151,7 +2153,7 @@ struct BurnDriver BurnDrvPtblanka = {
 	"ptblanka", "ptblank", "namcoc75", NULL, "1994",
 	"Point Blank (World, GN2 Rev B, set 2)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ptblankaRomInfo, ptblankaRomName, NULL, NULL, NULL, NULL, GunbuletInputInfo, GunbuletDIPInfo,
 	PtblankInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2190,7 +2192,7 @@ struct BurnDriver BurnDrvGunbuletw = {
 	"gunbuletw", "ptblank", "namcoc75", NULL, "1994",
 	"Gun Bullet (World, GN3 Rev B)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, gunbuletwRomInfo, gunbuletwRomName, NULL, NULL, NULL, NULL, GunbuletInputInfo, GunbuletDIPInfo,
 	PtblankInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2229,7 +2231,7 @@ struct BurnDriver BurnDrvGunbuletj = {
 	"gunbuletj", "ptblank", "namcoc75", NULL, "1994",
 	"Gun Bullet (Japan, GN1)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, gunbuletjRomInfo, gunbuletjRomName, NULL, NULL, NULL, NULL, GunbuletInputInfo, GunbuletDIPInfo,
 	PtblankInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2557,7 +2559,7 @@ struct BurnDriver BurnDrvOutfxies = {
 	"outfxies", NULL, "namcoc75", NULL, "1994",
 	"The Outfoxies (World, OU2)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, outfxiesRomInfo, outfxiesRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	OutfxiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2606,7 +2608,7 @@ struct BurnDriver BurnDrvOutfxiesj = {
 	"outfxiesj", "outfxies", "namcoc75", NULL, "1994",
 	"The Outfoxies (Japan, OU1)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, outfxiesjRomInfo, outfxiesjRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	OutfxiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2656,7 +2658,7 @@ struct BurnDriver BurnDrvOutfxiesja = {
 	"outfxiesja", "outfxies", "namcoc75", NULL, "1994",
 	"The Outfoxies (Japan, OU1, alternate GFX ROMs)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, outfxiesjaRomInfo, outfxiesjaRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	OutfxiesjaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2705,7 +2707,7 @@ struct BurnDriver BurnDrvOutfxiesa = {
 	"outfxiesa", "outfxies", "namcoc75", NULL, "1994",
 	"The Outfoxies (Korea?)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, outfxiesaRomInfo, outfxiesaRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	OutfxiesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2755,7 +2757,7 @@ struct BurnDriver BurnDrvMachbrkr = {
 	"machbrkr", NULL, "namcoc75", NULL, "1995",
 	"Mach Breakers (World, MB2)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, machbrkrRomInfo, machbrkrRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	MachbrkrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -2805,7 +2807,7 @@ struct BurnDriver BurnDrvMachbrkrj = {
 	"machbrkrj", "machbrkr", "namcoc75", NULL, "1995",
 	"Mach Breakers - Numan Athletics 2 (Japan, MB1)\0", NULL, "Namco", "NB-1 / NB-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, machbrkrjRomInfo, machbrkrjRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
 	MachbrkrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3

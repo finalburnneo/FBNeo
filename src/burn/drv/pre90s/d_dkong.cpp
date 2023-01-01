@@ -1,4 +1,4 @@
-// Fb Alpha Donkey Kong driver module
+// FB Neo Donkey Kong driver module
 // Based on MAME driver by Couriersud
 
 // still need:
@@ -21,11 +21,13 @@
 #include "eeprom.h"
 #include "bitswap.h"
 #include "8257dma.h"
-#include "i8039.h"
+#include "mcs48.h"
 #include "dac.h"
+#include "tms5110.h"
 #include "nes_apu.h"
 #include "resnet.h"
 #include <math.h> // for exp()
+#include "biquad.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -79,13 +81,16 @@ static void (*DrvPaletteUpdate)();
 // set in init
 static UINT8 draktonmode = 0;
 static UINT8 brazemode = 0;
+static UINT8 radarscp = 0;
 static UINT8 radarscp1 = 0;
 static INT32 s2650_protection = 0;
 
 // driver variables
 static INT32 sound_cpu_in_reset; // dkong3
 static UINT8 dkongjr_walk = 0;
-static UINT8 sndpage = 0, mcustatus;
+static UINT8 sndpage = 0;
+static UINT8 sndstatus;
+static UINT8 sndgrid_en;
 static UINT8 dma_latch = 0;
 static UINT8 sample_state[8];
 static UINT8 sample_count;
@@ -95,6 +100,9 @@ static INT32 decay;
 static INT32 braze_bank = 0; // for braze & drakton(epos) banking
 static UINT8 decrypt_counter = 0; // drakton (epos)
 static INT32 palette_type = -1;
+
+static BIQ biqdac;
+static BIQ biqdac2;
 
 static INT32 hunch_prot_ctr = 0; // hunchback (s2650)
 static UINT8 hunchloopback = 0;
@@ -109,8 +117,8 @@ static UINT8 main_fo = 0;
 #define RC1     (2.2e3 * 22e-6) /*  22e-6; */
 #define RC17    (33e-6 * 1e3 * (0*4.7+1.0/(1.0/10.0+1.0/20.0+0.0/0.3)))
 #define RC2     (10e3 * 33e-6)
-#define RC31    (18e3 * 33e-6)
-#define RC32    ((18e3 + 68e3) * 33e-6)
+#define RC31    (38e3 * 33e-6) // erase grid time
+#define RC32    ((18e3 + 68e3) * 333e-6) // display grid time
 #define RC4     (90e3 * 0.47e-6)
 #define dt      (1./60./(double) (264))
 #define period2 (((INT64)(6144000) * ( 33L * 68L )) / (INT32)10000000L / 3)  /*  period/2 in pixel ... */
@@ -137,117 +145,117 @@ static double vc17;
 static INT32 pixelcnt;
 
 static struct BurnInputInfo DkongInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Dkong)
 
 static struct BurnInputInfo Dkong3InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",	    BIT_DIGITAL,	DrvJoy1 + 7,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Service",	    	BIT_DIGITAL,	DrvJoy1 + 7,	"service"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 };
 
 STDINPUTINFO(Dkong3)
 
 static struct BurnInputInfo RadarscpInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Radarscp)
 
 static struct BurnInputInfo PestplceInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Pestplce)
 
 static struct BurnInputInfo HerodkInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Herodk)
@@ -671,23 +679,42 @@ static struct BurnDIPInfo DraktonDIPList[]=
 
 STDDIPINFO(Drakton)
 
-static void dkong_sh1_write(INT32 offset, UINT8 data)
+static void dkong_sample_play(INT32 offset, UINT8 data)
 {
-	INT32 sample_order[7] = {1,2,1,2,0,1,0};
+	INT32 sample_order[7] = { 1, 2, 1, 2, 0, 1, 0 };
 
 	if (sample_state[offset] != data)
 	{
 		if (data) {
-			if (offset) {
-				BurnSamplePlay(offset+2);
+			if (radarscp) {
+				// radarscrap (7d07 mapped to offset 3 !)
+				BurnSamplePlay(offset);
 			} else {
-				BurnSamplePlay(sample_order[sample_count]);
-				sample_count++;
-				if (sample_count == 7) sample_count = 0;
+				// dkong
+				if (offset) {
+					BurnSamplePlay(offset+2);
+				} else {
+					BurnSamplePlay(sample_order[sample_count]);
+					sample_count++;
+					if (sample_count == 7) sample_count = 0;
+				}
+			}
+		} else {
+			if (radarscp && offset == 3) {
+				BurnSampleStop(3); // siren
 			}
 		}
 
 		sample_state[offset] = data;
+	}
+}
+
+static void sync_sound()
+{
+	INT32 cyc = (INT64)ZetTotalCycles(0) * (6000000 / 15) / 3072000;
+	cyc -= mcs48TotalCycles();
+	if (cyc > 0) {
+		mcs48Run(cyc);
 	}
 }
 
@@ -701,8 +728,8 @@ static void __fastcall dkong_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x7c00:
-			*soundlatch = data ^ 0x0f;
-			//bprintf(0, _T("sh1: %x  %x\n"), address, data);
+			sync_sound();
+			*soundlatch = (data & 0x0f) ^ 0x0f;
 		return;
 
 		case 0x7c80:
@@ -712,23 +739,31 @@ static void __fastcall dkong_main_write(UINT16 address, UINT8 data)
 		case 0x7d00:
 		case 0x7d01:
 		case 0x7d02:
-			dkong_sh1_write(address & 3, data);
+			dkong_sample_play(address & 3, data);
 		return;
 
 		case 0x7d03:
+			sync_sound();
 			i8039_p[2] = (i8039_p[2] & ~0x20) | ((~data & 1) << 5);
 		return;
 
 		case 0x7d04:
+			sync_sound();
 			i8039_t[1] = ~data & 1;
 		return;
 
 		case 0x7d05:
+			sync_sound();
 			i8039_t[0] = ~data & 1;
 		return;
 
+		case 0x7d07:
+			if (radarscp) dkong_sample_play(3, data);
+		return;
+
 		case 0x7d80:
-			I8039SetIrqState(data ? 1 : 0);
+			sync_sound();
+			mcs48SetIRQLine(0, data ? 1 : 0);
 		return;
 
 		case 0x7d82:
@@ -779,9 +814,10 @@ static UINT8 __fastcall dkong_main_read(UINT16 address)
 
 		case 0x7d00:
 			{
+				sync_sound();
 				UINT8 ret = DrvInputs[2] & 0xbf;
 				if (ret & 0x10) ret = (ret & ~0x10) | 0x80;
-				ret |= mcustatus << 6;
+				ret |= sndstatus << 6;
 				return ret;
 			}
 			return 0;
@@ -789,6 +825,8 @@ static UINT8 __fastcall dkong_main_read(UINT16 address)
 		case 0x7d80:
 			return DrvDips[0];
 	}
+
+
 
 	return 0;
 }
@@ -831,10 +869,12 @@ static void __fastcall dkongjr_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x7c00:
+			sync_sound();
 			*soundlatch = data;
 		return;
 
 		case 0x7c81:
+			sync_sound();
 			i8039_p[2] = (i8039_p[2] & ~0x40) | ((~data & 1) << 6);
 		return;
 
@@ -884,7 +924,6 @@ static void __fastcall radarscp_main_write(UINT16 address, UINT8 data)
 
 		case 0x7d81:
 			*grid_enable = data & 0x01;
-			//bprintf(0, _T("grid_enable   %x\n"), data&1);
 		return;
 	}
 
@@ -1020,11 +1059,11 @@ static UINT8 __fastcall braze_main_read(UINT16 address)
 
 static const eeprom_interface braze_eeprom_intf =
 {
-	7,		// address bits
-	8,		// data bits
+	7,			// address bits
+	8,			// data bits
 	"*110",		// read command
 	"*101",		// write command
-	0,		// erase command
+	0,			// erase command
 	"*10000xxxxx",	// lock command
 	"*10011xxxxx",	// unlock command
 	0,0
@@ -1080,7 +1119,7 @@ static void s2650_main_write(UINT16 address, UINT8 data)
 		return;		// latch8_bit0_w
 
 		case 0x1580:
-			I8039SetIrqState(data ? 1 : 0);
+			mcs48SetIRQLine(0, data ? 1 : 0);
 		return;
 
 		case 0x1582:
@@ -1141,7 +1180,7 @@ static UINT8 s2650_main_read(UINT16 address)
 			{
 				UINT8 ret = DrvInputs[2] & 0xbf;
 				if (ret & 0x10) ret = (ret & ~0x10) | 0x80;
-				ret |= mcustatus << 6;
+				ret |= sndstatus << 6;
 				return ret;
 			}
 			return 0;
@@ -1215,38 +1254,38 @@ static UINT8 s2650_main_read_port(UINT16 port)
 	return 0;
 }
 
-static UINT8 __fastcall i8039_sound_read(UINT32 address)
-{
-	return DrvSndROM0[address & 0x0fff];
-}
-
-static UINT8 __fastcall i8039_sound_read_port(UINT32 port)
+static UINT8 i8039_sound_read_port(UINT32 port)
 {
 	if (port < 0x100) {
-		if ((sndpage & 0x40) && port == 0x20) return *soundlatch;
+		if (radarscp1 || sndpage & 0x40) return *soundlatch;
 
 		return DrvSndROM0[0x1000 + (sndpage & 7) * 0x100 + (port & 0xff)];
 	}
 
 	switch (port)
 	{
-		case I8039_p1:
+		case MCS48_P1:
+			if (radarscp1) {
+				UINT8 ret = (m58817_status_read() << 6) & 0x40;
+				ret |= (i8039_p[2] << 2) & 0x80;
+				return ret;
+			}
 			return i8039_p[1];
 
-		case I8039_p2:
-			return i8039_p[2];
+		case MCS48_P2:
+			return (radarscp1) ? 0x00 : i8039_p[2];
 
-		case I8039_t0:
+		case MCS48_T0:
 			return i8039_t[0];
 
-		case I8039_t1:
+		case MCS48_T1:
 			return i8039_t[1];
 	}
 
-	return 0;
+	return 0xff;
 }
 
-static void dkong_sh_p1_write(UINT8 data)
+static void dkong_dac_write(UINT8 data)
 {
 	DACWrite(0, (INT32)(data * exp(-envelope_ctr)));
 	if (decay) {
@@ -1258,18 +1297,29 @@ static void dkong_sh_p1_write(UINT8 data)
 	}
 }
 
-static void __fastcall i8039_sound_write_port(UINT32 port, UINT8 data)
+static void i8039_sound_write_port(UINT32 port, UINT8 data)
 {
+	if (radarscp1 && port < 0x100) {
+		dkong_dac_write(data);
+		return;
+	}
+
 	switch (port)
 	{
-		case I8039_p1:
-			dkong_sh_p1_write(data);
+		case MCS48_P1:
+			if (radarscp1) {
+				tms5110_CTL_set(data & 0x0f);
+				tms5110_PDC_set((data >> 4) & 0x01);
+			} else {
+				dkong_dac_write(data);
+			}
 		return;
 
-		case I8039_p2:
+		case MCS48_P2:
 			decay = !(data & 0x80);
 			sndpage = (data & 0x47);
-			mcustatus = ((~data & 0x10) >> 4);
+			sndstatus = ((~data & 0x10) >> 4);
+			sndgrid_en = (data & 0x20) >> 5;
 		return;
 	}
 }
@@ -1332,20 +1382,25 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	I8039Open(0);
-	I8039Reset();
-	I8039Close();
+	// before mcs48Reset()!
 	memset(i8039_p, 0xff, 4);
 	memset(i8039_t, 0x01, 4);
+	decay = 0;
+	sndpage = 0;
+	sndstatus = 0;
+	sndgrid_en = 0;
+
+	mcs48Open(0);
+	mcs48Reset();
+	mcs48Close();
 	dkongjr_walk = 0;
-	sndpage = 0; mcustatus = 0;
 	dma_latch = 0;
 	memset(sample_state, 0, sizeof(sample_state));
 	sample_count = 0;
 	climb_data = 0;
 	envelope_ctr = 0;
-	decay = 0;
 	decrypt_counter = 0x09;
+	*soundlatch = 0x0f;
 
 	// radar scope
 	sig30Hz = 0;
@@ -1372,6 +1427,9 @@ static INT32 DrvDoReset()
 
 	BurnSampleReset();
 	DACReset();
+	if (radarscp1) {
+		tms5110_reset();
+	}
 
 	i8257Reset();
 
@@ -1734,12 +1792,7 @@ static ior_out_functs dkong_dma_write_functions[4] = { p8257ControlWrite, NULL, 
 
 static INT32 DrvInit(INT32 (*pRomLoadCallback)(), UINT32 map_flags)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -1763,21 +1816,28 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), UINT32 map_flags)
 	ZetSetReadHandler(dkong_main_read);
 	ZetClose();
 
-	I8039Init(0);
-	I8039Open(0);
-	I8039SetIOReadHandler(i8039_sound_read_port);
-	I8039SetIOWriteHandler(i8039_sound_write_port);
-	I8039SetProgramReadHandler(i8039_sound_read);
-	I8039SetCPUOpReadHandler(i8039_sound_read);
-	I8039SetCPUOpReadArgHandler(i8039_sound_read);
-	I8039Close();
+	mcs48Init(0, 8884, DrvSndROM0);
+	mcs48Open(0);
+	mcs48_set_read_port(i8039_sound_read_port);
+	mcs48_set_write_port(i8039_sound_write_port);
+	mcs48Close();
 
-	DACInit(0, 0, 0, I8039TotalCycles, 6000000 / 15);
+	DACInit(0, 0, 0, mcs48TotalCycles, 6000000 / 15);
 	DACSetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 	DACDCBlock(1);
 
+	if (radarscp1) {
+		tms5110_init(640000, DrvSndROM1);
+		tms5110_set_variant(TMS5110_IS_M58817);
+		tms5110_set_buffered(mcs48TotalCycles, 6000000 / 15);
+	}
+
+	biqdac.init(FILT_LOWPASS, nBurnSoundRate, 2000, 0.8, 0);
+	biqdac2.init(FILT_LOWPASS, nBurnSoundRate, 2000, 0.8, 0);
+
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetBuffered(ZetTotalCycles, 3072000);
 
 	i8257Init();
 	i8257Config(ZetReadByte, ZetWriteByte, ZetIdle, dkong_dma_read_functions, dkong_dma_write_functions);
@@ -1807,16 +1867,23 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetExit();
-	I8039Exit();
+	mcs48Exit();
 	i8257Exit();
 
 	BurnSampleExit();
 	DACExit();
+	biqdac.exit();
+	biqdac2.exit();
+
+	if (radarscp1) {
+		tms5110_exit();
+	}
 
 	EEPROMExit();
 
 	BurnFree(AllMem);
 
+	radarscp = 0;
 	radarscp1 = 0;
 	brazemode = 0;
 	draktonmode = 0;
@@ -1855,12 +1922,7 @@ static UINT32 dkong3_nesapu_sync(INT32 samples_rate)
 
 static INT32 Dkong3Init()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
@@ -1958,9 +2020,9 @@ static INT32 s2650DkongDoReset()
 	s2650Reset();
 	s2650Close();
 
-	I8039Open(0);
-	I8039Reset();
-	I8039Close();
+	mcs48Open(0);
+	mcs48Reset();
+	mcs48Close();
 
 	BurnSampleReset();
 	DACReset();
@@ -2000,12 +2062,7 @@ static void s2650RevMapConvert()
 
 static INT32 s2650DkongInit(INT32 (*pRomLoadCallback)())
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (pRomLoadCallback) {
@@ -2035,16 +2092,13 @@ static INT32 s2650DkongInit(INT32 (*pRomLoadCallback)())
 	s2650SetInHandler(s2650_main_read_port);
 	s2650Close();
 
-	I8039Init(0);
-	I8039Open(0);
-	I8039SetIOReadHandler(i8039_sound_read_port);
-	I8039SetIOWriteHandler(i8039_sound_write_port);
-	I8039SetProgramReadHandler(i8039_sound_read);
-	I8039SetCPUOpReadHandler(i8039_sound_read);
-	I8039SetCPUOpReadArgHandler(i8039_sound_read);
-	I8039Close();
+	mcs48Init(0, 8884, DrvSndROM0);
+	mcs48Open(0);
+	mcs48_set_read_port(i8039_sound_read_port);
+	mcs48_set_write_port(i8039_sound_write_port);
+	mcs48Close();
 
-	DACInit(0, 0, 0, I8039TotalCycles, 6000000 / 15);
+	DACInit(0, 0, 0, mcs48TotalCycles, 6000000 / 15);
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	DACDCBlock(1);
 
@@ -2066,13 +2120,13 @@ static INT32 s2650DkongExit()
 	GenericTilesExit();
 
 	s2650Exit();
-	I8039Exit();
+	mcs48Exit();
 	i8257Exit();
 
 	BurnSampleExit();
 	DACExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	s2650_protection = 0;
 	palette_type = -1;
@@ -2164,23 +2218,12 @@ static void radarscp_step(INT32 line_cnt)
 	double vo = (vg3 - vc17);
 	vo = vo + 20.0 / (20.0+10.0) * 5;
 
-	// Transistor is marked as OMIT in TRS-02 schems.
-	//vo = vo - 0.7;
-
-
-	//double vo = (vg3o - vg3)/4.7 + 5.0/16.0;
-	//vo = vo / (1.0 / 4.7 + 1.0 / 16.0 + 1.0 / 30.0 );
-	//printf("%f %f\n", vg3, vc17);
-
 	blue_level = (INT32)(vo/5.0*255);
 
 	/*
 	 * Grid signal
-	 *
-	 * MAME is mixing this with ANS line (bit 5) from Port B of 8039,
-	 * but as far as i could tell the bit is always set, so let's ignore it for now -barbudreadmon
 	 */
-	if (*grid_enable) // && BIT(i8039_p[2], 5) ?
+	if (*grid_enable && sndgrid_en)
 	{
 		diff = (0.0 - cv3);
 		diff = diff - diff*exp(0.0 - (1.0/RC32 * dt) );
@@ -2226,7 +2269,7 @@ static void radarscp_draw_background()
 			counter = 0;
 		INT32 offset = (*flipscreen ^ rflip_sig) ? 0x000 : 0x400;
 		INT32 col = 0;
-		while (col < 384)
+		while (pBurnDraw && col < 384)
 		{
 			INT32 x = 255-col;
 			UINT8 draw_ok = !(pTransDraw[(y) * nScreenWidth + x] & 0x01) && !(pTransDraw[(y) * nScreenWidth + x] & 0x02) && (y >= 0 && y < nScreenHeight && x >= 0 && x < nScreenWidth);
@@ -2352,7 +2395,7 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	I8039NewFrame();
+	mcs48NewFrame();
 	ZetNewFrame();
 
 	{
@@ -2370,11 +2413,11 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
-	I8039Open(0);
+	mcs48Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN_SYNCINT(0, Zet);
-		CPU_RUN(1, I8039);
+		CPU_RUN(1, mcs48);
 
 		if (i == 239 && *nmi_mask) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		if (i == 240) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
@@ -2382,19 +2425,31 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+
+		if (radarscp) {
+			biqdac.filter_buffer_2x_mono(pBurnSoundOut, nBurnSoundLen);
+			biqdac2.filter_buffer_2x_mono(pBurnSoundOut, nBurnSoundLen);
+		}
+
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		BurnSoundDCFilter();
+
+		if (radarscp1) {
+			tms5110_update(pBurnSoundOut, nBurnSoundLen);
+		}
 	}
 
 	nExtraCycles[0] = ZetTotalCycles() - nCyclesTotal[0]; // ZetTotalCycles() because _SYNCINT and calling ZetIdle() by the dma engine.
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
-	I8039Close();
+	mcs48Close();
 	ZetClose();
 
 	if (pBurnDraw) {
 		update_palette_type(1);
 		BurnDrvRedraw();
+	} else if (radarscp) {
+		radarscp_draw_background(); // calculate the background stuff w/ffwd/frameskiop frames (etc)
 	}
 
 	return 0;
@@ -2461,7 +2516,7 @@ static INT32 s2650DkongFrame()
 		s2650DkongDoReset();
 	}
 
-	I8039NewFrame();
+	mcs48NewFrame();
 
 	{
 		memset (DrvInputs, 0, 3);
@@ -2478,14 +2533,14 @@ static INT32 s2650DkongFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	s2650Open(0);
-	I8039Open(0);
+	mcs48Open(0);
 
 	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, s2650);
-		CPU_RUN(1, I8039);
+		CPU_RUN(1, mcs48);
 
 		if (i == 30) {
 			vblank = 0x80;
@@ -2501,7 +2556,7 @@ static INT32 s2650DkongFrame()
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	I8039Close();
+	mcs48Close();
 	s2650Close();
 
 	if (pBurnDraw) {
@@ -2571,6 +2626,7 @@ static INT32 radarscpRomLoad()
 
 static INT32 radarscpInit()
 {
+	radarscp = 1;
 	INT32 ret = DrvInit(radarscpRomLoad, 0);
 
 	if (ret == 0)
@@ -2610,7 +2666,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 
 		i8257Scan();
-		I8039Scan(nAction, pnMin);
+		mcs48Scan(nAction);
 		BurnSampleScan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 
@@ -2618,7 +2674,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(dkongjr_walk);
 		SCAN_VAR(sndpage);
-		SCAN_VAR(mcustatus);
+		SCAN_VAR(sndstatus);
+		SCAN_VAR(sndgrid_en);
 
 		SCAN_VAR(dma_latch);
 		SCAN_VAR(sample_state);
@@ -2631,6 +2688,24 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(hunch_prot_ctr); // hunchback (s2650)
 		SCAN_VAR(hunchloopback);
 		SCAN_VAR(main_fo);
+
+		if (radarscp) {
+			SCAN_VAR(sig30Hz);
+			SCAN_VAR(lfsr_5I);
+			SCAN_VAR(grid_sig);
+			SCAN_VAR(rflip_sig);
+			SCAN_VAR(star_ff);
+			SCAN_VAR(blue_level);
+			SCAN_VAR(cv1);
+			SCAN_VAR(cv2);
+			SCAN_VAR(cv3);
+			SCAN_VAR(cv4);
+			SCAN_VAR(vg1);
+			SCAN_VAR(vg2);
+			SCAN_VAR(vg3);
+			SCAN_VAR(vc17);
+			SCAN_VAR(pixelcnt);
+		}
 
 		SCAN_VAR(nExtraCycles);
 
@@ -2674,19 +2749,30 @@ static INT32 Dkong3Scan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(dkongjr_walk);
 		SCAN_VAR(sndpage);
-		SCAN_VAR(mcustatus);
+		SCAN_VAR(sndstatus);
 	}
 
 	return 0;
 }
 
+static struct BurnSampleInfo RadarscpSampleDesc[] = {
+	{ "shot",		SAMPLE_NOLOOP	},
+	{ "enemy-die",	SAMPLE_NOLOOP	},
+	{ "player-die",	SAMPLE_NOLOOP	},
+	{ "siren",		SAMPLE_AUTOLOOP	},
+	{ "",			0				}
+};
+
+STD_SAMPLE_PICK(Radarscp)
+STD_SAMPLE_FN(Radarscp)
+
 
 struct BurnDriver BurnDrvRadarscp = {
-	"radarscp", NULL, NULL, NULL, "1980",
-	"Radar Scope (TRS02, rev. D)\0", "No sound", "Nintendo", "Miscellaneous",
+	"radarscp", NULL, NULL, "radarscp", "1980",
+	"Radar Scope (TRS02, rev. D)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, radarscpRomInfo, radarscpRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
+	NULL, radarscpRomInfo, radarscpRomName, NULL, NULL, RadarscpSampleInfo, RadarscpSampleName, RadarscpInputInfo, RadarscpDIPInfo,
 	radarscpInit, DrvExit, DrvFrame, radarscpDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -2722,11 +2808,11 @@ STD_ROM_FN(radarscpc)
 
 
 struct BurnDriver BurnDrvRadarscpc = {
-	"radarscpc", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS02?, rev. C)\0", "No sound", "Nintendo", "Miscellaneous",
+	"radarscpc", "radarscp", NULL, "radarscp", "1980",
+	"Radar Scope (TRS02?, rev. C)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, radarscpcRomInfo, radarscpcRomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
+	NULL, radarscpcRomInfo, radarscpcRomName, NULL, NULL, RadarscpSampleInfo, RadarscpSampleName, RadarscpInputInfo, RadarscpDIPInfo,
 	radarscpInit, DrvExit, DrvFrame, radarscpDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -2770,7 +2856,7 @@ static INT32 radarscp1RomLoad()
 {
 	if (radarscpRomLoad()) return 1;
 
-	// load speech
+	if (BurnLoadRom(DrvSndROM1 + 0x0000, 16, 1)) return 1; // tms speech
 
 	if (BurnLoadRom(DrvGfxROM3 + 0x0000, 15, 1)) return 1;
 	if (BurnLoadRom(DrvColPROM + 0x0300, 17, 1)) return 1;
@@ -2780,6 +2866,8 @@ static INT32 radarscp1RomLoad()
 
 static INT32 radarscp1Init()
 {
+	radarscp = 1;
+	radarscp1 = 1; // w/speech
 	INT32 ret = DrvInit(radarscp1RomLoad, 0);
 
 	if (ret == 0)
@@ -2787,18 +2875,17 @@ static INT32 radarscp1Init()
 		ZetOpen(0);
 		ZetSetWriteHandler(radarscp_main_write);
 		ZetClose();
-		radarscp1 = 1;
 	}
 
 	return ret;
 }
 
 struct BurnDriver BurnDrvRadarscp1 = {
-	"radarscp1", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS01)\0", "No sound", "Nintendo", "Miscellaneous",
+	"radarscp1", "radarscp", NULL, "radarscp", "1980",
+	"Radar Scope (TRS01)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, NULL, NULL, RadarscpInputInfo, Radarscp1DIPInfo,
+	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, RadarscpSampleInfo, RadarscpSampleName, RadarscpInputInfo, Radarscp1DIPInfo,
 	radarscp1Init, DrvExit, DrvFrame, radarscpDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

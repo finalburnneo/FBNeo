@@ -315,6 +315,12 @@ void mcs48Init(INT32 nCpu, INT32 subtype, UINT8 *prg)
 			mcs48->ram_mask = 0x7f;
 			mcs48->prg_mask = 0x7ff;
 			break;
+		case 8884:
+			mcs48->opcode_table = s_mcs48_opcodes;
+			mcs48->feature_mask = I8048_FEATURE;
+			mcs48->ram_mask = 0x3f;
+			mcs48->prg_mask = 0xfff;
+			break;
 		default:
 			bprintf(PRINT_ERROR, _T("mcs48Init(): Unsupported subtype!!\n"));
 			break;

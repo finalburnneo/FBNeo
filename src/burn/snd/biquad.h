@@ -37,6 +37,15 @@ struct BIQ {
 		}
 	}
 
+	void filter_buffer_2x_mono(INT16 *buffer, INT32 buflen) {
+		for (INT32 i = 0; i < buflen; i++) {
+			const INT32 a = i * 2 + 0;
+			INT32 m = filter(buffer[a]);
+			buffer[a] = BURN_SND_CLIP(m);
+			buffer[a+1] = buffer[a];
+		}
+	}
+
 	void reset() {
 		z1 = 0.0; z2 = 0.0; output = 0.0;
 	}

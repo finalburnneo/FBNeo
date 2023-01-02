@@ -4566,6 +4566,13 @@ INT32 OPTIMIZE_ATTR MegadriveFrame()
 		JoyPad->pad[3] |= (MegadriveJoy4[i] & 1) << i;
 		JoyPad->pad[4] |= (MegadriveJoy5[i] & 1) << i;
 	}
+	
+	// @FC
+	extern int kNetGame, kNetSpectator, kNetVersion;
+	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strcmp(BurnDrvGetTextA(DRV_NAME), "md_issdx") && (kNetGame || kNetSpectator)) {
+		MegadriveDIP[0] = 0x21;
+		MegadriveDIP[1] = 0x02;
+	}
 
 	SekCyclesNewFrame(); // for sound sync
 

@@ -1366,6 +1366,15 @@ static INT32 DrvFrame()
 
 	compile_inputs();
 	
+	// @FC
+	extern int kNetGame, kNetSpectator, kNetVersion;
+	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && (kNetGame || kNetSpectator)) {
+		if ((!strcmp(BurnDrvGetTextA(DRV_NAME), "bbmanw")) || (!strcmp(BurnDrvGetTextA(DRV_NAME), "dynablst"))) {
+			DrvDips[0] = 0xbf;
+			DrvDips[1] = 0x0f;
+		}
+	}
+	
 	INT32 nInterleave = 128; // nmi pulses for sound cpu
 	INT32 nCyclesTotal[2];
 	INT32 nCyclesDone[2];

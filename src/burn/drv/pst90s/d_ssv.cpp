@@ -3881,6 +3881,13 @@ static INT32 DrvFrame()
 	}
 
 	{
+		// @FC
+		extern int kNetGame, kNetSpectator, kNetVersion;
+		if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strcmp(BurnDrvGetTextA(DRV_NAME), "eaglshot") && (kNetGame || kNetSpectator)) {
+			DrvDips[0] = 0xd0;
+			DrvDips[1] = 0xff;
+		}
+		
 		memset (DrvInputs, 0xff, 8);
 
 		for (INT32 i = 0; i < 8; i++) {

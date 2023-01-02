@@ -61,6 +61,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="2048">
+		<comment>Homebrew</comment>
+		<description>2048 (HB)</description>
+		<year>2014</year>
+		<manufacturer>Tsone</manufacturer>
+		<rom name="2048 (2014)(Tsone).nes" size="16400" crc="50b7ee6f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="3dbatworru">
 		<description>3-D Battles of World Runner, The (USA)</description>
 		<year>1987</year>
@@ -1351,6 +1360,15 @@
 		<year>1992</year>
 		<manufacturer>Gluk Video</manufacturer>
 		<rom name="Balloon Monster (Unl).nes" size="40976" crc="b5ae9f8b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ballstand">
+		<comment>Homebrew</comment>
+		<description>Balloon Stand (HB)</description>
+		<year>2022</year>
+		<manufacturer>Spazzylemons</manufacturer>
+		<rom name="Balloon Stand (2022)(Spazzylemons).nes" size="24592" crc="1bb52cb6"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3693,6 +3711,15 @@
 		<year>1990</year>
 		<manufacturer>Mindscape</manufacturer>
 		<rom name="Days of Thunder (USA).nes" size="393232" crc="3616c7dd"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddreamddiver">
+		<comment>Homebrew</comment>
+		<description>Ddream Ddiver (HB)</description>
+		<year>2022</year>
+		<manufacturer>Game Losers</manufacturer>
+		<rom name="Ddream Ddiver (2022)(Game Losers).nes" size="524304" crc="26943006"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8650,6 +8677,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="karatekick">
+		<comment>Homebrew</comment>
+		<description>Karate Kick (HB)</description>
+		<year>2017</year>
+		<manufacturer>Mike Moffitt</manufacturer>
+		<rom name="Karate Kick (2017)(Mike Moffitt).nes" size="40976" crc="da688ee1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="karatekidthec" cloneof="karatekidthe" romof="karatekidthe">
 		<comment>Hack</comment>
 		<description>Karate Kid, The (Hack, Spanish v1.0)</description>
@@ -9217,11 +9253,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="lastarmageddon">
+	<game name="lastarmageddonj" cloneof="lastarmageddon" romof="lastarmageddon">
 		<description>Last Armageddon (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Yutaka</manufacturer>
 		<rom name="Last Armageddon (Japan).nes" size="524304" crc="ce0cc857"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="lastarmageddon">
+		<comment>Hack</comment>
+		<description>Last Armageddon (T-Eng, v1.02a)</description>
+		<year>2022</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Last Armageddon T-Eng v1.02a (2022)(BlackPaladin).nes" size="524304" crc="11faecdb"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15895,6 +15940,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="asteka2" cloneof="tmbtreasure" romof="tmbtreasure">
+		<description>Taiyou no Shinden - Asteka 2 (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Tokyo Shoseki</manufacturer>
+		<rom name="Taiyou no Shinden - Asteka 2 (J)(1988)(Tokyo Shoseki).nes" size="262160" crc="01259d1f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="taiyonoyuufirj" cloneof="taiyonoyuufir" romof="taiyonoyuufir">
 		<description>Taiyou no Yuusha Firebird (Japan)</description>
 		<year>1992</year>
@@ -16471,6 +16524,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="tctwh">
+		<comment>Homebrew</comment>
+		<description>They Came To Wreak Hell (HB, v0.3a)</description>
+		<year>2022</year>
+		<manufacturer>Team Disposable</manufacturer>
+		<rom name="They Came To Wreak Hell v0.3a (2022)(Team Disposable).nes" size="65552" crc="83c4b5a3"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="thiefcob" cloneof="smb2" romof="smb2">
 		<comment>Hack, Homebrew</comment>
 		<description>Thief and the Cobbler (Hack)</description>
@@ -16771,6 +16833,14 @@
 		<year>2020</year>
 		<manufacturer>FG Software</manufacturer>
 		<rom name="Tomb of Ice (2020)(HB)(FG Software).nes" size="40976" crc="426d3439"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmbtreasure">
+		<description>Tombs &amp; Treasure (USA)</description>
+		<year>1989</year>
+		<manufacturer>Infocom</manufacturer>
+		<rom name="Tombs &amp; Treasure (U)(1989)(Infocom).nes" size="262160" crc="013bd19f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

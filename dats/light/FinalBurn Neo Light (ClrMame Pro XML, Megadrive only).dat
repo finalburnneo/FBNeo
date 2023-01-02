@@ -8033,6 +8033,14 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gleylancc" cloneof="gleylanc" romof="gleylanc">
+		<description>GleyLancer - 30th Edition (Jpn)</description>
+		<year>2019-2022</year>
+		<manufacturer>Columbus Circle</manufacturer>
+		<rom name="Gley Lancer (2019-2022)(Columbus Circle).bin" size="1048576" crc="79ce299f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gluf">
 		<comment>Homebrew</comment>
 		<description>GLUF (HB)</description>
@@ -18677,9 +18685,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="spidmaxcs" cloneof="spidmaxc" romof="spidmaxc">
+		<comment>Hack</comment>
 		<description>Spider-Man &amp; Venom - Maximum Carnage (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Acclaim</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="spider-man and venom - maximum carnage (hack, spanish).bin" size="2097152" crc="13135784"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18701,6 +18710,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spidermnp1" cloneof="spidermn" romof="spidermn">
+		<comment>Prototype</comment>
 		<description>Spider-Man (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -18709,6 +18719,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="spidermnp2" cloneof="spidermn" romof="spidermn">
+		<comment>Prototype</comment>
 		<description>Spider-Man (USA, Prototype, Earlier)</description>
 		<year>1995</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -18725,9 +18736,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="spidkings" cloneof="spidking" romof="spidking">
+		<comment>Hack</comment>
 		<description>Spider-Man vs. the Kingpin (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="spider-man vs. the kingpin (hack, spanish).bin" size="524288" crc="e04a7f0a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18899,9 +18911,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="starcruse" cloneof="starcrus" romof="starcrus">
+		<comment>Hack</comment>
 		<description>Star Cruiser (Hack, English)</description>
 		<year>2016</year>
-		<manufacturer>NCS</manufacturer>
+		<manufacturer>Nebulous Translations</manufacturer>
 		<rom name="star cruiser (english translation).md" size="786432" crc="53d8b33e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18931,6 +18944,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sttngp04" cloneof="sttng" romof="sttng">
+		<comment>Prototype</comment>
 		<description>Star Trek - The Next Generation - Echoes from the Past (Prototype, 19940103)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -18939,6 +18953,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sttngp03" cloneof="sttng" romof="sttng">
+		<comment>Prototype</comment>
 		<description>Star Trek - The Next Generation - Echoes from the Past (Prototype, 19940110)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -18947,6 +18962,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sttngp02" cloneof="sttng" romof="sttng">
+		<comment>Prototype</comment>
 		<description>Star Trek - The Next Generation - Echoes from the Past (Prototype, 19940118)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -18955,6 +18971,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sttngp01" cloneof="sttng" romof="sttng">
+		<comment>Prototype</comment>
 		<description>Star Trek - The Next Generation - Echoes from the Past (Prototype, 19940125)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -18963,6 +18980,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sttngp06" cloneof="sttng" romof="sttng">
+		<comment>Prototype</comment>
 		<description>Star Trek - The Next Generation - Echoes from the Past (Prototype, 19941228)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -18971,6 +18989,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sttngp05" cloneof="sttng" romof="sttng">
+		<comment>Prototype</comment>
 		<description>Star Trek - The Next Generation - Echoes from the Past (Prototype, 19941229)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -18995,6 +19014,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="starwarsp">
+		<comment>Prototype</comment>
 		<description>Star Wars (Prototype, 19930125)</description>
 		<year>1994</year>
 		<manufacturer>Sega Interactive</manufacturer>
@@ -19035,6 +19055,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stargatep" cloneof="stargate" romof="stargate">
+		<comment>Prototype</comment>
 		<description>Stargate (Euro, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -19051,6 +19072,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stargatep1" cloneof="stargate" romof="stargate">
+		<comment>Prototype</comment>
 		<description>Stargate (Next Generation Magazine Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
@@ -19092,6 +19114,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="steeltalp" cloneof="steeltal" romof="steeltal">
+		<comment>Prototype</comment>
 		<description>Steel Talons (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Tengen</manufacturer>
@@ -19116,6 +19139,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="renstimup" cloneof="renstim" romof="renstim">
+		<comment>Prototype</comment>
 		<description>Stimpy's Invention Starring Starring Ren Hoek &amp; Stimpy (USA, Prototype)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
@@ -20226,9 +20250,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgp2019" cloneof="smgp" romof="smgp">
-		<description>Super Monaco GP 2019 - HE Returns (Hack, Improvement)</description>
+		<comment>Hack</comment>
+		<description>Super Monaco GP-2019 - HE Returns (Hack, Improvement)</description>
 		<year>2019</year>
-		<manufacturer>2019 TA_Marcos_Translations</manufacturer>
+		<manufacturer>TA_Marcos_Translations</manufacturer>
 		<rom name="Super_Monaco_GP2019.bin" size="524288" crc="12bcabb6"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20242,9 +20267,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="superoffs" cloneof="superoff" romof="superoff">
+		<comment>Hack</comment>
 		<description>Super Off Road (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer> Ballistic</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="super off road (hack, spanish).bin" size="524288" crc="050bbb2d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21108,6 +21134,15 @@
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="tmnt (unl).bin" size="1048576" crc="7fb1356e"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sor2tmntsr" cloneof="sor2" romof="sor2">
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)</description>
+		<year>2022</year>
+		<manufacturer>savok</manufacturer>
+		<rom name="Teenage Mutant Ninja Turtles - Shredder's Re-Revenge GlobHack (2022)(savok).bin" size="4063356" crc="6720cc8a"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

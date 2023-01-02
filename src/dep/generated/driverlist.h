@@ -118,6 +118,7 @@ DRV		BurnDrvbb2020;
 DRV		BurnDrvbba2020;
 DRV		BurnDrvbbh2020;
 DRV		BurnDrvmd_2020bbj;
+DRV		BurnDrvnes_2048;
 DRV		BurnSpec2088;
 DRV		BurnDrvpce_21emon;
 DRV		BurnSpec21erotic;
@@ -1266,6 +1267,7 @@ DRV		BurnDrvMSX_ballbuster;
 DRV		BurnDrvnes_balloonfight;
 DRV		BurnDrvnes_balloonmonster;
 DRV		BurnDrvMSX_balloonpunch;
+DRV		BurnDrvnes_ballstand;
 DRV		BurnDrvmd_ballz3d;
 DRV		BurnDrvmd_ballz3dp1;
 DRV		BurnDrvmd_ballz3dp2;
@@ -3830,6 +3832,7 @@ DRV		BurnDrvnes_daysofthunder;
 DRV		BurnDrvmd_dazexmass;
 DRV		BurnDrvmd_dazexmas;
 DRV		BurnDrvmd_dazexmasp;
+DRV		BurnDrvnes_ddreamddiver;
 DRV		BurnSpecDeatenebrarum;
 DRV		BurnDrvsms_deadang;
 DRV		BurnDrvsms_deadangp;
@@ -6440,6 +6443,7 @@ DRV		BurnSpecGlazx128;
 DRV		BurnSpecGlazx48;
 DRV		BurnDrvmd_gleylance;
 DRV		BurnDrvmd_gleylanc;
+DRV		BurnDrvmd_gleylancc;
 DRV		BurnDrvMSX_glider;
 DRV		BurnDrvMSX_glidera;
 DRV		BurnSpecGliderr;
@@ -8141,6 +8145,7 @@ DRV		BurnDrvKchamp;
 DRV		BurnDrvnes_karatechamp;
 DRV		BurnDrvKarateda;
 DRV		BurnDrvKaratedo;
+DRV		BurnDrvnes_karatekick;
 DRV		BurnDrvnes_karatekidthec;
 DRV		BurnDrvnes_karatekidthe;
 DRV		BurnDrvnes_karatekac;
@@ -8690,6 +8695,7 @@ DRV		BurnDrvLasso;
 DRV		BurnDrvmd_lastact;
 DRV		BurnDrvgg_lastact;
 DRV		BurnDrvnes_lastactionhero;
+DRV		BurnDrvnes_lastarmageddonj;
 DRV		BurnDrvnes_lastarmageddon;
 DRV		BurnDrvmd_lastbtle;
 DRV		BurnSpecLastduel;
@@ -16371,6 +16377,7 @@ DRV		BurnDrvnes_taitograprij;
 DRV		BurnDrvnes_taitograpri;
 DRV		BurnDrvPwrgoal;
 DRV		BurnDrvmd_taiwan;
+DRV		BurnDrvnes_asteka2;
 DRV		BurnDrvnes_taiyonoyuufirj;
 DRV		BurnDrvnes_taiyonoyuufir;
 DRV		BurnDrvnes_takameivic;
@@ -16589,6 +16596,7 @@ DRV		BurnDrvnes_tmntiimanpro;
 DRV		BurnDrvnes_tmntiiic;
 DRV		BurnDrvnes_tmntiii;
 DRV		BurnDrvnes_tmnttoufig;
+DRV		BurnDrvmd_sor2tmntsr;
 DRV		BurnDrvmd_teenqueen;
 DRV		BurnDrvmd_teiketsu;
 DRV		BurnDrvTekiPakit;
@@ -17126,6 +17134,7 @@ DRV		BurnDrvMSX_thexder;
 DRV		BurnDrvMSX_thexderb;
 DRV		BurnDrvMSX_thexdera;
 DRV		BurnDrvcv_thexder;
+DRV		BurnDrvnes_tctwh;
 DRV		BurnDrvnes_thiefcob;
 DRV		BurnDrvThief;
 DRV		BurnDrvMSX_tbback;
@@ -17392,6 +17401,7 @@ DRV		BurnDrvTomagic;
 DRV		BurnDrvcv_tomarc;
 DRV		BurnDrvMSX_togk;
 DRV		BurnDrvnes_tombice;
+DRV		BurnDrvnes_tmbtreasure;
 DRV		BurnSpecTomcat;
 DRV		BurnDrvmd_lasorda;
 DRV		BurnDrvpce_tongueman;
@@ -19442,6 +19452,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvbba2020,			// 2020 Super Baseball (set 2)
 	&BurnDrvbbh2020,			// 2020 Super Baseball (set 3)
 	&BurnDrvmd_2020bbj,			// 2020 Toshi Super Baseball (Jpn)
+	&BurnDrvnes_2048,			// 2048 (HB)
 	&BurnSpec2088,				// 2088 (48K)
 	&BurnDrvpce_21emon,			// 21 Emon - Mezase Hotel ou!!
 	&BurnSpec21erotic,			// 21 Erotic (Czech) (48K)
@@ -20590,6 +20601,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_balloonfight,	// Balloon Fight (USA)
 	&BurnDrvnes_balloonmonster,	// Balloon Monster (Unl)
 	&BurnDrvMSX_balloonpunch,	// Balloon Punch
+	&BurnDrvnes_ballstand,		// Balloon Stand (HB)
 	&BurnDrvmd_ballz3d,			// Ballz 3D (Euro, USA)
 	&BurnDrvmd_ballz3dp1,		// Ballz 3D (prototype 199409xx)
 	&BurnDrvmd_ballz3dp2,		// Ballz 3D (USA, prototype 199406xx)
@@ -23154,6 +23166,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_dazexmass,		// Daze Before Christmas (Hack, Spanish)
 	&BurnDrvmd_dazexmas,		// Daze Before Christmas (Oceania)
 	&BurnDrvmd_dazexmasp,		// Daze Before Christmas (Oceania, Prototype)
+	&BurnDrvnes_ddreamddiver,	// Ddream Ddiver (HB)
 	&BurnSpecDeatenebrarum,		// Dea Tenebrarum (Spanish) (48K)
 	&BurnDrvsms_deadang,		// Dead Angle (Euro, USA)
 	&BurnDrvsms_deadangp,		// Dead Angle (Prototype)
@@ -25764,6 +25777,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecGlazx48,			// GlaZX (48K) (HB)
 	&BurnDrvmd_gleylance,		// GleyLancer (Hack, English)
 	&BurnDrvmd_gleylanc,		// GleyLancer (Jpn)
+	&BurnDrvmd_gleylancc,		// GleyLancer - 30th Edition (Jpn)
 	&BurnDrvMSX_glider,			// Glider (Jpn)
 	&BurnDrvMSX_glidera,		// Glider (Jpn, Alt)
 	&BurnSpecGliderr,			// Glider Rider (128K)
@@ -27465,6 +27479,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_karatechamp,	// Karate Champ (USA) (Rev A)
 	&BurnDrvKarateda,			// Karate Dou (Arfyc bootleg)
 	&BurnDrvKaratedo,			// Karate Dou (Japan)
+	&BurnDrvnes_karatekick,		// Karate Kick (HB)
 	&BurnDrvnes_karatekidthec,	// Karate Kid, The (Hack, Spanish v1.0)
 	&BurnDrvnes_karatekidthe,	// Karate Kid, The (USA)
 	&BurnDrvnes_karatekac,		// Karateka (Hack, Spanish v1.0)
@@ -28014,7 +28029,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_lastact,			// Last Action Hero (Euro, USA)
 	&BurnDrvgg_lastact,			// Last Action Hero (USA)
 	&BurnDrvnes_lastactionhero,	// Last Action Hero (USA)
-	&BurnDrvnes_lastarmageddon,	// Last Armageddon (Japan)
+	&BurnDrvnes_lastarmageddonj,// Last Armageddon (Japan)
+	&BurnDrvnes_lastarmageddon,	// Last Armageddon (T-Eng, v1.02a)
 	&BurnDrvmd_lastbtle,		// Last Battle (Euro, USA, Kor)
 	&BurnSpecLastduel,			// Last Duel (48K)
 	&BurnDrvLsstduelb,			// Last Duel (bootleg)
@@ -35341,7 +35357,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSmgp6,				// Super Monaco GP (World, Rev A, FD1094 317-0126a)
 	&BurnDrvSmgpd,				// Super Monaco GP (World, Rev B, FD1094 317-0126a decrypted)
 	&BurnDrvSmgp,				// Super Monaco GP (World, Rev B, FD1094 317-0126a)
-	&BurnDrvmd_smgp2019,		// Super Monaco GP 2019 - HE Returns (Hack, Improvement)
+	&BurnDrvmd_smgp2019,		// Super Monaco GP-2019 - HE Returns (Hack, Improvement)
 	&BurnDrvSmooncrs,			// Super Moon Cresta (Gremlin, bootleg)
 	&BurnSpecSupmoritz,			// Super Moritz (128K) (HB)
 	&BurnDrvSuprmous,			// Super Mouse
@@ -35695,6 +35711,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_taitograpri,	// Taito Grand Prix - Eikou e no License (T-Eng)
 	&BurnDrvPwrgoal,			// Taito Power Goal (Ver 2.5O 1994/11/03)
 	&BurnDrvmd_taiwan,			// Taiwan Daheng (Tw) (Unl)
+	&BurnDrvnes_asteka2,		// Taiyou no Shinden - Asteka 2 (Japan)
 	&BurnDrvnes_taiyonoyuufirj,	// Taiyou no Yuusha Firebird (Japan)
 	&BurnDrvnes_taiyonoyuufir,	// Taiyou no Yuusha Firebird (T-Eng)
 	&BurnDrvnes_takameivic,		// Takahashi Meijin no Bouken-jima IV (T-Chi)
@@ -35913,6 +35930,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tmntiiic,		// Teenage Mutant Ninja Turtles III - The Manhattan Project (Hack, Spanish v0.91)
 	&BurnDrvnes_tmntiii,		// Teenage Mutant Ninja Turtles III - The Manhattan Project (USA)
 	&BurnDrvnes_tmnttoufig,		// Teenage Mutant Ninja Turtles Tournament Fighters (USA)
+	&BurnDrvmd_sor2tmntsr,		// Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)
 	&BurnDrvmd_teenqueen,		// Teenage Queen The Demo (HB)
 	&BurnDrvmd_teiketsu,		// Teitoku no Ketsudan (Jpn)
 	&BurnDrvTekiPakit,			// Teki Paki (location test)
@@ -36450,6 +36468,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_thexderb,		// Thexder (Jpn, Alt 2)
 	&BurnDrvMSX_thexdera,		// Thexder (Jpn, Alt)
 	&BurnDrvcv_thexder,			// Thexder (SGM) (HB)
+	&BurnDrvnes_tctwh,			// They Came To Wreak Hell (HB, v0.3a)
 	&BurnDrvnes_thiefcob,		// Thief and the Cobbler (Hack)
 	&BurnDrvThief,				// Thief
 	&BurnDrvMSX_tbback,			// Thing Bounces Back (Euro)
@@ -36716,6 +36735,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_tomarc,			// Tomarc the Barbarian
 	&BurnDrvMSX_togk,			// Tomb of Genghis Khan (HB)
 	&BurnDrvnes_tombice,		// Tomb of Ice (HB)
+	&BurnDrvnes_tmbtreasure,	// Tombs & Treasure (USA)
 	&BurnSpecTomcat,			// Tomcat (48K)
 	&BurnDrvmd_lasorda,			// Tommy Lasorda Baseball (USA)
 	&BurnDrvpce_tongueman,		// Tongueman's Logic (HB)

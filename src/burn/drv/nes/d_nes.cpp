@@ -21677,9 +21677,130 @@ struct BurnDriver BurnDrvnes_titanicc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Tombs & Treasure (USA)
+static struct BurnRomInfo nes_tmbtreasureRomDesc[] = {
+	{ "Tombs & Treasure (U)(1989)(Infocom).nes",          262160, 0x013bd19f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tmbtreasure)
+STD_ROM_FN(nes_tmbtreasure)
+
+struct BurnDriver BurnDrvnes_tmbtreasure = {
+	"nes_tmbtreasure", NULL, NULL, NULL, "1989",
+	"Tombs & Treasure (USA)\0", NULL, "Infocom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG | GBF_ADV, 0,
+	NESGetZipName, nes_tmbtreasureRomInfo, nes_tmbtreasureRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Taiyou no Shinden - Asteka 2 (Japan)
+static struct BurnRomInfo nes_asteka2RomDesc[] = {
+	{ "Taiyou no Shinden - Asteka 2 (J)(1988)(Tokyo Shoseki).nes",          262160, 0x01259d1f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_asteka2)
+STD_ROM_FN(nes_asteka2)
+
+struct BurnDriver BurnDrvnes_asteka2 = {
+	"nes_asteka2", "nes_tmbtreasure", NULL, NULL, "1988",
+	"Taiyou no Shinden - Asteka 2 (Japan)\0", NULL, "Tokyo Shoseki", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG | GBF_ADV, 0,
+	NESGetZipName, nes_asteka2RomInfo, nes_asteka2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_2048RomDesc[] = {
+	{ "2048 (2014)(Tsone).nes",          16400, 0x50b7ee6f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_2048)
+STD_ROM_FN(nes_2048)
+
+struct BurnDriver BurnDrvnes_2048 = {
+	"nes_2048", NULL, NULL, NULL, "2014",
+	"2048 (HB)\0", NULL, "Tsone", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_2048RomInfo, nes_2048RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ballstandRomDesc[] = {
+	{ "Balloon Stand (2022)(Spazzylemons).nes",          24592, 0x1bb52cb6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ballstand)
+STD_ROM_FN(nes_ballstand)
+
+struct BurnDriver BurnDrvnes_ballstand = {
+	"nes_ballstand", NULL, NULL, NULL, "2022",
+	"Balloon Stand (HB)\0", NULL, "Spazzylemons", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ballstandRomInfo, nes_ballstandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ddreamddiverRomDesc[] = {
+	{ "Ddream Ddiver (2022)(Game Losers).nes",          524304, 0x26943006, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ddreamddiver)
+STD_ROM_FN(nes_ddreamddiver)
+
+struct BurnDriver BurnDrvnes_ddreamddiver = {
+	"nes_ddreamddiver", NULL, NULL, NULL, "2022",
+	"Ddream Ddiver (HB)\0", NULL, "Game Losers", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_ddreamddiverRomInfo, nes_ddreamddiverRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_karatekickRomDesc[] = {
+	{ "Karate Kick (2017)(Mike Moffitt).nes",          40976, 0xda688ee1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_karatekick)
+STD_ROM_FN(nes_karatekick)
+
+struct BurnDriver BurnDrvnes_karatekick = {
+	"nes_karatekick", NULL, NULL, NULL, "2017",
+	"Karate Kick (HB)\0", NULL, "Mike Moffitt", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_karatekickRomInfo, nes_karatekickRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tctwhRomDesc[] = {
+	{ "They Came To Wreak Hell v0.3a (2022)(Team Disposable).nes",          65552, 0x83c4b5a3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tctwh)
+STD_ROM_FN(nes_tctwh)
+
+struct BurnDriver BurnDrvnes_tctwh = {
+	"nes_tctwh", NULL, NULL, NULL, "2022",
+	"They Came To Wreak Hell (HB, v0.3a)\0", NULL, "Team Disposable", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_MAZE, 0,
+	NESGetZipName, nes_tctwhRomInfo, nes_tctwhRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_bobsixsevenRomDesc[] = {
 	{ "Bobby Six Seven (Rev2)(2022)(calgames).nes",          524304, 0x81920aa8, BRF_ESS | BRF_PRG },
@@ -40928,18 +41049,35 @@ struct BurnDriver BurnDrvnes_lastactionhero = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_lastarmageddonRomDesc[] = {
+static struct BurnRomInfo nes_lastarmageddonjRomDesc[] = {
 	{ "Last Armageddon (Japan).nes",          524304, 0xce0cc857, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lastarmageddonj)
+STD_ROM_FN(nes_lastarmageddonj)
+
+struct BurnDriver BurnDrvnes_lastarmageddonj = {
+	"nes_lastarmageddonj", "nes_lastarmageddon", NULL, NULL, "1990",
+	"Last Armageddon (Japan)\0", NULL, "Yutaka", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_lastarmageddonjRomInfo, nes_lastarmageddonjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_lastarmageddonRomDesc[] = {
+	{ "Last Armageddon T-Eng v1.02a (2022)(BlackPaladin).nes",          524304, 0x11faecdb, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_lastarmageddon)
 STD_ROM_FN(nes_lastarmageddon)
 
 struct BurnDriver BurnDrvnes_lastarmageddon = {
-	"nes_lastarmageddon", NULL, NULL, NULL, "1990",
-	"Last Armageddon (Japan)\0", NULL, "Yutaka", "Miscellaneous",
+	"nes_lastarmageddon", NULL, NULL, NULL, "2022",
+	"Last Armageddon (T-Eng, v1.02a)\0", NULL, "BlackPaladin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_lastarmageddonRomInfo, nes_lastarmageddonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

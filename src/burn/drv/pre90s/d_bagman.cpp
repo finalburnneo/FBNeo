@@ -919,8 +919,8 @@ static INT32 BagmanCommonInit(INT32 game, INT32 memmap)
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 3072000);
 
-	tms5110_init(640000);
-	tms5110_M0_callback(bagman_TMS5110_M0_cb);
+	tms5110_init(640000, NULL);
+	tms5110_set_M0_callback(bagman_TMS5110_M0_cb);
 	tms5110_set_buffered(ZetTotalCycles, 3072000);
 
 	GenericTilesInit();

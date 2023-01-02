@@ -947,8 +947,9 @@ void ZetSetHALT(INT32 nStatus)
 #endif
 
 	if (nOpenedCPU < 0) return;
-	
+
 	ZetCPUContext[nOpenedCPU]->BusReq = nStatus;
+	if (nStatus) ZetRunEnd(); // end current timeslice since we're halted
 }
 
 void ZetSetHALT(INT32 nCPU, INT32 nStatus)

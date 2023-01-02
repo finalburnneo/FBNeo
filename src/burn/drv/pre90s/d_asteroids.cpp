@@ -51,6 +51,8 @@ static struct BurnInputInfo AsteroidInputList[] = {
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Hyperspace",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
 
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Diag Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 6,	"tilt"		},
@@ -71,6 +73,8 @@ static struct BurnInputInfo AsteroidbInputList[] = {
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 2"	},
 	{"P1 Hyperspace",	BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 3"	},
 
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 2,	"tilt"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -89,6 +93,8 @@ static struct BurnInputInfo AsterockInputList[] = {
 	{"P1 Fire",		    BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Hyperspace",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
@@ -109,6 +115,8 @@ static struct BurnInputInfo AstdeluxInputList[] = {
 	{"P1 Fire",		    BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Shield",	    BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Diag Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
@@ -131,6 +139,8 @@ static struct BurnInputInfo LlanderInputList[] = {
 	{"P1 Abort",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 start"	},
 	A("P1 Thrust",      BIT_ANALOG_REL, &BurnGun0,      "p1 y-axis"	),
 
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Diag Step",		BIT_DIGITAL,	DrvJoy1 + 7,	"service2"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 2,	"tilt"		},
@@ -152,11 +162,11 @@ static struct BurnInputInfo LlandertInputList[] = {
 
 STDINPUTINFO(Llandert)
 
-#define DO 0xa    // getting tired of re-basing the dips. :P
+#define DO 0xb    // getting tired of re-basing the dips. :P
 
 static struct BurnDIPInfo AsteroidDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x84, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -203,7 +213,7 @@ STDDIPINFO(Asteroid)
 
 static struct BurnDIPInfo AerolitosDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x87, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -250,7 +260,7 @@ STDDIPINFO(Aerolitos)
 
 static struct BurnDIPInfo AsteroidbDIPList[]=
 {
-	DIP_OFFSET(0x9)
+	DIP_OFFSET(0xa)
 	{0x00, 0xff, 0xff, 0x84, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -285,7 +295,7 @@ STDDIPINFO(Asteroidb)
 
 static struct BurnDIPInfo AsterockDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x87, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -332,7 +342,7 @@ STDDIPINFO(Asterock)
 
 static struct BurnDIPInfo AstdeluxDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x80, NULL					},
 	{0x01, 0xff, 0xff, 0xfd, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -400,7 +410,7 @@ STDDIPINFO(Astdelux)
 
 static struct BurnDIPInfo LlanderDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x80, NULL					},
 	{0x01, 0xff, 0xff, 0x02, NULL					},
 	{0x03, 0xff, 0xff, 0x00, NULL					},
@@ -444,7 +454,7 @@ STDDIPINFO(Llander)
 
 static struct BurnDIPInfo Llander1DIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0xa0, NULL					},
 	{0x01, 0xff, 0xff, 0x02, NULL					},
 	{0x03, 0xff, 0xff, 0x00, NULL					},

@@ -1,4 +1,4 @@
-// FB Alpha Taito SJ system driver module
+// FB Neo Taito SJ system driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -2826,6 +2826,49 @@ struct BurnDriver BurnDrvJunglekj2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglekj2RomInfo, junglekj2RomName, NULL, NULL, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
+	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	256, 224, 4, 3
+};
+
+
+// Jungle King (Japan, earlier, alt)
+
+static struct BurnRomInfo junglekj2aRomDesc[] = {
+	{ "kn41.bin",			0x1000, 0x7e4cd631, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "kn42.bin",			0x1000, 0xbade53af, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "kn43.bin",			0x1000, 0xa20e5a48, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "kn44.bin",			0x1000, 0x44c770d3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "kn45.bin",			0x1000, 0xf60a3d06, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "kn26.bin",			0x1000, 0x4b5adca2, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "kn27.bin",			0x1000, 0x5c3199e0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "kn48.bin",			0x1000, 0xe690b36e, 9 | BRF_PRG | BRF_ESS }, //  7
+	{ "kn60.bin",			0x1000, 0x1a9c0a26, 1 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "kn37.bin",			0x1000, 0x60d13095, 2 | BRF_PRG | BRF_ESS }, //  9 Sound Z80 Code
+	{ "kn38.bin",			0x1000, 0x6950413d, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "kn59.bin",			0x1000, 0xcee485fc, 2 | BRF_PRG | BRF_ESS }, // 11
+
+	{ "kn49.bin",			0x1000, 0xfe275213, 3 | BRF_GRA },           // 12 Graphics data
+	{ "kn50.bin",			0x1000, 0xd9f93c55, 3 | BRF_GRA },           // 13
+	{ "kn51.bin",			0x1000, 0x70e8fc12, 3 | BRF_GRA },           // 14
+	{ "kn52.bin",			0x1000, 0xbcbac1a3, 3 | BRF_GRA },           // 15
+	{ "kn53.bin",			0x1000, 0xb946c87d, 3 | BRF_GRA },           // 16
+	{ "kn54.bin",			0x1000, 0xf757d8f0, 3 | BRF_GRA },           // 17
+	{ "kn55.bin",			0x1000, 0x70aef58f, 3 | BRF_GRA },           // 18
+	{ "kn56.bin",			0x1000, 0x932eb667, 3 | BRF_GRA },           // 19
+
+	{ "eb16.22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 20 Layer Priority
+};
+
+STD_ROM_PICK(junglekj2a)
+STD_ROM_FN(junglekj2a)
+
+struct BurnDriver BurnDrvJunglekj2a = {
+	"junglekj2a", "junglek", NULL, NULL, "1982",
+	"Jungle King (Japan, earlier, alt)\0", NULL, "Taito Corporation", "Taito SJ System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, junglekj2aRomInfo, junglekj2aRomName, NULL, NULL, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };

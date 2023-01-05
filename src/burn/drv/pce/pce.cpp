@@ -486,9 +486,9 @@ static INT32 CommonInit(int type)
 		h6280SetWriteHandler(pce_write);
 		h6280SetReadHandler(pce_read);
 
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "pce_f1pilot") == 0 ||
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "pce_deepblue") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "pce_f1pilot") == 0 ||
 		    strcmp(BurnDrvGetTextA(DRV_NAME), "pce_wonderm") == 0) {
-			bprintf(0, _T("**  (PCE) Using timing hack for F-1 Pilot / Wonder Momo\n"));
+			bprintf(0, _T("**  (PCE) Using timing hack for F-1 Pilot / Wonder Momo / Deep Blue\n"));
 			h6280SetVDCPenalty(0);
 		}
 

@@ -1,4 +1,4 @@
-// FB Alpha Galaga 3 / Gaplus driver module
+// FB Neo Galaga 3 / Gaplus driver module
 // Based on MAME driver by Manuel Abadia, Ernesto Corvi, and Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -85,68 +85,198 @@ STDINPUTINFO(Gaplus)
 
 static struct BurnDIPInfo GaplusDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x0f, NULL				},
-	{0x11, 0xff, 0xff, 0x0f, NULL				},
-	{0x12, 0xff, 0xff, 0x0f, NULL				},
-	{0x13, 0xff, 0xff, 0x0f, NULL				},
-	{0x14, 0xff, 0xff, 0x0f, NULL				},
+	{0x10, 0xff, 0xff, 0x0f, NULL                      },
+	{0x11, 0xff, 0xff, 0x0f, NULL                      },
+	{0x12, 0xff, 0xff, 0x0f, NULL                      },
+	{0x13, 0xff, 0xff, 0x0f, NULL                      },
+	{0x14, 0xff, 0xff, 0x0f, NULL                      },
 
-	{0   , 0xfe, 0   ,    4, "Coin B"			},
-	{0x10, 0x01, 0x03, 0x00, "3 Coins 1 Credits"		},
-	{0x10, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
-	{0x10, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"                  },
+	{0x10, 0x01, 0x03, 0x00, "3 Coins 1 Credit"        },
+	{0x10, 0x01, 0x03, 0x01, "2 Coins 1 Credit"        },
+	{0x10, 0x01, 0x03, 0x03, "1 Coin  1 Credit"        },
+	{0x10, 0x01, 0x03, 0x02, "1 Coin  2 Credits"       },
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x10, 0x01, 0x08, 0x00, "Off"				},
-	{0x10, 0x01, 0x08, 0x08, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"             },
+	{0x10, 0x01, 0x08, 0x00, "Off"                     },
+	{0x10, 0x01, 0x08, 0x08, "On"                      },
 
-	{0   , 0xfe, 0   ,    4, "Coin A"			},
-	{0x11, 0x01, 0x03, 0x00, "3 Coins 1 Credits"		},
-	{0x11, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
-	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"                  },
+	{0x11, 0x01, 0x03, 0x00, "3 Coins 1 Credit"        },
+	{0x11, 0x01, 0x03, 0x01, "2 Coins 1 Credit"        },
+	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credit"        },
+	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"       },
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x11, 0x01, 0x0c, 0x08, "2"				},
-	{0x11, 0x01, 0x0c, 0x0c, "3"				},
-	{0x11, 0x01, 0x0c, 0x04, "4"				},
-	{0x11, 0x01, 0x0c, 0x00, "5"				},
+	{0   , 0xfe, 0   ,    4, "Lives"                   },
+	{0x11, 0x01, 0x0c, 0x08, "2"                       },
+	{0x11, 0x01, 0x0c, 0x0c, "3"                       },
+	{0x11, 0x01, 0x0c, 0x04, "4"                       },
+	{0x11, 0x01, 0x0c, 0x00, "5"                       },
 
-	{0   , 0xfe, 0   ,    8, "Bonus Life"			},
-	{0x12, 0x01, 0x07, 0x00, "30k 70k and every 70k"	},
-	{0x12, 0x01, 0x07, 0x01, "30k 100k and every 100k"	},
-	{0x12, 0x01, 0x07, 0x02, "30k 100k and every 200k"	},
-	{0x12, 0x01, 0x07, 0x03, "50k 100k and every 100k"	},
-	{0x12, 0x01, 0x07, 0x04, "50k 100k and every 200k"	},
-	{0x12, 0x01, 0x07, 0x07, "50k 150k and every 150k"	},
-	{0x12, 0x01, 0x07, 0x05, "50k 150k and every 300k"	},
-	{0x12, 0x01, 0x07, 0x06, "50k 150k"			},
+	{0   , 0xfe, 0   ,    8, "Bonus Life"              },
+	{0x12, 0x01, 0x07, 0x00, "30k 70k and every 70k"   },
+	{0x12, 0x01, 0x07, 0x01, "30k 100k and every 100k" },
+	{0x12, 0x01, 0x07, 0x02, "30k 100k and every 200k" },
+	{0x12, 0x01, 0x07, 0x03, "50k 100k and every 100k" },
+	{0x12, 0x01, 0x07, 0x04, "50k 100k and every 200k" },
+	{0x12, 0x01, 0x07, 0x07, "50k 150k and every 150k" },
+	{0x12, 0x01, 0x07, 0x05, "50k 150k and every 300k" },
+	{0x12, 0x01, 0x07, 0x06, "50k 150k"                },
 
-	{0   , 0xfe, 0   ,    2, "Round Advance"		},
-	{0x12, 0x01, 0x08, 0x08, "Off"				},
-	{0x12, 0x01, 0x08, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Round Advance"           },
+	{0x12, 0x01, 0x08, 0x08, "Off"                     },
+	{0x12, 0x01, 0x08, 0x00, "On"                      },
 
-	{0   , 0xfe, 0   ,    8, "Difficulty"			},
-	{0x13, 0x01, 0x07, 0x07, "0 - Standard"			},
-	{0x13, 0x01, 0x07, 0x06, "1 - Easiest"			},
-	{0x13, 0x01, 0x07, 0x05, "2"				},
-	{0x13, 0x01, 0x07, 0x04, "3"				},
-	{0x13, 0x01, 0x07, 0x03, "4"				},
-	{0x13, 0x01, 0x07, 0x02, "5"				},
-	{0x13, 0x01, 0x07, 0x01, "6"				},
-	{0x13, 0x01, 0x07, 0x00, "7 - Hardest"			},
+	{0   , 0xfe, 0   ,    8, "Difficulty"              },
+	{0x13, 0x01, 0x07, 0x07, "0 - Standard"            },
+	{0x13, 0x01, 0x07, 0x06, "1 - Easiest"             },
+	{0x13, 0x01, 0x07, 0x05, "2"                       },
+	{0x13, 0x01, 0x07, 0x04, "3"                       },
+	{0x13, 0x01, 0x07, 0x03, "4"                       },
+	{0x13, 0x01, 0x07, 0x02, "5"                       },
+	{0x13, 0x01, 0x07, 0x01, "6"                       },
+	{0x13, 0x01, 0x07, 0x00, "7 - Hardest"             },
 
-	{0   , 0xfe, 0   ,    2, "Service Mode" 	},
-	{0x13, 0x01, 0x08, 0x08, "Off"				},
-	{0x13, 0x01, 0x08, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"            },
+	{0x13, 0x01, 0x08, 0x08, "Off"                     },
+	{0x13, 0x01, 0x08, 0x00, "On"                      },
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x14, 0x01, 0x04, 0x04, "Upright"			},
-	{0x14, 0x01, 0x04, 0x00, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"                 },
+	{0x14, 0x01, 0x04, 0x04, "Upright"                 },
+	{0x14, 0x01, 0x04, 0x00, "Cocktail"                },
 };
 
 STDDIPINFO(Gaplus)
+
+static struct BurnDIPInfo Galaga3cDIPList[] =
+{
+	{0x10, 0xff, 0xff, 0x0f, NULL                      },
+	{0x11, 0xff, 0xff, 0x0f, NULL                      },
+	{0x12, 0xff, 0xff, 0x0a, NULL                      },
+	{0x13, 0xff, 0xff, 0x0f, NULL                      },
+	{0x14, 0xff, 0xff, 0x0f, NULL                      },
+
+	{0   , 0xfe, 0   ,    4, "Coin B"                  },
+	{0x10, 0x01, 0x03, 0x00, "3 Coins 1 Credit"        },
+	{0x10, 0x01, 0x03, 0x01, "2 Coins 1 Credit"        },
+	{0x10, 0x01, 0x03, 0x03, "1 Coin  1 Credit"        },
+	{0x10, 0x01, 0x03, 0x02, "1 Coin  2 Credits"       },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"             },
+	{0x10, 0x01, 0x08, 0x00, "Off"                     },
+	{0x10, 0x01, 0x08, 0x08, "On"                      },
+
+	{0   , 0xfe, 0   ,    4, "Coin A"                  },
+	{0x11, 0x01, 0x03, 0x00, "3 Coins 1 Credit"        },
+	{0x11, 0x01, 0x03, 0x01, "2 Coins 1 Credit"        },
+	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credit"        },
+	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"       },
+
+	{0   , 0xfe, 0   ,    4, "Lives"                   },
+	{0x11, 0x01, 0x0c, 0x08, "2"                       },
+	{0x11, 0x01, 0x0c, 0x0c, "3"                       },
+	{0x11, 0x01, 0x0c, 0x04, "4"                       },
+	{0x11, 0x01, 0x0c, 0x00, "5"                       },
+
+	{0   , 0xfe, 0   ,    8, "Bonus Life"              },
+	{0x12, 0x01, 0x07, 0x02, "30k 80k and every 100k"  },
+	{0x12, 0x01, 0x07, 0x03, "30k 100k and every 100k" },
+	{0x12, 0x01, 0x07, 0x04, "30k 100k and every 150k" },
+	{0x12, 0x01, 0x07, 0x07, "30k 100k and every 200k" },
+	{0x12, 0x01, 0x07, 0x05, "30k 100k and every 300k" },
+	{0x12, 0x01, 0x07, 0x06, "30k 150k"                },
+	{0x12, 0x01, 0x07, 0x00, "50k 150k and every 150k" },
+	{0x12, 0x01, 0x07, 0x01, "50k 150k and every 200k" },
+
+	{0   , 0xfe, 0   ,    2, "Round Advance"           },
+	{0x12, 0x01, 0x08, 0x08, "Off"                     },
+	{0x12, 0x01, 0x08, 0x00, "On"                      },
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"              },
+	{0x13, 0x01, 0x07, 0x07, "0 - Standard"            },
+	{0x13, 0x01, 0x07, 0x06, "1 - Easiest"             },
+	{0x13, 0x01, 0x07, 0x05, "2"                       },
+	{0x13, 0x01, 0x07, 0x04, "3"                       },
+	{0x13, 0x01, 0x07, 0x03, "4"                       },
+	{0x13, 0x01, 0x07, 0x02, "5"                       },
+	{0x13, 0x01, 0x07, 0x01, "6"                       },
+	{0x13, 0x01, 0x07, 0x00, "7 - Hardest"             },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"            },
+	{0x13, 0x01, 0x08, 0x08, "Off"                     },
+	{0x13, 0x01, 0x08, 0x00, "On"                      },
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"                 },
+	{0x14, 0x01, 0x04, 0x04, "Upright"                 },
+	{0x14, 0x01, 0x04, 0x00, "Cocktail"                },
+};
+
+STDDIPINFO(Galaga3c)
+
+static struct BurnDIPInfo Galaga3mDIPList[] =
+{
+	{0x10, 0xff, 0xff, 0x0f, NULL                       },
+	{0x11, 0xff, 0xff, 0x0f, NULL                       },
+	{0x12, 0xff, 0xff, 0x08, NULL                       },
+	{0x13, 0xff, 0xff, 0x0f, NULL                       },
+	{0x14, 0xff, 0xff, 0x0f, NULL                       },
+
+	{0   , 0xfe, 0   ,    4, "Coin B"                   },
+	{0x10, 0x01, 0x03, 0x00, "3 Coins 1 Credit"         },
+	{0x10, 0x01, 0x03, 0x01, "2 Coins 1 Credit"         },
+	{0x10, 0x01, 0x03, 0x03, "1 Coin  1 Credit"         },
+	{0x10, 0x01, 0x03, 0x02, "1 Coin  2 Credits"        },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"              },
+	{0x10, 0x01, 0x08, 0x00, "Off"                      },
+	{0x10, 0x01, 0x08, 0x08, "On"                       },
+
+	{0   , 0xfe, 0   ,    4, "Coin A"                   },
+	{0x11, 0x01, 0x03, 0x00, "3 Coins 1 Credit"         },
+	{0x11, 0x01, 0x03, 0x01, "2 Coins 1 Credit"         },
+	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credit"         },
+	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"        },
+
+	{0   , 0xfe, 0   ,    4, "Lives"                    },
+	{0x11, 0x01, 0x0c, 0x08, "2"                        },
+	{0x11, 0x01, 0x0c, 0x0c, "3"                        },
+	{0x11, 0x01, 0x0c, 0x04, "4"                        },
+	{0x11, 0x01, 0x0c, 0x00, "5"                        },
+
+	{0   , 0xfe, 0   ,    8, "Bonus Life"               },
+	{0x12, 0x01, 0x07, 0x00, "30k 150k and every 600k"  },
+	{0x12, 0x01, 0x07, 0x01, "50k 150k and every 300k"  },
+	{0x12, 0x01, 0x07, 0x02, "50k 150k and every 600k"  },
+	{0x12, 0x01, 0x07, 0x03, "50k 200k and every 300k"  },
+	{0x12, 0x01, 0x07, 0x04, "100k 300k and every 300k" },
+	{0x12, 0x01, 0x07, 0x07, "100k 300k and every 600k" },
+	{0x12, 0x01, 0x07, 0x05, "150k 400k and every 900k" },
+	{0x12, 0x01, 0x07, 0x06, "150k 400k"                },
+
+	{0   , 0xfe, 0   ,    2, "Round Advance"            },
+	{0x12, 0x01, 0x08, 0x08, "Off"                      },
+	{0x12, 0x01, 0x08, 0x00, "On"                       },
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"               },
+	{0x13, 0x01, 0x07, 0x07, "0 - Standard"             },
+	{0x13, 0x01, 0x07, 0x06, "1 - Easiest"              },
+	{0x13, 0x01, 0x07, 0x05, "2"                        },
+	{0x13, 0x01, 0x07, 0x04, "3"                        },
+	{0x13, 0x01, 0x07, 0x03, "4"                        },
+	{0x13, 0x01, 0x07, 0x02, "5"                        },
+	{0x13, 0x01, 0x07, 0x01, "6"                        },
+	{0x13, 0x01, 0x07, 0x00, "7 - Hardest"              },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"             },
+	{0x13, 0x01, 0x08, 0x08, "Off"                      },
+	{0x13, 0x01, 0x08, 0x00, "On"                       },
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"                  },
+	{0x14, 0x01, 0x04, 0x04, "Upright"                  },
+	{0x14, 0x01, 0x04, 0x00, "Cocktail"                 },
+};
+
+STDDIPINFO(Galaga3m)
 
 static void gaplus_main_write(UINT16 address, UINT8 data)
 {
@@ -989,6 +1119,52 @@ struct BurnDriver BurnDrvGaplusd = {
 };
 
 
+// Gaplus (GP7)
+
+static struct BurnRomInfo gapluseRomDesc[] = {
+	{ "gp7_4.8d",		0x2000, 0xd7faeafa, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "gp7_3.8c",		0x2000, 0x6674c6b7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gp7_2.8b",		0x2000, 0x12e47097, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "gp7_8.11d",		0x2000, 0xf5e056d1, 2 | BRF_PRG | BRF_ESS }, //  3 M6809 #1 Code
+	{ "gp2-7.11c",		0x2000, 0x0621f7df, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "gp7_6.11b",		0x2000, 0xc0b80680, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "gp2-1.4b",		0x2000, 0xed8aa206, 3 | BRF_GRA },           //  6 M6809 #2 Code
+
+	{ "gp2-5.8s",		0x2000, 0xf3d19987, 4 | BRF_GRA },           //  7 Background Tiles
+
+	{ "gp2-11.11p",		0x2000, 0x57740ff9, 5 | BRF_GRA },           //  8 Sprites
+	{ "gp2-10.11n",		0x2000, 0x6cd8ce11, 5 | BRF_GRA },           //  9
+	{ "gp2-12.11r",		0x2000, 0x7316a1f1, 5 | BRF_GRA },           // 10
+	{ "gp2-9.11m",		0x2000, 0xe6a9ae67, 5 | BRF_GRA },           // 11
+
+	{ "gp2-3.1p",		0x0100, 0xa5091352, 6 | BRF_GRA },           // 12 Color Data
+	{ "gp2-1.1n",		0x0100, 0x8bc8022a, 6 | BRF_GRA },           // 13
+	{ "gp2-2.2n",		0x0100, 0x8dabc20b, 6 | BRF_GRA },           // 14
+	{ "gp2-7.6s",		0x0100, 0x2faa3e09, 6 | BRF_GRA },           // 15
+	{ "gp2-6.6p",		0x0200, 0x6f99c2da, 6 | BRF_GRA },           // 16
+	{ "gp2-5.6n",		0x0200, 0xc7d31657, 6 | BRF_GRA },           // 17
+
+	{ "gp2-4.3f",		0x0100, 0x2d9fbdd8, 7 | BRF_GRA },           // 18 Sound Prom
+
+	{ "pal10l8.8n",		0x002c, 0x08e5b2fe, 0 | BRF_OPT },           // 19 plds
+};
+
+STD_ROM_PICK(gapluse)
+STD_ROM_FN(gapluse)
+
+struct BurnDriver BurnDrvGapluse = {
+	"gapluse", "gaplus", NULL, "gaplus", "1984",
+	"Gaplus (GP7)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, gapluseRomInfo, gapluseRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Gaplus (Tecfri PCB)
 
 static struct BurnRomInfo gaplustRomDesc[] = {
@@ -1029,7 +1205,7 @@ struct BurnDriver BurnDrvGaplust = {
 	"Gaplus (Tecfri PCB)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, gaplustRomInfo, gaplustRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, gaplustRomInfo, gaplustRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, Galaga3mDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1211,7 +1387,7 @@ struct BurnDriver BurnDrvGalaga3c = {
 	"Galaga 3 (set 4)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga3cRomInfo, galaga3cRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, galaga3cRomInfo, galaga3cRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, Galaga3cDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -1255,7 +1431,7 @@ struct BurnDriver BurnDrvGalaga3m = {
 	"Galaga 3 (set 5)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, galaga3mRomInfo, galaga3mRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, GaplusDIPInfo,
+	NULL, galaga3mRomInfo, galaga3mRomName, NULL, NULL, GaplusSampleInfo, GaplusSampleName, GaplusInputInfo, Galaga3mDIPInfo,
 	GaplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

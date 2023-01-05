@@ -224,7 +224,7 @@
 	</game>
 	<game name="aoiblinke" cloneof="aoiblink" romof="aoiblink">
 		<comment>Hack</comment>
-		<description>Blue Blink (Hack, English v0.99b)</description>
+		<description>Blue Blink (Hack, English, v0.99b)</description>
 		<year>2022</year>
 		<manufacturer>Gaijin Productions</manufacturer>
 		<rom name="Blue Blink (T-Eng v0.99b)(2022)(Gaijin Productions).pce" size="393216" crc="25d34a20"/>
@@ -404,7 +404,7 @@
 	</game>
 	<game name="cityhunte" cloneof="cityhunt" romof="cityhunt">
 		<comment>Hack</comment>
-		<description>City Hunter (Hack, English v1.1)</description>
+		<description>City Hunter (Hack, English, v1.1)</description>
 		<year>2022</year>
 		<manufacturer>filler, cabbage</manufacturer>
 		<rom name="City Hunter (T-Eng v1.1)(2022)(filler, cabbage).pce" size="393216" crc="23f3df33"/>
@@ -859,6 +859,15 @@
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
 		<rom name="fushigi no yume no alice (japan).pce" size="393216" crc="12c4e6fd"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gaiflamee" cloneof="gaiflame" romof="gaiflame">
+		<comment>Hack</comment>
+		<description>Gai Flame (Hack, English, v0.98)</description>
+		<year>2022</year>
+		<manufacturer>Nebulous Translations</manufacturer>
+		<rom name="Gai Flame T-Eng v0.98 (2022)(Nebulous Translations).pce" size="393216" crc="581164ce"/>
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1713,7 +1722,7 @@
 	</game>
 	<game name="outlivee" cloneof="outlive" romof="outlive">
 		<comment>Hack</comment>
-		<description>Out Live (Hack, English v1.1)</description>
+		<description>Out Live (Hack, English, v1.1)</description>
 		<year>2016</year>
 		<manufacturer>Nebulous Translations</manufacturer>
 		<rom name="Out Live (T-Eng v1.1)(2016)(Nebulous Translations).pce" size="303104" crc="2f1cee20"/>

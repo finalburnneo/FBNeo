@@ -1296,6 +1296,7 @@ DRV		BurnDrvMSX_bankp;
 DRV		BurnDrvsg1k_bankp;
 DRV		BurnDrvMSX_bankpa;
 DRV		BurnDrvMSX_bankpk;
+DRV		BurnDrvbankpt;
 DRV		BurnDrvbankp;
 DRV		BurnDrvcv_bankbuild;
 DRV		Burnmd_Baoxiao;
@@ -5091,8 +5092,9 @@ DRV		BurnDrvnes_esperdre2j;
 DRV		BurnDrvnes_esperdre2;
 DRV		BurnDrvEspgalbl;
 DRV		BurnDrvEspgal;
-DRV		BurnDrvEspgal2;
 DRV		BurnDrvEspgal2a;
+DRV		BurnDrvEspgal2b;
+DRV		BurnDrvEspgal2;
 DRV		BurnDrvEspial;
 DRV		BurnDrvEspialu;
 DRV		BurnDrvnes_espitene;
@@ -5997,6 +5999,7 @@ DRV		BurnDrvnes_gijoeatlfa;
 DRV		BurnDrvmd_gadgets;
 DRV		BurnDrvmd_gadget;
 DRV		BurnDrvsms_gaegujan;
+DRV		BurnDrvpce_gaiflamee;
 DRV		BurnDrvpce_gaiflame;
 DRV		BurnDrvGaialast;
 DRV		BurnDrvGaia;
@@ -6199,6 +6202,7 @@ DRV		BurnDrvnes_gansosai;
 DRV		BurnDrvGaplusd;
 DRV		BurnDrvGaplus;
 DRV		BurnDrvGaplusa;
+DRV		BurnDrvGapluse;
 DRV		BurnDrvGaplust;
 DRV		BurnDrvnes_gaplus;
 DRV		BurnDrvnes_garbpailkids;
@@ -8006,6 +8010,7 @@ DRV		BurnDrvcv_jungleh;
 DRV		BurnDrvJunglekas;
 DRV		BurnDrvJunglek;
 DRV		BurnDrvJunglekj2;
+DRV		BurnDrvJunglekj2a;
 DRV		BurnSpecJunglequeen;
 DRV		BurnDrvmd_jstrike;
 DRV		BurnDrvgg_jstrike;
@@ -14551,6 +14556,7 @@ DRV		BurnDrvSlspirit;
 DRV		BurnDrvfds_solomonnokagi;
 DRV		BurnDrvnes_solomonskeyj;
 DRV		BurnDrvSolomonj;
+DRV		BurnDrvSolomonc;
 DRV		BurnDrvsms_solomon;
 DRV		BurnDrvnes_solonokagi2;
 DRV		BurnDrvnes_solonokagi2h;
@@ -20630,6 +20636,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_bankp,			// Bank Panic (Jpn)
 	&BurnDrvMSX_bankpa,			// Bank Panic (Jpn, Alt)
 	&BurnDrvMSX_bankpk,			// Bank Panic (Kor)
+	&BurnDrvbankpt,				// Bank Panic (Tecfri bootleg)
 	&BurnDrvbankp,				// Bank Panic
 	&BurnDrvcv_bankbuild,		// Bankruptcy Builder (HB)
 	&Burnmd_Baoxiao,			// Bao Xiao San Guo
@@ -21246,7 +21253,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBloxeedu,			// Bloxeed (US, C System, Rev A)
 	&BurnDrvBloxeedc,			// Bloxeed (World, C System)
 	&BurnDrvmd_bluealma,		// Blue Almanac (Jpn)
-	&BurnDrvpce_aoiblinke,		// Blue Blink (Hack, English v0.99b)
+	&BurnDrvpce_aoiblinke,		// Blue Blink (Hack, English, v0.99b)
 	&BurnDrvBluehawkn,			// Blue Hawk (NTC)
 	&BurnDrvBluehawk,			// Blue Hawk
 	&BurnDrvnes_bluemarlinthe,	// Blue Marlin, The (USA)
@@ -22368,7 +22375,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCitycon,			// City Connection (set 1)
 	&BurnDrvCitycona,			// City Connection (set 2)
 	&BurnDrvnes_cityconnection,	// City Connection (USA)
-	&BurnDrvpce_cityhunte,		// City Hunter (Hack, English v1.1)
+	&BurnDrvpce_cityhunte,		// City Hunter (Hack, English, v1.1)
 	&BurnDrvpce_cityhunt,		// City Hunter
 	&BurnDrvnes_citytrouble,	// City Trouble (HB)
 	&BurnDrvgg_cj,				// CJ Elephant Fugitive (Euro)
@@ -24425,8 +24432,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_esperdre2,		// Esper Dream 2 - Aratanaru Tatakai (T-Eng)
 	&BurnDrvEspgalbl,			// Espgaluda (2003/10/15 Master Ver, bootleg cartridge conversion)
 	&BurnDrvEspgal,				// Espgaluda (Japan, 2003/10/15 Master Ver)
-	&BurnDrvEspgal2,			// Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)
-	&BurnDrvEspgal2a,			// Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)
+	&BurnDrvEspgal2a,			// Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)
+	&BurnDrvEspgal2b,			// Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)
+	&BurnDrvEspgal2,			// Espgaluda II (2005/11/14.MASTER VER.)
 	&BurnDrvEspial,				// Espial (Europe)
 	&BurnDrvEspialu,			// Espial (US?)
 	&BurnDrvnes_espitene,		// Espitene (HB)
@@ -25331,6 +25339,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_gadgets,			// Gadget twins (Hack, Spanish)
 	&BurnDrvmd_gadget,			// Gadget Twins (USA)
 	&BurnDrvsms_gaegujan,		// Gaegujangi Ggachi (Kor)
+	&BurnDrvpce_gaiflamee,		// Gai Flame (Hack, English, v0.98)
 	&BurnDrvpce_gaiflame,		// Gai Flame
 	&BurnDrvGaialast,			// Gaia - The Last Choice of Earth
 	&BurnDrvGaia,				// Gaia Crusaders
@@ -25533,6 +25542,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGaplusd,			// Gaplus (GP2 rev D, alternate hardware)
 	&BurnDrvGaplus,				// Gaplus (GP2 rev. B)
 	&BurnDrvGaplusa,			// Gaplus (GP2)
+	&BurnDrvGapluse,			// Gaplus (GP7)
 	&BurnDrvGaplust,			// Gaplus (Tecfri PCB)
 	&BurnDrvnes_gaplus,			// Gaplus
 	&BurnDrvnes_garbpailkids,	// Garbage Pail Kids Mad Mike and the Quest for Stale Gum (HB)
@@ -27340,6 +27350,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJunglekas,			// Jungle King (alternate sound)
 	&BurnDrvJunglek,			// Jungle King (Japan)
 	&BurnDrvJunglekj2,			// Jungle King (Japan, earlier)
+	&BurnDrvJunglekj2a,			// Jungle King (Japan, earlier, alt)
 	&BurnSpecJunglequeen,		// Jungle Queen (128K) (HB)
 	&BurnDrvmd_jstrike,			// Jungle Strike (Euro, USA)
 	&BurnDrvgg_jstrike,			// Jungle Strike (USA)
@@ -30740,7 +30751,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ottifant,		// Ottifants, The (Euro)
 	&BurnDrvsms_ottifant,		// Ottifants, The (Euro, Bra)
 	&BurnDrvottopz,				// Otto Project PZ (hack)
-	&BurnDrvpce_outlivee,		// Out Live (Hack, English v1.1)
+	&BurnDrvpce_outlivee,		// Out Live (Hack, English, v1.1)
 	&BurnDrvpce_outlive,		// Out Live
 	&BurnDrvmd_ootwp,			// Out of this World (Prototype)
 	&BurnDrvmd_ootw,			// Out of This World (USA)
@@ -33885,9 +33896,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_solomonnokagi,	// Solomon no Kagi (Japan)
 	&BurnDrvnes_solomonskeyj,	// Solomon no Kagi (Japan)
 	&BurnDrvSolomonj,			// Solomon no Kagi (Japan)
+	&BurnDrvSolomonc,			// Solomon no Kagi (T-Chi)
 	&BurnDrvsms_solomon,		// Solomon no Kagi - Oujo Rihita no Namida (Jpn)
 	&BurnDrvnes_solonokagi2,	// Solomon no Kagi 2 - Coolmintou Kyuushutsu Sakusen (Japan)
-	&BurnDrvnes_solonokagi2h,	// Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5)
+	&BurnDrvnes_solonokagi2h,	// Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.6)
 	&BurnDrvSolomonjx,			// Solomon no Kagi X (Japan)
 	&BurnSpecsolomon,			// Solomon's Key (48K)
 	&BurnDrvSolomon,			// Solomon's Key (US)

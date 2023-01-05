@@ -14611,10 +14611,10 @@
 	</game>
 	<game name="solonokagi2h" cloneof="firenice" romof="firenice">
 		<comment>Hack, 100 new levels</comment>
-		<description>Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5)</description>
+		<description>Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.6)</description>
 		<year>2022</year>
 		<manufacturer>FoxyShadow</manufacturer>
-		<rom name="Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.5).nes" size="262160" crc="e8753077"/>
+		<rom name="Solomon no Kagi 2 - Kitsune Attacks! (Hack, v1.6).nes" size="262160" crc="039d14fd"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -2,6 +2,8 @@
 // media: .tap, .z80 snapshots
 // input: kbd, kempston: joy1, sinclair intf.2: joy1 & joy2
 
+// tofix: scroll17 (128k) isn't quite right, also fpg8all borders weird(?)
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
@@ -573,7 +575,7 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 		return AY8910Read(0);
 	}
 
-	ula_run_cyc(ZetTotalCycles(), 0); // get up-to-date ula_byte!
+	ula_run_cyc(ZetTotalCycles() - 1, 0); // get up-to-date ula_byte!
 
 	return ula_byte; // Floating Memory
 }
@@ -690,7 +692,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 		//bprintf(0, _T("reading %x (%x)\n"), address, Spec128kMapper);
 	}
 
-	ula_run_cyc(ZetTotalCycles(), 0); // get up-to-date ula_byte!
+	ula_run_cyc(ZetTotalCycles() - 1, 0); // get up-to-date ula_byte!
 
 	return ula_byte; // Floating Memory
 }
@@ -38947,7 +38949,7 @@ struct BurnDriver BurnSpecCastlescape = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecCastlescapeRomInfo, SpecCastlescapeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KPlus2Init, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

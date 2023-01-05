@@ -1,4 +1,4 @@
-// FB Alpha Double Dragon driver module
+// FB Neo Double Dragon driver module
 // Based on MAME driver by Philip Bennett,Carlos A. Lozano, Rob Rosenbrock,
 // Phil Stroffolino, Ernesto Corvi, David Haywood, and R. Belmont
 
@@ -706,7 +706,8 @@ static struct BurnRomInfo Drv2RomDesc[] = {
 	{ "26j6-0.bin",    	0x20000, 0xa84b2a29, BRF_GRA },	     	  // 15	Samples
 	{ "26j7-0.bin",    	0x20000, 0xbc6a48d5, BRF_GRA },	     	  // 16
 
-	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 17	PROMs
+	{ "21j-k-0",       	0x00100, 0xfdb130a9, BRF_GRA },	     	  // 17	PROMs
+	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 18
 };
 
 STD_ROM_PICK(Drv2)
@@ -737,7 +738,8 @@ static struct BurnRomInfo Drv2jRomDesc[] = {
 	{ "26j6-0.bin",    	0x20000, 0xa84b2a29, BRF_GRA },	     	  // 15	Samples
 	{ "26j7-0.bin",    	0x20000, 0xbc6a48d5, BRF_GRA },	     	  // 16
 
-	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 17	PROMs
+	{ "21j-k-0",       	0x00100, 0xfdb130a9, BRF_GRA },	     	  // 17	PROMs / BAD DUMP
+	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 18
 };
 
 STD_ROM_PICK(Drv2j)
@@ -768,7 +770,8 @@ static struct BurnRomInfo Drv2uRomDesc[] = {
 	{ "26j6-0.bin",    	0x20000, 0xa84b2a29, BRF_GRA },	     	  // 15	Samples
 	{ "26j7-0.bin",    	0x20000, 0xbc6a48d5, BRF_GRA },	     	  // 16
 
-	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 17	PROMs
+	{ "21j-k-0",       	0x00100, 0xfdb130a9, BRF_GRA },	     	  // 17	PROMs / BAD DUMP
+	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 18
 };
 
 STD_ROM_PICK(Drv2u)
@@ -809,7 +812,8 @@ static struct BurnRomInfo Drv2bRomDesc[] = {
 	{ "8",    			0x10000, 0x151b22b4, BRF_GRA },	     	  // 25
 	{ "10",   			0x10000, 0xae2fc028, BRF_GRA },	     	  // 26
 
-	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 27	PROMs
+	{ "21j-k-0",       	0x00100, 0xfdb130a9, BRF_GRA },	     	  // 27	PROMs / BAD DUMP
+	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 28
 };
 
 STD_ROM_PICK(Drv2b)

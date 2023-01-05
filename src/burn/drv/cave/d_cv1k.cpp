@@ -722,10 +722,10 @@ struct BurnDriver BurnDrvMushisamb = {
 };
 
 
-// Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)
+// Espgaluda II (2005/11/14.MASTER VER.)
 
 static struct BurnRomInfo espgal2RomDesc[] = {
-	{ "espgal2_u4",	0x0200000, 0x843608b8, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+	{ "espgal2_u4",	0x0200000, 0x2cb37c03, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
 
 	{ "u2",			0x8400000, 0x222f58c7, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
 
@@ -738,8 +738,8 @@ STD_ROM_FN(espgal2)
 
 struct BurnDriver BurnDrvEspgal2 = {
 	"espgal2", NULL, NULL, NULL, "2005",
-	"Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
-	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, NULL, NULL,
+	"Espgaluda II (2005/11/14.MASTER VER.)\0", NULL, "Cave (AMI license)", "CA013",
+	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14.MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, espgal2RomInfo, espgal2RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -747,10 +747,10 @@ struct BurnDriver BurnDrvEspgal2 = {
 };
 
 
-// Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)
+// Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)
 
 static struct BurnRomInfo espgal2aRomDesc[] = {
-	{ "espgal2a_u4",	0x0200000, 0x09c908bb, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+	{ "espgal2a_u4",	0x0200000, 0x843608b8, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
 
 	{ "u2",				0x8400000, 0x222f58c7, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
 
@@ -763,10 +763,35 @@ STD_ROM_FN(espgal2a)
 
 struct BurnDriver BurnDrvEspgal2a = {
 	"espgal2a", "espgal2", NULL, NULL, "2005",
+	"Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
+	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	NULL, espgal2aRomInfo, espgal2aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	240, 320, 3, 4
+};
+
+
+// Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)
+
+static struct BurnRomInfo espgal2bRomDesc[] = {
+	{ "espgal2b_u4",	0x0200000, 0x09c908bb, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+
+	{ "u2",				0x8400000, 0x222f58c7, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
+
+	{ "u23",			0x0400000, 0xb9a10c22, 3 | BRF_SND },           //  2 YMZ770 Samples
+	{ "u24",			0x0400000, 0xc76b1ec4, 3 | BRF_SND },           //  3
+};
+
+STD_ROM_PICK(espgal2b)
+STD_ROM_FN(espgal2b)
+
+struct BurnDriver BurnDrvEspgal2b = {
+	"espgal2b", "espgal2", NULL, NULL, "2005",
 	"Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
 	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
-	NULL, espgal2aRomInfo, espgal2aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
+	NULL, espgal2bRomInfo, espgal2bRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
 };

@@ -313,7 +313,7 @@ void vce_reset()
 enum vdc_regs {MAWR = 0, MARR, VxR, reg3, reg4, CR, RCR, BXR, BYR, MWR, HSR, HDR, VPR, VDW, VCR, DCR, SOUR, DESR, LENR, DVSSR };
 
 
-static void conv_obj(INT32 which, INT32 i, INT32 l, INT32 hf, INT32 vf, UINT8 *buf)
+static void conv_obj(INT32 which, INT32 halfplane, INT32 i, INT32 l, INT32 hf, INT32 vf, UINT8 *buf)
 {
 	INT32 b0, b1, b2, b3, i0, i1, i2, i3, x;
 	INT32 xi;
@@ -333,6 +333,15 @@ static void conv_obj(INT32 which, INT32 i, INT32 l, INT32 hf, INT32 vf, UINT8 *b
 	b3  = vdc_vidram[which][(tmp + 0x30) * 2 + 0];
 	b3 |= vdc_vidram[which][(tmp + 0x30) * 2 + 1]<<8;
 
+	if (halfplane & 0x80) {
+		if (halfplane & 1) {
+			b0 = b2;
+			b1 = b3;
+		}
+
+		b2 = b3 = 0;
+	}
+
 	for(x=0;x<16;x++)
 	{
 		if(hf) xi = x; else xi = (15 - x);
@@ -351,6 +360,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 
 	/* Are we in greyscale mode or in color mode? */
 	INT32 color_base = vce_control & 0x80 ? 512 : 0;
+	INT32 half_plane = ((vdc_data[which][MWR] & 0x0c) == 0x04) << 7;
 
 	/* count up: Highest priority is Sprite 0 */
 	for(i = 0; i < 64; i++)
@@ -360,6 +370,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 		INT32 obj_y = (vdc_sprite_ram[which][(i << 2) + 0] & 0x03FF) - 64;
 		INT32 obj_x = (vdc_sprite_ram[which][(i << 2) + 1] & 0x03FF) - 32;
 		INT32 obj_i = (vdc_sprite_ram[which][(i << 2) + 2] & 0x07FE);
+		INT32 obj_lsb = (vdc_sprite_ram[which][(i << 2) + 2] & 0x0001) | half_plane;
 		INT32 obj_a = (vdc_sprite_ram[which][(i << 2) + 3]);
 		INT32 cgx   = (obj_a >> 8) & 1;   /* sprite width */
 		INT32 cgy   = (obj_a >> 12) & 3;  /* sprite height */
@@ -416,7 +427,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 				INT32 x;
 				INT32 pixel_x = ( ( obj_x * main_width ) / vdc_width[which] );
 
-				conv_obj(which, obj_i + (cgypos << 2), obj_l, hf, vf, buf);
+				conv_obj(which, obj_lsb, obj_i + (cgypos << 2), obj_l, hf, vf, buf);
 
 				for(x = 0; x < 16; x++)
 				{
@@ -471,7 +482,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 				INT32 x;
 				INT32 pixel_x = ( ( obj_x * main_width ) / vdc_width[which] );
 
-				conv_obj(which, obj_i + (cgypos << 2) + (hf ? 2 : 0), obj_l, hf, vf, buf);
+				conv_obj(which, obj_lsb, obj_i + (cgypos << 2) + (hf ? 2 : 0), obj_l, hf, vf, buf);
 
 				for(x = 0; x < 16; x++)
 				{
@@ -540,7 +551,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 				}
 				
 				{
-					conv_obj(which, obj_i + (cgypos << 2) + (hf ? 0 : 2), obj_l, hf, vf, buf);
+					conv_obj(which, obj_lsb, obj_i + (cgypos << 2) + (hf ? 0 : 2), obj_l, hf, vf, buf);
 					for(x = 0; x < 16; x++)
 					{
 						if(((obj_x + 0x10 + x) < (vdc_width[which])) && ((obj_x + 0x10 + x) >= 0))

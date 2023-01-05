@@ -1,9 +1,6 @@
 // FB Neo redclash/zerohour driver module
 // Based on MAME driver by David Haywood
 
-// Tofix:
-// Zero Hour colors for enemy sprites and top score (chars) are wrong
-
 // Zero Hour sample pack created by Otto_Pylotte October 2020
 
 #include "tiles_generic.h"
@@ -364,8 +361,13 @@ static void __fastcall redclash_write(UINT16 address, UINT8 data)
 static tilemap_callback( fg )
 {
 	INT32 code =  DrvVidRAM[offs];
+	INT32 color = (DrvVidRAM[offs] & 0x70) >> 4;
 
-	TILE_SET_INFO(0, code, (code & 0x70) >> 4, 0);
+	// score panel colors are determined differently: P1=5, TOP=4, P2=7
+	if ((offs & 0x1f) > 0x1b)
+		color = (((offs >> 5) + 12) & 0x1f) >> 3 ^ 7;
+
+	TILE_SET_INFO(0, code, color, 0);
 }
 
 static INT32 DrvDoReset()
@@ -688,7 +690,8 @@ static void draw_sprites()
 			if ((DrvSprRAM[offs + i] & 0x80) == 0) continue;
 
 			INT32 attr  =  DrvSprRAM[offs + i + 1];
-			INT32 color =  DrvSprRAM[offs + i + 2] & 0x0f;
+			INT32 color =  DrvSprRAM[offs + i + 2] & 0x27;
+			color = ((color & 0x20) >> 2) | (color & 0x7);
 			INT32 sx    =  DrvSprRAM[offs + i + 3];
 			INT32 sy    = (DrvSprRAM[offs + i + 0] & 0x07) + (offs / 4);
 			INT32 size  = (DrvSprRAM[offs + i + 0] & 0x18) >> 3;
@@ -716,8 +719,12 @@ static void draw_bullets()
 {
 	for (INT32 offs = 0; offs < 0x20; offs++)
 	{
-		INT32 sx = 8 * offs + (DrvVidRAM[offs] & 0x07);
+		INT32 sx = 8 * offs;// + (DrvVidRAM[offs] & 0x07);
 		INT32 sy = 0xff - DrvVidRAM[offs + 0x20];
+
+		// width and color are from the same bitfield
+		INT32 width = 8 - (DrvVidRAM[offs] >> 5 & 6);
+		INT32 color = (DrvVidRAM[offs] >> 3 & 0x10) | 5;
 
 		if (flipscreen)
 		{
@@ -725,10 +732,17 @@ static void draw_bullets()
 		}
 
 		sx -= 8;
+		sx -= (DrvVidRAM[offs] >> 3) & 7;
 		sy -= 32;
 
-		if (sx >= 0 && sy >= 0 && sx < nScreenWidth && sy < nScreenHeight) {
-			pTransDraw[sy * nScreenWidth + sx] = 0x19;
+		for (INT32 y = 0; y < 2; y++)
+			for (INT32 x = 0; x < width; x++)
+			{
+				INT32 syy = sy - y;
+				INT32 sxx = sx + x;
+				if (sxx >= 0 && syy >= 0 && sxx < nScreenWidth && syy < nScreenHeight) {
+					pTransDraw[syy * nScreenWidth + sxx] = color;
+			}
 		}
 	}
 }
@@ -819,8 +833,8 @@ static INT32 DrvDraw()
 	BurnTransferClear(0x80); // black
 
 	if (nBurnLayer & 1) redclash_draw_stars(0x60, true, 0x00, 0xff);
-	if (nSpriteEnable & 1) draw_sprites();
 	if (nBurnLayer & 2) draw_bullets();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0);
 

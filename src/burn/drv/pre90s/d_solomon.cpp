@@ -603,6 +603,7 @@ struct BurnDriver BurnDrvSolomonj = {
 };
 
 // Solomon no Kagi X (Japan)
+// 2005/05/05
 
 static struct BurnRomInfo solomonjxRomDesc[] = {
 	{ "slmn_06.bin",	0x4000, 0x959049ac, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -627,11 +628,45 @@ STD_ROM_PICK(solomonjx)
 STD_ROM_FN(solomonjx)
 
 struct BurnDriver BurnDrvSolomonjx = {
-	"solomonjx", "solomon", NULL, NULL, "1986",
+	"solomonjx", "solomon", NULL, NULL, "2005",
 	"Solomon no Kagi X (Japan)\0", "Use Konami code @ diagnostics screen to boot!", "Tecmo", "Miscellaneous",
 	L"Solomon's Key X (Japan)\0Solomon's Key X \u30BD\u30ED\u30E2\u30F3\u306E\u9375 X\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, solomonjxRomInfo, solomonjxRomName, NULL, NULL, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Solomon no Kagi (T-Chi)
+
+static struct BurnRomInfo solomoncRomDesc[] = {
+	{ "slmnc_06.bin",	0x4000, 0xbbc0d319, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "slmnc_07.bin",	0x8000, 0x2465a83a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "slmn_08.bin",	0x1000, 0xb924d162, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "slmn_01.bin",	0x4000, 0xfa6e562e, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "slmnc_12.bin",	0x8000, 0xe80594fc, 3 | BRF_GRA },           //  4 Foreground Tiles
+	{ "slmnc_11.bin",	0x8000, 0x9dab2e9a, 3 | BRF_GRA },           //  5
+
+	{ "slmnc_10.bin",	0x8000, 0xcf11872e, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "slmnc_09.bin",	0x8000, 0x60122e98, 4 | BRF_GRA },           //  7
+
+	{ "slmnc_02.bin",	0x4000, 0xbb5c5400, 5 | BRF_GRA },           //  8 Sprites
+	{ "slmnc_03.bin",	0x4000, 0x66137d2b, 5 | BRF_GRA },           //  9
+	{ "slmnc_04.bin",	0x4000, 0x33299a3a, 5 | BRF_GRA },           // 10
+	{ "slmnc_05.bin",	0x4000, 0x5856d9b0, 5 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(solomonc)
+STD_ROM_FN(solomonc)
+
+struct BurnDriver BurnDrvSolomonc = {
+	"solomonc", "solomon", NULL, NULL, "1986",
+	"Solomon no Kagi (T-Chi)\0", NULL, "hack", "Miscellaneous",
+	L"Solomon's Key (T-Chi)\0\u6240\u7f57\u95e8\u4e4b\u94a5 (\u6c49\u5316\u7248)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, solomoncRomInfo, solomoncRomName, NULL, NULL, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	256, 224, 4, 3
 };

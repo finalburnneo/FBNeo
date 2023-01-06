@@ -1665,6 +1665,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (f3_game == ARKRETRN) BurnTrackballScan();
 
 		EEPROMScan(nAction, pnMin);
+		EEPROMScanData(nAction, pnMin);
 
 		if (nAction & ACB_WRITE) {
 			for (INT32 i = 0; i < 0x2000; i+=4) {

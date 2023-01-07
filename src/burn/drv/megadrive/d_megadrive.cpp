@@ -43767,7 +43767,7 @@ struct BurnDriver BurnDrvmd_sonic3kbrc = {
 
 //Teenage Mutant Ninja Turtles - Shredder's Re-Revenge (USA) (Hack By Savok/PPI-Akiko)
 static struct BurnRomInfo md_tmntsrrRomDesc[] = {
-	{ "TMNT_Shredders_ReRevenge.md", 0x3E007C, 0x31A4C1DB, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "TMNT_Shredders_ReRevenge.md", 0x3E007C, 0x6720CC8A, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tmntsrr)

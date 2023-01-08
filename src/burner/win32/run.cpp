@@ -252,6 +252,7 @@ int RunFrame(int bDraw, int bPause, int bInput)
 				VidDisplayInputs(0, 0);
 				if (NetworkGetInput()) {	// Synchronize input with Network
 					VidDisplayInputs(1, 1);
+					DetectFreeze();
 					return 1;
 				}
 				VidDisplayInputs(1, 2);
@@ -260,6 +261,7 @@ int RunFrame(int bDraw, int bPause, int bInput)
 				VidDisplayInputs(0, 3);
 				if (NetworkGetInput()) {
 					VidDisplayInputs(1, 1);
+					DetectFreeze();
 					return 1;
 				}
 				VidDisplayInputs(1, 4);

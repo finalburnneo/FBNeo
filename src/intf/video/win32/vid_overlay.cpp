@@ -1720,6 +1720,35 @@ void VidDebug(const wchar_t *text, float a, float b)
 #endif
 }
 
+int nFreezeCount = 0;
+int nFreezeFrames = 0;
+int freeze_warn_sent = 0;
+void DetectFreeze()
+{
+	bool debug_freeze = false;
+
+	if (nFramesRendered < 3000) return;
+	if (!debug_freeze) if (!game_ranked || game_spectator || freeze_warn_sent || gameDetector.frame_end) return;
+	if (freeze_warn_sent >= 2) return;
+
+	nFreezeFrames++;
+	if (nFreezeFrames == 10) nFreezeCount++;
+
+	if (debug_freeze) {
+		TCHAR szTemp[128];
+		_sntprintf(szTemp, 128, _T("nFreezeFrames: %d nFreezeCount: %d"), nFreezeFrames, nFreezeCount);
+		VidOverlayAddChatLine(_T("System"), szTemp);
+	}
+
+	if (nFreezeFrames == 1800 || nFreezeCount == 10) {
+		if (debug_freeze) VidOverlayAddChatLine(_T("System"), _T("FREEZE WARNING SENT"));
+		char temp[32];
+		sprintf(temp, "%d,%d,%d", game_player,nFreezeFrames,nFreezeCount);
+		QuarkSendChatCmd(temp, 'F');
+		freeze_warn_sent++;
+	}
+}
+
 #define TURBOARRAYSIZE 60
 static int P1LP_Array[TURBOARRAYSIZE] = {};
 static int P1MP_Array[TURBOARRAYSIZE] = {};
@@ -1744,6 +1773,7 @@ static int p2_max_tps[6]={0, 0, 0, 0, 0, 0};
 void DetectTurbo()
 {
 
+	nFreezeFrames = 0;
 	bool debug_turbo = false;
 
 	UINT32 P1LP=0, P1MP=0, P1HP=0, P1LK=0, P1MK=0, P1HK=0;

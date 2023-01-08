@@ -39526,7 +39526,7 @@ struct BurnDriver BurnSpecTrashmanen = {
 // TRASHMAN - Crisis Time (Spanish) (128K) (HB)
 
 static struct BurnRomInfo SpecTrashmanesRomDesc[] = {
-	{ "TRASHMAN - Crisis Time ES 128K (2020)(PC NONO)..tap", 48913, 0x69df80ca, BRF_ESS | BRF_PRG },
+	{ "TRASHMAN - Crisis Time ES 128K (2020)(PC NONO).tap", 48913, 0x69df80ca, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTrashmanes, SpecTrashmanes, Spec128)

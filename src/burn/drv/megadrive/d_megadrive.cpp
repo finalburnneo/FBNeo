@@ -15256,6 +15256,42 @@ struct BurnDriver BurnDrvmd_dinho98 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Futbol Argentino '98 - Version 2022 (Bootleg) (Hack)
+static struct BurnRomInfo md_arg98RomDesc[] = {
+	{ "Futbol Argentino 98 - Version 2022 (Hack).bin", 0x200000, 0x68AA2492, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_arg98)
+STD_ROM_FN(md_arg98)
+
+struct BurnDriver BurnDrvmd_arg98 = {
+	"md_arg98", "md_issdx", NULL, NULL, "199?",
+	"Futbol Argentino '98 - Version 2022 (Hack)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_arg98RomInfo, md_arg98RomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Futbol Argentino 2006 - Torneo Apertura (Beta, Version 1) (Hack)
+static struct BurnRomInfo md_arg2006RomDesc[] = {
+	{ "Futbol Argentino 2006 - Torneo Apertura (Beta) (Ver.1).bin", 0x200000, 0x59672973, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_arg2006)
+STD_ROM_FN(md_arg2006)
+
+struct BurnDriver BurnDrvmd_arg2006 = {
+	"md_arg2006", "md_issdx", NULL, NULL, "200?",
+	"Futbol Argentino 2006 - Torneo Apertura (Hack)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_arg2006RomInfo, md_arg2006RomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Ishido - The Way of Stones (USA)
 static struct BurnRomInfo md_ishidoRomDesc[] = {
 	{ "mb834200a.bin", 0x020000, 0xb1de7d5e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -43731,7 +43767,7 @@ struct BurnDriver BurnDrvmd_sonic3kbrc = {
 
 //Teenage Mutant Ninja Turtles - Shredder's Re-Revenge (USA) (Hack By Savok/PPI-Akiko)
 static struct BurnRomInfo md_tmntsrrRomDesc[] = {
-	{ "TMNT_Shredders_ReRevenge.md", 0x3E007C, 0x31A4C1DB, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "TMNT_Shredders_ReRevenge.md", 0x3E007C, 0x6720CC8A, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tmntsrr)

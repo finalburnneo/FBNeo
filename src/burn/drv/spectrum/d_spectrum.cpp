@@ -39412,7 +39412,7 @@ struct BurnDriver BurnSpecOrderslpdrag = {
 // S.I.P. - Special Intergalactic Painter (48K) (HB)
 
 static struct BurnRomInfo SpecSipRomDesc[] = {
-	{ "S.I.P. - Special Intergalactic Painter 48K (2014)(Gamemaster).tap", 24836, 0x36df6da2, BRF_ESS | BRF_PRG },
+	{ "S.I.P. - Special Intergalactic Painter 48K (2014)(Gamemaster).tap", 12343, 0x36df6da2, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSip, SpecSip, Spectrum)

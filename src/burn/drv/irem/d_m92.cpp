@@ -2122,10 +2122,22 @@ static INT32 DrvFrame()
 	
 	// @FC
 	extern int kNetGame, kNetSpectator, kNetVersion;
-	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strcmp(BurnDrvGetTextA(DRV_NAME), "majtitl2") && (kNetGame || kNetSpectator)) {
-		DrvInput[5] = 0x9b;
-		DrvInput[6] = 0x0d;
-		DrvInput[7] = 0xff;
+	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && (kNetGame || kNetSpectator)) {
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "majtitl2")) {
+			DrvInput[5] = 0x9b;
+			DrvInput[6] = 0x0d;
+			DrvInput[7] = 0xff;
+		}
+		else if (!strncmp(BurnDrvGetTextA(DRV_NAME), "uccops", 6)) {
+			DrvInput[5] = 0xae;
+			DrvInput[6] = 0x0f;
+			DrvInput[7] = 0x00;
+		}
+		else if (!strncmp(BurnDrvGetTextA(DRV_NAME), "hook", 4)) {
+			DrvInput[5] = 0xbf;
+			DrvInput[6] = 0x0f;
+			DrvInput[7] = 0xff;
+		}
 	}
 
 	INT32 multiplier=8;

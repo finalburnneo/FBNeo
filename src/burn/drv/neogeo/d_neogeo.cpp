@@ -15770,7 +15770,7 @@ struct BurnDriver BurnDrvMSlug2t = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, Hack)
+// Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2, Hack)
 
 static struct BurnRomInfo mslugxsrfRomDesc[] = {
 	{ "250-p1srf.p1",	0x100000, 0xaed327fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -15797,7 +15797,7 @@ STD_ROM_FN(mslugxsrf)
 
 struct BurnDriver BurnDrvMSlugxsrf = {
 	"mslugxsrf", "mslugx", "neogeo", NULL, "2020",
-	"Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2 Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxsrfRomInfo, mslugxsrfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21909,7 +21909,7 @@ struct BurnDriver BurnDrvmslug2ct = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 2 - Super Vehicle-001/II (Enemy Remake, Hack)
+// Metal Slug 2 - Super Vehicle-001/II (Enemy Remix, Hack)
 // GOTVG 20140914
 static struct BurnRomInfo mslug2rRomDesc[] = {
 	{ "241-p1r.p1",		0x100000, 0xf882d50d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -21933,7 +21933,7 @@ STD_ROM_FN(mslug2r)
 
 struct BurnDriver BurnDrvmslug2r = {
 	"mslug2r", "mslug2", "neogeo", NULL, "2014",
-	"Metal Slug 2 - Super Vehicle-001/II (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 - Super Vehicle-001/II (Enemy Remix, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2rRomInfo, mslug2rRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21973,7 +21973,7 @@ struct BurnDriver BurnDrvmslug2dd = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 2 - Super Vehicle-001/II (Gun Storage, Hack)
+// Metal Slug 2 - Super Vehicle-001/II (Weapon Storage, Hack)
 // GOTVG 20151111
 static struct BurnRomInfo mslug2pRomDesc[] = {
 	{ "241-p1p.p1",		0x100000, 0xfe803784, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -21997,7 +21997,7 @@ STD_ROM_FN(mslug2p)
 
 struct BurnDriver BurnDrvmslug2p = {
 	"mslug2p", "mslug2", "neogeo", NULL, "2015",
-	"Metal Slug 2 - Super Vehicle-001/II (Gun Storage, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 - Super Vehicle-001/II (Weapon Storage, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2pRomInfo, mslug2pRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22071,7 +22071,7 @@ struct BurnDriver BurnDrvmslug2eg = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X - Super Vehicle-001 (Enemy Remake, Hack)
+// Metal Slug X - Super Vehicle-001 (Enemy Remix, Hack)
 // GOTVG 20131028
 static struct BurnRomInfo mslugxc2RomDesc[] = {
 	{ "250-p1.p1",		0x100000, 0x81f1f60b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -22098,7 +22098,7 @@ STD_ROM_FN(mslugxc2)
 
 struct BurnDriver BurnDrvmslugxc2 = {
 	"mslugxc2", "mslugx", "neogeo", NULL, "2013",
-	"Metal Slug X - Super Vehicle-001 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X - Super Vehicle-001 (Enemy Remix, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxc2RomInfo, mslugxc2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22106,7 +22106,7 @@ struct BurnDriver BurnDrvmslugxc2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X - Super Vehicle-001 (Green Blue, Hack)
+// Metal Slug X - Super Vehicle-001 (Blue, Hack)
 // GOTVG 20161016
 static struct BurnRomInfo mslugxebRomDesc[] = {
 	{ "250-p1eb.p1",	0x100000, 0x764d1bb1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -22133,7 +22133,7 @@ STD_ROM_FN(mslugxeb)
 
 struct BurnDriver BurnDrvmslugxeb = {
 	"mslugxeb", "mslugx", "neogeo", NULL, "2016",
-	"Metal Slug X - Super Vehicle-001 (Green Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X - Super Vehicle-001 (Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxebRomInfo, mslugxebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22281,7 +22281,7 @@ struct BurnDriver BurnDrvmslugx2r = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X - Super Vehicle-001 (2R Green Blue, Hack)
+// Metal Slug X - Super Vehicle-001 (2R Blue, Hack)
 // GOTVG 20200419
 static struct BurnRomInfo mslugx2rebRomDesc[] = {
 	{ "250-p12reb.p1",	0x100000, 0xdba3f1a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -22308,7 +22308,7 @@ STD_ROM_FN(mslugx2reb)
 
 struct BurnDriver BurnDrvmslugx2reb = {
 	"mslugx2reb", "mslugx", "neogeo", NULL, "2020",
-	"Metal Slug X - Super Vehicle-001 (2R Green Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X - Super Vehicle-001 (2R Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugx2rebRomInfo, mslugx2rebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22352,10 +22352,10 @@ struct BurnDriver BurnDrvmslugx2r1v2 = {
 };
 
 // Metal Slug X - Super Vehicle-001 (Survival, Hack)
-// 20221231
+// 20230101
 static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-p1sc.p1",	0x100000, 0xcdf2ddfe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",	0x400000, 0xdfeda77d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p2sc.ep1",	0x400000, 0xd53de7e6, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -22377,7 +22377,7 @@ STDROMPICKEXT(mslugxsc, mslugxsc, neogeo)
 STD_ROM_FN(mslugxsc)
 
 struct BurnDriver BurnDrvmslugxsc = {
-	"mslugxsc", "mslugx", "neogeo", NULL, "2022",
+	"mslugxsc", "mslugx", "neogeo", NULL, "2023",
 	"Metal Slug X - Super Vehicle-001 (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
@@ -22434,7 +22434,7 @@ struct BurnDriver BurnDrvmslug3gw = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Enemy Remake, Hack)
+// Metal Slug 3 (Enemy Remix, Hack)
 // GOTVG 20190720
 static struct BurnRomInfo mslug3cRomDesc[] = {
 	/* Encrypted */
@@ -22466,7 +22466,7 @@ STD_ROM_FN(mslug3c)
 
 struct BurnDriver BurnDrvmslug3c = {
 	"mslug3c", "mslug3", "neogeo", NULL, "2019",
-	"Metal Slug 3 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 3 (Enemy Remix, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3cRomInfo, mslug3cRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22474,7 +22474,7 @@ struct BurnDriver BurnDrvmslug3c = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Green Blue, Hack)
+// Metal Slug 3 (Blue, Hack)
 // GOTVG 20130227
 static struct BurnRomInfo mslug3ebRomDesc[] = {
 	/* Encrypted */
@@ -22506,7 +22506,7 @@ STD_ROM_FN(mslug3eb)
 
 struct BurnDriver BurnDrvmslug3eb = {
 	"mslug3eb", "mslug3", "neogeo", NULL, "2013",
-	"Metal Slug 3 (Green Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 3 (Blue, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3ebRomInfo, mslug3ebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22555,7 +22555,7 @@ struct BurnDriver BurnDrvmslug3lw = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Infinite Fire Power, Hack)
+// Metal Slug 3 (Firepower Enhance, Hack)
 // GOTVG 20210317
 static struct BurnRomInfo mslug3iRomDesc[] = {
 	/* Encrypted */
@@ -22587,7 +22587,7 @@ STD_ROM_FN(mslug3i)
 
 struct BurnDriver BurnDrvmslug3i = {
 	"mslug3i", "mslug3", "neogeo", NULL, "2021",
-	"Metal Slug 3 (Infinite Fire Power, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 3 (Firepower Enhance, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3iRomInfo, mslug3iRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22836,12 +22836,12 @@ struct BurnDriver BurnDrvmslug3ki = {
 };
 
 // Metal Slug 3 (Survival, Hack)
-// 20221203
+// 20221210
 static struct BurnRomInfo mslug3scRomDesc[] = {
 	/* Encrypted */
-	{ "ms3sc.neo-sma",	0x040000, 0xecae944c, 9 | BRF_ESS | BRF_PRG }, //  0 68K code     / stored in the custom chip
-	{ "256-pg1sc.p1",	0x400000, 0xb187e852, 1 | BRF_ESS | BRF_PRG }, //  1              / TC5332202
-	{ "256-pg2sc.p2",	0x400000, 0x80a52a8a, 1 | BRF_ESS | BRF_PRG }, //  2              / TC5332202
+	{ "ms3sc.neo-sma",	0x040000, 0x7ea358de, 9 | BRF_ESS | BRF_PRG }, //  0 68K code     / stored in the custom chip
+	{ "256-pg1sc.p1",	0x400000, 0x71202603, 1 | BRF_ESS | BRF_PRG }, //  1              / TC5332202
+	{ "256-pg2sc.p2",	0x400000, 0x3b06ba05, 1 | BRF_ESS | BRF_PRG }, //  2              / TC5332202
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22875,7 +22875,7 @@ struct BurnDriver BurnDrvmslug3sc = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 4 (Enemy Remake, Hack)
+// Metal Slug 4 (Enemy Remix, Hack)
 // GOTVG 20191117
 static struct BurnRomInfo mslug4cRomDesc[] = {
 	{ "263-p1c.p1",		0x100000, 0x81fd4ae9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -22903,7 +22903,7 @@ STD_ROM_FN(mslug4c)
 
 struct BurnDriver BurnDrvmslug4c = {
 	"mslug4c", "mslug4", "neogeo", NULL, "2021",
-	"Metal Slug 4 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 4 (Enemy Remix, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4cRomInfo, mslug4cRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -22947,7 +22947,7 @@ struct BurnDriver BurnDrvmslug4ammor = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 4 (TLW Bulletproof vest removed, Hack)
+// Metal Slug 4 (Last bullet without body armor, Hack)
 // GOTVG 20200916
 static struct BurnRomInfo mslug4lwqRomDesc[] = {
 	{ "263-p1lwq.p1",	0x100000, 0x9ebe335e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -22975,7 +22975,7 @@ STD_ROM_FN(mslug4lwq)
 
 struct BurnDriver BurnDrvmslug4lwq = {
 	"mslug4lwq", "mslug4", "neogeo", NULL, "2020",
-	"Metal Slug 4 (TLW Bulletproof vest removed, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 4 (Last bullet without body armor, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4lwqRomInfo, mslug4lwqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -23127,7 +23127,7 @@ struct BurnDriver BurnDrvmslug4q = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Enemy Remake, Hack)
+// Metal Slug 5 (Enemy Remix, Hack)
 // GOTVG 20190728
 
 static struct BurnRomInfo mslug5cRomDesc[] = {
@@ -23175,7 +23175,7 @@ static INT32 mslug5WOPInit()
 
 struct BurnDriver BurnDrvmslug5c = {
 	"mslug5c", "mslug5", "neogeo", NULL, "2019",
-	"Metal Slug 5 (Enemy Remake, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 5 (Enemy Remix, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5cRomInfo, mslug5cRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -23183,7 +23183,7 @@ struct BurnDriver BurnDrvmslug5c = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Enemy Magic, Hack)
+// Metal Slug 5 (Devil Enemy Remix, Hack)
 // GOTVG 20191207
 static struct BurnRomInfo mslug5mgRomDesc[] = {
 	/* Encrypted */
@@ -23214,7 +23214,7 @@ STD_ROM_FN(mslug5mg)
 
 struct BurnDriver BurnDrvmslug5mg = {
 	"mslug5mg", "mslug5", "neogeo", NULL, "2019",
-	"Metal Slug 5 (Enemy Magic, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 5 (Devil Enemy Remix, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5mgRomInfo, mslug5mgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -23261,7 +23261,7 @@ struct BurnDriver BurnDrvmslug5sg = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Remake Final FC2 Version, Hack)
+// Metal Slug 5 (Remake FC2, Hack)
 // 20211003
 static struct BurnRomInfo mslug5sgfRomDesc[] = {
 	/* Encrypted */
@@ -23292,7 +23292,7 @@ STD_ROM_FN(mslug5sgf)
 
 struct BurnDriver BurnDrvmslug5sgf = {
 	"mslug5sgf", "mslug5", "neogeo", NULL, "2021",
-	"Metal Slug 5 (Remake Final FC2 Version, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 5 (Remake FC2 Hack, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5sgfRomInfo, mslug5sgfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -23300,7 +23300,7 @@ struct BurnDriver BurnDrvmslug5sgf = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (X Final Ver, Hack)
+// Metal Slug 5 (X, Hack)
 // GOTVG 20220606
 static struct BurnRomInfo mslug5xRomDesc[] = {
 	/* Encrypted */
@@ -23331,7 +23331,7 @@ STD_ROM_FN(mslug5x)
 
 struct BurnDriver BurnDrvmslug5x = {
 	"mslug5x", "mslug5", "neogeo", NULL, "2022",
-	"Metal Slug 5 (X Final Ver, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 5 (X, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5xRomInfo, mslug5xRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -23378,7 +23378,7 @@ struct BurnDriver BurnDrvmslug5ex = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (The New Campaign, Hack)
+// Metal Slug 5 (New Battle, Hack)
 // Fixed the graphics to be visible by alicemsu (Alice愛麗絲)
 static struct BurnRomInfo mslug5wRomDesc[] = {
 	/* Encrypted */
@@ -23410,7 +23410,7 @@ STD_ROM_FN(mslug5w)
 
 struct BurnDriver BurnDrvmslug5w = {
 	"mslug5w", "mslug5", "neogeo", NULL, "2022",
-	"Metal Slug 5 (The New Campaign, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 5 (New Battle, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5wRomInfo, mslug5wRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -23458,7 +23458,7 @@ struct BurnDriver BurnDrvmslug5f = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Enemy Soldier Enhanced, Hack)
+// Metal Slug 5 (Enemy Enhance, Hack)
 // GOTVG 20220406
 static struct BurnRomInfo mslug5dbjRomDesc[] = {
 	/* Encrypted */
@@ -23489,7 +23489,7 @@ STD_ROM_FN(mslug5dbj)
 
 struct BurnDriver BurnDrvmslug5dbj = {
 	"mslug5dbj", "mslug5", "neogeo", NULL, "2022",
-	"Metal Slug 5 (Enemy Soldier Enhanced, Hack)\0", NULL, "hack", "Neo Geo",
+	"Metal Slug 5 (Enemy Enhance, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5dbjRomInfo, mslug5dbjRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

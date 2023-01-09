@@ -235,7 +235,6 @@ STDDIPINFOEXT(SpecCursorKeys, SpecCursorKeys, Spec)
 static void spectrum128_bank(); // forwards
 static void spectrum_loadz80();
 static void ula_init(INT32 scanlines, INT32 cyc_scanline, INT32 contention);
-static void ula_run_cyc(INT32 cyc, INT32 draw_screen);
 static void update_ula(INT32 cycle);
 
 // Spectrum 48k tap-loading robot -dink
@@ -575,7 +574,7 @@ static UINT8 __fastcall SpecZ80PortRead(UINT16 address)
 		return AY8910Read(0);
 	}
 
-	ula_run_cyc(ZetTotalCycles() - 1, 0); // get up-to-date ula_byte!
+	update_ula(ZetTotalCycles()); // get up-to-date ula_byte!
 
 	return ula_byte; // Floating Memory
 }
@@ -692,7 +691,7 @@ static UINT8 __fastcall SpecSpec128Z80PortRead(UINT16 address)
 		//bprintf(0, _T("reading %x (%x)\n"), address, Spec128kMapper);
 	}
 
-	ula_run_cyc(ZetTotalCycles() - 1, 0); // get up-to-date ula_byte!
+	update_ula(ZetTotalCycles()); // get up-to-date ula_byte!
 
 	return ula_byte; // Floating Memory
 }
@@ -1314,10 +1313,19 @@ static void ula_init(INT32 scanlines, INT32 cyc_scanline, INT32 contention)
 	SpecContention = contention;
 	CONT_START  = SpecContention; // 48k; 14335 / 128k: 14361
 	CONT_END    = (CONT_START + 192 * SpecCylesPerScanline);
-	BORDER_START= (SpecMode & SPEC_128K) ? 14368 : 14342;
-	BORDER_START-=(SpecCylesPerScanline * 16) + 8;
+
+	BORDER_START= SpecContention + 3; // start at first vis. pixel (top-left)
+	BORDER_START-=(SpecCylesPerScanline * 16) + 8; // go back 16 lines
 	BORDER_END  = SpecCylesPerScanline * (16+256+16);
 }
+
+#if 0
+static UINT8 ula_snow()
+{
+	extern int counter;
+	return (ActiveZ80GetI() >= 0x40 && ActiveZ80GetI() <= 0x7f && (ActiveZ80GetLastOp() & counter) == 0/* && (rand() & 0x187)==0x181*/) ? (ActiveZ80GetR() & 0x7f) : 0x00;
+}
+#endif
 
 static void ula_run_cyc(INT32 cyc, INT32 draw_screen)
 {
@@ -1357,29 +1365,29 @@ static void ula_run_cyc(INT32 cyc, INT32 draw_screen)
 	}
 
 	// active area
-	if (cyc >= CONT_START && cyc <= CONT_END) {
-		INT32 offset = cyc - CONT_START;
-		INT32 x = ((offset) % SpecCylesPerScanline) * 2;
-		INT32 y =  (offset) / SpecCylesPerScanline;
+	if (cyc > CONT_START && cyc <= CONT_END) {
+		INT32 offset = cyc - (CONT_START+1); // get to start of contention pattern
+		INT32 x = (offset) % SpecCylesPerScanline;
+		INT32 y = (offset) / SpecCylesPerScanline;
 
-		if (x < 256) {
-			switch (offset & 7) {
+		if (x < 128) {
+			switch (x & 7) {
 				default: // 0, 1, 6, 7
 					ula_byte = 0xff;
 					break;
 
 				case 2:
 				case 4:
-					ula_scr = SpecVideoRam[((y & 0xc0) << 5) | ((y & 0x38) << 2) | ((y & 7) << 8) | (x >> 3)];
+					ula_scr = SpecVideoRam[((y & 0xc0) << 5) | ((y & 0x38) << 2) | ((y & 0x07) << 8) | (x >> 2)];// | ula_snow()<<1];
 					ula_byte = ula_scr;
 					break;
 
 				case 3:
 				case 5:
-					ula_attr = SpecVideoRam[0x1800 | ((y & 0xf8) << 2) | (x >> 3)];
+					ula_attr = SpecVideoRam[0x1800 | ((y & 0xf8) << 2) | (x >> 2)];
 					ula_byte = ula_attr;
 
-					UINT16 *dst = pTransDraw + ((y + 16) * nScreenWidth) + ((x + 16) & ~7);
+					UINT16 *dst = pTransDraw + ((y + 16) * nScreenWidth) + (((x << 1) + 16) & ~7);
 					UINT8 ink = (ula_attr & 0x07) + ((ula_attr >> 3) & 0x08);
 					UINT8 pap = (ula_attr >> 3) & 0x0f;
 
@@ -1404,15 +1412,13 @@ static void ula_run_cyc(INT32 cyc, INT32 draw_screen)
 static void update_ula(INT32 cycle)
 {
 	//bprintf(0, _T("update_ula:  %d   last %d\n"), cycle, ula_last_cyc);
-	if (ula_last_cyc > cycle) {
-		// next frame! - finish up previous frame & restart
-		for (INT32 i = ula_last_cyc; i < BORDER_END; i++) {
-			ula_run_cyc(i, 1);
-		}
+	if (cycle == -1) {
+		// next frame!
 		ula_last_cyc = 0;
+		return;
 	}
 
-	for (INT32 i = ula_last_cyc; i < cycle; i++) {
+	for (INT32 i = ula_last_cyc+1; i <= cycle; i++) {
 		ula_run_cyc(i, 1);
 	}
 
@@ -1545,6 +1551,10 @@ static INT32 SpecFrame()
 		if (SpecMode & SPEC_INVES) {
 			update_ula(ZetTotalCycles());
 		}
+	}
+
+	if (SpecMode & SPEC_INVES) {
+		update_ula(-1); // notify start next frame
 	}
 
 	if (pBurnDraw) {
@@ -39105,22 +39115,22 @@ struct BurnDriver BurnSpecSpeccyquiz = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Castle Escape (48K) (HB)
+// Castle Escape (128K) (HB)
 
 static struct BurnRomInfo SpecCastlescapeRomDesc[] = {
 	{ "Castle Escape 128K (2022)(IrataHack).tap", 42131, 0x447f175d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecCastlescape, SpecCastlescape, Spectrum)
+STDROMPICKEXT(SpecCastlescape, SpecCastlescape, Spec128)
 STD_ROM_FN(SpecCastlescape)
 
 struct BurnDriver BurnSpecCastlescape = {
-	"spec_castlescape", NULL, "spec_spectrum", NULL, "2022",
-	"Castle Escape (48K) (HB)\0", "AY Sound support", "IrataHack", "ZX Spectrum",
+	"spec_castlescape", NULL, "spec_spec128", NULL, "2022",
+	"Castle Escape (128K) (HB)\0", "AY Sound support", "IrataHack", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecCastlescapeRomInfo, SpecCastlescapeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
@@ -39526,7 +39536,7 @@ struct BurnDriver BurnSpecTrashmanen = {
 // TRASHMAN - Crisis Time (Spanish) (128K) (HB)
 
 static struct BurnRomInfo SpecTrashmanesRomDesc[] = {
-	{ "TRASHMAN - Crisis Time ES 128K (2020)(PC NONO).tap", 48913, 0x69df80ca, BRF_ESS | BRF_PRG },
+	{ "TRASHMAN - Crisis Time ES 128K (2020)(PC NONO)..tap", 48913, 0x69df80ca, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTrashmanes, SpecTrashmanes, Spec128)

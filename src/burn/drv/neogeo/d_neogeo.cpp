@@ -20438,10 +20438,10 @@ struct BurnDriver BurnDrvMSlugX2r1v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X (Survival, Hack) 2022-12-01
+// Metal Slug X (Survival, Hack) 2022-12-31
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",    0x100000, 0xf53fe08f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",   0x400000, 0x20ce9f2f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",    0x100000, 0xcdf2ddfe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",   0x400000, 0xd53de7e6, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",    0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20449,8 +20449,8 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
 	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
 	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
-	{ "250-c5sc.c5",    0x800000, 0xd29cc949, 3 | BRF_GRA },           //  7
-	{ "250-c6sc.c6",    0x800000, 0x81234ddb, 3 | BRF_GRA },           //  8
+	{ "250-c5sc.c5",    0x800000, 0xc9d9073a, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",    0x800000, 0xb9a16599, 3 | BRF_GRA },           //  8
 
 	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
@@ -20463,7 +20463,7 @@ STDROMPICKEXT(mslugxsc, mslugxsc, neogeo)
 STD_ROM_FN(mslugxsc)
 
 struct BurnDriver BurnDrvmslugxsc = {
-	"mslugxsc", "mslugx", "neogeo", NULL, "2021",
+	"mslugxsc", "mslugx", "neogeo", NULL, "2023",
 	"Metal Slug X (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
@@ -21084,6 +21084,43 @@ struct BurnDriver BurnDrvmslug5ext = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5extRomInfo, mslug5extRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug 5 (Fierce Battle, Hack)
+static struct BurnRomInfo mslug5fRomDesc[] = {
+	{ "268-p1f.bin",     0x100000, 0x6be7043d, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p2w.bin",     0x400000, 0xf06c589a, 1 | BRF_ESS | BRF_PRG },  //  1
+
+	{ "268d-s1.rom",     0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
+
+	{ "268d-c1.rom",     0x800000, 0x969c0d62, 3 | BRF_GRA },            //  3 Sprite data
+	{ "268d-c2.rom",     0x800000, 0xc69ae867, 3 | BRF_GRA },            //  4
+	{ "268d-c3.rom",     0x800000, 0xd7beaeaf, 3 | BRF_GRA },            //  5
+	{ "268d-c4.rom",     0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  6
+	{ "268-c5f.bin",     0x800000, 0x3bc09dbf, 3 | BRF_GRA },            //  7
+	{ "268-c6f.bin",     0x800000, 0x0db5ce14, 3 | BRF_GRA },            //  8
+	{ "268-c7f.bin",     0x800000, 0xaa4f3214, 3 | BRF_GRA },            //  9
+	{ "268-c8f.bin",     0x800000, 0xc86d0d81, 3 | BRF_GRA },            // 10
+
+	{ "268d-m1.rom",     0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 11 Z80 code
+
+	{ "268-v1f.bin",     0x400000, 0xf61daa9e, 5 | BRF_SND },            // 12 Sound data
+	{ "268-v2f.bin",     0x400010, 0x7fed45cb, 5 | BRF_SND },            // 13
+	{ "268-v3f.bin",     0x400000, 0xdc737e12, 5 | BRF_SND },            // 14
+	{ "268-v4f.bin",     0x437510, 0xe3a76022, 5 | BRF_SND },            // 15
+};
+
+STDROMPICKEXT(mslug5f, mslug5f, neogeo)
+STD_ROM_FN(mslug5f)
+
+struct BurnDriver BurnDrvmslug5f = {
+	"mslug5f", "mslug5", "neogeo", NULL, "2016",
+	"Metal Slug 5 (Fierce Battle, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5fRomInfo, mslug5fRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

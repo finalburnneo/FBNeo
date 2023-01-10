@@ -31991,7 +31991,7 @@ struct BurnDriver BurnSpecMsolitaire = {
 // Saboteur II - Avenging Angel (128K) (Speed-up Hack)
 
 static struct BurnRomInfo SpecSabotur2speedRomDesc[] = {
-	{ "Saboteur 2 128K Speed-up (2015)(Alex Rider) .tap", 60290, 0x468098f8, BRF_ESS | BRF_PRG },
+	{ "Saboteur 2 128K Speed-up (2015)(Alex Rider).tap", 60290, 0x468098f8, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSabotur2speed, SpecSabotur2speed, Spec128)
@@ -39126,7 +39126,7 @@ STD_ROM_FN(SpecCastlescape)
 
 struct BurnDriver BurnSpecCastlescape = {
 	"spec_castlescape", NULL, "spec_spec128", NULL, "2022",
-	"Castle Escape (128K) (HB)\0", "AY Sound support", "IrataHack", "ZX Spectrum",
+	"Castle Escape (128K) (HB)\0", NULL, "IrataHack", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecCastlescapeRomInfo, SpecCastlescapeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -39422,7 +39422,7 @@ struct BurnDriver BurnSpecOrderslpdrag = {
 // S.I.P. - Special Intergalactic Painter (48K) (HB)
 
 static struct BurnRomInfo SpecSipRomDesc[] = {
-	{ "S.I.P. - Special Intergalactic Painter 48K (2014)(Gamemaster).z80", 24836, 0xaeda6d62, BRF_ESS | BRF_PRG },
+	{ "S.I.P. - Special Intergalactic Painter 48K (2014)(Gamemaster).tap", 35720, 0x564250e6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSip, SpecSip, Spectrum)

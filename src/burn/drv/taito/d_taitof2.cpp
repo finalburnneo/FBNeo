@@ -8625,6 +8625,7 @@ static INT32 MegablstInit()
 	SekClose();
 
 	TaitoF2SoundInit();
+	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
 
 	cchip_init();
 

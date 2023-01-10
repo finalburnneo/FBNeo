@@ -153,7 +153,7 @@ static void		(*m_raster_cb)(int); 			//Let the driver know a good time (in T-Sta
 static OPCODE_HISTORY	m_opcode_history;		// A list of reads/writes per opcode.
 static int		m_tstate_counter;		// The current t-state / cpu cycle.
 static int		m_selected_bank; 		// What ram bank 7ffd port has selected.
-
+static int Z80lastop; // for snow effect
 /****************************************************************************/
 /* The Z80 registers. HALT is set to 1 when the CPU is halted, the refresh  */
 /* register is calculated as follows: refresh=(Z80.r&127)|(Z80.r2&128)      */
@@ -962,7 +962,7 @@ Z80_INLINE UINT8 ROP(void)
 {
 	unsigned pc = PCD;
 	PC++;
-	UINT8 res = cpu_readop(pc);
+	UINT8 res = Z80lastop = cpu_readop(pc);
 	store_rwinfo(((PAIR*)(&pc))->w.l, res, RWINFO_READ|RWINFO_MEMORY, "rop");
 	return res;
 }
@@ -3663,7 +3663,7 @@ static void take_interrupt(void)
 	int irq_vector = Z80Vector;
 
 	if (m_ula_variant != ULA_VARIANT_NONE && m_tstate_counter >= ((m_cycles_per_line == 228) ? 36 : 32))
-    	return;
+		return;
 
 	/* there isn't a valid previous program counter */
 	PRVPC = (UINT32)-1;
@@ -3726,6 +3726,7 @@ static void take_interrupt(void)
 		/* if neither of these were found we assume a 1 byte opcode */
 		/* was placed on the databus                                */
 //		LOG(("Z80 #%d IM0 $%04x\n",cpu_getactivecpu() , irq_vector));
+		//bprintf(0, _T("imm0: opff: %d  exff: %d\n"),cc[Z80_TABLE_op][0xff], cc[Z80_TABLE_ex][0xff]);
 		switch (irq_vector & 0xff0000)
 		{
 			case 0xcd0000:	/* call */
@@ -4071,10 +4072,6 @@ int Z80Execute(int cycles)
 			capture_opcode_history_start((UINT16)BC,(UINT16)(I << 8));
 			EXEC_INLINE(op,ROP());
 			capture_opcode_history_finish();
-
-			// Elimiates sprite flicker on various games (E.g. Marauder and
-			// Stormlord) and makes Firefly playable.
-			m_raster_cb(m_tstate_counter);
 		}
 	} while( Z80.ICount > 0 && !Z80.end_run );
 
@@ -4306,9 +4303,19 @@ void ActiveZ80SetHL(int hl)
 	Z80.hl.w.l = hl;
 }
 
+int ActiveZ80GetLastOp()
+{
+	return Z80lastop;
+}
+
 int ActiveZ80GetI()
 {
 	return Z80.i;
+}
+
+int ActiveZ80GetR()
+{
+	return Z80.r;
 }
 
 int ActiveZ80GetIX()
@@ -5027,7 +5034,8 @@ static void eat_cycles(int type, int cycles)
 	m_tstate_counter += cycles;
 
 	if(m_tstate_counter >= m_cycles_per_frame) {
-		m_raster_cb(m_tstate_counter); // end frame
+		m_raster_cb(m_cycles_per_frame); // end frame
+		m_raster_cb(-1); // notify start next frame
 //		bprintf(0, _T("z80.cpp: spec frame eof %d\n"), m_tstate_counter);
 		m_tstate_counter -= m_cycles_per_frame;
 	}
@@ -5038,6 +5046,12 @@ static UINT8 store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
 {
 	RWINFO *rw;
 	UINT8 retval = 0xff;
+
+	if(!m_opcode_history.capturing && m_ula_variant != ULA_VARIANT_NONE) {
+		if (m_tstate_counter >= ((m_cycles_per_line == 228) ? 36 : 32)) { // interrupt not contended, logging during irq is not useful
+			bprintf(0, _T("not capturing?  tstate  %d  PC:  %x  addr/val/flags:  %x  %x  %x  (%S)\n"), m_tstate_counter, PCD, addr, val, flags, dbg);
+		}
+	}
 
 	if(!m_opcode_history.capturing || m_ula_variant == ULA_VARIANT_NONE) return 0;
 
@@ -5055,14 +5069,12 @@ static UINT8 store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
 	rw->dbg = dbg;
 	m_opcode_history.rw_count++;
 
-	retval = run_script();
-
 	//Originally, the intention was to update the screen raster each time
 	//any tstates were eaten (I.e. call the raster_cb from inside the
 	//eat_cycles function) which worked well but wasn't efficient.
 	//So below is the opimisation, it is based on the fact that the screen
 	//raster only needs to be updated immediately *before* a border or screen colour
-	//attribute write occurs.
+	//attribute write occurs.  (update before run_script() increments cycles -dink)
 	if(rw->flags & RWINFO_WRITE)
 	{
 		if(rw->flags & RWINFO_IO_PORT)
@@ -5076,12 +5088,18 @@ static UINT8 store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
 		else if(rw->flags & RWINFO_MEMORY)
 		{
 			// Screen or attribute change (48K and 128K)
-			if((addr >= 0x4000) && (addr <= 0x5AFF))
+			if((addr >= 0x4000) && (addr <= 0x5AFF)) {
 				m_raster_cb(m_tstate_counter);
+			}
 			// Screen or attribute change (128K models - bank 5)
 			else if( (m_selected_bank == 5) && ((addr >= 0xC000) && (addr <= 0xDAFF)) )
+			{
 				m_raster_cb(m_tstate_counter);
+			}
 		}
 	}
+
+	retval = run_script();
+
 	return retval;
 }

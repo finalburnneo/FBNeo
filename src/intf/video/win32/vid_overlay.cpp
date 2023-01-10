@@ -1769,6 +1769,8 @@ static int p1_turbo_certainty = 0;
 static int p2_turbo_certainty = 0;
 static int p1_max_tps[6]={0, 0, 0, 0, 0, 0};
 static int p2_max_tps[6]={0, 0, 0, 0, 0, 0};
+static int p1_smooth[6]={0, 0, 0, 0, 0, 0};
+static int p2_smooth[6]={0, 0, 0, 0, 0, 0};
 
 void DetectTurbo()
 {
@@ -1836,9 +1838,31 @@ void DetectTurbo()
 	turboArrayPos++;
 	if (turboArrayPos >= TURBOARRAYSIZE) turboArrayPos=0;
 
+	if (nFramesEmulated % 36000 == 0) {
+		p1_turbo_warning=0;
+		p2_turbo_warning=0;
+		if (debug_turbo) VidOverlayAddChatLine(_T("System"), _T("RESET TURBO WARNING"));
+	}
+
 	int p1_tps[6]={0, 0, 0, 0, 0, 0};
 	int p2_tps[6]={0, 0, 0, 0, 0, 0};
+	int p1_streak[6]={0, 0, 0, 0, 0, 0};
+	int p2_streak[6]={0, 0, 0, 0, 0, 0};
 	for (int i = 1; i < TURBOARRAYSIZE; i++) {
+		if (!P1LP_Array[i]) p1_streak[LP]=0; else p1_streak[LP]++;
+		if (!P1MP_Array[i]) p1_streak[MP]=0; else p1_streak[MP]++;
+		if (!P1HP_Array[i]) p1_streak[HP]=0; else p1_streak[HP]++;
+		if (!P1LK_Array[i]) p1_streak[LK]=0; else p1_streak[LK]++;
+		if (!P1MK_Array[i]) p1_streak[MK]=0; else p1_streak[MK]++;
+		if (!P1HK_Array[i]) p1_streak[HK]=0; else p1_streak[HK]++;
+
+		if (!P2LP_Array[i]) p2_streak[LP]=0; else p2_streak[LP]++;
+		if (!P2MP_Array[i]) p2_streak[MP]=0; else p2_streak[MP]++;
+		if (!P2HP_Array[i]) p2_streak[HP]=0; else p2_streak[HP]++;
+		if (!P2LK_Array[i]) p2_streak[LK]=0; else p2_streak[LK]++;
+		if (!P2MK_Array[i]) p2_streak[MK]=0; else p2_streak[MK]++;
+		if (!P2HK_Array[i]) p2_streak[HK]=0; else p2_streak[HK]++;
+
 		if (P1LP_Array[i] !=0 && P1LP_Array[i-1] == 0) p1_tps[LP]++;
 		if (P1MP_Array[i] !=0 && P1MP_Array[i-1] == 0) p1_tps[MP]++;
 		if (P1HP_Array[i] !=0 && P1HP_Array[i-1] == 0) p1_tps[HP]++;
@@ -1858,7 +1882,7 @@ void DetectTurbo()
 	TCHAR szWarn2[128];
 	int p1_buttons_with_turbo = 0;
 	int p2_buttons_with_turbo = 0;
-	int MIN_TURBO_CERTAINTY = 160;
+	int MIN_TURBO_CERTAINTY = 64;
 	if (game_ranked) MIN_TURBO_CERTAINTY=32;
 
 	for (int i=0; i < 6; i++) {
@@ -1867,7 +1891,11 @@ void DetectTurbo()
 			if (p1_tps[i] > p1_max_tps[i]) p1_max_tps[i]=p1_tps[i];
 			if (p1_tps[i] > 15) {
 				if (p1_tps[i] > p1_turbo_warning) {
-					p1_turbo_warning=p1_tps[i];
+					p1_turbo_warning=p1_tps[i] - p1_smooth[i];
+					//if (debug_turbo) {
+					//	_sntprintf(szWarn1, 128, _T("Player1 button%d: %dtps (%d)"), i+1, p1_tps[i], p1_smooth[i]);
+					//	VidOverlayAddChatLine(_T("System"), szWarn1);
+					//}
 					if (p1_tps[i] >= 20) {
 						if (p1_turbo_certainty >= MIN_TURBO_CERTAINTY && p1_tps[i] == p1_max_tps[i]) {
 							_sntprintf(szWarn1, 128, _T("Turbo/Autofire detected on Player1 button%d: %dtps"), i+1, p1_tps[i]);
@@ -1886,7 +1914,7 @@ void DetectTurbo()
 				}
 			}
 			else if (p1_buttons_with_turbo >= 2) {
-				p1_turbo_warning=15;
+				p1_turbo_warning=15 - p1_smooth[i];
 			}
 		}
 		if (p2_tps[i] > 14) {
@@ -1894,7 +1922,7 @@ void DetectTurbo()
 			if (p2_tps[i] > p2_max_tps[i]) p2_max_tps[i]=p2_tps[i];
 			if (p2_tps[i] > 15) {
 				if (p2_tps[i] > p2_turbo_warning) {
-					p2_turbo_warning=p2_tps[i];
+					p2_turbo_warning=p2_tps[i] - p2_smooth[i];
 					if (p2_tps[i] >= 20) {
 						if (p2_turbo_certainty >= MIN_TURBO_CERTAINTY && p2_tps[i] == p2_max_tps[i]) {
 							_sntprintf(szWarn2, 128, _T("Turbo/Autofire detected on Player2 button%d: %dtps"), i+1, p2_tps[i]);
@@ -1913,22 +1941,37 @@ void DetectTurbo()
 				}
 			}
 			else if (p2_buttons_with_turbo >= 2) {
-				p2_turbo_warning=15;
+				p2_turbo_warning=15 - p2_smooth[i];
 			}
 		}
 	}
 
 	if (turboArrayPos == 0) {
+
+		if (p1_streak[LP] > 8 && p1_streak[MP]==0 && p1_streak[HP]==0 && p1_smooth[LP] < 2) p1_smooth[LP]++;
+		if (p1_streak[LP]==0 && p1_streak[MP] > 8 && p1_streak[HP]==0 && p1_smooth[MP] < 2) p1_smooth[MP]++;
+		if (p1_streak[LP]==0 && p1_streak[MP]==0 && p1_streak[HP] > 8 && p1_smooth[HP] < 2) p1_smooth[HP]++;
+		if (p1_streak[LK] > 8 && p1_streak[MK]==0 && p1_streak[HK]==0 && p1_smooth[LK] < 2) p1_smooth[LK]++;
+		if (p1_streak[LK]==0 && p1_streak[MK] > 8 && p1_streak[HK]==0 && p1_smooth[MK] < 2) p1_smooth[MK]++;
+		if (p1_streak[LK]==0 && p1_streak[MK]==0 && p1_streak[HK] > 8 && p1_smooth[HK] < 2) p1_smooth[HK]++;
+
+		if (p2_streak[LP] > 8 && p2_streak[MP]==0 && p2_streak[HP]==0 && p2_smooth[LP] < 2) p2_smooth[LP]++;
+		if (p2_streak[LP]==0 && p2_streak[MP] > 8 && p2_streak[HP]==0 && p2_smooth[MP] < 2) p2_smooth[MP]++;
+		if (p2_streak[LP]==0 && p2_streak[MP]==0 && p2_streak[HP] > 8 && p2_smooth[HP] < 2) p2_smooth[HP]++;
+		if (p2_streak[LK] > 8 && p2_streak[MK]==0 && p2_streak[HK]==0 && p2_smooth[LK] < 2) p2_smooth[LK]++;
+		if (p2_streak[LK]==0 && p2_streak[MK] > 8 && p2_streak[HK]==0 && p2_smooth[MK] < 2) p2_smooth[MK]++;
+		if (p2_streak[LK]==0 && p2_streak[MK]==0 && p2_streak[HK] > 8 && p2_smooth[HK] < 2) p2_smooth[HK]++;
+
 		if (p1_turbo_certainty < MIN_TURBO_CERTAINTY && p1_turbo_warning > 14) {
 			if (p1_turbo_warning < 16) p1_turbo_certainty += 1;
-			else if (p1_turbo_warning < 18) p1_turbo_certainty += p1_turbo_warning - 12;
-			else if (p1_turbo_warning < 21) p1_turbo_certainty += p1_turbo_warning;
+			else if (p1_turbo_warning < 20) p1_turbo_certainty += p1_turbo_warning - 14;
+			else if (p1_turbo_warning < 22) p1_turbo_certainty += p1_turbo_warning;
 			else p1_turbo_certainty += p1_turbo_warning * 2;
 		}
 		if (p2_turbo_certainty < MIN_TURBO_CERTAINTY && p2_turbo_warning > 14) {
 			if (p2_turbo_warning < 16) p2_turbo_certainty += 1;
-			else if (p2_turbo_warning < 18) p2_turbo_certainty += p2_turbo_warning - 12;
-			else if (p2_turbo_warning < 21) p2_turbo_certainty += p2_turbo_warning;
+			else if (p2_turbo_warning < 20) p2_turbo_certainty += p2_turbo_warning - 14;
+			else if (p2_turbo_warning < 22) p2_turbo_certainty += p2_turbo_warning;
 			else p2_turbo_certainty += p2_turbo_warning * 2;
 		}
 		if (debug_turbo) {

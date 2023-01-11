@@ -3159,6 +3159,63 @@ struct BurnDriver BurnSpecbullseym = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Bumpy
+
+static struct BurnRomInfo SpecBumpyRomDesc[] = {
+	{ "Bumpy (1989)(Loriciels).tap", 45878, 0xc79bed54, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBumpy, SpecBumpy, Spectrum)
+STD_ROM_FN(SpecBumpy)
+
+struct BurnDriver BurnSpecBumpy = {
+	"spec_bumpy", NULL, "spec_spectrum", NULL, "1989",
+	"Bumpy (48K)\0", NULL, "Loriciels", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecBumpyRomInfo, SpecBumpyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Eric And The Floaters
+
+static struct BurnRomInfo SpecEricfloatersRomDesc[] = {
+	{ "Eric And The Floaters (1983)(Hudson Soft).tap", 8492, 0x0f7826de, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecEricfloaters, SpecEricfloaters, Spectrum)
+STD_ROM_FN(SpecEricfloaters)
+
+struct BurnDriver BurnSpecEricfloaters = {
+	"spec_ericfloaters", NULL, "spec_spectrum", NULL, "1983",
+	"Eric And The Floaters (48K)\0", NULL, "Hudson Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecEricfloatersRomInfo, SpecEricfloatersRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Glug Glug
+
+static struct BurnRomInfo SpecGlugglugRomDesc[] = {
+	{ "Glug Glug (1984)(CRL Ltd.).TAP", 18843, 0x0a096413, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGlugglug, SpecGlugglug, Spectrum)
+STD_ROM_FN(SpecGlugglug)
+
+struct BurnDriver BurnSpecGlugglug = {
+	"spec_glugglug", NULL, "spec_spectrum", NULL, "1984",
+	"Glug Glug (48K)\0", NULL, "CRL Ltd.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, SpecGlugglugRomInfo, SpecGlugglugRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Cabal (128K)
 
 static struct BurnRomInfo SpeccabalRomDesc[] = {

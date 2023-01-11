@@ -793,6 +793,17 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 	}
 
+	// Move 2-players start to P1's R2 for the asteroids driver
+	if ((parentrom && strcmp(parentrom, "asteroid") == 0) ||
+		(drvname && strcmp(drvname, "asteroid") == 0) ||
+		(parentrom && strcmp(parentrom, "astdelux") == 0) ||
+		(drvname && strcmp(drvname, "astdelux") == 0)
+	) {
+		if (strcmp("Start", description) == 0 && nPlayer == 1) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, "2P Start");
+		}
+	}
+
 	// Space Duel
 	if ((parentrom && strcmp(parentrom, "spacduel") == 0) ||
 		(drvname && strcmp(drvname, "spacduel") == 0)

@@ -1720,19 +1720,22 @@ void VidDebug(const wchar_t *text, float a, float b)
 #endif
 }
 
-int nFreezeCount = 0;
-int nFreezeFrames = 0;
-int freeze_warn_sent = 0;
+static int nFreezeCount = 0;
+static int nFreezeFrames = 0;
+static bool freeze_warn1_sent = false;
+static bool freeze_warn2_sent = false;
 void DetectFreeze()
 {
 	bool debug_freeze = false;
+	char temp[32];
 
 	if (nFramesRendered < 3000) return;
-	if (!debug_freeze) if (!game_ranked || game_spectator || freeze_warn_sent || gameDetector.frame_end) return;
-	if (freeze_warn_sent >= 2) return;
+	if (!debug_freeze && !game_ranked) return;
+	if (game_spectator || gameDetector.frame_end) return;
+	if (freeze_warn1_sent && freeze_warn2_sent) return;
 
 	nFreezeFrames++;
-	if (nFreezeFrames == 10) nFreezeCount++;
+	if (nFreezeFrames == 8) nFreezeCount++;
 
 	if (debug_freeze) {
 		TCHAR szTemp[128];
@@ -1740,13 +1743,20 @@ void DetectFreeze()
 		VidOverlayAddChatLine(_T("System"), szTemp);
 	}
 
-	if (nFreezeFrames == 1800 || nFreezeCount == 10) {
+	if (nFreezeFrames == 1800 && !freeze_warn1_sent) {
 		if (debug_freeze) VidOverlayAddChatLine(_T("System"), _T("FREEZE WARNING SENT"));
-		char temp[32];
 		sprintf(temp, "%d,%d,%d", game_player,nFreezeFrames,nFreezeCount);
 		QuarkSendChatCmd(temp, 'F');
-		freeze_warn_sent++;
+		freeze_warn1_sent=true;
 	}
+
+	if (nFreezeCount == 10 && !freeze_warn2_sent) {
+		if (debug_freeze) VidOverlayAddChatLine(_T("System"), _T("FREEZE WARNING SENT"));
+		sprintf(temp, "%d,%d,%d", game_player,nFreezeFrames,nFreezeCount);
+		QuarkSendChatCmd(temp, 'F');
+		freeze_warn2_sent=true;
+	}
+
 }
 
 #define TURBOARRAYSIZE 60

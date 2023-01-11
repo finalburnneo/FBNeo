@@ -2,8 +2,6 @@
 // media: .tap, .z80 snapshots
 // input: kbd, kempston: joy1, sinclair intf.2: joy1 & joy2
 
-// tofix: scroll17 (128k) isn't quite right, also fpg8all borders weird(?)
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"

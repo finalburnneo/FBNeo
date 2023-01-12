@@ -3144,7 +3144,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = vertical_lines;
-	INT32 nCyclesTotal[3] = { (10000000 * 100) / nBurnFPS, (3500000 * 100) / nBurnFPS, (14000000 * 100) / nBurnFPS };
+	INT32 nCyclesTotal[3] = { ((INT64)10000000 * 100 * nBurnCPUSpeedAdjust) / (0x0100 * nBurnFPS), (3500000 * 100) / nBurnFPS, (14000000 * 100) / nBurnFPS };
 	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 	INT32 nVBlankLine = 240 + sprite_y_adjust;
 

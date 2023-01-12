@@ -8778,11 +8778,11 @@ static struct BurnRomInfo kovqxzbwsRomDesc[] = {
 	{ "a0541.rom",		0x800000, 0x4ed6ed80, 3 | BRF_GRA },						//  6
 	{ "a0542.rom",		0x800000, 0x14499cf4, 3 | BRF_GRA },						//  7
 	{ "a0543.rom",		0x800000, 0x1ad2bc45, 3 | BRF_GRA },						//  8
-	
+
 	{ "b0600.rom",		0x800000, 0x0646c5ef, 4 | BRF_GRA },						//  9 Sprite Masks & Color Indexes
 	{ "b0540.rom",		0x800000, 0x35728e9a, 4 | BRF_GRA },						//  10
 	{ "b0541.rom",		0x800000, 0xfbdae21a, 4 | BRF_GRA },						//  11
-	
+
 	{ "m0600.rom",		0x800000, 0x468a0d43, 5 | BRF_SND },						//  12 Samples
 
 	{ "qxzb_v100_china.asic",		0x8000, 0xcf5c6119, 7 | BRF_PRG | BRF_ESS },	//  13 Internal ARM7 Rom
@@ -8791,13 +8791,27 @@ static struct BurnRomInfo kovqxzbwsRomDesc[] = {
 STDROMPICKEXT(kovqxzbws, kovqxzbws, pgm)
 STD_ROM_FN(kovqxzbws)
 
+static INT32 kovqxzbwsInit()
+{
+	bNeedOldCode = true;
+
+	return kovassgInit();
+}
+
+static INT32 kovqxzbwsExit()
+{
+	bNeedOldCode = false;
+
+	return pgmExit();
+}
+
 struct BurnDriver BurnDrvkovqxzbws = {
 	"kovqxzbws", "kovshp", "pgm", NULL, "2022-07-31",
 	"San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)\0", "Hack", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovqxzbwsRomInfo, kovqxzbwsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
-	kovassgInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	kovqxzbwsInit, kovqxzbwsExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

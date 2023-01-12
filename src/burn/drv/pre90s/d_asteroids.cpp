@@ -139,8 +139,6 @@ static struct BurnInputInfo LlanderInputList[] = {
 	{"P1 Abort",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 start"	},
 	A("P1 Thrust",      BIT_ANALOG_REL, &BurnGun0,      "p1 y-axis"	),
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
-
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Diag Step",		BIT_DIGITAL,	DrvJoy1 + 7,	"service2"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 2,	"tilt"		},
@@ -410,7 +408,7 @@ STDDIPINFO(Astdelux)
 
 static struct BurnDIPInfo LlanderDIPList[]=
 {
-	DIP_OFFSET(0xb)
+	DIP_OFFSET(0xa)
 	{0x00, 0xff, 0xff, 0x80, NULL					},
 	{0x01, 0xff, 0xff, 0x02, NULL					},
 	{0x03, 0xff, 0xff, 0x00, NULL					},
@@ -454,7 +452,7 @@ STDDIPINFO(Llander)
 
 static struct BurnDIPInfo Llander1DIPList[]=
 {
-	DIP_OFFSET(0xb)
+	DIP_OFFSET(0xa)
 	{0x00, 0xff, 0xff, 0xa0, NULL					},
 	{0x01, 0xff, 0xff, 0x02, NULL					},
 	{0x03, 0xff, 0xff, 0x00, NULL					},

@@ -174,13 +174,14 @@ static struct BurnDIPInfo SpecDIPList[]=
 	{0, 0x01, 0x80, 0x00, "Issue 2"					},
 	{0, 0x01, 0x80, 0x80, "Issue 3"					},
 
-	{0, 0xfe, 0   , 6   , "Joystick Config"			},
-	{0, 0x01, 0x1f, 0x00, "Kempston"				},
-	{0, 0x01, 0x1f, 0x01, "Sinclair Interface 2"	},
-	{0, 0x01, 0x1f, 0x02, "QAOPM"					},
-	{0, 0x01, 0x1f, 0x04, "QAOP Space"				},
-	{0, 0x01, 0x1f, 0x08, "Cursor Keys"				},
-	{0, 0x01, 0x1f, 0x10, "Disabled"				},
+	{0, 0xfe, 0   , 7   , "Joystick Config"			},
+	{0, 0x01, 0x5f, 0x00, "Kempston"				},
+	{0, 0x01, 0x5f, 0x01, "Sinclair Interface 2"	},
+	{0, 0x01, 0x5f, 0x02, "QAOPM"					},
+	{0, 0x01, 0x5f, 0x04, "QAOP Space"				},
+	{0, 0x01, 0x5f, 0x08, "Cursor Keys"				},
+	{0, 0x01, 0x5f, 0x40, "Jumping Jack"			},
+	{0, 0x01, 0x5f, 0x10, "Disabled"				},
 
 	{0, 0xfe, 0   , 2   , "Interface 2 Joyport"		},
 	{0, 0x01, 0x20, 0x00, "Normal"					},
@@ -217,6 +218,11 @@ static struct BurnDIPInfo SpecQAOPSpaceDIPList[]=
 	{0, 0xff, 0xff, 0x84, NULL						}, // Kempston mapped to QAOPSpace (jet pack bob)
 };
 
+static struct BurnDIPInfo SpecJJackDIPList[]=
+{
+	{0, 0xff, 0xff, 0xc0, NULL						}, // Kempston mapped to space, symbol shift, caps shift (jumping jack)
+};
+
 static struct BurnDIPInfo SpecCursorKeysDIPList[]=
 {
 	{0, 0xff, 0xff, 0x88, NULL						}, // Kempston mapped to Cursor Keys
@@ -228,6 +234,7 @@ STDDIPINFOEXT(SpecIntf2, SpecIntf2, Spec)
 STDDIPINFOEXT(SpecIntf2Swap, SpecIntf2Swapped, Spec)
 STDDIPINFOEXT(SpecQAOPM, SpecQAOPM, Spec)
 STDDIPINFOEXT(SpecQAOPSpace, SpecQAOPSpace, Spec)
+STDDIPINFOEXT(SpecJJack, SpecJJack, Spec)
 STDDIPINFOEXT(SpecCursorKeys, SpecCursorKeys, Spec)
 
 static void spectrum128_bank(); // forwards
@@ -1508,6 +1515,12 @@ static INT32 SpecFrame()
 			SpecInputKbd[3][4] |= SpecInputKbd[8][1]; // Left -> 5
 			SpecInputKbd[4][2] |= SpecInputKbd[8][0]; // Right -> 8
 			SpecInputKbd[4][0] |= SpecInputKbd[8][4]; // Fire -> 0
+		}
+
+		if (SpecDips[0] & 0x40) { // map kempston joy1 to Jumping Jack keys
+			SpecInputKbd[7][1] |= SpecInputKbd[8][1]; // Left -> Symbol Shift
+			SpecInputKbd[7][0] |= SpecInputKbd[8][0]; // Right -> Space
+			SpecInputKbd[0][0] |= SpecInputKbd[8][4]; // Fire -> Caps Shift
 		}
 
 		// Compile the input matrix
@@ -24775,6 +24788,25 @@ struct BurnDriver BurnSpecGlugglug = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecGlugglugRomInfo, SpecGlugglugRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Jumping Jack (48K)
+
+static struct BurnRomInfo SpecJjackRomDesc[] = {
+	{ "Jumping Jack (1983)(Imagine Software).tap", 11833, 0xc54ae2a8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJjack, SpecJjack, Spectrum)
+STD_ROM_FN(SpecJjack)
+
+struct BurnDriver BurnSpecJjack = {
+	"spec_jjack", NULL, "spec_spectrum", NULL, "1983",
+	"Jumping Jack (48K)\0", NULL, "Imagine Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecJjackRomInfo, SpecJjackRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecJJackDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

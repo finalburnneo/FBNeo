@@ -4569,7 +4569,7 @@ INT32 OPTIMIZE_ATTR MegadriveFrame()
 	
 	// @FC
 	extern int kNetGame, kNetSpectator, kNetVersion;
-	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strcmp(BurnDrvGetTextA(DRV_NAME), "md_issdx") && (kNetGame || kNetSpectator)) {
+	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && (!strcmp(BurnDrvGetTextA(DRV_NAME), "md_issdx") || !strcmp(BurnDrvGetTextA(DRV_NAME), "md_arg98") || !strcmp(BurnDrvGetTextA(DRV_NAME), "md_arg2006")) && (kNetGame || kNetSpectator)) {
 		MegadriveDIP[0] = 0x21;
 		MegadriveDIP[1] = 0x02;
 	}

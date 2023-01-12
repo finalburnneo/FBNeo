@@ -1957,11 +1957,19 @@ static INT32 DrvFrame()
 	
 	// @FC
 	extern int kNetGame, kNetSpectator, kNetVersion;
-	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && !strncmp(BurnDrvGetTextA(DRV_NAME), "ddragon3", 8) && (kNetGame || kNetSpectator)) {
-		DrvDip[0] = 0xff;
-		DrvDip[1] = 0xff;
-		DrvDip[2] = 0xff;
-		DrvDip[3] = 0xff;
+	if (kNetVersion >= NET_VERSION_ONLINE_DIPS && (kNetGame || kNetSpectator)) {
+		if (!strncmp(BurnDrvGetTextA(DRV_NAME), "ddragon3", 8)) {
+			DrvDip[0] = 0xff;
+			DrvDip[1] = 0xff;
+			DrvDip[2] = 0xff;
+			DrvDip[3] = 0xff;
+		}
+		else if (!strncmp(BurnDrvGetTextA(DRV_NAME), "ctribe", 6)) {
+			DrvDip[0] = 0x10;
+			DrvDip[1] = 0xff;
+			DrvDip[2] = 0xff;
+			DrvDip[3] = 0xff;
+		}
 	}
 
 	SekNewFrame();

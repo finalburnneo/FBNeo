@@ -2304,6 +2304,7 @@ DRV		BurnDrvBnj;
 DRV		BurnDrvcv_bnj;
 DRV		BurnDrvnes_bumpnjump;
 DRV		BurnDrvMSX_bumprace;
+DRV		BurnSpecBumpy;
 DRV		BurnDrvMSX_bumpyspa;
 DRV		BurnDrvMSX_bumpy;
 DRV		BurnDrvnes_buraifighterj;
@@ -5053,6 +5054,7 @@ DRV		BurnDrvEnmadaio;
 DRV		BurnDrvnes_enormadv;
 DRV		BurnDrvMSX_entombed;
 DRV		BurnSpecEquinox;
+DRV		BurnSpecEricfloaters;
 DRV		BurnDrvnes_erika;
 DRV		BurnDrvnes_erikaj;
 DRV		BurnDrvgg_ernieeg;
@@ -6463,6 +6465,7 @@ DRV		BurnSpecGlobus;
 DRV		BurnSpecGlooptroop;
 DRV		BurnSpecgluf;
 DRV		BurnDrvmd_gluf;
+DRV		BurnSpecGlugglug;
 DRV		BurnDrvnes_glukthuwar;
 DRV		BurnSpecGnonimh;
 DRV		BurnSpecGnoni;
@@ -7989,6 +7992,7 @@ DRV		BurnDrvJmpbreak;
 DRV		BurnDrvJmpbreaka;
 DRV		BurnDrvJcross;
 DRV		BurnDrvJcrossa;
+DRV		BurnSpecJjack;
 DRV		BurnDrvMSX_jumpjack;
 DRV		BurnDrvJjack;
 DRV		BurnDrvJpopnics;
@@ -21670,6 +21674,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_bnj,				// Bump 'n' Jump
 	&BurnDrvnes_bumpnjump,		// Bump'n'Jump (USA)
 	&BurnDrvMSX_bumprace,		// Bumper Ship Racing (HB, v1.1)
+	&BurnSpecBumpy,				// Bumpy (48K)
 	&BurnDrvMSX_bumpyspa,		// Bumpy (Grupo de Trabajo) (Spanish)
 	&BurnDrvMSX_bumpy,			// Bumpy (Loriciels) (Euro)
 	&BurnDrvnes_buraifighterj,	// Burai Fighter (Japan)
@@ -24419,6 +24424,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_enormadv,		// Enormous Adventures (HB)
 	&BurnDrvMSX_entombed,		// Entombed (HB, v1.1)
 	&BurnSpecEquinox,			// Equinox (48K)
+	&BurnSpecEricfloaters,		// Eric And The Floaters (48K)
 	&BurnDrvnes_erika,			// Erika and Satoru's Dream Adventure (T-Eng)
 	&BurnDrvnes_erikaj,			// Erika to Satoru no Yume Bouken (Japan)
 	&BurnDrvgg_ernieeg,			// Ernie Els Golf (Euro)
@@ -25829,6 +25835,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecGlooptroop,		// Gloop Troops (48K) (HB)
 	&BurnSpecgluf,				// GLUF (128K) (HB)
 	&BurnDrvmd_gluf,			// GLUF (HB)
+	&BurnSpecGlugglug,			// Glug Glug (48K)
 	&BurnDrvnes_glukthuwar,		// Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)
 	&BurnSpecGnonimh,			// GNONI (Spanish) (48K)
 	&BurnSpecGnoni,				// GNONI 2020 (Spanish) (48K) (HB, v1.2)
@@ -27355,6 +27362,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJmpbreaka,			// Jumping Break (set 2)
 	&BurnDrvJcross,				// Jumping Cross (set 1)
 	&BurnDrvJcrossa,			// Jumping Cross (set 2)
+	&BurnSpecJjack,				// Jumping Jack (48K)
 	&BurnDrvMSX_jumpjack,		// Jumping Jack (Euro)
 	&BurnDrvJjack,				// Jumping Jack
 	&BurnDrvJpopnics,			// Jumping Pop (Nics, Korean bootleg of Plump Pop)

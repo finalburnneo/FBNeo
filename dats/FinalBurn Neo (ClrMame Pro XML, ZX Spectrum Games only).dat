@@ -3030,6 +3030,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bumpy" romof="spectrum">
+		<description>Bumpy (48K)</description>
+		<year>1989</year>
+		<manufacturer>Loriciels</manufacturer>
+		<rom name="Bumpy (1989)(Loriciels).tap" size="45878" crc="c79bed54"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="buzzsaw" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Buzzsaw+ (48K) (HB)</description>
@@ -6412,6 +6421,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ericfloaters" romof="spectrum">
+		<description>Eric And The Floaters (48K)</description>
+		<year>1983</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Eric And The Floaters (1983)(Hudson Soft).tap" size="8492" crc="0f7826de"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="escapemonjasen" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Escape from M.O.N.J.A.S. (English) (48K) (HB)</description>
@@ -7809,6 +7827,15 @@
 		<rom name="Gluf (2019)(RetroSouls).tap" size="34669" crc="52be5093"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="glugglug" romof="spectrum">
+		<description>Glug Glug (48K)</description>
+		<year>1984</year>
+		<manufacturer>CRL Ltd.</manufacturer>
+		<rom name="Glug Glug (1984)(CRL Ltd.).TAP" size="18843" crc="0a096413"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9833,6 +9860,15 @@
 		<year>2020</year>
 		<manufacturer>Quantum Sheep</manufacturer>
 		<rom name="Jumpin' Jupiter (2020)(Quantum Sheep).tap" size="40858" crc="34a1f400"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="jjack" romof="spectrum">
+		<description>Jumping Jack (48K)</description>
+		<year>1983</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Jumping Jack (1983)(Imagine Software).tap" size="11833" crc="c54ae2a8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16958,7 +16994,7 @@
 		<description>Stop the Express (48K)</description>
 		<year>1983</year>
 		<manufacturer>Sinclair Research</manufacturer>
-		<rom name="Stop The Express (1983)(Hudson Soft).z80" size="21700" crc="56a42e2e"/>
+		<rom name="Stop The Express (1983)(Hudson Soft).tap" size="22521" crc="413eeba8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

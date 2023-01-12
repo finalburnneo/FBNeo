@@ -77,6 +77,8 @@ INT32 pgm_cave_refresh = 0;
 static INT32 nCyclesDone[3];
 static INT32 nCyclesTotal[3];
 
+bool bNeedOldCode = false;
+
 static INT32 pgmMemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -111,7 +113,7 @@ static INT32 pgmMemIndex()
 
 	PGMRowRAM			= (UINT16 *) Next; Next += 0x0001000;	// Row Scroll
 	PGMPalRAM			= (UINT16 *) Next; Next += 0x0002000;	// Palette R5G5B5
-	PGMSprBuf			= (UINT16 *) Next; Next += 0x0001000;
+	PGMSprBuf			= (UINT16 *) Next; Next += bNeedOldCode ? 0x000a00 : 0x0001000;
 
 	RamEnd				= Next;
 
@@ -1044,7 +1046,8 @@ INT32 pgmFrame()
 		{
 			if (i == 224) {
 				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); // vblank - cart-controlled!
-				pgm_sprite_buffer();
+				if (!bNeedOldCode)
+					pgm_sprite_buffer();
 			}
 			if (i == 218 && !nPGMDisableIRQ4) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO); // verified on Dragon World II cart - Cart-controlled! 
 
@@ -1068,6 +1071,9 @@ INT32 pgmFrame()
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
+
+	if (bNeedOldCode)
+		memcpy(PGMSprBuf, PGM68KRAM /* Sprite RAM 0-bff */, 0x0a00); // buffer sprites
 
 	return 0;
 }
@@ -1130,7 +1136,7 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ba.Data		= PGMSprBuf;
-		ba.nLen		= 0x001000;
+		ba.nLen		= bNeedOldCode ? 0x000a00 : 0x001000;
 		ba.nAddress	= 0xB00000;
 		ba.szName	= "Sprite Buffer";
 		BurnAcb(&ba);

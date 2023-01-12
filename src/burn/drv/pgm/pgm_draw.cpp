@@ -627,7 +627,7 @@ static void draw_sprite_new_zoomed(INT32 wide, INT32 high, INT32 xpos, INT32 ypo
 static void pgm_drawsprites()
 {
 	UINT16 *source = PGMSprBuf;
-	UINT16* finish = PGMSprBuf + (bNeedOldCode ? 0x0a00 : 0x1000) / 2;
+	UINT16 *finish = PGMSprBuf + 0x1000/2;
 	UINT16 *zoomtable = &PGMZoomRAM[0];
 	
 	while (source < finish)
@@ -647,8 +647,6 @@ static void pgm_drawsprites()
 		INT32 prio = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x0080) >> 7;
 		INT32 high =  BURN_ENDIAN_SWAP_INT16(source[4]) & 0x01ff;
 
-		if (source[2] & 0x8000) boff += 0x800000;
-
 		if (xgrow) xzom = 0x10-xzom;
 		if (ygrow) yzom = 0x10-yzom;
 
@@ -664,7 +662,7 @@ static void pgm_drawsprites()
 
 		draw_sprite_new_zoomed(wide, high, xpos, ypos, palt, boff * 2, flip, xzoom, xgrow, yzoom, ygrow, prio);
 
-		source += bNeedOldCode ? 5 : 8;
+		source += 8;
 	}
 }
 

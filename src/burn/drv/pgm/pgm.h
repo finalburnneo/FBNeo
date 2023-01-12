@@ -64,8 +64,6 @@ extern INT32 nPGMDisableIRQ4;
 extern UINT32 nPgmAsicRegionHackAddress;
 extern INT32 pgm_cave_refresh;
 
-extern bool bNeedOldCode;
-
 INT32 pgmInit();
 INT32 pgmExit();
 INT32 pgmFrame();

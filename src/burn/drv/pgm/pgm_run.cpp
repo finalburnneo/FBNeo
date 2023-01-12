@@ -66,6 +66,7 @@ static INT32 nEnableArm7 = 0;
 INT32 nPGMDisableIRQ4 = 0;
 INT32 nPGMArm7Type = 0;
 UINT32 nPgmAsicRegionHackAddress = 0;
+INT32 nPGMSpriteBufferHack = 0;
 
 INT32 pgm_cave_refresh = 0;
 #define Z80_FREQ	8468000
@@ -959,6 +960,7 @@ INT32 pgmExit()
 	nPgmCurrentBios = -1;
 
 	pgm_cave_refresh = 0;
+	nPGMSpriteBufferHack = 0;
 
 	return 0;
 }
@@ -969,13 +971,16 @@ static void pgm_sprite_buffer()
 	{
 		UINT16 *ram16 = (UINT16*)PGM68KRAM;
 		
-		UINT16 mask[5] = { 0xffff, 0xfbff, 0x7fff, 0xffff, 0xffff }; // The sprite buffer hardware masks these bits!
+		UINT16 mask[2][5] = { 
+			{ 0xffff, 0xfbff, 0x7fff, 0xffff, 0xffff }, // The sprite buffer hardware masks these bits!
+			{ 0xffff, 0xffff, 0xffff, 0xffff, 0xffff }	// Some hacks rely on poor emulation
+		};
 		
 		for (INT32 i = 0; i < 0xa00/2; i+= 10/2)
 		{
 			for (INT32 j = 0; j < 10 / 2; j++)
 			{
-				PGMSprBuf[(i / (10 / 2)) * (16 / 2) + j] = ram16[i + j] & mask[j];
+				PGMSprBuf[(i / (10 / 2)) * (16 / 2) + j] = ram16[i + j] & mask[nPGMSpriteBufferHack][j];
 			} 
 
 			if ((ram16[i+4] & 0x7fff) == 0) break; // verified on hardware

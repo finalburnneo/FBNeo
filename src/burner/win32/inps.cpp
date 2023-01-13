@@ -426,7 +426,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		// Initialise slider
 		SendDlgItemMessage(hDlg, IDC_INPS_DIGSLIDER, TBM_SETRANGE, (WPARAM)0, (LPARAM)MAKELONG(0x700, 0x2000));
-		SendDlgItemMessage(hDlg, IDC_INPS_DIGSLIDER, TBM_SETLINESIZE, (WPARAM)0, (LPARAM)0x200);
+		SendDlgItemMessage(hDlg, IDC_INPS_DIGSLIDER, TBM_SETLINESIZE, (WPARAM)0, (LPARAM)0x000); // need to be able to map arrow keys without moving the slider
 		SendDlgItemMessage(hDlg, IDC_INPS_DIGSLIDER, TBM_SETPAGESIZE, (WPARAM)0, (LPARAM)0x400);
 		SendDlgItemMessage(hDlg, IDC_INPS_DIGSLIDER, TBM_SETTIC, (WPARAM)0, (LPARAM)0x2000);
 		SendDlgItemMessage(hDlg, IDC_INPS_DIGSLIDER, TBM_SETTIC, (WPARAM)0, (LPARAM)0x1000);

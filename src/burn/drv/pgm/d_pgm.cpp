@@ -8791,13 +8791,20 @@ static struct BurnRomInfo kovqxzbwsRomDesc[] = {
 STDROMPICKEXT(kovqxzbws, kovqxzbws, pgm)
 STD_ROM_FN(kovqxzbws)
 
+static INT32 KovqxzbwsInit()
+{
+	nPGMSpriteBufferHack = 1;
+	
+	return kovassgInit();
+}
+
 struct BurnDriver BurnDrvkovqxzbws = {
 	"kovqxzbws", "kovshp", "pgm", NULL, "2022-07-31",
 	"San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)\0", "Hack", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovqxzbwsRomInfo, kovqxzbwsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
-	kovassgInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	KovqxzbwsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

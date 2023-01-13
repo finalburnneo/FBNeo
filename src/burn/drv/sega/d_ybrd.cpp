@@ -1925,6 +1925,7 @@ static void PdriftAnalogTick()
 static UINT8 PdriftProcessAnalogControls(UINT16 value)
 {
 	PdriftAnalogTick();
+	PdriftAnalogTick(); // twice!
 
 	switch (value) {
 

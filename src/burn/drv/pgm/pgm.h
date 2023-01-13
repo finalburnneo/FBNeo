@@ -63,6 +63,7 @@ extern void (*pPgmColorDataDecryptcallback)(UINT8 *gfx, INT32 len);
 extern INT32 nPGMDisableIRQ4;
 extern UINT32 nPgmAsicRegionHackAddress;
 extern INT32 pgm_cave_refresh;
+extern INT32 nPGMSpriteBufferHack;
 
 INT32 pgmInit();
 INT32 pgmExit();

@@ -132,3 +132,16 @@ That driver was disabled for now, it doesn't meet our quality criteria.
 
 ### Hiscore won't save, why ?
 You need to copy [hiscore.dat](/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and to have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores (or hiscore.dat might not be listing the romset). You can request support in the issue tracker as long as the request is reasonable (avoid making a list of several dozens/hundreds of games if you don't want to be ignored). There were also issues with libretro features preventing hiscores from working properly (like runahead), it should now work properly if your libretro frontend handles `RETRO_ENVIRONMENT_GET_SAVESTATE_CONTEXT` (you'll get a warning in logs if it doesn't).
+
+### Vertical games don't work properly, why ?
+2 settings are required when running vertical games in FBNeo :
+* `Settings > Core > Allow rotation` must be enabled  (`video_allow_rotate = "true"` in `retroarch.cfg`)
+* `Settings > Video > Scaling > Aspect Ratio` should be set to `Core Provided` (`aspect_ratio_index = "22"` in `retroarch.cfg`)
+If you are wondering why this isn't required for the MAME core, you can find more information about it [here](https://github.com/libretro/mame/issues/261)
+Additionally :
+* If you are playing on a vertical screen, you'll want to use the `Vertical Mode` core option to rotate the display for your needs, while it's also possible to rotate display from `Settings > Video > Output > Video Rotation`, that method is not recommended because it doesn't rotate the aspect ratio.
+* If you are using a bezel pack, it seems you need to enable `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`)
+
+### Music is high-pitched, too fast and/or different from FBNeo standalone, why ?
+For better or worse, it was decided to use different default audio settings from standalone in the libretro port. By default standalone has 44100 samplerate and both interpolations off and that's what you should set in libretro's core options if you want the same audio output.
+You might also want to make sure you are running the game at the correct speed, many arcade machines don't run at 60Hz and if you want the proper refresh rate to be emulated you'll need to make sure `Force 60Hz` isn't enabled in core options and `Settings > Video > Synchronization > Sync to Exact Content Framerate` is enabled (`vrr_runloop_enable = "true"` in `retroarch.cfg`). Please note that your screen might not handle well the correct refresh rate, in which case you'll have to make a choice between smoothness and correct refresh rate.

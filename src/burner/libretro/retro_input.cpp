@@ -793,7 +793,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 	}
 
-	// Move 2-players start to P1's R2 for the asteroids driver
+	// Move 2-players start to P1's R3 for the asteroids driver
 	if ((parentrom && strcmp(parentrom, "asteroid") == 0) ||
 		(drvname && strcmp(drvname, "asteroid") == 0) ||
 		(parentrom && strcmp(parentrom, "astdelux") == 0) ||

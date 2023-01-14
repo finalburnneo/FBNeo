@@ -16134,10 +16134,10 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinoa"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinou"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoj"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
-	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
+	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch          },
+	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch          },
 	{ "dinopic3"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
+	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch          },
 	{ "dinopic5"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "jurassic99"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoeh"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
@@ -16217,7 +16217,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "megamana"      , CPS_B_21_DEF, mapper_RCM63B, 0, NULL                },
 	{ "rockmanj"      , CPS_B_21_DEF, mapper_RCM63B, 0, NULL                },
 	{ "mercs"         , CPS_B_12    , mapper_O224B , 0, NULL                },
-	{ "mercsu"        , CPS_B_12    , mapper_O224B , 0, NULL                },	
+	{ "mercsu"        , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsur1"      , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsj"        , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsc"        , CPS_B_12    , mapper_O224B , 0, NULL                },
@@ -16231,17 +16231,17 @@ static const struct GameConfig ConfigTable[] =
 	{ "nemo"          , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemor1"        , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemoj"         , CPS_B_15    , mapper_NM24B , 0, NULL                },
-	{ "pang3"         , CPS_B_21_DEF, mapper_CP1B1F , 0, NULL               },
-	{ "pang3r1"       , CPS_B_21_DEF, mapper_CP1B1F , 0, NULL               },
-	{ "pang3r1a"      , CPS_B_21_DEF, mapper_CP1B1F , 0, NULL               },
-	{ "pang3b"        , CPS_B_21_DEF, mapper_CP1B1F , 0, NULL               },
-	{ "pang3b2"       , CPS_B_21_DEF, mapper_CP1B1F , 0, NULL               },
-	{ "pang3b3"       , CPS_B_17	, mapper_CP1B1F , 0, NULL               },
+	{ "pang3"         , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
+	{ "pang3r1"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
+	{ "pang3r1a"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
+	{ "pang3b"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
+	{ "pang3b2"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
+	{ "pang3b3"       , CPS_B_17	, mapper_pang3 , 0, NULL                },
 	{ "pang3b4"       , CPS_B_21_DEF, mapper_pang3b4, 0, NULL               },
 	{ "pang3b5"       , CPS_B_21_DEF, mapper_CP1B1F_boot, 0, NULL           },
-	{ "pang3b6"       , CPS_B_04    , mapper_CP1B1F , 0, NULL               }, // hacked to run on Final Fight C-Board
-	{ "pang3b7"       , CPS_B_04    , mapper_CP1B1F , 0, NULL               }, // hacked to run on Final Fight C-Board
-	{ "pang3j"        , CPS_B_21_DEF, mapper_CP1B1F , 0, NULL               },
+	{ "pang3b6"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b7"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3j"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pnickj"        , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
 	{ "pokonyan"      , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
 	{ "gulunpa"       , CPS_B_21_DEF, mapper_gulun , 0, NULL                },
@@ -16249,9 +16249,9 @@ static const struct GameConfig ConfigTable[] =
 	{ "punisheru"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherj"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherh"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
-	{ "punipic"       , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
-	{ "punipic2"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
-	{ "punipic3"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
+	{ "punipic"       , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch      }, // game controls layers at 0x98000c
+	{ "punipic2"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch      }, // game controls layers at 0x98000c
+	{ "punipic3"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch      }, // game controls layers at 0x98000c
 	{ "punisherbz"    , CPS_B_21_DEF, mapper_PS63B , 0, NULL                },
 	{ "punisherb"     , CPS_B_21_QS3, mapper_PS63B , 0, NULL                },
 	{ "punisherly"    , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
@@ -18359,6 +18359,13 @@ static INT32 Pang3b4Init()
 	}
 
 	return nRet;
+}
+
+static INT32 Pang3b5Init()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b5;
+
+	return Pang3Init();
 }
 
 static INT32 GulunpaInit()
@@ -22521,9 +22528,9 @@ struct BurnDriver BurnDrvCpsPang3b5 = {
 	"pang3b5", "pang3", NULL, NULL, "1995",
 	"Pang! 3 (bootleg set 5, 950511 Euro)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3b5RomInfo, Pang3b5RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
-	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Pang3b5Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

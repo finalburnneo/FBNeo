@@ -374,6 +374,14 @@ static const struct GfxRange mapper_PKB10B_table[] = {
 	{ 0                                ,      0,      0, 0 }
 };
 
+static const struct GfxRange mapper_pang3_table[] = {
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL2, 0x0000, 0x7fff, 0 },
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL2, 0x8000, 0x9fff, 1 },
+	{ GFXTYPE_SCROLL1,                   0xa000, 0xbfff, 1 },
+	{ GFXTYPE_SCROLL3,                   0xc000, 0xffff, 1 },
+	{ 0              ,                        0,      0, 0 }
+};
+
 static const struct GfxRange mapper_CP1B1F_table[] =
 {
 	// verified from PAL dump:
@@ -811,6 +819,15 @@ void SetGfxMapper(INT32 MapperId)
 			GfxBankSizes[2] = 0x0000;
 			GfxBankSizes[3] = 0x0000;
 			GfxBankMapper = mapper_PKB10B_table;
+			return;
+		}
+		
+		case mapper_pang3: {
+			GfxBankSizes[0] = 0x8000;
+			GfxBankSizes[1] = 0x8000;
+			GfxBankSizes[2] = 0x0000;
+			GfxBankSizes[3] = 0x0000;
+			GfxBankMapper = mapper_pang3_table;
 			return;
 		}
 		

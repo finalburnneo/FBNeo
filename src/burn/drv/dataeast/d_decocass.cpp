@@ -216,13 +216,15 @@ static struct BurnDIPInfo DecocassDIPList[]=
 	{0x12, 0x01, 0xe0, 0x60, "E"			},
 	{0x12, 0x01, 0xe0, 0x40, "F"			},
 
-	{0   , 0xfe, 0   ,    6, "Bios Version"		},
+	{0   , 0xfe, 0   ,    8, "Bios Version"		},
 	{0x13, 0x01, 0x07, 0x00, "Japan A, Newer"	},
 	{0x13, 0x01, 0x07, 0x01, "Japan A, Older"	},
 	{0x13, 0x01, 0x07, 0x02, "USA B, Newer"		},
 	{0x13, 0x01, 0x07, 0x03, "USA B, Older"		},
-	{0x13, 0x01, 0x07, 0x04, "UK C"				},
-	{0x13, 0x01, 0x07, 0x05, "Europe D"			},
+	{0x13, 0x01, 0x07, 0x04, "UK C, Newer"		},
+	{0x13, 0x01, 0x07, 0x05, "UK C, Older"		},
+	{0x13, 0x01, 0x07, 0x06, "Europe D, Newer"	},
+	{0x13, 0x01, 0x07, 0x07, "Europe D, Older"	},
 };
 
 STDDIPINFO(Decocass)
@@ -370,7 +372,7 @@ STDDIPINFOEXT(Ctisland, Decocass, Ctisland)
 static struct BurnDIPInfo Ctisland3DIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x05, NULL			},
+	{0x13, 0xff, 0xff, 0x06, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
 	{0x12, 0x01, 0x01, 0x01, "3"			},
@@ -421,7 +423,7 @@ static struct BurnDIPInfo CtowerDIPList[]=
 	DIP_OFFSET(0x15)
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 	{0x01, 0xff, 0xff, 0x81, NULL			},
-	{0x02, 0xff, 0xff, 0x05, NULL			},
+	{0x02, 0xff, 0xff, 0x06, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -457,12 +459,13 @@ static struct BurnDIPInfo CtowerDIPList[]=
 	{0x01, 0x01, 0xe0, 0x60, "E"			},
 	{0x01, 0x01, 0xe0, 0x40, "F"			},
 
-	{0   , 0xfe, 0   ,    5, "Bios Version"		},
+	{0   , 0xfe, 0   ,    6, "Bios Version"		},
 	{0x02, 0x01, 0x07, 0x00, "Japan A, Newer"	},
 	{0x02, 0x01, 0x07, 0x01, "Japan A, Older"	},
 	{0x02, 0x01, 0x07, 0x02, "USA B, Newer"		},
 	{0x02, 0x01, 0x07, 0x03, "USA B, Older"		},
-	{0x02, 0x01, 0x07, 0x04, "Bios D (Europe?)" },
+	{0x02, 0x01, 0x07, 0x06, "Europe D, Newer"	},
+	{0x02, 0x01, 0x07, 0x07, "Europe D, Older"	},
 };
 
 STDDIPINFO(Ctower)
@@ -2683,7 +2686,7 @@ static INT32 DrvDoReset()
 	// call before cpu resets to catch vectors!
 	if (DrvDips[2] != 0xff) // widel multi
 	{
-		INT32 bios_sets = 6; // total bios sets supported
+		INT32 bios_sets = 8; // total bios sets supported
 		INT32 bios_select = ((DrvDips[2] % bios_sets) * 8) + 0x80;
 
 		if (BurnLoadRom(DrvMainBIOS, bios_select + 0, 1)) return 1; // main m6502 bios
@@ -2692,8 +2695,8 @@ static INT32 DrvDoReset()
 			if (BurnLoadRom(DrvMainBIOS + 0x800, bios_select + 1, 1)) return 1;
 		}
 
-		// split type uses 1k rather than 2k rom (EU and UK excluded [4, 5])
-		if (BurnLoadRom(DrvSoundBIOS + (((DrvDips[2] & 1) && (DrvDips[2] < 4)) ? 0x400 : 0), bios_select + 2, 1)) return 1;
+		// split type uses 1k rather than 2k rom
+		if (BurnLoadRom(DrvSoundBIOS + (((DrvDips[2] & 1)) ? 0x400 : 0), bios_select + 2, 1)) return 1;
 
 		// load the mcu bios
 		if (BurnLoadRom(DrvMCUROM, 0x80 + (bios_sets * 8), 1)) return 1;
@@ -3600,19 +3603,43 @@ static struct BurnRomInfo decocassRomDesc[] = {
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa6
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa7
 
-	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa8 - BIOS "D" - ctisland3, ctower (Main M6502)
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa9
+	{ "dsp-3_p0-c.m9",      0x0800, 0xc76c4057, BRF_BIOS | BRF_PRG }, // 0xa8 - BIOS "C" UK, Older (Main M6502)
+	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0xa9 - BIOS "C" UK, Older (Main M6502)
 
-	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xaa - BIOS "D" (Sound M6502)
+	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0xaa - BIOS "C" UK, older (Sound M6502)
 
-	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xab - BIOS "D" (prom)
-	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xac - BIOS "D" (prom)
-	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xad - BIOS "D" (prom)
+	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0xab - BIOS "C" UK, older (prom)
+	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0xac - BIOS "C" UK, older (prom)
+	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0xad - BIOS "C" UK, older (prom)
 
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xae
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xaf
 
-	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xb0 - MCU BIOS (Shared)
+	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xb0 - BIOS "D" - ctisland3, ctower (Main M6502)
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb1
+
+	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xb2 - BIOS "D" (Sound M6502)
+
+	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xb3 - BIOS "D" (prom)
+	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xb4 - BIOS "D" (prom)
+	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xb5 - BIOS "D" (prom)
+
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb6
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb7
+
+	{ "dsp-3_p0-d.m9",      0x0800, 0x4b7d72bc, BRF_BIOS | BRF_PRG }, // 0xb8 - BIOS "D" Europe, Older (Main M6502)
+	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0xb9 - BIOS "D" Europe, Older (Main M6502)
+
+	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0xba - BIOS "D" Europe, older (Sound M6502)
+
+	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0xbb - BIOS "D" Europe, older (prom)
+	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0xbc - BIOS "D" Europe, older (prom)
+	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0xbd - BIOS "D" Europe, older (prom)
+
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xbe
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xbf
+
+	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xc0 - MCU BIOS (Shared)
 };
 
 STD_ROM_PICK(decocass)

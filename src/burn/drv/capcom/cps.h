@@ -65,6 +65,7 @@ INT32 CpsLoadTilesKodb(INT32 nStart);
 INT32 CpsLoadTilesWonder3b(INT32 nStart);
 INT32 CpsLoadTilesPang3r1a(INT32 nStart);
 INT32 CpsLoadTilesPang3b2(INT32 nStart);
+INT32 CpsLoadTilesPang3b4(INT32 nStart);
 INT32 CpsLoadTilesGulunpa(INT32 nStart);
 INT32 CpsLoadTilesPunisherb(INT32 nStart);
 INT32 CpsLoadTilesKnightsb2(INT32 nStart);
@@ -155,7 +156,7 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define mapper_TN2292		35
 #define mapper_RCM63B		36
 #define mapper_PKB10B		37
-#define mapper_pang3		38
+#define mapper_CP1B1F		38
 #define mapper_sfzch		39
 #define mapper_cps2			40
 #define mapper_frog			41
@@ -163,6 +164,8 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define mapper_KNM10B		43
 #define mapper_gulun		44
 #define mapper_SFZ63B		mapper_RCM63B
+#define mapper_pang3b4		45
+#define mapper_CP1B1F_boot	46
 extern void SetGfxMapper(INT32 MapperId);
 extern INT32 GfxRomBankMapper(INT32 Type, INT32 Code);
 extern void SetCpsBId(INT32 CpsBId, INT32 bStars);

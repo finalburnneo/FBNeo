@@ -1550,6 +1550,28 @@ INT32 CpsLoadTilesPang3b2(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesPang3b4(INT32 nStart)
+{
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart +  0, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart +  1, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart +  2, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart +  3, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart +  4, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart +  5, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart +  6, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart +  7, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart +  8, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart +  9, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart + 10, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart + 11, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart + 12, 0, 3);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart + 13, 0, 3);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart + 14, 0, 3);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart + 15, 0, 3);
+	
+	return 0;
+}
+
 INT32 CpsLoadTilesGulunpa(INT32 nStart)
 {
 	CpsLoadOne(CpsGfx +			0x000000, nStart + 0, 1, 0);

@@ -32949,3 +32949,41 @@ struct BurnDriver BurnDrvMSX_riskyrick = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Tere-Kinesis (English) (HB)
+
+static struct BurnRomInfo MSX_terekinenRomDesc[] = {
+	{ "Tere-Kinesis EN (2021)(Physical Dreams).rom",	49152, 0x7ef90f91, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_terekinen, MSX_terekinen, msx_msx)
+STD_ROM_FN(MSX_terekinen)
+
+struct BurnDriver BurnDrvMSX_terekinen = {
+	"msx_terekinen", NULL, "msx_msx", NULL, "2021",
+	"Tere-Kinesis (English) (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_terekinenRomInfo, MSX_terekinenRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Tere-Kinesis (Spanish) (HB)
+
+static struct BurnRomInfo MSX_terekinesRomDesc[] = {
+	{ "Tere-Kinesis ES (2021)(Physical Dreams).rom",	49152, 0x4263351a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_terekines, MSX_terekines, msx_msx)
+STD_ROM_FN(MSX_terekines)
+
+struct BurnDriver BurnDrvMSX_terekines = {
+	"msx_terekines", "msx_terekinen", "msx_msx", NULL, "2021",
+	"Tere-Kinesis (Spanish) (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_terekinesRomInfo, MSX_terekinesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

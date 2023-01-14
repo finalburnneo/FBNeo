@@ -24811,6 +24811,158 @@ struct BurnDriver BurnSpecJjack = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Chaos - The Battle of Wizards (48K)
+
+static struct BurnRomInfo SpecChaosRomDesc[] = {
+	{ "Chaos - The Battle of Wizards 48K (1985)(Games Workshop).tap", 41640, 0xa696e01a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecChaos, SpecChaos, Spectrum)
+STD_ROM_FN(SpecChaos)
+
+struct BurnDriver BurnSpecChaos = {
+	"spec_chaos", NULL, "spec_spectrum", NULL, "1985",
+	"Chaos - The Battle of Wizards (48K)\0", "Q, W, E, A, D, Z, X, C, to move cursor", "Games Workshop", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 8, HARDWARE_SPECTRUM, GBF_STRATEGY, 0,
+	SpectrumGetZipName, SpecChaosRomInfo, SpecChaosRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Cyberun (48K)
+
+static struct BurnRomInfo SpecCyberunRomDesc[] = {
+	{ "Cyberun 48K (1986)(Ultimate Play The Game).tap", 47506, 0x8ffbbf90, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCyberun, SpecCyberun, Spectrum)
+STD_ROM_FN(SpecCyberun)
+
+struct BurnDriver BurnSpecCyberun = {
+	"spec_cyberun", NULL, "spec_spectrum", NULL, "1986",
+	"Cyberun (48K)\0", "Press '1' or '2' to set controls", "Ultimate Play The Game", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecCyberunRomInfo, SpecCyberunRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Martianoids (48K)
+
+static struct BurnRomInfo SpecMartianoidsRomDesc[] = {
+	{ "Martianoids 48K (1987)(Ultimate Play The Game).tap", 49438, 0xa1fe1d86, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMartianoids, SpecMartianoids, Spectrum)
+STD_ROM_FN(SpecMartianoids)
+
+struct BurnDriver BurnSpecMartianoids = {
+	"spec_martianoids", NULL, "spec_spectrum", NULL, "1987",
+	"Martianoids (48K)\0", NULL, "Ultimate Play The Game", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MAZE, 0,
+	SpectrumGetZipName, SpecMartianoidsRomInfo, SpecMartianoidsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Nightshade (48K)
+
+static struct BurnRomInfo SpecNightshadeRomDesc[] = {
+	{ "Nightshade 48K (1985)(Ultimate Play The Game).tap", 42456, 0xb421d1a8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecNightshade, SpecNightshade, Spectrum)
+STD_ROM_FN(SpecNightshade)
+
+struct BurnDriver BurnSpecNightshade = {
+	"spec_nightshade", NULL, "spec_spectrum", NULL, "1985",
+	"Nightshade (48K)\0", NULL, "Ultimate Play The Game", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecNightshadeRomInfo, SpecNightshadeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Silent Service (48K)
+
+static struct BurnRomInfo SpecSilentserviceRomDesc[] = {
+	{ "Silent Service 48K (1986)(U.S. Gold).z80", 40554, 0x1822026f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSilentservice, SpecSilentservice, Spectrum)
+STD_ROM_FN(SpecSilentservice)
+
+struct BurnDriver BurnSpecSilentservice = {
+	"spec_silentservice", NULL, "spec_spectrum", NULL, "1986",
+	"Silent Service (48K)\0", NULL, "U.S. Gold", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SIM, 0,
+	SpectrumGetZipName, SpecSilentserviceRomInfo, SpecSilentserviceRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tau-Ceti (48K)
+
+static struct BurnRomInfo SpecTaucetiRomDesc[] = {
+	{ "Tau-Ceti 48K (1985)(CRL Group).tap", 56807, 0x309522ae, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTauceti, SpecTauceti, Spectrum)
+STD_ROM_FN(SpecTauceti)
+
+struct BurnDriver BurnSpecTauceti = {
+	"spec_tauceti", "spec_taucetise", "spec_spectrum", NULL, "1985",
+	"Tau-Ceti (48K)\0", "'SHIFT+SPACE' to begin, write 'HELP' to list commands", "CRL Group", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_SHOOT | GBF_SIM, 0,
+	SpectrumGetZipName, SpecTaucetiRomInfo, SpecTaucetiRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tau Ceti - The Special Edition (128K)
+
+static struct BurnRomInfo SpecTaucetiseRomDesc[] = {
+	{ "Tau Ceti - The Special Edition 128K (1987)(CRL Group).tap", 129527, 0x97369bcf, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTaucetise, SpecTaucetise, Spec128)
+STD_ROM_FN(SpecTaucetise)
+
+struct BurnDriver BurnSpecTaucetise = {
+	"spec_taucetise", NULL, "spec_spec128", NULL, "1987",
+	"Tau Ceti - The Special Edition (128K)\0", "'SHIFT+SPACE' to begin, write 'HELP' to list commands", "CRL Group", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT | GBF_SIM, 0,
+	SpectrumGetZipName, SpecTaucetiseRomInfo, SpecTaucetiseRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Vectron (48K)
+
+static struct BurnRomInfo SpecVectronRomDesc[] = {
+	{ "Vectron 48K (1985)(Firebird).tap", 49343, 0xec6217eb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecVectron, SpecVectron, Spectrum)
+STD_ROM_FN(SpecVectron)
+
+struct BurnDriver BurnSpecVectron = {
+	"spec_vectron", NULL, "spec_spectrum", NULL, "1985",
+	"Vectron (48K)\0", NULL, "Firebird Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecVectronRomInfo, SpecVectronRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 
@@ -39502,6 +39654,44 @@ struct BurnDriver BurnSpecOrderslpdrag = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_RPG, 0,
 	SpectrumGetZipName, SpecOrderslpdragRomInfo, SpecOrderslpdragRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ramiro el Vampiro and the Mystery of the Papyrus (128K) (HB)
+
+static struct BurnRomInfo SpecRamiro4enRomDesc[] = {
+	{ "Ramiro el vampiro IV EN (2023)(The Mojon Twins).tap", 49265, 0x643cf039, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRamiro4en, SpecRamiro4en, Spec128)
+STD_ROM_FN(SpecRamiro4en)
+
+struct BurnDriver BurnSpecRamiro4en = {
+	"spec_ramiro4en", NULL, "spec_spec128", NULL, "2023",
+	"Ramiro el Vampiro and the Mystery of the Papyrus (128K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
+	SpectrumGetZipName, SpecRamiro4enRomInfo, SpecRamiro4enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ramiro el Vampiro en el Misterio del Papiro (128K) (HB)
+
+static struct BurnRomInfo SpecRamiro4esRomDesc[] = {
+	{ "Ramiro el vampiro IV ES (2023)(The Mojon Twins).tap", 49233, 0x54c870f3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecRamiro4es, SpecRamiro4es, Spec128)
+STD_ROM_FN(SpecRamiro4es)
+
+struct BurnDriver BurnSpecRamiro4es = {
+	"spec_ramiro4es", "spec_ramiro4en", "spec_spec128", NULL, "2023",
+	"Ramiro el Vampiro en el Misterio del Papiro (128K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_ADV, 0,
+	SpectrumGetZipName, SpecRamiro4esRomInfo, SpecRamiro4esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

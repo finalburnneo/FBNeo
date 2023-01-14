@@ -126,7 +126,9 @@ static INT32 InputTick()
 		nAdd *= pgi->Input.Slider.nSliderSpeed;
 		nAdd /= 0x100;
 
-		if (pgi->Input.Slider.nSliderCenter && !bGotKey) {						// Attact to center
+		//		if (pgi->Input.Slider.nSliderCenter && !bGotKey) {						// Attact to center
+		// checking !bGotKey here causes the slider to lag -dink jan, 2023
+		if (pgi->Input.Slider.nSliderCenter) {						// Attact to center
 			if (pgi->Input.Slider.nSliderCenter == 1) {
 				// Fastest Auto-Center speed, center immediately when key/button is released
 				pgi->Input.Slider.nSliderValue = 0x8000;
@@ -141,11 +143,11 @@ static INT32 InputTick()
 
 		pgi->Input.Slider.nSliderValue += nAdd;
 		// Limit slider
-		if (pgi->Input.Slider.nSliderValue < 0x0000) {
-			pgi->Input.Slider.nSliderValue = 0x0000;
+		if (pgi->Input.Slider.nSliderValue < 0x0100) {
+			pgi->Input.Slider.nSliderValue = 0x0100;
 		}
-		if (pgi->Input.Slider.nSliderValue > 0xFFFF) {
-			pgi->Input.Slider.nSliderValue = 0xFFFF;
+		if (pgi->Input.Slider.nSliderValue > 0xFF00) {
+			pgi->Input.Slider.nSliderValue = 0xFF00;
 		}
 	}
 	return 0;

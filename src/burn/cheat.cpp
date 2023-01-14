@@ -399,9 +399,9 @@ INT32 CheatApply()
 							UINT8 byteToWrite = pAddressInfo->nValue;
 
 							if (pCurrentCheat->bWriteWithMask) {
-								//bprintf(0, _T("write with mask!  %x\n"), pAddressInfo->nExtended);
-								byteToWrite =  (byteToWrite & pAddressInfo->nExtended);
-								byteToWrite |= (cheat_subptr->read(pAddressInfo->nAddress ^ addressXor) & ~pAddressInfo->nExtended);
+								//bprintf(0, _T("write with mask!  %x\n"), pAddressInfo->nMask);
+								byteToWrite =  (byteToWrite & pAddressInfo->nMask);
+								byteToWrite |= (cheat_subptr->read(pAddressInfo->nAddress ^ addressXor) & ~pAddressInfo->nMask);
 							}
 
 							cheat_subptr->write(pAddressInfo->nAddress ^ addressXor, byteToWrite);

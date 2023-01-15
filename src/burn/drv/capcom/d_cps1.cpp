@@ -9321,7 +9321,7 @@ static struct BurnRomInfo Pang3b4RomDesc[] = {
 	{ "pal16v8.1a",  0x000117, 0x78c3161f, BRF_OPT },
 	{ "pal16v8.13e", 0x000117, 0x5406caf1, BRF_OPT },
 	{ "pal22v10.j8", 0x0002dd, 0xa9445f88, BRF_OPT },
-	{ "pal16l8.j8",  0x000117, 0x00000000, BRF_OPT },
+	{ "pal16l8.j8",  0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Pang3b4)

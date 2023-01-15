@@ -15745,6 +15745,7 @@ DRV		BurnDrvcv_sudoku;
 DRV		BurnDrvnes_sugorquej;
 DRV		BurnDrvnes_sugorque;
 DRV		BurnDrvsms_suhocheo;
+DRV		BurnDrvMSX_suitemacabre;
 DRV		BurnDrvnes_sukebandeka3j;
 DRV		BurnDrvnes_sukebandeka3;
 DRV		BurnDrvsms_sukeban;
@@ -31042,7 +31043,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsPang3b,			// Pang! 3 (bootleg set 1, 950511 Euro)
 	&BurnDrvCpsPang3b2,			// Pang! 3 (bootleg set 2, 950601 Euro)
 	&BurnDrvCpsPang3b3,			// Pang! 3 (bootleg set 3, 950511 Euro)
-	&BurnDrvCpsPang3b4,			// Pang! 3 (bootleg set 4, 950601 Euro, unencrypted, protection PIC, no serial EPROM) [no comment, NOT WORKING]
+	&BurnDrvCpsPang3b4,			// Pang! 3 (bootleg set 4, 950601 Euro, unencrypted, protection PIC, no serial EPROM)
 	&BurnDrvCpsPang3b5,			// Pang! 3 (bootleg set 5, 950511 Euro)
 	&BurnDrvCpsPang3b6,			// Pang! 3 (bootleg set 6, 950511 Euro)
 	&BurnDrvCpsPang3b7,			// Pang! 3 (bootleg set 7, 950601 Euro)
@@ -35129,6 +35130,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_sugorquej,		// Sugoro Quest - Dice no Senshitachi (Japan)
 	&BurnDrvnes_sugorque,		// Sugoro Quest - Dice no Senshitachi (T-Eng)
 	&BurnDrvsms_suhocheo,		// Suho Jeonsa (Kor)
+	&BurnDrvMSX_suitemacabre,	// Suite Macabre (HB)
 	&BurnDrvnes_sukebandeka3j,	// Sukeban Deka 3 (Japan)
 	&BurnDrvnes_sukebandeka3,	// Sukeban Deka 3 (T-Eng)
 	&BurnDrvsms_sukeban,		// Sukeban Deka II - Shoujo Tekkamen Densetsu (Jpn)

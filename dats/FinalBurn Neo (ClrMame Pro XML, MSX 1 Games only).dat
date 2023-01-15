@@ -15311,6 +15311,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="suitemacabre" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Suite Macabre (HB)</description>
+		<year>2022</year>
+		<manufacturer>Maltanto</manufacturer>
+		<rom name="Suite Macabre (2022)(Maltanto).rom" size="262144" crc="03c7ec35"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="suparobo" romof="msx">
 		<description>Suparobo (Jpn)</description>
 		<year>1984</year>

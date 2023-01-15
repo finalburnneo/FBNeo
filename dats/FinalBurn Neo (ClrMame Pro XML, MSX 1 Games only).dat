@@ -15888,6 +15888,30 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="terekinen" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Tere-Kinesis (English) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Tere-Kinesis EN (2021)(Physical Dreams).rom" size="49152" crc="7ef90f91"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="terekines" cloneof="terekinen" romof="terekinen">
+		<comment>Homebrew</comment>
+		<description>Tere-Kinesis (Spanish) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Tere-Kinesis ES (2021)(Physical Dreams).rom" size="49152" crc="4263351a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="terminus" romof="msx">
 		<description>Terminus - Prison Planet (Euro)</description>
 		<year>1987</year>

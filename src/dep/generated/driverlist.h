@@ -2776,6 +2776,7 @@ DRV		Burnmd_Chaojipok;
 DRV		BurnDrvsg1k_supertnkt;
 DRV		BurnDrvsg1k_bombjackt2;
 DRV		BurnDrvPgmdemo;
+DRV		BurnSpecChaos;
 DRV		BurnDrvCpsCps1demo;
 DRV		BurnDrvneodemo;
 DRV		BurnDrvmd_chaosen2;
@@ -3619,6 +3620,7 @@ DRV		BurnSpecCybernoid48;
 DRV		BurnDrvnes_cyber;
 DRV		BurnSpecCybernoidii128;
 DRV		BurnSpecCybernoidii48;
+DRV		BurnSpecCyberun;
 DRV		BurnDrvMSX_cyberun;
 DRV		BurnDrvsms_cyborgh;
 DRV		BurnDrvmd_cyborgj;
@@ -9454,6 +9456,7 @@ DRV		BurnDrvmartmast104c;
 DRV		BurnDrvMartmast;
 DRV		BurnDrvMarmatcp;
 DRV		BurnDrvMarmatsc;
+DRV		BurnSpecMartianoids;
 DRV		BurnDrvMSX_martianoids;
 DRV		BurnDrvMarvland;
 DRV		BurnDrvmd_marvlandj;
@@ -11100,6 +11103,7 @@ DRV		BurnDrvnitd;
 DRV		BurnDrvnes_nightonelmstra;
 DRV		BurnDrvnes_nightelmstreetdmk;
 DRV		BurnSpecNighthallowen;
+DRV		BurnSpecNightshade;
 DRV		BurnDrvnes_nightshade;
 DRV		BurnDrvmd_nikkan;
 DRV		BurnDrvpce_nikopun;
@@ -11656,6 +11660,8 @@ DRV		BurnDrvCpsPang3b2;
 DRV		BurnDrvCpsPang3b3;
 DRV		BurnDrvCpsPang3b4;
 DRV		BurnDrvCpsPang3b5;
+DRV		BurnDrvCpsPang3b6;
+DRV		BurnDrvCpsPang3b7;
 DRV		BurnDrvCpsPang3j;
 DRV		BurnDrvpanicbom;
 DRV		BurnSpecpandizzy;
@@ -13013,6 +13019,8 @@ DRV		BurnDrvmd_rambo3;
 DRV		BurnSpecRamirer1;
 DRV		BurnSpecRamirer2;
 DRV		BurnSpecRamirer3;
+DRV		BurnSpecRamiro4en;
+DRV		BurnSpecRamiro4es;
 DRV		BurnSpecRamiro3en;
 DRV		BurnSpecRamiro3es;
 DRV		BurnSpecRamiror1;
@@ -14265,6 +14273,7 @@ DRV		BurnDrvtg_silentd;
 DRV		BurnDrvSilentdj;
 DRV		BurnDrvSilentdu;
 DRV		BurnDrvSilentd;
+DRV		BurnSpecSilentservice;
 DRV		BurnDrvnes_silentservice;
 DRV		BurnSpecsilentshadow;
 DRV		BurnDrvMSX_sshadow;
@@ -16494,6 +16503,8 @@ DRV		BurnDrvpce_tatsujinp;
 DRV		BurnDrvpce_tatsujin;
 DRV		BurnDrvTattassa;
 DRV		BurnDrvTattass;
+DRV		BurnSpecTaucetise;
+DRV		BurnSpecTauceti;
 DRV		BurnDrvMSX_tawarakn;
 DRV		BurnDrvMSX_tawaraknb;
 DRV		BurnDrvMSX_tawarakna;
@@ -16697,6 +16708,8 @@ DRV		BurnSpecTeodororu;
 DRV		BurnSpecTeodoroes;
 DRV		BurnDrvMSX_teodoroes;
 DRV		BurnDrvnes_teraonodosooz;
+DRV		BurnDrvMSX_terekinen;
+DRV		BurnDrvMSX_terekines;
 DRV		BurnDrvsg1k_terebioe;
 DRV		BurnSpecTerminator2;
 DRV		BurnDrvsms_term2;
@@ -18083,6 +18096,7 @@ DRV		BurnDrvmd_vecman2p3;
 DRV		BurnDrvmd_vecman2p2;
 DRV		BurnDrvmd_vecman2;
 DRV		BurnSpecVectornauts;
+DRV		BurnSpecVectron;
 DRV		BurnDrvnes_veggieinvaders;
 DRV		BurnDrvpce_veigues;
 DRV		BurnDrvtg_veigues;
@@ -22146,6 +22160,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_supertnkt,		// Chaoji Tanke (Tw)
 	&BurnDrvsg1k_bombjackt2,	// Chaoren (Tw)
 	&BurnDrvPgmdemo,			// Chaos (PGM Demo)
+	&BurnSpecChaos,				// Chaos - The Battle of Wizards (48K)
 	&BurnDrvCpsCps1demo,		// Chaos Demo (CPS-1)
 	&BurnDrvneodemo,			// Chaos Demo (Neo Geo)
 	&BurnDrvmd_chaosen2,		// Chaos Engine 2, The (Euro, Prototype)
@@ -22989,6 +23004,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_cyber,			// Cybernoid - The Fighting Machine (USA)
 	&BurnSpecCybernoidii128,	// Cybernoid II - The Revenge (128K)
 	&BurnSpecCybernoidii48,		// Cybernoid II - The Revenge (48K)
+	&BurnSpecCyberun,			// Cyberun (48K)
 	&BurnDrvMSX_cyberun,		// Cyberun (Euro)
 	&BurnDrvsms_cyborgh,		// Cyborg Hunter (Euro, USA, Bra)
 	&BurnDrvmd_cyborgj,			// Cyborg Justice (Euro, USA)
@@ -28824,6 +28840,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMartmast,			// Martial Masters (V104, 102, 102, USA)
 	&BurnDrvMarmatcp,			// Martial Masters - Community Patch (Hack)
 	&BurnDrvMarmatsc,			// Martial Masters - Secret Characters (Hack)
+	&BurnSpecMartianoids,		// Martianoids (48K)
 	&BurnDrvMSX_martianoids,	// Martianoids (Euro)
 	&BurnDrvMarvland,			// Marvel Land (Japan)
 	&BurnDrvmd_marvlandj,		// Marvel Land (Jpn)
@@ -30470,6 +30487,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_nightonelmstra,	// Nightmare on Elm Street, A (USA)
 	&BurnDrvnes_nightelmstreetdmk,// Nightmare on Elm Street, A - Son of a Hundred Maniacs Demake (HB)
 	&BurnSpecNighthallowen,		// Nightmare on Halloween (48K) (HB)
+	&BurnSpecNightshade,		// Nightshade (48K)
 	&BurnDrvnes_nightshade,		// Nightshade (USA)
 	&BurnDrvmd_nikkan,			// Nikkan Sports Pro Yakyuu Van (Jpn)
 	&BurnDrvpce_nikopun,		// Niko Niko, Pun
@@ -31024,8 +31042,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsPang3b,			// Pang! 3 (bootleg set 1, 950511 Euro)
 	&BurnDrvCpsPang3b2,			// Pang! 3 (bootleg set 2, 950601 Euro)
 	&BurnDrvCpsPang3b3,			// Pang! 3 (bootleg set 3, 950511 Euro)
-	&BurnDrvCpsPang3b4,			// Pang! 3 (bootleg set 4, 950511 Euro)
-	&BurnDrvCpsPang3b5,			// Pang! 3 (bootleg set 5, 950601 Euro)
+	&BurnDrvCpsPang3b4,			// Pang! 3 (bootleg set 4, 950601 Euro, unencrypted, protection PIC, no serial EPROM) [no comment, NOT WORKING]
+	&BurnDrvCpsPang3b5,			// Pang! 3 (bootleg set 5, 950511 Euro)
+	&BurnDrvCpsPang3b6,			// Pang! 3 (bootleg set 6, 950511 Euro)
+	&BurnDrvCpsPang3b7,			// Pang! 3 (bootleg set 7, 950601 Euro)
 	&BurnDrvCpsPang3j,			// Pang! 3: Kaitou Tachi no Karei na Gogo (950511 Japan)
 	&BurnDrvpanicbom,			// Panic Bomber
 	&BurnSpecpandizzy,			// Panic Dizzy (128K)
@@ -32383,6 +32403,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecRamirer1,			// Ramire the Vampire Rewamp - Part 1 (48K) (HB)
 	&BurnSpecRamirer2,			// Ramire the Vampire Rewamp - Part 2 (48K) (HB)
 	&BurnSpecRamirer3,			// Ramire the Vampire Rewamp - Part 3 (48K) (HB)
+	&BurnSpecRamiro4en,			// Ramiro el Vampiro and the Mystery of the Papyrus (128K) (HB)
+	&BurnSpecRamiro4es,			// Ramiro el Vampiro en el Misterio del Papiro (128K) (HB)
 	&BurnSpecRamiro3en,			// Ramiro el Vampiro III (English) (128K) (HB)
 	&BurnSpecRamiro3es,			// Ramiro el Vampiro III (Spanish) (128K) (HB)
 	&BurnSpecRamiror1,			// Ramiro el Vampiro Rewamp - Parte 1 (48K) (HB)
@@ -33635,6 +33657,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSilentdj,			// Silent Dragon (Japan)
 	&BurnDrvSilentdu,			// Silent Dragon (US)
 	&BurnDrvSilentd,			// Silent Dragon (World)
+	&BurnSpecSilentservice,		// Silent Service (48K)
 	&BurnDrvnes_silentservice,	// Silent Service (USA)
 	&BurnSpecsilentshadow,		// Silent Shadow (48K)
 	&BurnDrvMSX_sshadow,		// Silent Shadow (Euro)
@@ -35864,6 +35887,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_tatsujin,		// Tatsujin
 	&BurnDrvTattassa,			// Tattoo Assassins (Asia prototype)
 	&BurnDrvTattass,			// Tattoo Assassins (US prototype)
+	&BurnSpecTaucetise,			// Tau Ceti - The Special Edition (128K)
+	&BurnSpecTauceti,			// Tau-Ceti (48K)
 	&BurnDrvMSX_tawarakn,		// Tawara-kun (Jpn)
 	&BurnDrvMSX_tawaraknb,		// Tawara-kun (Jpn, Alt 2)
 	&BurnDrvMSX_tawarakna,		// Tawara-kun (Jpn, Alt)
@@ -36067,6 +36092,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTeodoroes,			// Teodoro No Sabe Volar (Spanish) (48K) (HB)
 	&BurnDrvMSX_teodoroes,		// Teodoro No Sabe Volar (Spanish) (HB)
 	&BurnDrvnes_teraonodosooz,	// Terao no Dosukoi Oozumou (Japan)
+	&BurnDrvMSX_terekinen,		// Tere-Kinesis (English) (HB)
+	&BurnDrvMSX_terekines,		// Tere-Kinesis (Spanish) (HB)
 	&BurnDrvsg1k_terebioe,		// Terebi Oekaki (Jpn)
 	&BurnSpecTerminator2,		// Terminator 2 - Judgement Day (128K)
 	&BurnDrvsms_term2,			// Terminator 2 - Judgment Day (Euro)
@@ -37453,6 +37480,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_vecman2p2,		// Vectorman 2 (Prototype, 19960827)
 	&BurnDrvmd_vecman2,			// Vectorman 2 (USA)
 	&BurnSpecVectornauts,		// Vectornauts, The (128K) (HB)
+	&BurnSpecVectron,			// Vectron (48K)
 	&BurnDrvnes_veggieinvaders,	// Veggie Invaders (HB)
 	&BurnDrvpce_veigues,		// Veigues - Tactical Gladiator
 	&BurnDrvtg_veigues,			// Veigues - Tactical Gladiator

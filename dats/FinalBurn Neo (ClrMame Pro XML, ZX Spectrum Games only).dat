@@ -3471,6 +3471,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chaos" romof="spectrum">
+		<comment>Q, W, E, A, D, Z, X, C, to move cursor</comment>
+		<description>Chaos - The Battle of Wizards (48K)</description>
+		<year>1985</year>
+		<manufacturer>Games Workshop</manufacturer>
+		<rom name="Chaos - The Battle of Wizards 48K (1985)(Games Workshop).tap" size="41640" crc="a696e01a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="charm" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Charm, The (128K) (HB)</description>
@@ -4690,6 +4700,16 @@
 		<manufacturer>Hewson Consultants</manufacturer>
 		<rom name="Cybernoid II - The Revenge 48K (1988)(Hewson Consultants).tap" size="48032" crc="a66dd375"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cyberun" romof="spectrum">
+		<comment>Press '1' or '2' to set controls</comment>
+		<description>Cyberun (48K)</description>
+		<year>1986</year>
+		<manufacturer>Ultimate Play The Game</manufacturer>
+		<rom name="Cyberun 48K (1986)(Ultimate Play The Game).tap" size="47506" crc="8ffbbf90"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11177,6 +11197,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="martianoids" romof="spectrum">
+		<description>Martianoids (48K)</description>
+		<year>1987</year>
+		<manufacturer>Ultimate Play The Game</manufacturer>
+		<rom name="Martianoids 48K (1987)(Ultimate Play The Game).tap" size="49438" crc="a1fe1d86"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mask" romof="spec128">
 		<description>MASK (48K-128K)</description>
 		<year>1987</year>
@@ -12533,6 +12562,15 @@
 		<year>2013</year>
 		<manufacturer>Radastan</manufacturer>
 		<rom name="Nightmare on Halloween 48K (2013)(Radastan).tap" size="39246" crc="06b32e79"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nightshade" romof="spectrum">
+		<description>Nightshade (48K)</description>
+		<year>1985</year>
+		<manufacturer>Ultimate Play The Game</manufacturer>
+		<rom name="Nightshade 48K (1985)(Ultimate Play The Game).tap" size="42456" crc="b421d1a8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14378,6 +14416,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ramiro4en" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Ramiro el Vampiro and the Mystery of the Papyrus (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Ramiro el vampiro IV EN (2023)(The Mojon Twins).tap" size="49265" crc="643cf039"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ramiro4es" cloneof="ramiro4en" romof="ramiro4en">
+		<comment>Homebrew</comment>
+		<description>Ramiro el Vampiro en el Misterio del Papiro (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Ramiro el vampiro IV ES (2023)(The Mojon Twins).tap" size="49233" crc="54c870f3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ramiro3en" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Ramiro el Vampiro III (English) (128K) (HB)</description>
@@ -15888,6 +15948,15 @@
 		<year>1987</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Sidewize (1987)(Firebird Software).tap" size="41672" crc="db066855"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="silentservice" romof="spectrum">
+		<description>Silent Service (48K)</description>
+		<year>1986</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Silent Service 48K (1986)(U.S. Gold).z80" size="40554" crc="1822026f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17750,6 +17819,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="taucetise" romof="spec128">
+		<comment>'SHIFT+SPACE' to begin, write 'HELP' to list commands</comment>
+		<description>Tau Ceti - The Special Edition (128K)</description>
+		<year>1987</year>
+		<manufacturer>CRL Group</manufacturer>
+		<rom name="Tau Ceti - The Special Edition 128K (1987)(CRL Group).tap" size="129527" crc="97369bcf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tauceti" cloneof="taucetise" romof="taucetise">
+		<comment>'SHIFT+SPACE' to begin, write 'HELP' to list commands</comment>
+		<description>Tau-Ceti (48K)</description>
+		<year>1985</year>
+		<manufacturer>CRL Group</manufacturer>
+		<rom name="Tau-Ceti 48K (1985)(CRL Group).tap" size="56807" crc="309522ae"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="techted_48" romof="spectrum">
 		<description>Technician Ted (48K)</description>
 		<year>1984</year>
@@ -18972,6 +19062,15 @@
 		<rom name="Vectornauts, The 128K (2018)(Dom Reardon).tap" size="43878" crc="79bd68c7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vectron" romof="spectrum">
+		<description>Vectron (48K)</description>
+		<year>1985</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Vectron 48K (1985)(Firebird).tap" size="49343" crc="ec6217eb"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

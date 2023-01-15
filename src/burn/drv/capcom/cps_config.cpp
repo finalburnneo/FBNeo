@@ -376,11 +376,45 @@ static const struct GfxRange mapper_PKB10B_table[] = {
 
 static const struct GfxRange mapper_pang3_table[] = {
 	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL2, 0x0000, 0x7fff, 0 },
-
 	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL2, 0x8000, 0x9fff, 1 },
 	{ GFXTYPE_SCROLL1,                   0xa000, 0xbfff, 1 },
 	{ GFXTYPE_SCROLL3,                   0xc000, 0xffff, 1 },
 	{ 0              ,                        0,      0, 0 }
+};
+
+static const struct GfxRange mapper_CP1B1F_table[] =
+{
+	// verified from PAL dump:
+	// bank0 = pin 16 (ROMs 1,7 /ce)
+	//       = pin 15 (ROMs 1,7 /oe)
+	//       = pin 13 (ROMs 1,7 a19)
+	// Unlike other games which switch between 2 pairs of roms to form the full 64-bit gfx bus,
+	//  this unique B board stores the 2x 32-bit halves in the same rom pair and switches between them with the a19 line.
+	// An a20 line is available on pin 14 for 32MBit roms but is unused (this would be bank1 if used).
+	// pins 17,18,19 are rom /ce lines to other 3 pairs of unpopulated roms.
+
+	/* type                                                                  start   end     bank */
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x0000, 0xffff, 0 },
+	{ 0                                                                    ,      0,      0, 0 }
+};
+
+static const struct GfxRange mapper_CP1B1F_boot_table[] =
+{
+	// verified from PAL dump:
+	//         pin 15 (ROMs 1-4,7-10 /oe)
+	// bank0 = pin 16 (ROMs 1,7  /ce)
+	//         pin 18 (ROMs 3,9  /ce)
+	// bank1 = pin 17 (ROMs 2,8  /ce)
+	// 		   pin 19 (ROMs 4,10 /ce)
+	// An a19 line is available on pin 13 for 32MBit roms (pin 44 of the EPROM) but is unused.
+	// pin 14 is fixed high in 16Mbit mode and is driven by gfx_chnl (CPS B-21 pin 108) if 32Mbit mode is selected
+
+	/* type                                                                  start   end     bank */
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x00000, 0x07fff, 0 },
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x10000, 0x17fff, 0 },
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x08000, 0x0ffff, 1 },
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x18000, 0x1ffff, 1 },
+	{ 0                                                                    ,       0,       0, 0 }
 };
 
 static const struct GfxRange mapper_pokonyan_table[] = {
@@ -423,6 +457,24 @@ static const struct GfxRange mapper_KNM10B_table[] = {
 	{ GFXTYPE_SCROLL1, 0x01000, 0x01fff, 2 },
 	{ GFXTYPE_SCROLL3, 0x02000, 0x03fff, 2 },
 	{ 0              ,       0,       0, 0 }
+};
+
+static const struct GfxRange mapper_pang3b4_table[] =
+{
+	// verified from PAL dump:
+	// bank0 = pin 14 (ROMs 2,4,6,8,10,12,14,16)
+	// bank1 = pin 12 (ROMs 1,3,5,7,9,11,13,15)
+	// pins 13,15,16,17,18,19 are always enabled
+
+	/* type            start   end     bank */
+	{ GFXTYPE_SPRITES, 0x0000, 0x7fff, 0 },
+	{ GFXTYPE_SCROLL2, 0x0000, 0x7fff, 0 },
+
+	{ GFXTYPE_SPRITES, 0x8000, 0xffff, 1 },
+	{ GFXTYPE_SCROLL1, 0x8000, 0xffff, 1 },
+	{ GFXTYPE_SCROLL2, 0x8000, 0xffff, 1 },
+	{ GFXTYPE_SCROLL3, 0x8000, 0xffff, 1 },
+	{ 0              ,      0,      0, 0 }
 };
 
 void SetGfxMapper(INT32 MapperId)
@@ -779,6 +831,24 @@ void SetGfxMapper(INT32 MapperId)
 			return;
 		}
 		
+		case mapper_CP1B1F: {
+			GfxBankSizes[0] = 0x10000;
+			GfxBankSizes[1] = 0x00000;
+			GfxBankSizes[2] = 0x00000;
+			GfxBankSizes[3] = 0x00000;
+			GfxBankMapper = mapper_CP1B1F_table;
+			return;
+		}
+		
+		case mapper_CP1B1F_boot: {
+			GfxBankSizes[0] = 0x10000;
+			GfxBankSizes[1] = 0x10000;
+			GfxBankSizes[2] = 0x00000;
+			GfxBankSizes[3] = 0x00000;
+			GfxBankMapper = mapper_CP1B1F_boot_table;
+			return;
+		}
+		
 		case mapper_pokon: {
 			GfxBankSizes[0] = 0x8000;
 			GfxBankSizes[1] = 0x8000;
@@ -830,6 +900,15 @@ void SetGfxMapper(INT32 MapperId)
 			GfxBankSizes[2] = 0x8000;
 			GfxBankSizes[3] = 0x0000;
 			GfxBankMapper = mapper_KNM10B_table;
+			return;
+		}
+		
+		case mapper_pang3b4: {
+			GfxBankSizes[0] = 0x8000;
+			GfxBankSizes[1] = 0x8000;
+			GfxBankSizes[2] = 0x0000;
+			GfxBankSizes[3] = 0x0000;
+			GfxBankMapper = mapper_pang3b4_table;
 			return;
 		}
 	}

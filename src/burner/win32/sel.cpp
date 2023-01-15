@@ -297,7 +297,7 @@ static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 
 #define MASKSEGAGRP				(MASKSEGA | MASKSG1000 | MASKSMS | MASKMEGADRIVE | MASKGG)
 
 UINT64 nLoadMenuShowX			= 0; // hardware etc
-int nLoadMenuShowY				= 0; // selector options
+int nLoadMenuShowY				= AVAILABLE; // selector options, default to show available
 int nLoadMenuBoardTypeFilter	= 0;
 int nLoadMenuGenreFilter		= 0;
 int nLoadMenuFavoritesFilter	= 0;

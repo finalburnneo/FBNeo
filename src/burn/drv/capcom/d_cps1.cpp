@@ -3511,6 +3511,56 @@ static struct BurnDIPInfo Pang3DIPList[]=
 
 STDDIPINFO(Pang3)
 
+static struct BurnDIPInfo Pang3b4DIPList[]=
+{
+	// Defaults
+	{0x11, 0xff, 0xff, 0x00, NULL                     },
+	{0x12, 0xff, 0xff, 0x43, NULL                     },
+	{0x13, 0xff, 0xff, 0x40, NULL                     },
+
+	// Dip B
+	{0   , 0xfe, 0   , 8   , "Game level"             },
+	{0x12, 0x01, 0x07, 0x00, "Easy 3"                 },
+	{0x12, 0x01, 0x07, 0x01, "Easy 2"                 },
+	{0x12, 0x01, 0x07, 0x02, "Easy 1"                 },
+	{0x12, 0x01, 0x07, 0x03, "Normal"                 },
+	{0x12, 0x01, 0x07, 0x04, "Hard 1"                 },
+	{0x12, 0x01, 0x07, 0x05, "Hard 2"                 },
+	{0x12, 0x01, 0x07, 0x06, "Hard 3"                 },
+	{0x12, 0x01, 0x07, 0x07, "Hard 4"                 },
+
+	{0   , 0xfe, 0   , 4   , "Player"                 },
+	{0x12, 0x01, 0x18, 0x10, "1"                      },
+	{0x12, 0x01, 0x18, 0x08, "2"                      },
+	{0x12, 0x01, 0x18, 0x00, "3"                      },
+	{0x12, 0x01, 0x18, 0x18, "4"                      },
+
+	{0   , 0xfe, 0   , 4   , "Extend"                 },
+	{0x12, 0x01, 0x60, 0x60, "30K, 250K, 1M, 3M, 7M"  },
+	{0x12, 0x01, 0x60, 0x40, "80K, 500k, 2M, 5M, 10M" },
+	{0x12, 0x01, 0x60, 0x20, "250K, 1M, 3M, 7M, 15M"  },
+	{0x12, 0x01, 0x60, 0x00, "Not extend"             },
+
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+	{0x12, 0x01, 0x80, 0x00, "Off"                    },
+	{0x12, 0x01, 0x80, 0x80, "On"                     },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0x13, 0x01, 0x10, 0x00, "Off"                    },
+	{0x13, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x13, 0x01, 0x20, 0x00, "Off"                    },
+	{0x13, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x13, 0x01, 0x40, 0x00, "Off"                    },
+	{0x13, 0x01, 0x40, 0x40, "On"                     },
+};
+
+STDDIPINFO(Pang3b4)
+
 static struct BurnDIPInfo PnickjDIPList[]=
 {
 	// Defaults
@@ -9208,7 +9258,110 @@ static struct BurnRomInfo Pang3b3RomDesc[] = {
 STD_ROM_PICK(Pang3b3)
 STD_ROM_FN(Pang3b3)
 
+/* This bootleg uses a bootlegged B board nearly identical to that used in sf2ceblp.
+   In my set:
+     - Board-A is missing so I don't know if a normal or a dash board was used. 
+     - Board-C is an hacked 88622-C-5 with an unusual CPS-B-12 and clearly it's not its C-board because 
+       code analisys led to identify the CPS_B_21_DEF as the right configuration.
+     - Board-B has some missing components:
+      - audio cpu code EPROM @B13 (pang3b pa3_11.11f used instead)
+      - 28 pin DIP component @F8, probably a PIC16C55/7 looking the pinout (VCC on pin2, GND on pin 4, ...)
+
+   The program code is almost the same as of pang3b with some minor, yet interesting, hacks:
+      - Dip switch use for board configuration (code@ 0x000300, 0xe0000) instead of a serial EPROM
+      - Removed freeze from dip switch (code@ 020B74)
+      - Some code to handle the PIC (protection?). 
+        Read and write to addresses 0x5762b0 and 0x57a2b0 occurs in the code but the return value is never really used (nop or bra skips relevant parts)
+        and so seems that the PIC protection is ineffective.
+      - Read and write to port 0x80017a (EEPROM in pang3) still are present in the code, but are filtered by the PAL16V8 @ E13 so there is no need to 
+        create a port for that address here in mame (altough this causes a popmessage "CPS-B read port 3A contact MAMEDEV" to occurr at startup if compiled with
+        DEBUG=1)
+
+   Board-B has five PALs:
+      - PALCE16V8  @A2
+      - PAL16L8    @E11
+      - PALCE16V8  @E13
+      - PAL16L8    @J8
+      - PALCE22V10 @J8
+
+*/
 static struct BurnRomInfo Pang3b4RomDesc[] = {
+	{ "22.u30",      0x020000, 0xbf3ebe68, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "26.u35",      0x020000, 0xd20db83c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "23.u31",      0x020000, 0x94d494c2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "27.u36",      0x020000, 0x38e43390, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "20.u28",      0x020000, 0x8daf3814, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "24.u33",      0x020000, 0xbb34e444, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "21.u29",      0x020000, 0x54d0b680, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "25.u34",      0x020000, 0xd666ec70, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "14.u25",      0x040000, 0xd2b764a9, BRF_GRA | CPS1_TILES },
+	{ "10.u21",      0x040000, 0x79673708, BRF_GRA | CPS1_TILES },
+	{ "13.u24",      0x040000, 0x0c73a1c7, BRF_GRA | CPS1_TILES },
+	{ "09.u20",      0x040000, 0x6e36e963, BRF_GRA | CPS1_TILES },
+	{ "06.u15",      0x040000, 0xfb68be4e, BRF_GRA | CPS1_TILES },
+	{ "02.u11",      0x040000, 0xf706b466, BRF_GRA | CPS1_TILES },
+	{ "05.u14",      0x040000, 0x475a5ef1, BRF_GRA | CPS1_TILES },
+	{ "01.u10",      0x040000, 0x7d15b9d7, BRF_GRA | CPS1_TILES },
+	{ "16.u27",      0x040000, 0x3e293482, BRF_GRA | CPS1_TILES },
+	{ "12.u23",      0x040000, 0x3c4dfb4f, BRF_GRA | CPS1_TILES },
+	{ "15.u26",      0x040000, 0xa933434f, BRF_GRA | CPS1_TILES },
+	{ "11.u22",      0x040000, 0x29194b90, BRF_GRA | CPS1_TILES },
+	{ "08.u17",      0x040000, 0x7e0ca927, BRF_GRA | CPS1_TILES },
+	{ "04.u13",      0x040000, 0x44cd5e95, BRF_GRA | CPS1_TILES },
+	{ "07.u16",      0x040000, 0x83b3fa5e, BRF_GRA | CPS1_TILES },
+	{ "03.u12",      0x040000, 0x7e28974e, BRF_GRA | CPS1_TILES },
+
+	{ "pa3_11.11f",  0x020000, 0xcb1423a2, BRF_PRG | CPS1_Z80_PROGRAM }, // 19.u9 missing, used pang3b audio code instead
+
+	{ "pa3_05.10d",  0x020000, 0x73a10d5d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "pa3_06.11d",  0x020000, 0xaffa4f82, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	{ "pal16l8.11e", 0x000117, 0x27617943, BRF_OPT }, // b-board PLDs, bruteforced
+	{ "pal16v8.1a",  0x000117, 0x78c3161f, BRF_OPT },
+	{ "pal16v8.13e", 0x000117, 0x5406caf1, BRF_OPT },
+	{ "pal22v10.j8", 0x0002dd, 0xa9445f88, BRF_OPT },
+	{ "pal16l8.j8",  0x000117, 0x00000000, BRF_OPT },
+};
+
+STD_ROM_PICK(Pang3b4)
+STD_ROM_FN(Pang3b4)
+
+/* B-Board Mitchell 94916-10 */
+/* This set comes from an encrypted bootleg that uses a very well reproduced Mitchell 94916-10 B-Board surmounted by an
+   original Capcom 90631C-5 C-Board taken from a Knights of the round board (there's a sticker on it). 
+   Protection chip MACH215 is present. */
+static struct BurnRomInfo Pang3b5RomDesc[] = {
+	{ "pa3e_17.11l",    0x080000, 0xd7041d32, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "pa3e_16.10l",    0x080000, 0x1be9a483, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "1.2c",           0x080000, 0x22c934c4, BRF_GRA | CPS1_TILES },
+	{ "7.2f",           0x080000, 0x51031180, BRF_GRA | CPS1_TILES },
+	{ "3.4c",           0x080000, 0xac119a46, BRF_GRA | CPS1_TILES },
+	{ "9.4f",           0x080000, 0x2e1d35f2, BRF_GRA | CPS1_TILES },
+	{ "2.3c",           0x080000, 0x07c85e9b, BRF_GRA | CPS1_TILES },
+	{ "8.3f",           0x080000, 0x325cc0b7, BRF_GRA | CPS1_TILES },
+	{ "4.5c",           0x080000, 0x4ad13297, BRF_GRA | CPS1_TILES },
+	{ "10.5f",          0x080000, 0x026d0cd2, BRF_GRA | CPS1_TILES },
+
+	{ "pa3_11.11f",     0x020000, 0xcb1423a2, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "pa3_05.10d",     0x020000, 0x73a10d5d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "pa3_06.11d",     0x020000, 0xaffa4f82, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	A_BOARD_PLDS
+
+	{ "cp1b1f_boot.1f", 0x000117, 0x658849dc, BRF_OPT },	// b-board PLDs
+	{ "cp1b8k.8k",      0x000117, 0x8a52ea7a, BRF_OPT },
+	{ "cp1b9ka.9k",     0x000117, 0x238d3ff4, BRF_OPT },
+	{ "ioc1.ic7",       0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",       0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Pang3b5)
+STD_ROM_FN(Pang3b5)
+
+static struct BurnRomInfo Pang3b6RomDesc[] = {
 	{ "pa3_17bl.11l",  0x080000, 0x3b5d99de, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "pa3_16bl.10l",  0x080000, 0x1be9a483, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -9229,10 +9382,10 @@ static struct BurnRomInfo Pang3b4RomDesc[] = {
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Pang3b4)
-STD_ROM_FN(Pang3b4)
+STD_ROM_PICK(Pang3b6)
+STD_ROM_FN(Pang3b6)
 
-static struct BurnRomInfo Pang3b5RomDesc[] = {
+static struct BurnRomInfo Pang3b7RomDesc[] = {
 	{ "17.11l",        0x080000, 0xf62425e9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "16.10l",        0x080000, 0x7169ea67, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -9253,8 +9406,8 @@ static struct BurnRomInfo Pang3b5RomDesc[] = {
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Pang3b5)
-STD_ROM_FN(Pang3b5)
+STD_ROM_PICK(Pang3b7)
+STD_ROM_FN(Pang3b7)
 
 static struct BurnRomInfo Pang3jRomDesc[] = {
 	{ "pa3j_17.11l",   0x080000, 0x21f6e51f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -15981,10 +16134,10 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinoa"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinou"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoj"         , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
-	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
+	{ "dinopic"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch          },
+	{ "dinopic2"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch          },
 	{ "dinopic3"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
-	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch			},
+	{ "dinopic4"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_patch          },
 	{ "dinopic5"      , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "jurassic99"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoeh"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
@@ -16064,7 +16217,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "megamana"      , CPS_B_21_DEF, mapper_RCM63B, 0, NULL                },
 	{ "rockmanj"      , CPS_B_21_DEF, mapper_RCM63B, 0, NULL                },
 	{ "mercs"         , CPS_B_12    , mapper_O224B , 0, NULL                },
-	{ "mercsu"        , CPS_B_12    , mapper_O224B , 0, NULL                },	
+	{ "mercsu"        , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsur1"      , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsj"        , CPS_B_12    , mapper_O224B , 0, NULL                },
 	{ "mercsc"        , CPS_B_12    , mapper_O224B , 0, NULL                },
@@ -16084,8 +16237,10 @@ static const struct GameConfig ConfigTable[] =
 	{ "pang3b"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3b2"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3b3"       , CPS_B_17	, mapper_pang3 , 0, NULL                },
-	{ "pang3b4"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
-	{ "pang3b5"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b4"       , CPS_B_21_DEF, mapper_pang3b4, 0, NULL               },
+	{ "pang3b5"       , CPS_B_21_DEF, mapper_CP1B1F_boot, 0, NULL           },
+	{ "pang3b6"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b7"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
 	{ "pang3j"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pnickj"        , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
 	{ "pokonyan"      , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
@@ -16094,9 +16249,9 @@ static const struct GameConfig ConfigTable[] =
 	{ "punisheru"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherj"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherh"     , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
-	{ "punipic"       , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
-	{ "punipic2"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
-	{ "punipic3"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch		}, // game controls layers at 0x98000c
+	{ "punipic"       , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch      }, // game controls layers at 0x98000c
+	{ "punipic2"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch      }, // game controls layers at 0x98000c
+	{ "punipic3"      , CPS_B_21_QS3, mapper_PS63B , 0, punisher_patch      }, // game controls layers at 0x98000c
 	{ "punisherbz"    , CPS_B_21_DEF, mapper_PS63B , 0, NULL                },
 	{ "punisherb"     , CPS_B_21_QS3, mapper_PS63B , 0, NULL                },
 	{ "punisherly"    , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
@@ -18157,6 +18312,58 @@ static INT32 Pang3r1aInit()
 static INT32 Pang3b2Init()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b2;
+
+	return Pang3Init();
+}
+
+static UINT16 Pang3b4ProtValue = 0;
+
+UINT16 __fastcall Pang3b4ProtReadWord(UINT32 a)
+{
+	switch (a) {
+		case 0x5762b0: {
+			return 0;
+		}
+		
+		case 0x57a2b0: {
+			if ((Pang3b4ProtValue & 0xff) <= 7) return (Pang3b4ProtValue & 0xff) + 0x20; // Game level + extend
+			if (Pang3b4ProtValue == 0x17) return 0x7321; // Guessed from code @0x314
+			return 0xffff;
+		}
+	}
+	
+	return 0;
+}
+
+void __fastcall Pang3b4ProtWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x5762b0: {
+			Pang3b4ProtValue = d;
+			return;
+		}
+	}
+}
+
+static INT32 Pang3b4Init()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b4;
+
+	INT32 nRet = TwelveMhzInit();
+
+	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(1, 0x570000, 0x57ffff, MAP_READ | MAP_WRITE);
+		SekSetReadWordHandler(1, Pang3b4ProtReadWord);
+		SekSetWriteWordHandler(1, Pang3b4ProtWriteWord);
+	}
+
+	return nRet;
+}
+
+static INT32 Pang3b5Init()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b5;
 
 	return Pang3Init();
 }
@@ -21201,7 +21408,7 @@ struct BurnDriver BurnDrvCpsCaptcommb2 = {
 	"captcommb2", "captcomm", NULL, NULL, "1991",
 	"Captain Commando (bootleg set 2 (with 2xMSM5205), 911014 other country)\0", "unemulated graphics", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommb2RomInfo, Captcommb2RomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
 	Captcommb3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -21941,7 +22148,7 @@ struct BurnDriver BurnDrvCpsKnightsb3 = {
 	"knightsb3", "knights", NULL, NULL, "1991",
 	"Knights of the Round (bootleg set 3 (with 2xMSM5205), 911127 etc)\0", "unemulated graphics", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb3RomInfo, Knightsb3RomName, NULL, NULL, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
 	KnightsbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -22309,20 +22516,40 @@ struct BurnDriver BurnDrvCpsPang3b3 = {
 
 struct BurnDriver BurnDrvCpsPang3b4 = {
 	"pang3b4", "pang3", NULL, NULL, "1995",
-	"Pang! 3 (bootleg set 4, 950511 Euro)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (bootleg set 4, 950601 Euro, unencrypted, protection PIC, no serial EPROM)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
-	NULL, Pang3b4RomInfo, Pang3b4RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
-	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	NULL, Pang3b4RomInfo, Pang3b4RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3b4DIPInfo,
+	Pang3b4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvCpsPang3b5 = {
 	"pang3b5", "pang3", NULL, NULL, "1995",
-	"Pang! 3 (bootleg set 5, 950601 Euro)\0", NULL, "Mitchell", "CPS1",
+	"Pang! 3 (bootleg set 5, 950511 Euro)\0", NULL, "Mitchell", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	NULL, Pang3b5RomInfo, Pang3b5RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
+	Pang3b5Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsPang3b6 = {
+	"pang3b6", "pang3", NULL, NULL, "1995",
+	"Pang! 3 (bootleg set 6, 950511 Euro)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
-	NULL, Pang3b5RomInfo, Pang3b5RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
+	NULL, Pang3b6RomInfo, Pang3b6RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
+	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsPang3b7 = {
+	"pang3b7", "pang3", NULL, NULL, "1995",
+	"Pang! 3 (bootleg set 7, 950601 Euro)\0", NULL, "Mitchell", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	NULL, Pang3b7RomInfo, Pang3b7RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3DIPInfo,
 	Pang3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -23221,7 +23448,7 @@ struct BurnDriverD BurnDrvCpsSf2hfub = {
 	"sf2hfub", "sf2hf", NULL, NULL, "1992",
 	"Street Fighter II' - Hyper Fighting (bootleg set 3, street fighter 2' T 921209 USA)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfubRomInfo, Sf2hfubRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2hfubInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -23850,7 +24077,7 @@ struct BurnDriver BurnDrvCpsSlampic2 = {
 	"slampic2", "slammast", NULL, NULL, "1993",
 	"Saturday Night Slam Masters (bootleg with PIC16C57, set 2, 930713 etc)\0", "No Sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
 	NULL, Slampic2RomInfo, Slampic2RomName, NULL, NULL, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
 	SlampicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

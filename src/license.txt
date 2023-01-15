@@ -8,7 +8,7 @@ You may freely use, modify, and distribute both the FB Neo source code and binar
 
 FB Neo can currently be obtained from https://neo-source.com.
 
-FB Neo would not exist without a lot of code from the MAME project. The MAME project is subject to it's own license, which can be found at https://raw.githubusercontent.com/mamedev/mame/5cef4e1f91010f0d573bbd662208979fa39e73ec/docs/mamelicense.txt. Due to the use of MAME code in FB Neo, FB Neo is also subject to the terms of the MAME license.
+FB Neo would not exist without a lot of code from the MAME project. The MAME project is subject to its own license, which can be found at https://raw.githubusercontent.com/mamedev/mame/5cef4e1f91010f0d573bbd662208979fa39e73ec/docs/mamelicense.txt. Due to the use of MAME code in FB Neo, FB Neo is also subject to the terms of the MAME license.
 
 FB Neo is based on Final Burn (formally at http://www.finalburn.com), see additional text below.
 Musashi MC68000/MC68010/MC68EC020 CPU core by Karl Stenerud (http://www.mamedev.org).

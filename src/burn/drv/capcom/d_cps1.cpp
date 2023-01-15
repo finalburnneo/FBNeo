@@ -16231,17 +16231,17 @@ static const struct GameConfig ConfigTable[] =
 	{ "nemo"          , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemor1"        , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemoj"         , CPS_B_15    , mapper_NM24B , 0, NULL                },
-	{ "pang3"         , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3r1"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3r1a"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b2"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b3"       , CPS_B_17	, mapper_pang3 , 0, NULL                },
+	{ "pang3"         , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3r1"       , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3r1a"      , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3b"        , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3b2"       , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3b3"       , CPS_B_17	, mapper_CP1B1F, 0, NULL                },
 	{ "pang3b4"       , CPS_B_21_DEF, mapper_pang3b4, 0, NULL               },
 	{ "pang3b5"       , CPS_B_21_DEF, mapper_CP1B1F_boot, 0, NULL           },
-	{ "pang3b6"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
-	{ "pang3b7"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
-	{ "pang3j"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
+	{ "pang3b6"       , CPS_B_04    , mapper_CP1B1F, 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b7"       , CPS_B_04    , mapper_CP1B1F, 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3j"        , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
 	{ "pnickj"        , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
 	{ "pokonyan"      , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
 	{ "gulunpa"       , CPS_B_21_DEF, mapper_gulun , 0, NULL                },
@@ -16568,7 +16568,6 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 
 		if (Cps1Qs) nCpsZRomLen *= 2;
 		if (GameHasStars) nCpsGfxLen += 0x2000;
-		if (PangEEP) nCpsGfxLen *= 2;
 		if (nCpsPicRomNum) Cps1DisablePSnd = 1;
 		
 #if 1 && defined FBNEO_DEBUG
@@ -16643,9 +16642,12 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 						
 						i += 8;
 					} else {
-						if (PangEEP) {
-							CpsLoadTilesPang(CpsGfx + Offset, i);
-			
+						if (nCpsTilesRomNum < 4) {
+							// Handle this seperately
+							i += nCpsTilesRomNum;
+						} else {
+							CpsLoadTiles(CpsGfx + Offset, i);
+				
 							BurnDrvGetRomInfo(&ri, i + 0);
 							Offset += ri.nLen;
 							BurnDrvGetRomInfo(&ri, i + 1);
@@ -16654,26 +16656,8 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 							Offset += ri.nLen;
 							BurnDrvGetRomInfo(&ri, i + 3);
 							Offset += ri.nLen;
-					
+			
 							i += 4;
-						} else {
-							if (nCpsTilesRomNum < 4) {
-								// Handle this seperately
-								i += nCpsTilesRomNum;
-							} else {
-								CpsLoadTiles(CpsGfx + Offset, i);
-					
-								BurnDrvGetRomInfo(&ri, i + 0);
-								Offset += ri.nLen;
-								BurnDrvGetRomInfo(&ri, i + 1);
-								Offset += ri.nLen;
-								BurnDrvGetRomInfo(&ri, i + 2);
-								Offset += ri.nLen;
-								BurnDrvGetRomInfo(&ri, i + 3);
-								Offset += ri.nLen;
-				
-								i += 4;
-							}
 						}
 					}
 				}
@@ -18274,6 +18258,7 @@ static INT32 MtwinsbInit()
 static INT32 Pang3bInit()
 {
 	PangEEP = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3;
 
 	return TwelveMhzInit();
 }
@@ -18297,23 +18282,29 @@ static void Pang3Callback()
 
 static INT32 Pang3Init()
 {
+	PangEEP = 1;
 	AmendProgRomCallback = Pang3Callback;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3;
 	
-	return Pang3bInit();
+	return TwelveMhzInit();
 }
 
 static INT32 Pang3r1aInit()
 {
+	PangEEP = 1;
+	AmendProgRomCallback = Pang3Callback;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3r1a;
 	
-	return Pang3Init();
+	return TwelveMhzInit();
 }
 
 static INT32 Pang3b2Init()
 {
+	PangEEP = 1;
+	AmendProgRomCallback = Pang3Callback;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b2;
 
-	return Pang3Init();
+	return TwelveMhzInit();
 }
 
 static UINT16 Pang3b4ProtValue = 0;
@@ -18363,9 +18354,11 @@ static INT32 Pang3b4Init()
 
 static INT32 Pang3b5Init()
 {
+	PangEEP = 1;
+	AmendProgRomCallback = Pang3Callback;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b5;
 
-	return Pang3Init();
+	return TwelveMhzInit();
 }
 
 static INT32 GulunpaInit()

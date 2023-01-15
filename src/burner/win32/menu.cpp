@@ -63,10 +63,10 @@ static LRESULT CALLBACK MenuHook(int nCode, WPARAM wParam, LPARAM lParam)
 
 			GetWindowRect(hMenubar, &rect);
 			SendMessage(hMenubar, TB_GETITEMRECT, nLastMenu, (LPARAM)&buttonrect);
-
 			// If the button is pressed over the currently selected menu title, eat the message and close the menu
 			if (point.x >= rect.left + buttonrect.left && point.y >= rect.top + buttonrect.top && point.x < rect.left + buttonrect.right && point.y < rect.top + buttonrect.bottom) {
 				PostMessage(hMenubar, WM_CANCELMODE, 0, 0);
+				EndMenu();
 				return 1;
 			}
 			break;

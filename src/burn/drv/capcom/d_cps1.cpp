@@ -9286,14 +9286,14 @@ STD_ROM_FN(Pang3b3)
 
 */
 static struct BurnRomInfo Pang3b4RomDesc[] = {
-	{ "22.u30",      0x020000, 0xbf3ebe68, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "26.u35",      0x020000, 0xd20db83c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "23.u31",      0x020000, 0x94d494c2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "27.u36",      0x020000, 0x38e43390, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "20.u28",      0x020000, 0x8daf3814, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "24.u33",      0x020000, 0xbb34e444, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "21.u29",      0x020000, 0x54d0b680, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "25.u34",      0x020000, 0xd666ec70, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "22.u30",      0x020000, 0xbf3ebe68, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "26.u35",      0x020000, 0xd20db83c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "23.u31",      0x020000, 0x94d494c2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "27.u36",      0x020000, 0x38e43390, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "20.u28",      0x020000, 0x8daf3814, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "24.u33",      0x020000, 0xbb34e444, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "21.u29",      0x020000, 0x54d0b680, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "25.u34",      0x020000, 0xd666ec70, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	{ "14.u25",      0x040000, 0xd2b764a9, BRF_GRA | CPS1_TILES },
 	{ "10.u21",      0x040000, 0x79673708, BRF_GRA | CPS1_TILES },
@@ -16231,17 +16231,17 @@ static const struct GameConfig ConfigTable[] =
 	{ "nemo"          , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemor1"        , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemoj"         , CPS_B_15    , mapper_NM24B , 0, NULL                },
-	{ "pang3"         , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3r1"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3r1a"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b2"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
-	{ "pang3b3"       , CPS_B_17	, mapper_pang3 , 0, NULL                },
+	{ "pang3"         , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3r1"       , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3r1a"      , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3b"        , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3b2"       , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
+	{ "pang3b3"       , CPS_B_17	, mapper_CP1B1F, 0, NULL                },
 	{ "pang3b4"       , CPS_B_21_DEF, mapper_pang3b4, 0, NULL               },
 	{ "pang3b5"       , CPS_B_21_DEF, mapper_CP1B1F_boot, 0, NULL           },
-	{ "pang3b6"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
-	{ "pang3b7"       , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
-	{ "pang3j"        , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
+	{ "pang3b6"       , CPS_B_04    , mapper_CP1B1F, 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3b7"       , CPS_B_04    , mapper_CP1B1F, 0, NULL                }, // hacked to run on Final Fight C-Board
+	{ "pang3j"        , CPS_B_21_DEF, mapper_CP1B1F, 0, NULL                },
 	{ "pnickj"        , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
 	{ "pokonyan"      , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
 	{ "gulunpa"       , CPS_B_21_DEF, mapper_gulun , 0, NULL                },
@@ -16568,7 +16568,6 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 
 		if (Cps1Qs) nCpsZRomLen *= 2;
 		if (GameHasStars) nCpsGfxLen += 0x2000;
-		if (PangEEP) nCpsGfxLen *= 2;
 		if (nCpsPicRomNum) Cps1DisablePSnd = 1;
 		
 #if 1 && defined FBNEO_DEBUG
@@ -16643,9 +16642,12 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 						
 						i += 8;
 					} else {
-						if (PangEEP) {
-							CpsLoadTilesPang(CpsGfx + Offset, i);
-			
+						if (nCpsTilesRomNum < 4) {
+							// Handle this seperately
+							i += nCpsTilesRomNum;
+						} else {
+							CpsLoadTiles(CpsGfx + Offset, i);
+				
 							BurnDrvGetRomInfo(&ri, i + 0);
 							Offset += ri.nLen;
 							BurnDrvGetRomInfo(&ri, i + 1);
@@ -16654,26 +16656,8 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 							Offset += ri.nLen;
 							BurnDrvGetRomInfo(&ri, i + 3);
 							Offset += ri.nLen;
-					
+			
 							i += 4;
-						} else {
-							if (nCpsTilesRomNum < 4) {
-								// Handle this seperately
-								i += nCpsTilesRomNum;
-							} else {
-								CpsLoadTiles(CpsGfx + Offset, i);
-					
-								BurnDrvGetRomInfo(&ri, i + 0);
-								Offset += ri.nLen;
-								BurnDrvGetRomInfo(&ri, i + 1);
-								Offset += ri.nLen;
-								BurnDrvGetRomInfo(&ri, i + 2);
-								Offset += ri.nLen;
-								BurnDrvGetRomInfo(&ri, i + 3);
-								Offset += ri.nLen;
-				
-								i += 4;
-							}
 						}
 					}
 				}
@@ -18274,6 +18258,7 @@ static INT32 MtwinsbInit()
 static INT32 Pang3bInit()
 {
 	PangEEP = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3;
 
 	return TwelveMhzInit();
 }
@@ -18297,23 +18282,29 @@ static void Pang3Callback()
 
 static INT32 Pang3Init()
 {
+	PangEEP = 1;
 	AmendProgRomCallback = Pang3Callback;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3;
 	
-	return Pang3bInit();
+	return TwelveMhzInit();
 }
 
 static INT32 Pang3r1aInit()
 {
+	PangEEP = 1;
+	AmendProgRomCallback = Pang3Callback;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3r1a;
 	
-	return Pang3Init();
+	return TwelveMhzInit();
 }
 
 static INT32 Pang3b2Init()
 {
+	PangEEP = 1;
+	AmendProgRomCallback = Pang3Callback;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b2;
 
-	return Pang3Init();
+	return TwelveMhzInit();
 }
 
 static UINT16 Pang3b4ProtValue = 0;
@@ -18363,9 +18354,11 @@ static INT32 Pang3b4Init()
 
 static INT32 Pang3b5Init()
 {
+	PangEEP = 1;
+	AmendProgRomCallback = Pang3Callback;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesPang3b5;
 
-	return Pang3Init();
+	return TwelveMhzInit();
 }
 
 static INT32 GulunpaInit()
@@ -22518,7 +22511,7 @@ struct BurnDriver BurnDrvCpsPang3b4 = {
 	"pang3b4", "pang3", NULL, NULL, "1995",
 	"Pang! 3 (bootleg set 4, 950601 Euro, unencrypted, protection PIC, no serial EPROM)\0", NULL, "Mitchell", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_PUZZLE, 0,
 	NULL, Pang3b4RomInfo, Pang3b4RomName, NULL, NULL, NULL, NULL, Pang3InputInfo, Pang3b4DIPInfo,
 	Pang3b4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

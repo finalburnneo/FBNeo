@@ -91,6 +91,7 @@ static UINT8 DrvJoy5[8];
 static UINT8 DrvJoy6[8];
 static UINT8 DrvJoy7[8];
 static UINT8 DrvJoy8[8];
+static UINT8 DrvJoyF[1];
 static UINT8 DrvInputs[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
@@ -102,6 +103,7 @@ static INT32 draw_next_line = 0;
 static INT32 use_hblank = 0;
 static INT32 pastelis = 0;
 static INT32 sxyreact_kludge = 0;
+static INT32 hypreact_kludge = 0;
 static INT16 SxyGun = 0;
 
 static INT32 has_nvram = 0;
@@ -449,39 +451,48 @@ static struct BurnInputInfo Srmp4InputList[] = {
 STDINPUTINFO(Srmp4)
 
 static struct BurnInputInfo HypreactInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 left"	},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 right"	},
-	{"P1 A",		BIT_DIGITAL,	DrvJoy4 + 0,	"mah a"		},
-	{"P1 B",		BIT_DIGITAL,	DrvJoy5 + 0,	"mah b"		},
-	{"P1 C",		BIT_DIGITAL,	DrvJoy6 + 1,	"mah c"		},
-	{"P1 D",		BIT_DIGITAL,	DrvJoy7 + 0,	"mah d"		},
-	{"P1 E",		BIT_DIGITAL,	DrvJoy4 + 1,	"mah e"		},
-	{"P1 F",		BIT_DIGITAL,	DrvJoy5 + 1,	"mah f"		},
-	{"P1 G",		BIT_DIGITAL,	DrvJoy6 + 2,	"mah g"		},
-	{"P1 H",		BIT_DIGITAL,	DrvJoy7 + 1,	"mah h"		},
-	{"P1 I",		BIT_DIGITAL,	DrvJoy4 + 2,	"mah i"		},
-	{"P1 J",		BIT_DIGITAL,	DrvJoy5 + 2,	"mah j"		},
-	{"P1 K",		BIT_DIGITAL,	DrvJoy6 + 3,	"mah k"		},
-	{"P1 L",		BIT_DIGITAL,	DrvJoy7 + 2,	"mah l"		},
-	{"P1 M",		BIT_DIGITAL,	DrvJoy4 + 3,	"mah m"		},
-	{"P1 N",		BIT_DIGITAL,	DrvJoy5 + 3,	"mah n"		},
-	{"P1 Pon",		BIT_DIGITAL,	DrvJoy7 + 3,	"mah pon"	},
-	{"P1 Chi",		BIT_DIGITAL,	DrvJoy6 + 4,	"mah chi"	},
-	{"P1 Kan",		BIT_DIGITAL,	DrvJoy4 + 4,	"mah kan"	},
-	{"P1 Ron",		BIT_DIGITAL,	DrvJoy6 + 5,	"mah ron"	},
-	{"P1 Reach",	BIT_DIGITAL,	DrvJoy5 + 4,	"mah reach"	},
-	{"P1 Bet",		BIT_DIGITAL,	DrvJoy5 + 5,	"mah bet"	},
-	{"P1 Tsumo",	BIT_DIGITAL,	DrvJoy2 + 3,	"mah score"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoyF + 0,	"p1 start"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 3,	"tilt"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	// Only available in joystick Mode
+	{"P1 Up (Joy)",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 up"		},
+	{"P1 Down (Joy)",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"	},
+	{"P1 Left (Joy)",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 left"	},
+	{"P1 Right (Joy)",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 right"	},
+	{"P1 Chi (Joy)",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
+	{"P1 Pon (Joy)",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+	{"P1 Kan (Joy)",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
+	{"P1 Reach (Joy)",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 4"	},
+	{"P1 Ron (Joy)",	BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 5"	},
+	{"P1 Tsumo (Joy)",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 6"	},
+
+	// Only available in keyboard Mode
+	{"P1 A",			BIT_DIGITAL,	DrvJoy4 + 0,	"mah a"		},
+	{"P1 B",			BIT_DIGITAL,	DrvJoy5 + 0,	"mah b"		},
+	{"P1 C",			BIT_DIGITAL,	DrvJoy6 + 1,	"mah c"		},
+	{"P1 D",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah d"		},
+	{"P1 E",			BIT_DIGITAL,	DrvJoy4 + 1,	"mah e"		},
+	{"P1 F",			BIT_DIGITAL,	DrvJoy5 + 1,	"mah f"		},
+	{"P1 G",			BIT_DIGITAL,	DrvJoy6 + 2,	"mah g"		},
+	{"P1 H",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah h"		},
+	{"P1 I",			BIT_DIGITAL,	DrvJoy4 + 2,	"mah i"		},
+	{"P1 J",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah j"		},
+	{"P1 K",			BIT_DIGITAL,	DrvJoy6 + 3,	"mah k"		},
+	{"P1 L",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah l"		},
+	{"P1 M",			BIT_DIGITAL,	DrvJoy4 + 3,	"mah m"		},
+	{"P1 N",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah n"		},
+	{"P1 Pon",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah pon"	},
+	{"P1 Chi",			BIT_DIGITAL,	DrvJoy6 + 4,	"mah chi"	},
+	{"P1 Kan",			BIT_DIGITAL,	DrvJoy4 + 4,	"mah kan"	},
+	{"P1 Ron",			BIT_DIGITAL,	DrvJoy6 + 5,	"mah ron"	},
+	{"P1 Reach",		BIT_DIGITAL,	DrvJoy5 + 4,	"mah reach"	},
+	{"P1 Bet",			BIT_DIGITAL,	DrvJoy5 + 5,	"mah bet"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 3,	"tilt"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Hypreact)
@@ -1718,7 +1729,7 @@ STDDIPINFO(Srmp4)
 
 static struct BurnDIPInfo HypreactDIPList[]=
 {
-	DIP_OFFSET(0x1e)
+	DIP_OFFSET(0x23)
 	{0x00, 0xff, 0xff, 0xff, NULL				},
 	{0x01, 0xff, 0xff, 0xef, NULL				},
 
@@ -3272,6 +3283,7 @@ static INT32 DrvExit()
 	is_gdfs = 0;
 	dsp_enable = 0;
 	sxyreact_kludge = 0;
+	hypreact_kludge = 0;
 	pastelis = 0;
 	use_hblank = 0;
 
@@ -3850,6 +3862,10 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, 8);
+
+		if (hypreact_kludge) {
+			DrvJoy4[5] = DrvJoy1[0] = DrvJoyF[0];
+		}
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -5272,6 +5288,7 @@ STD_ROM_FN(hypreact)
 static INT32 HypreactInit()
 {
 	watchdog_disable = 1;
+	hypreact_kludge = 1;
 
 	return DrvCommonInit(Srmp4V60Map, NULL, 0, 0, 1, 0, 1, 0.10);
 }

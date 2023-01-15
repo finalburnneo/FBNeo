@@ -32950,6 +32950,25 @@ struct BurnDriver BurnDrvMSX_riskyrick = {
 	272, 228, 4, 3
 };
 
+// Suite Macabre (HB)
+
+static struct BurnRomInfo MSX_suitemacabreRomDesc[] = {
+	{ "Suite Macabre (2022)(Maltanto).rom",	262144, 0x03c7ec35, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_suitemacabre, MSX_suitemacabre, msx_msx)
+STD_ROM_FN(MSX_suitemacabre)
+
+struct BurnDriver BurnDrvMSX_suitemacabre = {
+	"msx_suitemacabre", NULL, "msx_msx", NULL, "2022",
+	"Suite Macabre (HB)\0", NULL, "Maltanto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_PLATFORM | GBF_ADV, 0,
+	MSXGetZipName, MSX_suitemacabreRomInfo, MSX_suitemacabreRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Tere-Kinesis (English) (HB)
 
 static struct BurnRomInfo MSX_terekinenRomDesc[] = {

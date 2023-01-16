@@ -1767,7 +1767,7 @@ struct BurnDriver BurnSpecSpec1282a = {
 // 180 (128K)
 
 static struct BurnRomInfo Spec180RomDesc[] = {
-	{ "180 (1986)(Mastertronic Added Dimension)[128K].z80", 0x0d536, 0xc4937cba, BRF_ESS | BRF_PRG },
+	{ "180 (1986)(Mastertronic Added Dimension)[128K].tap", 47982, 0xccbd1a31, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spec180, Spec180, Spec128)

@@ -29887,6 +29887,40 @@ struct BurnDriver BurnDrvnes_battlecity = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_tankh1990RomDesc[] = {
+	{ "Tank H 1990 (YS).nes",          40976, 0x86d9aa5d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tankh1990)
+STD_ROM_FN(nes_tankh1990)
+
+struct BurnDriver BurnDrvnes_tankh1990 = {
+	"nes_tankh1990", "nes_battlecity", NULL, NULL, "1990",
+	"Tank H 1990 (YS)\0", NULL, "YS", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MAZE | GBF_SHOOT, 0,
+	NESGetZipName, nes_tankh1990RomInfo, nes_tankh1990RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tankh1990bmRomDesc[] = {
+	{ "Tank H 1990bm (bedmoon).nes",          40976, 0x3e7577ce, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tankh1990bm)
+STD_ROM_FN(nes_tankh1990bm)
+
+struct BurnDriver BurnDrvnes_tankh1990bm = {
+	"nes_tankh1990bm", "nes_battlecity", NULL, NULL, "2023",
+	"Tank H 1990 (bedmoon)\0", NULL, "bedmoon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MAZE | GBF_SHOOT, 0,
+	NESGetZipName, nes_tankh1990bmRomInfo, nes_tankh1990bmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // http://www.romhacking.net/hacks/569/
 static struct BurnRomInfo nes_binarycityRomDesc[] = {
 	{ "Binary City GlobalHack (2009)(AnS).nes",          40976, 0x84f56a94, BRF_ESS | BRF_PRG },

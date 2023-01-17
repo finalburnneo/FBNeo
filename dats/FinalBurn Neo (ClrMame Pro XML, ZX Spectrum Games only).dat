@@ -74,7 +74,7 @@
 		<description>180 (128K)</description>
 		<year>1986</year>
 		<manufacturer>MAD (Mastertronic Added Dimension)</manufacturer>
-		<rom name="180 (1986)(Mastertronic Added Dimension)[128K].z80" size="54582" crc="c4937cba"/>
+		<rom name="180 (1986)(Mastertronic Added Dimension)[128K].tap" size="47982" crc="ccbd1a31"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -6673,6 +6673,15 @@
 		<year>1989</year>
 		<manufacturer>Screen 7</manufacturer>
 		<rom name="Fallen Angel 48K (1989)(Screen 7).tap" size="82545" crc="0067c07c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fantvoyage" romof="spectrum">
+		<description>Fantastic Voyage (48K)</description>
+		<year>1984</year>
+		<manufacturer>Quicksilva Ltd.</manufacturer>
+		<rom name="Fantastic Voyage (1984)(Quicksilva Ltd.).tap" size="42032" crc="8c6d5727"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

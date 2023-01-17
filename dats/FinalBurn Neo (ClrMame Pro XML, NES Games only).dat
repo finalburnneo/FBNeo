@@ -16015,6 +16015,24 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="tankh1990bm" cloneof="battlecity" romof="battlecity">
+		<comment>Hack</comment>
+		<description>Tank H 1990 (bedmoon)</description>
+		<year>2023</year>
+		<manufacturer>bedmoon</manufacturer>
+		<rom name="Tank H 1990bm (bedmoon).nes" size="40976" crc="3e7577ce"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tankh1990" cloneof="battlecity" romof="battlecity">
+		<comment>Hack</comment>
+		<description>Tank H 1990 (YS)</description>
+		<year>1990</year>
+		<manufacturer>YS</manufacturer>
+		<rom name="Tank H 1990 (YS).nes" size="40976" crc="86d9aa5d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="tapewormd" cloneof="tapeworm" romof="tapeworm">
 		<comment>Homebrew</comment>
 		<description>Tapeworm Disco Puzzle (HB, Demo)</description>

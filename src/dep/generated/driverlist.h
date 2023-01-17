@@ -5364,6 +5364,7 @@ DRV		BurnDrvmd_fantdizz1;
 DRV		BurnDrvMSX_fantfootball;
 DRV		BurnDrvngpc_cotton;
 DRV		BurnDrvngpc_cottonj;
+DRV		BurnSpecFantvoyage;
 DRV		BurnDrvFantsy95;
 DRV		BurnDrvFantasyg;
 DRV		BurnDrvFantasyg2;
@@ -16454,6 +16455,8 @@ DRV		BurnDrvcv_tankchal;
 DRV		BurnDrvTankfrcej;
 DRV		BurnDrvTankfrce;
 DRV		BurnDrvTankfrce4;
+DRV		BurnDrvnes_tankh1990bm;
+DRV		BurnDrvnes_tankh1990;
 DRV		BurnDrvcv_tankmission;
 DRV		BurnDrvcv_tankwars;
 DRV		BurnDrvmd_tank2011;
@@ -24749,6 +24752,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_fantfootball,	// Fantastic Football (HB)
 	&BurnDrvngpc_cotton,		// Fantastic Night Dreams Cotton (Euro)
 	&BurnDrvngpc_cottonj,		// Fantastic Night Dreams Cotton (Jpn)
+	&BurnSpecFantvoyage,		// Fantastic Voyage (48K)
 	&BurnDrvFantsy95,			// Fantasy '95
 	&BurnDrvFantasyg,			// Fantasy (Germany, set 1)
 	&BurnDrvFantasyg2,			// Fantasy (Germany, set 2)
@@ -35839,6 +35843,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTankfrcej,			// Tank Force (Japan)
 	&BurnDrvTankfrce,			// Tank Force (US, 2 Players)
 	&BurnDrvTankfrce4,			// Tank Force (US, 4 Players)
+	&BurnDrvnes_tankh1990bm,	// Tank H 1990 (bedmoon)
+	&BurnDrvnes_tankh1990,		// Tank H 1990 (YS)
 	&BurnDrvcv_tankmission,		// Tank Mission (HB)
 	&BurnDrvcv_tankwars,		// Tank Wars
 	&BurnDrvmd_tank2011,		// Tanki 2011 (Rus)

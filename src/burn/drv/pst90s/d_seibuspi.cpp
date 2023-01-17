@@ -195,25 +195,37 @@ STDINPUTINFO(Sys386i)
 static struct BurnInputInfo Spi_ejanhsInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy8 + 5,	"p1 start"	},
-	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
-	{"P1 B",			BIT_DIGITAL,	DrvJoy9 + 4,	"mah b"		},
-	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah c"		},
-	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
-	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
-	{"P1 F",			BIT_DIGITAL,	DrvJoy9 + 3,	"mah f"		},
-	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
-	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
-	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
-	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
-	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
-	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
-	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
-	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+
 	{"P1 Pon",			BIT_DIGITAL,	DrvJoy5 + 1,	"mah pon"	},
-	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
-	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
+	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
+	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
+	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
+
+	{"P1 Big",			BIT_DIGITAL,	DrvJoy6 + 0,	"mah big"	},
+	{"P1 Flip Flip",	BIT_DIGITAL,	DrvJoy6 + 1,	"mah ff"	},
+	{"P1 Double Up",	BIT_DIGITAL,	DrvJoy6 + 2,	"mah wup"	},
+	{"P1 Score",		BIT_DIGITAL,	DrvJoy6 + 3,	"mah score"	},
+	{"P1 Last Chance",	BIT_DIGITAL,	DrvJoy6 + 4,	"mah lc"	},
+	{"P1 Small",		BIT_DIGITAL,	DrvJoy6 + 5,	"mah small"	},
+
 	{"P1 Ron",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah ron"	},
+	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
+	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
+	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
+	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 4,	"mah c"		},
+
+	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
+	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
+	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
+	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
+	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
+
 	{"P1 Reach",		BIT_DIGITAL,	DrvJoy9 + 0,	"mah reach"	},
+	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
+	{"P1 F",			BIT_DIGITAL,	DrvJoy9 + 3,	"mah f"		},
+	{"P1 B",			BIT_DIGITAL,	DrvJoy9 + 4,	"mah b"		},
+	{"P1 Bet",			BIT_DIGITAL,	DrvJoy9 + 5,	"mah bet"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 2,	"diag"		},
@@ -226,28 +238,38 @@ STDINPUTINFO(Spi_ejanhs)
 static struct BurnInputInfo EjsakuraInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy8 + 5,	"p1 start"	},
-	{"P1 Payout",		BIT_DIGITAL,	DrvJoy9 + 11,	"payout"	},
-	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
-	{"P1 B",			BIT_DIGITAL,	DrvJoy6 + 0,	"mah b"		},
-	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah c"		},
-	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
-	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
-	{"P1 F",			BIT_DIGITAL,	DrvJoy6 + 1,	"mah f"		},
-	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
-	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
-	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
-	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
-	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
-	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
-	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
-	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+
 	{"P1 Pon",			BIT_DIGITAL,	DrvJoy5 + 1,	"mah pon"	},
-	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
-	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
-	{"P1 Ron",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah ron"	},
-	{"P1 Reach",		BIT_DIGITAL,	DrvJoy9 + 0,	"mah reach"	},
+	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
+	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
+	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
+
+	{"P1 Big",			BIT_DIGITAL,	DrvJoy6 + 0,	"mah big"	},
 	{"P1 Flip Flip",	BIT_DIGITAL,	DrvJoy6 + 1,	"mah ff"	},
+	{"P1 Double Up",	BIT_DIGITAL,	DrvJoy6 + 2,	"mah wup"	},
+	{"P1 Score",		BIT_DIGITAL,	DrvJoy6 + 3,	"mah score"	},
+	{"P1 Last Chance",	BIT_DIGITAL,	DrvJoy6 + 4,	"mah lc"	},
+	{"P1 Small",		BIT_DIGITAL,	DrvJoy6 + 5,	"mah small"	},
+
+	{"P1 Ron",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah ron"	},
+	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
+	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
+	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
+	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 4,	"mah c"		},
+
+	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
+	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
+	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
+	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
+	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
+
+	{"P1 Reach",		BIT_DIGITAL,	DrvJoy9 + 0,	"mah reach"	},
+	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
+	{"P1 F",			BIT_DIGITAL,	DrvJoy9 + 3,	"mah f"		},
+	{"P1 B",			BIT_DIGITAL,	DrvJoy9 + 4,	"mah b"		},
 	{"P1 Bet",			BIT_DIGITAL,	DrvJoy9 + 5,	"mah bet"	},
+	{"P1 Payout",		BIT_DIGITAL,	DrvJoy9 + 11,	"payout"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",	BIT_DIGITAL,	DrvJoy9 + 9,	"diag"		},
@@ -277,7 +299,7 @@ static struct BurnDIPInfo Spi_2buttonDIPList[]=
 
 static struct BurnDIPInfo Spi_ejanhsDIPList[]=
 {
-	DIP_OFFSET(0x18)
+	DIP_OFFSET(0x1F)
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 };
 

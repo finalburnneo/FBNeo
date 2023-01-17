@@ -903,7 +903,8 @@ int ProcessCmdLine()
 	}
 
 	if (_tcslen(szName)) {
-		if (_tcscmp(szName, _T("-listinfo")) == 0) {
+		if (_tcscmp(szName, _T("-listinfo")) == 0 ||
+			_tcscmp(szName, _T("-listxml")) == 0) {
 			write_datfile(DAT_ARCADE_ONLY, stdout);
 			return 1;
 		}

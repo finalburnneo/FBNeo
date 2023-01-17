@@ -2179,6 +2179,12 @@ static INT32 GameInpStandardOne(struct GameInp* pgi, INT32 nPlayer, char* szb, c
 			GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_2, szn, RETRO_DEVICE_KEYBOARD);
 		if (strcmp("mah score", szb) == 0)
 			GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_RCTRL, szn, RETRO_DEVICE_KEYBOARD);
+		if (strcmp("mah big", szb) == 0)
+			GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_RETURN, szn, RETRO_DEVICE_KEYBOARD);
+		if (strcmp("mah wup", szb) == 0)
+			GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_RSHIFT, szn, RETRO_DEVICE_KEYBOARD);
+		if (strcmp("mah small", szb) == 0)
+			GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_BACKSPACE, szn, RETRO_DEVICE_KEYBOARD);
 	}
 
 	return 0;

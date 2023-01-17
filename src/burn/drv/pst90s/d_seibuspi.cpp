@@ -487,7 +487,7 @@ static void common_write_dword(UINT32 address, UINT32 data)
 static INT32 ejanhs_encode(INT32 N)
 {
 	static const UINT8 encoding[6] = { 6, 5, 4, 3, 2, 7 };
-	static UINT8 state = ~DrvInputs[4 + N];
+	static UINT8 state = (UINT32)(~DrvInputs[4 + N]);
 
 	for (INT32 bit = 0; bit < 6; bit++)
 		if (state & (1 << bit))

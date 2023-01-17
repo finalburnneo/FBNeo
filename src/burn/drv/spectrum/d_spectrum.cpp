@@ -1767,7 +1767,7 @@ struct BurnDriver BurnSpecSpec1282a = {
 // 180 (128K)
 
 static struct BurnRomInfo Spec180RomDesc[] = {
-	{ "180 (1986)(Mastertronic Added Dimension)[128K].z80", 0x0d536, 0xc4937cba, BRF_ESS | BRF_PRG },
+	{ "180 (1986)(Mastertronic Added Dimension)[128K].tap", 47982, 0xccbd1a31, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spec180, Spec180, Spec128)
@@ -13864,6 +13864,25 @@ struct BurnDriver BurnSpecFairlight2 = {
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecFairlight2RomInfo, SpecFairlight2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Fantastic Voyage
+
+static struct BurnRomInfo SpecFantvoyageRomDesc[] = {
+	{ "Fantastic Voyage (1984)(Quicksilva Ltd.).tap", 42032, 0x8c6d5727, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecFantvoyage, SpecFantvoyage, Spectrum)
+STD_ROM_FN(SpecFantvoyage)
+
+struct BurnDriver BurnSpecFantvoyage = {
+	"spec_fantvoyage", NULL, "spec_spectrum", NULL, "1984",
+	"Fantastic Voyage (48K)\0", NULL, "Quicksilva Ltd.", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MAZE, 0,
+	SpectrumGetZipName, SpecFantvoyageRomInfo, SpecFantvoyageRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

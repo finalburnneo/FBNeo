@@ -56,6 +56,8 @@ static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
 
+static INT32 nCyclesExtra[2];
+
 static INT32 global_y = 8;
 static INT32 main_cpu_clock = 8000000;
 
@@ -1343,6 +1345,8 @@ static INT32 Z80YM2203DoReset()
 	priority_select = 0;
 	text_layer_enable = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -1368,6 +1372,8 @@ static INT32 Z80YM2151DoReset()
 	priority_select = 0;
 	text_layer_enable = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -1392,6 +1398,8 @@ static INT32 Drv68KDoReset()
 	soundlatch = 0;
 	priority_select = 0;
 	text_layer_enable = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
 	HiscoreReset();
 
@@ -2058,7 +2066,7 @@ static INT32 PrimellaCommonInit(INT32 game_select)
 
 	return 0;
 }
-	
+
 static INT32 RsharkCommonInit(INT32 game_select)
 {
 	AllMem = NULL;
@@ -2800,7 +2808,7 @@ static INT32 LastdayFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { main_cpu_clock / 60, 8000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	vblank = 1;
 
@@ -2822,6 +2830,8 @@ static INT32 LastdayFrame()
 		CPU_RUN_TIMER(1);
 		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		ZetOpen(1);
@@ -2859,7 +2869,7 @@ static INT32 FlytigerFrame()
 	INT32 nInterleave = 100;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2880,6 +2890,8 @@ static INT32 FlytigerFrame()
 		}
 		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	ZetOpen(1);
 
@@ -2940,18 +2952,18 @@ static INT32 RsharkFrame()
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { main_cpu_clock / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == 250) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		if (i == 120) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 
 		if (pBurnSoundOut) {
 			nSegment = nBurnSoundLen / nInterleave;
@@ -2962,6 +2974,8 @@ static INT32 RsharkFrame()
 			nSoundBufferPos += nSegment;
 		}
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		nSegment = nBurnSoundLen - nSoundBufferPos;
@@ -2983,7 +2997,7 @@ static INT32 RsharkFrame()
 	return 0;
 }
 
-static INT32 Z80YM2203Scan(INT32 nAction,INT32 *pnMin)
+static INT32 Z80YM2203Scan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -2991,7 +3005,7 @@ static INT32 Z80YM2203Scan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -3007,6 +3021,8 @@ static INT32 Z80YM2203Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(priority_select);
 		SCAN_VAR(text_layer_enable);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3018,7 +3034,7 @@ static INT32 Z80YM2203Scan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
-static INT32 Z80YM2151Scan(INT32 nAction,INT32 *pnMin)
+static INT32 Z80YM2151Scan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -3026,7 +3042,7 @@ static INT32 Z80YM2151Scan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -3043,6 +3059,8 @@ static INT32 Z80YM2151Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(priority_select);
 		SCAN_VAR(text_layer_enable);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3054,7 +3072,7 @@ static INT32 Z80YM2151Scan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
-static INT32 Drv68KScan(INT32 nAction,INT32 *pnMin)
+static INT32 Drv68KScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -3062,7 +3080,7 @@ static INT32 Drv68KScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -3080,6 +3098,8 @@ static INT32 Drv68KScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(priority_select);
 		SCAN_VAR(text_layer_enable);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

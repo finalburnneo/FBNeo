@@ -39,6 +39,8 @@ static UINT8 prot_p1;
 static UINT8 prot_p2;
 static UINT8 prot_latch;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 start"	},
@@ -468,6 +470,8 @@ static INT32 DrvDoReset()
 	dreamwld_oki_setbank(0, 0);
 	dreamwld_oki_setbank(1, 0); // dreamwld
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -861,7 +865,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = {(16000000 * 100) / 5779, (16000000 * 100) / 5779 / 12 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	SekOpen(0);
 
@@ -876,6 +880,9 @@ static INT32 DrvFrame()
 	}
 
 	SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
@@ -915,6 +922,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(prot_p1);
 		SCAN_VAR(prot_p2);
 		SCAN_VAR(prot_latch);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (nAction & ACB_WRITE) {
 			dreamwld_oki_setbank(0, DrvOkiBank[0]);

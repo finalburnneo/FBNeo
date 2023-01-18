@@ -361,6 +361,44 @@ static struct BurnDIPInfo MetlsavrDIPList[]=
 
 STDDIPINFO(Metlsavr)
 
+static struct BurnDIPInfo MagicbalDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0x7f, NULL					  },
+	{0x14, 0xff, 0xff, 0xff, NULL					  },
+
+	// Dip 1
+	{0   , 0xfe, 0   ,    4, "Game Time"			  },
+	{0x13, 0x01, 0x03, 0x03, "5:00"					  },
+	{0x13, 0x01, 0x03, 0x01, "6:00"					  },
+	{0x13, 0x01, 0x03, 0x02, "7:00"					  },
+	{0x13, 0x01, 0x03, 0x00, "8:00"					  },
+
+	{0   , 0xfe, 0   ,    8, "Coinage"				  },
+	{0x13, 0x01, 0x38, 0x00, "5 Coins 1 Credits"	  },
+	{0x13, 0x01, 0x38, 0x20, "4 Coins 1 Credits"	  },
+	{0x13, 0x01, 0x38, 0x10, "3 Coins 1 Credits"	  },
+	{0x13, 0x01, 0x38, 0x30, "2 Coins 1 Credits"	  },
+	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	  },
+	{0x13, 0x01, 0x38, 0x28, "2 Coins 3 Credits"	  },
+	{0x13, 0x01, 0x38, 0x18, "1 Coin  2 Credits"	  },
+	{0x13, 0x01, 0x38, 0x08, "1 Coin  3 Credits"	  },
+
+	{0   , 0xfe, 0   ,    2, "Timed Game"			  },
+	{0x13, 0x01, 0x40, 0x40, "Off"					  },
+	{0x13, 0x01, 0x40, 0x00, "On"			   		  },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			  },
+	{0x13, 0x01, 0x80, 0x80, "Off"					  },
+	{0x13, 0x01, 0x80, 0x00, "On"					  },
+
+	{0   , 0xfe, 0   ,    2, "2 Players Game"		  },
+	{0x14, 0x01, 0x08, 0x00, "1 Credit"				  },
+	{0x14, 0x01, 0x08, 0x08, "2 Credits"			  },
+};
+
+STDDIPINFO(Magicbal)
+
 static struct BurnDIPInfo SuprtrioDIPList[]=
 {
 	// Default Values
@@ -1148,6 +1186,31 @@ static struct BurnRomInfo MetlsavrRomDesc[] = {
 
 STD_ROM_PICK(Metlsavr)
 STD_ROM_FN(Metlsavr)
+
+static struct BurnRomInfo magicbalRomDesc[] = {
+	{ "jb17",			0x40000, 0x501e64dd, BRF_PRG | BRF_ESS }, //  0 68000 Program Code
+	{ "jb18",			0x40000, 0x84dcdf68, BRF_PRG | BRF_ESS }, //  1
+
+	{ "ub5",			0x10000, 0x48a9e99d, BRF_PRG | BRF_ESS }, //  2 Z80 Program Code
+
+	{ "protdata.bin",	0x00200, 0xfb67d20d, BRF_PRG | BRF_ESS }, //  3 Shared RAM Data
+
+	{ "rom5",			0x40000, 0xb9561ae0, BRF_GRA },           //  4 Tiles
+	{ "rom6",			0x40000, 0xb03a19ea, BRF_GRA },           //  5
+
+	{ "uor1",			0x80000, 0x1835ac6f, BRF_GRA },           //  6 Sprites
+	{ "uor2",			0x80000, 0xc9db161e, BRF_GRA },           //  7
+	{ "uor3",			0x80000, 0x69f54d5a, BRF_GRA },           //  8
+	{ "uor4",			0x80000, 0x3736eef4, BRF_GRA },           //  9
+
+	{ "uc1",			0x40000, 0x6e4cec27, BRF_SND },           // 10 Samples
+
+
+	{ "87c52.mcu",		0x02000, 0x00000000, 3 | BRF_NODUMP | BRF_PRG },           //  3 Undumped MCU
+};
+
+STD_ROM_PICK(magicbal)
+STD_ROM_FN(magicbal)
 
 static struct BurnRomInfo PangpangRomDesc[] = {
 	{ "2.bin",         0x40000, 0x45436666, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -4760,6 +4823,16 @@ struct BurnDriver BurnDrvMetlsavr = {
 	L"Metal Saver\0\uBA54\uD0C8\uC138\uC774\uBC84\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, MetlsavrRomInfo, MetlsavrRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, MetlsavrDIPInfo,
+	MetlsavrInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 0x800, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvMagicbal = {
+	"magicbal", NULL, NULL, NULL, "1994",
+	"Magicball Fighting (Korea)\0", NULL, "SemiCom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, magicbalRomInfo, magicbalRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, MagicbalDIPInfo,
 	MetlsavrInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };

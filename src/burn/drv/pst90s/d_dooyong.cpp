@@ -1797,8 +1797,8 @@ static INT32 PolluxInit()
 
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(8000000);
-	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
 	main_cpu_clock = 8000000;
 

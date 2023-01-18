@@ -43576,10 +43576,10 @@ STD_ROM_PICK(md_fightveng)
 STD_ROM_FN(md_fightveng)
 
 struct BurnDriver BurnDrvmd_fightveng = {
-	"md_fightveng", NULL, NULL, NULL, "2021",
+	"md_fightveng", "md_fightvengt", NULL, NULL, "2021",
 	"Fight for Vengeance (HB)\0", NULL, "PSCD Games", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_fightvengRomInfo, md_fightvengRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -43587,17 +43587,17 @@ struct BurnDriver BurnDrvmd_fightveng = {
 
 // Fight for Vengeance - Tournament Edition (HB)
 static struct BurnRomInfo md_fightvengtRomDesc[] = {
-	{ "Fight for Vengeance - Tournament Edition v3.0 (2022)(GFE).bin", 4194304, 0x813a61a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Fight for Vengeance - Tournament Edition (2022)(Genesis Fight Engine).bin", 4194304, 0x813a61a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_fightvengt)
 STD_ROM_FN(md_fightvengt)
 
 struct BurnDriver BurnDrvmd_fightvengt = {
-	"md_fightvengt", "md_fightveng", NULL, NULL, "2022",
-	"Fight for Vengeance - Tournament Edition (HB, v3.0)\0", NULL, "Genesis Fight Engine", "Sega Megadrive",
+	"md_fightvengt", NULL, NULL, NULL, "2022",
+	"Fight for Vengeance - Tournament Edition (HB)\0", NULL, "Genesis Fight Engine", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_fightvengtRomInfo, md_fightvengtRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

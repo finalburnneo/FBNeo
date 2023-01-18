@@ -134,10 +134,14 @@ static int GetInput(bool bCopy)
 {
 	// get input
 	InputMake(bCopy);
-	GameInpClearOpposites(bCopy);
-	GameInpUpdateNext(bCopy);
-	GameInpFixDiagonals(bCopy);
-	GameInpUpdatePrev(bCopy);
+
+	if (bCopy) {
+		GameInpClearOpposites(bCopy);
+		GameInpUpdateNext(bCopy);
+		GameInpFixDiagonals(bCopy);
+		GameInpUpdatePrev(bCopy);
+
+	}
 
 	if (!kNetGame || kNetSpectator) {
 		CheckSystemMacros();
@@ -366,12 +370,14 @@ int RunIdle()
 		// No need to do anything for a bit
 		if (kNetGame) {
 			if (nAccTime < nFpsIdle || nRunQuark) {
+				GetInput(false);
 				QuarkRunIdle(1);
 				nRunQuark = 0;
 			}
 		}
 		else {
 			if (nAccTime < nFpsIdle) {
+				GetInput(false);
 				Sleep(1);
 			}
 		}

@@ -44,6 +44,8 @@ static CDynRender renderer;
 static CFont font;
 static RECT frame_dest;
 static bool debug_mode = false;
+static bool debug_turbo = false;
+static bool debug_freeze = false;
 static float frame_scale;
 static float frame_adjust;
 static float frame_width;
@@ -1726,7 +1728,6 @@ static bool freeze_warn1_sent = false;
 static bool freeze_warn2_sent = false;
 void DetectFreeze()
 {
-	bool debug_freeze = false;
 	char temp[32];
 
 	if (nFramesRendered < 3000) return;
@@ -1756,7 +1757,6 @@ void DetectFreeze()
 		QuarkSendChatCmd(temp, 'F');
 		freeze_warn2_sent=true;
 	}
-
 }
 
 #define TURBOARRAYSIZE 60
@@ -1786,7 +1786,6 @@ void DetectTurbo()
 {
 
 	nFreezeFrames = 0;
-	bool debug_turbo = false;
 
 	UINT32 P1LP=0, P1MP=0, P1HP=0, P1LK=0, P1MK=0, P1HK=0;
 	UINT32 P2LP=0, P2MP=0, P2HP=0, P2LK=0, P2MK=0, P2HK=0;
@@ -1892,7 +1891,7 @@ void DetectTurbo()
 	TCHAR szWarn2[128];
 	int p1_buttons_with_turbo = 0;
 	int p2_buttons_with_turbo = 0;
-	int MIN_TURBO_CERTAINTY = 64;
+	int MIN_TURBO_CERTAINTY = 48;
 	if (game_ranked) MIN_TURBO_CERTAINTY=32;
 
 	for (int i=0; i < 6; i++) {

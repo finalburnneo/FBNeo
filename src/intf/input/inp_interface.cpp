@@ -198,9 +198,17 @@ static inline INT32 AutofirePick() {
 	return ((nCurrentFrame % nAutoFireRate) > nAutoFireRate-4);
 }
 
+static INT32 nCurrentFrameMerge = 0;
+static INT32 nCurrentFrameInput = 0;
+
+#define INPUT_MERGE(x) (x != 0 ? x : pgi->Input.nVal * nCurrentFrameMerge)
+
 // This will process all PC-side inputs and optionally update the emulated game side.
 INT32 InputMake(bool bCopy)
 {
+	nCurrentFrameMerge = nCurrentFrameInput == nCurrentFrame ? 1 : 0;
+	nCurrentFrameInput = nCurrentFrame;
+
 	struct GameInp* pgi;
 	UINT32 i;
 
@@ -224,7 +232,7 @@ INT32 InputMake(bool bCopy)
 				pgi->Input.nVal = 0;
 				break;
 			case GIT_CONSTANT:						// Constant value
-				pgi->Input.nVal = pgi->Input.Constant.nConst;
+				pgi->Input.nVal = INPUT_MERGE(pgi->Input.Constant.nConst);
 				if (bCopy) {
 					*(pgi->Input.pVal) = pgi->Input.nVal;
 				}
@@ -235,9 +243,9 @@ INT32 InputMake(bool bCopy)
 				if (pgi->nType & BIT_GROUP_ANALOG) {
 					// Set analog controls to full
 					if (s) {
-						pgi->Input.nVal = 0xFFFF;
+						pgi->Input.nVal = INPUT_MERGE(0xFFFF);
 					} else {
-						pgi->Input.nVal = 0x0001;
+						pgi->Input.nVal = INPUT_MERGE(0x0001);
 					}
 					if (bCopy) {
 						*(pgi->Input.pShortVal) = pgi->Input.nVal;
@@ -245,9 +253,9 @@ INT32 InputMake(bool bCopy)
 				} else {
 					// Binary controls
 					if (s) {
-						pgi->Input.nVal = 1;
+						pgi->Input.nVal = INPUT_MERGE(1);
 					} else {
-						pgi->Input.nVal = 0;
+						pgi->Input.nVal = INPUT_MERGE(0);
 					}
 					if (bCopy) {
 						*(pgi->Input.pVal) = pgi->Input.nVal;
@@ -341,9 +349,9 @@ INT32 InputMake(bool bCopy)
 						nJoy = 0xFFFF;
 					}
 
-					pgi->Input.nVal = (UINT16)nJoy;
+					pgi->Input.nVal = INPUT_MERGE((UINT16)nJoy);
 				} else {
-					pgi->Input.nVal = 0;
+					pgi->Input.nVal = INPUT_MERGE(0);
 				}
 
 				if (bCopy) {

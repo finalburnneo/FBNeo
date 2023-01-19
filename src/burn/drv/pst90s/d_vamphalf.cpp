@@ -56,6 +56,8 @@ static INT32 is_boongga = 0;
 static INT16 DrvPaddle; // butt-smacking paddle (..not the usual DrvPaddle)
 static UINT8 PaddleVal;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
@@ -943,6 +945,8 @@ static INT32 DrvDoReset()
 	protection_which = 0;
 	nvram_bank = 1;
 
+	nCyclesExtra = 0;
+
 	return 0;
 }
 
@@ -1311,7 +1315,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 10;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { cpu_clock / 59, 24000000 / 12 / 59 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	E132XSOpen(0);
 	if (sound_type == 2) mcs51Open(0);
@@ -1363,6 +1367,8 @@ static INT32 DrvFrame()
 	if (sound_type == 2) mcs51Close();
 	E132XSClose();
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -1408,6 +1414,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nvram_bank);
 		SCAN_VAR(protection_index);
 		SCAN_VAR(protection_which);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

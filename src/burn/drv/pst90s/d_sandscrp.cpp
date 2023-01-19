@@ -55,6 +55,8 @@ static UINT8 DrvDips[2];
 static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles[2];
+
 static struct BurnInputInfo SandscrpInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
@@ -463,6 +465,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	latch2_full = 0;
 	watchdog = 0;
 
+	nExtraCycles[0] = nExtraCycles[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -709,10 +713,11 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] =  { 20000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
+	ZetIdle(nExtraCycles[1]); // because timer(!)
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
@@ -728,18 +733,20 @@ static INT32 DrvFrame()
 			update_irq_state();
 		}
 
-		BurnTimerUpdate(SekTotalCycles()/5);
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
+
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -787,6 +794,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nDrvZ80Bank);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

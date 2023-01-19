@@ -2228,7 +2228,9 @@ static INT32 Sys386Frame()
 
 	INT32 nInterleave = 296; // vtotal
 	INT32 nCyclesTotal[1] = { 40000000 / 54 /*(((28636363)/4)/448)/296*/ }; // sys386i others are 25mhz
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
+
+	i386Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2238,6 +2240,10 @@ static INT32 Sys386Frame()
 			i386SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 	}
+
+	i386Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
@@ -2281,7 +2287,9 @@ static INT32 Sys386fFrame()
 
 	INT32 nInterleave = 296; // vtotal
 	INT32 nCyclesTotal[1] = { 25000000 / 54 /*(((28636363)/4)/448)/296*/ };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
+
+	i386Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2291,6 +2299,10 @@ static INT32 Sys386fFrame()
 			i386SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 	}
+
+	i386Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		YMZ280BRender(pBurnSoundOut, nBurnSoundLen);

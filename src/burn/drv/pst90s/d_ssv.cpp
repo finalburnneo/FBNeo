@@ -108,6 +108,8 @@ static INT16 SxyGun = 0;
 
 static INT32 has_nvram = 0;
 
+static INT32 nCyclesExtra[2];
+
 // Theory of sprite buffering for this machine  -dink nov. 22, 2021
 // spriteram is delayed 1 frame, buffered once per frame
 // scroll register updates are buffered in a list, for each line they are
@@ -3001,6 +3003,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	memset(scroll_buf, 0, sizeof(scroll_buf));
 	DrvScrollRAMDelayed = DrvScrollRAM;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	return 0;
 }
 
@@ -3896,7 +3900,7 @@ static INT32 DrvFrame()
 #else
 	INT32 nCyclesTotal[2] = { (16000000 * 100) / 6018, (10000000 * 100) / 6018 };
 #endif
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	v60Open(0);
 
@@ -3947,6 +3951,8 @@ static INT32 DrvFrame()
 
 		if (dsp_enable) {
 			CPU_RUN(1, upd96050);
+		} else {
+			CPU_IDLE(1, upd96050);
 		}
 
 		if (i == 0 && interrupt_ultrax) {
@@ -3962,6 +3968,9 @@ static INT32 DrvFrame()
 	DrvDrawEnd();
 
 	v60Close();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		ES5506Update(pBurnSoundOut, nBurnSoundLen);
@@ -4007,6 +4016,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (is_gdfs) EEPROMScan(nAction, pnMin);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (has_nvram && (nAction & ACB_NVRAM)) {

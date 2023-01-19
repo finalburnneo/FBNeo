@@ -50,6 +50,8 @@ static UINT32 DrvInputs[2];
 static INT32 color_mask[3];
 static INT32 volume_mute = 0;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo MacrosspInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -418,6 +420,10 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	sound_pending = 0;
 	sound_toggle = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -1052,7 +1058,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] = { 25000000 / 60, 16000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1066,10 +1072,13 @@ static INT32 DrvFrame()
 		SekClose();
 	}
 
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+
 	if (pBurnSoundOut) {
 		if (volume_mute) volume_mute--;
 		if (volume_mute == 1) {
-			ES5506SetRoute(0, 3.00, BURN_SND_ES5506_ROUTE_BOTH);
+			ES5506SetRoute(0, 10.00, BURN_SND_ES5506_ROUTE_BOTH); // really, volume is super low in this game
 		}
 		ES5506Update(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -1110,6 +1119,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_pending);
 		SCAN_VAR(sound_toggle);
 		SCAN_VAR(volume_mute);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

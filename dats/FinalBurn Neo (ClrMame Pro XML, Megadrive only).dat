@@ -7239,12 +7239,21 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fightveng">
+	<game name="fightveng" cloneof="fightvengt" romof="fightvengt">
 		<comment>Homebrew</comment>
 		<description>Fight for Vengeance (HB)</description>
 		<year>2021</year>
 		<manufacturer>PSCD Games</manufacturer>
 		<rom name="Fight for Vengeance (2021)(PSCD Games).bin" size="4194304" crc="7db61291"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fightvengt">
+		<comment>Homebrew</comment>
+		<description>Fight for Vengeance - Tournament Edition (HB)</description>
+		<year>2022</year>
+		<manufacturer>Genesis Fight Engine</manufacturer>
+		<rom name="Fight for Vengeance - Tournament Edition (2022)(Genesis Fight Engine).bin" size="4194304" crc="813a61a6"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -5504,6 +5504,7 @@ DRV		BurnDrvmd_fifa2k2;
 DRV		BurnDrvfightfev;
 DRV		BurnDrvfightfeva;
 DRV		BurnDrvmd_fightveng;
+DRV		BurnDrvmd_fightvengt;
 DRV		BurnDrvFghtatck;
 DRV		BurnSpecFightbomb;
 DRV		BurnDrvFghthistjb;
@@ -9790,6 +9791,7 @@ DRV		BurnDrvmslug3c;
 DRV		BurnDrvmslug3i;
 DRV		BurnDrvmslug3ki;
 DRV		BurnDrvmslug3lw;
+DRV		BurnDrvmslug3cq;
 DRV		BurnDrvmslug3g;
 DRV		BurnDrvmslug3v;
 DRV		BurnDrvmslug3h;
@@ -9798,7 +9800,6 @@ DRV		BurnDrvmslug3a;
 DRV		BurnDrvmslug3gw;
 DRV		BurnDrvmslug3sd;
 DRV		BurnDrvmslug3se;
-DRV		BurnDrvmslug3sc;
 DRV		BurnDrvmslug3zh;
 DRV		BurnDrvmslug3x;
 DRV		BurnDrvmslug3unity;
@@ -9824,7 +9825,6 @@ DRV		BurnDrvmslug5dd;
 DRV		BurnDrvmslug5dbj;
 DRV		BurnDrvmslug5c;
 DRV		BurnDrvmslug5ex;
-DRV		BurnDrvmslug5es;
 DRV		BurnDrvmslug5f;
 DRV		BurnDrvms5pcb;
 DRV		BurnDrvmslug5ki;
@@ -9834,6 +9834,7 @@ DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
 DRV		BurnDrvmslug5sgf;
 DRV		BurnDrvmslug5sg;
+DRV		BurnDrvmslug5es;
 DRV		BurnDrvmslug5zh;
 DRV		BurnDrvmslug5x;
 DRV		BurnDrvms5plus;
@@ -17024,7 +17025,7 @@ DRV		BurnDrvkof2001h;
 DRV		BurnDrvkof2001;
 DRV		BurnDrvkof2001pkz;
 DRV		BurnDrvkf2k1pls;
-DRV		BurnDrvkf2k1pa;
+DRV		BurnDrvkf2k1pla;
 DRV		BurnDrvkof2k1rp;
 DRV		BurnDrvkof2001ru;
 DRV		BurnDrvkof2001ult;
@@ -24893,6 +24894,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfightfev,			// Fight Fever (set 1)
 	&BurnDrvfightfeva,			// Fight Fever (set 2)
 	&BurnDrvmd_fightveng,		// Fight for Vengeance (HB)
+	&BurnDrvmd_fightvengt,		// Fight for Vengeance - Tournament Edition (HB)
 	&BurnDrvFghtatck,			// Fighter & Attacker (US)
 	&BurnSpecFightbomb,			// Fighter Bomber (48K)
 	&BurnDrvFghthistjb,			// Fighter's History (Japan ver 41-04, DE-0380-1 PCB)
@@ -29179,6 +29181,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug3i,			// Metal Slug 3 (Firepower Enhance, Hack)
 	&BurnDrvmslug3ki,			// Metal Slug 3 (Komorebi, Hack)
 	&BurnDrvmslug3lw,			// Metal Slug 3 (Last Bullet Remix, Hack)
+	&BurnDrvmslug3cq,			// Metal Slug 3 (Legend, Hack)
 	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack)
 	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
@@ -29187,7 +29190,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug3gw,			// Metal Slug 3 (Onimusha Samanosuke, Hack))
 	&BurnDrvmslug3sd,			// Metal Slug 3 (Shop Edition, Hack)
 	&BurnDrvmslug3se,			// Metal Slug 3 (Special Edition, Hack)
-	&BurnDrvmslug3sc,			// Metal Slug 3 (Survival, Hack)
 	&BurnDrvmslug3zh,			// Metal Slug 3 (Vehicle Summon, Hack)
 	&BurnDrvmslug3x,			// Metal Slug 3 (X, Homebrew)
 	&BurnDrvmslug3unity,		// Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)
@@ -29213,7 +29215,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug5dbj,			// Metal Slug 5 (Enemy Enhance, Hack)
 	&BurnDrvmslug5c,			// Metal Slug 5 (Enemy Remix, Hack)
 	&BurnDrvmslug5ex,			// Metal Slug 5 (Extend Ver. 2022, Hack)
-	&BurnDrvmslug5es,			// Metal Slug 5 (Extremely Simplified, Hack)
 	&BurnDrvmslug5f,			// Metal Slug 5 (Fierce Battle, Hack)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
 	&BurnDrvmslug5ki,			// Metal Slug 5 (Komorebi, Hack)
@@ -29223,6 +29224,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
 	&BurnDrvmslug5sgf,			// Metal Slug 5 (Remake FC2 Hack, Hack)
 	&BurnDrvmslug5sg,			// Metal Slug 5 (Stone Turtle, Hack)
+	&BurnDrvmslug5es,			// Metal Slug 5 (The Longest Battle, Hack)
 	&BurnDrvmslug5zh,			// Metal Slug 5 (Vehicle Summon, Hack)
 	&BurnDrvmslug5x,			// Metal Slug 5 (X, Hack)
 	&BurnDrvms5plus,			// Metal Slug 5 Plus (bootleg)
@@ -36413,7 +36415,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)
 	&BurnDrvkof2001pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition)
 	&BurnDrvkf2k1pls,			// The King of Fighters 2001 Plus (set 1, bootleg / hack)
-	&BurnDrvkf2k1pa,			// The King of Fighters 2001 Plus (set 2, bootleg / hack)
+	&BurnDrvkf2k1pla,			// The King of Fighters 2001 Plus (set 2, bootleg / hack)
 	&BurnDrvkof2k1rp,			// The King of Fighters 2001 Remix Pro v1.02 Final (Hack By Jason, Kim & Raymonose)
 	&BurnDrvkof2001ru,			// The King of Fighters 2001 Remix Ultra 2.3 (Hack By Jason FGCH)
 	&BurnDrvkof2001ult,			// The King of Fighters 2001 Ultimate

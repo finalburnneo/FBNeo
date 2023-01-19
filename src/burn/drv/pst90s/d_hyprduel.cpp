@@ -749,7 +749,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}
@@ -764,7 +764,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		
+
 		i4x00_scan(nAction, pnMin);
 
 		if (game_select == 1) {
@@ -777,6 +777,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cpu_trigger);
 		SCAN_VAR(requested_int);
 		SCAN_VAR(vblank_end_timer);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

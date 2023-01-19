@@ -55,6 +55,8 @@ static UINT8 DrvReset;
 
 static INT32 denjinmk_hack = 0;
 
+static INT32 nExtraCycles[2];
+
 static struct BurnInputInfo LegionnaInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
@@ -893,6 +895,8 @@ static INT32 DrvDoReset()
 
 	hold_coin.reset();
 
+	nExtraCycles[0] = nExtraCycles[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -1675,10 +1679,11 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 288;
 	INT32 nCyclesTotal[2] = { (10000000 * 100) / nBurnFPS, (3579545 * 100) / nBurnFPS };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
+	ZetIdle(nExtraCycles[1]); // because timer(!)
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1699,6 +1704,9 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
 
 	ZetClose();
 	SekClose();
@@ -1735,6 +1743,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(scroll);
 		SCAN_VAR(sample_bank);
+		hold_coin.scan();
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

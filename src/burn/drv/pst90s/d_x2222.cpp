@@ -26,6 +26,8 @@ static UINT16 DrvInputs[3];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo X2222InputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
@@ -202,6 +204,8 @@ static INT32 DrvDoReset()
 
 	memset (scrollx, 0, sizeof(scrollx));
 	memset (scrolly, 0, sizeof(scrolly));
+
+	nCyclesExtra = 0;
 
 	return 0;
 }
@@ -440,9 +444,12 @@ static INT32 DrvFrame()
 		}
 	}
 
+	E132XSNewFrame();
+
 	E132XSOpen(0);
-	E132XSRun(64000000 / 60);
+	E132XSRun((64000000 / 60) - nCyclesExtra);
 	E132XSSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+	nCyclesExtra = E132XSTotalCycles() - (64000000 / 60);
 	E132XSClose();
 
 	if (pBurnSoundOut) {
@@ -478,6 +485,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(scrollx);
 		SCAN_VAR(scrolly);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_NVRAM) {

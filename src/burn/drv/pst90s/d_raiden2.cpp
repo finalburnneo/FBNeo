@@ -1637,6 +1637,36 @@ static void __fastcall zeroteam_main_write(UINT32 address, UINT8 data)
 	}
 }
 
+static void __fastcall xsedae_main_write(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff000) == 0x0e000) {
+		DrvPalRAM[address & 0xfff] = data;
+		palette_update_entry(address & 0xffe);
+		return;
+	}
+
+	if ((address & 0xffc00) == 0x00000) {
+		DrvMainRAM[address] = data;
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x0470:
+		case 0x0471:
+		case 0x06cc:
+		case 0x06cd:
+		case 0x068e:
+		case 0x068f:
+		return;		// nop
+	}
+
+	if ((address & 0xffc00) == 0x00400) {
+		DrvMainRAM[address] = data;
+		rd2_cop_write(address, data);
+	}
+}
+
 static UINT8 __fastcall raiden2_main_read(UINT32 address)
 {
 	if ((address & 0xffc00) == 0x00000) {
@@ -1807,6 +1837,52 @@ static UINT8 __fastcall nzeroteam_main_read(UINT32 address)
 
 		case 0x74d:
 			return DrvInputs[1] >> 8; 
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall xsedae_main_read(UINT32 address)
+{
+	if ((address & 0xffc00) == 0x00000) {
+		return DrvMainRAM[address];
+	}
+
+	switch (address)
+	{
+		case 0x0740:
+			return DrvDips[0];
+			
+		case 0x0741:
+			return DrvDips[1];
+
+		case 0x0744:
+			return DrvInputs[0];
+			
+		case 0x0745:
+			return DrvInputs[0] >> 8;
+
+		case 0x0748:
+			return DrvInputs[1];
+			
+		case 0x0749:
+			return DrvInputs[1] >> 8;
+
+		case 0x074a:
+			return 0xff;
+			
+		case 0x074b:
+			return 0xff;
+
+		case 0x074c:
+			return DrvInputs[2];
+			
+		case 0x074d:
+			return DrvInputs[2] >> 8;
+	}
+
+	if ((address & 0xffc00) == 0x00400) {
+		return rd2_cop_read(address);
 	}
 
 	return 0;
@@ -2154,7 +2230,7 @@ static void DrvCreateAlphaTable(INT32 raiden2_alpha)
 {
 	memset (DrvAlphaTable, 0, 0x800); 
 
-	if (raiden2_alpha) { // raiden2/dx
+	if (raiden2_alpha == 1) { // raiden2/dx
 		DrvAlphaTable[0x380] = 1;
 		DrvAlphaTable[0x5de] = 1;
 		DrvAlphaTable[0x75c] = 1;
@@ -2179,7 +2255,7 @@ static void DrvCreateAlphaTable(INT32 raiden2_alpha)
 		memset (DrvAlphaTable + 0x77d, 1, 0x02);
 		memset (DrvAlphaTable + 0x7c8, 1, 0x08);
 	}
-	else // zero team
+	else if (raiden2_alpha == 0) // zero team
 	{
 		DrvAlphaTable[0x37e] = 1;
 		DrvAlphaTable[0x38e] = 1;
@@ -2538,6 +2614,44 @@ static void zeroteam_common_map()
 	VezClose();
 }
 
+static void xsedae_common_map()
+{
+	VezInit(0, V30_TYPE);
+	VezOpen(0);
+//	VezMapArea(0x00000, 0x007ff, 0, DrvMainRAM);
+//	VezMapArea(0x00000, 0x007ff, 1, DrvMainRAM); // handler
+	VezMapArea(0x00000, 0x007ff, 2, DrvMainRAM); // fetch (map shift is 11 bits (800))
+	VezMapArea(0x00800, 0x0b7ff, 0, DrvMainRAM + 0x00800);
+	VezMapArea(0x00800, 0x0b7ff, 1, DrvMainRAM + 0x00800);
+	VezMapArea(0x00800, 0x0b7ff, 2, DrvMainRAM + 0x00800);
+	VezMapArea(0x0b800, 0x0bfff, 0, DrvBgRAM);
+	VezMapArea(0x0b800, 0x0bfff, 1, DrvBgRAM);
+	VezMapArea(0x0b800, 0x0bfff, 2, DrvBgRAM);
+	VezMapArea(0x0c000, 0x0c7ff, 0, DrvFgRAM);
+	VezMapArea(0x0c000, 0x0c7ff, 1, DrvFgRAM);
+	VezMapArea(0x0c000, 0x0c7ff, 2, DrvFgRAM);
+	VezMapArea(0x0c800, 0x0cfff, 0, DrvMgRAM);
+	VezMapArea(0x0c800, 0x0cfff, 1, DrvMgRAM);
+	VezMapArea(0x0c800, 0x0cfff, 2, DrvMgRAM);
+	VezMapArea(0x0d000, 0x0dfff, 0, DrvTxRAM);
+	VezMapArea(0x0d000, 0x0dfff, 1, DrvTxRAM);
+	VezMapArea(0x0d000, 0x0dfff, 2, DrvTxRAM);
+	VezMapArea(0x0e000, 0x0efff, 0, DrvPalRAM);
+//	VezMapArea(0x0e000, 0x0efff, 1, DrvPalRAM); // handler
+	VezMapArea(0x0e000, 0x0efff, 2, DrvPalRAM);
+	VezMapArea(0x0f000, 0x0ffff, 0, DrvSprRAM);
+	VezMapArea(0x0f000, 0x0ffff, 1, DrvSprRAM);
+	VezMapArea(0x0f000, 0x0ffff, 2, DrvSprRAM);
+	VezMapArea(0x10000, 0x1ffff, 0, DrvMainRAM + 0x10000);
+	VezMapArea(0x10000, 0x1ffff, 1, DrvMainRAM + 0x10000);
+	VezMapArea(0x10000, 0x1ffff, 2, DrvMainRAM + 0x10000);
+	VezMapArea(0x20000, 0xfffff, 0, DrvMainROM + 0x20000);
+	VezMapArea(0x20000, 0xfffff, 2, DrvMainROM + 0x20000);
+	VezSetWriteHandler(xsedae_main_write);
+	VezSetReadHandler(xsedae_main_read);
+	VezClose();
+}
+
 static INT32 Raiden2Init()
 {
 	game_select = 0;
@@ -2865,12 +2979,13 @@ static INT32 XsedaeInit()
 
 		DrvGfxDecode();
 		DrvCreateTransTab();
-		DrvCreateAlphaTable(0);
+		DrvCreateAlphaTable(-1);
 	}
 
-	zeroteam_common_map();
+	xsedae_common_map();
 
 	seibu_sound_init(1|4, 0, 3579545, 3579545, 1022727 / 132);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -5186,13 +5301,13 @@ static struct BurnRomInfo xsedaeRomDesc[] = {
 STD_ROM_PICK(xsedae)
 STD_ROM_FN(xsedae)
 
-struct BurnDriverD BurnDrvXsedae = {
+struct BurnDriver BurnDrvXsedae = {
 	"xsedae", NULL, NULL, NULL, "1993",
 	"X Se Dae Quiz (Korea)\0", NULL, "Dream Island", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, xsedaeRomInfo, xsedaeRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, XsedaeDIPInfo,
-	XsedaeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	XsedaeInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 

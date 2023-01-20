@@ -50,6 +50,8 @@ static UINT8 DrvDips[4];
 static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo HalleysInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"		},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"		},
@@ -1122,6 +1124,8 @@ static INT32 DrvDoReset()
 	vector_type = 0;
 	blitter_busy = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	return 0;
 }
 
@@ -1587,7 +1591,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1664000 / 60, 3000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	M6809Open(0);
 	ZetOpen(0);
@@ -1611,6 +1615,9 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	M6809Close();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -1651,6 +1658,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(stars_enabled);
 		SCAN_VAR(vector_type);
 		SCAN_VAR(blitter_busy);
+
+		SCAN_VAR(nCyclesExtra);
 
 		ScanVar(BurnBitmapGetBitmap(1), 256*256*2, "Bitmap 1");
 		ScanVar(BurnBitmapGetBitmap(2), 256*256*2, "Bitmap 2");

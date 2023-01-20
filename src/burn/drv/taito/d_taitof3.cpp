@@ -42,6 +42,7 @@ static UINT8 previous_coin;
 
 static INT32 sound_cpu_in_reset = 0;
 static INT32 watchdog;
+static INT32 nCyclesExtra;
 
 INT32 f3_game = 0;
 
@@ -804,6 +805,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	watchdog = 0;
 	previous_coin = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -1509,19 +1512,14 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	nTaitoCyclesTotal[0] = 16000000 / 60; // do not touch!
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
+	INT32 nCyclesTotal[1] = { 16000000 / 60 }; // do not touch!
+	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	SekNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == 255) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (i == 7) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
@@ -1531,6 +1529,8 @@ static INT32 DrvFrame()
 				TaitoF3CpuUpdate(nInterleave, i);
 		}
 	}
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
 		if (pBurnSoundOut) {
@@ -1667,6 +1667,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (f3_game == ARKRETRN) BurnTrackballScan();
 
 		EEPROMScan(nAction, pnMin);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
 			for (INT32 i = 0; i < 0x2000; i+=4) {

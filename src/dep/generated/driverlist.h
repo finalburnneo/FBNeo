@@ -14534,6 +14534,8 @@ DRV		BurnDrvSnowbroc;
 DRV		BurnDrvSnowbroswb;
 DRV		BurnDrvSnowbro2;
 DRV		BurnDrvSnowbro2ny;
+DRV		BurnDrvSnowbro2b;
+DRV		BurnDrvSnowbro2b2;
 DRV		BurnDrvnes_snowbrothersc;
 DRV		BurnDrvnes_snowbrotherssc;
 DRV		BurnDrvnes_snowbrothers;
@@ -18923,9 +18925,7 @@ DRV		BurnDrvWyvernwg;
 DRV		BurnDrvWyvernwga;
 DRV		BurnDrvXmultiplm72;
 DRV		BurnDrvXmultipl;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvXsedae;			// no comment [NOT WORKING]
-#endif
+DRV		BurnDrvXsedae;
 DRV		BurnDrvXday2;
 DRV		BurnDrvXmen2pa;
 DRV		BurnDrvXmen2pe;
@@ -33924,6 +33924,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSnowbroswb,			// Snow Bros. - Nick & Tom (The Winter Bobble hardware bootleg)
 	&BurnDrvSnowbro2,			// Snow Bros. 2 - with new elves (Hanafram)
 	&BurnDrvSnowbro2ny,			// Snow Bros. 2 - with new elves (Nyanko)
+	&BurnDrvSnowbro2b,			// Snow Bros. 2 - With New Elves / Otenki Paradise (bootleg, set 1)
+	&BurnDrvSnowbro2b2,			// Snow Bros. 2 - With New Elves / Otenki Paradise (bootleg, set 2)
 	&BurnDrvnes_snowbrothersc,	// Snow Brothers (Hack, Spanish v1.0)
 	&BurnDrvnes_snowbrotherssc,	// Snow Brothers (T-Chi, v1.1)
 	&BurnDrvnes_snowbrothers,	// Snow Brothers (USA)
@@ -38313,9 +38315,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvWyvernwga,			// Wyvern Wings (set 2)
 	&BurnDrvXmultiplm72,		// X Multiply (Japan, M72 hardware)
 	&BurnDrvXmultipl,			// X Multiply (World, M81 hardware)
-#if defined FBNEO_DEBUG
-	&BurnDrvXsedae,				// X Se Dae Quiz (Korea) [no comment, NOT WORKING]
-#endif
+	&BurnDrvXsedae,				// X Se Dae Quiz (Korea)
 	&BurnDrvXday2,				// X-Day 2 (Japan)
 	&BurnDrvXmen2pa,			// X-Men (2 Players ver AAA)
 	&BurnDrvXmen2pe,			// X-Men (2 Players ver EAA)

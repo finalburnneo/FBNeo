@@ -509,7 +509,13 @@ static int DoExtraFilters()
 		return (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) ? 0 : 1;
 	}
 
-	if (nShowMVSCartsOnly && ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) != HARDWARE_PREFIX_CARTRIDGE)) return 1;
+#ifndef _MSC_VER
+	if (nShowMVSCartsOnly && ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) != HARDWARE_PREFIX_CARTRIDGE))
+#else
+	// If the compiler environment is msvc, determine if [Hardware]-[Neo Geo] is selected.
+	if ((nLoadMenuShowX & MASKNEOGEO) && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO)
+#endif
+																												return 1;
 
 	if ((nLoadMenuBoardTypeFilter & BDF_BOOTLEG)			&& (BurnDrvGetFlags() & BDF_BOOTLEG))				return 1;
 	if ((nLoadMenuBoardTypeFilter & BDF_DEMO)				&& (BurnDrvGetFlags() & BDF_DEMO))					return 1;
@@ -521,7 +527,7 @@ static int DoExtraFilters()
 															&& (!(BurnDrvGetFlags() & BDF_DEMO))
 															&& (!(BurnDrvGetFlags() & BDF_HACK))
 															&& (!(BurnDrvGetFlags() & BDF_HOMEBREW))
-															&& (!(BurnDrvGetFlags() & BDF_PROTOTYPE)))	return 1;
+															&& (!(BurnDrvGetFlags() & BDF_PROTOTYPE)))			return 1;
 
 	if ((nLoadMenuFamilyFilter & FBF_MSLUG)					&& (BurnDrvGetFamilyFlags() & FBF_MSLUG))			return 1;
 	if ((nLoadMenuFamilyFilter & FBF_SF)					&& (BurnDrvGetFamilyFlags() & FBF_SF))				return 1;

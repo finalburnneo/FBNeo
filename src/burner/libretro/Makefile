@@ -283,6 +283,7 @@ else ifeq ($(platform), switch)
 # Nintendo Switch (libnx)
 else ifeq ($(platform), libnx)
 	include $(DEVKITPRO)/libnx/switch_rules
+	AR="$(DEVKITPRO)/devkitA64/bin/aarch64-none-elf-ar$(BINARY_EXT)"
 	EXT=a
 	TARGET := $(TARGET_NAME)_libretro_$(platform).$(EXT)
 	DEFINES := -DSWITCH=1 -U__linux__ -U__linux -DRARCH_INTERNAL

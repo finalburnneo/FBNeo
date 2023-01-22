@@ -24,7 +24,6 @@ INT32 BurnPaddleX[MAX_GUNS];
 INT32 BurnPaddleY[MAX_GUNS];
 
 struct GunWrap { INT32 xmin; INT32 xmax; INT32 ymin; INT32 ymax; };
-static GunWrap BurnGunWrapInf[MAX_GUNS]; // Paddle/Dial use
 static GunWrap BurnGunBoxInf[MAX_GUNS]; // Gun use
 
 #define a 0,
@@ -138,7 +137,7 @@ void BurnPaddleReturn(BurnDialINF &dial, INT32 num, INT32 isB)
 
 	if (num > MAX_GUNS - 1) return;
 
-	INT32 Paddle = ((isB) ? BurnPaddleY[num] : BurnPaddleX[num]) >> 7;
+	INT32 Paddle = ((isB) ? BurnPaddleY[num] : BurnPaddleX[num]) / 0x80;
 	INT32 device = (num * 2) + isB;
 
 	if (Paddle < PaddleLast[device]) {
@@ -180,7 +179,7 @@ static INT32 UDLRSpeed[MAX_GUNS];
 
 static INT32 Max_Scanlines; // for interpolated reading
 
-void BurnTrackballFrame(INT32 dev, INT16 PortA, INT16 PortB, INT32 VelocityStart, INT32 VelocityMax, INT32 MaxScanlines)
+void BurnTrackballFrame(INT32 dev, INT32 PortA, INT32 PortB, INT32 VelocityStart, INT32 VelocityMax, INT32 MaxScanlines)
 {
 	BurnDialINF dial = { VelocityStart, VelocityMax, (VelocityStart + VelocityMax) / 2, 0, 0, 0 };
 
@@ -509,13 +508,7 @@ void BurnTrackballConfigStartStopPoints(INT32 dev, INT32 PortA_Start, INT32 Port
 
 // end Trackball Helpers
 
-void BurnPaddleSetWrap(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax)
-{
-	BurnGunWrapInf[num].xmin = xmin * 0x10; BurnGunWrapInf[num].xmax = xmax * 0x10;
-	BurnGunWrapInf[num].ymin = ymin * 0x10; BurnGunWrapInf[num].ymax = ymax * 0x10;
-}
-
-void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT16 x, INT16 y)
+void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT32 x, INT32 y)
 {
 #if defined FBNEO_DEBUG
 	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called without init\n"));
@@ -529,29 +522,6 @@ void BurnPaddleMakeInputs(INT32 num, BurnDialINF &dial, INT16 x, INT16 y)
 
 	BurnPaddleX[num] += x;
 	BurnPaddleY[num] += y;
-
-	// Wrapping (for dial/paddle use)
-	if (BurnGunWrapInf[num].xmin != -1)
-		if (BurnPaddleX[num] < BurnGunWrapInf[num].xmin * 0x100) {
-			BurnPaddleX[num] = BurnGunWrapInf[num].xmax * 0x100;
-			BurnPaddleReturn(dial, num, 0); // rebase PaddleLast* on wrap
-		}
-	if (BurnGunWrapInf[num].xmax != -1)
-		if (BurnPaddleX[num] > BurnGunWrapInf[num].xmax * 0x100) {
-			BurnPaddleX[num] = BurnGunWrapInf[num].xmin * 0x100;
-			BurnPaddleReturn(dial, num, 0); // rebase PaddleLast* on wrap
-		}
-
-	if (BurnGunWrapInf[num].ymin != -1)
-		if (BurnPaddleY[num] < BurnGunWrapInf[num].ymin * 0x100) {
-			BurnPaddleY[num] = BurnGunWrapInf[num].ymax * 0x100;
-			BurnPaddleReturn(dial, num, 1); // rebase PaddleLast* on wrap
-		}
-	if (BurnGunWrapInf[num].ymax != -1)
-		if (BurnPaddleY[num] > BurnGunWrapInf[num].ymax * 0x100) {
-			BurnPaddleY[num] = BurnGunWrapInf[num].ymin * 0x100;
-			BurnPaddleReturn(dial, num, 1); // rebase PaddleLast* on wrap
-		}
 }
 
 void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
@@ -633,7 +603,6 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 		BurnGunX[i] = ((nBurnGunMaxX >> 1) - 7) << 8;
 		BurnGunY[i] = ((nBurnGunMaxY >> 1) - 8) << 8;
 
-		BurnPaddleSetWrap(i, 0, 0xf0, 0, 0xf0); // Paddle/dial stuff
 		BurnGunSetBox(i, 0, 0xff, 0, 0xff); // Gun stuff
 	}
 

@@ -1372,7 +1372,7 @@ static INT32 DrvFrame()
 
 		if (is_trisport) {
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-			BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x3f, 512);
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x7f, 512);
 			BurnTrackballUpdate(0);
 		}
 	}

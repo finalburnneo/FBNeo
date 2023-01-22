@@ -7833,34 +7833,35 @@ struct BurnDriver BurnDrvoldsplusnr = {
 };
 
 
-// 西游释厄传 - 群魔乱舞 (版本 211, 修改版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)
-// More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=707290
+// 西游释厄传-群魔乱舞(新版 211 版, 最终版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)
+// Modified by: 萧鱼儿, 一只狼, wzc123
+// More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=718724
 
 static struct BurnRomInfo oldsplusnr211RomDesc[] = {
-	{ "v-211cn.u10",			0x0400000, 0x296a8c3a, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v-211cn.u10",			0x0400000, 0x8a8b30b7, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
-	{ "igs_t05301naw064.u2",	0x0800000, 0x9019665b, 2 | BRF_GRA },			//  1 Tile data
+	{ "igs_t05301naw064.u2",	0x0800000, 0xbf3db9be, 2 | BRF_GRA },                        //  1 Tile data
 
-	{ "igs_a05301naw064.u3",	0x0800000, 0x5291d22c, 3 | BRF_GRA },	 		//  2 Sprite Color Data
-	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 3 | BRF_GRA },			//  3
-	{ "igs_a05303naw064.u6",	0x0800000, 0x5f75eca2, 3 | BRF_GRA },			//  4
-	{ "igs_a05304naw064.u8",	0x0800000, 0x365015f9, 3 | BRF_GRA },			//  5
+	{ "igs_a05301naw064.u3",	0x0800000, 0x0f456049, 3 | BRF_GRA },                        //  2 Sprite Color Data
+	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 3 | BRF_GRA },                        //  3
+	{ "igs_a05303naw064.u6",	0x0800000, 0x5f75eca2, 3 | BRF_GRA },                        //  4
+	{ "igs_a05304naw064.u8",	0x0800000, 0xbce3d08b, 3 | BRF_GRA },                        //  5
 
-	{ "igs_b05301naw064.u9",	0x0800000, 0xe5286686, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "igs_b05302naw064.u11",	0x0800000, 0x383a24e2, 4 | BRF_GRA },			//  7
+	{ "igs_b05301naw064.u9",	0x0800000, 0x1cc7c2b1, 4 | BRF_GRA },                        //  6 Sprite Masks & Color Indexes
+	{ "igs_b05302naw064.u11",	0x0800000, 0x25b7a816, 4 | BRF_GRA },                        //  7
 
-	{ "igs_w05301nab032.u5",	0x0400000, 0x6adb13ed, 5 | BRF_SND },			//  8 Samples
+	{ "igs_w05301nab032.u5",	0x0400000, 0xb740b810, 5 | BRF_SND },                        //  8 Samples
 
-	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(oldsplusnr211, oldsplusnr211, pgm)
 STD_ROM_FN(oldsplusnr211)
 
 struct BurnDriver BurnDrvoldsplusnr211 = {
-	"oldsplusnr211", "oldsplus", "pgm", NULL, "2021",
-	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)\0", "Incomplete Dump", "hack", "PolyGameMaster",
-	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u7248\u672c 211)\0", NULL, NULL, NULL,
+	"oldsplusnr211", "oldsplus", "pgm", NULL, "2023",
+	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)\0", "Incomplete Dump", "hack", "PolyGameMaster",
+	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u65b0\u7248 211 \u7248, \u6700\u7d42\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, oldsplusnr211RomInfo, oldsplusnr211RomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldsplusnrDIPInfo,
 	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

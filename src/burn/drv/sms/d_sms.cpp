@@ -29825,18 +29825,18 @@ struct BurnDriver BurnDrvsms_gemitas = {
 	256, 224, 4, 3
 };
 
-// Gotris (HB, v1.2p)
+// Gotris (HB, v1.3p)
 
 static struct BurnRomInfo sms_gotrisfvRomDesc[] = {
-	{ "Gotris v1.2p (2021)(Tuxedo Games).sms",	262144, 0xcfe301ed, BRF_PRG | BRF_ESS },
+	{ "Gotris v1.3p (2022)(Tuxedo Games).sms",	278528, 0xa11888ff, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_gotrisfv)
 STD_ROM_FN(sms_gotrisfv)
 
 struct BurnDriver BurnDrvsms_gotrisfv = {
-	"sms_gotrisfv", NULL, NULL, NULL, "2021",
-	"Gotris (HB, v1.2p)\0", NULL, "Tuxedo Games", "Sega Master System",
+	"sms_gotrisfv", NULL, NULL, NULL, "2021-22",
+	"Gotris (HB, v1.3p)\0", NULL, "Tuxedo Games", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_gotrisfvRomInfo, sms_gotrisfvRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -30412,4 +30412,23 @@ struct BurnDriver BurnDrvsms_sww22e = {
 	SMSGetZipName, sms_sww22eRomInfo, sms_sww22eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 224, 4, 3
+};
+
+// Sutoroku (HB)
+
+static struct BurnRomInfo sms_sutorokuRomDesc[] = {
+	{ "Sutoroku (2022)(X7R).sms",	49152, 0xf4804329, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sutoroku)
+STD_ROM_FN(sms_sutoroku)
+
+struct BurnDriver BurnDrvsms_sutoroku = {
+	"sms_sutoroku", NULL, NULL, NULL, "2022",
+	"Sutoroku (HB)\0", "WIP version", "X7R", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_sutorokuRomInfo, sms_sutorokuRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
 };

@@ -8878,6 +8878,7 @@ DRV		BurnDrvLiberate;
 DRV		BurnDrvmd_liberty;
 DRV		BurnDrvnes_lifeforce;
 DRV		BurnDrvMSX_lifefastln;
+DRV		BurnDrvmd_lifeonmars;
 DRV		BurnDrvLifefrcej;
 DRV		BurnDrvLifefrce;
 DRV		BurnDrvcv_lift;
@@ -11016,6 +11017,7 @@ DRV		BurnDrvmd_nhktaidr;
 DRV		BurnDrvmd_nhktaidrc;
 DRV		BurnDrvpce_nhktaidr;
 DRV		BurnDrvmd_nhl94;
+DRV		BurnDrvmd_nhl2023;
 DRV		BurnDrvmd_nhl95;
 DRV		BurnDrvmd_nhl96;
 DRV		BurnDrvmd_nhl97;
@@ -12047,11 +12049,11 @@ DRV		BurnDrvmd_piratedw1;
 DRV		BurnDrvmd_piratedws;
 DRV		BurnDrvmd_piratedw;
 DRV		BurnDrvmd_pcarib;
+DRV		BurnDrvmd_pcarib2;
 DRV		BurnDrvnes_pirates;
 DRV		BurnDrvmd_piratesp1;
 DRV		BurnDrvmd_pirates;
 DRV		BurnDrvmd_piratesp;
-DRV		BurnDrvmd_pcarib2;
 DRV		BurnDrvPiscesb;
 DRV		BurnDrvPisces;
 DRV		BurnDrvPistoldm;
@@ -16302,6 +16304,7 @@ DRV		BurnDrvMSX_survivor;
 DRV		BurnDrvpce_susano;
 DRV		BurnDrvGogomile;
 DRV		BurnDrvGogomileo;
+DRV		BurnDrvsms_sutoroku;
 DRV		BurnDrvSuzuka8hj;
 DRV		BurnDrvSuzuka8h;
 DRV		BurnDrvSuzuk8h2j;
@@ -16994,6 +16997,7 @@ DRV		BurnDrvkof98bc2nd;
 DRV		BurnDrvkof98bc2k2;
 DRV		BurnDrvkof98eckg;
 DRV		BurnDrvkof98ecky;
+DRV		BurnDrvkof98evo;
 DRV		BurnDrvKof98mix;
 DRV		BurnDrvkof99jh;
 DRV		BurnDrvkof99sk;
@@ -26035,7 +26039,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_gotcha,			// Gotcha! - The Sport! (USA)
 	&BurnSpecGothik,			// Gothik (48K)
 	&BurnDrvsms_gotris,			// Gotris (HB, v0.8)
-	&BurnDrvsms_gotrisfv,		// Gotris (HB, v1.2p)
+	&BurnDrvsms_gotrisfv,		// Gotris (HB, v1.3p)
 	&BurnDrvPlegendsj,			// Gouketsuji Gaiden - Saikyou Densetsu (Japan, Ver. 95.06.20)
 	&BurnDrvPlegends,			// Gouketsuji Gaiden Legends (USA, ver. 95/06/20)
 	&BurnDrvPowerinj,			// Gouketsuji Ichizoku (Japan)
@@ -28268,6 +28272,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_liberty,			// Liberty or Death (USA)
 	&BurnDrvnes_lifeforce,		// Life Force (USA)
 	&BurnDrvMSX_lifefastln,		// Life in the Fast Lane (Euro)
+	&BurnDrvmd_lifeonmars,		// Life on Mars (HB)
 	&BurnDrvLifefrcej,			// Lifeforce (Japan)
 	&BurnDrvLifefrce,			// Lifeforce (US)
 	&BurnDrvcv_lift,			// Lift (HB)
@@ -30406,6 +30411,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_nhktaidrc,		// NHK Taiga Drama - Taiheiki (T-Chi)
 	&BurnDrvpce_nhktaidr,		// NHK Taiga Drama - Taiheiki
 	&BurnDrvmd_nhl94,			// NHL '94 (Euro, USA)
+	&BurnDrvmd_nhl2023,			// NHL '94: 2023 Edition (Hack, v1.1)
 	&BurnDrvmd_nhl95,			// NHL 95 (Euro, USA)
 	&BurnDrvmd_nhl96,			// NHL 96 (Euro, USA)
 	&BurnDrvmd_nhl97,			// NHL 97 (Euro, USA)
@@ -31437,11 +31443,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_piratedws,		// Pirates of Dark Water, The (Hack, Spanish)
 	&BurnDrvmd_piratedw,		// Pirates of Dark Water, The (USA, January 1994)
 	&BurnDrvmd_pcarib,			// Pirates of the Caribbean (Rus)
+	&BurnDrvmd_pcarib2,			// Pirates of the Caribbean - On Stranger Tides (Rus) (Unl)
 	&BurnDrvnes_pirates,		// Pirates! (USA)
 	&BurnDrvmd_piratesp1,		// Pirates! Gold (Prototype, 19930401)
 	&BurnDrvmd_pirates,			// Pirates! Gold (USA)
 	&BurnDrvmd_piratesp,		// Pirates! Gold (USA, Prototype)
-	&BurnDrvmd_pcarib2,			// Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirates of the Caribbean - On Stranger Tides (Rus)
 	&BurnDrvPiscesb,			// Pisces (bootleg)
 	&BurnDrvPisces,				// Pisces
 	&BurnDrvPistoldm,			// Pistol Daimyo no Bouken (Japan)
@@ -35692,6 +35698,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_susano,			// Susanoo Densetsu
 	&BurnDrvGogomile,			// Susume! Mile Smile / Go Go! Mile Smile (newer)
 	&BurnDrvGogomileo,			// Susume! Mile Smile / Go Go! Mile Smile (older)
+	&BurnDrvsms_sutoroku,		// Sutoroku (HB)
 	&BurnDrvSuzuka8hj,			// Suzuka 8 Hours (Japan, Rev B)
 	&BurnDrvSuzuka8h,			// Suzuka 8 Hours (World, Rev C)
 	&BurnDrvSuzuk8h2j,			// Suzuka 8 Hours 2 (Japan, Rev B)
@@ -36384,6 +36391,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof98bc2k2,			// The King of Fighters '98 BC Style 2002 (Hack)
 	&BurnDrvkof98eckg,			// The King of Fighters '98 Easy Combo King (GOTVG Version, Hack)
 	&BurnDrvkof98ecky,			// The King of Fighters '98 Easy Combo King (YZKOF Version, Hack)
+	&BurnDrvkof98evo,			// The King of Fighters '98 Evolution (Hack By NEO Edit Team)
 	&BurnDrvKof98mix,			// The King of Fighters '98 Mix (2015-12-29)
 	&BurnDrvkof99jh,			// The King of Fighters '99 - Evolution
 	&BurnDrvkof99sk,			// The King of Fighters '99 - Fluent and Refreshing

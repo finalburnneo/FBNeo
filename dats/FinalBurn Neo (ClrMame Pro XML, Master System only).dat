@@ -2174,10 +2174,10 @@
 	</game>
 	<game name="gotrisfv">
 		<comment>Homebrew</comment>
-		<description>Gotris (HB, v1.2p)</description>
-		<year>2021</year>
+		<description>Gotris (HB, v1.3p)</description>
+		<year>2021-22</year>
 		<manufacturer>Tuxedo Games</manufacturer>
-		<rom name="Gotris v1.2p (2021)(Tuxedo Games).sms" size="262144" crc="cfe301ed"/>
+		<rom name="Gotris v1.3p (2022)(Tuxedo Games).sms" size="278528" crc="a11888ff"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5007,6 +5007,15 @@
 		<year>1993</year>
 		<manufacturer>Virgin Interactive</manufacturer>
 		<rom name="mpr-15506.ic1" size="262144" crc="6f9ac98f"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sutoroku">
+		<comment>Homebrew, WIP version</comment>
+		<description>Sutoroku (HB)</description>
+		<year>2022</year>
+		<manufacturer>X7R</manufacturer>
+		<rom name="Sutoroku (2022)(X7R).sms" size="49152" crc="f4804329"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -10437,6 +10437,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="lifeonmars">
+		<comment>Homebrew</comment>
+		<description>Life on Mars (HB)</description>
+		<year>2022</year>
+		<manufacturer>Kai Magazine Software</manufacturer>
+		<rom name="Life on Mars (2022)(Kai Magazine).bin" size="4194304" crc="b256f14a"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lightc">
 		<description>Light Crusader (Euro)</description>
 		<year>1995</year>
@@ -11577,7 +11586,7 @@
 		<comment>Homebrew</comment>
 		<description>Metal Dragon (HB)</description>
 		<year>2021-22</year>
-		<manufacturer>Kai Magazine Games</manufacturer>
+		<manufacturer>Kai Magazine Software</manufacturer>
 		<rom name="Metal Dragon (2021)(Kai Magazine Software).bin" size="4194304" crc="96cb4ef2"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13423,6 +13432,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nhl2023" cloneof="nhl94" romof="nhl94">
+		<comment>Hack</comment>
+		<description>NHL '94: 2023 Edition (Hack, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>Adam Catalyst</manufacturer>
+		<rom name="NHL 94 - 2023 Edition hack v1.1 (2023)(Adam Catalyst).bin" size="2097152" crc="ee39cee0"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="nhl95">
 		<description>NHL 95 (Euro, USA)</description>
 		<year>1995</year>
@@ -14261,9 +14279,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="paperboys" cloneof="paperboy" romof="paperboy">
+		<comment>Hack</comment>
 		<description>Paperboy (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Tengen</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="paperboy (hack, spanish).bin" size="524288" crc="023b647c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14285,9 +14304,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="paperbo2s" cloneof="paperbo2" romof="paperbo2">
+		<comment>Hack</comment>
 		<description>Paperboy 2 (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Tengen</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="paperboy 2 (hack, spanish).bin" size="1048576" crc="d0a39c49"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -14875,6 +14895,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pcarib2">
+		<comment>Piraty Karibskogo Morya - Na Strannyh Beregah</comment>
+		<description>Pirates of the Caribbean - On Stranger Tides (Rus) (Unl)</description>
+		<year>20??</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="pirates of the caribbean - on stranger tides (unl).bin" size="1048576" crc="63c90c7c"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="piratesp1" cloneof="pirates" romof="pirates">
 		<comment>Prototype</comment>
 		<description>Pirates! Gold (Prototype, 19930401)</description>
@@ -14898,14 +14927,6 @@
 		<year>1993</year>
 		<manufacturer>Microprose</manufacturer>
 		<rom name="pirates! gold (usa) (beta).bin" size="1048576" crc="0a525641"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="pcarib2">
-		<description>Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirates of the Caribbean - On Stranger Tides (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
-		<rom name="pirates of the caribbean - on stranger tides (unl).bin" size="1048576" crc="63c90c7c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

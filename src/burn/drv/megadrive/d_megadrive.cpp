@@ -482,7 +482,7 @@ struct BurnDriver BurnDrvmd_lotust = {
 
 // NHL '94 (Euro, USA)
 static struct BurnRomInfo md_nhl94RomDesc[] = {
-	{ "nhl94_hl9402", 0x100000, 0xacecd225, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
+	{ "nhl94_hl9402", 1048576, 0xacecd225, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_nhl94)
@@ -494,6 +494,25 @@ struct BurnDriver BurnDrvmd_nhl94 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_nhl94RomInfo, md_nhl94RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// NHL '94: 2023 Edition (Hack, v1.1)
+// https://www.romhacking.net/reviews/9871
+static struct BurnRomInfo md_nhl2023RomDesc[] = {
+	{ "NHL 94 - 2023 Edition hack v1.1 (2023)(Adam Catalyst).bin", 2097152, 0xee39cee0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nhl2023)
+STD_ROM_FN(md_nhl2023)
+
+struct BurnDriver BurnDrvmd_nhl2023 = {
+	"md_nhl2023", "md_nhl94", NULL, NULL, "2023",
+	"NHL '94: 2023 Edition (Hack, v1.1)\0", NULL, "Adam Catalyst", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSMISC, 0,
+	MegadriveGetZipName, md_nhl2023RomInfo, md_nhl2023RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -1891,7 +1910,7 @@ struct BurnDriver BurnDrvmd_paperbo2 = {
 	"md_paperbo2", NULL, NULL, NULL, "1992",
 	"Paperboy 2 (Euro, USA)\0", NULL, "Tengen", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_paperbo2RomInfo, md_paperbo2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -24086,7 +24105,7 @@ struct BurnDriver BurnDrvmd_paperboy = {
 	"md_paperboy", NULL, NULL, NULL, "1991",
 	"Paperboy (Euro, USA)\0", NULL, "Tengen", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_paperboyRomInfo, md_paperboyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -24104,7 +24123,7 @@ struct BurnDriver BurnDrvmd_paperboyj = {
 	"md_paperboyj", "md_paperboy", NULL, NULL, "1992",
 	"Paperboy (Jpn)\0", NULL, "Tengen", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_paperboyjRomInfo, md_paperboyjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -24977,7 +24996,7 @@ struct BurnDriver BurnDrvmd_phantom = {
 	"md_phantom", NULL, NULL, NULL, "1995",
 	"Phantom 2040 (Euro)\0", NULL, "Viacom New Media", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_phantomRomInfo, md_phantomRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -24995,7 +25014,7 @@ struct BurnDriver BurnDrvmd_phantomu = {
 	"md_phantomu", "md_phantom", NULL, NULL, "1995",
 	"Phantom 2040 (USA)\0", NULL, "Viacom New Media", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_phantomuRomInfo, md_phantomuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42609,7 +42628,7 @@ struct BurnDriver BurnDrvmd_pcarib = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirates of the Caribbean - On Stranger Tides (Rus)
+// Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirates of the Caribbean - On Stranger Tides (Rus) (Unl)
 static struct BurnRomInfo md_pcarib2RomDesc[] = {
 	{ "pirates of the caribbean - on stranger tides (unl).bin", 0x100000, 0x63c90c7c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -42618,10 +42637,10 @@ STD_ROM_PICK(md_pcarib2)
 STD_ROM_FN(md_pcarib2)
 
 struct BurnDriver BurnDrvmd_pcarib2 = {
-	"md_pcarib2", NULL, NULL, NULL, "199?",
-	"Piraty Karibskogo Morya - Na Strannyh Beregah ~ Pirates of the Caribbean - On Stranger Tides (Rus)\0", NULL, "<unknown>", "Sega Megadrive",
+	"md_pcarib2", NULL, NULL, NULL, "20??",
+	"Pirates of the Caribbean - On Stranger Tides (Rus) (Unl)\0", "Piraty Karibskogo Morya - Na Strannyh Beregah", "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_pcarib2RomInfo, md_pcarib2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -43372,6 +43391,25 @@ struct BurnDriver BurnDrvmd_insanepain = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Life on Mars (HB)
+
+static struct BurnRomInfo md_lifeonmarsRomDesc[] = {
+	{ "Life on Mars (2022)(Kai Magazine).bin", 4194304, 0xb256f14a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lifeonmars)
+STD_ROM_FN(md_lifeonmars)
+
+struct BurnDriver BurnDrvmd_lifeonmars = {
+	"md_lifeonmars", NULL, NULL, NULL, "2022",
+	"Life on Mars (HB)\0", NULL, "Kai Magazine Software", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_lifeonmarsRomInfo, md_lifeonmarsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Miniplanets Remix (HB, Rev04)
 
 static struct BurnRomInfo md_miniplanrmxRomDesc[] = {
@@ -43899,7 +43937,7 @@ STD_ROM_FN(md_metaldragon)
 
 struct BurnDriver BurnDrvmd_metaldragon = {
 	"md_metaldragon", NULL, NULL, NULL, "2021-22",
-	"Metal Dragon (HB)\0", NULL, "Kai Magazine Games", "Sega Megadrive",
+	"Metal Dragon (HB)\0", NULL, "Kai Magazine Software", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_metaldragonRomInfo, md_metaldragonRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -51413,9 +51451,9 @@ STD_ROM_FN(md_paperboys)
 
 struct BurnDriver BurnDrvmd_paperboys = {
 	"md_paperboys", "md_paperboy", NULL, NULL, "2018",
-	"Paperboy (Hack, Spanish)\0", NULL, "Tengen", "Sega Megadrive",
+	"Paperboy (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_paperboysRomInfo, md_paperboysRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -51432,9 +51470,9 @@ STD_ROM_FN(md_paperbo2s)
 
 struct BurnDriver BurnDrvmd_paperbo2s = {
 	"md_paperbo2s", "md_paperbo2", NULL, NULL, "2018",
-	"Paperboy 2 (Hack, Spanish)\0", NULL, "Tengen", "Sega Megadrive",
+	"Paperboy 2 (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_paperbo2sRomInfo, md_paperbo2sRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

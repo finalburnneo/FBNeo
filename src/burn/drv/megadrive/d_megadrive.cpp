@@ -45734,7 +45734,7 @@ STD_ROM_FN(md_sorkiller)
 
 struct BurnDriver BurnDrvmd_sorkiller = {
 	"md_sorkiller", "md_sor", NULL, NULL, "2012",
-	"Streets of Rage (Killer Difficulty v0.9h, hack)\0", NULL, "gsaurus", "Sega Megadrive",
+	"Streets of Rage (Killer Difficulty v0.9, hack)\0", NULL, "gsaurus", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_sorkillerRomInfo, md_sorkillerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

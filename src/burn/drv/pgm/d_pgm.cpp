@@ -8697,10 +8697,10 @@ struct BurnDriver BurnDrvkov2dzxx = {
 
 
 // Knights of Valour Plus 2012 - Warriors
-// GOTVG 2022/12/25
+// GOTVG 20230120
 
 static struct BurnRomInfo kovplus12dwRomDesc[] = {
-	{ "12dw_p0603_119.u1",	0x0400000, 0x08ca9c0d, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
+	{ "12dw_p0603_119.u1",	0x0400000, 0x05c0e150b, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
 	{ "12dw_t0600.u11",		0x0800000, 0x364aec7e, 2 | BRF_GRA },                        //  1 Tile data
 
@@ -8721,7 +8721,7 @@ STDROMPICKEXT(kovplus12dw, kovplus12dw, kovplus12dwBios)
 STD_ROM_FN(kovplus12dw)
 
 struct BurnDriver BurnDrvkovplus12dw = {
-	"kovplus12dw", "kovplus", "pgm", NULL, "2022",
+	"kovplus12dw", "kovplus", "pgm", NULL, "2023",
 	"Knights of Valour Plus 2012 - Warriors\0", NULL, "hack", "PolyGameMaster",
 	L"Knights of Valour Plus 2012 - Warriors\0\u4e09\u570b\u6230\u7d00 \u6b63\u5b97 2012 - \u7121\u96d9 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,

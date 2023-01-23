@@ -3189,12 +3189,12 @@ struct BurnDriver BurnDrvImgfightj = {
 
 // Image Fight (Japan, bootleg)
 
-static struct BurnRomInfo imgfightbRomDesc[] = {
+static struct BurnRomInfo imgfightjbRomDesc[] = {
 	{ "ic108.9b",		0x10000, 0x592d2d80, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
 	{ "ic89.7b",		0x10000, 0x61f89056, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ic111.9e",		0x10000, 0xda50622e, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "ic110.9d",		0x10000, 0x0e0aefcd, 0x01 | BRF_PRG | BRF_ESS }, //  3
-	{ "ic92.7e",		0x10000, 0x38fce272, 0x01 | BRF_PRG | BRF_ESS }, //  4
+	{ "ic111.9e",		0x10000, 0x6aae3a46, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "ic92.7e",		0x10000, 0x38fce272, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "ic110.9d",		0x10000, 0x0e0aefcd, 0x01 | BRF_PRG | BRF_ESS }, //  4
 	{ "ic91.7d",		0x10000, 0xd69c0722, 0x01 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "ic96.7k",		0x10000, 0xd4febb03, 0x02 | BRF_GRA },           //  6 Sprites
@@ -3222,15 +3222,15 @@ static struct BurnRomInfo imgfightbRomDesc[] = {
 	{ "25.ic27.2l",		0x02000, 0xd83359a2, 0x07 | BRF_PRG }, 			 // 24 i8751 microcontroller (i80c31 instead of i8751, contents identical to imgfightj MCU, with second half padded with 0xff)
 };
 
-STD_ROM_PICK(imgfightb)
-STD_ROM_FN(imgfightb)
+STD_ROM_PICK(imgfightjb)
+STD_ROM_FN(imgfightjb)
 
-struct BurnDriver BurnDrvImgfightb = {
-	"imgfightb", "imgfight", NULL, NULL, "1988",
+struct BurnDriver BurnDrvImgfightjb = {
+	"imgfightjb", "imgfight", NULL, NULL, "1988",
 	"Image Fight (Japan, bootleg)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
-	NULL, imgfightbRomInfo, imgfightbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
+	NULL, imgfightjbRomInfo, imgfightjbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
 	imgfightInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
@@ -4146,7 +4146,7 @@ static struct BurnRomInfo gallopm72RomDesc[] = {
 
 	{ "cc-c-v0.ic44",	0x20000, 0x6247bade, 0x05 | BRF_SND },              // 16 DAC Samples
 	
-	{ "cc_c-pr-.ic1", 	0x10000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
+	{ "cc_c-pr-.ic1", 	0x01000, 0x00000000, 0x00 | BRF_PRG | BRF_NODUMP }, // 17 i8751 microcontroller
 
 	{ "m72_a-8l-.ic66",	0x00100, 0xb460c438, 0x00 | BRF_OPT },              // 18 Proms
 	{ "m72_a-9l-.ic75",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },              // 19

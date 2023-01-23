@@ -1,4 +1,4 @@
-// FB Alpha Raiden II driver module
+// FB Neo Raiden II driver module
 // Based on MAME driver Olivier Galibert, Angelo Salese, David Haywood, Tomasz Slanina
 
 #include "tiles_generic.h"
@@ -3867,7 +3867,7 @@ STD_ROM_FN(raiden2sw)
 
 struct BurnDriver BurnDrvRaiden2sw = {
 	"raiden2sw", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Switzerland)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (Switzerland)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2swRomInfo, raiden2swRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -3956,6 +3956,48 @@ struct BurnDriver BurnDrvRaiden2nl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2nlRomInfo, raiden2nlRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Raiden II (Australia)
+
+static struct BurnRomInfo raiden2auRomDesc[] = {
+	{ "1.u0211",						0x080000, 0xc1fc70f5, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "2.u0212",						0x080000, 0x396410f9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",					0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  2 COPX MCU data
+
+	{ "5.u1110",						0x010000, 0xc2028ba2, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "7.u0724",						0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",		0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",		0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811",		0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",		0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837",		0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836",		0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "6.u1017",						0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "voice_2.u1018",					0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342",		0x000155, 0x057a9cdc, 0 | BRF_OPT },           // 13 Pals
+	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },           // 14
+};
+
+STD_ROM_PICK(raiden2au)
+STD_ROM_FN(raiden2au)
+
+struct BurnDriver BurnDrvRaiden2au = {
+	"raiden2au", "raiden2", NULL, NULL, "1993",
+	"Raiden II (Australia)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2auRomInfo, raiden2auRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
 	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -4087,7 +4129,7 @@ struct BurnDriver BurnDrvRaiden2i = {
 };
 
 
-// Raiden II (Korea)
+// Raiden II (harder, Korea)
 
 static struct BurnRomInfo raiden2kRomDesc[] = {
 	{ "k1.u0211",					0x080000, 0x1fcc08cf, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4120,7 +4162,7 @@ STD_ROM_FN(raiden2k)
 
 struct BurnDriver BurnDrvRaiden2k = {
 	"raiden2k", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (harder, Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2kRomInfo, raiden2kRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4145,7 +4187,7 @@ http://www.gamefaqs.com/coinop/arcade/game/10729.html
 
 */
 
-// Raiden II (Easy Version, Korea?)
+// Raiden II (easier, Korea)
 
 static struct BurnRomInfo raiden2eRomDesc[] = {
 	{ "r2_prg_0.u0211",				0x080000, 0x2abc848c, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4178,7 +4220,7 @@ STD_ROM_FN(raiden2e)
 
 struct BurnDriver BurnDrvRaiden2e = {
 	"raiden2e", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Korea?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (easier, Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2eRomInfo, raiden2eRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4187,7 +4229,7 @@ struct BurnDriver BurnDrvRaiden2e = {
 };
 
 
-// Raiden II (Easy Version, Japan?)
+// Raiden II (easier, Japan)
 
 static struct BurnRomInfo raiden2eaRomDesc[] = {
 	{ "r2.1.u0211",					0x080000, 0xd7041be4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4220,7 +4262,7 @@ STD_ROM_FN(raiden2ea)
 
 struct BurnDriver BurnDrvRaiden2ea = {
 	"raiden2ea", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Japan?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (easier, Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2eaRomInfo, raiden2eaRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4229,7 +4271,7 @@ struct BurnDriver BurnDrvRaiden2ea = {
 };
 
 
-// Raiden II (Easy Version, US set 2)
+// Raiden II (easier, US set 2)
 // same as raiden2ea, different region
 
 static struct BurnRomInfo raiden2euRomDesc[] = {
@@ -4263,7 +4305,7 @@ STD_ROM_FN(raiden2eu)
 
 struct BurnDriver BurnDrvRaiden2eu = {
 	"raiden2eu", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, US set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (easier, US set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2euRomInfo, raiden2euRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4272,7 +4314,7 @@ struct BurnDriver BurnDrvRaiden2eu = {
 };
 
 
-// Raiden II (Easy Version, US set 1)
+// Raiden II (easier, US set 1)
 // sort of a mixture of raiden2e easy set with voice ROM of raiden2ea and 2f and a unique sound ROM
 
 static struct BurnRomInfo raiden2euaRomDesc[] = {
@@ -4308,7 +4350,7 @@ STD_ROM_FN(raiden2eua)
 
 struct BurnDriver BurnDrvRaiden2eua = {
 	"raiden2eua", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, US set 1)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (easier, US set 1)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2euaRomInfo, raiden2euaRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4317,7 +4359,7 @@ struct BurnDriver BurnDrvRaiden2eua = {
 };
 
 
-// Raiden II (Easy Version, Germany)
+// Raiden II (easier, Germany)
 // this is the same code revision as raiden2eua but a german region
 
 static struct BurnRomInfo raiden2egRomDesc[] = {
@@ -4353,7 +4395,7 @@ STD_ROM_FN(raiden2eg)
 
 struct BurnDriver BurnDrvRaiden2eg = {
 	"raiden2eg", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
+	"Raiden II (easier, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2egRomInfo, raiden2egRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4448,7 +4490,7 @@ struct BurnDriver BurnDrvRaiden2eub = {
 };
 
 
-// Raiden II (harder, Raiden DX Hardware)
+// Raiden II (harder, Raiden DX hardware, Korea)
 // this set is very weird, it's Raiden II on a Raiden DX board, I'm assuming for now that it uses Raiden DX graphics, but could be wrong.
 
 static struct BurnRomInfo raiden2dxRomDesc[] = {
@@ -4482,7 +4524,7 @@ STD_ROM_FN(raiden2dx)
 
 struct BurnDriver BurnDrvRaiden2dx = {
 	"raiden2dx", "raiden2", NULL, NULL, "1993",
-	"Raiden II (harder, Raiden DX Hardware)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (harder, Raiden DX hardware, Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2dxRomInfo, raiden2dxRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4947,7 +4989,7 @@ struct BurnDriver BurnDrvRaidendxch = {
 
 /* Zero Team sets */
 
-// Zero Team USA (set 1, US, Fabtek license)
+// Zero Team USA (US)
 
 static struct BurnRomInfo zeroteamRomDesc[] = {
 	{ "seibu__1.u024.5k",		0x040000, 0x25aa5ba4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4981,7 +5023,7 @@ STD_ROM_FN(zeroteam)
 
 struct BurnDriver BurnDrvZeroteam = {
 	"zeroteam", NULL, NULL, NULL, "1993",
-	"Zero Team USA (set 1, US, Fabtek license)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team USA (US)\0", "Unemulated protection", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -4990,7 +5032,7 @@ struct BurnDriver BurnDrvZeroteam = {
 };
 
 
-// Zero Team (set 2, Japan? (earlier?))
+// Zero Team (Japan?, earlier?)
 // No licensee, original japan?
 
 static struct BurnRomInfo zeroteamaRomDesc[] = {
@@ -5025,7 +5067,7 @@ STD_ROM_FN(zeroteama)
 
 struct BurnDriver BurnDrvZeroteama = {
 	"zeroteama", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 2, Japan? (earlier?))\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Japan?, earlier?)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -5042,7 +5084,7 @@ problem of the 3.6v lithium battery dying and the missing keys to cause the spri
 // sets, using the sound and char ROMs from us set and code from later japan set. This would make sense if it was dumped
 // from a 'fixed, suicide free' modified us board where someone swapped in the later suicideless japan code ROMs.
 
-// Zero Team (set 3, Japan? (later batteryless))
+// Zero Team (Japan?, later batteryless)
 // No licensee, later japan?
 
 static struct BurnRomInfo zeroteambRomDesc[] = {
@@ -5077,7 +5119,7 @@ STD_ROM_FN(zeroteamb)
 
 struct BurnDriver BurnDrvZeroteamb = {
 	"zeroteamb", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 3, Japan? (later batteryless))\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Japan?, later batteryless)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteambRomInfo, zeroteambRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -5086,7 +5128,7 @@ struct BurnDriver BurnDrvZeroteamb = {
 };
 
 
-// Zero Team (set 4, Taiwan, Liang Hwa license)
+// Zero Team (Taiwan)
 // Liang Hwa, Taiwan licensee, no special word under logo on title
 
 static struct BurnRomInfo zeroteamcRomDesc[] = {
@@ -5121,7 +5163,7 @@ STD_ROM_FN(zeroteamc)
 
 struct BurnDriver BurnDrvZeroteamc = {
 	"zeroteamc", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 4, Taiwan, Liang Hwa license)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Taiwan)\0", "Unemulated protection", "Seibu Kaihatsu (Liang Hwa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamcRomInfo, zeroteamcRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -5130,7 +5172,7 @@ struct BurnDriver BurnDrvZeroteamc = {
 };
 
 
-// Zero Team (set 5, Korea, Dream Soft license)
+// Zero Team (Korea)
 // Dream Soft, Korea licensee, no special word under logo on title; board had serial 'no 1041' on it.
 // this is weird, on other zt sets the ROM order is 1 3 2 4, but this one is 1 3 4 2. blame seibu or whoever marked the ROMs, which were labeled in pen
 
@@ -5166,7 +5208,7 @@ STD_ROM_FN(zeroteamd)
 
 struct BurnDriver BurnDrvZeroteamd = {
 	"zeroteamd", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 5, Korea, Dream Soft license)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Korea)\0", "Unemulated protection", "Seibu Kaihatsu (Dream Soft license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamdRomInfo, zeroteamdRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,

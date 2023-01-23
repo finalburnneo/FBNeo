@@ -8700,7 +8700,7 @@ struct BurnDriver BurnDrvkov2dzxx = {
 // GOTVG 20230120
 
 static struct BurnRomInfo kovplus12dwRomDesc[] = {
-	{ "12dw_p0603_119.u1",	0x0400000, 0x05c0e150b, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
+	{ "12dw_p0603_119.u1",	0x0400000, 0x5c0e150b, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
 	{ "12dw_t0600.u11",		0x0800000, 0x364aec7e, 2 | BRF_GRA },                        //  1 Tile data
 

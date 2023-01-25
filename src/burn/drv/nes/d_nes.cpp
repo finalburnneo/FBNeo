@@ -15926,6 +15926,25 @@ struct BurnDriver BurnDrvnes_jackalem = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Kyouryuu Sentai Juuranger (T-Chi)
+
+static struct BurnRomInfo nes_kyoursenjuucRomDesc[] = {
+	{ "Kyouryuu Sentai Juuranger (T-Chi).nes",          393232, 0x2cebf5e7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kyoursenjuuc)
+STD_ROM_FN(nes_kyoursenjuuc)
+
+struct BurnDriver BurnDrvnes_kyoursenjuuc = {
+	"nes_kyoursenjuuc", "nes_kyoursenjuu", NULL, NULL, "2023",
+	"Kyouryuu Sentai Juuranger (T-Chi)\0", NULL, "LSP Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
+	NESGetZipName, nes_kyoursenjuucRomInfo, nes_kyoursenjuucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Power Blade 2 (T-Chi)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=718809
 static struct BurnRomInfo nes_powerblade2cRomDesc[] = {
@@ -17173,6 +17192,46 @@ struct BurnDriver BurnDrvnes_akumajoudraculac = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_akumajoudraculacRomInfo, nes_akumajoudraculacRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Castlevania - The Holy Relics (Hack)
+// Modified by Optomon, Setz, Tessa Montoya, Dr. Mario, Boneless Ivar
+// https://www.romhacking.net/hacks/3759/ - 20171201
+static struct BurnRomInfo nes_castlevaniahrRomDesc[] = {
+	{ "Castlevania - The Holy Relics (Hack).nes",          131088, 0x8603cbbb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castlevaniahr)
+STD_ROM_FN(nes_castlevaniahr)
+
+struct BurnDriver BurnDrvnes_castlevaniahr = {
+	"nes_castlevaniahr", "nes_castlevania", NULL, NULL, "2017",
+	"Castlevania - The Holy Relics (Hack)\0", NULL, "Optomon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_castlevaniahrRomInfo, nes_castlevaniahrRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Castlevania - Chorus of Mysteries (v1.1, Hack)
+// Modified by Dr. Mario, Optomon
+// https://www.romhacking.net/hacks/263/ - 20070618
+static struct BurnRomInfo nes_castlevaniacomRomDesc[] = {
+	{ "Castlevania - Chorus of Mysteries (v1.1, Hack).nes",          131088, 0xbad05634, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_castlevaniacom)
+STD_ROM_FN(nes_castlevaniacom)
+
+struct BurnDriver BurnDrvnes_castlevaniacom = {
+	"nes_castlevaniacom", "nes_castlevania", NULL, NULL, "2007",
+	"Castlevania - Chorus of Mysteries (v1.1, Hack)\0", NULL, "Optomon & Dr. Mario", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_castlevaniacomRomInfo, nes_castlevaniacomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

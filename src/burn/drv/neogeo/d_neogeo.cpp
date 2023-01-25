@@ -19563,6 +19563,40 @@ struct BurnDriver BurnDrvkf2k2ru35 = {
 	0x1000, 304, 224, 4, 3
 };
 
+// The King of Fighters 2002 Same Character (Hack By DDJ)
+
+static struct BurnRomInfo kof2002scRomDesc[] = {
+	{ "265sc-p1.p1",  0x100000, 0x015ed6b2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p2.sp2",   0x400000, 0x327266b8, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "265-c1.c1",    0x800000, 0x2b65a656, 3 | BRF_GRA },           //  2 Sprite data
+	{ "265-c2.c2",    0x800000, 0xadf18983, 3 | BRF_GRA },           //  3
+	{ "265-c3.c3",    0x800000, 0x875e9fd7, 3 | BRF_GRA },           //  4
+	{ "265-c4.c4",    0x800000, 0x2da13947, 3 | BRF_GRA },           //  5
+	{ "265-c5.c5",    0x800000, 0x61bd165d, 3 | BRF_GRA },           //  6
+	{ "265-c6.c6",    0x800000, 0x03fdd1eb, 3 | BRF_GRA },           //  7
+	{ "265-c7.c7",    0x800000, 0x1a2749d8, 3 | BRF_GRA },           //  8
+	{ "265-c8.c8",    0x800000, 0xab0bb549, 3 | BRF_GRA },           //  9
+
+	{ "265-m1.m1",    0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "265-v1.v1",    0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 11 Sound data
+	{ "265-v2.v2",    0x800000, 0xda41d6f9, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(kof2002sc, kof2002sc, neogeo)
+STD_ROM_FN(kof2002sc)
+
+struct BurnDriver BurnDrvkof2002sc = {
+	"kof2002sc", "kof2002", "neogeo", NULL, "201?",
+	"The King of Fighters 2002 Same Character (Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2002scRomInfo, kof2002scRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof2002Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack)
 /* MVS ONLY RELEASE */
 

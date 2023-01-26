@@ -3280,6 +3280,66 @@ static void mapper192_map()
 		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
 }
 
+// mapper 195: mmc3 + chrram banks 0-3, cpu r/w @ 5000-5fff)
+
+static void mapper195_chrmap(INT32 slot, INT32 bank)
+{
+	mapper_map_chr_ramrom(1, slot, bank, (bank >= 0x0 && bank <= 0x3) ? MEM_RAM : MEM_ROM);
+}
+
+static void mapper195_map()
+{
+    mapper_map_prg(8, 1, mapper_regs[7]);
+
+    if (~mapper4_banksel & 0x40) {
+        mapper_map_prg(8, 0, mapper_regs[6]);
+        mapper_map_prg(8, 2, -2);
+    } else {
+        mapper_map_prg(8, 0, -2);
+        mapper_map_prg(8, 2, mapper_regs[6]);
+    }
+
+    if (~mapper4_banksel & 0x80) {
+		mapper195_chrmap(0, mapper_regs[0] & 0xfe);
+		mapper195_chrmap(1, mapper_regs[0] | 0x01);
+        mapper195_chrmap(2, mapper_regs[1] & 0xfe);
+        mapper195_chrmap(3, mapper_regs[1] | 0x01);
+
+		mapper195_chrmap(4, mapper_regs[2]);
+		mapper195_chrmap(5, mapper_regs[3]);
+		mapper195_chrmap(6, mapper_regs[4]);
+		mapper195_chrmap(7, mapper_regs[5]);
+	} else {
+		mapper195_chrmap(0, mapper_regs[2]);
+		mapper195_chrmap(1, mapper_regs[3]);
+		mapper195_chrmap(2, mapper_regs[4]);
+		mapper195_chrmap(3, mapper_regs[5]);
+
+		mapper195_chrmap(4, mapper_regs[0] & 0xfe);
+		mapper195_chrmap(5, mapper_regs[0] | 0x01);
+		mapper195_chrmap(6, mapper_regs[1] & 0xfe);
+		mapper195_chrmap(7, mapper_regs[1] | 0x01);
+	}
+
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
+static void mapper195_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x5000 && address <= 0x5fff) {
+		Cart.CHRRam[address&0xfff] = data;
+	}
+}
+
+static UINT8 mapper195_read(UINT16 address)
+{
+	if (address >= 0x5000 && address <= 0x5fff) {
+		return Cart.CHRRam[address&0xfff];
+	}
+	return cpu_open_bus;
+}
+
 static void mapper262_map()
 {
     mapper_map_prg(8, 1, mapper_regs[7]);
@@ -9399,6 +9459,19 @@ static INT32 mapper_init(INT32 mappernum)
 		case 192: { // mmc3-derivative w/char ram+rom, ram mapped to chr banks 8, 9, a, b
 			mapper_write = mapper04_write;
 			mapper_map   = mapper192_map;
+			mapper_scanline = mapper04_scanline;
+			mapper_set_chrtype(MEM_RAM);
+			mapper_map_prg( 8, 3, -1);
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 195: { // mmc3-derivative w/char ram+rom, ram mapped to chr banks 0-3, cpu accessable via 5000-5fff
+			mapper_write = mapper04_write;
+			mapper_map   = mapper195_map;
+			psg_area_write  = mapper195_write;	// 5000 - 5fff r/w chr ram
+			psg_area_read   = mapper195_read;	// 5000 - 5fff
 			mapper_scanline = mapper04_scanline;
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);

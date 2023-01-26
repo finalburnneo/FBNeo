@@ -57,12 +57,10 @@ static ButtonToggle Diag;
 
 static INT32 gear_shifter[2];
 
-static INT16 x_target, y_target; // trisport x-tree's
-static INT16 x_accu, y_accu;
-
 static INT32 nCyclesExtra[5];
 
 static INT32 vb_offset = 0; // special timing config for blasted, trisport
+static INT32 scanline;
 
 static INT32 is_spyhunt2 = 0;
 static INT32 is_trisport = 0;
@@ -842,24 +840,10 @@ static void __fastcall trisport_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-static void trackball_tick()
-{
-	// trisport prefers 1 trackball tick per scanline
-
-	x_target = (INT16)BurnTrackballReadWord(0, 0);
-	y_target = (INT16)BurnTrackballReadWord(0, 1);
-
-	if (x_accu < x_target) x_accu++;
-	else if (x_accu > x_target) x_accu--;
-
-	if (y_accu < y_target) y_accu++;
-	else if (y_accu > y_target) y_accu--;
-}
-
 static UINT16 __fastcall trisport_main_read_word(UINT32 address)
 {
 	if ((address & 0x1f0000) == 0x080000) {
-		return 0xff | ((x_accu << 6) & 0x0f00) | ((y_accu << 10) & 0xf000);
+		return 0xff | ((BurnTrackballReadInterpolated(0, scanline) & 0xf) << 8) | ((BurnTrackballReadInterpolated(1, scanline) & 0xf) << 12);
 	}
 
 	if ((address & 0x1f0000) == 0x0a0000) {
@@ -1388,8 +1372,8 @@ static INT32 DrvFrame()
 
 		if (is_trisport) {
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-			BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x7f);
-//			BurnTrackballUpdate(0); // in frame!
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x7f, 512);
+			BurnTrackballUpdate(0);
 		}
 	}
 
@@ -1402,13 +1386,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (is_trisport) {
-			if ((i & 0x3f) == 0) {
-				BurnTrackballUpdate(0);
-			}
-			trackball_tick();
-		}
-
+		scanline = i;
 		SekOpen(0);
 		if (i == 493) {
 			if (pBurnDraw) {
@@ -1523,11 +1501,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		if (is_trisport) {
 			BurnTrackballScan();
-
-			SCAN_VAR(x_target);
-			SCAN_VAR(y_target);
-			SCAN_VAR(x_accu);
-			SCAN_VAR(y_accu);
 		}
 
 		SCAN_VAR(control_data);

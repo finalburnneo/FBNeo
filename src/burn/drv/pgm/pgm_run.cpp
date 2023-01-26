@@ -88,7 +88,7 @@ static INT32 pgmMemIndex()
 
 	PGMProtROM			= PGMUSER0 + 0x10000; // Olds, Killbld, drgw3
 
-	PGMARMROM			= Next; Next += 0x0004000;	// Just always allocate this - only 16kb
+	PGMARMROM			= Next; Next += (bDoIpsPatch || (0 != nPGMSpriteBufferHack)) ? 0x0008000 : 0x0004000;	// Just always allocate this - only 16kb
 
 	RamCurPal			= (UINT32 *) Next; Next += (0x0002004 / 2) * sizeof(UINT32);
 
@@ -135,11 +135,12 @@ static INT32 pgmGetRoms(bool bLoad)
 	UINT8 *PGMSPRMaskROMLoad = PGMSPRMaskROM;
 	UINT8 *PGMSNDROMLoad = ICSSNDROM + (kov2 ? 0x800000 : 0x400000);
 
-	if (bLoad && nPGM68KROMLen == 0x80000 && nPGMSNDROMLen == 0x600000) { // dw2001 & dwpc
-		PGMSNDROMLoad -= 0x200000;
-	}
-	if (bLoad && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) { // kov2dzxx
-		PGMSNDROMLoad -= 0x600000;
+	if (bLoad) {
+		if (nPGM68KROMLen == 0x80000 && nPGMSNDROMLen == 0x600000) { // dw2001 & dwpc
+			PGMSNDROMLoad -= 0x200000;
+		} else if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (GetIpsDrvDefine() & IPS_PGM_SNDOFS6)) { // kov2dzxx
+			PGMSNDROMLoad -= 0x600000;
+		}
 	}
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
@@ -258,12 +259,12 @@ static INT32 pgmGetRoms(bool bLoad)
 		nPGMExternalARMLen = (PGMUSER0Load - PGMUSER0) + 0x100000;
 
 		if (bDoIpsPatch) {
-			nPGM68KROMLen <<= 1;
-			nPGMTileROMLen += 0x800000;
-			nPGMSPRColROMLen += 0x800000 << 2;
-			nPGMSPRMaskROMLen += 0x800000 << 2;
-			nPGMSNDROMLen += 0x800000;
-			nPGMExternalARMLen <<= 1;
+			nPGM68KROMLen		<<= 1;
+			nPGMExternalARMLen	<<= 1;
+			nPGMTileROMLen		+= 0x800000;
+			nPGMSNDROMLen		+= 0x800000;
+			nPGMSPRColROMLen	+= (0x800000 << 2);
+			nPGMSPRMaskROMLen	+= (0x800000 << 2);
 		}
 
 	//	bprintf (0, _T("68k: %x, tile: %x, sprmask: %x, sndrom: %x, arm7: %x\n"), nPGM68KROMLen, nPGMTileROMLen, nPGMSPRMaskROMLen, nPGMSNDROMLen, nPGMExternalARMLen);
@@ -777,6 +778,10 @@ INT32 pgmInit()
 
 	nEnableArm7 = (BurnDrvGetHardwareCode() / HARDWARE_IGS_USE_ARM_CPU) & 1;
 
+	if (0 == nPGMSpriteBufferHack) {
+		nPGMSpriteBufferHack = (GetIpsDrvDefine() & IPS_PGM_SPRHACK) ? 1 : 0;
+	}
+
 	Mem = NULL;
 
 	pgmGetRoms(false);
@@ -815,8 +820,8 @@ INT32 pgmInit()
 		{
 			// if a cart is mapped at 100000+, the BIOS is mapped from 0-fffff, if no cart inserted, the BIOS is mapped to 7fffff!
 			for (INT32 i = 0; i < 0x100000; i+= 0x20000) { // DDP3 bios is 512k in size, but >= 20000 is 0-filled!
-				if (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx")) { // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail
-					SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM);
+				if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (GetIpsDrvDefine() & IPS_PGM_MAPHACK)) {
+					SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM); // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail
 					break;
 				}
 

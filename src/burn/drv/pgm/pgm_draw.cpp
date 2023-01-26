@@ -647,7 +647,9 @@ static void pgm_drawsprites()
 		INT32 prio = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x0080) >> 7;
 		INT32 high =  BURN_ENDIAN_SWAP_INT16(source[4]) & 0x01ff;
 
-		if (source[2] & 0x8000) boff += 0x800000; // Real hardware does not have this! Useful for some rom hacks.
+		if (0 != nPGMSpriteBufferHack) {
+			if (source[2] & 0x8000) boff += 0x800000; // Real hardware does not have this! Useful for some rom hacks.
+		}
 
 		if (xgrow) xzom = 0x10-xzom;
 		if (ygrow) yzom = 0x10-yzom;

@@ -827,7 +827,7 @@ static struct BurnRomInfo ketsuiBiosRomDesc[] = {
 };
 
 static struct BurnRomInfo espgalBiosRomDesc[] = {
-	{ "t01s.u18", 					0x0200000, 0x1a7123a0, BRF_GRA | BRF_BIOS }, // 0x80 - 8x8 Text Layer Tiles
+	{ "t01s.u18", 					0x0200000, 0x1a7123a0, BRF_GRA | BRF_BIOS },	// 0x80 - 8x8 Text Layer Tiles
 	{ "",		  					0,        0,          0 },						// 0x81 - Samples
 
 	{ "",		  					0,        0,          0 },						// 0x82 - 68K BIOS
@@ -3274,7 +3274,7 @@ static INT32 kov2107Init()
 	INT32 nRet = kov2Init();
 	
 	// Fixed the bug that Xia Houyuan didn't move and the plot didn't advance after 107 version of recruiting Xia Houyuan
-	PGM68KROM[0xa7379] = 0x67;
+	if(!bDoIpsPatch) PGM68KROM[0x0a7379] = 0x67;
 
 	return nRet;
 }
@@ -7833,34 +7833,35 @@ struct BurnDriver BurnDrvoldsplusnr = {
 };
 
 
-// 西游释厄传 - 群魔乱舞 (版本 211, 修改版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)
-// More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=707290
+// 西游释厄传-群魔乱舞(新版 211 版, 最终版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)
+// Modified by: 萧鱼儿, 一只狼, wzc123
+// More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=718724
 
 static struct BurnRomInfo oldsplusnr211RomDesc[] = {
-	{ "v-211cn.u10",			0x0400000, 0x296a8c3a, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v-211cn.u10",			0x0400000, 0x8a8b30b7, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
-	{ "igs_t05301naw064.u2",	0x0800000, 0x9019665b, 2 | BRF_GRA },			//  1 Tile data
+	{ "igs_t05301naw064.u2",	0x0800000, 0xbf3db9be, 2 | BRF_GRA },                        //  1 Tile data
 
-	{ "igs_a05301naw064.u3",	0x0800000, 0x5291d22c, 3 | BRF_GRA },	 		//  2 Sprite Color Data
-	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 3 | BRF_GRA },			//  3
-	{ "igs_a05303naw064.u6",	0x0800000, 0x5f75eca2, 3 | BRF_GRA },			//  4
-	{ "igs_a05304naw064.u8",	0x0800000, 0x365015f9, 3 | BRF_GRA },			//  5
+	{ "igs_a05301naw064.u3",	0x0800000, 0x0f456049, 3 | BRF_GRA },                        //  2 Sprite Color Data
+	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 3 | BRF_GRA },                        //  3
+	{ "igs_a05303naw064.u6",	0x0800000, 0x5f75eca2, 3 | BRF_GRA },                        //  4
+	{ "igs_a05304naw064.u8",	0x0800000, 0xbce3d08b, 3 | BRF_GRA },                        //  5
 
-	{ "igs_b05301naw064.u9",	0x0800000, 0xe5286686, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "igs_b05302naw064.u11",	0x0800000, 0x383a24e2, 4 | BRF_GRA },			//  7
+	{ "igs_b05301naw064.u9",	0x0800000, 0x1cc7c2b1, 4 | BRF_GRA },                        //  6 Sprite Masks & Color Indexes
+	{ "igs_b05302naw064.u11",	0x0800000, 0x25b7a816, 4 | BRF_GRA },                        //  7
 
-	{ "igs_w05301nab032.u5",	0x0400000, 0x6adb13ed, 5 | BRF_SND },			//  8 Samples
+	{ "igs_w05301nab032.u5",	0x0400000, 0xb740b810, 5 | BRF_SND },                        //  8 Samples
 
-	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
+	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(oldsplusnr211, oldsplusnr211, pgm)
 STD_ROM_FN(oldsplusnr211)
 
 struct BurnDriver BurnDrvoldsplusnr211 = {
-	"oldsplusnr211", "oldsplus", "pgm", NULL, "2021",
-	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)\0", "Incomplete Dump", "hack", "PolyGameMaster",
-	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u7248\u672c 211)\0", NULL, NULL, NULL,
+	"oldsplusnr211", "oldsplus", "pgm", NULL, "2023",
+	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)\0", "Incomplete Dump", "hack", "PolyGameMaster",
+	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u65b0\u7248 211 \u7248, \u6700\u7d42\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, oldsplusnr211RomInfo, oldsplusnr211RomName, NULL, NULL, NULL, NULL, pgmInputInfo, oldsplusnrDIPInfo,
 	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -8663,18 +8664,18 @@ struct BurnDriver BurnDrvkovshpd3dw = {
 static struct BurnRomInfo kov2dzxxRomDesc[] = {
 	{ "dzxx_v110_u18.u18",			0x0400000, 0xfd087eca, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "dzxx_t1200.u27",	   			0x0800000, 0xe27c3fab, 2 | BRF_GRA },			//  1 Tile data
+	{ "dzxx_t1200.u27",	   			0x0800000, 0xe27c3fab, 2 | BRF_GRA },           //  1 Tile data
 
-	{ "pgm_a1200.u1",	   			0x0800000, 0xceeb81d8, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "pgm_a1201.u4",   			0x0800000, 0x21063ca7, 3 | BRF_GRA },			//  3
-	{ "pgm_a1202.u6",	   			0x0800000, 0x4bb92fae, 3 | BRF_GRA },			//  4
-	{ "pgm_a1203.u8",	   			0x0800000, 0xe73cb627, 3 | BRF_GRA },			//  5
-	{ "pgm_a1204.u10",   			0x0200000, 0x14b4b5bb, 3 | BRF_GRA },			//  6
+	{ "pgm_a1200.u1",	   			0x0800000, 0xceeb81d8, 3 | BRF_GRA },           //  2 Sprite Color Data
+	{ "pgm_a1201.u4",   			0x0800000, 0x21063ca7, 3 | BRF_GRA },           //  3
+	{ "pgm_a1202.u6",	   			0x0800000, 0x4bb92fae, 3 | BRF_GRA },           //  4
+	{ "pgm_a1203.u8",	   			0x0800000, 0xe73cb627, 3 | BRF_GRA },           //  5
+	{ "pgm_a1204.u10",   			0x0200000, 0x14b4b5bb, 3 | BRF_GRA },           //  6
 
-	{ "pgm_b1200.u5",	   			0x0800000, 0xbed7d994, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
-	{ "pgm_b1201.u7",	   			0x0800000, 0xf251eb57, 4 | BRF_GRA },			//  8
+	{ "pgm_b1200.u5",	   			0x0800000, 0xbed7d994, 4 | BRF_GRA },           //  7 Sprite Masks & Color Indexes
+	{ "pgm_b1201.u7",	   			0x0800000, 0xf251eb57, 4 | BRF_GRA },           //  8
 
-	{ "dzxx_m1200.u3",	   			0x0a00000, 0xc13c47fd, 5 | BRF_SND },			//  9 Samples
+	{ "dzxx_m1200.u3",	   			0x0a00000, 0xc13c47fd, 5 | BRF_SND },           //  9 Samples
 
 	{ "kov2dzxx_v110_china.asic", 	0x0004000, 0xed3198b4, 7 | BRF_PRG | BRF_ESS }, // 10 Internal ARM7 Rom
 
@@ -8686,8 +8687,8 @@ STD_ROM_FN(kov2dzxx)
 
 struct BurnDriver BurnDrvkov2dzxx = {
 	"kov2dzxx", "kov2", "pgm", NULL, "2021",
-	"Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)\0", NULL, "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	"Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)\0", NULL, "hack", "PolyGameMaster",
+	L"Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)\0\u4e09\u570b\u6230\u7d002 (\u9b25\u8f49\u661f\u65cb, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kov2dzxxRomInfo, kov2dzxxRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2dzxxDIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -8696,33 +8697,33 @@ struct BurnDriver BurnDrvkov2dzxx = {
 
 
 // Knights of Valour Plus 2012 - Warriors
-// GOTVG 2022/12/25
+// GOTVG 20230120
 
 static struct BurnRomInfo kovplus12dwRomDesc[] = {
-	{ "12dw_p0603_119.u1",	0x0400000, 0x08ca9c0d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "12dw_p0603_119.u1",	0x0400000, 0x5c0e150b, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
-	{ "12dw_t0600.u11",		0x0800000, 0x364aec7e, 2 | BRF_GRA },			//  1 Tile data
+	{ "12dw_t0600.u11",		0x0800000, 0x364aec7e, 2 | BRF_GRA },                        //  1 Tile data
 
-	{ "12dw_a0600.u2",		0x0800000, 0x5bd7ea9f, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  3
-	{ "12dw_a0602.u6",		0x0800000, 0xf68a56b7, 3 | BRF_GRA },			//  4
-	{ "pgm_a0603.u9",		0x0400000, 0xec31abda, 3 | BRF_GRA },			//  5
+	{ "12dw_a0600.u2",		0x0800000, 0x5bd7ea9f, 3 | BRF_GRA },                        //  2 Sprite Color Data
+	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },                        //  3
+	{ "12dw_a0602.u6",		0x0800000, 0xf68a56b7, 3 | BRF_GRA },                        //  4
+	{ "pgm_a0603.u9",		0x0400000, 0xec31abda, 3 | BRF_GRA },                        //  5
 
-	{ "12dw_b0600.u5",		0x0800000, 0x07d91ea3, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "12dw_b0601.u7",		0x0400000, 0xa8fc03a0, 4 | BRF_GRA },			//  7
+	{ "12dw_b0600.u5",		0x0800000, 0x07d91ea3, 4 | BRF_GRA },                        //  6 Sprite Masks & Color Indexes
+	{ "12dw_b0601.u7",		0x0400000, 0xa8fc03a0, 4 | BRF_GRA },                        //  7
 
-	{ "12dw_m0600.u3",		0x0400000, 0xacadac0d, 5 | BRF_SND },			//  8 Samples
+	{ "12dw_m0600.u3",		0x0400000, 0xacadac0d, 5 | BRF_SND },                        //  8 Samples
 
-	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  9 Internal ARM7 Rom
+	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovplus12dw, kovplus12dw, kovplus12dwBios)
 STD_ROM_FN(kovplus12dw)
 
 struct BurnDriver BurnDrvkovplus12dw = {
-	"kovplus12dw", "kovplus", "pgm", NULL, "2022",
+	"kovplus12dw", "kovplus", "pgm", NULL, "2023",
 	"Knights of Valour Plus 2012 - Warriors\0", NULL, "hack", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Knights of Valour Plus 2012 - Warriors\0\u4e09\u570b\u6230\u7d00 \u6b63\u5b97 2012 - \u7121\u96d9 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, kovplus12dwRomInfo, kovplus12dwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -8733,21 +8734,21 @@ struct BurnDriver BurnDrvkovplus12dw = {
 // Knights of Valour Plus - New Biography of Heroes
 
 static struct BurnRomInfo kovplusqRomDesc[] = {
-	{ "qyxz_p0603_119.u1",	0x0600000, 0x9e4c21bb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "qyxz_p0603_119.u1",	0x0600000, 0x9e4c21bb, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
-	{ "qyxz_t0600.u11",		0x0800000, 0x1f2a486c, 2 | BRF_GRA },			//  1 Tile data
+	{ "qyxz_t0600.u11",		0x0800000, 0x1f2a486c, 2 | BRF_GRA },                        //  1 Tile data
 
-	{ "qyxz_a0600.u2",		0x0800000, 0x82616975, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "qyxz_a0601.u4",		0x0800000, 0xd756a6f2, 3 | BRF_GRA },			//  3
-	{ "qyxz_a0602.u6",		0x0800000, 0x5092a3c3, 3 | BRF_GRA },			//  4
-	{ "qyxz_a0603.u9",		0x0800000, 0x7baf3f06, 3 | BRF_GRA },			//  5
+	{ "qyxz_a0600.u2",		0x0800000, 0x82616975, 3 | BRF_GRA },                        //  2 Sprite Color Data
+	{ "qyxz_a0601.u4",		0x0800000, 0xd756a6f2, 3 | BRF_GRA },                        //  3
+	{ "qyxz_a0602.u6",		0x0800000, 0x5092a3c3, 3 | BRF_GRA },                        //  4
+	{ "qyxz_a0603.u9",		0x0800000, 0x7baf3f06, 3 | BRF_GRA },                        //  5
 
-	{ "qyxz_b0600.u5",		0x0800000, 0xe39a14b6, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "qyxz_b0601.u7",		0x0800000, 0xf778a641, 4 | BRF_GRA },			//  7
+	{ "qyxz_b0600.u5",		0x0800000, 0xe39a14b6, 4 | BRF_GRA },                        //  6 Sprite Masks & Color Indexes
+	{ "qyxz_b0601.u7",		0x0800000, 0xf778a641, 4 | BRF_GRA },                        //  7
 
-	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },			//  8 Samples
+	{ "pgm_m0600.u3",		0x0400000, 0x3ada4fd6, 5 | BRF_SND },                        //  8 Samples
 
-	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  9 Internal ARM7 Rom
+	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovplusq, kovplusq, pgm)
@@ -8756,7 +8757,7 @@ STD_ROM_FN(kovplusq)
 struct BurnDriver BurnDrvkovplusq = {
 	"kovplusq", "kovplus", "pgm", NULL, "2021",
 	"Knights of Valour Plus - New Biography of Heroes (V120)\0", NULL, "Hack", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Knights of Valour Plus - New Biography of Heroes(v120)\0\u4e09\u570b\u6230\u7d00 - \u7fa4\u82f1\u65b0\u50b3 (v120, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, kovplusqRomInfo, kovplusqRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -8765,27 +8766,27 @@ struct BurnDriver BurnDrvkovplusq = {
 
 // San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)
 // Hacked by Fei Tian Xue
+// 2022-07-31
 
 static struct BurnRomInfo kovqxzbwsRomDesc[] = {
-	{ "qxzb_v500cn.rom",		0x800000, 0x7e574b9a, 1 | BRF_PRG | BRF_ESS },		//  0 68K Code
+	{ "qxzb_100.rom",			0x800000, 0x7e574b9a, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "t0600.rom",		0x800000, 0x9a361916, 2 | BRF_GRA },						//  1 Tile data
+	{ "qxzb_t0600.u2",			0x800000, 0x9a361916, 2 | BRF_GRA },           //  1 Tile data
 
-	{ "a0600.rom",		0x800000, 0x72643288, 3 | BRF_GRA },						//  2 Sprite Color Data
-	{ "a0601.rom",		0x800000, 0x85c26c90, 3 | BRF_GRA },						//  3
-	{ "a0602.rom",		0x800000, 0xee5a308e, 3 | BRF_GRA },						//  4
-	{ "a0540.rom",		0x800000, 0x306adeeb, 3 | BRF_GRA },						//  5
-	{ "a0541.rom",		0x800000, 0x4ed6ed80, 3 | BRF_GRA },						//  6
-	{ "a0542.rom",		0x800000, 0x14499cf4, 3 | BRF_GRA },						//  7
-	{ "a0543.rom",		0x800000, 0x1ad2bc45, 3 | BRF_GRA },						//  8
+	{ "qxzb_a0600.u3",			0x800000, 0x72643288, 3 | BRF_GRA },           //  2 Sprite Color Data
+	{ "qxzb_a0601.u4",			0x800000, 0x85c26c90, 3 | BRF_GRA },           //  3
+	{ "qxzb_a0602.u6",			0x800000, 0xee5a308e, 3 | BRF_GRA },           //  4
+	{ "qxzb_a05401w064.u8",		0x800000, 0x306adeeb, 3 | BRF_GRA },           //  5
+	{ "qxzb_a05411w064.u8",		0x800000, 0x4ed6ed80, 3 | BRF_GRA },           //  6
+	{ "qxzb_a05421w064.u8",		0x800000, 0x14499cf4, 3 | BRF_GRA },           //  7
 	
-	{ "b0600.rom",		0x800000, 0x0646c5ef, 4 | BRF_GRA },						//  9 Sprite Masks & Color Indexes
-	{ "b0540.rom",		0x800000, 0x35728e9a, 4 | BRF_GRA },						//  10
-	{ "b0541.rom",		0x800000, 0xfbdae21a, 4 | BRF_GRA },						//  11
+	{ "qxzb_b0600.u9",			0x800000, 0x0646c5ef, 4 | BRF_GRA },           //  8 Sprite Masks & Color Indexes
+	{ "qxzb_b05401w064.u11",	0x800000, 0x35728e9a, 4 | BRF_GRA },           //  9
+	{ "qxzb_b05411w064.u11",	0x800000, 0xfbdae21a, 4 | BRF_GRA },           // 10
 	
-	{ "m0600.rom",		0x800000, 0x468a0d43, 5 | BRF_SND },						//  12 Samples
+	{ "qxzb_m0600.u5",			0x800000, 0x468a0d43, 5 | BRF_SND },           // 11 Samples
 
-	{ "qxzb_v100_china.asic",		0x8000, 0xcf5c6119, 7 | BRF_PRG | BRF_ESS },	//  13 Internal ARM7 Rom
+	{ "qxzb_v100_china.asic",	0x008000, 0xcf5c6119, 7 | BRF_PRG | BRF_ESS }, // 12 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovqxzbws, kovqxzbws, pgm)
@@ -8799,9 +8800,9 @@ static INT32 KovqxzbwsInit()
 }
 
 struct BurnDriver BurnDrvkovqxzbws = {
-	"kovqxzbws", "kovshp", "pgm", NULL, "2022-07-31",
-	"San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)\0", "Hack", "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	"kovqxzbws", "kovshp", "pgm", NULL, "2022",
+	"San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)\0", "hack", "IGS", "PolyGameMaster",
+	L"San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)\0\u4e09\u570b\u6230\u7d00 - \u7fa4\u96c4\u722d\u9738 \u98a8\u96f2\u518d\u8d77 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovqxzbwsRomInfo, kovqxzbwsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	KovqxzbwsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

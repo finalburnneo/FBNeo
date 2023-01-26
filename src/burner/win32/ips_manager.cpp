@@ -1028,6 +1028,18 @@ UINT32 GetIpsDrvDefine()
 						nRet |= IPS_NOT_PROTECT;
 						continue;
 					}
+					if (0 == strcmp(tmp, "IPS_PGM_SPRHACK")) {
+						nRet |= IPS_PGM_SPRHACK;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_PGM_SNDOFS6")) {
+						nRet |= IPS_PGM_SNDOFS6;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_PGM_MAPHACK")) {
+						nRet |= IPS_PGM_MAPHACK;
+						continue;
+					}
 
 					// Assignment is only allowed once
 					if (!INCLUDE_NEOP3(nRet)) {

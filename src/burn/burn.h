@@ -414,6 +414,10 @@ void Reinitialise();
 #define IPS_PROG_800000		(1 << 10)
 #define IPS_PROG_900000		(1 << 11)
 
+#define IPS_PGM_SPRHACK		(1 << 12)
+#define IPS_PGM_SNDOFS6		(1 << 13)
+#define IPS_PGM_MAPHACK		(1 << 14)
+
 #define INCLUDE_NEOP3(x)	((x & IPS_NEOP3_20000) || (x & IPS_NEOP3_40000))
 #define INCLUDE_PROG(x)		((x & IPS_PROG_100000) || (x & IPS_PROG_200000) || (x & IPS_PROG_300000) || (x & IPS_PROG_400000) || (x & IPS_PROG_500000) ||	\
 							 (x & IPS_PROG_600000) || (x & IPS_PROG_700000) || (x & IPS_PROG_800000) || (x & IPS_PROG_900000))

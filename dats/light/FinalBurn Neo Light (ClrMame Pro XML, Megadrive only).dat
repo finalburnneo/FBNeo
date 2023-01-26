@@ -162,7 +162,7 @@
 	<game name="dinotale">
 		<description>A Dinosaur's Tale (USA)</description>
 		<year>1993</year>
-		<manufacturer>Hi-Tech Expression</manufacturer>
+		<manufacturer>Hi Tech Expressions</manufacturer>
 		<rom name="dinosaur's tale, a (usa).bin" size="1048576" crc="70155b5b"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1403,8 +1403,8 @@
 	<game name="babyboom1" cloneof="babyboom" romof="babyboom">
 		<comment>Prototype</comment>
 		<description>Baby Boom (Prototype, 19940603)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="baby boom (prototype - jun 03, 1994).bin" size="2097152" crc="c0d97f6f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1412,8 +1412,8 @@
 	<game name="babyboom2" cloneof="babyboom" romof="babyboom">
 		<comment>Prototype</comment>
 		<description>Baby Boom (Prototype, 19940606)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="baby boom (prototype - jun 06, 1994).bin" size="2097152" crc="6e0cf48d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1421,8 +1421,8 @@
 	<game name="babyboom">
 		<comment>Prototype</comment>
 		<description>Baby Boom (Prototype, 19940811)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
 		<rom name="baby boom (prototype - aug 11, 1994).bin" size="2097152" crc="bd697054"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1430,8 +1430,8 @@
 	<game name="babyd">
 		<comment>Prototype</comment>
 		<description>Baby's Day Out (USA, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1994</year>
+		<manufacturer>Hi Tech Expressions</manufacturer>
 		<rom name="baby's day out (usa) (prototype).bin" size="1048576" crc="b2e7cc49"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1439,8 +1439,8 @@
 	<game name="babydo" cloneof="babyd" romof="babyd">
 		<comment>Prototype</comment>
 		<description>Baby's Day Out (USA, Prototype, Earlier)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1994</year>
+		<manufacturer>Hi Tech Expressions</manufacturer>
 		<rom name="baby's day out (usa) (prototype) (earlier).bin" size="1048576" crc="459b891c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1454,17 +1454,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="backtof3cf" cloneof="backtof3" romof="backtof3">
+		<comment>Hack</comment>
 		<description>Back to the Future Part III (Hack, Color Fix)</description>
 		<year>2019</year>
-		<manufacturer>Arena Entertainment - Greg Kennedy</manufacturer>
+		<manufacturer>Greg Kennedy</manufacturer>
 		<rom name="back to the future part iii (color fix).md" size="524288" crc="51f67e2f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="backtof3s" cloneof="backtof3" romof="backtof3">
+		<comment>Hack</comment>
 		<description>Back to the Future Part III (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Arena</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="back to the future part iii (hack, spanish).bin" size="524288" crc="52493680"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1528,6 +1530,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballz3dp1" cloneof="ballz3d" romof="ballz3d">
+		<comment>Prototype</comment>
 		<description>Ballz 3D (prototype 199409xx)</description>
 		<year>1994</year>
 		<manufacturer>Accolade</manufacturer>
@@ -1536,6 +1539,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballz3dp2" cloneof="ballz3d" romof="ballz3d">
+		<comment>Prototype</comment>
 		<description>Ballz 3D (USA, prototype 199406xx)</description>
 		<year>1994</year>
 		<manufacturer>Accolade</manufacturer>
@@ -1850,17 +1854,19 @@
 		<driver status="good"/>
 	</game>
 	<game name="btlmanide" cloneof="btlmanid" romof="btlmanid">
+		<comment>Hack</comment>
 		<description>Battle Mania Daiginjou (Hack, English)</description>
 		<year>2006</year>
-		<manufacturer>Vic Tokai</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="battle mania daiginjou (english translation).bin" size="1048576" crc="fab20c39"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="btlmanids" cloneof="btlmanid" romof="btlmanid">
+		<comment>Hack</comment>
 		<description>Battle Mania Daiginjou (Hack, Spanish)</description>
 		<year>2013</year>
-		<manufacturer>Vic Tokai</manufacturer>
+		<manufacturer>pepodmc</manufacturer>
 		<rom name="battle mania daiginjou (hack, spanish).bin" size="1048576" crc="9e0ef510"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1898,9 +1904,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="battlesqs" cloneof="battlesq" romof="battlesq">
+		<comment>Hack</comment>
 		<description>Battle Squadron (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="battle squadron (hack, spanish).bin" size="524288" crc="cde81fbc"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -1992,25 +1999,9 @@
 	<game name="beastbal">
 		<comment>Prototype</comment>
 		<description>Beastball (Prototype)</description>
-		<year>199?</year>
+		<year>1993</year>
 		<manufacturer>Spectrum Holobyte</manufacturer>
 		<rom name="beast ball.bin" size="1030368" crc="6a176576"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="beautys" cloneof="beauty" romof="beauty">
-		<description>Beauty And The Beast - Belle's Quest (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer>SunSoft</manufacturer>
-		<rom name="beauty and the beast - belle's quest (hack, spanish).bin" size="1048576" crc="37123c7e"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="beautyrbs" cloneof="beautyrb" romof="beautyrb">
-		<description>Beauty And The Beast - Roar Of The Beast (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer>SunSoft</manufacturer>
-		<rom name="beauty and the beast - roar of the beast (hack, spanish).bin" size="1048576" crc="c0f52a6d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2023,9 +2014,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="beaviss" cloneof="beavis" romof="beavis">
+		<comment>Hack</comment>
 		<description>Beavis And Butt-Head (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Viacom New Media</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="beavis and butt-head (hack, spanish).bin" size="2097152" crc="10967d96"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -5487,11 +5479,29 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="beautys" cloneof="beauty" romof="beauty">
+		<comment>Hack</comment>
+		<description>Disney's Beauty and the Beast - Belle's Quest (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="beauty and the beast - belle's quest (hack, spanish).bin" size="1048576" crc="37123c7e"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="beauty">
 		<description>Disney's Beauty and the Beast - Belle's Quest (USA)</description>
 		<year>1993</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="beauty and the beast - belle's quest (usa).bin" size="1048576" crc="befb6fae"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="beautyrbs" cloneof="beautyrb" romof="beautyrb">
+		<comment>Hack</comment>
+		<description>Disney's Beauty and the Beast - Roar of the Beast (Hack, Spanish)</description>
+		<year>2017</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="beauty and the beast - roar of the beast (hack, spanish).bin" size="1048576" crc="c0f52a6d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -19464,6 +19474,15 @@
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="streets of rage (hack, spanish).bin" size="524288" crc="3e8baf7e"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sorkiller" cloneof="sor" romof="sor">
+		<comment>Hack</comment>
+		<description>Streets of Rage (Killer Difficulty v0.9, hack)</description>
+		<year>2012</year>
+		<manufacturer>gsaurus</manufacturer>
+		<rom name="Streets of Rage - Killer Difficulty (2012)(gsaurus).bin" size="524288" crc="86eed3d6"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

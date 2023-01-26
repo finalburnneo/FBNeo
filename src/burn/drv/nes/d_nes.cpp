@@ -29351,6 +29351,23 @@ struct BurnDriver BurnDrvnes_asterix = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+static struct BurnRomInfo nes_astroboyRomDesc[] = {
+	{ "Astro Boy T-Eng (2022)(Pacnsacdave).nes",          262160, 0xd5e10c90, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_astroboy)
+STD_ROM_FN(nes_astroboy)
+
+struct BurnDriver BurnDrvnes_astroboy = {
+	"nes_astroboy", NULL, NULL, NULL, "2022",
+	"Astro Boy (T-Eng)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_astroboyRomInfo, nes_astroboyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_astrofanjRomDesc[] = {
 	{ "Astro Fang - Super Machine (Japan).nes",          262160, 0xc3dae718, BRF_ESS | BRF_PRG },
 };
@@ -41619,6 +41636,23 @@ struct BurnDriver BurnDrvnes_legendarywings = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_legenfumRomDesc[] = {
+	{ "The Legend of Fuma (T-Eng).nes",          393232, 0xdad72cc9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legenfum)
+STD_ROM_FN(nes_legenfum)
+
+struct BurnDriver BurnDrvnes_legenfum = {
+	"nes_legenfum", NULL, NULL, NULL, "2018",
+	"Legend of Fuma, The (T-Eng)\0", NULL, "Nebulous Translations", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_legenfumRomInfo, nes_legenfumRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_leidiahuabikaqiuchsRomDesc[] = {
 	{ "Lei Dian Huang Bi Ka Qiu Chuan Shuo (China).nes",          2097168, 0xf4ebe9b2, BRF_ESS | BRF_PRG },
 };
@@ -50984,28 +51018,11 @@ STD_ROM_PICK(nes_tetsuwanatom)
 STD_ROM_FN(nes_tetsuwanatom)
 
 struct BurnDriver BurnDrvnes_tetsuwanatom = {
-	"nes_tetsuwanatom", NULL, NULL, NULL, "1988",
+	"nes_tetsuwanatom", "nes_astroboy", NULL, NULL, "1988",
 	"Tetsuwan Atom (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tetsuwanatomRomInfo, nes_tetsuwanatomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_legenfumRomDesc[] = {
-	{ "The Legend of Fuma (T-Eng).nes",          393232, 0xdad72cc9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_legenfum)
-STD_ROM_FN(nes_legenfum)
-
-struct BurnDriver BurnDrvnes_legenfum = {
-	"nes_legenfum", NULL, NULL, NULL, "2018",
-	"The Legend of Fuma (T-Eng)\0", NULL, "Nebulous Translations", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
-	NESGetZipName, nes_legenfumRomInfo, nes_legenfumRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

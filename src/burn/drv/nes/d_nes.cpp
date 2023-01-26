@@ -16001,8 +16001,27 @@ struct BurnDriver BurnDrvnes_jackalem = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kyouryuu Sentai Juuranger (T-Chi)
+// RoboCop (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=718366
+static struct BurnRomInfo nes_robocopscRomDesc[] = {
+	{ "RoboCop (T-Chi).nes",          393232, 0xa568590b, BRF_ESS | BRF_PRG },
+};
 
+STD_ROM_PICK(nes_robocopsc)
+STD_ROM_FN(nes_robocopsc)
+
+struct BurnDriver BurnDrvnes_robocopsc = {
+	"nes_robocopsc", "nes_robocop", NULL, NULL, "2023",
+	"RoboCop (T-Chi)\0", NULL, "LSP Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_robocopscRomInfo, nes_robocopscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Kyouryuu Sentai Juuranger (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=718391
 static struct BurnRomInfo nes_kyoursenjuucRomDesc[] = {
 	{ "Kyouryuu Sentai Juuranger (T-Chi).nes",          393232, 0x2cebf5e7, BRF_ESS | BRF_PRG },
 };
@@ -16014,7 +16033,7 @@ struct BurnDriver BurnDrvnes_kyoursenjuuc = {
 	"nes_kyoursenjuuc", "nes_kyoursenjuu", NULL, NULL, "2023",
 	"Kyouryuu Sentai Juuranger (T-Chi)\0", NULL, "LSP Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
 	NESGetZipName, nes_kyoursenjuucRomInfo, nes_kyoursenjuucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

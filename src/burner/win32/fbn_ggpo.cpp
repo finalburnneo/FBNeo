@@ -525,6 +525,20 @@ void QuarkInit(TCHAR *tconnect)
 		strcpy(kNetQuarkId, quarkid);
 		VidOverlaySetSystemMessage(_T("Connecting..."));
 	}
+	if (strncmp(connect, "quark:training", strlen("quark:training")) == 0) {
+		sscanf(connect, "quark:training,%[^,],%[^,],%d,%d", game, quarkid, &port, &delay);
+		iRanked = 0;
+		iPlayer = atoi(&quarkid[strlen(quarkid) - 1]);
+		if (nVidRunahead == 3 && delay < 2) {delay = 2;}
+		iDelay = delay;
+		iSeed = GetHash(quarkid, strlen(quarkid) - 2);
+		ggpo = ggpo_client_connect(&cb, game, quarkid, port);
+		ggpo_set_frame_delay(ggpo, delay);
+		strcpy(kNetQuarkId, quarkid);
+		VidOverlaySetSystemMessage(_T("Connecting..."));
+		kNetLua = 1;
+		FBA_LoadLuaCode("fbneo-training-mode/fbneo-training-mode.lua");
+	}
 	else if (strncmp(connect, "quark:direct", strlen("quark:direct")) == 0) {
 		sscanf(connect, "quark:direct,%[^,],%d,%[^,],%d,%d,%d,%d", game, &localPort, server, &remotePort, &player, &delay, &ranked);
 		kNetLua = 1;

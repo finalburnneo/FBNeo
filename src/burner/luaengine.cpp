@@ -301,6 +301,14 @@ static int fba_frameadvance(lua_State *L) {
 	return lua_yield(L, 0);
 }
 
+// fba.isonlinetraining()
+//
+// Returns true when it's a online training session
+static int fba_isonline(lua_State *L) {
+	if (kNetGame && !kNetSpectator && kNetLua) return true;
+	else return false;
+}
+
 // fba.isreplay()
 //
 // Returns true when it's a fightcade replay
@@ -3766,6 +3774,7 @@ static const struct luaL_reg fbalib [] = {
 	{"sourcename", fba_sourcename},
 	{"speedmode", fba_speedmode},
 	{"frameadvance", fba_frameadvance},
+	{"isonline", fba_isonline},
 	{"isreplay", fba_isreplay},
 	{"takeover", fba_takeover},
 	{"pause", fba_pause},

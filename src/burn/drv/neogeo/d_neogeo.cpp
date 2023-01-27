@@ -19599,6 +19599,48 @@ struct BurnDriver BurnDrvkof2002sc = {
 	0x1000, 304, 224, 4, 3
 };
 
+// The King of Fighters 2002 Mugen (Version 0.26, Hack By ZAKS)
+// Fixed Timer Over bug in p1 (TimerFix patch)
+
+static struct BurnRomInfo kof2002mRomDesc[] = {
+	{ "2k2m-p1.bin",  0x100000, 0xa49937ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "2k2m-p2.bin",  0x400000, 0x046a1232, 1 | BRF_ESS | BRF_PRG }, //  1
+	
+	{ "2k2m-s1.bin",  0x020000, 0x80922b39, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "2k2m-c1.bin",  0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "2k2m-c2.bin",  0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
+	{ "2k2m-c3.bin",  0x800000, 0x102a78a9, 3 | BRF_GRA },           //  5
+	{ "2k2m-c4.bin",  0x800000, 0xee9d72b8, 3 | BRF_GRA },           //  6
+	{ "2k2m-c5.bin",  0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
+	{ "2k2m-c6.bin",  0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8
+	{ "2k2m-c7.bin",  0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  9
+	{ "2k2m-c8.bin",  0x800000, 0xbef667a3, 3 | BRF_GRA },           //  10
+	{ "2k2m-c9.bin",  0x800000, 0xe0ab7f55, 3 | BRF_GRA },           //  11
+	{ "2k2m-c10.bin", 0x800000, 0x97f53698, 3 | BRF_GRA },           //  12
+
+	{ "2k2m-m1.bin",  0x020000, 0xce706bc7, 4 | BRF_ESS | BRF_PRG }, //  13 Z80 code
+
+	{ "2k2m-v1.bin",  0x400000, 0x13d98607, 5 | BRF_SND },           //  14 Sound data
+	{ "2k2m-v2.bin",  0x400000, 0x9cf74677, 5 | BRF_SND },           //  15
+	{ "2k2m-v3.bin",  0x400000, 0x8e9448b5, 5 | BRF_SND },           //  16
+    { "2k2m-v4.bin",  0x400000, 0x067271b5, 5 | BRF_SND },           //  17
+    { "2k2m-v5.bin",  0x400000, 0x86ce1fd1, 5 | BRF_SND },           //  18
+};
+
+STDROMPICKEXT(kof2002m, kof2002m, neogeo)
+STD_ROM_FN(kof2002m)
+
+struct BurnDriver BurnDrvkof2002m = {
+	"kof2002m", "kof2002", "neogeo", NULL, "2023",
+	"The King of Fighters 2002 Mugen (Version 0.26, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2002mRomInfo, kof2002mRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu (Secret Character Hack)
 /* MVS ONLY RELEASE */
 

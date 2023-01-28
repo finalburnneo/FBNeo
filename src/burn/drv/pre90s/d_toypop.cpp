@@ -471,6 +471,8 @@ static INT32 DrvDoReset()
 	slave_irq_enable = 0;
 	flipscreen = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -900,7 +902,7 @@ struct BurnDriver BurnDrvLiblrabl = {
 	"liblrabl", NULL, NULL, NULL, "1983",
 	"Libble Rabble\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, liblrablRomInfo, liblrablRomName, NULL, NULL, NULL, NULL, LiblrablInputInfo, LiblrablDIPInfo,
 	LiblrablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x320,
 	288, 224, 4, 3
@@ -943,7 +945,7 @@ struct BurnDriver BurnDrvToypop = {
 	"toypop", NULL, NULL, NULL, "1986",
 	"Toypop\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, toypopRomInfo, toypopRomName, NULL, NULL, NULL, NULL, ToypopInputInfo, ToypopDIPInfo,
 	ToypopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x320,
 	288, 224, 4, 3

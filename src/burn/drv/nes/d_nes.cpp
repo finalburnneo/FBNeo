@@ -912,6 +912,8 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0xa905cc12) ? NO_WORKRAM : 0; // Bill & Ted
 	NESMode |= (ROMCRC == 0x585f3500) ? ALT_MMC3 : 0; // Darkwing Duck (T-Chi)
 	NESMode |= (ROMCRC == 0x38f65b2d) ? BAD_HOMEBREW : 0; // Battler (HB)
+	NESMode |= (ROMCRC == 0x6673e5da) ? ALT_TIMING : 0; // t.atom
+	NESMode |= (ROMCRC == 0xd5e10c90) ? ALT_TIMING : 0; // astro boy
 	NESMode |= (ROMCRC == 0xc9f3f439) ? ALT_TIMING : 0; // vs. freedom force
 	NESMode |= (ROMCRC == 0x53eb8950) ? ALT_TIMING : 0; // freedom force
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
@@ -15999,8 +16001,27 @@ struct BurnDriver BurnDrvnes_jackalem = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Kyouryuu Sentai Juuranger (T-Chi)
+// RoboCop (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=718366
+static struct BurnRomInfo nes_robocopscRomDesc[] = {
+	{ "RoboCop (T-Chi).nes",          393232, 0xa568590b, BRF_ESS | BRF_PRG },
+};
 
+STD_ROM_PICK(nes_robocopsc)
+STD_ROM_FN(nes_robocopsc)
+
+struct BurnDriver BurnDrvnes_robocopsc = {
+	"nes_robocopsc", "nes_robocop", NULL, NULL, "2023",
+	"RoboCop (T-Chi)\0", NULL, "LSP Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_robocopscRomInfo, nes_robocopscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Kyouryuu Sentai Juuranger (T-Chi)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=718391
 static struct BurnRomInfo nes_kyoursenjuucRomDesc[] = {
 	{ "Kyouryuu Sentai Juuranger (T-Chi).nes",          393232, 0x2cebf5e7, BRF_ESS | BRF_PRG },
 };
@@ -16012,7 +16033,7 @@ struct BurnDriver BurnDrvnes_kyoursenjuuc = {
 	"nes_kyoursenjuuc", "nes_kyoursenjuu", NULL, NULL, "2023",
 	"Kyouryuu Sentai Juuranger (T-Chi)\0", NULL, "LSP Team", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_MINIGAMES, 0,
 	NESGetZipName, nes_kyoursenjuucRomInfo, nes_kyoursenjuucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -29351,6 +29372,23 @@ struct BurnDriver BurnDrvnes_asterix = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+static struct BurnRomInfo nes_astroboyRomDesc[] = {
+	{ "Astro Boy T-Eng (2022)(Pacnsacdave).nes",          262160, 0xd5e10c90, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_astroboy)
+STD_ROM_FN(nes_astroboy)
+
+struct BurnDriver BurnDrvnes_astroboy = {
+	"nes_astroboy", NULL, NULL, NULL, "2022",
+	"Astro Boy (T-Eng)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_astroboyRomInfo, nes_astroboyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_astrofanjRomDesc[] = {
 	{ "Astro Fang - Super Machine (Japan).nes",          262160, 0xc3dae718, BRF_ESS | BRF_PRG },
 };
@@ -41619,6 +41657,23 @@ struct BurnDriver BurnDrvnes_legendarywings = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_legenfumRomDesc[] = {
+	{ "The Legend of Fuma (T-Eng).nes",          393232, 0xdad72cc9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legenfum)
+STD_ROM_FN(nes_legenfum)
+
+struct BurnDriver BurnDrvnes_legenfum = {
+	"nes_legenfum", NULL, NULL, NULL, "2018",
+	"Legend of Fuma, The (T-Eng)\0", NULL, "Nebulous Translations", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_legenfumRomInfo, nes_legenfumRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_leidiahuabikaqiuchsRomDesc[] = {
 	{ "Lei Dian Huang Bi Ka Qiu Chuan Shuo (China).nes",          2097168, 0xf4ebe9b2, BRF_ESS | BRF_PRG },
 };
@@ -50984,28 +51039,11 @@ STD_ROM_PICK(nes_tetsuwanatom)
 STD_ROM_FN(nes_tetsuwanatom)
 
 struct BurnDriver BurnDrvnes_tetsuwanatom = {
-	"nes_tetsuwanatom", NULL, NULL, NULL, "1988",
+	"nes_tetsuwanatom", "nes_astroboy", NULL, NULL, "1988",
 	"Tetsuwan Atom (Japan)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tetsuwanatomRomInfo, nes_tetsuwanatomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_legenfumRomDesc[] = {
-	{ "The Legend of Fuma (T-Eng).nes",          393232, 0xdad72cc9, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_legenfum)
-STD_ROM_FN(nes_legenfum)
-
-struct BurnDriver BurnDrvnes_legenfum = {
-	"nes_legenfum", NULL, NULL, NULL, "2018",
-	"The Legend of Fuma (T-Eng)\0", NULL, "Nebulous Translations", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
-	NESGetZipName, nes_legenfumRomInfo, nes_legenfumRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -385,6 +385,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	nmimask = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -837,7 +839,7 @@ struct BurnDriver BurnDrvBwings = {
 	"bwings", NULL, NULL, NULL, "1984",
 	"B-Wings (Japan new Ver.)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, bwingsRomInfo, bwingsRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -871,7 +873,7 @@ struct BurnDriver BurnDrvBwingso = {
 	"bwingso", "bwings", NULL, NULL, "1984",
 	"B-Wings (Japan old Ver.)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, bwingsoRomInfo, bwingsoRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -912,7 +914,7 @@ struct BurnDriver BurnDrvBwingsa = {
 	"bwingsa", "bwings", NULL, NULL, "1984",
 	"B-Wings (Alt Ver.?)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, bwingsaRomInfo, bwingsaRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	bwingsaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -946,7 +948,7 @@ struct BurnDriver BurnDrvZaviga = {
 	"zaviga", NULL, NULL, NULL, "1984",
 	"Zaviga\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, zavigaRomInfo, zavigaRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -980,7 +982,7 @@ struct BurnDriver BurnDrvZavigaj = {
 	"zavigaj", "zaviga", NULL, NULL, "1984",
 	"Zaviga (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, zavigajRomInfo, zavigajRomName, NULL, NULL, NULL, NULL, BwingInputInfo, BwingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4

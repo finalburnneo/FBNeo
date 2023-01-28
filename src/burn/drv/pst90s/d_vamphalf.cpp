@@ -947,6 +947,8 @@ static INT32 DrvDoReset()
 
 	nCyclesExtra = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1546,7 +1548,7 @@ struct BurnDriver BurnDrvJmpbreak = {
 	"jmpbreak", NULL, NULL, NULL, "1999",
 	"Jumping Break (set 1)\0", NULL, "F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, jmpbreakRomInfo, jmpbreakRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	JmpbreakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -1585,7 +1587,7 @@ struct BurnDriver BurnDrvJmpbreaka = {
 	"jmpbreaka", "jmpbreak", NULL, NULL, "1999",
 	"Jumping Break (set 2)\0", NULL, "F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, jmpbreakaRomInfo, jmpbreakaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	JmpbreakaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -1623,7 +1625,7 @@ struct BurnDriver BurnDrvPoosho = {
 	"poosho", NULL, NULL, NULL, "1999",
 	"Poosho Poosho\0", NULL, "F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, pooshoRomInfo, pooshoRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	PooshoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -1986,7 +1988,7 @@ struct BurnDriver BurnDrvVamphalf = {
 	"vamphalf", NULL, NULL, NULL, "1999",
 	"Vamf x1/2 (Europe, version 1.1.0908)\0", NULL, "Danbi / F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, vamphalfRomInfo, vamphalfRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	VamphalfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -2019,7 +2021,7 @@ struct BurnDriver BurnDrvVamphalfr1 = {
 	"vamphalfr1", "vamphalf", NULL, NULL, "1999",
 	"Vamf x1/2 (Europe, version 1.0.0903)\0", NULL, "Danbi / F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, vamphalfr1RomInfo, vamphalfr1RomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	Vamphalfr1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -2054,7 +2056,7 @@ struct BurnDriver BurnDrvVamphalfk = {
 	"vamphalfk", "vamphalf", NULL, NULL, "1999",
 	"Vamp x1/2 (Korea, version 1.1.0908)\0", NULL, "Danbi / F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, vamphalfkRomInfo, vamphalfkRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	VamphalfkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -2136,7 +2138,7 @@ struct BurnDriver BurnDrvMisncrft = {
 	"misncrft", NULL, NULL, NULL, "2000",
 	"Mission Craft (version 2.7)\0", NULL, "Sun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, misncrftRomInfo, misncrftRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	MisncrftInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2180,7 +2182,7 @@ struct BurnDriver BurnDrvMisncrfta = {
 	"misncrfta", "misncrft", NULL, NULL, "2000",
 	"Mission Craft (version 2.4)\0", NULL, "Sun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, misncrftaRomInfo, misncrftaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	MisncrftaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2214,7 +2216,7 @@ struct BurnDriver BurnDrvMrdig = {
 	"mrdig", NULL, NULL, NULL, "2000",
 	"Mr. Dig\0", NULL, "Sun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, mrdigRomInfo, mrdigRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	MrdigInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 236, 4, 3
@@ -2442,7 +2444,7 @@ struct BurnDriver BurnDrvWivernwg = {
 	"wivernwg", NULL, NULL, NULL, "2001",
 	"Wivern Wings\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, wivernwgRomInfo, wivernwgRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	WivernwgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2488,7 +2490,7 @@ struct BurnDriver BurnDrvWyvernwg = {
 	"wyvernwg", "wivernwg", NULL, NULL, "2001",
 	"Wyvern Wings (set 1)\0", NULL, "SemiCom (Game Vision license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, wyvernwgRomInfo, wyvernwgRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	WyvernwgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2534,7 +2536,7 @@ struct BurnDriver BurnDrvWyvernwga = {
 	"wyvernwga", "wivernwg", NULL, NULL, "2001",
 	"Wyvern Wings (set 2)\0", NULL, "SemiCom (Game Vision license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, wyvernwgaRomInfo, wyvernwgaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NULL,
 	WyvernwgaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	236, 320, 3, 4
@@ -2589,7 +2591,7 @@ struct BurnDriver BurnDrvAoh = {
 	"aoh", NULL, NULL, NULL, "2001",
 	"Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)\0", NULL, "Unico", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, aohRomInfo, aohRomName, NULL, NULL, NULL, NULL, AohInputInfo, NULL,
 	AohInit, DrvExit, DrvFrame, AohDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 224, 4, 3

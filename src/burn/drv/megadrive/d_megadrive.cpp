@@ -1364,7 +1364,7 @@ struct BurnDriver BurnDrvmd_ssmashtv = {
 	"md_ssmashtv", NULL, NULL, NULL, "1992",
 	"Super Smash TV (Euro, USA)\0", NULL, "Flying Edge", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_ssmashtvRomInfo, md_ssmashtvRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -20740,7 +20740,7 @@ struct BurnDriver BurnDrvmd_mspacman = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1)
+// Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1) (Unl)
 static struct BurnRomInfo md_mspacmanpirRomDesc[] = {
 	{ "ms. pac-man (usa) (pirate).bin", 0x020000, 0x39b51b26, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -20750,7 +20750,7 @@ STD_ROM_FN(md_mspacmanpir)
 
 struct BurnDriver BurnDrvmd_mspacmanpir = {
 	"md_mspacmanpir", "md_mspacman", NULL, NULL, "199?",
-	"Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_MAZE, 0,
 	MegadriveGetZipName, md_mspacmanpirRomInfo, md_mspacmanpirRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -33002,7 +33002,7 @@ struct BurnDriver BurnDrvmd_shimpact = {
 	"md_shimpact", NULL, NULL, NULL, "1992",
 	"Super High Impact (USA)\0", NULL, "Arena", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_shimpactRomInfo, md_shimpactRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33020,7 +33020,7 @@ struct BurnDriver BurnDrvmd_suphydl = {
 	"md_suphydl", NULL, NULL, NULL, "1991",
 	"Super Hydlide (Euro)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_suphydlRomInfo, md_suphydlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33038,7 +33038,7 @@ struct BurnDriver BurnDrvmd_suphydlj = {
 	"md_suphydlj", "md_suphydl", NULL, NULL, "1989",
 	"Super Hydlide (Jpn)\0", NULL, "Asmik Ace", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_suphydljRomInfo, md_suphydljRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33056,7 +33056,7 @@ struct BurnDriver BurnDrvmd_suphydlu = {
 	"md_suphydlu", "md_suphydl", NULL, NULL, "1989",
 	"Super Hydlide (USA)\0", NULL, "Seismic", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_suphydluRomInfo, md_suphydluRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33074,7 +33074,7 @@ struct BurnDriver BurnDrvmd_skickoff = {
 	"md_skickoff", NULL, NULL, NULL, "1992",
 	"Super Kick Off (Euro)\0", NULL, "U.S. Gold", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSFOOTBALL, 0,
 	MegadriveGetZipName, md_skickoffRomInfo, md_skickoffRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33092,7 +33092,7 @@ struct BurnDriver BurnDrvmd_suprleag = {
 	"md_suprleag", NULL, NULL, NULL, "1990",
 	"Super League (Euro)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_suprleagRomInfo, md_suprleagRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33110,7 +33110,7 @@ struct BurnDriver BurnDrvmd_suprleagj = {
 	"md_suprleagj", "md_suprleag", NULL, NULL, "1989",
 	"Super League (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_suprleagjRomInfo, md_suprleagjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33128,7 +33128,7 @@ struct BurnDriver BurnDrvmd_lasorda = {
 	"md_lasorda", "md_suprleag", NULL, NULL, "1989",
 	"Tommy Lasorda Baseball (USA)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_lasordaRomInfo, md_lasordaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33254,7 +33254,7 @@ struct BurnDriver BurnDrvmd_srealbas = {
 	"md_srealbas", NULL, NULL, NULL, "1990",
 	"Super Real Basketball (Euro)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_srealbasRomInfo, md_srealbasRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33272,7 +33272,7 @@ struct BurnDriver BurnDrvmd_srealbasj = {
 	"md_srealbasj", "md_srealbas", NULL, NULL, "1990",
 	"Super Real Basketball (Jpn, Kor)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_srealbasjRomInfo, md_srealbasjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33290,7 +33290,7 @@ struct BurnDriver BurnDrvmd_patriley = {
 	"md_patriley", "md_srealbas", NULL, NULL, "1990",
 	"Pat Riley Basketball (USA)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_patrileyRomInfo, md_patrileyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33308,7 +33308,7 @@ struct BurnDriver BurnDrvmd_sskid = {
 	"md_sskid", NULL, NULL, NULL, "1995",
 	"Super Skidmarks (Euro, J-Cart)\0", NULL, "Codemasters", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_sskidRomInfo, md_sskidRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -33326,7 +33326,7 @@ struct BurnDriver BurnDrvmd_sskidp = {
 	"md_sskidp", "md_sskid", NULL, NULL, "1995",
 	"Super Skidmarks (USA, Prototype)\0", NULL, "Codemasters", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_sskidpRomInfo, md_sskidpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -41134,7 +41134,7 @@ struct BurnDriver BurnDrvmd_smario2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Super Mario World ~ Super Mario Bros. (Pirate)
+// Super Mario World ~ Super Mario Bros. (Unl)
 static struct BurnRomInfo md_smbRomDesc[] = {
 	{ "super mario bros. (unl).bin", 0x200000, 0x9cfa2bd8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -41144,9 +41144,9 @@ STD_ROM_FN(md_smb)
 
 struct BurnDriver BurnDrvmd_smb = {
 	"md_smb", NULL, NULL, NULL, "199?",
-	"Super Mario World ~ Super Mario Bros. (Pirate)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"Super Mario World ~ Super Mario Bros. (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SMB, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SMB, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_smbRomInfo, md_smbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42412,7 +42412,7 @@ struct BurnDriver BurnDrvmd_mario4 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Super Mario World 64
+// Super Mario World 64 (Unl)
 static struct BurnRomInfo md_smario64RomDesc[] = {
 	{ "super mario world 64 (unl).bin", 0x100000, 0xe7ac4161, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -42422,15 +42422,15 @@ STD_ROM_FN(md_smario64)
 
 struct BurnDriver BurnDrvmd_smario64 = {
 	"md_smario64", NULL, NULL, NULL, "199?",
-	"Super Mario World 64\0", NULL, "<unknown>", "Sega Megadrive",
+	"Super Mario World 64 (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_smario64RomInfo, md_smario64RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Super Mario World 64 (Hacked Protection)
+// Super Mario World 64 (Hacked Protection) (Unl)
 static struct BurnRomInfo md_smario64hRomDesc[] = {
 	{ "super mario world 64 (hacked).bin", 0x100000, 0xa20f98aa, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -42442,7 +42442,7 @@ struct BurnDriver BurnDrvmd_smario64h = {
 	"md_smario64h", "md_smario64", NULL, NULL, "199?",
 	"Super Mario World 64 (Hacked Protection)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_smario64hRomInfo, md_smario64hRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42898,7 +42898,7 @@ struct BurnDriver BurnDrvmd_t3ag = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tachki (Rus)
+// Tachki (Rus) (Unl)
 static struct BurnRomInfo md_carsRomDesc[] = {
 	{ "disney's cars (r).bin", 0x200000, 0x6c5f2530, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -42908,15 +42908,15 @@ STD_ROM_FN(md_cars)
 
 struct BurnDriver BurnDrvmd_cars = {
 	"md_cars", "md_sskid", NULL, NULL, "199?",
-	"Tachki (Rus)\0", NULL, "<unknown>", "Sega Megadrive",
+	"Tachki (Rus) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_carsRomInfo, md_carsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tachki 2 (Rus)
+// Tachki 2 (Rus) (Unl)
 static struct BurnRomInfo md_cars2RomDesc[] = {
 	{ "cars 2 (unl).bin", 0x200000, 0x4fd4d967, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -42926,15 +42926,15 @@ STD_ROM_FN(md_cars2)
 
 struct BurnDriver BurnDrvmd_cars2 = {
 	"md_cars2", "md_cproam", NULL, NULL, "199?",
-	"Tachki 2 (Rus)\0", NULL, "<unknown>", "Sega Megadrive",
+	"Tachki 2 (Rus) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_cars2RomInfo, md_cars2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tanki 2011 (Rus)
+// Tanki 2011 (Rus) (Unl)
 static struct BurnRomInfo md_tank2011RomDesc[] = {
 	{ "tank 2011 (unl).bin", 0x080000, 0x03739820, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -43372,6 +43372,25 @@ struct BurnDriver BurnDrvmd_pacman = {
 
 // -- Homebrew additions below --
 
+// Amshay (HB)
+
+static struct BurnRomInfo md_amshayRomDesc[] = {
+	{ "Amshay (2022)(BankBank).bin", 1048576, 0x79e57b7f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_amshay)
+STD_ROM_FN(md_amshay)
+
+struct BurnDriver BurnDrvmd_amshay = {
+	"md_amshay", NULL, NULL, NULL, "2022",
+	"Amshay (HB)\0", NULL, "BankBank", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_amshayRomInfo, md_amshayRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Insane Pain (HB)
 
 static struct BurnRomInfo md_insanepainRomDesc[] = {
@@ -43425,6 +43444,25 @@ struct BurnDriver BurnDrvmd_miniplanrmx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE | GBF_ACTION, 0,
 	MegadriveGetZipName, md_miniplanrmxRomInfo, md_miniplanrmxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Spax (HB)
+
+static struct BurnRomInfo md_spaxRomDesc[] = {
+	{ "Spax (2022)(Nomad Natan).bin", 842240, 0xaf859ad5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_spax)
+STD_ROM_FN(md_spax)
+
+struct BurnDriver BurnDrvmd_spax = {
+	"md_spax", NULL, NULL, NULL, "2022",
+	"Spax (HB)\0", NULL, "Nomad Natan", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_spaxRomInfo, md_spaxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -52881,9 +52919,9 @@ STD_ROM_FN(md_ssmashtvs)
 
 struct BurnDriver BurnDrvmd_ssmashtvs = {
 	"md_ssmashtvs", "md_ssmashtv", NULL, NULL, "2019",
-	"Super Smash TV (Hack, Spanish)\0", NULL, "Flying Edge", "Sega Megadrive",
+	"Super Smash TV (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_ssmashtvsRomInfo, md_ssmashtvsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -54822,17 +54860,18 @@ struct BurnDriver BurnDrvmd_rrash2imp = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Road 3 Rash Improvement (Hack, v1.02)
+// Road 3 Rash Improvement (Hack, v1.04)
+// https://www.romhacking.net/hacks/7078/
 static struct BurnRomInfo md_rrash3impRomDesc[] = {
-	{ "Road Rash 3 Improvement v1.02 (2022)(Ti).bin", 2097152, 0x62486344, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Road Rash 3 Improvement v1.04 (2023)(Ti).bin", 2097152, 0x76a6f6db, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_rrash3imp)
 STD_ROM_FN(md_rrash3imp)
 
 struct BurnDriver BurnDrvmd_rrash3imp = {
-	"md_rrash3imp", "md_rrash3", NULL, NULL, "2022",
-	"Road 3 Rash Improvement (Hack, v1.02)\0", NULL, "Ti", "Sega Megadrive",
+	"md_rrash3imp", "md_rrash3", NULL, NULL, "2023",
+	"Road 3 Rash Improvement (Hack, v1.04)\0", NULL, "Ti", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_rrash3impRomInfo, md_rrash3impRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

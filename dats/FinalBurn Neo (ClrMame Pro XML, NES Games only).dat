@@ -1140,6 +1140,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="astroboy">
+		<comment>Hack</comment>
+		<description>Astro Boy (T-Eng)</description>
+		<year>2022</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Astro Boy T-Eng (2022)(Pacnsacdave).nes" size="262160" crc="d5e10c90"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="astrofanj" cloneof="astrofan" romof="astrofan">
 		<description>Astro Fang - Super Machine (Japan)</description>
 		<year>1990</year>
@@ -9218,6 +9227,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kyoursenjuuc" cloneof="kyoursenjuu" romof="kyoursenjuu">
+		<comment>Hack</comment>
 		<description>Kyouryuu Sentai Juuranger (T-Chi)</description>
 		<year>2023</year>
 		<manufacturer>LSP Team</manufacturer>
@@ -9435,6 +9445,15 @@
 		<year>2017</year>
 		<manufacturer>Psyklax</manufacturer>
 		<rom name="Legend of Balubalouk (T-Eng).nes" size="131088" crc="661c0a1b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="legenfum">
+		<comment>Hack</comment>
+		<description>Legend of Fuma, The (T-Eng)</description>
+		<year>2018</year>
+		<manufacturer>Nebulous Translations</manufacturer>
+		<rom name="The Legend of Fuma (T-Eng).nes" size="393232" crc="dad72cc9"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13514,6 +13533,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="robocopsc" cloneof="robocop" romof="robocop">
+		<comment>Hack</comment>
+		<description>RoboCop (T-Chi)</description>
+		<year>2023</year>
+		<manufacturer>LSP Team</manufacturer>
+		<rom name="RoboCop (T-Chi).nes" size="393232" crc="a568590b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="robocop">
 		<description>RoboCop (USA)</description>
 		<year>1989</year>
@@ -16604,7 +16632,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="tetsuwanatom">
+	<game name="tetsuwanatom" cloneof="astroboy" romof="astroboy">
 		<description>Tetsuwan Atom (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -16618,15 +16646,6 @@
 		<year>2021</year>
 		<manufacturer>NesDraug</manufacturer>
 		<rom name="The Beatles Adventures in Pepperland GlobHack (2021)(NesDraug).nes" size="524304" crc="fa5e3fa2"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="legenfum">
-		<comment>Hack</comment>
-		<description>The Legend of Fuma (T-Eng)</description>
-		<year>2018</year>
-		<manufacturer>Nebulous Translations</manufacturer>
-		<rom name="The Legend of Fuma (T-Eng).nes" size="393232" crc="dad72cc9"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

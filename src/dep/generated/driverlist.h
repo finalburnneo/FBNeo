@@ -1006,6 +1006,7 @@ DRV		BurnDrvAstdelux;
 DRV		BurnDrvAstrians;
 DRV		BurnSpecAstroblast;
 DRV		BurnDrvMSX_astrobls;
+DRV		BurnDrvnes_astroboy;
 DRV		BurnDrvcv_astrododge;
 DRV		BurnDrvnes_astrofanj;
 DRV		BurnDrvnes_astrofan;
@@ -8785,6 +8786,7 @@ DRV		BurnDrvnes_legacwizc;
 DRV		BurnDrvnes_legacwiz;
 DRV		BurnDrvnes_legenbalj;
 DRV		BurnDrvnes_legenbal;
+DRV		BurnDrvnes_legenfum;
 DRV		BurnDrvLoht_ms;
 DRV		BurnDrvLohtj;
 DRV		BurnDrvLohtb2;
@@ -13365,6 +13367,7 @@ DRV		BurnDrvnes_robocopc;
 DRV		BurnDrvRobocopj;
 DRV		BurnDrvMSX_seicorobocop;
 DRV		BurnDrvRobocopb2;
+DRV		BurnDrvnes_robocopsc;
 DRV		BurnDrvRobocopu0;
 DRV		BurnDrvRobocopu;
 DRV		BurnDrvnes_robocop;
@@ -17093,7 +17096,6 @@ DRV		BurnDrvLastday;
 DRV		BurnDrvLastdaya;
 DRV		BurnDrvlastsold;
 DRV		BurnDrvmd_lawnmowr;
-DRV		BurnDrvnes_legenfum;
 DRV		BurnDrvLkageb;
 DRV		BurnDrvLkageb2;
 DRV		BurnDrvLkageb3;
@@ -20417,6 +20419,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAstrians,			// Astrians (clone of Swarm)
 	&BurnSpecAstroblast,		// Astro Blaster (16K)
 	&BurnDrvMSX_astrobls,		// Astro Blaster (Euro)
+	&BurnDrvnes_astroboy,		// Astro Boy (T-Eng)
 	&BurnDrvcv_astrododge,		// Astro Dodge (HB)
 	&BurnDrvnes_astrofanj,		// Astro Fang - Super Machine (Japan)
 	&BurnDrvnes_astrofan,		// Astro Fang - Super Machine (T-Eng)
@@ -28196,6 +28199,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_legacwiz,		// Legacy of the Wizard (USA)
 	&BurnDrvnes_legenbalj,		// Legend of Balubalouk (Japan)
 	&BurnDrvnes_legenbal,		// Legend of Balubalouk (T-Eng)
+	&BurnDrvnes_legenfum,		// Legend of Fuma, The (T-Eng)
 	&BurnDrvLoht_ms,			// Legend of Hero Tonma (Gaelco bootleg, Modular System) [no comment, NOT WORKING]
 	&BurnDrvLohtj,				// Legend of Hero Tonma (Japan)
 	&BurnDrvLohtb2,				// Legend of Hero Tonma (Japan, bootleg with i8751)
@@ -32776,6 +32780,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRobocopj,			// Robocop (Japan)
 	&BurnDrvMSX_seicorobocop,	// RoboCop (Jpn)
 	&BurnDrvRobocopb2,			// Robocop (Red Corporation World bootleg)
+	&BurnDrvnes_robocopsc,		// RoboCop (T-Chi)
 	&BurnDrvRobocopu0,			// Robocop (US revision 0)
 	&BurnDrvRobocopu,			// Robocop (US revision 1)
 	&BurnDrvnes_robocop,		// RoboCop (USA)
@@ -36504,7 +36509,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLastdaya,			// The Last Day (set 2)
 	&BurnDrvlastsold,			// The Last Soldier (Korean release of The Last Blade)
 	&BurnDrvmd_lawnmowr,		// The Lawnmower Man (Euro, USA)
-	&BurnDrvnes_legenfum,		// The Legend of Fuma (T-Eng)
 	&BurnDrvLkageb,				// The Legend of Kage (bootleg set 1)
 	&BurnDrvLkageb2,			// The Legend of Kage (bootleg set 2)
 	&BurnDrvLkageb3,			// The Legend of Kage (bootleg set 3)

@@ -1,4 +1,4 @@
-// FB Alpha Deco Cassette driver module
+// FB Neo Deco Cassette driver module
 // Based on MAME driver by Juergen Buchmueller, David Haywood, Ajrhacker
 // Uses tape loader & protection code by Juergen Buchmueller, David Haywood
 // Some graphics routines by Juergen Buchmueller, David Haywood, Ajrhacker
@@ -2957,6 +2957,8 @@ static INT32 DrvExit()
 
 	e900_enable = 0;
 
+	cflyball_hack = false;
+
 	return 0;
 }
 
@@ -5217,6 +5219,8 @@ STD_ROM_FN(cflyball)
 
 static INT32 CflyballInit()
 {
+	cflyball_hack = true;
+
 	return DecocassInit(decocass_nodongle_read,NULL);
 }
 

@@ -761,8 +761,6 @@ static void region_swap()
 
 static INT32 DrvInit()
 {
-	cflyball_hack = false;
-
 	BurnAllocMemIndex();
 
 	{

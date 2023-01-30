@@ -63,6 +63,8 @@ static struct BurnInputInfo RampartInputList[] = {
 	{"P3 Coin",			BIT_DIGITAL,	DrvJoyF + 0,	"p3 coin"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy1 + 10,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p3 fire 2"	},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy1 + 0,	"p3 fire 3"	},
+	{"P3 Button 4",		BIT_DIGITAL,	DrvJoy2 + 10,	"p3 fire 4"	},
 
 	A("P3 Trackball X", BIT_ANALOG_REL, &Analog[4],		"p3 x-axis"),
 	A("P3 Trackball Y", BIT_ANALOG_REL, &Analog[5],		"p3 y-axis"),
@@ -139,7 +141,7 @@ STDINPUTINFO(Rampartj)
 
 static struct BurnDIPInfo RampartDIPList[]=
 {
-	DIP_OFFSET(0x12)
+	DIP_OFFSET(0x14)
 	{0x00, 0xff, 0xff, 0x04, NULL				},
 };
 

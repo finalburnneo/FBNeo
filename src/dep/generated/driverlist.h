@@ -715,6 +715,7 @@ DRV		BurnDrvAmigo;
 DRV		BurnSpecAmmytris;
 DRV		BurnDrvMSX_amomundo;
 DRV		BurnDrvMSX_amotopuf;
+DRV		BurnDrvmd_amshay;
 DRV		BurnDrvMSX_amurisus;
 DRV		BurnSpecAnarchy;
 DRV		BurnDrvMSX_anchors;
@@ -11448,6 +11449,7 @@ DRV		BurnDrvfds_otocky;
 DRV		BurnDrvgg_ottifant;
 DRV		BurnDrvsms_ottifant;
 DRV		BurnDrvottopz;
+DRV		BurnDrvOgonsiro;
 DRV		BurnDrvpce_outlivee;
 DRV		BurnDrvpce_outlive;
 DRV		BurnDrvmd_ootwp;
@@ -14948,6 +14950,7 @@ DRV		BurnDrvSpartanx;
 DRV		BurnDrvnes_spartanx2j;
 DRV		BurnDrvnes_spartanx2;
 DRV		BurnDrvSpatter;
+DRV		BurnDrvmd_spax;
 DRV		BurnDrvspeakresb;
 DRV		BurnDrvspeakres;
 DRV		BurnSpecSpeccies2;
@@ -20128,6 +20131,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAmmytris,			// Ammytris (128K)
 	&BurnDrvMSX_amomundo,		// Amo del Mundo (Spanish)
 	&BurnDrvMSX_amotopuf,		// Amoto's Puf (Spanish)
+	&BurnDrvmd_amshay,			// Amshay (HB)
 	&BurnDrvMSX_amurisus,		// Amurisus (HB, Tech-Demo)
 	&BurnSpecAnarchy,			// Anarchy (48K)
 	&BurnDrvMSX_anchors,		// Anchors Aweigh (HB, v1.1)
@@ -29924,7 +29928,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mspacmans,		// Ms. Pac-Man (Hack, Spanish)
 	&BurnDrvmspacmanlai,		// Ms. Pac-Man (Leisure and Allied bootleg)
 	&BurnDrvmspacmbmc,			// Ms. Pac-Man (Marti Colls bootleg)
-	&BurnDrvmd_mspacmanpir,		// Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1)
+	&BurnDrvmd_mspacmanpir,		// Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1) (Unl)
 	&BurnDrvnes_mspacmanu,		// Ms. Pac-Man (USA)(Namco)
 	&BurnDrvnes_mspacman,		// Ms. Pac-Man (USA)(Tengen)
 	&BurnDrvgg_mspacman,		// Ms. Pac-Man (USA)
@@ -30861,6 +30865,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_ottifant,		// Ottifants, The (Euro)
 	&BurnDrvsms_ottifant,		// Ottifants, The (Euro, Bra)
 	&BurnDrvottopz,				// Otto Project PZ (hack)
+	&BurnDrvOgonsiro,			// Ougon no Shiro (Japan)
 	&BurnDrvpce_outlivee,		// Out Live (Hack, English, v1.1)
 	&BurnDrvpce_outlive,		// Out Live
 	&BurnDrvmd_ootwp,			// Out of this World (Prototype)
@@ -32723,7 +32728,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_riyadh,			// Riyadh (HB, Tech-Demo)
 	&BurnDrvmd_rrash3,			// Road 3 Rash - Tour de Force (Euro, USA)
 	&BurnDrvmd_rrash3p,			// Road 3 Rash - World Warriors (USA, Prototype)
-	&BurnDrvmd_rrash3imp,		// Road 3 Rash Improvement (Hack, v1.02)
+	&BurnDrvmd_rrash3imp,		// Road 3 Rash Improvement (Hack, v1.04)
 	&BurnSpecRblaster,			// Road Blasters (128K)
 	&BurnDrvcv_roadfght,		// Road Fighter (HB)
 	&BurnDrvnes_roadfighter,	// Road Fighter (Japan)
@@ -34361,6 +34366,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_spartanx2j,		// Spartan X 2 (Japan)
 	&BurnDrvnes_spartanx2,		// Spartan X 2 (T-Eng)
 	&BurnDrvSpatter,			// Spatter (315-5xxx)
+	&BurnDrvmd_spax,			// Spax (HB)
 	&BurnDrvspeakresb,			// Speak & Rescue (bootleg)
 	&BurnDrvspeakres,			// Speak & Rescue
 	&BurnSpecSpeccies2,			// Speccies 2, The (16K) (HB, v1.1)
@@ -35456,10 +35462,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_smbunldlx,		// Super Mario Unlimited Deluxe (Hack)
 	&BurnDrvnes_supermarwor,	// Super Mario World (Unl)
 	&BurnDrvmd_smario64h,		// Super Mario World 64 (Hacked Protection)
-	&BurnDrvmd_smario64,		// Super Mario World 64 [no comment, NOT WORKING]
+	&BurnDrvmd_smario64,		// Super Mario World 64 (Unl) [no comment, NOT WORKING]
 	&BurnDrvmd_smbb,			// Super Mario World ~ Super Mario Bros. (Alt 2) (Unl)
 	&BurnDrvmd_smba,			// Super Mario World ~ Super Mario Bros. (Alt) (Unl)
-	&BurnDrvmd_smb,				// Super Mario World ~ Super Mario Bros. (Pirate)
+	&BurnDrvmd_smb,				// Super Mario World ~ Super Mario Bros. (Unl)
 	&BurnDrvMarukina,			// Super Marukin-Ban (Japan 901017)
 	&BurnDrvMarukin,			// Super Marukin-Ban (Japan 911128)
 	&BurnDrvnes_smaruo,			// Super Maruo
@@ -35818,8 +35824,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_t3ag,			// T3 - The Arcade Game (Rus) (Unl)
 	&BurnDrvnes_taboo,			// Taboo - The Sixth Sense (USA)
 	&BurnDrvTacscan,			// Tac/Scan
-	&BurnDrvmd_cars,			// Tachki (Rus)
-	&BurnDrvmd_cars2,			// Tachki 2 (Rus)
+	&BurnDrvmd_cars,			// Tachki (Rus) (Unl)
+	&BurnDrvmd_cars2,			// Tachki 2 (Rus) (Unl)
 	&BurnDrvTactcian,			// Tactician (set 1)
 	&BurnDrvTactcian2,			// Tactician (set 2)
 	&BurnDrvnes_tactus,			// Tactus (HB, Prototype)

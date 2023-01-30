@@ -860,6 +860,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="amshay">
+		<comment>Homebrew</comment>
+		<description>Amshay (HB)</description>
+		<year>2022</year>
+		<manufacturer>BankBank</manufacturer>
+		<rom name="Amshay (2022)(BankBank).bin" size="1048576" crc="79e57b7f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="agassi">
 		<description>Andre Agassi Tennis (Euro)</description>
 		<year>1992</year>
@@ -12425,9 +12434,9 @@
 	</game>
 	<game name="mspacmanpir" cloneof="mspacman" romof="mspacman">
 		<comment>Hack</comment>
-		<description>Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1)</description>
+		<description>Ms. Pac-Man (Pirate, Ripped from Golden 10 in 1) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="ms. pac-man (usa) (pirate).bin" size="131072" crc="39b51b26"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16169,10 +16178,10 @@
 	</game>
 	<game name="rrash3imp" cloneof="rrash3" romof="rrash3">
 		<comment>Hack</comment>
-		<description>Road 3 Rash Improvement (Hack, v1.02)</description>
-		<year>2022</year>
+		<description>Road 3 Rash Improvement (Hack, v1.04)</description>
+		<year>2023</year>
 		<manufacturer>Ti</manufacturer>
-		<rom name="Road Rash 3 Improvement v1.02 (2022)(Ti).bin" size="2097152" crc="62486344"/>
+		<rom name="Road Rash 3 Improvement v1.04 (2023)(Ti).bin" size="2097152" crc="76a6f6db"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18692,6 +18701,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spax">
+		<comment>Homebrew</comment>
+		<description>Spax (HB)</description>
+		<year>2022</year>
+		<manufacturer>Nomad Natan</manufacturer>
+		<rom name="Spax (2022)(Nomad Natan).bin" size="842240" crc="af859ad5"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="speedbl2">
 		<description>Speedball 2 (Euro)</description>
 		<year>1992</year>
@@ -20226,7 +20244,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smario64">
-		<description>Super Mario World 64</description>
+		<description>Super Mario World 64 (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="super mario world 64 (unl).bin" size="1048576" crc="e7ac4161"/>
@@ -20250,9 +20268,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="smb">
-		<description>Super Mario World ~ Super Mario Bros. (Pirate)</description>
+		<description>Super Mario World ~ Super Mario Bros. (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="super mario bros. (unl).bin" size="2097152" crc="9cfa2bd8"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20425,6 +20443,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sskidp" cloneof="sskid" romof="sskid">
+		<comment>Prototype</comment>
 		<description>Super Skidmarks (USA, Prototype)</description>
 		<year>1995</year>
 		<manufacturer>Codemasters</manufacturer>
@@ -20441,9 +20460,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssmashtvs" cloneof="ssmashtv" romof="ssmashtv">
+		<comment>Hack</comment>
 		<description>Super Smash TV (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Flying Edge</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="super smash tv (hack, spanish).bin" size="524288" crc="349b2a6c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20774,7 +20794,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cars" cloneof="sskid" romof="sskid">
-		<description>Tachki (Rus)</description>
+		<comment>Hack</comment>
+		<description>Tachki (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="disney's cars (r).bin" size="2097152" crc="6c5f2530"/>
@@ -20782,7 +20803,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="cars2" cloneof="cproam" romof="cproam">
-		<description>Tachki 2 (Rus)</description>
+		<comment>Hack</comment>
+		<description>Tachki 2 (Rus) (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="cars 2 (unl).bin" size="2097152" crc="4fd4d967"/>

@@ -3824,7 +3824,7 @@ struct BurnDriver BurnDrvCastfant = {
 static struct BurnRomInfo cnebulaRomDesc[] = {
 	{ "nebula2.pro",	0x0020, 0x75cae001, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
 
-	{ "nebula2.cas",	0x5c00, 0xef05ce36, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{ "nebula2.cas",	0x5c00, 0xaaac39e6, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
 };
 
 STDROMPICKEXT(cnebula, cnebula, decocass)

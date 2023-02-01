@@ -656,7 +656,7 @@ static int SelListMake()
 
 		if(!gameAv[nBurnDrvActive]) nMissingDrvCount++;
 
-		UINT64 nHardware = (UINT64)(1 << (BurnDrvGetHardwareCode() >> 24));
+		UINT64 nHardware = (UINT64)1 << ((UINT32)BurnDrvGetHardwareCode() >> 24);
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || (nHardware & MASKALL) == 0)) {
 			continue;
 		}
@@ -721,7 +721,7 @@ static int SelListMake()
 
 		if(!gameAv[nBurnDrvActive]) nMissingDrvCount++;
 
-		UINT64 nHardware = (UINT64)(1 << (BurnDrvGetHardwareCode() >> 24));
+		UINT64 nHardware = (UINT64)1 << ((UINT32)BurnDrvGetHardwareCode() >> 24);
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || ((nHardware & MASKALL) == 0))) {
 			continue;
 		}

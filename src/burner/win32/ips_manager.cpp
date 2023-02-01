@@ -1040,6 +1040,10 @@ UINT32 GetIpsDrvDefine()
 						nRet |= IPS_PGM_MAPHACK;
 						continue;
 					}
+					if (0 == strcmp(tmp, "IPS_LOAD_OFFSET")) {
+						nRet |= IPS_LOAD_OFFSET;
+						continue;
+					}
 
 					// Assignment is only allowed once
 					if (!INCLUDE_NEOP3(nRet)) {
@@ -1115,6 +1119,9 @@ INT32 GetIpsesMaxLen(char* rom_name)
 			if (nIpsMaxFileLen > nRet) nRet = nIpsMaxFileLen;	// Returns the address with the largest length in ipses.
 		}
 	}
+
+	if (GetIpsDrvDefine() & IPS_LOAD_OFFSET) nRet += 0x800000;
+
 	return nRet;
 }
 

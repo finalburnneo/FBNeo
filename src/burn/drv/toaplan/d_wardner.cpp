@@ -630,6 +630,8 @@ static INT32 DrvDoReset()
 	dsp_BIO = 0;
 	dsp_on = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1190,7 +1192,7 @@ struct BurnDriver BurnDrvWardner = {
 	"wardner", NULL, NULL, NULL, "1987",
 	"Wardner (World)\0", NULL, "Toaplan / Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
 	NULL, wardnerRomInfo, wardnerRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, WardnerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3
@@ -1250,7 +1252,7 @@ struct BurnDriver BurnDrvWardnerb = {
 	"wardnerb", "wardner", NULL, NULL, "1987",
 	"Wardner (World, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
 	NULL, wardnerbRomInfo, wardnerbRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, WardnerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3
@@ -1302,7 +1304,7 @@ struct BurnDriver BurnDrvPyros = {
 	"pyros", "wardner", NULL, NULL, "1987",
 	"Pyros (US)\0", NULL, "Toaplan / Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
 	NULL, pyrosRomInfo, pyrosRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, PyrosDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3
@@ -1354,7 +1356,7 @@ struct BurnDriver BurnDrvWardnerj = {
 	"wardnerj", "wardner", NULL, NULL, "1987",
 	"Wardner no Mori (Japan)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
 	NULL, wardnerjRomInfo, wardnerjRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, WardnerjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3

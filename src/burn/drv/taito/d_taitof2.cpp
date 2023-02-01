@@ -11361,7 +11361,7 @@ struct BurnDriver BurnDrvNinjak = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, NinjakRomInfo, NinjakRomName, NULL, NULL, NULL, NULL, NinjakInputInfo, NinjakDIPInfo,
-	NinjakInit, TaitoF2Exit, TaitoF2Frame, TaitoF2Draw, TaitoF2Scan,
+	NinjakInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 

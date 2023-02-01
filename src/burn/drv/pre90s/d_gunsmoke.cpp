@@ -1014,7 +1014,7 @@ struct BurnDriver BurnDrvGunsmokeuc = {
 	"Gun.Smoke (USA and Canada, 1985-11-15, set 2)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
-	NULL, gunsmokeubRomInfo, gunsmokeubRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, gunsmokeucRomInfo, gunsmokeucRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
 	224, 256, 3, 4
 };

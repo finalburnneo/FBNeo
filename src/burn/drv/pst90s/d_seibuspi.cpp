@@ -513,11 +513,14 @@ static UINT32 common_read_dword(UINT32 address)
 			UINT32 ret = DrvInputs[0]; // FLIPSCREEN & ~0x8000;
 
 			if (BurnDrvGetGenreFlags() & GBF_MAHJONG) { // ejanhs
+				UINT32 ej = 0;
 				ret &= 0xffff4000;
-				ret |= ejanhs_encode(3) << 0;
-				ret |= ejanhs_encode(4) << 3;
-				ret |= ejanhs_encode(2) << 6;
-				ret |= ejanhs_encode(0) << 9;
+				ej |= ejanhs_encode(3) << 0;
+				ej |= ejanhs_encode(4) << 3;
+				ej |= ejanhs_encode(2) << 6;
+				ej |= ejanhs_encode(0) << 9;
+				ej = ~ej; // active low
+				ret |= (ej & 0x3f3f); // add bits from encoder
 			}
 
 			return ret; // inputs

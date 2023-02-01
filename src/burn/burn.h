@@ -418,6 +418,8 @@ void Reinitialise();
 #define IPS_PGM_SNDOFS6		(1 << 13)
 #define IPS_PGM_MAPHACK		(1 << 14)
 
+#define IPS_LOAD_OFFSET		(1 << 15)	// Increase the temporary memory for loading the rom
+
 #define INCLUDE_NEOP3(x)	((x & IPS_NEOP3_20000) || (x & IPS_NEOP3_40000))
 #define INCLUDE_PROG(x)		((x & IPS_PROG_100000) || (x & IPS_PROG_200000) || (x & IPS_PROG_300000) || (x & IPS_PROG_400000) || (x & IPS_PROG_500000) ||	\
 							 (x & IPS_PROG_600000) || (x & IPS_PROG_700000) || (x & IPS_PROG_800000) || (x & IPS_PROG_900000))

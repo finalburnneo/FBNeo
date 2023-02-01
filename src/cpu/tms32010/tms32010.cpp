@@ -56,9 +56,10 @@
 #include "tms32010.h"
 
 
-#ifndef INLINE
-#define INLINE static inline
+#ifdef INLINE
+#undef INLINE
 #endif
+#define INLINE static inline
 
 static INT32 addr_mask;
 

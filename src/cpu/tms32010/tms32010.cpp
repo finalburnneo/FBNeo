@@ -57,7 +57,7 @@
 
 
 #ifndef INLINE
-#define INLINE inline
+#define INLINE static inline
 #endif
 
 static INT32 addr_mask;
@@ -206,11 +206,11 @@ static int add_branch_cycle();
  *  Shortcuts
  ************************************************************************/
 
-static INLINE void CLR(UINT16 flag) { R.STR &= ~flag; R.STR |= 0x1efe; }
-static INLINE void SET(UINT16 flag) { R.STR |=  flag; R.STR |= 0x1efe; }
+INLINE void CLR(UINT16 flag) { R.STR &= ~flag; R.STR |= 0x1efe; }
+INLINE void SET(UINT16 flag) { R.STR |=  flag; R.STR |= 0x1efe; }
 
 
-static INLINE void CALCULATE_ADD_OVERFLOW(INT32 addval)
+INLINE void CALCULATE_ADD_OVERFLOW(INT32 addval)
 {
 	if ((INT32)(~(R.oldacc.d ^ addval) & (R.oldacc.d ^ R.ACC.d)) < 0) {
 		SET(OV_FLAG);
@@ -218,7 +218,7 @@ static INLINE void CALCULATE_ADD_OVERFLOW(INT32 addval)
 			R.ACC.d = ((INT32)R.oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 	}
 }
-static INLINE void CALCULATE_SUB_OVERFLOW(INT32 subval)
+INLINE void CALCULATE_SUB_OVERFLOW(INT32 subval)
 {
 	if ((INT32)((R.oldacc.d ^ subval) & (R.oldacc.d ^ R.ACC.d)) < 0) {
 		SET(OV_FLAG);
@@ -227,7 +227,7 @@ static INLINE void CALCULATE_SUB_OVERFLOW(INT32 subval)
 	}
 }
 
-static INLINE UINT16 POP_STACK(void)
+INLINE UINT16 POP_STACK(void)
 {
 	UINT16 data = R.STACK[3];
 	R.STACK[3] = R.STACK[2];
@@ -235,7 +235,7 @@ static INLINE UINT16 POP_STACK(void)
 	R.STACK[1] = R.STACK[0];
 	return (data & addr_mask);
 }
-static INLINE void PUSH_STACK(UINT16 data)
+INLINE void PUSH_STACK(UINT16 data)
 {
 	R.STACK[0] = R.STACK[1];
 	R.STACK[1] = R.STACK[2];
@@ -243,7 +243,7 @@ static INLINE void PUSH_STACK(UINT16 data)
 	R.STACK[3] = (data & addr_mask);
 }
 
-static INLINE void UPDATE_AR(void)
+INLINE void UPDATE_AR(void)
 {
 	if (R.opcode.b.l & 0x30) {
 		UINT16 tmpAR = R.AR[ARP];
@@ -252,7 +252,7 @@ static INLINE void UPDATE_AR(void)
 		R.AR[ARP] = (R.AR[ARP] & 0xfe00) | (tmpAR & 0x01ff);
 	}
 }
-static INLINE void UPDATE_ARP(void)
+INLINE void UPDATE_ARP(void)
 {
 	if (~R.opcode.b.l & 0x08) {
 		if (R.opcode.b.l & 0x01) SET(ARP_REG);
@@ -261,7 +261,7 @@ static INLINE void UPDATE_ARP(void)
 }
 
 
-static INLINE void getdata(UINT8 shift,UINT8 signext)
+INLINE void getdata(UINT8 shift,UINT8 signext)
 {
 	if (R.opcode.b.l & 0x80)
 		R.memaccess = IND;
@@ -277,7 +277,7 @@ static INLINE void getdata(UINT8 shift,UINT8 signext)
 	}
 }
 
-static INLINE void putdata(UINT16 data)
+INLINE void putdata(UINT16 data)
 {
 	if (R.opcode.b.l & 0x80)
 		R.memaccess = IND;
@@ -290,7 +290,7 @@ static INLINE void putdata(UINT16 data)
 	}
 	M_WRTRAM(R.memaccess,data);
 }
-static INLINE void putdata_sar(UINT8 data)
+INLINE void putdata_sar(UINT8 data)
 {
 	if (R.opcode.b.l & 0x80)
 		R.memaccess = IND;
@@ -303,7 +303,7 @@ static INLINE void putdata_sar(UINT8 data)
 	}
 	M_WRTRAM(R.memaccess,R.AR[data]);
 }
-static INLINE void putdata_sst(UINT16 data)
+INLINE void putdata_sst(UINT16 data)
 {
 	if (R.opcode.b.l & 0x80)
 		R.memaccess = IND;

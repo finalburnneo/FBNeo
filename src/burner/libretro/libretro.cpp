@@ -362,7 +362,7 @@ static int create_variables_from_dipswitches()
 	if (!drvname)
 		return 0;
 
-	for (int i = 0, j = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++)
+	for (int i = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++)
 	{
 		/* 0xFE is the beginning label for a DIP switch entry */
 		/* 0xFD are region DIP switches */
@@ -474,8 +474,6 @@ static int create_variables_from_dipswitches()
 				dipswitch_core_options.pop_back();
 				continue;
 			}
-
-			j++;
 		}
 	}
 
@@ -1179,7 +1177,6 @@ static void VideoBufferInit()
 
 void retro_run()
 {
-	int nAudioVideoEnable = 0;
 	bool bEnableVideo = true;
 	bool bEmulateAudio = true;
 	bool bPresentAudio = true;
@@ -1199,6 +1196,7 @@ void retro_run()
 #ifndef FBNEO_DEBUG
 	// Setting RA's video or audio driver to null will disable video/audio bits,
 	// however that's a problem because i do batch run with video/audio disabled to detect asan issues 
+	int nAudioVideoEnable = 0;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE, &nAudioVideoEnable))
 	{
 		// Video is required when "Enable Video" bit is set

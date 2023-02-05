@@ -2071,7 +2071,7 @@ INT32 System16Init()
 			BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		} else {
 			BurnYM2151Init(4000000);
-			BurnYM2151SetAllRoutes(0.43, BURN_SND_ROUTE_BOTH);
+			BurnYM2151SetAllRoutes(0.33, BURN_SND_ROUTE_BOTH);
 		}
 		
 		if (System16UPD7759DataSize) {

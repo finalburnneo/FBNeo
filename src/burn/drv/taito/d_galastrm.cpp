@@ -388,6 +388,7 @@ static INT32 DrvInit()
 
 	TaitoF3ES5506RomSize = 0x1000000;
 	TaitoF3SoundInit(1);
+	TaitoF3SoundIRQConfig(1);
 
 	EEPROMInit(&eeprom_interface_93C46);
 	EEPROMIgnoreErrMessage(1);
@@ -568,7 +569,7 @@ static void tc0610_draw_scanline(void *dest, INT32 scan_line, const poly_extent 
 static void tc0610_rotate_draw()
 {
 	struct rectangle clip;
-	clip.set(0, nScreenWidth-1, 0, nScreenHeight-1);
+	clip.set(0, nScreenHeight-1, 0, nScreenWidth-1); // for some reason, this is correct
 
 	struct polygon
 	{

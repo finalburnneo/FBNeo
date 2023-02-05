@@ -805,8 +805,6 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	Cart.Trainer = (ROMData[6] & 0x4) >> 2;
 	Cart.BatteryBackedSRAM = (ROMData[6] & 0x2) >> 1;
 
-	if (Cart.Trainer) bprintf(PRINT_ERROR, _T("Has Trainer data!\n"));
-
 	Cart.PRGRom = ROMData + 0x10 + (Cart.Trainer ? 0x200 : 0);
 
 	// Default CHR-Ram size (8k), always set-up (for advanced mappers, etc)
@@ -877,6 +875,18 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	bprintf(0, _T("Cartridge RAM: %d\n"), Cart.WorkRAMSize);
 	Cart.WorkRAM = (UINT8*)BurnMalloc(Cart.WorkRAMSize);
 	if (Cart.WorkRAMSize == 0) NESMode |= NO_WORKRAM;
+
+	if (Cart.Trainer) {
+		// This is not a trainer in the traditional sense.  It was a little
+		// block of ram on early nes/fc copy-machines to simulate certain
+		// mappers with code.
+		bprintf(0, _T("ROM has Trainer code, mapping @ 0x7000.\n"));
+		if (Cart.WorkRAMSize == 0x2000) {
+			memcpy(Cart.WorkRAM + 0x1000, ROMData + 0x10, 0x200);
+		} else {
+			bprintf(PRINT_ERROR, _T("Invalid WorkRam size, can't use Trainer data.\n"));
+		}
+	}
 
 	// set-up MAPPER
 	bprintf(0, _T("Cartridge Mapper: %d   Mirroring: "), Cart.Mapper);
@@ -4774,14 +4784,14 @@ static void vrc2vrc4_write(UINT16 address, UINT8 data)
 			case 0x8001:
 			case 0x8002:
 			case 0x8003:
-				mapper23_prg(0) = data & 0x1f;
+				mapper23_prg(0) = data; // usually a 0x1f mask, some pirate carts/hacks want this unmasked to address larger prg than usual
 				mapper_map();
 				break;
 			case 0xA000:
 			case 0xA001:
 			case 0xA002:
 			case 0xA003:
-				mapper23_prg(1) = data & 0x1f;
+				mapper23_prg(1) = data; // comment: same as above
 				mapper_map();
 				break;
 			case 0x9000:

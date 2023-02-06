@@ -32494,6 +32494,41 @@ struct BurnDriver BurnDrvnes_contrrevredfal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_contracsRomDesc[] = {
+	{ "contracs.nes",          541200, 0xe7e2ffa3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contracs)
+STD_ROM_FN(nes_contracs)
+
+struct BurnDriver BurnDrvnes_contracs = {
+	"nes_contracs", "nes_contra", NULL, NULL, "1989?",
+	"Contra - The Last Rebirth\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_contracsRomInfo, nes_contracsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_contramdlRomDesc[] = {
+	{ "contramdl.nes",          541200, 0x78e3d5a4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contramdl)
+STD_ROM_FN(nes_contramdl)
+
+struct BurnDriver BurnDrvnes_contramdl = {
+	"nes_contramdl", "nes_contra", NULL, NULL, "1989?",
+	"Contra - Demon Contra\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_contramdlRomInfo, nes_contramdlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+
 static struct BurnRomInfo nes_contra168in1RomDesc[] = {
 	{ "Contra 168-in-1 (Unl).nes",          1048592, 0xc6fd114e, BRF_ESS | BRF_PRG },
 };

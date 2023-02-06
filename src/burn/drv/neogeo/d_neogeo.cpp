@@ -19073,11 +19073,11 @@ struct BurnDriver BurnDrvkof2001pkz = {
 };
 
 // The King of Fighters 2001 Ultimate
-// Ver 1.02 - 20221023
+// Ver 1.03 - 20221209
 
 static struct BurnRomInfo kof2001ultRomDesc[] = {
-	{ "262-p1ult-08-e0.p1",		0x100000, 0x54bd89e8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "262-p2ult-08-e0.sp2",	0x500000, 0x1bb69042, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "262-p1ult-08-e0.p1",		0x100000, 0xb23474ff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262-p2ult-08-e0.sp2",	0x500000, 0x6bb7d9dc, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22369,10 +22369,10 @@ struct BurnDriver BurnDrvmslugx2r1v2 = {
 
 // Metal Slug X - Super Vehicle-001 (Survival, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20230101
+// GOTVG 20230204
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",	0x100000, 0xcdf2ddfe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",	0x400000, 0xdfeda77d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",	0x100000, 0xfef6d9cc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",	0x400000, 0xd522cb34, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -22380,8 +22380,8 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-c2.c2",		0x800000, 0x31679821, 3 | BRF_GRA },           //  4
 	{ "250-c3.c3",		0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
 	{ "250-c4.c4",		0x800000, 0x31354513, 3 | BRF_GRA },           //  6
-	{ "250-c5sc.c5",	0x800000, 0xc9d9073a, 3 | BRF_GRA },           //  7
-	{ "250-c6sc.c6",	0x800000, 0xb9a16599, 3 | BRF_GRA },           //  8
+	{ "250-c5sc.c5",	0x800000, 0x1a7a284f, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",	0x800000, 0x9dfb0714, 3 | BRF_GRA },           //  8
 
 	{ "250-m1.m1",    	0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
@@ -23887,12 +23887,12 @@ struct BurnDriver BurnDrvkof97evn = {
 };
 
 // The King of Fighters '99 - Fluent and Refreshing
-// GOTVG 20221203
+// GOTVG 20230131
 static struct BurnRomInfo kof99skRomDesc[] = {
 	/* Encrypted */
 	{ "sk.neo-sma",		0x040000, 0xea9a3451, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "251-p1sk.p1",	0x400000, 0x9fbc14f6, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "251-p2sk.p2",	0x400000, 0x05242429, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "251-p1sk.p1",	0x400000, 0x25159a90, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2sk.p2",	0x400000, 0x350ae004, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23925,7 +23925,7 @@ static INT32 kof99WOPInit()
 }
 
 struct BurnDriver BurnDrvkof99sk = {
-	"kof99sk", "kof99", "neogeo", NULL, "2022",
+	"kof99sk", "kof99", "neogeo", NULL, "2023",
 	"The King of Fighters '99 - Fluent and Refreshing\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, FBF_KOF,
@@ -23935,12 +23935,12 @@ struct BurnDriver BurnDrvkof99sk = {
 };
 
 // The King of Fighters '99 - Evolution
-// GOTVG 20221016
+// GOTVG 20230128
 static struct BurnRomInfo kof99jhRomDesc[] = {
 	/* Encrypted */
 	{ "jh.neo-sma",		0x040000, 0xeb34c057, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "251-p1jh.p1",	0x400000, 0xf163729d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "251-p2jh.p2",	0x400000, 0x03570b47, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "251-p1jh.p1",	0x400000, 0xc2a8e114, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2jh.p2",	0x400000, 0x6a80c2db, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23975,7 +23975,7 @@ static INT32 kof99WOPTPInit()
 }
 
 struct BurnDriver BurnDrvkof99jh = {
-	"kof99jh", "kof99", "neogeo", NULL, "2022",
+	"kof99jh", "kof99", "neogeo", NULL, "2023",
 	"The King of Fighters '99 - Evolution\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, FBF_KOF,

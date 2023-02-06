@@ -8731,25 +8731,6 @@ struct BurnDriver BurnDrvpce_santatlantean = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
-// Contra (NES Mod Version 3.0)
-
-static struct BurnRomInfo pce_contranesRomDesc[] = {
-	{ "Contra.pce", 0x80000, 0xAAF5AEB4, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(pce_contranes)
-STD_ROM_FN(pce_contranes)
-
-struct BurnDriver BurnDrvpce_contranes = {
-	"pce_contranes", NULL, NULL, NULL, "20??",
-	"Contra (NES Mod Version 3.0)\0", NULL, "Unknown", "PC Engine",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM | GBF_SHOOT, 0,
-	PceGetZipName, pce_contranesRomInfo, pce_contranesRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
-	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
-};
-
 
 // PC-Engine CPU Timing Test by Chris Covell (http://www.chrismcovell.com/CPUTest/)
 

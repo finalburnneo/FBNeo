@@ -2071,19 +2071,15 @@ INT32 System16Init()
 			BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		} else {
 			BurnYM2151Init(4000000);
-			BurnYM2151SetAllRoutes(0.43, BURN_SND_ROUTE_BOTH);
+			BurnYM2151SetAllRoutes(0.33, BURN_SND_ROUTE_BOTH);
 		}
 		
 		if (System16UPD7759DataSize) {
 			UPD7759Init(0, UPD7759_STANDARD_CLOCK, NULL);
 			UPD7759SetDrqCallback(0, System16UPD7759DrqCallback);
 			UPD7759SetSyncCallback(0, ZetTotalCycles, 5000000);
-			if (strstr(BurnDrvGetTextA(DRV_NAME), "tturf")) {
-				UPD7759SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
-			} else {
-				UPD7759SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-			}
-			UPD7759SetFilter(0, 2000);
+			UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+			UPD7759SetFilter(0, 7000);
 			BurnTimerAttachZet(5000000);
 		}
 		

@@ -805,8 +805,6 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	Cart.Trainer = (ROMData[6] & 0x4) >> 2;
 	Cart.BatteryBackedSRAM = (ROMData[6] & 0x2) >> 1;
 
-	if (Cart.Trainer) bprintf(PRINT_ERROR, _T("Has Trainer data!\n"));
-
 	Cart.PRGRom = ROMData + 0x10 + (Cart.Trainer ? 0x200 : 0);
 
 	// Default CHR-Ram size (8k), always set-up (for advanced mappers, etc)
@@ -877,6 +875,18 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	bprintf(0, _T("Cartridge RAM: %d\n"), Cart.WorkRAMSize);
 	Cart.WorkRAM = (UINT8*)BurnMalloc(Cart.WorkRAMSize);
 	if (Cart.WorkRAMSize == 0) NESMode |= NO_WORKRAM;
+
+	if (Cart.Trainer) {
+		// This is not a trainer in the traditional sense.  It was a little
+		// block of ram on early nes/fc copy-machines to simulate certain
+		// mappers with code.
+		bprintf(0, _T("ROM has Trainer code, mapping @ 0x7000.\n"));
+		if (Cart.WorkRAMSize == 0x2000) {
+			memcpy(Cart.WorkRAM + 0x1000, ROMData + 0x10, 0x200);
+		} else {
+			bprintf(PRINT_ERROR, _T("Invalid WorkRam size, can't use Trainer data.\n"));
+		}
+	}
 
 	// set-up MAPPER
 	bprintf(0, _T("Cartridge Mapper: %d   Mirroring: "), Cart.Mapper);
@@ -4774,14 +4784,14 @@ static void vrc2vrc4_write(UINT16 address, UINT8 data)
 			case 0x8001:
 			case 0x8002:
 			case 0x8003:
-				mapper23_prg(0) = data & 0x1f;
+				mapper23_prg(0) = data; // usually a 0x1f mask, some pirate carts/hacks want this unmasked to address larger prg than usual
 				mapper_map();
 				break;
 			case 0xA000:
 			case 0xA001:
 			case 0xA002:
 			case 0xA003:
-				mapper23_prg(1) = data & 0x1f;
+				mapper23_prg(1) = data; // comment: same as above
 				mapper_map();
 				break;
 			case 0x9000:
@@ -15982,7 +15992,8 @@ struct BurnDriver BurnDrvnes_magickidsdorp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Jackal - Endless Mission (v1.2) 2021-03-13
+// Jackal - Endless Mission (v1.2) 20210313
+// Modified by HHNM Team - ZENG GE / 曾哥
 // https://www.nesbbs.com/bbs/thread-51662-1-1.html
 static struct BurnRomInfo nes_jackalemRomDesc[] = {
 	{ "Jackal - Endless Mission (v1.2).nes",          262160, 0x833c6bc4, BRF_ESS | BRF_PRG },
@@ -15994,7 +16005,7 @@ STD_ROM_FN(nes_jackalem)
 struct BurnDriver BurnDrvnes_jackalem = {
 	"nes_jackalem", "nes_jackal", NULL, NULL, "2021",
 	"Jackal - Endless Mission (v1.2)\0", NULL, "HHNM Team - ZENG GE", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	L"Jackal - Endless Mission (v1.2)\0\u8d64\u8272\u8981\u585e - \u65e0\u5c3d\u7684\u4efb\u52a1 (v1.2)", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_jackalemRomInfo, nes_jackalemRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
@@ -21930,6 +21941,23 @@ struct BurnDriver BurnDrvnes_asteka2 = {
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_chickenfarmRomDesc[] = {
+	{ "Chicken Of The Farm (2019)(mitch3a and link_7777).nes",          40976, 0x60e65140, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chickenfarm)
+STD_ROM_FN(nes_chickenfarm)
+
+struct BurnDriver BurnDrvnes_chickenfarm = {
+	"nes_chickenfarm", NULL, NULL, NULL, "2019",
+	"Chicken Of The Farm (HB)\0", NULL, "mitch3a, link_7777", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_chickenfarmRomInfo, nes_chickenfarmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // https://www.romhacking.net/hacks/4723/
 static struct BurnRomInfo nes_deadpoolRomDesc[] = {
@@ -32483,6 +32511,47 @@ struct BurnDriver BurnDrvnes_contrrevredfal = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+
+// Contra - The Last Rebirth (China)
+// Modified by Jing Jing Bu Xiang Wo / 静静不想我
+// GOTVG 20221226
+static struct BurnRomInfo nes_contracsRomDesc[] = {
+	{ "contracs.nes",          541200, 0xe7e2ffa3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contracs)
+STD_ROM_FN(nes_contracs)
+
+struct BurnDriver BurnDrvnes_contracs = {
+	"nes_contracs", "nes_contra", NULL, NULL, "2022",
+	"Contra - The Last Rebirth (China)\0", NULL, "Jing Jing Bu Xiang Wo", "Miscellaneous",
+	L"Contra - The Last Rebirth\0\u9b42\u6597\u7f85 - \u6700\u540e\u7684\u91cd\u751f\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_contracsRomInfo, nes_contracsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Contra - Demon Contra (China)
+// Modified by Huan Tian / 幻天
+// GOTVG 20200406
+static struct BurnRomInfo nes_contramdlRomDesc[] = {
+	{ "contramdl.nes",          541200, 0x78e3d5a4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contramdl)
+STD_ROM_FN(nes_contramdl)
+
+struct BurnDriver BurnDrvnes_contramdl = {
+	"nes_contramdl", "nes_contra", NULL, NULL, "2020",
+	"Contra - Demon Contra (China)\0", NULL, "Huan Tian", "Miscellaneous",
+	L"Contra - Demon Contra\0\u9b42\u6597\u7f85 - \u9b54\u6597\u7f85\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_contramdlRomInfo, nes_contramdlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 
 static struct BurnRomInfo nes_contra168in1RomDesc[] = {
 	{ "Contra 168-in-1 (Unl).nes",          1048592, 0xc6fd114e, BRF_ESS | BRF_PRG },

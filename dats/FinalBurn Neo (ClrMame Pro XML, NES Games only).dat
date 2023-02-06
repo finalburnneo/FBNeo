@@ -2873,6 +2873,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="chickenfarm">
+		<comment>Homebrew</comment>
+		<description>Chicken Of The Farm (HB)</description>
+		<year>2019</year>
+		<manufacturer>mitch3a, link_7777</manufacturer>
+		<rom name="Chicken Of The Farm (2019)(mitch3a and link_7777).nes" size="40976" crc="60e65140"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="chiisobaj" cloneof="chiisoba" romof="chiisoba">
 		<description>Chiisana Obake - Acchi Socchi Kocchi (Japan)</description>
 		<year>1992</year>
@@ -3281,6 +3290,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="contramdl" cloneof="contra" romof="contra">
+		<comment>Hack</comment>
+		<description>Contra - Demon Contra (China)</description>
+		<year>2020</year>
+		<manufacturer>Huan Tian</manufacturer>
+		<rom name="contramdl.nes" size="541200" crc="78e3d5a4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="contrredfalwar" cloneof="contra" romof="contra">
 		<comment>Hack</comment>
 		<description>Contra - Red Falcon War (Hack)</description>
@@ -3296,6 +3314,15 @@
 		<year>2016</year>
 		<manufacturer>Trax</manufacturer>
 		<rom name="Contra - Revenge of the Red Falcon (USA).nes" size="262160" crc="fa28193b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="contracs" cloneof="contra" romof="contra">
+		<comment>Hack</comment>
+		<description>Contra - The Last Rebirth (China)</description>
+		<year>2022</year>
+		<manufacturer>Jing Jing Bu Xiang Wo</manufacturer>
+		<rom name="contracs.nes" size="541200" crc="e7e2ffa3"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

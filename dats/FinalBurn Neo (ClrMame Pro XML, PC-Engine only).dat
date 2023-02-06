@@ -427,15 +427,6 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="contranes">
-		<comment>Hack</comment>
-		<description>Contra (NES Mod Version 3.0)</description>
-		<year>20??</year>
-		<manufacturer>Unknown</manufacturer>
-		<rom name="Contra.pce" size="524288" crc="aaf5aeb4"/>
-		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="coryoon1" cloneof="coryoon" romof="coryoon">
 		<description>Coryoon - Child of Dragon (Alt)</description>
 		<year>1991</year>

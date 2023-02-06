@@ -12405,15 +12405,15 @@
 		<description>Metal Slug X - Super Vehicle-001 (Survival, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1sc.p1" size="1048576" crc="cdf2ddfe"/>
-		<rom name="250-p2sc.ep1" size="4194304" crc="dfeda77d"/>
+		<rom name="250-p1sc.p1" size="1048576" crc="fef6d9cc"/>
+		<rom name="250-p2sc.ep1" size="4194304" crc="d522cb34"/>
 		<rom name="250-s1sc.s1" size="131072" crc="03bce893"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
 		<rom name="250-c3.c3" merge="250-c3.c3" size="8388608" crc="fd602019"/>
 		<rom name="250-c4.c4" merge="250-c4.c4" size="8388608" crc="31354513"/>
-		<rom name="250-c5sc.c5" size="8388608" crc="c9d9073a"/>
-		<rom name="250-c6sc.c6" size="8388608" crc="b9a16599"/>
+		<rom name="250-c5sc.c5" size="8388608" crc="1a7a284f"/>
+		<rom name="250-c6sc.c6" size="8388608" crc="9dfb0714"/>
 		<rom name="250-m1.m1" merge="250-m1.m1" size="131072" crc="fd42a842"/>
 		<rom name="250-v1.v1" merge="250-v1.v1" size="4194304" crc="c79ede73"/>
 		<rom name="250-v2.v2" merge="250-v2.v2" size="4194304" crc="ea9aabe1"/>
@@ -23409,11 +23409,11 @@
 	<game name="kof99jh" cloneof="kof99" romof="kof99">
 		<comment>Hack</comment>
 		<description>The King of Fighters '99 - Evolution</description>
-		<year>2022</year>
+		<year>2023</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="jh.neo-sma" size="262144" crc="eb34c057"/>
-		<rom name="251-p1jh.p1" size="4194304" crc="f163729d"/>
-		<rom name="251-p2jh.p2" size="4194304" crc="03570b47"/>
+		<rom name="251-p1jh.p1" size="4194304" crc="c2a8e114"/>
+		<rom name="251-p2jh.p2" size="4194304" crc="6a80c2db"/>
 		<rom name="251-c1jh.c1" size="8388608" crc="317c6a74"/>
 		<rom name="251-c2jh.c2" size="8388608" crc="6ef5f6fd"/>
 		<rom name="251-c3jh.c3" size="8388608" crc="0973cf42"/>
@@ -23471,11 +23471,11 @@
 	<game name="kof99sk" cloneof="kof99" romof="kof99">
 		<comment>Hack</comment>
 		<description>The King of Fighters '99 - Fluent and Refreshing</description>
-		<year>2022</year>
+		<year>2023</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="sk.neo-sma" size="262144" crc="ea9a3451"/>
-		<rom name="251-p1sk.p1" size="4194304" crc="9fbc14f6"/>
-		<rom name="251-p2sk.p2" size="4194304" crc="05242429"/>
+		<rom name="251-p1sk.p1" size="4194304" crc="25159a90"/>
+		<rom name="251-p2sk.p2" size="4194304" crc="350ae004"/>
 		<rom name="251-c1.c1" merge="251-c1.c1" size="8388608" crc="0f9e93fe"/>
 		<rom name="251-c2.c2" merge="251-c2.c2" size="8388608" crc="e71e2ea3"/>
 		<rom name="251-c3.c3" merge="251-c3.c3" size="8388608" crc="238755d2"/>
@@ -25469,8 +25469,8 @@
 		<description>The King of Fighters 2001 Ultimate</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="262-p1ult-08-e0.p1" size="1048576" crc="54bd89e8"/>
-		<rom name="262-p2ult-08-e0.sp2" size="5242880" crc="1bb69042"/>
+		<rom name="262-p1ult-08-e0.p1" size="1048576" crc="b23474ff"/>
+		<rom name="262-p2ult-08-e0.sp2" size="5242880" crc="6bb7d9dc"/>
 		<rom name="262-c1ult-08-e0.c1" size="8388608" crc="de322745"/>
 		<rom name="262-c2ult-08-e0.c2" size="8388608" crc="266df0a3"/>
 		<rom name="262-c3ult-08-e0.c3" size="8388608" crc="bf60e575"/>

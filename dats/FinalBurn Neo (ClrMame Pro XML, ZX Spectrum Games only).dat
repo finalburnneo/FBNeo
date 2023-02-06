@@ -2620,12 +2620,23 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bootyremake" romof="spec128">
+	<game name="bootyrmk" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Booty the Remake (128K) (HB)</description>
+		<description>Booty the remake (128K) (HB, v1.2)</description>
 		<year>2019</year>
 		<manufacturer>salvaKantero</manufacturer>
-		<rom name="Booty the Remake (2019)(salvaKantero).tap" size="65706" crc="aeaad13f"/>
+		<rom name="Booty the remake v1.2 (2019)(salvaKantero).tap" size="65706" crc="f6a0702a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bootyrmkbe" cloneof="bootyrmk" romof="bootyrmk">
+		<comment>Homebrew</comment>
+		<description>Booty the remake - Black Edition (128K) (HB, v1.2)</description>
+		<year>2019</year>
+		<manufacturer>salvaKantero</manufacturer>
+		<rom name="Booty the remake BE v1.2 (2019)(salvaKantero).tap" size="65203" crc="08ae97d1"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7508,6 +7519,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ganimedes" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Ganimedes (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Nextric</manufacturer>
+		<rom name="Ganimedes 128K (2023)(Nextric).tap" size="59246" crc="4ee27661"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="garfield" romof="spectrum">
 		<description>Garfield - Big Fat Hairy Deal (48K)</description>
 		<year>1988</year>
@@ -10320,6 +10342,50 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="laetitiap1" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Laetitia - Part 1 (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Laetitia Part1 128K (2019)(Jaime Grilo).tap" size="48451" crc="3a7f3003"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="laetitiap2" cloneof="laetitiap1" romof="laetitiap1">
+		<comment>Homebrew</comment>
+		<description>Laetitia - Part 2 (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Laetitia Part2 128K (2019)(Jaime Grilo).tap" size="47973" crc="8b919d99"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="laetitiap3" cloneof="laetitiap1" romof="laetitiap1">
+		<comment>Homebrew</comment>
+		<description>Laetitia - Part 3 (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Laetitia Part3 128K (2019)(Jaime Grilo).tap" size="47954" crc="222b918d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="laetitiap4" cloneof="laetitiap1" romof="laetitiap1">
+		<comment>Homebrew</comment>
+		<description>Laetitia - Part 4 (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Jaime Grilo</manufacturer>
+		<rom name="Laetitia Part4 128K (2019)(Jaime Grilo).tap" size="48657" crc="46c87322"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lala" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Lala Prologue (48K) (HB)</description>
@@ -11302,6 +11368,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mdrallyx" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Maze Death Rally-X (48K) (HB, v1.6)</description>
+		<year>2018</year>
+		<manufacturer>Tom Dalby</manufacturer>
+		<rom name="Maze Death Rally-X 48K (2018)(Tom Dalby).tap" size="26219" crc="e8c301b0"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mazy" romof="spectrum">
 		<comment>Homebrew, AY Sound support</comment>
 		<description>Mazy (48K) (HB)</description>
@@ -11537,6 +11613,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mprofanation" romof="spectrum">
+		<comment>Homebrew, O: left - P: right - Z: long jump - X: short jump</comment>
+		<description>Micro Profanation (48K) (HB, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Ivan Gomez Marquez</manufacturer>
+		<rom name="Micro Profanation 48K v1.1 (2022)(Ivan Gomez Marquez).z80" size="6912" crc="067f74cd"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="micronaut" romof="spectrum">
 		<comment>S, Z, O, P and SPACE to set options in main menu</comment>
 		<description>Micronaut One (48K)</description>
@@ -11654,6 +11740,17 @@
 		<manufacturer>Luca Bordoni</manufacturer>
 		<rom name="Mire Mare v1.09 (2020)(Luca Bordoni).tap" size="47329" crc="91db2eb2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="misifu" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Misifu la Gatita (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Jordi</manufacturer>
+		<rom name="Misifu la Gatita 128K (2019)(Jordi).tap" size="47525" crc="2c13468b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12900,6 +12997,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="opuzz" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>O-Puzz Attack (48K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Oblo</manufacturer>
+		<rom name="O-Puzz Attack 48K (2018)(Oblo).tap" size="29543" crc="ebadd8c9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="oceano" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Oceano (128K) (HB)</description>
@@ -14065,6 +14172,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ptm" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>PTM (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>UltraNarwhal</manufacturer>
+		<rom name="PTM 128K (2021)(UltraNarwhal).tap" size="43484" crc="5f02d900"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pubtrivia" romof="spec128">
 		<description>Pub Trivia (128K)</description>
 		<year>1989</year>
@@ -15173,6 +15291,17 @@
 		<manufacturer>Joefish</manufacturer>
 		<rom name="Roger the Pangolin in 2020 Knurled Tour (2020)(Joefish).tap" size="42586" crc="94fea62c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rogue" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Rogue (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Dmitry Krapivins</manufacturer>
+		<rom name="Rogue 128K (2019)(Dmitry Krapivins).tap" size="13718" crc="a9c91888"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

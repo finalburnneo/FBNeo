@@ -327,6 +327,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -768,7 +770,7 @@ struct BurnDriver BurnDrvDdribble = {
 	"ddribble", NULL, NULL, NULL, "1986",
 	"Double Dribble\0", NULL, "Konami", "GX690",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, ddribbleRomInfo, ddribbleRomName, NULL, NULL, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3
@@ -811,7 +813,7 @@ struct BurnDriver BurnDrvDdribblep = {
 	"ddribblep", "ddribble", NULL, NULL, "1986",
 	"Double Dribble (prototype?)\0", NULL, "Konami", "GX690",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, ddribblepRomInfo, ddribblepRomName, NULL, NULL, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3

@@ -436,6 +436,8 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	port_fc = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -856,7 +858,7 @@ struct BurnDriver BurnDrvPaddlema = {
 	"paddlema", NULL, NULL, NULL, "1988",
 	"Paddle Mania\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
 	NULL, paddlemaRomInfo, paddlemaRomName, NULL, NULL, NULL, NULL, PaddlemaInputInfo, PaddlemaDIPInfo,
 	PaddlemaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
@@ -890,7 +892,7 @@ struct BurnDriver BurnDrvTnextspc = {
 	"tnextspc", NULL, NULL, NULL, "1989",
 	"The Next Space (set 1)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspcRomInfo, tnextspcRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
 	TnextspcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
@@ -931,7 +933,7 @@ struct BurnDriver BurnDrvTnextspc2 = {
 	"tnextspc2", "tnextspc", NULL, NULL, "1989",
 	"The Next Space (set 2)\0", NULL, "SNK", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspc2RomInfo, tnextspc2RomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
 	Tnextspc2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
@@ -965,7 +967,7 @@ struct BurnDriver BurnDrvTnextspcj = {
 	"tnextspcj", "tnextspc", NULL, NULL, "1989",
 	"The Next Space (Japan)\0", NULL, "SNK (Pasadena International Corp. license)", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tnextspcjRomInfo, tnextspcjRomName, NULL, NULL, NULL, NULL, TnextspcInputInfo, TnextspcDIPInfo,
 	TnextspcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4

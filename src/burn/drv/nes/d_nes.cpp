@@ -21953,7 +21953,7 @@ struct BurnDriver BurnDrvnes_chickenfarm = {
 	"nes_chickenfarm", NULL, NULL, NULL, "2019",
 	"Chicken Of The Farm (HB)\0", NULL, "mitch3a, link_7777", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_chickenfarmRomInfo, nes_chickenfarmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -32512,7 +32512,7 @@ struct BurnDriver BurnDrvnes_contrrevredfal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Contra - The Last Rebirth
+// Contra - The Last Rebirth (China)
 // Modified by Jing Jing Bu Xiang Wo / 静静不想我
 // GOTVG 20221226
 static struct BurnRomInfo nes_contracsRomDesc[] = {
@@ -32524,15 +32524,15 @@ STD_ROM_FN(nes_contracs)
 
 struct BurnDriver BurnDrvnes_contracs = {
 	"nes_contracs", "nes_contra", NULL, NULL, "2022",
-	"Contra - The Last Rebirth\0", NULL, "Jing Jing Bu Xiang Wo", "Miscellaneous",
+	"Contra - The Last Rebirth (China)\0", NULL, "Jing Jing Bu Xiang Wo", "Miscellaneous",
 	L"Contra - The Last Rebirth\0\u9b42\u6597\u7f85 - \u6700\u540e\u7684\u91cd\u751f\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_contracsRomInfo, nes_contracsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Contra - Demon Contra
+// Contra - Demon Contra (China)
 // Modified by Huan Tian / 幻天
 // GOTVG 20200406
 static struct BurnRomInfo nes_contramdlRomDesc[] = {
@@ -32544,9 +32544,9 @@ STD_ROM_FN(nes_contramdl)
 
 struct BurnDriver BurnDrvnes_contramdl = {
 	"nes_contramdl", "nes_contra", NULL, NULL, "2020",
-	"Contra - Demon Contra\0", NULL, "Huan Tian", "Miscellaneous",
+	"Contra - Demon Contra (China)\0", NULL, "Huan Tian", "Miscellaneous",
 	L"Contra - Demon Contra\0\u9b42\u6597\u7f85 - \u9b54\u6597\u7f85\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_contramdlRomInfo, nes_contramdlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

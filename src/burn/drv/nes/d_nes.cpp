@@ -21942,6 +21942,23 @@ struct BurnDriver BurnDrvnes_asteka2 = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_chickenfarmRomDesc[] = {
+	{ "Chicken Of The Farm (2019)(mitch3a and link_7777).nes",          40976, 0x60e65140, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chickenfarm)
+STD_ROM_FN(nes_chickenfarm)
+
+struct BurnDriver BurnDrvnes_chickenfarm = {
+	"nes_chickenfarm", NULL, NULL, NULL, "2019",
+	"Chicken Of The Farm (HB)\0", NULL, "mitch3a, link_7777", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_chickenfarmRomInfo, nes_chickenfarmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // https://www.romhacking.net/hacks/4723/
 static struct BurnRomInfo nes_deadpoolRomDesc[] = {
 	{ "Deadpool Globalhack (2019)(Techmoon).nes",          786448, 0x5e36e542, BRF_ESS | BRF_PRG },

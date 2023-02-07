@@ -517,8 +517,8 @@ static UINT32 common_read_dword(UINT32 address)
 				ret &= 0xffff4000;
 				ej |= ejanhs_encode(3) << 0;
 				ej |= ejanhs_encode(4) << 3;
-				ej |= ejanhs_encode(2) << 6;
-				ej |= ejanhs_encode(0) << 9;
+				ej |= ejanhs_encode(2) << 8;
+				ej |= ejanhs_encode(0) << 11;
 				ej = ~ej; // active low
 				ret |= (ej & 0x3f3f); // add bits from encoder
 			}

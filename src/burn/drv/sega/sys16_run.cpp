@@ -4,6 +4,7 @@
 #include "mc8123.h"
 #include "upd7759.h"
 #include "segapcm.h"
+#include "biquad.h"
 
 UINT8  System16InputPort0[8]  = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8  System16InputPort1[8]  = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -166,6 +167,8 @@ static UINT8 N7751Command;
 static UINT32 N7751RomAddress;
 static UINT32 UPD7759BankAddress;
 static UINT32 RF5C68PCMBankAddress;
+
+static BIQSTEREO biq_shelf;
 
 UINT8 *System16I8751InitialConfig = NULL;
 
@@ -2071,7 +2074,7 @@ INT32 System16Init()
 			BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		} else {
 			BurnYM2151Init(4000000);
-			BurnYM2151SetAllRoutes(0.33, BURN_SND_ROUTE_BOTH);
+			BurnYM2151SetAllRoutes(0.23, BURN_SND_ROUTE_BOTH);
 		}
 		
 		if (System16UPD7759DataSize) {
@@ -2082,7 +2085,9 @@ INT32 System16Init()
 			UPD7759SetFilter(0, 7000);
 			BurnTimerAttachZet(5000000);
 		}
-		
+
+		biq_shelf.init(FILT_HIGHSHELF, nBurnSoundRate, 2000, 0.0, -8.0);
+
 		if (System16MSM6295RomSize) {
 			MSM6295Init(0, 1000000 / 132, 1);
 			MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
@@ -2627,6 +2632,8 @@ INT32 System16Exit()
 	
 	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN)) {
 		sega_315_5195_exit();
+
+		biq_shelf.exit();
 	}
 	
 	if (System16I8751RomNum) {
@@ -3006,6 +3013,8 @@ INT32 System16BFrame()
 				ZetClose();
 			}
 		}
+
+		biq_shelf.filter_buffer(pBurnSoundOut, nBurnSoundLen); // ym high-shelf filter @ 2khz -8db
 
 		if (System16UPD7759DataSize) {
 			ZetOpen(0);

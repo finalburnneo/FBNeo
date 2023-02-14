@@ -19073,11 +19073,11 @@ struct BurnDriver BurnDrvkof2001pkz = {
 };
 
 // The King of Fighters 2001 Ultimate
-// Ver 1.03 - 20221209
+// Ver 2.0 - 20220213
 
 static struct BurnRomInfo kof2001ultRomDesc[] = {
-	{ "262-p1ult-08-e0.p1",		0x100000, 0xb23474ff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "262-p2ult-08-e0.sp2",	0x500000, 0x6bb7d9dc, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "262-p1ult-08-e0.p1",		0x100000, 0x27c68dc6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262-p2ult-08-e0.sp2",	0x500000, 0xbd603fce, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -19089,8 +19089,8 @@ static struct BurnRomInfo kof2001ultRomDesc[] = {
 	{ "262-c6ult-08-e0.c6",		0x800000, 0x3ff10428, 3 | BRF_GRA },           //  7
 	{ "262-c7ult-08-e0.c7",		0x800000, 0x2689a993, 3 | BRF_GRA },           //  8
 	{ "262-c8ult-08-e0.c8",		0x800000, 0x14d07532, 3 | BRF_GRA },           //  9
-	{ "262-c9ult-08-e0.c9",		0x800000, 0x7d1a4a6e, 3 | BRF_GRA },           // 10
-	{ "262-c10ult-08-e0.c10",	0x800000, 0x61ba2805, 3 | BRF_GRA },           // 11
+	{ "262-c9ult-08-e0.c9",		0x800000, 0x6e7c6804, 3 | BRF_GRA },           // 10
+	{ "262-c10ult-08-e0.c10",	0x800000, 0xb9607a0e, 3 | BRF_GRA },           // 11
 	{ "262-c11ult-08-e0.c11",	0x800000, 0x1ca31bb7, 3 | BRF_GRA },           // 12
 	{ "262-c12ult-08-e0.c12",	0x800000, 0x01ed9f46, 3 | BRF_GRA },           // 13
 
@@ -19107,7 +19107,7 @@ STDROMPICKEXT(kof2001ult, kof2001ult, neogeo)
 STD_ROM_FN(kof2001ult)
 
 struct BurnDriver BurnDrvkof2001ult = {
-	"kof2001ult", "kof2001", "neogeo", NULL, "2022",
+	"kof2001ult", "kof2001", "neogeo", NULL, "2023",
 	"The King of Fighters 2001 Ultimate\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
@@ -23935,12 +23935,12 @@ struct BurnDriver BurnDrvkof99sk = {
 };
 
 // The King of Fighters '99 - Evolution
-// GOTVG 20230128
+// GOTVG 20230213
 static struct BurnRomInfo kof99jhRomDesc[] = {
 	/* Encrypted */
 	{ "jh.neo-sma",		0x040000, 0xeb34c057, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "251-p1jh.p1",	0x400000, 0xc2a8e114, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "251-p2jh.p2",	0x400000, 0x6a80c2db, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "251-p1jh.p1",	0x400000, 0xf15358b3, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2jh.p2",	0x400000, 0x70ecf656, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

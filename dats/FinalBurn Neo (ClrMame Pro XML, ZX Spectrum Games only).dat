@@ -2580,6 +2580,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bombpengo" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Bomber Pengo (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Bomber Pengo 128K (2023)(Gabriele Amore).tap" size="47773" crc="6755ffe2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bonanzabros" romof="spec128">
 		<description>Bonanza Bros. (128K)</description>
 		<year>1992</year>
@@ -3136,6 +3147,25 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cannisland" romof="spectrum">
+		<description>Cannibal Island (48K)</description>
+		<year>1986</year>
+		<manufacturer>LiveWire Software</manufacturer>
+		<rom name="Cannibal Island 48K (1986)(LiveWire Software).tap" size="48016" crc="0a6738c4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cannisland2" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Cannibal Island 2 (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Pavero Software</manufacturer>
+		<rom name="Cannibal Island 2 48K (2023)(Pavero Software).tap" size="40421" crc="4bc3ae8a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="canywarr" romof="spec128">
 		<description>Canyon Warrior (128K)</description>
 		<year>1989</year>
@@ -3553,6 +3583,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="chemichaos" romof="spec128">
+		<comment>Homebrew, R: reset - S: skip - O: left - P: right - Enter: fire</comment>
+		<description>Chemi Chaos (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>g0blinish</manufacturer>
+		<rom name="Chemi Chaos (2023)(g0blinish).tap" size="9393" crc="8905d3a7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cheqflag" romof="spectrum">
 		<comment>'A-F' to steer, '0' to accelerate, 'I' to brake and 'M-N' to shift gears</comment>
 		<description>Chequered Flag (48K)</description>
@@ -3792,6 +3833,25 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cityconn128" romof="spec128">
+		<description>City Connection (128K)</description>
+		<year>2023</year>
+		<manufacturer>Manuel Lemos</manufacturer>
+		<rom name="City Connection 128K (1988-2023)(Manuel Lemos).tap" size="112933" crc="ba5fd65a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cityconn48" cloneof="cityconn128" romof="cityconn128">
+		<description>City Connection (48K)</description>
+		<year>1988</year>
+		<manufacturer>Manuel Lemos</manufacturer>
+		<rom name="City Connection 48K (1988)(Manuel Lemos).z80" size="41555" crc="cbd6d656"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cjiiiusa" romof="spec128">
 		<comment>In main menu: SPACE to choose, ENTER to select</comment>
 		<description>CJ In the USA (128K)</description>
@@ -3829,6 +3889,17 @@
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Cobra's Arc ES (1986)(Dinamic).tap" size="49106" crc="ed2e3bb4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cocabear" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Cocaine Bear (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Azimov</manufacturer>
+		<rom name="Cocaine Bear 128K (2023)(Azimov).tap" size="27332" crc="8c4a6eac"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5512,6 +5583,28 @@
 		<year>199?</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Dizzy 2 - Treasure Island Dizzy 128K (1988)(Codemasters)[ru].z80" size="57508" crc="ccc7f01b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy2ex23e" romof="spec128">
+		<comment>Hack</comment>
+		<description>Dizzy II - Treasure Island Extended Edition 2023 (English) (128K) (Hack, v1.0d)</description>
+		<year>2023</year>
+		<manufacturer>Dr.Titus</manufacturer>
+		<rom name="Dizzy 2 - Treasure Island Ext2023 128K ENG v1.0d (2023)(Dr.Titus).tap" size="44702" crc="d9f6f36f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy2ex23r" cloneof="dizzy2ex23e" romof="dizzy2ex23e">
+		<comment>Hack</comment>
+		<description>Dizzy II - Treasure Island Extended Edition 2023 (Russian) (128K) (Hack, v1.0d)</description>
+		<year>2023</year>
+		<manufacturer>Dr.Titus</manufacturer>
+		<rom name="Dizzy 2 - Treasure Island Ext2023 128K RUS v1.0d (2023)(Dr.Titus).tap" size="44695" crc="dccca5a7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -16062,6 +16155,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="shuriken" romof="spectrum">
+		<comment>Set '3 - Sinclair' to use contoller, press 'SPACE' for missiles</comment>
+		<description>Shuriken (48K)</description>
+		<year>1989</year>
+		<manufacturer>Xplosive</manufacturer>
+		<rom name="Shuriken 48K (1989)(Xplosive).tap" size="48301" crc="cee18b6e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shuttlebug" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Shuttlebug (48K) (HB)</description>
@@ -19565,6 +19668,16 @@
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Wild West Seymour (1992)(Codemasters).z80" size="46251" crc="bf324d91"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="witm" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>WiLLY iN ThE MiRRoRVeRSE (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Carl Paterson</manufacturer>
+		<rom name="WiLLY iN ThE MiRRoRVeRSE (2023)(Carl Paterson).tap" size="36897" crc="ff8bb357"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

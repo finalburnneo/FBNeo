@@ -740,6 +740,14 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fantzonemini" cloneof="fantzone" romof="fantzone">
+		<description>Fantasy Zone (PC-Engine Mini Ed.)</description>
+		<year>2020</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="Fantasy Zone (PCE Mini).pce" size="524288" crc="4d3f879a"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="fantzone">
 		<description>Fantasy Zone</description>
 		<year>1988</year>
@@ -939,6 +947,14 @@
 		<year>1990</year>
 		<manufacturer>UPL</manufacturer>
 		<rom name="gomola speed (japan).pce" size="393216" crc="4bd38f17"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gradiusmini" cloneof="gradius" romof="gradius">
+		<description>Gradius (PC-Engine Mini Ed.)</description>
+		<year>2020</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Gradius (PCE Mini).pce" size="524288" crc="4eabdc5c"/>
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2134,6 +2150,14 @@
 		<year>1990</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="saigo no nindou - ninja spirit (japan).pce" size="524288" crc="0590a156"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="salamandmini" cloneof="salamand" romof="salamand">
+		<description>Salamander (PC-Engine Mini Ed.)</description>
+		<year>2020</year>
+		<manufacturer>Konami</manufacturer>
+		<rom name="Salamander (PCE Mini).pce" size="1048576" crc="83b0c3a4"/>
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -8860,11 +8860,11 @@
 	<game name="mslug3lw" cloneof="mslug3" romof="mslug3">
 		<comment>Hack, Enter the portal : Start + Button D</comment>
 		<description>Metal Slug 3 (Last Bullet Remix, Hack)</description>
-		<year>2022</year>
+		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="ms3lw.neo-sma" size="262144" crc="ffb72ba2"/>
-		<rom name="256-pg1lw.p1" size="4194304" crc="ff75f355"/>
-		<rom name="256-pg2lw.p2" size="4194304" crc="5e2b618b"/>
+		<rom name="ms3lw.neo-sma" size="262144" crc="ea1b3c12"/>
+		<rom name="256-pg1lw.p1" size="4194304" crc="188a281d"/>
+		<rom name="256-pg2lw.p2" size="4194304" crc="26a9b5a7"/>
 		<rom name="256-c1.c1" merge="256-c1.c1" size="8388608" crc="5a79c34e"/>
 		<rom name="256-c2.c2" merge="256-c2.c2" size="8388608" crc="944c362c"/>
 		<rom name="256-c3.c3" merge="256-c3.c3" size="8388608" crc="6e69d36f"/>
@@ -11400,10 +11400,10 @@
 	<game name="mslug5es" cloneof="mslug5" romof="mslug5">
 		<comment>Hack, Enter [Soft Dip] to turn on level display</comment>
 		<description>Metal Slug 5 (The Longest Battle, Hack)</description>
-		<year>2022</year>
+		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="268-p1ces.p1" size="4194304" crc="74ad74a9"/>
-		<rom name="268-p2ces.p2" size="4194304" crc="1f8d9e31"/>
+		<rom name="268-p1ces.p1" size="4194304" crc="9f766af0"/>
+		<rom name="268-p2ces.p2" size="4194304" crc="80724a7c"/>
 		<rom name="268-c1c.c1" merge="268-c1c.c1" size="8388608" crc="ab7c389a"/>
 		<rom name="268-c2c.c2" merge="268-c2c.c2" size="8388608" crc="3560881b"/>
 		<rom name="268-c3c.c3" merge="268-c3c.c3" size="8388608" crc="3af955ea"/>
@@ -23412,8 +23412,8 @@
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="jh.neo-sma" size="262144" crc="eb34c057"/>
-		<rom name="251-p1jh.p1" size="4194304" crc="c2a8e114"/>
-		<rom name="251-p2jh.p2" size="4194304" crc="6a80c2db"/>
+		<rom name="251-p1jh.p1" size="4194304" crc="f15358b3"/>
+		<rom name="251-p2jh.p2" size="4194304" crc="70ecf656"/>
 		<rom name="251-c1jh.c1" size="8388608" crc="317c6a74"/>
 		<rom name="251-c2jh.c2" size="8388608" crc="6ef5f6fd"/>
 		<rom name="251-c3jh.c3" size="8388608" crc="0973cf42"/>
@@ -25467,10 +25467,10 @@
 	<game name="kof2001ult" cloneof="kof2001" romof="kof2001">
 		<comment>Hack</comment>
 		<description>The King of Fighters 2001 Ultimate</description>
-		<year>2022</year>
+		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="262-p1ult-08-e0.p1" size="1048576" crc="b23474ff"/>
-		<rom name="262-p2ult-08-e0.sp2" size="5242880" crc="6bb7d9dc"/>
+		<rom name="262-p1ult-08-e0.p1" size="1048576" crc="27c68dc6"/>
+		<rom name="262-p2ult-08-e0.sp2" size="5242880" crc="bd603fce"/>
 		<rom name="262-c1ult-08-e0.c1" size="8388608" crc="de322745"/>
 		<rom name="262-c2ult-08-e0.c2" size="8388608" crc="266df0a3"/>
 		<rom name="262-c3ult-08-e0.c3" size="8388608" crc="bf60e575"/>
@@ -25479,8 +25479,8 @@
 		<rom name="262-c6ult-08-e0.c6" size="8388608" crc="3ff10428"/>
 		<rom name="262-c7ult-08-e0.c7" size="8388608" crc="2689a993"/>
 		<rom name="262-c8ult-08-e0.c8" size="8388608" crc="14d07532"/>
-		<rom name="262-c9ult-08-e0.c9" size="8388608" crc="7d1a4a6e"/>
-		<rom name="262-c10ult-08-e0.c10" size="8388608" crc="61ba2805"/>
+		<rom name="262-c9ult-08-e0.c9" size="8388608" crc="6e7c6804"/>
+		<rom name="262-c10ult-08-e0.c10" size="8388608" crc="b9607a0e"/>
 		<rom name="262-c11ult-08-e0.c11" size="8388608" crc="1ca31bb7"/>
 		<rom name="262-c12ult-08-e0.c12" size="8388608" crc="01ed9f46"/>
 		<rom name="265-262-m1ult.m1" size="262144" crc="bd71e1f2"/>

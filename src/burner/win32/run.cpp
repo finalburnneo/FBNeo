@@ -255,6 +255,12 @@ int RunFrame(int bDraw, int bPause)
 
 			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED)) { // || bAppDoFast) { *todink: put this back in the if clause when not in WIP.
 				if (VidFrame()) {				// Do one frame w/o RunAhead
+
+					// VidFrame() failed, but we must run a driver frame because we have
+					// an input.  Possibly from recording or netplay(!)
+					pBurnDraw = NULL;			// Make sure no image is drawn
+					BurnDrvFrame();
+
 					AudBlankSound();
 				}
 			} else {
@@ -265,7 +271,14 @@ int RunFrame(int bDraw, int bPause)
 				pBurnSoundOut = NULL;
 				nCurrentFrame++;
 				bBurnRunAheadFrame = 1;
-				VidFrame();
+
+				if (VidFrame()) {
+					// VidFrame() failed, but we must run a driver frame because we have
+					// an input.  Possibly from recording or netplay(!)
+					pBurnDraw = NULL;			// Make sure no image is drawn, since video failed this time 'round.
+					BurnDrvFrame();
+				}
+
 				bBurnRunAheadFrame = 0;
 				nCurrentFrame--;
 				StateRunAheadLoad();

@@ -19073,11 +19073,11 @@ struct BurnDriver BurnDrvkof2001pkz = {
 };
 
 // The King of Fighters 2001 Ultimate
-// Ver 1.03 - 20221209
+// Ver 2.0 - 20220213
 
 static struct BurnRomInfo kof2001ultRomDesc[] = {
-	{ "262-p1ult-08-e0.p1",		0x100000, 0xb23474ff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "262-p2ult-08-e0.sp2",	0x500000, 0x6bb7d9dc, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "262-p1ult-08-e0.p1",		0x100000, 0x27c68dc6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262-p2ult-08-e0.sp2",	0x500000, 0xbd603fce, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -19089,8 +19089,8 @@ static struct BurnRomInfo kof2001ultRomDesc[] = {
 	{ "262-c6ult-08-e0.c6",		0x800000, 0x3ff10428, 3 | BRF_GRA },           //  7
 	{ "262-c7ult-08-e0.c7",		0x800000, 0x2689a993, 3 | BRF_GRA },           //  8
 	{ "262-c8ult-08-e0.c8",		0x800000, 0x14d07532, 3 | BRF_GRA },           //  9
-	{ "262-c9ult-08-e0.c9",		0x800000, 0x7d1a4a6e, 3 | BRF_GRA },           // 10
-	{ "262-c10ult-08-e0.c10",	0x800000, 0x61ba2805, 3 | BRF_GRA },           // 11
+	{ "262-c9ult-08-e0.c9",		0x800000, 0x6e7c6804, 3 | BRF_GRA },           // 10
+	{ "262-c10ult-08-e0.c10",	0x800000, 0xb9607a0e, 3 | BRF_GRA },           // 11
 	{ "262-c11ult-08-e0.c11",	0x800000, 0x1ca31bb7, 3 | BRF_GRA },           // 12
 	{ "262-c12ult-08-e0.c12",	0x800000, 0x01ed9f46, 3 | BRF_GRA },           // 13
 
@@ -19107,7 +19107,7 @@ STDROMPICKEXT(kof2001ult, kof2001ult, neogeo)
 STD_ROM_FN(kof2001ult)
 
 struct BurnDriver BurnDrvkof2001ult = {
-	"kof2001ult", "kof2001", "neogeo", NULL, "2022",
+	"kof2001ult", "kof2001", "neogeo", NULL, "2023",
 	"The King of Fighters 2001 Ultimate\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
@@ -22537,12 +22537,12 @@ struct BurnDriver BurnDrvmslug3eb = {
 // Metal Slug 3 (Last Bullet Remix, Hack)
 // Enter the portal with the following commands : Start + Button D
 // Modified by 磁暴线圈
-// 20220616
+// 20230215
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	/* Encrypted */
-	{ "ms3lw.neo-sma",	0x040000, 0xffb72ba2, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1lw.p1",	0x400000, 0xff75f355, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2lw.p2",	0x400000, 0x5e2b618b, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3lw.neo-sma",	0x040000, 0xea1b3c12, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1lw.p1",	0x400000, 0x188a281d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2lw.p2",	0x400000, 0x26a9b5a7, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22567,7 +22567,7 @@ STDROMPICKEXT(mslug3lw, mslug3lw, neogeo)
 STD_ROM_FN(mslug3lw)
 
 struct BurnDriver BurnDrvmslug3lw = {
-	"mslug3lw", "mslug3", "neogeo", NULL, "2022",
+	"mslug3lw", "mslug3", "neogeo", NULL, "2023",
 	"Metal Slug 3 (Last Bullet Remix, Hack)\0", "Enter the portal : Start + Button D", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
@@ -23542,11 +23542,11 @@ struct BurnDriver BurnDrvmslug5dbj = {
 
 // Metal Slug 5 (The Longest Battle, Hack)
 // Modified by 明天再努力吧
-// GOTVG 20221215
+// GOTVG 20230208
 static struct BurnRomInfo mslug5esRomDesc[] = {
 	/* Encrypted */
-	{ "268-p1ces.p1",	0x400000, 0x74ad74a9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2ces.p2",	0x400000, 0x1f8d9e31, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p1ces.p1",	0x400000, 0x9f766af0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2ces.p2",	0x400000, 0x80724a7c, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23571,7 +23571,7 @@ STDROMPICKEXT(mslug5es, mslug5es, neogeo)
 STD_ROM_FN(mslug5es)
 
 struct BurnDriver BurnDrvmslug5es = {
-	"mslug5es", "mslug5", "neogeo", NULL, "2022",
+	"mslug5es", "mslug5", "neogeo", NULL, "2023",
 	"Metal Slug 5 (The Longest Battle, Hack)\0", "Enter [Soft Dip] to turn on level display", "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
@@ -23935,12 +23935,12 @@ struct BurnDriver BurnDrvkof99sk = {
 };
 
 // The King of Fighters '99 - Evolution
-// GOTVG 20230128
+// GOTVG 20230213
 static struct BurnRomInfo kof99jhRomDesc[] = {
 	/* Encrypted */
 	{ "jh.neo-sma",		0x040000, 0xeb34c057, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "251-p1jh.p1",	0x400000, 0xc2a8e114, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "251-p2jh.p2",	0x400000, 0x6a80c2db, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "251-p1jh.p1",	0x400000, 0xf15358b3, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2jh.p2",	0x400000, 0x70ecf656, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

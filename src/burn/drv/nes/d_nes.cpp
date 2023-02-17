@@ -3583,11 +3583,23 @@ static void mapper406_scan()
 #undef flashrom_busy
 
 static UINT8 *mmc5_mask; // mmc3/mmc5 ppumask-sniffer // 0x18 = rendering
+static UINT8 *mmc5_ctrl; // mmc3/mmc5 ppuctrl-sniffer // 0x20 = 8x16 spr
 
 static void mapper04_scanline()
 {
 	if (NESMode & ALT_MMC3 && (mmc5_mask[0] & 0x18) == 0x00) {
 		return;
+	}
+
+	{ // a12 counter stop
+		const INT32 spr = (mmc5_ctrl[0] & 0x08) >> 3;
+		const INT32 bg = (mmc5_ctrl[0] & 0x10) >> 4;
+		const INT32 _16 = (mmc5_ctrl[0] & 0x20) >> 5;
+
+		// if spr table == bg table data, a12 will never clock
+		// in 16x8 sprite mode, a12 will "most likely" clock
+
+		if (spr == bg && _16 == 0) return;
 	}
 
 	INT32 cnt = mapper4_irqcount;
@@ -3615,7 +3627,6 @@ static void mapper04_scanline()
 // ---[ mapper 05 (MMC5) Castlevania III, Uchuu Keibitai SDF
 // PPU Hooks
 static UINT8 *mmc5_nt_ram; // pointer to our ppu's nt ram
-static UINT8 *mmc5_ctrl; // mmc5 ppuctrl-sniffer // 0x20 = 8x16 spr
 #define MMC5RENDERING (mmc5_mask[0] & 0x18)
 #define MMC58x16 (mmc5_ctrl[0] & 0x20)
 

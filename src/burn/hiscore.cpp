@@ -238,6 +238,13 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 							bprintf(0, _T("-- leds2011 noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
 						}
+
+						// gradius2/vulcan venture
+						if ((!strcmp(name, "gradius2") || !strcmp(name, "gradius2a") || !strcmp(name, "gradius2b") || !strcmp(name, "vulcan") || !strcmp(name, "vulcana") || !strcmp(name, "vulcanb"))
+							&& HiscoreMemRange[nHiscoreNumRanges].Address == 0x60008) {
+							bprintf(0, _T("-- gradius2/vulcan noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
 						// end NoConfirm "feature"
 
 #if 1 && defined FBNEO_DEBUG

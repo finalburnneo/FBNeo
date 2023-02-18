@@ -207,10 +207,6 @@ static UINT8 nSoundLatch;
 static UINT8 nSoundReply;
 static UINT32 nSoundStatus;
 
-#if 1 && defined USE_SPEEDHACKS
-static INT32 nSoundPrevReply;
-#endif
-
 INT32 s1945pmode = 0;
 INT32 cphdmode = 0;
 INT32 fatfury2mode = 0; // fatfury2 protection active (fatfury2, ssideki)
@@ -1087,14 +1083,8 @@ static UINT8 __fastcall vliner_timing(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x320000: {
+			neogeoSynchroniseZ80(0);
 			INT32 nReply = nSoundReply;
-
-#if 1 && defined USE_SPEEDHACKS
-			// nSoundStatus: &1 = sound latch read, &2 = response written
-			if (nSoundStatus != 3) {
-				neogeoSynchroniseZ80(0x0100);
-			}
-#endif
 
 			if (nSoundStatus & 1) {
 //				bprintf(PRINT_NORMAL, _T("  - Sound reply read (0x%02X).\n"),  nSoundReply);
@@ -1518,10 +1508,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nSoundReply);
 		SCAN_VAR(nSoundStatus);
 
-#if 1 && defined USE_SPEEDHACKS
-		SCAN_VAR(nSoundPrevReply);
-#endif
-
 		SCAN_VAR(nInputSelect);
 
 		SCAN_OFF(NeoInputBank, NeoInput, nAction);
@@ -1678,9 +1664,7 @@ static UINT8 __fastcall neogeoZ80In(UINT16 nAddress)
 		case 0x00:									// Read sound command
 //			bprintf(PRINT_NORMAL, _T("  - Sound command received (0x%02X).\n"), nSoundLatch);
 			nSoundStatus = 1;
-#if 1 && defined USE_SPEEDHACKS
-			nSoundPrevReply = -1;
-#endif
+
 			return nSoundLatch;
 
 		case 0x04:
@@ -1721,9 +1705,7 @@ static UINT8 __fastcall neogeoZ80InCD(UINT16 nAddress)
 		case 0x00:									// Read sound command
 //			bprintf(PRINT_NORMAL, _T("  - Sound command received (0x%02X).\n"), nSoundLatch);
 			nSoundStatus = 1;
-#if 1 && defined USE_SPEEDHACKS
-			nSoundPrevReply = -1;
-#endif
+
 			return nSoundLatch;
 
 		case 0x04:
@@ -1771,29 +1753,7 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 		case 0x0C:									// Write reply to sound commands
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply sent (0x%02X).\n"), nValue);
 			nSoundReply = nValue;
-
-#if 1 && defined USE_SPEEDHACKS
-			if (nSoundPrevReply != nValue) {
-				nSoundPrevReply = nValue;
-
-				// s1945p replies a 0x00, then an 0xFF;
-				// the 68K loops until it has read both
-				if (nSoundReply == 0) {
-					nSoundStatus &= ~2;
-				} else {
-					nSoundStatus |=  2;
-				}
-			} else {
-				nSoundStatus |= 2;
-			}
-
-			if (ZetTotalCycles() > nCycles68KSync) {
-
-				//				bprintf(PRINT_NORMAL, _T("    %i\n"), ZetTotalCycles());
-				BurnTimerUpdateEnd();
-				//				bprintf(PRINT_NORMAL, _T("    %i - %i\n"), ZetTotalCycles(), nCycles68KSync);
-			}
-#endif
+			ZetRunEnd();
 
 			break;
 
@@ -1900,13 +1860,11 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 
 	ZetNmi();
 
-#if 1 && defined USE_SPEEDHACKS
-	// notes: value too high, and breaks nam1975 voice after coin up
+	// notes: if sound timing changes, check these sensitive games:
+	// nam1975: voice dies after coin up
 	// stikers 1945p: goes really slow
 	// pulstar: music/bonus count noise at end of level
 	// cphd: ugh.
-	neogeoSynchroniseZ80((cphdmode) ? 0x64 : 0x24);
-#endif
 }
 
 static UINT8 ReadInput1(INT32 nOffset)
@@ -1965,16 +1923,8 @@ static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 
 		case 0x320000: {
 			if ((sekAddress & 1) == 0) {
-				INT32 nReply = nSoundReply;
-
-#if 1 && defined USE_SPEEDHACKS
-				// nSoundStatus: &1 = sound latch read, &2 = response written
-				if (nSoundStatus != 3) {
-					neogeoSynchroniseZ80((s1945pmode) ? 0x60 : 0x0100);
-				}
-#else
 				neogeoSynchroniseZ80(0);
-#endif
+				INT32 nReply = nSoundReply;
 
 				if ((nSoundStatus & 1) == 0) {
 //					bprintf(PRINT_NORMAL, _T("  - Sound reply read while sound pending (0x%02X).\n"),  nSoundReply);
@@ -3791,10 +3741,6 @@ static INT32 neogeoReset()
 	nSoundLatch = 0x00;
 	nSoundReply = 0x00;
 	nSoundStatus = 1;
-
-#if 1 && defined USE_SPEEDHACKS
-	nSoundPrevReply = -1;
-#endif
 
 	NeoGraphicsRAMBank = NeoGraphicsRAM;
 	NeoGraphicsRAMPointer = 0;

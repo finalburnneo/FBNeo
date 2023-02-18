@@ -74,6 +74,8 @@ static INT32 graphics_length[4];
 static INT32 video_offsets[2] = { 0, 0 };
 
 static INT32 use_mcu = 0;
+static INT32 main_mhz;
+static INT32 mcu_mhz;
 
 enum { Z80_NO_NMI = 0, Z80_REAL_NMI, Z80_FAKE_NMI };
 enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, Z80_ASSERT, Z80_CLEAR };
@@ -761,9 +763,7 @@ static INT32 DrvMCURun(INT32 cycles)
 
 static void DrvMCUSync()
 {
-	INT32 main_clock = (Clock_16mhz) ? 16000000 : 8000000;
-
-	INT32 todo = ((INT64)((double)VezTotalCycles() * ((double)8000000 / 12)) / main_clock) - mcs51TotalCycles();
+	INT32 todo = ((INT64)((double)VezTotalCycles() * ((double)mcu_mhz / 12)) / main_mhz) - mcs51TotalCycles();
 
 	if (todo > 0) DrvMCURun(todo);
 }
@@ -2149,13 +2149,20 @@ static INT32 DrvFrame()
 	INT32 multiplier = 3;
 	INT32 nInterleave = 284 * multiplier;
 	INT32 nSampleInt = nInterleave / 142;
-//	INT32 nCyclesTotal[3] = { (INT32)((INT64)(8000000 / 55.017606) * nBurnCPUSpeedAdjust / 0x0100), (INT32)((INT64)(3579545 / 55.017606) * nBurnCPUSpeedAdjust / 0x0100), (INT32)((double)8000000 / 12 / 55) };
-	INT32 nCyclesTotal[3] = { (INT32)((double)8000000 / 55.017606), (INT32)((double)3579545 / 55.017606), (INT32)((double)8000000 / 12 / 55.017606) };
+	INT32 nCyclesTotal[3] = {
+		BurnSpeedAdjust(8000000 / 55.017606),
+		BurnSpeedAdjust(3579545 / 55.017606),
+		BurnSpeedAdjust(8000000 / 12 / 55.017606),
+	};
+	main_mhz = BurnSpeedAdjust(8000000);
+	mcu_mhz = main_mhz;
 	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 	INT32 z80samplecount = 0;
 
-	if (Clock_16mhz) // Ken-go, Cosmic Cop
-		nCyclesTotal[0] = (INT32)((INT64)(16000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
+	if (Clock_16mhz) {// Ken-go, Cosmic Cop
+		nCyclesTotal[0] = BurnSpeedAdjust(16000000 / 55.017606);
+		main_mhz = BurnSpeedAdjust(16000000);
+	}
 
 	if (pBurnDraw) {
 		DrvDrawInitFrame();

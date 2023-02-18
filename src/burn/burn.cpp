@@ -1561,6 +1561,12 @@ double BurnGetTime()
 	return (double)BurnTimerCPUTotalCycles() / BurnTimerCPUClockspeed;
 }
 
+// CPU Speed adjuster
+INT32 BurnSpeedAdjust(INT32 cyc)
+{
+	return (INT32)((INT64)cyc * nBurnCPUSpeedAdjust / 0x0100);
+}
+
 // ----------------------------------------------------------------------------
 // Wrappers for MAME-specific function calls
 

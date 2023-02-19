@@ -19073,7 +19073,7 @@ struct BurnDriver BurnDrvkof2001pkz = {
 };
 
 // The King of Fighters 2001 Ultimate
-// Ver 2.0 - 20220213
+// Ver 2.0 - 20230213
 
 static struct BurnRomInfo kof2001ultRomDesc[] = {
 	{ "262-p1ult-08-e0.p1",		0x100000, 0x27c68dc6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code

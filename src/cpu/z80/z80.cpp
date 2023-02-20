@@ -1138,7 +1138,7 @@ static inline void RET_COND_SPECTRUM(int cond, UINT8 opcode)
 	POP( pc );													\
 	WZ = PC;													\
 	change_pc(PCD);												\
-	IFF1 = IFF2;												\
+	Z80.after_retn = TRUE;  									\
 }
 
 /***************************************************************
@@ -3999,6 +3999,7 @@ void Z80Reset()
 	Z80.nmi_pending = FALSE;
 	Z80.irq_state = Z80_CLEAR_LINE;
 	Z80.after_ei = FALSE;
+	Z80.after_retn = FALSE;
 	IX = IY = 0xffff; /* IX and IY are FFFF after a reset! */
 	IFF1 = 0;
 	IFF2 = 0;
@@ -4062,6 +4063,13 @@ int Z80Execute(int cycles)
 		if (Z80.irq_state != Z80_CLEAR_LINE && IFF1 && !Z80.after_ei)
 			take_interrupt();
 		Z80.after_ei = FALSE;
+
+		if (Z80.after_retn)
+		{
+			// https://floooh.github.io/2021/12/17/cycle-stepped-z80.html#the-ei-di-and-retiretn-instructions
+			IFF1 = IFF2; // happens during fetch of next opcode
+			Z80.after_retn = FALSE;
+		}
 
 		PRVPC = PCD;
 //		CALL_DEBUGGER(PCD);

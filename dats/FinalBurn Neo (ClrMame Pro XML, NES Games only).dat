@@ -2262,6 +2262,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="bowbeast">
+		<comment>Homebrew</comment>
+		<description>Bowels of the Beast (HB)</description>
+		<year>2021</year>
+		<manufacturer>T-Bone</manufacturer>
+		<rom name="Bowels of the Beast (2021)(T-bone).nes" size="524304" crc="2002b239"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="bowsette2" cloneof="smb2" romof="smb2">
 		<comment>Hack</comment>
 		<description>Bowsette 2 (Hack, Red version)</description>
@@ -9655,20 +9664,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="lionkinlegc" cloneof="lionkinleg" romof="lionkinleg">
+		<description>Lion King Legend, The (China) (Unl)</description>
+		<year>1996</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Lion King Legend, The (China).nes" size="524304" crc="1309fa69"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="lionkinleg">
 		<comment>Hack</comment>
 		<description>Lion King Legend, The (T-Eng)</description>
 		<year>2015</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Lion King Legend, The (T-Eng).nes" size="524304" crc="0f95fc73"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="lionkinlegc" cloneof="lionkinleg" romof="lionkinleg">
-		<description>Lion King Legend, The (Unl) (Ch)</description>
-		<year>1996</year>
-		<manufacturer>Waixing</manufacturer>
-		<rom name="Lion King Legend, The (China).nes" size="524304" crc="1309fa69"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11205,6 +11214,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="monkeyking">
+		<description>Monkey King (China) (Unl)</description>
+		<year>2005</year>
+		<manufacturer>Waixing</manufacturer>
+		<rom name="Monkey King (Unl)(2005)(Waixing).nes" size="524304" crc="e5119eed"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="monopoly">
 		<description>Monopoly (USA)</description>
 		<year>1991</year>
@@ -12423,6 +12440,15 @@
 		<year>1985</year>
 		<manufacturer>ASCII</manufacturer>
 		<rom name="Penguin-kun Wars (Japan).nes" size="40976" crc="27229b16"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="pentablocat">
+		<comment>Homebrew</comment>
+		<description>Pentablocat (HB)</description>
+		<year>2023</year>
+		<manufacturer>Pineberry fox</manufacturer>
+		<rom name="Pentablocat (2023)(Pineberry fox).nes" size="24592" crc="27a14751"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13816,7 +13842,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rollingthunder">
-		<description>Rolling Thunder (USA) (Unl)</description>
+		<description>Rolling Thunder (USA)</description>
 		<year>1989</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="Rolling Thunder (USA) (Unl).nes" size="262160" crc="e68a35bc"/>
@@ -14588,7 +14614,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skullcro">
-		<description>Skull &amp; Crossbones (USA) (Unl)</description>
+		<description>Skull &amp; Crossbones (USA)</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="Skull &amp; Crossbones (USA) (Unl).nes" size="196624" crc="a8b93a4b"/>
@@ -16528,6 +16554,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="tenebra">
+		<comment>Homebrew</comment>
+		<description>Tenebra (HB)</description>
+		<year>2023</year>
+		<manufacturer>Haplo</manufacturer>
+		<rom name="Tenebra (2023)(Haplo).nes" size="40976" crc="213d756f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="tenkanogoi">
 		<description>Tenka no Goikenban - Mito Koumon (Japan)</description>
 		<year>1987</year>
@@ -17491,7 +17526,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="univesol">
-		<description>Universe Soldiers, The (Ch)</description>
+		<description>Universe Soldiers, The (China)</description>
 		<year>1993</year>
 		<manufacturer>Whirlwind Manu</manufacturer>
 		<rom name="Universe Soldiers, The (Ch).nes" size="65552" crc="74bbcb02"/>

@@ -2118,6 +2118,7 @@ DRV		BurnSpecbounder;
 DRV		BurnDrvMSX_bounder;
 DRV		BurnSpecBountybob;
 DRV		BurnSpecBountyhunter;
+DRV		BurnDrvnes_bowbeast;
 DRV		BurnDrvBowlrama;
 DRV		BurnDrvCHF_bowling;
 DRV		BurnDrvnes_bowsette2;
@@ -8948,8 +8949,8 @@ DRV		BurnDrvnes_linusspascoscr;
 DRV		BurnDrvmd_lionkin3b;
 DRV		BurnDrvmd_lionkin3a;
 DRV		BurnDrvmd_lionkin3;
-DRV		BurnDrvnes_lionkinleg;
 DRV		BurnDrvnes_lionkinlegc;
+DRV		BurnDrvnes_lionkinleg;
 DRV		BurnDrvgg_lionking;
 DRV		BurnDrvnes_lionkingthe;
 DRV		BurnDrvnes_lionkingthec;
@@ -10224,6 +10225,7 @@ DRV		BurnDrvMSX_monkeyacc;
 DRV		BurnDrvMSX_monkeyaca;
 DRV		BurnDrvcv_monkey;
 DRV		BurnSpecMonkeyj;
+DRV		BurnDrvnes_monkeyking;
 DRV		BurnDrvMmagic;
 DRV		BurnDrvMonkelf;
 DRV		BurnDrvsms_monopoly;
@@ -11852,6 +11854,7 @@ DRV		BurnDrvMSX_penguinw;
 DRV		BurnDrvMSX_penguinwk;
 DRV		BurnDrvpkunwar;
 DRV		BurnDrvpenta;
+DRV		BurnDrvnes_pentablocat;
 DRV		BurnSpecPentacornen;
 DRV		BurnSpecPentacornes;
 DRV		BurnSpecPentagram;
@@ -13030,6 +13033,7 @@ DRV		BurnDrvmd_rbislands;
 DRV		BurnDrvmd_rbisland;
 DRV		BurnDrvnes_rallybike;
 DRV		BurnDrvRallybik;
+DRV		BurnDrvrallych;
 DRV		BurnSpecRallycrosssim;
 DRV		BurnDrvRallyx;
 DRV		BurnDrvRallyxm;
@@ -16751,6 +16755,7 @@ DRV		BurnDrvCpswofchp;
 DRV		BurnDrvnes_tenchwokuriij;
 DRV		BurnDrvnes_tenchwokurii;
 DRV		BurnSpecTenebra;
+DRV		BurnDrvnes_tenebra;
 DRV		BurnSpectmacabre;
 DRV		BurnDrvTengai;
 DRV		BurnDrvgg_tengenwc;
@@ -21565,6 +21570,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_bounder,		// Bounder (Euro)
 	&BurnSpecBountybob,			// Bounty Bob Strikes Back! (48K)
 	&BurnSpecBountyhunter,		// Bounty Hunter (128K)
+	&BurnDrvnes_bowbeast,		// Bowels of the Beast (HB)
 	&BurnDrvBowlrama,			// Bowl-O-Rama Rev 1.0
 	&BurnDrvCHF_bowling,		// Bowling
 	&BurnDrvnes_bowsette2,		// Bowsette 2 (Hack, Red version)
@@ -28395,8 +28401,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_lionkin3b,		// Lion King 3 (Alt 2?)
 	&BurnDrvmd_lionkin3a,		// Lion King 3 (Alt?)
 	&BurnDrvmd_lionkin3,		// Lion King 3
+	&BurnDrvnes_lionkinlegc,	// Lion King Legend, The (China) (Unl)
 	&BurnDrvnes_lionkinleg,		// Lion King Legend, The (T-Eng)
-	&BurnDrvnes_lionkinlegc,	// Lion King Legend, The (Unl) (Ch)
 	&BurnDrvgg_lionking,		// Lion King, The (Euro)
 	&BurnDrvnes_lionkingthe,	// Lion King, The (Europe)
 	&BurnDrvnes_lionkingthec,	// Lion King, The (Hack, Spanish v1.0)
@@ -29671,6 +29677,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_monkeyaca,		// Monkey Academy (Jpn, Alt)
 	&BurnDrvcv_monkey,			// Monkey Academy
 	&BurnSpecMonkeyj,			// Monkey J - The Treasure Of The Gold Temple (128K) (HB)
+	&BurnDrvnes_monkeyking,		// Monkey King (China) (Unl)
 	&BurnDrvMmagic,				// Monkey Magic
 	&BurnDrvMonkelf,			// Monky Elf (Korean bootleg of Avenging Spirit)
 	&BurnDrvsms_monopoly,		// Monopoly (Euro)
@@ -31299,6 +31306,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_penguinwk,		// Penguin-kun Wars (Kor)
 	&BurnDrvpkunwar,			// Penguin-Kun Wars (US)
 	&BurnDrvpenta,				// Penta
+	&BurnDrvnes_pentablocat,	// Pentablocat (HB)
 	&BurnSpecPentacornen,		// Pentacorn Quest (English) (128K) (HB)
 	&BurnSpecPentacornes,		// Pentacorn Quest (Spanish) (128K) (HB)
 	&BurnSpecPentagram,			// Pentagram (48K)
@@ -32477,6 +32485,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_rbisland,		// Rainbow Islands Extra (Jpn)
 	&BurnDrvnes_rallybike,		// Rally Bike (USA)
 	&BurnDrvRallybik,			// Rally Bike / Dash Yarou
+	&BurnDrvrallych,			// Rally Chase (Neo CD conversion)
 	&BurnSpecRallycrosssim,		// Rally Cross Simulator (128K)
 	&BurnDrvRallyx,				// Rally X (32k Ver.?)
 	&BurnDrvRallyxm,			// Rally X (Midway)
@@ -32995,7 +33004,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRthunder2,			// Rolling Thunder (rev 2)
 	&BurnDrvRthunder,			// Rolling Thunder (rev 3)
 	&BurnDrvRthundera,			// Rolling Thunder (rev 3, hack)
-	&BurnDrvnes_rollingthunder,	// Rolling Thunder (USA) (Unl)
+	&BurnDrvnes_rollingthunder,	// Rolling Thunder (USA)
 	&BurnDrvmd_rthun2,			// Rolling Thunder 2 (Euro)
 	&BurnDrvmd_rthun2s,			// Rolling Thunder 2 (Hack, Spanish)
 	&BurnDrvRthun2j,			// Rolling Thunder 2 (Japan)
@@ -33867,7 +33876,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_skooter,		// Skooter (Jpn)
 	&BurnDrvMSX_skootera,		// Skooter (Jpn, Alt)
 	&BurnDrvSkullxbo,			// Skull & Crossbones (rev 5)
-	&BurnDrvnes_skullcro,		// Skull & Crossbones (USA) (Unl)
+	&BurnDrvnes_skullcro,		// Skull & Crossbones (USA)
 	&BurnDrvMSX_skulexil,		// Skull Exilon (Spanish)
 	&BurnDrvSkullfng,			// Skull Fang (Europe 1.13)
 	&BurnDrvSkullfnga,			// Skull Fang - Kuhga Gaiden (Asia 1.13)
@@ -36198,6 +36207,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tenchwokuriij,	// Tenchi wo Kurau II - Shokatsu Koumei Den (Japan)
 	&BurnDrvnes_tenchwokurii,	// Tenchi wo Kurau II - Shokatsu Koumei Den (T-Eng, v1.12)
 	&BurnSpecTenebra,			// Tenebra (48K) (HB)
+	&BurnDrvnes_tenebra,		// Tenebra (HB)
 	&BurnSpectmacabre,			// Tenebra Macabre (48K) (HB)
 	&BurnDrvTengai,				// Tengai (World)
 	&BurnDrvgg_tengenwc,		// Tengen World Cup Soccer (Euro, USA)
@@ -37461,7 +37471,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_uninvitedu,		// Uninvited Uncensored (Hack, v1.0f)
 	&BurnDrvmd_univsold,		// Universal Soldier (Euro, USA)
 	&BurnDrvmd_univsolds,		// Universal Soldier (Hack, Spanish)
-	&BurnDrvnes_univesol,		// Universe Soldiers, The (Ch)
+	&BurnDrvnes_univesol,		// Universe Soldiers, The (China)
 	&BurnDrvMSX_univunk,		// Universe Unknown (HB)
 	&BurnDrvUniwarsa,			// UniWar S (bootleg)
 	&BurnDrvUniwars,			// UniWar S

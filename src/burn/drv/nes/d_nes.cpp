@@ -21949,9 +21949,78 @@ struct BurnDriver BurnDrvnes_asteka2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Monkey King (China) (Unl)
+static struct BurnRomInfo nes_monkeykingRomDesc[] = {
+	{ "Monkey King (Unl)(2005)(Waixing).nes",          524304, 0xe5119eed, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_monkeyking)
+STD_ROM_FN(nes_monkeyking)
+
+struct BurnDriver BurnDrvnes_monkeyking = {
+	"nes_monkeyking", NULL, NULL, NULL, "2005",
+	"Monkey King (China) (Unl)\0", NULL, "Waixing", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_monkeykingRomInfo, nes_monkeykingRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_bowbeastRomDesc[] = {
+	{ "Bowels of the Beast (2021)(T-bone).nes",          524304, 0x2002b239, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bowbeast)
+STD_ROM_FN(nes_bowbeast)
+
+struct BurnDriver BurnDrvnes_bowbeast = {
+	"nes_bowbeast", NULL, NULL, NULL, "2021",
+	"Bowels of the Beast (HB)\0", NULL, "T-Bone", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_bowbeastRomInfo, nes_bowbeastRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_pentablocatRomDesc[] = {
+	{ "Pentablocat (2023)(Pineberry fox).nes",          24592, 0x27a14751, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pentablocat)
+STD_ROM_FN(nes_pentablocat)
+
+struct BurnDriver BurnDrvnes_pentablocat = {
+	"nes_pentablocat", NULL, NULL, NULL, "2023",
+	"Pentablocat (HB)\0", NULL, "Pineberry fox", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_pentablocatRomInfo, nes_pentablocatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_tenebraRomDesc[] = {
+	{ "Tenebra (2023)(Haplo).nes",          40976, 0x213d756f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tenebra)
+STD_ROM_FN(nes_tenebra)
+
+struct BurnDriver BurnDrvnes_tenebra = {
+	"nes_tenebra", NULL, NULL, NULL, "2023",
+	"Tenebra (HB)\0", NULL, "Haplo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MAZE, 0,
+	NESGetZipName, nes_tenebraRomInfo, nes_tenebraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_chickenfarmRomDesc[] = {
 	{ "Chicken Of The Farm (2019)(mitch3a and link_7777).nes",          40976, 0x60e65140, BRF_ESS | BRF_PRG },
@@ -41848,7 +41917,7 @@ STD_ROM_FN(nes_lionkinlegc)
 
 struct BurnDriver BurnDrvnes_lionkinlegc = {
 	"nes_lionkinlegc", "nes_lionkinleg", NULL, NULL, "1996",
-	"Lion King Legend, The (Unl) (Ch)\0", NULL, "Waixing", "Miscellaneous",
+	"Lion King Legend, The (China) (Unl)\0", NULL, "Waixing", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_lionkinlegcRomInfo, nes_lionkinlegcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -47442,7 +47511,7 @@ STD_ROM_FN(nes_rollingthunder)
 
 struct BurnDriver BurnDrvnes_rollingthunder = {
 	"nes_rollingthunder", NULL, NULL, NULL, "1989",
-	"Rolling Thunder (USA) (Unl)\0", NULL, "Tengen", "Miscellaneous",
+	"Rolling Thunder (USA)\0", NULL, "Tengen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_rollingthunderRomInfo, nes_rollingthunderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -48292,7 +48361,7 @@ STD_ROM_FN(nes_skullcro)
 
 struct BurnDriver BurnDrvnes_skullcro = {
 	"nes_skullcro", NULL, NULL, NULL, "1990",
-	"Skull & Crossbones (USA) (Unl)\0", NULL, "Tengen", "Miscellaneous",
+	"Skull & Crossbones (USA)\0", NULL, "Tengen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_skullcroRomInfo, nes_skullcroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -52259,7 +52328,7 @@ STD_ROM_FN(nes_univesol)
 
 struct BurnDriver BurnDrvnes_univesol = {
 	"nes_univesol", NULL, NULL, NULL, "1993",
-	"Universe Soldiers, The (Ch)\0", NULL, "Whirlwind Manu", "Miscellaneous",
+	"Universe Soldiers, The (China)\0", NULL, "Whirlwind Manu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
 	NESGetZipName, nes_univesolRomInfo, nes_univesolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -30,6 +30,7 @@ typedef struct
 	UINT8	irq_state;			/* irq line state */
 	UINT8   vector;             /* vector */
 	UINT8	after_ei;			/* are we in the EI shadow? */
+	UINT8	after_retn;			/* are we in the RETN shadow? */
 	INT32   cycles_left;
 	INT32   ICount;
 	INT32   end_run;

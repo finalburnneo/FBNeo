@@ -10877,6 +10877,40 @@ struct BurnDriver BurnDrvtrally = {
 	0x1000,	320, 224, 4, 3
 };
 
+// Rally Chase (CD Conversion)
+
+static struct BurnRomInfo rallychRomDesc[] = {
+	{ "rallych-p1.p1",      0x080000, 0x430c531b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
+	{ "rallych-p2.p2",      0x080000, 0x9facb7fb, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC534200
+
+	{ "038-s1.s1",    		0x020000, 0xfff62ae3, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	{ "rallych-c1.c1",      0x100000, 0x840e6161, 3 | BRF_GRA },           //  3 Sprite data 		/ TC538200
+	{ "rallych-c2.c2",      0x100000, 0x51979c7a, 3 | BRF_GRA },           //  4 					/ TC538200
+	{ "038-c3.c3",    		0x080000, 0x3bb7b9d6, 3 | BRF_GRA },           //  5 					/ TC534200
+	{ "038-c4.c4",    		0x080000, 0xa4513ecf, 3 | BRF_GRA },           //  6 					/ TC534200
+
+	{ "038-m1.m1",    		0x020000, 0x0908707e, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code 		/ TC531001
+
+	{ "038-v1.v1",    		0x100000, 0x5ccd9fd5, 5 | BRF_SND },           //  8 Sound data 		/ TC538200
+	{ "038-v2.v2",    		0x080000, 0xddd8d1e6, 5 | BRF_SND },           //  9 					/ TC534200
+
+	{ "hd6301v1p.hd6301v1", 0x001000, 0x00000000, BRF_OPT | BRF_NODUMP }, // Hitachi HD6301V1 MCU
+};
+
+STDROMPICKEXT(rallych, rallych, neogeo)
+STD_ROM_FN(rallych)
+
+struct BurnDriver BurnDrvrallych = {
+	"rallych", "trally", "neogeo", NULL, "1991",
+	"Rally Chase (Neo CD conversion)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
+	NULL, rallychRomInfo, rallychRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
 // Ninja Commando
 
 static struct BurnRomInfo ncommandRomDesc[] = {
@@ -19073,7 +19107,7 @@ struct BurnDriver BurnDrvkof2001pkz = {
 };
 
 // The King of Fighters 2001 Ultimate
-// Ver 2.0 - 20220213
+// Ver 2.0 - 20230213
 
 static struct BurnRomInfo kof2001ultRomDesc[] = {
 	{ "262-p1ult-08-e0.p1",		0x100000, 0x27c68dc6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code

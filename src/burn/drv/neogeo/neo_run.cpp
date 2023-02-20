@@ -193,6 +193,7 @@ static bool bSRAMWritable;
 static bool b68KBoardROMBankedIn;
 static bool bZ80BoardROMBankedIn;
 static INT32 nZ80Bank0, nZ80Bank1, nZ80Bank2, nZ80Bank3;
+static INT32 bZ80NMIEnable;
 
 static UINT8* NeoGraphicsRAMBank;
 static UINT16 NeoGraphicsRAMPointer;
@@ -457,6 +458,8 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 
 	// The most recent MVS models doesn't have a Z80 BIOS
 	bZ80BIOS = (nNewBIOS != 0) ? true : false;
+
+	if (nNewBIOS == 35) bZ80BIOS = false; // IRRMAZE: need to bank in z80 prog(!)
 
 	// Check if we need to load a new BIOS
 	if (nNewBIOS == nBIOS) {
@@ -1489,6 +1492,8 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 
 		SCAN_VAR(bZ80BoardROMBankedIn);
 		SCAN_VAR(b68KBoardROMBankedIn);
+		SCAN_VAR(bZ80NMIEnable);
+
 		if (nNeoSystemType & NEO_SYS_CART) {
 			SCAN_VAR(bBIOSTextROMEnabled);
 			SCAN_VAR(nZ80Bank0); SCAN_VAR(nZ80Bank1); SCAN_VAR(nZ80Bank2); SCAN_VAR(nZ80Bank3);
@@ -1745,9 +1750,12 @@ static void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 			break;
 
 		case 0x08:
+			bZ80NMIEnable = 1;
+			break;
+
         case 0x18:
-            // sound nmi enable/disable bit.  causes too many problems, so we ignore it.
-			// (breaks sound in irrmaze, sonicwi3 (cd and aes/mvs version), and possibly others
+            // sound nmi enable/disable bit.
+			bZ80NMIEnable = 0;
 			break;
 
 		case 0x0C:									// Write reply to sound commands
@@ -1858,7 +1866,10 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	nSoundStatus &= ~1;
 	nSoundLatch = nCommand;
 
-	ZetNmi();
+	if (bZ80NMIEnable) {
+		ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+		ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+	}
 
 	// notes: if sound timing changes, check these sensitive games:
 	// nam1975: voice dies after coin up
@@ -3741,6 +3752,7 @@ static INT32 neogeoReset()
 	nSoundLatch = 0x00;
 	nSoundReply = 0x00;
 	nSoundStatus = 1;
+	bZ80NMIEnable = 0;
 
 	NeoGraphicsRAMBank = NeoGraphicsRAM;
 	NeoGraphicsRAMPointer = 0;

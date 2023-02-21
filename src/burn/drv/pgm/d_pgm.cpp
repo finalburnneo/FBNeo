@@ -8165,21 +8165,21 @@ struct BurnDriver BurnDrvkovytzyce = {
 // This set is known as kovsho184 in HBMAME
 
 static struct BurnRomInfo kovytzywsRomDesc[] = {
-	{ "p0600h_101_po184.rom",		0x0400000, 0x4f01a87d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "ytzyws_v201cn.rom",			0x0400000, 0x4f01a87d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "t0600_pw111.rom",    		0x0800000, 0xde7fdc0c, 2 | BRF_GRA },			//  1 Tile data
+	{ "ytzyws_t0600.u2",			0x0800000, 0xde7fdc0c, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "pgm_a0600.u3",	   			0x0800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "pgm_a0601.u4",	   			0x0800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
-	{ "a0602_po112.rom",	   		0x0800000, 0xf25b6930, 3 | BRF_GRA }, 	        //  4
-	{ "a0540_pw184.rom",	   		0x0800000, 0xdf811b9c, 3 | BRF_GRA }, 	        //  5
+	{ "pgm_a0600.u3",				0x0800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a0601.u4",				0x0800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "ytzyws_a0602.u6",			0x0800000, 0xf25b6930, 3 | BRF_GRA }, 	        //  4
+	{ "ytzyws_a05401w064.u8",		0x0800000, 0xdf811b9c, 3 | BRF_GRA }, 	        //  5
 
-	{ "pgm_b0600.u9",	   			0x0800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "b0540_pw184.rom",	   		0x0800000, 0xaa821799, 4 | BRF_GRA },			//  7
+	{ "pgm_b0600.u9",				0x0800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "ytzyws_b05401w064.u11",		0x0800000, 0xaa821799, 4 | BRF_GRA },			//  7
 
-	{ "m0600_po112.rom",	   		0x0400000, 0x53532587, 5 | BRF_SND },			//  8 Samples
+	{ "ytzyws_m0600.u5",			0x0400000, 0x53532587, 5 | BRF_SND },			//  8 Samples
 
-	{ "kovsh_v100_china_pw111.asic", 	0x0004000, 0x5aa832c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
+	{ "ytzyws_v100_china.asic",		0x0004000, 0x5aa832c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovytzyws, kovytzyws, pgm)
@@ -8191,6 +8191,41 @@ struct BurnDriver BurnDrvkovytzyws = {
 	L"Knights of Valour Super Heroes / Yi Tong Zhong Yuan Wu Shuang Ban (2019-0, hack)\0\u4E09\u56FD\u6218\u7EAA - \u4E00\u7EDF\u4E2D\u539F \u65E0\u53CC\u7248 (2019-0, \u4FEE\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovytzywsRomInfo, kovytzywsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,  
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Yi Tong Zhong Yuan - Warriors (20211024)
+// Modified by Fei Tian Xue
+
+static struct BurnRomInfo kovytzywscwRomDesc[] = {
+	{ "ytzywscw_v201cn.rom",		0x0600000, 0xf5b62abd, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "ytzywscw_t0600.u2",			0x0800000, 0x29e43d4f, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "pgm_a0600.u3",				0x0800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "pgm_a0601.u4",				0x0800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "ytzywscw_a0602.u6",			0x0800000, 0xbb211e0f, 3 | BRF_GRA }, 	        //  4
+	{ "ytzywscw_a05401w064.u8",		0x1000000, 0xc58c518f, 3 | BRF_GRA }, 	        //  5
+
+	{ "pgm_b0600.u9",				0x0800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "ytzywscw_b05401w064.u11",	0x1000000, 0x3ac97a58, 4 | BRF_GRA },			//  7
+
+	{ "ytzywscw_m0600.u5",			0x0800000, 0x574353db, 5 | BRF_SND },			//  8 Samples
+
+	{ "ytzyws_v100_china.asic",		0x0004000, 0x5aa832c1, 7 | BRF_PRG | BRF_ESS }, //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovytzywscw, kovytzywscw, pgm)
+STD_ROM_FN(kovytzywscw)
+
+struct BurnDriver BurnDrvkovytzywscw = {
+	"kovytzywscw", "kovshp", "pgm", NULL, "2021",
+	"Yi Tong Zhong Yuan - Warriors\0", "Imperfect Protection Emulation", "hack", "PolyGameMaster",
+	L"Yi Tong Zhong Yuan - Warriors\0\u4e00\u7edf\u4e2d\u539f - \u65e0\u53cc\u7248\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovytzywscwRomInfo, kovytzywscwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

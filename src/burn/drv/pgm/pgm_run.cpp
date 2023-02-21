@@ -299,7 +299,7 @@ static void ics2115_soundlatch_w(INT32 i, UINT16 d)
 
 static inline INT32 get_current_scanline()
 {
-	UINT32 ret = (SekTotalCycles() * 262) / (M68K_CYCS_PER_FRAME);
+	UINT32 ret = (SekTotalCycles() * 264) / (M68K_CYCS_PER_FRAME);
 
 	return (ret > 263) ? 263 : ret;
 }

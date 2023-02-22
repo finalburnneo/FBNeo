@@ -8179,7 +8179,7 @@ static struct BurnRomInfo kovytzywsRomDesc[] = {
 
 	{ "ytzyws_m0600.u5",			0x0400000, 0x53532587, 5 | BRF_SND },			//  8 Samples
 
-	{ "ytzyws_v100_china.asic",		0x0004000, 0x5aa832c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
+	{ "ytzyws_v100_china.asic",		0x0004000, 0x5aa832c1, 7 | BRF_PRG | BRF_ESS }, //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovytzyws, kovytzyws, pgm)
@@ -8220,13 +8220,20 @@ static struct BurnRomInfo kovytzywscwRomDesc[] = {
 STDROMPICKEXT(kovytzywscw, kovytzywscw, pgm)
 STD_ROM_FN(kovytzywscw)
 
+static INT32 kovytzywscwInit()
+{
+	nPGMSpriteBufferHack = 1;
+
+	return kovshpInit();
+}
+
 struct BurnDriver BurnDrvkovytzywscw = {
 	"kovytzywscw", "kovshp", "pgm", NULL, "2021",
 	"Yi Tong Zhong Yuan - Warriors\0", "Imperfect Protection Emulation", "hack", "PolyGameMaster",
 	L"Yi Tong Zhong Yuan - Warriors\0\u4e00\u7edf\u4e2d\u539f - \u65e0\u53cc\u7248\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovytzywscwRomInfo, kovytzywscwRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovassgDIPInfo,
-	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	kovytzywscwInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

@@ -20889,10 +20889,10 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Survival, Hack)
+// Metal Slug 3 (Survival, Hack) 2023-02-22
 static struct BurnRomInfo mslug3scRomDesc[] = {
-	{ "256-ph1sc.bin",   0x100000, 0xf9da849a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2sc.bin",   0x400000, 0x9ed2e766, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1sc.bin",   0x100000, 0x618f5416, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2sc.bin",   0x400000, 0x1e8042c3, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20902,7 +20902,7 @@ static struct BurnRomInfo mslug3scRomDesc[] = {
 	{ "ms3n_c4.rom",     0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
 	{ "ms3n_c5.rom",     0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
 	{ "ms3n_c6.rom",     0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
-	{ "256-c7sc.bin",    0x800000, 0xf3fd4e0e, 3 | BRF_GRA },           //  9
+	{ "256-c7sc.bin",    0x800000, 0xb8e017de, 3 | BRF_GRA },           //  9
 	{ "256-c8sc.bin",    0x800000, 0xdef95742, 3 | BRF_GRA },           // 10
 
 	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
@@ -20917,7 +20917,7 @@ STDROMPICKEXT(mslug3sc, mslug3sc, neogeo)
 STD_ROM_FN(mslug3sc)
 
 struct BurnDriver BurnDrvmslug3sc = {
-	"mslug3sc", "mslug3", "neogeo", NULL, "2022",
+	"mslug3sc", "mslug3", "neogeo", NULL, "2023",
 	"Metal Slug 3 (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

@@ -32340,3 +32340,20 @@ struct BurnDriver BurnDrvnes_pacmance = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_pentablocatRomDesc[] = {
+	{ "Pentablocat (2023)(Pineberry fox).nes",          24592, 0x27a14751, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pentablocat)
+STD_ROM_FN(nes_pentablocat)
+
+struct BurnDriver BurnDrvnes_pentablocat = {
+	"nes_pentablocat", NULL, NULL, NULL, "2023",
+	"Pentablocat (HB)\0", NULL, "Pineberry fox", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_pentablocatRomInfo, nes_pentablocatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

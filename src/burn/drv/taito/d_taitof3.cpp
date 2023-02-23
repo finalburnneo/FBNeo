@@ -5322,6 +5322,43 @@ struct BurnDriver BurnDrvPbobble3j = {
 };
 
 
+// Puzzle Bobble 3 Recarbonated
+
+static struct BurnRomInfo pbobble3rcRomDesc[] = {
+	{ "e29-12rc.rom",	0x080000, 0xc22eda63, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e29-11rc.rom",	0x080000, 0x531e2891, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e29-10rc.rom",	0x080000, 0xba599730, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e29-16rc.rom",	0x080000, 0x412e7ca4, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "e29-02.rom",		0x100000, 0x437391d3, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e29-01.rom",		0x100000, 0x52547c77, TAITO_SPRITESA_BYTESWAP },  //  5
+
+	{ "e29-08.rom",		0x100000, 0x7040a3d5, TAITO_CHARS_BYTESWAP },     //  6 Layer Tiles
+	{ "e29-07.rom",		0x100000, 0xfca2ea9b, TAITO_CHARS_BYTESWAP },     //  7
+	{ "e29-06.rom",		0x100000, 0xc16184f8, TAITO_CHARS },              //  8
+
+	{ "e29-13.rom",		0x040000, 0x1ef551ef, TAITO_68KROM2_BYTESWAP },   //  9 68k Code
+	{ "e29-14.rom",		0x040000, 0x7ee7e688, TAITO_68KROM2_BYTESWAP },   // 10
+
+	{ "e29-03.rom",		0x200000, 0xa4371658, TAITO_ES5505_BYTESWAP },    // 11 Ensoniq Samples
+	{ "e29-04.rom",		0x200000, 0xd1f42457, TAITO_ES5505_BYTESWAP },    // 12
+	{ "e29-05.rom",		0x200000, 0xe33c1234, TAITO_ES5505_BYTESWAP },    // 13
+};
+
+STD_ROM_PICK(pbobble3rc)
+STD_ROM_FN(pbobble3rc)
+
+struct BurnDriver BurnDrvPbobble3rc = {
+	"pbobble3rc", "pbobble3", NULL, NULL, "2022",
+	"Puzzle Bobble 3 Recarbonated\0", NULL, "Bank Bank", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, pbobble3rcRomInfo, pbobble3rcRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	pbobble3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 232, 4, 3
+};
+
+
 // Arkanoid Returns (Ver 2.02O 1997/02/10)
 
 static struct BurnRomInfo arkretrnRomDesc[] = {

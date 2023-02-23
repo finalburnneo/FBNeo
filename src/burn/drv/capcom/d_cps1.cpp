@@ -20082,7 +20082,7 @@ struct BurnDriver BurnDrvCpsDinore = {
 
 struct BurnDriver BurnDrvCpsDinox5 = {
 	"dinox5", "dino", NULL, NULL, "2016",
-	"Cadillacs and Dinosaurs X5 Enemies (Hack, Ver.2016-01-10)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs X5 Enemies (Hack, Ver.2016-01-10)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinox5RomInfo, dinox5RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20092,7 +20092,7 @@ struct BurnDriver BurnDrvCpsDinox5 = {
 
 struct BurnDriver BurnDrvCpsDinoares = {
 	"dinoares", "dino", NULL, NULL, "2020",
-	"Cadillacs and Dinosaurs - Ares Edition (Hack, Ver.2020-08-06)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - Ares Edition (Hack, Ver.2020-08-06)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinoaresRomInfo, dinoaresRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20102,7 +20102,7 @@ struct BurnDriver BurnDrvCpsDinoares = {
 
 struct BurnDriver BurnDrvCpsDinocx3 = {
 	"dinocx3", "dino", NULL, NULL, "20??",
-	"Cadillacs and Dinosaurs Chaos X3 (Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs Chaos X3 (Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinocx3RomInfo, dinocx3RomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20112,7 +20112,7 @@ struct BurnDriver BurnDrvCpsDinocx3 = {
 
 struct BurnDriver BurnDrvCpsDinocunp = {
 	"dinocunp", "dino", NULL, NULL, "20??",
-	"Cadillacs and Dinosaurs Chaos Unparalleled (Hack)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs Chaos Unparalleled (Hack)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinocunpRomInfo, dinocunpRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20122,7 +20122,7 @@ struct BurnDriver BurnDrvCpsDinocunp = {
 
 struct BurnDriver BurnDrvCpsDinopuni = {
 	"dinopuni", "dino", NULL, NULL, "2018",
-	"Cadillacs and Dinosaurs - Punishment Edition (Hack, Ver.2018-08-23)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - Punishment Edition (Hack, Ver.2018-08-23)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinopuniRomInfo, dinopuniRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20132,7 +20132,7 @@ struct BurnDriver BurnDrvCpsDinopuni = {
 
 struct BurnDriver BurnDrvCpsJurass99p = {
 	"jurass99p", "dino", NULL, NULL, "2017",
-	"Cadillacs and Dinosaurs - '99 Jurassic Plus (Hack, Ver.2017-11-13)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - '99 Jurassic Plus (Hack, Ver.2017-11-13)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, jurass99pRomInfo, jurass99pRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20142,7 +20142,7 @@ struct BurnDriver BurnDrvCpsJurass99p = {
 
 struct BurnDriver BurnDrvCpsDinombull = {
 	"dinombull", "dino", NULL, NULL, "2017",
-	"Cadillacs and Dinosaurs - Matchless Bullets (Hack, Ver.2017-09-02)\0", NULL, "Hack", "CPS1 / QSound",
+	"Cadillacs and Dinosaurs - Matchless Bullets (Hack, Ver.2017-09-02)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinombullRomInfo, dinombullRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -20152,7 +20152,7 @@ struct BurnDriver BurnDrvCpsDinombull = {
 
 struct BurnDriver BurnDrvCpsDinohced = {
 	"dinohced", "dino", NULL, NULL, "2017",
-	"Dinosaur Hunter - Challenge Edition (Hack, Ver.2017-11-16)\0", NULL, "Hack", "CPS1 / QSound",
+	"Dinosaur Hunter - Challenge Edition (Hack, Ver.2017-11-16)\0", NULL, "hack", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, dinohcedRomInfo, dinohcedRomName, NULL, NULL, NULL, NULL, DinoInputInfo, DinoDIPInfo,
@@ -23678,14 +23678,14 @@ struct BurnDriver BurnDrvCpsFfightaemgc = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Street Fighter II Mix (Ver 1.2)
+// Street Fighter II Mix (Ver 1.3)
 // Hacked by ZERO800 - BRAZIL
 // For more infomation, please visit: https://sf2mix.github.io/
 
 static struct BurnRomInfo sf2mixRomDesc[] = {
-	{ "smxe_23b.8f",   0x080000, 0x997f551e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_22b.7f",    0x080000, 0x414ab00b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "smx_21a.6f",    0x080000, 0x1221db31, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smxe_23b.8f",   0x080000, 0x478d09c6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_22b.7f",    0x080000, 0x23212fb2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "smx_21a.6f",    0x080000, 0xd3d77d12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "smx-1m.3a",     0x080000, 0xa8f70643, BRF_GRA | CPS1_TILES },
 	{ "smx-3m.5a",     0x080000, 0xf73f1913, BRF_GRA | CPS1_TILES },
@@ -23718,8 +23718,8 @@ STD_ROM_PICK(sf2mix)
 STD_ROM_FN(sf2mix)
 
 struct BurnDriver BurnDrvCpssf2mix = {
-	"sf2mix", "sf2ce", NULL, NULL, "2022",
-	"Street Fighter II Mix (v1.2)\0", NULL, "Hack", "CPS1",
+	"sf2mix", "sf2ce", NULL, NULL, "2023",
+	"Street Fighter II Mix (v1.3)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, sf2mixRomInfo, sf2mixRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2mixDIPInfo,

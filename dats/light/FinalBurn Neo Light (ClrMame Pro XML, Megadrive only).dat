@@ -4244,9 +4244,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="commands">
-		<description>Commandos (Rus)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<description>Commandos (Rus) (Unl)</description>
+		<year>200?</year>
+		<manufacturer>Glorysun</manufacturer>
 		<rom name="commandos.bin" size="2097152" crc="28a88d6f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4353,8 +4353,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="cstrike" cloneof="lethalen" romof="lethalen">
-		<description>Counter Strike (Rus)</description>
-		<year>199?</year>
+		<comment>Hack</comment>
+		<description>Counter Strike (Rus) (Unl)</description>
+		<year>200?</year>
 		<manufacturer>Glorysun</manufacturer>
 		<rom name="counter strike.bin" size="2097152" crc="9e7b83ba"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
@@ -8676,6 +8677,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="hellfiresaga">
+		<comment>Hack, Homebrew</comment>
+		<description>Hellfire Saga - Sonic (GlobalHack)</description>
+		<year>2023</year>
+		<manufacturer>Red Miso Studios</manufacturer>
+		<rom name="Hellfire Saga - GlobalHack (2023)(Red Miso Studios).bin" size="3911106" crc="a09a9c31"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hercules" cloneof="dahnam" romof="dahnam">
 		<comment>Hack</comment>
 		<description>Hercules (Unl)</description>
@@ -10490,6 +10500,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lightcp" cloneof="lightc" romof="lightc">
+		<comment>Prototype</comment>
 		<description>Light Crusader (Prototype, 19950608)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
@@ -25011,9 +25022,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="zombhigh">
+		<comment>Prototype</comment>
 		<description>Zombie High (USA, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<year>1993</year>
+		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="zombie high (usa) (prototype).bin" size="1024239" crc="7bea6194"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -25031,6 +25043,15 @@
 		<year>1994</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="zombies ate my neighbors (usa).bin" size="1048576" crc="2bf3626f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zombieswm" cloneof="zombies" romof="zombies">
+		<comment>Hack</comment>
+		<description>Zombies Ate My Neighbors - Wide Mode (Hack)</description>
+		<year>2023</year>
+		<manufacturer>paul_met</manufacturer>
+		<rom name="Zombies Ate My Neighbors Wide Mode Hack (2023)(paul_met).bin" size="1048576" crc="b05c5e95"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

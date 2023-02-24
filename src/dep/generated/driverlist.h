@@ -7189,6 +7189,7 @@ DRV		BurnDrvmd_hellfire;
 DRV		BurnDrvmd_hellfires;
 DRV		BurnDrvmd_hellfirej;
 DRV		BurnDrvmd_hellfireu;
+DRV		BurnDrvmd_hellfiresaga;
 DRV		BurnDrvnes_hellokitnooha;
 DRV		BurnDrvnes_hellokitwor;
 DRV		BurnDrvnes_heohdemo;
@@ -13754,6 +13755,7 @@ DRV		BurnDrvSamShoa;
 DRV		BurnDrvSamsho2;
 DRV		BurnDrvSamsho2new;
 DRV		BurnDrvSamsho2sp;
+DRV		BurnDrvSamsho2pe;
 DRV		BurnDrvSamSho3h;
 DRV		BurnDrvSamSho3;
 DRV		BurnDrvSamSho4;
@@ -15759,6 +15761,9 @@ DRV		BurnSpecstriker;
 DRV		BurnDrvgg_striker;
 DRV		BurnDrvmd_striker;
 DRV		BurnDrvmd_strikerp;
+#if defined FBNEO_DEBUG
+DRV		BurnDrvS1945bl;			// no comment [NOT WORKING]
+#endif
 DRV		BurnDrvS1945a;
 DRV		BurnDrvS1945j;
 DRV		BurnDrvS1945nj;
@@ -19164,6 +19169,7 @@ DRV		BurnDrvMSX_yellowsb;
 DRV		BurnSpecYenght;
 DRV		BurnDrvYesnoj;
 DRV		BurnSpecYeti;
+DRV		BurnDrvkovytzywscw;
 DRV		BurnSpecyiarkufu;
 DRV		BurnSpecyiarkufu_48;
 DRV		BurnDrvYieartf;
@@ -19395,6 +19401,7 @@ DRV		BurnDrvZombraidp;
 DRV		BurnDrvnes_zombhuntbob;
 DRV		BurnDrvmd_zombies;
 DRV		BurnDrvmd_zombiesu;
+DRV		BurnDrvmd_zombieswm;
 DRV		BurnSpecZombo;
 DRV		BurnSpecZombocc;
 DRV		BurnSpeczona0;
@@ -22716,7 +22723,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCommandou2,			// Commando (US set 2)
 	&BurnDrvnes_commando,		// Commando (USA)
 	&BurnDrvCommando,			// Commando (World)
-	&BurnDrvmd_commands,		// Commandos (Rus)
+	&BurnDrvmd_commands,		// Commandos (Rus) (Unl)
 	&BurnDrvComotion,			// CoMOTION
 	&BurnDrvCompgolfo,			// Competition Golf Final Round (Japan, old version)
 	&BurnDrvCompgolf,			// Competition Golf Final Round (revision 3)
@@ -22860,7 +22867,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecCountduckula,		// Count Duckula in No Sax Please - We're Egyptian (48K)
 	&BurnDrvCountrunb,			// Counter Run (bootleg set 1)
 	&BurnDrvCountrun,			// Counter Run (NS6201-A 1988.3) [Please use countrunb instead!, NOT WORKING]
-	&BurnDrvmd_cstrike,			// Counter Strike (Rus)
+	&BurnDrvmd_cstrike,			// Counter Strike (Rus) (Unl)
 	&BurnDrvCountryc,			// Country Club [bad inputs, use fitegolf instead!, NOT WORKING]
 	&BurnSpecChorace1,			// Cousin Horace - Chapter 1 (48K) (HB)
 	&BurnSpecChorace2,			// Cousin Horace - Chapter 2 (48K) (HB)
@@ -26641,6 +26648,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_hellfires,		// Hellfire (Hack, Spanish)
 	&BurnDrvmd_hellfirej,		// Hellfire (Jpn)
 	&BurnDrvmd_hellfireu,		// Hellfire (USA)
+	&BurnDrvmd_hellfiresaga,	// Hellfire Saga - Sonic (GlobalHack)
 	&BurnDrvnes_hellokitnooha,	// Hello Kitty no Ohanabatake (Japan)
 	&BurnDrvnes_hellokitwor,	// Hello Kitty World (Japan)
 	&BurnDrvnes_heohdemo,		// HEOH demo (HB, Tech-Demo)
@@ -33206,6 +33214,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSamsho2,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063)(NGH-063)
 	&BurnDrvSamsho2new,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Optimized)
 	&BurnDrvSamsho2sp,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)
+	&BurnDrvSamsho2pe,			// Samurai Shodown II Perfect (V. 01, Hack)
 	&BurnDrvSamSho3h,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)
 	&BurnDrvSamSho3,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)
 	&BurnDrvSamSho4,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222)(NGH-222)
@@ -35211,6 +35220,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_striker,			// Striker (Euro)
 	&BurnDrvmd_striker,			// Striker (Euro)
 	&BurnDrvmd_strikerp,		// Striker (Euro, Prototype)
+#if defined FBNEO_DEBUG
+	&BurnDrvS1945bl,			// Strikers 1945 (Hong Kong, bootleg) [no comment, NOT WORKING]
+#endif
 	&BurnDrvS1945a,				// Strikers 1945 (Japan / World)
 	&BurnDrvS1945j,				// Strikers 1945 (Japan)
 	&BurnDrvS1945nj,			// Strikers 1945 (Japan, unprotected)
@@ -38616,6 +38628,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecYenght,			// Yenght - La Fuente de la Juventud (Spanish) (48K)
 	&BurnDrvYesnoj,				// Yes/No Sinri Tokimeki Chart
 	&BurnSpecYeti,				// Yeti (48K)
+	&BurnDrvkovytzywscw,		// Yi Tong Zhong Yuan - Warriors
 	&BurnSpecyiarkufu,			// Yie Ar Kung-Fu (128K)
 	&BurnSpecyiarkufu_48,		// Yie Ar Kung-Fu (48K)
 	&BurnDrvYieartf,			// Yie Ar Kung-Fu (GX361 conversion)
@@ -38847,6 +38860,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_zombhuntbob,	// Zombiehunter Bob (HB)
 	&BurnDrvmd_zombies,			// Zombies (Euro)
 	&BurnDrvmd_zombiesu,		// Zombies Ate My Neighbors (USA)
+	&BurnDrvmd_zombieswm,		// Zombies Ate My Neighbors - Wide Mode (Hack)
 	&BurnSpecZombo,				// Zombo (48K) (HB)
 	&BurnSpecZombocc,			// Zombo's Christmas Capers (48K) (HB)
 	&BurnSpeczona0,				// Zona 0 (Spanish) (128K)

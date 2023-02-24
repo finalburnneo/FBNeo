@@ -1,4 +1,4 @@
-#include "burnint.h"
+#include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
 
@@ -7,6 +7,7 @@ enum {
 	PSIKYO_HW_SAMURAIA,
 	PSIKYO_HW_GUNBIRD,
 	PSIKYO_HW_S1945,
+	PSIKYO_HW_S1945BL,
 	PSIKYO_HW_TENGAI
 };
 
@@ -17,8 +18,8 @@ INT32 PsikyoPalInit();
 INT32 PsikyoPalExit();
 INT32 PsikyoPalUpdate();
 
-void PsikyoPalWriteByte(UINT32 nAddress, UINT8 byteValue);
-void PsikyoPalWriteWord(UINT32 nAddress, UINT16 wordValue);
+void __fastcall PsikyoPalWriteByte(UINT32 nAddress, UINT8 byteValue);
+void __fastcall PsikyoPalWriteWord(UINT32 nAddress, UINT16 wordValue);
 
 extern UINT8* PsikyoPalSrc;
 extern UINT8 PsikyoRecalcPalette;
@@ -32,8 +33,6 @@ void PsikyoTileExit();
 
 extern UINT8* PsikyoTileROM;
 extern UINT8* PsikyoTileRAM[3];
-
-extern bool bPsikyoClearBackground;
 
 // Sprite rendering
 INT32 PsikyoSpriteInit(INT32 nROMSize);

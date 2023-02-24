@@ -138,7 +138,7 @@ static INT32 pgmGetRoms(bool bLoad)
 	if (bLoad) {
 		if (nPGM68KROMLen == 0x80000 && nPGMSNDROMLen == 0x600000) { // dw2001 & dwpc
 			PGMSNDROMLoad -= 0x200000;
-		} else if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (GetIpsDrvDefine() & IPS_PGM_SNDOFS6)) { // kov2dzxx
+		} else if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (nIpsDrvDefine & IPS_PGM_SNDOFFS)) { // kov2dzxx
 			PGMSNDROMLoad -= 0x600000;
 		}
 	}
@@ -259,12 +259,12 @@ static INT32 pgmGetRoms(bool bLoad)
 		nPGMExternalARMLen = (PGMUSER0Load - PGMUSER0) + 0x100000;
 
 		if (bDoIpsPatch) {
-			nPGM68KROMLen		<<= 1;
-			nPGMExternalARMLen	<<= 1;
-			nPGMTileROMLen		+= 0x800000;
-			nPGMSNDROMLen		+= 0x800000;
-			nPGMSPRColROMLen	+= (0x800000 << 2);
-			nPGMSPRMaskROMLen	+= (0x800000 << 2);
+			nPGM68KROMLen		+= nIpsMemExpLen[PRG1_ROM];
+			nPGMExternalARMLen	+= nIpsMemExpLen[PRG2_ROM];
+			nPGMTileROMLen		+= nIpsMemExpLen[GRA1_ROM];
+			nPGMSNDROMLen		+= nIpsMemExpLen[SND1_ROM];
+			nPGMSPRColROMLen	+= nIpsMemExpLen[GRA2_ROM];
+			nPGMSPRMaskROMLen	+= nIpsMemExpLen[GRA3_ROM];
 		}
 
 	//	bprintf (0, _T("68k: %x, tile: %x, sprmask: %x, sndrom: %x, arm7: %x\n"), nPGM68KROMLen, nPGMTileROMLen, nPGMSPRMaskROMLen, nPGMSNDROMLen, nPGMExternalARMLen);
@@ -779,7 +779,7 @@ INT32 pgmInit()
 	nEnableArm7 = (BurnDrvGetHardwareCode() / HARDWARE_IGS_USE_ARM_CPU) & 1;
 
 	if (0 == nPGMSpriteBufferHack) {
-		nPGMSpriteBufferHack = (GetIpsDrvDefine() & IPS_PGM_SPRHACK) ? 1 : 0;
+		nPGMSpriteBufferHack = (nIpsDrvDefine & IPS_PGM_SPRHACK) ? 1 : 0;
 	}
 
 	Mem = NULL;
@@ -820,7 +820,7 @@ INT32 pgmInit()
 		{
 			// if a cart is mapped at 100000+, the BIOS is mapped from 0-fffff, if no cart inserted, the BIOS is mapped to 7fffff!
 			for (INT32 i = 0; i < 0x100000; i+= 0x20000) { // DDP3 bios is 512k in size, but >= 20000 is 0-filled!
-				if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (GetIpsDrvDefine() & IPS_PGM_MAPHACK)) {
+				if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (nIpsDrvDefine & IPS_PGM_MAPHACK)) {
 					SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM); // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail
 					break;
 				}

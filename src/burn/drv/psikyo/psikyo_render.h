@@ -105,27 +105,10 @@
  #endif
 #endif
 
-#if BPP == 16
- #define PLOTPIXEL(a, b) if (TESTCOLOUR(b) && TESTZBUF(a)) {			\
+#define PLOTPIXEL(a, b) if (TESTCOLOUR(b) && TESTZBUF(a)) {			\
    	WRITEZBUF(a);														\
-   	((UINT16*)pTileRow)[a] = (UINT16)pTilePalette[b];	\
+   	((UINT16*)pTileRow)[a] = (UINT16)(b + pTilePalette);	\
  }
-#elif BPP == 24
- #define PLOTPIXEL(a, b) if (TESTCOLOUR(b) && TESTZBUF(a)) {			\
-	UINT32 nRGB = pTilePalette[b];								\
-   	WRITEZBUF(a);														\
-	pTileRow[3 * a + 0] = (UINT8)nRGB;							\
-	pTileRow[3 * a + 1] = (UINT8)(nRGB >> 8);					\
-	pTileRow[3 * a + 2] = (UINT8)(nRGB >> 16);					\
- }
-#elif BPP == 32
- #define PLOTPIXEL(a, b) if (TESTCOLOUR(b) && TESTZBUF(a)) {			\
-   	WRITEZBUF(a);														\
-	((UINT32*)pTileRow)[a] = (UINT32)pTilePalette[b];		\
- }
-#else
- #error unsupported bitdepth specified.
-#endif
 
 // For decorating the function name
 #if ROWSCROLL == 0
@@ -154,29 +137,29 @@ static void FUNCTIONNAME(BPP,TRANSMODE,DOFLIP,ROT,SCROLL,ZOOMMODE,ZBUF,CLIP)()
  #if ZOOM == 1
   #if ZBUFFER == 0
    #if FLIPY == 0
-	for (y = 0, pTileRow = pTile; y < nTileYSize; ADVANCEROW, pTileData += pYZoomInfo[y], y++) {
+	for (y = 0, pTileRow = pTile; y < nTileYSize; ADVANCEROW, pTileData8 += pYZoomInfo[y], y++) {
    #else
-  	for (y = nTileYSize - 1, pTileRow = pTile + ((BPP >> 3) * 320 * (nTileYSize - 1)); y >= 0; ADVANCEROW, pTileData += pYZoomInfo[nTileYSize - 1 - y], y--) {
+  	for (y = nTileYSize - 1, pTileRow = pTile + ((BPP >> 3) * 320 * (nTileYSize - 1)); y >= 0; ADVANCEROW, pTileData8 += pYZoomInfo[nTileYSize - 1 - y], y--) {
    #endif
   #else
    #if FLIPY == 0
-  	for (y = 0, pTileRow = pTile, pZTileRow = pZTile; y < nTileYSize; ADVANCEROW, ADVANCEZROW, pTileData += pYZoomInfo[y], y++) {
+  	for (y = 0, pTileRow = pTile, pZTileRow = pZTile; y < nTileYSize; ADVANCEROW, ADVANCEZROW, pTileData8 += pYZoomInfo[y], y++) {
    #else
-  	for (y = nTileYSize - 1, pTileRow = pTile + ((BPP >> 3) * 320 * (nTileYSize - 1)), pZTileRow = pZTile + (320 * (nTileYSize - 1)); y >= 0; ADVANCEROW, ADVANCEZROW, pTileData += pYZoomInfo[nTileYSize - 1 - y],  y--) {
+  	for (y = nTileYSize - 1, pTileRow = pTile + ((BPP >> 3) * 320 * (nTileYSize - 1)), pZTileRow = pZTile + (320 * (nTileYSize - 1)); y >= 0; ADVANCEROW, ADVANCEZROW, pTileData8 += pYZoomInfo[nTileYSize - 1 - y],  y--) {
    #endif
   #endif
  #else
   #if ZBUFFER == 0
    #if FLIPY == 0
-	for (y = 0, pTileRow = pTile; y < 16; y++, ADVANCEROW, pTileData += 16) {
+	for (y = 0, pTileRow = pTile; y < 16; y++, ADVANCEROW, pTileData8 += 16) {
    #else
-  	for (y = 15, pTileRow = pTile + ((BPP >> 3) * 320 * 15); y >= 0; y--, ADVANCEROW, pTileData += 16) {
+  	for (y = 15, pTileRow = pTile + ((BPP >> 3) * 320 * 15); y >= 0; y--, ADVANCEROW, pTileData8 += 16) {
    #endif
   #else
    #if FLIPY == 0
-  	for (y = 0, pTileRow = pTile, pZTileRow = pZTile; y < 16; y++, ADVANCEROW, ADVANCEZROW, pTileData += 16) {
+  	for (y = 0, pTileRow = pTile, pZTileRow = pZTile; y < 16; y++, ADVANCEROW, ADVANCEZROW, pTileData8 += 16) {
    #else
-  	for (y = 15, pTileRow = pTile + ((BPP >> 3) * 320 * 15), pZTileRow = pZTile + (320 * 15); y >= 0; y--, ADVANCEROW, ADVANCEZROW, pTileData += 16) {
+  	for (y = 15, pTileRow = pTile + ((BPP >> 3) * 320 * 15), pZTileRow = pZTile + (320 * 15); y >= 0; y--, ADVANCEROW, ADVANCEZROW, pTileData8 += 16) {
    #endif
   #endif
  #endif
@@ -219,40 +202,40 @@ static void FUNCTIONNAME(BPP,TRANSMODE,DOFLIP,ROT,SCROLL,ZOOMMODE,ZBUF,CLIP)()
 
  #if DOCLIP == 1 || ROWSCROLL == 1
   #define CLIPPIXEL(a,b) if (XPOS >= 0 - (a) && XPOS < 320 - (a)) { PLOTPIXEL(ROWOFFSET + a,b); }
-		CLIPPIXEL( 0, pTileData[OFFSET( 0)]);
-		CLIPPIXEL( 1, pTileData[OFFSET( 1)]);
-		CLIPPIXEL( 2, pTileData[OFFSET( 2)]);
-		CLIPPIXEL( 3, pTileData[OFFSET( 3)]);
-		CLIPPIXEL( 4, pTileData[OFFSET( 4)]);
-		CLIPPIXEL( 5, pTileData[OFFSET( 5)]);
-		CLIPPIXEL( 6, pTileData[OFFSET( 6)]);
-		CLIPPIXEL( 7, pTileData[OFFSET( 7)]); CHECKX( 8);
-		CLIPPIXEL( 8, pTileData[OFFSET( 8)]); CHECKX( 9);
-		CLIPPIXEL( 9, pTileData[OFFSET( 9)]); CHECKX(10);
-		CLIPPIXEL(10, pTileData[OFFSET(10)]); CHECKX(11);
-		CLIPPIXEL(11, pTileData[OFFSET(11)]); CHECKX(12);
-		CLIPPIXEL(12, pTileData[OFFSET(12)]); CHECKX(13);
-		CLIPPIXEL(13, pTileData[OFFSET(13)]); CHECKX(14);
-		CLIPPIXEL(14, pTileData[OFFSET(14)]); CHECKX(15);
-		CLIPPIXEL(15, pTileData[OFFSET(15)]);
+		CLIPPIXEL( 0, pTileData8[OFFSET( 0)]);
+		CLIPPIXEL( 1, pTileData8[OFFSET( 1)]);
+		CLIPPIXEL( 2, pTileData8[OFFSET( 2)]);
+		CLIPPIXEL( 3, pTileData8[OFFSET( 3)]);
+		CLIPPIXEL( 4, pTileData8[OFFSET( 4)]);
+		CLIPPIXEL( 5, pTileData8[OFFSET( 5)]);
+		CLIPPIXEL( 6, pTileData8[OFFSET( 6)]);
+		CLIPPIXEL( 7, pTileData8[OFFSET( 7)]); CHECKX( 8);
+		CLIPPIXEL( 8, pTileData8[OFFSET( 8)]); CHECKX( 9);
+		CLIPPIXEL( 9, pTileData8[OFFSET( 9)]); CHECKX(10);
+		CLIPPIXEL(10, pTileData8[OFFSET(10)]); CHECKX(11);
+		CLIPPIXEL(11, pTileData8[OFFSET(11)]); CHECKX(12);
+		CLIPPIXEL(12, pTileData8[OFFSET(12)]); CHECKX(13);
+		CLIPPIXEL(13, pTileData8[OFFSET(13)]); CHECKX(14);
+		CLIPPIXEL(14, pTileData8[OFFSET(14)]); CHECKX(15);
+		CLIPPIXEL(15, pTileData8[OFFSET(15)]);
   #undef CLIPPIXEL
  #else
-		PLOTPIXEL( 0, pTileData[OFFSET( 0)]);
-		PLOTPIXEL( 1, pTileData[OFFSET( 1)]);
-		PLOTPIXEL( 2, pTileData[OFFSET( 2)]);
-		PLOTPIXEL( 3, pTileData[OFFSET( 3)]);
-		PLOTPIXEL( 4, pTileData[OFFSET( 4)]);
-		PLOTPIXEL( 5, pTileData[OFFSET( 5)]);
-		PLOTPIXEL( 6, pTileData[OFFSET( 6)]);
-		PLOTPIXEL( 7, pTileData[OFFSET( 7)]); CHECKX( 8);
-		PLOTPIXEL( 8, pTileData[OFFSET( 8)]); CHECKX( 9);
-		PLOTPIXEL( 9, pTileData[OFFSET( 9)]); CHECKX(10);
-		PLOTPIXEL(10, pTileData[OFFSET(10)]); CHECKX(11);
-		PLOTPIXEL(11, pTileData[OFFSET(11)]); CHECKX(12);
-		PLOTPIXEL(12, pTileData[OFFSET(12)]); CHECKX(13);
-		PLOTPIXEL(13, pTileData[OFFSET(13)]); CHECKX(14);
-		PLOTPIXEL(14, pTileData[OFFSET(14)]); CHECKX(15);
-		PLOTPIXEL(15, pTileData[OFFSET(15)]);
+		PLOTPIXEL( 0, pTileData8[OFFSET( 0)]);
+		PLOTPIXEL( 1, pTileData8[OFFSET( 1)]);
+		PLOTPIXEL( 2, pTileData8[OFFSET( 2)]);
+		PLOTPIXEL( 3, pTileData8[OFFSET( 3)]);
+		PLOTPIXEL( 4, pTileData8[OFFSET( 4)]);
+		PLOTPIXEL( 5, pTileData8[OFFSET( 5)]);
+		PLOTPIXEL( 6, pTileData8[OFFSET( 6)]);
+		PLOTPIXEL( 7, pTileData8[OFFSET( 7)]); CHECKX( 8);
+		PLOTPIXEL( 8, pTileData8[OFFSET( 8)]); CHECKX( 9);
+		PLOTPIXEL( 9, pTileData8[OFFSET( 9)]); CHECKX(10);
+		PLOTPIXEL(10, pTileData8[OFFSET(10)]); CHECKX(11);
+		PLOTPIXEL(11, pTileData8[OFFSET(11)]); CHECKX(12);
+		PLOTPIXEL(12, pTileData8[OFFSET(12)]); CHECKX(13);
+		PLOTPIXEL(13, pTileData8[OFFSET(13)]); CHECKX(14);
+		PLOTPIXEL(14, pTileData8[OFFSET(14)]); CHECKX(15);
+		PLOTPIXEL(15, pTileData8[OFFSET(15)]);
  #endif
 
  #undef ROWOFFSET

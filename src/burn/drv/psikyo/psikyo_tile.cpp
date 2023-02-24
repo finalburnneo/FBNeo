@@ -17,8 +17,8 @@ static INT32 PsikyoTileMask;
 static UINT32 PsikyoTileBank[2];
 
 static UINT8* pTile;
-static UINT8* pTileData;
-static UINT32* pTilePalette;
+static UINT8* pTileData8;
+static UINT32 pTilePalette;
 static INT16* pTileRowInfo;
 
 typedef void (*RenderTileFunction)();
@@ -43,7 +43,7 @@ static void PsikyoRenderLayer(INT32 nLayer)
 
     UINT16* pTileRAM = (UINT16*)(PsikyoTileRAM[nLayer]);
 
-	UINT32* LayerPalette = PsikyoPalette + (nLayer ? 0x0C00 : 0x0800);
+	UINT32 LayerPalette = (nLayer ? 0x0C00 : 0x0800);
 
 	nTileBank = PsikyoTileBank[nLayer];
 
@@ -54,7 +54,7 @@ static void PsikyoRenderLayer(INT32 nLayer)
 
 	nRenderFunction = 8;
 	nTransColour = 99;
-	if ((bPsikyoClearBackground || nLayer) && (PsikyoLayerAttrib[nLayer] & 0x02) == 0) {
+	if ((PsikyoLayerAttrib[nLayer] & 0x02) == 0) {
 		if (PsikyoLayerAttrib[nLayer] & 0x08) {
 			nRenderFunction = 0;
 			nTransColour = 0;
@@ -129,8 +129,9 @@ static void PsikyoRenderLayer(INT32 nLayer)
 							continue;
 						}
 
-						pTile = pBurnDraw + (nTileYPos * nBurnPitch);
-						pTileData = PsikyoTileROM + (nTileNumber << 8);
+						pTile = (UINT8*)pTransDraw;
+						pTile += (nTileYPos * (nScreenWidth * 2));
+						pTileData8 = PsikyoTileROM + (nTileNumber << 8);
 						pTilePalette = LayerPalette + (nTilePalette << 4);
 
 						if (bClip) {
@@ -165,8 +166,9 @@ static void PsikyoRenderLayer(INT32 nLayer)
 				continue;
 			}
 
-			pTile = pBurnDraw + (nTileYPos * nBurnPitch) + (nTileXPos * nBurnBpp);
-			pTileData = PsikyoTileROM + (nTileNumber << 8);
+			pTile = (UINT8*)pTransDraw;
+			pTile += (nTileYPos * (nScreenWidth * 2)) + (nTileXPos * 2);
+			pTileData8 = PsikyoTileROM + (nTileNumber << 8);
 			pTilePalette = LayerPalette + (nTilePalette << 4);
 
 			if (bClip || nTileXPos < 0 || nTileXPos > 304) {
@@ -202,9 +204,7 @@ INT32 PsikyoTileRender()
 		PsikyoTileBank[1] = (PsikyoLayerAttrib[1] & 0x0400) << 3;
 	}
 
-	if (bPsikyoClearBackground || ((PsikyoLayerAttrib[0] & 0x01) && (PsikyoLayerAttrib[1] & 0x02)) || (nBurnLayer & 0x0C) != 0x0C) {
-		BurnClearScreen();
-	}
+	BurnTransferClear((PsikyoLayerAttrib[0] & 0x08) ? 0x800 : 0x80f);
 
 	for (nPriority = 1; nPriority < 4; nPriority++) {
 

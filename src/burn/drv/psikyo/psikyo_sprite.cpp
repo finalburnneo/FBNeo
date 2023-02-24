@@ -27,8 +27,8 @@ static INT32* PsikyoZoomXTable = NULL;
 static INT32* PsikyoZoomYTable = NULL;
 
 static UINT8* pTile;
-static UINT8* pTileData;
-static UINT32* pTilePalette;
+static UINT8* pTileData8;
+static UINT32 pTilePalette;
 
 static UINT16* pZBuffer = NULL;
 static UINT16* pZTile;
@@ -123,7 +123,7 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 		nTileXPos = pBuffer->x;
 		nTileYPos = pBuffer->y;
 
-		pTilePalette = PsikyoPalette + pBuffer->palette;
+		pTilePalette = pBuffer->palette;
 
 		nXSize = pBuffer->xsize;
 		nYSize = pBuffer->ysize;
@@ -184,9 +184,10 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 				nZPos = nZOffset + nCurrentZPos;
 			}
 
-			pStart = pBurnDraw + (nTileYPos * nBurnPitch) + (nTileXPos * nBurnBpp);
+			pStart = (UINT8*)pTransDraw;
+			pStart += (nTileYPos * (nScreenWidth * 2)) + (nTileXPos * 2);
 
-			for (INT32 y = 0; y < nYSize; y++, nTileYPos += 16, pStart += 16 * nBurnPitch, pZStart += 16 * 320) {
+			for (INT32 y = 0; y < nYSize; y++, nTileYPos += 16, pStart += 16 * (nScreenWidth * 2), pZStart += 16 * 320) {
 				nTileXPos = pBuffer->x;
 
 				pTile = pStart;
@@ -194,13 +195,13 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 
 				nAddress += nNextTileY;
 
-				for (INT32 x = 0; x < nXSize; x++, nTileXPos += 16, nAddress += nNextTileX, pTile += nBurnBpp << 4, pZTile += 16) {
+				for (INT32 x = 0; x < nXSize; x++, nTileXPos += 16, nAddress += nNextTileX, pTile += 2 << 4, pZTile += 16) {
 
 					if (PsikyoSpriteAttrib[BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress])] == nTransColour) {
 						continue;
 					}
 
-					pTileData = PsikyoSpriteROM + ((BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress]) << 8) & nSpriteAddressMask);
+					pTileData8 = PsikyoSpriteROM + ((BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress]) << 8) & nSpriteAddressMask);
 					if (nTileYPos < 0 || nTileYPos > 208 || nTileXPos < 0 || nTileXPos > 304) {
 						if (nTileYPos > -16 && nTileYPos < 224 && nTileXPos > -16 && nTileXPos < 320) {
 							RenderSprite[nRenderFunction + 1]();
@@ -248,10 +249,11 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 				nZPos = nZOffset + nCurrentZPos;
 			}
 
-			pStart = pBurnDraw + (nTileYPos * nBurnPitch) + (nTileXPos * nBurnBpp);
+			pStart = (UINT8*)pTransDraw;
+			pStart += (nTileYPos * (nScreenWidth * 2)) + (nTileXPos * 2);
 			nStartXPos = nTileXPos;
 
-			for (INT32 y = 0; y < nYSize; y++, nTileYPos += nTileYSize, pStart += nTileYSize * nBurnPitch, pZStart += nTileYSize * 320) {
+			for (INT32 y = 0; y < nYSize; y++, nTileYPos += nTileYSize, pStart += nTileYSize * (nScreenWidth * 2), pZStart += nTileYSize * 320) {
 				nTileXPos = nStartXPos;
 
 				pTile = pStart;
@@ -262,7 +264,7 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 				nTileYSize = (y + 1) * nYZoom / 2 - (y * nYZoom / 2);
 				pYZoomInfo = PsikyoZoomYTable + (nTileYSize << 4);
 
-				for (INT32 x = 0; x < nXSize; x++, nTileXPos += nTileXSize, nAddress += nNextTileX, pTile += nBurnBpp * nTileXSize, pZTile += nTileXSize) {
+				for (INT32 x = 0; x < nXSize; x++, nTileXPos += nTileXSize, nAddress += nNextTileX, pTile += 2 * nTileXSize, pZTile += nTileXSize) {
 
 					nTileXSize = (x + 1) * nXZoom / 2 - (x * nXZoom / 2);
 
@@ -271,7 +273,7 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 					}
 
 					pXZoomInfo = PsikyoZoomXTable + (nTileXSize << 4);
-					pTileData = PsikyoSpriteROM + ((BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress]) << 8) & nSpriteAddressMask);
+					pTileData8 = PsikyoSpriteROM + ((BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress]) << 8) & nSpriteAddressMask);
 					if (nTileYPos < 0 || nTileYPos > (224 - nTileYSize) || nTileXPos < 0 || nTileXPos > (320 - nTileXSize)) {
 						if (nTileYPos > -nTileYSize && nTileYPos < 224 && nTileXPos > -nTileXSize && nTileXPos < 320) {
 							RenderSprite[nRenderFunction + 33]();

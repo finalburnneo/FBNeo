@@ -8,8 +8,8 @@ static UINT16* PsikyoPalCopy;
 
 INT32 PsikyoPalInit()
 {
-	PsikyoPalette = (UINT32*)BurnMalloc(0x1000 * sizeof(UINT32));
-	memset(PsikyoPalette, 0, 0x1000 * sizeof(UINT32));
+	PsikyoPalette = (UINT32*)BurnMalloc(0x1001 * sizeof(UINT32));
+	memset(PsikyoPalette, 0, 0x1001 * sizeof(UINT32));
 
 	PsikyoPalCopy = (UINT16*)BurnMalloc(0x1000 * sizeof(UINT16));
 	memset(PsikyoPalCopy, 0, 0x1000 * sizeof(UINT16));
@@ -59,8 +59,9 @@ INT32 PsikyoPalUpdate()
 }
 
 // Update the PC copy of the palette on writes to the palette memory
-void PsikyoPalWriteByte(UINT32 nAddress, UINT8 byteValue)
+void __fastcall PsikyoPalWriteByte(UINT32 nAddress, UINT8 byteValue)
 {
+	nAddress &= 0x1FFF;
 	nAddress ^= 1;
 	PsikyoPalSrc[nAddress] = byteValue;							// write byte
 
@@ -70,8 +71,9 @@ void PsikyoPalWriteByte(UINT32 nAddress, UINT8 byteValue)
 	}
 }
 
-void PsikyoPalWriteWord(UINT32 nAddress, UINT16 wordValue)
+void __fastcall PsikyoPalWriteWord(UINT32 nAddress, UINT16 wordValue)
 {
+	nAddress &= 0x1FFF;
 	nAddress >>= 1;
 
 	((UINT16*)PsikyoPalSrc)[nAddress] = wordValue;		// write word

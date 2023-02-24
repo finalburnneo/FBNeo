@@ -1716,8 +1716,8 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 
 				case SEGA_MD_ROM_LOAD16_WORD_SWAP: {
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
-                    //BurnDump("derpy.bin", RomMain, (bDoIpsPatch && ri.nLen < nIpsMaxFileLen) ? nIpsMaxFileLen : ri.nLen);
-                    BurnByteswap(RomMain + Offset, (bDoIpsPatch && ri.nLen < nIpsMaxFileLen) ? nIpsMaxFileLen : ri.nLen);
+                    //BurnDump("derpy.bin", RomMain, (bDoIpsPatch && ri.nLen < nIpsMemExpLen[LOAD_ROM]) ? nIpsMemExpLen[LOAD_ROM] : ri.nLen);
+                    BurnByteswap(RomMain + Offset, (bDoIpsPatch && ri.nLen < nIpsMemExpLen[LOAD_ROM]) ? nIpsMemExpLen[LOAD_ROM] : ri.nLen);
 					break;
 				}
 
@@ -1748,9 +1748,9 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 				memcpy(RomMain + 0x300000, RomMain + 0x000000, 0x100000);
 			}
 
-            if (bDoIpsPatch && ri.nLen < nIpsMaxFileLen) {
+            if (bDoIpsPatch && ri.nLen < nIpsMemExpLen[LOAD_ROM]) {
                 INT32 old = RomSize;
-                RomSize += nIpsMaxFileLen - ri.nLen;
+                RomSize += nIpsMemExpLen[LOAD_ROM] - ri.nLen;
                 bprintf(PRINT_NORMAL, _T("*** Megadrive: IPS Patch grew RomSize: %d  (was %d)\n"), RomSize, old);
             }
 		}

@@ -1520,7 +1520,7 @@ static INT32 NeoSMAInit(void (*pInitCallback)(), pSekWriteWordHandler pBankswitc
 	NeoCallbackActive->pInitialise = pInitCallback;
 
 	// Control SMA protection in ips environment.
-	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
+	if (!bDoIpsPatch || !(nIpsDrvDefine & IPS_NOT_PROTECT)) {
 		NeoCallbackActive->pInstallHandlers = NeoSMAInstallHanders;
 		NeoCallbackActive->pBankswitch = NeoSMABankswitch;
 		NeoCallbackActive->pScan = NeoSMAScan;
@@ -1706,7 +1706,7 @@ static void NeoPVCInstallHandlers()
 static INT32 NeoPVCInit()
 {
 	// Control PVC protection in ips environment.
-	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
+	if (!bDoIpsPatch || !(nIpsDrvDefine & IPS_NOT_PROTECT)) {
 		PVCRAM = (UINT8*)BurnMalloc(0x2000);
 		if (!PVCRAM) return 1;
 
@@ -6011,14 +6011,9 @@ static void kof98Decrypt()
 
 	UINT32 nSp2Size = 0x400000;
 
-	if (bDoIpsPatch) {
-		UINT32 nRet = GetIpsDrvDefine(), nProgSize = IPS_PROG_VALUE(nRet);
-
-		// kof98 P2 = ProgSize - P1Size.
-		// Same as [neo_run.cpp].
-		// Extra Rom not moved in ips.
-		nSp2Size = (nProgSize >= 0x600000) ? nProgSize - 0x200000 : nSp2Size + (0x200000 << 1);
-	}
+	// Extra Rom not moved in ips.
+	if (bDoIpsPatch)
+		nSp2Size += nIpsMemExpLen[PRG1_ROM];
 
 	memmove(&Neo68KROMActive[0x100000], &Neo68KROMActive[0x200000], nSp2Size);
 

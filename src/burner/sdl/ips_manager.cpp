@@ -18,10 +18,11 @@
 
 bool bDoIpsPatch = false;
 
-UINT32 nIpsDrvDefine = 0, nIpsMemExpLen[SND2_ROM + 1] = { 0 };
+unsigned int nIpsDrvDefine = 0, nIpsMemExpLen[SND2_ROM + 1] = { 0 };
 
 static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 {
+#if 0
 	char buf[6];
 	FILE* f = NULL;
 	INT32 Offset = 0, Size = 0;
@@ -83,12 +84,14 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 	if (readonly && (Offset > nIpsMemExpLen[LOAD_ROM])) nIpsMemExpLen[LOAD_ROM] = Offset; // file size is growing
 
 	fclose(f);
+#endif
 }
 
 static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bool readonly)
 {
+#if 0
 	char s[MAX_PATH];
-	char* p = NULL, * u = NULL;
+	char* p = NULL;
 	char* rom_name = NULL;
 	char* ips_name = NULL;
 	char* ips_offs = NULL;
@@ -191,6 +194,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bo
 		}
 		fclose(fp);
 	}
+#endif
 }
 
 void GetIpsDrvDefine()
@@ -202,6 +206,7 @@ void GetIpsDrvDefine()
 	memset(nIpsMemExpLen, 0, sizeof(nIpsMemExpLen));
 
 #if 0
+
 	char ips_data[MAX_PATH];
 	INT32 nActivePatches = GetIpsNumActivePatches();
 

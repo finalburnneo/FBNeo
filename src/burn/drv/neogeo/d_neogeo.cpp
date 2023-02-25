@@ -7875,6 +7875,24 @@ static void cthd2003_decode()
 	DoPerm(0);
 }
 
+static void cthd2003_fixaes()
+{
+	UINT16* Rom = (UINT16*)Neo68KROMActive;
+
+	// Game sets itself to MVS & English mode, patch this out
+	Rom[0x0ed00e / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	Rom[0x0ed394 / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+
+	// Fix for AES mode (stop loop that triggers Watchdog)
+	Rom[0x0a2b7e / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+}
+
+static void ct2k3saCallback()
+{
+	cthd2003_decode();
+	cthd2003_fixaes();
+}
+
 static void cthd2003Callback()
 {
 	INT32 i, n;
@@ -7885,12 +7903,12 @@ static void cthd2003Callback()
 		NeoTextROM[nNeoActiveSlot][0x10000 + i] = n;
 	}
 
-	cthd2003_decode();
+	ct2k3saCallback();
 }
 
 static void cthd2003InstallBankSwitchHandler()
 {
-	SekMapHandler(6,	0x200000, 0x2fffff, MAP_WRITE);
+	SekMapHandler(6, 0x200000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, cthd2003WriteWordBankswitch);
 	SekSetWriteByteHandler(6, cthd2003WriteByteBankswitch);
 
@@ -7963,12 +7981,12 @@ static void ct2k3spCallback()
 		BurnFree (dst);
 	}
 
-	cthd2003_decode();
+	ct2k3saCallback();
 }
 
 static void ct2kspInstallBankSwitchHandler()
 {
-	SekMapHandler(6,	0x200000, 0x2fffff, MAP_WRITE);
+	SekMapHandler(6, 0x200000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, cthd2003WriteWordBankswitch);
 	SekSetWriteByteHandler(6, cthd2003WriteByteBankswitch);
 
@@ -8028,7 +8046,7 @@ STD_ROM_FN(ct2k3sa)
 static INT32 ct2k3saInit()
 {
 	nBurnCPUSpeedAdjust = 0x010d;
-	NeoCallbackActive->pInitialise = cthd2003_decode;
+	NeoCallbackActive->pInitialise = ct2k3saCallback;
  	return NeoInit();
 }
 

@@ -22622,12 +22622,12 @@ struct BurnDriver BurnDrvmslug3eb = {
 // Metal Slug 3 (Last Bullet Remix, Hack)
 // Enter the portal with the following commands : Start + Button D
 // Modified by 磁暴线圈
-// 20230215
+// 20230222
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	/* Encrypted */
-	{ "ms3lw.neo-sma",	0x040000, 0xea1b3c12, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1lw.p1",	0x400000, 0x188a281d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2lw.p2",	0x400000, 0x26a9b5a7, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3lw.neo-sma",	0x040000, 0xb9519127, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1lw.p1",	0x400000, 0x8f38e111, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2lw.p2",	0x400000, 0x20400f7c, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22949,12 +22949,12 @@ struct BurnDriver BurnDrvmslug3ki = {
 
 // Metal Slug 3 (Legend, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20221210
+// GOTVG 20230222
 static struct BurnRomInfo mslug3cqRomDesc[] = {
 	/* Encrypted */
-	{ "ms3cq.neo-sma",	0x040000, 0x7ea358de, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1cq.p1",	0x400000, 0x71202603, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2cq.p2",	0x400000, 0x3b06ba05, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3cq.neo-sma",	0x040000, 0x73531f6a, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1cq.p1",	0x400000, 0x00a7f350, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2cq.p2",	0x400000, 0x663ae8ae, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22979,7 +22979,7 @@ STDROMPICKEXT(mslug3cq, mslug3cq, neogeo)
 STD_ROM_FN(mslug3cq)
 
 struct BurnDriver BurnDrvmslug3cq = {
-	"mslug3cq", "mslug3", "neogeo", NULL, "2022",
+	"mslug3cq", "mslug3", "neogeo", NULL, "2023",
 	"Metal Slug 3 (Legend, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,

@@ -33006,3 +33006,117 @@ struct BurnDriver BurnDrvMSX_terekines = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Bomb Jack (HB, v1.2)
+
+static struct BurnRomInfo MSX_bombjackRomDesc[] = {
+	{ "Bomb Jack v1.2 (2023)(Fregarni).rom",	131072, 0x6165d482, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_bombjack, MSX_bombjack, msx_msx)
+STD_ROM_FN(MSX_bombjack)
+
+struct BurnDriver BurnDrvMSX_bombjack = {
+	"msx_bombjack", NULL, "msx_msx", NULL, "2023",
+	"Bomb Jack (HB, v1.2)\0", NULL, "Fregarni", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_ACTION, 0,
+	MSXGetZipName, MSX_bombjackRomInfo, MSX_bombjackRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Gelatino 2 (English) (HB)
+
+static struct BurnRomInfo MSX_gelatino2eRomDesc[] = {
+	{ "Gelatino 2 EN (2021)(Physical Dreams).rom",	49152, 0x10091cd1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gelatino2e, MSX_gelatino2e, msx_msx)
+STD_ROM_FN(MSX_gelatino2e)
+
+struct BurnDriver BurnDrvMSX_gelatino2e = {
+	"msx_gelatino2e", NULL, "msx_msx", NULL, "2021",
+	"Gelatino 2 (English) (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_gelatino2eRomInfo, MSX_gelatino2eRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Gelatino 2 (French) (HB)
+
+static struct BurnRomInfo MSX_gelatino2fRomDesc[] = {
+	{ "Gelatino 2 FR (2021)(Physical Dreams).rom",	49152, 0x60fe517b, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gelatino2f, MSX_gelatino2f, msx_msx)
+STD_ROM_FN(MSX_gelatino2f)
+
+struct BurnDriver BurnDrvMSX_gelatino2f = {
+	"msx_gelatino2f", "msx_gelatino2e", "msx_msx", NULL, "2021",
+	"Gelatino 2 (French) (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_gelatino2fRomInfo, MSX_gelatino2fRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Gelatino 2 (Italian) (HB)
+
+static struct BurnRomInfo MSX_gelatino2iRomDesc[] = {
+	{ "Gelatino 2 IT (2021)(Physical Dreams).rom",	49152, 0x5297b0ac, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gelatino2i, MSX_gelatino2i, msx_msx)
+STD_ROM_FN(MSX_gelatino2i)
+
+struct BurnDriver BurnDrvMSX_gelatino2i = {
+	"msx_gelatino2i", "msx_gelatino2e", "msx_msx", NULL, "2021",
+	"Gelatino 2 (Italian) (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_gelatino2iRomInfo, MSX_gelatino2iRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Gelatino 2 (Spanish) (HB)
+
+static struct BurnRomInfo MSX_gelatino2sRomDesc[] = {
+	{ "Gelatino 2 ES (2021)(Physical Dreams).rom",	49152, 0x97822084, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gelatino2s, MSX_gelatino2s, msx_msx)
+STD_ROM_FN(MSX_gelatino2s)
+
+struct BurnDriver BurnDrvMSX_gelatino2s = {
+	"msx_gelatino2s", "msx_gelatino2e", "msx_msx", NULL, "2021",
+	"Gelatino 2 (Spanish) (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_gelatino2sRomInfo, MSX_gelatino2sRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Pentacorn Quest (HB)
+
+static struct BurnRomInfo MSX_pentaquestRomDesc[] = {
+	{ "Pentacorn Quest v1.0 (2023)(Robosoft).rom",	49152, 0x11c2bd4f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pentaquest, MSX_pentaquest, msx_msx)
+STD_ROM_FN(MSX_pentaquest)
+
+struct BurnDriver BurnDrvMSX_pentaquest = {
+	"msx_pentaquest", NULL, "msx_msx", NULL, "2023",
+	"Pentacorn Quest (HB)\0", NULL, "Robosoft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_pentaquestRomInfo, MSX_pentaquestRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

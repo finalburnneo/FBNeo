@@ -16004,7 +16004,7 @@ struct BurnDriver BurnDrvnes_magickidsdorp = {
 };
 
 // Jackal - Endless Mission (v1.2) 20210313
-// Modified by HHNM Team - ZENG GE / Ôø¸ç
+// Modified by HHNM Team - ZENG GE / æ›¾å“¥
 // https://www.nesbbs.com/bbs/thread-51662-1-1.html
 static struct BurnRomInfo nes_jackalemRomDesc[] = {
 	{ "Jackal - Endless Mission (v1.2).nes",          262160, 0x833c6bc4, BRF_ESS | BRF_PRG },
@@ -16931,7 +16931,7 @@ struct BurnDriver BurnDrvnes_kirbysadvc = {
 };
 
 // Fire Emblem Gaiden (T-Chi, v2.0)
-// Modified by ÌìÏÂµÚÆß, ½ªÎ¬µÚ¶ş, º®Ñ©Ê¹Õß
+// Modified by å¤©ä¸‹ç¬¬ä¸ƒ, å§œç»´ç¬¬äºŒ, å¯’é›ªä½¿è€…
 // https://www.nesbbs.com/bbs/thread-51529-1-1.html
 static struct BurnRomInfo nes_fireembgaicRomDesc[] = {
 	{ "Fire Emblem Gaiden (T-Chi, v2.0).nes",          663568, 0x1df6fb24, BRF_ESS | BRF_PRG },
@@ -17008,7 +17008,7 @@ struct BurnDriver BurnDrvnes_chipndalresra2sc = {
 };
 
 // Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi
-// Modified by ÌìÏÂµÚÆß, ½ªÎ¬µÚ¶ş, ZARD/ÅÓÏÈÉú, º®Ñ©Ê¹Õß
+// Modified by å¤©ä¸‹ç¬¬ä¸ƒ, å§œç»´ç¬¬äºŒ, ZARD/åºå…ˆç”Ÿ, å¯’é›ªä½¿è€…
 // https://www.nesbbs.com/bbs/thread-53027-1-1.html
 static struct BurnRomInfo nes_fireembcRomDesc[] = {
 	{ "Fire Emblem - Ankoku Ryuu to Hikari no Tsurugi (T-Chi).nes",          655376, 0xa3126533, BRF_ESS | BRF_PRG },
@@ -17581,7 +17581,7 @@ struct BurnDriver BurnDrvnes_gundecc = {
 };
 
 // Teenage Mutant Ninja Turtles (T-Chi, v1.1)
-// Modified by MEZARANSU, ½ªÎ¬µÚ¶ş, ÂŞÔÆ
+// Modified by MEZARANSU, å§œç»´ç¬¬äºŒ, ç½—äº‘
 // https://www.nesbbs.com/bbs/thread-49880-1-1.html
 static struct BurnRomInfo nes_tmntcRomDesc[] = {
 	{ "Teenage Mutant Ninja Turtles (T-Chi, v1.1).nes",          393232, 0xa02316dc, BRF_ESS | BRF_PRG },
@@ -23450,7 +23450,7 @@ struct BurnDriver BurnDrvnes_awakening = {
 };
 
 static struct BurnRomInfo nes_nemulesisRomDesc[] = {
-	{ "neMULEsis v8.28.22 (2022)(John Vanderhoef).nes",          524304, 0x1aca9507, BRF_ESS | BRF_PRG },
+	{ "neMULEsis v2.25.23 (2023)(John Vanderhoef).nes",          524304, 0x9982f1b7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nemulesis)
@@ -32761,7 +32761,7 @@ struct BurnDriver BurnDrvnes_contrrevredfal = {
 };
 
 // Contra - The Last Rebirth (China)
-// Modified by Jing Jing Bu Xiang Wo / ¾²¾²²»ÏëÎÒ
+// Modified by Jing Jing Bu Xiang Wo / é™é™ä¸æƒ³æˆ‘
 // GOTVG 20221226
 static struct BurnRomInfo nes_contracsRomDesc[] = {
 	{ "contracs.nes",          541200, 0xe7e2ffa3, BRF_ESS | BRF_PRG },
@@ -32781,7 +32781,7 @@ struct BurnDriver BurnDrvnes_contracs = {
 };
 
 // Contra - Demon Contra (China)
-// Modified by Huan Tian / »ÃÌì
+// Modified by Huan Tian / å¹»å¤©
 // GOTVG 20200406
 static struct BurnRomInfo nes_contramdlRomDesc[] = {
 	{ "contramdl.nes",          541200, 0x78e3d5a4, BRF_ESS | BRF_PRG },

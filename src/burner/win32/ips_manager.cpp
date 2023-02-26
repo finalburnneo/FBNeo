@@ -806,8 +806,11 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 		}
 	}
 
-	// When in the read-only state, the only thing is to get nIpsMemExpLen[LOAD_ROM], thus avoiding memory out-of-bounds.
-	if (readonly && (Offset > nIpsMemExpLen[LOAD_ROM])) nIpsMemExpLen[LOAD_ROM] = Offset; // file size is growing
+	// Avoid memory out-of-bounds due to ips offset greater than rom length.
+	if (readonly && (0 == nIpsMemExpLen[EXP_FLAG])) {	// Unspecified length.
+		nIpsMemExpLen[LOAD_ROM] = 0;					// Must be reset to 0 before getting the next ips offset.
+		nIpsMemExpLen[LOAD_ROM] = Offset;
+	}
 
 	fclose(f);
 }

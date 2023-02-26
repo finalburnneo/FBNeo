@@ -33102,10 +33102,10 @@ struct BurnDriver BurnDrvMSX_gelatino2s = {
 	272, 228, 4, 3
 };
 
-// Pentacorn Quest (HB)
+// Pentacorn Quest (HB, v1.1)
 
 static struct BurnRomInfo MSX_pentaquestRomDesc[] = {
-	{ "Pentacorn Quest v1.0 (2023)(Robosoft).rom",	49152, 0x11c2bd4f, BRF_PRG | BRF_ESS },
+	{ "Pentacorn Quest v1.1 (2023)(Robosoft).rom",	49152, 0x883c5abe, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_pentaquest, MSX_pentaquest, msx_msx)
@@ -33113,7 +33113,7 @@ STD_ROM_FN(MSX_pentaquest)
 
 struct BurnDriver BurnDrvMSX_pentaquest = {
 	"msx_pentaquest", NULL, "msx_msx", NULL, "2023",
-	"Pentacorn Quest (HB)\0", NULL, "Robosoft", "MSX",
+	"Pentacorn Quest (HB, v1.1)\0", NULL, "Robosoft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_pentaquestRomInfo, MSX_pentaquestRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

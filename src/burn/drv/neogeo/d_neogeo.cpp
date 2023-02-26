@@ -18937,10 +18937,10 @@ struct BurnDriver BurnDrvmslug4dg = {
 	0x1000,	304, 224, 4, 3
 };
 
-// GOTVG  Metal Slug 4 (Last Bullet Hack)
+// GOTVG Metal Slug 4 (Last Bullet Hack)
 static struct BurnRomInfo mslug4lwRomDesc[] = {
 	{ "263-p1lw.bin",   0x100000, 0xad713169, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2lw.bin",   0x800000, 0x427eed0b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p2lw.bin",   0x800000, 0x5aa184e7, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "263-s1d.bin",    0x020000, 0xa9446774, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -18963,8 +18963,8 @@ STDROMPICKEXT(mslug4lw, mslug4lw, neogeo)
 STD_ROM_FN(mslug4lw)
 
 struct BurnDriver BurnDrvmslug4lw = {
-	"mslug4lw", "mslug4", "neogeo", NULL, "2018",
-	"Metal Slug 4 (Last Bullet Remix, Hack 20180519)\0", NULL, "hack", "Neo Geo",
+	"mslug4lw", "mslug4", "neogeo", NULL, "2023",
+	"Metal Slug 4 (Last Bullet Remix, Hack 20230225)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4lwRomInfo, mslug4lwRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

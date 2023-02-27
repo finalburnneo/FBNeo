@@ -23450,15 +23450,15 @@ struct BurnDriver BurnDrvnes_awakening = {
 };
 
 static struct BurnRomInfo nes_nemulesisRomDesc[] = {
-	{ "neMULEsis v8.28.22 (2022)(John Vanderhoef).nes",          524304, 0x1aca9507, BRF_ESS | BRF_PRG },
+	{ "neMULEsis v2.25.23 (2023)(John Vanderhoef).nes",          524304, 0x9982f1b7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_nemulesis)
 STD_ROM_FN(nes_nemulesis)
 
 struct BurnDriver BurnDrvnes_nemulesis = {
-	"nes_nemulesis", NULL, NULL, NULL, "2021-22",
-	"neMULEsis (HB, v8.28.22)\0", NULL, "John Vanderhoef", "Miscellaneous",
+	"nes_nemulesis", NULL, NULL, NULL, "2021-23",
+	"neMULEsis (HB, v2.25.23)\0", NULL, "John Vanderhoef", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_nemulesisRomInfo, nes_nemulesisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

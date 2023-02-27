@@ -8862,9 +8862,9 @@
 		<description>Metal Slug 3 (Last Bullet Remix, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="ms3lw.neo-sma" size="262144" crc="ea1b3c12"/>
-		<rom name="256-pg1lw.p1" size="4194304" crc="188a281d"/>
-		<rom name="256-pg2lw.p2" size="4194304" crc="26a9b5a7"/>
+		<rom name="ms3lw.neo-sma" size="262144" crc="b9519127"/>
+		<rom name="256-pg1lw.p1" size="4194304" crc="8f38e111"/>
+		<rom name="256-pg2lw.p2" size="4194304" crc="20400f7c"/>
 		<rom name="256-c1.c1" merge="256-c1.c1" size="8388608" crc="5a79c34e"/>
 		<rom name="256-c2.c2" merge="256-c2.c2" size="8388608" crc="944c362c"/>
 		<rom name="256-c3.c3" merge="256-c3.c3" size="8388608" crc="6e69d36f"/>
@@ -8922,11 +8922,11 @@
 	<game name="mslug3cq" cloneof="mslug3" romof="mslug3">
 		<comment>Hack</comment>
 		<description>Metal Slug 3 (Legend, Hack)</description>
-		<year>2022</year>
+		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="ms3cq.neo-sma" size="262144" crc="7ea358de"/>
-		<rom name="256-pg1cq.p1" size="4194304" crc="71202603"/>
-		<rom name="256-pg2cq.p2" size="4194304" crc="3b06ba05"/>
+		<rom name="ms3cq.neo-sma" size="262144" crc="73531f6a"/>
+		<rom name="256-pg1cq.p1" size="4194304" crc="00a7f350"/>
+		<rom name="256-pg2cq.p2" size="4194304" crc="663ae8ae"/>
 		<rom name="256-c1cq.c1" size="8388608" crc="af853e09"/>
 		<rom name="256-c2cq.c2" size="8388608" crc="83831dc7"/>
 		<rom name="256-c3cq.c3" size="8388608" crc="88da636e"/>
@@ -17069,7 +17069,7 @@
 		<description>Samurai Shodown II Perfect (V. 01, Hack)</description>
 		<year>2023</year>
 		<manufacturer>Bear</manufacturer>
-		<rom name="063-p1pe.p1" size="2097152" crc="63055581"/>
+		<rom name="063-p1pe.p1" size="2097152" crc="c675bfa5"/>
 		<rom name="063-p2pe.p2" size="131072" crc="e9cc1d72"/>
 		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
 		<rom name="063-c1.c1" merge="063-c1.c1" size="2097152" crc="86cd307c"/>

@@ -1966,6 +1966,7 @@ DRV		BurnDrvBombbee;
 DRV		BurnSpecBbbuster;
 DRV		BurnSpecbombjack_48;
 DRV		BurnDrvcv_bombjack;
+DRV		BurnDrvMSX_bombjack;
 DRV		BurnDrvsg1k_bombjack;
 DRV		BurnDrvsg1k_bombjackk1;
 DRV		BurnDrvBombjack;
@@ -2649,6 +2650,7 @@ DRV		BurnDrvnes_castlevaniacom;
 DRV		BurnSpeccastlevania;
 DRV		BurnSpeccastlevanrus;
 DRV		BurnDrvnes_castlevaniahr;
+DRV		BurnDrvnes_castlevanialt;
 DRV		BurnDrvmd_cvania;
 DRV		BurnDrvmd_cvaniap;
 DRV		BurnDrvnes_castliih;
@@ -6328,6 +6330,10 @@ DRV		BurnDrvGekiridnj;
 DRV		BurnDrvGekiridn;
 DRV		BurnDrvpce_gekisboy;
 DRV		BurnDrvnes_gekityonbat;
+DRV		BurnDrvMSX_gelatino2e;
+DRV		BurnDrvMSX_gelatino2f;
+DRV		BurnDrvMSX_gelatino2i;
+DRV		BurnDrvMSX_gelatino2s;
 DRV		BurnSpecGemchaser;
 DRV		BurnSpecGemchaser2;
 DRV		BurnDrvmd_gemfire;
@@ -7327,6 +7333,10 @@ DRV		BurnDrvRedfoxwp2;
 DRV		BurnDrvRedfoxwp2a;
 DRV		BurnDrvsms_hongkildong;
 DRV		BurnSpecHkphooey;
+DRV		BurnDrvnes_ddballj;
+DRV		BurnDrvnes_ddball;
+DRV		BurnDrvnes_ddball2j;
+DRV		BurnDrvnes_ddball2;
 DRV		BurnDrvgg_ddanpei;
 DRV		BurnDrvmd_ddanpei;
 DRV		BurnDrvpce_ddanpei;
@@ -10949,6 +10959,7 @@ DRV		BurnDrvngpc_ngp;
 DRV		BurnDrvneotris;
 DRV		BurnDrvnes_hangman;
 DRV		BurnDrvnes_nesopetougol;
+DRV		BurnDrvnes_neswars;
 DRV		BurnDrvnes_nescape;
 DRV		BurnDrvnes_nesertgolf;
 DRV		BurnDrvnes_nesertgolfte;
@@ -11857,6 +11868,7 @@ DRV		BurnDrvpkunwar;
 DRV		BurnDrvpenta;
 DRV		BurnDrvnes_pentablocat;
 DRV		BurnSpecPentacornen;
+DRV		BurnDrvMSX_pentaquest;
 DRV		BurnSpecPentacornes;
 DRV		BurnSpecPentagram;
 DRV		BurnDrvMSX_pentagram;
@@ -13308,6 +13320,8 @@ DRV		BurnDrvRiotw;
 DRV		BurnDrvRiotcity;
 DRV		BurnDrvRiot;
 DRV		BurnDrvcv_ripcord;
+DRV		BurnDrvnes_ripislandj;
+DRV		BurnDrvnes_ripisland;
 DRV		BurnDrvnes_ramondus;
 DRV		BurnDrvnes_riseamo;
 DRV		BurnDrvmd_riserobo;
@@ -16286,6 +16300,7 @@ DRV		BurnDrvUsg83x;
 DRV		BurnDrvsms_stennis;
 DRV		BurnDrvsms_stennisc;
 DRV		BurnDrvgg_stetris;
+DRV		BurnDrvnes_stetrisland;
 DRV		BurnDrvmd_stbladj;
 DRV		BurnDrvmd_stblad;
 DRV		BurnDrvnes_supertiltbro;
@@ -21425,6 +21440,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBbbuster,			// Bomb Bomb Buster (128K) (HB)
 	&BurnSpecbombjack_48,		// Bomb Jack (48K)
 	&BurnDrvcv_bombjack,		// Bomb Jack (HB)
+	&BurnDrvMSX_bombjack,		// Bomb Jack (HB, v1.2)
 	&BurnDrvsg1k_bombjack,		// Bomb Jack (Jpn)
 	&BurnDrvsg1k_bombjackk1,	// Bomb Jack (Kor)
 	&BurnDrvBombjack,			// Bomb Jack (set 1)
@@ -22104,10 +22120,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_cvaniaec,		// Castlevania - Bloodlines (Hack, Enhanced Colors)
 	&BurnDrvmd_cvanias,			// Castlevania - Bloodlines (Hack, Spanish)
 	&BurnDrvmd_cvaniau,			// Castlevania - Bloodlines (USA)
-	&BurnDrvnes_castlevaniacom,	// Castlevania - Chorus of Mysteries (v1.1, Hack)
+	&BurnDrvnes_castlevaniacom,	// Castlevania - Chorus of Mysteries (Hack, v1.1)
 	&BurnSpeccastlevania,		// Castlevania - Spectral Interlude (English) (128K) (HB)
 	&BurnSpeccastlevanrus,		// Castlevania - Spectral Interlude (Russian) (128K) (HB)
 	&BurnDrvnes_castlevaniahr,	// Castlevania - The Holy Relics (Hack)
+	&BurnDrvnes_castlevanialt,	// Castlevania - The Last Tear (Hack, v2.78.5)
 	&BurnDrvmd_cvania,			// Castlevania - The New Generation (Euro)
 	&BurnDrvmd_cvaniap,			// Castlevania - The New Generation (Euro, Prototype)
 	&BurnDrvnes_castliih,		// Castlevania II - Simon's Quest (Hack, Re-translation+Map)
@@ -25787,6 +25804,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGekiridn,			// Gekirindan (Ver 2.3O 1995/09/21)
 	&BurnDrvpce_gekisboy,		// Gekisha Boy
 	&BurnDrvnes_gekityonbat,	// Gekitotsu Yonku Battle (Japan)
+	&BurnDrvMSX_gelatino2e,		// Gelatino 2 (English) (HB)
+	&BurnDrvMSX_gelatino2f,		// Gelatino 2 (French) (HB)
+	&BurnDrvMSX_gelatino2i,		// Gelatino 2 (Italian) (HB)
+	&BurnDrvMSX_gelatino2s,		// Gelatino 2 (Spanish) (HB)
 	&BurnSpecGemchaser,			// Gem Chaser (48K) (HB)
 	&BurnSpecGemchaser2,		// Gem Chaser 2 (48K) (HB)
 	&BurnDrvmd_gemfire,			// Gemfire (USA)
@@ -26786,6 +26807,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRedfoxwp2a,			// Hong Hu Zhanji II (China, set 2)
 	&BurnDrvsms_hongkildong,	// Hong Kil Dong (Kor)
 	&BurnSpecHkphooey,			// Hong Kong Phooey (48K)
+	&BurnDrvnes_ddballj,		// Honoo no Doukyuuji - Dan's Dodge Ball (Japan)
+	&BurnDrvnes_ddball,			// Honoo no Doukyuuji - Dan's Dodge Ball (T-Eng, v1.0b)
+	&BurnDrvnes_ddball2j,		// Honoo no Doukyuuji - Dan's Dodge Ball 2 (Japan)
+	&BurnDrvnes_ddball2,		// Honoo no Doukyuuji - Dan's Dodge Ball 2 (T-Eng, v1.0a)
 	&BurnDrvgg_ddanpei,			// Honoo no Toukyuuji - Dodge Danpei (Jpn)
 	&BurnDrvmd_ddanpei,			// Honoo no Toukyuuji - Dodge Danpei (Jpn)
 	&BurnDrvpce_ddanpei,		// Honoo no Toukyuuji - Dodge Danpei
@@ -30380,7 +30405,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsNemor1,			// Nemo (90 11 09 etc)
 	&BurnDrvCpsNemoj,			// Nemo (90 11 20 Japan)
 	&BurnDrvCpsNemo,			// Nemo (90 11 30 etc)
-	&BurnDrvnes_nemulesis,		// neMULEsis (HB, v8.28.22)
+	&BurnDrvnes_nemulesis,		// neMULEsis (HB, v2.25.23)
 	&BurnDrvMSX_nenokatas,		// Nenokatas (HB)
 	&BurnDrvneo2500,			// Neo 2500 Demo
 	&BurnDrvNblktiger,			// Neo Black Tiger (Demo)
@@ -30408,6 +30433,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvneotris,			// NeoTRIS (Free Beta 2, Ver. 202009)
 	&BurnDrvnes_hangman,		// NES Hangman (HB)
 	&BurnDrvnes_nesopetougol,	// NES Open Tournament Golf (USA)
+	&BurnDrvnes_neswars,		// NES Wars (T-Eng)
 	&BurnDrvnes_nescape,		// NEScape (HB)
 	&BurnDrvnes_nesertgolf,		// NESert Golfing (HB)
 	&BurnDrvnes_nesertgolfte,	// NESert Golfing - Tournament Edition (HB)
@@ -31316,6 +31342,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpenta,				// Penta
 	&BurnDrvnes_pentablocat,	// Pentablocat (HB)
 	&BurnSpecPentacornen,		// Pentacorn Quest (English) (128K) (HB)
+	&BurnDrvMSX_pentaquest,		// Pentacorn Quest (HB, v1.1)
 	&BurnSpecPentacornes,		// Pentacorn Quest (Spanish) (128K) (HB)
 	&BurnSpecPentagram,			// Pentagram (48K)
 	&BurnDrvMSX_pentagram,		// Pentagram (Euro)
@@ -32767,6 +32794,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRiotcity,			// Riot City (Japan)
 	&BurnDrvRiot,				// Riot
 	&BurnDrvcv_ripcord,			// Rip Cord (HB)
+	&BurnDrvnes_ripislandj,		// Ripple Island (Japan)
+	&BurnDrvnes_ripisland,		// Ripple Island (T-Eng)
 	&BurnDrvnes_ramondus,		// Rise of Amondus, The (HB) (Sly Dog Studios)
 	&BurnDrvnes_riseamo,		// Rise of Amondus, The (HB)
 	&BurnDrvmd_riserobo,		// Rise of the Robots (Euro)
@@ -35745,6 +35774,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_stennis,		// Super Tennis (Euro, USA)
 	&BurnDrvsms_stennisc,		// Super Tennis (Euro, USA, Sega Card)
 	&BurnDrvgg_stetris,			// Super Tetris (Kor, SMS Mode?)
+	&BurnDrvnes_stetrisland,	// Super Tetris Land - GB skin (Hack)
 	&BurnDrvmd_stbladj,			// Super Thunder Blade (Jpn, Launch Cart)
 	&BurnDrvmd_stblad,			// Super Thunder Blade (World)
 	&BurnDrvnes_supertiltbro,	// Super Tilt Bro (HB, v2 alpha1)

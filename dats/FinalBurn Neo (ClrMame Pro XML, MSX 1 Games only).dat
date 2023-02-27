@@ -2156,6 +2156,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bombjack" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Bomb Jack (HB, v1.2)</description>
+		<year>2023</year>
+		<manufacturer>Fregarni</manufacturer>
+		<rom name="Bomb Jack v1.2 (2023)(Fregarni).rom" size="131072" crc="6165d482"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bombbattle" romof="msx">
 		<comment>Homebrew</comment>
 		<description>Bomber Battle (HB)</description>
@@ -6481,6 +6493,54 @@
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="gauntlet (1986)(u.s. gold)(gb)(side a)[run'cas-'].cas" size="58101" crc="7e4c19ec"/>
 		<rom name="gauntlet (1986)(u.s. gold)(gb)(side b)[run'cas-'].cas" size="95157" crc="ce0a53a4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gelatino2e" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Gelatino 2 (English) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Gelatino 2 EN (2021)(Physical Dreams).rom" size="49152" crc="10091cd1"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gelatino2f" cloneof="gelatino2e" romof="gelatino2e">
+		<comment>Homebrew</comment>
+		<description>Gelatino 2 (French) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Gelatino 2 FR (2021)(Physical Dreams).rom" size="49152" crc="60fe517b"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gelatino2i" cloneof="gelatino2e" romof="gelatino2e">
+		<comment>Homebrew</comment>
+		<description>Gelatino 2 (Italian) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Gelatino 2 IT (2021)(Physical Dreams).rom" size="49152" crc="5297b0ac"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gelatino2s" cloneof="gelatino2e" romof="gelatino2e">
+		<comment>Homebrew</comment>
+		<description>Gelatino 2 (Spanish) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Gelatino 2 ES (2021)(Physical Dreams).rom" size="49152" crc="97822084"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12389,6 +12449,18 @@
 		<year>198?</year>
 		<manufacturer>Prosoft</manufacturer>
 		<rom name="penguin wars (1985)(ascii)[cr prosoft].rom" size="32768" crc="9827fad6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pentaquest" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Pentacorn Quest (HB, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>Robosoft</manufacturer>
+		<rom name="Pentacorn Quest v1.1 (2023)(Robosoft).rom" size="49152" crc="883c5abe"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

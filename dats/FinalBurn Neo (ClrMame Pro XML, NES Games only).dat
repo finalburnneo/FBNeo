@@ -2669,7 +2669,7 @@
 	</game>
 	<game name="castlevaniacom" cloneof="castlevania" romof="castlevania">
 		<comment>Hack</comment>
-		<description>Castlevania - Chorus of Mysteries (v1.1, Hack)</description>
+		<description>Castlevania - Chorus of Mysteries (Hack, v1.1)</description>
 		<year>2007</year>
 		<manufacturer>Optomon &amp; Dr. Mario</manufacturer>
 		<rom name="Castlevania - Chorus of Mysteries (v1.1, Hack).nes" size="131088" crc="bad05634"/>
@@ -2682,6 +2682,15 @@
 		<year>2017</year>
 		<manufacturer>Optomon</manufacturer>
 		<rom name="Castlevania - The Holy Relics (Hack).nes" size="131088" crc="8603cbbb"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="castlevanialt" cloneof="castlevania" romof="castlevania">
+		<comment>Hack</comment>
+		<description>Castlevania - The Last Tear (Hack, v2.78.5)</description>
+		<year>2023</year>
+		<manufacturer>Sky Flare</manufacturer>
+		<rom name="Castlevania - The Last Tear v2.78.5 (2023)(Sky Flare).nes" size="131088" crc="0839e2d4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7771,6 +7780,40 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddballj" cloneof="ddball" romof="ddball">
+		<description>Honoo no Doukyuuji - Dan's Dodge Ball (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Honoo no Doukyuuji - Dodge Danpei (J)(1992)(Sunsoft).nes" size="393232" crc="aea2a320"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddball">
+		<comment>Hack</comment>
+		<description>Honoo no Doukyuuji - Dan's Dodge Ball (T-Eng, v1.0b)</description>
+		<year>2017</year>
+		<manufacturer>TransGen</manufacturer>
+		<rom name="Honoo no Doukyuuji - Dodge Danpei T-Eng v1.0.b (2017)(TransGen).nes" size="393232" crc="47325872"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddball2j" cloneof="ddball2" romof="ddball2">
+		<description>Honoo no Doukyuuji - Dan's Dodge Ball 2 (Japan)</description>
+		<year>1993</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Honoo no Doukyuuji - Dodge Danpei 2 (J)(1993)(Sunsoft).nes" size="524304" crc="646666f2"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddball2">
+		<comment>Hack</comment>
+		<description>Honoo no Doukyuuji - Dan's Dodge Ball 2 (T-Eng, v1.0a)</description>
+		<year>2017</year>
+		<manufacturer>TransGen</manufacturer>
+		<rom name="Honoo no Doukyuuji - Dodge Danpei 2 T-Eng v1.0a (2017)(TransGen).nes" size="524304" crc="95469699"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="hook">
 		<description>Hook (USA)</description>
 		<year>1992</year>
@@ -11653,10 +11696,10 @@
 	</game>
 	<game name="nemulesis">
 		<comment>Homebrew</comment>
-		<description>neMULEsis (HB, v8.28.22)</description>
-		<year>2021-22</year>
+		<description>neMULEsis (HB, v2.25.23)</description>
+		<year>2021-23</year>
 		<manufacturer>John Vanderhoef</manufacturer>
-		<rom name="neMULEsis v8.28.22 (2022)(John Vanderhoef).nes" size="524304" crc="1aca9507"/>
+		<rom name="neMULEsis v2.25.23 (2023)(John Vanderhoef).nes" size="524304" crc="9982f1b7"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11683,6 +11726,15 @@
 		<year>1991</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="NES Open Tournament Golf (USA).nes" size="262160" crc="9316bf4b"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="neswars" cloneof="famicomwars" romof="famicomwars">
+		<comment>Hack</comment>
+		<description>NES Wars (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="NES Wars T-Eng (2023)(Stardust Crusaders).nes" size="196624" crc="35da4b73"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -13474,6 +13526,23 @@
 		<year>1987</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="Ring King (USA).nes" size="131088" crc="38e1163d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ripislandj" cloneof="ripisland" romof="ripisland">
+		<description>Ripple Island (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Sunsoft</manufacturer>
+		<rom name="Ripple Island (J)(1988)(Sunsoft).nes" size="131088" crc="7148c342"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ripisland">
+		<comment>Hack</comment>
+		<description>Ripple Island (T-Eng)</description>
+		<year>2018</year>
+		<manufacturer>LIPEMCO! Translations</manufacturer>
+		<rom name="Ripple Island T-Eng (2018)(LIPEMCO! Translations).nes" size="262160" crc="51f5e289"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15922,6 +15991,15 @@
 		<year>1986</year>
 		<manufacturer>Tecmo</manufacturer>
 		<rom name="Super Star Force (Japan).nes" size="131088" crc="0ca0b143"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="stetrisland" cloneof="tetris" romof="tetris">
+		<comment>Hack</comment>
+		<description>Super Tetris Land - GB skin (Hack)</description>
+		<year>2022</year>
+		<manufacturer>CAndiman</manufacturer>
+		<rom name="Super Tetris Land - GB edition (2022)(CAndiman).nes" size="163856" crc="4aaca4c2"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

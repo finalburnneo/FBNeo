@@ -138,10 +138,11 @@ int bRunPause;
 bool bAlwaysProcessKeyboardInput;
 
 bool bDoIpsPatch;
-void IpsApplyPatches(UINT8 *, char *) {}
+void IpsApplyPatches(UINT8* base, char* rom_name, bool readonly) {}
 INT32 GetIpsesMaxLen(char* rom_name) {return -1;}
 bool GetIpsDrvProtection() { return false; };
-UINT32 GetIpsDrvDefine() { return 0; }
+void GetIpsDrvDefine() {}
+UINT32 nIpsDrvDefine		= 0, nIpsMemExpLen[SND2_ROM + 1] = { 0 };
 UINT32 nStartFrame = 0;
 INT32 FreezeInput(UINT8** buf, INT32* size) { return 0; }
 INT32 UnfreezeInput(const UINT8* buf, INT32 size) { return 0; }

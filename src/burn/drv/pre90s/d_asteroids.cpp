@@ -794,6 +794,7 @@ static INT32 res_check()
 
 		if (Height != 1080) {
 			vector_rescale((1080*640/480), 1080);
+			DrvRecalc = 1;
 			return 1;
 		}
 	} else {
@@ -802,6 +803,7 @@ static INT32 res_check()
 
 		if (Height != 480) {
 			vector_rescale(640, 480);
+			DrvRecalc = 1;
 			return 1;
 		}
 	}
@@ -1030,9 +1032,12 @@ static void DrvPaletteInit()
 			INT32 b = r;
 
 			if (astdelux) {
-				r = (0x27 * j) / 0xff;
-				g = (0xa0 * j) / 0xff;
-				b = (0xa0 * j) / 0xff;
+				INT32 hires = (DrvDips[3] & 1);
+				INT32 plus = (hires) ? 0x00 : 0x40; // lores mode needs to be brighter
+
+				r = ((0x27+plus) * j) / 0xff;
+				g = ((0xa0+plus) * j) / 0xff;
+				b = ((0xa0+plus) * j) / 0xff;
 			}
 
 			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)

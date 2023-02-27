@@ -17,19 +17,14 @@ TCHAR *GetIsoPath()
 }
 
 
-void IpsApplyPatches(UINT8 *, char *)
+void IpsApplyPatches(UINT8 *, char *, bool)
 {
 
 }
 
-UINT32 GetIpsDrvDefine()
+void GetIpsDrvDefine()
 {
-	return 0;
-}
 
-INT32 GetIpsesMaxLen(char *)
-{
-	return 0;
 }
 
 void InpDIPSWResetDIPs()

@@ -9,7 +9,7 @@
 //   Ninja Commando: glitching "logo" during demo play.
 
 /*
- * FB Alpha Neo Geo module
+ * FB Neo Neo Geo module
  *
  * The video frequencies of MVS hardware are:
  * hsync: 15625    Hz
@@ -262,8 +262,6 @@ static UINT8 *Neo68KRAM, *NeoZ80RAM, *NeoNVRAM, *NeoNVRAM2, *NeoMemoryCard;
 
 static UINT32 nSpriteSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT32 nCodeSize[MAX_SLOT] = { 0, 0, 0, 0, 0, 0, 0, 0 }, nAllCodeSize = 0;
-
-static UINT32 nIpsDefine = 0, nProgSize = 0, nExtraProgSize = 0;
 
 UINT8* NeoGraphicsRAM;
 
@@ -537,12 +535,6 @@ static INT32 LoadRoms()
 
 	UINT32 nSpriteRomSize = 0;
 
-	if (bDoIpsPatch) {
-		nIpsDefine = GetIpsDrvDefine();
-		nProgSize = IPS_PROG_VALUE(nIpsDefine);
-		nExtraProgSize = IPS_NEOP3_VALUE(nIpsDefine);
-	}
-
 	{
 		struct BurnRomInfo ri;
 
@@ -590,7 +582,7 @@ static INT32 LoadRoms()
 
 		// Extend the length of[nCodeSize] to fit the ips of the hack games.
 		if (bDoIpsPatch)
-			nCodeSize[nNeoActiveSlot] = (nProgSize >= nCodeSize[nNeoActiveSlot]) ? nProgSize + nExtraProgSize : nCodeSize[nNeoActiveSlot] += (0x200000 << 1);
+			nCodeSize[nNeoActiveSlot] += (nIpsMemExpLen[PRG1_ROM] + nIpsMemExpLen[EXTR_ROM]);
 
 		nAllCodeSize = nCodeSize[nNeoActiveSlot];
 		nSpriteSize[nNeoActiveSlot] = 0;
@@ -633,7 +625,8 @@ static INT32 LoadRoms()
 		nSpriteRomSize = nSpriteSize[nNeoActiveSlot];
 
 		// The [nSpriteSize] here corresponds to the setting of [nBuf1Len] in [neogeo.cpp].
-		if (bDoIpsPatch) nSpriteSize[nNeoActiveSlot] += (0x800000 << 2);
+		if (bDoIpsPatch)
+			nSpriteSize[nNeoActiveSlot] += nIpsMemExpLen[GRA1_ROM];
 
 		{
 			UINT32 nSize = nSpriteSize[nNeoActiveSlot];
@@ -663,13 +656,16 @@ static INT32 LoadRoms()
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + i);
 				if (ri.nLen > nMaxSize) nMaxSize = ri.nLen;
 			}
-			nYM2610ADPCMASize[nNeoActiveSlot] += bDoIpsPatch ? (nMaxSize << 1) * pInfo->nADPCMANum : nMaxSize * pInfo->nADPCMANum;
+			nYM2610ADPCMASize[nNeoActiveSlot] += nMaxSize * pInfo->nADPCMANum;
+			if (bDoIpsPatch)
+				nYM2610ADPCMASize[nNeoActiveSlot] += nIpsMemExpLen[SND1_ROM];
 
 			for (INT32 i = 0; i < pInfo->nADPCMBNum; i++) {
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum + i);
 				nYM2610ADPCMBSize[nNeoActiveSlot] += ri.nLen;
 			}
-			if (bDoIpsPatch) nYM2610ADPCMBSize[nNeoActiveSlot] *= 2;
+			if (bDoIpsPatch)
+				nYM2610ADPCMBSize[nNeoActiveSlot] += nIpsMemExpLen[SND2_ROM];
 
 			bprintf(0, _T("ADPCM-A Size:\t%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 			bprintf(0, _T("ADPCM-B Size:\t%x\n"), nYM2610ADPCMBSize[nNeoActiveSlot]);
@@ -691,13 +687,15 @@ static INT32 LoadRoms()
 		return 1;
 	}
 
-/*	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
+/*
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
 		BurnSetProgressRange(1.0 / ((double)nSpriteSize[nNeoActiveSlot] / 0x800000 / 12));
 	} else if (BurnDrvGetHardwareCode() & (HARDWARE_SNK_CMC42 | HARDWARE_SNK_CMC50)) {
 		BurnSetProgressRange(1.0 / ((double)nSpriteSize[nNeoActiveSlot] / 0x800000 /  9));
 	} else {
 		BurnSetProgressRange(1.0 / ((double)nSpriteSize[nNeoActiveSlot] / 0x800000 /  3));
-	}*/
+	}
+*/
 
 	if (BurnDrvGetHardwareCode() & (HARDWARE_SNK_CMC42 | HARDWARE_SNK_CMC50)) {
 		double fRange = (double)pInfo->nSpriteNum / 4.0;
@@ -727,10 +725,10 @@ static INT32 LoadRoms()
 			// With IPS, The true length of [nSpriteSize] will be obtained.
 			UINT32 nRealSpriteSize = nSpriteRomSize;
 
-			if (bDoIpsPatch) {
-				// If the expansion bytes of 0x800000 << 2 are all empty data,
+			if (bDoIpsPatch && (0 == (nIpsMemExpLen[GRA1_ROM] % (0x800000 << 1)))) {
+				// If the expansion bytes of nIpsMemExpLen[GRA1_ROM] are all empty data,
 				// then [SpriteSize] will subtract the expansion part to ensure that [NeoTextROM] is obtained correctly.
-				for (INT32 i = 0; i < (0x800000 << 2); i += (0x800000 << 1)) {
+				for (INT32 i = 0; i < nIpsMemExpLen[GRA1_ROM]; i += (0x800000 << 1)) {
 
 					// Move the pointer to the starting position of the capacity expansion.
 					UINT8* pFind = NeoSpriteROM[nNeoActiveSlot] + nSpriteRomSize + i;
@@ -4040,8 +4038,8 @@ static INT32 NeoInitCommon()
 	}
 
 	// Mapping extra rom.
-	if (bDoIpsPatch && ((nProgSize + nExtraProgSize) == nAllCodeSize))
-		SekMapMemory(Neo68KROMActive + nProgSize, 0x900000, 0x900000 + nExtraProgSize - 1, MAP_ROM);
+	if (bDoIpsPatch && (nIpsMemExpLen[EXTR_ROM] > 0))
+		SekMapMemory(Neo68KROMActive + (nAllCodeSize - nIpsMemExpLen[EXTR_ROM]), 0x900000, 0x900000 + (nIpsMemExpLen[EXTR_ROM] - 1), MAP_ROM);
 
 	ZetClose();
 	SekClose();

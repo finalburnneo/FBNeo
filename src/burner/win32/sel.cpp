@@ -927,6 +927,7 @@ static void SelOkay()
 	}
 #endif
 	nDialogSelect = nSelect;
+	GetIpsDrvDefine();	// Entry point : SelOkay
 
 	bDialogCancel = false;
 	MyEndDialog();
@@ -1758,8 +1759,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), FALSE);
-		bDoIpsPatch = false;
-		IpsPatchExit();
+		IpsPatchExit();	// bDoIpsPatch = false;
 
 		WndInMid(hDlg, hParent);
 

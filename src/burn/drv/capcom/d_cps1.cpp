@@ -16559,12 +16559,9 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 
 		} while (ri.nLen);
 
-		if (bDoIpsPatch) {
-			// Some ips come from hack games in which CpsRom is expanded.
-			UINT32 nIpsDefine = GetIpsDrvDefine(), nProgSize = IPS_PROG_VALUE(nIpsDefine);
-
-			nCpsRomLen = (nProgSize >= nCpsRomLen) ? nProgSize : nCpsRomLen + 0x200000;
-		}
+		// Some ips come from hack games in which CpsRom is expanded.
+		if (bDoIpsPatch)
+			nCpsRomLen += nIpsMemExpLen[PRG1_ROM];
 
 		if (Cps1Qs) nCpsZRomLen *= 2;
 		if (GameHasStars) nCpsGfxLen += 0x2000;

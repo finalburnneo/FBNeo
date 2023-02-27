@@ -1022,12 +1022,20 @@ static INT32 DrvExit()
 static void DrvPaletteInit()
 {
     for (INT32 i = 0; i < 0x20; i++) // color
-	{		
+	{
 		for (INT32 j = 0; j < 256; j++) // intensity
 		{
-			INT32 c = (0xff * j) / 0xff;
+			INT32 r = (0xff * j) / 0xff;
+			INT32 g = r;
+			INT32 b = r;
 
-			DrvPalette[i * 256 + j] = (c << 16) | (c << 8) | c; // must be 32bit palette! -dink (see vector.cpp)
+			if (astdelux) {
+				r = (0x27 * j) / 0xff;
+				g = (0xa0 * j) / 0xff;
+				b = (0xa0 * j) / 0xff;
+			}
+
+			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)
 		}
 	}
 }

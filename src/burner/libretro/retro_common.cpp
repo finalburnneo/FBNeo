@@ -108,7 +108,7 @@ static const struct retro_core_option_v2_definition var_fbneo_force_60hz = {
 	"fbneo-force-60hz",
 	"Force 60Hz",
 	NULL,
-	"Force 60Hz instead of original refresh rate",
+	"Force 60Hz instead of original refresh rate, it means the game won't run at the proper speed",
 	NULL,
 	NULL,
 	{

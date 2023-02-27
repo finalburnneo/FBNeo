@@ -856,9 +856,9 @@ static void DrvPaletteInit()
 			INT32 b = r;
 
 			if (redbaron) {
-				r = (0x67 * j) / 0xff;
-				g = (0xe0 * j) / 0xff;
-				b = (0xe0 * j) / 0xff;
+				r = (0x27 * j) / 0xff;
+				g = (0xa0 * j) / 0xff;
+				b = (0xa0 * j) / 0xff;
 			}
 
 			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)

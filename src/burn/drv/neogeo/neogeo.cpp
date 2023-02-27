@@ -94,7 +94,7 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 		// The length of the temporary memory corresponding to the CMC decryption.
 		// If the temporary memory length here is not set enough, a memory out-of-bounds error will occur during the [BurnExtLoadRom] process of [load.cpp].
 		// The temporary memory length here corresponds to the setting of [neo_run.cpp] in the ips environment.
-		UINT32 nBuf1Len = bDoIpsPatch ? (nRomSize << 1) + (0x800000 << 2) : nRomSize << 1;
+		UINT32 nBuf1Len = bDoIpsPatch ? (nRomSize << 1) + nIpsMemExpLen[GRA1_ROM] : nRomSize << 1;
 
 		pBuf1 = (UINT8*)BurnMalloc(nBuf1Len);
 		if (pBuf1 == NULL) {

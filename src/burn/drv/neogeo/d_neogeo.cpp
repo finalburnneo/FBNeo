@@ -1520,7 +1520,7 @@ static INT32 NeoSMAInit(void (*pInitCallback)(), pSekWriteWordHandler pBankswitc
 	NeoCallbackActive->pInitialise = pInitCallback;
 
 	// Control SMA protection in ips environment.
-	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
+	if (!bDoIpsPatch || !(nIpsDrvDefine & IPS_NOT_PROTECT)) {
 		NeoCallbackActive->pInstallHandlers = NeoSMAInstallHanders;
 		NeoCallbackActive->pBankswitch = NeoSMABankswitch;
 		NeoCallbackActive->pScan = NeoSMAScan;
@@ -1706,7 +1706,7 @@ static void NeoPVCInstallHandlers()
 static INT32 NeoPVCInit()
 {
 	// Control PVC protection in ips environment.
-	if (!bDoIpsPatch || !(GetIpsDrvDefine() & IPS_NOT_PROTECT)) {
+	if (!bDoIpsPatch || !(nIpsDrvDefine & IPS_NOT_PROTECT)) {
 		PVCRAM = (UINT8*)BurnMalloc(0x2000);
 		if (!PVCRAM) return 1;
 
@@ -6011,14 +6011,9 @@ static void kof98Decrypt()
 
 	UINT32 nSp2Size = 0x400000;
 
-	if (bDoIpsPatch) {
-		UINT32 nRet = GetIpsDrvDefine(), nProgSize = IPS_PROG_VALUE(nRet);
-
-		// kof98 P2 = ProgSize - P1Size.
-		// Same as [neo_run.cpp].
-		// Extra Rom not moved in ips.
-		nSp2Size = (nProgSize >= 0x600000) ? nProgSize - 0x200000 : nSp2Size + (0x200000 << 1);
-	}
+	// Extra Rom not moved in ips.
+	if (bDoIpsPatch)
+		nSp2Size += nIpsMemExpLen[PRG1_ROM];
 
 	memmove(&Neo68KROMActive[0x100000], &Neo68KROMActive[0x200000], nSp2Size);
 
@@ -7880,6 +7875,24 @@ static void cthd2003_decode()
 	DoPerm(0);
 }
 
+static void cthd2003_fixaes()
+{
+	UINT16* Rom = (UINT16*)Neo68KROMActive;
+
+	// Game sets itself to MVS & English mode, patch this out
+	Rom[0x0ed00e / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	Rom[0x0ed394 / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+
+	// Fix for AES mode (stop loop that triggers Watchdog)
+	Rom[0x0a2b7e / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+}
+
+static void ct2k3saCallback()
+{
+	cthd2003_decode();
+	cthd2003_fixaes();
+}
+
 static void cthd2003Callback()
 {
 	INT32 i, n;
@@ -7890,12 +7903,12 @@ static void cthd2003Callback()
 		NeoTextROM[nNeoActiveSlot][0x10000 + i] = n;
 	}
 
-	cthd2003_decode();
+	ct2k3saCallback();
 }
 
 static void cthd2003InstallBankSwitchHandler()
 {
-	SekMapHandler(6,	0x200000, 0x2fffff, MAP_WRITE);
+	SekMapHandler(6, 0x200000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, cthd2003WriteWordBankswitch);
 	SekSetWriteByteHandler(6, cthd2003WriteByteBankswitch);
 
@@ -7968,12 +7981,12 @@ static void ct2k3spCallback()
 		BurnFree (dst);
 	}
 
-	cthd2003_decode();
+	ct2k3saCallback();
 }
 
 static void ct2kspInstallBankSwitchHandler()
 {
-	SekMapHandler(6,	0x200000, 0x2fffff, MAP_WRITE);
+	SekMapHandler(6, 0x200000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, cthd2003WriteWordBankswitch);
 	SekSetWriteByteHandler(6, cthd2003WriteByteBankswitch);
 
@@ -8033,7 +8046,7 @@ STD_ROM_FN(ct2k3sa)
 static INT32 ct2k3saInit()
 {
 	nBurnCPUSpeedAdjust = 0x010d;
-	NeoCallbackActive->pInitialise = cthd2003_decode;
+	NeoCallbackActive->pInitialise = ct2k3saCallback;
  	return NeoInit();
 }
 
@@ -16669,7 +16682,7 @@ struct BurnDriver BurnDrvSamsho2new = {
 // Samurai Shodown II Perfect Hack
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",   0x200000, 0x63055581, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p1pe.p1",   0x200000, 0xc675bfa5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "063-p2pe.p2",   0x020000, 0xe9cc1d72, 0 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "063-s1.s1",     0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -22609,12 +22622,12 @@ struct BurnDriver BurnDrvmslug3eb = {
 // Metal Slug 3 (Last Bullet Remix, Hack)
 // Enter the portal with the following commands : Start + Button D
 // Modified by 磁暴线圈
-// 20230215
+// 20230222
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	/* Encrypted */
-	{ "ms3lw.neo-sma",	0x040000, 0xea1b3c12, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1lw.p1",	0x400000, 0x188a281d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2lw.p2",	0x400000, 0x26a9b5a7, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3lw.neo-sma",	0x040000, 0xb9519127, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1lw.p1",	0x400000, 0x8f38e111, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2lw.p2",	0x400000, 0x20400f7c, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22936,12 +22949,12 @@ struct BurnDriver BurnDrvmslug3ki = {
 
 // Metal Slug 3 (Legend, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20221210
+// GOTVG 20230222
 static struct BurnRomInfo mslug3cqRomDesc[] = {
 	/* Encrypted */
-	{ "ms3cq.neo-sma",	0x040000, 0x7ea358de, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1cq.p1",	0x400000, 0x71202603, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2cq.p2",	0x400000, 0x3b06ba05, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3cq.neo-sma",	0x040000, 0x73531f6a, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1cq.p1",	0x400000, 0x00a7f350, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2cq.p2",	0x400000, 0x663ae8ae, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -22966,7 +22979,7 @@ STDROMPICKEXT(mslug3cq, mslug3cq, neogeo)
 STD_ROM_FN(mslug3cq)
 
 struct BurnDriver BurnDrvmslug3cq = {
-	"mslug3cq", "mslug3", "neogeo", NULL, "2022",
+	"mslug3cq", "mslug3", "neogeo", NULL, "2023",
 	"Metal Slug 3 (Legend, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,

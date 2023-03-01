@@ -146,6 +146,7 @@ void NeoSetSpriteSlot(INT32 nSlot);
 INT32 NeoInitSprites(INT32 nSlot);
 void NeoExitSprites(INT32 nSlot);
 INT32 NeoRenderSprites();
+void NeoSpriteCalcLimit();
 
 // neo_decrypt.cpp
 extern UINT8 nNeoProtectionXor;

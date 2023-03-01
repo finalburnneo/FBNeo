@@ -20889,10 +20889,10 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Survival, Hack) 2023-02-22
+// Metal Slug 3 (Survival, Hack) 2023-03-01
 static struct BurnRomInfo mslug3scRomDesc[] = {
-	{ "256-ph1sc.bin",   0x100000, 0x618f5416, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2sc.bin",   0x400000, 0x1e8042c3, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1sc.bin",   0x100000, 0xd820ecee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2sc.bin",   0x400000, 0x9edcbaf4, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 

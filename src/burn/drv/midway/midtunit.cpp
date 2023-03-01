@@ -1240,11 +1240,11 @@ INT32 TUnitFrame()
 	if (nSoundType == SOUND_ADPCM) M6809NewFrame();
 
 	INT32 nInterleave = 288;
-	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/54.71), (INT32)(2000000 / 54.71) };
+	INT32 nCyclesTotal[2] = { (INT32)(50000000/8/(nBurnFPS/100)), (INT32)(2000000 / (nBurnFPS/100)) };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	if (nSoundType == SOUND_DCS) {
-		nCyclesTotal[1] = (INT32)(10000000 / 54.71);
+		nCyclesTotal[1] = (INT32)(10000000 / (nBurnFPS/100));
 		Dcs2kNewFrame();
 	}
 

@@ -140,12 +140,14 @@ extern UINT32 nNeoTileMask[MAX_SLOT];
 extern INT32 nNeoMaxTile[MAX_SLOT];
 
 extern INT32 nSliceStart, nSliceEnd, nSliceSize;
+extern INT32 nNeoEnforceSpriteLimit;
 
 void NeoUpdateSprites(INT32 nOffset, INT32 nSize);
 void NeoSetSpriteSlot(INT32 nSlot);
 INT32 NeoInitSprites(INT32 nSlot);
 void NeoExitSprites(INT32 nSlot);
 INT32 NeoRenderSprites();
+void NeoSpriteCalcLimit();
 
 // neo_decrypt.cpp
 extern UINT8 nNeoProtectionXor;

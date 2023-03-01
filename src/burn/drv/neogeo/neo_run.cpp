@@ -4889,6 +4889,7 @@ INT32 NeoFrame()
 	if (pBurnDraw) {
 		NeoUpdatePalette();											// Update the palette
 		NeoClearScreen();
+		NeoSpriteCalcLimit();
 	}
 	nSliceEnd = 0x10;
 
@@ -5105,7 +5106,6 @@ INT32 NeoFrame()
 #endif
 //	bprintf(PRINT_NORMAL, _T("    Z80 PC 0x%04X\n"), Doze.pc);
 //	bprintf(PRINT_NORMAL, _T("  - %i\n"), SekTotalCycles());
-
 	ZetClose();
 	SekClose();
 

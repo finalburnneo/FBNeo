@@ -20362,6 +20362,37 @@ struct BurnDriver BurnDrvkof98evo = {
 };
 
 // GOTVG Mslug hacks part 2
+// Metal Slug (1v2 Mode, Hack)
+static struct BurnRomInfo mslug1v2RomDesc[] = {
+	{ "201-p11v2.p1",   0x200000, 0xc6a2f0e9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "201-s1.s1",      0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "201-c1.c1",      0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data
+	{ "201-c2.c2",      0x400000, 0x96f62574, 3 | BRF_GRA },           //  3
+	{ "201-c3.c3",      0x400000, 0x5121456a, 3 | BRF_GRA },           //  4
+	{ "201-c4.c4",      0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5
+
+	{ "201-m1.m1",      0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "201-v1.v1",      0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data
+	{ "201-v2.v2",      0x400000, 0x472cf9db, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(mslug1v2, mslug1v2, neogeo)
+STD_ROM_FN(mslug1v2)
+
+struct BurnDriver BurnDrvmslug1v2 = {
+	"mslug1v2", "mslug", "neogeo", NULL, "2023",
+	"Metal Slug (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug1v2RomInfo, mslug1v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Metal Slug 2 (Weapon Storage, Hack)
 static struct BurnRomInfo mslug2pRomDesc[] = {
 	{ "241-p1p.p1",   0x100000, 0xfe803784, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -20889,10 +20920,10 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Survival, Hack) 2023-03-01
+// Metal Slug 3 (Survival, Hack) 2023-03-02
 static struct BurnRomInfo mslug3scRomDesc[] = {
-	{ "256-ph1sc.bin",   0x100000, 0xd820ecee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2sc.bin",   0x400000, 0x9edcbaf4, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1sc.bin",   0x100000, 0xb255fd1b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2sc.bin",   0x400000, 0x060a9907, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 

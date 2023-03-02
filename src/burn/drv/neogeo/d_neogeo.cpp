@@ -15690,7 +15690,7 @@ struct BurnDriver BurnDrvMatrimbh = {
 // Modified by 合金弹头爱克斯
 // GOTVG 20180430
 static struct BurnRomInfo mslugdgRomDesc[] = {
-	{ "201-p1.bin",		0x200000, 0x0a739521, 1 | BRF_ESS | BRF_PRG }, //  0 68K code         / TC5316200
+	{ "201-p1dg.p1",	0x200000, 0x0a739521, 1 | BRF_ESS | BRF_PRG }, //  0 68K code         / TC5316200
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
@@ -15714,6 +15714,37 @@ struct BurnDriver BurnDrvmslugdg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugdgRomInfo, mslugdgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Metal Slug - Super Vehicle-001 (1v2 Mode, Hack)
+// 20230302
+static struct BurnRomInfo mslug1v2RomDesc[] = {
+	{ "201-p11v2.p1",	0x200000, 0xc6a2f0e9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code         / TC5316200
+
+	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "201-c1.c1",		0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data      / TC5332205
+	{ "201-c2.c2",		0x400000, 0x96f62574, 3 | BRF_GRA },           //  3                  / TC5332205
+	{ "201-c3.c3",		0x400000, 0x5121456a, 3 | BRF_GRA },           //  4                  / TC5332205
+	{ "201-c4.c4",		0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5                  / TC5332205
+
+	{ "201-m1.m1",		0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code         / TC531001
+
+	{ "201-v1.v1",		0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data       / TC5332204
+	{ "201-v2.v2",		0x400000, 0x472cf9db, 5 | BRF_SND },           //  8                  / TC5332204
+};
+
+STDROMPICKEXT(mslug1v2, mslug1v2, neogeo)
+STD_ROM_FN(mslug1v2)
+
+struct BurnDriver BurnDrvmslug1v2 = {
+	"mslug1v2", "mslug", "neogeo", NULL, "2023",
+	"Metal Slug - Super Vehicle-001 (1v2 Mode, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug1v2RomInfo, mslug1v2RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -15969,10 +16000,10 @@ struct BurnDriver BurnDrvmslug4dg = {
 
 // Metal Slug 4 (Last Bullet Remix, Hack)
 // Modified by 磁暴线圈
-// GOTVG 20180519
+// Alice愛麗絲 fixes bugs 20230225
 static struct BurnRomInfo mslug4lwRomDesc[] = {
 	{ "263-p1lw.bin",	0x100000, 0xad713169, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2amr.sp2",	0x500000, 0x2817d3bc, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p2lw.sp2",	0x500000, 0x7deba8eb, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -15995,7 +16026,7 @@ STDROMPICKEXT(mslug4lw, mslug4lw, neogeo)
 STD_ROM_FN(mslug4lw)
 
 struct BurnDriver BurnDrvmslug4lw = {
-	"mslug4lw", "mslug4", "neogeo", NULL, "2018",
+	"mslug4lw", "mslug4", "neogeo", NULL, "2023",
 	"Metal Slug 4 (Last Bullet Remix, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
@@ -22949,12 +22980,12 @@ struct BurnDriver BurnDrvmslug3ki = {
 
 // Metal Slug 3 (Legend, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20230222
+// 20230302
 static struct BurnRomInfo mslug3cqRomDesc[] = {
 	/* Encrypted */
-	{ "ms3cq.neo-sma",	0x040000, 0x73531f6a, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1cq.p1",	0x400000, 0x00a7f350, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2cq.p2",	0x400000, 0x663ae8ae, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3cq.neo-sma",	0x040000, 0xd9472211, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1cq.p1",	0x400000, 0x501b711e, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2cq.p2",	0x400000, 0xee84dece, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23027,10 +23058,10 @@ struct BurnDriver BurnDrvmslug4c = {
 
 // Metal Slug 4 (Random Ammunition, Hack)
 // Modified by 磁暴线圈
-// GOTVG 20160724
+// Alice愛麗絲 fixes bugs 20230225
 static struct BurnRomInfo mslug4ammorRomDesc[] = {
 	{ "263-p1amr.p1",	0x100000, 0x21b68d31, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2amr.sp2",	0x500000, 0x2817d3bc, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p2lw.sp2",	0x500000, 0x7deba8eb, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23053,7 +23084,7 @@ STDROMPICKEXT(mslug4ammor, mslug4ammor, neogeo)
 STD_ROM_FN(mslug4ammor)
 
 struct BurnDriver BurnDrvmslug4ammor = {
-	"mslug4ammor", "mslug4", "neogeo", NULL, "2016",
+	"mslug4ammor", "mslug4", "neogeo", NULL, "2023",
 	"Metal Slug 4 (Random Ammunition, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
@@ -23064,10 +23095,10 @@ struct BurnDriver BurnDrvmslug4ammor = {
 
 // Metal Slug 4 (Last bullet without body armor, Hack)
 // Modified by 磁暴线圈
-// GOTVG 20200916
+// Alice愛麗絲 fixes bugs 20230225
 static struct BurnRomInfo mslug4lwqRomDesc[] = {
 	{ "263-p1lwq.p1",	0x100000, 0x9ebe335e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "263-p2amr.sp2",	0x500000, 0x2817d3bc, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "263-p2lw.sp2",	0x500000, 0x7deba8eb, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23090,7 +23121,7 @@ STDROMPICKEXT(mslug4lwq, mslug4lwq, neogeo)
 STD_ROM_FN(mslug4lwq)
 
 struct BurnDriver BurnDrvmslug4lwq = {
-	"mslug4lwq", "mslug4", "neogeo", NULL, "2020",
+	"mslug4lwq", "mslug4", "neogeo", NULL, "2023",
 	"Metal Slug 4 (Last bullet without body armor, Hack)\0", NULL, "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,

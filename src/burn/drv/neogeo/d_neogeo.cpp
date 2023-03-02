@@ -20927,10 +20927,10 @@ struct BurnDriver BurnDrvmslug3sc = {
 };
 
 
-// Metal Slug 4 (Random Ammunition, Hack)
+// Metal Slug 4 (Random Ammunition, Hack) - p2 fix 2023-02-25
 static struct BurnRomInfo mslug4ammorRomDesc[] = {
 	{ "263-p1amr.bin",   0x100000, 0x21b68d31, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
-	{ "263-p2lw.bin",    0x800000, 0x427eed0b, 1 | BRF_ESS | BRF_PRG },  //  1
+	{ "263-p2lw.bin",    0x800000, 0x5aa184e7, 1 | BRF_ESS | BRF_PRG },  //  1
 	
 	{ "263-s1d.bin",     0x020000, 0xa9446774, 2 | BRF_GRA },            //  2 Text layer tiles
 
@@ -20953,7 +20953,7 @@ STDROMPICKEXT(mslug4ammor, mslug4ammor, neogeo)
 STD_ROM_FN(mslug4ammor)
 
 struct BurnDriver BurnDrvmslug4ammor = {
-	"mslug4ammor", "mslug4", "neogeo", NULL, "2018",
+	"mslug4ammor", "mslug4", "neogeo", NULL, "2023",
 	"Metal Slug 4 (Random Ammunition, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
@@ -20962,10 +20962,10 @@ struct BurnDriver BurnDrvmslug4ammor = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 4 (Last bullet without body armor, Hack)
+// Metal Slug 4 (Last bullet without body armor, Hack) - p2 fix 2023-02-25
 static struct BurnRomInfo mslug4lwqRomDesc[] = {
 	{ "263-p1lwq.bin",   0x100000, 0x9ebe335e, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
-	{ "263-p2lw.bin",    0x800000, 0x427eed0b, 1 | BRF_ESS | BRF_PRG },  //  1
+	{ "263-p2lw.bin",    0x800000, 0x5aa184e7, 1 | BRF_ESS | BRF_PRG },  //  1
 	
 	{ "263-s1d.bin",     0x020000, 0xa9446774, 2 | BRF_GRA },            //  2 Text layer tiles
 
@@ -20988,7 +20988,7 @@ STDROMPICKEXT(mslug4lwq, mslug4lwq, neogeo)
 STD_ROM_FN(mslug4lwq)
 
 struct BurnDriver BurnDrvmslug4lwq = {
-	"mslug4lwq", "mslug4", "neogeo", NULL, "2020",
+	"mslug4lwq", "mslug4", "neogeo", NULL, "2023",
 	"Metal Slug 4 (Last bullet without body armor, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

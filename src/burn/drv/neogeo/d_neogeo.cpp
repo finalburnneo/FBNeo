@@ -23376,11 +23376,11 @@ struct BurnDriver BurnDrvmslug5mg = {
 
 // Metal Slug 5 (Stone Turtle, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20221115
+// GOTVG 20230303
 static struct BurnRomInfo mslug5sgRomDesc[] = {
 	/* Encrypted */
-	{ "268-p1csg.p1",	0x400000, 0x1f5cad74, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2csg.p2",	0x400000, 0xf56088ce, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p1csg.p1",	0x400000, 0xab60c026, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2csg.p2",	0x400000, 0xbfe41d68, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23405,7 +23405,7 @@ STDROMPICKEXT(mslug5sg, mslug5sg, neogeo)
 STD_ROM_FN(mslug5sg)
 
 struct BurnDriver BurnDrvmslug5sg = {
-	"mslug5sg", "mslug5", "neogeo", NULL, "2022",
+	"mslug5sg", "mslug5", "neogeo", NULL, "2023",
 	"Metal Slug 5 (Stone Turtle, Hack)\0", "Enter [Soft Dip] to turn on level display", "hack", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,

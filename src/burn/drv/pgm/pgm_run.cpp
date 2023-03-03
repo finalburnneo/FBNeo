@@ -308,7 +308,7 @@ static void __fastcall PgmVideoControllerWriteWord(UINT32 sekAddress, UINT16 wor
 {
 	switch (sekAddress & 0x0f000)
 	{
-		case 0x0000: /*bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue);*/ break; // Sprite buffer is not writeable by the 68K, but the BIOS tries anyway
+		case 0x0000: PGMSprBuf[(sekAddress >> 1) & 0x7ff] = wordValue; bprintf(0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // Sprite buffer is not writeable by the 68K, but the BIOS tries anyway
 		case 0x1000: PGMZoomRAM[(sekAddress >> 1) & 0x1f] = wordValue; break; // size is guessed
 		case 0x2000: pgm_bg_scrolly = wordValue; break;
 		case 0x3000: pgm_bg_scrollx = wordValue; break;

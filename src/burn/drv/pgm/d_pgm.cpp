@@ -97,7 +97,7 @@ static struct BurnDIPInfo pgmDIPList[] = {
 	{0x2F,	0x01, 0x0f,	0x03, "Newer (no intro)"				},
 
 	// Fake Dip
-	{0,		0xFE, 0,	2,    "Code select (Reload game)"		},
+	{0,		0xFE, 0,	2,    "Code select (Need to reload)"	},
 	{0x30,	0x01, 0x01, 0x00, "Newer"							},
 	{0x30,	0x01, 0x01, 0x01, "Older"							},
 };
@@ -113,9 +113,9 @@ static struct BurnDIPInfo jammaDIPList[] = {
 	{0x2D,	0x01, 0x01,	0x01, "On"								},
 
 	// Fake Dip
-	{0,		0xFE, 0,	2,    "Code select (Reload game)"		},
-	{0x2E,	0x01, 0x01, 0x00, "Newer"							},
-	{0x2E,	0x01, 0x01, 0x01, "Older"							},
+	{0,		0xFE, 0,	2,    "Code select (Need to reload)"	},
+	{0x30,	0x01, 0x01, 0x00, "Newer"							},
+	{0x30,	0x01, 0x01, 0x01, "Older"							},
 };
 
 STDDIPINFO(jamma)

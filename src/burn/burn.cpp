@@ -774,7 +774,7 @@ INT32 BurnDrvCartridgeSetup(BurnCartrigeCommand nCommand)
 	BurnExtCartridgeSetupCallback(CART_INIT_END);
 
 #if defined FBNEO_DEBUG
-		bprintf(PRINT_NORMAL, _T("  * Loading"));
+		bprintf(PRINT_NORMAL, _T("  * Loading Cartridge\n"));
 #endif
 
 	if (BurnExtCartridgeSetupCallback(CART_INIT_START)) {
@@ -1151,6 +1151,8 @@ void StateRewindInit()
 
 void StateRewindExit()
 {
+	bRewindStatus = REWINDSTATUS_DISABLED;
+
 	if (RewindBuffer != NULL) {
 		free (RewindBuffer);
 	}
@@ -1159,6 +1161,12 @@ void StateRewindExit()
 	}
 
 	thready.exit();
+}
+
+void StateRewindReInit() // enable / disable via ui
+{
+	StateRewindExit();
+	StateRewindInit();
 }
 
 static INT32 __cdecl RewindLenAcb(struct BurnArea* pba)

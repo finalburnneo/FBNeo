@@ -37,6 +37,7 @@ UINT32 *PGMTxtRAM;
 UINT32 *RamCurPal;
 UINT16 *PGMRowRAM;
 UINT16 *PGMPalRAM;
+UINT16 *PGMVidReg;
 UINT16 *PGMSprBuf;
 static UINT8 *RamZ80;
 UINT8 *PGM68KRAM;
@@ -112,6 +113,9 @@ static INT32 pgmMemIndex()
 
 	PGMRowRAM			= (UINT16 *) Next; Next += 0x0001000;	// Row Scroll
 	PGMPalRAM			= (UINT16 *) Next; Next += 0x0002000;	// Palette R5G5B5
+
+	PGMVidReg			= (UINT16 *) Next; Next += 0x0010000;	// Video Regs inc. Zoom Table; Older code
+
 	PGMSprBuf			= (UINT16 *) Next; Next += 0x0001000;
 
 	RamEnd				= Next;
@@ -850,32 +854,44 @@ INT32 pgmInit()
 		for (INT32 i = 0; i < 0x100000; i+= 0x02000) { // mirror
 			SekMapMemory((UINT8 *)PGMPalRAM,	0xa00000 | i, 0xa01fff | i, MAP_ROM); // palette
 		}
-
-		SekMapHandler(1,						0xa00000, 0xafffff, MAP_WRITE);
-		SekMapHandler(2,						0xb00000, 0xbfffff, MAP_READ | MAP_WRITE);
-		for (INT32 i = 0; i < 0x100000; i += 0x20000) { // mirror
-			SekMapHandler(3,					0xc10000 | i, 0xc1ffff | i, MAP_READ | MAP_WRITE);
+		if (Pgm_CodeDip & 1) {
+			SekMapMemory((UINT8 *)PGMVidReg,	0xb00000, 0xb0ffff, MAP_RAM); // should be mirrored?
+			SekMapHandler(1,					0xa00000, 0xa013ff, MAP_WRITE);
+			SekMapHandler(2,					0xc10000, 0xc1ffff, MAP_READ | MAP_WRITE);
+		} else {
+			SekMapHandler(1,					0xa00000, 0xafffff, MAP_WRITE);
+			SekMapHandler(2,					0xb00000, 0xbfffff, MAP_READ | MAP_WRITE);
+			for (INT32 i = 0; i < 0x100000; i += 0x20000) { // mirror
+				SekMapHandler(3,				0xc10000 | i, 0xc1ffff | i, MAP_READ | MAP_WRITE);
+			}
 		}
 
 		// from d00000 to ffffff is completely mappable by the cartridge
 
-		SekSetReadWordHandler(0, PgmReadWord);
-		SekSetReadByteHandler(0, PgmReadByte);
-		SekSetWriteWordHandler(0, PgmWriteWord);
-		SekSetWriteByteHandler(0, PgmWriteByte);
+		SekSetReadWordHandler(0,		PgmReadWord);
+		SekSetReadByteHandler(0,		PgmReadByte);
+		SekSetWriteWordHandler(0,		PgmWriteWord);
+		SekSetWriteByteHandler(0,		PgmWriteByte);
 
-		SekSetWriteByteHandler(1, PgmPaletteWriteByte);
-		SekSetWriteWordHandler(1, PgmPaletteWriteWord);
+		SekSetWriteByteHandler(1,		PgmPaletteWriteByte);
+		SekSetWriteWordHandler(1,		PgmPaletteWriteWord);
 
-		SekSetReadWordHandler(2,	PgmVideoControllerReadWord);
-		SekSetReadByteHandler(2,	PgmVideoControllerReadByte);
-		SekSetWriteWordHandler(2,	PgmVideoControllerWriteWord);
-		SekSetWriteByteHandler(2,	PgmVideoControllerWriteByte);
+		if (Pgm_CodeDip & 1) {
+			SekSetReadWordHandler(2,	PgmZ80ReadWord);
+			SekSetReadByteHandler(2,	PgmZ80ReadByte);
+			SekSetWriteWordHandler(2,	PgmZ80WriteWord);
+			SekSetWriteByteHandler(2,	PgmZ80WriteByte);
+		} else {
+			SekSetReadWordHandler(2,	PgmVideoControllerReadWord);
+			SekSetReadByteHandler(2,	PgmVideoControllerReadByte);
+			SekSetWriteWordHandler(2,	PgmVideoControllerWriteWord);
+			SekSetWriteByteHandler(2,	PgmVideoControllerWriteByte);
 
-		SekSetReadWordHandler(3, PgmZ80ReadWord);
-		SekSetReadByteHandler(3, PgmZ80ReadByte);
-		SekSetWriteWordHandler(3, PgmZ80WriteWord);
-		SekSetWriteByteHandler(3, PgmZ80WriteByte);
+			SekSetReadWordHandler(3,	PgmZ80ReadWord);
+			SekSetReadByteHandler(3,	PgmZ80ReadByte);
+			SekSetWriteWordHandler(3,	PgmZ80WriteWord);
+			SekSetWriteByteHandler(3,	PgmZ80WriteByte);
+		}
 
 		SekClose();
 	}
@@ -1054,7 +1070,7 @@ INT32 pgmFrame()
 		{
 			if (i == 224) {
 				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); // vblank - cart-controlled!
-				pgm_sprite_buffer();
+				if (Pgm_CodeDip ^ 1) pgm_sprite_buffer();
 			}
 			if (i == 218 && !nPGMDisableIRQ4) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO); // verified on Dragon World II cart - Cart-controlled! 
 
@@ -1078,6 +1094,9 @@ INT32 pgmFrame()
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
+
+	if (Pgm_CodeDip & 1)
+		memcpy (PGMSprBuf, PGM68KRAM /* Sprite RAM 0-bff */, 0xa00); // buffer sprites
 
 	return 0;
 }
@@ -1138,6 +1157,25 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		ba.nAddress	= 0xA00000;
 		ba.szName	= "Palette RAM";
 		BurnAcb(&ba);
+
+		if (Pgm_CodeDip & 1) {
+			ba.Data		= PGMVidReg;
+			ba.nLen		= 0x0010000;
+			ba.nAddress	= 0xB00000;
+			ba.szName	= "Video Regs";
+		} else {
+			ba.Data		= PGMSprBuf;
+			ba.nLen		= 0x001000;
+			ba.nAddress	= 0xB00000;
+			ba.szName	= "Sprite Buffer";
+			BurnAcb(&ba);
+			
+			ba.Data		= PGMZoomRAM;
+			ba.nLen		= 0x000040;
+			ba.nAddress	= 0xB01000;
+			ba.szName	= "Zoom Regs";
+			BurnAcb(&ba);
+		}
 
 		ba.Data		= PGMSprBuf;
 		ba.nLen		= 0x001000;

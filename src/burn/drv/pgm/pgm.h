@@ -31,6 +31,7 @@ extern UINT8 *PGMARMShareRAM;
 extern UINT8 *PGMARMShareRAM2;
 extern UINT16 *PGMRowRAM;
 extern UINT16 *PGMPalRAM;
+extern UINT16 *PGMVidReg;
 extern UINT16 *PGMZoomRAM;
 extern UINT16 *PGMSprBuf;
 extern UINT32 *PGMBgRAM;
@@ -52,6 +53,7 @@ extern UINT8 PgmBtn1[];
 extern UINT8 PgmBtn2[];
 extern UINT8 PgmInput[];
 extern UINT8 PgmReset;
+extern UINT8 Pgm_CodeDip;
 
 extern void (*pPgmInitCallback)();
 extern void (*pPgmResetCallback)();

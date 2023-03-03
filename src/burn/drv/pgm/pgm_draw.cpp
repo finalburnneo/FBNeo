@@ -628,7 +628,7 @@ static void pgm_drawsprites()
 {
 	UINT16 *source = PGMSprBuf;
 	UINT16 *finish = PGMSprBuf + 0x1000/2;
-	UINT16 *zoomtable = &PGMZoomRAM[0];
+	UINT16 *zoomtable = (Pgm_CodeDip & 1) ? &PGMVidReg[0x1000/2] : &PGMZoomRAM[0];
 	
 	while (source < finish)
 	{
@@ -647,7 +647,7 @@ static void pgm_drawsprites()
 		INT32 prio = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x0080) >> 7;
 		INT32 high =  BURN_ENDIAN_SWAP_INT16(source[4]) & 0x01ff;
 
-		if (0 != nPGMSpriteBufferHack) {
+		if ((0 != nPGMSpriteBufferHack) || (Pgm_CodeDip & 1)) {
 			if (source[2] & 0x8000) boff += 0x800000; // Real hardware does not have this! Useful for some rom hacks.
 		}
 
@@ -666,7 +666,7 @@ static void pgm_drawsprites()
 
 		draw_sprite_new_zoomed(wide, high, xpos, ypos, palt, boff * 2, flip, xzoom, xgrow, yzoom, ygrow, prio);
 
-		source += 8;
+		source += (Pgm_CodeDip & 1) ? 5 : 8;
 	}
 }
 
@@ -704,8 +704,8 @@ static void draw_text()
 {
 	UINT16 *vram = (UINT16*)PGMTxtRAM;
 
-	INT32 scrollx = pgm_fg_scrollx & 0x1ff;
-	INT32 scrolly = pgm_fg_scrolly & 0x0ff;
+	INT32 scrollx = ((Pgm_CodeDip & 1) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x6000 / 2])) : pgm_fg_scrollx) & 0x1ff;
+	INT32 scrolly = ((Pgm_CodeDip & 1) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x5000 / 2])) : pgm_fg_scrollx) & 0x0ff;
 
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
 	{
@@ -823,8 +823,8 @@ static void draw_background()
 	UINT16 *vram = (UINT16*)PGMBgRAM;
 
 	UINT16 *rowscroll = PGMRowRAM;
-	INT32 yscroll = (INT16)BURN_ENDIAN_SWAP_INT16(pgm_bg_scrolly);
-    INT32 xscroll = (INT16)BURN_ENDIAN_SWAP_INT16(pgm_bg_scrollx);
+	INT32 yscroll = (INT16)BURN_ENDIAN_SWAP_INT16((Pgm_CodeDip & 1) ? PGMVidReg[0x2000 / 2] : pgm_bg_scrolly);
+    INT32 xscroll = (INT16)BURN_ENDIAN_SWAP_INT16((Pgm_CodeDip & 1) ? PGMVidReg[0x3000 / 2] : pgm_bg_scrollx);
 
 	// check to see if we need to do line scroll
 	INT32 t = 0;

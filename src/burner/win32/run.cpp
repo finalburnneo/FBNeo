@@ -253,11 +253,11 @@ int RunFrame(int bDraw, int bPause)
 		if (bDraw) {                            // Draw Frame
 			nFramesRendered++;
 
-			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED)) { // || bAppDoFast) { *todink: put this back in the if clause when not in WIP.
-				if (VidFrame()) {				// Do one frame w/o RunAhead
+			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED) || bAppDoFast) {
+				if (VidFrame()) {				// Do one normal frame (w/o RunAhead)
 
 					// VidFrame() failed, but we must run a driver frame because we have
-					// an input.  Possibly from recording or netplay(!)
+					// a clocked input.  Possibly from recording or netplay(!)
 					pBurnDraw = NULL;			// Make sure no image is drawn
 					BurnDrvFrame();
 

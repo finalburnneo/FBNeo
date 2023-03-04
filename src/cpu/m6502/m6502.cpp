@@ -469,6 +469,11 @@ void m6502_set_irq_line(int irqline, int state)
 	}
 }
 
+void m6502_set_pc(unsigned int pc_)
+{
+	m6502.pc.d = pc_;
+}
+
 UINT32 m6502_get_pc()
 {
 	return m6502.pc.d;

@@ -699,6 +699,16 @@ void M6502WriteRom(UINT32 Address, UINT8 Data)
 	}
 }
 
+void M6502SetPC(INT32 pc)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetPC called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetPC called with no CPU open\n"));
+#endif
+
+	m6502_set_pc(pc);
+}
+
 UINT32 M6502GetPC(INT32)
 {
 #if defined FBNEO_DEBUG

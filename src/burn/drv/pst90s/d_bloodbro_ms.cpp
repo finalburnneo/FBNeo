@@ -223,6 +223,7 @@ static UINT16 __fastcall bbms_main_read_word(UINT32 address)
 
 		case 0x0e0004:
 				return DrvInputs[1];
+
 	//	default:
 	//		bprintf (0, _T("RW: %5.5x PC(%5.5x)\n"), address, SekGetPPC(-1));
 	}
@@ -247,7 +248,6 @@ static void __fastcall bbms_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0x8000:
 		{
-			//bprintf(0, _T("0x8000:  %x  pc: %x  ppc: %x\n"), data, ZetGetPC(-1), ZetGetPrevPC(-1));
 			if (sound_bank != (data >> 7)) {
 				// it's assumed d7 also controls YM2203 #0 CS line
 				bankswitch(data >> 7);
@@ -276,19 +276,15 @@ static void __fastcall bbms_sound_write(UINT16 address, UINT8 data)
 		case 0xe000:
 		case 0xe001:
 			if (sound_bank == 0) BurnYM2203Write(0, address & 1, data);
-			else {
-				//bprintf(0, _T("ym0: bad data: %x  %x   pc: %x  ppc: %x\n"), address&1, data, ZetGetPC(-1), ZetGetPrevPC(-1));
-			}
 		return;
 
 		case 0xe002:
 		case 0xe003:
 			if (sound_bank == 0) BurnYM2203Write(1, address & 1, data);
-			else bprintf(0, _T("ym1: bad data: %x  %x\n"), address&1, data);
 		return;
 
-		default:
-			bprintf (0, _T("SWB: %4.4x %2.2x PC(%5.5x)\n"), address, data, ZetGetPC(-1));
+	//	default:
+	//		bprintf (0, _T("SWB: %4.4x %2.2x PC(%5.5x)\n"), address, data, ZetGetPC(-1));
 	}
 }
 
@@ -314,8 +310,8 @@ static UINT8 __fastcall bbms_sound_read(UINT16 address)
 		case 0xe00b:
 			return BurnYM2203Read(1, address & 1);
 
-		default:
-			bprintf (0, _T("SRB: %5.5x PC(%5.5x)\n"), address, ZetGetPC(-1));
+	//	default:
+	//		bprintf (0, _T("SRB: %5.5x PC(%5.5x)\n"), address, ZetGetPC(-1));
 	}
 
 	return 0;
@@ -412,9 +408,9 @@ static INT32 MemIndex()
 
 static void DrvGfxDecode(INT32 n, INT32 type, INT32 len)
 {
-	INT32 Plane0[4]  = { 0, 4, (0x20000/2)*8+0, (0x20000/2)*8+4 };
-	INT32 XOffs0[8]  = { STEP4(3,-1), STEP4((8+3),-1) };
-	INT32 YOffs0[8]  = { STEP8(0,16) };
+	INT32 Plane0[4] = { 0x8000*8*3,0x8000*8*2,0x8000*8*1,0x8000*8*0 };
+	INT32 XOffs0[8] = { STEP8(0,1) };
+	INT32 YOffs0[8] = { STEP8(0,8) };
 
 	INT32 Plane1[4]  = { STEP4(0,8) };
 	INT32 XOffs1[16] = { STEP8(0,1), STEP8(512,1) };
@@ -427,7 +423,7 @@ static void DrvGfxDecode(INT32 n, INT32 type, INT32 len)
 
 	memcpy (tmp, DrvGfxROM[n], len);
 
-	if (type == 0) GfxDecode((len * 2) / ( 8 *  8), 4,  8,  8, Plane0, XOffs0, YOffs0, 0x080, tmp, DrvGfxROM[n]);
+	if (type == 0) GfxDecode((len * 2) / ( 8 *  8), 4,  8,  8, Plane0, XOffs0, YOffs0, 0x040, tmp, DrvGfxROM[n]);
 	if (type == 1) GfxDecode((len * 2) / (16 * 16), 4, 16, 16, Plane1, XOffs1, YOffs1, 0x400, tmp, DrvGfxROM[n]);
 
 	BurnFree (tmp);
@@ -472,10 +468,10 @@ static INT32 DrvInit()
 		if (BurnLoadRomExt(DrvGfxROM[1] + 0x000001, k++, 4, LD_INVERT)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM[1] + 0x000000, k++, 4, LD_INVERT)) return 1;
 
-		k += 4;	// skip undumped char roms
-
-		if (BurnLoadRom(DrvGfxROM[3] + 0x000000, k++, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM[3] + 0x010000, k++, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM[3] + 0x000000, k++, 1, LD_INVERT)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM[3] + 0x008000, k++, 1, LD_INVERT)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM[3] + 0x010000, k++, 1, LD_INVERT)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM[3] + 0x018000, k++, 1, LD_INVERT)) return 1;
 
 		if (BurnLoadRomExt(DrvGfxROM[2] + 0x000003, k++, 4, LD_INVERT)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM[2] + 0x000002, k++, 4, LD_INVERT)) return 1;
@@ -670,8 +666,6 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnDraw) {
-//		BurnDump("main.bin", Drv68KRAM, 0x10000);
-//		BurnDump("spr.bin", DrvSprRAM, 0x1000);
 		BurnDrvRedraw();
 	}
 
@@ -739,14 +733,10 @@ static struct BurnRomInfo bloodbromRomDesc[] = {
 	{ "4-3-b_bb4b3.ic15",				0x20000, 0x3efcb6aa, 4 | BRF_GRA },           // 13
 	{ "4-3-b_bb4b4.ic14",				0x20000, 0x6b5254fa, 4 | BRF_GRA },           // 14
 
-	{ "text.ic17",						0x20000, 0x00000000, 5 | BRF_NODUMP | BRF_GRA },           // 15 Characters
-	{ "text.ic16",						0x20000, 0x00000000, 5 | BRF_NODUMP | BRF_GRA },           // 16
-	{ "text.ic15",						0x20000, 0x00000000, 5 | BRF_NODUMP | BRF_GRA },           // 17
-	{ "text.ic14",						0x20000, 0x00000000, 5 | BRF_NODUMP | BRF_GRA },           // 18
-
-	// use these until text roms are dumped
-	{ "bb_05.u061.6f",					0x10000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters - remove when above roms are dumped!
-	{ "bb_06.u063.6d",					0x10000, 0x7092e35b, 3 | BRF_GRA },           //  6
+	{ "4-3_bb401.ic17",    				0x08000, 0x07e12bd2, 3 | BRF_GRA },           // 15 Characters
+	{ "4-3_bb402.ic16",   				0x08000, 0xeca374ea, 3 | BRF_GRA },           // 16
+	{ "4-3_bb403.ic15",    				0x08000, 0xd77b84d3, 3 | BRF_GRA },           // 17
+	{ "4-3_bb404.ic14",    				0x08000, 0xf8d2d4dc, 3 | BRF_GRA },           // 18
 
 	{ "51-1-b_bb503.ic3",				0x10000, 0x9d2a382d, 6 | BRF_GRA },           // 19 Sprites
 	{ "51-1-b_bb512.ic12",				0x10000, 0x83bbb220, 6 | BRF_GRA },           // 20

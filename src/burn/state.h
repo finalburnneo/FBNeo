@@ -18,6 +18,7 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin); // burn.cpp
 /* ReWind */
 void StateRewindInit();
 void StateRewindExit();
+void StateRewindReInit();
 void StateRewindReset();
 void StateRewindDoFrame(INT32 bDoRewind, INT32 bDoCancel, INT32 bIsPaused);
 

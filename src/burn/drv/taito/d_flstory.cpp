@@ -52,6 +52,7 @@ static INT32 m_vol_ctrl[16];
 static UINT8 m_snd_ctrl0;
 static UINT8 m_snd_ctrl1;
 static UINT8 m_snd_ctrl2;
+static double ay_vol_divider;
 
 static struct BurnInputInfo FlstoryInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
@@ -711,7 +712,7 @@ static void AY_ayportA_write(UINT32 /*addr*/, UINT32 data)
 	if (data == 0xff) return; // ignore ay-init
 	m_snd_ctrl2 = data & 0xff;
 
-	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / ((select_game == 3) ? 1600.0 : 2000.0), BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / ay_vol_divider, BURN_SND_ROUTE_BOTH);
 }
 
 static void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
@@ -1025,6 +1026,7 @@ static INT32 DrvInit()
 
 	DACInit(0, 0, 1, ZetTotalCycles, 4000000);
 	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	GenericTilesInit();
 
@@ -1364,6 +1366,7 @@ STD_ROM_FN(flstory)
 static INT32 flstoryInit()
 {
 	select_game = 0;
+	ay_vol_divider = 1600.0;
 
 	return DrvInit();
 }
@@ -1446,6 +1449,7 @@ STD_ROM_FN(onna34ro)
 static INT32 onna34roInit()
 {
 	select_game = 1;
+	ay_vol_divider = 400.0;
 
 	return DrvInit();
 }
@@ -1490,6 +1494,7 @@ STD_ROM_FN(onna34ra)
 static INT32 onna34roaInit()
 {
 	select_game = 10;
+	ay_vol_divider = 400.0;
 
 	return DrvInit();
 }
@@ -1541,19 +1546,20 @@ STD_ROM_FN(victnine)
 static INT32 victnineInit()
 {
 	select_game = 2;
+	ay_vol_divider = 1600.0;
 
 	INT32 nRet = DrvInit();
-	
+
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-	
+
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvVictnine = {
+struct BurnDriver BurnDrvVictnine = {
 	"victnine", NULL, NULL, NULL, "1984",
 	"Victorious Nine\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, victnineRomInfo, victnineRomName, NULL, NULL, NULL, NULL, VictnineInputInfo, VictnineDIPInfo,
 	victnineInit, DrvExit, DrvFrame, victnineDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1562,6 +1568,7 @@ struct BurnDriverD BurnDrvVictnine = {
 static INT32 rumbaInit()
 {
 	select_game = 3;
+	ay_vol_divider = 1600.0;
 
 	INT32 nRet = DrvInit();
 

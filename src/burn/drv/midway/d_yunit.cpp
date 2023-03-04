@@ -95,6 +95,7 @@ static INT32 flip_screen_x = 0;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoyF[16];
 static UINT8 DrvDips[3];
 static UINT16 DrvInputs[6];
 static UINT8 DrvReset;
@@ -105,6 +106,7 @@ static INT32 nExtraCycles = 0;
 static ButtonToggle service;
 static UINT8 DrvServ[1]; // service mode/diag toggle (f2)
 
+static INT32 is_totcarn = 0;
 static INT32 is_term2 = 0;
 static INT32 is_mkturbo = 0;
 static INT32 is_yawdim = 0;
@@ -332,10 +334,7 @@ static struct BurnInputInfo StrkforcInputList[] = {
 STDINPUTINFO(Strkforc)
 
 static struct BurnInputInfo TotcarnInputList[] = {
-	{"Coin 1",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
-	{"Coin 2",					BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
-	{"Coin 3",					BIT_DIGITAL,	DrvJoy2 + 9,	"p3 coin"	},
-
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",				BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
 	{"P1 Left Stick Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Left Stick Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
@@ -345,7 +344,9 @@ static struct BurnInputInfo TotcarnInputList[] = {
 	{"P1 Right Stick Down",		BIT_DIGITAL,	DrvJoy1 + 5,	"p3 down"	},
 	{"P1 Right Stick Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p3 left"	},
 	{"P1 Right Stick Right",	BIT_DIGITAL,	DrvJoy1 + 7,	"p3 right"	},
+	{"P1 Button 1",				BIT_DIGITAL,	DrvJoyF + 2,	"p1 fire 1"	},
 
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"	},
 	{"P2 Left Stick Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
 	{"P2 Left Stick Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
@@ -355,6 +356,9 @@ static struct BurnInputInfo TotcarnInputList[] = {
 	{"P2 Right Stick Down",		BIT_DIGITAL,	DrvJoy1 + 13,	"p4 down"	},
 	{"P2 Right Stick Left",		BIT_DIGITAL,	DrvJoy1 + 14,	"p4 left"	},
 	{"P2 Right Stick Right",	BIT_DIGITAL,	DrvJoy1 + 15,	"p4 right"	},
+	{"P2 Button 1",				BIT_DIGITAL,	DrvJoyF + 5,	"p2 fire 1"	},
+
+	{"P3 Coin",					BIT_DIGITAL,	DrvJoy2 + 9,	"p3 coin"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",					BIT_DIGITAL,	DrvJoy2 + 6,	"service"	},
@@ -703,7 +707,7 @@ STDDIPINFO(Strkforc)
 
 static struct BurnDIPInfo TotcarnDIPList[]=
 {
-	DIP_OFFSET(0x19)
+	DIP_OFFSET(0x1b)
 	{0x00, 0xff, 0xff, 0xff, NULL					},
 	{0x01, 0xff, 0xff, 0xff, NULL					},
 
@@ -1280,8 +1284,9 @@ static void from_shiftreg(UINT32 address, UINT16 *shiftreg)
 
 static void autoerase_line(INT32 scanline)
 {
-	if (autoerase_enable && scanline >= 0 && scanline < 510)
+	if (autoerase_enable && scanline >= 0 && scanline < 510) {
 		memcpy(&local_videoram[512 * scanline], &local_videoram[512 * (510 + (scanline & 1))], 512 * sizeof(UINT16));
+	}
 }
 
 static INT32 scanline_callback(INT32 scanline, TMS34010Display *params)
@@ -1336,6 +1341,10 @@ static INT32 scanline_callback(INT32 scanline, TMS34010Display *params)
 	}
 
 	autoerase_line(params->rowaddr - 1);
+
+	if (scanline == nScreenHeight-1) { // last visible line
+		autoerase_line(params->rowaddr);
+	}
 
 	return 0;
 }
@@ -1754,6 +1763,7 @@ static INT32 DrvExit()
 
 	is_term2 = 0;
 	is_mkturbo = 0;
+	is_totcarn = 0;
 
 	return 0;
 }
@@ -1788,6 +1798,12 @@ static INT32 DrvFrame()
 			DrvJoy2[4] = DrvServ[0];
 		}
 
+		// add button for bomb on total carnage
+		if (is_totcarn) {
+			DrvJoy2[2] |= DrvJoyF[2];
+			DrvJoy2[5] |= DrvJoyF[5];
+		}
+
 		// process inputs
 		memset (DrvInputs, 0xff, sizeof(DrvInputs));
 
@@ -1803,7 +1819,6 @@ static INT32 DrvFrame()
 			BurnGunMakeInputs(0, Gun[0], Gun[1]);
 			BurnGunMakeInputs(1, Gun[2], Gun[3]);
 		}
-
 	}
 
 	TMS34010NewFrame();
@@ -4310,6 +4325,8 @@ static INT32 TotcarnInit()
 	};
 
 	prot_data = &totcarn_protection_data;
+
+	is_totcarn = 1;
 
 	return CommonInit(TotcarnLoadCallback, 0, 48000000, 6, 0xfc04, 0xfc2e);
 }

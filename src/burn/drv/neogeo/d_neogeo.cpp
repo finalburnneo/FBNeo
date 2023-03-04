@@ -17055,7 +17055,7 @@ struct BurnDriver BurnDrvSamsho2sp = {
 // Samurai Shodown II Perfect Hack
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",   0x200000, 0xc675bfa5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p1pe.p1",   0x200000, 0xb9538f2b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "063-p2pe.p2",   0x020000, 0xe9cc1d72, 0 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "063-s1.s1",     0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  2 Text layer tiles

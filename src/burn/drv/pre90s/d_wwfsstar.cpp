@@ -1,4 +1,4 @@
-// FB Alpha WWF Superstars driver module
+// FB Neo WWF Superstars driver module
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"
@@ -916,6 +916,45 @@ struct BurnDriver BurnDrvWwfsstarj = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
+
+
+// WWF Superstars (Canada)
+
+static struct BurnRomInfo wwfsstarcRomDesc[] = {
+	{ "24ac-0c.ic34",	0x20000, 0x3e5eebf3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "24ad-0c.ic35",	0x20000, 0x154bf54c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "24ab-0.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "24a9-0.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
+	{ "24j8-0.45",		0x20000, 0x61138487, 3 | BRF_SND },           //  4
+
+	{ "24aa-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  5 Characters
+
+	{ "c951.114",		0x80000, 0xfa76d1f0, 5 | BRF_GRA },           //  6 Sprites
+	{ "24j4-0.115",		0x40000, 0xc4a589a3, 5 | BRF_GRA },           //  7
+	{ "24j5-0.116",		0x40000, 0xd6bca436, 5 | BRF_GRA },           //  8
+	{ "c950.117",		0x80000, 0xcca5703d, 5 | BRF_GRA },           //  9
+	{ "24j2-0.118",		0x40000, 0xdc1b7600, 5 | BRF_GRA },           // 10
+	{ "24j3-0.119",		0x40000, 0x3ba12d43, 5 | BRF_GRA },           // 11
+
+	{ "24j7-0.113",		0x40000, 0xe0a1909e, 6 | BRF_GRA },           // 12 Tiles
+	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(wwfsstarc)
+STD_ROM_FN(wwfsstarc)
+
+struct BurnDriver BurnDrvWwfsstarc = {
+	"wwfsstarc", "wwfsstar", NULL, NULL, "1989",
+	"WWF Superstars (Canada)\0", NULL, "Technos Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
+	NULL, wwfsstarcRomInfo, wwfsstarcRomName, NULL, NULL, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
+	256, 240, 4, 3
+};
+
 
 // WWF Superstars (bootleg)
 

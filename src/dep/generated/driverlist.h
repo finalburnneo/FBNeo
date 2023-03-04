@@ -9816,6 +9816,7 @@ DRV		BurnDrvmslugdg;
 DRV		BurnDrvngpc_mslug1st;
 DRV		BurnDrvngpc_mslug2ndd;
 DRV		BurnDrvngpc_mslug2nd;
+DRV		BurnDrvmslug1v2;
 DRV		BurnDrvmslug;
 DRV		BurnDrvmslug21v2;
 DRV		BurnDrvmslug2dd;
@@ -13793,7 +13794,9 @@ DRV		BurnDrvfds_samsworden;
 DRV		BurnSpecSamwarrior128k;
 DRV		BurnDrvtg_samuraig;
 DRV		Burnmd_Sanguoyan;
+DRV		BurnDrvkovplushsqj;
 DRV		BurnDrvkovqxzbws;
+DRV		BurnDrvkovpluststd;
 DRV		BurnDrvmd_sanguo;
 DRV		BurnDrvmd_sanguo5;
 DRV		BurnDrvmd_sansan;
@@ -18217,9 +18220,7 @@ DRV		BurnDrvHangonvf;
 DRV		BurnSpecviajecentterra;
 DRV		BurnDrvMSX_viajecentro;
 DRV		BurnDrvnes_vice;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvVictnine;		// no comment [NOT WORKING]
-#endif
+DRV		BurnDrvVictnine;
 DRV		BurnDrvVictorycb;
 DRV		BurnDrvVictoryc;
 DRV		BurnDrvVictroad;
@@ -29290,6 +29291,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvngpc_mslug1st,		// Metal Slug - 1st Mission (World)
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
 	&BurnDrvngpc_mslug2nd,		// Metal Slug - 2nd Mission (World)
+	&BurnDrvmslug1v2,			// Metal Slug - Super Vehicle-001 (1v2 Mode, Hack)
 	&BurnDrvmslug,				// Metal Slug - Super Vehicle-001
 	&BurnDrvmslug21v2,			// Metal Slug 2 - Super Vehicle-001/II (1v2 Mode, Hack)
 	&BurnDrvmslug2dd,			// Metal Slug 2 - Super Vehicle-001/II (Early Summer Starry Sky, Hack)
@@ -33267,7 +33269,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSamwarrior128k,	// Samurai Warrior - Usagi Yojimbo (128K)
 	&BurnDrvtg_samuraig,		// Samurai-Ghost
 	&Burnmd_Sanguoyan,			// San Guo Yan Yi - Huo Shao Chi Bi
+	&BurnDrvkovplushsqj,		// San Guo Zhan Ji - Heng Sao Qian Jun (Hack)
 	&BurnDrvkovqxzbws,			// San Guo Zhan Ji - Qun Xiong Zheng Ba Feng Yun Zai Qi (Hack, ver. 2022-07-31)
+	&BurnDrvkovpluststd,		// San Guo Zhan Ji - Zhen Tun Shi Tian Di (Hack)
 	&BurnDrvmd_sanguo,			// San Guo Zhi Lie Zhuan - Luan Shi Qun Ying (Chi)
 	&BurnDrvmd_sanguo5,			// San Guo Zhi V (Chi) (Unl)
 	&BurnDrvmd_sansan,			// San San (Jpn)
@@ -37691,9 +37695,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecviajecentterra,	// Viaje al Centro de la Tierra (Spanish) (128K)
 	&BurnDrvMSX_viajecentro,	// Viaje al Centro de la Tierra (Spanish)
 	&BurnDrvnes_vice,			// Vice - Project Doom (USA)
-#if defined FBNEO_DEBUG
-	&BurnDrvVictnine,			// Victorious Nine [no comment, NOT WORKING]
-#endif
+	&BurnDrvVictnine,			// Victorious Nine
 	&BurnDrvVictorycb,			// Victory (Comsoft) (bootleg)
 	&BurnDrvVictoryc,			// Victory (Comsoft)
 	&BurnDrvVictroad,			// Victory Road

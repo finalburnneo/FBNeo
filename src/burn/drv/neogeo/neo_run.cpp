@@ -643,6 +643,9 @@ static INT32 LoadRoms()
 			if (pInfo->nTextOffset > 0) {
 				BurnDrvGetRomInfo(&ri, pInfo->nTextOffset);
 				nNeoTextROMSize[nNeoActiveSlot] = ri.nLen;
+
+				if (bDoIpsPatch)
+					nNeoTextROMSize[nNeoActiveSlot] += nIpsMemExpLen[GRA2_ROM];
 			} else {
 				nNeoTextROMSize[nNeoActiveSlot] = 0x080000;
 			}

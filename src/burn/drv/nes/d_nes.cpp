@@ -22117,9 +22117,81 @@ struct BurnDriver BurnDrvnes_ripisland = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zoids - Chuuou Tairiku no Tatakai (Japan)
+static struct BurnRomInfo nes_zoidsjRomDesc[] = {
+	{ "Zoids - Chuuou Tairiku no Tatakai (J)(1987)(Toshiba-EMI).nes",          131088, 0xe3d6a15a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zoidsj)
+STD_ROM_FN(nes_zoidsj)
+
+struct BurnDriver BurnDrvnes_zoidsj = {
+	"nes_zoidsj", "nes_zoids", NULL, NULL, "1987",
+	"Zoids - Chuuou Tairiku no Tatakai (Japan)\0", NULL, "Toshiba-EMI", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_zoidsjRomInfo, nes_zoidsjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Zoids - Battle of Central Continent (T-Eng)
+// https://www.romhacking.net/translations/6845/
+static struct BurnRomInfo nes_zoidsRomDesc[] = {
+	{ "Zoids - Chuuou Tairiku no Tatakai T-Eng (2023)(Life With Matthew).nes",          131088, 0x1528e6c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zoids)
+STD_ROM_FN(nes_zoids)
+
+struct BurnDriver BurnDrvnes_zoids = {
+	"nes_zoids", NULL, NULL, NULL, "2023",
+	"Zoids - Battle of Central Continent (T-Eng)\0", NULL, "Life With Matthew", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_zoidsRomInfo, nes_zoidsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dino Hockey (Prototype)
+static struct BurnRomInfo nes_dinohockeyRomDesc[] = {
+	{ "Dino Hockey (Proto)(1991)(Virgin Games).nes",          262160, 0xc3710b73, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dinohockey)
+STD_ROM_FN(nes_dinohockey)
+
+struct BurnDriver BurnDrvnes_dinohockey = {
+	"nes_dinohockey", NULL, NULL, NULL, "1991",
+	"Dino Hockey (Prototype)\0", NULL, "Sunsoft - Virgin Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_dinohockeyRomInfo, nes_dinohockeyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_blazblocksRomDesc[] = {
+	{ "Blazing Blocks (2023)(FG Software).nes",          65552, 0x3a8f9933, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blazblocks)
+STD_ROM_FN(nes_blazblocks)
+
+struct BurnDriver BurnDrvnes_blazblocks = {
+	"nes_blazblocks", NULL, NULL, NULL, "2023",
+	"Blazing Blocks (HB)\0", NULL, "FG Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_blazblocksRomInfo, nes_blazblocksRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_bowbeastRomDesc[] = {
 	{ "Bowels of the Beast (2021)(T-bone).nes",          524304, 0x2002b239, BRF_ESS | BRF_PRG },
@@ -22134,6 +22206,23 @@ struct BurnDriver BurnDrvnes_bowbeast = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bowbeastRomInfo, nes_bowbeastRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mystpillarsRomDesc[] = {
+	{ "Mystic Pillars (2008)(Sivak Games).nes",          524304, 0x420f1b1a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mystpillars)
+STD_ROM_FN(nes_mystpillars)
+
+struct BurnDriver BurnDrvnes_mystpillars = {
+	"nes_mystpillars", NULL, NULL, NULL, "2008",
+	"Mystic Pillars (HB)\0", NULL, "Sivak Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_mystpillarsRomInfo, nes_mystpillarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -28241,7 +28330,7 @@ STD_ROM_FN(nes_battlkid)
 
 struct BurnDriver BurnDrvnes_battlkid = {
 	"nes_battlkid", NULL, NULL, NULL, "2010",
-	"Battle Kid - Fortress of Peril (HB, Japan)\0", NULL, "Sivak", "Miscellaneous",
+	"Battle Kid - Fortress of Peril (HB, Japan)\0", NULL, "Sivak Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_battlkidRomInfo, nes_battlkidRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28258,7 +28347,7 @@ STD_ROM_FN(nes_battlkid2)
 
 struct BurnDriver BurnDrvnes_battlkid2 = {
 	"nes_battlkid2", NULL, NULL, NULL, "2012",
-	"Battle Kid 2 - Mountain of Torment (HB, USA)\0", NULL, "Sivak", "Miscellaneous",
+	"Battle Kid 2 - Mountain of Torment (HB, USA)\0", NULL, "Sivak Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_battlkid2RomInfo, nes_battlkid2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

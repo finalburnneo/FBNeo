@@ -68,6 +68,7 @@ INT32 nPGMDisableIRQ4 = 0;
 INT32 nPGMArm7Type = 0;
 UINT32 nPgmAsicRegionHackAddress = 0;
 INT32 nPGMSpriteBufferHack = 0;
+INT32 OldCodeMode = 0;
 
 INT32 pgm_cave_refresh = 0;
 #define Z80_FREQ	8468000
@@ -92,8 +93,7 @@ static INT32 pgmMemIndex()
 	PGMARMROM			= Next;	Next += (bDoIpsPatch || (0 != nPGMSpriteBufferHack)) ? 0x0008000 : 0x0004000;	// Just always allocate this - only 16kb
 
 	RamCurPal			= (UINT32 *) Next;
-	if ((HackCodeDip & 1) || (bDoIpsPatch))
-								Next += (0x0001204 / 2) * sizeof(UINT32);
+	if (OldCodeMode)			Next += (0x0001204 / 2) * sizeof(UINT32);
 	else						Next += (0x0002004 / 2) * sizeof(UINT32);
 
 	RamStart			= Next;
@@ -103,11 +103,9 @@ static INT32 pgmMemIndex()
 
 	if (nEnableArm7) {
 		PGMARMShareRAM	= Next;	Next += 0x0020000;
-		if ((HackCodeDip & 1) || (bDoIpsPatch))
-								Next -= 0x0010000;
+		if (OldCodeMode)		Next -= 0x0010000;
 		PGMARMShareRAM2	= Next;	Next += 0x0020000;
-		if ((HackCodeDip & 1) || (bDoIpsPatch))
-								Next -= 0x0010000;
+		if (OldCodeMode)		Next -= 0x0010000;
 		PGMARMRAM0		= Next;	Next += 0x0001000; // minimum page size in arm7 is 0x1000
 		PGMARMRAM1		= Next;	Next += 0x0040000;
 		PGMARMRAM2		= Next;	Next += 0x0001000; // minimum page size in arm7 is 0x1000
@@ -120,7 +118,7 @@ static INT32 pgmMemIndex()
 
 	PGMRowRAM			= (UINT16 *) Next;	Next += 0x0001000;	// Row Scroll
 	PGMPalRAM			= (UINT16 *) Next;	Next += 0x0002000;	// Palette R5G5B5
-	if ((HackCodeDip & 1) || (bDoIpsPatch))	Next -= 0x0000c00;
+	if (OldCodeMode)						Next -= 0x0000c00;
 	PGMVidReg			= (UINT16 *) Next;	Next += 0x0010000;	// Video Regs inc. Zoom Table
 	PGMSprBuf			= (UINT16 *) Next;	Next += 0x0001000;
 
@@ -384,7 +382,7 @@ static UINT8 __fastcall PgmVideoControllerReadByte(UINT32 sekAddress)
 static UINT8 __fastcall PgmReadByte(UINT32 sekAddress)
 {
 	UINT32 u32Addr = sekAddress;
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) u32Addr &= ~0xe7ff8;
+	if (!OldCodeMode) u32Addr &= ~0xe7ff8;
 
 	switch (u32Addr)
 	{
@@ -404,7 +402,7 @@ static UINT8 __fastcall PgmReadByte(UINT32 sekAddress)
 static UINT16 __fastcall PgmReadWord(UINT32 sekAddress)
 {
 	UINT32 u32Addr = sekAddress;
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) u32Addr &= ~0xe7ff8;
+	if (!OldCodeMode) u32Addr &= ~0xe7ff8;
 
 	switch (u32Addr)
 	{
@@ -456,7 +454,7 @@ static void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 
 	UINT32 u32Addr = sekAddress;
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) u32Addr &= ~0xe7ff0;
+	if (!OldCodeMode) u32Addr &= ~0xe7ff0;
 	
 	switch (u32Addr)
 	{
@@ -490,7 +488,7 @@ static void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		case 0xC0000A:	// z80 controller
-			if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
+			if (!OldCodeMode) {
 				if (wordValue == 0x45d3) pgm_z80_connect_bus = 1;
 				if (wordValue == 0x0a0a) pgm_z80_connect_bus = 0;
 			}
@@ -528,7 +526,7 @@ static UINT16 __fastcall PgmZ80ReadWord(UINT32 sekAddress)
 {
 	pgmSynchroniseZ80(0);
 
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch))
+	if (!OldCodeMode)
 		if (pgm_z80_connect_bus == 0) return 0;
 
 	sekAddress &= 0xffff;
@@ -548,7 +546,7 @@ static void __fastcall PgmZ80WriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	pgmSynchroniseZ80(0);
 
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch))
+	if (!OldCodeMode)
 		if (pgm_z80_connect_bus == 0) return;
 
 	sekAddress &= 0xffff;
@@ -572,9 +570,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 
 static void __fastcall PgmPaletteWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch))
-			sekAddress = (sekAddress & 0x001ffe) >> 1;
-	else	sekAddress = (sekAddress - 0xa00000) >> 1;
+	sekAddress = (sekAddress & 0x001ffe) >> 1;
 
 	PGMPalRAM[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	RamCurPal[sekAddress] = CalcCol(wordValue);
@@ -582,9 +578,7 @@ static void __fastcall PgmPaletteWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 static void __fastcall PgmPaletteWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch))
-			sekAddress &= 0x001fff;
-	else	sekAddress -= 0xa00000;
+	sekAddress &= 0x001fff;
 
 	UINT8 *pal = (UINT8*)PGMPalRAM;
 	pal[sekAddress ^ 1] = byteValue;
@@ -804,6 +798,7 @@ INT32 pgmInit()
 	BurnSetRefreshRate(((BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB) || pgm_cave_refresh) ? 59.17 : 60.00);
 
 	nEnableArm7 = (BurnDrvGetHardwareCode() / HARDWARE_IGS_USE_ARM_CPU) & 1;
+	OldCodeMode = ((HackCodeDip & 1) || (bDoIpsPatch)) ? 1 : 0;
 
 	if (0 == nPGMSpriteBufferHack) {
 		nPGMSpriteBufferHack = (nIpsDrvDefine & IPS_PGM_SPRHACK) ? 1 : 0;
@@ -874,7 +869,7 @@ INT32 pgmInit()
 			SekMapMemory((UINT8 *)PGMRowRAM,	0x907000 | i, 0x907fff | i, MAP_RAM);
 		}
 		
-		if ((HackCodeDip & 1) || (bDoIpsPatch)) {
+		if (OldCodeMode) {
 			SekMapMemory((UINT8 *)PGMPalRAM,	0xa00000, 0xa013ff, MAP_ROM); // palette
 			SekMapMemory((UINT8 *)PGMVidReg,	0xb00000, 0xb0ffff, MAP_RAM); // should be mirrored?
 			SekMapHandler(1,					0xa00000, 0xa013ff, MAP_WRITE);
@@ -900,7 +895,7 @@ INT32 pgmInit()
 		SekSetWriteByteHandler(1,		PgmPaletteWriteByte);
 		SekSetWriteWordHandler(1,		PgmPaletteWriteWord);
 		
-		if ((HackCodeDip & 1) || (bDoIpsPatch)) {
+		if (OldCodeMode) {
 			SekSetReadWordHandler(2,	PgmZ80ReadWord);
 			SekSetReadByteHandler(2,	PgmZ80ReadByte);
 			SekSetWriteWordHandler(2,	PgmZ80WriteWord);
@@ -1077,7 +1072,7 @@ INT32 pgmFrame()
 	SekIdle(nCyclesDone[0]);
 	ZetIdle(nCyclesDone[1]);
 
-	if ((HackCodeDip & 1) || (bDoIpsPatch))
+	if (OldCodeMode)
 		SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (nEnableArm7)
@@ -1086,7 +1081,7 @@ INT32 pgmFrame()
 		Arm7Open(0);
 		Arm7Idle(nCyclesDone[2]);
 
-		if ((HackCodeDip & 1) || (bDoIpsPatch)) {
+		if (OldCodeMode) {
 			nCyclesTotal[0] = M68K_CYCS_PER_FRAME;
 			nCyclesTotal[1] = Z80_CYCS_PER_FRAME;
 			nCyclesTotal[2] = ARM7_CYCS_PER_FRAME;
@@ -1107,7 +1102,7 @@ INT32 pgmFrame()
 			Arm7Close();
 		}
 	} else {
-		if ((HackCodeDip & 1) || (bDoIpsPatch)) {
+		if (OldCodeMode) {
 			nCyclesTotal[0] = (UINT32)((UINT64)(20000000) * nBurnCPUSpeedAdjust * 100 / (0x0100 * nBurnFPS));
 			nCyclesTotal[1] = Z80_CYCS_PER_FRAME;
 
@@ -1122,7 +1117,7 @@ INT32 pgmFrame()
 		}
 	}
 
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
+	if (!OldCodeMode) {
 		INT32 nInterleave = 262; // 262 scanlines
 		nCyclesTotal[0] = M68K_CYCS_PER_FRAME;
 		nCyclesTotal[1] = Z80_CYCS_PER_FRAME;
@@ -1148,7 +1143,7 @@ INT32 pgmFrame()
 	nCyclesDone[0]			= SekTotalCycles() - nCyclesTotal[0];
 	nCyclesDone[1]			= ZetTotalCycles() - nCyclesTotal[1];
 
-	if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
+	if (!OldCodeMode) {
 		if (nEnableArm7) {
 			nCyclesDone[2]	= Arm7TotalCycles() - nCyclesTotal[2];
 			Arm7Close();
@@ -1158,10 +1153,10 @@ INT32 pgmFrame()
 	SekClose();
 
 	if (pBurnDraw) {
-		((HackCodeDip ^ 1) && (!bDoIpsPatch)) ? BurnDrvRedraw() : pgmDraw();;
+		BurnDrvRedraw();
 	}
 
-	if ((HackCodeDip & 1) || (bDoIpsPatch))
+	if (OldCodeMode)
 		memcpy(PGMSprBuf, PGM68KRAM /* Sprite RAM 0-bff */, 0xa00); // buffer sprites
 	
 	return 0;
@@ -1218,7 +1213,7 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		ba.szName		= "Row Scroll";
 		BurnAcb(&ba);
 
-		if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
+		if (!OldCodeMode) {
 			ba.Data		= PGMPalRAM;
 			ba.nLen		= 0x002000;
 			ba.nAddress	= 0xA00000;

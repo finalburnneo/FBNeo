@@ -627,14 +627,16 @@ static void draw_sprite_new_zoomed(INT32 wide, INT32 high, INT32 xpos, INT32 ypo
 static void pgm_drawsprites()
 {
 	UINT16 *source		= PGMSprBuf;
-	UINT16 *finish		= PGMSprBuf + (((HackCodeDip & 1) || (bDoIpsPatch)) ? 0x0a00 : 0x1000)/2;
-	UINT16 *zoomtable	= ((HackCodeDip & 1) || (bDoIpsPatch)) ? &PGMVidReg[0x1000/2] : &PGMZoomRAM[0];
+	UINT16 *finish		= PGMSprBuf + ((OldCodeMode) ? 0x0a00 : 0x1000)/2;
+	UINT16 *zoomtable	= (OldCodeMode) ? &PGMVidReg[0x1000/2] : &PGMZoomRAM[0];
 	
 	while (source < finish)
 	{
-		if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
-			if ((source[4] & 0x7fff) == 0) break; // verified on hardware
-		} else { if (source[4] == 0) break; } // right?
+		if (!OldCodeMode) {
+			if ((source[4] & 0x7fff) == 0) break;	// verified on hardware
+		} else {
+			if (source[4] == 0) break;				// right?
+		}
 
 		INT32 xpos =  BURN_ENDIAN_SWAP_INT16(source[0]) & 0x07ff;
 		INT32 ypos =  BURN_ENDIAN_SWAP_INT16(source[1]) & 0x03ff;
@@ -649,23 +651,15 @@ static void pgm_drawsprites()
 		INT32 prio = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x0080) >> 7;
 		INT32 high =  BURN_ENDIAN_SWAP_INT16(source[4]) & 0x01ff;
 
-		if ((0 != nPGMSpriteBufferHack) || (HackCodeDip & 1) || (bDoIpsPatch)) {
+		if ((0 != nPGMSpriteBufferHack) || (OldCodeMode)) {
 			if (source[2] & 0x8000) boff += 0x800000; // Real hardware does not have this! Useful for some rom hacks.
 		}
 
 		if (xgrow) xzom = 0x10-xzom;
 		if (ygrow) yzom = 0x10-yzom;
 
-		UINT32 xzoom = 0;
-		UINT32 yzoom = 0;
-
-		if ((HackCodeDip & 1) || (bDoIpsPatch)) {
-			xzoom = (zoomtable[xzom*2]<<16)|zoomtable[xzom*2+1];
-			yzoom = (zoomtable[yzom*2]<<16)|zoomtable[yzom*2+1];
-		} else {
-			xzoom = (xzom & 0x10) ? 0 : ((zoomtable[xzom*2]<<16)|zoomtable[xzom*2+1]);
-			yzoom = (yzom & 0x10) ? 0 : ((zoomtable[yzom*2]<<16)|zoomtable[yzom*2+1]);
-		}
+		UINT32 xzoom = (xzom & 0x10) ? 0 : ((zoomtable[xzom * 2] << 16) | zoomtable[xzom * 2 + 1]);
+		UINT32 yzoom = (yzom & 0x10) ? 0 : ((zoomtable[yzom * 2] << 16) | zoomtable[yzom * 2 + 1]);
 
 		if (xpos > 0x3ff) xpos -=0x800;
 		if (ypos > 0x1ff) ypos -=0x400;
@@ -676,7 +670,7 @@ static void pgm_drawsprites()
 
 		draw_sprite_new_zoomed(wide, high, xpos, ypos, palt, boff * 2, flip, xzoom, xgrow, yzoom, ygrow, prio);
 
-		source += ((HackCodeDip & 1) || (bDoIpsPatch)) ? 5 : 8;
+		source += (OldCodeMode) ? 5 : 8;
 	}
 }
 
@@ -714,8 +708,8 @@ static void draw_text()
 {
 	UINT16 *vram = (UINT16*)PGMTxtRAM;
 
-	INT32 scrollx = (((HackCodeDip & 1) || (bDoIpsPatch)) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x6000 / 2])) : pgm_fg_scrollx) & 0x1ff;
-	INT32 scrolly = (((HackCodeDip & 1) || (bDoIpsPatch)) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x5000 / 2])) : pgm_fg_scrolly) & 0x0ff;
+	INT32 scrollx = ((OldCodeMode) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x6000 / 2])) : pgm_fg_scrollx) & 0x1ff;
+	INT32 scrolly = ((OldCodeMode) ? ((INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x5000 / 2])) : pgm_fg_scrolly) & 0x0ff;
 
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
 	{
@@ -833,8 +827,8 @@ static void draw_background()
 	UINT16 *vram = (UINT16*)PGMBgRAM;
 
 	UINT16 *rowscroll = PGMRowRAM;
-	INT32 yscroll = (INT16)BURN_ENDIAN_SWAP_INT16(((HackCodeDip & 1) || (bDoIpsPatch)) ? PGMVidReg[0x2000 / 2] : pgm_bg_scrolly);
-    INT32 xscroll = (INT16)BURN_ENDIAN_SWAP_INT16(((HackCodeDip & 1) || (bDoIpsPatch)) ? PGMVidReg[0x3000 / 2] : pgm_bg_scrollx);
+	INT32 yscroll = (INT16)BURN_ENDIAN_SWAP_INT16((OldCodeMode) ? PGMVidReg[0x2000 / 2] : pgm_bg_scrolly);
+    INT32 xscroll = (INT16)BURN_ENDIAN_SWAP_INT16((OldCodeMode) ? PGMVidReg[0x3000 / 2] : pgm_bg_scrollx);
 
 	// check to see if we need to do line scroll
 	INT32 t = 0;
@@ -1065,18 +1059,18 @@ INT32 pgmDraw()
 		nPgmPalRecalc = 0;
 	}
 	
-	INT32 nTemp = ((HackCodeDip & 1) || (bDoIpsPatch)) ? 0x1200 : 0x2000;
+	INT32 nTemp = (OldCodeMode) ? 0x1200 : 0x2000;
 
 	{
 		// black / magenta
-		RamCurPal[nTemp/2]		= (nBurnLayer & 1) ? RamCurPal[0x3ff] : BurnHighCol(0xff, 0, 0xff, 0);
+		RamCurPal[(nTemp+0)/2]	= (nBurnLayer & 1) ? RamCurPal[0x3ff] : BurnHighCol(0xff, 0, 0xff, 0);
 		RamCurPal[(nTemp+2)/2]	= BurnHighCol(0xff,0x00,0xff,0);
 	}
 
 	// Fill in background color (0x2000/2)
 	// also, clear buffers
 	{
-		nTemp = ((HackCodeDip & 1) || (bDoIpsPatch)) ? 0x0900 : 0x1000;
+		nTemp = (OldCodeMode) ? 0x0900 : 0x1000;
 
 		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 			pTempDraw32[i]	= RamCurPal[nTemp];
@@ -1096,7 +1090,7 @@ INT32 pgmDraw()
 
 //	if ((pgm_video_control & 0x1000) == 0 && (nBurnLayer & 1)) draw_background();
 	if (nBurnLayer & 1) {
-		if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
+		if (!OldCodeMode) {
 			if ((pgm_video_control & 0x1000) == 0)
 				draw_background();
 		} else {draw_background();}
@@ -1104,7 +1098,7 @@ INT32 pgmDraw()
 
 //	if ((pgm_video_control & 0x2000) == 0 && (nSpriteEnable & 2)) copy_sprite_priority(0);
 	if (nBurnLayer & 2) {
-		if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
+		if (!OldCodeMode) {
 			if ((pgm_video_control & 0x2000) == 0)
 				copy_sprite_priority(0);
 		} else {copy_sprite_priority(0);}
@@ -1116,7 +1110,7 @@ INT32 pgmDraw()
 
 //	if ((pgm_video_control & 0x0800) == 0 && (nBurnLayer & 2)) draw_text();
 	if (nBurnLayer & 2) {
-		if ((HackCodeDip ^ 1) && (!bDoIpsPatch)) {
+		if (!OldCodeMode) {
 			if ((pgm_video_control & 0x0800) == 0)
 				draw_text();
 		} else {draw_text();}

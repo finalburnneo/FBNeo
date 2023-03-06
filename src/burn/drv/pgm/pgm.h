@@ -6,6 +6,9 @@
 
 #define HARDWARE_IGS_JAMMAPCB		0x0002
 
+// d_pgm
+extern UINT8 HackCodeDip;
+
 // pgm_run
 extern INT32 nPGM68KROMLen;
 extern INT32 nPGMSPRColMaskLen;
@@ -31,6 +34,7 @@ extern UINT8 *PGMARMShareRAM;
 extern UINT8 *PGMARMShareRAM2;
 extern UINT16 *PGMRowRAM;
 extern UINT16 *PGMPalRAM;
+extern UINT16 *PGMVidReg;
 extern UINT16 *PGMZoomRAM;
 extern UINT16 *PGMSprBuf;
 extern UINT32 *PGMBgRAM;

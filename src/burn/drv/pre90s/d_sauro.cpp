@@ -1,4 +1,4 @@
-// FB Alpha Sauro driver module
+// FB Neo Sauro driver module
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"
@@ -1022,6 +1022,46 @@ struct BurnDriver BurnDrvSaurob = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, saurobRomInfo, saurobRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 224, 4, 3
+};
+
+
+// Sauro (set 4, easier)
+
+static struct BurnRomInfo saurocRomDesc[] = {
+	{ "sauro_facil.2",	0x8000, 0xac2e1290, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "sauro_facil.1",	0x8000, 0xc7705d1d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "sauro-7.bin",	0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+
+	{ "sauro-4.bin",	0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
+	{ "sauro-5.bin",	0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+
+	{ "sauro-8.bin",	0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
+	{ "sauro-9.bin",	0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
+	{ "sauro-10.bin",	0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
+	{ "sauro-11.bin",	0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+
+	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
+	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
+	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+
+	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+};
+
+STD_ROM_PICK(sauroc)
+STD_ROM_FN(sauroc)
+
+struct BurnDriver BurnDrvSauroc = {
+	"sauroc", "sauro", NULL, NULL, "1987",
+	"Sauro (set 4, easier)\0", NULL, "Tecfri", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, saurocRomInfo, saurocRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };

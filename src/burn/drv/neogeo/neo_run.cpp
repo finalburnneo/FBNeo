@@ -923,10 +923,14 @@ static void MapVectorTable(bool bMapBoardROM)
 
 	if (!bMapBoardROM && Neo68KROMActive) {
 		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0003FF, MAP_ROM);
-		SekMapMemory(Neo68KBIOS, 0xc00000, 0xc003FF, MAP_ROM);
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_DEDICATED_PCB) {
+			SekMapMemory(Neo68KBIOS, 0xc00000, 0xc003FF, MAP_ROM);
+		}
 	} else {
 		SekMapMemory(NeoVectorActive, 0x000000, 0x0003FF, MAP_ROM);
-		SekMapMemory(NeoBiosVectorActive, 0xc00000, 0xc003FF, MAP_ROM);
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_DEDICATED_PCB) {
+			SekMapMemory(NeoBiosVectorActive, 0xc00000, 0xc003FF, MAP_ROM);
+		}
 	}
 }
 

@@ -18869,10 +18869,10 @@ struct BurnDriver BurnDrvmslug3eb = {
 };
 
 
-// Metal Slug 3 (Last Bullet Remix Hack) 2023-02-22
+// Metal Slug 3 (Last Bullet Remix Hack) 2023-03-08
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	{ "256-p1lw.bin",   0x100000,  0x15afff2a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-p2lw.bin",   0x400000,  0x3ddd3781, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-p2lw.bin",   0x400000,  0x6d5ea861, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",    0x020000,  0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -18893,7 +18893,7 @@ STDROMPICKEXT(mslug3lw, mslug3lw, neogeo)
 STD_ROM_FN(mslug3lw)
 
 struct BurnDriver BurnDrvmslug3lw = {
-	"mslug3lw", "mslug3", "neogeo", NULL, "2021",
+	"mslug3lw", "mslug3", "neogeo", NULL, "2023",
 	"Metal Slug 3 (Last Bullet Remix, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

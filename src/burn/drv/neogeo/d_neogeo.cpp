@@ -22651,14 +22651,14 @@ struct BurnDriver BurnDrvmslug3eb = {
 };
 
 // Metal Slug 3 (Last Bullet Remix, Hack)
-// Enter the portal with the following commands : Start + Button D
+// Press the Start key continuously to switch the route value. 
 // Modified by 磁暴线圈
-// 20230222
+// 20230309
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	/* Encrypted */
-	{ "ms3lw.neo-sma",	0x040000, 0xb9519127, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1lw.p1",	0x400000, 0x8f38e111, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2lw.p2",	0x400000, 0x20400f7c, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3lw.neo-sma",	0x040000, 0xdec38e47, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1lw.p1",	0x400000, 0x210e9c7f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2lw.p2",	0x400000, 0xf7f5ab93, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -23376,11 +23376,11 @@ struct BurnDriver BurnDrvmslug5mg = {
 
 // Metal Slug 5 (Stone Turtle, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20230303
+// GOTVG 20230309
 static struct BurnRomInfo mslug5sgRomDesc[] = {
 	/* Encrypted */
-	{ "268-p1csg.p1",	0x400000, 0xab60c026, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2csg.p2",	0x400000, 0xbfe41d68, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "268-p1csg.p1",	0x400000, 0x6068b275, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2csg.p2",	0x400000, 0x0ea4d6b5, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

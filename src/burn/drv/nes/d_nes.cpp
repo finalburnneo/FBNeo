@@ -9917,7 +9917,7 @@ static void ppu_write(UINT16 reg, UINT8 data)
 					//Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
 					//Animal Clipper (HB) - nmi clobbers A register during bootup.
 					//Dragon Power scrolling goes bad
-					//Solution: Delay NMI by 1(?) cpu-cycles.
+					//Solution: Delay NMI by 1(?) opcode
 					//bprintf(0, _T("PPUCTRL: toggle-nmi-arm! scanline %d  pixel %d    frame: %d   PPC %X\n"), scanline, pixel, nCurrentFrame, M6502GetPC(-1));
 					m6502_set_nmi_hold2();
 				}

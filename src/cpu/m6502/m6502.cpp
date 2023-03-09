@@ -316,16 +316,20 @@ int m6502_execute(int cycles)
 			m6502.delay_nmi--;
 			if (m6502.delay_nmi == 0) {
 				m6502.nmi_req = 1;
+				m6502_take_irq();
 			}
 		}
 
-		if( m6502.pending_irq == 1 || m6502.nmi_req)
+		if( m6502.pending_irq == 1)
 			m6502_take_irq();
 
 		op = RDOP();
 
 		//(*m6502.insn[op])();
 		(*insnActive[op])();
+
+		if( m6502.nmi_req )
+			m6502_take_irq();
 
 		/* check if the I flag was just reset (interrupts enabled) */
 		if( m6502.after_cli )

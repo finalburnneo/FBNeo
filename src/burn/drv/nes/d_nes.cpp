@@ -928,6 +928,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x53eb8950) ? ALT_TIMING : 0; // freedom force
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
 	NESMode |= (ROMCRC == 0xe39e0be2) ? ALT_TIMING2 : 0; // laser invasion
+	NESMode |= (ROMCRC == 0x47d22165) ? BAD_HOMEBREW : 0; // animal clipper
 	NESMode |= (ROMCRC == 0x70eac605) ? ALT_TIMING : 0; // deblock
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
@@ -9701,7 +9702,6 @@ static UINT16 ppu_bus_address;
 static INT32 ppu_over; // #cycles we've run over/under to be compensated for on next frame
 static UINT8 ppu_dbus; // ppu data-bus
 static UINT8 ppu_buffer; // VRAM read buffer.
-static INT32 ppu_runextranmi;
 
 static UINT8 write_latch;
 static UINT8 nt_byte;
@@ -9916,17 +9916,17 @@ static void ppu_write(UINT16 reg, UINT8 data)
 					//--Note: If NMI is fired here, it will break:
 					//Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
 					//Animal Clipper (HB) - nmi clobbers A register during bootup.
-					//Solution: Delay NMI by 4(?) cpu-cycles.
-					//Note: Dragon Power needs a slightly longer delay? (GetPC instead of GetPPC) Otherwise scrolling goes bad
-					bprintf(0, _T("PPUCTRL: toggle-nmi-arm! scanline %d  pixel %d    frame: %d   PPC %X\n"), scanline, pixel, nCurrentFrame, M6502GetPrevPC(-1));
-					ppu_runextranmi = cyc_counter + 4;
+					//Dragon Power scrolling goes bad
+					//Solution: Delay NMI by 1(?) cpu-cycles.
+					//bprintf(0, _T("PPUCTRL: toggle-nmi-arm! scanline %d  pixel %d    frame: %d   PPC %X\n"), scanline, pixel, nCurrentFrame, M6502GetPC(-1));
+					m6502_set_nmi_hold2();
 				}
 			} else {
 				//bprintf(0, _T("PPUCTRL: %X  cancel-nmi?  scanline %d  pixel %d   frame %d\n"), data, scanline, pixel, nCurrentFrame);
 			}
 
 			ctrl.reg = data;
-			//bprintf(0, _T("PPUCTRL reg: %X   scanline %d  pixel %d   frame %d\n"), ctrl.reg, scanline, pixel, nCurrentFrame);
+			//bprintf(0, _T("PPUCTRL reg: %X   scanline %d  pixel %d   frame %d  PC  %X\n"), ctrl.reg, scanline, pixel, nCurrentFrame, M6502GetPC(-1));
 			tAddr = (tAddr & 0x73ff) | ((data & 0x3) << 10);
 
 			sprite_height = ctrl.bit.sprsize ? 16 : 8;
@@ -10302,7 +10302,6 @@ void ppu_cycle()
 	else if (scanline == 241)
 		scanlinestate(VBLANK);
 	else if (scanline == prerender_line) {
-		ppu_runextranmi = 0;
 		scanlinestate(PRERENDER);
 	}
 
@@ -10316,18 +10315,6 @@ void ppu_cycle()
 				ppu_bus_address = vAddr & 0x3fff;
 			}
 		}
-	}
-
-	if (ppu_runextranmi && cyc_counter >= ppu_runextranmi) {
-		// Delay by x cpu-cycles when nmi toggled via PPUCTRL during vblank.
-		// Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
-		// will get stuck in the game's nmi handler if the "sta $nmistatus_addr"
-		// op gets executed after the nmi:
-		// "lda #$80, sta PPUCTRL, sta $nmistatus_addr"
-		bprintf(0, _T("toggle-nmi @ scanline %d  pixel %d  PC %X\n"), scanline, pixel, M6502GetPrevPC(-1));
-		M6502SetIRQLine(CPU_IRQLINE_NMI, CPU_IRQSTATUS_AUTO);
-		//M6502Stall(7); // nmi takes 7 cycles (old m6502 core needs this)
-		ppu_runextranmi = 0;
 	}
 }
 
@@ -10414,6 +10401,7 @@ static void ppu_reset()
 
 	// start at (around) vblank to remove 1 full frame of input lag
 	scanline = 239; // line on titlescreen of micromachines if starts on 240
+	if (NESMode & BAD_HOMEBREW) scanline = 0; // animal clipper, enables nmi via ppuctrl, if happens during vblank, game will go nuts
 	pixel = 0;
 	ppu_frame = 0;
 

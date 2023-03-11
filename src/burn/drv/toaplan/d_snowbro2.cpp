@@ -559,7 +559,7 @@ static INT32 DrvInit(INT32 (*pLoadRoms)())
 
 	BurnYM2151Init(27000000 / 8);
 	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
-	MSM6295Init(0, 27000000 / 10 / 132, 1);
+	MSM6295Init(0, 16000000 / 4 / MSM6295_PIN7_LOW, 1);
 	MSM6295SetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset(); // Reset machine

@@ -1581,6 +1581,30 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 	}
 
+	// Defender
+	// Stargate
+	// Robotron
+	// Joust
+	// Sinistar
+	if ((parentrom && strcmp(parentrom, "defender") == 0) ||
+	  (drvname && strcmp(drvname, "defender") == 0) ||
+		(parentrom && strcmp(parentrom, "stargate") == 0) ||
+		(drvname && strcmp(drvname, "stargate") == 0) ||
+		(parentrom && strcmp(parentrom, "robotron") == 0) ||
+		(drvname && strcmp(drvname, "robotron") == 0) ||
+		(parentrom && strcmp(parentrom, "joust") == 0) ||
+		(drvname && strcmp(drvname, "joust") == 0) ||
+		(parentrom && strcmp(parentrom, "sinistar") == 0) ||
+		(drvname && strcmp(drvname, "sinistar") == 0)
+	) {
+		if (strcmp("Auto Up / Manual Down", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L3, description);
+		}
+		if (strcmp("High Score Reset", description) == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, description);
+		}
+	}
+
 	// Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion
 	// Pac-Man - 25th Anniversary Edition
 	if ((parentrom && strcmp(parentrom, "20pacgal") == 0) ||

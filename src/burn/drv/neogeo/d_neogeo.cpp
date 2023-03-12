@@ -727,50 +727,50 @@ static struct BurnDIPInfo neogeoDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,	0xFD, 0,	33,   "BIOS"                     	         },
-	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"  },
-	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"  },
-	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"  },
-	{0x02,	0x01, 0x3f,	0x03, "MVS USA ver. 5 (2 slot)"          },
-	{0x02,	0x01, 0x3f,	0x04, "MVS USA ver. 5 (4 slot)"          },
-	{0x02,	0x01, 0x3f,	0x05, "MVS USA ver. 5 (6 slot)"          },
-	{0x02,	0x01, 0x3f,	0x06, "MVS USA (U4)"                     },
-	{0x02,	0x01, 0x3f,	0x07, "MVS USA (U3)"                     },
-	{0x02,	0x01, 0x3f,	0x08, "MVS Japan ver. 6 (? slot)"        },
-	{0x02,	0x01, 0x3f,	0x09, "MVS Japan ver. 5 (? slot)"        },
-	{0x02,	0x01, 0x3f,	0x0a, "MVS Japan ver. 3 (4 slot)"        },
-	{0x02,	0x01, 0x3f,	0x0b, "NEO-MVH MV1C (Asia)"              },
-	{0x02,	0x01, 0x3f,	0x0c, "NEO-MVH MV1C (Japan)"             },
-	{0x02,	0x01, 0x3f,	0x0d, "MVS Japan (J3)"                   },
-	{0x02,	0x01, 0x3f,	0x0e, "MVS Japan (J3, alt)"              },
-	{0x02,	0x01, 0x3f,	0x0f, "AES Japan"                        },
-	{0x02,	0x01, 0x3f,	0x10, "AES Asia"                         },
-	{0x02,	0x01, 0x3f,	0x11, "Development Kit"                  },
-	{0x02,	0x01, 0x3f,	0x12, "Deck ver. 6 (Git Ver 1.3)"        },
-	{0x02,	0x01, 0x3f,	0x13, "Universe BIOS ver. 4.0"           },
-	{0x02,	0x01, 0x3f,	0x14, "Universe BIOS ver. 3.3"           },
-	{0x02,	0x01, 0x3f,	0x15, "Universe BIOS ver. 3.2"           },
-	{0x02,	0x01, 0x3f,	0x16, "Universe BIOS ver. 3.1"           },
-	{0x02,	0x01, 0x3f,	0x17, "Universe BIOS ver. 3.0"           },
-	{0x02,	0x01, 0x3f,	0x18, "Universe BIOS ver. 2.3"           },
-	{0x02,	0x01, 0x3f,	0x19, "Universe BIOS ver. 2.3 (alt)"     },
-	{0x02,	0x01, 0x3f,	0x1a, "Universe BIOS ver. 2.2"           },
-	{0x02,	0x01, 0x3f,	0x1b, "Universe BIOS ver. 2.1"           },
-	{0x02,	0x01, 0x3f,	0x1c, "Universe BIOS ver. 2.0"           },
-	{0x02,	0x01, 0x3f,	0x1d, "Universe BIOS ver. 1.3"           },
-	{0x02,	0x01, 0x3f,	0x1e, "Universe BIOS ver. 1.2"           },
-	{0x02,	0x01, 0x3f,	0x1f, "Universe BIOS ver. 1.2 (alt)"     },
-	{0x02,	0x01, 0x3f,	0x20, "Universe BIOS ver. 1.1"           },
-	{0x02,	0x01, 0x3f,	0x21, "Universe BIOS ver. 1.0"           },
-	{0x02,	0x01, 0x3f,	0x22, "NeoOpen BIOS v0.1 beta"           },
+	{0,	0xFD, 0,	33,   "BIOS"										},
+	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"			},
+	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"			},
+	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"			},
+	{0x02,	0x01, 0x3f,	0x03, "MVS USA ver. 5 (2 slot)"					},
+	{0x02,	0x01, 0x3f,	0x04, "MVS USA ver. 5 (4 slot)"					},
+	{0x02,	0x01, 0x3f,	0x05, "MVS USA ver. 5 (6 slot)"					},
+	{0x02,	0x01, 0x3f,	0x06, "MVS USA (U4)"							},
+	{0x02,	0x01, 0x3f,	0x07, "MVS USA (U3)"							},
+	{0x02,	0x01, 0x3f,	0x08, "MVS Japan ver. 6 (? slot)"				},
+	{0x02,	0x01, 0x3f,	0x09, "MVS Japan ver. 5 (? slot)"				},
+	{0x02,	0x01, 0x3f,	0x0a, "MVS Japan ver. 3 (4 slot)"				},
+	{0x02,	0x01, 0x3f,	0x0b, "NEO-MVH MV1C (Asia)"						},
+	{0x02,	0x01, 0x3f,	0x0c, "NEO-MVH MV1C (Japan)"					},
+	{0x02,	0x01, 0x3f,	0x0d, "MVS Japan (J3)"							},
+	{0x02,	0x01, 0x3f,	0x0e, "MVS Japan (J3, alt)"						},
+	{0x02,	0x01, 0x3f,	0x0f, "AES Japan"								},
+	{0x02,	0x01, 0x3f,	0x10, "AES Asia"								},
+	{0x02,	0x01, 0x3f,	0x11, "Development Kit"							},
+	{0x02,	0x01, 0x3f,	0x12, "Deck ver. 6 (Git Ver 1.3)"				},
+	{0x02,	0x01, 0x3f,	0x13, "Universe BIOS (Hack, Ver. 4.0)"			},
+	{0x02,	0x01, 0x3f,	0x14, "Universe BIOS (Hack, Ver. 3.3)"			},
+	{0x02,	0x01, 0x3f,	0x15, "Universe BIOS (Hack, Ver. 3.2)"			},
+	{0x02,	0x01, 0x3f,	0x16, "Universe BIOS (Hack, Ver. 3.1)"			},
+	{0x02,	0x01, 0x3f,	0x17, "Universe BIOS (Hack, Ver. 3.0)"			},
+	{0x02,	0x01, 0x3f,	0x18, "Universe BIOS (Hack, Ver. 2.3)"			},
+	{0x02,	0x01, 0x3f,	0x19, "Universe BIOS (Hack, Ver. 2.3, older?)"	},
+	{0x02,	0x01, 0x3f,	0x1a, "Universe BIOS (Hack, Ver. 2.2)"			},
+	{0x02,	0x01, 0x3f,	0x1b, "Universe BIOS (Hack, Ver. 2.1)"			},
+	{0x02,	0x01, 0x3f,	0x1c, "Universe BIOS (Hack, Ver. 2.0)"			},
+	{0x02,	0x01, 0x3f,	0x1d, "Universe BIOS (Hack, Ver. 1.3)"			},
+	{0x02,	0x01, 0x3f,	0x1e, "Universe BIOS (Hack, Ver. 1.2)"			},
+	{0x02,	0x01, 0x3f,	0x1f, "Universe BIOS (Hack, Ver. 1.2, older)"	},
+	{0x02,	0x01, 0x3f,	0x20, "Universe BIOS (Hack, Ver. 1.1)"			},
+	{0x02,	0x01, 0x3f,	0x21, "Universe BIOS (Hack, Ver. 1.0)"			},
+	{0x02,	0x01, 0x3f,	0x22, "NeoOpen BIOS v0.1 beta"					},
 
 	// Memory card
-	{0,		0xFD, 0,	2,	  "Memory card"},
-	{0x02,	0x01, 0x80,	0x80, "Writable"},
-	{0x02,	0x01, 0x80,	0x00, "Write-protected"},
-	{0,		0xFD, 0,	2,	  "New card type"},
-	{0x02,	0x01, 0x40,	0x40, "1 Megabit"},
-	{0x02,	0x01, 0x40,	0x00, "Normal"},
+	{0,		0xFD, 0,	2,	  "Memory card"								},
+	{0x02,	0x01, 0x80,	0x80, "Writable"								},
+	{0x02,	0x01, 0x80,	0x00, "Write-protected"							},
+	{0,		0xFD, 0,	2,	  "New card type"							},
+	{0x02,	0x01, 0x40,	0x40, "1 Megabit"								},
+	{0x02,	0x01, 0x40,	0x00, "Normal"									},
 };
 
 STDDIPINFOEXT(neogeo, neodefault, neogeo)
@@ -834,50 +834,50 @@ static struct BurnDIPInfo neoFakeDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,		0xFD, 0,	33,   "BIOS"                     	     },
-	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"  },
-	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"  },
-	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"  },
-	{0x02,	0x01, 0x3f,	0x03, "MVS USA ver. 5 (2 slot)"          },
-	{0x02,	0x01, 0x3f,	0x04, "MVS USA ver. 5 (4 slot)"          },
-	{0x02,	0x01, 0x3f,	0x05, "MVS USA ver. 5 (6 slot)"          },
-	{0x02,	0x01, 0x3f,	0x06, "MVS USA (U4)"                     },
-	{0x02,	0x01, 0x3f,	0x07, "MVS USA (U3)"                     },
-	{0x02,	0x01, 0x3f,	0x08, "MVS Japan ver. 6 (? slot)"        },
-	{0x02,	0x01, 0x3f,	0x09, "MVS Japan ver. 5 (? slot)"        },
-	{0x02,	0x01, 0x3f,	0x0a, "MVS Japan ver. 3 (4 slot)"        },
-	{0x02,	0x01, 0x3f,	0x0b, "NEO-MVH MV1C (Asia)"              },
-	{0x02,	0x01, 0x3f,	0x0c, "NEO-MVH MV1C (Japan)"             },
-	{0x02,	0x01, 0x3f,	0x0d, "MVS Japan (J3)"                   },
-	{0x02,	0x01, 0x3f,	0x0e, "MVS Japan (J3, alt)"              },
-	{0x02,	0x01, 0x3f,	0x0f, "AES Japan"                        },
-	{0x02,	0x01, 0x3f,	0x10, "AES Asia"                         },
-	{0x02,	0x01, 0x3f,	0x11, "Development Kit"                  },
-	{0x02,	0x01, 0x3f,	0x12, "Deck ver. 6 (Git Ver 1.3)"        },
-	{0x02,	0x01, 0x3f,	0x13, "Universe BIOS ver. 4.0"           },
-	{0x02,	0x01, 0x3f,	0x14, "Universe BIOS ver. 3.3"           },
-	{0x02,	0x01, 0x3f,	0x15, "Universe BIOS ver. 3.2"           },
-	{0x02,	0x01, 0x3f,	0x16, "Universe BIOS ver. 3.1"           },
-	{0x02,	0x01, 0x3f,	0x17, "Universe BIOS ver. 3.0"           },
-	{0x02,	0x01, 0x3f,	0x18, "Universe BIOS ver. 2.3"           },
-	{0x02,	0x01, 0x3f,	0x19, "Universe BIOS ver. 2.3 (alt)"     },
-	{0x02,	0x01, 0x3f,	0x1a, "Universe BIOS ver. 2.2"           },
-	{0x02,	0x01, 0x3f,	0x1b, "Universe BIOS ver. 2.1"           },
-	{0x02,	0x01, 0x3f,	0x1c, "Universe BIOS ver. 2.0"           },
-	{0x02,	0x01, 0x3f,	0x1d, "Universe BIOS ver. 1.3"           },
-	{0x02,	0x01, 0x3f,	0x1e, "Universe BIOS ver. 1.2"           },
-	{0x02,	0x01, 0x3f,	0x1f, "Universe BIOS ver. 1.2 (alt)"     },
-	{0x02,	0x01, 0x3f,	0x20, "Universe BIOS ver. 1.1"           },
-	{0x02,	0x01, 0x3f,	0x21, "Universe BIOS ver. 1.0"           },
-	{0x02,	0x01, 0x3f,	0x22, "NeoOpen BIOS v0.1 beta"           },
+	{0,		0xFD, 0,	33,   "BIOS"									},
+	{0x02,	0x01, 0x3f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"			},
+	{0x02,	0x01, 0x3f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"			},
+	{0x02,	0x01, 0x3f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"			},
+	{0x02,	0x01, 0x3f,	0x03, "MVS USA ver. 5 (2 slot)"					},
+	{0x02,	0x01, 0x3f,	0x04, "MVS USA ver. 5 (4 slot)"					},
+	{0x02,	0x01, 0x3f,	0x05, "MVS USA ver. 5 (6 slot)"					},
+	{0x02,	0x01, 0x3f,	0x06, "MVS USA (U4)"							},
+	{0x02,	0x01, 0x3f,	0x07, "MVS USA (U3)"							},
+	{0x02,	0x01, 0x3f,	0x08, "MVS Japan ver. 6 (? slot)"				},
+	{0x02,	0x01, 0x3f,	0x09, "MVS Japan ver. 5 (? slot)"				},
+	{0x02,	0x01, 0x3f,	0x0a, "MVS Japan ver. 3 (4 slot)"				},
+	{0x02,	0x01, 0x3f,	0x0b, "NEO-MVH MV1C (Asia)"						},
+	{0x02,	0x01, 0x3f,	0x0c, "NEO-MVH MV1C (Japan)"					},
+	{0x02,	0x01, 0x3f,	0x0d, "MVS Japan (J3)"							},
+	{0x02,	0x01, 0x3f,	0x0e, "MVS Japan (J3, alt)"						},
+	{0x02,	0x01, 0x3f,	0x0f, "AES Japan"								},
+	{0x02,	0x01, 0x3f,	0x10, "AES Asia"								},
+	{0x02,	0x01, 0x3f,	0x11, "Development Kit"							},
+	{0x02,	0x01, 0x3f,	0x12, "Deck ver. 6 (Git Ver 1.3)"				},
+	{0x02,	0x01, 0x3f,	0x13, "Universe BIOS (Hack, Ver. 4.0)"			},
+	{0x02,	0x01, 0x3f,	0x14, "Universe BIOS (Hack, Ver. 3.3)"			},
+	{0x02,	0x01, 0x3f,	0x15, "Universe BIOS (Hack, Ver. 3.2)"			},
+	{0x02,	0x01, 0x3f,	0x16, "Universe BIOS (Hack, Ver. 3.1)"			},
+	{0x02,	0x01, 0x3f,	0x17, "Universe BIOS (Hack, Ver. 3.0)"			},
+	{0x02,	0x01, 0x3f,	0x18, "Universe BIOS (Hack, Ver. 2.3)"			},
+	{0x02,	0x01, 0x3f,	0x19, "Universe BIOS (Hack, Ver. 2.3, older?)"	},
+	{0x02,	0x01, 0x3f,	0x1a, "Universe BIOS (Hack, Ver. 2.2)"			},
+	{0x02,	0x01, 0x3f,	0x1b, "Universe BIOS (Hack, Ver. 2.1)"			},
+	{0x02,	0x01, 0x3f,	0x1c, "Universe BIOS (Hack, Ver. 2.0)"			},
+	{0x02,	0x01, 0x3f,	0x1d, "Universe BIOS (Hack, Ver. 1.3)"			},
+	{0x02,	0x01, 0x3f,	0x1e, "Universe BIOS (Hack, Ver. 1.2)"			},
+	{0x02,	0x01, 0x3f,	0x1f, "Universe BIOS (Hack, Ver. 1.2, older)"	},
+	{0x02,	0x01, 0x3f,	0x20, "Universe BIOS (Hack, Ver. 1.1)"			},
+	{0x02,	0x01, 0x3f,	0x21, "Universe BIOS (Hack, Ver. 1.0)"			},
+	{0x02,	0x01, 0x3f,	0x22, "NeoOpen BIOS v0.1 beta"					},
 
 	// Memory card
-	{0,		0xFD, 0,	2,	  "Memory card"},
-	{0x02,	0x01, 0x80,	0x80, "Writable"},
-	{0x02,	0x01, 0x80,	0x00, "Write-protected"},
-	{0,		0xFD, 0,	2,	  "New card type"},
-	{0x02,	0x01, 0x40,	0x40, "1 Megabit"},
-	{0x02,	0x01, 0x40,	0x00, "Normal"},
+	{0,		0xFD, 0,	2,	  "Memory card"								},
+	{0x02,	0x01, 0x80,	0x80, "Writable"								},
+	{0x02,	0x01, 0x80,	0x00, "Write-protected"							},
+	{0,		0xFD, 0,	2,	  "New card type"							},
+	{0x02,	0x01, 0x40,	0x40, "1 Megabit"								},
+	{0x02,	0x01, 0x40,	0x00, "Normal"									},
 };
 
 STDDIPINFOEXT(neoMVS, neoKOF, neoFake)
@@ -913,58 +913,75 @@ static struct BurnDIPInfo neoCDDIPList[] = {
 STDDIPINFO(neoCD)
 
 static struct BurnDIPInfo neotrackballDIPList[] = {
+	DIP_OFFSET(0x0D)
+
 	// Defaults
-	{0x0D,	0xFF, 0xFF,	0x00, NULL},
-	{0x0E,	0xFF, 0x7F,	0x00, NULL},
+	{0x00,	0xFF, 0xFF,	0x00, NULL										},
+	{0x01,	0xFF, 0x7F,	0x00, NULL										},
 	// Fake DIPs
-	{0x0F,	0xFF, 0xFF,	0x86, NULL},
+	{0x02,	0xFF, 0xFF,	0x86, NULL										},
 
 	// DIP 1
-	{0,		0xFE, 0,	2,	  "Setting mode"},
-	{0x0D,	0x01, 0x01,	0x00, "Off"},
-	{0x0D,	0x01, 0x01,	0x01, "On"},
-	{0,		0xFE, 0,	2,	  "Coin chutes"},
-	{0x0D,	0x01, 0x02,	0x00, "1"},
-	{0x0D,	0x01, 0x02,	0x02, "2"},
-	{0,		0xFE, 0,	2,	  "Autofire"},
-	{0x0D,	0x01, 0x04,	0x00, "Off"},
-	{0x0D,	0x01, 0x04,	0x04, "On"},
-	{0,		0xFE, 0,	5,	  "Commmunicaton"},
-	{0x0D,	0x01, 0x38,	0x00, "Disabled"},
-	{0x0D,	0x01, 0x38,	0x08, "Setting 1"},
-	{0x0D,	0x01, 0x38,	0x10, "Setting 2"},
-	{0x0D,	0x01, 0x38,	0x18, "Setting 3"},
-	{0x0D,	0x01, 0x38,	0x20, "Setting 4"},
-	{0x0D,	0x01, 0x38,	0x28, "Setting 5"},
-	{0x0D,	0x01, 0x38,	0x30, "Setting 6"},
-	{0x0D,	0x01, 0x38,	0x38, "Setting 7"},
-	{0,		0xFE, 0,	2,	  "Free play"},
-	{0x0D,	0x01, 0x40,	0x00, "Off"},
-	{0x0D,	0x01, 0x40,	0x40, "On"},
-	{0,		0xFE, 0,	2,	  "Stop mode"},
-	{0x0D,	0x01, 0x80,	0x00, "Off"},
-	{0x0D,	0x01, 0x80,	0x80, "On"},
+	{0,		0xFE, 0,	2,	  "Setting mode"							},
+	{0x00,	0x01, 0x01,	0x00, "Off"										},
+	{0x00,	0x01, 0x01,	0x01, "On"										},
+	{0,		0xFE, 0,	2,	  "Coin chutes"								},
+	{0x00,	0x01, 0x02,	0x00, "1"										},
+	{0x00,	0x01, 0x02,	0x02, "2"										},
+	{0,		0xFE, 0,	2,	  "Autofire"								},
+	{0x00,	0x01, 0x04,	0x00, "Off"										},
+	{0x00,	0x01, 0x04,	0x04, "On"										},
+	{0,		0xFE, 0,	5,	  "Commmunicaton"							},
+	{0x00,	0x01, 0x38,	0x00, "Disabled"},
+	{0x00,	0x01, 0x38,	0x08, "Setting 1"								},
+	{0x00,	0x01, 0x38,	0x10, "Setting 2"								},
+	{0x00,	0x01, 0x38,	0x18, "Setting 3"								},
+	{0x00,	0x01, 0x38,	0x20, "Setting 4"								},
+	{0x00,	0x01, 0x38,	0x28, "Setting 5"								},
+	{0x00,	0x01, 0x38,	0x30, "Setting 6"								},
+	{0x00,	0x01, 0x38,	0x38, "Setting 7"								},
+	{0,		0xFE, 0,	2,	  "Free play"								},
+	{0x00,	0x01, 0x40,	0x00, "Off"},
+	{0x00,	0x01, 0x40,	0x40, "On"										},
+	{0,		0xFE, 0,	2,	  "Stop mode"								},
+	{0x00,	0x01, 0x80,	0x00, "Off"										},
+	{0x00,	0x01, 0x80,	0x80, "On"										},
 
+#if 0
 	// MVS/AES system
 	{0,		0xFD, 0,	2,	  NULL},
-	{0x0F,	0x02, 0x04,	0x04, "MVS system"},
-	{0x0F,	0x00, 0x30,	0x00, NULL},
-	{0x0F,	0x02, 0x04,	0x00, "AES system"},
-	{0x0F,	0x00, 0x30,	0x00, NULL},
+	{0x02,	0x02, 0x04,	0x04, "MVS system"},
+	{0x02,	0x00, 0x30,	0x00, NULL},
+	{0x02,	0x02, 0x04,	0x00, "AES system"},
+	{0x02,	0x00, 0x30,	0x00, NULL},
 	// Region
 	{0,		0xFD, 0,	3,	  "Region"},
-	{0x0F,	0x01, 0x03,	0x00, "Japan"},
-	{0x0F,	0x01, 0x03,	0x01, "USA"},
-	{0x0F,	0x01, 0x03,	0x02, "Asia / Europe"},
-	{0x0F,	0x01, 0x03,	0x03, "Japan"},
+	{0x02,	0x01, 0x03,	0x00, "Japan"},
+	{0x02,	0x01, 0x03,	0x01, "USA"},
+	{0x02,	0x01, 0x03,	0x02, "Asia / Europe"},
+	{0x02,	0x01, 0x03,	0x03, "Japan"},
+#endif
+
+	// BIOS
+	{0,		0xFD, 0,	10,   "BIOS"									},
+	{0x02,	0x01, 0x3f,	0x06, "Asia MV1B 263"							},
+	{0x02,	0x01, 0x3f,	0x24, "Japan (hack?)"							},
+	{0x02,	0x01, 0x3f,	0x13, "Universe BIOS (Hack, Ver. 4.0)"			},
+	{0x02,	0x01, 0x3f,	0x14, "Universe BIOS (Hack, Ver. 3.3)"			},
+	{0x02,	0x01, 0x3f,	0x15, "Universe BIOS (Hack, Ver. 3.2)"			},
+	{0x02,	0x01, 0x3f,	0x16, "Universe BIOS (Hack, Ver. 3.1)"			},
+	{0x02,	0x01, 0x3f,	0x17, "Universe BIOS (Hack, Ver. 3.0)"			},
+	{0x02,	0x01, 0x3f,	0x18, "Universe BIOS (Hack, Ver. 2.3)"			},
+	{0x02,	0x01, 0x3f,	0x19, "Universe BIOS (Hack, Ver. 2.3, older?)"	},
+	{0x02,	0x01, 0x3f,	0x1a, "Universe BIOS (Hack, Ver. 2.2)"			},
 
 	// Memory card
-	{0,		0xFD, 0,	2,	  "Memory card"},
-	{0x0F,	0x01, 0x80,	0x80, "Writable"},
-	{0x0F,	0x01, 0x80,	0x00, "Write-protected"},
-	{0,		0xFD, 0,	2,	  "Default card type"},
-	{0x0F,	0x01, 0x40,	0x40, "1 Megabit"},
-	{0x0F,	0x01, 0x40,	0x00, "Normal"},
+	{0,		0xFD, 0,	2,	  "Memory card"								},
+	{0x02,	0x01, 0x80,	0x80, "Writable"								},
+	{0x02,	0x01, 0x80,	0x00, "Write-protected"							},
+	{0,		0xFD, 0,	2,	  "Default card type"						},
+	{0x02,	0x01, 0x40,	0x40, "1 Megabit"								},
+	{0x02,	0x01, 0x40,	0x00, "Normal"									},
 };
 
 STDDIPINFO(neotrackball)
@@ -1033,21 +1050,21 @@ static struct BurnRomInfo neogeoRomDesc[] = {
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 17
 #endif
 	{ "sp-1v1_3db8c.bin",  0x20000, 0x162f0ebe, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 18 Deck ver. 6 (Git Ver 1.3)
-	{ "uni-bios_4_0.rom",  0x20000, 0xa7aab458, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 19 Universe BIOS ver. 4.0 (free)
-	{ "uni-bios_3_3.rom",  0x20000, 0x24858466, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 20 Universe BIOS ver. 3.3 (free)
-	{ "uni-bios_3_2.rom",  0x20000, 0xa4e8b9b3, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 21 Universe BIOS ver. 3.2 (free)
-	{ "uni-bios_3_1.rom",  0x20000, 0x0c58093f, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 22 Universe BIOS ver. 3.1 (free)
-	{ "uni-bios_3_0.rom",  0x20000, 0xa97c89a9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 23 Universe BIOS ver. 3.0 (free)
-	{ "uni-bios_2_3.rom",  0x20000, 0x27664eb5, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 24 Universe BIOS ver. 2.3
-	{ "uni-bios_2_3o.rom", 0x20000, 0x601720ae, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 25 Universe BIOS ver. 2.3 (alt)
-	{ "uni-bios_2_2.rom",  0x20000, 0x2d50996a, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 26 Universe BIOS ver. 2.2
-	{ "uni-bios_2_1.rom",  0x20000, 0x8dabf76b, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 27 Universe BIOS ver. 2.1
-	{ "uni-bios_2_0.rom",  0x20000, 0x0c12c2ad, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 28 Universe BIOS ver. 2.0
-	{ "uni-bios_1_3.rom",  0x20000, 0xb24b44a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 29 Universe BIOS ver. 1.3
-	{ "uni-bios_1_2.rom",  0x20000, 0x4fa698e9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 30 Universe BIOS ver. 1.2
-	{ "uni-bios_1_2o.rom", 0x20000, 0xe19d3ce9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 31 Universe BIOS ver. 1.2 (alt)
-	{ "uni-bios_1_1.rom",  0x20000, 0x5dda0d84, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 32 Universe BIOS ver. 1.1
-	{ "uni-bios_1_0.rom",  0x20000, 0x0ce453a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 33 Universe BIOS ver. 1.0
+	{ "uni-bios_4_0.rom",  0x20000, 0xa7aab458, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 19 Universe BIOS (Hack, Ver. 4.0)
+	{ "uni-bios_3_3.rom",  0x20000, 0x24858466, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 20 Universe BIOS (Hack, Ver. 3.3)
+	{ "uni-bios_3_2.rom",  0x20000, 0xa4e8b9b3, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 21 Universe BIOS (Hack, Ver. 3.2)
+	{ "uni-bios_3_1.rom",  0x20000, 0x0c58093f, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 22 Universe BIOS (Hack, Ver. 3.1)
+	{ "uni-bios_3_0.rom",  0x20000, 0xa97c89a9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 23 Universe BIOS (Hack, Ver. 3.0)
+	{ "uni-bios_2_3.rom",  0x20000, 0x27664eb5, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 24 Universe BIOS (Hack, Ver. 2.3)
+	{ "uni-bios_2_3o.rom", 0x20000, 0x601720ae, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 25 Universe BIOS (Hack, Ver. 2.3, older?)
+	{ "uni-bios_2_2.rom",  0x20000, 0x2d50996a, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 26 Universe BIOS (Hack, Ver. 2.2)
+	{ "uni-bios_2_1.rom",  0x20000, 0x8dabf76b, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 27 Universe BIOS (Hack, Ver. 2.1)
+	{ "uni-bios_2_0.rom",  0x20000, 0x0c12c2ad, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 28 Universe BIOS (Hack, Ver. 2.0)
+	{ "uni-bios_1_3.rom",  0x20000, 0xb24b44a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 29 Universe BIOS (Hack, Ver. 1.3)
+	{ "uni-bios_1_2.rom",  0x20000, 0x4fa698e9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 30 Universe BIOS (Hack, Ver. 1.2)
+	{ "uni-bios_1_2o.rom", 0x20000, 0xe19d3ce9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 31 Universe BIOS (Hack, Ver. 1.2, older)
+	{ "uni-bios_1_1.rom",  0x20000, 0x5dda0d84, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 32 Universe BIOS (Hack, Ver. 1.1)
+	{ "uni-bios_1_0.rom",  0x20000, 0x0ce453a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 33 Universe BIOS (Hack, Ver. 1.0)
 #if !defined (ROM_VERIFY)
 	{ "neopen.sp1",        0x20000, 0xcb915e76, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 34 NeoOpen BIOS v0.1 beta
 #else
@@ -1085,21 +1102,21 @@ static struct BurnRomInfo neoMVSRomDesc[] = {
 	{ "neo-epo.bin",       0x20000, 0xd27a71f1, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 16 AES Asia
 	{ "neodebug.bin",      0x20000, 0x698ebb7d, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 17 Development Kit
 	{ "sp-1v1_3db8c.bin",  0x20000, 0x162f0ebe, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 18 Deck ver. 6 (Git Ver 1.3)
-	{ "uni-bios_4_0.rom",  0x20000, 0xa7aab458, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 19 Universe BIOS ver. 4.0 (free)
-	{ "uni-bios_3_3.rom",  0x20000, 0x24858466, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 20 Universe BIOS ver. 3.3 (free)
-	{ "uni-bios_3_2.rom",  0x20000, 0xa4e8b9b3, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 21 Universe BIOS ver. 3.2 (free)
-	{ "uni-bios_3_1.rom",  0x20000, 0x0c58093f, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 22 Universe BIOS ver. 3.1 (free)
-	{ "uni-bios_3_0.rom",  0x20000, 0xa97c89a9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 23 Universe BIOS ver. 3.0 (free)
-	{ "uni-bios_2_3.rom",  0x20000, 0x27664eb5, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 24 Universe BIOS ver. 2.3
-	{ "uni-bios_2_3o.rom", 0x20000, 0x601720ae, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 25 Universe BIOS ver. 2.3 (alt)
-	{ "uni-bios_2_2.rom",  0x20000, 0x2d50996a, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 26 Universe BIOS ver. 2.2
-	{ "uni-bios_2_1.rom",  0x20000, 0x8dabf76b, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 27 Universe BIOS ver. 2.1
-	{ "uni-bios_2_0.rom",  0x20000, 0x0c12c2ad, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 28 Universe BIOS ver. 2.0
-	{ "uni-bios_1_3.rom",  0x20000, 0xb24b44a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 29 Universe BIOS ver. 1.3
-	{ "uni-bios_1_2.rom",  0x20000, 0x4fa698e9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 30 Universe BIOS ver. 1.2
-	{ "uni-bios_1_2o.rom", 0x20000, 0xe19d3ce9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 31 Universe BIOS ver. 1.2 (alt)
-	{ "uni-bios_1_1.rom",  0x20000, 0x5dda0d84, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 32 Universe BIOS ver. 1.1
-	{ "uni-bios_1_0.rom",  0x20000, 0x0ce453a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 33 Universe BIOS ver. 1.0
+	{ "uni-bios_4_0.rom",  0x20000, 0xa7aab458, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 19 Universe BIOS (Hack, Ver. 4.0)
+	{ "uni-bios_3_3.rom",  0x20000, 0x24858466, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 20 Universe BIOS (Hack, Ver. 3.3)
+	{ "uni-bios_3_2.rom",  0x20000, 0xa4e8b9b3, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 21 Universe BIOS (Hack, Ver. 3.2)
+	{ "uni-bios_3_1.rom",  0x20000, 0x0c58093f, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 22 Universe BIOS (Hack, Ver. 3.1)
+	{ "uni-bios_3_0.rom",  0x20000, 0xa97c89a9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 23 Universe BIOS (Hack, Ver. 3.0)
+	{ "uni-bios_2_3.rom",  0x20000, 0x27664eb5, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 24 Universe BIOS (Hack, Ver. 2.3)
+	{ "uni-bios_2_3o.rom", 0x20000, 0x601720ae, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 25 Universe BIOS (Hack, Ver. 2.3, older?)
+	{ "uni-bios_2_2.rom",  0x20000, 0x2d50996a, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 26 Universe BIOS (Hack, Ver. 2.2)
+	{ "uni-bios_2_1.rom",  0x20000, 0x8dabf76b, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 27 Universe BIOS (Hack, Ver. 2.1)
+	{ "uni-bios_2_0.rom",  0x20000, 0x0c12c2ad, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 28 Universe BIOS (Hack, Ver. 2.0)
+	{ "uni-bios_1_3.rom",  0x20000, 0xb24b44a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 29 Universe BIOS (Hack, Ver. 1.3)
+	{ "uni-bios_1_2.rom",  0x20000, 0x4fa698e9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 30 Universe BIOS (Hack, Ver. 1.2)
+	{ "uni-bios_1_2o.rom", 0x20000, 0xe19d3ce9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 31 Universe BIOS (Hack, Ver. 1.2, older)
+	{ "uni-bios_1_1.rom",  0x20000, 0x5dda0d84, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 32 Universe BIOS (Hack, Ver. 1.1)
+	{ "uni-bios_1_0.rom",  0x20000, 0x0ce453a0, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 33 Universe BIOS (Hack, Ver. 1.0)
 	{ "neopen.sp1",        0x20000, 0xcb915e76, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 34 NeoOpen BIOS v0.1 beta
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 35 Trackball BIOS loaded here
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 36 PCB BIOS loaded here
@@ -1113,49 +1130,49 @@ STD_ROM_PICK(neoMVS)
 STD_ROM_FN(neoMVS)
 
 static struct BurnRomInfo neotrackballRomDesc[] = {
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  0
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  1
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  2
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  3
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  4
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  5
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  6
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  7
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  8
-	{ "",                  0x00000, 0x00000000, 0                                                   }, //  9
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 10
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 11
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 12
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 13
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 14
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 15
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 16
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 17
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 18
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 19
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 20
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 21
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 22
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 23
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 24
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 25
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 26
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 27
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 28
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 29
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 30
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 31
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 32
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 33
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 34
-	{ "236-bios.sp1",      0x20000, 0x853e6b96, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 35 Trackball BIOS
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 36
+	{ "",							0x00000, 0x00000000, 0														}, //  0
+	{ "",							0x00000, 0x00000000, 0														}, //  1
+	{ "",							0x00000, 0x00000000, 0														}, //  2
+	{ "",							0x00000, 0x00000000, 0														}, //  3
+	{ "",							0x00000, 0x00000000, 0														}, //  4
+	{ "",							0x00000, 0x00000000, 0														}, //  5
+	{ "",							0x00000, 0x00000000, 0														}, //  6
+	{ "",							0x00000, 0x00000000, 0														}, //  7
+	{ "",							0x00000, 0x00000000, 0														}, //  8
+	{ "",							0x00000, 0x00000000, 0														}, //  9
+	{ "",							0x00000, 0x00000000, 0														}, // 10
+	{ "",							0x00000, 0x00000000, 0														}, // 11
+	{ "",							0x00000, 0x00000000, 0														}, // 12
+	{ "",							0x00000, 0x00000000, 0														}, // 13
+	{ "",							0x00000, 0x00000000, 0														}, // 14
+	{ "",							0x00000, 0x00000000, 0														}, // 15
+	{ "",							0x00000, 0x00000000, 0														}, // 16
+	{ "",							0x00000, 0x00000000, 0														}, // 17
+	{ "",							0x00000, 0x00000000, 0														}, // 18
+	{ "uni-bios_4_0.rom",			0x20000, 0xa7aab458, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 19 Universe BIOS (Hack, Ver. 4.0) (free)
+	{ "uni-bios_3_3.rom",			0x20000, 0x24858466, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 20 Universe BIOS (Hack, Ver. 3.3)
+	{ "uni-bios_3_2.rom",			0x20000, 0xa4e8b9b3, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 21 Universe BIOS (Hack, Ver. 3.2)
+	{ "uni-bios_3_1.rom",			0x20000, 0x0c58093f, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 22 Universe BIOS (Hack, Ver. 3.1)
+	{ "uni-bios_3_0.rom",			0x20000, 0xa97c89a9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 23 Universe BIOS (Hack, Ver. 3.0)
+	{ "uni-bios_2_3.rom",			0x20000, 0x27664eb5, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 24 Universe BIOS (Hack, Ver. 2.3)
+	{ "uni-bios_2_3o.rom",			0x20000, 0x601720ae, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 25 Universe BIOS (Hack, Ver. 2.3, older?)
+	{ "uni-bios_2_2.rom",			0x20000, 0x2d50996a, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 26 Universe BIOS (Hack, Ver. 2.2)
+	{ "",							0x00000, 0x00000000, 0														}, // 27
+	{ "",							0x00000, 0x00000000, 0														}, // 28
+	{ "",							0x00000, 0x00000000, 0														}, // 29
+	{ "",							0x00000, 0x00000000, 0														}, // 30
+	{ "",							0x00000, 0x00000000, 0														}, // 31
+	{ "",							0x00000, 0x00000000, 0														}, // 32
+	{ "",							0x00000, 0x00000000, 0														}, // 33
+	{ "",							0x00000, 0x00000000, 0														}, // 34
+	{ "236-bios.sp1",				0x20000, 0x853e6b96, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 35 Trackball BIOS / Asia MV1B 263
+	{ "236-bios_japan_hack.sp1",	0x20000, 0x02bf4426, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT	}, // 36 Trackball BIOS / Japan (hack?)
 
 
-//	{ "sm1.sm1",           0x20000, 0x94416d67, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 37 Z80 BIOS
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 37 Z80 BIOS
-	{ "sfix.sfix",         0x20000, 0xc2ea0cfd, BRF_GRA | BRF_BIOS                                  }, // 38 Text layer tiles
-	{ "000-lo.lo",         0x20000, 0x5a86cff2, BRF_ESS | BRF_BIOS                                  }, // 39 Zoom table
+//	{ "sm1.sm1",					0x20000, 0x94416d67, BRF_ESS | BRF_PRG | BRF_BIOS							}, // 37 Z80 BIOS
+	{ "",							0x00000, 0x00000000, 0														}, // 37 Z80 BIOS
+	{ "sfix.sfix",					0x20000, 0xc2ea0cfd, BRF_GRA | BRF_BIOS										}, // 38 Text layer tiles
+	{ "000-lo.lo",					0x20000, 0x5a86cff2, BRF_ESS | BRF_BIOS										}, // 39 Zoom table
 };
 
 static struct BurnRomInfo ms5pcbBIOSRomDesc[] = {
@@ -13637,10 +13654,10 @@ STDROMPICKEXT(puzzldpr, puzzldpr, neogeo)
 STD_ROM_FN(puzzldpr)
 
 struct BurnDriver BurnDrvpuzzldpr = {
-	"puzzldpr", "puzzledp", "neogeo", NULL, "1997",
+	"puzzldpr", NULL, "neogeo", NULL, "1997",
 	"Puzzle De Pon! R!\0", NULL, "Visco", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
 	NULL, puzzldprRomInfo, puzzldprRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3

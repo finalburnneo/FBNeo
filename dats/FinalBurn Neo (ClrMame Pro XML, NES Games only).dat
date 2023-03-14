@@ -1650,7 +1650,7 @@
 		<comment>Homebrew</comment>
 		<description>Battle Kid - Fortress of Peril (HB, Japan)</description>
 		<year>2010</year>
-		<manufacturer>Sivak</manufacturer>
+		<manufacturer>Sivak Games</manufacturer>
 		<rom name="Battle Kid - Fortress of Peril (Japan).nes" size="524304" crc="c7f3a581"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1659,7 +1659,7 @@
 		<comment>Homebrew</comment>
 		<description>Battle Kid 2 - Mountain of Torment (HB, USA)</description>
 		<year>2012</year>
-		<manufacturer>Sivak</manufacturer>
+		<manufacturer>Sivak Games</manufacturer>
 		<rom name="Battle Kid 2 - Mountain of Torment (USA).nes" size="524304" crc="4916dc6d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -2014,6 +2014,15 @@
 		<year>1988</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Blaster Master (USA).nes" size="262160" crc="52bcf64a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="blazblocks">
+		<comment>Homebrew</comment>
+		<description>Blazing Blocks (HB)</description>
+		<year>2023</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="Blazing Blocks (2023)(FG Software).nes" size="65552" crc="3a8f9933"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -4117,6 +4126,15 @@
 		<year>2016</year>
 		<manufacturer>Dushbadge</manufacturer>
 		<rom name="Digital Devil Monogatari - Megami Tensei II (T-eng).nes" size="524304" crc="31d915cd"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="dinohockey">
+		<comment>Prototype</comment>
+		<description>Dino Hockey (Prototype)</description>
+		<year>1991</year>
+		<manufacturer>Sunsoft - Virgin Games</manufacturer>
+		<rom name="Dino Hockey (Proto)(1991)(Virgin Games).nes" size="262160" crc="c3710b73"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11576,6 +11594,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mystpillars">
+		<comment>Homebrew</comment>
+		<description>Mystic Pillars (HB)</description>
+		<year>2008</year>
+		<manufacturer>Sivak Games</manufacturer>
+		<rom name="Mystic Pillars (2008)(Sivak Games).nes" size="524304" crc="420f1b1a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="nalleland">
 		<comment>Homebrew</comment>
 		<description>Nalle Land (HB, v0.4.0)</description>
@@ -18627,6 +18654,23 @@
 		<year>1985</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Zippy Race (Japan).nes" size="24592" crc="6f0e4a40"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zoids">
+		<comment>Hack</comment>
+		<description>Zoids - Battle of Central Continent (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Life With Matthew</manufacturer>
+		<rom name="Zoids - Chuuou Tairiku no Tatakai T-Eng (2023)(Life With Matthew).nes" size="131088" crc="1528e6c0"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zoidsj" cloneof="zoids" romof="zoids">
+		<description>Zoids - Chuuou Tairiku no Tatakai (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Toshiba-EMI</manufacturer>
+		<rom name="Zoids - Chuuou Tairiku no Tatakai (J)(1987)(Toshiba-EMI).nes" size="131088" crc="e3d6a15a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

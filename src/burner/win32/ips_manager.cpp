@@ -955,8 +955,14 @@ static UINT32 GetIpsDefineExpValue(char* szTmp)
 
 	INT32 nRet = 0;
 
-	if (     0 == strcmp(szTmp, "EXP_VALUE_002")) nRet = 0x0020000;
+	if (     0 == strcmp(szTmp, "EXP_VALUE_001")) nRet = 0x0010000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_002")) nRet = 0x0020000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_003")) nRet = 0x0030000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_004")) nRet = 0x0040000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_005")) nRet = 0x0050000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_006")) nRet = 0x0060000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_007")) nRet = 0x0070000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_008")) nRet = 0x0080000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_010")) nRet = 0x0100000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_020")) nRet = 0x0200000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_030")) nRet = 0x0300000;

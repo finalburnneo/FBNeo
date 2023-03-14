@@ -219,6 +219,14 @@ void m6502_set_nmi_hold()
 	m6502.hold_nmi = 1;
 }
 
+// for nes - ppuctrl transition to 0x80 during vblank takes nmi after
+// next opcode has executed
+void m6502_set_nmi_hold2()
+{
+	m6502.hold_nmi = 1;
+	m6502.delay_nmi = 2;
+}
+
 M6502_INLINE void m6502_take_irq(void)
 {
 	if (m6502.nmi_req)
@@ -303,6 +311,15 @@ int m6502_execute(int cycles)
 //		debugger_instruction_hook(Machine, PCD);
 
 		/* if an irq is pending, take it now */
+
+		if (m6502.delay_nmi > 0) {
+			m6502.delay_nmi--;
+			if (m6502.delay_nmi == 0) {
+				m6502.nmi_req = 1;
+				m6502_take_irq();
+			}
+		}
+
 		if( m6502.pending_irq == 1)
 			m6502_take_irq();
 
@@ -335,7 +352,7 @@ int m6502_execute(int cycles)
 					m6502.pending_irq = 1;
 				}
 			}
-			if( m6502.pending_irq == 1 || m6502.nmi_req == 1 )
+			if( m6502.pending_irq == 1 )
 				m6502_take_irq();
 			if ( m6502.pending_irq == 2 ) {
 				m6502.pending_irq = 1;

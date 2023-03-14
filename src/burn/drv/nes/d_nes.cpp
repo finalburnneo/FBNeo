@@ -928,6 +928,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x53eb8950) ? ALT_TIMING : 0; // freedom force
 	NESMode |= (ROMCRC == 0x560142bc) ? ALT_TIMING2 : 0; // don doko don 2
 	NESMode |= (ROMCRC == 0xe39e0be2) ? ALT_TIMING2 : 0; // laser invasion
+	NESMode |= (ROMCRC == 0x47d22165) ? BAD_HOMEBREW : 0; // animal clipper
 	NESMode |= (ROMCRC == 0x70eac605) ? ALT_TIMING : 0; // deblock
 	NESMode |= (ROMCRC == 0x3616c7dd) ? ALT_TIMING : 0; // days of thunder
 	NESMode |= (ROMCRC == 0xeb506bf9) ? ALT_TIMING : 0; // star wars
@@ -9701,7 +9702,6 @@ static UINT16 ppu_bus_address;
 static INT32 ppu_over; // #cycles we've run over/under to be compensated for on next frame
 static UINT8 ppu_dbus; // ppu data-bus
 static UINT8 ppu_buffer; // VRAM read buffer.
-static INT32 ppu_runextranmi;
 
 static UINT8 write_latch;
 static UINT8 nt_byte;
@@ -9916,17 +9916,17 @@ static void ppu_write(UINT16 reg, UINT8 data)
 					//--Note: If NMI is fired here, it will break:
 					//Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
 					//Animal Clipper (HB) - nmi clobbers A register during bootup.
-					//Solution: Delay NMI by 4(?) cpu-cycles.
-					//Note: Dragon Power needs a slightly longer delay? (GetPC instead of GetPPC) Otherwise scrolling goes bad
-					bprintf(0, _T("PPUCTRL: toggle-nmi-arm! scanline %d  pixel %d    frame: %d   PPC %X\n"), scanline, pixel, nCurrentFrame, M6502GetPrevPC(-1));
-					ppu_runextranmi = cyc_counter + 4;
+					//Dragon Power scrolling goes bad
+					//Solution: Delay NMI by 1(?) opcode
+					//bprintf(0, _T("PPUCTRL: toggle-nmi-arm! scanline %d  pixel %d    frame: %d   PPC %X\n"), scanline, pixel, nCurrentFrame, M6502GetPC(-1));
+					m6502_set_nmi_hold2();
 				}
 			} else {
 				//bprintf(0, _T("PPUCTRL: %X  cancel-nmi?  scanline %d  pixel %d   frame %d\n"), data, scanline, pixel, nCurrentFrame);
 			}
 
 			ctrl.reg = data;
-			//bprintf(0, _T("PPUCTRL reg: %X   scanline %d  pixel %d   frame %d\n"), ctrl.reg, scanline, pixel, nCurrentFrame);
+			//bprintf(0, _T("PPUCTRL reg: %X   scanline %d  pixel %d   frame %d  PC  %X\n"), ctrl.reg, scanline, pixel, nCurrentFrame, M6502GetPC(-1));
 			tAddr = (tAddr & 0x73ff) | ((data & 0x3) << 10);
 
 			sprite_height = ctrl.bit.sprsize ? 16 : 8;
@@ -10302,7 +10302,6 @@ void ppu_cycle()
 	else if (scanline == 241)
 		scanlinestate(VBLANK);
 	else if (scanline == prerender_line) {
-		ppu_runextranmi = 0;
 		scanlinestate(PRERENDER);
 	}
 
@@ -10316,18 +10315,6 @@ void ppu_cycle()
 				ppu_bus_address = vAddr & 0x3fff;
 			}
 		}
-	}
-
-	if (ppu_runextranmi && cyc_counter >= ppu_runextranmi) {
-		// Delay by x cpu-cycles when nmi toggled via PPUCTRL during vblank.
-		// Bram Stokers Dracula, Galaxy 5000, GLUK The Thunder aka Thunder Warrior
-		// will get stuck in the game's nmi handler if the "sta $nmistatus_addr"
-		// op gets executed after the nmi:
-		// "lda #$80, sta PPUCTRL, sta $nmistatus_addr"
-		bprintf(0, _T("toggle-nmi @ scanline %d  pixel %d  PC %X\n"), scanline, pixel, M6502GetPrevPC(-1));
-		M6502SetIRQLine(CPU_IRQLINE_NMI, CPU_IRQSTATUS_AUTO);
-		//M6502Stall(7); // nmi takes 7 cycles (old m6502 core needs this)
-		ppu_runextranmi = 0;
 	}
 }
 
@@ -10414,6 +10401,7 @@ static void ppu_reset()
 
 	// start at (around) vblank to remove 1 full frame of input lag
 	scanline = 239; // line on titlescreen of micromachines if starts on 240
+	if (NESMode & BAD_HOMEBREW) scanline = 0; // animal clipper, enables nmi via ppuctrl, if happens during vblank, game will go nuts
 	pixel = 0;
 	ppu_frame = 0;
 
@@ -22117,9 +22105,81 @@ struct BurnDriver BurnDrvnes_ripisland = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zoids - Chuuou Tairiku no Tatakai (Japan)
+static struct BurnRomInfo nes_zoidsjRomDesc[] = {
+	{ "Zoids - Chuuou Tairiku no Tatakai (J)(1987)(Toshiba-EMI).nes",          131088, 0xe3d6a15a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zoidsj)
+STD_ROM_FN(nes_zoidsj)
+
+struct BurnDriver BurnDrvnes_zoidsj = {
+	"nes_zoidsj", "nes_zoids", NULL, NULL, "1987",
+	"Zoids - Chuuou Tairiku no Tatakai (Japan)\0", NULL, "Toshiba-EMI", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_zoidsjRomInfo, nes_zoidsjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Zoids - Battle of Central Continent (T-Eng)
+// https://www.romhacking.net/translations/6845/
+static struct BurnRomInfo nes_zoidsRomDesc[] = {
+	{ "Zoids - Chuuou Tairiku no Tatakai T-Eng (2023)(Life With Matthew).nes",          131088, 0x1528e6c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zoids)
+STD_ROM_FN(nes_zoids)
+
+struct BurnDriver BurnDrvnes_zoids = {
+	"nes_zoids", NULL, NULL, NULL, "2023",
+	"Zoids - Battle of Central Continent (T-Eng)\0", NULL, "Life With Matthew", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_zoidsRomInfo, nes_zoidsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dino Hockey (Prototype)
+static struct BurnRomInfo nes_dinohockeyRomDesc[] = {
+	{ "Dino Hockey (Proto)(1991)(Virgin Games).nes",          262160, 0xc3710b73, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dinohockey)
+STD_ROM_FN(nes_dinohockey)
+
+struct BurnDriver BurnDrvnes_dinohockey = {
+	"nes_dinohockey", NULL, NULL, NULL, "1991",
+	"Dino Hockey (Prototype)\0", NULL, "Sunsoft - Virgin Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_dinohockeyRomInfo, nes_dinohockeyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
+
+static struct BurnRomInfo nes_blazblocksRomDesc[] = {
+	{ "Blazing Blocks (2023)(FG Software).nes",          65552, 0x3a8f9933, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blazblocks)
+STD_ROM_FN(nes_blazblocks)
+
+struct BurnDriver BurnDrvnes_blazblocks = {
+	"nes_blazblocks", NULL, NULL, NULL, "2023",
+	"Blazing Blocks (HB)\0", NULL, "FG Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_blazblocksRomInfo, nes_blazblocksRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 static struct BurnRomInfo nes_bowbeastRomDesc[] = {
 	{ "Bowels of the Beast (2021)(T-bone).nes",          524304, 0x2002b239, BRF_ESS | BRF_PRG },
@@ -22134,6 +22194,23 @@ struct BurnDriver BurnDrvnes_bowbeast = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bowbeastRomInfo, nes_bowbeastRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_mystpillarsRomDesc[] = {
+	{ "Mystic Pillars (2008)(Sivak Games).nes",          524304, 0x420f1b1a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mystpillars)
+STD_ROM_FN(nes_mystpillars)
+
+struct BurnDriver BurnDrvnes_mystpillars = {
+	"nes_mystpillars", NULL, NULL, NULL, "2008",
+	"Mystic Pillars (HB)\0", NULL, "Sivak Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_mystpillarsRomInfo, nes_mystpillarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -28241,7 +28318,7 @@ STD_ROM_FN(nes_battlkid)
 
 struct BurnDriver BurnDrvnes_battlkid = {
 	"nes_battlkid", NULL, NULL, NULL, "2010",
-	"Battle Kid - Fortress of Peril (HB, Japan)\0", NULL, "Sivak", "Miscellaneous",
+	"Battle Kid - Fortress of Peril (HB, Japan)\0", NULL, "Sivak Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_battlkidRomInfo, nes_battlkidRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -28258,7 +28335,7 @@ STD_ROM_FN(nes_battlkid2)
 
 struct BurnDriver BurnDrvnes_battlkid2 = {
 	"nes_battlkid2", NULL, NULL, NULL, "2012",
-	"Battle Kid 2 - Mountain of Torment (HB, USA)\0", NULL, "Sivak", "Miscellaneous",
+	"Battle Kid 2 - Mountain of Torment (HB, USA)\0", NULL, "Sivak Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_battlkid2RomInfo, nes_battlkid2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -14433,3 +14433,46 @@ struct BurnDriver BurnDrvCpsGigaman2 = {
 	Gigaman2Init, Gigaman2Exit, Cps2Frame, CpsRedraw, Gigaman2Scan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+// Dungeons & Dragons - shadow over mystara (T-Chi)
+// Modified by フェニックス
+static struct BurnRomInfo DdsomjcRomDesc[] = {
+	{ "dd2jc.03g",		0x080000, 0xed73e646, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2jc.04g",		0x080000, 0xc5a6e4b5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.05g",		0x080000, 0x5eb1991c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2c.06g",		0x080000, 0x05c5fd8e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.07",			0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.08",			0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2c.09",		0x080000, 0x1547eab4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.10",			0x080000, 0xad954c26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "dd2c.13m",		0x400000, 0xcf628d3e, CPS2_GFX | BRF_GRA },
+	{ "dd2c.15m",		0x400000, 0xb7a16e7b, CPS2_GFX | BRF_GRA },
+	{ "dd2c.17m",		0x400000, 0xabfc24b4, CPS2_GFX | BRF_GRA },
+	{ "dd2c.19m",		0x400000, 0x2b6b77bf, CPS2_GFX | BRF_GRA },
+	{ "dd2c.14m",		0x200000, 0x358674f5, CPS2_GFX | BRF_GRA },
+	{ "dd2c.16m",		0x200000, 0x005cd6e0, CPS2_GFX | BRF_GRA },
+	{ "dd2c.18m",		0x200000, 0x01895a06, CPS2_GFX | BRF_GRA },
+	{ "dd2c.20m",		0x200000, 0x623c5e89, CPS2_GFX | BRF_GRA },
+
+	{ "dd2.01",			0x020000, 0x99d657e5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "dd2.02",			0x020000, 0x117a3824, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "dd2.11m",		0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
+	{ "dd2.12m",		0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+
+	{ "ddsomjc.key",	0x000014, 0xd8dadb22, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ddsomjc)
+STD_ROM_FN(Ddsomjc)
+
+struct BurnDriver BurnDrvCpsDdsomjc = {
+	"ddsomjc", "ddsom", NULL, NULL, "2015",
+	"Dungeons & Dragons: Shadow over Mystara (T-Chi)\0", NULL, "hack", "CPS2",
+	L"\u9f99\u4e0e\u5730\u4e0b\u57ce: \u6697\u9ed1\u79d8\u5f71 (\u6c49\u5316\u7248)\0Dungeons & Dragons: Shadow over Mystara (T-Chi)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, DdsomjcRomInfo, DdsomjcRomName, NULL, NULL, NULL, NULL, DdsomInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};

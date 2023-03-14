@@ -1813,8 +1813,12 @@ void install_protection_asic25_asic28_olds()
 
 	SekOpen(0);
 
-	for (INT32 i = 0; i < 0x100000; i+= 0x4000) { // mirroring verified on hardware
-		SekMapMemory(PGMUSER0,		0x400000 + i, 0x403fff + i, MAP_RAM);
+	if (OldCodeMode) {
+		SekMapMemory(PGMUSER0, 0x400000, 0x403fff, MAP_RAM);
+	} else {
+		for (INT32 i = 0; i < 0x100000; i+= 0x4000) { // mirroring verified on hardware
+			SekMapMemory(PGMUSER0,		0x400000 + i, 0x403fff + i, MAP_RAM);
+		}
 	}
 
 	SekMapHandler(4,		0xdcb400, 0xdcb403, MAP_READ | MAP_WRITE);

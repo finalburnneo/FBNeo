@@ -878,7 +878,7 @@ void BurnSetMouseDivider(INT32 nDivider)
 
 	nInputIntfMouseDivider = nDivider;
 
-	bprintf(0, _T("BurnSetMouseDivider() @ %d\n"), nDivider);
+	//bprintf(0, _T("BurnSetMouseDivider() @ %d\n"), nDivider);
 }
 
 inline static INT32 BurnClearSize(INT32 w, INT32 h)

@@ -447,7 +447,8 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL) {
-		nNewBIOS = 35;
+		if ((nNewBIOS < 19) || (nNewBIOS > 36))
+			nNewBIOS = 35;
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
@@ -457,7 +458,7 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	// The most recent MVS models doesn't have a Z80 BIOS
 	bZ80BIOS = (nNewBIOS != 0) ? true : false;
 
-	if (nNewBIOS == 35) bZ80BIOS = false; // IRRMAZE: need to bank in z80 prog(!)
+	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL) bZ80BIOS = false; // IRRMAZE: need to bank in z80 prog(!)
 
 	// Check if we need to load a new BIOS
 	if (nNewBIOS == nBIOS) {
@@ -643,6 +644,9 @@ static INT32 LoadRoms()
 			if (pInfo->nTextOffset > 0) {
 				BurnDrvGetRomInfo(&ri, pInfo->nTextOffset);
 				nNeoTextROMSize[nNeoActiveSlot] = ri.nLen;
+
+				if (bDoIpsPatch)
+					nNeoTextROMSize[nNeoActiveSlot] += nIpsMemExpLen[GRA2_ROM];
 			} else {
 				nNeoTextROMSize[nNeoActiveSlot] = 0x080000;
 			}
@@ -920,10 +924,14 @@ static void MapVectorTable(bool bMapBoardROM)
 
 	if (!bMapBoardROM && Neo68KROMActive) {
 		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0003FF, MAP_ROM);
-		SekMapMemory(Neo68KBIOS, 0xc00000, 0xc003FF, MAP_ROM);
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_DEDICATED_PCB) {
+			SekMapMemory(Neo68KBIOS, 0xc00000, 0xc003FF, MAP_ROM);
+		}
 	} else {
 		SekMapMemory(NeoVectorActive, 0x000000, 0x0003FF, MAP_ROM);
-		SekMapMemory(NeoBiosVectorActive, 0xc00000, 0xc003FF, MAP_ROM);
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_DEDICATED_PCB) {
+			SekMapMemory(NeoBiosVectorActive, 0xc00000, 0xc003FF, MAP_ROM);
+		}
 	}
 }
 

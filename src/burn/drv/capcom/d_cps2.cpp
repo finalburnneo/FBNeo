@@ -14250,6 +14250,41 @@ struct BurnDriver BurnDrvCpsFfightaec2 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Final Fight 30th Anniversary Edition (Deadly Streets, Hack), hacked by ZombieMaster with the FFAEE-C2 Editor
+// Editor Link: https://gamehackfan.github.io/ffaee-c2
+//
+// A lot more enemies and many other features
+static struct BurnRomInfo Ffightaec2dsRomDesc[] = {
+	{ "ffaeds-23m.8h",   0x080000, 0x082e6947, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffaeds-22m.7h",   0x080000, 0xf41d8be3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	
+	{ "ff-5m.7a",        0x400000, 0x3f4028c5, CPS2_GFX | BRF_GRA },
+	{ "ff-7m.9a",        0x400000, 0xbe3858b0, CPS2_GFX | BRF_GRA },
+	{ "ff-1m.3a",        0x400000, 0xed622314, CPS2_GFX | BRF_GRA },
+	{ "ff-3m.5a",        0x400000, 0xd65b53e9, CPS2_GFX | BRF_GRA },
+	
+	{ "sz3.01",          0x020000, 0x7ee68d38, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",          0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",         0x400000, 0x71af8d5a, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",         0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",     0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ffightaec2ds)
+STD_ROM_FN(Ffightaec2ds)
+
+struct BurnDriver BurnDrvCpsFfightaec2ds = {
+	"ffightaec2ds", "ffightaec2", NULL, NULL, "2023",
+	"Final Fight Anniversary Edition (Deadly Streets, Hack)(CPS2 Hardware)\0", NULL, "ZombieMaster", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, Ffightaec2dsRomInfo, Ffightaec2dsRomName, NULL, NULL, NULL, NULL, Ffightaec2InputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Progear No Arashi (010117 Japan, decrypted set)
 static struct BurnRomInfo ProgearjblRomDesc[] = {
 	{ "pgaj_bl.03",    0x080000, 0x4fef676c, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum

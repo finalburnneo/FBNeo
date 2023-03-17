@@ -33120,3 +33120,79 @@ struct BurnDriver BurnDrvMSX_pentaquest = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Jumping Llama (HB)
+
+static struct BurnRomInfo MSX_jumpllamaRomDesc[] = {
+	{ "Jumping Llama (2021)(Oniric Factor).rom",	32768, 0x91e9458d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_jumpllama, MSX_jumpllama, msx_msx)
+STD_ROM_FN(MSX_jumpllama)
+
+struct BurnDriver BurnDrvMSX_jumpllama = {
+	"msx_jumpllama", NULL, "msx_msx", NULL, "2021",
+	"Jumping Llama (HB)\0", NULL, "Oniric Factor", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_jumpllamaRomInfo, MSX_jumpllamaRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Pearl Rain (HB)
+
+static struct BurnRomInfo MSX_pearlrainRomDesc[] = {
+	{ "Pearl Rain v1.0 (2023)(Patrik's Retro Tech).rom",	32768, 0x84c2f111, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pearlrain, MSX_pearlrain, msx_msx)
+STD_ROM_FN(MSX_pearlrain)
+
+struct BurnDriver BurnDrvMSX_pearlrain = {
+	"msx_pearlrain", NULL, "msx_msx", NULL, "2023",
+	"Pearl Rain (HB)\0", NULL, "Patrik's Retro Tech", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_pearlrainRomInfo, MSX_pearlrainRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Tower of Damnation (HB, v1.2)
+
+static struct BurnRomInfo MSX_towerdamnRomDesc[] = {
+	{ "Tower of Damnation v1.2 (2023)(BigFive).rom",	49152, 0xd679ddd0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_towerdamn, MSX_towerdamn, msx_msx)
+STD_ROM_FN(MSX_towerdamn)
+
+struct BurnDriver BurnDrvMSX_towerdamn = {
+	"msx_towerdamn", NULL, "msx_msx", NULL, "2023",
+	"Tower of Damnation (HB, v1.2)\0", "Use 'MSX cursor keys' to set options", "BigFive", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_towerdamnRomInfo, MSX_towerdamnRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Uchu Yohei (HB, v1.4)
+
+static struct BurnRomInfo MSX_uchuyoheiRomDesc[] = {
+	{ "Uchu Yohei v1.4 (2023)(FranChesstein).rom",	131072, 0x11e8024e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_uchuyohei, MSX_uchuyohei, msx_msx)
+STD_ROM_FN(MSX_uchuyohei)
+
+struct BurnDriver BurnDrvMSX_uchuyohei = {
+	"msx_uchuyohei", NULL, "msx_msx", NULL, "2023",
+	"Uchu Yohei (HB, v1.4)\0", NULL, "FranChesstein", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_uchuyoheiRomInfo, MSX_uchuyoheiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

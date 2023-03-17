@@ -1,4 +1,4 @@
-// FB Alpha Fairyland story driver module
+// FB Neo Fairyland story driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -783,7 +783,7 @@ static UINT8 __fastcall flstory_sound_read(UINT16 address)
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	ZetReset(0);
 	ZetReset(1);
@@ -1248,7 +1248,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 5);
+		memset(DrvInputs, 0xff, 5);
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1382,9 +1382,9 @@ struct BurnDriver BurnDrvFlstory = {
 };
 
 
-// The FairyLand Story (Japan)
+// The FairyLand Story (earlier)
 
-static struct BurnRomInfo flstoryjRomDesc[] = {
+static struct BurnRomInfo flstoryoRomDesc[] = {
 	{ "cpu-a45.15",		0x4000, 0xf03fc969, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "cpu-a45.16",		0x4000, 0x311aa82e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "cpu-a45.17",		0x4000, 0xa2b5d17d, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1404,15 +1404,15 @@ static struct BurnRomInfo flstoryjRomDesc[] = {
 	{ "a45-20.mcu",		0x0800, 0x7d2cdd9b, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
 };
 
-STD_ROM_PICK(flstoryj)
-STD_ROM_FN(flstoryj)
+STD_ROM_PICK(flstoryo)
+STD_ROM_FN(flstoryo)
 
-struct BurnDriver BurnDrvFlstoryj = {
-	"flstoryj", "flstory", NULL, NULL, "1985",
-	"The FairyLand Story (Japan)\0", NULL, "Taito", "Miscellaneous",
+struct BurnDriver BurnDrvFlstoryo = {
+	"flstoryo ", "flstory", NULL, NULL, "1985",
+	"The FairyLand Story (earlier)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, flstoryjRomInfo, flstoryjRomName, NULL, NULL, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
+	NULL, flstoryoRomInfo, flstoryoRomName, NULL, NULL, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
 	flstoryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

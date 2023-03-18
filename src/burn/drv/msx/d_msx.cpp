@@ -33159,10 +33159,10 @@ struct BurnDriver BurnDrvMSX_pearlrain = {
 	272, 228, 4, 3
 };
 
-// Tower of Damnation (HB, v1.2)
+// Tower of Damnation (HB, v1.3)
 
 static struct BurnRomInfo MSX_towerdamnRomDesc[] = {
-	{ "Tower of Damnation v1.2 (2023)(BigFive).rom",	49152, 0xd679ddd0, BRF_PRG | BRF_ESS },
+	{ "Tower of Damnation v1.3 (2023)(BigFive).rom",	49152, 0xa592ac03, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_towerdamn, MSX_towerdamn, msx_msx)
@@ -33170,7 +33170,7 @@ STD_ROM_FN(MSX_towerdamn)
 
 struct BurnDriver BurnDrvMSX_towerdamn = {
 	"msx_towerdamn", NULL, "msx_msx", NULL, "2023",
-	"Tower of Damnation (HB, v1.2)\0", "Use 'MSX cursor keys' to set options", "BigFive", "MSX",
+	"Tower of Damnation (HB, v1.3)\0", "Use keys 'W', 'S' and 'O' to set options", "BigFive", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_towerdamnRomInfo, MSX_towerdamnRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

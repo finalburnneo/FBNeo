@@ -1408,7 +1408,7 @@ STD_ROM_PICK(flstoryo)
 STD_ROM_FN(flstoryo)
 
 struct BurnDriver BurnDrvFlstoryo = {
-	"flstoryo ", "flstory", NULL, NULL, "1985",
+	"flstoryo", "flstory", NULL, NULL, "1985",
 	"The FairyLand Story (earlier)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,

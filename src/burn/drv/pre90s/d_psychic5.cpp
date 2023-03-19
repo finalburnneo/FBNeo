@@ -1005,21 +1005,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 static struct BurnRomInfo DrvRomDesc[] = {
 // "Oversea's version V2.00 CHANGED BY TAMIO NAKASATO" text present in ROM, various modifications (English names, more complete attract demo etc.)
-	{ "myp5d",         0x08000, 0x1d40a8c7, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "myp5d",         0x08000, 0x1d40a8c7, BRF_ESS | BRF_PRG }, //  0  Z80 #1 Program Code
 	{ "myp5e",         0x10000, 0x2fa7e8c0, BRF_ESS | BRF_PRG }, //	 1
 
-	{ "myp5a",         0x10000, 0x6efee094, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program
+	{ "myp5a",         0x10000, 0x6efee094, BRF_ESS | BRF_PRG }, //  2  Z80 #2 Program
 
-	{ "p5b",           0x10000, 0x7e3f87d4, BRF_GRA },	     //  3	Sprites
-	{ "p5c",           0x10000, 0x8710fedb, BRF_GRA },	     //  4
+	{ "p5b",           0x10000, 0x7e3f87d4, BRF_GRA },	         //  3  Sprites
+	{ "p5c",           0x10000, 0x8710fedb, BRF_GRA },	         //  4
 
-	{ "myp5g",         0x10000, 0x617b074b, BRF_GRA },	     //  5	BG Tiles
-	{ "myp5h",         0x10000, 0xa9dfbe67, BRF_GRA },	     //  6
+	{ "myp5g",         0x10000, 0x617b074b, BRF_GRA },	         //  5  BG Tiles
+	{ "myp5h",         0x10000, 0xa9dfbe67, BRF_GRA },	         //  6
 
-	{ "p5f",           0x08000, 0x04d7e21c, BRF_GRA },	     //  7  FG Tiles
+	{ "p5f",           0x08000, 0x04d7e21c, BRF_GRA },	         //  7  FG Tiles
 
-	{ "my10.7l",       0x00200, 0x6a7d13c0, BRF_OPT },	     //  8	PROMs
-	{ "my09.3t",       0x00400, 0x59e44236, BRF_OPT },	     //  9
+	{ "my10.7l",       0x00200, 0x6a7d13c0, BRF_OPT },	         //  8  PROMs
+	{ "my09.3t",       0x00400, 0x59e44236, BRF_OPT },	         //  9
 };
 
 STD_ROM_PICK(Drv)
@@ -1036,21 +1036,21 @@ struct BurnDriver BurnDrvPsychic5 = {
 };
 
 static struct BurnRomInfo Psychic5jRomDesc[] = {
-	{ "4.7a",		0x08000, 0x90259249, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "5.7c",		0x10000, 0x72298f34, BRF_ESS | BRF_PRG }, //	 1
+	{ "4.7a",		0x08000, 0x90259249, BRF_ESS | BRF_PRG }, //  0  Z80 #1 Program Code
+	{ "5.7c",		0x10000, 0x72298f34, BRF_ESS | BRF_PRG }, //  1
 
-	{ "1.2b",		0x10000, 0x6efee094, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program
+	{ "1.2b",		0x10000, 0x6efee094, BRF_ESS | BRF_PRG }, //  2  Z80 #2 Program
 
-	{ "2.4p",		0x10000, 0x7e3f87d4, BRF_GRA },	     //  3	Sprites
-	{ "3.4r",		0x10000, 0x8710fedb, BRF_GRA },	     //  4
+	{ "2.4p",		0x10000, 0x7e3f87d4, BRF_GRA },	          //  3  Sprites
+	{ "3.4r",		0x10000, 0x8710fedb, BRF_GRA },	          //  4
 
-	{ "7.2k",		0x10000, 0xf9262f32, BRF_GRA },	     //  5	BG Tiles
-	{ "8.2m",		0x10000, 0xc411171a, BRF_GRA },	     //  6
+	{ "7.2k",		0x10000, 0xf9262f32, BRF_GRA },	          //  5  BG Tiles
+	{ "8.2m",		0x10000, 0xc411171a, BRF_GRA },	          //  6
 
-	{ "6.5f",		0x08000, 0x04d7e21c, BRF_GRA },	     //  7  FG Tiles
+	{ "6.5f",		0x08000, 0x04d7e21c, BRF_GRA },	          //  7  FG Tiles
 
-	{ "my10.7l",	0x00200, 0x6a7d13c0, BRF_OPT },	     //  8	PROMs
-	{ "my09.3t",	0x00400, 0x59e44236, BRF_OPT },	     //  9
+	{ "my10.7l",	0x00200, 0x6a7d13c0, BRF_OPT },	          //  8  PROMs
+	{ "my09.3t",	0x00400, 0x59e44236, BRF_OPT },	          //  9
 };
 
 STD_ROM_PICK(Psychic5j)

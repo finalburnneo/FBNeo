@@ -3959,8 +3959,12 @@ static struct BurnRomInfo rdft2RomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region80.u1053",	0x100000, 0xe2adaff5, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region80.u1053",	0x100000, 0xe2adaff5, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2)
@@ -4015,8 +4019,12 @@ static struct BurnRomInfo rdft2uRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region10.u1053",	0x100000, 0x4319d998, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region10.u1053",	0x100000, 0x4319d998, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2u)
@@ -4066,8 +4074,12 @@ static struct BurnRomInfo rdft2jRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2j)
@@ -4110,8 +4122,12 @@ static struct BurnRomInfo rdft2jaRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2ja)
@@ -4154,8 +4170,12 @@ static struct BurnRomInfo rdft2jbRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2jb)
@@ -4198,8 +4218,12 @@ static struct BurnRomInfo rdft2jcRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2jc)
@@ -4242,8 +4266,12 @@ static struct BurnRomInfo rdft2itRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "seibu8.bin",						0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region92.u1053",	0x100000, 0x204d82d0, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region92.u1053",	0x100000, 0x204d82d0, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2it)
@@ -4286,8 +4314,12 @@ static struct BurnRomInfo rdft2aRomDesc[] = {
 
 	{ "raiden-f2__pcm.u0217",			0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "seibu__8.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region22.u1053",	0x100000, 0x5fee8413, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region22.u1053",	0x100000, 0x5fee8413, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2a)
@@ -4337,8 +4369,12 @@ static struct BurnRomInfo rdft2aaRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region24.u1053",	0x100000, 0x72a33dc4, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region24.u1053",	0x100000, 0x72a33dc4, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2aa)
@@ -4381,8 +4417,12 @@ static struct BurnRomInfo rdft2tRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region20.u1053",	0x100000, 0xf2051161, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region20.u1053",	0x100000, 0xf2051161, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2t)
@@ -4425,8 +4465,12 @@ static struct BurnRomInfo rdft2sRomDesc[] = {
 
 	{ "raiden-f2__pcm.u0217",			0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "seibu__8.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region9c.u1053",	0x100000, 0xd73d640c, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region9c.u1053",	0x100000, 0xd73d640c, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2s)

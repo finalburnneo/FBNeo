@@ -3929,7 +3929,7 @@ struct BurnDriver BurnDrvDkgensanm82 = {
 };
 
 
-// Lightning Swords
+// Lightning Swords (World)
 
 static struct BurnRomInfo ltswordsRomDesc[] = {
 	{ "h0.ic55",			0x20000, 0x22f342b2, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3978,7 +3978,7 @@ static INT32 kengoInit()
 
 struct BurnDriver BurnDrvLtswords = {
 	"ltswords", NULL, NULL, NULL, "1991",
-	"Lightning Swords\0", NULL, "Irem", "Irem M84?",
+	"Lightning Swords (World)\0", NULL, "Irem", "Irem M84?",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, ltswordsRomInfo, ltswordsRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KengoDIPInfo,
@@ -3987,11 +3987,11 @@ struct BurnDriver BurnDrvLtswords = {
 };
 
 
-// Ken-Go (set 1)
+// Ken-Go (World)
 
 static struct BurnRomInfo kengoRomDesc[] = {
-	{ "ken_d-h0-.rom",		0x20000, 0xf4ddeea5, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "ken_d-l0-.rom",		0x20000, 0x04dc0f81, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ken_d-h0-c.ic55",	0x20000, 0xf4ddeea5, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ken_d-l0-c.ic61",	0x20000, 0x04dc0f81, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ken_d-sp-.ic17",		0x10000, 0x233ca1cf, 0x06 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
@@ -4021,8 +4021,8 @@ STD_ROM_FN(kengo)
 
 struct BurnDriver BurnDrvKengo = {
 	"kengo", "ltswords", NULL, NULL, "1991",
-	"Ken-Go (set 1)\0", NULL, "Irem", "Irem M84?",
-	NULL, NULL, NULL, NULL,
+	"Ken-Go (World)\0", NULL, "Irem", "Irem M84?",
+	L"Ken-Go (World)\0\u5263\u8c6a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoRomInfo, kengoRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KengoDIPInfo,
 	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
@@ -4030,11 +4030,11 @@ struct BurnDriver BurnDrvKengo = {
 };
 
 
-// Ken-Go (set 2)
+// Ken-Go (Japan)
 
-static struct BurnRomInfo kengoaRomDesc[] = {
-	{ "ken-d-h0-.ic55",		0x20000, 0xed3da88c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "ken-d-l0-.ic61",		0x20000, 0x92c57d8e, 0x01 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo kengojRomDesc[] = {
+	{ "ken_d-h0-.ic55",		0x20000, 0xed3da88c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ken_d-l0-.ic61",		0x20000, 0x92c57d8e, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ken_d-sp.ic17",		0x10000, 0x233ca1cf, 0x06 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
@@ -4059,15 +4059,15 @@ static struct BurnRomInfo kengoaRomDesc[] = {
 	{ "ken_b-3a-.ic9",		0x00117, 0xad1a7942, 0x00 | BRF_OPT },           // 17
 };
 
-STD_ROM_PICK(kengoa)
-STD_ROM_FN(kengoa)
+STD_ROM_PICK(kengoj)
+STD_ROM_FN(kengoj)
 
-struct BurnDriver BurnDrvKengoa = {
-	"kengoa", "ltswords", NULL, NULL, "1991",
-	"Ken-Go (set 2)\0", NULL, "Irem", "Irem M84?",
-	NULL, NULL, NULL, NULL,
+struct BurnDriver BurnDrvKengoj = {
+	"kengoj", "ltswords", NULL, NULL, "1991",
+	"Ken-Go (Japan)\0", NULL, "Irem", "Irem M84?",
+	L"Ken-Go (Japan)\0\u5263\u8c6a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
-	NULL, kengoaRomInfo, kengoaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KengoDIPInfo,
+	NULL, kengojRomInfo, kengojRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KengoDIPInfo,
 	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };

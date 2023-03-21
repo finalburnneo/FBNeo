@@ -6204,6 +6204,7 @@ static INT32 ChopliftInit()
 
 static INT32 ShtngmstInit()
 {
+	EnforceBars = 1;
 	has_mcu = 1;
 	is_shtngmst = 1;
 

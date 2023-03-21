@@ -875,6 +875,11 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	unsigned int j;
 
 	int nOldDrvSelect = nBurnDrvActive;
+
+#ifdef INCLUDE_AVI_RECORDING
+	AviStop();
+#endif
+
 	DrvExit();
 	bLoading = 1;
 
@@ -1154,7 +1159,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 
 #ifdef INCLUDE_AVI_RECORDING
-			case MENU_AVISTART:
+		case MENU_AVISTART:
 			if (AviStart()) {
 				AviStop();
 			} else {

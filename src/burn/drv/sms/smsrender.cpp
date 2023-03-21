@@ -27,6 +27,7 @@ UINT8 bg_name_dirty[0x200];     /* 1= This pattern is dirty */
 UINT16 bg_name_list[0x200];     /* List of modified pattern indices */
 UINT16 bg_list_index;           /* # of modified patterns in list */
 UINT8 bg_pattern_cache[0x20000];/* Cached and flipped patterns */
+UINT16 smsvdp_ntmask;
 
 /* Pixel look-up table */
 static UINT8 lut[0x10000];
@@ -330,7 +331,7 @@ void render_bg_sms(INT16 line)
 	INT32 hscroll = ((vdp.reg[0] & 0x40) && (line < 0x10)) ? 0 : (0x100 - vdp.reg[8]);
 	INT32 column = 0;
 	UINT16 attr;
-	UINT16 *nt = (UINT16 *)&vdp.vram[vdp.ntab + ((v_line >> 3) << 6)];
+	UINT16 *nt = (UINT16 *)&vdp.vram[(vdp.ntab + ((v_line >> 3) << 6)) & smsvdp_ntmask];
 	INT32 nt_scroll = (hscroll >> 3);
 	INT32 shift = (hscroll & 7);
 	UINT32 atex_mask;

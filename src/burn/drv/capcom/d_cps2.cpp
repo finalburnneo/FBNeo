@@ -14513,7 +14513,7 @@ struct BurnDriver BurnDrvCpsDdsomjc = {
 };
 
 /******************************************************************************************************
-*chrsel: make shin akuma selectable(left off Akuma)
+* chrsel: make shin akuma selectable(left off Akuma)
 * chrsel : random character select(right off of Dan)
 * gameplay : music always random(31 songs)
 * gameplay : remove most stage sprites(attempting to reduce lag during Custom Combo)

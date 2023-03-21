@@ -288,9 +288,12 @@ static UINT8 SCCReg[MAXSLOTS]; // Konami-scc enable register
 
 static UINT8 Kana, KanaByte; // Kanji-rom stuff
 
+static UINT8 frame_lastnmi = 0;
+static INT32 frame_lastM = 0;
+
 static INT32 lastshifted;
 static UINT8 ppiC_row;
-static UINT8 keyRows[12];
+static UINT8 keyRows[9];
 static INT32 charMatrix[][3] = {
 	{'0', 0, 0}, {')', 0, 0}, {'1', 0, 1}, {'!', 0, 1}, {'2', 0, 2}, {'@', 0, 2},
 	{'3', 0, 3}, {'#', 0, 3}, {'4', 0, 4}, {'$', 0, 4}, {'5', 0, 5}, {'%', 0, 5},
@@ -1348,6 +1351,9 @@ static INT32 DrvDoReset()
 	KanaByte = 0;
 	lastshifted = 0;
 
+	frame_lastnmi = 0;
+	frame_lastM = 0;
+
 	msxinit(CurRomSize[0]);
 
 	ppi8255_reset();
@@ -1414,19 +1420,9 @@ static UINT8 __fastcall msx_read(UINT16 address)
 	return (RAM[address >> 13][address & 0x1fff]);
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / ((Hertz60) ? 60.0 : 50.0))));
-}
-
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		struct BurnRomInfo ri;
@@ -1499,7 +1495,7 @@ static INT32 DrvInit()
 	K051649Init(3579545/2);
 	K051649SetRoute(0.20, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	TMS9928AInit((Hertz60) ? TMS99x8A : TMS9929A, 0x4000, 0, 0, vdp_interrupt);
@@ -1526,8 +1522,7 @@ static INT32 DrvExit()
 
 	ppi8255_exit();
 
-	BurnFree (AllMem);
-	AllMem = NULL;
+	BurnFreeMemIndex();
 
 	msx_basicmode = 0;
 	BiosmodeJapan = 0;
@@ -1551,8 +1546,6 @@ static INT32 DrvExit()
 
 static INT32 DrvFrame()
 {
-	static UINT8 lastnmi = 0;
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
@@ -1566,15 +1559,14 @@ static INT32 DrvFrame()
 
 		if (SwapButton2)
 		{ // Kludge for Xenon and Astro Marine Corps where button #2 is the 'm' key.
-			static INT32 lastM = 0;
 			if (DrvJoy1[5]) {
 				keyInput('m', DrvJoy1[5]);
 			} else {
-				if (lastM) { // only turn 'm' off once after Button2 is unpressed.
+				if (frame_lastM) { // only turn 'm' off once after Button2 is unpressed.
 					keyInput('m', DrvJoy1[5]);
 				}
 			}
-			lastM = DrvJoy1[5];
+			frame_lastM = DrvJoy1[5];
 		}
 
 		SwapJoyports = (DrvDips[0] & 0x20) ? 1 : 0;
@@ -1637,10 +1629,10 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 	ZetOpen(0);
 
-	if (DrvNMI && !lastnmi) {
+	if (DrvNMI && !frame_lastnmi) {
 		ZetNmi();
-		lastnmi = DrvNMI;
-	} else lastnmi = DrvNMI;
+		frame_lastnmi = DrvNMI;
+	} else frame_lastnmi = DrvNMI;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1706,6 +1698,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(KanaByte);
 		SCAN_VAR(lastshifted);
 		SCAN_VAR(ppiC_row);
+		SCAN_VAR(frame_lastnmi);
+		SCAN_VAR(frame_lastM);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -23539,6 +23539,46 @@ struct BurnDriver BurnDrvmslug5sg = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Metal Slug 5 (Boss Battles, Hack)
+// Modified by 合金弹头爱克斯
+// GOTVG 20230316
+static struct BurnRomInfo mslug5bsRomDesc[] = {
+	/* Encrypted */
+	{ "268-p1cbs.p1",	0x400000, 0x64a7379a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p2cbs.p2",	0x400000, 0xbd0325c4, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "268-c1c.c1",		0x800000, 0xab7c389a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "268-c2c.c2",		0x800000, 0x3560881b, 3 | BRF_GRA },           //  3
+	{ "268-c3c.c3",		0x800000, 0x3af955ea, 3 | BRF_GRA },           //  4
+	{ "268-c4c.c4",		0x800000, 0xc329c373, 3 | BRF_GRA },           //  5
+	{ "268-c5c.c5",		0x800000, 0x959c8177, 3 | BRF_GRA },           //  6
+	{ "268-c6c.c6",		0x800000, 0x010a831b, 3 | BRF_GRA },           //  7
+	{ "268-c7c.c7",		0x800000, 0x6d72a969, 3 | BRF_GRA },           //  8
+	{ "268-c8c.c8",		0x800000, 0x551d720e, 3 | BRF_GRA },           //  9
+
+	/* Encrypted */
+	{ "268-m1.m1",		0x080000, 0x4a5a6e0e, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	/* Encrypted */
+	{ "268-v1c.v1",		0x800000, 0xae31d60c, 5 | BRF_SND },           // 11 Sound data
+	{ "268-v2c.v2",		0x800000, 0xc40613ed, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslug5bs, mslug5bs, neogeo)
+STD_ROM_FN(mslug5bs)
+
+struct BurnDriver BurnDrvmslug5bs = {
+	"mslug5bs", "mslug5", "neogeo", NULL, "2023",
+	"Metal Slug 5 (Boss Battles, Hack)\0", "Enter [Soft Dip] to turn on level display", "hack", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug5bsRomInfo, mslug5bsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug5WOPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Metal Slug 5 (Remake FC2, Hack)
 // Modified by 合金弹头爱克斯, Alice愛麗絲
 // 20211003

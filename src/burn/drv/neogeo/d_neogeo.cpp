@@ -22737,23 +22737,23 @@ struct BurnDriver BurnDrvmslug3eb = {
 // Metal Slug 3 (Last Bullet Remix, Hack)
 // Press the Start key continuously to switch the route value. 
 // Modified by 磁暴线圈
-// 20230309
+// 20230321
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	/* Encrypted */
-	{ "ms3lw.neo-sma",	0x040000, 0xdec38e47, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1lw.p1",	0x400000, 0x210e9c7f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "ms3lw.neo-sma",	0x040000, 0x88adb595, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1lw.p1",	0x400000, 0xab03ed5e, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "256-pg2lw.p2",	0x400000, 0xf7f5ab93, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
-	{ "256-c1.c1",		0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data
-	{ "256-c2.c2",		0x800000, 0x944c362c, 3 | BRF_GRA },           //  4
-	{ "256-c3.c3",		0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5
-	{ "256-c4.c4",		0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6
-	{ "256-c5.c5",		0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7
-	{ "256-c6.c6",		0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8
-	{ "256-c7.c7",		0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9
-	{ "256-c8.c8",		0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10
+	{ "256-c1lw.c1",	0x800000, 0x1b089643, 3 | BRF_GRA },           //  3 Sprite data
+	{ "256-c2lw.c2",	0x800000, 0xcef74af8, 3 | BRF_GRA },           //  4
+	{ "256-c3lw.c3",	0x800000, 0x4ee519b7, 3 | BRF_GRA },           //  5
+	{ "256-c4lw.c4",	0x800000, 0x58cb9c86, 3 | BRF_GRA },           //  6
+	{ "256-c5lw.c5",	0x800000, 0xad5739c6, 3 | BRF_GRA },           //  7
+	{ "256-c6lw.c6",	0x800000, 0x32233cab, 3 | BRF_GRA },           //  8
+	{ "256-c7lw.c7",	0x800000, 0xbc0008fb, 3 | BRF_GRA },           //  9
+	{ "256-c8lw.c8",	0x800000, 0xf9fb3aa3, 3 | BRF_GRA },           // 10
 
 	{ "256-m1.m1",		0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
@@ -22772,6 +22772,47 @@ struct BurnDriver BurnDrvmslug3lw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3lwRomInfo, mslug3lwRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslug3WOPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Metal Slug 3 (Pigeon Slug, Hack)
+// Modified by 磁暴线圈
+// 20230320
+static struct BurnRomInfo mslug3psRomDesc[] = {
+	/* Encrypted */
+	{ "ms3ps.neo-sma",	0x040000, 0x05bc1960, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1ps.p1",	0x400000, 0xab03ed5e, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2ps.p2",	0x400000, 0x3fba3da4, 1 | BRF_ESS | BRF_PRG }, //  2
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "256-c1ps.c1",	0x800000, 0xedfd52e7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "256-c2ps.c2",	0x800000, 0xd25eb4e9, 3 | BRF_GRA },           //  4
+	{ "256-c3ps.c3",	0x800000, 0x2f934c83, 3 | BRF_GRA },           //  5
+	{ "256-c4ps.c4",	0x800000, 0xd963d89e, 3 | BRF_GRA },           //  6
+	{ "256-c5ps.c5",	0x800000, 0xd76a40a6, 3 | BRF_GRA },           //  7
+	{ "256-c6ps.c6",	0x800000, 0x4a55c424, 3 | BRF_GRA },           //  8
+	{ "256-c7ps.c7",	0x800000, 0xf74c0fc9, 3 | BRF_GRA },           //  9
+	{ "256-c8ps.c8",	0x800000, 0x55437268, 3 | BRF_GRA },           // 10
+
+	{ "256-m1ps.m1",	0x080000, 0x0c876e7f, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
+	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
+	{ "256-v3.v3",		0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14
+	{ "256-v4ps.v4",	0x400000, 0xe4421cbf, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(mslug3ps, mslug3ps, neogeo)
+STD_ROM_FN(mslug3ps)
+
+struct BurnDriver BurnDrvmslug3ps = {
+	"mslug3ps", "mslug3", "neogeo", NULL, "2023",
+	"Metal Slug 3 (Pigeon Slug, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslug3psRomInfo, mslug3psRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	mslug3WOPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -23105,12 +23146,12 @@ struct BurnDriver BurnDrvmslug3sc = {
 
 // Metal Slug 3 (Legend, Hack)
 // Modified by 合金弹头爱克斯
-// 20230307
+// 20230312
 static struct BurnRomInfo mslug3cqRomDesc[] = {
 	/* Encrypted */
-	{ "ms3cq.neo-sma",	0x040000, 0x2d801d3e, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1cq.p1",	0x400000, 0xb0b10e46, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2cq.p2",	0x400000, 0x098eecd6, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "ms3cq.neo-sma",	0x040000, 0xdc743549, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1cq.p1",	0x400000, 0xea609b4d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2cq.p2",	0x400000, 0x1e254cd8, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

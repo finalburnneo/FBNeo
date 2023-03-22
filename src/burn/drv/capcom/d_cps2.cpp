@@ -14528,9 +14528,9 @@ struct BurnDriver BurnDrvCpsDdsomjc = {
 * text color changes depending on who won last round
 ******************************************************************************************************/
 
-// Street Fighter Alpha 2 Ultra
+// Street Fighter Alpha 2 Ultra (Beta)
 // Modified by bankbank
-// GOTVG 20230304
+// 20230304
 static struct BurnRomInfo Sfa2ultraRomDesc[] = {
 	{ "sz2uult.03a",	0x080000, 0xe0481264, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2u.04a",		0x080000, 0xfae0e9c3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -14562,7 +14562,7 @@ STD_ROM_FN(Sfa2ultra)
 
 struct BurnDriver BurnDrvCpsSfa2ultra = {
 	"sfa2ultra", "sfa2", NULL, NULL, "2023",
-	"Street Fighter Alpha 2 Ultra\0", NULL, "hack", "CPS2",
+	"Street Fighter Alpha 2 Ultra (Beta)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa2ultraRomInfo, Sfa2ultraRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

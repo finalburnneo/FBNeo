@@ -148,3 +148,12 @@ Additionally :
 For better or worse, it was decided to use different default audio settings from standalone in the libretro port. By default standalone has 44100 samplerate and both interpolations off and that's what you should set in libretro's core options if you want the same audio output.
 
 You might also want to make sure you are running the game at the correct speed, many arcade machines don't run at 60Hz and if you want the proper refresh rate to be emulated you'll need to make sure `Force 60Hz` isn't enabled in core options and `Settings > Video > Synchronization > Sync to Exact Content Framerate` is enabled (`vrr_runloop_enable = "true"` in `retroarch.cfg`). Please note that your screen might not handle well the correct refresh rate, in which case you'll have to make a choice between smoothness and correct refresh rate.
+
+### My favorite combo button is not available, why ?
+Retroarch doesn't allow cores to declare buttons and map them later, meaning the number of different "actions" available is limited by the number of buttons available on the retropad model.
+
+Removing that limitation was asked in https://github.com/libretro/RetroArch/issues/6718, then again in https://github.com/libretro/RetroArch/issues/11273, i won't add more macros as long as this limitation hasn't been removed. If you want more macros, go spam those issues, preferably the later.
+
+The currently available neogeo combos were decided in https://github.com/libretro/FBNeo/issues/51, i won't replace them, but i'll seriously consider removing all of them if i keep having users complaining about them every month.
+
+Note that there was also a request to add a retroarch macro mapper in https://github.com/libretro/RetroArch/issues/8209.

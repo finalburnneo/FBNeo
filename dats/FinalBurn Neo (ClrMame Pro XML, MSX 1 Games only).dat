@@ -8389,6 +8389,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jumpllama" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Jumping Llama (HB)</description>
+		<year>2021</year>
+		<manufacturer>Oniric Factor</manufacturer>
+		<rom name="Jumping Llama (2021)(Oniric Factor).rom" size="32768" crc="91e9458d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jrabbit" romof="msx">
 		<description>Jumping Rabbit (Jpn)</description>
 		<year>1984</year>
@@ -12324,6 +12336,18 @@
 		<year>1985</year>
 		<manufacturer>Sony</manufacturer>
 		<rom name="Payload (1985)(Sony)(JP).rom" size="32768" crc="165eae6d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pearlrain" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Pearl Rain (HB)</description>
+		<year>2023</year>
+		<manufacturer>Patrik's Retro Tech</manufacturer>
+		<rom name="Pearl Rain v1.0 (2023)(Patrik's Retro Tech).rom" size="32768" crc="84c2f111"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -16547,6 +16571,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="towerdamn" romof="msx">
+		<comment>Homebrew, Use keys 'W', 'S' and 'O' to set options</comment>
+		<description>Tower of Damnation (HB, v1.3)</description>
+		<year>2023</year>
+		<manufacturer>BigFive</manufacturer>
+		<rom name="Tower of Damnation v1.3 (2023)(BigFive).rom" size="49152" crc="a592ac03"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="druaga" romof="msx">
 		<description>Tower of Druaga, The (Jpn)</description>
 		<year>1986</year>
@@ -16843,6 +16879,18 @@
 		<year>1986</year>
 		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="tzr - grand prix rider (japan).rom" size="32768" crc="d792c827"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="uchuyohei" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Uchu Yohei (HB, v1.4)</description>
+		<year>2023</year>
+		<manufacturer>FranChesstein</manufacturer>
+		<rom name="Uchu Yohei v1.4 (2023)(FranChesstein).rom" size="131072" crc="11e8024e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

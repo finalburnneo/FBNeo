@@ -11030,6 +11030,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mdfootball" cloneof="qbscramble" romof="qbscramble">
+		<description>Mike Ditka's Big Play Football (Unl)</description>
+		<year>2008</year>
+		<manufacturer>NGD</manufacturer>
+		<rom name="Mike Ditka's Big Play Football (Unl)(2008)(NGD).nes" size="262160" crc="6bf165f3"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="miketysspunout">
 		<description>Mike Tyson's Punch-Out!! (Japan, USA) (Rev A)</description>
 		<year>1987</year>
@@ -12382,6 +12390,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="pplanev2">
+		<comment>Homebrew</comment>
+		<description>Paper Plane, The (HB, v2)</description>
+		<year>2022</year>
+		<manufacturer>5cinq</manufacturer>
+		<rom name="Paper Plane, The v2 (2022)(5cinq).nes" size="524304" crc="9fe3d96e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="paperboy">
 		<description>Paperboy (USA)</description>
 		<year>1988</year>
@@ -13153,6 +13170,23 @@
 		<year>2016</year>
 		<manufacturer>retroUSB</manufacturer>
 		<rom name="Quadralords (2016)(RetroUSB).nes" size="524304" crc="88b407f7"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="qbscramblej" cloneof="qbscramble" romof="qbscramble">
+		<description>Quarter Back Scramble (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="Quarter Back Scramble (J)(1990)(Pony Canyon).nes" size="262160" crc="c373aeec"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="qbscramble">
+		<comment>Prototype</comment>
+		<description>Quarter Back Scramble (Prototype)</description>
+		<year>1990</year>
+		<manufacturer>Pony Canyon</manufacturer>
+		<rom name="Quarter Back Scramble (USA)(Proto)(1990)(Pony Canyon).nes" size="262160" crc="0a55b11f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14982,6 +15016,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="spaceraft">
+		<comment>Homebrew</comment>
+		<description>Space Raft (HB)</description>
+		<year>2020</year>
+		<manufacturer>Raftronaut</manufacturer>
+		<rom name="Space Raft (2020)(Raftronaut).nes" size="524304" crc="03841119"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="spacegulls">
 		<comment>Homebrew</comment>
 		<description>Spacegulls (HB, v1.1)</description>
@@ -15511,6 +15554,15 @@
 		<year>1992</year>
 		<manufacturer>Camerica</manufacturer>
 		<rom name="Stunt Kids (USA) (Unl).nes" size="131088" crc="7384aa7d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="sudoku23">
+		<comment>Homebrew</comment>
+		<description>Sudoku 23 (HB)</description>
+		<year>2023</year>
+		<manufacturer>Johnybot</manufacturer>
+		<rom name="Sudoku 23 (2023)(Johnybot).nes" size="40976" crc="914d683d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

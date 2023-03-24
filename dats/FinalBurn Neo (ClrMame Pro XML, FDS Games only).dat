@@ -143,6 +143,25 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="aspic" romof="fdsbios">
+		<comment>Hack</comment>
+		<description>Aspic - Curse of the Snakelord (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Aspic - Curse of the Snakelord T-Eng (2023)(BlackPaladin).fds" size="131000" crc="9f1976dd"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="aspicj" cloneof="aspic" romof="aspic">
+		<description>Aspic - Majaou no Noroi (Japan)</description>
+		<year>1988</year>
+		<manufacturer>Bothtec</manufacturer>
+		<rom name="Aspic - Majaou no Noroi (J)(1988)(Bothtec).fds" size="131000" crc="1999addb"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="bakutpatkun" romof="fdsbios">
 		<description>Bakutoushi Patton-kun (Japan)</description>
 		<year>1988</year>

@@ -54,6 +54,7 @@ typedef struct
 /* Global data */
 extern vdp_t vdp;
 extern UINT32 smsvdp_tmsmode;
+extern UINT16 smsvdp_ntmask;
 extern UINT8 *hc_ntsc_256;
 extern UINT8 *vc_table[2][4];
 

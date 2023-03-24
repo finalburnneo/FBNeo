@@ -11652,7 +11652,7 @@ struct BurnDriver BurnDrvsms_ysj = {
 	"sms_ysj", "sms_ys", NULL, NULL, "1988",
 	"Ys (Jpn)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_JAPANESE, GBF_RPG, 0,
 	SMSGetZipName, sms_ysjRomInfo, sms_ysjRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3

@@ -3764,6 +3764,16 @@ void z80_set_cycle_tables_msx()
 	cc[Z80_TABLE_ex] = cc_ex_msx;
 }
 
+void z80_set_cycle_tables(const UINT8 *op, const UINT8 *cb, const UINT8 *ed, const UINT8 *xy, const UINT8 *xycb, const UINT8 *ex)
+{
+	if (op) cc[Z80_TABLE_op] = op;
+	if (cb) cc[Z80_TABLE_cb] = cb;
+	if (ed) cc[Z80_TABLE_ed] = ed;
+	if (xy) cc[Z80_TABLE_xy] = xy;
+	if (xycb) cc[Z80_TABLE_xycb] = xycb;
+	if (ex) cc[Z80_TABLE_ex] = ex;
+}
+
 void Z80Init()
 {
 	int i, p;

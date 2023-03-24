@@ -54933,4 +54933,22 @@ struct BurnDriverD BurnDrvmd_spritemask = {
 	MegadriveGetZipName, md_spritemaskRomInfo, md_spritemaskRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};*/
+};
+
+static struct BurnRomInfo md_insnspeedRomDesc[] = {
+	{ "test_inst_speed.bin", 131072, 0x093f3d29, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_insnspeed)
+STD_ROM_FN(md_insnspeed)
+
+struct BurnDriverD BurnDrvmd_insnspeed = {
+	"md_testinstspeed", NULL, NULL, NULL, "2019",
+	"MD inst speed Test (HB)\0", NULL, "?", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_insnspeedRomInfo, md_insnspeedRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+*/

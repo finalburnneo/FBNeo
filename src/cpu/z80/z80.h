@@ -84,6 +84,7 @@ INT32 z80TstateCounter();
 void Z80StopExecute();
 void z80_set_spectrum_tape_callback(int (*tape_cb)());
 void z80_set_cycle_tables_msx();
+void z80_set_cycle_tables(const UINT8 *op, const UINT8 *cb, const UINT8 *ed, const UINT8 *xy, const UINT8 *xycb, const UINT8 *ex);
 
 extern unsigned char Z80Vector;
 extern void (*z80edfe_callback)(Z80_Regs *Regs);

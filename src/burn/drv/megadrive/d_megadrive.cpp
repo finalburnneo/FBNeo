@@ -54952,3 +54952,84 @@ struct BurnDriverD BurnDrvmd_insnspeed = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 */
+
+// Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)
+// Audio fix by Ken_Tse - 20230112
+static struct BurnRomInfo md_dgwcyscsRomDesc[] = {
+	{ "Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)", 0x200000, 0x87ac7f92, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_dgwcyscs)
+STD_ROM_FN(md_dgwcyscs)
+
+
+struct BurnDriver BurnDrvmd_dgwcyscs = {
+	"md_dgwcyscs", NULL, NULL, NULL, "2023",
+	"Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)\0", NULL, "Chuan Pu Ke Ji / Ken_Tse", "Sega Megadrive",
+	L"\u5c01\u795e\u82f1\u5091\u8f49 (\u4e2d\u6587)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
+	MegadriveGetZipName, md_dgwcyscsRomInfo, md_dgwcyscsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Feng Shen Ying Jie Zhuan (Chinese)
+// Audio fix by Ken_Tse - 20230107
+static struct BurnRomInfo md_fsyjzRomDesc[] = {
+	{ "Feng Shen Ying Jie Zhuan (Chinese)", 0x200000, 0x88664e2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_fsyjz)
+STD_ROM_FN(md_fsyjz)
+
+
+struct BurnDriver BurnDrvmd_fsyjz = {
+	"md_fsyjz", NULL, NULL, NULL, "2023",
+	"Feng Shen Ying Jie Zhuan (Chinese)\0", NULL, "Chuan Pu Ke Ji / Ken_Tse", "Sega Megadrive",
+	L"\u5c01\u795e\u82f1\u5091\u50b3 (\u4e2d\u6587)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SIM, 0,
+	MegadriveGetZipName, md_fsyjzRomInfo, md_fsyjzRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shui Hu Zhuan (Chinese)
+// Audio fix by Ken_Tse - 20230107
+static struct BurnRomInfo md_shzRomDesc[] = {
+	{ "Shui Hu Zhuan (Chinese)", 0x200000, 0x84c2f352, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shz)
+STD_ROM_FN(md_shz)
+
+
+struct BurnDriver BurnDrvmd_shz = {
+	"md_shz", NULL, NULL, NULL, "2023",
+	"Shui Hu Zhuan (Chinese)\0", NULL, "Chuan Pu Ke Ji / Ken_Tse", "Sega Megadrive",
+	L"\u6c34\u6ef8\u50b3 (\u4e2d\u6587)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_shzRomInfo, md_shzRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Barver Battle Saga (Chinese)
+// Audio fix by Ken_Tse - 20230107
+static struct BurnRomInfo md_tkzsRomDesc[] = {
+	{ "Tai Kong Zhan Shi (Chinese)", 0x200000, 0x5c70016a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tkzs)
+STD_ROM_FN(md_tkzs)
+
+
+struct BurnDriver BurnDrvmd_tkzs = {
+	"md_barverbs", NULL, NULL, NULL, "2023",
+	"Barver Battle Saga (Chinese)\0", NULL, "Chuan Pu Ke Ji / Ken_Tse", "Sega Megadrive",
+	L"\u592a\u7a7a\u6230\u58eb - \u9b54\u6cd5\u6230\u58eb (\u4e2d\u6587)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_tkzsRomInfo, md_tkzsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+

@@ -11746,6 +11746,40 @@ struct BurnDriver BurnDrvfds_armananokiseki = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo fds_aspicjRomDesc[] = {
+	{ "Aspic - Majaou no Noroi (J)(1988)(Bothtec).fds",          131000, 0x1999addb, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_aspicj, fds_aspicj, fds_fdsbios)
+STD_ROM_FN(fds_aspicj)
+
+struct BurnDriver BurnDrvfds_aspicj = {
+	"fds_aspicj", "fds_aspic", "fds_fdsbios", NULL, "1988",
+	"Aspic - Majaou no Noroi (Japan)\0", NULL, "Bothtec", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_RPG, 0,
+	NESGetZipName, fds_aspicjRomInfo, fds_aspicjRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo fds_aspicRomDesc[] = {
+	{ "Aspic - Curse of the Snakelord T-Eng (2023)(BlackPaladin).fds",          131000, 0x9f1976dd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_aspic, fds_aspic, fds_fdsbios)
+STD_ROM_FN(fds_aspic)
+
+struct BurnDriver BurnDrvfds_aspic = {
+	"fds_aspic", NULL, "fds_fdsbios", NULL, "2023",
+	"Aspic - Curse of the Snakelord (T-Eng)\0", NULL, "BlackPaladin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_RPG, 0,
+	NESGetZipName, fds_aspicRomInfo, fds_aspicRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo fds_bakutpatkunRomDesc[] = {
 	{ "Bakutoushi Patton-kun (Japan).fds",          131016, 0xbdb5104d, BRF_ESS | BRF_PRG },
 };
@@ -22160,6 +22194,60 @@ struct BurnDriver BurnDrvnes_dinohockey = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Quarter Back Scramble (Prototype)
+static struct BurnRomInfo nes_qbscrambleRomDesc[] = {
+	{ "Quarter Back Scramble (USA)(Proto)(1990)(Pony Canyon).nes",          262160, 0x0a55b11f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_qbscramble)
+STD_ROM_FN(nes_qbscramble)
+
+struct BurnDriver BurnDrvnes_qbscramble = {
+	"nes_qbscramble", NULL, NULL, NULL, "1990",
+	"Quarter Back Scramble (Prototype)\0", NULL, "Pony Canyon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_qbscrambleRomInfo, nes_qbscrambleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Quarter Back Scramble (Japan)
+static struct BurnRomInfo nes_qbscramblejRomDesc[] = {
+	{ "Quarter Back Scramble (J)(1990)(Pony Canyon).nes",          262160, 0xc373aeec, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_qbscramblej)
+STD_ROM_FN(nes_qbscramblej)
+
+struct BurnDriver BurnDrvnes_qbscramblej = {
+	"nes_qbscramblej", "nes_qbscramble", NULL, NULL, "1990",
+	"Quarter Back Scramble (Japan)\0", NULL, "Pony Canyon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_qbscramblejRomInfo, nes_qbscramblejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mike Ditka's Big Play Football (Unl)
+static struct BurnRomInfo nes_mdfootballRomDesc[] = {
+	{ "Mike Ditka's Big Play Football (Unl)(2008)(NGD).nes",          262160, 0x6bf165f3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mdfootball)
+STD_ROM_FN(nes_mdfootball)
+
+struct BurnDriver BurnDrvnes_mdfootball = {
+	"nes_mdfootball", "nes_qbscramble", NULL, NULL, "2008",
+	"Mike Ditka's Big Play Football (Unl)\0", NULL, "NGD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_mdfootballRomInfo, nes_mdfootballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
@@ -22215,6 +22303,23 @@ struct BurnDriver BurnDrvnes_mystpillars = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_pplanev2RomDesc[] = {
+	{ "Paper Plane, The v2 (2022)(5cinq).nes",          524304, 0x9fe3d96e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pplanev2)
+STD_ROM_FN(nes_pplanev2)
+
+struct BurnDriver BurnDrvnes_pplanev2 = {
+	"nes_pplanev2", NULL, NULL, NULL, "2022",
+	"Paper Plane, The (HB, v2)\0", NULL, "5cinq", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_pplanev2RomInfo, nes_pplanev2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_pentablocatRomDesc[] = {
 	{ "Pentablocat (2023)(Pineberry fox).nes",          24592, 0x27a14751, BRF_ESS | BRF_PRG },
 };
@@ -22228,6 +22333,40 @@ struct BurnDriver BurnDrvnes_pentablocat = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_pentablocatRomInfo, nes_pentablocatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spaceraftRomDesc[] = {
+	{ "Space Raft (2020)(Raftronaut).nes",          524304, 0x03841119, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spaceraft)
+STD_ROM_FN(nes_spaceraft)
+
+struct BurnDriver BurnDrvnes_spaceraft = {
+	"nes_spaceraft", NULL, NULL, NULL, "2020",
+	"Space Raft (HB)\0", NULL, "Raftronaut", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_spaceraftRomInfo, nes_spaceraftRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_sudoku23RomDesc[] = {
+	{ "Sudoku 23 (2023)(Johnybot).nes",          40976, 0x914d683d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sudoku23)
+STD_ROM_FN(nes_sudoku23)
+
+struct BurnDriver BurnDrvnes_sudoku23 = {
+	"nes_sudoku23", NULL, NULL, NULL, "2023",
+	"Sudoku 23 (HB)\0", NULL, "Johnybot", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_sudoku23RomInfo, nes_sudoku23RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

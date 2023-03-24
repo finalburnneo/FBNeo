@@ -79,6 +79,7 @@ void vdp_reset(void)
 	bitmap.viewport.changed = 1;
 
 	smsvdp_tmsmode = 0;
+	smsvdp_ntmask = 0x3fff;
 }
 
 
@@ -170,6 +171,10 @@ void viewport_check(void)
 
 	render_bg  = (vdp.mode & 8) ? render_bg_sms  : render_bg_tms;
 	render_obj = (vdp.mode & 8) ? render_obj_sms : render_obj_tms;
+
+	if (sms.territory == TERRITORY_DOMESTIC) {// Japanese
+		smsvdp_ntmask = (vdp.reg[2] & 1) ? 0x3fff : 0x3bff;
+	}
 }
 
 

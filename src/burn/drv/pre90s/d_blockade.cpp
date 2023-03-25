@@ -440,6 +440,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	BurnSampleReset();
+	HiscoreReset();
 
 	coin_latch   = 0;
 	coin_inserted = 0;
@@ -813,7 +814,7 @@ struct BurnDriver BurnDrvBlasto = {
 	"blasto", NULL, NULL, "blockade", "1978",
 	"Blasto\0", NULL, "Gremlin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, blastoRomInfo, blastoRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, BlastoInputInfo, BlastoDIPInfo,
 	BlastoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3

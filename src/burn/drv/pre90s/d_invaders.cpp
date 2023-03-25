@@ -351,7 +351,7 @@ static INT32 DrvDraw()
 static INT32 DrvFrame()
 {
 	watchdog++;
-	if (watchdog >= 180) {
+	if (watchdog >= 255) {
 		DrvDoReset(0);
 	}
 

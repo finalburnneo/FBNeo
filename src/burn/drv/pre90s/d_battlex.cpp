@@ -308,6 +308,7 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 	AY8910Reset(1);
+	HiscoreReset();
 
 	scroll[0] = scroll[1] = 0;
 	flipscreen = 0;
@@ -689,7 +690,7 @@ struct BurnDriver BurnDrvBattlex = {
 	"battlex", NULL, NULL, NULL, "1982",
 	"Battle Cross\0", NULL, "Omori Electric Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, battlexRomInfo, battlexRomName, NULL, NULL, NULL, NULL, BattlexInputInfo, BattlexDIPInfo,
 	battlexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42,
 	256, 224, 4, 3
@@ -726,7 +727,7 @@ struct BurnDriver BurnDrvDodgeman = {
 	"dodgeman", NULL, NULL, NULL, "1983",
 	"Dodge Man\0", NULL, "Omori Electric Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dodgemanRomInfo, dodgemanRomName, NULL, NULL, NULL, NULL, DodgemanInputInfo, DodgemanDIPInfo,
 	dodgemanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

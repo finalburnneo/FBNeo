@@ -22569,10 +22569,10 @@ struct BurnDriver BurnDrvmslugxsc = {
 
 // Metal Slug X - Super Vehicle-001 (Legend, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20230307
+// GOTVG 20230311
 static struct BurnRomInfo mslugxcqRomDesc[] = {
-	{ "250-p1cq.p1",	0x100000, 0x31a59213, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2cq.ep1",	0x400000, 0x80067de1, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1cq.p1",	0x100000, 0xda458e67, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2cq.ep1",	0x400000, 0x7a27bd7f, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",	0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -24209,12 +24209,12 @@ struct BurnDriver BurnDrvkof97evn = {
 };
 
 // The King of Fighters '99 - Fluent and Refreshing
-// GOTVG 20230131
+// GOTVG 20230319
 static struct BurnRomInfo kof99skRomDesc[] = {
 	/* Encrypted */
 	{ "sk.neo-sma",		0x040000, 0xea9a3451, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "251-p1sk.p1",	0x400000, 0x25159a90, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "251-p2sk.p2",	0x400000, 0x350ae004, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "251-p1sk.p1",	0x400000, 0xa1d7eafc, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p2sk.p2",	0x400000, 0x853c903e, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

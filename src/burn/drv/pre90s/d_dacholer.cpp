@@ -407,6 +407,8 @@ static INT32 DrvDoReset()
 	sound_ack = 0;
 	MSM5205ResetWrite(0, 1);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -859,7 +861,7 @@ struct BurnDriver BurnDrvDacholer = {
 	"dacholer", NULL, NULL, NULL, "1983",
 	"Dacholer\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, dacholerRomInfo, dacholerRomName, NULL, NULL, NULL, NULL, DacholerInputInfo, DacholerDIPInfo,
 	DacholerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
@@ -905,7 +907,7 @@ struct BurnDriver BurnDrvKickboy = {
 	"kickboy", NULL, NULL, NULL, "1983",
 	"Kick Boy\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, kickboyRomInfo, kickboyRomName, NULL, NULL, NULL, NULL, DacholerInputInfo, KickboyDIPInfo,
 	KickboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
@@ -954,7 +956,7 @@ struct BurnDriver BurnDrvItaten = {
 	"itaten", NULL, NULL, NULL, "1984",
 	"Itazura Tenshi (Japan)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, itatenRomInfo, itatenRomName, NULL, NULL, NULL, NULL, ItatenInputInfo, ItatenDIPInfo,
 	ItatenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3

@@ -776,7 +776,7 @@ struct BurnDriver BurnDrvDeadang = {
 	"deadang", NULL, NULL, NULL, "1988",
 	"Dead Angle\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, deadangRomInfo, deadangRomName, NULL, NULL, NULL, NULL, DeadangInputInfo, DeadangDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 224, 4, 3
@@ -827,7 +827,7 @@ struct BurnDriver BurnDrvLeadang = {
 	"leadang", "deadang", NULL, NULL, "1988",
 	"Lead Angle (Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, leadangRomInfo, leadangRomName, NULL, NULL, NULL, NULL, DeadangInputInfo, DeadangDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 224, 4, 3
@@ -878,7 +878,7 @@ struct BurnDriver BurnDrvGhunter = {
 	"ghunter", "deadang", NULL, NULL, "1988",
 	"Gang Hunter / Dead Angle\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ghunterRomInfo, ghunterRomName, NULL, NULL, NULL, NULL, DeadangInputInfo, GhunterDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 224, 4, 3

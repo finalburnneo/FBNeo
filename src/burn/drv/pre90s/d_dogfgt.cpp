@@ -228,6 +228,8 @@ static INT32 DrvDoReset()
 
 	memset (scroll, 0, 4);
 
+	HiscoreReset();
+
 	last_sound_control = 0;
 	flipscreen = 0;
 	pixelcolor = 0;
@@ -630,7 +632,7 @@ struct BurnDriver BurnDrvDogfgt = {
 	"dogfgt", NULL, NULL, NULL, "1984",
 	"Acrobatic Dog-Fight\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, dogfgtRomInfo, dogfgtRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	256, 240, 4, 3
@@ -675,7 +677,7 @@ struct BurnDriver BurnDrvDogfgtu = {
 	"dogfgtu", "dogfgt", NULL, NULL, "1985",
 	"Acrobatic Dog-Fight (USA)\0", NULL, "Technos Japan (Data East USA, Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, dogfgtuRomInfo, dogfgtuRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	256, 240, 4, 3
@@ -721,7 +723,7 @@ struct BurnDriver BurnDrvDogfgtj = {
 	"dogfgtj", "dogfgt", NULL, NULL, "1984",
 	"But-ten Ohara's Suit-Cha Luck-a Dog-Fight (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, dogfgtjRomInfo, dogfgtjRomName, NULL, NULL, NULL, NULL, DogfgtInputInfo, DogfgtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	256, 240, 4, 3

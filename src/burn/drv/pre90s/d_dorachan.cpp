@@ -111,6 +111,8 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	HiscoreReset();
+
 	flipscreen = 0;
 	protection_value = 0;
 
@@ -341,7 +343,7 @@ struct BurnDriver BurnDrvDorachan = {
 	"dorachan", NULL, NULL, NULL, "1980",
 	"Dora-chan (Japan)\0", "No sound", "Alpha Denshi Co. / Craul Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dorachanRomInfo, dorachanRomName, NULL, NULL, NULL, NULL, DorachanInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	240, 256, 3, 4

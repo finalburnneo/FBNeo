@@ -289,6 +289,8 @@ static INT32 DrvDoReset()
 	BurnYM3526Reset();
 	M6809Close();
 
+	HiscoreReset();
+
 	soundlatch = 0;
 	protection_value = 0;
 	flipscreen = 0;
@@ -710,7 +712,7 @@ struct BurnDriver BurnDrvExprraid = {
 	"exprraid", NULL, NULL, NULL, "1986",
 	"Express Raider (World, Rev 4)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, exprraidRomInfo, exprraidRomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -757,7 +759,7 @@ struct BurnDriver BurnDrvExprraidu = {
 	"exprraidu", "exprraid", NULL, NULL, "1986",
 	"Express Raider (US, rev 5)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, exprraiduRomInfo, exprraiduRomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -804,7 +806,7 @@ struct BurnDriver BurnDrvExprraidi = {
 	"exprraidi", "exprraid", NULL, NULL, "1986",
 	"Express Raider (Italy)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, exprraidiRomInfo, exprraidiRomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -851,7 +853,7 @@ struct BurnDriver BurnDrvWexpress = {
 	"wexpress", "exprraid", NULL, NULL, "1986",
 	"Western Express (Japan, rev 4)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wexpressRomInfo, wexpressRomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -904,7 +906,7 @@ struct BurnDriver BurnDrvWexpressb1 = {
 	"wexpressb1", "exprraid", NULL, NULL, "1986",
 	"Western Express (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wexpressb1RomInfo, wexpressb1RomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	Wexpressb1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -954,7 +956,7 @@ struct BurnDriver BurnDrvWexpressb2 = {
 	"wexpressb2", "exprraid", NULL, NULL, "1986",
 	"Western Express (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wexpressb2RomInfo, wexpressb2RomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	Wexpressb2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -1004,7 +1006,7 @@ struct BurnDriver BurnDrvWexpressb3 = {
 	"wexpressb3", "exprraid", NULL, NULL, "1986",
 	"Western Express (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wexpressb3RomInfo, wexpressb3RomName, NULL, NULL, NULL, NULL, ExprraidInputInfo, ExprraidDIPInfo,
 	Wexpressb3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3

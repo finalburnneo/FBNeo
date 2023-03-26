@@ -242,6 +242,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 
+	HiscoreReset();
+
 	soundlatch = 0;
 	flipscreen = 0;
 	calorie_bg = 0;
@@ -634,7 +636,7 @@ struct BurnDriver BurnDrvCalorie = {
 	"calorie", NULL, NULL, NULL, "1986",
 	"Calorie Kun vs Moguranian\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, calorieRomInfo, calorieRomName, NULL, NULL, NULL, NULL, CalorieInputInfo, CalorieDIPInfo,
 	CalorieInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	256, 224, 4, 3
@@ -692,7 +694,7 @@ struct BurnDriver BurnDrvCalorieb = {
 	"calorieb", "calorie", NULL, NULL, "1986",
 	"Calorie Kun vs Moguranian (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, caloriebRomInfo, caloriebRomName, NULL, NULL, NULL, NULL, CalorieInputInfo, CalorieDIPInfo,
 	CaloriebInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	256, 224, 4, 3

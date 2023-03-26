@@ -1545,7 +1545,17 @@ static INT32 NeoSMAInit(void (*pInitCallback)(), pSekWriteWordHandler pBankswitc
 
 	nSMARandomNumber[nNeoActiveSlot] = 0x2345;
 
-	return NeoInit();
+	INT32 nRet = NeoInit();
+
+	// If IPS_NOT_PROTECT, the data between PROM+0x700000 ~ 0x900000 is redundant, and the data of nIpsMemExpLen[PRG1_ROM] will be isolated.
+	// Mapping nIpsMemExpLen[PRG1_ROM] to PROM + 0x700000 can be solved.
+	if ((0 == nRet) && (nIpsDrvDefine & IPS_NOT_PROTECT) && (nIpsMemExpLen[PRG1_ROM] > 0)) {
+		SekOpen(0);
+		SekMapMemory(Neo68KROMActive + 0x700000, 0x900000, 0x900000 + nIpsMemExpLen[PRG1_ROM] - 1, MAP_ROM);
+		SekClose();
+	}
+
+	return nRet;
 }
 
 INT32 NeoSMAExit()
@@ -6029,8 +6039,7 @@ static void kof98Decrypt()
 	UINT32 nSp2Size = 0x400000;
 
 	// Extra Rom not moved in ips.
-	if (bDoIpsPatch)
-		nSp2Size += nIpsMemExpLen[PRG1_ROM];
+	if (bDoIpsPatch) nSp2Size += nIpsMemExpLen[PRG1_ROM];
 
 	memmove(&Neo68KROMActive[0x100000], &Neo68KROMActive[0x200000], nSp2Size);
 
@@ -16761,7 +16770,7 @@ struct BurnDriver BurnDrvSamsho2new = {
 // Samurai Shodown II Perfect Hack
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",   0x200000, 0xc0104be4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p1pe.p1",   0x200000, 0x0340ef3c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "063-p2pe.p2",   0x020000, 0xe9cc1d72, 0 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "063-s1.s1",     0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -23146,12 +23155,12 @@ struct BurnDriver BurnDrvmslug3sc = {
 
 // Metal Slug 3 (Legend, Hack)
 // Modified by 合金弹头爱克斯
-// 20230312
+// 20230323
 static struct BurnRomInfo mslug3cqRomDesc[] = {
 	/* Encrypted */
-	{ "ms3cq.neo-sma",	0x040000, 0xdc743549, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1cq.p1",	0x400000, 0xea609b4d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2cq.p2",	0x400000, 0x1e254cd8, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "cq.neo-sma",		0x040000, 0xb3ac1233, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-pg1cq.p1",	0x400000, 0x456ff72a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-pg2cq.p2",	0x400000, 0x7ca4a195, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */

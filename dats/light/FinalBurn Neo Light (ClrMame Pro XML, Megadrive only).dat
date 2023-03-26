@@ -1729,6 +1729,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="barverbs">
+		<comment>Hack</comment>
+		<description>Barver Battle Saga (Chinese)</description>
+		<year>2023</year>
+		<manufacturer>Chuan Pu Ke Ji / Ken_Tse</manufacturer>
+		<rom name="Tai Kong Zhan Shi (Chinese)" size="2097152" crc="5c70016a"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="barver">
 		<description>Barver Battle Saga - Tai Kong Zhan Shi (Chi) (Unl)</description>
 		<year>1996</year>
@@ -5329,6 +5338,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dgwcyscs">
+		<comment>Hack</comment>
+		<description>Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)</description>
+		<year>2023</year>
+		<manufacturer>Chuan Pu Ke Ji / Ken_Tse</manufacturer>
+		<rom name="Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)" size="2097152" crc="87ac7f92"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="diablo" cloneof="fatallab" romof="fatallab">
 		<comment>Hack</comment>
 		<description>Diablo (Rus) (Unl)</description>
@@ -7102,6 +7120,15 @@
 		<year>1996</year>
 		<manufacturer>Chuanpu Technologies</manufacturer>
 		<rom name="feng shen ying jie chuan (chi) (unl).bin" size="2097152" crc="6a382b60"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="fsyjz">
+		<comment>Hack</comment>
+		<description>Feng Shen Ying Jie Zhuan (Chinese)</description>
+		<year>2023</year>
+		<manufacturer>Chuan Pu Ke Ji / Ken_Tse</manufacturer>
+		<rom name="Feng Shen Ying Jie Zhuan (Chinese)" size="2097152" crc="88664e2f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17579,6 +17606,15 @@
 		<year>1996</year>
 		<manufacturer>Chuanpu Technologies</manufacturer>
 		<rom name="shui hu zhuan (chi) (unl).bin" size="2097152" crc="61e458c3"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="shz">
+		<comment>Hack</comment>
+		<description>Shui Hu Zhuan (Chinese)</description>
+		<year>2023</year>
+		<manufacturer>Chuan Pu Ke Ji / Ken_Tse</manufacturer>
+		<rom name="Shui Hu Zhuan (Chinese)" size="2097152" crc="84c2f352"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

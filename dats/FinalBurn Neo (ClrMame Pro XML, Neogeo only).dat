@@ -12581,8 +12581,8 @@
 		<description>Metal Slug X - Super Vehicle-001 (Legend, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1cq.p1" size="1048576" crc="31a59213"/>
-		<rom name="250-p2cq.ep1" size="4194304" crc="80067de1"/>
+		<rom name="250-p1cq.p1" size="1048576" crc="da458e67"/>
+		<rom name="250-p2cq.ep1" size="4194304" crc="7a27bd7f"/>
 		<rom name="250-s1sc.s1" size="131072" crc="03bce893"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
@@ -23954,8 +23954,8 @@
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="sk.neo-sma" size="262144" crc="ea9a3451"/>
-		<rom name="251-p1sk.p1" size="4194304" crc="25159a90"/>
-		<rom name="251-p2sk.p2" size="4194304" crc="350ae004"/>
+		<rom name="251-p1sk.p1" size="4194304" crc="a1d7eafc"/>
+		<rom name="251-p2sk.p2" size="4194304" crc="853c903e"/>
 		<rom name="251-c1.c1" merge="251-c1.c1" size="8388608" crc="0f9e93fe"/>
 		<rom name="251-c2.c2" merge="251-c2.c2" size="8388608" crc="e71e2ea3"/>
 		<rom name="251-c3.c3" merge="251-c3.c3" size="8388608" crc="238755d2"/>

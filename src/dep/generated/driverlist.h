@@ -1348,6 +1348,7 @@ DRV		BurnSpecBarmyburg;
 DRV		BurnDrvMSX_barnstrm;
 DRV		BurnDrvmd_barney;
 DRV		BurnDrvpce_barunba;
+DRV		BurnDrvmd_tkzs;
 DRV		BurnDrvmd_barver;
 DRV		BurnDrvmd_barvere;
 DRV		BurnDrvBaryon;
@@ -4095,6 +4096,7 @@ DRV		BurnDrvDharmag;
 DRV		BurnDrvDharmaj;
 DRV		BurnDrvDharmak;
 DRV		BurnDrvDharma;
+DRV		BurnDrvmd_dgwcyscs;
 DRV		BurnSpecDilithium;
 DRV		BurnDrvmd_diablo;
 DRV		BurnDrvnes_diabloii;
@@ -5500,6 +5502,7 @@ DRV		BurnDrvsms_felipe;
 DRV		BurnDrvnes_felixthecat;
 DRV		BurnDrvmd_fengkuan;
 DRV		BurnDrvmd_fengshen;
+DRV		BurnDrvmd_fsyjz;
 DRV		BurnDrvmd_fengshena;
 DRV		BurnDrvFenix;
 DRV		BurnDrvFenixn;
@@ -14356,6 +14359,7 @@ DRV		BurnDrvShufshot139;
 DRV		BurnDrvShufshot;
 DRV		BurnDrvmd_shuihu;
 DRV		BurnDrvmd_shuihuzh;
+DRV		BurnDrvmd_shz;
 DRV		BurnDrvmd_shuramon;
 DRV		BurnSpecShuriken;
 DRV		BurnSpecShuttlebug;
@@ -20880,6 +20884,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_barnstrm,		// Barn Stormer (Euro)
 	&BurnDrvmd_barney,			// Barney's Hide & Seek Game (USA)
 	&BurnDrvpce_barunba,		// Barunba
+	&BurnDrvmd_tkzs,			// Barver Battle Saga (Chinese)
 	&BurnDrvmd_barver,			// Barver Battle Saga - Tai Kong Zhan Shi (Chi) (Unl)
 	&BurnDrvmd_barvere,			// Barver Battle Saga - Tai Kong Zhan Shi (Hack, English)
 	&BurnDrvBaryon,				// Baryon - Future Assault (set 1)
@@ -23627,6 +23632,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDharmaj,			// Dharma Doujou (Japan)
 	&BurnDrvDharmak,			// Dharma Doujou (Korea)
 	&BurnDrvDharma,				// Dharma Doujou
+	&BurnDrvmd_dgwcyscs,		// Di Guo Wang Chao - Ya Se Chuan Shuo (Chinese)
 	&BurnSpecDilithium,			// Di-Lithium Lift (16K)
 	&BurnDrvmd_diablo,			// Diablo (Rus) (Unl)
 	&BurnDrvnes_diabloii,		// Diablo II (Hack)
@@ -25032,6 +25038,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_felixthecat,	// Felix the Cat (USA)
 	&BurnDrvmd_fengkuan,		// Feng Kuang Tao Hua Yuan (Tw) (Unl)
 	&BurnDrvmd_fengshen,		// Feng Shen Ying Jie Chuan (Tw) (Unl)
+	&BurnDrvmd_fsyjz,			// Feng Shen Ying Jie Zhuan (Chinese)
 	&BurnDrvmd_fengshena,		// Feng Shen Ying Jie Zhuan (Tw, Alt?) (Unl)
 	&BurnDrvFenix,				// Fenix (bootleg of Phoenix) [no comment, NOT WORKING]
 	&BurnDrvFenixn,				// Fenix (Niemer bootleg of Phoenix)
@@ -33888,6 +33895,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvShufshot,			// Shuffleshot (v1.40)
 	&BurnDrvmd_shuihu,			// Shui Hu - Feng Yun Zhuan (Chi) (Unl)
 	&BurnDrvmd_shuihuzh,		// Shui Hu Zhuan (Chi) (Unl)
+	&BurnDrvmd_shz,				// Shui Hu Zhuan (Chinese)
 	&BurnDrvmd_shuramon,		// Shura no Mon (Jpn)
 	&BurnSpecShuriken,			// Shuriken (48K)
 	&BurnSpecShuttlebug,		// Shuttlebug (48K) (HB)

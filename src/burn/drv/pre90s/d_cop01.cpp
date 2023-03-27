@@ -468,6 +468,8 @@ static INT32 DrvDoReset()
 		BurnYM3526Reset();
 	}
 
+	HiscoreReset();
+
 	soundlatch = 0;
 	timer_pulse = 0;
 
@@ -999,7 +1001,7 @@ struct BurnDriver BurnDrvCop01 = {
 	"cop01", NULL, NULL, NULL, "1985",
 	"Cop 01 (set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, cop01RomInfo, cop01RomName, NULL, NULL, NULL, NULL, Cop01InputInfo, Cop01DIPInfo,
 	Cop01Init, DrvExit, Cop01Frame, DrvDraw, DrvScan, &DrvRecalc, 0x190,
 	256, 224, 4, 3
@@ -1045,7 +1047,7 @@ struct BurnDriver BurnDrvCop01a = {
 	"cop01a", "cop01", NULL, NULL, "1985",
 	"Cop 01 (set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, cop01aRomInfo, cop01aRomName, NULL, NULL, NULL, NULL, Cop01InputInfo, Cop01DIPInfo,
 	Cop01Init, DrvExit, Cop01Frame, DrvDraw, DrvScan, &DrvRecalc, 0x190,
 	256, 224, 4, 3
@@ -1088,7 +1090,7 @@ struct BurnDriver BurnDrvMightguy = {
 	"mightguy", NULL, NULL, NULL, "1986",
 	"Mighty Guy\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mightguyRomInfo, mightguyRomName, NULL, NULL, NULL, NULL, Cop01InputInfo, MightguyDIPInfo,
 	MightguyInit, DrvExit, MightguyFrame, DrvDraw, DrvScan, &DrvRecalc, 0x190,
 	224, 256, 3, 4

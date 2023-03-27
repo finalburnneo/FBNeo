@@ -285,7 +285,7 @@ static bool bForceUpdateOnStatusRead;
 static INT32 nNeoControlConfig;
 
 static INT32 nNeoSystemType;
-static bool bZ80BIOS;
+static bool bZ80BIOS; // game can map/unmap z80 bios when true
 
 static INT32 nNeoCDCyclesIRQ = 0, nNeoCDCyclesIRQPeriod = 0;
 
@@ -458,7 +458,11 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	// The most recent MVS models doesn't have a Z80 BIOS
 	bZ80BIOS = (nNewBIOS != 0) ? true : false;
 
-	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL) bZ80BIOS = false; // IRRMAZE: need to bank in z80 prog(!)
+	// IRRMAZE & Jamma-PCB: need to bank in z80 prog(!)
+	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL ||
+	    (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
+		bZ80BIOS = false;
+	}
 
 	// Check if we need to load a new BIOS
 	if (nNewBIOS == nBIOS) {

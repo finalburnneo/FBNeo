@@ -180,6 +180,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 
+	HiscoreReset();
+
 	ay8910_last = 0;
 	ay8910_psg_latch = 0;
 	color_bank = 0;
@@ -585,7 +587,7 @@ struct BurnDriver BurnDrvBogeyman = {
 	"bogeyman", NULL, NULL, NULL, "1985",
 	"Bogey Manor\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bogeymanRomInfo, bogeymanRomName, NULL, NULL, NULL, NULL, BogeymanInputInfo, BogeymanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 272,
 	256, 240, 4, 3

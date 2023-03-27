@@ -158,6 +158,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6502Close();
 
 	BurnLEDReset();
+	HiscoreReset();
 
 	watchdog = 0;
 
@@ -444,7 +445,7 @@ struct BurnDriver BurnDrvCanyon = {
 	"canyon", NULL, NULL, NULL, "1977",
 	"Canyon Bomber\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, canyonRomInfo, canyonRomName, NULL, NULL, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
 	CanyonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 4,
 	256, 240, 4, 3
@@ -479,7 +480,7 @@ struct BurnDriver BurnDrvCanyonp = {
 	"canyonp", "canyon", NULL, NULL, "1977",
 	"Canyon Bomber (prototype)\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, canyonpRomInfo, canyonpRomName, NULL, NULL, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
 	CanyonpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 4,
 	256, 240, 4, 3

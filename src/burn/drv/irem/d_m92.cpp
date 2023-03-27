@@ -3514,6 +3514,8 @@ static struct BurnRomInfo nbbatmanRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 15 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 17
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 18
+	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 19
 };
 
 STD_ROM_PICK(nbbatman)
@@ -3577,6 +3579,8 @@ static struct BurnRomInfo nbbatmanuRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 15 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 17
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 18
+	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 19
 };
 
 STD_ROM_PICK(nbbatmanu)
@@ -3619,6 +3623,8 @@ static struct BurnRomInfo leaguemnRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 15 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 17
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 18
+	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 19
 };
 
 STD_ROM_PICK(leaguemn)
@@ -3665,9 +3671,9 @@ static struct BurnRomInfo leaguemnaRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },              // 19 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },              // 20
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },              // 21
-	{ "m92_z-2f-.ic64",		0x000117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 22
-	{ "m92_z-2k-.ic15",		0x000117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 23
-	{ "m92_z-2l-.ic16",		0x000117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 24
+	{ "m92_z-2k-.ic15",		0x000117, 0x0646be21, 0 | BRF_OPT },              // 22
+	{ "m92_z-2l-.ic16",		0x000117, 0xa09df0ee, 0 | BRF_OPT },              // 23
+	{ "m92_z-2f-.ic64",		0x000117, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 24
 };
 
 STD_ROM_PICK(leaguemna)

@@ -385,6 +385,7 @@ static INT32 DrvDoReset()
 		DACReset();
 		BurnYM2151Reset();
 		VezClose();
+		HiscoreReset();
 	}
 	else if (game_select == 2)
 	{
@@ -394,6 +395,7 @@ static INT32 DrvDoReset()
 		ZetClose();
 		SN76496Reset();
 	}
+
 
 	soundlatch = 0;
 	nmi_enable = 0;
@@ -1015,7 +1017,7 @@ struct BurnDriver BurnDrvFantland = {
 	"fantland", NULL, NULL, NULL, "19??",
 	"Fantasy Land (set 1)\0", NULL, "Electronic Devices Italy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, fantlandRomInfo, fantlandRomName, NULL, NULL, NULL, NULL, FantlandInputInfo, FantlandDIPInfo,
 	FantlandInit, DrvExit, FantlandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	352, 256, 4, 3
@@ -1052,7 +1054,7 @@ struct BurnDriver BurnDrvFantlanda = {
 	"fantlanda", "fantland", NULL, NULL, "19??",
 	"Fantasy Land (set 2)\0", NULL, "Electronic Devices Italy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, fantlandaRomInfo, fantlandaRomName, NULL, NULL, NULL, NULL, FantlandInputInfo, FantlandDIPInfo,
 	FantlandInit, DrvExit, FantlandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	352, 256, 4, 3
@@ -1104,7 +1106,7 @@ struct BurnDriver BurnDrvGalaxygn = {
 	"galaxygn", NULL, NULL, NULL, "1989",
 	"Galaxy Gunners\0", "Imperfect sound", "Electronic Devices Italy", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, galaxygnRomInfo, galaxygnRomName, NULL, NULL, NULL, NULL, FantlandInputInfo, GalaxygnDIPInfo,
 	GalaxygnInit, DrvExit, FantlandFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 352, 3, 4

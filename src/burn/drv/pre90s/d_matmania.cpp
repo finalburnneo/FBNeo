@@ -361,6 +361,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(1);
 	DACReset();
 
+	HiscoreReset();
+
 	pageselect = 0;
 	scroll = 0;
 	soundlatch = 0;
@@ -917,7 +919,7 @@ struct BurnDriver BurnDrvMatmania = {
 	"matmania", NULL, NULL, NULL, "1985",
 	"Mat Mania\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, matmaniaRomInfo, matmaniaRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, MatmaniaDIPInfo,
 	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
@@ -977,7 +979,7 @@ struct BurnDriver BurnDrvExcthour = {
 	"excthour", "matmania", NULL, NULL, "1985",
 	"Exciting Hour\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, excthourRomInfo, excthourRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
@@ -1050,7 +1052,7 @@ struct BurnDriver BurnDrvManiach = {
 	"maniach", NULL, NULL, NULL, "1986",
 	"Mania Challenge (set 1)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, maniachRomInfo, maniachRomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4
@@ -1118,7 +1120,7 @@ struct BurnDriver BurnDrvManiach2 = {
 	"maniach2", "maniach", NULL, NULL, "1986",
 	"Mania Challenge (set 2)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, maniach2RomInfo, maniach2RomName, NULL, NULL, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4

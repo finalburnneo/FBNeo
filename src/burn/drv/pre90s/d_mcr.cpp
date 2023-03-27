@@ -910,6 +910,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
     if (has_squak) midsat_reset();
     tcs_reset();
 
+	HiscoreReset();
+
 	flipscreen = 0;
 
 	return 0;
@@ -3173,7 +3175,7 @@ struct BurnDriver BurnDrvDemoderb = {
 	"demoderb", NULL, NULL, NULL, "1984",
 	"Demolition Derby\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, demoderbRomInfo, demoderbRomName, NULL, NULL, NULL, NULL, DemoderbInputInfo, DemoderbDIPInfo,
 	DemoderbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	512, 480, 4, 3

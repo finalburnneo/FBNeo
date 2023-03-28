@@ -134,6 +134,7 @@ static INT32 cpustr2num(char *pCpu)
 { // all known versions of the first cpu as of May 15, 2017
 	return (strstr(pCpu, "maincpu") ||
 		    strstr(pCpu, "cpu1") ||
+		    strstr(pCpu, "alpha") ||
 			strstr(pCpu, "master") ||
 			strstr(pCpu, "fgcpu") ||
 			strstr(pCpu, "cpua") ||
@@ -243,6 +244,12 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 						if ((!strcmp(name, "gradius2") || !strcmp(name, "gradius2a") || !strcmp(name, "gradius2b") || !strcmp(name, "vulcan") || !strcmp(name, "vulcana") || !strcmp(name, "vulcanb"))
 							&& HiscoreMemRange[nHiscoreNumRanges].Address == 0x60008) {
 							bprintf(0, _T("-- gradius2/vulcan noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+
+						// mhavoc (same comment as above, 0x0095 is a timer)
+						if (!strcmp(name, "mhavoc") && HiscoreMemRange[nHiscoreNumRanges].Address == 0x0095) {
+							bprintf(0, _T("-- mhavoc noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
 						}
 						// end NoConfirm "feature"

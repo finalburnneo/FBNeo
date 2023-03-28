@@ -903,14 +903,14 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (AllRam, 0x00, RamEnd - AllRam);
 	}
 
-    ZetOpen(0);
+	ZetOpen(0);
 	ZetReset();
 	ZetClose();
 
 	BurnSampleReset();
 	ssio_reset();
-    if (has_squak) midsat_reset();
-    tcs_reset();
+	if (has_squak) midsat_reset();
+	tcs_reset();
 
 	HiscoreReset();
 

@@ -926,13 +926,13 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	tcs_reset();
 	cvsd_reset();
 
-	HiscoreReset();
-
 	control_data = 0;
 
 	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 
 	gear_shifter[0] = gear_shifter[1] = 0;
+
+	HiscoreReset();
 
 	return 0;
 }

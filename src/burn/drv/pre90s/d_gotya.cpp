@@ -209,6 +209,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	flipscreen = 0;
 	tune_timer = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -439,9 +441,6 @@ static INT32 DrvFrame()
 	ZetRun(3072000 / 60);
 	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	ZetClose();
-
-	HiscoreReset();
-
 
 	if (tune_timer > 0) {
 		tune_timer--;

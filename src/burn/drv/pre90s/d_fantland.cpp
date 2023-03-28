@@ -385,7 +385,6 @@ static INT32 DrvDoReset()
 		DACReset();
 		BurnYM2151Reset();
 		VezClose();
-		HiscoreReset();
 	}
 	else if (game_select == 2)
 	{
@@ -399,6 +398,8 @@ static INT32 DrvDoReset()
 
 	soundlatch = 0;
 	nmi_enable = 0;
+
+	HiscoreReset();
 
 	return 0;
 }

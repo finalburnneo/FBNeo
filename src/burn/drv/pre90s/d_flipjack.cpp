@@ -239,6 +239,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	layer_reg = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

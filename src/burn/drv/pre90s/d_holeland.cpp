@@ -400,6 +400,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	flipscreen[1] = 0;
 	palette_offset = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

@@ -192,9 +192,7 @@ INT32 midsatRun(INT32 cycles)
 
 void midsat_update(INT16 *samples, INT32 length)
 {
-    M6800Open(0);
     tms5220_update(samples, length);
-    M6800Close();
 }
 
 void midsat_scan(INT32 nAction, INT32 *pnMin)

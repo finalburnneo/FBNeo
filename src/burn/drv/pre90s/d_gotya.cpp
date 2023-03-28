@@ -209,6 +209,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	flipscreen = 0;
 	tune_timer = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

@@ -4785,6 +4785,29 @@ struct BurnDriver BurnDrvWwmarine = {
 };
 
 
+// Waku Waku Anpanman (Rev A)
+
+static struct BurnRomInfo wwanpanmRomDesc[] = {
+	{ "epr-15097.ic32",			0x40000, 0x0e4f38c6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "epr-15096.ic31",			0x40000, 0x1b833932, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "epr-15095.ic4",			0x40000, 0x69adf3a1, 2 | BRF_SND },           //  2 UPD Samples
+};
+
+STD_ROM_PICK(wwanpanm)
+STD_ROM_FN(wwanpanm)
+
+struct BurnDriver BurnDrvwwanpanm = {
+	"wwanpanm", NULL, NULL, NULL, "1992",
+	"Waku Waku Anpanman (Rev A)\0", NULL, "Sega", "C2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	NULL, wwanpanmRomInfo, wwanpanmRomName, NULL, NULL, NULL, NULL, WwmarineInputInfo, WwmarineDIPInfo,
+	WwmarineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
+	320, 224, 4, 3
+};
+
+
 // SegaSonic Cosmo Fighter (World)
 
 static struct BurnRomInfo sonicfgtRomDesc[] = {
@@ -5383,6 +5406,31 @@ struct BurnDriverD BurnDrvAnpanman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, anpanmanRomInfo, anpanmanRomName, NULL, NULL, NULL, NULL, AnpanmanInputInfo, AnpanmanDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
+	320, 224, 4, 3
+};
+
+
+// Soreike! Anpanman Popcorn Koujou (Rev A)
+
+static struct BurnRomInfo anpanmanaRomDesc[] = {
+	{ "epr-14804a.ic32",		0x40000, 0xa80bd024, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "epr-14803a.ic31",		0x40000, 0x32e1f248, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-14806.ic34",			0x40000, 0x40f398db, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-14805.ic33",			0x40000, 0xf27229ed, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "epr-14807.ic4",			0x40000, 0x9827549f, 2 | BRF_SND },           //  4 UPD Samples
+};
+
+STD_ROM_PICK(anpanmana)
+STD_ROM_FN(anpanmana)
+
+struct BurnDriverD BurnDrvAnpanmana = {
+	"anpanmana", "anpanman", NULL, NULL, "1992",
+	"Soreike! Anpanman Popcorn Koujou (Rev A)\0", NULL, "Sega", "C2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING| BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	NULL, anpanmanRomaInfo, anpanmanaRomName, NULL, NULL, NULL, NULL, AnpanmanInputInfo, AnpanmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
 	320, 224, 4, 3
 };

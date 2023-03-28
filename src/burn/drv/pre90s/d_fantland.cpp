@@ -400,6 +400,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	nmi_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

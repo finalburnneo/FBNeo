@@ -270,6 +270,8 @@ static INT32 DrvDoReset()
 	prot_toggle = 0;
 	PaddleX = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

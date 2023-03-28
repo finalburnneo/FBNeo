@@ -934,6 +934,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	gear_shifter[0] = gear_shifter[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

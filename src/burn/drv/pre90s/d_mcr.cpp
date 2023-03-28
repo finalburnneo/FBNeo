@@ -41,6 +41,8 @@ static UINT8 DrvRecalc;
 
 static INT32 flipscreen;
 
+static INT32 nCyclesExtra[3];
+
 static INT32 nGraphicsLen0;
 static INT32 nGraphicsLen1;
 static INT32 nMainClock;
@@ -914,6 +916,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	flipscreen = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
+
 	return 0;
 }
 
@@ -1511,7 +1515,7 @@ static INT32 DrvFrame()
 
     INT32 nInterleave = 480;
 	INT32 nCyclesTotal[3] = { nMainClock / 30, 2000000 / 30, 3579545 / 4 / 30 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1544,6 +1548,14 @@ static INT32 DrvFrame()
             }
             M6809Close();
         }
+	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	if (has_ssio || has_tcs) {
+		nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	}
+	if (has_squak) {
+		nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
 	}
 
 	if (pBurnSoundOut) {
@@ -1593,7 +1605,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnTrackballScan();
 
-        SCAN_VAR(input_playernum);
+		SCAN_VAR(input_playernum);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
     if (nAction & ACB_NVRAM) {

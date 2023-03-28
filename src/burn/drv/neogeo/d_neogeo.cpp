@@ -17052,7 +17052,7 @@ struct BurnDriver BurnDrvSamsho2sp = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown II Perfect Hack - 2023-03-28, 19h35
+// Samurai Shodown II Perfect Hack - 2023-03-28, 19h53
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
 	{ "063-p1pe.p1",   0x200000, 0x2555cf40, 1 | BRF_ESS | BRF_PRG }, //  0 68K code

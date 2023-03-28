@@ -261,6 +261,9 @@ static INT32 DrvDoReset()
 	BurnYM2203Reset();
 	ZetClose();
 
+	HiscoreReset();
+
+
 	scrollx = 0;
 	scrolly = 0;
 	soundlatch = 0;
@@ -648,7 +651,7 @@ struct BurnDriver BurnDrvGoindol = {
 	"goindol", NULL, NULL, NULL, "1987",
 	"Goindol (World)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, goindolRomInfo, goindolRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	GoindolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -684,7 +687,7 @@ struct BurnDriver BurnDrvGoindolu = {
 	"goindolu", "goindol", NULL, NULL, "1987",
 	"Goindol (US)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, goindoluRomInfo, goindoluRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	GoindolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -720,7 +723,7 @@ struct BurnDriver BurnDrvGoindolj = {
 	"goindolj", "goindol", NULL, NULL, "1987",
 	"Goindol (Japan)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, goindoljRomInfo, goindoljRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	GoindolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -756,7 +759,7 @@ struct BurnDriver BurnDrvHomo = {
 	"homo", "goindol", NULL, NULL, "1987",
 	"Homo\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, homoRomInfo, homoRomName, NULL, NULL, NULL, NULL, GoindolInputInfo, GoindolDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

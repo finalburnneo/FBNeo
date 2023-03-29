@@ -229,6 +229,8 @@ static INT32 DrvDoReset()
 
 	t5182Reset();
 
+	HiscoreReset();
+
 	fg_tilebank = 0;
 	rowscroll_enable = 0;
 
@@ -609,7 +611,7 @@ struct BurnDriver BurnDrvMetlfrzr = {
 	"metlfrzr", NULL, NULL, NULL, "1989",
 	"Metal Freezer\0", NULL, "Seibu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, metlfrzrRomInfo, metlfrzrRomName, NULL, NULL, NULL, NULL, MetlfrzrInputInfo, MetlfrzrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

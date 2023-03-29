@@ -855,6 +855,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnWatchdogReset();
 
+	HiscoreReset();
+
 	startframe = 0;
 
 	return 0;
@@ -1379,7 +1381,7 @@ struct BurnDriver BurnDrvMilliped = {
 	"milliped", NULL, NULL, NULL, "1982",
 	"Millipede\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, millipedRomInfo, millipedRomName, NULL, NULL, NULL, NULL, MillipedInputInfo, MillipedDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4
@@ -1406,7 +1408,7 @@ struct BurnDriver BurnDrvCentiped = {
 	"centiped", NULL, NULL, NULL, "1980",
 	"Centipede (revision 4)\0", "1 Player version", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, centipedRomInfo, centipedRomName, NULL, NULL, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
 	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4
@@ -1433,7 +1435,7 @@ struct BurnDriver BurnDrvCentiped3 = {
 	"centiped3", "centiped", NULL, NULL, "1980",
 	"Centipede (revision 3)\0", "2 Player version", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, centiped3RomInfo, centiped3RomName, NULL, NULL, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
 	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4
@@ -1462,7 +1464,7 @@ struct BurnDriver BurnDrvWarlords = {
 	"warlords", NULL, NULL, NULL, "1980",
 	"Warlords\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, warlordsRomInfo, warlordsRomName, NULL, NULL, NULL, NULL, WarlordsInputInfo, WarlordsDIPInfo,
 	DrvInitwarlords, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 240, 4, 3

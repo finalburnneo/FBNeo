@@ -433,6 +433,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 	AY8910Exit(2);
+	HiscoreReset();
 
 	BurnFreeMemIndex();
 
@@ -696,7 +697,7 @@ struct BurnDriver BurnDrvFcombat = {
 	"fcombat", NULL, NULL, NULL, "1985",
 	"Field Combat\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, fcombatRomInfo, fcombatRomName, NULL, NULL, NULL, NULL, FcombatInputInfo, FcombatDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 320, 3, 4

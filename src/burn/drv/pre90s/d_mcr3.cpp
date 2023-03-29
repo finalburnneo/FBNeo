@@ -821,7 +821,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnWatchdogReset();
 
-    if (has_shift) BurnShiftReset();
+	if (has_shift) BurnShiftReset();
 
 	input_mux = 0;
 	flipscreen = 0;
@@ -829,16 +829,18 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	scrolly = 0;
 	latched_input = 0;
 
-    lamp = 0;
-    last_op4 = 0;
+	lamp = 0;
+	last_op4 = 0;
 
 	// powerdrv shifters
 	memset(pd_shift, 0, sizeof(pd_shift));
 	memset(pd_shift_prev, 0, sizeof(pd_shift_prev));
 
-    nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
-    return 0;
+	HiscoreReset();
+
+	return 0;
 }
 
 static INT32 MemIndex()

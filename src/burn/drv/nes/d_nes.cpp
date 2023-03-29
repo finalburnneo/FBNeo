@@ -16025,6 +16025,26 @@ struct BurnDriver BurnDrvnes_magickidsdorp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rockman 3 - Dr. Wily no Saigo! (T-Chi) 20230315
+// Modified by NOKOH
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=719402
+static struct BurnRomInfo nes_rockm3cRomDesc[] = {
+	{ "Rockman 3 - Dr. Wily no Saigo! (T-Chi).nes",          786448, 0x8125b0a4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_rockm3c)
+STD_ROM_FN(nes_rockm3c)
+
+struct BurnDriver BurnDrvnes_rockm3c = {
+	"nes_rockm3c", "nes_megaman3", NULL, NULL, "2023",
+	"Rockman 3 - Dr. Wily no Saigo! (T-Chi)\0", NULL, "NOKOH", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_rockm3cRomInfo, nes_rockm3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Jackal - Endless Mission (v1.2) 20210313
 // Modified by HHNM Team - ZENG GE / Ôø¸ç
 // https://www.nesbbs.com/bbs/thread-51662-1-1.html

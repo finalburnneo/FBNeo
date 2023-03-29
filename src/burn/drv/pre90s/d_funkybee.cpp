@@ -308,6 +308,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	
 	BurnWatchdogReset();
 
+	HiscoreReset();
+
 	scroll = 0;
 	gfx_bank = 0;
 	flipscreen = 0;
@@ -617,7 +619,7 @@ struct BurnDriver BurnDrvfunkybee = {
 	"funkybee", NULL, NULL, NULL, "1982",
 	"Funky Bee\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, funkybeeRomInfo, funkybeeRomName, NULL, NULL, NULL, NULL, DrvInputInfo, funkybeeDIPInfo,
 	funkybeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 236, 3, 4
@@ -645,7 +647,7 @@ struct BurnDriver BurnDrvfunkbeeb = {
 	"funkybeeb", "funkybee", NULL, NULL, "1982",
 	"Funky Bee (bootleg, harder)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, funkbeebRomInfo, funkbeebRomName, NULL, NULL, NULL, NULL, DrvInputInfo, funkbeebDIPInfo,
 	funkybeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 236, 3, 4
@@ -677,7 +679,7 @@ struct BurnDriver BurnDrvskylancr = {
 	"skylancr", NULL, NULL, NULL, "1983",
 	"Sky Lancer\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, skylancrRomInfo, skylancrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, skylancrDIPInfo,
 	skylancrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 236, 3, 4
@@ -704,7 +706,7 @@ struct BurnDriver BurnDrvskylance = {
 	"skylancre", "skylancr", NULL, NULL, "1983",
 	"Sky Lancer (Esco Trading Co license)\0", NULL, "Orca (Esco Trading Co license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, skylanceRomInfo, skylanceRomName, NULL, NULL, NULL, NULL, DrvInputInfo, skylanceDIPInfo,
 	skylancrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 236, 3, 4

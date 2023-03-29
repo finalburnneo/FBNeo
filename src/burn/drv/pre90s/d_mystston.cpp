@@ -221,6 +221,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 
+	HiscoreReset();
+
 	ay8910_select = 0;
 
 	return 0;
@@ -642,7 +644,7 @@ struct BurnDriver BurnDrvmystston = {
 	"mystston", NULL, NULL, NULL, "1984",
 	"Mysterious Stones - Dr. John's Adventure\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, myststonRomInfo, myststonRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
@@ -683,7 +685,7 @@ struct BurnDriver BurnDrvmyststno = {
 	"myststono", "mystston", NULL, NULL, "1984",
 	"Mysterious Stones - Dr. Kick in Adventure\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, myststnoRomInfo, myststnoRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
@@ -727,7 +729,7 @@ struct BurnDriver BurnDrvmyststni = {
 	"myststonoi", "mystston", NULL, NULL, "1984",
 	"Mysterious Stones - Dr. Kick in Adventure (Itisa PCB)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, myststniRomInfo, myststniRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4

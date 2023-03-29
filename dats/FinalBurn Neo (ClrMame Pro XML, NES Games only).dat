@@ -13872,6 +13872,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="rockm3c" cloneof="megaman3" romof="megaman3">
+		<comment>Hack</comment>
+		<description>Rockman 3 - Dr. Wily no Saigo! (T-Chi)</description>
+		<year>2023</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Rockman 3 - Dr. Wily no Saigo! (T-Chi).nes" size="786448" crc="8125b0a4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="rockm4" cloneof="megaman4" romof="megaman4">
 		<description>Rockman 4 - Aratanaru Yabou!! (Japan)</description>
 		<year>1991</year>

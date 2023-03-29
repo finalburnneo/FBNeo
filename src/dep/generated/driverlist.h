@@ -13548,6 +13548,7 @@ DRV		BurnDrvCpsRockmanj;
 DRV		BurnDrvnes_rockm2;
 DRV		BurnDrvCpsRockman2j;
 DRV		BurnDrvnes_rockm3;
+DRV		BurnDrvnes_rockm3c;
 DRV		BurnDrvnes_rockm4;
 DRV		BurnDrvnes_rockm4mi;
 DRV		BurnDrvnes_rockm5;
@@ -18487,6 +18488,7 @@ DRV		BurnDrvsms_waimanu;
 DRV		BurnDrvMj4simai;
 DRV		BurnDrvwakuwak7bh;
 DRV		BurnDrvwakuwak7;
+DRV		BurnDrvwwanpanm;
 DRV		BurnDrvWwmarine;
 DRV		BurnDrvSoniccar;
 DRV		BurnDrvUltracin;
@@ -33084,6 +33086,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_rockm2,			// Rockman 2 - Dr. Wily no Nazo (Japan)
 	&BurnDrvCpsRockman2j,		// Rockman 2 - the power fighters (960708 Japan)
 	&BurnDrvnes_rockm3,			// Rockman 3 - Dr. Wily no Saigo! (Japan)
+	&BurnDrvnes_rockm3c,		// Rockman 3 - Dr. Wily no Saigo! (T-Chi)
 	&BurnDrvnes_rockm4,			// Rockman 4 - Aratanaru Yabou!! (Japan)
 	&BurnDrvnes_rockm4mi,		// Rockman 4 - Minus Infinity (Hack)
 	&BurnDrvnes_rockm5,			// Rockman 5 - Blues no Wana! (Japan)
@@ -38023,6 +38026,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMj4simai,			// Wakakusamonogatari Mahjong Yonshimai (Japan)
 	&BurnDrvwakuwak7bh,			// Waku Waku 7 (Boss Hack)
 	&BurnDrvwakuwak7,			// Waku Waku 7
+	&BurnDrvwwanpanm,			// Waku Waku Anpanman (Rev A)
 	&BurnDrvWwmarine,			// Waku Waku Marine
 	&BurnDrvSoniccar,			// Waku Waku Sonic Patrol Car
 	&BurnDrvUltracin,			// Waku Waku Ultraman Racing

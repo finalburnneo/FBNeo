@@ -42765,20 +42765,58 @@ struct BurnDriver BurnDrvmd_umk3mh = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Ultimate Mortal Kombat 3 Hack Version 0.6 (By Nemesis_c)
+// Ultimate Mortal Kombat 3 Arcade Hack Version 0.6 (By Nemesis_c)
+// https://www.romhacking.net/hacks/3158/
+static struct BurnRomInfo md_umk3h06RomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 Arcade Hack Ver. 0.6 (By Nemesis_c).bin", 0x5f59da, 0xd8c152ff, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3h06)
+STD_ROM_FN(md_umk3h06)
+
+struct BurnDriver BurnDrvmd_umk3h06 = {
+	"md_umk3h06", "md_umk3", NULL, NULL, "2012",
+	"Ultimate Mortal Kombat 3 Arcade (Hack, v0.6)\0", NULL, "Nemesis_c", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_umk3h06RomInfo, md_umk3h06RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat 3 Arcade Hack Version 0.71 (By Nemesis_c)
 static struct BurnRomInfo md_umk3hRomDesc[] = {
-	{ "Ultimate Mortal Kombat 3 Hack Ver. 0.6 (By Nemesis_c).bin", 0x5F59DA, 0xD8C152FF, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Ultimate Mortal Kombat 3 Hack Ver. 0.71 (By Nemesis_c).bin", 0x61263a, 0xb069ab33, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_umk3h)
 STD_ROM_FN(md_umk3h)
 
 struct BurnDriver BurnDrvmd_umk3h = {
-	"md_umk3h", "md_umk3", NULL, NULL, "2012",
-	"Ultimate Mortal Kombat 3 (Hack, V0.6)\0", NULL, "2012 Nemesis_c", "Sega Megadrive",
+	"md_umk3h", "md_umk3", NULL, NULL, "2012?",
+	"Ultimate Mortal Kombat 3 Arcade (Hack, v0.71)\0", NULL, "Nemesis_c", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_umk3hRomInfo, md_umk3hRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat 3 OSC Hack
+
+static struct BurnRomInfo md_umk3oscRomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 OSC (2022)(Bonus).bin", 5595464, 0x1eb9b657, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3osc)
+STD_ROM_FN(md_umk3osc)
+
+struct BurnDriver BurnDrvmd_umk3osc = {
+	"md_umk3osc", "md_umk3", NULL, NULL, "2022-10-03",
+	"Ultimate Mortal Kombat 3 (OSC Hack, version 27b)\0", NULL, "Bonus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_umk3oscRomInfo, md_umk3oscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

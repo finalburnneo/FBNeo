@@ -1456,6 +1456,8 @@ static INT32 DrvHangonJrInit()
 
 static INT32 DrvTetrisInit()
 {
+	sprite_bug = 1;
+
 	return DrvInit(0);
 }
 

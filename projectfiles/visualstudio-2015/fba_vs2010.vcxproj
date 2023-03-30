@@ -255,6 +255,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_sderby.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_seibuspi.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_shangha3.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_topdrive.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vamphalf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_vegaeo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_x2222.cpp" />

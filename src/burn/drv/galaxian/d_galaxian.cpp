@@ -11051,7 +11051,8 @@ static struct BurnRomInfo Mooncrs5RomDesc[] = {
 	{ "f_r_d.bin",     0x00800, 0x06d378a6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "f_f_e.bin",     0x00800, 0x6e84a927, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "f_f_f.bin",     0x00800, 0xb45af1e8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "f_r_f.bin",     0x00800, 0x2d36a3e6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	// optional rom "f_r_f.bin" is probably incorrect, let's use the mooncrs2 ROM for now
+	{ "m7.bin",        0x00800, 0x957ee078, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
 	{ "r_r_a.bin",     0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "r_f_a.bin",     0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
@@ -11060,6 +11061,9 @@ static struct BurnRomInfo Mooncrs5RomDesc[] = {
 	
 	// not dumped for this set
 	{ "mmi6331.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+
+	// 1st and 2nd half identical, misses the second half of code
+	{ "f_r_f.bin",     0x00800, 0x2d36a3e6, BRF_OPT },
 };
 
 STD_ROM_PICK(Mooncrs5)

@@ -17607,6 +17607,7 @@ DRV		BurnSpecToofy3;
 DRV		BurnSpecToofy2;
 DRV		BurnDrvMSX_toolblocks;
 DRV		BurnSpecTopcat;
+DRV		BurnDrvTopdrive;
 DRV		BurnDrvmd_topfight;
 DRV		BurnDrvmd_topf2k5;
 DRV		BurnDrvmd_topgear2;
@@ -18043,6 +18044,7 @@ DRV		BurnDrvnes_ultimleasoci;
 DRV		BurnDrvnes_ultimleasoc;
 DRV		BurnDrvmd_umk3;
 DRV		BurnDrvnes_ultimmorkom3h;
+DRV		BurnDrvmd_umk3osc;
 DRV		BurnDrvUmk3r10;
 DRV		BurnDrvUmk3r11;
 DRV		BurnDrvUmk3;
@@ -37145,6 +37147,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecToofy2,			// Toofy's Winter Nuts (48K) (HB)
 	&BurnDrvMSX_toolblocks,		// Tool Blocks (HB)
 	&BurnSpecTopcat,			// Top Cat in Beverly Hills Cats (48K) (HB)
+	&BurnDrvTopdrive,			// Top Driving (version 1.1)
 	&BurnDrvmd_topfight,		// Top Fighter 2000 MK VIII
 	&BurnDrvmd_topf2k5,			// Top Fighter 2005
 	&BurnDrvmd_topgear2,		// Top Gear 2 (USA)
@@ -37581,6 +37584,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ultimleasoc,	// Ultimate League Soccer (USA)
 	&BurnDrvmd_umk3,			// Ultimate Mortal Kombat 3 (Euro)
 	&BurnDrvnes_ultimmorkom3h,	// Ultimate Mortal Kombat 3 (Hack)
+	&BurnDrvmd_umk3osc,			// Ultimate Mortal Kombat 3 (OSC Hack, version 27b)
 	&BurnDrvUmk3r10,			// Ultimate Mortal Kombat 3 (rev 1.0)
 	&BurnDrvUmk3r11,			// Ultimate Mortal Kombat 3 (rev 1.1)
 	&BurnDrvUmk3,				// Ultimate Mortal Kombat 3 (rev 1.2)

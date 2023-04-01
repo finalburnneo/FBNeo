@@ -356,6 +356,27 @@ STDDIPINFO(Zipzap)
 
 // Rom information
 static struct BurnRomInfo GalpanicRomDesc[] = {
+	{ "ver.2.0_pm_112-subic5.subic5", 	0x020000, 0x8bf38add, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "ver.2.0_pm_111-subic6.subic6", 	0x020000, 0x6dc4b075, BRF_ESS | BRF_PRG },
+	{ "pm017e", 						0x080000, 0xbc41b6ca, BRF_ESS | BRF_PRG },
+	{ "pm004e.8",  	  					0x080000, 0xd3af52bc, BRF_ESS | BRF_PRG },
+	{ "pm005e.7",	    				0x080000, 0xd7ec650c, BRF_ESS | BRF_PRG },
+	{ "pm000e.15", 	  					0x080000, 0x5d220f3f, BRF_ESS | BRF_PRG },
+	{ "pm001e.14",	  					0x080000, 0x90433eb1, BRF_ESS | BRF_PRG },
+	{ "pm002e.17", 	  					0x080000, 0x713ee898, BRF_ESS | BRF_PRG },
+	{ "pm003e.16",	  					0x080000, 0x6bb060fd, BRF_ESS | BRF_PRG },
+
+	{ "pm006e.67",    					0x100000, 0x57aec037, BRF_GRA },			  // graphics
+
+	{ "pm008e.l",     					0x080000, 0xd9379ba8, BRF_SND },			  // PCM
+	{ "pm007e.u",     					0x080000, 0xc7ed7950, BRF_SND },
+};
+
+STD_ROM_PICK(Galpanic)
+STD_ROM_FN(Galpanic)
+
+// Rom information
+static struct BurnRomInfo GalpanicaRomDesc[] = {
 	{ "pm110.4m2",    		0x080000, 0xae6b17a8, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "pm109.4m1",    		0x080000, 0xb85d792d, BRF_ESS | BRF_PRG },
 	{ "pm112.subic6", 		0x020000, 0x7b972b58, BRF_ESS | BRF_PRG },
@@ -373,8 +394,8 @@ static struct BurnRomInfo GalpanicRomDesc[] = {
 	{ "pm007e.u",     		0x080000, 0xc7ed7950, BRF_SND },
 };
 
-STD_ROM_PICK(Galpanic)
-STD_ROM_FN(Galpanic)
+STD_ROM_PICK(Galpanica)
+STD_ROM_FN(Galpanica)
 
 // Rom information
 static struct BurnRomInfo FantasiaRomDesc[] = {
@@ -1120,21 +1141,44 @@ static INT32 GalpanicInit()
 	// Load and byte-swap 68000 Program roms
 	nRet = BurnLoadRom(Rom68K + 0x000001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Rom68K + 0x000000, 1, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Rom68K + 0x000001, 2, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Rom68K + 0x000000, 3, 2); if (nRet != 0) return 1;
 
-	nRet = BurnLoadRom(Rom68K + 0x100000, 4, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Rom68K + 0x100001, 5, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Rom68K + 0x200000, 6, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Rom68K + 0x200001, 7, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Rom68K + 0x300000, 8, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Rom68K + 0x300001, 9, 2); if (nRet != 0) return 1;
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "galpanic") == 0)
+	{
+		nRet = BurnLoadRom(Rom68K + 0x040000, 2, 1); if (nRet != 0) return 1;
+		memmove (Rom68K + 0x080000, Rom68K + 0x040000, 0x080000);
 
-	nRet = BurnLoadRom(RomGfx + 0x000000, 10, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x100000, 3, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x100001, 4, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x200000, 5, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x200001, 6, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x300000, 7, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x300001, 8, 2); if (nRet != 0) return 1;
+
+		nRet = BurnLoadRom(RomGfx + 0x000000, 9, 1); if (nRet != 0) return 1;
+
+		BurnLoadRom(RomSnd + 0x040000, 10, 1);
+		BurnLoadRom(RomSnd + 0x0C0000, 11, 1);
+	}
+	else
+	{
+		nRet = BurnLoadRom(Rom68K + 0x000001, 2, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x000000, 3, 2); if (nRet != 0) return 1;
+
+		nRet = BurnLoadRom(Rom68K + 0x100000, 4, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x100001, 5, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x200000, 6, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x200001, 7, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x300000, 8, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x300001, 9, 2); if (nRet != 0) return 1;
+
+		nRet = BurnLoadRom(RomGfx + 0x000000, 10, 1); if (nRet != 0) return 1;
+
+		BurnLoadRom(RomSnd + 0x040000, 11, 1);
+		BurnLoadRom(RomSnd + 0x0C0000, 12, 1);
+	}
+
 	DeCodeGfx();
 
-	BurnLoadRom(RomSnd + 0x040000, 11, 1);
-	BurnLoadRom(RomSnd + 0x0C0000, 12, 1);
 	memcpy(RomSnd, RomSnd + 0x040000, 0x040000);
 
 	{
@@ -2151,10 +2195,20 @@ static INT32 GalpanicScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvGalpanic = {
 	"galpanic", NULL, NULL, NULL, "1990",
-	"Gals Panic (Unprotected)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic (unprotected, ver. 2.0)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, GalpanicRomInfo, GalpanicRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, GalpanicDIPInfo,
+	GalpanicInit, GalpanicExit, GalpanicFrame, GalpanicDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalpanica = {
+	"galpanica", "galpanic", NULL, NULL, "1990",
+	"Gals Panic (Unprotected)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, GalpanicaRomInfo, GalpanicaRomName, NULL, NULL, NULL, NULL, GalpanicInputInfo, GalpanicDIPInfo,
 	GalpanicInit, GalpanicExit, GalpanicFrame, GalpanicDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
 };

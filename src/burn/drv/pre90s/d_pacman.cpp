@@ -7477,24 +7477,19 @@ struct BurnDriver BurnDrvbirdiy = {
 	224, 288, 3, 4
 };
 
-/*
-Known to exist but not dumped:
-  Pengo using SEGA 315-5007 CPU, EPROMs numbers EPR-1701 through EPR-1708 (with EPR-1701 & EPR-1708 as A rev)
-  Sega game ID# 834-5078 PENGO
-*/
 
-// Pengo (set 1 rev C, encrypted)
-// Uses Sega 315-5010 encrypted Z80 CPU
+// Pengo (World, not encrypted, rev A)
+// Sega game ID# 834-5092 PENGO REV.A
 
 static struct BurnRomInfo pengoRomDesc[] = {
-	{ "epr-1689c.ic8",    0x1000, 0xf37066a8, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "epr-1690b.ic7",    0x1000, 0xbaf48143, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "epr-1691b.ic15",   0x1000, 0xadf0eba0, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "epr-1692b.ic14",   0x1000, 0xa086d60f, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "epr-1693b.ic21",   0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "epr-1694b.ic20",   0x1000, 0x94194a89, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "epr-5118b.ic32",   0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "epr-5119c.ic31",   0x1000, 0x933950fe, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "epr-5128.ic8",     0x1000, 0x3dfeb20e, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "epr-5129.ic7",     0x1000, 0x1db341bd, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "epr-5130.ic15",    0x1000, 0x7c2842d5, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "epr-5131a.ic14",   0x1000, 0x6e3c1f2f, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "epr-5132.ic21",    0x1000, 0x95f354ff, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "epr-5133.ic20",    0x1000, 0x0fdb04b8, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "epr-5134.ic32",    0x1000, 0xe5920728, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "epr-5135a.ic31",   0x1000, 0x13de47ed, 1 | BRF_ESS | BRF_PRG },	//  7
 
 	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
 	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
@@ -7509,7 +7504,67 @@ static struct BurnRomInfo pengoRomDesc[] = {
 STD_ROM_PICK(pengo)
 STD_ROM_FN(pengo)
 
-static void PengoDecode()
+static void PengoGraphicsReorder()
+{
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x2000);
+
+	memcpy (tmp + 0x0000, DrvGfxROM + 0x2000, 0x1000);
+	memcpy (tmp + 0x1000, DrvGfxROM + 0x1000, 0x1000);
+	memcpy (DrvGfxROM + 0x1000, tmp + 0x0000, 0x2000);
+
+	BurnFree (tmp);
+}
+
+static void PengouCallback()
+{
+	memcpy (DrvZ80ROM + 0x8000, DrvZ80ROM, 0x8000);
+
+	PengoGraphicsReorder();
+}
+
+static INT32 pengouInit()
+{
+	return DrvInit(PengoMap, PengouCallback, PENGO);
+}
+
+struct BurnDriver BurnDrvpengo = {
+	"pengo", NULL, NULL, NULL, "1982",
+	"Pengo (World, not encrypted, rev A)\0", NULL, "Sega", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, pengoRomInfo, pengoRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengouInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Pengo (World, 315-5010 type, set 1)
+// Uses Sega 315-5010 encrypted Z80 CPU
+
+static struct BurnRomInfo pengoaRomDesc[] = {
+	{ "ic8.2",        	  0x1000, 0xe4924b7b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "ic7.2",        	  0x1000, 0x72e7775d, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "ic15.2",      	  0x1000, 0x7410ef1e, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "ic14.2",       	  0x1000, 0x55b3f379, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "epr-1693b.ic21",   0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "ic20.2",       	  0x1000, 0x770570cf, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "epr-5118b.ic32",   0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "ic31.2",       	  0x1000, 0x669555c1, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
+
+	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
+
+	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
+	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
+};
+
+STD_ROM_PICK(pengoa)
+STD_ROM_FN(pengoa)
+
+static void PengoeDecode()
 {
 	static const UINT8 convtable[32][4] =
 	{
@@ -7556,196 +7611,25 @@ static void PengoDecode()
 	}
 }
 
-static void PengoGraphicsReorder()
+static void PengoeCallback()
 {
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x2000);
-
-	memcpy (tmp + 0x0000, DrvGfxROM + 0x2000, 0x1000);
-	memcpy (tmp + 0x1000, DrvGfxROM + 0x1000, 0x1000);
-	memcpy (DrvGfxROM + 0x1000, tmp + 0x0000, 0x2000);
-
-	BurnFree (tmp);
-}
-
-static void PengoCallback()
-{
-	PengoDecode();
+	PengoeDecode();
 
 	PengoGraphicsReorder();
 }
 
-static INT32 pengoInit()
+static INT32 pengoeInit()
 {
-	return DrvInit(PengoMap, PengoCallback, PENGO);
+	return DrvInit(PengoMap, PengoeCallback, PENGO);
 }
 
-struct BurnDriver BurnDrvpengo = {
-	"pengo", NULL, NULL, NULL, "1982",
-	"Pengo (set 1 rev C, encrypted)\0", NULL, "Sega", "Pac-man",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengoRomInfo, pengoRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
-// Pengo (set 2, encrypted)
-// Uses Sega 315-5010 encrypted Z80 CPU
-
-static struct BurnRomInfo pengo2RomDesc[] = {
-	{ "ic8.2",        	  0x1000, 0xe4924b7b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "ic7.2",        	  0x1000, 0x72e7775d, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "ic15.2",      	  0x1000, 0x7410ef1e, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "ic14.2",       	  0x1000, 0x55b3f379, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "epr-1693b.ic21",   0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "ic20.2",       	  0x1000, 0x770570cf, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "epr-5118b.ic32",   0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "ic31.2",       	  0x1000, 0x669555c1, 1 | BRF_ESS | BRF_PRG },	//  7
-
-	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
-	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
-
-	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
-	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
-
-	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
-	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
-};
-
-STD_ROM_PICK(pengo2)
-STD_ROM_FN(pengo2)
-
-struct BurnDriver BurnDrvpengo2 = {
-	"pengo2", "pengo", NULL, NULL, "1982",
-	"Pengo (set 2, encrypted)\0", NULL, "Sega", "Pac-man",
+struct BurnDriver BurnDrvpengoa = {
+	"pengoa", "pengo", NULL, NULL, "1982",
+	"Pengo (World, 315-5010 type, set 1)\0", NULL, "Sega", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengo2RomInfo, pengo2RomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
-// Pengo (set 2, rev A, not encrypted)
-// Sega game ID# 834-5092 PENGO REV.A 
-
-static struct BurnRomInfo pengo2uRomDesc[] = {
-	{ "epr-5128.ic8",     0x1000, 0x3dfeb20e, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "epr-5129.ic7",     0x1000, 0x1db341bd, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "epr-5130.ic15",    0x1000, 0x7c2842d5, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "epr-5131a.ic14",   0x1000, 0x6e3c1f2f, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "epr-5132.ic21",    0x1000, 0x95f354ff, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "epr-5133.ic20",    0x1000, 0x0fdb04b8, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "epr-5134.ic32",    0x1000, 0xe5920728, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "epr-5135a.ic31",   0x1000, 0x13de47ed, 1 | BRF_ESS | BRF_PRG },	//  7
-
-	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
-	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
-
-	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
-	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
-
-	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
-	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
-};
-
-STD_ROM_PICK(pengo2u)
-STD_ROM_FN(pengo2u)
-
-static void PengouCallback()
-{
-	memcpy (DrvZ80ROM + 0x8000, DrvZ80ROM, 0x8000);
-
-	PengoGraphicsReorder();
-}
-
-static INT32 pengouInit()
-{
-	return DrvInit(PengoMap, PengouCallback, PENGO);
-}
-
-struct BurnDriver BurnDrvpengo2u = {
-	"pengo2u", "pengo", NULL, NULL, "1982",
-	"Pengo (set 2, rev A, not encrypted)\0", NULL, "Sega", "Pac-man",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengo2uRomInfo, pengo2uRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengouInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
-// Pengo (set 3, not encrypted)
-//  Sega game ID# 834-5091 PENGO 
-
-static struct BurnRomInfo pengo3uRomDesc[] = {
-	{ "epr-5120.ic8",     0x1000, 0xf01afb60, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "epr-5121.ic7",     0x1000, 0x2eb38353, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "epr-5122.ic15",    0x1000, 0xc33400d7, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "epr-5123.ic14",    0x1000, 0x6a85c6a2, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "epr-5124.ic21",    0x1000, 0x95f354ff, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "epr-5125.ic20",    0x1000, 0x1a42310f, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "epr-5126.ic32",    0x1000, 0xe5920728, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "epr-5127.ic31",    0x1000, 0xa7d3d1d6, 1 | BRF_ESS | BRF_PRG },	//  7
-
-	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
-	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
-
-	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
-	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
-
-	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
-	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
-};
-
-STD_ROM_PICK(pengo3u)
-STD_ROM_FN(pengo3u)
-
-struct BurnDriver BurnDrvpengo3u = {
-	"pengo3u", "pengo", NULL, NULL, "1982",
-	"Pengo (set 3, not encrypted)\0", NULL, "Sega", "Pac-man",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengo3uRomInfo, pengo3uRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengouInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
-// Pengo (set 4, encrypted)
-// Sega game ID# 834-5081 PENGO (REV.A of this set known to exist, but not currently dumped) - Uses Sega 315-5010 encrypted Z80 CPU 
-
-static struct BurnRomInfo pengo4RomDesc[] = {
-	{ "epr-1738.ic8",     0x1000, 0x68ba25ea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "epr-1739.ic7",     0x1000, 0x41e7b5b3, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "epr-1740.ic15",    0x1000, 0x27f05f59, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "epr-1741.ic14",    0x1000, 0x27d93ec1, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "epr-1742.ic21",    0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "epr-1743.ic20",    0x1000, 0x770570cf, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "epr-1744.ic32",    0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "epr-1745.ic31",    0x1000, 0x507e18b9, 1 | BRF_ESS | BRF_PRG },	//  7
-
-	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
-	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
-
-	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
-	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
-
-	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
-	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
-};
-
-STD_ROM_PICK(pengo4)
-STD_ROM_FN(pengo4)
-
-struct BurnDriver BurnDrvpengo4 = {
-	"pengo4", "pengo", NULL, NULL, "1982",
-	"Pengo (set 4, encrypted)\0", NULL, "Sega", "Pac-man",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengo4RomInfo, pengo4RomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, pengoaRomInfo, pengoaRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengoeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
@@ -7762,10 +7646,10 @@ A PCB (not dumped) with dated ROMs like the set below has been seen with later d
 PCB labeled as 834-5081 PENGO REV.A
 */
 
-// Pengo (set 5, encrypted)
-// Sega game ID# 834-5081 PENGO - PCB has an additional label Bally N.E.
+// Pengo (World, 315-5010 type, set 2)
+// Sega game ID# 834-5081 PENGO - PCB has an additional label Bally N.E. - Uses Sega 315-5010 encrypted Z80 CPU
 
-static struct BurnRomInfo pengo5RomDesc[] = {
+static struct BurnRomInfo pengobRomDesc[] = {
 	{ "0_oct6-82.ic8",		0x1000, 0x43e45441, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "1_oct11-82.ic7", 	0x1000, 0x30a52a90, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "2_oct11-82.ic15",    0x1000, 0x09783cc2, 1 | BRF_ESS | BRF_PRG },	//  2
@@ -7785,24 +7669,140 @@ static struct BurnRomInfo pengo5RomDesc[] = {
 	{ "pr1636.ic70",        0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 };
 
-STD_ROM_PICK(pengo5)
-STD_ROM_FN(pengo5)
+STD_ROM_PICK(pengob)
+STD_ROM_FN(pengob)
 
-struct BurnDriver BurnDrvpengo5 = {
-	"pengo5", "pengo", NULL, NULL, "1982",
-	"Pengo (set 5, encrypted)\0", NULL, "Sega", "Pac-man",
+struct BurnDriver BurnDrvpengob = {
+	"pengob", "pengo", NULL, NULL, "1982",
+	"Pengo (World, 315-5010 type, set 2)\0", NULL, "Sega", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengo5RomInfo, pengo5RomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, pengobRomInfo, pengobRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengoeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
 
-// Pengo (set 6, encrypted)
+// Pengo (World, 315-5010 type, set 3)
+// Sega game ID# 834-5081 PENGO (REV.A of this set known to exist, but not currently dumped) - Uses Sega 315-5010 encrypted Z80 CPU
+
+static struct BurnRomInfo pengocRomDesc[] = {
+	{ "epr-1738.ic8",     0x1000, 0x68ba25ea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "epr-1739.ic7",     0x1000, 0x41e7b5b3, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "epr-1740.ic15",    0x1000, 0x27f05f59, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "epr-1741.ic14",    0x1000, 0x27d93ec1, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "epr-1742.ic21",    0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "epr-1743.ic20",    0x1000, 0x770570cf, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "epr-1744.ic32",    0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "epr-1745.ic31",    0x1000, 0x507e18b9, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
+
+	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
+
+	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
+	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
+};
+
+STD_ROM_PICK(pengoc)
+STD_ROM_FN(pengoc)
+
+struct BurnDriver BurnDrvpengoc = {
+	"pengoc", "pengo", NULL, NULL, "1982",
+	"Pengo (World, 315-5010 type, set 3)\0", NULL, "Sega", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, pengocRomInfo, pengocRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengoeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Pengo (Japan, not encrypted)
+// Sega game ID# 834-5091 PENGO
+
+static struct BurnRomInfo pengojRomDesc[] = {
+	{ "epr-5120.ic8",     0x1000, 0xf01afb60, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "epr-5121.ic7",     0x1000, 0x2eb38353, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "epr-5122.ic15",    0x1000, 0xc33400d7, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "epr-5123.ic14",    0x1000, 0x6a85c6a2, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "epr-5124.ic21",    0x1000, 0x95f354ff, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "epr-5125.ic20",    0x1000, 0x1a42310f, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "epr-5126.ic32",    0x1000, 0xe5920728, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "epr-5127.ic31",    0x1000, 0xa7d3d1d6, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
+
+	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
+
+	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
+	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
+};
+
+STD_ROM_PICK(pengoj)
+STD_ROM_FN(pengoj)
+
+struct BurnDriver BurnDrvpengoj = {
+	"pengoj", "pengo", NULL, NULL, "1982",
+	"Pengo (Japan, not encrypted)\0", NULL, "Sega", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, pengojRomInfo, pengojRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengouInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+/*
+Known to exist but not dumped:
+  Pengo using SEGA 315-5007 CPU, EPROMs numbers EPR-1701 through EPR-1708 (with EPR-1701 & EPR-1708 as A rev)
+  Sega game ID# 834-5078 PENGO
+*/
+
+// Pengo (Japan, 315-5010 type, rev C)
+// Uses Sega 315-5010 encrypted Z80 CPU
+
+static struct BurnRomInfo pengojaRomDesc[] = {
+	{ "epr-1689c.ic8",    0x1000, 0xf37066a8, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "epr-1690b.ic7",    0x1000, 0xbaf48143, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "epr-1691b.ic15",   0x1000, 0xadf0eba0, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "epr-1692b.ic14",   0x1000, 0xa086d60f, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "epr-1693b.ic21",   0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "epr-1694b.ic20",   0x1000, 0x94194a89, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "epr-5118b.ic32",   0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "epr-5119c.ic31",   0x1000, 0x933950fe, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "epr-1640.ic92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "epr-1695.ic105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
+
+	{ "pr1633.ic78",      0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.ic88",      0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
+
+	{ "pr1635.ic51",      0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
+	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
+};
+
+STD_ROM_PICK(pengoja)
+STD_ROM_FN(pengoja)
+
+struct BurnDriver BurnDrvpengoja = {
+	"pengoja", "pengo", NULL, NULL, "1982",
+	"Pengo (Japan, 315-5010 type, rev C)\0", NULL, "Sega", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, pengojaRomInfo, pengojaRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengoeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Pengo (Japan, 315-5007 type, rev A)
 // Sega game ID# 834-5078 PENGO  REV.A - Uses Sega 315-5007 encrypted Z80 CPU
 
-static struct BurnRomInfo pengo6RomDesc[] = {
+static struct BurnRomInfo pengojbRomDesc[] = {
 	{ "epr-1701a.ic8",		0x1000, 0x6ad6b227, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "epr-1702.ic7", 		0x1000, 0xcea1e8d1, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "epr-1703.ic15",    	0x1000, 0xbc1cd590, 1 | BRF_ESS | BRF_PRG },	//  2
@@ -7822,10 +7822,10 @@ static struct BurnRomInfo pengo6RomDesc[] = {
 	{ "pr1636.ic70",        0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 };
 
-STD_ROM_PICK(pengo6)
-STD_ROM_FN(pengo6)
+STD_ROM_PICK(pengojb)
+STD_ROM_FN(pengojb)
 
-static void PentaDecode()
+static void PengojbDecode()
 {
 	static const UINT8 data_xortable[2][8] =
 	{
@@ -7865,32 +7865,32 @@ static void PentaDecode()
 	}
 }
 
-static void Pengo6Callback()
+static void PengojbCallback()
 {
-	PentaDecode();
+	PengojbDecode();
 
 	PengoGraphicsReorder();
 }
 
-static INT32 pengo6Init()
+static INT32 pengojbInit()
 {
-	return DrvInit(PengoMap, Pengo6Callback, PENGO);
+	return DrvInit(PengoMap, PengojbCallback, PENGO);
 }
-struct BurnDriver BurnDrvpengo6 = {
-	"pengo6", "pengo", NULL, NULL, "1982",
-	"Pengo (set 6, encrypted)\0", NULL, "Sega", "Pac-man",
+struct BurnDriver BurnDrvpengojb = {
+	"pengojb", "pengo", NULL, NULL, "1982",
+	"Pengo (Japan, 315-5007 type, rev A)\0", NULL, "Sega", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengo6RomInfo, pengo6RomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengo6Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, pengojbRomInfo, pengojbRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengojbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
 
-// Pengo (bootleg)
-// based on pengo6, uses daughterboard with a Z80 plus additional circuitry to replicate Sega's 315-5007 encryption
+// Pengo (Japan, bootleg)
+// based on pengojb, uses daughterboard with a Z80 plus additional circuitry to replicate Sega's 315-5007 encryption
 
-static struct BurnRomInfo pengobRomDesc[] = {
+static struct BurnRomInfo pengojblRomDesc[] = {
 	{ "1",            	  0x2000, 0xe04064db, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "2",            	  0x2000, 0x75752424, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "3", 	  			  0x2000, 0x9269931d, 1 | BRF_ESS | BRF_PRG },	//  2
@@ -7906,22 +7906,22 @@ static struct BurnRomInfo pengobRomDesc[] = {
 	{ "pr1636.ic70",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom
 };
 
-STD_ROM_PICK(pengob)
-STD_ROM_FN(pengob)
+STD_ROM_PICK(pengojbl)
+STD_ROM_FN(pengojbl)
 
-struct BurnDriver BurnDrvpengob = {
-	"pengob", "pengo", NULL, NULL, "1982",
-	"Pengo (bootleg)\0", NULL, "Bootleg", "Pac-man",
+struct BurnDriver BurnDrvpengojbl = {
+	"pengojbl", "pengo", NULL, NULL, "1982",
+	"Pengo (Japan, bootleg)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
-	NULL, pengobRomInfo, pengobRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengo6Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, pengojblRomInfo, pengojblRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
+	pengojbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
 
 // Penta
-// based on pengo6, uses daughterboard with a Z80 plus additional circuitry to replicate Sega's 315-5007 encryption
+// based on pengojb, uses daughterboard with a Z80 plus additional circuitry to replicate Sega's 315-5007 encryption
 
 static struct BurnRomInfo pentaRomDesc[] = {
 	{ "008_pn01.bin", 	  0x1000, 0x22f328df, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -7948,11 +7948,11 @@ STD_ROM_FN(penta)
 
 struct BurnDriver BurnDrvpenta = {
 	"penta", "pengo", NULL, NULL, "1982",
-	"Penta\0", NULL, "Bootleg", "Pac-man",
+	"Penta (bootleg)\0", NULL, "bootleg (Grinbee Shouji)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, pentaRomInfo, pentaRomName, NULL, NULL, NULL, NULL, PengoInputInfo, PengoDIPInfo,
-	pengo6Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	pengojbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 

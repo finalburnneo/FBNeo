@@ -4784,14 +4784,13 @@ struct BurnDriver BurnDrvWwmarine = {
 	320, 224, 4, 3
 };
 
-
 // Waku Waku Anpanman (Rev A)
 
 static struct BurnRomInfo wwanpanmRomDesc[] = {
-	{ "epr-15097.ic32",			0x40000, 0x0e4f38c6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "epr-15096.ic31",			0x40000, 0x1b833932, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-14123a.ic32",		0x40000, 0x0e4f38c6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "epr-14122a.ic31",		0x40000, 0x01b8fe20, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "epr-15095.ic4",			0x40000, 0x69adf3a1, 2 | BRF_SND },           //  2 UPD Samples
+	{ "epr-14121.ic4",			0x40000, 0x69adf3a1, 2 | BRF_SND },           //  2 UPD Samples
 };
 
 STD_ROM_PICK(wwanpanm)

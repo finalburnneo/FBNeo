@@ -1190,6 +1190,37 @@ struct BurnDriver BurnDrvThepitu2 = {
 };
 
 
+// The Pit (US set 3)
+
+static struct BurnRomInfo thepitu3RomDesc[] = {
+	{ "pi-38.ic38",		0x1000, 0x71affecc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "pi-39.ic39",		0x1000, 0x894063cd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pi-40.ic40",		0x1000, 0x1b488543, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pi-41.ic41",		0x1000, 0xf33aab67, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "pi-33.ic33",		0x1000, 0x394ef216, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "pi-30.ic30",		0x0800, 0x1b79dfb6, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+
+	{ "pi-9.ic9",		0x0800, 0x69502afc, 3 | BRF_GRA },           //  6 Graphics
+	{ "pi-8.ic8",		0x0800, 0x2ddd5045, 3 | BRF_GRA },           //  7
+
+	{ "82s123.ic4",		0x0020, 0xa758b567, 4 | BRF_GRA },           //  8 Color data
+};
+
+STD_ROM_PICK(thepitu3)
+STD_ROM_FN(thepitu3)
+
+struct BurnDriver BurnDrvThepitu3 = {
+	"thepitu3", "thepit", NULL, NULL, "1982",
+	"The Pit (US set 3)\0", NULL, "Zilec Electronics (Centuri license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, thepitu3RomInfo, thepitu3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
+	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
+	224, 256, 3, 4
+};
+
+
 // The Pit (Japan)
 
 static struct BurnRomInfo thepitjRomDesc[] = {
@@ -1217,37 +1248,6 @@ struct BurnDriver BurnDrvThepitj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, thepitjRomInfo, thepitjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
-	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
-	224, 256, 3, 4
-};
-
-
-// The Pit (Centuri Inc)
-
-static struct BurnRomInfo thepitcRomDesc[] = {
-	{ "pi-38.ic38",		0x1000, 0x71affecc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "pi-39.ic39",		0x1000, 0x894063cd, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "pi-40.ic40",		0x1000, 0x1b488543, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "pi-41.ic41",		0x1000, 0xf33aab67, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "pi-33.ic33",		0x1000, 0x394ef216, 1 | BRF_PRG | BRF_ESS }, //  4
-
-	{ "pi-30.ic30",		0x0800, 0x1b79dfb6, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
-
-	{ "pi-9.ic9",		0x0800, 0x69502afc, 3 | BRF_GRA },           //  6 Graphics
-	{ "pi-8.ic8",		0x0800, 0x2ddd5045, 3 | BRF_GRA },           //  7
-
-	{ "82s123.ic4",		0x0020, 0xa758b567, 4 | BRF_GRA },           //  8 Color data
-};
-
-STD_ROM_PICK(thepitc)
-STD_ROM_FN(thepitc)
-
-struct BurnDriver BurnDrvThepitc = {
-	"thepitc", "thepit", NULL, NULL, "1982",
-	"The Pit (Centuri Inc)\0", NULL, "Centuri Inc", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, thepitcRomInfo, thepitcRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ThepitDIPInfo,
 	thepitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };

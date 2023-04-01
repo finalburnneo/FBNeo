@@ -3605,8 +3605,8 @@ static struct BurnRomInfo leaguemnRomDesc[] = {
 	{ "a1_-h1-.ic33",		0x040000, 0x3ce2aab5, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "a1_-l1-.ic32",		0x040000, 0x116d9bcc, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "a1_-sh0-.ic14",		0x010000, 0xb7fae3e6, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "a1_-sl0-.ic17",		0x010000, 0xb26d54fc, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "a1_-sh0-a.ic14",		0x010000, 0xc4aef83a, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "a1_-sl0-a.ic17",		0x010000, 0xe9ecbed2, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "lh534k0c.ic9",		0x080000, 0x314a0c6d, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "lh534k0e.ic10",		0x080000, 0xdc31675b, 3 | BRF_GRA },           //  7
@@ -4091,6 +4091,7 @@ static struct BurnRomInfo majtitl2aRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 

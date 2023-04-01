@@ -6164,6 +6164,7 @@ DRV		BurnDrvGallopm72;
 DRV		BurnDrvGallop;
 DRV		BurnDrvGalmedes;
 DRV		BurnDrvGalhustl;
+DRV		BurnDrvGalpanica;
 DRV		BurnDrvGalpanic;
 DRV		BurnDrvGalpani3;
 DRV		BurnDrvGalpani3hk;
@@ -11874,16 +11875,16 @@ DRV		BurnDrvmd_pele2;
 DRV		BurnSpecPenetrator;
 DRV		BurnDrvPenfan;
 DRV		BurnDrvPenfana;
-DRV		BurnDrvpengob;
 DRV		BurnDrvgg_pengo;
+DRV		BurnDrvpengojb;
+DRV		BurnDrvpengoja;
+DRV		BurnDrvpengojbl;
+DRV		BurnDrvpengoj;
 DRV		BurnDrvgg_pengoj;
+DRV		BurnDrvpengoa;
+DRV		BurnDrvpengob;
+DRV		BurnDrvpengoc;
 DRV		BurnDrvpengo;
-DRV		BurnDrvpengo2;
-DRV		BurnDrvpengo2u;
-DRV		BurnDrvpengo3u;
-DRV		BurnDrvpengo4;
-DRV		BurnDrvpengo5;
-DRV		BurnDrvpengo6;
 DRV		BurnDrvnes_pengusea;
 DRV		BurnDrvPengadvb;
 DRV		BurnDrvMSX_pengadv;
@@ -17255,10 +17256,10 @@ DRV		BurnDrvOutfxiesa;
 DRV		BurnDrvOutfxies;
 DRV		BurnDrvPercuss;
 DRV		BurnDrvThepitm;
-DRV		BurnDrvThepitc;
 DRV		BurnDrvThepitj;
 DRV		BurnDrvThepitu1;
 DRV		BurnDrvThepitu2;
+DRV		BurnDrvThepitu3;
 DRV		BurnDrvThepit;
 DRV		BurnDrvCpsPunisherh;
 DRV		BurnDrvCpsPunisherj;
@@ -25704,7 +25705,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGallop,				// Gallop - Armed Police Unit (Japan, M84 hardware)
 	&BurnDrvGalmedes,			// Galmedes (Japan)
 	&BurnDrvGalhustl,			// Gals Hustler
-	&BurnDrvGalpanic,			// Gals Panic (Unprotected)
+	&BurnDrvGalpanica,			// Gals Panic (Unprotected)
+	&BurnDrvGalpanic,			// Gals Panic (unprotected, ver. 2.0)
 	&BurnDrvGalpani3,			// Gals Panic 3 (Euro)
 	&BurnDrvGalpani3hk,			// Gals Panic 3 (Hong Kong)
 	&BurnDrvGalpani3j,			// Gals Panic 3 (Japan)
@@ -31414,16 +31416,16 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecPenetrator,		// Penetrator (48K)
 	&BurnDrvPenfan,				// Penfan Girls - Step1. Mild Mind (set 1)
 	&BurnDrvPenfana,			// Penfan Girls - Step1. Mild Mind (set 2)
-	&BurnDrvpengob,				// Pengo (bootleg)
 	&BurnDrvgg_pengo,			// Pengo (Euro, USA)
+	&BurnDrvpengojb,			// Pengo (Japan, 315-5007 type, rev A)
+	&BurnDrvpengoja,			// Pengo (Japan, 315-5010 type, rev C)
+	&BurnDrvpengojbl,			// Pengo (Japan, bootleg)
+	&BurnDrvpengoj,				// Pengo (Japan, not encrypted)
 	&BurnDrvgg_pengoj,			// Pengo (Jpn)
-	&BurnDrvpengo,				// Pengo (set 1 rev C, encrypted)
-	&BurnDrvpengo2,				// Pengo (set 2, encrypted)
-	&BurnDrvpengo2u,			// Pengo (set 2, rev A, not encrypted)
-	&BurnDrvpengo3u,			// Pengo (set 3, not encrypted)
-	&BurnDrvpengo4,				// Pengo (set 4, encrypted)
-	&BurnDrvpengo5,				// Pengo (set 5, encrypted)
-	&BurnDrvpengo6,				// Pengo (set 6, encrypted)
+	&BurnDrvpengoa,				// Pengo (World, 315-5010 type, set 1)
+	&BurnDrvpengob,				// Pengo (World, 315-5010 type, set 2)
+	&BurnDrvpengoc,				// Pengo (World, 315-5010 type, set 3)
+	&BurnDrvpengo,				// Pengo (World, not encrypted, rev A)
 	&BurnDrvnes_pengusea,		// Penguin & Seal, The (Unl)
 	&BurnDrvPengadvb,			// Penguin Adventure (bootleg of MSX version)
 	&BurnDrvMSX_pengadv,		// Penguin Adventure (Euro) - Yume Tairiku Adventure (Jpn)
@@ -31442,7 +31444,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_penguinw,		// Penguin-kun Wars (Jpn)
 	&BurnDrvMSX_penguinwk,		// Penguin-kun Wars (Kor)
 	&BurnDrvpkunwar,			// Penguin-Kun Wars (US)
-	&BurnDrvpenta,				// Penta
+	&BurnDrvpenta,				// Penta (bootleg)
 	&BurnDrvnes_pentablocat,	// Pentablocat (HB)
 	&BurnSpecPentacornen,		// Pentacorn Quest (English) (128K) (HB)
 	&BurnDrvMSX_pentaquest,		// Pentacorn Quest (HB, v1.1)
@@ -36795,10 +36797,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvOutfxies,			// The Outfoxies (World, OU2)
 	&BurnDrvPercuss,			// The Percussor
 	&BurnDrvThepitm,			// The Pit (bootleg on Moon Quasar hardware)
-	&BurnDrvThepitc,			// The Pit (Centuri Inc)
 	&BurnDrvThepitj,			// The Pit (Japan)
 	&BurnDrvThepitu1,			// The Pit (US set 1)
 	&BurnDrvThepitu2,			// The Pit (US set 2)
+	&BurnDrvThepitu3,			// The Pit (US set 3)
 	&BurnDrvThepit,				// The Pit
 	&BurnDrvCpsPunisherh,		// The Punisher (930422 Hispanic)
 	&BurnDrvCpsPunisherj,		// The Punisher (930422 Japan)

@@ -4450,23 +4450,38 @@ static INT32 Macross2Init()
 		if (Tdragon2mode & 2) { // Tdragon3h mode
 			if (BurnLoadRom(Drv68KROM  + 0x000001,  rom++, 2)) return 1;
 			if (BurnLoadRom(Drv68KROM  + 0x000000,  rom++, 2)) return 1;
+
+			if (BurnLoadRom(DrvZ80ROM  + 0x000000,  rom++, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x000000,  rom++, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM1 + 0x000000,  rom++, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x100000,  rom++, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM2  + 0x000001,  rom++, 2)) return 1;
+			if (BurnLoadRom(DrvGfxROM2  + 0x000000,  rom++, 2)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x200000,  rom++, 1)) return 1;
+			BurnByteswap(DrvGfxROM2, 0x400000);
+
+			if (BurnLoadRom(DrvSndROM1 + 0x040000,  rom++, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM1 + 0x140000,  rom++, 1)) return 1;
+
 		} else { // everything else
 			if (BurnLoadRom(Drv68KROM  + 0x000000,  rom++, 1)) return 1;
+
+			if (BurnLoadRom(DrvZ80ROM  + 0x000000,  rom++, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x000000,  rom++, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM1 + 0x000000,  rom++, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM2 + 0x000000,  rom++, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x200000,  rom++, 1)) return 1;
+			BurnByteswap(DrvGfxROM2, 0x400000);
+
+			if (BurnLoadRom(DrvSndROM0 + 0x000000,  rom++, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM1 + 0x000000,  rom++, 1)) return 1;
 		}
-
-		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  rom++, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  rom++, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  rom++, 1)) return 1;
-
-		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  rom++, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x200000,  rom++, 1)) return 1;
-		BurnByteswap(DrvGfxROM2, 0x400000);
-
-		if (BurnLoadRom(DrvSndROM0 + 0x000000,  rom++, 1)) return 1;
-
-		if (BurnLoadRom(DrvSndROM1 + 0x000000,  rom++, 1)) return 1;
 
 		DrvGfxDecode(0x20000, 0x200000, 0x400000);
 	}
@@ -6739,16 +6754,18 @@ static struct BurnRomInfo tdragon3hRomDesc[] = {
 
 	{ "12.27c1000",	0x020000, 0xf809d616, 3 | BRF_GRA }, //  3 Characters
 
-	{ "ww930914.2",	0x200000, 0xf968c65d, 4 | BRF_GRA }, //  4 Tiles
+	{ "conny.3",	0x100000, 0x5951c031, 4 | BRF_GRA }, //  4 Tiles
+	{ "conny.4",	0x100000, 0xa7772524, 4 | BRF_GRA }, //  5
 
-	{ "ww930917.7",	0x200000, 0xb98873cb, 5 | BRF_GRA }, //  5 Sprites
-	{ "ww930918.8",	0x200000, 0xbaee84b2, 5 | BRF_GRA }, //  6
+	{ "conny.2",	0x100000, 0xfefe8384, 5 | BRF_GRA }, //  6 Sprites
+	{ "conny.1",	0x100000, 0x37b32460, 5 | BRF_GRA }, //  7
+	{ "conny.5",	0x200000, 0xbaee84b2, 5 | BRF_GRA }, //  8
 
-	{ "ww930916.4",	0x200000, 0x07c35fe6, 6 | BRF_SND }, //  7 OKI1 Samples
-	{ "ww930915.3",	0x200000, 0x82025bab, 7 | BRF_SND }, //  8 OKI2 Samples
+	{ "conny.6",	0x100000, 0x564f87ed, 6 | BRF_SND }, //  9 OKI2 Samples
+	{ "conny.7",	0x100000, 0x2e767f6f, 7 | BRF_SND }, // 10
 
-	{ "9.bpr",	0x000100, 0x435653a2, 0 | BRF_OPT }, //  9 Unused proms
-	{ "10.bpr",	0x000100, 0xe6ead349, 0 | BRF_OPT }, // 10
+	{ "9.bpr",		0x000100, 0x435653a2, 0 | BRF_OPT }, // 11 Unused proms
+	{ "10.bpr",		0x000100, 0xe6ead349, 0 | BRF_OPT }, // 12
 };
 
 STD_ROM_PICK(tdragon3h)

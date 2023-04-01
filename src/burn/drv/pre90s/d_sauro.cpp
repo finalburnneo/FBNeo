@@ -431,6 +431,8 @@ static int DrvDoReset(INT32 clear_mem)
 	palette_bank = 0;
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -940,7 +942,7 @@ struct BurnDriver BurnDrvSauro = {
 	"sauro", NULL, NULL, NULL, "1987",
 	"Sauro (set 1)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sauroRomInfo, sauroRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -980,7 +982,7 @@ struct BurnDriver BurnDrvSauroa = {
 	"sauroa", "sauro", NULL, NULL, "1987",
 	"Sauro (set 2)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sauroaRomInfo, sauroaRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1100,7 +1102,7 @@ struct BurnDriver BurnDrvSaurop = {
 	"saurop", "sauro", NULL, NULL, "1987",
 	"Sauro (Philko license)\0", NULL, "Tecfri (Philko license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sauropRomInfo, sauropRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1140,7 +1142,7 @@ struct BurnDriver BurnDrvSaurorr = {
 	"saurorr", "sauro", NULL, NULL, "1987",
 	"Sauro (Recreativos Real S.A. license)\0", NULL, "Tecfri (Recreativos Real S.A. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, saurorrRomInfo, saurorrRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1257,7 +1259,7 @@ struct BurnDriver BurnDrvTrckydoc = {
 	"trckydoc", NULL, NULL, NULL, "1987",
 	"Tricky Doc (set 1)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, trckydocRomInfo, trckydocRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1292,7 +1294,7 @@ struct BurnDriver BurnDrvTrckydoca = {
 	"trckydoca", "trckydoc", NULL, NULL, "1987",
 	"Tricky Doc (set 2)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, trckydocaRomInfo, trckydocaRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TrckydocaDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3

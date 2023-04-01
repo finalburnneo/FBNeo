@@ -419,6 +419,9 @@ static INT32 DrvDoReset()
 	adpcm_end[0] = adpcm_end[1] = 0;
 	adpcm_data[0] = adpcm_data[0] = 0;
 
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -847,7 +850,7 @@ struct BurnDriver BurnDrvSpdodgeb = {
 	"spdodgeb", NULL, NULL, NULL, "1987",
 	"Super Dodge Ball (US)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, spdodgebRomInfo, spdodgebRomName, NULL, NULL, NULL, NULL, SpdodgebInputInfo, SpdodgebDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -883,7 +886,7 @@ struct BurnDriver BurnDrvNkdodge = {
 	"nkdodge", "spdodgeb", NULL, NULL, "1987",
 	"Nekketsu Koukou Dodgeball Bu (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, nkdodgeRomInfo, nkdodgeRomName, NULL, NULL, NULL, NULL, SpdodgebInputInfo, SpdodgebDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -923,7 +926,7 @@ struct BurnDriver BurnDrvNkdodgeb = {
 	"nkdodgeb", "spdodgeb", NULL, NULL, "1987",
 	"Nekketsu Koukou Dodgeball Bu (Japan, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, nkdodgebRomInfo, nkdodgebRomName, NULL, NULL, NULL, NULL, SpdodgebInputInfo, SpdodgebDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3

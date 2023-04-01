@@ -223,6 +223,8 @@ static INT32 DrvDoReset()
 	color_bank = 0;
 	previous_coin = 0xc0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -717,7 +719,7 @@ struct BurnDriver BurnDrvSsozumo = {
 	"ssozumo", NULL, NULL, NULL, "1984",
 	"Syusse Oozumou (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, ssozumoRomInfo, ssozumoRomName, NULL, NULL, NULL, NULL, SsozumoInputInfo, SsozumoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
 	240, 256, 3, 4

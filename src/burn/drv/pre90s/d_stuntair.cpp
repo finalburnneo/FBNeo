@@ -230,6 +230,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	spritebank = 0;
 	nmi_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -553,7 +555,7 @@ struct BurnDriver BurnDrvStuntair = {
 	"stuntair", NULL, NULL, NULL, "1983",
 	"Stunt Air\0", NULL, "Nuova Videotron", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, stuntairRomInfo, stuntairRomName, NULL, NULL, NULL, NULL, StuntairInputInfo, StuntairDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x22,
 	224, 256, 3, 4

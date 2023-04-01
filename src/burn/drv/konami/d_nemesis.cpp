@@ -2609,7 +2609,7 @@ static INT32 KonamigtInit()
 		if (BurnLoadRom(Drv68KROM + 0x030001,  6, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM + 0x030000,  7, 2)) return 1;
 
-		BurnDump("kgt_fbn.bin", Drv68KROM, 0x40000);
+		//BurnDump("kgt_fbn.bin", Drv68KROM, 0x40000);
 
 		if (BurnLoadRom(DrvZ80ROM + 0x000000,  8, 1)) return 1;
 

@@ -132,6 +132,8 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -385,7 +387,7 @@ struct BurnDriver BurnDrvWallc = {
 	"wallc", NULL, NULL, NULL, "1984",
 	"Wall Crash (set 1)\0", NULL, "Midcoin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, wallcRomInfo, wallcRomName, NULL, NULL, NULL, NULL, WallcInputInfo, WallcDIPInfo,
 	wallcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
 	256, 256, 4, 3
@@ -434,7 +436,7 @@ struct BurnDriver BurnDrvWallca = {
 	"wallca", "wallc", NULL, NULL, "1984",
 	"Wall Crash (set 2)\0", NULL, "Midcoin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, wallcaRomInfo, wallcaRomName, NULL, NULL, NULL, NULL, WallcInputInfo, WallcDIPInfo,
 	wallcaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
 	256, 256, 4, 3

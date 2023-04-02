@@ -1383,7 +1383,7 @@ struct BurnDriver BurnDrvGeebee = {
 	"geebee", NULL, NULL, NULL, "1978",
 	"Gee Bee (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, geebeeRomInfo, geebeeRomName, NULL, NULL, NULL, NULL, GeebeeInputInfo, GeebeeDIPInfo,
 	GeebeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1404,7 +1404,7 @@ struct BurnDriver BurnDrvGeebeeg = {
 	"geebeeg", "geebee", NULL, NULL, "1978",
 	"Gee Bee (US)\0", NULL, "Namco (Gremlin license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, geebeegRomInfo, geebeegRomName, NULL, NULL, NULL, NULL, GeebeeInputInfo, GeebeeDIPInfo,
 	GeebeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1428,7 +1428,7 @@ struct BurnDriver BurnDrvGeebeea = {
 	"geebeea", "geebee", NULL, NULL, "1978",
 	"Gee Bee (UK)\0", NULL, "Namco (Alca license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, geebeeaRomInfo, geebeeaRomName, NULL, NULL, NULL, NULL, GeebeeInputInfo, GeebeeDIPInfo,
 	GeebeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1452,7 +1452,7 @@ struct BurnDriver BurnDrvGeebeeb = {
 	"geebeeb", "geebee", NULL, NULL, "1978",
 	"Gee Bee (Europe)\0", NULL, "Namco (F.lli Bertolino license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, geebeebRomInfo, geebeebRomName, NULL, NULL, NULL, NULL, GeebeeInputInfo, GeebeeDIPInfo,
 	GeebeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1483,7 +1483,7 @@ struct BurnDriver BurnDrvNavarone = {
 	"navarone", NULL, NULL, NULL, "1980",
 	"Navarone\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, navaroneRomInfo, navaroneRomName, NULL, NULL, NULL, NULL, NavaroneInputInfo, NavaroneDIPInfo,
 	NavaroneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1514,7 +1514,7 @@ struct BurnDriver BurnDrvKaitein = {
 	"kaitein", "kaitei", NULL, NULL, "1980",
 	"Kaitei Takara Sagashi (Namco license)\0", NULL, "K.K. Tokki (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kaiteinRomInfo, kaiteinRomName, NULL, NULL, NULL, NULL, KaiteinInputInfo, KaiteinDIPInfo,
 	KaiteinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1547,7 +1547,7 @@ struct BurnDriver BurnDrvKaitei = {
 	"kaitei", NULL, NULL, NULL, "1980",
 	"Kaitei Takara Sagashi\0", NULL, "K.K. Tokki", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kaiteiRomInfo, kaiteiRomName, NULL, NULL, NULL, NULL, KaiteiInputInfo, KaiteiDIPInfo,
 	KaiteiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1580,7 +1580,7 @@ struct BurnDriver BurnDrvSos = {
 	"sos", NULL, NULL, NULL, "1980",
 	"SOS\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, sosRomInfo, sosRomName, NULL, NULL, NULL, NULL, SosInputInfo, SosDIPInfo,
 	SOSInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1614,7 +1614,7 @@ struct BurnDriver BurnDrvBombbee = {
 	"bombbee", NULL, NULL, NULL, "1979",
 	"Bomb Bee\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, bombbeeRomInfo, bombbeeRomName, NULL, NULL, NULL, NULL, BombbeeInputInfo, BombbeeDIPInfo,
 	BombbeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1636,7 +1636,7 @@ struct BurnDriver BurnDrvCutieq = {
 	"cutieq", NULL, NULL, NULL, "1979",
 	"Cutie Q\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, cutieqRomInfo, cutieqRomName, NULL, NULL, NULL, NULL, BombbeeInputInfo, BombbeeDIPInfo,
 	BombbeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4

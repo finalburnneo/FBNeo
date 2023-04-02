@@ -521,6 +521,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1173,7 +1175,7 @@ struct BurnDriver BurnDrvMonymony = {
 	"monymony", NULL, NULL, NULL, "1983",
 	"Money Money (set 1)\0", NULL, "Zaccaria", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, monymonyRomInfo, monymonyRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MonymonyDIPInfo,
 	monymonyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1211,7 +1213,7 @@ struct BurnDriver BurnDrvMonymony2 = {
 	"monymony2", "monymony", NULL, NULL, "1983",
 	"Money Money (set 2)\0", NULL, "Zaccaria", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, monymony2RomInfo, monymony2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, MonymonyDIPInfo,
 	monymonyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1264,7 +1266,7 @@ struct BurnDriver BurnDrvJackrabt = {
 	"jackrabt", NULL, NULL, NULL, "1984",
 	"Jack Rabbit (set 1)\0", NULL, "Zaccaria", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, jackrabtRomInfo, jackrabtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, JackrabtDIPInfo,
 	jackrabtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1314,7 +1316,7 @@ struct BurnDriver BurnDrvJackrabt2 = {
 	"jackrabt2", "jackrabt", NULL, NULL, "1984",
 	"Jack Rabbit (set 2)\0", NULL, "Zaccaria", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, jackrabt2RomInfo, jackrabt2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, JackrabtDIPInfo,
 	jackrabt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1352,7 +1354,7 @@ struct BurnDriver BurnDrvJackrabts = {
 	"jackrabts", "jackrabt", NULL, NULL, "1984",
 	"Jack Rabbit (special)\0", NULL, "Zaccaria", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, jackrabtsRomInfo, jackrabtsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, JackrabtDIPInfo,
 	jackrabt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

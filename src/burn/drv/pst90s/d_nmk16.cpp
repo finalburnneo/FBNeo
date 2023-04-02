@@ -15,6 +15,10 @@
 	hachamf - needs some protection work
 #endif
 
+// note: sound with the OKI roms dumped from the tdragon3h bootleg is currently unimplemented,
+//       let's use the OKI roms from the vanilla board until a fix is found
+#define TDRAGON3H_ROMS_KLUDGE
+
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
 static UINT8 *MemEnd;
@@ -4458,13 +4462,17 @@ static INT32 Macross2Init()
 			if (BurnLoadRom(DrvGfxROM1 + 0x000000,  rom++, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1 + 0x100000,  rom++, 1)) return 1;
 
-			if (BurnLoadRom(DrvGfxROM2  + 0x000001,  rom++, 2)) return 1;
-			if (BurnLoadRom(DrvGfxROM2  + 0x000000,  rom++, 2)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x000001,  rom++, 2)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x000000,  rom++, 2)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x200000,  rom++, 1)) return 1;
-			BurnByteswap(DrvGfxROM2, 0x400000);
 
+#if !defined TDRAGON3H_ROMS_KLUDGE
 			if (BurnLoadRom(DrvSndROM1 + 0x040000,  rom++, 1)) return 1;
 			if (BurnLoadRom(DrvSndROM1 + 0x140000,  rom++, 1)) return 1;
+#else
+			if (BurnLoadRom(DrvSndROM0 + 0x000000,  rom++, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM1 + 0x000000,  rom++, 1)) return 1;
+#endif
 
 		} else { // everything else
 			if (BurnLoadRom(Drv68KROM  + 0x000000,  rom++, 1)) return 1;
@@ -4477,12 +4485,12 @@ static INT32 Macross2Init()
 
 			if (BurnLoadRom(DrvGfxROM2 + 0x000000,  rom++, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x200000,  rom++, 1)) return 1;
-			BurnByteswap(DrvGfxROM2, 0x400000);
 
 			if (BurnLoadRom(DrvSndROM0 + 0x000000,  rom++, 1)) return 1;
 			if (BurnLoadRom(DrvSndROM1 + 0x000000,  rom++, 1)) return 1;
 		}
 
+		BurnByteswap(DrvGfxROM2, 0x400000);
 		DrvGfxDecode(0x20000, 0x200000, 0x400000);
 	}
 
@@ -6761,8 +6769,13 @@ static struct BurnRomInfo tdragon3hRomDesc[] = {
 	{ "conny.1",	0x100000, 0x37b32460, 5 | BRF_GRA }, //  7
 	{ "conny.5",	0x200000, 0xbaee84b2, 5 | BRF_GRA }, //  8
 
+#if !defined TDRAGON3H_ROMS_KLUDGE
 	{ "conny.6",	0x100000, 0x564f87ed, 6 | BRF_SND }, //  9 OKI2 Samples
 	{ "conny.7",	0x100000, 0x2e767f6f, 7 | BRF_SND }, // 10
+#else
+	{ "ww930916.4",	0x200000, 0x07c35fe6, 6 | BRF_SND }, //  9 OKI1 Samples
+	{ "ww930915.3",	0x200000, 0x82025bab, 7 | BRF_SND }, // 10 OKI2 Samples
+#endif
 
 	{ "9.bpr",		0x000100, 0x435653a2, 0 | BRF_OPT }, // 11 Unused proms
 	{ "10.bpr",		0x000100, 0xe6ead349, 0 | BRF_OPT }, // 12

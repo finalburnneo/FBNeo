@@ -2447,7 +2447,7 @@ struct BurnDriverD BurnDrvSafari = {
 	"safari", NULL, NULL, NULL, "1977",
 	"Safari (set 1)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, safariRomInfo, safariRomName, NULL, NULL, NULL, NULL, SafariInputInfo, SafariDIPInfo,
 	SafariInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
@@ -2479,7 +2479,7 @@ struct BurnDriverD BurnDrvSafaria = {
 	"safaria", "safari", NULL, NULL, "1977",
 	"Safari (set 2, bootleg?)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, safariaRomInfo, safariaRomName, NULL, NULL, NULL, NULL, SafariInputInfo, SafariDIPInfo,
 	SafariInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
@@ -2633,7 +2633,7 @@ struct BurnDriver BurnDrvHeiankyo = {
 	"heiankyo", NULL, NULL, "heiankyo", "1979",
 	"Heiankyo Alien\0", NULL, "Denki Onkyo", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, heiankyoRomInfo, heiankyoRomName, NULL, NULL, heiankyoSampleInfo, heiankyoSampleName, HeiankyoInputInfo, HeiankyoDIPInfo,
 	HeiankyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -2896,7 +2896,7 @@ struct BurnDriver BurnDrvSamuraij = {
 	"samuraij", "samurai", NULL, NULL, "1980",
 	"Samurai (Japan)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, samuraijRomInfo, samuraijRomName, NULL, NULL, NULL, NULL, SamuraiInputInfo, SamuraiDIPInfo,
 	SamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -2956,7 +2956,7 @@ struct BurnDriverD BurnDrvTranqgun = {
 	"tranqgun", NULL, NULL, "tranqgun", "1980",
 	"Tranquillizer Gun\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, tranqgunRomInfo, tranqgunRomName, NULL, NULL, tranqgunSampleInfo, tranqgunSampleName, TranqgunInputInfo, NULL,
 	TranqgunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3081,7 +3081,7 @@ struct BurnDriver BurnDrvHeadonsa = {
 	"headonsa", "headon", NULL, NULL, "1979",
 	"Head On (Sidam bootleg, set 2)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, headonsaRomInfo, headonsaRomName, NULL, NULL, NULL, NULL, HeadonInputInfo, HeadonDIPInfo,
 	HeadonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
@@ -3110,7 +3110,7 @@ struct BurnDriver BurnDrvHocrash = {
 	"hocrash", "headon", NULL, NULL, "1979",
 	"Crash (bootleg of Head On)\0", "No sound", "bootleg (Fraber)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, hocrashRomInfo, hocrashRomName, NULL, NULL, NULL, NULL, HeadonInputInfo, HeadonDIPInfo,
 	HeadonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
@@ -3178,7 +3178,7 @@ struct BurnDriver BurnDrvHeadonn = {
 	"headonn", "headon", NULL, NULL, "1979",
 	"Head On N\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, headonnRomInfo, headonnRomName, NULL, NULL, NULL, NULL, HeadonnInputInfo, HeadonnDIPInfo,
 	HeadonnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3209,7 +3209,7 @@ struct BurnDriver BurnDrvSupcrash = {
 	"supcrash", "headon", NULL, NULL, "1979",
 	"Super Crash (bootleg of Head On)\0", "No sound", "bootleg (VGG)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, supcrashRomInfo, supcrashRomName, NULL, NULL, NULL, NULL, SupcrashInputInfo, SupcrashDIPInfo,
 	SupcrashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
@@ -3268,7 +3268,7 @@ struct BurnDriver BurnDrvNostromo = {
 	"nostromo", NULL, NULL, NULL, "198?",
 	"Nostromo\0", "No sound", "bootleg", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, nostromoRomInfo, nostromoRomName, NULL, NULL, NULL, NULL, HeadonInputInfo, StartrksDIPInfo,
 	HeadonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
@@ -3500,7 +3500,7 @@ struct BurnDriverD BurnDrvBrdrlinet = {
 	"brdrlinet", "brdrline", NULL, "tranqgun", "1981",
 	"Borderline (Tranquillizer Gun conversion)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, brdrlinetRomInfo, brdrlinetRomName, NULL, NULL, tranqgunSampleInfo, tranqgunSampleName, TranqgunInputInfo, NULL,
 	TranqgunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3692,7 +3692,7 @@ struct BurnDriverD BurnDrvCarnivalh = {
 	"carnivalh", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 1)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalhRomInfo, carnivalhRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3726,7 +3726,7 @@ struct BurnDriverD BurnDrvCarnivalha = {
 	"carnivalha", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 2)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalhaRomInfo, carnivalhaRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3889,7 +3889,7 @@ struct BurnDriverD BurnDrvInvcarht = {
 	"invcarht", NULL, NULL, NULL, "1979",
 	"Invinco / Car Hunt (Germany)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, invcarhtRomInfo, invcarhtRomName, NULL, NULL, NULL, NULL, CarhntdsInputInfo, CarhntdsDIPInfo,
 	CarhntdsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3959,7 +3959,7 @@ struct BurnDriverD BurnDrvHeadon2s = {
 	"headon2s", "headon2", NULL, NULL, "1979",
 	"Head On 2 (Sidam bootleg)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, headon2sRomInfo, headon2sRomName, NULL, NULL, NULL, NULL, Headon2InputInfo, Headon2DIPInfo,
 	Headon2sInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
@@ -3988,7 +3988,7 @@ struct BurnDriverD BurnDrvCar2 = {
 	"car2", "headon2", NULL, NULL, "1979",
 	"Car 2 (bootleg of Head On 2)\0", "No sound", "bootleg (RZ Bologna)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, car2RomInfo, car2RomName, NULL, NULL, NULL, NULL, Headon2InputInfo, Headon2DIPInfo,
 	Headon2sInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3

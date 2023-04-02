@@ -1,6 +1,5 @@
 // FB Alpha Haunted Castle / Akuma-Jou Dracula driver module
 // Based on MAME driver by Bryan McPhail
-//
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -45,113 +44,117 @@ static UINT8 DrvReset;
 
 static UINT8 *soundlatch;
 static UINT8 *gfxbank;
+static UINT8 *sound_bank;
 
 static INT32 watchdog;
 
+static INT32 nExtraCycles;
+
 static struct BurnInputInfo HcastleInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Hcastle)
 
 static struct BurnDIPInfo HcastleDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x53, NULL			},
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-	{0x14, 0xff, 0xff, 0xff, NULL			},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0x53, NULL			},
+	{0x01, 0xff, 0xff, 0xff, NULL			},
+	{0x02, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x04, 0x00, "Upright"		},
-	{0x12, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0x00, 0x01, 0x04, 0x00, "Upright"		},
+	{0x00, 0x01, 0x04, 0x04, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x18, 0x18, "Easy"			},
-	{0x12, 0x01, 0x18, 0x10, "Normal"		},
-	{0x12, 0x01, 0x18, 0x08, "Hard"			},
-	{0x12, 0x01, 0x18, 0x00, "Hardest"		},
+	{0x00, 0x01, 0x18, 0x18, "Easy"			},
+	{0x00, 0x01, 0x18, 0x10, "Normal"		},
+	{0x00, 0x01, 0x18, 0x08, "Hard"			},
+	{0x00, 0x01, 0x18, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Strength of Player"		},
-	{0x12, 0x01, 0x60, 0x00, "Very Weak"		},
-	{0x12, 0x01, 0x60, 0x20, "Weak"		},
-	{0x12, 0x01, 0x60, 0x40, "Normal"			},
-	{0x12, 0x01, 0x60, 0x60, "Strong"		},
+	{0x00, 0x01, 0x60, 0x00, "Very Weak"		},
+	{0x00, 0x01, 0x60, 0x20, "Weak"		},
+	{0x00, 0x01, 0x60, 0x40, "Normal"			},
+	{0x00, 0x01, 0x60, 0x60, "Strong"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x12, 0x01, 0x80, 0x80, "Off"			},
-	{0x12, 0x01, 0x80, 0x00, "On"			},
+	{0x00, 0x01, 0x80, 0x80, "Off"			},
+	{0x00, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,   16, "Coin A"		},
-	{0x13, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"	},
-	{0x13, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"	},
-	{0x13, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"	},
-	{0x13, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x13, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x13, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"	},
-	{0x13, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x13, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x13, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x13, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x13, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x13, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x13, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x01, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"	},
+	{0x01, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"	},
+	{0x01, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"	},
+	{0x01, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x01, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"	},
+	{0x01, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x01, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0x0f, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,   15, "Coin B"		},
-	{0x13, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"	},
-	{0x13, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"	},
-	{0x13, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"	},
-	{0x13, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x13, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x13, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"	},
-	{0x13, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x13, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x13, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x13, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x13, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x13, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"	},
+	{0x01, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"	},
+	{0x01, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"	},
+	{0x01, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x01, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"	},
+	{0x01, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x01, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x01, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x01, 0x01, "Off"			},
-	{0x14, 0x01, 0x01, 0x00, "On"			},
+	{0x02, 0x01, 0x01, 0x01, "Off"			},
+	{0x02, 0x01, 0x01, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Upright Controls"	},
-	{0x14, 0x01, 0x02, 0x02, "Single"		},
-	{0x14, 0x01, 0x02, 0x00, "Dual"			},
+	{0x02, 0x01, 0x02, 0x02, "Single"		},
+	{0x02, 0x01, 0x02, 0x00, "Dual"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x14, 0x01, 0x04, 0x04, "Off"			},
-	{0x14, 0x01, 0x04, 0x00, "On"			},
+	{0x02, 0x01, 0x04, 0x04, "Off"			},
+	{0x02, 0x01, 0x04, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x14, 0x01, 0x08, 0x08, "Yes"			},
-	{0x14, 0x01, 0x08, 0x00, "No"			},
+	{0x02, 0x01, 0x08, 0x08, "Yes"			},
+	{0x02, 0x01, 0x08, 0x00, "No"			},
 };
 
 STDDIPINFO(Hcastle)
@@ -175,7 +178,7 @@ static void playfield_write(INT32 address, INT32 data, UINT8 *ctrl, UINT8 *spr, 
 	ctrl[address & 7] = data;
 }
 
-void hcastle_write(UINT16 address, UINT8 data)
+static void hcastle_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff8) == 0x0000) {
 		playfield_write(address, data, DrvPf1Ctrl, DrvSprRAM1, DrvSprBuf1);
@@ -208,13 +211,7 @@ void hcastle_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x0408:
-		{
-//			float t = konamiTotalCycles() * 1.19318167;
-//			t -= ZetTotalCycles();
-//			if (t > 1) ZetRun((INT32)t);
-
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		}
 		return;
 
 		case 0x040c:
@@ -231,7 +228,7 @@ void hcastle_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 hcastle_read(UINT16 address)
+static UINT8 hcastle_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -258,13 +255,15 @@ UINT8 hcastle_read(UINT16 address)
 
 static void sound_bankswitch(INT32 data)
 {
+	*sound_bank = data;
+
 	INT32 bank_A=(data&0x3);
 	INT32 bank_B=((data>>2)&0x3);
 
 	k007232_set_bank(0, bank_A, bank_B );
 }
 
-void __fastcall hcastle_sound_write(UINT16 address, UINT8 data)
+static void __fastcall hcastle_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xff00) == 0x9800) {
 		K051649Write(address & 0xff, data);
@@ -289,7 +288,7 @@ void __fastcall hcastle_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall hcastle_sound_read(UINT16 address)
+static UINT8 __fastcall hcastle_sound_read(UINT16 address)
 {
 	if (address >= 0xb000 && address <= 0xb00d) {
 		return K007232ReadReg(0, address & 0x0f);
@@ -322,8 +321,6 @@ inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	konamiOpen(0);
@@ -339,6 +336,9 @@ static INT32 DrvDoReset()
 	BurnYM3812Reset();
 
 	watchdog = 0;
+	nExtraCycles = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -380,6 +380,7 @@ static INT32 MemIndex()
 	nDrvKonBank		= Next; Next += 0x000001;
 	soundlatch		= Next; Next += 0x000001;
 	gfxbank			= Next; Next += 0x000001;
+	sound_bank      = Next; Next += 0x000001;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -422,12 +423,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(59);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvKonROM  + 0x00000,  0, 1)) return 1;
@@ -511,7 +507,7 @@ static INT32 DrvExit()
 	K051649Exit();
 	BurnYM3812Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -743,26 +739,30 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 	INT32 nInterleave = 30;
 
 	ZetOpen(0);
 	konamiOpen(0);
+
 	for (INT32 i = 0; i < nInterleave; i++) {
-		konamiRun(nCyclesTotal[0] / nInterleave);
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN(0, konami);
+		CPU_RUN_TIMER_YM3812(1);
 	}
 
 	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+
+	konamiClose();
+	ZetClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+	bprintf(0, _T("extra %d\n"), nExtraCycles);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 		K051649Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	konamiClose();
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -771,7 +771,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -779,7 +779,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -795,12 +795,16 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		K051649Scan(nAction, pnMin);
 
 		SCAN_VAR(watchdog);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
 		konamiOpen(0);
 		bankswitch(*nDrvKonBank);
 		konamiClose();
+
+		sound_bankswitch(*sound_bank);
 	}
 
 	return 0;
@@ -838,7 +842,7 @@ struct BurnDriver BurnDrvHcastle = {
 	"hcastle", NULL, NULL, NULL, "1988",
 	"Haunted Castle (ver. M)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastleRomInfo, hcastleRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
@@ -876,7 +880,7 @@ struct BurnDriver BurnDrvHcastlek = {
 	"hcastlek", "hcastle", NULL, NULL, "1988",
 	"Haunted Castle (ver. K)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastlekRomInfo, hcastlekRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
@@ -914,7 +918,7 @@ struct BurnDriver BurnDrvHcastlee = {
 	"hcastlee", "hcastle", NULL, NULL, "1988",
 	"Haunted Castle (ver. E)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastleeRomInfo, hcastleeRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
@@ -952,7 +956,7 @@ struct BurnDriver BurnDrvAkumajou = {
 	"akumajou", "hcastle", NULL, NULL, "1988",
 	"Akuma-Jou Dracula (Japan ver. P)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. P)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, akumajouRomInfo, akumajouRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
@@ -990,7 +994,7 @@ struct BurnDriver BurnDrvAkumajoun = {
 	"akumajoun", "hcastle", NULL, NULL, "1988",
 	"Akuma-Jou Dracula (Japan ver. N)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. N)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, akumajounRomInfo, akumajounRomName, NULL, NULL, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3

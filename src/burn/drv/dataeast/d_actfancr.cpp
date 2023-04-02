@@ -403,6 +403,8 @@ static INT32 DrvDoReset()
 
 	control_select = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

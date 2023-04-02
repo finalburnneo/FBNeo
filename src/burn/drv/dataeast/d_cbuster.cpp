@@ -246,6 +246,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 

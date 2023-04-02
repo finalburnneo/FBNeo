@@ -366,6 +366,8 @@ static INT32 DrvDoReset()
 
 	sndSetBank(0, 0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -624,7 +626,7 @@ struct BurnDriver BurnDrv1945kiii = {
 	"1945kiii", NULL, NULL, NULL, "2000",
 	"1945k III (newer, OPCX2 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, _1945kiiiRomInfo, _1945kiiiRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
 	_1945kiiiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
@@ -670,7 +672,7 @@ struct BurnDriver BurnDrv1945kiiio = {
 	"1945kiiio", "1945kiii", NULL, NULL, "1999",
 	"1945k III (older, OPCX1 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, _1945kiiioRomInfo, _1945kiiioRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, _1945kiiioldDIPInfo,
 	_1945kiiioInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
@@ -711,7 +713,7 @@ struct BurnDriver BurnDrv1945kiiin = {
 	"1945kiiin", "1945kiii", NULL, NULL, "2000",
 	"1945k III (newer, OPCX1 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, _1945kiiinRomInfo, _1945kiiinRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
 	_1945kiiioInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
@@ -750,7 +752,7 @@ struct BurnDriver BurnDrvSlspirit = {
 	"slspirit", NULL, NULL, NULL, "1999",
 	"Solite Spirits\0", NULL, "Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, slspiritRomInfo, slspiritRomName, NULL, NULL, NULL, NULL, _1945kiiiInputInfo, SoliteDIPInfo,
 	_1945kiiioInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
@@ -791,7 +793,7 @@ struct BurnDriver BurnDrvFlagrall = {
 	"flagrall", NULL, NULL, NULL, "1996",
 	"'96 Flag Rally\0", NULL, "unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, flagrallRomInfo, flagrallRomName, NULL, NULL, NULL, NULL, FlagrallInputInfo, FlagrallDIPInfo,
 	flagrallInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3

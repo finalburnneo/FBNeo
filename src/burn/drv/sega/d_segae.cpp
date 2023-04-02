@@ -22,6 +22,8 @@ static INT16 DrvWheel = 0;
 static INT16 DrvAccel = 0;
 static INT16 Analog[2];
 
+static INT32 nCyclesExtra;
+
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -52,7 +54,6 @@ static UINT8 currentLine = 0;
 
 static UINT8 leftcolumnblank = 0; // most games need this, except tetris
 static UINT8 leftcolumnblank_special = 0; // for fantzn2, move over the screen 8px
-static UINT8 sprite_bug = 0; // for fantzn2 & ridleofp
 static UINT8 ridleofp = 0;
 static UINT8 megrescu = 0;
 
@@ -634,12 +635,6 @@ static void segae_vdp_reg_w ( UINT8 chip, UINT8 data )
 	}
 }
 
-/*static UINT8 input_r(INT32 offset)
-{
-	//bprintf(0, _T("input_r chip %X.\n"), offset);
-	return 0xff;
-}*/
-
 static UINT8 __fastcall systeme_main_in(UINT16 port)
 {
 	port &= 0xff;
@@ -818,11 +813,13 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	SN76496Exit();
 	BurnFreeMemIndex();
-	BurnTrackballExit();
+
+	if (ridleofp) { // and megrescu
+		BurnTrackballExit();
+	}
 
 	leftcolumnblank = 0;
 	leftcolumnblank_special = 0;
-	sprite_bug = 0;
 	mc8123 = 0;
 	mc8123_banked = 0;
 
@@ -846,6 +843,8 @@ static INT32 DrvDoReset()
 	segae_bankswitch();
 	ZetReset();
 	ZetClose();
+
+	nCyclesExtra = 0;
 
 	HiscoreReset();
 
@@ -879,7 +878,7 @@ static inline void DrvMakeInputs()
 
 	if (ridleofp) { // paddle
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-		BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x3f);
+		BurnTrackballFrame(0, Analog[0]*2, Analog[1]*2, 0x00, 0x3f);
 		BurnTrackballUDLR(0, DrvJoy4[2], DrvJoy4[3], DrvJoy4[0], DrvJoy4[1]);
 		BurnTrackballUpdate(0);
 	}
@@ -978,7 +977,7 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 
 	UINT16 spritebase;
 
-	nosprites = 0;
+	nosprites = 63;
 	if (segae_vdp_regs[chip][1] & 0x1) {
 		bprintf(0, _T("double-size spr. not supported. "));
 		return;
@@ -1000,9 +999,6 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 		}
 	}
 
-//	if (!strcmp(Machine->gamedrv->name,"ridleofp")) nosprites = 63; /* why, there must be a bug elsewhere i guess ?! */
-	if (sprite_bug)
-		nosprites = 63;
 	/*- draw sprites IN REVERSE ORDER -*/
 
 	for (loopcount = nosprites; loopcount >= 0;loopcount--) {
@@ -1199,7 +1195,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[1] = { 10738635 / 2 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	currentLine = 0;
 
@@ -1215,11 +1211,13 @@ static INT32 DrvFrame()
 	}
 	ZetClose();
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut)
 	{
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-	}	
+	}
 
 	if (pBurnDraw) DrvDraw();
 
@@ -1385,11 +1383,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		if (ridleofp) {
 			BurnTrackballScan();
+
+			SCAN_VAR(paddle_diff1);
+			SCAN_VAR(paddle_diff2);
+			SCAN_VAR(paddle_last1);
+			SCAN_VAR(paddle_last2);
 		}
-		SCAN_VAR(paddle_diff1);
-		SCAN_VAR(paddle_diff2);
-		SCAN_VAR(paddle_last1);
-		SCAN_VAR(paddle_last2);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);
@@ -1406,7 +1407,6 @@ static INT32 DrvFantzn2Init()
 {
 	leftcolumnblank = 1;
 	leftcolumnblank_special = 1;
-	sprite_bug = 1;
 
 	return DrvInit(3);
 }
@@ -1437,7 +1437,6 @@ static INT32 DrvTransfrmInit()
 static INT32 DrvSlapshtrInit()
 {
 	leftcolumnblank = 1;
-	sprite_bug = 1;
 
 	return DrvInit(2);
 }
@@ -1458,8 +1457,6 @@ static INT32 DrvHangonJrInit()
 
 static INT32 DrvTetrisInit()
 {
-	sprite_bug = 1;
-
 	return DrvInit(0);
 }
 
@@ -1467,7 +1464,6 @@ static INT32 DrvRidleOfpInit()
 {
 	leftcolumnblank = 1;
 	leftcolumnblank_special = 1;
-	sprite_bug = 1;
 	ridleofp = 1;
 
 	return DrvInit(2);

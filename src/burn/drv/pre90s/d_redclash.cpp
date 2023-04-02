@@ -382,6 +382,9 @@ static INT32 DrvDoReset()
 	gfxbank = 0;
 	previous_coin = 0;
 
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -980,7 +983,7 @@ struct BurnDriver BurnDrvZerohour = {
 	"zerohour", NULL, NULL, "zerohour", "1980",
 	"Zero Hour (set 1)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zerohourRomInfo, zerohourRomName, NULL, NULL, zerohourSampleInfo, zerohourSampleName, RedclashInputInfo, ZerohourDIPInfo,
 	ZerohourInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1014,7 +1017,7 @@ struct BurnDriver BurnDrvZerohoura = {
 	"zerohoura", "zerohour", NULL, "zerohour", "1980",
 	"Zero Hour (set 2)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zerohouraRomInfo, zerohouraRomName, NULL, NULL, zerohourSampleInfo, zerohourSampleName, RedclashInputInfo, ZerohourDIPInfo,
 	ZerohourInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1048,7 +1051,7 @@ struct BurnDriver BurnDrvZerohouri = {
 	"zerohouri", "zerohour", NULL, "zerohour", "1980",
 	"Zero Hour (Inder)\0", NULL, "bootleg (Inder SA)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zerohouriRomInfo, zerohouriRomName, NULL, NULL, zerohourSampleInfo, zerohourSampleName, RedclashInputInfo, ZerohourDIPInfo,
 	ZerohourInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1082,7 +1085,7 @@ struct BurnDriver BurnDrvRedclash = {
 	"redclash", NULL, NULL, NULL, "1981",
 	"Red Clash\0", "NO Sound", "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashRomInfo, redclashRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1113,7 +1116,7 @@ struct BurnDriver BurnDrvRedclasht = {
 	"redclasht", "redclash", NULL, NULL, "1981",
 	"Red Clash (Tehkan, set 1)\0", "NO Sound", "Kaneko (Tehkan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashtRomInfo, redclashtRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1144,7 +1147,7 @@ struct BurnDriver BurnDrvRedclashta = {
 	"redclashta", "redclash", NULL, NULL, "1981",
 	"Red Clash (Tehkan, set 2)\0", "NO Sound", "Kaneko (Tehkan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashtaRomInfo, redclashtaRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1175,7 +1178,7 @@ struct BurnDriver BurnDrvRedclashs = {
 	"redclashs", "redclash", NULL, NULL, "1982",
 	"Red Clash (Suntronics)\0", "NO Sound", "Kaneko (Suntronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashsRomInfo, redclashsRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4

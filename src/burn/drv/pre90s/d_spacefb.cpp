@@ -249,6 +249,9 @@ static INT32 DrvDoReset()
 								 0, NULL, NULL, 0, 0);
 	}
 
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -761,7 +764,7 @@ struct BurnDriver BurnDrvSpacefb = {
 	"spacefb", NULL, NULL, "spacefb", "1980",
 	"Space Firebird (rev. 04-u)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, spacefbRomInfo, spacefbRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
@@ -797,7 +800,7 @@ struct BurnDriver BurnDrvSpacefbe = {
 	"spacefbe", "spacefb", NULL, "spacefb", "1980",
 	"Space Firebird (rev. 03-e set 1)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, spacefbeRomInfo, spacefbeRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
@@ -833,7 +836,7 @@ struct BurnDriver BurnDrvSpacefbe2 = {
 	"spacefbe2", "spacefb", NULL, "spacefb", "1980",
 	"Space Firebird (rev. 03-e set 2)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, spacefbe2RomInfo, spacefbe2RomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
@@ -869,7 +872,7 @@ struct BurnDriver BurnDrvSpacefba = {
 	"spacefba", "spacefb", NULL, "spacefb", "1980",
 	"Space Firebird (rev. 02-a)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, spacefbaRomInfo, spacefbaRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
@@ -905,7 +908,7 @@ struct BurnDriver BurnDrvSpacefbg = {
 	"spacefbg", "spacefb", NULL, "spacefb", "1980",
 	"Space Firebird (Gremlin)\0", NULL, "Nintendo (Gremlin license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, spacefbgRomInfo, spacefbgRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
@@ -941,7 +944,7 @@ struct BurnDriver BurnDrvSpacebrd = {
 	"spacebrd", "spacefb", NULL, "spacefb", "1980",
 	"Space Bird (bootleg)\0", NULL, "bootleg (Karateco)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, spacebrdRomInfo, spacebrdRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
@@ -977,7 +980,7 @@ struct BurnDriver BurnDrvSpacefbb = {
 	"spacefbb", "spacefb", NULL, "spacefb", "1980",
 	"Space Firebird (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, spacefbbRomInfo, spacefbbRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
@@ -1049,7 +1052,7 @@ struct BurnDriver BurnDrvStarwarr = {
 	"starwarr", "spacefb", NULL, "spacefb", "1980",
 	"Star Warrior\0", NULL, "bootleg (Potomac Mortgage)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, starwarrRomInfo, starwarrRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4

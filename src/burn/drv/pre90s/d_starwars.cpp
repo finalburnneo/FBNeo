@@ -756,6 +756,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	res_check();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1333,7 +1335,7 @@ struct BurnDriver BurnDrvEsb = {
 	"esb", NULL, NULL, NULL, "1985",
 	"The Empire Strikes Back\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, esbRomInfo, esbRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, EsbDIPInfo,
 	EsbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32 * 256,
 	640, 480, 4, 3

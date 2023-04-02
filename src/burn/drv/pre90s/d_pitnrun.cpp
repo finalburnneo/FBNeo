@@ -390,6 +390,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	watchdog = 0;
 	watchdog_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -823,7 +825,7 @@ struct BurnDriver BurnDrvPitnrun = {
 	"pitnrun", NULL, NULL, NULL, "1984",
 	"Pit & Run - F-1 Race (set 1)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
 	NULL, pitnrunRomInfo, pitnrunRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
 	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
 	224, 256, 3, 4
@@ -866,7 +868,7 @@ struct BurnDriver BurnDrvPitnruna = {
 	"pitnruna", "pitnrun", NULL, NULL, "1984",
 	"Pit & Run - F-1 Race (set 2)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
 	NULL, pitnrunaRomInfo, pitnrunaRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
 	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
 	224, 256, 3, 4

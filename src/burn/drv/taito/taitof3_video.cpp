@@ -123,6 +123,7 @@ static UINT8 *m_tsrc4;
 static UINT8 *m_tsrc_s4;
 static UINT32 m_x_count4;
 static UINT32 m_x_zoom4;
+static UINT16 m_pal_add[5];
 
 static UINT8 m_add_sat[256][256];
 
@@ -183,6 +184,7 @@ struct f3_playfield_line_inf
 	UINT32 x_zoom[256];
 	UINT32 clip0[256];
 	UINT32 clip1[256];
+	UINT16 pal_add[256];
 };
 
 struct f3_spritealpha_line_inf
@@ -1501,6 +1503,7 @@ static void init_alpha_blend_func()
 	m_clip_ar##pf_num=line_tmp->clip0[y]>>16; \
 	m_clip_bl##pf_num=line_tmp->clip1[y]&0xffff; \
 	m_clip_br##pf_num=line_tmp->clip1[y]>>16; \
+	m_pal_add[pf_num] = line_tmp->pal_add[y]; \
 }
 
 #define CULC_PIXMAP_POINTER(pf_num) \
@@ -1536,7 +1539,7 @@ if(cx>=clip_als && cx<clip_ars-1 && !(cx>=clip_bls && cx<clip_brs)) \
 	{ \
 		m_tval=*m_tsrc##pf_num; \
 		if(m_tval&0xf0) \
-			if((*m_dpix_lp[pf_num][m_pval>>4])(clut[*m_src##pf_num])) {*dsti=m_dval;break;} \
+			if((*m_dpix_lp[pf_num][m_pval>>4])(clut[(*m_src##pf_num + m_pal_add[pf_num]) & 0x1fff])) {*dsti=m_dval;break;} \
 	}
 
 
@@ -1845,12 +1848,12 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 	struct f3_playfield_line_inf *line_t=&m_pf_line_inf[pos];
 
 	INT32 y,y_start,y_end,y_inc;
-	INT32 line_base,zoom_base,col_base,pri_base,inc;
+	INT32 line_base,zoom_base,col_base,pri_base,pal_add_base,inc;
 
 	INT32 line_enable;
 	INT32 colscroll=0,x_offset=0,line_zoom=0;
 	UINT32 _y_zoom[256];
-	UINT16 pri=0;
+	UINT16 pri=0, pal_add = 0;
 	INT32 bit_select=1<<pos;
 
 	INT32 _colscroll[256];
@@ -1865,6 +1868,7 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		zoom_base=0x81fe;// + (pos*0x200);
 		col_base =0x41fe + (pos*0x200);
 		pri_base =0xb1fe + (pos*0x200);
+		pal_add_base = 0x91fe + (pos << 9);
 		inc=-2;
 		y_start=255;
 		y_end=-1;
@@ -1879,6 +1883,7 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		zoom_base=0x8000;// + (pos*0x200);
 		col_base =0x4000 + (pos*0x200);
 		pri_base =0xb000 + (pos*0x200);
+		pal_add_base = 0x9000 + (pos << 9);
 		inc=2;
 		y_start=0;
 		y_end=256;
@@ -1928,6 +1933,9 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 			// Column scroll only affects playfields 2 & 3
 			if (pos>=2 && BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x000+(y)])&bit_select)
 				colscroll=(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[col_base/2])>> 0)&0x3ff;
+
+			if (m_f3_line_ram[0x500 + y] & bit_select)
+				pal_add = (m_f3_line_ram[pal_add_base / 2] & 0x1ff) * 16;
 		}
 
 		if (!pri || (!flipscreen && y<24) || (flipscreen && y>231) ||
@@ -1976,11 +1984,13 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		line_t->x_zoom[y]=0x10000 - (line_zoom&0xff00);
 		line_t->alpha_mode[y]=line_enable;
 		line_t->pri[y]=pri;
+		line_t->pal_add[y] = pal_add;
 
 		zoom_base+=inc;
 		line_base+=inc;
 		col_base +=inc;
 		pri_base +=inc;
+		pal_add_base += inc;
 		y +=y_inc;
 	}
 

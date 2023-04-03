@@ -270,6 +270,8 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -899,7 +901,7 @@ struct BurnDriver BurnDrvLogicpro = {
 	"logicpro", "croquis", NULL, NULL, "1996",
 	"Logic Pro (Japan)\0", NULL, "Deniam", "Deniam-16b Hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, logicproRomInfo, logicproRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
 	logicproInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
@@ -954,7 +956,7 @@ struct BurnDriver BurnDrvKarianx = {
 	"karianx", NULL, NULL, NULL, "1996",
 	"Karian Cross (Rev. 1.0)\0", NULL, "Deniam", "Deniam-16b Hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, karianxRomInfo, karianxRomName, NULL, NULL, NULL, NULL, DrvInputInfo, KarianxDIPInfo,
 	karianxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
@@ -990,7 +992,7 @@ struct BurnDriver BurnDrvLogicpr2 = {
 	"logicpr2", NULL, NULL, NULL, "1997",
 	"Logic Pro 2 (Japan)\0", NULL, "Deniam", "Deniam-16c Hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, logicpr2RomInfo, logicpr2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
 	logicpr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3

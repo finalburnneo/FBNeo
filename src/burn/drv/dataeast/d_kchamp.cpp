@@ -355,6 +355,8 @@ static INT32 DrvDoReset()
 	msm_data = 0;
 	msm_counter = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -895,7 +897,7 @@ struct BurnDriver BurnDrvKchamp = {
 	"kchamp", NULL, NULL, NULL, "1984",
 	"Karate Champ (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampRomInfo, kchampRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -948,7 +950,7 @@ struct BurnDriver BurnDrvKaratedo = {
 	"karatedo", "kchamp", NULL, NULL, "1984",
 	"Karate Dou (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, karatedoRomInfo, karatedoRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1010,7 +1012,7 @@ struct BurnDriver BurnDrvKarateda = {
 	"karateda", "kchamp", NULL, NULL, "1984",
 	"Karate Dou (Arfyc bootleg)\0", NULL, "bootleg (Arfyc)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, karatedaRomInfo, karatedaRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1063,7 +1065,7 @@ struct BurnDriver BurnDrvKchamptec = {
 	"kchamptec", "kchamp", NULL, NULL, "1984",
 	"Karate Champ (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchamptecRomInfo, kchamptecRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1143,7 +1145,7 @@ struct BurnDriver BurnDrvKchampvs = {
 	"kchampvs", "kchamp", NULL, NULL, "1984",
 	"Karate Champ (US VS version, set 1)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvsRomInfo, kchampvsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1194,7 +1196,7 @@ struct BurnDriver BurnDrvKchampvs2 = {
 	"kchampvs2", "kchamp", NULL, NULL, "1984",
 	"Karate Champ (US VS version, set 2)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvs2RomInfo, kchampvs2RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1248,7 +1250,7 @@ struct BurnDriver BurnDrvKchampvs3 = {
 	"kchampvs3", "kchamp", NULL, NULL, "1984",
 	"Karate Champ (US VS version, set 3)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvs3RomInfo, kchampvs3RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1302,7 +1304,7 @@ struct BurnDriver BurnDrvKchampvs4 = {
 	"kchampvs4", "kchamp", NULL, NULL, "1984",
 	"Karate Champ (US VS version, set 4)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchampvs4RomInfo, kchampvs4RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1353,7 +1355,7 @@ struct BurnDriver BurnDrvKaratevs = {
 	"karatevs", "kchamp", NULL, NULL, "1984",
 	"Taisen Karate Dou (Japan VS version)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, karatevsRomInfo, karatevsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

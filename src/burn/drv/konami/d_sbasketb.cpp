@@ -315,6 +315,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnWatchdogReset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -722,7 +724,7 @@ struct BurnDriver BurnDrvSbasketb = {
 	"sbasketb", NULL, NULL, NULL, "1984",
 	"Super Basketball (version I, encrypted)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, sbasketbRomInfo, sbasketbRomName, NULL, NULL, NULL, NULL, SbasketbInputInfo, SbasketbDIPInfo,
 	SbasketbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1100,
 	224, 256, 3, 4

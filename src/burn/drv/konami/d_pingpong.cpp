@@ -385,6 +385,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -825,7 +827,7 @@ struct BurnDriver BurnDrvPingpong = {
 	"pingpong", NULL, NULL, NULL, "1985",
 	"Konami's Ping-Pong\0", NULL, "Konami", "GX555",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_BALLPADDLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_BALLPADDLE, 0,
 	NULL, pingpongRomInfo, pingpongRomName, NULL, NULL, NULL, NULL, PingpongInputInfo, PingpongDIPInfo,
 	PingpongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

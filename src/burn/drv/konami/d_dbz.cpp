@@ -541,6 +541,8 @@ static INT32 DrvDoReset()
 
 	control_data = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1029,7 +1031,7 @@ struct BurnDriver BurnDrvDbz = {
 	"dbz", NULL, NULL, NULL, "1993",
 	"Dragonball Z (rev B)\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, dbzRomInfo, dbzRomName, NULL, NULL, NULL, NULL, DbzInputInfo, DbzDIPInfo,
 	dbzInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 256, 4, 3
@@ -1065,7 +1067,7 @@ struct BurnDriver BurnDrvDbza = {
 	"dbza", "dbz", NULL, NULL, "1993",
 	"Dragonball Z (rev A)\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, dbzaRomInfo, dbzaRomName, NULL, NULL, NULL, NULL, DbzInputInfo, DbzDIPInfo,
 	dbzaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 256, 4, 3
@@ -1104,7 +1106,7 @@ struct BurnDriver BurnDrvDbz2 = {
 	"dbz2", NULL, NULL, NULL, "1994",
 	"Dragonball Z 2 - Super Battle\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, dbz2RomInfo, dbz2RomName, NULL, NULL, NULL, NULL, DbzInputInfo, Dbz2DIPInfo,
 	dbz2Init,DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 256, 4, 3

@@ -320,6 +320,8 @@ static INT32 DrvDoReset()
 
 	readzoomroms = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -574,7 +576,7 @@ struct BurnDriver BurnDrvRollerg = {
 	"rollerg", NULL, NULL, NULL, "1991",
 	"Rollergames (US)\0", NULL, "Konami", "GX999",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, rollergRomInfo, rollergRomName, NULL, NULL, NULL, NULL, RollergInputInfo, RollergDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
@@ -604,7 +606,7 @@ struct BurnDriver BurnDrvRollergj = {
 	"rollergj", "rollerg", NULL, NULL, "1991",
 	"Rollergames (Japan)\0", NULL, "Konami", "GX999",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, rollergjRomInfo, rollergjRomName, NULL, NULL, NULL, NULL, RollergInputInfo, RollergDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3

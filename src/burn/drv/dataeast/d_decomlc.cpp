@@ -424,6 +424,8 @@ static INT32 DrvDoReset()
 	scanline_timer = -1;
 	vblank_flip = ~0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1284,7 +1286,7 @@ struct BurnDriver BurnDrvAvengrgs = {
 	"avengrgs", NULL, NULL, NULL, "1995",
 	"Avengers In Galactic Storm (US/Europe 1.0\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, avengrgsRomInfo, avengrgsRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -1326,7 +1328,7 @@ struct BurnDriver BurnDrvAvengrgsj = {
 	"avengrgsj", "avengrgs", NULL, NULL, "1995",
 	"Avengers In Galactic Storm (Japan 1.2)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, avengrgsjRomInfo, avengrgsjRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -1407,7 +1409,7 @@ struct BurnDriver BurnDrvSkullfng = {
 	"skullfng", NULL, NULL, NULL, "1996",
 	"Skull Fang (Europe 1.13)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, skullfngRomInfo, skullfngRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	SkullfngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
@@ -1442,7 +1444,7 @@ struct BurnDriver BurnDrvSkullfngj = {
 	"skullfngj", "skullfng", NULL, NULL, "1996",
 	"Skull Fang - Kuhga Gaiden (Japan 1.09)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, skullfngjRomInfo, skullfngjRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	SkullfngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
@@ -1477,7 +1479,7 @@ struct BurnDriver BurnDrvSkullfnga = {
 	"skullfnga", "skullfng", NULL, NULL, "1996",
 	"Skull Fang - Kuhga Gaiden (Asia 1.13)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, skullfngaRomInfo, skullfngaRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	SkullfngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4

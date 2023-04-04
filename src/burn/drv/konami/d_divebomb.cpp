@@ -347,6 +347,8 @@ static INT32 DrvDoReset()
 	to_rozcpu = 0;
 	roz_palettebank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -745,7 +747,7 @@ struct BurnDriver BurnDrvDivebomb = {
 	"divebomb", NULL, NULL, NULL, "1989",
 	"Kyuukoukabakugekitai - Dive Bomber Squad (Japan, prototype)\0", "bugs are normal!", "Konami", "GX840",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, divebombRomInfo, divebombRomName, NULL, NULL, NULL, NULL, DivebombInputInfo, DivebombDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xd00,
 	224, 256, 3, 4

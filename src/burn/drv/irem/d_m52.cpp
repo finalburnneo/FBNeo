@@ -363,6 +363,8 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	scrollx = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -894,7 +896,7 @@ struct BurnDriver BurnDrvMpatrol = {
 	"mpatrol", NULL, NULL, NULL, "1982",
 	"Moon Patrol\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, mpatrolRomInfo, mpatrolRomName, NULL, NULL, NULL, NULL, MpatrolInputInfo, MpatrolDIPInfo,
 	mpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 252, 4, 3
@@ -938,7 +940,7 @@ struct BurnDriver BurnDrvMpatrolw = {
 	"mpatrolw", "mpatrol", NULL, NULL, "1982",
 	"Moon Patrol (Williams)\0", NULL, "Irem (Williams license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, mpatrolwRomInfo, mpatrolwRomName, NULL, NULL, NULL, NULL, MpatrolInputInfo, MpatrolwDIPInfo,
 	mpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 252, 4, 3
@@ -980,7 +982,7 @@ struct BurnDriver BurnDrvMranger = {
 	"mranger", "mpatrol", NULL, NULL, "1982",
 	"Moon Ranger (bootleg of Moon Patrol)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, mrangerRomInfo, mrangerRomName, NULL, NULL, NULL, NULL, MpatrolInputInfo, MpatrolDIPInfo,
 	mpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 252, 4, 3

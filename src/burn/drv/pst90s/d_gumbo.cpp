@@ -239,6 +239,8 @@ static INT32 DrvDoReset()
 
 	MSM6295Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -495,7 +497,7 @@ struct BurnDriver BurnDrvGumbo = {
 	"gumbo", NULL, NULL, NULL, "1994",
 	"Gumbo\0", NULL, "Min Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, gumboRomInfo, gumboRomName, NULL, NULL, NULL, NULL, GumboInputInfo, GumboDIPInfo,
 	GumboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
@@ -524,7 +526,7 @@ struct BurnDriver BurnDrvMspuzzlg = {
 	"mspuzzleg", "gumbo", NULL, NULL, "1994",
 	"Miss Puzzle (Clone of Gumbo)\0", NULL, "Min Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, mspuzzlgRomInfo, mspuzzlgRomName, NULL, NULL, NULL, NULL, GumboInputInfo, GumboDIPInfo,
 	GumboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
@@ -553,7 +555,7 @@ struct BurnDriver BurnDrvMsbingo = {
 	"msbingo", NULL, NULL, NULL, "1994",
 	"Miss Bingo\0", NULL, "Min Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, msbingoRomInfo, msbingoRomName, NULL, NULL, NULL, NULL, GumboInputInfo, MsbingoDIPInfo,
 	MbingoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
@@ -584,7 +586,7 @@ struct BurnDriver BurnDrvMspuzzle = {
 	"mspuzzle", NULL, NULL, NULL, "1994",
 	"Miss Puzzle\0", NULL, "Min Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, mspuzzleRomInfo, mspuzzleRomName, NULL, NULL, NULL, NULL, GumboInputInfo, MspuzzleDIPInfo,
 	MspuzzleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
@@ -616,7 +618,7 @@ struct BurnDriver BurnDrvMspuzzlea = {
 	"mspuzzlea", "mspuzzle", NULL, NULL, "1994",
 	"Miss Puzzle (Nudes, less explicit)\0", NULL, "Min Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, mspuzzleaRomInfo, mspuzzleaRomName, NULL, NULL, NULL, NULL, GumboInputInfo, MspuzzleDIPInfo,
 	MspuzzleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4
@@ -651,7 +653,7 @@ struct BurnDriver BurnDrvMspuzzleb = {
 	"mspuzzleb", "mspuzzle", NULL, NULL, "1994",
 	"Miss Puzzle (Nudes, more explicit)\0", "imperfect graphics", "Min Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, mspuzzlebRomInfo, mspuzzlebRomName, NULL, NULL, NULL, NULL, GumboInputInfo, MspuzzleDIPInfo,
 	MspuzzleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 320, 3, 4

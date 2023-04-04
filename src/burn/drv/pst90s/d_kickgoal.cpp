@@ -331,6 +331,8 @@ static INT32 DrvDoReset()
 	sound_new = 0;
 #endif
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -798,7 +800,7 @@ struct BurnDriver BurnDrvActionhw = {
 	"actionhw", NULL, NULL, NULL, "1995",
 	"Action Hollywood\0", NULL, "TCH / Proyesel", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, actionhwRomInfo, actionhwRomName, NULL, NULL, NULL, NULL, KickgoalInputInfo, NULL,
 	ActionhwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	352, 240, 4, 3

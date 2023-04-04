@@ -169,6 +169,8 @@ static INT32 DrvDoReset()
 
 	flipscreen = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -550,7 +552,7 @@ struct BurnDriver BurnDrvTroangel = {
 	"troangel", NULL, NULL, NULL, "1983",
 	"Tropical Angel\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
 	NULL, troangelRomInfo, troangelRomName, NULL, NULL, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3
@@ -591,7 +593,7 @@ struct BurnDriver BurnDrvNewtangl = {
 	"newtangl", "troangel", NULL, NULL, "1983",
 	"New Tropical Angel\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_MISC, 0,
 	NULL, newtanglRomInfo, newtanglRomName, NULL, NULL, NULL, NULL, TroangelInputInfo, TroangelDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3

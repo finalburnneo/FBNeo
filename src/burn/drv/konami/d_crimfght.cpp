@@ -423,6 +423,8 @@ static INT32 DrvDoReset()
 
 	KonamiICReset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -704,7 +706,7 @@ struct BurnDriver BurnDrvCrimfght = {
 	"crimfght", NULL, NULL, NULL, "1989",
 	"Crime Fighters (World 2 players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, crimfghtRomInfo, crimfghtRomName, NULL, NULL, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
@@ -736,7 +738,7 @@ struct BurnDriver BurnDrvCrimfghtj = {
 	"crimfghtj", "crimfght", NULL, NULL, "1989",
 	"Crime Fighters (Japan 2 Players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, crimfghtjRomInfo, crimfghtjRomName, NULL, NULL, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
@@ -768,7 +770,7 @@ struct BurnDriver BurnDrvCrimfghtu = {
 	"crimfghtu", "crimfght", NULL, NULL, "1989",
 	"Crime Fighters (US 4 Players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, crimfghtuRomInfo, crimfghtuRomName, NULL, NULL, NULL, NULL, CrimfghtuInputInfo, CrimfghtuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3

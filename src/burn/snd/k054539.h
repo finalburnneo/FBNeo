@@ -17,6 +17,8 @@ void K054539SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void K054539SetApanCallback(INT32 chip, void (*ApanCB)(double, double));
 void K054539Exit();
 
+void K054539SetIRQCallback(INT32 chip, void (*irq_cb)(int));
+
 void K054539Scan(INT32 nAction, INT32 *pnMin);
 
 #define BURN_SND_K054539_ROUTE_1		0

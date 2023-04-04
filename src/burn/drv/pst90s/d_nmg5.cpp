@@ -975,6 +975,8 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 	BurnYM3812Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1456,7 +1458,7 @@ struct BurnDriver BurnDrvNmg5 = {
 	"nmg5", NULL, NULL, NULL, "1998",
 	"Multi 5 / New Multi Game 5 (set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, nmg5RomInfo, nmg5RomName, NULL, NULL, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
@@ -1496,7 +1498,7 @@ struct BurnDriver BurnDrvNmg5a = {
 	"nmg5a", "nmg5", NULL, NULL, "1997",
 	"Multi 5 / New Multi Game 5 (set 2)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, nmg5aRomInfo, nmg5aRomName, NULL, NULL, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
@@ -1536,7 +1538,7 @@ struct BurnDriver BurnDrvNmg5e = {
 	"nmg5e", "nmg5", NULL, NULL, "1997",
 	"Multi 5 / New Multi Game 5 (set 3, earlier)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, nmg5eRomInfo, nmg5eRomName, NULL, NULL, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
@@ -1704,7 +1706,7 @@ struct BurnDriver BurnDrvPclubys = {
 	"pclubys", NULL, NULL, NULL, "2000",
 	"Puzzle Club (Yun Sung, set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, pclubysRomInfo, pclubysRomName, NULL, NULL, NULL, NULL, PclubysInputInfo, PclubysDIPInfo,
 	PclubysInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
@@ -1740,7 +1742,7 @@ struct BurnDriver BurnDrvPclubysa = {
 	"pclubysa", "pclubys", NULL, NULL, "2000",
 	"Puzzle Club (Yun Sung, set 2)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, pclubysaRomInfo, pclubysaRomName, NULL, NULL, NULL, NULL, PclubysInputInfo, PclubysDIPInfo,
 	PclubysInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
@@ -1891,7 +1893,7 @@ struct BurnDriver BurnDrvWondstck = {
 	"wondstck", NULL, NULL, NULL, "????",
 	"Wonder Stick (set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, wondstckRomInfo, wondstckRomName, NULL, NULL, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
 	WondstckInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3

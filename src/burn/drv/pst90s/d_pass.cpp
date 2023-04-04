@@ -177,6 +177,8 @@ static INT32 DrvDoReset()
 	BurnYM2203Reset();
 	MSM6295Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -499,7 +501,7 @@ struct BurnDriver BurnDrvPass = {
 	"pass", NULL, NULL, NULL, "1992",
 	"Pass\0", NULL, "Oksan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, passRomInfo, passRomName, NULL, NULL, NULL, NULL, PassInputInfo, PassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3

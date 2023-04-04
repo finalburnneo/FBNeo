@@ -1267,6 +1267,8 @@ static INT32 DrvDoReset()
 
 	DACReset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2189,7 +2191,7 @@ struct BurnDriver BurnDrvUballoon = {
 	"uballoon", NULL, NULL, NULL, "1996",
 	"Ultra Balloon\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, uballoonRomInfo, uballoonRomName, NULL, NULL, NULL, NULL, UballoonInputInfo, uballoonDIPInfo,
 	UballoonInit, DrvExit, UballoonFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
@@ -2225,7 +2227,7 @@ struct BurnDriver BurnDrvBssoccer = {
 	"bssoccer", NULL, NULL, NULL, "1996",
 	"Back Street Soccer\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bssoccerRomInfo, bssoccerRomName, NULL, NULL, NULL, NULL, BssoccerInputInfo, bssoccerDIPInfo,
 	BssoccerInit, DrvExit, BssoccerFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3

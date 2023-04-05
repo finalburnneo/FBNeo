@@ -2126,7 +2126,7 @@ static void WriteIO2(INT32 nOffset, UINT8 byteValue)
 		case 0x0B:											// Select BIOS text ROM
 //			bprintf(PRINT_NORMAL, _T("  - BIOS text/Z80 ROM banked in (0x%02X).\n"), byteValue);
 
-			bBIOSTextROMEnabled = !(nNeoSystemType & (NEO_SYS_PCB | NEO_SYS_AES));
+			bBIOSTextROMEnabled = !(nNeoSystemType & (NEO_SYS_AES));
 
 			if (bZ80BIOS) {
 				if (!bZ80BoardROMBankedIn) {

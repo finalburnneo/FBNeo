@@ -284,6 +284,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	soundlatch1 = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -712,7 +714,7 @@ struct BurnDriver BurnDrvOlibochu = {
 	"olibochu", "punchkid", NULL, NULL, "1981",
 	"Oli-Boo-Chu (USA)\0", NULL, "Irem (GDI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
 	NULL, olibochuRomInfo, olibochuRomName, NULL, NULL, NULL, NULL, OlibochuInputInfo, OlibochuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 256, 3, 4

@@ -389,6 +389,8 @@ static INT32 DrvDoReset()
 	tile_bank[2] = 2;
 	tile_bank[3] = 3;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -960,7 +962,7 @@ struct BurnDriver BurnDrvPitapat = {
 	"pitapat", NULL, NULL, NULL, "1997",
 	"Pitapat Puzzle (set 1)\0", NULL, "F2 System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pitapatRomInfo, pitapatRomName, NULL, NULL, NULL, NULL, PitapatInputInfo, PitapatDIPInfo,
 	pitapatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3

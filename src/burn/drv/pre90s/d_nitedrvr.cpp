@@ -345,6 +345,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	sound_disable = 1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1129,7 +1131,7 @@ struct BurnDriver BurnDrvNitedrvr = {
 	"nitedrvr", NULL, NULL, "nitedrvr", "1976",
 	"Night Driver\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, nitedrvrRomInfo, nitedrvrRomName, NULL, NULL, nitedrvrSampleInfo, nitedrvrSampleName, NitedrvrInputInfo, NitedrvrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x12,
 	512, 512, 4, 3

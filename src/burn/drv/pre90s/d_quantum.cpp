@@ -320,6 +320,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	res_check();
 
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -588,7 +591,7 @@ struct BurnDriver BurnDrvQuantum = {
 	"quantum", NULL, NULL, NULL, "1982",
 	"Quantum (rev 2)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, quantumRomInfo, quantumRomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	480, 640, 3, 4
@@ -621,7 +624,7 @@ struct BurnDriver BurnDrvQuantum1 = {
 	"quantum1", "quantum", NULL, NULL, "1982",
 	"Quantum (rev 1)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, quantum1RomInfo, quantum1RomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	480, 640, 3, 4
@@ -654,7 +657,7 @@ struct BurnDriver BurnDrvQuantump = {
 	"quantump", "quantum", NULL, NULL, "1982",
 	"Quantum (prototype)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, quantumpRomInfo, quantumpRomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	480, 640, 3, 4

@@ -290,6 +290,8 @@ static INT32 DrvDoReset()
 	ccu_timer = 0;
 	ccu_timer_latch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -634,7 +636,7 @@ struct BurnDriver BurnDrvHexion = {
 	"hexion", NULL, NULL, NULL, "1992",
 	"Hexion (Japan ver. JAB)\0", NULL, "Konami", "GX122",
 	L"Hexion  (Japan ver. JAB)\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Japan ver. JAB)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
 	NULL, hexionRomInfo, hexionRomName, NULL, NULL, NULL, NULL, HexionInputInfo, HexionDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
@@ -665,7 +667,7 @@ struct BurnDriver BurnDrvHexionb = {
 	"hexionb", "hexion", NULL, NULL, "1992",
 	"Hexion (Bootleg, Asia ver. AAA)\0", NULL, "Bootleg", "GX122",
 	L"Hexion  (Bootleg, Asia ver. AAA)\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Bootleg, Asia ver. AAA)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
 	NULL, hexionbRomInfo, hexionbRomName, NULL, NULL, NULL, NULL, HexionInputInfo, HexionDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3

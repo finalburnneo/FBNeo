@@ -334,6 +334,8 @@ static INT32 DrvDoReset()
 
 	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -777,7 +779,7 @@ struct BurnDriver BurnDrvZwackery = {
 	"zwackery", NULL, NULL, NULL, "1984",
 	"Zwackery\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, zwackeryRomInfo, zwackeryRomName, NULL, NULL, NULL, NULL, ZwackeryInputInfo, ZwackeryDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	512, 480, 4, 3

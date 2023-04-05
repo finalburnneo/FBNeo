@@ -159,6 +159,10 @@ struct dtimer
 		if (retrig == 0) { running = 0; }
 		time_current = 0;
 	}
+	void stop_retrig() {
+		running = 0;
+		time_current = 0;
+	}
 	INT32 isrunning() {
 		return running;
 	}
@@ -171,6 +175,7 @@ void timerNewFrame();
 void timerInit();
 void timerExit();
 void timerAdd(dtimer &timer, INT32 tparam, void (*callback)(int));
+void timerAdd(dtimer &timer); // already initted, just add to subsystem
 void timerAddClockSource(dtimer &timer, UINT32 speed, void (*callback)(int));
 void timerReset();
 INT32 timerRun(INT32 cyc);

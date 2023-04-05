@@ -203,6 +203,8 @@ static INT32 DrvDoReset()
 	scrollx = 0;
 	scrolly = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -565,7 +567,7 @@ struct BurnDriver BurnDrvSprcros2 = {
 	"sprcros2", NULL, NULL, NULL, "1986",
 	"Super Cross II (Japan, set 1)\0", NULL, "GM Shoji", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, sprcros2RomInfo, sprcros2RomName, NULL, NULL, NULL, NULL, Sprcros2InputInfo, Sprcros2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 224, 4, 3
@@ -609,7 +611,7 @@ struct BurnDriver BurnDrvSprcros2a = {
 	"sprcros2a", "sprcros2", NULL, NULL, "1986",
 	"Super Cross II (Japan, set 2)\0", NULL, "GM Shoji", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, sprcros2aRomInfo, sprcros2aRomName, NULL, NULL, NULL, NULL, Sprcros2InputInfo, Sprcros2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 224, 4, 3

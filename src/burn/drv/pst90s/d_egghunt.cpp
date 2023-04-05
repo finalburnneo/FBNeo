@@ -205,6 +205,8 @@ static INT32 DrvDoReset()
 	gfx_bank = 0;
 	soundlatch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -479,7 +481,7 @@ struct BurnDriver BurnDrvEgghunt = {
 	"egghunt", NULL, NULL, NULL, "1995",
 	"Egg Hunt\0", NULL, "Invi Image", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, egghuntRomInfo, egghuntRomName, NULL, NULL, NULL, NULL, EgghuntInputInfo, EgghuntDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x400,
 	384, 240, 4, 3

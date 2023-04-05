@@ -416,6 +416,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -810,7 +812,7 @@ struct BurnDriver BurnDrvAirbustr = {
 	"airbustr", NULL, NULL, NULL, "1990",
 	"Air Buster: Trouble Specialty Raid Unit (World)\0", NULL, "Kaneko (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, airbustrRomInfo, airbustrRomName, NULL, NULL, NULL, NULL, AirbustrInputInfo, AirbustrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x0300,
 	256, 224, 4, 3
@@ -843,7 +845,7 @@ struct BurnDriver BurnDrvAirbustrj = {
 	"airbustrj", "airbustr", NULL, NULL, "1990",
 	"Air Buster: Trouble Specialty Raid Unit (Japan)\0", NULL, "Kaneko (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, airbustrjRomInfo, airbustrjRomName, NULL, NULL, NULL, NULL, AirbustrInputInfo, AirbustjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x0300,
 	256, 224, 4, 3
@@ -881,7 +883,7 @@ struct BurnDriver BurnDrvAirbustrb = {
 	"airbustrb", "airbustr", NULL, NULL, "1990",
 	"Air Buster: Trouble Specialty Raid Unit (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, airbustrbRomInfo, airbustrbRomName, NULL, NULL, NULL, NULL, AirbustrInputInfo, AirbustjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x0300,
 	256, 224, 4, 3

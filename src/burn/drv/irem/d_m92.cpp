@@ -3760,8 +3760,8 @@ static struct BurnRomInfo thndblstRomDesc[] = {
 	{ "lt_c-h1-.ic27",		0x020000, 0xd7dd3d48, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "lt_c-l1-.ic26",		0x020000, 0xb94b3bd8, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "lt_c-sh0-a.ic14",	0x010000, 0xaf5b224f, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "lt_c-sl0-a.ic17",	0x010000, 0xcb3faac3, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "lt_c-sh0-a.ic14",	0x008000, 0xcb76fd08, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "lt_c-sl0-a.ic17",	0x008000, 0xabea2071, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "lt_c0.ic9",			0x040000, 0xada0fd50, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "lt_c1.ic10",			0x040000, 0xd2596883, 3 | BRF_GRA },           //  7

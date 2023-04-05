@@ -442,6 +442,9 @@ static INT32 DrvFrame()
 	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	ZetClose();
 
+	HiscoreReset();
+
+
 	if (tune_timer > 0) {
 		tune_timer--;
 		if (tune_timer == 0) {

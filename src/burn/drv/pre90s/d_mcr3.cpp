@@ -823,6 +823,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	if (has_shift) BurnShiftReset();
 
+	HiscoreReset();
+
 	input_mux = 0;
 	flipscreen = 0;
 	scrollx = 0;

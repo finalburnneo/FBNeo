@@ -214,6 +214,8 @@ static INT32 DrvDoReset()
 	DrvBgSy1 = 0;
 	DrvBgSy2 = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1029,7 +1031,7 @@ struct BurnDriver BurnDrvPsychic5 = {
 	"psychic5", NULL, NULL, NULL, "1987",
 	"Psychic 5 (World)\0", NULL, "Jaleco / NMK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x300, 224, 256, 3, 4
@@ -1060,7 +1062,7 @@ struct BurnDriver BurnDrvPsychic5j = {
 	"psychic5j", "psychic5", NULL, NULL, "1987",
 	"Psychic 5 (Japan)\0", NULL, "Jaleco / NMK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, Psychic5jRomInfo, Psychic5jRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x300, 224, 256, 3, 4

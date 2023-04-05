@@ -215,6 +215,8 @@ static INT32 DrvDoReset()
 
 	sound_nmi_mask = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -551,7 +553,7 @@ struct BurnDriver BurnDrvSub = {
 	"sub", NULL, NULL, NULL, "1985",
 	"Submarine (Sigma)\0", NULL, "Sigma Enterprises Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, subRomInfo, subRomName, NULL, NULL, NULL, NULL, SubInputInfo, SubDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4

@@ -385,6 +385,7 @@ static INT32 DrvDoReset()
 		DACReset();
 		BurnYM2151Reset();
 		VezClose();
+		HiscoreReset();
 	}
 	else if (game_select == 2)
 	{

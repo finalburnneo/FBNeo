@@ -261,6 +261,9 @@ static INT32 DrvDoReset()
 	BurnYM2203Reset();
 	ZetClose();
 
+	HiscoreReset();
+
+
 	scrollx = 0;
 	scrolly = 0;
 	soundlatch = 0;

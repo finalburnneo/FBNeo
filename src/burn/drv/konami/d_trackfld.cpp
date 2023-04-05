@@ -818,6 +818,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	last_sound_irq = 0;
 	SN76496_latch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2089,7 +2091,7 @@ struct BurnDriver BurnDrvYieartf = {
 	"yieartf", "yiear", NULL, NULL, "1985",
 	"Yie Ar Kung-Fu (GX361 conversion)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yieartfRomInfo, yieartfRomName, NULL, NULL, NULL, NULL, YieartfInputInfo, YieartfDIPInfo,
 	YieartfInit, DrvExit, YieartfFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

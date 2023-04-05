@@ -290,6 +290,7 @@ DRV		BurnDrvmd_gleylancs;
 DRV		BurnDrvmd_advdaisn;
 DRV		BurnDrvnes_advdddsc;
 DRV		BurnDrvnes_advddds;
+DRV		BurnDrvnes_advdddfs;
 DRV		BurnDrvnes_advdddfj;
 DRV		BurnDrvnes_advdddf;
 DRV		BurnDrvnes_advddhlc;
@@ -7811,10 +7812,9 @@ DRV		BurnSpecJailbreak;
 DRV		BurnDrvJailbrekb;
 DRV		BurnDrvJailbrek;
 DRV		BurnDrvnes_jajamgekj;
-DRV		BurnDrvnes_jajamgek;
+DRV		BurnDrvnes_jajamgeke;
 DRV		BurnDrvnes_jajamninchoj;
-DRV		BurnDrvnes_jajamnincho;
-DRV		BurnDrvnes_jajamnodai;
+DRV		BurnDrvnes_jajamninchoe;
 DRV		BurnDrvmd_jbdougko;
 DRV		BurnDrvmd_jbdougkos;
 DRV		BurnDrvsms_jbdougko;
@@ -11236,10 +11236,16 @@ DRV		BurnSpecNinjagardensim;
 DRV		BurnDrvnes_ninjahatkun;
 DRV		BurnDrvMSX_ninja2;
 DRV		BurnDrvnes_ninjajajj;
+DRV		BurnDrvnes_ninjajaje;
+DRV		BurnDrvnes_jajamgek;
 DRV		BurnDrvnes_ninjajaj;
-DRV		BurnDrvnes_ninjajajkun;
+DRV		BurnDrvnes_jajamnincho;
+DRV		BurnDrvnes_jajamnodaij;
+DRV		BurnDrvnes_jajamnodai;
+DRV		BurnDrvnes_ninjajajkunj;
 DRV		BurnDrvMSX_ninjajaj;
 DRV		BurnDrvMSX_ninjajajk;
+DRV		BurnDrvnes_ninjajajkun;
 DRV		BurnDrvKazan;
 DRV		BurnDrvnes_ninjakid;
 DRV		BurnDrvMSX_ninjalove;
@@ -16124,6 +16130,7 @@ DRV		BurnDrvSuplup;
 DRV		BurnDrvmd_smario2a;
 DRV		BurnDrvmd_smario2;
 DRV		BurnDrvnes_supermarallstanes;
+DRV		BurnDrvnes_smbroop;
 DRV		BurnDrvnes_smb8en;
 DRV		BurnDrvnes_smb8es;
 DRV		BurnDrvnes_smb8se;
@@ -19831,6 +19838,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_advdaisn,		// Advanced Daisenryaku - Deutsch Dengeki Sakusen (Jpn, Rev. A)
 	&BurnDrvnes_advdddsc,		// Advanced Dungeons & Dragons - Dragon Strike (Hack, Spanish v1.0)
 	&BurnDrvnes_advddds,		// Advanced Dungeons & Dragons - Dragon Strike (USA)
+	&BurnDrvnes_advdddfs,		// Advanced Dungeons & Dragons - Dragons of Flame (Hack, Spanish v1.0)
 	&BurnDrvnes_advdddfj,		// Advanced Dungeons & Dragons - Dragons of Flame (Japan)
 	&BurnDrvnes_advdddf,		// Advanced Dungeons & Dragons - Dragons of Flame (T-Eng, v1.03)
 	&BurnDrvnes_advddhlc,		// Advanced Dungeons & Dragons - Heroes of the Lance (Hack, Spanish v1.0)
@@ -27352,10 +27360,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJailbrekb,			// Jail Break (bootleg)
 	&BurnDrvJailbrek,			// Jail Break
 	&BurnDrvnes_jajamgekj,		// Jajamaru Gekimaden - Maboroshi no Kinmajou (Japan)
-	&BurnDrvnes_jajamgek,		// Jajamaru Gekimaden - Maboroshi no Kinmajou (T-Eng)
+	&BurnDrvnes_jajamgeke,		// Jajamaru Gekimaden - Maboroshi no Kinmajou (T-Eng)
 	&BurnDrvnes_jajamninchoj,	// Jajamaru Ninpou Chou (Japan)
-	&BurnDrvnes_jajamnincho,	// Jajamaru Ninpou Chou (T-Eng)
-	&BurnDrvnes_jajamnodai,		// Jajamaru no Daibouken (Japan)
+	&BurnDrvnes_jajamninchoe,	// Jajamaru Ninpou Chou (T-Eng)
 	&BurnDrvmd_jbdougko,		// James 'Buster' Douglas Knockout Boxing (Euro, USA)
 	&BurnDrvmd_jbdougkos,		// James 'Buster' Douglas Knockout Boxing (Hack, Spanish)
 	&BurnDrvsms_jbdougko,		// James 'Buster' Douglas Knockout Boxing (USA)
@@ -30777,10 +30784,16 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ninjahatkun,	// Ninja Hattori-kun - Ninja wa Syugyou de Gozaru (Japan)
 	&BurnDrvMSX_ninja2,			// Ninja II (Kor)
 	&BurnDrvnes_ninjajajj,		// Ninja Jajamaru - Ginga Daisakusen (Japan)
-	&BurnDrvnes_ninjajaj,		// Ninja Jajamaru - Ginga Daisakusen (T-Eng)
-	&BurnDrvnes_ninjajajkun,	// Ninja Jajamaru-kun (Japan)
+	&BurnDrvnes_ninjajaje,		// Ninja Jajamaru - Ginga Daisakusen (T-Eng)
+	&BurnDrvnes_jajamgek,		// Ninja JaJaMaru - Legend of The Golden Castle (T-Eng)
+	&BurnDrvnes_ninjajaj,		// Ninja JaJaMaru - Operation Milky Way (T-Eng)
+	&BurnDrvnes_jajamnincho,	// Ninja JaJaMaru - The Ninja Skill Book (T-Eng)
+	&BurnDrvnes_jajamnodaij,	// Ninja Jajamaru no Daibouken (Japan)
+	&BurnDrvnes_jajamnodai,		// Ninja JaJaMaru's Big Adventure (T-Eng)
+	&BurnDrvnes_ninjajajkunj,	// Ninja Jajamaru-kun (Japan)
 	&BurnDrvMSX_ninjajaj,		// Ninja Jajamaru-kun (Jpn)
 	&BurnDrvMSX_ninjajajk,		// Ninja Jajamaru-kun (Kor)
+	&BurnDrvnes_ninjajajkun,	// Ninja Jajamaru-kun (T-Eng)
 	&BurnDrvKazan,				// Ninja Kazan (World)
 	&BurnDrvnes_ninjakid,		// Ninja Kid (USA)
 	&BurnDrvMSX_ninjalove,		// Ninja Love (Spanish) (HB)
@@ -35665,6 +35678,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smario2a,		// Super Mario 2 (Alt?) (Unl) [no comment, NOT WORKING]
 	&BurnDrvmd_smario2,			// Super Mario 2 (Unl)
 	&BurnDrvnes_supermarallstanes,// Super Mario All Stars NES (Hack)
+	&BurnDrvnes_smbroop,		// Super Mario Bro-Op (Hack, v1.1)
 	&BurnDrvnes_smb8en,			// Super Mario Bros 8 (English) (Hack)
 	&BurnDrvnes_smb8es,			// Super Mario Bros 8 (Spanish) (Hack)
 	&BurnDrvnes_smb8se,			// Super Mario Bros 8 Special Edition (Hack)

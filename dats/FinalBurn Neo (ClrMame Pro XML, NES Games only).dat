@@ -319,6 +319,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="advdddfs" cloneof="advdddf" romof="advdddf">
+		<comment>Hack</comment>
+		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (Hack, Spanish v1.0)</description>
+		<year>2023</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="Advanced Dungeons &amp; Dragons - Dragons of Flame T-Spa (2023)(Wave).nes" size="262160" crc="9e431abb"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="advdddfj" cloneof="advdddf" romof="advdddf">
 		<description>Advanced Dungeons &amp; Dragons - Dragons of Flame (Japan)</description>
 		<year>1992</year>
@@ -8243,7 +8252,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="jajamgek">
+	<game name="jajamgeke" cloneof="jajamgek" romof="jajamgek">
 		<comment>Hack</comment>
 		<description>Jajamaru Gekimaden - Maboroshi no Kinmajou (T-Eng)</description>
 		<year>2009</year>
@@ -8260,20 +8269,12 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="jajamnincho">
+	<game name="jajamninchoe" cloneof="jajamnincho" romof="jajamnincho">
 		<comment>Hack</comment>
 		<description>Jajamaru Ninpou Chou (T-Eng)</description>
 		<year>2020</year>
 		<manufacturer>Stardust Crusaders</manufacturer>
 		<rom name="Jajamaru Ninpou Chou (T-Eng).nes" size="393232" crc="70fc8e57"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="jajamnodai">
-		<description>Jajamaru no Daibouken (Japan)</description>
-		<year>1986</year>
-		<manufacturer>Jaleco</manufacturer>
-		<rom name="Jajamaru no Daibouken (Japan).nes" size="65552" crc="d7c19e5f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -11985,7 +11986,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ninjajaj">
+	<game name="ninjajaje" cloneof="ninjajaj" romof="ninjajaj">
 		<comment>Hack</comment>
 		<description>Ninja Jajamaru - Ginga Daisakusen (T-Eng)</description>
 		<year>2002</year>
@@ -11994,11 +11995,64 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ninjajajkun">
+	<game name="jajamgek">
+		<comment>Official Translation</comment>
+		<description>Ninja JaJaMaru - Legend of The Golden Castle (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Ninja JaJaMaru - Legend of The Golden Castle T-Eng (1990-2023)(Jaleco).nes" size="458240" crc="d243a931"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjajaj">
+		<comment>Official Translation</comment>
+		<description>Ninja JaJaMaru - Operation Milky Way (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Ninja JaJaMaru - Operation Milky Way T-Eng (1991-2023)(Jaleco).nes" size="262160" crc="f438e54a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="jajamnincho">
+		<comment>Official Translation</comment>
+		<description>Ninja JaJaMaru - The Ninja Skill Book (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Ninja JaJaMaru - The Ninja Skill Book T-Eng (1989-2023)(Jaleco).nes" size="458752" crc="3fb34ddc"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="jajamnodaij" cloneof="jajamnodai" romof="jajamnodai">
+		<description>Ninja Jajamaru no Daibouken (Japan)</description>
+		<year>1986</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Jajamaru no Daibouken (Japan).nes" size="65552" crc="d7c19e5f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="jajamnodai">
+		<comment>Official Translation</comment>
+		<description>Ninja JaJaMaru's Big Adventure (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Ninja JaJaMaru's Big Adventure T-Eng (1986-2023)(Jaleco).nes" size="65552" crc="0c78c264"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjajajkunj" cloneof="ninjajajkun" romof="ninjajajkun">
 		<description>Ninja Jajamaru-kun (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Ninja Jajamaru-kun (Japan).nes" size="32784" crc="95e02519"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ninjajajkun">
+		<comment>Official Translation</comment>
+		<description>Ninja Jajamaru-kun (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Jaleco</manufacturer>
+		<rom name="Ninja JaJaMaru-Kun T-Eng (1985-2023)(Jaleco).nes" size="32784" crc="5f595395"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15725,6 +15779,15 @@
 		<year>2020</year>
 		<manufacturer>infidelity</manufacturer>
 		<rom name="Super Mario All Stars NES (Hack).nes" size="2097168" crc="be155d3e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="smbroop" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Super Mario Bro-Op (Hack, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>NesDraug</manufacturer>
+		<rom name="Super Mario Bro-Op v1.1 (2023)(NesDraug).nes" size="73744" crc="1ce829ca"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

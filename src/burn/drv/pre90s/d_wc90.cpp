@@ -1306,7 +1306,7 @@ struct BurnDriver BurnDrvWc90t = {
 	"twcup90t", "twcup90", "ym2608", NULL, "1989",
 	"World Cup '90 (trackball)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90tRomInfo, Wc90tRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
 	Wc90tInit, Wc90Exit, Wc90Frame, Wc90tDraw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3

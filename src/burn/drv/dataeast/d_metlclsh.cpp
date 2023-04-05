@@ -273,6 +273,8 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	scrollx[0] = scrollx[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -676,7 +678,7 @@ struct BurnDriver BurnDrvMetlclsh = {
 	"metlclsh", NULL, NULL, NULL, "1985",
 	"Metal Clash (Japan)\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, metlclshRomInfo, metlclshRomName, NULL, NULL, NULL, NULL, MetlclshInputInfo, MetlclshDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x30,
 	256, 224, 4, 3

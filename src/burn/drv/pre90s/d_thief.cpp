@@ -651,6 +651,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	coprocessor.bank = 0;
 	memset (coprocessor.param, 0, sizeof(coprocessor.param));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -973,7 +975,7 @@ struct BurnDriver BurnDrvSharkatt = {
 	"sharkatt", NULL, NULL, "sharkatt", "1980",
 	"Shark Attack\0", NULL, "Pacific Novelty", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, sharkattRomInfo, sharkattRomName, NULL, NULL, DrvSampleInfo, DrvSampleName, SharkattInputInfo, SharkattDIPInfo,
 	SharkattInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 192, 4, 3
@@ -1011,7 +1013,7 @@ struct BurnDriver BurnDrvThief = {
 	"thief", NULL, NULL, "thief", "1981",
 	"Thief\0", NULL, "Pacific Novelty", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, thiefRomInfo, thiefRomName, NULL, NULL, DrvSampleInfo, DrvSampleName, ThiefInputInfo, ThiefDIPInfo,
 	ThiefInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 256, 4, 3
@@ -1054,7 +1056,7 @@ struct BurnDriver BurnDrvNatodef = {
 	"natodef", NULL, NULL, "natodef", "1982",
 	"NATO Defense\0", NULL, "Pacific Novelty", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, natodefRomInfo, natodefRomName, NULL, NULL, DrvSampleInfo, DrvSampleName, NatodefInputInfo, NatodefDIPInfo,
 	NatodefInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 256, 4, 3
@@ -1092,7 +1094,7 @@ struct BurnDriver BurnDrvNatodefa = {
 	"natodefa", "natodef", NULL, "natodef", "1982",
 	"NATO Defense (alternate mazes)\0", NULL, "Pacific Novelty", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, natodefaRomInfo, natodefaRomName, NULL, NULL, DrvSampleInfo, DrvSampleName, NatodefInputInfo, NatodefDIPInfo,
 	NatodefInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 256, 4, 3

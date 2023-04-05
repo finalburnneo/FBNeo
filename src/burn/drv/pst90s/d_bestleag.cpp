@@ -251,6 +251,8 @@ static INT32 DrvDoReset()
 
 	memset (scroll, 0, 8 * sizeof(INT16));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -579,7 +581,7 @@ struct BurnDriver BurnDrvBestleag = {
 	"bestleag", "bigstrik", NULL, NULL, "1993",
 	"Best League (bootleg of Big Striker, Italian Serie A)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bestleagRomInfo, bestleagRomName, NULL, NULL, NULL, NULL, BestleagInputInfo, BestleagDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BestleagDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -618,7 +620,7 @@ struct BurnDriver BurnDrvBestleaw = {
 	"bestleaw", "bigstrik", NULL, NULL, "1993",
 	"Best League (bootleg of Big Striker, World Cup)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bestleawRomInfo, bestleawRomName, NULL, NULL, NULL, NULL, BestleagInputInfo, BestleagDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BestleawDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

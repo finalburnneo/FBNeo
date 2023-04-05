@@ -365,6 +365,8 @@ static INT32 DrvDoReset()
 	adpcm_end[0] = adpcm_end[1] = 0;
 	adpcm_data[0] = adpcm_data[1] = -1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -828,7 +830,7 @@ struct BurnDriver BurnDrvTbowl = {
 	"tbowl", NULL, NULL, NULL, "1987",
 	"Tecmo Bowl (World, set 1)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlRomInfo, tbowlRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3
@@ -878,7 +880,7 @@ struct BurnDriver BurnDrvTbowla = {
 	"tbowla", "tbowl", NULL, NULL, "1987",
 	"Tecmo Bowl (World, set 2)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlaRomInfo, tbowlaRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3
@@ -934,7 +936,7 @@ struct BurnDriver BurnDrvTbowlp = {
 	"tbowlp", "tbowl", NULL, NULL, "1987",
 	"Tecmo Bowl (World, prototype?)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlpRomInfo, tbowlpRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3
@@ -984,7 +986,7 @@ struct BurnDriver BurnDrvTbowlj = {
 	"tbowlj", "tbowl", NULL, NULL, "1987",
 	"Tecmo Bowl (Japan)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowljRomInfo, tbowljRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3

@@ -719,7 +719,7 @@ struct BurnDriver BurnDrvToobin = {
 	"toobin", NULL, NULL, NULL, "1988",
 	"Toobin' (rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, toobinRomInfo, toobinRomName, NULL, NULL, NULL, NULL, ToobinInputInfo, ToobinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 512, 3, 4

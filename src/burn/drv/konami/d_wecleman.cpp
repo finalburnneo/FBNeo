@@ -749,6 +749,8 @@ static INT32 DrvDoReset()
 	sound_status = 0;
 	irq_timer = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1941,7 +1943,7 @@ struct BurnDriver BurnDrvWecleman = {
 	"wecleman", NULL, NULL, NULL, "1986",
 	"WEC Le Mans 24 (v2.01)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, weclemanRomInfo, weclemanRomName, NULL, NULL, NULL, NULL, WeclemanInputInfo, WeclemanDIPInfo,
 	WeclemanInit, DrvExit, DrvFrame, WeclemanDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
@@ -1998,7 +2000,7 @@ struct BurnDriver BurnDrvWeclemana = {
 	"weclemana", "wecleman", NULL, NULL, "1986",
 	"WEC Le Mans 24 (v2.00)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, weclemanaRomInfo, weclemanaRomName, NULL, NULL, NULL, NULL, WeclemanInputInfo, WeclemanDIPInfo,
 	WeclemanInit, DrvExit, DrvFrame, WeclemanDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
@@ -2055,7 +2057,7 @@ struct BurnDriver BurnDrvWeclemanb = {
 	"weclemanb", "wecleman", NULL, NULL, "1988",
 	"WEC Le Mans 24 (v2.00, hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, weclemanbRomInfo, weclemanbRomName, NULL, NULL, NULL, NULL, WeclemanInputInfo, WeclemanDIPInfo,
 	WeclemanInit, DrvExit, DrvFrame, WeclemanDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
@@ -2112,7 +2114,7 @@ struct BurnDriver BurnDrvWeclemanc = {
 	"weclemanc", "wecleman", NULL, NULL, "1986",
 	"WEC Le Mans 24 (v1.26)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, weclemancRomInfo, weclemancRomName, NULL, NULL, NULL, NULL, WeclemanInputInfo, WeclemanDIPInfo,
 	WeclemanInit, DrvExit, DrvFrame, WeclemanDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
@@ -2167,7 +2169,7 @@ struct BurnDriver BurnDrvHotchase = {
 	"hotchase", NULL, NULL, NULL, "1988",
 	"Hot Chase (set 1)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, hotchaseRomInfo, hotchaseRomName, NULL, NULL, NULL, NULL, WeclemanInputInfo, HotchaseDIPInfo,
 	HotchaseInit, DrvExit, DrvFrame, HotchaseDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

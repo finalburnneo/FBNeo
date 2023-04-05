@@ -277,6 +277,9 @@ static INT32 DrvDoReset()
 	vram_bank = 0;
 	back_color = 0;
 
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -620,7 +623,7 @@ struct BurnDriver BurnDrvPopper = {
 	"popper", NULL, NULL, NULL, "1983",
 	"Popper\0", NULL, "Omori", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popperRomInfo, popperRomName, NULL, NULL, NULL, NULL, PopperInputInfo, PopperDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 280, 3, 4

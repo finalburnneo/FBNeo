@@ -295,6 +295,8 @@ static INT32 DrvDoReset()
 	sample_address = 0;
 	soundlatch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -611,7 +613,7 @@ struct BurnDriver BurnDrvMatchit = {
 	"matchit", NULL, NULL, NULL, "1989",
 	"Match It\0", NULL, "Tamtex", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, matchitRomInfo, matchitRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	MatchitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
@@ -665,7 +667,7 @@ struct BurnDriver BurnDrvSichuan2 = {
 	"sichuan2", "matchit", NULL, NULL, "1989",
 	"Sichuan II (hack, set 1)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2RomInfo, sichuan2RomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
@@ -710,7 +712,7 @@ struct BurnDriver BurnDrvSichuan2a = {
 	"sichuan2a", "matchit", NULL, NULL, "1989",
 	"Sichuan II (hack, set 2)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, sichuan2aRomInfo, sichuan2aRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	Sichuan2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
@@ -759,7 +761,7 @@ struct BurnDriver BurnDrvShisen = {
 	"shisen", "matchit", NULL, NULL, "1989",
 	"Shisensho - Joshiryo-Hen (Japan)\0", NULL, "Tamtex", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, shisenRomInfo, shisenRomName, NULL, NULL, NULL, NULL, ShisenInputInfo, ShisenDIPInfo,
 	ShisenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3

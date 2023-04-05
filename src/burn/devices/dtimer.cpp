@@ -2,6 +2,12 @@
 #include "dtimer.h"
 
 // dtimer subsystem (runs like a cpu, see d_exidy440.cpp, d_zaccaria.cpp)
+
+// todo:
+// x: make retrig timers have an optional flag, so reset & stop will not
+// affect them. (ie: timers which are part of a system, like in kaneko suprnova)
+
+
 static const INT32 max_timers = 0x10;
 static dtimer *timer_array[max_timers];
 static INT32 timer_count;
@@ -27,6 +33,15 @@ void timerAdd(dtimer &timer, INT32 tparam, void (*callback)(int))
 	if (timer_count + 1 < max_timers) {
 		timer_array[timer_count++] = &timer;
 		timer.init(tparam, callback);
+	} else {
+		bprintf(0, _T("timerAdd(): ran out of timer slots!\n"));
+	}
+}
+
+void timerAdd(dtimer &timer) // already initted, just add to subsystem
+{
+	if (timer_count + 1 < max_timers) {
+		timer_array[timer_count++] = &timer;
 	} else {
 		bprintf(0, _T("timerAdd(): ran out of timer slots!\n"));
 	}

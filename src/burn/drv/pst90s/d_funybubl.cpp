@@ -316,6 +316,8 @@ static INT32 DrvDoReset()
 
 	soundlatch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -573,7 +575,7 @@ struct BurnDriver BurnDrvFunybubl = {
 	"funybubl", NULL, NULL, NULL, "1999",
 	"Funny Bubble\0", NULL, "In Chang Electronic Co", "misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, funybublRomInfo, funybublRomName, NULL, NULL, NULL, NULL, FunybublInputInfo, FunybublDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 224, 4, 3
@@ -612,7 +614,7 @@ struct BurnDriver BurnDrvFunybubc = {
 	"funybublc", "funybubl", NULL, NULL, "1999",
 	"Funny Bubble (Comad version)\0", NULL, "Comad Industry Co Ltd", "misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, funybubcRomInfo, funybubcRomName, NULL, NULL, NULL, NULL, FunybublInputInfo, FunybublDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 224, 4, 3

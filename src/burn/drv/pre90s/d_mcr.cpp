@@ -914,6 +914,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	HiscoreReset();
 
+	HiscoreReset();
+
 	flipscreen = 0;
 
 	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;

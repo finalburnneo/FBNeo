@@ -251,6 +251,8 @@ static INT32 DrvDoReset()
 
 	memset (scroll, 0, 2 * 2 * sizeof(UINT16));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -554,7 +556,7 @@ struct BurnDriver BurnDrvBigstrkb = {
 	"bigstrkb", "bigstrik", NULL, NULL, "1992",
 	"Big Striker (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bigstrkbRomInfo, bigstrkbRomName, NULL, NULL, NULL, NULL, BigstrkbInputInfo, BigstrkbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -594,7 +596,7 @@ struct BurnDriver BurnDrvBigstrkba = {
 	"bigstrkba", "bigstrik", NULL, NULL, "1992",
 	"Big Striker (bootleg w/Italian teams)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bigstrkbaRomInfo, bigstrkbaRomName, NULL, NULL, NULL, NULL, BigstrkbInputInfo, BigstrkbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

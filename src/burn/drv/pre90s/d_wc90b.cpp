@@ -1102,7 +1102,7 @@ struct BurnDriver BurnDrvWc90b1 = {
 	"twcup90b1", "twcup90", NULL, NULL, "1989",
 	"Euro League (Italian hack of Tecmo World Cup '90)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90b1RomInfo, Wc90b1RomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
@@ -1112,7 +1112,7 @@ struct BurnDriver BurnDrvWc90b2 = {
 	"twcup90b2", "twcup90", NULL, NULL, "1989",
 	"World Cup '90 (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90b2RomInfo, Wc90b2RomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
@@ -1142,7 +1142,7 @@ struct BurnDriver BurnDrvWc90ba = {
 	"twcup90ba", "twcup90", NULL, NULL, "1989",
 	"Euro League (Italian hack of Tecmo World Cup '90 - alt version)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90baRomInfo, Wc90baRomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
@@ -1152,7 +1152,7 @@ struct BurnDriver BurnDrvWc90bb = {
 	"twcup90bb", "twcup90", NULL, NULL, "1989",
 	"World Cup '90 (european hack, different title)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90bbRomInfo, Wc90bbRomName, NULL, NULL, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, Wc90b1Draw, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3

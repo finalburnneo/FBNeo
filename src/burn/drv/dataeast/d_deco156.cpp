@@ -392,6 +392,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -804,7 +806,7 @@ struct BurnDriver BurnDrvHvysmsh = {
 	"hvysmsh", NULL, NULL, NULL, "1993",
 	"Heavy Smash (Europe version -2)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshRomInfo, hvysmshRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	HvysmshInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -834,7 +836,7 @@ struct BurnDriver BurnDrvHvysmshj = {
 	"hvysmshj", "hvysmsh", NULL, NULL, "1993",
 	"Heavy Smash (Japan version -2)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshjRomInfo, hvysmshjRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	HvysmshInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -864,7 +866,7 @@ struct BurnDriver BurnDrvHvysmsha = {
 	"hvysmsha", "hvysmsh", NULL, NULL, "1993",
 	"Heavy Smash (Asia version -4)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshaRomInfo, hvysmshaRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
 	HvysmshInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

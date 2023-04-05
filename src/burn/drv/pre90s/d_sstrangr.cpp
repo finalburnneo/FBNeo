@@ -196,6 +196,8 @@ static INT32 DrvDoReset()
 	previous_port_data42 = 0;
 	previous_port_data44 = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -476,7 +478,7 @@ struct BurnDriver BurnDrvSstrangr = {
 	"sstrangr", NULL, NULL, "invaders", "1978",
 	"Space Stranger\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, sstrangrRomInfo, sstrangrRomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, SstrangrInputInfo, SstrangrDIPInfo,
 	SstrangrInit, DrvExit, DrvFrame, SstrangrDraw, DrvScan, &DrvRecalc, 2,
 	224, 262, 3, 4
@@ -504,7 +506,7 @@ struct BurnDriver BurnDrvSstrangr2 = {
 	"sstrangr2", "sstrangr", NULL, "invaders", "1979",
 	"Space Stranger 2\0", NULL, "Yachiyo Electronics, Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, sstrangr2RomInfo, sstrangr2RomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, Sstrngr2InputInfo, Sstrngr2DIPInfo,
 	Sstrangr2Init, DrvExit, DrvFrame, Sstrangr2Draw, DrvScan, &DrvRecalc, 8,
 	224, 262, 3, 4

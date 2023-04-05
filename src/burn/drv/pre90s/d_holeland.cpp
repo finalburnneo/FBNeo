@@ -393,6 +393,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnWatchdogReset();
 
+	HiscoreReset();
+
 	scrollx = 0;
 	flipscreen[0] = 0;
 	flipscreen[1] = 0;

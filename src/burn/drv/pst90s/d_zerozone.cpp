@@ -254,6 +254,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	tilebank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -519,7 +521,7 @@ struct BurnDriver BurnDrvZerozone = {
 	"zerozone", NULL, NULL, NULL, "1993",
 	"Zero Zone\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, zerozoneRomInfo, zerozoneRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	368, 224, 4, 3
@@ -547,7 +549,7 @@ struct BurnDriver BurnDrvLvgirl94 = {
 	"lvgirl94", NULL, NULL, NULL, "1994",
 	"Las Vegas Girl (Girl '94)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, lvgirl94RomInfo, lvgirl94RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	368, 224, 4, 3

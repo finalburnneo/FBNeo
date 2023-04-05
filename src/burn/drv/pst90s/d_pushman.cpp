@@ -405,6 +405,8 @@ static INT32 DrvDoReset()
 	latch = 0x400; // bballs
 	new_latch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -832,7 +834,7 @@ struct BurnDriver BurnDrvPushman = {
 	"pushman", NULL, NULL, NULL, "1990",
 	"Pushman (Korea, set 1)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pushmanRomInfo, pushmanRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -873,7 +875,7 @@ struct BurnDriver BurnDrvPushmana = {
 	"pushmana", "pushman", NULL, NULL, "1990",
 	"Pushman (Korea, set 2)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pushmanaRomInfo, pushmanaRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -914,7 +916,7 @@ struct BurnDriver BurnDrvPushmans = {
 	"pushmans", "pushman", NULL, NULL, "1990",
 	"Pushman (American Sammy license)\0", NULL, "Comad (American Sammy license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pushmansRomInfo, pushmansRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -955,7 +957,7 @@ struct BurnDriver BurnDrvPushmant = {
 	"pushmant", "pushman", NULL, NULL, "1990",
 	"Pushman (Top Tronic license)\0", NULL, "Comad (Top Tronic license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pushmantRomInfo, pushmantRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -1003,7 +1005,7 @@ struct BurnDriver BurnDrvBballs = {
 	"bballs", NULL, NULL, NULL, "1991",
 	"Bouncing Balls\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, bballsRomInfo, bballsRomName, NULL, NULL, NULL, NULL, BballsInputInfo, BballsDIPInfo,
 	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -1044,7 +1046,7 @@ struct BurnDriver BurnDrvBballsa = {
 	"bballsa", "bballs", NULL, NULL, "1991",
 	"Bouncing Balls (Adult)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, bballsaRomInfo, bballsaRomName, NULL, NULL, NULL, NULL, BballsInputInfo, BballsDIPInfo,
 	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3

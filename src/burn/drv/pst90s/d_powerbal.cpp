@@ -487,6 +487,8 @@ static INT32 DrvDoReset()
 
 	tilebank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -836,7 +838,7 @@ struct BurnDriver BurnDrvPowerbal = {
 	"powerbal", NULL, NULL, NULL, "1994",
 	"Power Balls\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC | GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC | GBF_BREAKOUT, 0,
 	NULL, powerbalRomInfo, powerbalRomName, NULL, NULL, NULL, NULL, PowerbalInputInfo, PowerbalDIPInfo,
 	PowerbalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	320, 240, 4, 3
@@ -940,7 +942,7 @@ struct BurnDriver BurnDrvAtombjt = {
 	"atombjt", "bjtwin", NULL, NULL, "1993",
 	"Atom (bootleg of Bombjack Twin)\0", NULL, "bootleg (Kyon K.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, atombjtRomInfo, atombjtRomName, NULL, NULL, NULL, NULL, AtombjtInputInfo, AtombjtDIPInfo,
 	AtombjtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	224, 384, 3, 4

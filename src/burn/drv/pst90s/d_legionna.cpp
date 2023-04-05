@@ -1905,7 +1905,7 @@ struct BurnDriver BurnDrvHeatbrl = {
 	"heatbrl", NULL, NULL, NULL, "1992",
 	"Heated Barrel (World version 3)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrlRomInfo, heatbrlRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 256, 4, 3
@@ -1948,7 +1948,7 @@ struct BurnDriver BurnDrvHeatbrl2 = {
 	"heatbrl2", "heatbrl", NULL, NULL, "1992",
 	"Heated Barrel (World version 2)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrl2RomInfo, heatbrl2RomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 256, 4, 3
@@ -1991,7 +1991,7 @@ struct BurnDriver BurnDrvHeatbrl3 = {
 	"heatbrl3", "heatbrl", NULL, NULL, "1992",
 	"Heated Barrel (World version ?)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrl3RomInfo, heatbrl3RomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 256, 4, 3
@@ -2034,7 +2034,7 @@ struct BurnDriver BurnDrvHeatbrlo = {
 	"heatbrlo", "heatbrl", NULL, NULL, "1992",
 	"Heated Barrel (World old version)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrloRomInfo, heatbrloRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 256, 4, 3
@@ -2077,7 +2077,7 @@ struct BurnDriver BurnDrvHeatbrlu = {
 	"heatbrlu", "heatbrl", NULL, NULL, "1992",
 	"Heated Barrel (US)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrluRomInfo, heatbrluRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 256, 4, 3
@@ -2120,7 +2120,7 @@ struct BurnDriver BurnDrvHeatbrle = {
 	"heatbrle", "heatbrl", NULL, NULL, "1992",
 	"Heated Barrel (Electronic Devices license)\0", NULL, "TAD Corporation (Electronic Devices license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, heatbrleRomInfo, heatbrleRomName, NULL, NULL, NULL, NULL, HeatbrlInputInfo, HeatbrlDIPInfo,
 	HeatbrlInit, DrvExit, DrvFrame, HeatbrlDraw, DrvScan, &DrvRecalc, 0x801,
 	256, 256, 4, 3

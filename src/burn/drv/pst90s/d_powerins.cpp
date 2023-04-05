@@ -716,6 +716,8 @@ static INT32 DrvDoReset()
 	tile_bank = 0;
 	soundlatch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1492,7 +1494,7 @@ struct BurnDriver BurnDrvPowerins = {
 	"powerins", NULL, NULL, NULL, "1993",
 	"Power Instinct (USA)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinsRomInfo, powerinsRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
@@ -1502,7 +1504,7 @@ struct BurnDriver BurnDrvPowerinj = {
 	"powerinsj", "powerins", NULL, NULL, "1993",
 	"Gouketsuji Ichizoku (Japan)\0", NULL, "Atlus", "Miscellaneous",
 	L"\u8C6A\u8840\u5BFA\u4E00\u65CF (Japan)\0Gouketsuji Ichizoku\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinjRomInfo, powerinjRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinjDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
@@ -1522,7 +1524,7 @@ struct BurnDriver BurnDrvPowerinspj = {
 	"powerinspj", "powerins", NULL, NULL, "1993",
 	"Gouketsuji Ichizoku (Japan, prototype)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinspjRomInfo, powerinspjRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinjDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
@@ -1532,7 +1534,7 @@ struct BurnDriver BurnDrvPowerina = {
 	"powerinsa", "powerins", NULL, NULL, "1993",
 	"Power Instinct (USA, bootleg set 1)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinaRomInfo, powerinaRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
@@ -1542,7 +1544,7 @@ struct BurnDriver BurnDrvPowerinb = {
 	"powerinsb", "powerins", NULL, NULL, "1993",
 	"Power Instinct (USA, bootleg set 2)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinbRomInfo, powerinbRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3
@@ -1552,7 +1554,7 @@ struct BurnDriver BurnDrvPowerinsc = {
 	"powerinsc", "powerins", NULL, NULL, "1993",
 	"Power Instinct (USA, bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinscRomInfo, powerinscRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3

@@ -293,7 +293,7 @@ static INT32 frame_lastM = 0;
 
 static INT32 lastshifted;
 static UINT8 ppiC_row;
-static UINT8 keyRows[9];
+static UINT8 keyRows[9]; // 0 - 8 (normal), 9,10 (numeric keypad) not emulated
 static INT32 charMatrix[][3] = {
 	{'0', 0, 0}, {')', 0, 0}, {'1', 0, 1}, {'!', 0, 1}, {'2', 0, 2}, {'@', 0, 2},
 	{'3', 0, 3}, {'#', 0, 3}, {'4', 0, 4}, {'$', 0, 4}, {'5', 0, 5}, {'%', 0, 5},
@@ -358,7 +358,7 @@ static inline void intkeyOff(INT32 row, INT32 bit) {
 }
 
 static UINT8 keyRowGet(INT32 row) { // for ppi to read
-	if (row > 11) return 0xff;
+	if (row > 8) return 0xff;
 	return ~keyRows[row];
 }
 

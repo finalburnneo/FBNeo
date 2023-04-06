@@ -17052,10 +17052,10 @@ struct BurnDriver BurnDrvSamsho2sp = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown II Perfect Hack - 2023-03-28, 19h53
+// Samurai Shodown II Perfect Hack - 2023-04-06
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",   0x200000, 0x2555cf40, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p1pe.p1",   0x200000, 0x485fddcb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "063-p2pe.p2",   0x020000, 0xe9cc1d72, 0 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "063-s1.s1",     0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -18869,10 +18869,10 @@ struct BurnDriver BurnDrvmslug3eb = {
 };
 
 
-// Metal Slug 3 (Last Bullet Remix Hack) 2023-03-21
+// Metal Slug 3 (Last Bullet Remix Hack) 2023-03-24
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	{ "256-p1lw.bin",   0x100000,  0xb4c7de94, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-p2lw.bin",   0x400000,  0x84b5e1e5, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-p2lw.bin",   0x400000,  0xa66e5c26, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",    0x020000,  0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20695,6 +20695,40 @@ struct BurnDriver BurnDrvmslugxsc = {
 	0x1000, 304, 224, 4, 3
 };
 
+// Metal Slug X (Multifunction Hack)
+static struct BurnRomInfo mslugxdgRomDesc[] = {
+	{ "250-p1dg.p1",    0x100000, 0x4868b5ce, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2dg.ep1",   0x400000, 0xda239a0d, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "250-c1.c1",      0x800000, 0x09a52c6f, 3 | BRF_GRA },           //  3 Sprite data
+	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
+	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
+	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
+	{ "250-c5.c5",      0x800000, 0xa4b56124, 3 | BRF_GRA },           //  7
+	{ "250-c6.c6",      0x800000, 0x83e3e69d, 3 | BRF_GRA },           //  8
+
+	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "250-v1.v1",      0x400000, 0xc79ede73, 5 | BRF_SND },           // 10 Sound data
+	{ "250-v2.v2",      0x400000, 0xea9aabe1, 5 | BRF_SND },           // 11
+	{ "250-v3.v3",      0x200000, 0x2ca65102, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(mslugxdg, mslugxdg, neogeo)
+STD_ROM_FN(mslugxdg)
+
+struct BurnDriver BurnDrvmslugxdg = {
+	"mslugxdg", "mslugx", "neogeo", NULL, "2023",
+	"Metal Slug X (Multifunction Hack, 20230402)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugxdgRomInfo, mslugxdgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 
 // Metal Slug 3 (Onimusha Samanosuke, Hack)
 static struct BurnRomInfo mslug3gwRomDesc[] = {
@@ -20920,10 +20954,10 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Survival, Hack) 2023-03-02
+// Metal Slug 3 (Survival, Hack) 2023-03-28
 static struct BurnRomInfo mslug3scRomDesc[] = {
-	{ "256-ph1sc.bin",   0x100000, 0xb255fd1b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2sc.bin",   0x400000, 0x060a9907, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1sc.bin",   0x100000, 0x7b4dd96c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2sc.bin",   0x400000, 0xa9cad8f1, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 

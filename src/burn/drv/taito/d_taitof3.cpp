@@ -8,11 +8,10 @@
 	1: *FIXED* scfinals & scfinalso coin inputs do not work, therefore a kludge is used.
 	  -> if a coin is pressed, it instead presses the service coin :)
 	  -> scfinals also displays a weird/corrupt version string in service mode(!!)
+	  note: this was a 68ec020 cpu-core interface bug in handling odd 32bit reads/writes
 
 	- todo -
 	kirameki sound banking
-	multi-layer clipping code from y-ack
-	ignore top layer zoom fix from y-ack
 */
 
 //#define USE_CPU_SPEEDHACKS

@@ -1767,10 +1767,10 @@ static void calculate_clip(INT32 y, UINT16 pri, UINT32 *clip_in, UINT32 *clip_ex
 
 	INT16 clipl = 0, clipr = 0x7fff;
 
-	if (normal_planes & 0b0001) { calc_clip(0); };
-	if (normal_planes & 0b0010) { calc_clip(1); };
-	if (normal_planes & 0b0100) { calc_clip(2); };
-	if (normal_planes & 0b1000) { calc_clip(3); };
+	if (normal_planes & 0x01) { calc_clip(0); };
+	if (normal_planes & 0x02) { calc_clip(1); };
+	if (normal_planes & 0x04) { calc_clip(2); };
+	if (normal_planes & 0x08) { calc_clip(3); };
 	if (clipl > clipr)
 		*line_enable = 0;
 	else
@@ -1778,10 +1778,10 @@ static void calculate_clip(INT32 y, UINT16 pri, UINT32 *clip_in, UINT32 *clip_ex
 
 	// reset temp clip sides for the inverted/excluded window
 	clipl = 0x7fff; clipr = 0;
-	if (invert_planes & 0b0001) { calc_clip_inv(0); };
-	if (invert_planes & 0b0010) { calc_clip_inv(1); };
-	if (invert_planes & 0b0100) { calc_clip_inv(2); };
-	if (invert_planes & 0b1000) { calc_clip_inv(3); };
+	if (invert_planes & 0x01) { calc_clip_inv(0); };
+	if (invert_planes & 0x02) { calc_clip_inv(1); };
+	if (invert_planes & 0x04) { calc_clip_inv(2); };
+	if (invert_planes & 0x08) { calc_clip_inv(3); };
 	if (clipl > clipr)
 		*clip_ex = 0;
 	else

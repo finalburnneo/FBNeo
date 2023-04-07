@@ -5,12 +5,14 @@
     version .00001d ;)
 
 	- known issues and workarounds -
-	scfinals & scfinalso coin inputs do not work, therefore a kludge is used.
+	1: *FIXED* scfinals & scfinalso coin inputs do not work, therefore a kludge is used.
 	  -> if a coin is pressed, it instead presses the service coin :)
 	  -> scfinals also displays a weird/corrupt version string in service mode(!!)
 
 	- todo -
 	kirameki sound banking
+	multi-layer clipping code from y-ack
+	ignore top layer zoom fix from y-ack
 */
 
 //#define USE_CPU_SPEEDHACKS
@@ -43,6 +45,8 @@ static UINT8 previous_coin;
 static INT32 sound_cpu_in_reset = 0;
 static INT32 watchdog;
 static INT32 nCyclesExtra;
+
+static UINT8 *Brightness_LUT;
 
 INT32 f3_game = 0;
 
@@ -224,6 +228,21 @@ static struct BurnDIPInfo F3DIPList[]=
 };
 
 STDDIPINFO(F3)
+
+static struct BurnDIPInfo GunlockDIPList[]=
+{
+	{0x2e, 0xff, 0xff, 0x00, NULL },
+
+	{0   , 0xfe, 0   , 2   , "Music Tempo (must restart!)" },
+	{0x2e, 0x01, 0x02, 0x00, "Normal / Fast" },
+	{0x2e, 0x01, 0x02, 0x02, "Slow / Mellow" },
+
+	{0   , 0xfe, 0   , 2   , "GammaBrightness hack" },
+	{0x2e, 0x01, 0x04, 0x04, "On" },
+	{0x2e, 0x01, 0x04, 0x00, "Off" },
+};
+
+STDDIPINFO(Gunlock)
 
 static struct BurnDIPInfo F3AnalogDIPList[]=
 {
@@ -678,11 +697,43 @@ static void f3_reset_dirtybuffer()
 	memset (dirty_tile_count, 1, 10);
 }
 
+static void calc_brightness_gamma_lut()
+{ // this is specifically for gunlock/rayforce
+	INT32 brightness = 0x64; // 100 = no attenuation
+	float gamma = 1.00; // 1.00 = no gamma
+
+	if ((TaitoDip[0] & 4) && f3_game == GUNLOCK) {
+		gamma = 0.53;
+		bprintf(0, _T("gunlock-gamma-hack is On (%.2f)\n"), gamma);
+	}
+
+	gamma = 1/gamma;
+
+	for (INT32 col = 0; col < 0x100; col++) {
+		float er;
+		INT32 mcol = col;
+
+		// apply brightness
+		mcol = col * brightness / 100;
+		if (mcol < 0) mcol = 0;
+		if (mcol > 255) mcol = 255;
+
+		// apply gamma
+		er = (float)mcol / 255.0;
+		er = pow(er, gamma);
+		mcol = (UINT8)(er * 255.0);
+
+		Brightness_LUT[col] = mcol;
+	}
+}
+
 static INT32 DrvDoReset(INT32 full_reset)
 {
 	if (full_reset) {
 		memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 	}
+
+	calc_brightness_gamma_lut();
 
 	SekOpen(0);
 	SekReset();
@@ -847,6 +898,8 @@ static INT32 MemIndex()
 
 	TaitoCharsB			= Next; Next += 0x0004000;
 	TaitoCharsPivot		= Next; Next += 0x0020000;
+
+	Brightness_LUT      = Next; Next += 0x100;
 
 	TaitoRamStart		= Next;
 
@@ -1411,9 +1464,9 @@ static void f3_24bit_palette_update(UINT16 offset)
 {
 	UINT32 x = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(TaitoPaletteRam + (offset & ~3))));
 
-	UINT8 r = x;
-	UINT8 g = x >> 24;
-	UINT8 b = x >> 16;
+	UINT8 r = Brightness_LUT[(x >>  0) & 0xff];
+	UINT8 g = Brightness_LUT[(x >> 24) & 0xff];
+	UINT8 b = Brightness_LUT[(x >> 16) & 0xff];
 
 	TaitoPalette[offset/4] = BURN_ENDIAN_SWAP_INT32(r*0x10000+g*0x100+b); //BurnHighCol(r,g,b, 0);
 }
@@ -2646,7 +2699,7 @@ struct BurnDriver BurnDrvGunlock = {
 	"Gunlock (Ver 2.3O 1994/01/20)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, gunlockRomInfo, gunlockRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, gunlockRomInfo, gunlockRomName, NULL, NULL, NULL, NULL, F3InputInfo, GunlockDIPInfo,
 	gunlockInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	224, 320, 3, 4
 };
@@ -2683,7 +2736,7 @@ struct BurnDriver BurnDrvRayforce = {
 	"Ray Force (Ver 2.3A 1994/01/20)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, rayforceRomInfo, rayforceRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, rayforceRomInfo, rayforceRomName, NULL, NULL, NULL, NULL, F3InputInfo, GunlockDIPInfo,
 	gunlockInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	224, 320, 3, 4
 };
@@ -2720,7 +2773,7 @@ struct BurnDriver BurnDrvRayforcej = {
 	"Ray Force (Ver 2.3J 1994/01/20)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, rayforcejRomInfo, rayforcejRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	NULL, rayforcejRomInfo, rayforcejRomName, NULL, NULL, NULL, NULL, F3InputInfo, GunlockDIPInfo,
 	gunlockInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	224, 320, 3, 4
 };

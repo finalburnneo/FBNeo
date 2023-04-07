@@ -20954,10 +20954,10 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Survival, Hack) 2023-03-28
-static struct BurnRomInfo mslug3scRomDesc[] = {
-	{ "256-ph1sc.bin",   0x100000, 0x7b4dd96c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2sc.bin",   0x400000, 0xa9cad8f1, 1 | BRF_ESS | BRF_PRG }, //  1 
+// Metal Slug 3 (Legendary Version, Hack) 2023-03-28
+static struct BurnRomInfo mslug3cqRomDesc[] = {
+	{ "256-ph1cq.bin",   0x100000, 0x7b4dd96c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2cq.bin",   0x400000, 0xa9cad8f1, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",     0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20967,8 +20967,8 @@ static struct BurnRomInfo mslug3scRomDesc[] = {
 	{ "ms3n_c4.rom",     0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
 	{ "ms3n_c5.rom",     0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
 	{ "ms3n_c6.rom",     0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
-	{ "256-c7sc.bin",    0x800000, 0xb8e017de, 3 | BRF_GRA },           //  9
-	{ "256-c8sc.bin",    0x800000, 0xdef95742, 3 | BRF_GRA },           // 10
+	{ "256-c7cq.bin",    0x800000, 0xb8e017de, 3 | BRF_GRA },           //  9
+	{ "256-c8cq.bin",    0x800000, 0xdef95742, 3 | BRF_GRA },           // 10
 
 	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
@@ -20978,15 +20978,15 @@ static struct BurnRomInfo mslug3scRomDesc[] = {
 	{ "256-v4.v4",       0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15
 };
 
-STDROMPICKEXT(mslug3sc, mslug3sc, neogeo)
-STD_ROM_FN(mslug3sc)
+STDROMPICKEXT(mslug3cq, mslug3cq, neogeo)
+STD_ROM_FN(mslug3cq)
 
-struct BurnDriver BurnDrvmslug3sc = {
-	"mslug3sc", "mslug3", "neogeo", NULL, "2023",
-	"Metal Slug 3 (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
+struct BurnDriver BurnDrvmslug3cq = {
+	"mslug3cq", "mslug3", "neogeo", NULL, "2023",
+	"Metal Slug 3 (Legendary Version, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug3scRomInfo, mslug3scRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, mslug3cqRomInfo, mslug3cqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

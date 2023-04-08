@@ -534,6 +534,8 @@ static INT32 DrvDoReset()
 
 	memset (hold_coin, 0, sizeof(hold_coin));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1168,7 +1170,7 @@ struct BurnDriver BurnDrvSkydest = {
 	"skydest", NULL, NULL, NULL, "1985",
 	"Sky Destroyer (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, skydestRomInfo, skydestRomName, NULL, NULL, NULL, NULL, SkydestInputInfo, SkydestDIPInfo,
 	SkydestInit, DrvExit, DrvFrame, SkydestDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

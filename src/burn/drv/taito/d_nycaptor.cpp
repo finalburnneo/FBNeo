@@ -533,6 +533,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1101,7 +1103,7 @@ struct BurnDriver BurnDrvNycaptor = {
 	"nycaptor", NULL, NULL, NULL, "1985",
 	"N.Y. Captor\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, nycaptorRomInfo, nycaptorRomName, NULL, NULL, NULL, NULL, NycaptorInputInfo, NycaptorDIPInfo,
 	NycaptorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1236,7 +1238,7 @@ struct BurnDriver BurnDrvBronx = {
 	"bronx", "cyclshtg", NULL, NULL, "1986",
 	"Bronx\0", "GFX/layer priority issues", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, bronxRomInfo, bronxRomName, NULL, NULL, NULL, NULL, NycaptorInputInfo, BronxDIPInfo,
 	BronxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

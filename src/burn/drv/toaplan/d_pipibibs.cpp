@@ -332,6 +332,8 @@ static INT32 DrvDoReset()
 	BurnYM3812Reset();
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -594,7 +596,7 @@ struct BurnDriver BurnDrvPipibibsp = {
 	"pipibibsp", "pipibibs", NULL, NULL, "1991",
 	"Pipi & Bibis / Whoopee!! (prototype)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PLATFORM, 0,
 	NULL, pipibibspRomInfo, pipibibspRomName, NULL, NULL, NULL, NULL, PipibibsInputInfo, PipibibsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3

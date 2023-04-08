@@ -72,44 +72,45 @@ STDINPUTINFO(Formatz)
 
 static struct BurnDIPInfo FormatzDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x6c, NULL			},
-	{0x11, 0xff, 0xff, 0x08, NULL			},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0x6c, NULL					},
+	{0x01, 0xff, 0xff, 0x08, NULL					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x10, 0x01, 0x03, 0x00, "3"			},
-	{0x10, 0x01, 0x03, 0x01, "4"			},
-	{0x10, 0x01, 0x03, 0x02, "5"			},
-	{0x10, 0x01, 0x03, 0x03, "Infinite (Cheat)"	},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x00, 0x01, 0x03, 0x00, "3"					},
+	{0x00, 0x01, 0x03, 0x01, "4"					},
+	{0x00, 0x01, 0x03, 0x02, "5"					},
+	{0x00, 0x01, 0x03, 0x03, "Infinite (Cheat)"		},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x10, 0x01, 0x0c, 0x0c, "30000"		},
-	{0x10, 0x01, 0x0c, 0x08, "40000"		},
-	{0x10, 0x01, 0x0c, 0x04, "70000"		},
-	{0x10, 0x01, 0x0c, 0x00, "100000"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x00, 0x01, 0x0c, 0x0c, "30000"				},
+	{0x00, 0x01, 0x0c, 0x08, "40000"				},
+	{0x00, 0x01, 0x0c, 0x04, "70000"				},
+	{0x00, 0x01, 0x0c, 0x00, "100000"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x10, 0x01, 0x20, 0x00, "Off"			},
-	{0x10, 0x01, 0x20, 0x20, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x00, 0x01, 0x20, 0x00, "Off"					},
+	{0x00, 0x01, 0x20, 0x20, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x10, 0x01, 0x40, 0x40, "Upright"		},
-	{0x10, 0x01, 0x40, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x00, 0x01, 0x40, 0x40, "Upright"				},
+	{0x00, 0x01, 0x40, 0x00, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x11, 0x01, 0x07, 0x07, "5 Coins 1 Credits"	},
-	{0x11, 0x01, 0x07, 0x05, "4 Coins 1 Credits"	},
-	{0x11, 0x01, 0x07, 0x03, "3 Coins 1 Credits"	},
-	{0x11, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x07, 0x04, "1 Coin  3 Credits"	},
-	{0x11, 0x01, 0x07, 0x06, "1 Coin  4 Credits"	},
+	{0   , 0xfe, 0   ,    8, "Coinage"				},
+	{0x01, 0x01, 0x07, 0x07, "5 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x05, "4 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x03, "3 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x07, 0x04, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x07, 0x06, "1 Coin  4 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x11, 0x01, 0x18, 0x00, "Easy"			},
-	{0x11, 0x01, 0x18, 0x08, "Normal"		},
-	{0x11, 0x01, 0x18, 0x10, "Medium"		},
-	{0x11, 0x01, 0x18, 0x18, "Hard"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x18, 0x00, "Easy"					},
+	{0x01, 0x01, 0x18, 0x08, "Normal"				},
+	{0x01, 0x01, 0x18, 0x10, "Medium"				},
+	{0x01, 0x01, 0x18, 0x18, "Hard"					},
 };
 
 STDDIPINFO(Formatz)
@@ -132,7 +133,7 @@ static UINT8 aeroboto_main_read(UINT16 address)
 			return DrvInputs[4];
 
 		case 0x3004:
-			return (0x031b9fff >> (((counter201 - 1) & 3) * 8)) & 0xff;
+			return (0x031b9fff >> (((counter201++) & 3) * 8)) & 0xff;
 
 		case 0x3800:
 			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -146,7 +147,7 @@ static void aeroboto_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xff00) == 0x0100)
 	{
-		if (address == 0x01a2)
+		if (address == 0x01a2 && data)
 		{
 			disable_irq = 1;
 		}
@@ -254,6 +255,8 @@ static INT32 DrvDoReset()
 
 	hold_coin.reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -322,12 +325,7 @@ static void DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM0 + 0x4000,  0, 1)) return 1;
@@ -395,7 +393,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -511,9 +509,7 @@ static void draw_stars() // copied directly from MAME
 		m_sx = m_ox = starx;
 		m_sy = m_oy = stary;
 
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-			pTransDraw[i] = bgcolor;
-		}
+		BurnTransferClear(bgcolor);
 	}
 }
 
@@ -534,7 +530,6 @@ static void draw_sprites()
 		else
 		{
 			RenderCustomTile_Mask_Clip(pTransDraw, 8, 16, code, ((sx + 8) & 0xff) - 8, sy - 16, color, 3, 0, 0, DrvGfxROM2);
-
 		}
 	}
 }
@@ -587,7 +582,7 @@ static INT32 DrvFrame()
 		CPU_RUN(0, M6809);
 		if (i == (nInterleave - 1))
 		{
-			if (disable_irq == 0 || i & 1)
+			if (disable_irq == 0)
 			{
 				M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
@@ -684,7 +679,7 @@ struct BurnDriver BurnDrvFormatz = {
 	"formatz", NULL, NULL, NULL, "1984",
 	"Formation Z\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, formatzRomInfo, formatzRomName, NULL, NULL, NULL, NULL, FormatzInputInfo, FormatzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 224, 4, 3
@@ -720,7 +715,7 @@ struct BurnDriver BurnDrvAeroboto = {
 	"aeroboto", "formatz", NULL, NULL, "1984",
 	"Aeroboto\0", NULL, "Jaleco (Williams license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, aerobotoRomInfo, aerobotoRomName, NULL, NULL, NULL, NULL, FormatzInputInfo, FormatzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 224, 4, 3

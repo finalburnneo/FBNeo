@@ -477,6 +477,8 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 	BurnYM3812Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -936,7 +938,7 @@ struct BurnDriver BurnDrvMagicbub = {
 	"magicbub", NULL, NULL, NULL, "199?",
 	"Magic Bubble\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, magicbubRomInfo, magicbubRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubDIPInfo,
 	MagicbubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -980,7 +982,7 @@ struct BurnDriver BurnDrvMagicbuba = {
 	"magicbuba", "magicbub", NULL, NULL, "199?",
 	"Magic Bubble (Adult version, YS-1302 PCB, set 1)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, magicbubaRomInfo, magicbubaRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
 	MagicbubaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -1019,7 +1021,7 @@ struct BurnDriver BurnDrvMagicbubb = {
 	"magicbubb", "magicbub", NULL, NULL, "199?",
 	"Magic Bubble (Adult version, YS-1302 PCB, set 2)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, magicbubbRomInfo, magicbubbRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
 	MagicbubaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -1061,7 +1063,7 @@ struct BurnDriver BurnDrvMagicbubc = {
 	"magicbubc", "magicbub", NULL, NULL, "199?",
 	"Magic Bubble (Adult version, YS-0211 PCB)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, magicbubcRomInfo, magicbubcRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, MagicbubaDIPInfo,
 	MagicbubcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -1103,7 +1105,7 @@ struct BurnDriver BurnDrvPaprazzi = {
 	"paprazzi", NULL, NULL, NULL, "1996",
 	"Paparazzi\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, paprazziRomInfo, paprazziRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, PaprazziDIPInfo,
 	PaprazziInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 380, 3, 4
@@ -1141,7 +1143,7 @@ struct BurnDriver BurnDrvShocking = {
 	"shocking", NULL, NULL, NULL, "1997",
 	"Shocking\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, shockingRomInfo, shockingRomName, NULL, NULL, NULL, NULL, MagicbubInputInfo, ShockingDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	380, 224, 4, 3
@@ -1174,7 +1176,7 @@ struct BurnDriver BurnDrvBombkick = {
 	"bombkick", NULL, NULL, NULL, "1998",
 	"Bomb Kick (set 1)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bombkickRomInfo, bombkickRomName, NULL, NULL, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	380, 224, 4, 3
@@ -1207,7 +1209,7 @@ struct BurnDriver BurnDrvBombkicka = {
 	"bombkicka", "bombkick", NULL, NULL, "1998",
 	"Bomb Kick (set 2)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bombkickaRomInfo, bombkickaRomName, NULL, NULL, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
 	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	380, 224, 4, 3

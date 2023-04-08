@@ -45302,7 +45302,7 @@ struct BurnDriver BurnDrvnes_ninjajajkun = {
 	"nes_ninjajajkun", NULL, NULL, NULL, "2023",
 	"Ninja Jajamaru-kun (T-Eng)\0", "Official Translation", "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_ninjajajkunRomInfo, nes_ninjajajkunRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

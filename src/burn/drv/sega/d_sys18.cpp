@@ -3620,7 +3620,7 @@ struct BurnDriver BurnDrvBloxeed = {
 	"bloxeed", NULL, NULL, NULL, "1989",
 	"Bloxeed (Japan, FD1094 317-0139)\0", NULL, "Sega / Elorg", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PUZZLE, 0,
 	NULL, BloxeedRomInfo, BloxeedRomName, NULL, NULL, NULL, NULL, System18InputInfo, BloxeedDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -3810,7 +3810,7 @@ struct BurnDriver BurnDrvDesertbr = {
 	"desertbr", NULL, NULL, NULL, "1992",
 	"Desert Breaker (World, FD1094 317-0196)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_RUNGUN, 0,
 	NULL, DesertbrRomInfo, DesertbrRomName, NULL, NULL, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -3994,7 +3994,7 @@ struct BurnDriver BurnDrvShdancer = {
 	"shdancer", NULL, NULL, NULL, "1989",
 	"Shadow Dancer (set 3, US)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM, 0,
 	NULL, ShdancerRomInfo, ShdancerRomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4004,7 +4004,7 @@ struct BurnDriver BurnDrvShdancer1 = {
 	"shdancer1", "shdancer", NULL, NULL, "1989",
 	"Shadow Dancer (set 1)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM, 0,
 	NULL, Shdancer1RomInfo, Shdancer1RomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4014,7 +4014,7 @@ struct BurnDriver BurnDrvShdancerj = {
 	"shdancerj", "shdancer", NULL, NULL, "1989",
 	"Shadow Dancer (set 2, Japan)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_SHADOW, GBF_PLATFORM, 0,
 	NULL, ShdancerjRomInfo, ShdancerjRomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	System16Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4024,7 +4024,7 @@ struct BurnDriverD BurnDrvShdancbl = {
 	"shdancbl", "shdancer", NULL, NULL, "1989",
 	"Shadow Dancer (bootleg)\0", NULL, "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM, 0,
 	NULL, ShdancblRomInfo, ShdancblRomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,
 	ShdancblInit, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3

@@ -297,6 +297,8 @@ static INT32 DrvDoReset()
 	coin_lockout[0] = 0;
 	coin_lockout[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -711,7 +713,7 @@ struct BurnDriver BurnDrvWrally = {
 	"wrally", NULL, NULL, NULL, "1993",
 	"World Rally (Version 1.0, Checksum 0E56)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallyRomInfo, wrallyRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
 	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
@@ -748,7 +750,7 @@ struct BurnDriver BurnDrvWrallya = {
 	"wrallya", "wrally", NULL, NULL, "1993",
 	"World Rally (Version 1.0, Checksum 3873)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallyaRomInfo, wrallyaRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
 	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
@@ -787,7 +789,7 @@ struct BurnDriver BurnDrvWrallyb = {
 	"wrallyb", "wrally", NULL, NULL, "1993",
 	"World Rally (Version 1.0, Checksum 8AA2)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallybRomInfo, wrallybRomName, NULL, NULL, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
 	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3

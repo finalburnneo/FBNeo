@@ -2425,15 +2425,15 @@ static void Gx400SoundInit(INT32 rf2mode)
 	ZetClose();
 
 	K005289Init(3579545, K005289ROM);
-	K005289SetRoute(BURN_SND_K005289_ROUTE_1, (rf2mode) ? 0.60 : 0.35, BURN_SND_ROUTE_BOTH);
+	K005289SetRoute(BURN_SND_K005289_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 14318180/8, 0);
 	AY8910Init(1, 14318180/8, 1);
 	AY8910SetPorts(0, &nemesis_AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetPorts(1, NULL, NULL, &k005289_control_A_write, &k005289_control_B_write);
 	AY8910SetBuffered(ZetTotalCycles, 3579545);
-	AY8910SetAllRoutes(0, (rf2mode) ? 0.80 : 0.35, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, (rf2mode) ? 0.70 : 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, (rf2mode) ? 0.20 : 0.35, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, (rf2mode) ? 0.15 : 1.00, BURN_SND_ROUTE_BOTH);
 
 	vlm5030Init(0,  3579545, salamand_vlm_sync, DrvVLMROM, 0x0800, 1);
 	vlm5030SetAllRoutes(0, 1.70, BURN_SND_ROUTE_BOTH);

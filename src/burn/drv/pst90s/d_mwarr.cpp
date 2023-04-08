@@ -505,6 +505,8 @@ static INT32 DrvDoReset()
 
 	bright = 0xff; // start off at full brightness
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1086,7 +1088,7 @@ struct BurnDriver BurnDrvMwarr = {
 	"mwarr", NULL, NULL, NULL, "199?",
 	"Mighty Warriors\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, mwarrRomInfo, mwarrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, MwarrDIPInfo,
 	MwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	366, 240, 4, 3
@@ -1121,7 +1123,7 @@ struct BurnDriver BurnDrvStlforce = {
 	"stlforce", NULL, NULL, NULL, "1994",
 	"Steel Force\0", NULL, "Electronic Devices Italy / Ecogames S.L. Spain", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, stlforceRomInfo, stlforceRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	StlforceInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	368, 240, 4, 3
@@ -1157,7 +1159,7 @@ struct BurnDriver BurnDrvTwinbrat = {
 	"twinbrat", NULL, NULL, NULL, "1995",
 	"Twin Brats (set 1)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbratRomInfo, twinbratRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	334, 240, 4, 3
@@ -1193,7 +1195,7 @@ struct BurnDriver BurnDrvTwinbrata = {
 	"twinbrata", "twinbrat", NULL, NULL, "1995",
 	"Twin Brats (set 2)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	334, 240, 4, 3
@@ -1228,7 +1230,7 @@ struct BurnDriver BurnDrvTwinbratb = {
 	"twinbratb", "twinbrat", NULL, NULL, "1995",
 	"Twin Brats (set 3)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbratbRomInfo, twinbratbRomName, NULL, NULL, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	334, 240, 4, 3

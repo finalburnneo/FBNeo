@@ -163,6 +163,8 @@ INT32 NewsDoReset()
 
 	MSM6295Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -443,7 +445,7 @@ struct BurnDriver BurnDrvNews = {
 	"news", NULL, NULL, NULL, "1993",
 	"News (set 1)\0", NULL, "Poby / Virus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewsRomInfo, NewsRomName, NULL, NULL, NULL, NULL, NewsInputInfo, NewsDIPInfo,
 	NewsInit, NewsExit, NewsFrame, NewsDraw, NewsScan,
 	NULL, 0x100, 256, 224, 4, 3
@@ -453,7 +455,7 @@ struct BurnDriver BurnDrvNewsa = {
 	"newsa", "news", NULL, NULL, "1993",
 	"News (set 2)\0", NULL, "Poby / Jeansole", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewsaRomInfo, NewsaRomName, NULL, NULL, NULL, NULL, NewsInputInfo, NewsaDIPInfo,
 	NewsInit, NewsExit, NewsFrame, NewsDraw, NewsScan,
 	NULL, 0x100, 256, 224, 4, 3

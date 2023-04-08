@@ -249,6 +249,8 @@ static INT32 DrvDoReset()
 
 	prot_val = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -483,7 +485,7 @@ struct BurnDriver BurnDrvMosaic = {
 	"mosaic", NULL, NULL, NULL, "1990",
 	"Mosaic\0", NULL, "Space", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, mosaicRomInfo, mosaicRomName, NULL, NULL, NULL, NULL, MosaicInputInfo, MosaicDIPInfo,
 	MosaicInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
@@ -550,7 +552,7 @@ struct BurnDriver BurnDrvGfire2 = {
 	"gfire2", NULL, NULL, NULL, "1992",
 	"Golden Fire II\0", NULL, "Topis Corp", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, gfire2RomInfo, gfire2RomName, NULL, NULL, NULL, NULL, Gfire2InputInfo, Gfire2DIPInfo,
 	Gfire2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3

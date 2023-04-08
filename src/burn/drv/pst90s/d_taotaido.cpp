@@ -604,6 +604,8 @@ static INT32 DrvDoReset()
 	taotaido_sound_bankswitch(1);
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -981,7 +983,7 @@ struct BurnDriver BurnDrvTaotaido = {
 	"taotaido", NULL, NULL, NULL, "1993",
 	"Tao Taido (set 1)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, taotaidoRomInfo, taotaidoRomName, NULL, NULL, NULL, NULL, TaotaidoInputInfo, TaotaidoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
@@ -1013,7 +1015,7 @@ struct BurnDriver BurnDrvTaotaidoa = {
 	"taotaidoa", "taotaido", NULL, NULL, "1993",
 	"Tao Taido (set 2)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, taotaidoaRomInfo, taotaidoaRomName, NULL, NULL, NULL, NULL, TaotaidoaInputInfo, TaotaidoaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3

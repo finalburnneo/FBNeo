@@ -40,82 +40,85 @@ static UINT16 DrvInputs[2];
 
 static INT32 prot_data = 0;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo CbusterInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Cbuster)
 
 static struct BurnDIPInfo CbusterDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL			},
-	{0x14, 0xff, 0xff, 0x7f, NULL			},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xff, NULL			},
+	{0x01, 0xff, 0xff, 0x7f, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x13, 0x01, 0x07, 0x00, "3 Coins 1 Credits"	},
-	{0x13, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
-	{0x13, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x07, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x13, 0x01, 0x38, 0x00, "3 Coins 1 Credits"	},
-	{0x13, 0x01, 0x38, 0x08, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
-	{0x13, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x38, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x38, 0x08, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x13, 0x01, 0x40, 0x40, "Off"			},
-	{0x13, 0x01, 0x40, 0x00, "On"			},
+	{0x00, 0x01, 0x40, 0x40, "Off"			},
+	{0x00, 0x01, 0x40, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x14, 0x01, 0x03, 0x01, "1"			},
-	{0x14, 0x01, 0x03, 0x00, "2"			},
-	{0x14, 0x01, 0x03, 0x03, "3"			},
-	{0x14, 0x01, 0x03, 0x02, "4"			},
+	{0x01, 0x01, 0x03, 0x01, "1"			},
+	{0x01, 0x01, 0x03, 0x00, "2"			},
+	{0x01, 0x01, 0x03, 0x03, "3"			},
+	{0x01, 0x01, 0x03, 0x02, "4"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x14, 0x01, 0x0c, 0x0c, "Normal"		},
-	{0x14, 0x01, 0x0c, 0x08, "Easy"			},
-	{0x14, 0x01, 0x0c, 0x04, "Hard"			},
-	{0x14, 0x01, 0x0c, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x01, 0x01, 0x0c, 0x08, "Easy"			},
+	{0x01, 0x01, 0x0c, 0x04, "Hard"			},
+	{0x01, 0x01, 0x0c, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x14, 0x01, 0x40, 0x00, "No"			},
-	{0x14, 0x01, 0x40, 0x40, "Yes"			},
+	{0x01, 0x01, 0x40, 0x00, "No"			},
+	{0x01, 0x01, 0x40, 0x40, "Yes"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x14, 0x01, 0x80, 0x80, "Off"			},
-	{0x14, 0x01, 0x80, 0x00, "On"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"			},
+	{0x01, 0x01, 0x80, 0x00, "On"			},
 };
 
 STDDIPINFO(Cbuster)
@@ -246,6 +249,10 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	prot_data = 0;
+
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -350,12 +357,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -446,7 +448,7 @@ static INT32 DrvExit()
 	SekExit();
 	deco16SoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -531,19 +533,7 @@ static void draw_sprites(INT32 pri)
 			INT32 sy = (y + mult * multi) - 8;
 			INT32 c = sprite - multi * inc;
 
-			if (fy) {
-				if (fx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, c, x, sy, colour, 4, 0, 0, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, c, x, sy, colour, 4, 0, 0, DrvGfxROM3);
-				}
-			} else {
-				if (fx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, c, x, sy, colour, 4, 0, 0, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, c, x, sy, colour, 4, 0, 0, DrvGfxROM3);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, c, x, sy, fx, fy, colour, 4, 0, 0, DrvGfxROM3);
 
 			multi--;
 		}
@@ -560,9 +550,7 @@ static INT32 DrvDraw()
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x100;
-	}
+	BurnTransferClear(0x100);
 
 	if (nBurnLayer & 1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE);
 
@@ -602,10 +590,10 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 232;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	h6280NewFrame();
-	
+
 	SekOpen(0);
 	h6280Open(0);
 
@@ -613,9 +601,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
-
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 
 		if (i == 206) deco16_vblank = 0x08;
 
@@ -628,7 +615,6 @@ static INT32 DrvFrame()
 	}
 
 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -643,6 +629,8 @@ static INT32 DrvFrame()
 
 	h6280Close();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -673,6 +661,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
+
+		SCAN_VAR(prot_data);
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

@@ -7887,6 +7887,7 @@ DRV		BurnDrvsg1k_jetpaco;
 DRV		BurnSpecjswilly;
 DRV		BurnDrvMSX_jetsetw;
 DRV		BurnDrvMSX_jetsetwa;
+DRV		BurnSpecJetsetwrr;
 DRV		BurnSpecJswilly128;
 DRV		BurnSpecjswilly2;
 DRV		BurnDrvMSX_Jsw2;
@@ -9446,6 +9447,7 @@ DRV		BurnDrvManiacsqa;
 DRV		BurnDrvManiacsq;
 DRV		BurnDrvManiacsqu;
 DRV		BurnDrvManiacsp;
+DRV		BurnSpecManicjsw;
 DRV		BurnSpecmminer;
 DRV		BurnDrvMSX_manicminer;
 DRV		BurnSpecmminersp;
@@ -13794,6 +13796,7 @@ DRV		BurnDrvMSX_salamandk;
 DRV		BurnDrvpce_salamand;
 DRV		BurnSpecSamallardes;
 DRV		BurnSpecSamallarden;
+DRV		BurnSpecSamslade;
 DRV		BurnDrvSamesame;
 DRV		BurnDrvSamesamenh;
 DRV		BurnDrvSamesame2;
@@ -15455,6 +15458,9 @@ DRV		BurnSpecStopvirus;
 DRV		BurnSpecStopvirusaf;
 DRV		BurnDrvStmbladej;
 DRV		BurnDrvStmblade;
+DRV		BurnSpecStvalhalla;
+DRV		BurnSpecStvalhallaepe;
+DRV		BurnSpecStvalhallaeps;
 DRV		BurnDrvMSX_stormrescue;
 DRV		BurnSpecstormbringer;
 DRV		BurnDrvMSX_stormbringer;
@@ -15966,6 +15972,7 @@ DRV		BurnDrvSboblboblb;
 DRV		BurnDrvSboblbobld;
 DRV		BurnDrvSboblboble;
 DRV		BurnDrvSboblboblf;
+DRV		BurnSpecSbman2r;
 DRV		BurnDrvMSX_sboy3;
 DRV		BurnDrvsms_sboy3;
 DRV		BurnDrvMSX_sboy3a;
@@ -18646,6 +18653,7 @@ DRV		BurnDrvmd_whiprush;
 DRV		BurnDrvmd_whiprushj;
 DRV		BurnSpecWhiteheat;
 DRV		BurnSpecWhitejaguar;
+DRV		BurnSpecWhitejaguarzx;
 DRV		BurnDrvWhizz;
 DRV		BurnSpecWhodareswinsii;
 DRV		BurnDrvMSX_whodares;
@@ -19194,6 +19202,7 @@ DRV		BurnDrvnes_xenophobe;
 DRV		BurnDrvXenophob;
 DRV		BurnSpecxevious;
 DRV		BurnDrvXevious;
+DRV		BurnDrvxeviousng;
 DRV		BurnDrvpce_xevious;
 DRV		BurnDrvnes_xevious;
 DRV		BurnDrvXexexa;
@@ -27435,6 +27444,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecjswilly,			// Jet Set Willy (48K)
 	&BurnDrvMSX_jetsetw,		// Jet Set Willy (Jpn)
 	&BurnDrvMSX_jetsetwa,		// Jet Set Willy (Jpn, Alt)
+	&BurnSpecJetsetwrr,			// Jet Set Willy - Role Reversal (48K) (HB)
 	&BurnSpecJswilly128,		// Jet Set Willy 128 (128K) (HB)
 	&BurnSpecjswilly2,			// Jet Set Willy II - The Final Frontier (48K)
 	&BurnDrvMSX_Jsw2,			// Jet Set Willy II - The Final Frontier
@@ -28994,6 +29004,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvManiacsq,			// Maniac Square (protected, Version 1.0, Checksum DEEE)
 	&BurnDrvManiacsqu,			// Maniac Square (unprotected, Version 1.0, Checksum BB73)
 	&BurnDrvManiacsp,			// Maniac Square (ver 1.0, checksum b602, prototype)
+	&BurnSpecManicjsw,			// Manic Jet Set Willy (48K) (HB)
 	&BurnSpecmminer,			// Manic Miner (Bug-Byte Software) (48K)
 	&BurnDrvMSX_manicminer,		// Manic Miner (Euro)
 	&BurnSpecmminersp,			// Manic Miner (Software Projects) (48K)
@@ -33342,6 +33353,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_salamand,		// Salamander
 	&BurnSpecSamallardes,		// Sam Mallard - el Caso del Cisne Desaparecido (Spanish) (48K) (HB, v1.2)
 	&BurnSpecSamallarden,		// Sam Mallard - the Case of the Missing Swan (English) (48K) (HB, v1.2)
+	&BurnSpecSamslade,			// Sam Slade - Robo-Hunter (48K) (HB)
 	&BurnDrvSamesame,			// Same! Same! Same! (1P set)
 	&BurnDrvSamesamenh,			// Same! Same! Same! (1P set, NEW VER! hack)
 	&BurnDrvSamesame2,			// Same! Same! Same! (2P set)
@@ -35003,6 +35015,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecStopvirusaf,		// Stop Virus (Axel F bgm) (128K) (HB)
 	&BurnDrvStmbladej,			// Storm Blade (Japan)
 	&BurnDrvStmblade,			// Storm Blade (US)
+	&BurnSpecStvalhalla,		// Storm Over Valhalla (48K) (HB)
+	&BurnSpecStvalhallaepe,		// Storm Over Valhalla Epilogue (English) (48K) (HB)
+	&BurnSpecStvalhallaeps,		// Storm Over Valhalla Epilogue (Spanish) (48K) (HB)
 	&BurnDrvMSX_stormrescue,	// Storm Rescue (HB)
 	&BurnSpecstormbringer,		// Stormbringer (128K)
 	&BurnDrvMSX_stormbringer,	// Stormbringer (Euro)
@@ -35514,6 +35529,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSboblbobld,			// Super Bobble Bobble (bootleg, set 4)
 	&BurnDrvSboblboble,			// Super Bobble Bobble (bootleg, set 5)
 	&BurnDrvSboblboblf,			// Super Bobble Bobble (bootleg, set 6)
+	&BurnSpecSbman2r,			// Super Bomberman 2 Remix (128K) (HB)
 	&BurnDrvMSX_sboy3,			// Super Boy 3 (Kor)
 	&BurnDrvsms_sboy3,			// Super Boy 3 (Kor)
 	&BurnDrvMSX_sboy3a,			// Super Boy 3 (Kor, Alt)
@@ -38194,6 +38210,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_whiprushj,		// Whip Rush - Wakusei Voltegas no Nazo (Jpn)
 	&BurnSpecWhiteheat,			// White Heat (48K)
 	&BurnSpecWhitejaguar,		// White Jaguar (128K) (HB)
+	&BurnSpecWhitejaguarzx,		// White Jaguar (128K) (HB, v1.3)
 	&BurnDrvWhizz,				// Whizz
 	&BurnSpecWhodareswinsii,	// Who Dares Wins II (48K)
 	&BurnDrvMSX_whodares,		// Who Dares Wins II (Euro)
@@ -38742,6 +38759,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXenophob,			// Xenophobe
 	&BurnSpecxevious,			// Xevious (48K)
 	&BurnDrvXevious,			// Xevious (Namco)
+	&BurnDrvxeviousng,			// Xevious (Neo-Geo Conversion)
 	&BurnDrvpce_xevious,		// Xevious - Fardraut Densetsu
 	&BurnDrvnes_xevious,		// Xevious - The Avenger (USA)
 	&BurnDrvXexexa,				// Xexex (ver AAA)

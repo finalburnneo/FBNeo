@@ -9953,6 +9953,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jetsetwrr" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Jet Set Willy - Role Reversal (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Arcane Design</manufacturer>
+		<rom name="Jet Set Willy - Role Reversal 48K (2023)(Arcane Design).tap" size="37243" crc="a15673a3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jswilly128" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Jet Set Willy 128 (128K) (HB)</description>
@@ -11403,6 +11413,16 @@
 		<year>2021</year>
 		<manufacturer>Mananuk</manufacturer>
 		<rom name="Mandarino, El 48K (2021)(Mananuk).tap" size="44308" crc="9d9b9c94"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="manicjsw" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Manic Jet Set Willy (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Norman Sword</manufacturer>
+		<rom name="Manic Jet Set Willy 48K (2023)(Norman Sword).tap" size="35618" crc="57f5b6de"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15900,6 +15920,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="samslade" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Sam Slade - Robo-Hunter (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Monsterbytes</manufacturer>
+		<rom name="Sam Slade - Robo-Hunter 48K (2022)(Monsterbytes).tap" size="37981" crc="d5815f2f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="samwarrior128k" romof="spec128">
 		<description>Samurai Warrior - Usagi Yojimbo (128K)</description>
 		<year>1988</year>
@@ -17551,6 +17581,36 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="stvalhalla" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Storm Over Valhalla (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Sequentia Soft</manufacturer>
+		<rom name="Storm Over Valhalla 48K (2023)(Sequentia Soft).tap" size="64600" crc="61e05a4b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stvalhallaepe" cloneof="stvalhalla" romof="stvalhalla">
+		<comment>Homebrew</comment>
+		<description>Storm Over Valhalla Epilogue (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Sequentia Soft</manufacturer>
+		<rom name="Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap" size="21880" crc="9f021955"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stvalhallaeps" cloneof="stvalhalla" romof="stvalhalla">
+		<comment>Homebrew</comment>
+		<description>Storm Over Valhalla Epilogue (Spanish) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Sequentia Soft</manufacturer>
+		<rom name="Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap" size="22060" crc="9876d82e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="stormbringer" romof="spec128">
 		<description>Stormbringer (128K)</description>
 		<year>1987</year>
@@ -17826,6 +17886,17 @@
 		<year>2015</year>
 		<manufacturer>Vanbsoftware</manufacturer>
 		<rom name="Super 48K Box 128K (2015)(Vanbsoftware).tap" size="40975" crc="b2f7b936"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sbman2r" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Super Bomberman 2 Remix (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>ZX Evolution</manufacturer>
+		<rom name="Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap" size="53893" crc="7c1de823"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -19872,12 +19943,23 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="whitejaguar" romof="spec128">
+	<game name="whitejaguar" cloneof="whitejaguarzx" romof="whitejaguarzx">
 		<comment>Homebrew</comment>
 		<description>White Jaguar (128K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Romancha</manufacturer>
 		<rom name="White Jaguar (2020)(Romancha).tap" size="24324" crc="bb1edf8f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="whitejaguarzx" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>White Jaguar (128K) (HB, v1.3)</description>
+		<year>2023</year>
+		<manufacturer>ZX-Online - Romancha</manufacturer>
+		<rom name="White Jaguar v1.3 128K (2023)(ZX-Online).tap" size="72533" crc="b82f465f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

@@ -385,6 +385,8 @@ static INT32 DrvDoReset()
 	adpcm_toggle = 0;
 	adpcm_data = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -633,7 +635,7 @@ struct BurnDriver BurnDrvMagix = {
 	"magix", NULL, NULL, NULL, "1995",
 	"Magix / Rock\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, magixRomInfo, magixRomName, NULL, NULL, NULL, NULL, RocktrisInputInfo, MagixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 240, 4, 3
@@ -693,7 +695,7 @@ struct BurnDriver BurnDrvCannball = {
 	"cannball", NULL, NULL, NULL, "1995",
 	"Cannon Ball (Yun Sung, horizontal)\0", NULL, "Yun Sung / Soft Vision", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, cannballRomInfo, cannballRomName, NULL, NULL, NULL, NULL, CannballInputInfo, CannballDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 240, 4, 3
@@ -723,7 +725,7 @@ struct BurnDriver BurnDrvCannballv = {
 	"cannballv", "cannball", NULL, NULL, "1995",
 	"Cannon Ball (Yun Sung, vertical)\0", NULL, "Yun Sung / J&K Production", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, cannballvRomInfo, cannballvRomName, NULL, NULL, NULL, NULL, CannballInputInfo, CannballDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 384, 3, 4

@@ -515,6 +515,8 @@ static INT32 DrvDoReset()
 
 	gun_entropy = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1778,7 +1780,7 @@ struct BurnDriver BurnDrvBurglarx = {
 	"burglarx", NULL, NULL, NULL, "1997",
 	"Burglar X\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, BurglarxRomInfo, BurglarxRomName, NULL, NULL, NULL, NULL, BurglarxInputInfo, BurglarxDIPInfo,
 	BurglarxInit, DrvExit, DrvFrame, DrvDraw, BurglarxScan,
 	NULL, 0x2000, 384, 224, 4, 3
@@ -1788,7 +1790,7 @@ struct BurnDriver BurnDrvZeropnt = {
 	"zeropnt", NULL, NULL, NULL, "1998",
 	"Zero Point (set 1)\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ZeropntRomInfo, ZeropntRomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
 	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
@@ -1798,7 +1800,7 @@ struct BurnDriver BurnDrvZeropntj = {
 	"zeropntj", "zeropnt", NULL, NULL, "1998",
 	"Zero Point (Japan)\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ZeropntjRomInfo, ZeropntjRomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
 	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
@@ -1808,7 +1810,7 @@ struct BurnDriver BurnDrvZeropnta = {
 	"zeropnta", "zeropnt", NULL, NULL, "1998",
 	"Zero Point (set 2)\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ZeropntaRomInfo, ZeropntaRomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
 	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
@@ -1818,7 +1820,7 @@ struct BurnDriver BurnDrvZeropnt2 = {
 	"zeropnt2", NULL, NULL, NULL, "1999",
 	"Zero Point 2\0", NULL, "Unico", "Unico",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, Zeropnt2RomInfo, Zeropnt2RomName, NULL, NULL, NULL, NULL, ZeropntInputInfo, Zeropnt2DIPInfo,
 	Zeropnt2Init, Zeropnt2Exit, Zeropnt2Frame, Zeropnt2Draw, Zeropnt2Scan,
 	NULL, 0x2000, 384, 224, 4, 3

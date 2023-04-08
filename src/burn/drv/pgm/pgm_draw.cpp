@@ -4,9 +4,10 @@
 /*
 	Video flag notes (b0e000 writes)
 
-	0000 0000 0000 000x	- sprite dma enable
-	0000 0000 0000 xxx0 - nothing?
-	0000 0000 000x 0000 - all games set this?
+	0000 0000 0000 000x - sprite dma enable - pulse 0->1 to trigger (does 1->0 work?)
+	0000 0000 0000 00x0 - nothing?
+	0000 0000 0000 0x00 - IRQ4 ACK - pulse to trigger (0->1 and 1->0 work?)
+	0000 0000 0000 x000 - IRQ6 ACK - pulse to trigger (0->1 and 1->0 work?)
 	0000 0000 0xx0 0000 - all games except CAVE, but seems to serve no purpose when set?
 	0000 0000 x000 0000	- loses refresh rate?
 	0000 000x 0000 0000 - shows garbage on screen for all except background?

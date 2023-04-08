@@ -1184,7 +1184,7 @@ struct BurnDriver BurnDrvMacrossp = {
 	"macrossp", NULL, NULL, NULL, "1996",
 	"Macross Plus\0", NULL, "MOSS / Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, macrosspRomInfo, macrosspRomName, NULL, NULL, NULL, NULL, MacrosspInputInfo, MacrosspDIPInfo,
 	macrosspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	240, 384, 3, 4

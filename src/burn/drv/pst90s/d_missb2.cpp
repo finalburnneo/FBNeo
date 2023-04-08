@@ -287,6 +287,8 @@ static INT32 DrvDoReset()
 	sound_cpu_in_reset = 0;
 	video_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -691,7 +693,7 @@ struct BurnDriver BurnDrvMissb2 = {
 	"missb2", NULL, NULL, NULL, "1996",
 	"Miss Bubble II\0", NULL, "Alpha Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, missb2RomInfo, missb2RomName, NULL, NULL, NULL, NULL, Missb2InputInfo, Missb2DIPInfo,
 	missb2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -735,7 +737,7 @@ struct BurnDriver BurnDrvBublpong = {
 	"bublpong", "missb2", NULL, NULL, "1996",
 	"Bubble Pong Pong\0", NULL, "Top Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bublpongRomInfo, bublpongRomName, NULL, NULL, NULL, NULL, Missb2InputInfo, Missb2DIPInfo,
 	bublpongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

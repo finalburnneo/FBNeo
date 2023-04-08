@@ -288,6 +288,8 @@ static INT32 DrvDoReset()
 
 	MSM6295Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -607,7 +609,7 @@ struct BurnDriver BurnDrvSpeedspn = {
 	"speedspn", NULL, NULL, NULL, "1994",
 	"Speed Spin\0", NULL, "TCH", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_BALLPADDLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BALLPADDLE, 0,
 	NULL, speedspnRomInfo, speedspnRomName, NULL, NULL, NULL, NULL, SpeedspnInputInfo, SpeedspnDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	384, 240, 4, 3

@@ -612,6 +612,8 @@ static INT32 DrvDoReset()
 	bankswitch(0);
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -997,7 +999,7 @@ struct BurnDriver BurnDrvAppoooh = {
 	"appoooh", NULL, NULL, NULL, "1984",
 	"Appoooh\0", NULL, "Sanritsu / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
 	NULL, appooohRomInfo, appooohRomName, NULL, NULL, NULL, NULL, AppooohInputInfo, AppooohDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x220,
 	256, 224, 4, 3
@@ -1007,7 +1009,7 @@ struct BurnDriver BurnDrvRobowres = {
 	"robowres", NULL, NULL, NULL, "1986",
 	"Robo Wres 2001\0", NULL, "Sanritsu / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VSFIGHT, 0,
 	NULL, robowresRomInfo, robowresRomName, NULL, NULL, NULL, NULL, AppooohInputInfo, RobowresDIPInfo,
 	DrvRobowresInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x220,
 	256, 224, 4, 3

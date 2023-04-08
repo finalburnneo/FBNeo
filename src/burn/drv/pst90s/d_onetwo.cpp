@@ -261,6 +261,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	soundlatch = 0;
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -542,7 +544,7 @@ struct BurnDriver BurnDrvOnetwo = {
 	"onetwo", NULL, NULL, NULL, "1997",
 	"One + Two\0", NULL, "Barko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, onetwoRomInfo, onetwoRomName, NULL, NULL, NULL, NULL, OnetwoInputInfo, OnetwoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	512, 256, 4, 3
@@ -570,7 +572,7 @@ struct BurnDriver BurnDrvOnetwoe = {
 	"onetwoe", "onetwo", NULL, NULL, "1997",
 	"One + Two (earlier)\0", NULL, "Barko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, onetwoeRomInfo, onetwoeRomName, NULL, NULL, NULL, NULL, OnetwoInputInfo, OnetwoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	512, 256, 4, 3

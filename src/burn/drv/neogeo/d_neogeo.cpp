@@ -16770,7 +16770,7 @@ struct BurnDriver BurnDrvSamsho2new = {
 // Samurai Shodown II Perfect Hack
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",   0x200000, 0x2555cf40, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p1pe.p1",   0x200000, 0xb321ff65, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "063-p2pe.p2",   0x020000, 0xe9cc1d72, 0 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "063-s1.s1",     0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -21755,6 +21755,34 @@ struct BurnDriver BurnDrvCabalng = {
 	NULL, cabalngRomInfo, cabalngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
+};
+
+// Xevious (Neo-Geo Conversion)
+
+static struct BurnRomInfo xeviousngRomDesc[] = {
+	{ "xevious-p1.p1",    0x100000, 0x11dff034, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "xevious-s1.s1",    0x020000, 0xf41d121a, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "xevious-c1.c1",    0x100000, 0xf963e5b6, 3 | BRF_GRA },           //  2 Sprite data
+	{ "xevious-c2.c2",    0x100000, 0xc97c4e64, 3 | BRF_GRA },           //  3
+
+	{ "xevious-m1.m1",    0x010000, 0x6f31c601, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "xevious-v1.v1",    0x100000, 0x37ef6dc5, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(xeviousng, xeviousng, neogeo)
+STD_ROM_FN(xeviousng)
+
+struct BurnDriver BurnDrvxeviousng = {
+	"xeviousng", NULL, "neogeo", NULL, "1982-2023",
+	"Xevious (Neo-Geo Conversion)\0", NULL, "Namco", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	NULL, xeviousngRomInfo, xeviousngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	224, 304, 3, 4
 };
 
 // Looptris (v.2021-12-26)

@@ -33,7 +33,7 @@ enum {
 	GUNLOCK,
 	TWINQIX,
 	UNDRFIRE,
-	SCFINALS,  // - coin inputs don't work, service coin ok.
+	SCFINALS,
 	LIGHTBR,
 	KAISERKN,
 	DARIUSG,

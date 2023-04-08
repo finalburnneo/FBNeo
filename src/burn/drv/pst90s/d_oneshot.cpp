@@ -386,6 +386,8 @@ static INT32 DrvDoReset()
 	BurnYM3812Reset();
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -820,7 +822,7 @@ struct BurnDriver BurnDrvMaddonna = {
 	"maddonna", NULL, NULL, NULL, "1995",
 	"Mad Donna (set 1)\0", NULL, "Tuning", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, maddonnaRomInfo, maddonnaRomName, NULL, NULL, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
 	MaddonnaInit, DrvExit, DrvFrame, MaddonnaDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

@@ -28892,10 +28892,10 @@ STDROMPICKEXT(SpecWhitejaguar, SpecWhitejaguar, Spec128)
 STD_ROM_FN(SpecWhitejaguar)
 
 struct BurnDriver BurnSpecWhitejaguar = {
-	"spec_whitejaguar", NULL, "spec_spec128", NULL, "2020",
+	"spec_whitejaguar", "spec_whitejaguarzx", "spec_spec128", NULL, "2020",
 	"White Jaguar (128K) (HB)\0", NULL, "Romancha", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecWhitejaguarRomInfo, SpecWhitejaguarRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -40814,5 +40814,157 @@ struct BurnDriver BurnSpecStercore = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
 	SpectrumGetZipName, SpecStercoreRomInfo, SpecStercoreRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Jet Set Willy - Role Reversal (48K) (HB)
+
+static struct BurnRomInfo SpecJetsetwrrRomDesc[] = {
+	{ "Jet Set Willy - Role Reversal 48K (2023)(Arcane Design).tap", 37243, 0xa15673a3, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJetsetwrr, SpecJetsetwrr, Spectrum)
+STD_ROM_FN(SpecJetsetwrr)
+
+struct BurnDriver BurnSpecJetsetwrr = {
+	"spec_jetsetwrr", NULL, "spec_spectrum", NULL, "2023",
+	"Jet Set Willy - Role Reversal (48K) (HB)\0", NULL, "Arcane Design", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecJetsetwrrRomInfo, SpecJetsetwrrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Manic Jet Set Willy (48K) (HB)
+
+static struct BurnRomInfo SpecManicjswRomDesc[] = {
+	{ "Manic Jet Set Willy 48K (2023)(Norman Sword).tap", 35618, 0x57f5b6de, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecManicjsw, SpecManicjsw, Spectrum)
+STD_ROM_FN(SpecManicjsw)
+
+struct BurnDriver BurnSpecManicjsw = {
+	"spec_manicjsw", NULL, "spec_spectrum", NULL, "2023",
+	"Manic Jet Set Willy (48K) (HB)\0", NULL, "Norman Sword", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecManicjswRomInfo, SpecManicjswRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Sam Slade - Robo-Hunter (48K) (HB)
+
+static struct BurnRomInfo SpecSamsladeRomDesc[] = {
+	{ "Sam Slade - Robo-Hunter 48K (2022)(Monsterbytes).tap", 37981, 0xd5815f2f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSamslade, SpecSamslade, Spectrum)
+STD_ROM_FN(SpecSamslade)
+
+struct BurnDriver BurnSpecSamslade = {
+	"spec_samslade", NULL, "spec_spectrum", NULL, "2022",
+	"Sam Slade - Robo-Hunter (48K) (HB)\0", NULL, "Monsterbytes", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
+	SpectrumGetZipName, SpecSamsladeRomInfo, SpecSamsladeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Super Bomberman 2 Remix (128K) (HB)
+
+static struct BurnRomInfo SpecSbman2rRomDesc[] = {
+	{ "Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap", 53893, 0x7c1de823, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSbman2r, SpecSbman2r, Spec128)
+STD_ROM_FN(SpecSbman2r)
+
+struct BurnDriver BurnSpecSbman2r = {
+	"spec_sbman2r", NULL, "spec_spec128", NULL, "2023",
+	"Super Bomberman 2 Remix (128K) (HB)\0", NULL, "ZX Evolution", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecSbman2rRomInfo, SpecSbman2rRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Storm Over Valhalla (48K)
+
+static struct BurnRomInfo SpecStvalhallaRomDesc[] = {
+	{ "Storm Over Valhalla 48K (2023)(Sequentia Soft).tap", 64600, 0x61e05a4b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStvalhalla, SpecStvalhalla, Spectrum)
+STD_ROM_FN(SpecStvalhalla)
+
+struct BurnDriver BurnSpecStvalhalla = {
+	"spec_stvalhalla", NULL, "spec_spectrum", NULL, "2023",
+	"Storm Over Valhalla (48K) (HB)\0", NULL, "Sequentia Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecStvalhallaRomInfo, SpecStvalhallaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Storm Over Valhalla Epilogue (English) (48K) (HB)
+
+static struct BurnRomInfo SpecStvalhallaepeRomDesc[] = {
+	{ "Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap", 21880, 0x9f021955, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStvalhallaepe, SpecStvalhallaepe, Spectrum)
+STD_ROM_FN(SpecStvalhallaepe)
+
+struct BurnDriver BurnSpecStvalhallaepe = {
+	"spec_stvalhallaepe", "spec_stvalhalla", "spec_spectrum", NULL, "2023",
+	"Storm Over Valhalla Epilogue (English) (48K) (HB)\0", NULL, "Sequentia Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecStvalhallaepeRomInfo, SpecStvalhallaepeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Storm Over Valhalla Epilogue (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecStvalhallaepsRomDesc[] = {
+	{ "Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap", 22060, 0x9876d82e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecStvalhallaeps, SpecStvalhallaeps, Spectrum)
+STD_ROM_FN(SpecStvalhallaeps)
+
+struct BurnDriver BurnSpecStvalhallaeps = {
+	"spec_stvalhallaeps", "spec_stvalhalla", "spec_spectrum", NULL, "2023",
+	"Storm Over Valhalla Epilogue (Spanish) (48K) (HB)\0", NULL, "Sequentia Soft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecStvalhallaepsRomInfo, SpecStvalhallaepsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// White Jaguar (128K) (HB, v1.3)
+
+static struct BurnRomInfo SpecWhitejaguarzxRomDesc[] = {
+	{ "White Jaguar v1.3 128K (2023)(ZX-Online).tap", 72533, 0xb82f465f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecWhitejaguarzx, SpecWhitejaguarzx, Spec128)
+STD_ROM_FN(SpecWhitejaguarzx)
+
+struct BurnDriver BurnSpecWhitejaguarzx = {
+	"spec_whitejaguarzx", NULL, "spec_spec128", NULL, "2023",
+	"White Jaguar (128K) (HB, v1.3)\0", NULL, "ZX-Online - Romancha", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecWhitejaguarzxRomInfo, SpecWhitejaguarzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

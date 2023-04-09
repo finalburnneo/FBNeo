@@ -16065,6 +16065,26 @@ struct BurnDriver BurnDrvnes_jackalem = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Teenage Mutant Ninja Turtles II - The Arcade Game (T-Chi)
+// Modified by NOKOH
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=720874
+static struct BurnRomInfo nes_tmntiiarcgamtcRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles II - The Arcade Game (T-Chi).nes",          786448, 0x35e378fc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tmntiiarcgamtc)
+STD_ROM_FN(nes_tmntiiarcgamtc)
+
+struct BurnDriver BurnDrvnes_tmntiiarcgamtc = {
+	"nes_tmntiiarcgamtc", "nes_tmntiiarcgam", NULL, NULL, "2023",
+	"Teenage Mutant Ninja Turtles II - The Arcade Game (T-Chi)\0", NULL, "NOKOH", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
+	NESGetZipName, nes_tmntiiarcgamtcRomInfo, nes_tmntiiarcgamtcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // RoboCop (T-Chi)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=718366
 static struct BurnRomInfo nes_robocopscRomDesc[] = {
@@ -22287,42 +22307,6 @@ struct BurnDriver BurnDrvnes_mdfootball = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Airball
-static struct BurnRomInfo nes_airballRomDesc[] = {
-	{ "Airball (2007)(Retrozone).nes",          131088, 0x9a535a93, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_airball)
-STD_ROM_FN(nes_airball)
-
-struct BurnDriver BurnDrvnes_airball = {
-	"nes_airball", NULL, NULL, NULL, "2007",
-	"Airball\0", NULL, "Retrozone - Tengen", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MAZE | GBF_PUZZLE, 0,
-	NESGetZipName, nes_airballRomInfo, nes_airballRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Airball (Prototype)
-static struct BurnRomInfo nes_airballpRomDesc[] = {
-	{ "Airball (Proto)(1990)(Tengen).nes",          131088, 0x8adb80e1, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_airballp)
-STD_ROM_FN(nes_airballp)
-
-struct BurnDriver BurnDrvnes_airballp = {
-	"nes_airballp", "nes_airball", NULL, NULL, "1990",
-	"Airball (Prototype)\0", NULL, "Tengen", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_MAZE | GBF_PUZZLE, 0,
-	NESGetZipName, nes_airballpRomInfo, nes_airballpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
@@ -22412,23 +22396,6 @@ struct BurnDriver BurnDrvnes_pentablocat = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_spacecatRomDesc[] = {
-	{ "Space Cat (2023).nes",          524304, 0x809a6b97, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_spacecat)
-STD_ROM_FN(nes_spacecat)
-
-struct BurnDriver BurnDrvnes_spacecat = {
-	"nes_spacecat", NULL, NULL, NULL, "2023",
-	"Space Cat (HB)\0", NULL, "unknown", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_spacecatRomInfo, nes_spacecatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_spaceraftRomDesc[] = {
 	{ "Space Raft (2020)(Raftronaut).nes",          524304, 0x03841119, BRF_ESS | BRF_PRG },
 };
@@ -22442,23 +22409,6 @@ struct BurnDriver BurnDrvnes_spaceraft = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_spaceraftRomInfo, nes_spaceraftRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_splatoodRomDesc[] = {
-	{ "SplatooD v1.0.6 (2016)(John Carmackerel).nes",          40976, 0x93d17b02, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_splatood)
-STD_ROM_FN(nes_splatood)
-
-struct BurnDriver BurnDrvnes_splatood = {
-	"nes_splatood", NULL, NULL, NULL, "2016",
-	"SplatooD (HB, v1.0.6)\0", NULL, "John Carmackerel", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
-	NESGetZipName, nes_splatoodRomInfo, nes_splatoodRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -240,6 +240,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	rsxoffs = 0;
 	rsyoffs = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -993,7 +995,7 @@ struct BurnDriver BurnDrvGalastrm = {
 	"galastrm", NULL, NULL, NULL, "1992",
 	"Galactic Storm (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, galastrmRomInfo, galastrmRomName, NULL, NULL, NULL, NULL, GalastrmInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 232, 4, 3

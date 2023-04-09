@@ -289,6 +289,8 @@ static INT32 DrvDoReset()
 	bankswitch(0);
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -684,7 +686,7 @@ struct BurnDriver BurnDrvChaknpop = {
 	"chaknpop", NULL, NULL, NULL, "1983",
 	"Chack'n Pop\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, chaknpopRomInfo, chaknpopRomName, NULL, NULL, NULL, NULL, ChaknpopInputInfo, ChaknpopDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

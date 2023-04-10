@@ -16768,7 +16768,7 @@ struct BurnDriver BurnDrvMSlug2t = {
 // Metal Slug 3 (Enhanced Violence Version)
 
 static struct BurnRomInfo mslug3vRomDesc[] = {
-	{ "256-pg1v.p1",   0x100000, 0x47f9aeea, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
+	{ "256-ph1v.p1",   0x100000, 0x47f9aeea, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
 	{ "256-ph2.sp2",   0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
 	
 	{ "256-c1.c1",     0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202

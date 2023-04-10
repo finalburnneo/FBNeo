@@ -20697,7 +20697,7 @@ struct BurnDriver BurnDrvmslugxsc = {
 
 // Metal Slug X (Multifunction Hack)
 static struct BurnRomInfo mslugxdgRomDesc[] = {
-	{ "250-p1dg.p1",    0x100000, 0x0728de2c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p1dg.p1",    0x100000, 0xcc6b725c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2dg.ep1",   0x400000, 0x9e052243, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles

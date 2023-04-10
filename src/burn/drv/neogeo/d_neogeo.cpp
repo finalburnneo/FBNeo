@@ -18869,24 +18869,24 @@ struct BurnDriver BurnDrvmslug3eb = {
 };
 
 
-// Metal Slug 3 (Last Bullet Remix Hack) 2023-03-24
+// Metal Slug 3 (Last Bullet Remix Hack) 2023-04-10
 static struct BurnRomInfo mslug3lwRomDesc[] = {
-	{ "256-p1lw.bin",   0x100000,  0xb4c7de94, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-p2lw.bin",   0x400000,  0xa66e5c26, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1lw.bin",   0x100000,  0xd2484dff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2lw.bin",   0x400000,  0xa66e5c26, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "ms3n_s1.rom",    0x020000,  0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "ms3n_s1.rom",     0x020000,  0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "256-c1.rom",     0x1000000, 0x1195f6b3, 3 | BRF_GRA },		    //  3 Sprite data
-	{ "256-c2.rom",     0x1000000, 0xfa28d925, 3 | BRF_GRA },           //  4
-	{ "256-c3.rom",     0x1000000, 0x5d78a51c, 3 | BRF_GRA },           //  5
-	{ "256-c4.rom",     0x1000000, 0x45478437, 3 | BRF_GRA },           //  6
+	{ "256-c1.rom",      0x1000000, 0x1195f6b3, 3 | BRF_GRA },		    //  3 Sprite data
+	{ "256-c2.rom",      0x1000000, 0xfa28d925, 3 | BRF_GRA },           //  4
+	{ "256-c3.rom",      0x1000000, 0x5d78a51c, 3 | BRF_GRA },           //  5
+	{ "256-c4.rom",      0x1000000, 0x45478437, 3 | BRF_GRA },           //  6
 
-	{ "256-m1.m1",      0x080000,  0xeaeec116, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "256-m1.m1",       0x080000,  0xeaeec116, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
 
-	{ "256-v1.v1",    	0x400000,  0xf2690241, 5 | BRF_SND },           //  8 Sound data
-	{ "256-v2.v2",    	0x400000,  0x7e2a10bd, 5 | BRF_SND },           //  9
-	{ "256-v3.v3",    	0x400000,  0x0eaec17c, 5 | BRF_SND },           // 10
-	{ "256-v4.v4",    	0x400000,  0x9b4b22d4, 5 | BRF_SND },           // 11
+	{ "256-v1.v1",       0x400000,  0xf2690241, 5 | BRF_SND },           //  8 Sound data
+	{ "256-v2.v2",       0x400000,  0x7e2a10bd, 5 | BRF_SND },           //  9
+	{ "256-v3.v3",       0x400000,  0x0eaec17c, 5 | BRF_SND },           // 10
+	{ "256-v4.v4",       0x400000,  0x9b4b22d4, 5 | BRF_SND },           // 11
 };
 
 STDROMPICKEXT(mslug3lw, mslug3lw, neogeo)

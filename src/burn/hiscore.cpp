@@ -28,12 +28,6 @@ static INT32 WriteCheck1;
 static INT32 LetsTryToApply = 0;
 static INT32 nLoadingFrameDelay = 0;
 
-struct cheat_core {
-	cpu_core_config *cpuconfig;
-
-	INT32 nCPU;			// which cpu
-};
-
 static cheat_core *cheat_ptr;
 static cpu_core_config *cheat_subptr;
 extern cheat_core *GetCpuCheatRegister(INT32 nCPU);

@@ -1146,7 +1146,7 @@ struct BurnDriver BurnDrvRingking3 = {
 	"ringking3", "kingofb", NULL, NULL, "1985",
 	"Ring King (US set 3)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking3RomInfo, ringking3RomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
 	Ringking3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4

@@ -837,7 +837,7 @@ struct BurnDriver BurnDrvCroquis = {
 	"croquis", NULL, NULL, NULL, "1996",
 	"Croquis (Korea)\0", NULL, "Deniam", "Deniam-16b Hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, croquisRomInfo, croquisRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Logicpr2DIPInfo,
 	logicproInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3

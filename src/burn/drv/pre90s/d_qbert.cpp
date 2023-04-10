@@ -1511,6 +1511,8 @@ static INT32 DrvDoReset()
 	flipscreeny = 0;
 	joystick_select = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2683,7 +2685,7 @@ struct BurnDriver BurnDrvKrull = {
 	"krull", NULL, NULL, NULL, "1983",
 	"Krull\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, krullRomInfo, krullRomName, NULL, NULL, NULL, NULL, KrullInputInfo, KrullDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2840,7 +2842,7 @@ struct BurnDriver BurnDrvReactor = {
 	"reactor", NULL, NULL, "reactor", "1982",
 	"Reactor\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, reactorRomInfo, reactorRomName, NULL, NULL, reactorSampleInfo, reactorSampleName, ReactorInputInfo, ReactorDIPInfo,
 	DrvInitReactor, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3

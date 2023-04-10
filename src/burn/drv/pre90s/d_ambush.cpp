@@ -528,7 +528,7 @@ struct BurnDriver BurnDrvAmbush = {
 	"ambush", NULL, NULL, NULL, "1983",
 	"Ambush\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ambushRomInfo, ambushRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -559,7 +559,7 @@ struct BurnDriver BurnDrvAmbushj = {
 	"ambushj", "ambush", NULL, NULL, "1983",
 	"Ambush (Japan)\0", NULL, "Nippon Amuse Co-Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ambushjRomInfo, ambushjRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -623,7 +623,7 @@ struct BurnDriver BurnDrvAmbushv = {
 	"ambushv", "ambush", NULL, NULL, "1983",
 	"Ambush (Volt Elec co-ltd)\0", NULL, "Volt Elec co-ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ambushvRomInfo, ambushvRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

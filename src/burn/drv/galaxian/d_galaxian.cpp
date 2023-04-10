@@ -23291,7 +23291,7 @@ struct BurnDriver BurnDrvMimonkey = {
 	"mimonkey", NULL, NULL, NULL, "198?",
 	"Mighty Monkey\0", NULL, "Universal Video Games", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, MimonkeyRomInfo, MimonkeyRomName, NULL, NULL, NULL, NULL, AtlantisInputInfo, MimonkeyDIPInfo,
 	MimonkeyInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4

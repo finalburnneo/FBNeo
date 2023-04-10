@@ -136,6 +136,8 @@ static INT32 DrvDoReset()
 
 	input_select = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 

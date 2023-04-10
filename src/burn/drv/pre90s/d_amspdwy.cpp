@@ -270,6 +270,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	flipscreen = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -572,7 +574,7 @@ struct BurnDriver BurnDrvAmspdwy = {
 	"amspdwy", NULL, NULL, NULL, "1987",
 	"American Speedway (set 1)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, amspdwyRomInfo, amspdwyRomName, NULL, NULL, NULL, NULL, AmspdwyInputInfo, AmspdwyDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
@@ -600,7 +602,7 @@ struct BurnDriver BurnDrvAmspdwya = {
 	"amspdwya", "amspdwy", NULL, NULL, "1987",
 	"American Speedway (set 2)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, amspdwyaRomInfo, amspdwyaRomName, NULL, NULL, NULL, NULL, AmspdwyInputInfo, AmspdwyaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3

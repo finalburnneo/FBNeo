@@ -173,6 +173,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -589,7 +591,7 @@ struct BurnDriver BurnDrvAmbushh = {
 	"ambushh", "ambush", NULL, NULL, "1983",
 	"Ambush (hack?)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ambushhRomInfo, ambushhRomName, NULL, NULL, NULL, NULL, AmbushInputInfo, AmbushDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

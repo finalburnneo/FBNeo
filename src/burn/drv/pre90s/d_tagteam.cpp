@@ -633,7 +633,7 @@ struct BurnDriver BurnDrvBigprowr = {
 	"bigprowr", NULL, NULL, NULL, "1983",
 	"The Big Pro Wrestling!\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, bigprowrRomInfo, bigprowrRomName, NULL, NULL, NULL, NULL, BigprowrInputInfo, BigprowrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	240, 256, 3, 4

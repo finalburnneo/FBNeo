@@ -70,6 +70,9 @@ void M6502SetReadHandler(UINT8 (*pHandler)(UINT16));
 void M6502SetWriteHandler(void (*pHandler)(UINT16, UINT8));
 INT32 M6502Scan(INT32 nAction);
 
+void M6502CPUPush(INT32 nCPU);
+void M6502CPUPop();
+
 void M6502SetOpcodeDecode(UINT8 *table);
 
 void M6502SetAddressMask(UINT16 RangeMask);

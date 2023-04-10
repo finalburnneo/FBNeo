@@ -12,8 +12,8 @@ static M6809Ext *m6809CPUContext = NULL;
 cpu_core_config M6809Config =
 {
 	"M6809",
-	M6809Open,
-	M6809Close,
+	M6809CPUPush, //M6809Open,
+	M6809CPUPop, //M6809Close,
 	M6809CheatRead,
 	M6809WriteRom,
 	M6809GetActive,

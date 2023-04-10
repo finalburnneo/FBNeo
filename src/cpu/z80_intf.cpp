@@ -36,8 +36,8 @@ INT32 nHasZet = -1;
 cpu_core_config ZetConfig =
 {
 	"Z80",
-	ZetOpen,
-	ZetClose,
+	ZetCPUPush, //ZetOpen,
+	ZetCPUPop, //ZetClose,
 	ZetCheatRead,
 	ZetCheatWriteROM,
 	ZetGetActive,

@@ -246,6 +246,12 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 							bprintf(0, _T("-- mhavoc noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
 						}
+
+						// amspdwy e3de block is suspect -dink
+						if (!strcmp(name, "amspdwy") && HiscoreMemRange[nHiscoreNumRanges].Address == 0xe3de) {
+							bprintf(0, _T("-- amspdwy noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
 						// end NoConfirm "feature"
 
 #if 1 && defined FBNEO_DEBUG

@@ -40877,7 +40877,7 @@ struct BurnDriver BurnSpecSamslade = {
 // Super Bomberman 2 Remix (128K) (HB)
 
 static struct BurnRomInfo SpecSbman2rRomDesc[] = {
-	{ "Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap", 53893, 0x7c1de823, BRF_ESS | BRF_PRG },
+	{ "Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap", 55559, 0x2343539f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSbman2r, SpecSbman2r, Spec128)
@@ -40896,7 +40896,7 @@ struct BurnDriver BurnSpecSbman2r = {
 // Storm Over Valhalla (48K)
 
 static struct BurnRomInfo SpecStvalhallaRomDesc[] = {
-	{ "Storm Over Valhalla 48K (2023)(Sequentia Soft).tap", 64600, 0x61e05a4b, BRF_ESS | BRF_PRG },
+	{ "Storm Over Valhalla 48K (2023)(Sequentia Soft).tap", 64600, 0xbc4731e6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecStvalhalla, SpecStvalhalla, Spectrum)
@@ -40915,7 +40915,7 @@ struct BurnDriver BurnSpecStvalhalla = {
 // Storm Over Valhalla Epilogue (English) (48K) (HB)
 
 static struct BurnRomInfo SpecStvalhallaepeRomDesc[] = {
-	{ "Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap", 21880, 0x9f021955, BRF_ESS | BRF_PRG },
+	{ "Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap", 25905, 0xc6ff8fdb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecStvalhallaepe, SpecStvalhallaepe, Spectrum)
@@ -40934,7 +40934,7 @@ struct BurnDriver BurnSpecStvalhallaepe = {
 // Storm Over Valhalla Epilogue (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecStvalhallaepsRomDesc[] = {
-	{ "Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap", 22060, 0x9876d82e, BRF_ESS | BRF_PRG },
+	{ "Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap", 26127, 0x994943ed, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecStvalhallaeps, SpecStvalhallaeps, Spectrum)

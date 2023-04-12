@@ -156,7 +156,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd-RamStart;
 		ba.szName	= "All Ram";
 		BurnAcb(&ba);
@@ -176,20 +176,20 @@ static INT32 LoadRoms()
 {
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pipibibsp")) {
 		// Load 68000 ROM
-		ToaLoadCode(Rom01, 0, 2);
+		if (ToaLoadCode(Rom01, 0, 2)) return 1;
 
 		// Load GP9001 tile data
 		ToaLoadGP9001Tiles(GP9001ROM[0], 2, 4, nGP9001ROMSize[0]);
 
-		BurnLoadRom(RomZ80, 6, 1);
+		if (BurnLoadRom(RomZ80, 6, 1)) return 1;
 	} else {
 		// Load 68000 ROM
-		ToaLoadCode(Rom01, 0, 2);
+		if (ToaLoadCode(Rom01, 0, 2)) return 1;
 
 		// Load GP9001 tile data
 		ToaLoadGP9001Tiles(GP9001ROM[0], 2, 2, nGP9001ROMSize[0]);
 
-		BurnLoadRom(RomZ80, 4, 1);
+		if (BurnLoadRom(RomZ80, 4, 1)) return 1;
 	}
 
 	return 0;
@@ -323,6 +323,8 @@ inline static INT32 pipibibsSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvDoReset()
 {
+	memset(RamStart, 0, RamEnd-RamStart);
+
 	SekOpen(0);
 	SekReset();
 	SekClose();

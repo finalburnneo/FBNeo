@@ -3479,9 +3479,7 @@ static INT32 DrvDraw()
 static INT32 ZeroteamDraw() // sprite priorities different
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x1000; i+=2) {
-			palette_update_entry(i);
-		}
+		palettedma();
 		DrvRecalc = 0;
 	}
 
@@ -3633,12 +3631,17 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(mg_bank);
 		SCAN_VAR(bg_bank);
 		SCAN_VAR(fg_bank);
+		SCAN_VAR(tx_bank);
 		SCAN_VAR(r2dx_gameselect);
 		SCAN_VAR(r2dx_okibank);
 
 		SeibuCopScan(nAction);
 
 		hold_coin.scan();
+
+		if (game_select == 4 || game_select == 6) {
+			EEPROMScan(nAction, pnMin);
+		}
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3652,12 +3655,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		VezClose();
 
 		DrvRecalc = 1;
-	}
-
-	if (nAction & ACB_NVRAM) {
-		if (game_select == 4 || game_select == 6) {
-			EEPROMScan(nAction, pnMin);
-		}
 	}
 
 	return 0;

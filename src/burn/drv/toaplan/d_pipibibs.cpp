@@ -176,20 +176,20 @@ static INT32 LoadRoms()
 {
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pipibibsp")) {
 		// Load 68000 ROM
-		ToaLoadCode(Rom01, 0, 2);
+		if (ToaLoadCode(Rom01, 0, 2)) return 1;
 
 		// Load GP9001 tile data
 		ToaLoadGP9001Tiles(GP9001ROM[0], 2, 4, nGP9001ROMSize[0]);
 
-		BurnLoadRom(RomZ80, 6, 1);
+		if (BurnLoadRom(RomZ80, 6, 1)) return 1;
 	} else {
 		// Load 68000 ROM
-		ToaLoadCode(Rom01, 0, 2);
+		if (ToaLoadCode(Rom01, 0, 2)) return 1;
 
 		// Load GP9001 tile data
 		ToaLoadGP9001Tiles(GP9001ROM[0], 2, 2, nGP9001ROMSize[0]);
 
-		BurnLoadRom(RomZ80, 4, 1);
+		if (BurnLoadRom(RomZ80, 4, 1)) return 1;
 	}
 
 	return 0;

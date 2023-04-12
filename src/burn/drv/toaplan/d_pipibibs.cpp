@@ -323,6 +323,8 @@ inline static INT32 pipibibsSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvDoReset()
 {
+	memset(RamStart, 0, RamEnd-RamStart);
+
 	SekOpen(0);
 	SekReset();
 	SekClose();

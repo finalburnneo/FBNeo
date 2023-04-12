@@ -17586,7 +17586,7 @@
 		<description>Storm Over Valhalla (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Sequentia Soft</manufacturer>
-		<rom name="Storm Over Valhalla 48K (2023)(Sequentia Soft).tap" size="64600" crc="61e05a4b"/>
+		<rom name="Storm Over Valhalla 48K (2023)(Sequentia Soft).tap" size="64600" crc="bc4731e6"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17596,7 +17596,7 @@
 		<description>Storm Over Valhalla Epilogue (English) (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Sequentia Soft</manufacturer>
-		<rom name="Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap" size="21880" crc="9f021955"/>
+		<rom name="Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap" size="25905" crc="c6ff8fdb"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17606,7 +17606,7 @@
 		<description>Storm Over Valhalla Epilogue (Spanish) (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Sequentia Soft</manufacturer>
-		<rom name="Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap" size="22060" crc="9876d82e"/>
+		<rom name="Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap" size="26127" crc="994943ed"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17896,7 +17896,7 @@
 		<description>Super Bomberman 2 Remix (128K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>ZX Evolution</manufacturer>
-		<rom name="Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap" size="53893" crc="7c1de823"/>
+		<rom name="Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap" size="55559" crc="2343539f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

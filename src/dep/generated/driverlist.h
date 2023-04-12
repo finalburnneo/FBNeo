@@ -451,6 +451,8 @@ DRV		BurnDrvArescuej;
 DRV		BurnDrvArescueu;
 DRV		BurnDrvArescue;
 DRV		BurnDrvtg_airzonk;
+DRV		BurnDrvnes_airballp;
+DRV		BurnDrvnes_airball;
 DRV		BurnSpecairborneranger;
 DRV		BurnSpecairwolf;
 DRV		BurnDrvnes_airwolfj;
@@ -9929,6 +9931,7 @@ DRV		BurnDrvmslugxc2;
 DRV		BurnDrvmslugxlb;
 DRV		BurnDrvmslugxcq;
 DRV		BurnDrvmslugxc1;
+DRV		BurnDrvmslugxdg;
 DRV		BurnDrvMSlugx;
 DRV		BurnDrvmslugxsc;
 DRV		BurnDrvmslugxunity;
@@ -14943,6 +14946,7 @@ DRV		BurnDrvSbomber;
 DRV		BurnDrvSbombera;
 DRV		BurnDrvMSX_spacecmp;
 DRV		BurnDrvMSX_spacecmpa;
+DRV		BurnDrvnes_spacecat;
 DRV		BurnDrvSpacecr;
 DRV		BurnSpecSpacecrusade;
 DRV		BurnDrvSpacedem;
@@ -15154,6 +15158,7 @@ DRV		BurnDrvCHF_spitfirep;
 DRV		BurnDrvCHF_spitfire;
 DRV		BurnDrvMSX_splash;
 DRV		BurnDrvSplat;
+DRV		BurnDrvnes_splatood;
 DRV		BurnDrvSplatterj;
 DRV		BurnDrvSplatter;
 DRV		BurnDrvSplatter2;
@@ -16787,6 +16792,7 @@ DRV		BurnDrvTmnt24pu;
 DRV		BurnDrvmd_tmntru;
 DRV		BurnDrvnes_tmntiiarcgamc;
 DRV		BurnDrvnes_tmntiiarcgamj;
+DRV		BurnDrvnes_tmntiiarcgamtc;
 DRV		BurnDrvnes_tmntiiarcgam;
 DRV		BurnDrvnes_tmntiimanpro;
 DRV		BurnDrvnes_tmntiiic;
@@ -17178,11 +17184,11 @@ DRV		BurnDrvkof2000sp;
 DRV		BurnDrvkof2001h;
 DRV		BurnDrvkof2001;
 DRV		BurnDrvkof2001pkz;
+DRV		BurnDrvkof2001ult;
 DRV		BurnDrvkf2k1pls;
 DRV		BurnDrvkf2k1pla;
 DRV		BurnDrvkof2k1rp;
 DRV		BurnDrvkof2001ru;
-DRV		BurnDrvkof2001ult;
 DRV		BurnDrvkof2002b;
 DRV		BurnDrvkof2002;
 DRV		BurnDrvkof2k2omg;
@@ -20008,6 +20014,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArescueu,			// Air Rescue (US)
 	&BurnDrvArescue,			// Air Rescue (World)
 	&BurnDrvtg_airzonk,			// Air Zonk
+	&BurnDrvnes_airballp,		// Airball (Prototype)
+	&BurnDrvnes_airball,		// Airball
 	&BurnSpecairborneranger,	// Airborne Ranger (48K)
 	&BurnSpecairwolf,			// Airwolf (48K)
 	&BurnDrvnes_airwolfj,		// Airwolf (Japan)
@@ -29398,7 +29406,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetlsavr,			// Metal Saver
 	&BurnDrvnes_metalslagloj,	// Metal Slader Glory (Japan)
 	&BurnDrvnes_metalslaglo,	// Metal Slader Glory (T-Eng)
-	&BurnDrvmslugdg,			// Metal Slug (Multifunction Hack)
+	&BurnDrvmslugdg,			// Metal Slug (Multifunction, Hack)
 	&BurnDrvngpc_mslug1st,		// Metal Slug - 1st Mission (World)
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
 	&BurnDrvngpc_mslug2nd,		// Metal Slug - 2nd Mission (World)
@@ -29410,7 +29418,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug2r,			// Metal Slug 2 - Super Vehicle-001/II (Enemy Remix, Hack)
 	&BurnDrvmslug2eg,			// Metal Slug 2 - Super Vehicle-001/II (Extraction Green Turbo, Hack)
 	&BurnDrvmslug2fm,			// Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2, Hack)
-	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack)
+	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction, Hack)
 	&BurnDrvMSlug2,				// Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)
 	&BurnDrvmslug2ct,			// Metal Slug 2 - Super Vehicle-001/II (Survival, Hack)
 	&BurnDrvMSlug2t,			// Metal Slug 2 - Super Vehicle-001/II (Turbo)
@@ -29423,8 +29431,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug3i,			// Metal Slug 3 (Firepower Enhance, Hack)
 	&BurnDrvmslug3ki,			// Metal Slug 3 (Komorebi, Hack)
 	&BurnDrvmslug3lw,			// Metal Slug 3 (Last Bullet Remix, Hack)
-	&BurnDrvmslug3cq,			// Metal Slug 3 (Legend, Hack)
-	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction Hack)
+	&BurnDrvmslug3cq,			// Metal Slug 3 (Legendary, Hack)
+	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction, Hack)
 	&BurnDrvmslug3v,			// Metal Slug 3 (NGH-2560) (Enhanced Violence Version, hack by EEZEZY)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
@@ -29444,7 +29452,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug4ki,			// Metal Slug 4 (Komorebi, Hack)
 	&BurnDrvmslug4lw,			// Metal Slug 4 (Last Bullet Remix, Hack)
 	&BurnDrvmslug4lwq,			// Metal Slug 4 (Last bullet without body armor, Hack)
-	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction Hack)
+	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction, Hack)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
 	&BurnDrvmslug4ammor,		// Metal Slug 4 (Random Ammunition, Hack)
@@ -29463,7 +29471,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug5f,			// Metal Slug 5 (Fierce Battle, Hack)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
 	&BurnDrvmslug5ki,			// Metal Slug 5 (Komorebi, Hack)
-	&BurnDrvmslug5d,			// Metal Slug 5 (Multifunction Hack)
+	&BurnDrvmslug5d,			// Metal Slug 5 (Multifunction, Hack)
 	&BurnDrvmslug5w,			// Metal Slug 5 (New Battle, Hack)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
@@ -29484,8 +29492,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslugxeb,			// Metal Slug X - Super Vehicle-001 (Blue, Hack)
 	&BurnDrvmslugxc2,			// Metal Slug X - Super Vehicle-001 (Enemy Remix, Hack)
 	&BurnDrvmslugxlb,			// Metal Slug X - Super Vehicle-001 (Extreme Space, Hack)
-	&BurnDrvmslugxcq,			// Metal Slug X - Super Vehicle-001 (Legend, Hack)
+	&BurnDrvmslugxcq,			// Metal Slug X - Super Vehicle-001 (Legendary, Hack)
 	&BurnDrvmslugxc1,			// Metal Slug X - Super Vehicle-001 (Multi Vehicle, Hack)
+	&BurnDrvmslugxdg,			// Metal Slug X - Super Vehicle-001 (Multifunction, Hack)
 	&BurnDrvMSlugx,				// Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)
 	&BurnDrvmslugxsc,			// Metal Slug X - Super Vehicle-001 (Survival, Hack)
 	&BurnDrvmslugxunity,		// Metal Slug X - Super Vehicle-001 Unity (Added Timer Ver. 2021-01-23)
@@ -34500,6 +34509,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSbombera,			// Space Bomber
 	&BurnDrvMSX_spacecmp,		// Space Camp (Jpn)
 	&BurnDrvMSX_spacecmpa,		// Space Camp (Jpn, Alt)
+	&BurnDrvnes_spacecat,		// Space Cat (HB)
 	&BurnDrvSpacecr,			// Space Cruiser
 	&BurnSpecSpacecrusade,		// Space Crusade (128K)
 	&BurnDrvSpacedem,			// Space Demon
@@ -34711,6 +34721,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCHF_spitfire,		// Spitfire
 	&BurnDrvMSX_splash,			// Splash (Spanish)
 	&BurnDrvSplat,				// Splat!
+	&BurnDrvnes_splatood,		// SplatooD (HB, v1.0.6)
 	&BurnDrvSplatterj,			// Splatter House (Japan, SH1)
 	&BurnDrvSplatter,			// Splatter House (World, new version (SH3))
 	&BurnDrvSplatter2,			// Splatter House (World, old version (SH2))
@@ -36344,6 +36355,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_tmntru,			// Teenage Mutant Ninja Turtles - Vozvrashchenie Legendy (Rus)
 	&BurnDrvnes_tmntiiarcgamc,	// Teenage Mutant Ninja Turtles II - The Arcade Game (Hack, Spanish v0.9)
 	&BurnDrvnes_tmntiiarcgamj,	// Teenage Mutant Ninja Turtles II - The Arcade Game (Japan)
+	&BurnDrvnes_tmntiiarcgamtc,	// Teenage Mutant Ninja Turtles II - The Arcade Game (T-Chi)
 	&BurnDrvnes_tmntiiarcgam,	// Teenage Mutant Ninja Turtles II - The Arcade Game (USA)
 	&BurnDrvnes_tmntiimanpro,	// Teenage Mutant Ninja Turtles II - The Manhattan Project (Japan)
 	&BurnDrvnes_tmntiiic,		// Teenage Mutant Ninja Turtles III - The Manhattan Project (Hack, Spanish v0.91)
@@ -36735,11 +36747,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvkof2001h,			// The King of Fighters 2001 (NGH-2621)
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)
 	&BurnDrvkof2001pkz,			// The King of Fighters 2001 (PS2 Krizalid Edition)
+	&BurnDrvkof2001ult,			// The King of Fighters 2001 (Ultimate)
 	&BurnDrvkf2k1pls,			// The King of Fighters 2001 Plus (set 1, bootleg / hack)
 	&BurnDrvkf2k1pla,			// The King of Fighters 2001 Plus (set 2, bootleg / hack)
 	&BurnDrvkof2k1rp,			// The King of Fighters 2001 Remix Pro v1.02 Final (Hack By Jason, Kim & Raymonose)
 	&BurnDrvkof2001ru,			// The King of Fighters 2001 Remix Ultra 2.3 (Hack By Jason FGCH)
-	&BurnDrvkof2001ult,			// The King of Fighters 2001 Ultimate
 	&BurnDrvkof2002b,			// The King of Fighters 2002 (bootleg)
 	&BurnDrvkof2002,			// The King of Fighters 2002 (NGM-2650)(NGH-2650)
 	&BurnDrvkof2k2omg,			// The King of Fighters 2002 (Omega v.0?)

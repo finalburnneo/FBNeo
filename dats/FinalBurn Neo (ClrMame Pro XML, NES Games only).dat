@@ -585,6 +585,23 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="airballp" cloneof="airball" romof="airball">
+		<comment>Prototype</comment>
+		<description>Airball (Prototype)</description>
+		<year>1990</year>
+		<manufacturer>Tengen</manufacturer>
+		<rom name="Airball (Proto)(1990)(Tengen).nes" size="131088" crc="8adb80e1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="airball">
+		<description>Airball</description>
+		<year>2007</year>
+		<manufacturer>Retrozone - Tengen</manufacturer>
+		<rom name="Airball (2007)(Retrozone).nes" size="131088" crc="9a535a93"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="airwolfj" cloneof="airwolf" romof="airwolf">
 		<description>Airwolf (Japan)</description>
 		<year>1988</year>
@@ -15055,6 +15072,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="spacecat">
+		<comment>Homebrew</comment>
+		<description>Space Cat (HB)</description>
+		<year>2023</year>
+		<manufacturer>unknown</manufacturer>
+		<rom name="Space Cat (2023).nes" size="524304" crc="809a6b97"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="spaceharrier">
 		<description>Space Harrier (Japan)</description>
 		<year>1989</year>
@@ -15170,6 +15196,15 @@
 		<year>2020</year>
 		<manufacturer>Passe Gaming</manufacturer>
 		<rom name="Spirit Impel (2020)(Passe Gaming).nes" size="524304" crc="146f8f6c"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="splatood">
+		<comment>Homebrew</comment>
+		<description>SplatooD (HB, v1.0.6)</description>
+		<year>2016</year>
+		<manufacturer>John Carmackerel</manufacturer>
+		<rom name="SplatooD v1.0.6 (2016)(John Carmackerel).nes" size="40976" crc="93d17b02"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16689,6 +16724,15 @@
 		<year>1990</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles II - The Arcade Game (Japan).nes" size="524304" crc="7a476257"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmntiiarcgamtc" cloneof="tmntiiarcgam" romof="tmntiiarcgam">
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles II - The Arcade Game (T-Chi)</description>
+		<year>2023</year>
+		<manufacturer>NOKOH</manufacturer>
+		<rom name="Teenage Mutant Ninja Turtles II - The Arcade Game (T-Chi).nes" size="786448" crc="35e378fc"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

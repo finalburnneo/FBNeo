@@ -15,12 +15,6 @@ CheatInfo* pCheatInfo = NULL;
 static bool bCheatsEnabled = false;
 static INT32 cheat_core_init_pointer = 0;
 
-struct cheat_core {
-	cpu_core_config *cpuconfig;
-
-	INT32 nCPU;			// which cpu
-};
-
 static struct cheat_core cpus[CHEAT_MAXCPU];
 static cheat_core *cheat_ptr;
 static cpu_core_config *cheat_subptr;
@@ -59,6 +53,12 @@ static cpu_core_config dummy_config  = {
 cheat_core *GetCpuCheatRegister(INT32 nCPU)
 {
 	return &cpus[nCPU];
+}
+
+cpu_core_config *GetCpuCoreConfig(INT32 nCPU)
+{
+	cheat_core *s_ptr = &cpus[nCPU];
+	return s_ptr->cpuconfig;
 }
 
 void CpuCheatRegister(INT32 nCPU, cpu_core_config *config)

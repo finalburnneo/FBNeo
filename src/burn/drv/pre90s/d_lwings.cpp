@@ -2784,7 +2784,7 @@ struct BurnDriver BurnDrvFball = {
 	"fball", NULL, NULL, NULL, "1992",
 	"Fire Ball (FM Work)\0", "Black Bar on the left side is normal.", "FM Work", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_MAZE, 0,
 	NULL, fballRomInfo, fballRomName, NULL, NULL, NULL, NULL, FballInputInfo, FballDIPInfo,
 	FballInit, DrvExit, FballFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3

@@ -170,6 +170,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	gun_interrupt_timer = -1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -646,7 +648,7 @@ struct BurnDriver BurnDrvGunbustr = {
 	"gunbustr", NULL, NULL, NULL, "1992",
 	"Gunbuster (World)\0", NULL, "Taito Corporation Japan", "K11J0717A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, gunbustrRomInfo, gunbustrRomName, NULL, NULL, NULL, NULL, GunbustrInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
@@ -688,7 +690,7 @@ struct BurnDriver BurnDrvGunbustru = {
 	"gunbustru", "gunbustr", NULL, NULL, "1992",
 	"Gunbuster (US)\0", NULL, "Taito America Corporation", "K11J0717A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, gunbustruRomInfo, gunbustruRomName, NULL, NULL, NULL, NULL, GunbustrInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
@@ -730,7 +732,7 @@ struct BurnDriver BurnDrvGunbustrj = {
 	"gunbustrj", "gunbustr", NULL, NULL, "1992",
 	"Gunbuster (Japan)\0", NULL, "Taito Corporation", "K11J0717A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, gunbustrjRomInfo, gunbustrjRomName, NULL, NULL, NULL, NULL, GunbustrInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3

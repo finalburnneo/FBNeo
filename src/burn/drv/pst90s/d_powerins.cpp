@@ -1514,7 +1514,7 @@ struct BurnDriver BurnDrvPowerinspu = {
 	"powerinspu", "powerins", NULL, NULL, "1993",
 	"Power Instinct (USA, prototype)\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinspuRomInfo, powerinspuRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinjDIPInfo,
 	powerinsInit, powerinsExit, powerinsFrame, DrvDraw, powerinsScan, &bRecalcPalette, 0x800,
 	320, 224, 4, 3

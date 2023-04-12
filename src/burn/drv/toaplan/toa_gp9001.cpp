@@ -370,16 +370,25 @@ static void RenderTileQueue(INT32 i, INT32 nPriority)
 	}
 }
 
+static INT32 ToaGP9001SpritesLoadState()
+{
+	// Upon loading state, we need to restore the correct pSpriteBuffer pointers
+	// and populate the spritebuffer with state-saved data (GP9001RAM)  -dink
+	pSpriteBuffer[0] = pSpriteBufferData[0] + 0x0800 * (nSpriteBuffer ^ 1);
+	if (nControllers > 1) {
+		pSpriteBuffer[1] = pSpriteBufferData[1] + 0x0800 * (nSpriteBuffer ^ 1);
+	}
+
+	memcpy(pSpriteBufferData[0] + 0x0800 * nSpriteBuffer, GP9001RAM[0] + 0x3000, 0x0800);
+	if (nControllers > 1) {
+		memcpy(pSpriteBufferData[1] + 0x0800 * nSpriteBuffer, GP9001RAM[1] + 0x3000, 0x0800);
+	}
+
+	return 0;
+}
+
 INT32 ToaBufferGP9001Sprites()
 {
-
-#if 0
-	pSpriteBuffer[0] = GP9001RAM[0] + 0x3000;
-	if (nControllers > 1) {
-		pSpriteBuffer[1] = GP9001RAM[1] + 0x3000;
-	}
-#else
-
 	pSpriteBuffer[0] = pSpriteBufferData[0] + 0x0800 * nSpriteBuffer;
 	if (nControllers > 1) {
 		pSpriteBuffer[1] = pSpriteBufferData[1] + 0x0800 * nSpriteBuffer;
@@ -391,7 +400,6 @@ INT32 ToaBufferGP9001Sprites()
 	if (nControllers > 1) {
 		memcpy(pSpriteBufferData[1] + 0x0800 * nSpriteBuffer, GP9001RAM[1] + 0x3000, 0x0800);
 	}
-#endif
 
 	return 0;
 }
@@ -621,6 +629,73 @@ INT32 ToaScanGP9001(INT32 nAction, INT32* pnMin)
 				//bprintf(0, _T("ncontrgp9001: %X\n"), i);
 				ToaGP9001SetRAMPointer(GP9001PointerCfg[i], i);
 			}
+
+			ToaGP9001SpritesLoadState();
+		}
+	}
+
+	return 0;
+}
+
+
+INT32 ToaRenderGP9001One(INT32 nSelect)
+{
+	if (nLastBPP != nBurnBpp ) {
+		nLastBPP = nBurnBpp;
+
+#ifdef DRIVER_ROTATION
+		if (bRotatedScreen) {
+			RenderTile = RenderTile_ROT270[nBurnBpp - 2];
+		} else {
+			RenderTile = RenderTile_ROT0[nBurnBpp - 2];
+		}
+#else
+		RenderTile = RenderTile_ROT0[nBurnBpp - 2];
+#endif
+	}
+
+	{
+		UINT8* pSpriteInfo;
+		INT32 nSprite, nAttrib;
+
+		UINT8*** pMySpriteQueue = &pSpriteQueue[nSelect << 4];
+
+		for (INT32 nPriority = 0; nPriority < 16; nPriority++) {
+			pMySpriteQueue[nPriority] = &pSpriteQueueData[nSelect][(nPriority << 8) + nPriority];
+		}
+
+		for (nSprite = 0, pSpriteInfo = pSpriteBuffer[nSelect]; nSprite < 0x0100; nSprite++, pSpriteInfo += 8) {
+			nAttrib = pSpriteInfo[1];
+			if (nAttrib & 0x80) {				// Sprite is enabled
+				*pMySpriteQueue[nAttrib & 0x0F]++ = pSpriteInfo;
+			}
+		}
+	}
+
+	{
+		UINT32** pMyTileQueue = &pTileQueue[nSelect << 4];
+
+		for (INT32 nPriority = 0; nPriority < 16; nPriority++) {
+			pMyTileQueue[nPriority] = &pTileQueueData[nSelect][nPriority * 512 * 3 * 2];
+		}
+
+		QueueLayer(nSelect, (UINT16*)(GP9001RAM[nSelect] + 0x0000), GP9001Reg[nSelect][0] + nLayer0XOffset, GP9001Reg[nSelect][1] + nLayer0YOffset);
+		QueueLayer(nSelect, (UINT16*)(GP9001RAM[nSelect] + 0x1000), GP9001Reg[nSelect][2] + nLayer1XOffset, GP9001Reg[nSelect][3] + nLayer1YOffset);
+		QueueLayer(nSelect, (UINT16*)(GP9001RAM[nSelect] + 0x2000), GP9001Reg[nSelect][4] + nLayer2XOffset, GP9001Reg[nSelect][5] + nLayer2YOffset);
+	}
+
+	if (nSpritePriority) {
+		for (INT32 nPriority = 0; nPriority < nSpritePriority; nPriority++) {
+			RenderTileQueue(nSelect, nPriority);
+		}
+	}
+	for (INT32 nPriority = nSpritePriority; nPriority < 16; nPriority++) {
+		RenderTileQueue(nSelect, nPriority );
+		RenderSpriteQueue(nSelect, nPriority - nSpritePriority);
+	}
+	if (nSpritePriority) {
+		for (INT32 nPriority = 16 - nSpritePriority; nPriority < 16; nPriority++) {
+			RenderSpriteQueue(nSelect, nPriority);
 		}
 	}
 

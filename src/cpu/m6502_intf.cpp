@@ -13,8 +13,8 @@ static M6502Ext *pCurrentCPU;
 cpu_core_config M6502Config =
 {
 	"M6502",
-	M6502Open,
-	M6502Close,
+	M6502CPUPush, //M6502Open,
+	M6502CPUPop, //M6502Close,
 	M6502CheatRead,
 	M6502WriteRom,
 	M6502GetActive,
@@ -58,7 +58,7 @@ struct m6809pstack {
 static m6809pstack pstack[MAX_PSTACK];
 static INT32 pstacknum = 0;
 
-static void M6502CPUPush(INT32 nCPU)
+void M6502CPUPush(INT32 nCPU)
 {
 	m6809pstack *p = &pstack[pstacknum++];
 
@@ -76,7 +76,7 @@ static void M6502CPUPush(INT32 nCPU)
 	}
 }
 
-static void M6502CPUPop()
+void M6502CPUPop()
 {
 	m6809pstack *p = &pstack[--pstacknum];
 

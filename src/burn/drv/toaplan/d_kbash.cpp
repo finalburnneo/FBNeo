@@ -495,6 +495,8 @@ static INT32 DrvDoReset()
 	BurnYM2151Reset();
 	MSM6295Reset(0);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -721,7 +723,7 @@ struct BurnDriver BurnDrvKBash = {
 	"kbash", NULL, NULL, NULL, "1993",
 	"Knuckle Bash\0", NULL, "Toaplan / Atari", "Toaplan GP9001 based",
 	L"Knuckle Bash\0Knuckle Bash \u30CA\u30C3\u30AF\u30EB\u30D0\u30C3\u30B7\u30E5\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_SCRFIGHT, 0,
 	NULL, drvRomInfo, drvRomName, NULL, NULL, NULL, NULL, kbashInputInfo,kbashDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3

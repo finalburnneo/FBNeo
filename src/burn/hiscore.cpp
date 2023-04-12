@@ -28,12 +28,6 @@ static INT32 WriteCheck1;
 static INT32 LetsTryToApply = 0;
 static INT32 nLoadingFrameDelay = 0;
 
-struct cheat_core {
-	cpu_core_config *cpuconfig;
-
-	INT32 nCPU;			// which cpu
-};
-
 static cheat_core *cheat_ptr;
 static cpu_core_config *cheat_subptr;
 extern cheat_core *GetCpuCheatRegister(INT32 nCPU);
@@ -250,6 +244,12 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 						// mhavoc (same comment as above, 0x0095 is a timer)
 						if (!strcmp(name, "mhavoc") && HiscoreMemRange[nHiscoreNumRanges].Address == 0x0095) {
 							bprintf(0, _T("-- mhavoc noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+
+						// amspdwy e3de block is suspect -dink
+						if (!strcmp(name, "amspdwy") && HiscoreMemRange[nHiscoreNumRanges].Address == 0xe3de) {
+							bprintf(0, _T("-- amspdwy noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
 						}
 						// end NoConfirm "feature"

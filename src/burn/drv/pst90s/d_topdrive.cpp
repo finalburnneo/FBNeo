@@ -245,7 +245,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	BurnSetRefreshRate(50.0);
+	BurnSetRefreshRate(58.75);
 
 	BurnAllocMemIndex();
 

@@ -270,6 +270,8 @@ static INT32 DrvDoReset()
 	screen_flipy = 0;
 	screen_flipx = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -694,7 +696,7 @@ struct BurnDriver BurnDrvFightrol = {
 	"fightrol", NULL, NULL, NULL, "1983",
 	"Fighting Roller\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, fightrolRomInfo, fightrolRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 240, 3, 4
@@ -746,7 +748,7 @@ struct BurnDriver BurnDrvRollace = {
 	"rollace", "fightrol", NULL, NULL, "1983",
 	"Roller Aces (set 1)\0", NULL, "Kaneko (Williams license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, RollaceRomInfo, RollaceRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 240, 3, 4

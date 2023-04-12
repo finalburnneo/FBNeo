@@ -383,6 +383,8 @@ static INT32 DrvDoReset()
 	memset (scrollx, 0, 3);
 	memset (scrolly, 0, 3);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -734,7 +736,7 @@ struct BurnDriver BurnDrvMsisaac = {
 	"msisaac", NULL, NULL, NULL, "1985",
 	"Metal Soldier Isaac II\0", "buggy game due to unemulated protection MCU", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_TAITO, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_SHOOT, 0,
 	NULL, msisaacRomInfo, msisaacRomName, NULL, NULL, NULL, NULL, MsisaacInputInfo, MsisaacDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4

@@ -385,6 +385,8 @@ static INT32 DrvDoReset()
 	nmi_enable = 0;
 	nmi_pending = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -886,7 +888,7 @@ struct BurnDriver BurnDrvLsasquad = {
 	"lsasquad", NULL, NULL, NULL, "1986",
 	"Land Sea Air Squad / Riku Kai Kuu Saizensen\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, lsasquadRomInfo, lsasquadRomName, NULL, NULL, NULL, NULL, LsasquadInputInfo, LsasquadDIPInfo,
 	LsasquadInit, DrvExit, DrvFrame, LsasquadDraw, DrvScan, &BurnRecalc, 0x200,
 	224, 256, 3, 4
@@ -933,7 +935,7 @@ struct BurnDriver BurnDrvStorming = {
 	"storming", "lsasquad", NULL, NULL, "1986",
 	"Storming Party / Riku Kai Kuu Saizensen (set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, stormingRomInfo, stormingRomName, NULL, NULL, NULL, NULL, LsasquadInputInfo, LsasquadDIPInfo,
 	StormingInit, DrvExit, DrvFrame, LsasquadDraw, DrvScan, &BurnRecalc, 0x200,
 	224, 256, 3, 4
@@ -975,7 +977,7 @@ struct BurnDriver BurnDrvStorminga = {
 	"storminga", "lsasquad", NULL, NULL, "1986",
 	"Storming Party / Riku Kai Kuu Saizensen (set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, stormingaRomInfo, stormingaRomName, NULL, NULL, NULL, NULL, LsasquadInputInfo, LsasquadDIPInfo,
 	StormingInit, DrvExit, DrvFrame, LsasquadDraw, DrvScan, &BurnRecalc, 0x200,
 	224, 256, 3, 4
@@ -1022,7 +1024,7 @@ struct BurnDriver BurnDrvDaikaiju = {
 	"daikaiju", NULL, NULL, NULL, "1986",
 	"Daikaiju no Gyakushu\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, daikaijuRomInfo, daikaijuRomName, NULL, NULL, NULL, NULL, LsasquadInputInfo, DaikaijuDIPInfo,
 	DaikaijuInit, DrvExit, DrvFrame, daikaijuDraw, DrvScan, &BurnRecalc, 0x200,
 	224, 256, 3, 4

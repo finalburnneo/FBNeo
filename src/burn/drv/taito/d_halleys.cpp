@@ -1126,6 +1126,8 @@ static INT32 DrvDoReset()
 
 	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1714,7 +1716,7 @@ struct BurnDriver BurnDrvHalleysc = {
 	"halleysc", NULL, NULL, NULL, "1986",
 	"Halley's Comet (US)\0", NULL, "Taito America Corporation (Coin-It license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, halleyscRomInfo, halleyscRomName, NULL, NULL, NULL, NULL, HalleysInputInfo, HalleysDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1753,7 +1755,7 @@ struct BurnDriver BurnDrvHalleyscj = {
 	"halleyscj", "halleysc", NULL, NULL, "1986",
 	"Halley's Comet (Japan, rev 1)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, halleyscjRomInfo, halleyscjRomName, NULL, NULL, NULL, NULL, HalleysInputInfo, HalleysDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1792,7 +1794,7 @@ struct BurnDriver BurnDrvHalleyscja = {
 	"halleyscja", "halleysc", NULL, NULL, "1986",
 	"Halley's Comet (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, halleyscjaRomInfo, halleyscjaRomName, NULL, NULL, NULL, NULL, HalleysInputInfo, HalleysDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1831,7 +1833,7 @@ struct BurnDriver BurnDrvHalleyscjp = {
 	"halleyscjp", "halleysc", NULL, NULL, "1985",
 	"Halley's Comet (Japan, Prototype)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, halleyscjpRomInfo, halleyscjpRomName, NULL, NULL, NULL, NULL, HalleysInputInfo, HalleysDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1870,7 +1872,7 @@ struct BurnDriver BurnDrvHalleysc87 = {
 	"halleysc87", "halleysc", NULL, NULL, "1986",
 	"Halley's Comet '87\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, halleysc87RomInfo, halleysc87RomName, NULL, NULL, NULL, NULL, HalleysInputInfo, HalleysDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1906,7 +1908,7 @@ struct BurnDriver BurnDrvBenberob = {
 	"benberob", NULL, NULL, NULL, "1984",
 	"Ben Bero Beh (Japan)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, benberobRomInfo, benberobRomName, NULL, NULL, NULL, NULL, HalleysInputInfo, BenberobDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 240, 4, 3

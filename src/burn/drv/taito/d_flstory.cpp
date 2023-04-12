@@ -802,6 +802,8 @@ static INT32 DrvDoReset()
 	pending_nmi = 0;
 	char_bank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1375,7 +1377,7 @@ struct BurnDriver BurnDrvFlstory = {
 	"flstory", NULL, NULL, NULL, "1985",
 	"The FairyLand Story\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, flstoryRomInfo, flstoryRomName, NULL, NULL, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
 	flstoryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1411,7 +1413,7 @@ struct BurnDriver BurnDrvFlstoryo = {
 	"flstoryo", "flstory", NULL, NULL, "1985",
 	"The FairyLand Story (earlier)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, flstoryoRomInfo, flstoryoRomName, NULL, NULL, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
 	flstoryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1458,7 +1460,7 @@ struct BurnDriver BurnDrvOnna34ro = {
 	"onna34ro", NULL, NULL, NULL, "1985",
 	"Onna Sansirou - Typhoon Gal\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
 	onna34roInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1503,7 +1505,7 @@ struct BurnDriver BurnDrvOnna34ra = {
 	"onna34roa", "onna34ro", NULL, NULL, "1985",
 	"Onna Sansirou - Typhoon Gal (bootleg)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
 	onna34roaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1601,7 +1603,7 @@ struct BurnDriver BurnDrvRumba = {
 	"rumba", NULL, NULL, NULL, "1984",
 	"Rumba Lumber\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, rumbaRomInfo, rumbaRomName, NULL, NULL, NULL, NULL, RumbaInputInfo, RumbaDIPInfo,
 	rumbaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

@@ -31,7 +31,7 @@ void ToaZExit();
 extern UINT8* RomZ80;
 extern UINT8* RamZ80;
 
-extern INT32 nCyclesDone[2], nCyclesTotal[2];
+extern INT32 nCyclesDone[3], nCyclesTotal[3];
 extern INT32 nCyclesSegment;
 
 #ifdef DRIVER_ROTATION
@@ -97,6 +97,7 @@ extern INT32 nLayer3XOffset, nLayer3YOffset;
 
 INT32 ToaBufferGP9001Sprites();
 INT32 ToaRenderGP9001();
+INT32 ToaRenderGP9001One(INT32 nSelect);
 INT32 ToaInitGP9001(INT32 n = 1);
 INT32 ToaExitGP9001();
 INT32 ToaScanGP9001(INT32 nAction, INT32* pnMin);

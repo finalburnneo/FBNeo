@@ -4,7 +4,7 @@ UINT8* RomZ80;
 UINT8* RamZ80;
 
 // Used to keep track of emulated CPU cycles
-INT32 nCyclesDone[2], nCyclesTotal[2];
+INT32 nCyclesDone[3], nCyclesTotal[3];
 INT32 nCyclesSegment;
 
 INT32 nToaCyclesScanline;

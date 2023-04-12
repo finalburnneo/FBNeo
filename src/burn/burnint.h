@@ -166,9 +166,18 @@ struct cpu_core_config {
 	UINT32 nAddressFlags;	// fix endianness for some cpus
 };
 
+struct cheat_core {
+	cpu_core_config *cpuconfig;
+
+	INT32 nCPU;			// which cpu
+};
+
 #define MB_CHEAT_ENDI_SWAP 0x8000 // multibyte cheat needs swap on cheat-write
 
 void CpuCheatRegister(INT32 type, cpu_core_config *config);
+
+cheat_core *GetCpuCheatRegister(INT32 nCPU);
+cpu_core_config *GetCpuCoreConfig(INT32 nCPU);
 
 // burn_memory.cpp
 void BurnInitMemoryManager();

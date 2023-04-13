@@ -7453,7 +7453,7 @@ struct BurnDriver BurnDrvmslug3h = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3hRomInfo, mslug3hRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3hInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug3hInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -7506,7 +7506,7 @@ struct BurnDriver BurnDrvmslug3b6 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3b6RomInfo, mslug3b6RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3b6Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug3b6Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -16797,7 +16797,7 @@ struct BurnDriver BurnDrvmslug3v = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3vRomInfo, mslug3vRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3hInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug3hInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -18869,10 +18869,10 @@ struct BurnDriver BurnDrvmslug3eb = {
 };
 
 
-// Metal Slug 3 (Last Bullet Remix Hack) 2023-04-10
+// Metal Slug 3 (Last Bullet Remix Hack) 2023-04-12
 static struct BurnRomInfo mslug3lwRomDesc[] = {
-	{ "256-ph1lw.bin",   0x100000,  0xd2484dff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2lw.bin",   0x400000,  0xa66e5c26, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1lw.bin",   0x100000,  0xa4f46533, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2lw.bin",   0x400000,  0x47a73593, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "ms3n_s1.rom",     0x020000,  0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 

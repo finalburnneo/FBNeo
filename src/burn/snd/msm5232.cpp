@@ -2,6 +2,7 @@
 
 #include "burnint.h"
 #include "msm5232.h"
+#include <math.h>
 
 /*
     OKI MSM5232RS
@@ -64,7 +65,11 @@ static INT32     m_add;
 static INT32     m_chip_clock;      /* chip clock in Hz */
 static INT32     m_rate;       /* sample rate in Hz */
 
-static double  m_external_capacity[8]; /* in Farads, eg 0.39e-6 = 0.36 uF (microFarads) */
+static double	m_envelope_generator_resistance_attack;
+static double	m_envelope_generator_resistance_decay_rrf;
+static double	m_envelope_generator_resistance_decay_rrs;
+
+static double	m_external_capacity[8]; /* in Farads, eg 0.39e-6 = 0.36 uF (microFarads) */
 static void (*m_gate_handler_cb)(INT32 state) = NULL;/* callback called when the GATE output pin changes state */
 
 static INT32 *sound_buffer[11];
@@ -213,6 +218,22 @@ static const UINT16 MSM5232_ROM[88]={
 #define R51 1400    /* charge resistance */
 #define R52 28750   /* discharge resistance */
 
+static void init_rate_tables()
+{
+	for (int i=0; i<8; i++)
+	{
+		double clockscale = (double)m_chip_clock / 2119040.0;
+		m_ar_tbl[i]   = ((1<<i) / clockscale) * m_envelope_generator_resistance_attack;
+	}
+
+	for (int i=0; i<8; i++)
+	{
+		double clockscale = (double)m_chip_clock / 2119040.0;
+		m_dr_tbl[i]   = ((1<<i) / clockscale) * m_envelope_generator_resistance_decay_rrf;
+		m_dr_tbl[i+8] = ((1<<i) / clockscale) * m_envelope_generator_resistance_decay_rrs;
+	}
+}
+
 static void init_tables()
 {
 	INT32 i;
@@ -228,6 +249,7 @@ static void init_tables()
 	scale = ((double)m_chip_clock) / (double)m_rate;
 	m_noise_step = (INT32)(((1<<STEP_SH)/128.0) * scale); /* step of the rng reg in 16.16 format */
 
+#if 0
 	for (i=0; i<8; i++)
 	{
 		double clockscale = (double)m_chip_clock / 2119040.0;
@@ -240,6 +262,29 @@ static void init_tables()
 		m_dr_tbl[i]   = (     (1<<i) / clockscale) * (double)R52;
 		m_dr_tbl[i+8] = (6.25*(1<<i) / clockscale) * (double)R52;
 	}
+#endif
+
+	MSM5232SetEnvGenResistances(R51, R52, R52*6.25); // defaults
+}
+
+void MSM5232SetEnvGenResistances(double attack, double decay_rrf, double decay_rrs)
+{
+	m_envelope_generator_resistance_attack = attack;
+	m_envelope_generator_resistance_decay_rrf = decay_rrf;
+	m_envelope_generator_resistance_decay_rrs = decay_rrs;
+
+	init_rate_tables();
+}
+
+void MSM5232SetEnvGenResistancesByCapacitance(double capacitance)
+{
+	const double time_constant = capacitance * log( 1-0.9 ) ;
+
+	MSM5232SetEnvGenResistances(
+			-0.002 / time_constant
+		,	-0.040 / time_constant
+		,	-0.250 / time_constant
+		);
 }
 
 static void init_voice(INT32 i)

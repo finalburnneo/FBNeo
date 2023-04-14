@@ -30452,10 +30452,10 @@ struct BurnDriver BurnDrvsms_castlescape = {
 	256, 192, 4, 3
 };
 
-// Extreme Volleyball Infernal League (HB, v1.0.5)
+// Extreme Volleyball Infernal League (HB, v1.0.6)
 
 static struct BurnRomInfo sms_evilRomDesc[] = {
-	{ "Extreme Volleyball Infernal League v1.0.5 (2023)(raphnet).sms",	524288, 0x6402d2d6, BRF_PRG | BRF_ESS },
+	{ "Extreme Volleyball Infernal League v1.0.6 (2023)(raphnet).sms",	524288, 0x82ef4bda, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_evil)
@@ -30463,7 +30463,7 @@ STD_ROM_FN(sms_evil)
 
 struct BurnDriver BurnDrvsms_evil = {
 	"sms_evil", NULL, NULL, NULL, "2023",
-	"Extreme Volleyball Infernal League (HB, v1.0.5)\0", NULL, "raphnet", "Sega Master System",
+	"Extreme Volleyball Infernal League (HB, v1.0.6)\0", NULL, "raphnet", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_evilRomInfo, sms_evilRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

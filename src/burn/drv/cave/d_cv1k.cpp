@@ -1390,7 +1390,7 @@ struct BurnDriver BurnDrvDdpsdoj = {
 	"ddpsdoj", NULL, NULL, NULL, "2012",
 	"DoDonPachi SaiDaiOuJou (2012/ 4/20)\0", NULL, "Cave", "CA???",
 	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u6700\u5927\u5f80\u751f (2012/4/20)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ddpsdojRomInfo, ddpsdojRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4

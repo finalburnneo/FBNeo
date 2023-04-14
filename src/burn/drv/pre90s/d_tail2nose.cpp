@@ -808,7 +808,7 @@ struct BurnDriver BurnDrvTail2nosa = {
 	"tail2nosa", "tail2nos", "ym2608", NULL, "1989",
 	"Tail to Nose - Great Championship\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, tail2nosaRomInfo, tail2nosaRomName, NULL, NULL, NULL, NULL, Tail2nosInputInfo, Tail2nosDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4

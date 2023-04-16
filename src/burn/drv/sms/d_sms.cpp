@@ -30436,7 +30436,7 @@ struct BurnDriver BurnDrvsms_sutoroku = {
 // Castle Escape (HB)
 
 static struct BurnRomInfo sms_castlescapeRomDesc[] = {
-	{ "Castle Escape (2023)(IrataHack).sms",	65536, 0x2a3b133c, BRF_PRG | BRF_ESS },
+	{ "Castle Escape (2023)(IrataHack).sms",	65536, 0x41d70425, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_castlescape)

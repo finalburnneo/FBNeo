@@ -97,6 +97,7 @@ static UINT16 spritelist_dma_prev = 0;
 static INT32 cps3_gfx_width, cps3_gfx_height;
 static INT32 cps3_gfx_max_x, cps3_gfx_max_y;
 
+static INT32 nExtraCycles;
 
 // -- AMD/Fujitsu 29F016 --------------------------------------------------
 
@@ -1123,6 +1124,8 @@ static INT32 Cps3Reset()
 
 	dma_timer = -1;
 
+	nExtraCycles = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -2115,18 +2118,22 @@ INT32 cps3Frame()
 
 	Sh2NewFrame();
 
-	INT32 nInterleave = 4;
+	INT32 nInterleave = 16;
 	INT32 nCyclesTotal[1] = { 25000000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
+
+	Sh2Idle(nExtraCycles);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN_SYNCINT(0, Sh2);
 
-		if (cps_int10_cnt >= 2) {
-			cps_int10_cnt = 0;
-			Sh2SetIRQLine(10, CPU_IRQSTATUS_ACK);
-		} else cps_int10_cnt++;
+		if ((i&3)==3) {
+			if (cps_int10_cnt >= 2) {
+				cps_int10_cnt = 0;
+				Sh2SetIRQLine(10, CPU_IRQSTATUS_ACK);
+			} else cps_int10_cnt++;
+		}
 
 		if (dma_timer > 0)
 		{
@@ -2138,6 +2145,10 @@ INT32 cps3Frame()
 		}
 	}
 	Sh2SetIRQLine(12, CPU_IRQSTATUS_ACK);
+
+	nExtraCycles = Sh2TotalCycles() - nCyclesTotal[0];
+
+	//bprintf(0, _T("nCyclesDone[0]  %d  totalcyc  %d  extra  %d\n"), nCyclesDone[0], Sh2TotalCycles(), nExtraCycles);
 
 	cps3SndUpdate();
 	
@@ -2229,9 +2240,7 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		
 		Sh2Scan(nAction);
 		cps3SndScan(nAction);
-		
-		SCAN_VAR(Cps3Input);
-		
+
 		SCAN_VAR(ss_bank_base);
 		SCAN_VAR(ss_pal_base);
 		SCAN_VAR(cram_bank);
@@ -2252,14 +2261,16 @@ INT32 cps3Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(dma_status);
 		SCAN_VAR(dma_timer);
 
-		//SCAN_VAR(main_flash);
+		SCAN_VAR(main_flash);
 		
-		//SCAN_VAR(last_normal_byte);
-		//SCAN_VAR(lastb);
-		//SCAN_VAR(lastb2);
+		SCAN_VAR(last_normal_byte);
+		SCAN_VAR(lastb);
+		SCAN_VAR(lastb2);
 		
 		SCAN_VAR(cps_int10_cnt);
-				
+
+		SCAN_VAR(nExtraCycles);
+
 		if (nAction & ACB_WRITE) {
 			
 			// rebuild current palette

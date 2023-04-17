@@ -8364,7 +8364,7 @@ STD_ROM_PICK(Chuckieegg)
 STD_ROM_FN(Chuckieegg)
 
 struct BurnDriver BurnDrvChuckieegg = {
-	"Chuckieegg", NULL, NULL, NULL, "2023",
+	"chuckieegg", NULL, NULL, NULL, "2023",
 	"Chuckie Egg\0", NULL, "Arlasoft", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,

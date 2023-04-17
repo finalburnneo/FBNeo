@@ -50,6 +50,8 @@ static UINT8 *flipscreen;
 static INT32 interrupt_mode;
 static INT32 interrupt_mask;
 
+static INT32 nExtraCycles;
+
 static UINT8 colortablebank;
 static UINT8 palettebank;
 static UINT8 spritebank;
@@ -652,6 +654,34 @@ STDINPUTINFO(shootbul)
 
 #undef A
 
+static struct BurnInputInfo ChuckieeggInputList[] = {
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 7,	"diag"		},
+
+	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,    "dip"		},
+	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 3,    "dip"		},
+	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 0,    "dip"		},
+	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 1,    "dip"		},
+};
+
+STDINPUTINFO(Chuckieegg)
+
+static struct BurnDIPInfo ChuckieeggDIPList[]=
+{
+	DIP_OFFSET(0x07)
+	{0x00, 0xff, 0xff, 0xd1, NULL                     },
+	{0x01, 0xff, 0xff, 0xb1, NULL                     },
+	{0x02, 0xff, 0xff, 0xe0, NULL                     },
+	{0x03, 0xff, 0xff, 0x00, NULL                     },
+};
+
+STDDIPINFO(Chuckieegg)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
@@ -2405,12 +2435,10 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	NamcoSoundReset();
 
-	HiscoreReset();
-
 	mschamp_counter = 0;
 	cannonb_bit_to_read = 0;
 	alibaba_mystery = 0;
-	
+
 	interrupt_mode = 0;
 	interrupt_mask = 0;
 	colortablebank = 0;
@@ -2418,6 +2446,10 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	spritebank = 0;	
 	charbank = 0;
 	sublatch = 0;
+
+	nExtraCycles = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -3018,15 +3050,15 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetOpen(0);
-
 	INT32 nInterleave = 264;
 	INT32 nCyclesTotal[1] = { (INT32)((double)3072000 / 60.606061) };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	if (game_select == MSPACTWIN) {
 		DrvDrawBegin();
 	}
+
+	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Zet);
@@ -3052,6 +3084,8 @@ static INT32 DrvFrame()
 		}
 	}
 
+	ZetClose();
+
 	if (pBurnSoundOut) {
 		if (!(game_select == DREMSHPR || game_select == CRUSHS || game_select == VANVAN)) {
 			NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
@@ -3063,7 +3097,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetClose();
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		if (game_select == MSPACTWIN) {
@@ -3101,6 +3135,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(nPacBank);
 
+		SCAN_VAR(watchdog);
+
 		SCAN_VAR(interrupt_mode);
 		SCAN_VAR(interrupt_mask);
 
@@ -3119,6 +3155,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == ZOLAPAC) {
 			SCAN_VAR(zolapac_timer);
 		}
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -8300,3 +8338,37 @@ struct BurnDriver BurnDrvzolapac = {
 	224, 288, 3, 4
 };
 
+// Chuckie Egg
+
+static struct BurnRomInfo ChuckieeggRomDesc[] = {
+	{ "ppokoj1.bin",    0x1000, 0xf2ba04fd, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "ppokoj2.bin",    0x1000, 0x161510d3, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "ppokoj3.bin",    0x1000, 0x5c594671, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "ppokoj4.bin",    0x1000, 0x25d4fc4f, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "ppoko5.bin",     0x1000, 0x54ca3d7d, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "ppoko6.bin",     0x1000, 0x3055c7e0, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "ppoko7.bin",     0x1000, 0x3cbe47ca, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "ppokoj8.bin",    0x1000, 0x04b63fc6, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "ppoko9.bin",     0x1000, 0x7394bd6d, 2 | BRF_GRA },				//  8 Graphics
+	{ "ppoko10.bin",    0x1000, 0x0024afe1, 2 | BRF_GRA },				//  9
+
+	{ "82s123.7f",      0x0020, 0xf2f2cbfb, 3 | BRF_GRA },				// 10 Color Proms
+	{ "82s126.4a",      0x0100, 0x3eb3a8e4, 3 | BRF_GRA },				// 11
+
+	{ "82s126.1m",      0x0100, 0xa9cc86bf, 4 | BRF_SND },				// 12 Sound Prom
+	{ "82s126.3m",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
+};
+
+STD_ROM_PICK(Chuckieegg)
+STD_ROM_FN(Chuckieegg)
+
+struct BurnDriver BurnDrvChuckieegg = {
+	"chuckieegg", NULL, NULL, NULL, "2023",
+	"Chuckie Egg\0", NULL, "Arlasoft", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
+	NULL, ChuckieeggRomInfo, ChuckieeggRomName, NULL, NULL, NULL, NULL, ChuckieeggInputInfo, ChuckieeggDIPInfo,
+	ponpokoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	288, 224, 4, 3
+};

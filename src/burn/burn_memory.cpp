@@ -126,6 +126,19 @@ void _BurnFree(void *ptr)
 	}
 }
 
+// Swap contents of src with dst
+void BurnSwapMemBlock(UINT8 *src, UINT8 *dst, INT32 size)
+{
+	UINT8 *temp = BurnMalloc(size);
+
+	memcpy(temp,	src,	size);
+	memcpy(src,		dst,	size);
+	memcpy(dst,		temp,	size);
+
+	BurnFree(temp);
+}
+
+
 // call in BurnDrvExit?
 
 void BurnExitMemoryManager()

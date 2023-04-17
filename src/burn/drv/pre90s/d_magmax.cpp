@@ -827,7 +827,7 @@ struct BurnDriver BurnDrvMagmaxa = {
 	"magmaxa", "magmax", NULL, NULL, "1985",
 	"Mag Max (set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, magmaxaRomInfo, magmaxaRomName, NULL, NULL, NULL, NULL, MagmaxInputInfo, MagmaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x210,
 	256, 224, 4, 3

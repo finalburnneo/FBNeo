@@ -4404,7 +4404,7 @@ struct BurnDriver BurnDrvOoparts = {
 	"ooparts", NULL, NULL, NULL, "1992",
 	"OOPArts (prototype, joystick hack)\0", NULL, "hack", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_BREAKOUT, 0,
 	NULL, oopartsRomInfo, oopartsRomName, NULL, NULL, NULL, NULL, OopartsInputInfo, OopartsDIPInfo,
 	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	224, 320, 3, 4

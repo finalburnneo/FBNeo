@@ -8972,8 +8972,8 @@
 		<description>Metal Slug 3 (Last Bullet Remix, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="256-ph1lw.p1" size="1048576" crc="b4c7de94"/>
-		<rom name="256-ph2lw.sp2" size="4194304" crc="a66e5c26"/>
+		<rom name="256-ph1lw.p1" size="1048576" crc="a4f46533"/>
+		<rom name="256-ph2lw.sp2" size="4194304" crc="47a73593"/>
 		<rom name="256-s1d.s1" size="131072" crc="8458fff9"/>
 		<rom name="256-c1d.c1" size="8388608" crc="3540398c"/>
 		<rom name="256-c2d.c2" size="8388608" crc="bdd220f0"/>
@@ -9034,8 +9034,8 @@
 		<description>Metal Slug 3 (Legendary, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="256-ph1cq.p1" size="1048576" crc="7b4dd96c"/>
-		<rom name="256-ph2cq.sp2" size="4194304" crc="a9cad8f1"/>
+		<rom name="256-ph1cq.p1" size="1048576" crc="8f65bb77"/>
+		<rom name="256-ph2cq.sp2" size="4194304" crc="18583a4c"/>
 		<rom name="256-s1d.s1" size="131072" crc="8458fff9"/>
 		<rom name="256-c1d.c1" size="8388608" crc="3540398c"/>
 		<rom name="256-c2d.c2" size="8388608" crc="bdd220f0"/>
@@ -9043,8 +9043,8 @@
 		<rom name="256-c4d.c4" size="8388608" crc="1463add6"/>
 		<rom name="256-c5d.c5" size="8388608" crc="48ca7f28"/>
 		<rom name="256-c6d.c6" size="8388608" crc="806eb36f"/>
-		<rom name="256-c7dcq.c7" size="8388608" crc="b8e017de"/>
-		<rom name="256-c8dcq.c8" size="8388608" crc="def95742"/>
+		<rom name="256-c7dcq.c7" size="8388608" crc="b7bd7296"/>
+		<rom name="256-c8dcq.c8" size="8388608" crc="638e5920"/>
 		<rom name="256-m1.m1" merge="256-m1.m1" size="524288" crc="eaeec116"/>
 		<rom name="256-v1.v1" merge="256-v1.v1" size="4194304" crc="f2690241"/>
 		<rom name="256-v2.v2" merge="256-v2.v2" size="4194304" crc="7e2a10bd"/>
@@ -9768,18 +9768,27 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mslug3x" romof="neogeo">
-		<comment>Homebrew</comment>
-		<description>Metal Slug 3 (X, Homebrew)</description>
-		<year>2022</year>
-		<manufacturer>Willnie</manufacturer>
-		<rom name="mslug3x-p1cr.p1" size="4194304" crc="840b5b8e"/>
-		<rom name="mslug3x-p2cr.p2" size="4194304" crc="c7635ac9"/>
-		<rom name="mslug3x-c1c.c1" size="8388608" crc="bbb8d9f6"/>
-		<rom name="mslug3x-c2c.c2" size="8388608" crc="5fb3498a"/>
-		<rom name="mslug3x-m1.m1" size="131072" crc="876df5e1"/>
-		<rom name="mslug3x-v1c.v1" size="8388608" crc="5d904213"/>
-		<rom name="mslug3x-v2c.v2" size="8388608" crc="97cee550"/>
+	<game name="mslug3unity" cloneof="mslug3" romof="mslug3">
+		<comment>Hack</comment>
+		<description>Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)</description>
+		<year>2021</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="green.neo-sma" size="262144" crc="3c6c536b"/>
+		<rom name="256-pg1.p1" merge="256-pg1.p1" size="4194304" crc="b07edfd5"/>
+		<rom name="256-pg2.p2" size="4194304" crc="ea0c22b6"/>
+		<rom name="256-c1.c1" merge="256-c1.c1" size="8388608" crc="5a79c34e"/>
+		<rom name="256-c2.c2" merge="256-c2.c2" size="8388608" crc="944c362c"/>
+		<rom name="256-c3.c3" merge="256-c3.c3" size="8388608" crc="6e69d36f"/>
+		<rom name="256-c4.c4" merge="256-c4.c4" size="8388608" crc="b755b4eb"/>
+		<rom name="256-c5.c5" merge="256-c5.c5" size="8388608" crc="7aacab47"/>
+		<rom name="256-c6.c6" merge="256-c6.c6" size="8388608" crc="c698fd5d"/>
+		<rom name="256-c7.c7" merge="256-c7.c7" size="8388608" crc="cfceddd2"/>
+		<rom name="256-c8.c8" merge="256-c8.c8" size="8388608" crc="4d9be34c"/>
+		<rom name="256-m1.m1" merge="256-m1.m1" size="524288" crc="eaeec116"/>
+		<rom name="256-v1.v1" merge="256-v1.v1" size="4194304" crc="f2690241"/>
+		<rom name="256-v2.v2" merge="256-v2.v2" size="4194304" crc="7e2a10bd"/>
+		<rom name="256-v3.v3" merge="256-v3.v3" size="4194304" crc="0eaec17c"/>
+		<rom name="256-v4.v4" merge="256-v4.v4" size="4194304" crc="9b4b22d4"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -9821,27 +9830,41 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mslug3unity" cloneof="mslug3" romof="mslug3">
-		<comment>Hack</comment>
-		<description>Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)</description>
-		<year>2021</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="green.neo-sma" size="262144" crc="3c6c536b"/>
-		<rom name="256-pg1.p1" merge="256-pg1.p1" size="4194304" crc="b07edfd5"/>
-		<rom name="256-pg2.p2" size="4194304" crc="ea0c22b6"/>
-		<rom name="256-c1.c1" merge="256-c1.c1" size="8388608" crc="5a79c34e"/>
-		<rom name="256-c2.c2" merge="256-c2.c2" size="8388608" crc="944c362c"/>
-		<rom name="256-c3.c3" merge="256-c3.c3" size="8388608" crc="6e69d36f"/>
-		<rom name="256-c4.c4" merge="256-c4.c4" size="8388608" crc="b755b4eb"/>
-		<rom name="256-c5.c5" merge="256-c5.c5" size="8388608" crc="7aacab47"/>
-		<rom name="256-c6.c6" merge="256-c6.c6" size="8388608" crc="c698fd5d"/>
-		<rom name="256-c7.c7" merge="256-c7.c7" size="8388608" crc="cfceddd2"/>
-		<rom name="256-c8.c8" merge="256-c8.c8" size="8388608" crc="4d9be34c"/>
-		<rom name="256-m1.m1" merge="256-m1.m1" size="524288" crc="eaeec116"/>
-		<rom name="256-v1.v1" merge="256-v1.v1" size="4194304" crc="f2690241"/>
-		<rom name="256-v2.v2" merge="256-v2.v2" size="4194304" crc="7e2a10bd"/>
-		<rom name="256-v3.v3" merge="256-v3.v3" size="4194304" crc="0eaec17c"/>
-		<rom name="256-v4.v4" merge="256-v4.v4" size="4194304" crc="9b4b22d4"/>
+	<game name="mslug3x" romof="neogeo">
+		<comment>Homebrew</comment>
+		<description>Metal Slug 3X (Complete Collection)</description>
+		<year>2022</year>
+		<manufacturer>Homebrew</manufacturer>
+		<rom name="mslug3x-p1.p1" size="2097152" crc="0d327ddb"/>
+		<rom name="mslug3x-s1.s1" size="131072" crc="d2af5597"/>
+		<rom name="mslug3x-c1.c1" size="8388608" crc="7eb33146"/>
+		<rom name="mslug3x-c2.c2" size="8388608" crc="a193a88a"/>
+		<rom name="mslug3x-m1.m1" size="131072" crc="0e339fdf"/>
+		<rom name="mslug3x-v1.v1" size="16777216" crc="67cc9264"/>
+		<rom name="mslug3x-p1pb.p1" size="2097152" crc="64f596c5"/>
+		<rom name="mslug3x-c1pb.c1" size="8388608" crc="4a895201"/>
+		<rom name="mslug3x-c2pb.c2" size="8388608" crc="47c53b38"/>
+		<rom name="mslug3x-p1d0.p1" size="2097152" crc="06967c7f"/>
+		<rom name="mslug3x-s1d0.s1" size="131072" crc="87094760"/>
+		<rom name="mslug3x-c1d0.c1" size="8388608" crc="e245ad45"/>
+		<rom name="mslug3x-c2d0.c2" size="8388608" crc="96bf1209"/>
+		<rom name="mslug3x-m1d0.m1" size="131072" crc="3d9feec6"/>
+		<rom name="mslug3x-v1d0.v1" size="8388608" crc="3fdaec62"/>
+		<rom name="mslug3x-p1d1.p1" size="2097152" crc="8cfeada7"/>
+		<rom name="mslug3x-c1d1.c1" size="8388608" crc="4f64aecb"/>
+		<rom name="mslug3x-c2d1.c2" size="8388608" crc="c02b2cbb"/>
+		<rom name="mslug3x-m1d1.m1" size="131072" crc="d603fc58"/>
+		<rom name="mslug3x-v1d1.v1" size="8388608" crc="3fe95bc8"/>
+		<rom name="mslug3x-p1d2.p1" size="2097152" crc="17510972"/>
+		<rom name="mslug3x-c1d2.c1" size="4194304" crc="9d497f06"/>
+		<rom name="mslug3x-c2d2.c2" size="4194304" crc="00482d5f"/>
+		<rom name="mslug3x-m1d2.m1" size="131072" crc="c6eace68"/>
+		<rom name="mslug3x-v1d2.v1" size="8388608" crc="95a64a9d"/>
+		<rom name="mslug3x-p1d3.p1" size="2097152" crc="0f7700d7"/>
+		<rom name="mslug3x-c1d3.c1" size="8388608" crc="9be2f993"/>
+		<rom name="mslug3x-c2d3.c2" size="8388608" crc="9f261733"/>
+		<rom name="mslug3x-m1d3.m1" size="131072" crc="c5579de4"/>
+		<rom name="mslug3x-v1d3.v1" size="8388608" crc="17934969"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -10867,19 +10890,19 @@
 		<description>Metal Slug 5 (Boss Battles, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="268-p1cbs.p1" size="4194304" crc="64a7379a"/>
-		<rom name="268-p2cbs.p2" size="4194304" crc="bd0325c4"/>
-		<rom name="268-c1c.c1" merge="268-c1c.c1" size="8388608" crc="ab7c389a"/>
-		<rom name="268-c2c.c2" merge="268-c2c.c2" size="8388608" crc="3560881b"/>
-		<rom name="268-c3c.c3" merge="268-c3c.c3" size="8388608" crc="3af955ea"/>
-		<rom name="268-c4c.c4" merge="268-c4c.c4" size="8388608" crc="c329c373"/>
-		<rom name="268-c5c.c5" merge="268-c5c.c5" size="8388608" crc="959c8177"/>
-		<rom name="268-c6c.c6" merge="268-c6c.c6" size="8388608" crc="010a831b"/>
-		<rom name="268-c7c.c7" merge="268-c7c.c7" size="8388608" crc="6d72a969"/>
-		<rom name="268-c8c.c8" merge="268-c8c.c8" size="8388608" crc="551d720e"/>
-		<rom name="268-m1.m1" merge="268-m1.m1" size="524288" crc="4a5a6e0e"/>
-		<rom name="268-v1c.v1" merge="268-v1c.v1" size="8388608" crc="ae31d60c"/>
-		<rom name="268-v2c.v2" merge="268-v2c.v2" size="8388608" crc="c40613ed"/>
+		<rom name="268-p1nbs.p1" size="6291456" crc="db66b94c"/>
+		<rom name="268-s1d.s1" size="131072" crc="64952683"/>
+		<rom name="268-c1d.c1" size="8388608" crc="e8239365"/>
+		<rom name="268-c2d.c2" size="8388608" crc="89b21d4c"/>
+		<rom name="268-c3d.c3" size="8388608" crc="3cda13a0"/>
+		<rom name="268-c4d.c4" size="8388608" crc="9c00160d"/>
+		<rom name="268-c5d.c5" size="8388608" crc="38754256"/>
+		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
+		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
+		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
+		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
+		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -11636,19 +11659,19 @@
 		<description>Metal Slug 5 (Stone Turtle, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="268-p1csg.p1" size="4194304" crc="6068b275"/>
-		<rom name="268-p2csg.p2" size="4194304" crc="0ea4d6b5"/>
-		<rom name="268-c1c.c1" merge="268-c1c.c1" size="8388608" crc="ab7c389a"/>
-		<rom name="268-c2c.c2" merge="268-c2c.c2" size="8388608" crc="3560881b"/>
-		<rom name="268-c3c.c3" merge="268-c3c.c3" size="8388608" crc="3af955ea"/>
-		<rom name="268-c4c.c4" merge="268-c4c.c4" size="8388608" crc="c329c373"/>
-		<rom name="268-c5c.c5" merge="268-c5c.c5" size="8388608" crc="959c8177"/>
-		<rom name="268-c6c.c6" merge="268-c6c.c6" size="8388608" crc="010a831b"/>
-		<rom name="268-c7c.c7" merge="268-c7c.c7" size="8388608" crc="6d72a969"/>
-		<rom name="268-c8c.c8" merge="268-c8c.c8" size="8388608" crc="551d720e"/>
-		<rom name="268-m1.m1" merge="268-m1.m1" size="524288" crc="4a5a6e0e"/>
-		<rom name="268-v1c.v1" merge="268-v1c.v1" size="8388608" crc="ae31d60c"/>
-		<rom name="268-v2c.v2" merge="268-v2c.v2" size="8388608" crc="c40613ed"/>
+		<rom name="268-p1nsg.p1" size="6291456" crc="be30e935"/>
+		<rom name="268-s1d.s1" size="131072" crc="64952683"/>
+		<rom name="268-c1d.c1" size="8388608" crc="e8239365"/>
+		<rom name="268-c2d.c2" size="8388608" crc="89b21d4c"/>
+		<rom name="268-c3d.c3" size="8388608" crc="3cda13a0"/>
+		<rom name="268-c4d.c4" size="8388608" crc="9c00160d"/>
+		<rom name="268-c5d.c5" size="8388608" crc="38754256"/>
+		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
+		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
+		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
+		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
+		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -12699,8 +12722,8 @@
 		<description>Metal Slug X - Super Vehicle-001 (Multifunction, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1dg.p1" size="1048576" crc="4868b5ce"/>
-		<rom name="250-p2dg.ep1" size="4194304" crc="da239a0d"/>
+		<rom name="250-p1dg.p1" size="1048576" crc="9874ddee"/>
+		<rom name="250-p2dg.ep1" size="4194304" crc="431cb335"/>
 		<rom name="250-s1.s1" merge="250-s1.s1" size="131072" crc="fb6f441d"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
@@ -17480,7 +17503,7 @@
 		<description>Samurai Shodown II Perfect (V. 01, Hack)</description>
 		<year>2023</year>
 		<manufacturer>Bear</manufacturer>
-		<rom name="063-p1pe.p1" size="2097152" crc="b321ff65"/>
+		<rom name="063-p1pe.p1" size="2097152" crc="c9f763e0"/>
 		<rom name="063-p2pe.p2" size="131072" crc="e9cc1d72"/>
 		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
 		<rom name="063-c1.c1" merge="063-c1.c1" size="2097152" crc="86cd307c"/>

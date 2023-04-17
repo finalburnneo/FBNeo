@@ -2632,6 +2632,7 @@ DRV		BurnDrvsms_castelo;
 DRV		BurnDrvcv_castelo;
 DRV		BurnSpecCastlecapers;
 DRV		BurnSpecCastlescape;
+DRV		BurnDrvsms_castlescape;
 DRV		BurnDrvnes_castleexcellent;
 DRV		BurnDrvMSX_castlex;
 DRV		BurnDrvMSX_castlexa;
@@ -3026,6 +3027,7 @@ DRV		BurnDrvmd_excelart;
 DRV		BurnSpecchuckegg;
 DRV		BurnDrvMSX_chuckie;
 DRV		BurnSpecchuckeg2;
+DRV		BurnDrvChuckieegg;
 DRV		BurnDrvChukataja;
 DRV		BurnDrvChukataj;
 DRV		BurnDrvChukatau;
@@ -5252,6 +5254,7 @@ DRV		BurnDrvMSX_extermin;
 DRV		BurnDrvExterm;
 DRV		BurnSpecExtreme;
 DRV		BurnDrvExtdwnhl;
+DRV		BurnDrvsms_evil;
 DRV		BurnSpecExtruder;
 DRV		BurnDrvExvaniaj;
 DRV		BurnDrvExvania;
@@ -8967,6 +8970,7 @@ DRV		BurnDrvLgtnfght;
 DRV		BurnDrvLtswords;
 DRV		BurnDrvCHF_lightsout;
 DRV		BurnDrvnes_lightsout;
+DRV		BurnDrvsms_leknievel;
 DRV		BurnDrvShangonleeh;
 DRV		BurnDrvShangonle;
 DRV		BurnSpeclinefire;
@@ -9880,8 +9884,8 @@ DRV		BurnDrvmslug3sd;
 DRV		BurnDrvmslug3se;
 DRV		BurnDrvmslug3sc;
 DRV		BurnDrvmslug3zh;
-DRV		BurnDrvmslug3x;
 DRV		BurnDrvmslug3unity;
+DRV		BurnDrvmslug3x;
 DRV		BurnDrvmslug41v2;
 DRV		BurnDrvmslug4a;
 DRV		BurnDrvmslug4dd;
@@ -10263,6 +10267,8 @@ DRV		BurnDrvsg1k_monacogpb;
 DRV		BurnDrvsg1k_monacogpa;
 DRV		BurnDrvsg1k_monacogp;
 DRV		BurnDrvsg1k_monacogpt;
+DRV		BurnDrvgg_mcmastergg;
+DRV		BurnDrvsms_mcmaster;
 DRV		BurnDrvMonymony;
 DRV		BurnDrvMonymony2;
 DRV		BurnDrvmiexchng;
@@ -14632,6 +14638,7 @@ DRV		BurnDrvnes_snakesrevenge;
 DRV		BurnDrvnes_snakky;
 DRV		BurnDrvSnapjack;
 DRV		BurnDrvSnapper;
+DRV		BurnDrvsms_snappysnorg;
 DRV		BurnDrvmd_snezkoro;
 DRV		BurnDrvngpc_snkgals;
 DRV		BurnDrvngpc_snkgalsj;
@@ -18652,6 +18659,7 @@ DRV		BurnDrvnes_whereintimiscasa;
 DRV		BurnDrvmd_carmntimb;
 DRV		BurnDrvmd_carmntim;
 DRV		BurnDrvMSX_whereisit;
+DRV		BurnDrvsms_whereisit;
 DRV		BurnSpecWheretimestoodstill;
 DRV		BurnDrvnes_whereswaldo;
 DRV		BurnDrvmd_whiprushs;
@@ -22195,6 +22203,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_castelo,			// Castelo
 	&BurnSpecCastlecapers,		// Castle Capers (128K) (HB)
 	&BurnSpecCastlescape,		// Castle Escape (128K) (HB)
+	&BurnDrvsms_castlescape,	// Castle Escape (HB)
 	&BurnDrvnes_castleexcellent,// Castle Excellent (Japan)
 	&BurnDrvMSX_castlex,		// Castle Excellent (Jpn)
 	&BurnDrvMSX_castlexa,		// Castle Excellent (Jpn, Alt)
@@ -22589,6 +22598,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecchuckegg,			// Chuckie Egg (48K)
 	&BurnDrvMSX_chuckie,		// Chuckie Egg (Euro)
 	&BurnSpecchuckeg2,			// Chuckie Egg 2 (48K)
+	&BurnDrvChuckieegg,			// Chuckie Egg
 	&BurnDrvChukataja,			// Chuka Taisen (Japan) (P0-025-A PCB)
 	&BurnDrvChukataj,			// Chuka Taisen (Japan) (P0-028-A PCB)
 	&BurnDrvChukatau,			// Chuka Taisen (US) (P0-028-A PCB)
@@ -24815,6 +24825,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvExterm,				// Exterminator
 	&BurnSpecExtreme,			// Extreme (48K)
 	&BurnDrvExtdwnhl,			// Extreme Downhill (v1.5)
+	&BurnDrvsms_evil,			// Extreme Volleyball Infernal League (HB, v1.0.6)
 	&BurnSpecExtruder,			// Extruder (48K) (HB)
 	&BurnDrvExvaniaj,			// Exvania (Japan)
 	&BurnDrvExvania,			// Exvania (World)
@@ -28530,6 +28541,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLtswords,			// Lightning Swords (World)
 	&BurnDrvCHF_lightsout,		// Lights Out (HB)
 	&BurnDrvnes_lightsout,		// Lights Out (HB)
+	&BurnDrvsms_leknievel,		// Lil Evel Knievel (HB)
 	&BurnDrvShangonleeh,		// Limited Edition Hang-On (Enhanced Edition v2.0.2)
 	&BurnDrvShangonle,			// Limited Edition Hang-On
 	&BurnSpeclinefire,			// Line of Fire (128K)
@@ -29443,8 +29455,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmslug3se,			// Metal Slug 3 (Special Edition, Hack)
 	&BurnDrvmslug3sc,			// Metal Slug 3 (Survival, Hack)
 	&BurnDrvmslug3zh,			// Metal Slug 3 (Vehicle Summon, Hack)
-	&BurnDrvmslug3x,			// Metal Slug 3 (X, Homebrew)
 	&BurnDrvmslug3unity,		// Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)
+	&BurnDrvmslug3x,			// Metal Slug 3X (Complete Collection)
 	&BurnDrvmslug41v2,			// Metal Slug 4 (1v2 Mode, Hack)
 	&BurnDrvmslug4a,			// Metal Slug 4 (20th Anniversary)
 	&BurnDrvmslug4dd,			// Metal Slug 4 (Early Summer Starry Sky, Hack)
@@ -29826,6 +29838,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_monacogpa,		// Monaco GP (Jpn, v1)
 	&BurnDrvsg1k_monacogp,		// Monaco GP (Jpn, v2)
 	&BurnDrvsg1k_monacogpt,		// Monaco GP (Tw)
+	&BurnDrvgg_mcmastergg,		// Monaco Master (HB, v1.1)
+	&BurnDrvsms_mcmaster,		// Monaco Master (HB, v2.9)
 	&BurnDrvMonymony,			// Money Money (set 1)
 	&BurnDrvMonymony2,			// Money Money (set 2)
 	&BurnDrvmiexchng,			// Money Puzzle Exchanger / Money Idol Exchanger
@@ -34195,6 +34209,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_snakky,			// Snakky (HB)
 	&BurnDrvSnapjack,			// Snap Jack
 	&BurnDrvSnapper,			// Snapper (Korea)
+	&BurnDrvsms_snappysnorg,	// Snappy Snorg and the Seven Silver Stones (GlobalHack, v1.4)
 	&BurnDrvmd_snezkoro,		// Snezhnaya Koroleva (Rus) (Unl)
 	&BurnDrvngpc_snkgals,		// SNK Gals' Fighters (Euro, USA)
 	&BurnDrvngpc_snkgalsj,		// SNK Gals' Fighters (Jpn)
@@ -38215,6 +38230,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_carmntimb,		// Where in Time Is Carmen Sandiego? (Bra)
 	&BurnDrvmd_carmntim,		// Where in Time Is Carmen Sandiego? (Euro, USA)
 	&BurnDrvMSX_whereisit,		// Where Is it - The Quest For the 10th Island (HB)
+	&BurnDrvsms_whereisit,		// Where is it - The Quest for the 10th Island (HB, v1.01)
 	&BurnSpecWheretimestoodstill,// Where Time Stood Still (128K)
 	&BurnDrvnes_whereswaldo,	// Where's Waldo (USA)
 	&BurnDrvmd_whiprushs,		// Whip Rush (Hack, Spanish)

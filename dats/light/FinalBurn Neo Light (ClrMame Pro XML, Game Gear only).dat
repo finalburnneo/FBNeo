@@ -2950,6 +2950,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mcmastergg">
+		<comment>Homebrew</comment>
+		<description>Monaco Master (HB, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>Louis The SEGA Nerd</manufacturer>
+		<rom name="Monaco Master v1.1 (2023)(Louis The SEGA Nerd).gg" size="49152" crc="01a074ab"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="monstwar">
 		<description>Monster Truck Wars (Euro, USA)</description>
 		<year>1994</year>

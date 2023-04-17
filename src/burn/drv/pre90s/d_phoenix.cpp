@@ -2352,7 +2352,7 @@ struct BurnDriver BurnDrvCityatta = {
 	"cityatta", "pleiads", NULL, NULL, "1981",
 	"City Attack (Petaco S.A., bootleg of Pleiads)\0", NULL, "bootleg (Petaco S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cityattaRomInfo, cityattaRomName, NULL, NULL, NULL, NULL, PhoenixInputInfo, CityattaDIPInfo,
 	PleiadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	208, 256, 3, 4

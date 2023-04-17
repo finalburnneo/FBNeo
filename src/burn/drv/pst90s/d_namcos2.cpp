@@ -4406,7 +4406,7 @@ struct BurnDriver BurnDrvMirninjaa = {
 	"mirninjaa", "mirninja", NULL, NULL, "1988",
 	"Mirai Ninja (Japan, set 2)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, mirninjaaRomInfo, mirninjaaRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	MirninjaInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -4638,7 +4638,7 @@ struct BurnDriver BurnDrvMarvlandup = {
 	"marvlandup", "marvland", NULL, NULL, "1989",
 	"Marvel Land (US, prototype?)\0", "Bad music - use the Japan version", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, marvlandupRomInfo, marvlandupRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	MarvlandInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

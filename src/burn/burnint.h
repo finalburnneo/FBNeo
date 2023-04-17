@@ -186,6 +186,7 @@ UINT8 *BurnRealloc(void *ptr, INT32 size);
 void _BurnFree(void *ptr); // internal use only :)
 #define BurnFree(x) do {_BurnFree(x); x = NULL; } while (0)
 #define BurnMalloc(x) _BurnMalloc(x, __FILE__, __LINE__)
+void BurnSwapMemBlock(UINT8 *src, UINT8 *dst, INT32 size); // swap contents of src with dst
 void BurnExitMemoryManager();
 
 // ---------------------------------------------------------------------------

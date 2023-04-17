@@ -7083,7 +7083,7 @@ struct BurnDriver BurnDrvRedhawksa = {
 	"redhawksa", "stagger1", NULL, NULL, "1997",
 	"Red Hawk (horizontal, Spain, set 2)\0", NULL, "Afega (Hae Dong Corp license)", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawksaRomInfo, redhawksaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
 	RedhawksaInit, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
 	256, 224, 4, 3
@@ -9309,7 +9309,7 @@ struct BurnDriver BurnDrvTdragonb3 = {
 	"tdragonb3", "tdragon", NULL, NULL, "1991",
 	"Thunder Dragon (bootleg with Raiden sounds, unencrypted)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonb3RomInfo, tdragonb3RomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonbDIPInfo,
 	Tdragonb3Init, SeibuSoundExit, SeibuSoundFrame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4

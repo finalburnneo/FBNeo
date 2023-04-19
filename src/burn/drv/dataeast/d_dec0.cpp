@@ -484,8 +484,8 @@ static struct BurnDIPInfo BouldashDIPList[]=
 	{0x01, 0x01, 0x40, 0x40, "Yes"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x01, 0x01, 0x20, 0x80, "Off"                    },
-	{0x01, 0x01, 0x20, 0x00, "On"                     },
+	{0x01, 0x01, 0x00, 0x80, "Off"                    },
+	{0x01, 0x01, 0x00, 0x00, "On"                     },
 };
 
 STDDIPINFO(Bouldash)

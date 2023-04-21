@@ -44,6 +44,8 @@ static UINT16 *mcu_com;
 static UINT16 enable_sub_irq;
 static INT32 watchdog;
 
+static INT32 nExtraCycles[2];
+
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
@@ -349,6 +351,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	enable_sub_irq = 0;
 	watchdog = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -1119,7 +1123,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 512;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 16000000 / 60 };
-	INT32 nCyclesDone[2]  = { 0, 0 };
+	INT32 nCyclesDone[2]  = { nExtraCycles[0], nExtraCycles[1] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1137,14 +1141,17 @@ static INT32 DrvFrame()
 			if (i == 249) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 		SekClose();
+
+		if (i == 240 && pBurnDraw) {
+			DrvDraw();
+		}
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;
@@ -1173,6 +1180,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(enable_sub_irq);
 		SCAN_VAR(watchdog);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {

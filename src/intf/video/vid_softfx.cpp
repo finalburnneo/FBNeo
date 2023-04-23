@@ -1001,7 +1001,7 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			break;
 		}
 		case FILTER_CRTx22: {
-			CRTx22(ps,pd,nSoftFXImageWidth,nSoftFXImageHeight, nSoftFXImagePitch, nPitch);
+			CRTx22fast(ps,pd,nSoftFXImageWidth,nSoftFXImageHeight, nSoftFXImagePitch, nPitch);
 			break;
 		}
 		case FILTER_CRTx33: {

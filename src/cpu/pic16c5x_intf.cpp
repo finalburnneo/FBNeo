@@ -26,7 +26,7 @@ cpu_core_config pic16c5xConfig =
 	pic16c5xOpen,
 	pic16c5xClose,
 	pic16c5xCheatRead,
-	pic16c5xCheatWrite, 
+	pic16c5xCheatWrite,
 	pic16c5xGetActive,
 	pic16c5xTotalCycles,
 	pic16c5xNewFrame,
@@ -35,6 +35,8 @@ cpu_core_config pic16c5xConfig =
 	pic16c5xRun,
 	pic16c5xRunEnd,
 	pic16c5xReset,
+	pic16c5xScan,
+	pic16c5xExit,
 	0x7ff,
 	0
 };

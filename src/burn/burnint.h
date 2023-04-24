@@ -146,21 +146,23 @@ inline static void PutPix(UINT8* pPix, UINT32 c)
 
 struct cpu_core_config {
 	char cpu_name[32];
-	void (*open)(INT32);		// cpu open
+	void (*open)(INT32);	// cpu open
 	void (*close)();		// cpu close
 
-	UINT8 (*read)(UINT32);		// read
+	UINT8 (*read)(UINT32);	// read
 	void (*write)(UINT32, UINT8);	// write
 	INT32 (*active)();		// active cpu
-	INT32 (*totalcycles)();		// total cycles
+	INT32 (*totalcycles)();	// total cycles
 	void (*newframe)();		// new frame'
 	INT32 (*idle)(INT32);	// idle cycles
 
-	void (*irq)(INT32, INT32, INT32);	// set irq, cpu, line, status
+	void (*irq)(INT32, INT32, INT32);	// set irq ( cpu, line, status )
 
-	INT32 (*run)(INT32);		// execute cycles
+	INT32 (*run)(INT32);	// execute cycles
 	void (*runend)();		// end run
 	void (*reset)();		// reset cpu
+	INT32 (*scan)(INT32);	// state handleing
+	void (*exit)();			// exit core
 
 	UINT64 nMemorySize;		// how large is our memory range?
 	UINT32 nAddressFlags;	// fix endianness for some cpus

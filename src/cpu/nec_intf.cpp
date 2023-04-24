@@ -328,6 +328,8 @@ cpu_core_config VezConfig =
 	VezRun,
 	VezRunEnd,
 	VezReset,
+	VezScan,
+	VezExit,
 	0x100000,
 	0
 };

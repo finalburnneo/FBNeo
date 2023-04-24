@@ -24,6 +24,8 @@ cpu_core_config M6809Config =
 	M6809Run,
 	M6809RunEnd,
 	M6809Reset,
+	M6809Scan,
+	M6809Exit,
 	0x10000,
 	0
 };

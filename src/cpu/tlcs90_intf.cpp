@@ -32,6 +32,8 @@ cpu_core_config tlcs90Config =
 	tlcs90Run,
 	tlcs90RunEnd,
 	tlcs90Reset,
+	tlcs90Scan,
+	tlcs90Exit,
 	0x100000,
 	0
 };
@@ -179,7 +181,7 @@ INT32 tlcs90Init(INT32, INT32 clock)
 	return tlcs90_init(clock);
 }
 
-INT32 tlcs90Exit()
+void tlcs90Exit()
 {
 	memset (mem, 0, 2 * 0x1000 * sizeof(UINT8 *));
 	read = NULL;
@@ -187,7 +189,7 @@ INT32 tlcs90Exit()
 	readio = NULL;
 	writeio = NULL;
 
-	return 0;
+	return;
 }
 
 

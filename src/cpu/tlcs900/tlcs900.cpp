@@ -419,6 +419,8 @@ cpu_core_config tlcs900Config =
 	tlcs900Run,
 	tlcs900RunEnd,
 	tlcs900Reset,
+	tlcs900Scan,
+	tlcs900Exit,
 	0x1000000,
 	0
 };

@@ -119,6 +119,8 @@ cpu_core_config TMS34010Config =
 	TMS34010Run,
 	TMS34010RunEnd,
 	TMS34010Reset,
+	TMS34010Scan,
+	TMS34010Exit,
 	0x100000000ULL,
 	MB_CHEAT_ENDI_SWAP // 0x8000 - LE but needs address swap when writing multibyte cheats
 };
@@ -251,13 +253,15 @@ void TMS34010RunEnd()
 	tms34010_stop();
 }
 
-void TMS34010Scan(INT32 nAction)
+INT32 TMS34010Scan(INT32 nAction)
 {
 	for (INT32 i = 0; i < total_cpus; i++) {
 		TMS34010Open(i);
 		tms34010_scan(nAction);
 		TMS34010Close();
 	}
+
+	return 0;
 }
 
 UINT32 TMS34010GetPC()

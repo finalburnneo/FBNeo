@@ -50,6 +50,8 @@ cpu_core_config Arm7Config =
 	Arm7Run,
 	Arm7RunEnd,
 	Arm7Reset,
+	Arm7Scan,
+	Arm7Exit,
 	0x80000000,
 	0
 };

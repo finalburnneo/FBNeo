@@ -821,6 +821,8 @@ cpu_core_config sh3Config =
 	Sh3Run,
 	Sh3RunEnd,
 	Sh3Reset,
+	Sh3Scan,
+	Sh3Exit,
 	0x1000000,
 	0
 };

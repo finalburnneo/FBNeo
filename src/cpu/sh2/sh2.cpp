@@ -216,6 +216,8 @@ cpu_core_config Sh2Config =
 	Sh2Run,
 	Sh2StopRun,
 	Sh2Reset,
+	Sh2Scan,
+	Sh2Exit,
 	0xffffffff,
 	0
 };
@@ -464,7 +466,7 @@ void __fastcall Sh2EmptyWriteByte(unsigned int, unsigned char) { }
 void __fastcall Sh2EmptyWriteWord(unsigned int, unsigned short) { }
 void __fastcall Sh2EmptyWriteLong(unsigned int, unsigned int) { }
 
-int Sh2Exit()
+void Sh2Exit()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Exit called without init\n"));
@@ -480,7 +482,7 @@ int Sh2Exit()
 	
 	DebugCPU_SH2Initted = 0;
 
-	return 0;
+	return;
 }
 
 void Sh2CheatWriteByte(UINT32 a, UINT8 d)

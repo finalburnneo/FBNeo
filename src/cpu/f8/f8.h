@@ -49,7 +49,7 @@ void F8Close();
 
 INT32 F8GetActive();
 
-INT32 F8Scan(INT32 nAction,INT32 *);
+INT32 F8Scan(INT32 nAction);
 INT32 F8TotalCycles();
 void F8NewFrame();
 INT32 F8Idle(INT32 cycles);

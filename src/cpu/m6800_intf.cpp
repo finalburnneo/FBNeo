@@ -29,6 +29,8 @@ cpu_core_config M6800Config =  // M6802, M6808
 	M6800Run,		// different
 	M6800RunEnd,
 	M6800Reset,
+	M6800Scan,
+	M6800Exit,
 	0x10000,
 	0
 };
@@ -48,6 +50,8 @@ cpu_core_config HD63701Config =
 	HD63701Run,		// different
 	M6800RunEnd,
 	M6800Reset,
+	M6800Scan,
+	M6800Exit,
 	0x10000,
 	0
 };
@@ -67,6 +71,8 @@ cpu_core_config M6803Config =  // M6801, M6803
 	M6803Run,		// different
 	M6800RunEnd,
 	M6800Reset,
+	M6800Scan,
+	M6800Exit,
 	0x10000,
 	0
 };
@@ -86,6 +92,8 @@ cpu_core_config M6801Config =
 	M6803Run,		// different
 	M6800RunEnd,
 	M6800Reset,
+	M6800Scan,
+	M6800Exit,
 	0x10000,
 	0
 };
@@ -105,6 +113,8 @@ cpu_core_config NSC8105Config =
 	NSC8105Run,		// different
 	M6800RunEnd,
 	M6800Reset,
+	M6800Scan,
+	M6800Exit,
 	0x10000,
 	0
 };

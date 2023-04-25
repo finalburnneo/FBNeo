@@ -129,6 +129,17 @@ void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent, double make_up_g
 	}
 }
 
+void BurnSoundSwapLR(INT16 *sndout, INT32 len)
+{
+	for (INT32 i = 0; i < len; i++) {
+		INT32 sample_l = (sndout[i * 2 + 0]);
+		INT32 sample_r = (sndout[i * 2 + 1]);
+
+		sndout[i * 2 + 0] = sample_r;
+		sndout[i * 2 + 1] = sample_l;
+	}
+}
+
 void BurnSoundClear()
 {
 	if (pBurnSoundOut) {

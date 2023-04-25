@@ -2070,6 +2070,8 @@ cpu_core_config F8Config =
 	F8Run,
 	F8RunEnd,
 	F8Reset,
+	F8Scan,
+	F8Exit,
 	0x010000,
 	0
 };
@@ -2089,7 +2091,7 @@ void F8Exit()
 
 }
 
-INT32 F8Scan(INT32 nAction, INT32 *)
+INT32 F8Scan(INT32 nAction)
 {
 	if (nAction & ACB_VOLATILE) {
 		SCAN_VAR(cpu_store[0]);

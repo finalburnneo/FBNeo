@@ -26,6 +26,8 @@ cpu_core_config HD6309Config =
 	HD6309Run,
 	HD6309RunEnd,
 	HD6309Reset,
+	HD6309Scan,
+	HD6309Exit,
 	0x10000,
 	0
 };

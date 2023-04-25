@@ -31,6 +31,8 @@ static void dummy_irq(INT32, INT32, INT32) {}
 static INT32 dummy_run(INT32) { return 0; }
 static void dummy_runend() {}
 static void dummy_reset() {}
+static INT32 dummy_scan(INT32) { return 0; }
+static void dummy_exit() {}
 
 static cpu_core_config dummy_config  = {
 	"dummy",
@@ -46,6 +48,8 @@ static cpu_core_config dummy_config  = {
 	dummy_run,
 	dummy_runend,
 	dummy_reset,
+	dummy_scan,
+	dummy_exit,
 	~0UL,
 	0
 };

@@ -15471,7 +15471,6 @@ wbmljb:
 wbmljo:
 wbmlvc:
 @:maincpu,program,c101,1,24,24
-@:maincpu,program,072f,1,03,03
 @:maincpu,program,c179,1,00,00
 @:maincpu,program,c17a,1,00,00
 @:maincpu,program,c17b,1,00,00

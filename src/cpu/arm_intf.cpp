@@ -48,6 +48,8 @@ cpu_core_config ArmConfig =
 	ArmRun,
 	ArmRunEnd,
 	ArmReset,
+	ArmScan,
+	ArmExit,
 	0x04000000,
 	0
 };

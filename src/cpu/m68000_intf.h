@@ -126,7 +126,7 @@ void SekWriteWordROM(UINT32 a, UINT16 d);
 void SekWriteLongROM(UINT32 a, UINT32 d);
 
 INT32 SekInit(INT32 nCount, INT32 nCPUType);
-INT32 SekExit();
+void SekExit();
 
 void SekNewFrame();
 void SekSetCyclesScanline(INT32 nCycles);

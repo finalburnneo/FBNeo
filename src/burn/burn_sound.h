@@ -45,6 +45,7 @@ void BurnSoundDCFilterReset(); // called in burn.cpp: BurnDrvInit()
 void BurnSoundClear();
 void BurnSoundTweakVolume(INT16 *sndout, INT32 len, double volume);
 void BurnSoundLimiter(INT16 *sndout, INT32 len, double percent, double make_up_gain);
+void BurnSoundSwapLR(INT16 *sndout, INT32 len);
 
 #ifdef __ELF__
  #define Precalc _Precalc

@@ -30,6 +30,8 @@ static int nMemdumpAttrib;
 
 static bool bBreakpointHit;
 
+static HMODULE hRiched = NULL;
+
 #if defined FBNEO_DEBUG
 extern UINT8 DebugCPU_SekInitted;
 #endif
@@ -1529,6 +1531,9 @@ int DebugExit()
 	SetPauseMode(bOldPause);
 	MenuUpdate();
 
+	FreeLibrary(hRiched);
+	hRiched = NULL;
+
 #endif
 
 	return 0;
@@ -1545,6 +1550,14 @@ int DebugCreate()
 
 	if (bDrvOkay == 0) {
 		return 1;
+	}
+
+	if (hRiched == NULL) {
+#if defined (_UNICODE)
+		hRiched = LoadLibrary(L"RICHED20.DLL");
+#else
+		hRiched = LoadLibrary("RICHED20.DLL");
+#endif
 	}
 
 	AudBlankSound();

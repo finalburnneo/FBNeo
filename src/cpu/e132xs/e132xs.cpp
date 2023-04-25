@@ -4645,6 +4645,8 @@ cpu_core_config E132XSConfig =
 	E132XSRun,
 	E132XSRunEnd,
 	E132XSReset,
+	E132XSScan,
+	E132XSExit,
 	0xffffffff,
 	1
 };
@@ -4845,7 +4847,7 @@ void E132XSNewFrame()
 	utotal_cycles = 0;
 }
 
-void E132XSScan(INT32 nAction)
+INT32 E132XSScan(INT32 nAction)
 {
 	SCAN_VAR(m_global_regs);
 	SCAN_VAR(m_local_regs);
@@ -4881,6 +4883,8 @@ void E132XSScan(INT32 nAction)
 	SCAN_VAR(itotal_cycles); // internal total cycles (timers etc)
 	SCAN_VAR(utotal_cycles); // user-total cycles (E132XSTotalCycles() / E132XSNewFrame() etc..)
 	SCAN_VAR(n_cycles);
+
+	return 0;
 }
 
 void E132XSSetIRQLine(INT32 line, INT32 state)

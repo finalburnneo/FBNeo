@@ -33,7 +33,6 @@ typedef struct
 	UINT8	ireg;		/* First opcode */
 	UINT8	irq_state[2];
 	UINT8	irq_hold[2];
-	INT32 	extra_cycles; /* cycles used up by interrupts */
 
 	INT32   ICount;
 	INT32   segmentcycles;

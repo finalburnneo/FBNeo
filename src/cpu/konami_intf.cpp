@@ -48,6 +48,8 @@ cpu_core_config konamiCPUConfig =
 	konamiRun,
 	konamiRunEnd,
 	konamiReset,
+	konamiCpuScan,
+	konamiExit,
 	0x10000,
 	0
 };

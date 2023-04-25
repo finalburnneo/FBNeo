@@ -52,6 +52,8 @@ cpu_core_config SekConfig =
 	SekRun,
 	SekRunEnd,
 	SekReset,
+	SekScan,
+	SekExit,
 	0x1000000,
 	1 // big endian
 };
@@ -1258,13 +1260,13 @@ static void SekCPUExitM68K(INT32 i)
 #endif
 
 
-INT32 SekExit()
+void SekExit()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekExit called without init\n"));
 #endif
 
-	if (!DebugCPU_SekInitted) return 1;
+	if (!DebugCPU_SekInitted) return;
 
 	// Deallocate cpu extenal data (memory map etc)
 	for (INT32 i = 0; i <= nSekCount; i++) {
@@ -1294,8 +1296,6 @@ INT32 SekExit()
 	nSekCount = -1;
 	
 	DebugCPU_SekInitted = 0;
-
-	return 0;
 }
 
 void SekReset()

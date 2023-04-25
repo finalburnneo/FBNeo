@@ -423,6 +423,8 @@ cpu_core_config upd7810Config =
 	upd7810Run,
 	upd7810RunEnd,
 	upd7810Reset,
+	upd7810Scan,
+	upd7810Exit,
 	0x10000,
 	0
 };

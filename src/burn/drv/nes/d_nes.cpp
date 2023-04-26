@@ -41750,10 +41750,10 @@ STD_ROM_PICK(nes_kinni)
 STD_ROM_FN(nes_kinni)
 
 struct BurnDriver BurnDrvnes_kinni = {
-	"nes_kinni", NULL, NULL, NULL, "1985",
+	"nes_kinni", "nes_muscle", NULL, NULL, "1985",
 	"Kinnikuman - Muscle Tag Match (Japan)\0", NULL, "Bandai", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_kinniRomInfo, nes_kinniRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

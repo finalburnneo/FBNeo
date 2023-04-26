@@ -263,7 +263,7 @@ static const INT32 pitch_vals[32] = {
 };
 
 // downsampler
-Stream stream; // using upsampler for testing
+static Stream stream; // using upsampler for testing
 
 static const UINT8 *m_rom;
 static INT32 m_romsize;

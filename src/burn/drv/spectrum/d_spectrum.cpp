@@ -34795,15 +34795,15 @@ struct BurnDriver BurnSpecDucktalesru = {
 // Funky Fungus Reloaded (German) (128K) (HB)
 
 static struct BurnRomInfo SpecFunfungusdeRomDesc[] = {
-	{ "Funky Fungus Reloaded 128K DE (2020)(Grussu, Alessandro).tap", 96243, 0x99816719, BRF_ESS | BRF_PRG },
+	{ "Funky Fungus Reloaded DE 128K (2019-2023)(Zankle Soft).tap", 96207, 0xc7072dda, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFunfungusde, SpecFunfungusde, Spec128)
 STD_ROM_FN(SpecFunfungusde)
 
 struct BurnDriver BurnSpecFunfungusde = {
-	"spec_funfungusde", "spec_funfungusen", "spec_spec128", NULL, "2020",
-	"Funky Fungus Reloaded (German) (128K) (HB)\0", NULL, "Alessandro Grussu", "ZX Spectrum",
+	"spec_funfungusde", "spec_funfungusen", "spec_spec128", NULL, "2019-2023",
+	"Funky Fungus Reloaded (German) (128K) (HB)\0", "Press 'Space' to select and 'Enter' to set options", "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecFunfungusdeRomInfo, SpecFunfungusdeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34814,15 +34814,15 @@ struct BurnDriver BurnSpecFunfungusde = {
 // Funky Fungus Reloaded (English) (128K) (HB)
 
 static struct BurnRomInfo SpecFunfungusenRomDesc[] = {
-	{ "Funky Fungus Reloaded 128K EN (2020)(Grussu, Alessandro).tap", 96206, 0x92ea93e8, BRF_ESS | BRF_PRG },
+	{ "Funky Fungus Reloaded EN 128K (2019-2023)(Zankle Soft).tap", 96170, 0xa8a15992, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFunfungusen, SpecFunfungusen, Spec128)
 STD_ROM_FN(SpecFunfungusen)
 
 struct BurnDriver BurnSpecFunfungusen = {
-	"spec_funfungusen", NULL, "spec_spec128", NULL, "2020",
-	"Funky Fungus Reloaded (English) (128K) (HB)\0", NULL, "Alessandro Grussu", "ZX Spectrum",
+	"spec_funfungusen", NULL, "spec_spec128", NULL, "2019-2023",
+	"Funky Fungus Reloaded (English) (128K) (HB)\0", "Press 'Space' to select and 'Enter' to set options", "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecFunfungusenRomInfo, SpecFunfungusenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34833,15 +34833,15 @@ struct BurnDriver BurnSpecFunfungusen = {
 // Funky Fungus Reloaded (Spanish) (128K) (HB)
 
 static struct BurnRomInfo SpecFunfungusesRomDesc[] = {
-	{ "Funky Fungus Reloaded 128K ES (2020)(Grussu, Alessandro).tap", 96259, 0x92e7e2f8, BRF_ESS | BRF_PRG },
+	{ "Funky Fungus Reloaded ES 128K (2019-2023)(Zankle Soft).tap", 96223, 0x6002d9da, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFunfunguses, SpecFunfunguses, Spec128)
 STD_ROM_FN(SpecFunfunguses)
 
 struct BurnDriver BurnSpecFunfunguses = {
-	"spec_funfunguses", "spec_funfungusen", "spec_spec128", NULL, "2020",
-	"Funky Fungus Reloaded (Spanish) (128K) (HB)\0", NULL, "Alessandro Grussu", "ZX Spectrum",
+	"spec_funfunguses", "spec_funfungusen", "spec_spec128", NULL, "2019-2023",
+	"Funky Fungus Reloaded (Spanish) (128K) (HB)\0", "Press 'Space' to select and 'Enter' to set options", "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecFunfungusesRomInfo, SpecFunfungusesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34852,15 +34852,15 @@ struct BurnDriver BurnSpecFunfunguses = {
 // Funky Fungus Reloaded (French) (128K) (HB)
 
 static struct BurnRomInfo SpecFunfungusfrRomDesc[] = {
-	{ "Funky Fungus Reloaded 128K FR (2020)(Grussu, Alessandro).tap", 96277, 0x84cda226, BRF_ESS | BRF_PRG },
+	{ "Funky Fungus Reloaded FR 128K (2019-2023)(Zankle Soft).tap", 80892, 0xd453cf6c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFunfungusfr, SpecFunfungusfr, Spec128)
 STD_ROM_FN(SpecFunfungusfr)
 
 struct BurnDriver BurnSpecFunfungusfr = {
-	"spec_funfungusfr", "spec_funfungusen", "spec_spec128", NULL, "2020",
-	"Funky Fungus Reloaded (French) (128K) (HB)\0", NULL, "Alessandro Grussu", "ZX Spectrum",
+	"spec_funfungusfr", "spec_funfungusen", "spec_spec128", NULL, "2019-2023",
+	"Funky Fungus Reloaded (French) (128K) (HB)\0", "Press 'Space' to select and 'Enter' to set options", "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecFunfungusfrRomInfo, SpecFunfungusfrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34871,15 +34871,15 @@ struct BurnDriver BurnSpecFunfungusfr = {
 // Funky Fungus Reloaded (Italian) (128K) (HB)
 
 static struct BurnRomInfo SpecFunfungusitRomDesc[] = {
-	{ "Funky Fungus Reloaded 128K IT (2020)(Grussu, Alessandro).tap", 96217, 0x9a6f50a7, BRF_ESS | BRF_PRG },
+	{ "Funky Fungus Reloaded IT 128K (2019-2023)(Zankle Soft).tap", 96181, 0x0b0e7184, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFunfungusit, SpecFunfungusit, Spec128)
 STD_ROM_FN(SpecFunfungusit)
 
 struct BurnDriver BurnSpecFunfungusit = {
-	"spec_funfungusit", "spec_funfungusen", "spec_spec128", NULL, "2020",
-	"Funky Fungus Reloaded (Italian) (128K) (HB)\0", NULL, "Alessandro Grussu", "ZX Spectrum",
+	"spec_funfungusit", "spec_funfungusen", "spec_spec128", NULL, "2019-2023",
+	"Funky Fungus Reloaded (Italian) (128K) (HB)\0", "Press 'Space' to select and 'Enter' to set options", "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecFunfungusitRomInfo, SpecFunfungusitRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34890,15 +34890,15 @@ struct BurnDriver BurnSpecFunfungusit = {
 // Funky Fungus Reloaded (Portuguese) (128K) (HB)
 
 static struct BurnRomInfo SpecFunfungusptRomDesc[] = {
-	{ "Funky Fungus Reloaded 128K PT (2020)(Grussu, Alessandro).tap", 96280, 0x4ec682bd, BRF_ESS | BRF_PRG },
+	{ "Funky Fungus Reloaded PT 128K (2019-2023)(Zankle Soft).tap", 96244, 0x1d23636e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFunfunguspt, SpecFunfunguspt, Spec128)
 STD_ROM_FN(SpecFunfunguspt)
 
 struct BurnDriver BurnSpecFunfunguspt = {
-	"spec_funfunguspt", "spec_funfungusen", "spec_spec128", NULL, "2020",
-	"Funky Fungus Reloaded (Portuguese) (128K) (HB)\0", NULL, "Alessandro Grussu", "ZX Spectrum",
+	"spec_funfunguspt", "spec_funfungusen", "spec_spec128", NULL, "2019-2023",
+	"Funky Fungus Reloaded (Portuguese) (128K) (HB)\0", "Press 'Space' to select and 'Enter' to set options", "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecFunfungusptRomInfo, SpecFunfungusptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40874,10 +40874,10 @@ struct BurnDriver BurnSpecSamslade = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Super Bomberman 2 Remix (128K) (HB)
+// Super Bomberman 2 Remix (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecSbman2rRomDesc[] = {
-	{ "Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap", 55559, 0x2343539f, BRF_ESS | BRF_PRG },
+	{ "Super Bomberman 2 Remix v1.1 128K (2023)(ZX Evolution).tap", 55559, 0x2343539f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSbman2r, SpecSbman2r, Spec128)
@@ -40885,7 +40885,7 @@ STD_ROM_FN(SpecSbman2r)
 
 struct BurnDriver BurnSpecSbman2r = {
 	"spec_sbman2r", NULL, "spec_spec128", NULL, "2023",
-	"Super Bomberman 2 Remix (128K) (HB)\0", NULL, "ZX Evolution", "ZX Spectrum",
+	"Super Bomberman 2 Remix (128K) (HB, v1.1)\0", NULL, "ZX Evolution", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecSbman2rRomInfo, SpecSbman2rRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40893,10 +40893,10 @@ struct BurnDriver BurnSpecSbman2r = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Storm Over Valhalla (48K)
+// Storm Over Valhalla (48K) (HB, v1.2)
 
 static struct BurnRomInfo SpecStvalhallaRomDesc[] = {
-	{ "Storm Over Valhalla 48K (2023)(Sequentia Soft).tap", 64600, 0xbc4731e6, BRF_ESS | BRF_PRG },
+	{ "Storm Over Valhalla v1.2 48K (2023)(Sequentia Soft).tap", 64600, 0xbc4731e6, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecStvalhalla, SpecStvalhalla, Spectrum)
@@ -40904,7 +40904,7 @@ STD_ROM_FN(SpecStvalhalla)
 
 struct BurnDriver BurnSpecStvalhalla = {
 	"spec_stvalhalla", NULL, "spec_spectrum", NULL, "2023",
-	"Storm Over Valhalla (48K) (HB)\0", NULL, "Sequentia Soft", "ZX Spectrum",
+	"Storm Over Valhalla (48K) (HB, v1.2)\0", NULL, "Sequentia Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecStvalhallaRomInfo, SpecStvalhallaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40912,10 +40912,10 @@ struct BurnDriver BurnSpecStvalhalla = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Storm Over Valhalla Epilogue (English) (48K) (HB)
+// Storm Over Valhalla Epilogue (English) (48K) (HB, v1.2)
 
 static struct BurnRomInfo SpecStvalhallaepeRomDesc[] = {
-	{ "Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap", 25905, 0xc6ff8fdb, BRF_ESS | BRF_PRG },
+	{ "Storm Over Valhalla - Epilogue v1.2 EN (2023)(Sequentia Soft).tap", 25905, 0xc6ff8fdb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecStvalhallaepe, SpecStvalhallaepe, Spectrum)
@@ -40923,7 +40923,7 @@ STD_ROM_FN(SpecStvalhallaepe)
 
 struct BurnDriver BurnSpecStvalhallaepe = {
 	"spec_stvalhallaepe", "spec_stvalhalla", "spec_spectrum", NULL, "2023",
-	"Storm Over Valhalla Epilogue (English) (48K) (HB)\0", NULL, "Sequentia Soft", "ZX Spectrum",
+	"Storm Over Valhalla Epilogue (English) (48K) (HB, v1.2)\0", NULL, "Sequentia Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecStvalhallaepeRomInfo, SpecStvalhallaepeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40931,10 +40931,10 @@ struct BurnDriver BurnSpecStvalhallaepe = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Storm Over Valhalla Epilogue (Spanish) (48K) (HB)
+// Storm Over Valhalla Epilogue (Spanish) (48K) (HB, v1.2)
 
 static struct BurnRomInfo SpecStvalhallaepsRomDesc[] = {
-	{ "Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap", 26127, 0x994943ed, BRF_ESS | BRF_PRG },
+	{ "Storm Over Valhalla - Epilogue v1.2 ES (2023)(Sequentia Soft).tap", 26127, 0x994943ed, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecStvalhallaeps, SpecStvalhallaeps, Spectrum)
@@ -40942,7 +40942,7 @@ STD_ROM_FN(SpecStvalhallaeps)
 
 struct BurnDriver BurnSpecStvalhallaeps = {
 	"spec_stvalhallaeps", "spec_stvalhalla", "spec_spectrum", NULL, "2023",
-	"Storm Over Valhalla Epilogue (Spanish) (48K) (HB)\0", NULL, "Sequentia Soft", "ZX Spectrum",
+	"Storm Over Valhalla Epilogue (Spanish) (48K) (HB, v1.2)\0", NULL, "Sequentia Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecStvalhallaepsRomInfo, SpecStvalhallaepsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40966,5 +40966,157 @@ struct BurnDriver BurnSpecWhitejaguarzx = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecWhitejaguarzxRomInfo, SpecWhitejaguarzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// DJ Puff's Volcanic Capers Recoloured (128K) (Hack)
+
+static struct BurnRomInfo SpecDjpuff23RomDesc[] = {
+	{ "DJ Puff's Volcanic Capers 128K (Re-coloured MOD)(2023)(Rafal Miazga).tap", 58200, 0xd26dc482, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDjpuff23, SpecDjpuff23, Spec128)
+STD_ROM_FN(SpecDjpuff23)
+
+struct BurnDriver BurnSpecDjpuff23 = {
+	"spec_djpuff23", "spec_djpuff", "spec_spec128", NULL, "2023",
+	"DJ Puff's Volcanic Capers Recoloured (128K) (Hack)\0", NULL, "Rafal Miazga", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecDjpuff23RomInfo, SpecDjpuff23RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Janky Joe in Retro Hell (128K) (HB)
+
+static struct BurnRomInfo SpecJankyjoeRomDesc[] = {
+	{ "Janky Joe in Retro Hell 128K (2023)(Sloanysoft).tap", 43848, 0x247dddd0, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJankyjoe, SpecJankyjoe, Spec128)
+STD_ROM_FN(SpecJankyjoe)
+
+struct BurnDriver BurnSpecJankyjoe = {
+	"spec_jankyjoe", NULL, "spec_spec128", NULL, "2023",
+	"Janky Joe in Retro Hell (128K) (HB)\0", NULL, "Sloanysoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecJankyjoeRomInfo, SpecJankyjoeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// SBOT Part-1 (128K) (HB)
+
+static struct BurnRomInfo SpecSbotp1RomDesc[] = {
+	{ "SBOT Part1 128K (2023)(Xavisan).tap", 46761, 0x3377c7b7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSbotp1, SpecSbotp1, Spec128)
+STD_ROM_FN(SpecSbotp1)
+
+struct BurnDriver BurnSpecSbotp1 = {
+	"spec_sbotp1", NULL, "spec_spec128", NULL, "2023",
+	"SBOT Part-1 (128K) (HB)\0", NULL, "Xavisan", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecSbotp1RomInfo, SpecSbotp1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// SBOT Part-2 (128K) (HB)
+
+static struct BurnRomInfo SpecSbotp2RomDesc[] = {
+	{ "SBOT Part2 128K (2023)(Xavisan).tap", 48067, 0xb2a76283, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSbotp2, SpecSbotp2, Spec128)
+STD_ROM_FN(SpecSbotp2)
+
+struct BurnDriver BurnSpecSbotp2 = {
+	"spec_sbotp2", "spec_sbotp1", "spec_spec128", NULL, "2023",
+	"SBOT Part-2 (128K) (HB)\0", NULL, "Xavisan", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecSbotp2RomInfo, SpecSbotp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Snake Power (48K) (HB, v1.4)
+
+static struct BurnRomInfo SpecSnakepowerRomDesc[] = {
+	{ "Snake Power v1.4 48K (2023)(Hash6lron).tap", 37771, 0xf799a3ae, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSnakepower, SpecSnakepower, Spectrum)
+STD_ROM_FN(SpecSnakepower)
+
+struct BurnDriver BurnSpecSnakepower = {
+	"spec_snakepower", NULL, "spec_spectrum", NULL, "2023",
+	"Snake Power (48K) (HB, v1.4)\0", NULL, "Hash6lron", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecSnakepowerRomInfo, SpecSnakepowerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Transylvania Castle 3 - The Queen of Sorcery (English) (48K) (HB, v1.2)
+
+static struct BurnRomInfo SpecTc3enRomDesc[] = {
+	{ "Transylvania Castle 3 EN 48K (2022)(Fitosoft).tap", 47171, 0xf820a20b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTc3en, SpecTc3en, Spectrum)
+STD_ROM_FN(SpecTc3en)
+
+struct BurnDriver BurnSpecTc3en = {
+	"spec_tc3en", NULL, "spec_spectrum", NULL, "2022",
+	"Transylvania Castle 3 - The Queen of Sorcery (English) (48K) (HB, v1.2)\0", NULL, "Fitosoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RPG | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecTc3enRomInfo, SpecTc3enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Transylvania Castle 3 - The Queen of Sorcery (Spanish) (48K) (HB, v1.2)
+
+static struct BurnRomInfo SpecTc3esRomDesc[] = {
+	{ "Transylvania Castle 3 ES 48K (2022)(Fitosoft).tap", 47154, 0xa73d13c7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTc3es, SpecTc3es, Spectrum)
+STD_ROM_FN(SpecTc3es)
+
+struct BurnDriver BurnSpecTc3es = {
+	"spec_tc3es", "spec_tc3en", "spec_spectrum", NULL, "2022",
+	"Transylvania Castle 3 - The Queen of Sorcery (Spanish) (48K) (HB, v1.2)\0", NULL, "Fitosoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RPG | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecTc3esRomInfo, SpecTc3esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Transylvania Castle 3 - The Queen of Sorcery (Portuguese) (48K) (HB, v1.2)
+
+static struct BurnRomInfo SpecTc3ptRomDesc[] = {
+	{ "Transylvania Castle 3 PT 48K (2022)(Fitosoft).tap", 47171, 0xfd8f0e09, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTc3pt, SpecTc3pt, Spectrum)
+STD_ROM_FN(SpecTc3pt)
+
+struct BurnDriver BurnSpecTc3pt = {
+	"spec_tc3pt", "spec_tc3en", "spec_spectrum", NULL, "2022",
+	"Transylvania Castle 3 - The Queen of Sorcery (Portuguese) (48K) (HB, v1.2)\0", NULL, "Fitosoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RPG | GBF_MAZE, 0,
+	SpectrumGetZipName, SpecTc3ptRomInfo, SpecTc3ptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPMDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

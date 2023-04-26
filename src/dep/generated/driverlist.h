@@ -4283,6 +4283,7 @@ DRV		BurnDrvDjboyua;
 DRV		BurnDrvmd_djboyu;
 DRV		BurnDrvDjboy;
 DRV		BurnSpecDjpuff;
+DRV		BurnSpecDjpuff23;
 DRV		BurnDrvMSX_dothesame;
 DRV		BurnDrvsms_dothesame;
 DRV		BurnDrvDorunrunc;
@@ -7853,6 +7854,7 @@ DRV		BurnDrvsms_jangpun3;
 DRV		BurnDrvgg_jangpun2;
 DRV		BurnDrvsms_janggun;
 DRV		BurnDrvnes_janggunuiadeul;
+DRV		BurnSpecJankyjoe;
 DRV		BurnSpecJanosik;
 DRV		BurnDrvmd_janout;
 DRV		BurnDrvmd_jantei;
@@ -13953,6 +13955,8 @@ DRV		BurnDrvSavagereb;
 DRV		BurnDrvSavagere;
 DRV		BurnSpecSavekonga;
 DRV		BurnSpecSavekongb;
+DRV		BurnSpecSbotp1;
+DRV		BurnSpecSbotp2;
 DRV		BurnSpecSc0tb0t;
 DRV		BurnDrvSpacewin;
 DRV		BurnDrvMSX_scarlet7;
@@ -14630,6 +14634,7 @@ DRV		BurnDrvsg1k_snake;
 DRV		BurnDrvsms_snake;
 DRV		BurnSpecSnakeescape;
 DRV		BurnDrvMSX_snakeit;
+DRV		BurnSpecSnakepower;
 DRV		BurnDrvnes_snakeratnrol;
 DRV		BurnDrvmd_snakernr;
 DRV		BurnDrvmd_snakernrs;
@@ -17777,6 +17782,9 @@ DRV		BurnDrvfds_trans;
 DRV		BurnDrvmd_transf3;
 DRV		BurnDrvTransfrm;
 DRV		BurnSpecTransmuter;
+DRV		BurnSpecTc3en;
+DRV		BurnSpecTc3pt;
+DRV		BurnSpecTc3es;
 DRV		BurnSpectrantor;
 DRV		BurnDrvMSX_trantor;
 DRV		BurnSpecTranzam;
@@ -23854,6 +23862,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_djboyu,			// DJ Boy (USA)
 	&BurnDrvDjboy,				// DJ Boy (World)
 	&BurnSpecDjpuff,			// DJ Puff's Volcanic Capers (128K)
+	&BurnSpecDjpuff23,			// DJ Puff's Volcanic Capers Recoloured (128K) (Hack)
 	&BurnDrvMSX_dothesame,		// Do the Same (HB, v1.1)
 	&BurnDrvsms_dothesame,		// Do The Same (HB, v1.40)
 	&BurnDrvDorunrunc,			// Do! Run Run (Do's Castle hardware, set 1)
@@ -27424,6 +27433,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_jangpun2,		// Jang Pung II (Kor, SMS Mode)
 	&BurnDrvsms_janggun,		// Janggun-ui Adeul (Kor)
 	&BurnDrvnes_janggunuiadeul,	// Janggun-ui Adeul (Korea) (Unl)
+	&BurnSpecJankyjoe,			// Janky Joe in Retro Hell (128K) (HB)
 	&BurnSpecJanosik,			// Janosik (128K) (HB)
 	&BurnDrvmd_janout,			// Janou Touryuumon (Jpn)
 	&BurnDrvmd_jantei,			// Jantei Monogatari (Jpn)
@@ -33524,6 +33534,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSavagere,			// Savage Reign / Fu'un Mokushiroku - kakutou sousei
 	&BurnSpecSavekonga,			// Saving Kong - Crazy Kong City II (bgm Dizziness) (128K) (HB)
 	&BurnSpecSavekongb,			// Saving Kong - Crazy Kong City II (bgm Massive Attack) (128K) (HB)
+	&BurnSpecSbotp1,			// SBOT Part-1 (128K) (HB)
+	&BurnSpecSbotp2,			// SBOT Part-2 (128K) (HB)
 	&BurnSpecSc0tb0t,			// Sc0tb0t (48K) (HB)
 	&BurnDrvSpacewin,			// Scacco Matto / Space Win
 	&BurnDrvMSX_scarlet7,		// Scarlet 7 - The Mightiest Women (Jpn)
@@ -34201,6 +34213,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_snake,			// Snake (HB, v1.04)
 	&BurnSpecSnakeescape,		// Snake Escape (128K) (HB)
 	&BurnDrvMSX_snakeit,		// Snake It (Euro)
+	&BurnSpecSnakepower,		// Snake Power (48K) (HB, v1.4)
 	&BurnDrvnes_snakeratnrol,	// Snake Rattle n Roll (USA)
 	&BurnDrvmd_snakernr,		// Snake Rattle n' Roll (Euro)
 	&BurnDrvmd_snakernrs,		// Snake Rattle n' Roll (Hack, Spanish)
@@ -35041,9 +35054,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecStopvirusaf,		// Stop Virus (Axel F bgm) (128K) (HB)
 	&BurnDrvStmbladej,			// Storm Blade (Japan)
 	&BurnDrvStmblade,			// Storm Blade (US)
-	&BurnSpecStvalhalla,		// Storm Over Valhalla (48K) (HB)
-	&BurnSpecStvalhallaepe,		// Storm Over Valhalla Epilogue (English) (48K) (HB)
-	&BurnSpecStvalhallaeps,		// Storm Over Valhalla Epilogue (Spanish) (48K) (HB)
+	&BurnSpecStvalhalla,		// Storm Over Valhalla (48K) (HB, v1.2)
+	&BurnSpecStvalhallaepe,		// Storm Over Valhalla Epilogue (English) (48K) (HB, v1.2)
+	&BurnSpecStvalhallaeps,		// Storm Over Valhalla Epilogue (Spanish) (48K) (HB, v1.2)
 	&BurnDrvMSX_stormrescue,	// Storm Rescue (HB)
 	&BurnSpecstormbringer,		// Stormbringer (128K)
 	&BurnDrvMSX_stormbringer,	// Stormbringer (Euro)
@@ -35555,7 +35568,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSboblbobld,			// Super Bobble Bobble (bootleg, set 4)
 	&BurnDrvSboblboble,			// Super Bobble Bobble (bootleg, set 5)
 	&BurnDrvSboblboblf,			// Super Bobble Bobble (bootleg, set 6)
-	&BurnSpecSbman2r,			// Super Bomberman 2 Remix (128K) (HB)
+	&BurnSpecSbman2r,			// Super Bomberman 2 Remix (128K) (HB, v1.1)
 	&BurnDrvMSX_sboy3,			// Super Boy 3 (Kor)
 	&BurnDrvsms_sboy3,			// Super Boy 3 (Kor)
 	&BurnDrvMSX_sboy3a,			// Super Boy 3 (Kor, Alt)
@@ -37348,6 +37361,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_transf3,			// Transformers 3 (Hack, Rus)
 	&BurnDrvTransfrm,			// Transformer
 	&BurnSpecTransmuter,		// Transmuter (48K)
+	&BurnSpecTc3en,				// Transylvania Castle 3 - The Queen of Sorcery (English) (48K) (HB, v1.2)
+	&BurnSpecTc3pt,				// Transylvania Castle 3 - The Queen of Sorcery (Portuguese) (48K) (HB, v1.2)
+	&BurnSpecTc3es,				// Transylvania Castle 3 - The Queen of Sorcery (Spanish) (48K) (HB, v1.2)
 	&BurnSpectrantor,			// Trantor - The Last Stormtrooper (48K)
 	&BurnDrvMSX_trantor,		// Trantor - The Last Stormtrooper (Euro)
 	&BurnSpecTranzam,			// Tranz Am (16K)
@@ -37643,7 +37659,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ultimleasoc,	// Ultimate League Soccer (USA)
 	&BurnDrvmd_umk3,			// Ultimate Mortal Kombat 3 (Euro)
 	&BurnDrvnes_ultimmorkom3h,	// Ultimate Mortal Kombat 3 (Hack)
-	&BurnDrvmd_umk3osc,			// Ultimate Mortal Kombat 3 (OSC Hack, version 27b)
+	&BurnDrvmd_umk3osc,			// Ultimate Mortal Kombat 3 (OSC Hack, version 28)
 	&BurnDrvUmk3r10,			// Ultimate Mortal Kombat 3 (rev 1.0)
 	&BurnDrvUmk3r11,			// Ultimate Mortal Kombat 3 (rev 1.1)
 	&BurnDrvUmk3,				// Ultimate Mortal Kombat 3 (rev 1.2)

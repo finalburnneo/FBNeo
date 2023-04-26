@@ -5801,6 +5801,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="djpuff23" cloneof="djpuff" romof="djpuff">
+		<comment>Hack</comment>
+		<description>DJ Puff's Volcanic Capers Recoloured (128K) (Hack)</description>
+		<year>2023</year>
+		<manufacturer>Rafal Miazga</manufacturer>
+		<rom name="DJ Puff's Volcanic Capers 128K (Re-coloured MOD)(2023)(Rafal Miazga).tap" size="58200" crc="d26dc482"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="doomrevenge" romof="spectrum">
 		<comment>The Amazing Spider-Man and Captain America in Dr. Doom's Revenge!</comment>
 		<description>Doctor Doom's Revenge (48K)</description>
@@ -7490,66 +7501,66 @@
 		<driver status="good"/>
 	</game>
 	<game name="funfungusen" romof="spec128">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Press 'Space' to select and 'Enter' to set options</comment>
 		<description>Funky Fungus Reloaded (English) (128K) (HB)</description>
-		<year>2020</year>
-		<manufacturer>Alessandro Grussu</manufacturer>
-		<rom name="Funky Fungus Reloaded 128K EN (2020)(Grussu, Alessandro).tap" size="96206" crc="92ea93e8"/>
+		<year>2019-2023</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Funky Fungus Reloaded EN 128K (2019-2023)(Zankle Soft).tap" size="96170" crc="a8a15992"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="funfungusfr" cloneof="funfungusen" romof="funfungusen">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Press 'Space' to select and 'Enter' to set options</comment>
 		<description>Funky Fungus Reloaded (French) (128K) (HB)</description>
-		<year>2020</year>
-		<manufacturer>Alessandro Grussu</manufacturer>
-		<rom name="Funky Fungus Reloaded 128K FR (2020)(Grussu, Alessandro).tap" size="96277" crc="84cda226"/>
+		<year>2019-2023</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Funky Fungus Reloaded FR 128K (2019-2023)(Zankle Soft).tap" size="80892" crc="d453cf6c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="funfungusde" cloneof="funfungusen" romof="funfungusen">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Press 'Space' to select and 'Enter' to set options</comment>
 		<description>Funky Fungus Reloaded (German) (128K) (HB)</description>
-		<year>2020</year>
-		<manufacturer>Alessandro Grussu</manufacturer>
-		<rom name="Funky Fungus Reloaded 128K DE (2020)(Grussu, Alessandro).tap" size="96243" crc="99816719"/>
+		<year>2019-2023</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Funky Fungus Reloaded DE 128K (2019-2023)(Zankle Soft).tap" size="96207" crc="c7072dda"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="funfungusit" cloneof="funfungusen" romof="funfungusen">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Press 'Space' to select and 'Enter' to set options</comment>
 		<description>Funky Fungus Reloaded (Italian) (128K) (HB)</description>
-		<year>2020</year>
-		<manufacturer>Alessandro Grussu</manufacturer>
-		<rom name="Funky Fungus Reloaded 128K IT (2020)(Grussu, Alessandro).tap" size="96217" crc="9a6f50a7"/>
+		<year>2019-2023</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Funky Fungus Reloaded IT 128K (2019-2023)(Zankle Soft).tap" size="96181" crc="0b0e7184"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="funfunguspt" cloneof="funfungusen" romof="funfungusen">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Press 'Space' to select and 'Enter' to set options</comment>
 		<description>Funky Fungus Reloaded (Portuguese) (128K) (HB)</description>
-		<year>2020</year>
-		<manufacturer>Alessandro Grussu</manufacturer>
-		<rom name="Funky Fungus Reloaded 128K PT (2020)(Grussu, Alessandro).tap" size="96280" crc="4ec682bd"/>
+		<year>2019-2023</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Funky Fungus Reloaded PT 128K (2019-2023)(Zankle Soft).tap" size="96244" crc="1d23636e"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="funfunguses" cloneof="funfungusen" romof="funfungusen">
-		<comment>Homebrew</comment>
+		<comment>Homebrew, Press 'Space' to select and 'Enter' to set options</comment>
 		<description>Funky Fungus Reloaded (Spanish) (128K) (HB)</description>
-		<year>2020</year>
-		<manufacturer>Alessandro Grussu</manufacturer>
-		<rom name="Funky Fungus Reloaded 128K ES (2020)(Grussu, Alessandro).tap" size="96259" crc="92e7e2f8"/>
+		<year>2019-2023</year>
+		<manufacturer>Zankle Soft</manufacturer>
+		<rom name="Funky Fungus Reloaded ES 128K (2019-2023)(Zankle Soft).tap" size="96223" crc="6002d9da"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9817,6 +9828,17 @@
 		<manufacturer>Konami</manufacturer>
 		<rom name="Jail Break 48K (1987)(Konami).z80" size="44911" crc="9ee208aa"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="jankyjoe" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Janky Joe in Retro Hell (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Sloanysoft</manufacturer>
+		<rom name="Janky Joe in Retro Hell 128K (2023)(Sloanysoft).tap" size="43848" crc="247dddd0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -16048,6 +16070,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sbotp1" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>SBOT Part-1 (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Xavisan</manufacturer>
+		<rom name="SBOT Part1 128K (2023)(Xavisan).tap" size="46761" crc="3377c7b7"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sbotp2" cloneof="sbotp1" romof="sbotp1">
+		<comment>Homebrew</comment>
+		<description>SBOT Part-2 (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Xavisan</manufacturer>
+		<rom name="SBOT Part2 128K (2023)(Xavisan).tap" size="48067" crc="b2a76283"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sc0tb0t" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Sc0tb0t (48K) (HB)</description>
@@ -16721,6 +16765,16 @@
 		<rom name="Snake Escape (2016)(Einar Saukas).tap" size="39093" crc="870cc8cd"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="snakepower" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Snake Power (48K) (HB, v1.4)</description>
+		<year>2023</year>
+		<manufacturer>Hash6lron</manufacturer>
+		<rom name="Snake Power v1.4 48K (2023)(Hash6lron).tap" size="37771" crc="f799a3ae"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17583,30 +17637,30 @@
 	</game>
 	<game name="stvalhalla" romof="spectrum">
 		<comment>Homebrew</comment>
-		<description>Storm Over Valhalla (48K) (HB)</description>
+		<description>Storm Over Valhalla (48K) (HB, v1.2)</description>
 		<year>2023</year>
 		<manufacturer>Sequentia Soft</manufacturer>
-		<rom name="Storm Over Valhalla 48K (2023)(Sequentia Soft).tap" size="64600" crc="bc4731e6"/>
+		<rom name="Storm Over Valhalla v1.2 48K (2023)(Sequentia Soft).tap" size="64600" crc="bc4731e6"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="stvalhallaepe" cloneof="stvalhalla" romof="stvalhalla">
 		<comment>Homebrew</comment>
-		<description>Storm Over Valhalla Epilogue (English) (48K) (HB)</description>
+		<description>Storm Over Valhalla Epilogue (English) (48K) (HB, v1.2)</description>
 		<year>2023</year>
 		<manufacturer>Sequentia Soft</manufacturer>
-		<rom name="Storm Over Valhalla - Epilogue EN (2023)(Sequentia Soft).tap" size="25905" crc="c6ff8fdb"/>
+		<rom name="Storm Over Valhalla - Epilogue v1.2 EN (2023)(Sequentia Soft).tap" size="25905" crc="c6ff8fdb"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="stvalhallaeps" cloneof="stvalhalla" romof="stvalhalla">
 		<comment>Homebrew</comment>
-		<description>Storm Over Valhalla Epilogue (Spanish) (48K) (HB)</description>
+		<description>Storm Over Valhalla Epilogue (Spanish) (48K) (HB, v1.2)</description>
 		<year>2023</year>
 		<manufacturer>Sequentia Soft</manufacturer>
-		<rom name="Storm Over Valhalla - Epilogue ES (2023)(Sequentia Soft).tap" size="26127" crc="994943ed"/>
+		<rom name="Storm Over Valhalla - Epilogue v1.2 ES (2023)(Sequentia Soft).tap" size="26127" crc="994943ed"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17893,10 +17947,10 @@
 	</game>
 	<game name="sbman2r" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Super Bomberman 2 Remix (128K) (HB)</description>
+		<description>Super Bomberman 2 Remix (128K) (HB, v1.1)</description>
 		<year>2023</year>
 		<manufacturer>ZX Evolution</manufacturer>
-		<rom name="Super Bomberman 2 Remix 128K (2023)(ZX Evolution).tap" size="55559" crc="2343539f"/>
+		<rom name="Super Bomberman 2 Remix v1.1 128K (2023)(ZX Evolution).tap" size="55559" crc="2343539f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -19166,6 +19220,36 @@
 		<year>1987</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Transmuter (1987)(Codemasters).tap" size="48599" crc="626052a5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tc3en" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Transylvania Castle 3 - The Queen of Sorcery (English) (48K) (HB, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>Fitosoft</manufacturer>
+		<rom name="Transylvania Castle 3 EN 48K (2022)(Fitosoft).tap" size="47171" crc="f820a20b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tc3pt" cloneof="tc3en" romof="tc3en">
+		<comment>Homebrew</comment>
+		<description>Transylvania Castle 3 - The Queen of Sorcery (Portuguese) (48K) (HB, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>Fitosoft</manufacturer>
+		<rom name="Transylvania Castle 3 PT 48K (2022)(Fitosoft).tap" size="47171" crc="fd8f0e09"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tc3es" cloneof="tc3en" romof="tc3en">
+		<comment>Homebrew</comment>
+		<description>Transylvania Castle 3 - The Queen of Sorcery (Spanish) (48K) (HB, v1.2)</description>
+		<year>2022</year>
+		<manufacturer>Fitosoft</manufacturer>
+		<rom name="Transylvania Castle 3 ES 48K (2022)(Fitosoft).tap" size="47154" crc="a73d13c7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

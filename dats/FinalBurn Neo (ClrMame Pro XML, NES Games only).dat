@@ -9125,7 +9125,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kinni">
+	<game name="kinni" cloneof="muscle" romof="muscle">
 		<description>Kinnikuman - Muscle Tag Match (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Bandai</manufacturer>

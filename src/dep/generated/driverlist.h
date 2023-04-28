@@ -1709,6 +1709,7 @@ DRV		BurnDrvnes_billtedsexcvigaad;
 DRV		BurnDrvmd_billwlsh;
 DRV		BurnDrvmd_billwl95;
 DRV		BurnDrvmd_btomatog;
+DRV		BurnDrvBilyard;
 DRV		BurnSpecBillythekid;
 DRV		BurnDrvmd_bimini;
 DRV		BurnDrvnes_binarycity;
@@ -6695,6 +6696,7 @@ DRV		BurnDrvnes_gorbynopipdai;
 DRV		BurnDrvcv_gorf;
 DRV		BurnDrvMSX_ggeftsdp;
 DRV		BurnDrvgorkans;
+DRV		BurnDrvGorodki;
 DRV		BurnDrvGotcha;
 DRV		BurnDrvGotya;
 DRV		BurnDrvnes_gotcha;
@@ -8600,6 +8602,7 @@ DRV		BurnDrvMSX_kontenna;
 DRV		BurnDrvMSX_kontennk;
 DRV		BurnDrvnes_konamspoinseo;
 DRV		BurnDrvfds_konamictennis;
+DRV		BurnDrvKonek;
 DRV		BurnDrvfds_konekmon;
 DRV		BurnDrvMSX_koneko;
 DRV		BurnDrvKong;
@@ -8616,6 +8619,7 @@ DRV		BurnDrvkorosuke;
 DRV		BurnDrvnes_kosatak;
 DRV		BurnDrvMyangel;
 DRV		BurnDrvMyangel2;
+DRV		BurnDrvKot;
 DRV		BurnDrvLegofair;
 DRV		BurnDrvmd_koteteik;
 DRV		BurnDrvStrahlj;
@@ -13722,6 +13726,7 @@ DRV		BurnDrvMSX_soloen;
 DRV		BurnSpecsoloes;
 DRV		BurnDrvMSX_soloes;
 DRV		BurnDrvsms_saposos;
+DRV		BurnDrvSosterm;
 DRV		BurnDrvSpyu;
 DRV		BurnDrvSpy;
 DRV		BurnDrvSrdmissn;
@@ -14644,6 +14649,7 @@ DRV		BurnDrvnes_snakky;
 DRV		BurnDrvSnapjack;
 DRV		BurnDrvSnapper;
 DRV		BurnDrvsms_snappysnorg;
+DRV		BurnDrvKoroleva;
 DRV		BurnDrvmd_snezkoro;
 DRV		BurnDrvngpc_snkgals;
 DRV		BurnDrvngpc_snkgalsj;
@@ -21288,6 +21294,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_billwlsh,		// Bill Walsh College Football (Euro, USA)
 	&BurnDrvmd_billwl95,		// Bill Walsh College Football 95 (USA)
 	&BurnDrvmd_btomatog,		// Bill's Tomato Game (Prototype) (Unl)
+	&BurnDrvBilyard,			// Billiard
 	&BurnSpecBillythekid,		// Billy the Kid (48K)
 	&BurnDrvmd_bimini,			// Bimini Run (USA)
 	&BurnDrvnes_binarycity,		// Binary City (GlobalHack)
@@ -26274,6 +26281,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_gorf,			// Gorf
 	&BurnDrvMSX_ggeftsdp,		// Gorgeous Gemma in Escape from the Space Disposal Planet (HB)
 	&BurnDrvgorkans,			// Gorkans
+	&BurnDrvGorodki,			// Gorodki
 	&BurnDrvGotcha,				// Got-cha Mini Game Festival
 	&BurnDrvGotya,				// Got-Ya (12/24/1981, prototype?)
 	&BurnDrvnes_gotcha,			// Gotcha! - The Sport! (USA)
@@ -28179,6 +28187,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_kontennk,		// Konami's Tennis (Kor)
 	&BurnDrvnes_konamspoinseo,	// Konamic Sports in Seoul (Japan)
 	&BurnDrvfds_konamictennis,	// Konamic Tennis (Japan)
+	&BurnDrvKonek,				// Konek-Gorbunok
 	&BurnDrvfds_konekmon,		// Koneko Monogatari - The Adventures of Chatran (Japan)
 	&BurnDrvMSX_koneko,			// Koneko no Daibouken - Chibi-chan ga Iku (Jpn)
 	&BurnDrvKong,				// Kong (Donkey Kong conversion on Galaxian hardware)
@@ -28195,6 +28204,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_kosatak,		// Kosmity Atakujo (HB, v10.07.2020)
 	&BurnDrvMyangel,			// Kosodate Quiz My Angel (Japan)
 	&BurnDrvMyangel2,			// Kosodate Quiz My Angel 2 (Japan)
+	&BurnDrvKot,				// Kot-Rybolov (Terminal)
 	&BurnDrvLegofair,			// Koukuu Kihei Monogatari - The Legend of Air Cavalry (Japan)
 	&BurnDrvmd_koteteik,		// Koutetsu Teikoku (Jpn)
 	&BurnDrvStrahlj,			// Koutetsu Yousai Strahl (Japan set 1)
@@ -33301,6 +33311,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecsoloes,			// S.o.L.o. (Spanish) (128K) (HB)
 	&BurnDrvMSX_soloes,			// S.o.L.o. (Spanish) (HB)
 	&BurnDrvsms_saposos,		// S.O.S Lagoa Poluida (Bra)
+	&BurnDrvSosterm,			// S.O.S.
 	&BurnDrvSpyu,				// S.P.Y. - Special Project Y (US ver. M)
 	&BurnDrvSpy,				// S.P.Y. - Special Project Y (World ver. N)
 	&BurnDrvSrdmissn,			// S.R.D. Mission
@@ -34223,6 +34234,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSnapjack,			// Snap Jack
 	&BurnDrvSnapper,			// Snapper (Korea)
 	&BurnDrvsms_snappysnorg,	// Snappy Snorg and the Seven Silver Stones (GlobalHack, v1.4)
+	&BurnDrvKoroleva,			// Snezhnaja Koroleva
 	&BurnDrvmd_snezkoro,		// Snezhnaya Koroleva (Rus) (Unl)
 	&BurnDrvngpc_snkgals,		// SNK Gals' Fighters (Euro, USA)
 	&BurnDrvngpc_snkgalsj,		// SNK Gals' Fighters (Jpn)

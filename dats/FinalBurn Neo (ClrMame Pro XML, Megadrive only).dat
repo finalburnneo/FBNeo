@@ -22597,9 +22597,9 @@
 	<game name="umk3osc" cloneof="umk3" romof="umk3">
 		<comment>Hack</comment>
 		<description>Ultimate Mortal Kombat 3 (OSC Hack, version 28)</description>
-		<year>2023-14-23</year>
+		<year>2023-04-23</year>
 		<manufacturer>Bonus</manufacturer>
-		<rom name="Ultimate Mortal Kombat 3 OSC (2022)(Bonus).bin" size="5512572" crc="48374220"/>
+		<rom name="Ultimate Mortal Kombat 3 OSC (2023)(Bonus).bin" size="5512572" crc="48374220"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

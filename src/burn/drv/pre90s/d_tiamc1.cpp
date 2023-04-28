@@ -42,6 +42,7 @@ static UINT8 DrvReset;
 static INT16 Analog[1];
 
 static INT32 is_gorodki = 0;
+static INT32 is_kot = 0;
 
 static INT32 nExtraCycles;
 
@@ -456,6 +457,8 @@ static INT32 KotInit()
 
 	button_config = 0x6affff;
 
+	is_kot = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -473,6 +476,7 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	is_gorodki = 0;
+	is_kot = 0;
 
 	return 0;
 }
@@ -615,6 +619,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(update_colors);
 
 		SCAN_VAR(nExtraCycles);
+	}
+
+	if (nAction & ACB_WRITE && is_kot == 0) {
+		update_characters = 1;
 	}
 
 	return 0;

@@ -76,6 +76,7 @@ static struct BurnInputInfo ThreeWondersInputList[] =
 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+	{"Dip D"            , BIT_DIPSWITCH, &fFakeDip  , "dip"       },
 };
 
 STDINPUTINFO(ThreeWonders)
@@ -1924,7 +1925,8 @@ static struct BurnDIPInfo ThreeWondersDIPList[]=
 	{0x13, 0xff, 0xff, 0x00, NULL                     },
 	{0x14, 0xff, 0xff, 0x65, NULL                     },
 	{0x15, 0xff, 0xff, 0x66, NULL                     },
-	
+	{0x16, 0xff, 0xff, 0x00, NULL                     },
+
 	// Dip A
 	CPS1_COINAGE_1(0x13)
 
@@ -1989,6 +1991,10 @@ static struct BurnDIPInfo ThreeWondersDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x15, 0x01, 0x80, 0x00, "Game"                   },
 	{0x15, 0x01, 0x80, 0x80, "Test"                   },
+
+	{0   , 0xfe, 0   , 2   , "CPS1 Backdrop (fake)"   },
+	{0x16, 0x01, 0x01, 0x00, "Normal"                 },
+	{0x16, 0x01, 0x01, 0x01, "Always Black"           },
 };
 
 STDDIPINFO(ThreeWonders)

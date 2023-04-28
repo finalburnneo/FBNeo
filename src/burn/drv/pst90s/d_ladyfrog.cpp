@@ -392,7 +392,7 @@ static INT32 DrvInit(INT32 sprite_offset)
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
 	MSM5232Init(2000000, 1);
-	MSM5232SetCapacitors(0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6);
+	MSM5232SetCapacitors(1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_0);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_1);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_2);

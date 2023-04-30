@@ -1,3 +1,4 @@
+// FB Neo IPS Mangler^H^H^H^H^H^H^HManager
 #include "burner.h"
 
 #define NUM_LANGUAGES		12
@@ -771,7 +772,7 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 		}
 		return;
 	} else {
-		bprintf(0, _T("IPS - Patching with: %S.\n"), ips_path);
+		bprintf(0, _T("IPS - Patching with: %S. (%S)\n"), ips_path, (readonly) ? "Read-Only" : "Write");
 		UINT8 ch = 0;
 		INT32 bRLE = 0;
 		while (!feof(f)) {
@@ -848,13 +849,28 @@ static char* stristr_int(const char* str1, const char* str2)
     return (*p2) ? NULL : (char*)r;
 }
 
-static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bool readonly)
+static UINT32 hexto32(const char *s)
+{
+	UINT32 val = 0;
+	char c;
+
+	while ((c = *s++)) {
+		UINT8 v = ((c & 0xf) + (c >> 6)) | ((c >> 3) & 0x8);
+		val = (val << 4) | (UINT32)v;
+    }
+
+	return val;
+}
+
+static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UINT8* base, bool readonly)
 {
 	char s[MAX_PATH];
     char* p = NULL;
 	char* rom_name = NULL;
 	char* ips_name = NULL;
 	char* ips_offs = NULL;
+	char* ips_crc  = NULL;
+	UINT32 nIps_crc = 0;
 	FILE* fp = NULL;
 	unsigned long nIpsSize;
 
@@ -872,32 +888,26 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bo
 				if (strncmp(p, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)) == 0)
 					p += strlen(UTF8_SIGNATURE);
 
-				if (p[0] == '[')	// '['
+				if (p[0] == '[')	// '[' reached info-section of .dat file
 					break;
 
-                // Can support linetypes:
+                // Can support linetypes: (space or tab)
                 // "rom name.bin" "patch file.ips" CRC(abcd1234)
                 // romname.bin patchfile CRC(abcd1234)
 
-                if (p[0] == '\"') { // "quoted rom name with spaces.bin"
-                    p++;
-                    rom_name = strtok(p, "\"");
-                } else {
-                    rom_name = strtok(p, " \t\r\n");
-                }
+				rom_name = strtok(p, "\"\t\r\n()");
+
 				if (!rom_name)
 					continue;
 				if (*rom_name == '#')
 					continue;
-				if (_stricmp(rom_name, game_name))
-					continue;
 
-				ips_name = strtok(NULL, "\"\t\r\n");
+				ips_name = strtok(NULL, "\"\t\r\n()");
 				if (!ips_name)
 					continue;
 
 				nRomOffset = 0; // Reset to 0
-				if (NULL != (ips_offs = strtok(NULL, " \t\r\n"))) {	// Parameters of the offset increment
+				if (NULL != (ips_offs = strtok(NULL, "\"\t\r\n()"))) {	// Parameters of the offset increment
 					if (     0 == strcmp(ips_offs, "IPS_OFFSET_016")) nRomOffset = 0x1000000;
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_032")) nRomOffset = 0x2000000;
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_048")) nRomOffset = 0x3000000;
@@ -909,26 +919,24 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bo
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_144")) nRomOffset = 0x9000000;
 				}
 
-                // remove crc portion, and end quote/spaces from ips name
-                char *c = stristr_int(ips_name, "crc");
-                if (c) {
-                    c--; // "derp.ips" CRC(abcd1234)\n"
-                         //           ^ we're now here.
-                    while (*c && (*c == ' ' || *c == '\t' || *c == '\"'))
-                    {
-                        *c = '\0';
-                        c--;
-                    }
-                }
-
-                // clean-up IPS name beginning (could be quoted or not)
-                while (ips_name && (ips_name[0] == '\t' || ips_name[0] == ' ' || ips_name[0] == '\"'))
-                    ips_name++;
+				if (stristr_int(ips_offs, "crc")) {
+					ips_crc = strtok(NULL, "\"\t\r\n()");
+					if (ips_crc) {
+						nIps_crc = hexto32(ips_crc);
+					}
+				}
 
                 char *has_ext = stristr_int(ips_name, ".ips");
 
-                bprintf(0, _T("ips name:[%S]\n"), ips_name);
-                bprintf(0, _T("rom name:[%S]\n"), rom_name);
+				if (_stricmp(rom_name, game_name))	// name don't match?
+					if (nIps_crc != crc)			// crc don't match?
+						continue;					// not out file.
+
+				if (!readonly) {
+					bprintf(0, _T("ips name:[%S]\n"), ips_name);
+					bprintf(0, _T("rom name:[%S]\n"), rom_name);
+					bprintf(0, _T("rom crc :[%x]\n"), nIps_crc);
+				}
 
 				char ips_path[MAX_PATH*2];
 				char ips_dir[MAX_PATH];
@@ -1106,7 +1114,7 @@ void GetIpsDrvDefine()
 	}
 }
 
-void IpsApplyPatches(UINT8* base, char* rom_name, bool readonly)
+void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly)
 {
 	if (!bDoIpsPatch)
 		return;
@@ -1118,7 +1126,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name, bool readonly)
 	for (INT32 i = 0; i < nActivePatches; i++) {
 		memset(ips_data, 0, MAX_PATH);
 		TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
-		DoPatchGame(ips_data, rom_name, base, readonly);
+		DoPatchGame(ips_data, rom_name, crc, base, readonly);
 	}
 }
 

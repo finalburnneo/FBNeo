@@ -906,6 +906,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 				if (!ips_name)
 					continue;
 
+				nIps_crc = 0;
 				nRomOffset = 0; // Reset to 0
 				if (NULL != (ips_offs = strtok(NULL, "\"\t\r\n()"))) {	// Parameters of the offset increment
 					if (     0 == strcmp(ips_offs, "IPS_OFFSET_016")) nRomOffset = 0x1000000;
@@ -923,7 +924,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 					}
 				}
 
-				if (stristr_int(ips_offs, "crc")) {
+				if (ips_offs != NULL && stristr_int(ips_offs, "crc")) {
 					ips_crc = strtok(NULL, "\"\t\r\n()");
 					if (ips_crc) {
 						nIps_crc = hexto32(ips_crc);

@@ -888,7 +888,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 				if (strncmp(p, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)) == 0)
 					p += strlen(UTF8_SIGNATURE);
 
-				if (p[0] == '[')	// '[' reached info-section of .dat file
+				if (p[0] == '[')	// reached info-section of .dat file, time to leave.
 					break;
 
                 // Can support linetypes: (space or tab)
@@ -917,6 +917,10 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_112")) nRomOffset = 0x7000000;
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_128")) nRomOffset = 0x8000000;
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_144")) nRomOffset = 0x9000000;
+
+					if (nRomOffset != 0) { // better get next token (crc)
+						ips_offs = strtok(NULL, "\"\t\r\n()");
+					}
 				}
 
 				if (stristr_int(ips_offs, "crc")) {
@@ -930,7 +934,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 
 				if (_stricmp(rom_name, game_name))	// name don't match?
 					if (nIps_crc != crc)			// crc don't match?
-						continue;					// not out file.
+						continue;					// not our file. next!
 
 				if (!readonly) {
 					bprintf(0, _T("ips name:[%S]\n"), ips_name);

@@ -5,6 +5,8 @@
 UINT8 CpsReset = 0;
 UINT8 Cpi01A = 0, Cpi01C = 0, Cpi01E = 0;
 
+static UINT8 OldSwitcher = 0;
+
 static INT32 nInterrupt;
 static INT32 nIrqLine, nIrqCycles;
 static bool bEnableAutoIrq50, bEnableAutoIrq52;				// Trigger an interrupt every 32 scanlines
@@ -114,6 +116,8 @@ static const eeprom_interface cps2_eeprom_interface =
 
 INT32 CpsRunInit()
 {
+	OldSwitcher = VerSwitcher & 1;
+
 	SekInit(0, 0x68000);					// Allocate 68000
 	
 	if (CpsMemInit()) {						// Memory init
@@ -374,6 +378,10 @@ INT32 Cps1Frame()
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;
 
 	SekClose();
+
+	if (OldSwitcher != VerSwitcher) { // Setting is changed
+		DrvReload();
+	}
 
 	return 0;
 }

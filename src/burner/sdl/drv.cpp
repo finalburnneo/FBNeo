@@ -166,6 +166,15 @@ int DrvExit()
 	return 0;
 }
 
+INT32 DrvReload()
+{
+	INT32 nRet = 0;
+
+//	nRet = DrvInitCallback();
+
+	return nRet;
+}
+
 #ifndef BUILD_MACOS
 
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs)

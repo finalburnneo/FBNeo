@@ -330,3 +330,8 @@ int DrvExit()
 
 	return 0;
 }
+
+INT32 DrvReload()
+{
+	return DrvInitCallback();
+}

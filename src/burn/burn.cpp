@@ -52,6 +52,8 @@ bool bBurnUseBlend = true;
 INT32 nBurnFPS = 6000;
 INT32 nBurnCPUSpeedAdjust = 0x0100;	// CPU speed adjustment (clock * nBurnCPUSpeedAdjust / 0x0100)
 
+UINT8 VerSwitcher = 0;
+
 // Burn Draw:
 UINT8* pBurnDraw = NULL;	// Pointer to correctly sized bitmap
 INT32 nBurnPitch = 0;					// Pitch between each line

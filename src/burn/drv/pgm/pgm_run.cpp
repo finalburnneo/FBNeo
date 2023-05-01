@@ -13,6 +13,7 @@ UINT8 PgmBtn2[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmInput[9] = {0,0,0,0,0,0,0,0,0};
 UINT8 PgmReset = 0;
 static HoldCoin<4> hold_coin;
+static UINT8 OldSwitcher[2] = { 0,0 }; // Code & Ver.
 
 INT32 nPGM68KROMLen = 0;
 INT32 nPGMTileROMLen = 0;
@@ -785,7 +786,7 @@ static void expand_colourdata()
 		PGMSPRColROM[cnt*3+2] = (colpack >> 10) & 0x1f;
 	}
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 }
 
 static void ics2115_sound_irq(INT32 nState)
@@ -799,6 +800,10 @@ INT32 pgmInit()
 
 	nEnableArm7 = (BurnDrvGetHardwareCode() / HARDWARE_IGS_USE_ARM_CPU) & 1;
 	OldCodeMode = ((HackCodeDip & 1) || (bDoIpsPatch)) ? 1 : 0;
+
+	// Sync settings
+	OldSwitcher[0] = HackCodeDip & 1;
+	OldSwitcher[1] = VerSwitcher;
 
 	if (0 == nPGMSpriteBufferHack) {
 		nPGMSpriteBufferHack = (nIpsDrvDefine & IPS_PGM_SPRHACK) ? 1 : 0;
@@ -973,10 +978,10 @@ INT32 pgmExit()
 	v3021Exit();
 	ics2115_exit();
 
-	BurnFree (PGMTileROM);
-	BurnFree (PGMTileROMExp);
-	BurnFree (PGMSPRColROM);
-	BurnFree (PGMSPRMaskROM);
+	BurnFree(PGMTileROM);
+	BurnFree(PGMTileROMExp);
+	BurnFree(PGMSPRColROM);
+	BurnFree(PGMSPRMaskROM);
 
 	nPGM68KROMLen = 0;
 	nPGMTileROMLen = 0;
@@ -1036,7 +1041,7 @@ INT32 pgmFrame()
 
 	// compile inputs
 	{
-		memset (PgmInput, 0, 6); // 6 is correct! Regions are stored in 7!
+		memset(PgmInput, 0, 6); // 6 is correct! Regions are stored in 7!
 
 		for (INT32 i = 0; i < sizeof(PgmJoy1); i++) {
 			PgmInput[0] |= (PgmJoy1[i] & 1) << i;
@@ -1158,6 +1163,10 @@ INT32 pgmFrame()
 
 	if (OldCodeMode)
 		memcpy(PGMSprBuf, PGM68KRAM /* Sprite RAM 0-bff */, 0xa00); // buffer sprites
+
+	if ((OldSwitcher[0] != (HackCodeDip & 1)) || (OldSwitcher[1] != VerSwitcher)) { // Setting is changed
+		DrvReload();
+	}
 	
 	return 0;
 }

@@ -8,8 +8,6 @@
 	// #define ROM_VERIFY
 #endif
 
-static UINT8 VerSwitch = 0; // Fake Dip
-
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -140,7 +138,7 @@ static struct BurnInputInfo neoForceAESInputList[] = {
 STDINPUTINFO(neoForceAES)
 
 static struct BurnInputInfo mslug3xInputList[] = {
-	{"Dip Ex",		BIT_DIPSWITCH,	&VerSwitch,		"dip"       },      // 19
+	{"Dip Ex",		BIT_DIPSWITCH,	&VerSwitcher,   "dip"       },      // 19
 };
 
 STDINPUTINFOEXT(mslug3x, neoForceAES, mslug3x)
@@ -1034,7 +1032,7 @@ static struct BurnDIPInfo mslug3xDIPList[] = {
 	// Fake DIPs
 	{0x04,	0xFF, 0xFF,	0x00, NULL                           },	// Release
 
-	{0,		0xFE, 0,	6,	  "Version change (Must reload)" },
+	{0,		0xFE, 0,	6,	  "Version change (Fake)"        },
 	{0x04,	0x01, 0x1f,	0x00, "Release"                      },
 	{0x04,	0x01, 0x1f,	0x01, "Public Beta"                  },
 	{0x04,	0x01, 0x1f,	0x02, "Development 0"                },
@@ -22132,7 +22130,7 @@ STD_ROM_FN(mslug3x)
 
 static void mslug3xCallback()
 {
-	UINT8 nSwitch = (VerSwitch & 0x1f);
+	UINT8 nSwitch = (VerSwitcher & 0x1f);
 
 	if (nSwitch > 0x00) {
 			memset(Neo68KROMActive,              0, 0x0200000);
@@ -22195,7 +22193,7 @@ static INT32 mslug3xInit()
 	INT32 nRet =  NeoInit();
 
 	if (0 == nRet) {
-		UINT8 nSwitch = (VerSwitch & 0x1f);
+		UINT8 nSwitch = (VerSwitcher & 0x1f);
 
 		// The loading of the sample file occurs after the initialization callback.
 		switch (nSwitch) {
@@ -22795,10 +22793,10 @@ struct BurnDriver BurnDrvmslugxcq = {
 
 // Metal Slug X - Super Vehicle-001 (Multifunction, Hack)
 // Modified by 合金弹头爱克斯
-// 20230414
+// 20230416
 
 static struct BurnRomInfo mslugxdgRomDesc[] = {
-	{ "250-p1dg.p1",	0x100000, 0x9874ddee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p1dg.p1",	0x100000, 0x38cffcb9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2dg.ep1",	0x400000, 0x431cb335, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1.s1",		0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles

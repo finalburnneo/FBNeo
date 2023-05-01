@@ -399,6 +399,11 @@ INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 void Reinitialise();
 
 // ---------------------------------------------------------------------------
+// Driver Reload
+extern UINT8 VerSwitcher;
+INT32 DrvReload();
+
+// ---------------------------------------------------------------------------
 // IPS Control
 
 #define IPS_NOT_PROTECT		(1 <<  0)	// Protection switche for NeoGeo, etc.

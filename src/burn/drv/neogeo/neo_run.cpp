@@ -140,7 +140,8 @@ UINT8 NeoDiag[2]	 = { 0, 0 };
 UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
 
-static UINT8 OldDebugDip[2] = { 0, 0 };
+static UINT8 OldDebugDip[2]	= { 0, 0 };
+static UINT8 OldSwitcher	= 0;
 
 // Which 68K BIOS to use
 INT32 nBIOS;
@@ -4207,6 +4208,7 @@ INT32 NeoInit()
 	}
 
 	nNeoActiveSlot = 0;
+	OldSwitcher = VerSwitcher & 0x1f;
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
 		UINT32 nDriver = nBurnDrvActive;
@@ -5124,6 +5126,10 @@ INT32 NeoFrame()
 	if (pBurnSoundOut) {
 		if ((nNeoSystemType & NEO_SYS_CD) && !(LC8951RegistersW[10] & 4))
 			CDEmuGetSoundBuffer(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	if (OldSwitcher != VerSwitcher) { // Setting is changed
+		DrvReload();
 	}
 
 	return 0;

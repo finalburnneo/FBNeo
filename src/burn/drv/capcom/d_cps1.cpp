@@ -17,8 +17,6 @@
 typedef INT32 (*Cps1Callback)(INT32);
 static Cps1Callback Cps1GfxLoadCallbackFunction = NULL;
 
-static UINT8 Cps1QSDip   = 0; // Fake Dip
-
 // Input Definitions
 
 static struct BurnInputInfo NTFOInputList[] =
@@ -1720,7 +1718,7 @@ static struct BurnInputInfo WofsjbInputList[] =
  	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
  	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
-	{"Dip D"            , BIT_DIPSWITCH, &Cps1QSDip , "dip"       },
+	{"Dip D"            , BIT_DIPSWITCH, &VerSwitcher,"dip"       },
 };
 
 STDINPUTINFO(Wofsjb)
@@ -1767,7 +1765,7 @@ STDINPUTINFO(Wofabla)
 
 static struct BurnInputInfo QSoundPatchInputList[] =
 {
-	{"Dip D"            , BIT_DIPSWITCH, &Cps1QSDip , "dip"       },
+	{"Dip D"            , BIT_DIPSWITCH, &VerSwitcher,  "dip"       },
 };
 
 STDINPUTINFOEXT(DinoQS, Dino, QSoundPatch)
@@ -5044,7 +5042,7 @@ static struct BurnDIPInfo DinoQSoundDIPList[] =
 	{0x1c, 0xff, 0xff, 0x00, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Fake)"         },
 	{0x1c, 0x01, 0x01, 0x00, "Off"                    },
 	{0x1c, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -5057,7 +5055,7 @@ static struct BurnDIPInfo DinohQSoundDIPList[] =
 	{0x1e, 0xff, 0xff, 0x00, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Fake)"         },
 	{0x1e, 0x01, 0x01, 0x00, "Off"                    },
 	{0x1e, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -5068,7 +5066,7 @@ static struct BurnDIPInfo PunisherQSoundDIPList[] =
 	{0x14, 0xff, 0xff, 0x00, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Fake)"         },
 	{0x14, 0x01, 0x01, 0x00, "Off"                    },
 	{0x14, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -5079,7 +5077,7 @@ static struct BurnDIPInfo SlammastQSoundDIPList[] =
 	{0x28, 0xff, 0xff, 0x00, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Fake)"         },
 	{0x28, 0x01, 0x01, 0x00, "Off"                    },
 	{0x28, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -16082,19 +16080,19 @@ static KabukiDecode KabukiDecodeFunction;
 static INT32 GameHasStars = 0;
 
 void wof_patch(void) {
-	if (Cps1QSDip & 1)
+	if (VerSwitcher & 1)
 		wof_decode();
 }
 void dino_patch(void) {
-	if (Cps1QSDip & 1)
+	if (VerSwitcher & 1)
 		dino_decode();
 }
 void punisher_patch(void) {
-	if (Cps1QSDip & 1)
+	if (VerSwitcher & 1)
 		punisher_decode();
 }
 void slammast_patch(void) {
-	if (Cps1QSDip & 1)
+	if (VerSwitcher & 1)
 		slammast_decode();
 }
 
@@ -17155,7 +17153,7 @@ static void Jurassic99PatchCallback()
 		CpsRom[patch_fix_a[(i << 1) + 0]] = (UINT8)patch_fix_a[(i << 1) + 1];
 	}
 
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		UINT32 patch_fix_b[] = {
 			// Fix draw scroll
 			0x0006c2, 0xc0, 0x0006c3, 0xff,
@@ -17186,7 +17184,7 @@ static INT32 DinopicInit()
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = Jurassic99PatchCallback;
 	} else {
 		Cps1ObjGetCallbackFunction = DinopicObjGet;
@@ -17197,7 +17195,7 @@ static INT32 DinopicInit()
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
 
-	if (Cps1QSDip ^ 1) {
+	if (VerSwitcher ^ 1) {
 		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
 		SekOpen(0);
@@ -17238,7 +17236,7 @@ static INT32 Dinopic3Init()
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160Alt;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = Jurassic99PatchCallback;
 	} else {
 		Cps1ObjGetCallbackFunction = DinopicObjGet;
@@ -17249,7 +17247,7 @@ static INT32 Dinopic3Init()
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
 
-	if (Cps1QSDip ^ 1) {
+	if (VerSwitcher ^ 1) {
 		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
 		SekOpen(0);
@@ -17346,7 +17344,7 @@ static INT32 DinotpicInit()
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = Jurassic99PatchCallback;
 	} else {
 		Cps1ObjGetCallbackFunction = DinopicObjGet;
@@ -17357,7 +17355,7 @@ static INT32 DinotpicInit()
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
 
-	if (Cps1QSDip ^ 1) {
+	if (VerSwitcher ^ 1) {
 		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
 		SekOpen(0);
@@ -17376,7 +17374,7 @@ static INT32 Jurassic99Init()
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = Jurassic99PatchCallback;
 	} else {
 		Cps1ObjGetCallbackFunction = DinopicObjGet;
@@ -17391,7 +17389,7 @@ static INT32 Jurassic99Init()
 
 	SekOpen(0);
 	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, MAP_RAM);
-	if (Cps1QSDip ^ 1) {
+	if (VerSwitcher ^ 1) {
 		SekMapHandler(1, 0x980000, 0x98000f, MAP_WRITE);
 		SekSetWriteWordHandler(1, DinopicScrollWrite);
 		SekMapHandler(2, 0x800200, 0x8002ff, MAP_WRITE);
@@ -18632,7 +18630,7 @@ static INT32 PunipicInit()
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	CpsBootlegEEPROM = 1;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = PunipicPatchCallback;
 	} else {
 		Cps1OverrideLayers = 1;
@@ -18673,7 +18671,7 @@ static INT32 Punipic2Init()
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	CpsBootlegEEPROM = 1;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = PunipicPatchCallback;
 	} else {
 		Cps1OverrideLayers = 1;
@@ -18707,7 +18705,7 @@ static INT32 Punipic3Init()
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	CpsBootlegEEPROM = 1;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = PunipicPatchCallback;
 	} else {
 		Cps1OverrideLayers = 1;
@@ -20344,7 +20342,7 @@ static INT32 SlampicInit()
 	CpsBootlegEEPROM = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSlampic;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = SlampicPatchCallback;
 	} else {
 		Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
@@ -20355,7 +20353,7 @@ static INT32 SlampicInit()
 	INT32 nRet = TwelveMhzInit();
 
 	if (!nRet) {
-		if (Cps1QSDip ^ 1) {
+		if (VerSwitcher ^ 1) {
 			for (INT32 i = 0x7fff; i >= 0; i--) {
 				CpsZRom[(i << 1) + 0] = CpsZRom[i];
 				CpsZRom[(i << 1) + 1] = 0xff;
@@ -20364,17 +20362,17 @@ static INT32 SlampicInit()
 		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
 		SekOpen(0);
-		if (Cps1QSDip ^ 1)
+		if (VerSwitcher ^ 1)
 			SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, MAP_ROM);
 		SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, MAP_RAM);
 		SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
-		if (Cps1QSDip ^ 1)
+		if (VerSwitcher ^ 1)
 			SekSetReadByteHandler(1, SlampicF18Read);
 		SekMapHandler(2, 0xf1e000, 0xf1ffff, MAP_READ);
-		if (Cps1QSDip ^ 1)
+		if (VerSwitcher ^ 1)
 			SekSetReadByteHandler(2, SlampicF18Read);
 		SekMapHandler(3, 0x980000, 0x980fff, MAP_WRITE);
-		if (Cps1QSDip ^ 1)
+		if (VerSwitcher ^ 1)
 			SekSetWriteWordHandler(3, SlampicScrollWrite);
 		SekMapHandler(4, 0xff0000, 0xffffff, MAP_WRITE);
 		SekSetWriteByteHandler(4, SlampicFFWriteByte);
@@ -20985,7 +20983,7 @@ static INT32 WofsjbInit()
 
 	Cps1DisablePSnd = 1;
 
-	if (Cps1QSDip & 1)
+	if (VerSwitcher & 1)
 		AmendProgRomCallback = WofsjbPatchCallback;
 
 	return TwelveMhzInit();
@@ -21100,7 +21098,7 @@ static INT32 Wofr1blInit()
 {
 	bCpsUpdatePalEveryFrame = 1;
 	CpsBootlegEEPROM = 1;
-	if (Cps1QSDip & 1) {
+	if (VerSwitcher & 1) {
 		AmendProgRomCallback = WofpicPatchCallback;
 	} else {
 		Cps1OverrideLayers = 1;
@@ -21117,7 +21115,7 @@ static INT32 Wofr1blInit()
 	INT32 nRet = TwelveMhzInit();
 	if (nRet) return nRet;
 
-	if (Cps1QSDip ^ 1) {
+	if (VerSwitcher ^ 1) {
 		CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 
 		SekOpen(0);

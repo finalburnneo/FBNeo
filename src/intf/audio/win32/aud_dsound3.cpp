@@ -156,6 +156,11 @@ static int DxSoundCheck()
 	WRAP_INC(nFollowingSeg);
 
 	while (nDSoundNextSeg != nPlaySeg) {
+		// Prevents being changed to NULL externally while looping
+		if (pdsbLoop == NULL) {
+			return 1;
+		}
+
 		void *pData = NULL, *pData2 = NULL;
 		DWORD cbLen = 0, cbLen2 = 0;
 

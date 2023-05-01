@@ -862,6 +862,41 @@ static UINT32 hexto32(const char *s)
 	return val;
 }
 
+// strqtoken() - functionally identicle to strtok() w/ special treatment for
+// quoted strings.  -dink april 2023
+char *strqtoken(char *s, const char *delims)
+{
+	static char *prev_str = NULL;
+	char *token = NULL;
+
+	if (!s) s = prev_str;
+
+	s += strspn(s, delims);
+	if (s[0] == '\0') {
+		prev_str = s;
+		return NULL;
+	}
+
+	if (s[0] == '\"') { // time to grab quoted string!
+		token = ++s;
+		if ((s = strpbrk(token, "\""))) {
+			*(s++) = '\0';
+		}
+	} else {
+		token = s;
+	}
+
+	if ((s = strpbrk(s, delims))) {
+		*(s++) = '\0';
+		prev_str = s;
+	} else {
+		// we're at the end of the road
+		prev_str = (char*)memchr((void *)token, '\0', MAX_PATH);
+	}
+
+	return token;
+}
+
 static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UINT8* base, bool readonly)
 {
 	char s[MAX_PATH];
@@ -873,6 +908,8 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 	UINT32 nIps_crc = 0;
 	FILE* fp = NULL;
 	unsigned long nIpsSize;
+
+	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
 
     if ((fp = fopen(patch_name, "rb")) != NULL) {
 		// get ips size
@@ -894,21 +931,22 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
                 // Can support linetypes: (space or tab)
                 // "rom name.bin" "patch file.ips" CRC(abcd1234)
                 // romname.bin patchfile CRC(abcd1234)
-
-				rom_name = strtok(p, "\"\t\r\n()");
+				#define DELIM_TOKENS " \t\r\n()"
+				rom_name = strqtoken(p, DELIM_TOKENS);
 
 				if (!rom_name)
 					continue;
 				if (*rom_name == '#')
 					continue;
 
-				ips_name = strtok(NULL, "\"\t\r\n()");
-				if (!ips_name)
+				ips_name = strqtoken(NULL, DELIM_TOKENS);
+				if (!ips_name) {
 					continue;
+				}
 
 				nIps_crc = 0;
 				nRomOffset = 0; // Reset to 0
-				if (NULL != (ips_offs = strtok(NULL, "\"\t\r\n()"))) {	// Parameters of the offset increment
+				if (NULL != (ips_offs = strqtoken(NULL, DELIM_TOKENS))) {	// Parameters of the offset increment
 					if (     0 == strcmp(ips_offs, "IPS_OFFSET_016")) nRomOffset = 0x1000000;
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_032")) nRomOffset = 0x2000000;
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_048")) nRomOffset = 0x3000000;
@@ -920,12 +958,12 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 					else if (0 == strcmp(ips_offs, "IPS_OFFSET_144")) nRomOffset = 0x9000000;
 
 					if (nRomOffset != 0) { // better get next token (crc)
-						ips_offs = strtok(NULL, "\"\t\r\n()");
+						ips_offs = strqtoken(NULL, DELIM_TOKENS);
 					}
 				}
 
 				if (ips_offs != NULL && stristr_int(ips_offs, "crc")) {
-					ips_crc = strtok(NULL, "\"\t\r\n()");
+					ips_crc = strqtoken(NULL, DELIM_TOKENS);
 					if (ips_crc) {
 						nIps_crc = hexto32(ips_crc);
 					}

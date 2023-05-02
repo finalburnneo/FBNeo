@@ -138,7 +138,7 @@ int bRunPause;
 bool bAlwaysProcessKeyboardInput;
 
 bool bDoIpsPatch;
-void IpsApplyPatches(UINT8* base, char* rom_name, bool readonly) {}
+void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly) {}
 INT32 GetIpsesMaxLen(char* rom_name) {return -1;}
 bool GetIpsDrvProtection() { return false; };
 void GetIpsDrvDefine() {}

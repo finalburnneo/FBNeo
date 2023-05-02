@@ -3770,9 +3770,7 @@ DRV		BurnDrvMSX_dangerx4;
 DRV		BurnDrvMSX_dangerx4b;
 DRV		BurnDrvMSX_dangerx4a;
 DRV		BurnDrvgg_dangdem;
-#if defined FBNEO_DEBUG
-DRV		BurnDrvDdungeon;		// no comment [NOT WORKING]
-#endif
+DRV		BurnDrvDdungeon;
 DRV		BurnDrvDangseed;
 DRV		BurnDrvmd_dangseed;
 DRV		BurnDrvDFeveron;
@@ -16397,6 +16395,8 @@ DRV		BurnDrvnes_stetrisland;
 DRV		BurnDrvmd_stbladj;
 DRV		BurnDrvmd_stblad;
 DRV		BurnDrvnes_supertiltbro;
+DRV		BurnDrvStoffyu;
+DRV		BurnDrvStoffy;
 DRV		BurnDrvSuprtrio;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvStriv;			// bad sound
@@ -17434,6 +17434,8 @@ DRV		BurnDrvThoop;
 DRV		BurnDrvmd_thundpaw;
 DRV		BurnDrvmd_tpwres;
 DRV		BurnDrvmd_tpwresen;
+DRV		BurnDrvTstrike;
+DRV		BurnDrvTstrikea;
 DRV		BurnDrvnes_thunderwarrior;
 DRV		BurnDrvThndzonej;
 DRV		BurnDrvThndzone4;
@@ -17579,6 +17581,7 @@ DRV		BurnDrvmd_toejam2;
 DRV		BurnDrvmd_toejam2s;
 DRV		BurnDrvmd_toejam2j;
 DRV		BurnDrvmd_toejam2u;
+DRV		BurnDrvToffy;
 DRV		BurnDrvpce_toiletk;
 DRV		BurnDrvTokib;
 DRV		BurnDrvTokip;
@@ -23355,9 +23358,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_dangerx4b,		// Danger X4 (Jpn, Alt 2)
 	&BurnDrvMSX_dangerx4a,		// Danger X4 (Jpn, Alt)
 	&BurnDrvgg_dangdem,			// Dangerous Demolition (HB, v1.0)
-#if defined FBNEO_DEBUG
-	&BurnDrvDdungeon,			// Dangerous Dungeons [no comment, NOT WORKING]
-#endif
+	&BurnDrvDdungeon,			// Dangerous Dungeons
 	&BurnDrvDangseed,			// Dangerous Seed (Japan)
 	&BurnDrvmd_dangseed,		// Dangerous Seed (Jpn)
 	&BurnDrvDFeveron,			// Dangun Feveron (Japan, 98/09/17 VER.)
@@ -35982,6 +35983,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_stbladj,			// Super Thunder Blade (Jpn, Launch Cart)
 	&BurnDrvmd_stblad,			// Super Thunder Blade (World)
 	&BurnDrvnes_supertiltbro,	// Super Tilt Bro (HB, v2 alpha1)
+	&BurnDrvStoffyu,			// Super Toffy (Unico license)
+	&BurnDrvStoffy,				// Super Toffy
 	&BurnDrvSuprtrio,			// Super Trio
 #if defined FBNEO_DEBUG
 	&BurnDrvStriv,				// Super Triv (English questions) [bad sound]
@@ -37019,6 +37022,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_thundpaw,		// Thunder Paw (HB)
 	&BurnDrvmd_tpwres,			// Thunder Pro Wrestling Retsuden (Jpn)
 	&BurnDrvmd_tpwresen,		// Thunder Pro Wrestling Story (Hack, English)
+	&BurnDrvTstrike,			// Thunder Strike (set 1)
+	&BurnDrvTstrikea,			// Thunder Strike (set 2, older)
 	&BurnDrvnes_thunderwarrior,	// Thunder Warrior (Asia) (Unl)
 	&BurnDrvThndzonej,			// Thunder Zone (Japan)
 	&BurnDrvThndzone4,			// Thunder Zone (World 4 Players)
@@ -37164,6 +37169,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_toejam2s,		// Toe Jam & Earl in Panic on Funkotron (Hack, Spanish)
 	&BurnDrvmd_toejam2j,		// Toe Jam & Earl in Panic on Funkotron (Jpn)
 	&BurnDrvmd_toejam2u,		// Toe Jam & Earl in Panic on Funkotron (USA)
+	&BurnDrvToffy,				// Toffy
 	&BurnDrvpce_toiletk,		// Toilet Kids
 	&BurnDrvTokib,				// Toki (bootleg)
 	&BurnDrvTokip,				// Toki (US, prototype?)

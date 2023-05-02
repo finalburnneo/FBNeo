@@ -1,8 +1,6 @@
 void MSM5232Write(INT32 offset, UINT8 data);
 void MSM5232Reset();
 void MSM5232SetCapacitors(double cap1, double cap2, double cap3, double cap4, double cap5, double cap6, double cap7, double cap8);
-void MSM5232SetEnvGenResistances(double attack, double decay_rrf, double decay_rrs);
-void MSM5232SetEnvGenResistancesByCapacitance(double capacitance);
 void MSM5232SetGateCallback(void (*callback)(INT32));
 void MSM5232Init(INT32 clock, INT32 bAdd);
 void MSM5232SetClock(INT32 clock);

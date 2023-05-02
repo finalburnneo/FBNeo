@@ -260,6 +260,18 @@ static struct BurnInputInfo HerodkInputList[] = {
 
 STDINPUTINFO(Herodk)
 
+static struct BurnDIPInfo DkongNoDipDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0x01, NULL						},
+
+	{0   , 0xfe, 0   ,    3, "Palette"					},
+	{0x0f, 0x01, 0x03, 0x01, "New"						},
+	{0x0f, 0x01, 0x03, 0x00, "Radarscope Conversion"	},
+	{0x0f, 0x01, 0x03, 0x02, "Legacy"					},
+};
+
+STDDIPINFO(DkongNoDip)
+
 static struct BurnDIPInfo DkongDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0x80, NULL			},
@@ -4117,7 +4129,7 @@ struct BurnDriver BurnDrvDkongx = {
 	"Donkey Kong II - Jumpman Returns (hack, V1.2)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, dkongxRomInfo, dkongxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	NULL, dkongxRomInfo, dkongxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
 	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -4157,7 +4169,7 @@ struct BurnDriver BurnDrvDkongx11 = {
 	"Donkey Kong II - Jumpman Returns (hack, V1.1)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, dkongx11RomInfo, dkongx11RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	NULL, dkongx11RomInfo, dkongx11RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
 	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -4197,7 +4209,7 @@ struct BurnDriver BurnDrvDkchrmx = {
 	"Donkey Kong Christmas Remix (Hack)\0", NULL, "Sock Master", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, dkchrmxRomInfo, dkchrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	NULL, dkchrmxRomInfo, dkchrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
 	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -4237,7 +4249,7 @@ struct BurnDriver BurnDrvDkspkyrmx = {
 	"Donkey Kong Spooky Remix (Hack)\0", NULL, "Sock Master", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, dkspkyrmxRomInfo, dkspkyrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
+	NULL, dkspkyrmxRomInfo, dkspkyrmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
 	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

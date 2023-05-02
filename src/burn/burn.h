@@ -421,7 +421,7 @@ extern UINT32 nIpsDrvDefine, nIpsMemExpLen[SND2_ROM + 1];
 
 extern bool bDoIpsPatch;
 
-void IpsApplyPatches(UINT8* base, char* rom_name, bool readonly = false);
+void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 rom_crc, bool readonly = false);
 void GetIpsDrvDefine();
 
 // ---------------------------------------------------------------------------

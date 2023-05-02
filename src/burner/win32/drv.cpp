@@ -84,6 +84,8 @@ static int DoLibInit()					// Do Init of Burn library driver
 
 	if (!bQuietLoading) ProgressDestroy();
 
+	IpsPatchExit(); // done loading roms, disable ips patcher
+
 	if (nRet) {
 		return 3;
 	} else {

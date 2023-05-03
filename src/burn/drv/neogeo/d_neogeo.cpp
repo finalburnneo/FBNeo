@@ -140,7 +140,7 @@ static struct BurnInputInfo neoForceAESInputList[] = {
 STDINPUTINFO(neoForceAES)
 
 static struct BurnInputInfo mslug3xInputList[] = {
-	{"Dip Ex",		BIT_DIPSWITCH,	&VerSwitch,		"dip"       },      // 19
+	{"Dip Ex",      BIT_DIPSWITCH,  &VerSwitch,     "dip"       },      // 19
 };
 
 STDINPUTINFOEXT(mslug3x, neoForceAES, mslug3x)
@@ -1032,15 +1032,15 @@ STDDIPINFO(neoForceAES)
 
 static struct BurnDIPInfo mslug3xDIPList[] = {
 	// Fake DIPs
-	{0x04,	0xFF, 0xFF,	0x00, NULL                           },	// Release
+	{0x04, 0xFF, 0xFF, 0x00, NULL                                       },  // Release
 
-	{0,		0xFE, 0,	6,	  "Version change (Must reload)" },
-	{0x04,	0x01, 0x1f,	0x00, "Release"                      },
-	{0x04,	0x01, 0x1f,	0x01, "Public Beta"                  },
-	{0x04,	0x01, 0x1f,	0x02, "Development 0"                },
-	{0x04,	0x01, 0x1f,	0x04, "Development 1"                },
-	{0x04,	0x01, 0x1f,	0x08, "Development 2"                },
-	{0x04,	0x01, 0x1f,	0x10, "Development 3"                },
+	{0,    0xFE, 0,    6,    "Version change (Effective when reloaded)" },
+	{0x04, 0x01, 0x1f, 0x00, "Release"                                  },
+	{0x04, 0x01, 0x1f, 0x01, "Public Beta"                              },
+	{0x04, 0x01, 0x1f, 0x02, "Development 0"                            },
+	{0x04, 0x01, 0x1f, 0x04, "Development 1"                            },
+	{0x04, 0x01, 0x1f, 0x08, "Development 2"                            },
+	{0x04, 0x01, 0x1f, 0x10, "Development 3"                            },
 };
 
 STDDIPINFOEXT(mslug3x, neoForceAES, mslug3x)
@@ -22795,10 +22795,10 @@ struct BurnDriver BurnDrvmslugxcq = {
 
 // Metal Slug X - Super Vehicle-001 (Multifunction, Hack)
 // Modified by 合金弹头爱克斯
-// 20230414
+// 20230430
 
 static struct BurnRomInfo mslugxdgRomDesc[] = {
-	{ "250-p1dg.p1",	0x100000, 0x9874ddee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p1dg.p1",	0x100000, 0x095b7f44, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2dg.ep1",	0x400000, 0x431cb335, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1.s1",		0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -22964,10 +22964,10 @@ struct BurnDriver BurnDrvmslug3eb = {
 // Metal Slug 3 (Last Bullet Remix, Hack)
 // Press the Start key continuously to switch the route value. 
 // Modified by 磁暴线圈
-// 20230412
+// 20230428
 static struct BurnRomInfo mslug3lwRomDesc[] = {
-	{ "256-ph1lw.p1",	0x100000, 0xa4f46533, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2lw.sp2",	0x400000, 0x47a73593, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "256-ph1lw.p1",	0x100000, 0x94527837, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2lw.sp2",	0x400000, 0x8a2e9f38, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "256-s1d.s1",		0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -23003,25 +23003,23 @@ struct BurnDriver BurnDrvmslug3lw = {
 
 // Metal Slug 3 (Pigeon Slug, Hack)
 // Modified by 磁暴线圈
-// 20230320
+// 20230428
 static struct BurnRomInfo mslug3psRomDesc[] = {
-	/* Encrypted */
-	{ "ms3ps.neo-sma",	0x040000, 0x05bc1960, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-pg1ps.p1",	0x400000, 0xab03ed5e, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2ps.p2",	0x400000, 0x3fba3da4, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "256-ph1ps.p1",	0x100000, 0x3f9c4361, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2lw.sp2",	0x400000, 0x8a2e9f38, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
-	/* Encrypted */
-	{ "256-c1ps.c1",	0x800000, 0xedfd52e7, 3 | BRF_GRA },           //  3 Sprite data
-	{ "256-c2ps.c2",	0x800000, 0xd25eb4e9, 3 | BRF_GRA },           //  4
-	{ "256-c3ps.c3",	0x800000, 0x2f934c83, 3 | BRF_GRA },           //  5
-	{ "256-c4ps.c4",	0x800000, 0xd963d89e, 3 | BRF_GRA },           //  6
-	{ "256-c5ps.c5",	0x800000, 0xd76a40a6, 3 | BRF_GRA },           //  7
-	{ "256-c6ps.c6",	0x800000, 0x4a55c424, 3 | BRF_GRA },           //  8
-	{ "256-c7ps.c7",	0x800000, 0xf74c0fc9, 3 | BRF_GRA },           //  9
-	{ "256-c8ps.c8",	0x800000, 0x55437268, 3 | BRF_GRA },           // 10
+	{ "256-s1d.s1",		0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "256-m1ps.m1",	0x080000, 0x0c876e7f, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "256-c1d.c1",		0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "256-c2d.c2",		0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4
+	{ "256-c3d.c3",		0x800000, 0xbfaade82, 3 | BRF_GRA },           //  5
+	{ "256-c4d.c4",		0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
+	{ "256-c5d.c5",		0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
+	{ "256-c6d.c6",		0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
+	{ "256-c7d.c7",		0x800000, 0x9395b809, 3 | BRF_GRA },           //  9
+	{ "256-c8d.c8",		0x800000, 0xa369f9d4, 3 | BRF_GRA },           // 10
+
+	{ "256-m1.m1",		0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
 	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13
@@ -23036,9 +23034,9 @@ struct BurnDriver BurnDrvmslug3ps = {
 	"mslug3ps", "mslug3", "neogeo", NULL, "2023",
 	"Metal Slug 3 (Pigeon Slug, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_RUNGUN, FBF_MSLUG,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3psRomInfo, mslug3psRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslug3WOPInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -23802,9 +23800,9 @@ struct BurnDriver BurnDrvmslug5sg = {
 
 // Metal Slug 5 (Boss Battles, Hack)
 // Modified by 合金弹头爱克斯
-// GOTVG 20230414
+// GOTVG 20230430
 static struct BurnRomInfo mslug5bsRomDesc[] = {
-	{ "268-p1nbs.p1",	0x600000, 0xdb66b94c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p1nbs.p1",	0x600000, 0xff3a4b86, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "268-s1d.s1",		0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
 

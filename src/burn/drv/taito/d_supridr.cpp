@@ -7,7 +7,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
-#include "lowpass2.h"
+#include "biquad.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -45,32 +45,26 @@ static UINT8 bgscrolly;
 
 static INT32 watchdog;
 
-static class LowPass2 *LP1 = NULL, *LP2 = NULL;
-#define SampleFreq 44100.0
-#define CutFreq 1000.0
-#define Q 0.4
-#define Gain 1.0
-#define CutFreq2 1000.0
-#define Q2 0.3
-#define Gain2 1.475
+static BIQ biqbass;
+static BIQ biqpk;
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 1,    "service"       },
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dips",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 1,    "service"   },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dips",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
@@ -189,6 +183,8 @@ static void __fastcall supridr_sound_write_port(UINT16 port, UINT8 data)
 
 		case 0x8c:
 		case 0x8d:
+			AY8910Write((port & 2)/2, port & 1, data);
+		return;
 		case 0x8e:
 		case 0x8f:
 			AY8910Write((port & 2)/2, port & 1, data);
@@ -224,6 +220,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	AY8910Reset(0);
 	AY8910Reset(1);
+
+	biqbass.reset();
+	biqpk.reset();
 
 	tilemapflipx = 0;
 	tilemapflipy = 0;
@@ -323,12 +322,7 @@ static void DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x0000,  0, 1)) return 1;
@@ -391,8 +385,8 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(1, 0.05, BURN_SND_ROUTE_BOTH);
 	GenericTilesInit();
 
-	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, CutFreq2, Q2, Gain2);
-	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain, CutFreq2, Q2, Gain2);
+	biqbass.init(FILT_LOWPASS, nBurnSoundRate, 3301, 1.0, 0);
+	biqpk.init(FILT_PEAK, nBurnSoundRate, 8000, 4.029, -12.0);
 
 	DrvDoReset(1);
 
@@ -406,13 +400,10 @@ static INT32 DrvExit()
 	ZetExit();
 	AY8910Exit(0);
 	AY8910Exit(1);
+	biqbass.exit();
+	biqpk.exit();
 
-	BurnFree (AllMem);
-
-	delete LP1;
-	delete LP2;
-	LP1 = NULL;
-	LP2 = NULL;
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -433,7 +424,7 @@ static void draw_bg_layer()
 
 		INT32 code = DrvBgRAM[offs];
 
-		Render8x8Tile_Clip(pTransDraw, code, sx, sy, 0, 4, 0x00, DrvGfxROM0);
+		Draw8x8Tile(pTransDraw, code, sx, sy, 0, 0, 0, 4, 0x00, DrvGfxROM0);
 	}
 }
 
@@ -449,7 +440,7 @@ static void draw_fg_layer()
 		sy -= 16; // offset
 		INT32 code = DrvFgRAM[offs];
 
-		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, 0, 4, 0, 0x20, DrvGfxROM1);
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, 0, 0, 0, 4, 0, 0x20, DrvGfxROM1);
 	}
 }
 
@@ -460,7 +451,7 @@ static void draw_sprites()
 	for (INT32 i = 0; i < 48; i++)
 	{
 		INT32 code = (spr[i*4+1] & 0x3f) | ((spr[i*4+2] >> 1) & 0x40);
-		INT32 color = spr[i*4+2] & 0x03; // iq_132... right? or 0x7f...
+		INT32 color = spr[i*4+2] & 0x03;
 		INT32 flipx = spr[i*4+1] & 0x40;
 		INT32 flipy = spr[i*4+1] & 0x80;
 		INT32 sx = spr[i*4+3];
@@ -477,19 +468,7 @@ static void draw_sprites()
 			sy = 240 - sy;
 		}
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x40, DrvGfxROM2);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0x40, DrvGfxROM2);
 	}
 }
 
@@ -508,6 +487,18 @@ static INT32 DrvDraw()
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
+}
+
+// mono input, stereo output
+static void mix_m2s(INT16 *buf_in, INT16 *buf_out, INT32 buf_len, double volume)
+{
+	for (INT32 i = 0; i < buf_len; i++) {
+		const INT32 a = i * 2 + 0;
+		const INT32 b = i * 2 + 1;
+
+		buf_out[a] = BURN_SND_CLIP(buf_out[a] + (buf_in[i] * volume));
+		buf_out[b] = BURN_SND_CLIP(buf_out[b] + (buf_in[i] * volume));
+	}
 }
 
 static INT32 DrvFrame()
@@ -530,6 +521,19 @@ static INT32 DrvFrame()
 		}
 	}
 
+
+#if 0
+	// filter experimentation
+	extern int counter;
+	static INT32 zz=0;
+	if (counter!=zz) {
+		zz = counter;
+
+		biqpk.init(FILT_PEAK, nBurnSoundRate, 8000, 4.029, -12.0);
+
+	}
+#endif
+
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 2500000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nInterleave = 100;
@@ -537,21 +541,37 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1) && nmi_enable) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(1, Zet);
 		ZetClose();
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		if (LP1 && LP2) {
-			LP1->Filter(pBurnSoundOut, nBurnSoundLen);  // Left
-			LP2->Filter(pBurnSoundOut+1, nBurnSoundLen); // Right
-		}
+		BurnSoundClear();
+		AY8910RenderInternal(nBurnSoundLen);
+
+		// filter top ay
+		biqpk.filter_buffer(pAY8910Buffer[0], nBurnSoundLen);
+		biqpk.filter_buffer(pAY8910Buffer[1], nBurnSoundLen);
+		biqpk.filter_buffer(pAY8910Buffer[2], nBurnSoundLen);
+		// filter bass channel
+		biqbass.filter_buffer(pAY8910Buffer[3], nBurnSoundLen); // bass
+		biqbass.filter_buffer(pAY8910Buffer[4], nBurnSoundLen); // bass
+		biqbass.filter_buffer(pAY8910Buffer[5], nBurnSoundLen); // bass
+
+		// mix ay0
+		mix_m2s(pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0.25);
+		mix_m2s(pAY8910Buffer[1], pBurnSoundOut, nBurnSoundLen, 0.25);
+		mix_m2s(pAY8910Buffer[2], pBurnSoundOut, nBurnSoundLen, 0.25);
+
+		// mix ay1
+		mix_m2s(pAY8910Buffer[3], pBurnSoundOut, nBurnSoundLen, 0.05);
+		mix_m2s(pAY8910Buffer[4], pBurnSoundOut, nBurnSoundLen, 0.05);
+		mix_m2s(pAY8910Buffer[5], pBurnSoundOut, nBurnSoundLen, 0.05);
 	}
 
 	if (pBurnDraw) {
@@ -587,6 +607,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(fgscrolly);
 		SCAN_VAR(bgscrolly);
 		SCAN_VAR(fgdisable);
+		SCAN_VAR(watchdog);
 	}
 
 	return 0;

@@ -2334,10 +2334,48 @@ static INT32 DdungeonInit()
 
 struct BurnDriver BurnDrvDdungeon = {
 	"ddungeon", NULL, NULL, NULL, "1992",
-	"Dangerous Dungeons\0", NULL, "Game Room", "Miscellaneous",
+	"Dangerous Dungeons (set 1)\0", NULL, "Game Room", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
 	NULL, ddungeonRomInfo, ddungeonRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdungeonDIPInfo,
+	DdungeonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
+	256, 240, 4, 3
+};
+
+static struct BurnRomInfo ddungeoneRomDesc[] = {
+	{ "dd26.26",       	0x08000, 0xa6e7f608, 1 | BRF_ESS | BRF_PRG }, //  0	HD6309 Program Code
+	{ "dd25.25",       	0x08000, 0x922e719c, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "63701.bin",     	0x04000, 0xf5232d03, 2 | BRF_ESS | BRF_PRG }, //  2	HD63701 Program Code
+
+	{ "21j-0-1",       	0x08000, 0x9efa95bb, 3 | BRF_ESS | BRF_PRG }, //  3	M6809 Program Code
+
+	{ "dd_mcu.bin",    	0x00800, 0x34cbb2d3, 4 | BRF_ESS | BRF_PRG }, //  4	M68705 MCU Program Code
+
+	{ "dd6.bin",       	0x08000, 0x057588ca, 1 | BRF_GRA },	     	  //  5	Characters
+
+	{ "dd-7r.bin",     	0x08000, 0x50d6ab5d, 2 | BRF_GRA },	     	  //  6	Sprites
+	{ "dd113.113",     	0x08000, 0x43264ad8, 2 | BRF_GRA },	     	  //  7
+
+	{ "dd78.78",       	0x08000, 0x3deacae9, 3 | BRF_GRA },	     	  //  8	Tiles
+	{ "dd109.109",     	0x08000, 0x5a2f31eb, 3 | BRF_GRA },	     	  //  9
+
+	{ "21j-6",         	0x10000, 0x34755de3, 1 | BRF_SND },	     	  // 10	Samples
+	{ "21j-7",         	0x10000, 0x904de6f8, 2 | BRF_SND },	     	  // 11
+
+	{ "21j-k-0.101",   	0x00100, 0xfdb130a9, 8 | BRF_OPT },	     	  // 12	PROMs
+	{ "21j-l-0.16",    	0x00200, 0x46339529, 8 | BRF_OPT },	     	  // 13
+};
+
+STD_ROM_PICK(ddungeone)
+STD_ROM_FN(ddungeone)
+
+struct BurnDriver BurnDrvDdungeone = {
+	"ddungeone", "ddungeon", NULL, NULL, "1992",
+	"Dangerous Dungeons (set 2)\0", NULL, "East Coast Coin Company", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
+	NULL, ddungeoneRomInfo, ddungeoneRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdungeonDIPInfo,
 	DdungeonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };

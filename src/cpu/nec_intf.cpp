@@ -58,6 +58,9 @@ struct VezContext {
 	UINT8 * ppMemFetch[2048];
 	UINT8 * ppMemFetchData[2048];
 
+	INT32 reset;
+	INT32 halt;
+
 	// Handlers
  #ifdef FASTCALL
 	UINT8 (__fastcall *ReadHandler)(UINT32 a);
@@ -615,6 +618,51 @@ void VezReset()
 	VezCurrentCPU->cpu_reset();
 }
 
+void VezSetRESETLine(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetRESETLine called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetRESETLine called when no CPU open\n"));
+#endif
+
+	if (VezCurrentCPU->reset && nStatus == 0) {
+		VezCurrentCPU->cpu_reset();
+	}
+
+	VezCurrentCPU->reset = nStatus;
+}
+
+void VezSetHALT(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetHALT called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetHALT called when no CPU open\n"));
+#endif
+
+	VezCurrentCPU->halt = nStatus;
+	if (nStatus) VezRunEnd(); // end timeslice
+}
+
+INT32 VezGetHALT()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetHALT called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezGetHALT called when no CPU open\n"));
+#endif
+
+	return VezCurrentCPU->halt;
+}
+
+INT32 VezGetRESETLine()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetRESETLine called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezGetRESETLine called when no CPU open\n"));
+#endif
+
+	return VezCurrentCPU->reset;
+}
+
 INT32 VezRun(INT32 nCycles)
 {
 #if defined FBNEO_DEBUG
@@ -623,8 +671,12 @@ INT32 VezRun(INT32 nCycles)
 #endif
 
 	if (nCycles <= 0) return 0;
-
-	return VezCurrentCPU->cpu_execute(nCycles);
+	if (VezCurrentCPU->reset || VezCurrentCPU->halt) {
+		VezCurrentCPU->idle(nCycles); // doesn't return cycles...
+		return nCycles;
+	} else {
+		return VezCurrentCPU->cpu_execute(nCycles);
+	}
 }
 
 UINT32 VezGetPC(INT32 n)
@@ -658,6 +710,9 @@ INT32 VezScan(INT32 nAction)
 		struct VezContext *CPU = VezCPUContext[i];
 		if (CPU->scan) {
 			CPU->scan(i, nAction);
+
+			SCAN_VAR(CPU->reset);
+			SCAN_VAR(CPU->halt);
 		}
 	}
 	

@@ -61,6 +61,12 @@ INT32 VezScan(INT32 nAction);
 
 INT32 VezRun(INT32 nCycles);
 
+void VezSetRESETLine(INT32 nStatus);
+void VezSetHALT(INT32 nStatus);
+INT32 VezGetHALT();
+INT32 VezGetRESETLine();
+
+
 #define NEC_INPUT_LINE_INTP0 10
 #define NEC_INPUT_LINE_INTP1 11
 #define NEC_INPUT_LINE_INTP2 12

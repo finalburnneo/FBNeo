@@ -7,10 +7,11 @@
 extern "C" double BurnTimerGetTime();
 
 // Callbacks for various sound chips
-void BurnOPMTimerCallback(INT32 c, double period);                      // period in  s
-void BurnOPNTimerCallback(INT32 n, INT32 c, INT32 cnt, double stepTime);	// period = cnt * stepTime in s
-void BurnOPLTimerCallback(INT32 c, double period);					    // period in  s
-void BurnYMFTimerCallback(INT32 n, INT32 c, double period);				// period in us
+void BurnOPMTimerCallback(INT32 n, INT32 c, double period);             // ym2151:			period in  s
+void BurnOPNTimerCallback(INT32 n, INT32 c, INT32 cnt, double stepTime);// ym2203, ym2612:	period = cnt * stepTime in s
+void BurnOPLTimerCallback(INT32 c, double period);					    // y8950, ym3526,
+																		// ym3812: 			period in  s
+void BurnYMFTimerCallback(INT32 n, INT32 c, double period);				// ymf278b: 		period in us
 void BurnYMF262TimerCallback(INT32 n, INT32 c, double period);          // period in  s
 
 // Start / stop a timer

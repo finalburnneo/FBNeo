@@ -3771,6 +3771,7 @@ DRV		BurnDrvMSX_dangerx4b;
 DRV		BurnDrvMSX_dangerx4a;
 DRV		BurnDrvgg_dangdem;
 DRV		BurnDrvDdungeon;
+DRV		BurnDrvDdungeone;
 DRV		BurnDrvDangseed;
 DRV		BurnDrvmd_dangseed;
 DRV		BurnDrvDFeveron;
@@ -19241,7 +19242,6 @@ DRV		BurnDrvXexex;
 DRV		BurnDrvXexexj;
 DRV		BurnDrvnes_xexyz;
 DRV		BurnDrvoldsplusnr;
-DRV		BurnDrvoldsplusnr211;
 DRV		BurnDrvnes_xiaohonmao;
 DRV		BurnDrvnes_xiaomali;
 DRV		BurnDrvmd_xiaomo;
@@ -23358,7 +23358,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_dangerx4b,		// Danger X4 (Jpn, Alt 2)
 	&BurnDrvMSX_dangerx4a,		// Danger X4 (Jpn, Alt)
 	&BurnDrvgg_dangdem,			// Dangerous Demolition (HB, v1.0)
-	&BurnDrvDdungeon,			// Dangerous Dungeons
+	&BurnDrvDdungeon,			// Dangerous Dungeons (set 1)
+	&BurnDrvDdungeone,			// Dangerous Dungeons (set 2)
 	&BurnDrvDangseed,			// Dangerous Seed (Japan)
 	&BurnDrvmd_dangseed,		// Dangerous Seed (Jpn)
 	&BurnDrvDFeveron,			// Dangun Feveron (Japan, 98/09/17 VER.)
@@ -38828,8 +38829,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvXexex,				// Xexex (ver EAA)
 	&BurnDrvXexexj,				// Xexex (ver JAA)
 	&BurnDrvnes_xexyz,			// Xexyz (USA)
-	&BurnDrvoldsplusnr,			// Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
-	&BurnDrvoldsplusnr211,		// Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)
+	&BurnDrvoldsplusnr,			// Xi You Shi E Zhuan - Xin Qun Mo Luan Wu (Hack)
 	&BurnDrvnes_xiaohonmao,		// Xiao Hong Mao - Little Red Hood (Unl)
 	&BurnDrvnes_xiaomali,		// Xiao Ma Li (Unl) [no comment, NOT WORKING]
 	&BurnDrvmd_xiaomo,			// Xiao Monv - Magic Girl (Tw) (Unl)

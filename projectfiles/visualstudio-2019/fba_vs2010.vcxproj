@@ -226,6 +226,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_spdodgeb.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_stuntair.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_taxidriv.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tiamc1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tubep.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_zaccaria.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_zwackery.cpp" />
@@ -284,6 +285,7 @@
     <ClCompile Include="..\..\src\burn\snd\multipcm.cpp" />
     <ClCompile Include="..\..\src\burn\snd\s14001a.cpp" />
     <ClCompile Include="..\..\src\burn\snd\t6w28.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\tiamc1_snd.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf262.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymf271.cpp" />
     <ClCompile Include="..\..\src\cpu\e132xs\e132xs.cpp" />

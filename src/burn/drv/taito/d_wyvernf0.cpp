@@ -484,7 +484,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(1, 0.14, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
-	MSM5232SetCapacitors(0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6);
+	MSM5232SetCapacitors(1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6);
 	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_0);
 	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_1);
 	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_2);

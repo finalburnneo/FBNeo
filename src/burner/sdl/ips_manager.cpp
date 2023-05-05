@@ -320,7 +320,7 @@ void GetIpsDrvDefine()
 #endif
 }
 
-void IpsApplyPatches(UINT8* base, char* rom_name, bool readonly)
+void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly)
 {
 	if (!bDoIpsPatch)
 		return;

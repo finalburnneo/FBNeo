@@ -20,7 +20,7 @@ void __fastcall Sh2WriteByte(unsigned int a, unsigned char d);
 unsigned char __fastcall Sh2ReadByte(unsigned int a);
 
 int Sh2Init(int nCount);
-int Sh2Exit();
+void Sh2Exit();
 
 void Sh2Open(const int i);
 void Sh2Close();

@@ -58,6 +58,8 @@ cpu_core_config Z180Config =
 	Z180Run,
 	Z180RunEnd,
 	Z180Reset,
+	Z180Scan,
+	Z180Exit,
 	0x100000,
 	0
 };
@@ -260,12 +262,14 @@ void Z180Nmi()
 	Z180SetIRQLine(0x20, CPU_IRQSTATUS_HOLD);
 }
 
-void Z180Scan(INT32 nAction)
+INT32 Z180Scan(INT32 nAction)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Scan called without init\n"));
 #endif
 	z180_scan(nAction);
+
+	return 0;
 }
 
 void __fastcall z180_cpu_write_handler(UINT32 address, UINT8 data)

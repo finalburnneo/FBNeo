@@ -336,6 +336,8 @@ cpu_core_config M377Config =
 	M377Run,
 	M377RunEnd,
 	M377Reset,
+	M377Scan,
+	M377Exit,
 	0x1000000,
 	0
 };

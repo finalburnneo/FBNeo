@@ -48,6 +48,8 @@ cpu_core_config ZetConfig =
 	ZetRun,
 	ZetRunEnd,
 	ZetReset,
+	ZetScan,
+	ZetExit,
 	0x10000,
 	0
 };

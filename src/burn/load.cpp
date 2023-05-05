@@ -6,11 +6,12 @@
 INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 {
 	INT32 nRet = 0, nLen = 0;
+	struct BurnRomInfo ri;
+
 	if (BurnExtLoadRom == NULL) return 1; // Load function was not defined by the application
 
 	// Find the length of the rom (as given by the current driver)
 	{
-		struct BurnRomInfo ri;
 		ri.nType = 0;
 		ri.nLen = 0;
 		BurnDrvGetRomInfo(&ri,i);
@@ -28,7 +29,7 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 		// Use temporary memory to load ROM, ips patching is also done here, enough space must be reserved.
 		if (bDoIpsPatch) {
 			if (0 == nIpsMemExpLen[EXP_FLAG]) {			// Unspecified nIpsMemExpLen[LOAD_ROM].
-				IpsApplyPatches(NULL, RomName, true);	// Get the maximum offset of ips.
+				IpsApplyPatches(NULL, RomName, ri.nCrc, true);	// Get the maximum offset of ips.
 				if (nIpsMemExpLen[LOAD_ROM] > nLen) {	// ips offset is greater than rom length.
 					nLen = nIpsMemExpLen[LOAD_ROM];
 				}
@@ -44,7 +45,7 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 		// Load in the file
 		nRet = BurnExtLoadRom(Load, &nLoadLen, i);
-		if (bDoIpsPatch) IpsApplyPatches(Load, RomName);
+		if (bDoIpsPatch) IpsApplyPatches(Load, RomName, ri.nCrc);
 		if (nRet != 0) { if (Load) { BurnFree(Load); Load = NULL; } return 1; }
 
 		if (nLoadLen < 0) nLoadLen = 0;
@@ -89,8 +90,8 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
  		// If no XOR, and gap of 1, just copy straight in
 		nRet = BurnExtLoadRom(Dest, NULL, i);
 		if (bDoIpsPatch) {
-			IpsApplyPatches(NULL, RomName, true);	// Get the maximum offset of ips. & megadrive needs. 
-			IpsApplyPatches(Dest, RomName);
+			IpsApplyPatches(NULL, RomName, ri.nCrc, true);	// Get the maximum offset of ips. & megadrive needs.
+			IpsApplyPatches(Dest, RomName, ri.nCrc);
 		}
 		if (nRet != 0) return 1;
 

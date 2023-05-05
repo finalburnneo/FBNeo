@@ -9,7 +9,7 @@ void tlcs90Open(INT32 nCpu);
 INT32 tlcs90Run(INT32 nCycles);
 void tlcs90Reset();
 void tlcs90Close();
-INT32 tlcs90Exit();
+void tlcs90Exit();
 
 void tlcs90SetIRQLine(INT32 line, INT32 state);
 

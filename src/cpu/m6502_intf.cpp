@@ -25,6 +25,8 @@ cpu_core_config M6502Config =
 	M6502Run,
 	M6502RunEnd,
 	M6502Reset,
+	M6502Scan,
+	M6502Exit,
 	0x10000,
 	0
 };

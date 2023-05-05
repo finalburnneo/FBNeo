@@ -136,7 +136,7 @@ typedef struct
 //#ifdef USE_MAME_TIMERS
 /* ASG 980324 -- added for tracking timers */
 	INT32       UseBurnTimer;
-	void        (*timer_callback)(INT32, double);
+	void        (*timer_callback)(INT32, INT32, double);
 	INT32		timer_A;                // Timer A / B enable/disable
 	INT32		timer_B;                // ""
 	double		timer_A_time[1024];		/* timer A times for MAME/FM Timers */
@@ -813,7 +813,7 @@ static void timer_callback_a (int n)
 	YM2151 *chip = &YMPSG[n];
 
 	//timer_adjust(chip->timer_A, chip->timer_A_time[ chip->timer_A_index ], n, 0);
-	chip->timer_callback(0, chip->timer_A_time[ chip->timer_A_index ]);
+	chip->timer_callback(n, 0, chip->timer_A_time[ chip->timer_A_index ]);
 
 	chip->timer_A_index_old = chip->timer_A_index;
 	if (chip->irq_enable & 0x04)
@@ -830,7 +830,7 @@ static void timer_callback_b (int n)
 	YM2151 *chip = &YMPSG[n];
 
 	//timer_adjust(chip->timer_B, chip->timer_B_time[ chip->timer_B_index ], n, 0);
-	chip->timer_callback(1, chip->timer_B_time[ chip->timer_B_index ]);
+	chip->timer_callback(n, 1, chip->timer_B_time[ chip->timer_B_index ]);
 
 	chip->timer_B_index_old = chip->timer_B_index;
 	if (chip->irq_enable & 0x08)
@@ -843,9 +843,10 @@ static void timer_callback_b (int n)
 
 int ym2151_timer_over(int num, int timer)
 {
+	//bprintf(0, _T("ym timer_over:  %x  %x\n"), num, timer);
 	switch (timer) {
-		case 0: timer_callback_a(0); break;
-		case 1: timer_callback_b(0); break;
+		case 0: timer_callback_a(num); break;
+		case 1: timer_callback_b(num); break;
 	}
 
 	return 0;
@@ -1131,7 +1132,7 @@ void YM2151WriteReg(int n, int r, int v)
 					if (!chip->timer_B) //(!timer_enable(chip->timer_B, 1))
 					{
 						//timer_adjust(chip->timer_B, chip->timer_B_time[ chip->timer_B_index ], n, 0);
-						chip->timer_callback(1, chip->timer_B_time[ chip->timer_B_index ]);
+						chip->timer_callback(n, 1, chip->timer_B_time[ chip->timer_B_index ]);
 						chip->timer_B = 1;
 						chip->timer_B_index_old = chip->timer_B_index;
 					}
@@ -1149,7 +1150,7 @@ void YM2151WriteReg(int n, int r, int v)
 				/* ASG 980324: added a real timer */
 				if (chip->UseBurnTimer) {
 					chip->timer_B = 0;
-					chip->timer_callback(1, 0.0);
+					chip->timer_callback(n, 1, 0.0);
 					//timer_enable(chip->timer_B, 0);
 				} else {
 				//#else
@@ -1166,7 +1167,7 @@ void YM2151WriteReg(int n, int r, int v)
 					if (!chip->timer_A) //(!timer_enable(chip->timer_A, 1))
 					{
 						//timer_adjust(chip->timer_A, chip->timer_A_time[ chip->timer_A_index ], n, 0);
-						chip->timer_callback(0, chip->timer_A_time[ chip->timer_A_index ]);
+						chip->timer_callback(n, 0, chip->timer_A_time[ chip->timer_A_index ]);
 						chip->timer_A = 1;
 						chip->timer_A_index_old = chip->timer_A_index;
 					}
@@ -1184,7 +1185,7 @@ void YM2151WriteReg(int n, int r, int v)
 				/* ASG 980324: added a real timer */
 				if (chip->UseBurnTimer) {
 					chip->timer_A = 0;
-					chip->timer_callback(0, 0.0);
+					chip->timer_callback(n, 0, 0.0);
 					//timer_enable(chip->timer_A, 0);
 				} else {
 				//#else
@@ -1668,7 +1669,7 @@ void YM2151SetTimerInterleave(double d)
 *	'clock' is the chip clock in Hz
 *	'rate' is sampling rate
 */
-int YM2151Init(int num, int clock, int rate, void (*timer_cb)(INT32, double))
+int YM2151Init(int num, int clock, int rate, void (*timer_cb)(INT32, INT32, double))
 {
 	int i;
 

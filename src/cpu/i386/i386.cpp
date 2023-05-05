@@ -975,6 +975,8 @@ static void core_set_irq_line(INT32, INT32 line, INT32 state)
 	i386SetIRQLine(line, state);
 }
 
+INT32 i386Scan(INT32 nAction); // forward
+
 cpu_core_config i386Config =
 {
 	"i386",
@@ -990,6 +992,8 @@ cpu_core_config i386Config =
 	i386Run,
 	i386RunEnd,
 	i386Reset,
+	i386Scan,
+	i386Exit,
 	0xffffffff,
 	0
 };

@@ -394,8 +394,45 @@ static void UpdateState(void)
 static void CHECK_IRQ_LINES( void )
 {
 	if( hd6309.irq_state[HD6309_IRQ_LINE] != HD6309_CLEAR_LINE ||
-		hd6309.irq_state[HD6309_FIRQ_LINE] != HD6309_CLEAR_LINE )
+	    hd6309.irq_state[HD6309_FIRQ_LINE] != HD6309_CLEAR_LINE ||
+	    hd6309.nmi_state != HD6309_CLEAR_LINE )
 		hd6309.int_state &= ~HD6309_SYNC; /* clear SYNC flag */
+
+	if (hd6309.nmi_state != HD6309_CLEAR_LINE) { // git 'r dun?
+		hd6309.nmi_state = HD6309_CLEAR_LINE; // got 'r dun.
+
+		/* HJB 990225: state already saved by CWAI? */
+		if( hd6309.int_state & HD6309_CWAI )
+		{
+			hd6309.int_state &= ~HD6309_CWAI;
+			hd6309_ICount -= 7;	/* subtract +7 cycles next time */
+		}
+		else
+		{
+			CC |= CC_E; 				/* save entire state */
+			PUSHWORD(pPC);
+			PUSHWORD(pU);
+			PUSHWORD(pY);
+			PUSHWORD(pX);
+			PUSHBYTE(DP);
+			if ( MD & MD_EM )
+			{
+				PUSHBYTE(F);
+				PUSHBYTE(E);
+				hd6309_ICount -= 2; /* subtract +2 cycles */
+			}
+
+			PUSHBYTE(B);
+			PUSHBYTE(A);
+			PUSHBYTE(CC);
+			hd6309_ICount -= 19;	/* subtract +19 cycles next time */
+		}
+		CC |= CC_IF | CC_II;			/* inhibit FIRQ and IRQ */
+		PCD = RM16(0xfffc);
+		CHANGE_PC;
+		//bprintf(0, _T("WE Take NMI, cyka!\n"));
+	}
+	else
 	if( hd6309.irq_state[HD6309_FIRQ_LINE]!=HD6309_CLEAR_LINE && !(CC & CC_IF))
 	{
 		/* fast IRQ */
@@ -403,7 +440,7 @@ static void CHECK_IRQ_LINES( void )
 		if( hd6309.int_state & HD6309_CWAI )
 		{
 			hd6309.int_state &= ~HD6309_CWAI;
-			hd6309.extra_cycles += 7;		 /* subtract +7 cycles */
+			hd6309_ICount -= 7;		 /* subtract +7 cycles */
 		}
 		else
 		{
@@ -419,19 +456,19 @@ static void CHECK_IRQ_LINES( void )
 				{
 					PUSHBYTE(F);
 					PUSHBYTE(E);
-					hd6309.extra_cycles += 2; /* subtract +2 cycles */
+					hd6309_ICount -= 2; /* subtract +2 cycles */
 				}
 				PUSHBYTE(B);
 				PUSHBYTE(A);
 				PUSHBYTE(CC);
-				hd6309.extra_cycles += 19;	 /* subtract +19 cycles */
+				hd6309_ICount -= 19;	 /* subtract +19 cycles */
 			}
 			else
 			{
 				CC &= ~CC_E;				/* save 'short' state */
 				PUSHWORD(pPC);
 				PUSHBYTE(CC);
-				hd6309.extra_cycles += 10;	/* subtract +10 cycles */
+				hd6309_ICount -= 10;	/* subtract +10 cycles */
 			}
 		}
 		CC |= CC_IF | CC_II;			/* inhibit FIRQ and IRQ */
@@ -439,6 +476,7 @@ static void CHECK_IRQ_LINES( void )
 		CHANGE_PC;
 		if (hd6309.irq_hold[HD6309_FIRQ_LINE])
 			hd6309_set_irq_line(HD6309_FIRQ_LINE, 0);
+		//bprintf(0, _T("hd6309 FIRQ taken.\n"));
 //		(void)(*hd6309.irq_callback)(HD6309_FIRQ_LINE);
 	}
 	else
@@ -449,7 +487,7 @@ static void CHECK_IRQ_LINES( void )
 		if( hd6309.int_state & HD6309_CWAI )
 		{
 			hd6309.int_state &= ~HD6309_CWAI;  /* clear CWAI flag */
-			hd6309.extra_cycles += 7;		 /* subtract +7 cycles */
+			hd6309_ICount -= 7;		 /* subtract +7 cycles */
 		}
 		else
 		{
@@ -463,18 +501,19 @@ static void CHECK_IRQ_LINES( void )
 			{
 				PUSHBYTE(F);
 				PUSHBYTE(E);
-				hd6309.extra_cycles += 2; /* subtract +2 cycles */
+				hd6309_ICount -= 2; /* subtract +2 cycles */
 			}
 			PUSHBYTE(B);
 			PUSHBYTE(A);
 			PUSHBYTE(CC);
-			hd6309.extra_cycles += 19;	 /* subtract +19 cycles */
+			hd6309_ICount -= 19;	 /* subtract +19 cycles */
 		}
 		CC |= CC_II;					/* inhibit IRQ */
 		PCD=RM16(0xfff8);
 		CHANGE_PC;
 		if (hd6309.irq_hold[HD6309_IRQ_LINE])
 			hd6309_set_irq_line(HD6309_IRQ_LINE, 0);
+		//bprintf(0, _T("hd6309 IRQ taken.\n"));
 //		(void)(*hd6309.irq_callback)(HD6309_IRQ_LINE);
 	}
 }
@@ -497,7 +536,6 @@ void hd6309_set_context(void *src)
 		hd6309 = *(hd6309_Regs*)src;
 	CHANGE_PC;
 
-	CHECK_IRQ_LINES();
 	UpdateState();
 }
 
@@ -568,54 +606,21 @@ void hd6309_set_irq_line(int irqline, int state)
 
 	if (state == 2) { hold = 1; state = 1; }
 
-	if (irqline == HD6309_INPUT_LINE_NMI)
-	{
-		if (hd6309.nmi_state == state) return;
-		hd6309.nmi_state = state;
-//		LOG(("HD6309#%d set_irq_line (NMI) %d (PC=%4.4X)\n", cpu_getactivecpu(), state, pPC.d));
-		if( state == HD6309_CLEAR_LINE ) return;
-
-		/* if the stack was not yet initialized */
-		if( !(hd6309.int_state & HD6309_LDS) ) return;
-
-		hd6309.int_state &= ~HD6309_SYNC;
-		/* HJB 990225: state already saved by CWAI? */
-		if( hd6309.int_state & HD6309_CWAI )
-		{
-			hd6309.int_state &= ~HD6309_CWAI;
-			hd6309.extra_cycles += 7;	/* subtract +7 cycles next time */
-		}
-		else
-		{
-			CC |= CC_E; 				/* save entire state */
-			PUSHWORD(pPC);
-			PUSHWORD(pU);
-			PUSHWORD(pY);
-			PUSHWORD(pX);
-			PUSHBYTE(DP);
-			if ( MD & MD_EM )
-			{
-				PUSHBYTE(F);
-				PUSHBYTE(E);
-				hd6309.extra_cycles += 2; /* subtract +2 cycles */
+	switch (irqline) {
+		case HD6309_INPUT_LINE_NMI:
+			if (~hd6309.int_state & HD6309_LDS) {
+				//bprintf(0, _T("HD6309: cpu not ready for NMI (stack not set).\n"));
+				break;
 			}
 
-			PUSHBYTE(B);
-			PUSHBYTE(A);
-			PUSHBYTE(CC);
-			hd6309.extra_cycles += 19;	/* subtract +19 cycles next time */
-		}
-		CC |= CC_IF | CC_II;			/* inhibit FIRQ and IRQ */
-		PCD = RM16(0xfffc);
-		CHANGE_PC;
-	}
-	else if (irqline < 2)
-	{
-//		LOG(("HD6309#%d set_irq_line %d, %d (PC=%4.4X)\n", cpu_getactivecpu(), irqline, state, pPC.d));
-		hd6309.irq_state[irqline] = state;
-		hd6309.irq_hold[irqline] = hold;
-		if (state == HD6309_CLEAR_LINE) return;
-		CHECK_IRQ_LINES();
+			hd6309.nmi_state = state;
+			break;
+
+		case HD6309_IRQ_LINE:
+		case HD6309_FIRQ_LINE:
+			hd6309.irq_state[irqline] = state;
+			hd6309.irq_hold[irqline] = hold;
+			break;
 	}
 }
 
@@ -631,20 +636,21 @@ int hd6309_segmentcycles()
 int hd6309_execute(int cycles)	/* NS 970908 */
 {
 	hd6309.segmentcycles = cycles;
-	hd6309_ICount = cycles - hd6309.extra_cycles;
-	hd6309.extra_cycles = 0;
+	hd6309_ICount = cycles;
 
 	hd6309.end_run = 0;
 
 	if (hd6309.int_state & (HD6309_CWAI | HD6309_SYNC))
 	{
-//		debugger_instruction_hook(Machine, PCD);
+		//		debugger_instruction_hook(Machine, PCD);
 		hd6309_ICount = 0;
 	}
 	else
 	{
 		do
 		{
+			CHECK_IRQ_LINES();
+
 			pPPC = pPC;
 
 //			debugger_instruction_hook(Machine, PCD);
@@ -919,9 +925,6 @@ int hd6309_execute(int cycles)	/* NS 970908 */
 			hd6309_ICount -= cycle_counts_page0[hd6309.ireg];
 
 		} while( hd6309_ICount > 0 && !hd6309.end_run );
-
-		hd6309_ICount -= hd6309.extra_cycles;
-		hd6309.extra_cycles = 0;
 	}
 
 	cycles = hd6309.segmentcycles - hd6309_ICount;

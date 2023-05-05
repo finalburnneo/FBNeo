@@ -68,6 +68,8 @@ cpu_core_config s2650Config =
 	s2650Run,
 	s2650RunEnd,
 	s2650Reset,
+	s2650Scan,
+	s2650Exit,
 	0x8000,
 	0
 };

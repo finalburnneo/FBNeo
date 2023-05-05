@@ -30432,3 +30432,136 @@ struct BurnDriver BurnDrvsms_sutoroku = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+// Castle Escape (HB)
+
+static struct BurnRomInfo sms_castlescapeRomDesc[] = {
+	{ "Castle Escape (2023)(IrataHack).sms",	65536, 0x41d70425, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_castlescape)
+STD_ROM_FN(sms_castlescape)
+
+struct BurnDriver BurnDrvsms_castlescape = {
+	"sms_castlescape", NULL, NULL, NULL, "2023",
+	"Castle Escape (HB)\0", NULL, "IrataHack", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_castlescapeRomInfo, sms_castlescapeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Extreme Volleyball Infernal League (HB, v1.0.6)
+
+static struct BurnRomInfo sms_evilRomDesc[] = {
+	{ "Extreme Volleyball Infernal League v1.0.6 (2023)(raphnet).sms",	524288, 0x82ef4bda, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_evil)
+STD_ROM_FN(sms_evil)
+
+struct BurnDriver BurnDrvsms_evil = {
+	"sms_evil", NULL, NULL, NULL, "2023",
+	"Extreme Volleyball Infernal League (HB, v1.0.6)\0", NULL, "raphnet", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_evilRomInfo, sms_evilRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Lil Evel Knievel (HB)
+
+static struct BurnRomInfo sms_leknievelRomDesc[] = {
+	{ "Lil Evel Knievel v1.0 (2023)(SteveProXNA).sms",	1048576, 0x11e0647b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_leknievel)
+STD_ROM_FN(sms_leknievel)
+
+struct BurnDriver BurnDrvsms_leknievel = {
+	"sms_leknievel", NULL, NULL, NULL, "2023",
+	"Lil Evel Knievel (HB)\0", NULL, "SteveProXNA", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_leknievelRomInfo, sms_leknievelRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Monaco Master (HB, v2.9)
+
+static struct BurnRomInfo sms_mcmasterRomDesc[] = {
+	{ "Monaco Master v2.9 (2023)(Louis The SEGA Nerd).sms",	65536, 0xdb0071cf, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mcmaster)
+STD_ROM_FN(sms_mcmaster)
+
+struct BurnDriver BurnDrvsms_mcmaster = {
+	"sms_mcmaster", NULL, NULL, NULL, "2023",
+	"Monaco Master (HB, v2.9)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_RACING, 0,
+	SMSGetZipName, sms_mcmasterRomInfo, sms_mcmasterRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Monaco Master (HB, v1.1)
+
+static struct BurnRomInfo gg_mcmasterggRomDesc[] = {
+	{ "Monaco Master v1.1 (2023)(Louis The SEGA Nerd).gg",	49152, 0x01a074ab, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_mcmastergg)
+STD_ROM_FN(gg_mcmastergg)
+
+struct BurnDriver BurnDrvgg_mcmastergg = {
+	"gg_mcmastergg", NULL, NULL, NULL, "2023",
+	"Monaco Master (HB, v1.1)\0", NULL, "Louis The SEGA Nerd", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_RACING, 0,
+	GGGetZipName, gg_mcmasterggRomInfo, gg_mcmasterggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Snappy Snorg and the Seven Silver Stones (GlobalHack, v1.4)
+
+static struct BurnRomInfo sms_snappysnorgRomDesc[] = {
+	{ "Snappy Snorg and the Seven Silver Stones v1.4 (2023)(pinkeyeFR).sms",	1048576, 0x934b9fe7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_snappysnorg)
+STD_ROM_FN(sms_snappysnorg)
+
+struct BurnDriver BurnDrvsms_snappysnorg = {
+	"sms_snappysnorg", NULL, NULL, NULL, "2023",
+	"Snappy Snorg and the Seven Silver Stones (GlobalHack, v1.4)\0", "WIP version, demo", "pinkeyeFR", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_snappysnorgRomInfo, sms_snappysnorgRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Where is it - The Quest for the 10th Island (HB, v1.01)
+ 
+static struct BurnRomInfo sms_whereisitRomDesc[] = {
+	{ "Where is it - The Quest for the 10th Island v1.01 (2023)(Ricco59).sms",	81920, 0x9ecafb4d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_whereisit)
+STD_ROM_FN(sms_whereisit)
+
+struct BurnDriver BurnDrvsms_whereisit = {
+	"sms_whereisit", NULL, NULL, NULL, "2023",
+	"Where is it - The Quest for the 10th Island (HB, v1.01)\0", NULL, "Ricco59", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_whereisitRomInfo, sms_whereisitRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};

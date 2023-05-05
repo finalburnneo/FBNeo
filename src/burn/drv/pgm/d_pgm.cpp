@@ -5,7 +5,7 @@
 #include "pgm.h"
 #include "ics2115.h"
 
-UINT8 HackCodeDip = 0;
+UINT8 HackCodeDip = 0, VerSwitcher = 0;
 
 static struct BurnInputInfo pgmInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	PgmBtn1 + 0,	"p1 coin"	},
@@ -69,7 +69,13 @@ static struct BurnInputInfo pgmhInputList[] = {
 	{"Dip D",			BIT_DIPSWITCH,  &HackCodeDip,	"dip"		},
 };
 
-STDINPUTINFOEXT(pgmh,	pgm,	pgmh)
+static struct BurnInputInfo oldsplusnrInputList[] = {
+	{"Dip D",			BIT_DIPSWITCH,  &HackCodeDip,	"dip"		},
+	{"Dip Ex",			BIT_DIPSWITCH,  &VerSwitcher,	"dip"		},
+};
+
+STDINPUTINFOEXT(pgmh,		pgm,	pgmh		)
+STDINPUTINFOEXT(oldsplusnr,	pgm,	oldsplusnr	)
 
 static struct BurnDIPInfo pgmDIPList[] = {
 	{0x2D,	0xFF, 0xFF,	0x00, NULL								},
@@ -116,57 +122,57 @@ static struct BurnDIPInfo jammaDIPList[] = {
 STDDIPINFO(jamma)
 
 static struct BurnDIPInfo pgmhDIPList[] = {
-	{0x2D,	0xFF, 0xFF,	0x00, NULL								},
-	{0x2F,  0xFF, 0x01, 0x01, NULL								},
-	{0x30,  0xFF, 0x01, 0x01, NULL								},
+	{0x2D, 0xFF, 0xFF, 0x00, NULL                                    },
+	{0x2F, 0xFF, 0x01, 0x01, NULL                                    },
+	{0x30, 0xFF, 0x01, 0x01, NULL                                    },
 
-	{0,		0xFE, 0,	2,    "Test mode"						},
-	{0x2D,	0x01, 0x01,	0x00, "Off"								},
-	{0x2D,	0x01, 0x01,	0x01, "On"								},
+	{0,    0xFE, 0,    2,    "Test mode"                             },
+	{0x2D, 0x01, 0x01, 0x00, "Off"                                   },
+	{0x2D, 0x01, 0x01, 0x01, "On"                                    },
 
-	{0,		0xFE, 0,	2,    "Music"							},
-	{0x2D,	0x01, 0x02,	0x02, "Off"								},
-	{0x2D,	0x01, 0x02,	0x00, "On"								},
+	{0,    0xFE, 0,    2,    "Music"                                 },
+	{0x2D, 0x01, 0x02, 0x02, "Off"                                   },
+	{0x2D, 0x01, 0x02, 0x00, "On"                                    },
 
-	{0,		0xFE, 0,	2,    "Voice"							},
-	{0x2D,	0x01, 0x04,	0x04, "Off"								},
-	{0x2D,	0x01, 0x04,	0x00, "On"								},
+	{0,    0xFE, 0,    2,    "Voice"                                 },
+	{0x2D, 0x01, 0x04, 0x04, "Off"                                   },
+	{0x2D, 0x01, 0x04, 0x00, "On"                                    },
 
-	{0,		0xFE, 0,	2,    "Free play"						},
-	{0x2D,	0x01, 0x08,	0x00, "Off"								},
-	{0x2D,	0x01, 0x08,	0x08, "On"								},
+	{0,    0xFE, 0,    2,    "Free play"                             },
+	{0x2D, 0x01, 0x08, 0x00, "Off"                                   },
+	{0x2D, 0x01, 0x08, 0x08, "On"                                    },
 
-	{0,		0xFE, 0,	2,    "Stop mode"						},
-	{0x2D,	0x01, 0x10,	0x00, "Off"								},
-	{0x2D,	0x01, 0x10,	0x10, "On"								},
+	{0,    0xFE, 0,    2,    "Stop mode"                             },
+	{0x2D, 0x01, 0x10, 0x00, "Off"                                   },
+	{0x2D, 0x01, 0x10, 0x10, "On"                                    },
 
-	{0,     0xFE, 0,	4,    "Bios select (Fake)"				},
-	{0x2F,  0x01, 0x0f,	0x00, "Older"							},
-	{0x2F,  0x01, 0x0f,	0x01, "Newer"							},
-	{0x2F,  0x01, 0x0f,	0x02, "Newer (no intro, calendar)"		},
-	{0x2F,  0x01, 0x0f,	0x03, "Newer (no intro)"				},
+	{0,    0xFE, 0,    4,    "Bios select (Fake)"                    },
+	{0x2F, 0x01, 0x0f, 0x00, "Older"                                 },
+	{0x2F, 0x01, 0x0f, 0x01, "Newer"                                 },
+	{0x2F, 0x01, 0x0f, 0x02, "Newer (no intro, calendar)"            },
+	{0x2F, 0x01, 0x0f, 0x03, "Newer (no intro)"                      },
 
 	// Fake Dip
-	{0,		0xFE, 0,	2,    "Code select (Reload game)"		},
-	{0x30,	0x01, 0x01, 0x00, "Real hardware"					},
-	{0x30,	0x01, 0x01, 0x01, "Non-real hardware"				},
+	{0,    0xFE, 0,    2,    "Code select (Effective when reloaded)" },
+	{0x30, 0x01, 0x01, 0x00, "Real hardware"                         },
+	{0x30, 0x01, 0x01, 0x01, "Non-real hardware"                     },
 };
 
 STDDIPINFO(pgmh)
 
 static struct BurnDIPInfo jammahDIPList[] = {
-	{0x2D,	0xFF, 0xFF,	0x00, NULL								},
-	{0x2F,  0xFF, 0x01, 0x00, NULL								},
-	{0x30,  0xFF, 0x01, 0x01, NULL								},
+	{0x2D, 0xFF, 0xFF, 0x00, NULL                                    },
+	{0x2F, 0xFF, 0x01, 0x00, NULL                                    },
+	{0x30, 0xFF, 0x01, 0x01, NULL                                    },
 
-	{0,		0xFE, 0,	2,    "Test mode"						},
-	{0x2D,	0x01, 0x01,	0x00, "Off"								},
-	{0x2D,	0x01, 0x01,	0x01, "On"								},
+	{0,    0xFE, 0,    2,    "Test mode"                             },
+	{0x2D, 0x01, 0x01, 0x00, "Off"                                   },
+	{0x2D, 0x01, 0x01, 0x01, "On"                                    },
 
 	// Fake Dip
-	{0,		0xFE, 0,	2,    "Code select (Reload game)"		},
-	{0x30,	0x01, 0x01, 0x00, "Real hardware"					},
-	{0x30,	0x01, 0x01, 0x01, "Non-real hardware"				},
+	{0,    0xFE, 0,    2,    "Code select (Effective when reloaded)" },
+	{0x30, 0x01, 0x01, 0x00, "Real hardware"                         },
+	{0x30, 0x01, 0x01, 0x01, "Non-real hardware"                     },
 };
 
 STDDIPINFO(jammah)
@@ -343,15 +349,12 @@ static struct BurnDIPInfo olds103tDIPList[] = {
 };
 
 static struct BurnDIPInfo oldsplusnrDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x01, NULL								},  
+	{0x2E, 0xFF, 0xFF, 0x01, NULL                                       },
+	{0x31, 0xFF, 0xFF, 0x00, NULL                                       },
 
-	{0,		0xFE, 0,	6,    "Region (Fake)"					},
-	{0x2E,	0x01, 0x0F,	0x00, "Taiwan"							},
-	{0x2E,	0x01, 0x0F,	0x01, "China"							},
-	{0x2E,	0x01, 0x0F,	0x02, "Japan"							},
-	{0x2E,	0x01, 0x0F,	0x03, "Korea"							},
-	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"						},
-	{0x2E,	0x01, 0x0F,	0x05, "World"							},
+	{0,    0xFE, 0,    2,    "Version change (Effective when reloaded)" },
+	{0x31, 0x01, 0x01, 0x00, "v211"                                     },
+	{0x31, 0x01, 0x01, 0x01, "v208"                                     },
 };
 
 static struct BurnDIPInfo puzzli2DIPList[] = {
@@ -2795,7 +2798,7 @@ struct BurnDriver BurnDrvphotoy2k103j = {
 	"photoy2k103j", "photoy2k", "pgm", NULL, "1999",
 	"Photo Y2K / Real and Fake (V103, Japan)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u30EA\u30A2\u30EB\u30A2\u30F3\u30C9 \u30D5\u30A7\u30A4\u30AF\0Photo Y2K\0\u5927\u5BB6\u6765 \u627E\u78B4\0\u8D85\u7EA7 \u6BD4\u4E00\u6BD4 (V103, Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING  | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, photoy2k103jRomInfo, photoy2k103jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k103DIPInfo,
 	photoy2kInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -2837,7 +2840,7 @@ struct BurnDriver BurnDrvphotoy2k102j = {
 	"photoy2k102j", "photoy2k", "pgm", NULL, "1999",
 	"Photo Y2K / Real and Fake (V102, Japan)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u30EA\u30A2\u30EB\u30A2\u30F3\u30C9 \u30D5\u30A7\u30A4\u30AF\0Photo Y2K\0\u5927\u5BB6\u6765 \u627E\u78B4\0\u8D85\u7EA7 \u6BD4\u4E00\u6BD4 (V102, Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING  | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PUZZLE, 0,
 	NULL, photoy2k102jRomInfo, photoy2k102jRomName, NULL, NULL, NULL, NULL, pgmInputInfo, py2k103DIPInfo,
 	photoy2kInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -6799,7 +6802,7 @@ struct BurnDriver BurnDrvPgmdemo = {
 	"pgmdemo", NULL, "pgm", NULL, "2005",
 	"Chaos (PGM Demo)\0", "Demo Game", "Raster", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING  | BDF_DEMO, 4, HARDWARE_IGS_PGM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_DEMO, 4, HARDWARE_IGS_PGM, GBF_MISC, 0,
 	NULL, pgmdemoRomInfo, pgmdemoRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgmInit,pgmExit,pgmFrame,pgmDraw,NULL, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -6827,7 +6830,7 @@ struct BurnDriver BurnDrvPgmfrog = {
 	"pgmfrog", NULL, "pgm", NULL, "2006",
 	"Frog Feast (PGM)\0", NULL, "RasterSoft", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING  | BDF_HOMEBREW, 4, HARDWARE_IGS_PGM, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_IGS_PGM, GBF_ACTION, 0,
 	NULL, pgmfrogRomInfo, pgmfrogRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -6855,7 +6858,7 @@ struct BurnDriver BurnDrvPgemeni = {
 	"pgemeni", NULL, "pgm", NULL, "2006",
 	"P-GeMeni (060123)\0", NULL, "blastar@gmx.net", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING  | BDF_HOMEBREW, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, pgemeniRomInfo, pgemeniRomName, NULL, NULL, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -7849,49 +7852,13 @@ struct BurnDriver BurnDrvEspgalbl = {
 	224, 448, 3, 4
 };
 
-
-// 西游释厄传 - 群魔乱舞 (版本 208, 修改版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)
-// More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=695504&fromuid=150233
-// Last update 20200705
-
-static struct BurnRomInfo oldsplusnrRomDesc[] = {
-	{ "v-208cn.u10",			0x0400000, 0xce6893ae, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
-
-	{ "igs_t05301w064.u2",		0x0800000, 0x8257bbb0, 2 | BRF_GRA },			//  1 Tile data
-
-	{ "igs_a05301nw064.u3",		0x0800000, 0x3d3125ff, 3 | BRF_GRA },	 		//  2 Sprite Color Data
-	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 3 | BRF_GRA },			//  3
-	{ "igs_a05303w064.u6",		0x0800000, 0x13475d85, 3 | BRF_GRA },			//  4
-	{ "igs_a05304w064.u8",		0x0800000, 0xf03ef7a6, 3 | BRF_GRA },			//  5
-
-	{ "igs_b05301nw064.u9",		0x0800000, 0x13702bbf, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "igs_b05302nw064.u11",	0x0800000, 0xb9f75120, 4 | BRF_GRA },			//  7
-
-	{ "igs_w05301b032.u5",		0x0400000, 0x86ec83bc, 5 | BRF_SND },			//  8 Samples
-
-	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  9 Internal ARM7 Rom
-};
-
-STDROMPICKEXT(oldsplusnr, oldsplusnr, pgm)
-STD_ROM_FN(oldsplusnr)
-
-struct BurnDriver BurnDrvoldsplusnr = {
-	"oldsplusnr", "oldsplus", "pgm", NULL, "2020",
-	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0", "Incomplete Dump", "hack", "PolyGameMaster",
-	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 208 Revision)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u7248\u672c 208)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, oldsplusnrRomInfo, oldsplusnrRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, oldsplusnrDIPInfo,
-	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
-	448, 224, 4, 3
-};
-
-
-// 西游释厄传-群魔乱舞(新版 211 版, 最终版) Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)
+// 西游释厄传 - 新群魔乱舞(修改版)
 // Modified by: 萧鱼儿, 一只狼, wzc123
 // More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=718724
 
-static struct BurnRomInfo oldsplusnr211RomDesc[] = {
-	{ "v-211cn.u10",			0x0400000, 0x8a8b30b7, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
+static struct BurnRomInfo oldsplusnrRomDesc[] = {
+	/* v211 - 20230427 */
+	{ "v-211cn.u10",			0x0400000, 0x5758fe37, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
 	{ "igs_t05301naw064.u2",	0x0800000, 0xbf3db9be, 2 | BRF_GRA },                        //  1 Tile data
 
@@ -7906,18 +7873,76 @@ static struct BurnRomInfo oldsplusnr211RomDesc[] = {
 	{ "igs_w05301nab032.u5",	0x0400000, 0xb740b810, 5 | BRF_SND },                        //  8 Samples
 
 	{ "oldsplus_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  9 Internal ARM7 Rom
+
+	/* v208 - 20200705 */
+	{ "v-208cn.u10",			0x0400000, 0xce6893ae, 0 | BRF_PRG | BRF_ESS },              // 10 68K Code
+
+	{ "igs_t05301w064.u2",		0x0800000, 0x8257bbb0, 0 | BRF_GRA },                        // 11 Tile data
+
+	{ "igs_a05301nw064.u3",		0x0800000, 0x3d3125ff, 0 | BRF_GRA },                        // 12 Sprite Color Data
+//	{ "igs_a05302nw064.u4",		0x0800000, 0x4ed9028c, 0 | BRF_GRA },
+	{ "igs_a05303w064.u6",		0x0800000, 0x13475d85, 0 | BRF_GRA },                        // 13
+	{ "igs_a05304w064.u8",		0x0800000, 0xf03ef7a6, 0 | BRF_GRA },                        // 14
+
+	{ "igs_b05301nw064.u9",		0x0800000, 0x13702bbf, 0 | BRF_GRA },                        // 15 Sprite Masks & Color Indexes
+	{ "igs_b05302nw064.u11",	0x0800000, 0xb9f75120, 0 | BRF_GRA },                        // 16
+
+	{ "igs_w05301b032.u5",		0x0400000, 0x86ec83bc, 0 | BRF_SND },                        // 17 Samples
 };
 
-STDROMPICKEXT(oldsplusnr211, oldsplusnr211, pgm)
-STD_ROM_FN(oldsplusnr211)
+STDROMPICKEXT(oldsplusnr, oldsplusnr, pgm)
+STD_ROM_FN(oldsplusnr)
 
-struct BurnDriver BurnDrvoldsplusnr211 = {
-	"oldsplusnr211", "oldsplus", "pgm", NULL, "2023",
-	"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)\0", "Incomplete Dump", "hack", "PolyGameMaster",
-	L"Xi You Shi E Zhuan Super Plus (Qun Mo Luan Wu New 211 Revision, Final Ver.)\0\u897f\u904a\u91cb\u5384\u50b3 - \u65b0\u7fa4\u9b54\u4e82\u821e (\u65b0\u7248 211 \u7248, \u6700\u7d42\u7248)\0", NULL, NULL, NULL,
+static void oldsplusnrLoadSPRColCallback(UINT8* gfx, INT32)
+{
+	// gfx is a pointer to the temporary memory where the Sprite Color Data roms are loaded
+	// v208
+	if (VerSwitcher & 1) {
+		BurnLoadRom(gfx + 0x0000000, 12, 1);
+		/* igs_a05302nw064.u4 Same as v211 */
+		BurnLoadRom(gfx + 0x1000000, 13, 1);
+		BurnLoadRom(gfx + 0x1800000, 14, 1);
+	}
+}
+
+static void oldsplusnrLoadTileCallback(UINT8* gfx, INT32)
+{
+	// gfx is a pointer to the (PGMTileROM + 0x0180000)
+	// v208
+	if (VerSwitcher & 1) BurnLoadRom(gfx, 11, 1);
+}
+
+static void oldsplusnrLoadRomsCallback()
+{
+	// v208
+	if (VerSwitcher & 1) {
+		BurnLoadRom(PGM68KROM,                 10, 1);
+		BurnLoadRom(PGMSPRMaskROM + 0x0000000, 15, 1);
+		BurnLoadRom(PGMSPRMaskROM + 0x0800000, 16, 1);
+		BurnLoadRom(ICSSNDROM     + 0x0400000, 17, 1);
+	}
+
+	// Decrypt 68k rom
+	pgm_decrypt_oldsplus();
+}
+
+static INT32 oldsplusnrInit()
+{
+	pPgmColorDataDecryptcallback	= oldsplusnrLoadSPRColCallback;
+	pPgmTileDecryptCallback			= oldsplusnrLoadTileCallback;
+	pPgmInitCallback				= oldsplusnrLoadRomsCallback;
+	pPgmProtCallback				= install_protection_asic27a_oldsplus; // simulation
+
+	return pgmInit();
+}
+
+struct BurnDriver BurnDrvoldsplusnr = {
+	"oldsplusnr", "oldsplus", "pgm", NULL, "2023",
+	"Xi You Shi E Zhuan - Xin Qun Mo Luan Wu (Hack)\0", "Switchable v208 / v211", "hack", "PolyGameMaster",
+	L"Xi You Shi E Zhuan - Xin Qun Mo Luan Wu (Hack)\0\u897f\u6e38\u91ca\u5384\u4f20 - \u65b0\u7fa4\u9b54\u4e71\u821e (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, oldsplusnr211RomInfo, oldsplusnr211RomName, NULL, NULL, NULL, NULL, pgmhInputInfo, oldsplusnrDIPInfo,
-	oldsplusInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	NULL, oldsplusnrRomInfo, oldsplusnrRomName, NULL, NULL, NULL, NULL, oldsplusnrInputInfo, oldsplusnrDIPInfo,
+	oldsplusnrInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

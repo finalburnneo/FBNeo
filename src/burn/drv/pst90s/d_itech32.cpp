@@ -3372,6 +3372,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		ES5506Update(pBurnSoundOut, nBurnSoundLen);
+		BurnSoundSwapLR(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	return 0;

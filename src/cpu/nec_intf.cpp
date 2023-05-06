@@ -329,42 +329,26 @@ void VezCPUPop()
 	}
 }
 
-static INT32 core_idle(INT32 cycles)
-{
-	VezCurrentCPU->idle(cycles);
-
-	return cycles;
-}
-
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 {
-	INT32 active = nOpenedCPU;
-	if (active != cpu)
-	{
-		if (active != -1) VezClose();
-		VezOpen(cpu);
-	}
+	VezCPUPush(cpu);
 
 	VezCurrentCPU->cpu_set_irq_line(line & 0xffff, line >> 16, state);
 
-	if (active != cpu)
-	{
-		VezClose();
-		if (active != -1) VezOpen(active);
-	}
+	VezCPUPop();
 }
 
 cpu_core_config VezConfig =
 {
 	"nec v20-v35",
-	VezOpen,
-	VezClose,
+	VezCPUPush,
+	VezCPUPop,
 	cpu_readmem20,
 	VezCheatWrite,
 	VezGetActive,
 	VezTotalCycles,
 	VezNewFrame,
-	core_idle,
+	VezIdle,
 	core_set_irq,
 	VezRun,
 	VezRunEnd,

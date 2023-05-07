@@ -17500,10 +17500,10 @@
 	</game>
 	<game name="samsho2pe" cloneof="samsho2" romof="samsho2">
 		<comment>Hack</comment>
-		<description>Samurai Shodown II Perfect (V. 01, Hack)</description>
+		<description>Samurai Shodown II Perfect (V. 1.1, Hack)</description>
 		<year>2023</year>
 		<manufacturer>Bear</manufacturer>
-		<rom name="063-p1pe.p1" size="2097152" crc="e73b842e"/>
+		<rom name="063-p1pe.p1" size="2097152" crc="3987833f"/>
 		<rom name="063-p2pe.p2" size="131072" crc="e9cc1d72"/>
 		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
 		<rom name="063-c1.c1" merge="063-c1.c1" size="2097152" crc="86cd307c"/>

@@ -1198,6 +1198,7 @@ DRV		BurnSpecBabymonkeyalba;
 DRV		BurnDrvmd_babyd;
 DRV		BurnDrvmd_babydo;
 DRV		BurnSpecBabyman;
+DRV		BurnSpecBabyman2;
 DRV		BurnDrvbackfirt;
 DRV		BurnDrvMSX_backgamj;
 DRV		BurnDrvMSX_backgamja;
@@ -3154,6 +3155,7 @@ DRV		BurnDrvcnbe;
 DRV		BurnDrvcnbe2018;
 DRV		BurnDrvmd_coffeecrisis;
 DRV		BurnDrvnes_coinworld;
+DRV		BurnSpecCoinz;
 DRV		BurnDrvMSX_coldblood;
 DRV		BurnDrvcv_coldblood;
 DRV		BurnDrvcv_cvjoytest;
@@ -3617,6 +3619,9 @@ DRV		BurnDrvmd_cursep;
 DRV		BurnDrvmd_curseibay;
 DRV		BurnDrvMSX_rabenstein;
 DRV		BurnSpecSherwood;
+DRV		BurnSpecCursedemone;
+DRV		BurnSpecCursedemonp;
+DRV		BurnSpecCursedemons;
 DRV		BurnDrvmd_cuknight;
 DRV		BurnDrvCurvebal;
 DRV		BurnDrvmd_custodian;
@@ -9671,6 +9676,7 @@ DRV		BurnDrvmd_mcdonaldj;
 DRV		BurnDrvmd_mcdonaldjp;
 DRV		BurnDrvmd_mcdonaldu;
 DRV		BurnSpecMeanstreak;
+DRV		BurnSpecMeaniegolf;
 DRV		BurnDrvMSX_mecha8;
 DRV		BurnDrvcv_mecha8;
 DRV		BurnDrvMSX_mecha8ex;
@@ -14167,6 +14173,7 @@ DRV		BurnSpecthesentinel;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvBubsymphba;		// no comment [NOT WORKING]
 #endif
+DRV		BurnSpecSeraphima;
 DRV		BurnSpecSergeantseymourrobotcop;
 DRV		BurnDrvsg1k_serizawa;
 DRV		BurnDrvmd_sesame;
@@ -15669,6 +15676,7 @@ DRV		BurnDrvCpsSf2ceub;
 DRV		BurnDrvCpsSf2ce;
 DRV		BurnDrvCpsSf2cejc;
 DRV		BurnDrvCpsSf2ceuc;
+DRV		BurnDrvCpsSf2ceec;
 DRV		BurnDrvCpsSf2tlona;
 DRV		BurnDrvCpsSf2tlonb;
 DRV		BurnDrvCpsSf2tlonc;
@@ -18143,6 +18151,7 @@ DRV		BurnSpecUnderground;
 DRV		BurnDrvMSX_undergnd;
 DRV		BurnDrvnes_underadv;
 DRV		BurnSpecunderwur;
+DRV		BurnSpecUnicorn;
 DRV		BurnDrvnes_uninvited;
 DRV		BurnDrvnes_uninvitedu;
 DRV		BurnDrvmd_univsold;
@@ -20786,6 +20795,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_babyd,			// Baby's Day Out (USA, Prototype)
 	&BurnDrvmd_babydo,			// Baby's Day Out (USA, Prototype, Earlier)
 	&BurnSpecBabyman,			// Baby-man Vs Man-baby (48K) (HB)
+	&BurnSpecBabyman2,			// Baby-man Vs Nappy Bird (48K) (HB)
 	&BurnDrvbackfirt,			// Back Fire (Tecmo, bootleg)
 	&BurnDrvMSX_backgamj,		// Back Gammon (Jpn)
 	&BurnDrvMSX_backgamja,		// Back Gammon (Jpn, Alt)
@@ -22742,6 +22752,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcnbe2018,			// Codename - Blut Engel (2018-09-05)
 	&BurnDrvmd_coffeecrisis,	// Coffee Crisis (HB)
 	&BurnDrvnes_coinworld,		// Coin World (HB)
+	&BurnSpecCoinz,				// COINZ are mine (128K) (HB)
 	&BurnDrvMSX_coldblood,		// Cold Blood (HB)
 	&BurnDrvcv_coldblood,		// Cold Blood (SGM) (HB)
 	&BurnDrvcv_cvjoytest,		// ColecoVision Joystick Test
@@ -23205,6 +23216,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_curseibay,		// Curse of Illmoore Bay, the (HB)
 	&BurnDrvMSX_rabenstein,		// Curse of Rabenstein, The (HB)
 	&BurnSpecSherwood,			// Curse of Sherwood, The (48K)
+	&BurnSpecCursedemone,		// Cursed Demons of Wallachia (English) (48K) (HB)
+	&BurnSpecCursedemonp,		// Cursed Demons of Wallachia (Portuguese) (48K) (HB)
+	&BurnSpecCursedemons,		// Cursed Demons of Wallachia (Spanish) (48K) (HB)
 	&BurnDrvmd_cuknight,		// Cursed Knight, The (HB)
 	&BurnDrvCurvebal,			// Curve Ball
 	&BurnDrvmd_custodian,		// Custodian MD (HB)
@@ -29259,6 +29273,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mcdonaldjp,		// McDonald's Treasure Land Adventure (Jpn, Prototype)
 	&BurnDrvmd_mcdonaldu,		// McDonald's Treasure Land Adventure (USA)
 	&BurnSpecMeanstreak,		// Mean Streak (128K)
+	&BurnSpecMeaniegolf,		// Meanie Golf (48K) (HB)
 	&BurnDrvMSX_mecha8,			// Mecha-8 (HB)
 	&BurnDrvcv_mecha8,			// Mecha-8 (SGM) (HB)
 	&BurnDrvMSX_mecha8ex,		// Mecha-8 EX (HB)
@@ -33423,7 +33438,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSamsho2,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063)(NGH-063)
 	&BurnDrvSamsho2new,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Optimized)
 	&BurnDrvSamsho2sp,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)
-	&BurnDrvSamsho2pe,			// Samurai Shodown II Perfect (V. 01, Hack)
+	&BurnDrvSamsho2pe,			// Samurai Shodown II Perfect (V. 1.1, Hack)
 	&BurnDrvSamSho3h,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)
 	&BurnDrvSamSho3,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)
 	&BurnDrvSamSho4,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222)(NGH-222)
@@ -33755,6 +33770,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvBubsymphba,			// Seoul Symphony (Bubble Symphony bootleg with OKI6295) [no comment, NOT WORKING]
 #endif
+	&BurnSpecSeraphima,			// Seraphima (128K) (HB)
 	&BurnSpecSergeantseymourrobotcop,// Sergeant Seymour Robotcop (128K)
 	&BurnDrvsg1k_serizawa,		// Serizawa Hachidan no Tsumeshogi (Jpn)
 	&BurnDrvmd_sesame,			// Sesame Street Counting Cafe (USA)
@@ -35257,6 +35273,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSf2ce,			// Street Fighter II' - Champion Edition (street fighter 2' 920513 World)
 	&BurnDrvCpsSf2cejc,			// Street Fighter II' - Champion Edition (street fighter 2' 920803 Japan)
 	&BurnDrvCpsSf2ceuc,			// Street Fighter II' - Champion Edition (street fighter 2' 920803 USA)
+	&BurnDrvCpsSf2ceec,			// Street Fighter II' - Champion Edition (street fighter 2' 920803 World)
 	&BurnDrvCpsSf2tlona,		// Street Fighter II' - Champion Edition (Tu Long bootleg set 1, 811102 001)
 	&BurnDrvCpsSf2tlonb,		// Street Fighter II' - Champion Edition (Tu Long bootleg set 2, 811102 001)
 	&BurnDrvCpsSf2tlonc,		// Street Fighter II' - Champion Edition (Tu Long bootleg set 3, 811102 001)
@@ -37731,6 +37748,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_undergnd,		// Underground (Spanish)
 	&BurnDrvnes_underadv,		// Underground Adventure (HB)
 	&BurnSpecunderwur,			// Underwurlde (48K)
+	&BurnSpecUnicorn,			// Unicorn, The 48K (HB)
 	&BurnDrvnes_uninvited,		// Uninvited (USA)
 	&BurnDrvnes_uninvitedu,		// Uninvited Uncensored (Hack, v1.0f)
 	&BurnDrvmd_univsold,		// Universal Soldier (Euro, USA)

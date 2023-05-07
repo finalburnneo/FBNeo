@@ -1723,6 +1723,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="babyman2" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Baby-man Vs Nappy Bird (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>PuttyCAD, Tin Soldiers</manufacturer>
+		<rom name="Babyman vs Nappy Bird 48K (2023)(PuttyCAD, Tin Soldiers).tap" size="23094" crc="f2c4fc89"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="backskoo" romof="spectrum">
 		<description>Back to Skool (48K)</description>
 		<year>1985</year>
@@ -4115,6 +4125,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="coinz" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>COINZ are mine (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Drunk Fly</manufacturer>
+		<rom name="COINZ are mine 128K (2023)(Drunk Fly).tap" size="31418" crc="1c0f1177"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="coliseum" romof="spectrum">
 		<description>Coliseum (Spanish) (48K)</description>
 		<year>1988</year>
@@ -4802,6 +4823,36 @@
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Curse of Sherwood, The (1987)(Mastertronic).z80" size="39360" crc="72701ae3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cursedemone" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Cursed Demons of Wallachia (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Cursed Demons Of Wallachia EN 48K (2023)(Furillo Productions).tap" size="44991" crc="b03297f7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cursedemonp" cloneof="cursedemone" romof="cursedemone">
+		<comment>Homebrew</comment>
+		<description>Cursed Demons of Wallachia (Portuguese) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Cursed Demons Of Wallachia PT 48K (2023)(Furillo Productions).tap" size="44986" crc="7dc4605c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cursedemons" cloneof="cursedemone" romof="cursedemone">
+		<comment>Homebrew</comment>
+		<description>Cursed Demons of Wallachia (Spanish) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Cursed Demons Of Wallachia ES 48K (2023)(Furillo Productions).tap" size="45019" crc="a17dfc94"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11682,6 +11733,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="meaniegolf" romof="spectrum">
+		<comment>Homebrew, Set '1.Keyboard' to use controller</comment>
+		<description>Meanie Golf (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Psychic Parrot</manufacturer>
+		<rom name="Meanie Golf 48K (2023)(PsychicParrot).tap" size="37024" crc="97119a14"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mwarena" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Mechwars Arena (48K) (HB)</description>
@@ -16231,6 +16292,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="seraphima" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Seraphima (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Seraphima 128K (2023)(Zosya Entertainment).tap" size="119727" crc="70cd9fb0"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sergeantseymourrobotcop" romof="spec128">
 		<description>Sergeant Seymour Robotcop (128K)</description>
 		<year>1992</year>
@@ -19573,6 +19645,16 @@
 		<year>1984</year>
 		<manufacturer>Ultimate Play The Game</manufacturer>
 		<rom name="Underwurlde (1984)(Ultimate Play The Game).tap" size="46026" crc="0a46e7cf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="unicorn" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Unicorn, The 48K (HB)</description>
+		<year>2023</year>
+		<manufacturer>UriS</manufacturer>
+		<rom name="Unicorn, The 48K (2023)(UriS).tap" size="28858" crc="d7d33b1e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

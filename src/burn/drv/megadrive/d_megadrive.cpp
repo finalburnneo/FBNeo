@@ -14094,6 +14094,25 @@ struct BurnDriver BurnDrvmd_ghostbst1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Ghostbusters - Special Edition (Hack, v1.1)
+// https://www.romhacking.net/hacks/7761/
+static struct BurnRomInfo md_ghostbstseRomDesc[] = {
+	{ "Ghostbusters - Special Edition v1.1 (2013)(BillyTime! Games).bin", 0x100000, 0xa9542c76, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ghostbstse)
+STD_ROM_FN(md_ghostbstse)
+
+struct BurnDriver BurnDrvmd_ghostbstse = {
+	"md_ghostbstse", "md_ghostbst", NULL, NULL, "2023",
+	"Ghostbusters - Special Edition (Hack, v1.1)\0", NULL, "BillyTime! Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_ghostbstseRomInfo, md_ghostbstseRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Dai Makaimura (Jpn)
 static struct BurnRomInfo md_daimakaiRomDesc[] = {
 	{ "dai makaimura (jpn).bin", 0x0a0000, 0x5659f379, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -43424,6 +43443,25 @@ struct BurnDriver BurnDrvmd_amshay = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_amshayRomInfo, md_amshayRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Criatura (HB)
+
+static struct BurnRomInfo md_criaturaRomDesc[] = {
+	{ "Criatura (2023)(Manganga Team).bin", 1179648, 0x91d31b0f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_criatura)
+STD_ROM_FN(md_criatura)
+
+struct BurnDriver BurnDrvmd_criatura = {
+	"md_criatura", NULL, NULL, NULL, "2023",
+	"Criatura (HB)\0", NULL, "Manganga Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_criaturaRomInfo, md_criaturaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

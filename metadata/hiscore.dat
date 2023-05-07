@@ -4695,8 +4695,7 @@ darktowr:
 ;(super toffy) (by GeoMan)
 stoffy:
 stoffyu:
-@:maincpu,program,833,e0,00,f2
-@:maincpu,program,913,f0,20,00
+@:maincpu,program,913,a0,20,ff
 
 
 ;@s:ddragon3.cpp

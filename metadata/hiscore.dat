@@ -3689,6 +3689,7 @@ willowuo:
 @:maincpu,program,fff03e,04,00,00
 
 
+kod:
 kodb:
 kodj:
 kodja:
@@ -3717,7 +3718,6 @@ cworld2j:
 @:maincpu,program,ff0f6c,9c,00,00
 
 
-kod:
 kodr1:
 @:maincpu,program,ff9d94,28,01,04
 

@@ -16792,7 +16792,7 @@ struct BurnDriver BurnDrvSamsho2new = {
 // Samurai Shodown II Perfect Hack
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",   0x200000, 0xe73b842e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p1pe.p1",   0x200000, 0x3987833f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "063-p2pe.p2",   0x020000, 0xe9cc1d72, 0 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "063-s1.s1",     0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -16819,7 +16819,7 @@ STD_ROM_FN(samsho2pe)
 
 struct BurnDriver BurnDrvSamsho2pe = {
 	"samsho2pe", "samsho2", "neogeo", NULL, "2023",
-	"Samurai Shodown II Perfect (V. 01, Hack)\0", NULL, "Bear", "Neo Geo MVS",
+	"Samurai Shodown II Perfect (V. 1.1, Hack)\0", NULL, "Bear", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

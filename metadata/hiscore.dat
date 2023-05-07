@@ -22,6 +22,20 @@
 ; This hiscore.dat is only usable with lua enabled versions of mame since 0.172
 ; For examples of @delay & shared memory see: Gorf/Missile Command (share) & blastoff (@delay)
 
+;******* start of FBNeo additions *****************
+
+;dkchrmx:***Donkey Kong Christmas & Spooky Remix (hack). dink aug'21
+dkchrmx:
+dkspkyrmx:
+@:maincpu,program,6100,aa,94,76
+@:maincpu,program,60b8,03,65,00
+@:maincpu,program,7641,01,00,00
+@:maincpu,program,7621,01,00,00
+@:maincpu,program,7601,01,07,07
+@:maincpu,program,75e1,01,06,06
+@:maincpu,program,75c1,01,05,05
+@:maincpu,program,75a1,01,00,00
+
 ;******* start of mame 2.48 additions *************
 
 monkelf:

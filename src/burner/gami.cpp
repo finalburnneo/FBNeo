@@ -497,10 +497,8 @@ static void GameInpInitMacros()
 			if (bii.szName == NULL) {
 				bii.szName = "";
 			}
-			if (_stricmp(" Up", bii.szName + 2) == 0 ||
-				_stricmp(" Down", bii.szName + 2) == 0 ||
-				_stricmp(" Left", bii.szName + 2) == 0 ||
-				_stricmp(" Right", bii.szName + 2) == 0)
+			// Check if current input to be added matches player number to prevents duplicate macros
+			if ((UINT32) (bii.szName[1] - '0') == (nPlayer + 1))
 			{
 				sprintf(pgi->Macro.szName, "%s", bii.szName);
 
@@ -519,7 +517,7 @@ static void GameInpInitMacros()
 				if (_stricmp(" Right", bii.szName + 2) == 0) pArrow[3] = bii.pVal;
 
 				if ((SETS_VS) && pArrow[0] && pArrow[1] && pArrow[2] && pArrow[3]) {
-					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "¨I");
+					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "Â¨I");
 					pgi->nInput = GIT_MACRO_AUTO;
 					pgi->nType = BIT_DIGITAL;
 					pgi->Macro.nMode = 0;
@@ -530,7 +528,7 @@ static void GameInpInitMacros()
 					nMacroCount++;
 					pgi++;
 
-					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "¨J");
+					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "Â¨J");
 					pgi->nInput = GIT_MACRO_AUTO;
 					pgi->nType = BIT_DIGITAL;
 					pgi->Macro.nMode = 0;
@@ -541,7 +539,7 @@ static void GameInpInitMacros()
 					nMacroCount++;
 					pgi++;
 
-					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "¨L");
+					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "Â¨L");
 					pgi->nInput = GIT_MACRO_AUTO;
 					pgi->nType = BIT_DIGITAL;
 					pgi->Macro.nMode = 0;
@@ -552,7 +550,7 @@ static void GameInpInitMacros()
 					nMacroCount++;
 					pgi++;
 
-					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "¨K");
+					sprintf(pgi->Macro.szName, "P%d %s", nPlayer + 1, "Â¨K");
 					pgi->nInput = GIT_MACRO_AUTO;
 					pgi->nType = BIT_DIGITAL;
 					pgi->Macro.nMode = 0;

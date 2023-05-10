@@ -22347,6 +22347,23 @@ struct BurnDriver BurnDrvnes_airballp = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_5starRomDesc[] = {
+	{ "5-star Restaurant (2023)(Wendel Scardua).nes",          81936, 0x42658f47, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_5star)
+STD_ROM_FN(nes_5star)
+
+struct BurnDriver BurnDrvnes_5star = {
+	"nes_5star", NULL, NULL, NULL, "2023",
+	"5-star Restaurant (HB)\0", NULL, "Wendel Scardua", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_5starRomInfo, nes_5starRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_blazblocksRomDesc[] = {
 	{ "Blazing Blocks (2023)(FG Software).nes",          65552, 0x3a8f9933, BRF_ESS | BRF_PRG },
 };
@@ -33959,6 +33976,24 @@ struct BurnDriver BurnDrvnes_dengeki = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_dengekiRomInfo, nes_dengekiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/translations/6913/
+static struct BurnRomInfo nes_dengekienRomDesc[] = {
+	{ "Dengeki - Big Bang! (T-Eng)(2023)(StripyMonk).nes",          262160, 0x6a89092e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dengekien)
+STD_ROM_FN(nes_dengekien)
+
+struct BurnDriver BurnDrvnes_dengekien = {
+	"nes_dengekien", "nes_clashatdem", NULL, NULL, "2023",
+	"Dengeki - Big Bang! (T-Eng, v2.8a)\0", NULL, "StripyMonk", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_dengekienRomInfo, nes_dengekienRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

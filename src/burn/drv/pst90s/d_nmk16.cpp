@@ -51,6 +51,7 @@ static UINT8 *soundlatch2;
 static UINT8 *flipscreen;
 static UINT8 *tilebank;
 static UINT8 *okibank;
+static UINT8 *soundbank;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -69,7 +70,6 @@ static INT32 screen_flip_y = 0;
 static INT32 nNMK004CpuSpeed;
 static INT32 NMK004_enabled = 0;
 static INT32 NMK112_enabled = 0;
-static INT32 macross2_sound_enable;
 static INT32 MSM6295x1_only = 0;
 static INT32 MSM6295x2_only = 0;
 static INT32 no_z80 = 0;
@@ -82,8 +82,10 @@ static INT32 Tdragon2mode = 0; // use draw_sprites_tdragon2()
 static INT32 GunnailMode = 0;
 static INT32 TharrierShakey = 0; // kludge for shakey-ship on the end of level cutscene
 static INT32 HachamfTdragonMCU = 0; // mcu active for hachamf, tdragon?
+static INT32 Macross2Sound = 0;
+static INT32 SeibuSound = 0;
 
-static INT32 mustang_bg_xscroll = 0;
+static INT32 nExtraCycles[2];
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -2727,12 +2729,7 @@ static void __fastcall macross2_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x100016:
-			if (data == 0) {
-				if (macross2_sound_enable != 0) {
-					ZetReset();
-				}
-			}
-			macross2_sound_enable = data;
+			ZetSetRESETLine((data) ? 0 : 1);
 		return;
 
 		case 0x100018:
@@ -2772,11 +2769,11 @@ static void __fastcall afega_main_write_word(UINT32 address, UINT16 data)
 		case 0x08c000: { // for twin action twinactn background scroll
 			switch (data & 0xff00) {
 				case 0x0000:
-					mustang_bg_xscroll = (mustang_bg_xscroll & 0x00ff) | ((data & 0x00ff)<<8);
+					DrvScrollRAM[1] = data;
 					break;
 
 				case 0x0100:
-					mustang_bg_xscroll = (mustang_bg_xscroll & 0xff00) | (data & 0x00ff);
+					DrvScrollRAM[0] = data;
 					break;
 			}
 			return;
@@ -3162,11 +3159,11 @@ static void __fastcall mustang_main_write_word(UINT32 address, UINT16 data)
 		case 0x08c000: {
 			switch (data & 0xff00) {
 				case 0x0000:
-					mustang_bg_xscroll = (mustang_bg_xscroll & 0x00ff) | ((data & 0x00ff)<<8);
+					DrvScrollRAM[1] = data;
 					break;
 
 				case 0x0100:
-					mustang_bg_xscroll = (mustang_bg_xscroll & 0xff00) | (data & 0x00ff);
+					DrvScrollRAM[0] = data;
 					break;
 			}
 			return;
@@ -3186,8 +3183,8 @@ static void __fastcall mustang_main_write_byte(UINT32 address, UINT8 data)
 		case 0x08001e:
 		case 0x08001f:
 			NMK004Write(0, data);
-                        return;
-        }
+		return;
+	}
 }
 
 static UINT8 __fastcall acrobatm_main_read_byte(UINT32 address)
@@ -3812,11 +3809,8 @@ static void __fastcall tharrier_sound_out(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x00:
-			BurnYM2203Write(0, 0, data);
-		return;
-
 		case 0x01:
-			BurnYM2203Write(0, 1, data);
+			BurnYM2203Write(0, port & 1, data);
 		return;
 	}
 }
@@ -3959,6 +3953,8 @@ static UINT8 __fastcall firehawk_sound_read(UINT16 address)
 
 static void macross2_sound_bank(INT32 bank)
 {
+	*soundbank = bank;
+
 	bank = (bank & 7) * 0x4000;
 
 	ZetMapMemory(DrvZ80ROM + bank, 0x8000, 0xbfff, MAP_ROM);
@@ -4105,8 +4101,9 @@ static INT32 DrvDoReset()
 
 	MSM6295SetInitialBanks(2);
 
-	macross2_sound_enable = -1;
 	prot_count = 0;
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -4126,6 +4123,10 @@ static INT32 SmissinDoReset()
 	ZetClose();
 
 	MSM6295Reset();
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -4147,6 +4148,10 @@ static INT32 AfegaDoReset()
 
 	MSM6295SetInitialBanks(2);
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -4162,6 +4167,8 @@ static INT32 BjtwinDoReset()
 
 	NMK112Reset();
 	MSM6295SetInitialBanks(2);
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -4179,6 +4186,10 @@ static INT32 SeibuSoundDoReset()
 	seibu_sound_reset();
 	MSM6295SetInitialBanks(1);
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -4193,6 +4204,10 @@ static INT32 NMK004DoReset()
 	NMK004_reset();
 
 	MSM6295SetInitialBanks(2);
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -4251,6 +4266,7 @@ static INT32 MemIndex()
 	flipscreen		= Next; Next += 0x000001;
 	tilebank		= Next; Next += 0x000001;
 	okibank			= Next; Next += 0x000001;
+	soundbank		= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 
@@ -4383,7 +4399,7 @@ static INT32 DrvInit(INT32 (*pLoadCallback)()) // tharrier, manybloc
 	ZetSetInHandler(tharrier_sound_in);
 	ZetClose();
 
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
 	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, 0);
 	BurnTimerAttachZet(6000000);
@@ -4425,7 +4441,7 @@ static INT32 BjtwinInit(INT32 (*pLoadCallback)())
 	SekSetReadByteHandler(0,	bjtwin_main_read_byte);
 	SekClose();
 
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
 	MSM6295Init(0, 4000000 / 165, 1);
 	MSM6295Init(1, 4000000 / 165, 1);
@@ -4527,7 +4543,7 @@ static INT32 Macross2Init()
 	ZetSetInHandler(macross2_sound_in);
 	ZetClose();
 
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
 	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, 0);
 	BurnTimerAttachZet(4000000);
@@ -4552,6 +4568,7 @@ static INT32 Macross2Init()
 	}
 
 	NMK112_enabled = 1;
+	Macross2Sound = 1;
 
 	GenericTilesInit();
 
@@ -4579,7 +4596,7 @@ static INT32 MSM6295x1Init(INT32  (*pLoadCallback)())
 	ZetSetReadHandler(ssmissin_sound_read);
 	ZetClose();
 
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -4624,11 +4641,12 @@ static INT32 SeibuSoundInit(INT32 (*pLoadCallback)(), INT32 type)
 	SekSetReadByteHandler(0,	mustangb_main_read_byte);
 	SekClose();
 
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
 	SeibuZ80ROM = DrvZ80ROM;
 	SeibuZ80RAM = DrvZ80RAM;
 	seibu_sound_init(0, 0, 3579545, 3579545, 1320000 / 132);
+	SeibuSound = 1;
 
 	GenericTilesInit();
 
@@ -4665,7 +4683,7 @@ static INT32 AfegaInit(INT32 (*pLoadCallback)(), void (*pZ80Callback)(), INT32 p
 		pZ80Callback();
 	}
 
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
 	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
@@ -4735,7 +4753,6 @@ static INT32 CommonExit()
 	MSM6295x2_only = 0;
 	no_z80 = 0;
 	AFEGA_SYS = 0;
-	mustang_bg_xscroll = 0;
 	NMK004_enabled = 0;
 	NMK112_enabled = 0;
 	Tharriermode = 0;
@@ -4745,6 +4762,8 @@ static INT32 CommonExit()
 	TharrierShakey = 0;
 	HachamfTdragonMCU = 0;
 	GunnailMode = 0;
+	Macross2Sound = 0;
+	SeibuSound = 0;
 
 	return 0;
 }
@@ -5201,28 +5220,28 @@ static INT32 MacrossDraw()
 	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
 	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
-	common_draw(0, scrollx, scrolly, 0, 0, 0x200, 0);
+	common_draw(-1, scrollx, scrolly, 0, 0, 0x200, 0);
 
 	return 0;
 }
 
-static INT32 MustangDraw()
+static INT32 HachamfDraw()
 {
-	INT32 scrollx = mustang_bg_xscroll;
-	INT32 scrolly = 0;
+	UINT16 *scroll = (UINT16*)DrvScrollRAM;
+	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
+	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
 	common_draw(-1, scrollx, scrolly, 0, 0, 0x200, 1);
 
 	return 0;
 }
 
-static INT32 AcrobatmDraw()
+static INT32 MustangDraw()
 {
-	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
-	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
+	UINT16 *scrollx = (UINT16*)DrvScrollRAM;
+	INT32 scrolly = 0;
 
-	common_draw(0, scrollx, scrolly, 0, 0, 0x200, 1);
+	common_draw(-1, *scrollx, scrolly, 0, 0, 0x200, 1);
 
 	return 0;
 }
@@ -5256,17 +5275,6 @@ static INT32 FirehawkDraw()
 	INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(scroll[1]) - 0x100) & 0xfff;
 
 	common_draw(1, scrollx, scrolly, 0, 0, 0x200, 0);
-
-	return 0;
-}
-
-static INT32 HachamfDraw()
-{
-	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
-	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
-
-	common_draw(0, scrollx, scrolly, 0, 0, 0x200, 1);
 
 	return 0;
 }
@@ -5519,7 +5527,7 @@ static INT32 DrvFrame() // tharrier, manybloc
 
 	INT32 nInterleave = 263;
 	INT32 nCyclesTotal[2] = { 12000000 / 56, 6000000 / 56 }; // a little oc to quench that horrible slowdown in tharrier
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -5549,6 +5557,8 @@ static INT32 DrvFrame() // tharrier, manybloc
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5593,8 +5603,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			}
 		} else {
 			// Everything else
-			if (!MSM6295x1_only && !MSM6295x2_only)
-				BurnYM2203Scan(nAction, pnMin);
+			if (SeibuSound) {
+				seibu_sound_scan(nAction, pnMin);
+			} else
+				if (!MSM6295x1_only && !MSM6295x2_only) {
+					BurnYM2203Scan(nAction, pnMin);
+				}
 		}
 
 		if (Tomagicmode) {
@@ -5603,7 +5617,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		MSM6295Scan(nAction, pnMin);
 
-		SCAN_VAR(macross2_sound_enable);
 		if (NMK004_enabled) {
 			NMK004Scan(nAction, pnMin);
 		}
@@ -5612,11 +5625,20 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			NMK112_Scan(nAction);
 		}
 
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {
-		if (MSM6295x1_only) // S.S. Mission, Dolmen & Twin Action
+		if (MSM6295x1_only) { // S.S. Mission, Dolmen & Twin Action
 			ssmissin_okibank(*okibank);
+		}
+
+		if (Macross2Sound || Tomagicmode) {
+			ZetOpen(0);
+			macross2_sound_bank(*soundbank);
+			ZetClose();
+		}
+
 	}
 
 	return 0;
@@ -5641,7 +5663,7 @@ static INT32 SsmissinFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 8000000 / 56, 4000000 / 56 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -5669,6 +5691,9 @@ static INT32 SsmissinFrame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5698,7 +5723,7 @@ static INT32 Macross2Frame()
 
 	INT32 nInterleave = 200;
 	INT32 nCyclesTotal[2] = { 10000000 / 56, 4000000 / 56 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -5714,9 +5739,7 @@ static INT32 Macross2Frame()
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
-		if (macross2_sound_enable) {
-			CPU_RUN_TIMER(1);
-		}
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
@@ -5726,6 +5749,8 @@ static INT32 Macross2Frame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5755,7 +5780,7 @@ static INT32 AfegaFrame()
 
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[2] = { 12000000 / 56, 4000000 / 56 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -5776,6 +5801,8 @@ static INT32 AfegaFrame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5803,7 +5830,7 @@ static INT32 BjtwinFrame()
 
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[1] = { 10000000 / 56 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles[0] };
 
 	SekOpen(0);
 
@@ -5826,6 +5853,8 @@ static INT32 BjtwinFrame()
 	}
 
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5855,7 +5884,7 @@ static INT32 SeibuSoundFrame()
 
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[2] = { 10000000 / 56, 3579545 / 56 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -5863,17 +5892,15 @@ static INT32 SeibuSoundFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Sek);
 
-		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
+		if (i == (nInterleave - 2) || i == ((nInterleave / 2) - 2)) {
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
-		if (i == ((nInterleave/2)-1)) {
-			SekRun(0);
+		if (i == ((nInterleave / 2) - 1)) {
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 
-		if (i == (nInterleave-1)) {
-			SekRun(0);
+		if (i == (nInterleave - 1)) {
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
@@ -5886,6 +5913,8 @@ static INT32 SeibuSoundFrame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -5923,7 +5952,7 @@ static INT32 NMK004Frame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { (INT32)(nNMK004CpuSpeed / 56.18), (INT32)(8000000 / 56.18) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	tlcs90Open(0);
@@ -5960,6 +5989,8 @@ static INT32 NMK004Frame()
 
 	tlcs90Close();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (HachamfTdragonMCU) {
 		mcu_run(HachamfTdragonMCU >> 1);
@@ -6410,7 +6441,7 @@ struct BurnDriver BurnDrvSsmissin = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, ssmissinRomInfo, ssmissinRomName, NULL, NULL, NULL, NULL, SsmissinInputInfo, SsmissinDIPInfo,
-	SsmissinInit, DrvExit, SsmissinFrame, AcrobatmDraw, DrvScan, NULL, 0x400,
+	SsmissinInit, DrvExit, SsmissinFrame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
 };
 
@@ -6447,7 +6478,7 @@ struct BurnDriver BurnDrvAirattck = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, airattckRomInfo, airattckRomName, NULL, NULL, NULL, NULL, SsmissinInputInfo, SsmissinDIPInfo,
-	SsmissinInit, DrvExit, SsmissinFrame, AcrobatmDraw, DrvScan, NULL, 0x400,
+	SsmissinInit, DrvExit, SsmissinFrame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
 };
 
@@ -9148,7 +9179,7 @@ struct BurnDriver BurnDrvTdragon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonRomInfo, tdragonRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonDIPInfo,
-	TdragonInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
+	TdragonInit, NMK004Exit, NMK004Frame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
 };
 
@@ -9184,7 +9215,7 @@ struct BurnDriver BurnDrvTdragon1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragon1RomInfo, tdragon1RomName, NULL, NULL, NULL, NULL, CommonInputInfo, TdragonDIPInfo,
-	TdragonInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
+	TdragonInit, NMK004Exit, NMK004Frame, MacrossDraw, DrvScan, NULL, 0x400,
 	224, 256, 3, 4
 };
 
@@ -9401,7 +9432,7 @@ struct BurnDriver BurnDrvAcrobatm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, acrobatmRomInfo, acrobatmRomName, NULL, NULL, NULL, NULL, AcrobatmInputInfo, AcrobatmDIPInfo,
-	AcrobatmInit, NMK004Exit, NMK004Frame, AcrobatmDraw, DrvScan, NULL, 0x300,
+	AcrobatmInit, NMK004Exit, NMK004Frame, MacrossDraw, DrvScan, NULL, 0x300,
 	224, 256, 3, 4
 };
 
@@ -10901,14 +10932,9 @@ static INT32 RapheroDoReset()
 
 static INT32 RapheroInit()
 {
-	BurnSetRefreshRate(56.00);
+	BurnSetRefreshRate(56.18);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 1)) return 1;
@@ -11018,16 +11044,15 @@ static INT32 RapheroFrame()
 	SekNewFrame();
 	tlcs90NewFrame();
 
-	INT32 nSegment;
-	INT32 nInterleave = 3000;
-	INT32 nTotalCycles[2] = { 14000000 / 56, 8000000 / 56 };
-
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] = { 14000000 / 56, 8000000 / 56 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 	SekOpen(0);
 	tlcs90Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		SekRun(nTotalCycles[0] / nInterleave);
+		CPU_RUN(0, Sek);
 
 		if (i == (nInterleave-16) || i == (nInterleave/2)-16) { // ??
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
@@ -11037,11 +11062,8 @@ static INT32 RapheroFrame()
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
-		nSegment = (nTotalCycles[1] / nInterleave) * (i + 1);
-		BurnTimerUpdate(nSegment);
+		CPU_RUN_TIMER(1);
 	}
-
-	BurnTimerEndFrame(nTotalCycles[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -11050,6 +11072,8 @@ static INT32 RapheroFrame()
 
 	tlcs90Close();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -11155,7 +11179,7 @@ static INT32 TomagicFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 12000000 / 56, 3000000 / 56 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -11189,6 +11213,8 @@ static INT32 TomagicFrame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	return 0;
 }

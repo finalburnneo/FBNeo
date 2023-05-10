@@ -497,10 +497,8 @@ static void GameInpInitMacros()
 			if (bii.szName == NULL) {
 				bii.szName = "";
 			}
-			if (_stricmp(" Up", bii.szName + 2) == 0 ||
-				_stricmp(" Down", bii.szName + 2) == 0 ||
-				_stricmp(" Left", bii.szName + 2) == 0 ||
-				_stricmp(" Right", bii.szName + 2) == 0)
+			// Check if current input to be added matches player number to prevents duplicate macros
+			if ((UINT32) (bii.szName[1] - '0') == (nPlayer + 1))
 			{
 				sprintf(pgi->Macro.szName, "%s", bii.szName);
 

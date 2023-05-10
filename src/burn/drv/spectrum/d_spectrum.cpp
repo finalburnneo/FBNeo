@@ -41121,10 +41121,10 @@ struct BurnDriver BurnSpecTc3pt = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Baby-man Vs Nappy Bird (48K) (HB)
+// Baby-man Vs Nappy Bird (48K) (HB, v1.01)
 
 static struct BurnRomInfo SpecBabyman2RomDesc[] = {
-	{ "Babyman vs Nappy Bird 48K (2023)(PuttyCAD, Tin Soldiers).tap", 23094, 0xf2c4fc89, BRF_ESS | BRF_PRG },
+	{ "Baby-man Vs Nappy Bird 48K v1.01 (2023)(PuttyCAD, Tin Soldiers).tap", 23108, 0x70cf01bf, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBabyman2, SpecBabyman2, Spectrum)
@@ -41132,7 +41132,7 @@ STD_ROM_FN(SpecBabyman2)
 
 struct BurnDriver BurnSpecBabyman2 = {
 	"spec_babyman2", NULL, "spec_spectrum", NULL, "2023",
-	"Baby-man Vs Nappy Bird (48K) (HB)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
+	"Baby-man Vs Nappy Bird (48K) (HB, v1.01)\0", NULL, "PuttyCAD, Tin Soldiers", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecBabyman2RomInfo, SpecBabyman2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -41219,7 +41219,7 @@ struct BurnDriver BurnSpecCursedemons = {
 // Meanie Golf (48K) (HB)
 
 static struct BurnRomInfo SpecMeaniegolfRomDesc[] = {
-	{ "Meanie Golf 48K (2023)(PsychicParrot).tap", 37024, 0x97119a14, BRF_ESS | BRF_PRG },
+	{ "Meanie Golf 48K (2023)(PsychicParrot).tap", 37359, 0x58d9e059, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMeaniegolf, SpecMeaniegolf, Spectrum)
@@ -41227,10 +41227,29 @@ STD_ROM_FN(SpecMeaniegolf)
 
 struct BurnDriver BurnSpecMeaniegolf = {
 	"spec_meaniegolf", NULL, "spec_spectrum", NULL, "2023",
-	"Meanie Golf (48K) (HB)\0", "Set '1.Keyboard' to use controller", "Psychic Parrot", "ZX Spectrum",
+	"Meanie Golf (48K) (HB)\0", NULL, "Psychic Parrot", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_ACTION | GBF_SPORTSMISC, 0,
-	SpectrumGetZipName, SpecMeaniegolfRomInfo, SpecMeaniegolfRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	SpectrumGetZipName, SpecMeaniegolfRomInfo, SpecMeaniegolfRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Meanie Golf - Side B (48K) (HB)
+
+static struct BurnRomInfo SpecMeaniegolfbRomDesc[] = {
+	{ "Meanie Golf - Side B 48K (2023)(PsychicParrot).tap", 39351, 0x21a61a8f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecMeaniegolfb, SpecMeaniegolfb, Spectrum)
+STD_ROM_FN(SpecMeaniegolfb)
+
+struct BurnDriver BurnSpecMeaniegolfb = {
+	"spec_meaniegolfb", "spec_meaniegolf", "spec_spectrum", NULL, "2023",
+	"Meanie Golf - Side B (48K) (HB)\0", NULL, "Psychic Parrot", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_ACTION | GBF_SPORTSMISC, 0,
+	SpectrumGetZipName, SpecMeaniegolfbRomInfo, SpecMeaniegolfbRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

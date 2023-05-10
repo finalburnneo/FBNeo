@@ -371,6 +371,8 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 
+	HiscoreReset();
+
 	scrolly = 0;
 	nmi_enable = 0;
 	palette_bank = 0;
@@ -951,7 +953,7 @@ struct BurnDriver BurnDrvKingofb = {
 	"kingofb", NULL, NULL, NULL, "1985",
 	"King of Boxer (World)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbRomInfo, kingofbRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
 	KingoboxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4
@@ -1002,7 +1004,7 @@ struct BurnDriver BurnDrvKingofbj = {
 	"kingofbj", "kingofb", NULL, NULL, "1985",
 	"King of Boxer (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbjRomInfo, kingofbjRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
 	KingoboxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4
@@ -1084,7 +1086,7 @@ struct BurnDriver BurnDrvRingkingw = {
 	"ringkingw", "kingofb", NULL, NULL, "1985",
 	"Ring King (US, Wood Place Inc.)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingwRomInfo, ringkingwRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
 	RingkingwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4
@@ -1144,7 +1146,7 @@ struct BurnDriver BurnDrvRingking3 = {
 	"ringking3", "kingofb", NULL, NULL, "1985",
 	"Ring King (US set 3)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking3RomInfo, ringking3RomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
 	Ringking3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4
@@ -1187,7 +1189,7 @@ struct BurnDriver BurnDrvRingking = {
 	"ringking", "kingofb", NULL, NULL, "1985",
 	"Ring King (US set 1)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingRomInfo, ringkingRomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,
 	RingkingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4
@@ -1230,7 +1232,7 @@ struct BurnDriver BurnDrvRingking2 = {
 	"ringking2", "kingofb", NULL, NULL, "1985",
 	"Ring King (US set 2)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking2RomInfo, ringking2RomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,
 	RingkingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x108,
 	224, 256, 3, 4

@@ -615,8 +615,8 @@ STD_ROM_FN(guwange)
 
 struct BurnDriver BurnDrvGuwange = {
 	"guwange", NULL, NULL, NULL, "1999",
-	"Guwange (Japan, Master Ver. 99/06/24)\0", NULL, "Atlus / Cave", "Cave",
-	L"\u3050\u308F\u3093\u3052 (Japan, Master Ver. 99/06/24)\0Guwange\0", NULL, NULL, NULL,
+	"Guwange (Japan, 1999 6/24 Master Ver 16:55)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"Guwange\0\u3050\u308F\u3093\u3052 (Japan, 1999 6/24 Master Ver 16:55)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
 	NULL, guwangeRomInfo, guwangeRomName, NULL, NULL, NULL, NULL, guwangeInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
@@ -654,8 +654,8 @@ STD_ROM_FN(guwanges)
 
 struct BurnDriver BurnDrvGuwanges = {
 	"guwanges", "guwange", NULL, NULL, "1999",
-	"Guwange (Japan, Special Ver. 00/01/01)\0", NULL, "Atlus / Cave", "Cave",
-	L"\u3050\u308F\u3093\u3052 (Japan, Special Ver. 00/07/07)\0Guwange\0", NULL, NULL, NULL,
+	"Guwange (Japan, 2000 7/ 7 Special Ver 13:22)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"Guwange\0\u3050\u308F\u3093\u3052 (Japan, 2000 7/ 7 Special Ver 13:22)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
 	NULL, guwangesRomInfo, guwangesRomName, NULL, NULL, NULL, NULL, guwangeInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,

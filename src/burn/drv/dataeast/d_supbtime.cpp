@@ -34,126 +34,128 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
 static struct BurnInputInfo SupbtimeInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Supbtime)
 
 static struct BurnDIPInfo SupbtimeDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xfe, NULL			},
+	DIP_OFFSET(0x011)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xfe, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x11, 0x01, 0x02, 0x02, "Off"			},
-	{0x11, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x11, 0x01, 0x1c, 0x00, "3 Coins 1 Credits"	},
-	{0x11, 0x01, 0x1c, 0x10, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
-	{0x11, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"	},
-	{0x11, 0x01, 0x1c, 0x18, "1 Coin  5 Credits"	},
-	{0x11, 0x01, 0x1c, 0x08, "1 Coin  6 Credits"	},
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
+	{0x00, 0x01, 0x1c, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x1c, 0x18, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x1c, 0x08, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x11, 0x01, 0xe0, 0x00, "3 Coins 1 Credits"	},
-	{0x11, 0x01, 0xe0, 0x80, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
-	{0x11, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
-	{0x11, 0x01, 0xe0, 0xc0, "1 Coin  5 Credits"	},
-	{0x11, 0x01, 0xe0, 0x40, "1 Coin  6 Credits"	},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
+	{0x00, 0x01, 0xe0, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xe0, 0x80, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0xe0, 0xc0, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0xe0, 0x40, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x12, 0x01, 0x01, 0x01, "Off"			},
-	{0x12, 0x01, 0x01, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x01, 0x01, "Off"					},
+	{0x01, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x12, 0x01, 0x02, 0x00, "No"			},
-	{0x12, 0x01, 0x02, 0x02, "Yes"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x01, 0x01, 0x02, 0x00, "No"					},
+	{0x01, 0x01, 0x02, 0x02, "Yes"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x30, 0x10, "Easy"			},
-	{0x12, 0x01, 0x30, 0x30, "Normal"		},
-	{0x12, 0x01, 0x30, 0x20, "Hard"			},
-	{0x12, 0x01, 0x30, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x30, 0x10, "Easy"					},
+	{0x01, 0x01, 0x30, 0x30, "Normal"				},
+	{0x01, 0x01, 0x30, 0x20, "Hard"					},
+	{0x01, 0x01, 0x30, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    3, "Lives"		},
-	{0x12, 0x01, 0xc0, 0x80, "1"			},
-	{0x12, 0x01, 0xc0, 0x00, "2"			},
-	{0x12, 0x01, 0xc0, 0xc0, "3"			},
+	{0   , 0xfe, 0   ,    3, "Lives"				},
+	{0x01, 0x01, 0xc0, 0x80, "1"					},
+	{0x01, 0x01, 0xc0, 0x00, "2"					},
+	{0x01, 0x01, 0xc0, 0xc0, "3"					},
 };
 
 STDDIPINFO(Supbtime)
 
 static struct BurnDIPInfo ChinatwnDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xfe, NULL			},
+	DIP_OFFSET(0x011)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xfe, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x11, 0x01, 0x02, 0x02, "Off"			},
-	{0x11, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x11, 0x01, 0x1c, 0x00, "3 Coins 1 Credits"	},
-	{0x11, 0x01, 0x1c, 0x10, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
-	{0x11, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"	},
-	{0x11, 0x01, 0x1c, 0x18, "1 Coin  5 Credits"	},
-	{0x11, 0x01, 0x1c, 0x08, "1 Coin  6 Credits"	},
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
+	{0x00, 0x01, 0x1c, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x1c, 0x18, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x1c, 0x08, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x11, 0x01, 0xe0, 0x00, "3 Coins 1 Credits"	},
-	{0x11, 0x01, 0xe0, 0x80, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
-	{0x11, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
-	{0x11, 0x01, 0xe0, 0xc0, "1 Coin  5 Credits"	},
-	{0x11, 0x01, 0xe0, 0x40, "1 Coin  6 Credits"	},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
+	{0x00, 0x01, 0xe0, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xe0, 0x80, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0xe0, 0xc0, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0xe0, 0x40, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x12, 0x01, 0x01, 0x01, "Off"			},
-	{0x12, 0x01, 0x01, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x01, 0x01, "Off"					},
+	{0x01, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x30, 0x10, "Easy"			},
-	{0x12, 0x01, 0x30, 0x30, "Normal"		},
-	{0x12, 0x01, 0x30, 0x20, "Hard"			},
-	{0x12, 0x01, 0x30, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x30, 0x10, "Easy"					},
+	{0x01, 0x01, 0x30, 0x30, "Normal"				},
+	{0x01, 0x01, 0x30, 0x20, "Hard"					},
+	{0x01, 0x01, 0x30, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    4, "Time"			},
-	{0x12, 0x01, 0xc0, 0x00, "1500"			},
-	{0x12, 0x01, 0xc0, 0x80, "2000"			},
-	{0x12, 0x01, 0xc0, 0xc0, "2500"			},
-	{0x12, 0x01, 0xc0, 0x40, "3000"			},
+	{0   , 0xfe, 0   ,    4, "Time"					},
+	{0x01, 0x01, 0xc0, 0x00, "1500"					},
+	{0x01, 0x01, 0xc0, 0x80, "2000"					},
+	{0x01, 0x01, 0xc0, 0xc0, "2500"					},
+	{0x01, 0x01, 0xc0, 0x40, "3000"					},
 };
 
 STDDIPINFO(Chinatwn)
@@ -219,10 +221,10 @@ static UINT8 __fastcall supbtime_main_read_byte(UINT32 address)
 			return DrvInputs[0] >> ((~address & 1) << 3);
 
 		case 0x180002:
-			return DrvDips[0];
+			return DrvDips[1];
 
 		case 0x180003:
-			return DrvDips[1];
+			return DrvDips[0];
 
 		case 0x180008:
 		case 0x180009:
@@ -256,6 +258,8 @@ static INT32 DrvDoReset()
 	deco16SoundReset();
 
 	deco16Reset();
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -296,12 +300,7 @@ static INT32 DrvInit(INT32 game)
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
@@ -362,10 +361,10 @@ static INT32 DrvExit()
 	deco16Exit();
 
 	SekExit();
-	
+
 	deco16SoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -441,19 +440,7 @@ static void draw_sprites()
 			INT32 y = (sy + mult * multi) - 8;
 			INT32 c = (code - multi * inc) & 0x3fff;
 
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, c, sx, y, color, 4, 0, 0, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, c, sx, y, color, 4, 0, 0, DrvGfxROM2);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, c, sx, y, color, 4, 0, 0, DrvGfxROM2);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, c, sx, y, color, 4, 0, 0, DrvGfxROM2);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, c, sx, y, flipx, flipy, color, 4, 0, 0, DrvGfxROM2);
 
 			multi--;
 		}
@@ -512,15 +499,14 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		CPU_RUN(0, Sek);
+		CPU_RUN(1, h6280);
 
 		if (i == 206) {
 			deco16_vblank = 0x08;
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
 
-		
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -529,7 +515,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -538,7 +523,7 @@ static INT32 DrvFrame()
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
 	}
-	
+
 	h6280Close();
 	SekClose();
 
@@ -613,7 +598,7 @@ struct BurnDriver BurnDrvSupbtime = {
 	"supbtime", NULL, NULL, NULL, "1990",
 	"Super Burger Time (World, set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, supbtimeRomInfo, supbtimeRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
 	supbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -643,7 +628,7 @@ struct BurnDriver BurnDrvSupbtimea = {
 	"supbtimea", "supbtime", NULL, NULL, "1990",
 	"Super Burger Time (World, set 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, supbtimeaRomInfo, supbtimeaRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
 	supbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -673,7 +658,7 @@ struct BurnDriver BurnDrvSupbtimej = {
 	"supbtimej", "supbtime", NULL, NULL, "1990",
 	"Super Burger Time (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, supbtimejRomInfo, supbtimejRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
 	supbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -708,7 +693,7 @@ struct BurnDriver BurnDrvChinatwn = {
 	"chinatwn", NULL, NULL, NULL, "1991",
 	"China Town (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, chinatwnRomInfo, chinatwnRomName, NULL, NULL, NULL, NULL, SupbtimeInputInfo, ChinatwnDIPInfo,
 	chinatwnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

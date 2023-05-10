@@ -1,4 +1,4 @@
-// FB Alpha Taito SJ system driver module
+// FB Neo Taito SJ system driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -82,7 +82,7 @@ static UINT8 DrvJoyF0[8];
 static UINT8 DrvJoyF1[8];
 static UINT8 DrvDips[4];
 static UINT8 DrvReset;
-static UINT8 DrvInputs[7];
+static UINT8 DrvInputs[8];
 static UINT8 kikstart_gears[2];
 
 static struct BurnInputInfo TwoButtonInputList[] = {
@@ -271,6 +271,30 @@ static struct BurnInputInfo KikstartInputList[] = {
 };
 
 STDINPUTINFO(Kikstart)
+	
+static struct BurnInputInfo SpacecrInputList[] = {
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
+	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
+	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Continue",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2" },
+
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
+	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
+	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Continue",         BIT_DIGITAL,    DrvJoy2 + 5,    "p2 fire 2" },
+
+	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
+	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Spacecr)
 
 #define COMMON_COIN_DIPS(offs)							\
 	{0   , 0xfe, 0   ,   16, "Coin A"				},	\
@@ -1198,6 +1222,7 @@ static void __fastcall taitosj_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xf000) == 0xd000) address &= ~0x00f0;
+	if ((address & 0xf800) == 0x8800) address &= ~0x07fe;
 
 	switch (address)
 	{
@@ -1290,13 +1315,17 @@ static UINT8 __fastcall taitosj_main_read(UINT16 address)
 	}
 
 	if ((address & 0xf000) == 0xd000) address &= ~0x00f0;
+	if ((address & 0xf800) == 0x8800) address &= ~0x07fe;
 
 	switch (address)
 	{
 		case 0x8800:
-			sync_mcu();
-			zaccept = 1;
-			return toz80;
+			if (has_mcu) {
+				sync_mcu();
+				zaccept = 1;
+				return toz80;
+			}
+			return 0x00;
 
 		case 0x8801:
 			if (has_mcu) {
@@ -2619,7 +2648,7 @@ struct BurnDriver BurnDrvSpacecr = {
 	"Space Cruiser\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, spacecrRomInfo, spacecrRomName, NULL, NULL, NULL, NULL, TwoButtonLRInputInfo, SpacecrDIPInfo,
+	NULL, spacecrRomInfo, spacecrRomName, NULL, NULL, NULL, NULL, SpacecrInputInfo, SpacecrDIPInfo,
 	spacecrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2797,6 +2826,49 @@ struct BurnDriver BurnDrvJunglekj2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglekj2RomInfo, junglekj2RomName, NULL, NULL, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
+	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	256, 224, 4, 3
+};
+
+
+// Jungle King (Japan, earlier, alt)
+
+static struct BurnRomInfo junglekj2aRomDesc[] = {
+	{ "kn41.bin",			0x1000, 0x7e4cd631, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "kn42.bin",			0x1000, 0xbade53af, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "kn43.bin",			0x1000, 0xa20e5a48, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "kn44.bin",			0x1000, 0x44c770d3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "kn45.bin",			0x1000, 0xf60a3d06, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "kn26.bin",			0x1000, 0x4b5adca2, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "kn27.bin",			0x1000, 0x5c3199e0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "kn48.bin",			0x1000, 0xe690b36e, 9 | BRF_PRG | BRF_ESS }, //  7
+	{ "kn60.bin",			0x1000, 0x1a9c0a26, 1 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "kn37.bin",			0x1000, 0x60d13095, 2 | BRF_PRG | BRF_ESS }, //  9 Sound Z80 Code
+	{ "kn38.bin",			0x1000, 0x6950413d, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "kn59.bin",			0x1000, 0xcee485fc, 2 | BRF_PRG | BRF_ESS }, // 11
+
+	{ "kn49.bin",			0x1000, 0xfe275213, 3 | BRF_GRA },           // 12 Graphics data
+	{ "kn50.bin",			0x1000, 0xd9f93c55, 3 | BRF_GRA },           // 13
+	{ "kn51.bin",			0x1000, 0x70e8fc12, 3 | BRF_GRA },           // 14
+	{ "kn52.bin",			0x1000, 0xbcbac1a3, 3 | BRF_GRA },           // 15
+	{ "kn53.bin",			0x1000, 0xb946c87d, 3 | BRF_GRA },           // 16
+	{ "kn54.bin",			0x1000, 0xf757d8f0, 3 | BRF_GRA },           // 17
+	{ "kn55.bin",			0x1000, 0x70aef58f, 3 | BRF_GRA },           // 18
+	{ "kn56.bin",			0x1000, 0x932eb667, 3 | BRF_GRA },           // 19
+
+	{ "eb16.22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 20 Layer Priority
+};
+
+STD_ROM_PICK(junglekj2a)
+STD_ROM_FN(junglekj2a)
+
+struct BurnDriver BurnDrvJunglekj2a = {
+	"junglekj2a", "junglek", NULL, NULL, "1982",
+	"Jungle King (Japan, earlier, alt)\0", NULL, "Taito Corporation", "Taito SJ System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, junglekj2aRomInfo, junglekj2aRomName, NULL, NULL, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };

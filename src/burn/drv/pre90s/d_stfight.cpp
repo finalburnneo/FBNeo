@@ -375,6 +375,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -911,7 +913,7 @@ struct BurnDriver BurnDrvEmpcity = {
 	"empcity", NULL, NULL, NULL, "1986",
 	"Empire City: 1931 (bootleg?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, empcityRomInfo, empcityRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -975,7 +977,7 @@ struct BurnDriver BurnDrvEmpcityu = {
 	"empcityu", "empcity", NULL, NULL, "1986",
 	"Empire City: 1931 (US)\0", NULL, "Seibu Kaihatsu (Taito / Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, empcityuRomInfo, empcityuRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1037,7 +1039,7 @@ struct BurnDriver BurnDrvEmpcityj = {
 	"empcityj", "empcity", NULL, NULL, "1986",
 	"Empire City: 1931 (Japan)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, empcityjRomInfo, empcityjRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1099,7 +1101,7 @@ struct BurnDriver BurnDrvEmpcityi = {
 	"empcityi", "empcity", NULL, NULL, "1986",
 	"Empire City: 1931 (Italy)\0", NULL, "Seibu Kaihatsu (Eurobed license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, empcityiRomInfo, empcityiRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1161,7 +1163,7 @@ struct BurnDriver BurnDrvStfight = {
 	"stfight", "empcity", NULL, NULL, "1986",
 	"Street Fight (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stfightRomInfo, stfightRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1223,7 +1225,7 @@ struct BurnDriver BurnDrvStfighta = {
 	"stfighta", "empcity", NULL, NULL, "1986",
 	"Street Fight (bootleg?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stfightaRomInfo, stfightaRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1285,7 +1287,7 @@ struct BurnDriver BurnDrvStfightgb = {
 	"stfightgb", "empcity", NULL, NULL, "1986",
 	"Street Fight (Germany - Benelux)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stfightgbRomInfo, stfightgbRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

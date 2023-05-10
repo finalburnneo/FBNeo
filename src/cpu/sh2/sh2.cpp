@@ -216,6 +216,8 @@ cpu_core_config Sh2Config =
 	Sh2Run,
 	Sh2StopRun,
 	Sh2Reset,
+	Sh2Scan,
+	Sh2Exit,
 	0xffffffff,
 	0
 };
@@ -464,7 +466,7 @@ void __fastcall Sh2EmptyWriteByte(unsigned int, unsigned char) { }
 void __fastcall Sh2EmptyWriteWord(unsigned int, unsigned short) { }
 void __fastcall Sh2EmptyWriteLong(unsigned int, unsigned int) { }
 
-int Sh2Exit()
+void Sh2Exit()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Exit called without init\n"));
@@ -480,7 +482,7 @@ int Sh2Exit()
 	
 	DebugCPU_SH2Initted = 0;
 
-	return 0;
+	return;
 }
 
 void Sh2CheatWriteByte(UINT32 a, UINT8 d)
@@ -968,6 +970,7 @@ SH2_INLINE void ANDM(UINT32 i)
 	temp = i & RB( sh2->ea );
 	WB( sh2->ea, temp );
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }
 
 /*  code                 cycles  t-bit
@@ -982,6 +985,7 @@ SH2_INLINE void BF(UINT32 d)
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
+		sh2->sh2_total_cycles += 2;
 	}
 }
 
@@ -997,6 +1001,7 @@ SH2_INLINE void BFS(UINT32 d)
 		sh2->delay = sh2->pc;
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
+		sh2->sh2_total_cycles += 1;
 	}
 }
 
@@ -1019,6 +1024,7 @@ SH2_INLINE void BRA(UINT32 d)
 			//bprintf(0, _T("SH2: BUSY_LOOP_HACKS: %d\n"), sh2->sh2_icount);
 			if (sh2_busyloop_speedhack_mode2) {
 				sh2->sh2_icount -= 10;
+				sh2->sh2_total_cycles += 10;
 			} else {
 				sh2->sh2_total_cycles += sh2->sh2_icount;
 				sh2->sh2_icount %= 3;	/* cycles for BRA $ and NOP taken (3) */
@@ -1029,6 +1035,7 @@ SH2_INLINE void BRA(UINT32 d)
 	sh2->delay = sh2->pc;
 	sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  code                 cycles  t-bit
@@ -1040,6 +1047,7 @@ SH2_INLINE void BRAF(UINT32 m)
 	sh2->delay = sh2->pc;
 	sh2->pc += sh2->r[m] + 2;
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  code                 cycles  t-bit
@@ -1054,6 +1062,7 @@ SH2_INLINE void BSR(UINT32 d)
 	sh2->delay = sh2->pc;
 	sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  code                 cycles  t-bit
@@ -1066,6 +1075,7 @@ SH2_INLINE void BSRF(UINT32 m)
 	sh2->delay = sh2->pc;
 	sh2->pc += sh2->r[m] + 2;
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  code                 cycles  t-bit
@@ -1080,6 +1090,7 @@ SH2_INLINE void BT(UINT32 d)
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
+		sh2->sh2_total_cycles += 2;
 	}
 }
 
@@ -1095,6 +1106,7 @@ SH2_INLINE void BTS(UINT32 d)
 		sh2->delay = sh2->pc;
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
+		sh2->sh2_total_cycles += 1;
 	}
 }
 
@@ -1407,6 +1419,7 @@ SH2_INLINE void DMULS(UINT32 m, UINT32 n)
 	sh2->mach = Res2;
 	sh2->macl = Res0;
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  DMULU.L Rm,Rn */
@@ -1435,6 +1448,7 @@ SH2_INLINE void DMULU(UINT32 m, UINT32 n)
 	sh2->mach = Res2;
 	sh2->macl = Res0;
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  DT      Rn */
@@ -1503,6 +1517,7 @@ SH2_INLINE void JSR(UINT32 m)
 	sh2->pr = sh2->pc + 2;
 	sh2->pc = sh2->ea = sh2->r[m];
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 
@@ -1532,6 +1547,7 @@ SH2_INLINE void LDCMSR(UINT32 m)
 	sh2->sr = RL( sh2->ea ) & FLAGS;
 	sh2->r[m] += 4;
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 	sh2->test_irq = 1;
 }
 
@@ -1542,6 +1558,7 @@ SH2_INLINE void LDCMGBR(UINT32 m)
 	sh2->gbr = RL( sh2->ea );
 	sh2->r[m] += 4;
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }
 
 /*  LDC.L   @Rm+,VBR */
@@ -1551,6 +1568,7 @@ SH2_INLINE void LDCMVBR(UINT32 m)
 	sh2->vbr = RL( sh2->ea );
 	sh2->r[m] += 4;
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }
 
 /*  LDS     Rm,MACH */
@@ -1670,6 +1688,7 @@ SH2_INLINE void MAC_L(UINT32 m, UINT32 n)
 		sh2->macl = Res0;
 	}
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }
 
 /*  MAC.W   @Rm+,@Rn+ */
@@ -1722,6 +1741,7 @@ SH2_INLINE void MAC_W(UINT32 m, UINT32 n)
 			sh2->mach += 1;
 		}
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }}
 
 /*  MOV     Rm,Rn */
@@ -2003,6 +2023,7 @@ SH2_INLINE void MULL(UINT32 m, UINT32 n)
 {
 	sh2->macl = sh2->r[n] * sh2->r[m];
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  MULS    Rm,Rn */
@@ -2069,6 +2090,7 @@ SH2_INLINE void ORM(UINT32 i)
 	temp |= i;
 	WB( sh2->ea, temp );
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }
 
 /*  ROTCL   Rn */
@@ -2118,6 +2140,7 @@ SH2_INLINE void RTE(void)
 	sh2->sr = RL( sh2->ea ) & FLAGS;
 	sh2->r[15] += 4;
 	sh2->sh2_icount -= 3;
+	sh2->sh2_total_cycles += 3;
 	sh2->test_irq = 1;
 }
 
@@ -2127,6 +2150,7 @@ SH2_INLINE void RTS(void)
 	sh2->delay = sh2->pc;
 	sh2->pc = sh2->ea = sh2->pr;
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  SETT */
@@ -2204,6 +2228,7 @@ SH2_INLINE void SLEEP(void)
 {
 	sh2->pc -= 2;
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 	/* Wait_for_exception; */
 }
 
@@ -2232,6 +2257,7 @@ SH2_INLINE void STCMSR(UINT32 n)
 	sh2->ea = sh2->r[n];
 	WL( sh2->ea, sh2->sr );
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  STC.L   GBR,@-Rn */
@@ -2241,6 +2267,7 @@ SH2_INLINE void STCMGBR(UINT32 n)
 	sh2->ea = sh2->r[n];
 	WL( sh2->ea, sh2->gbr );
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  STC.L   VBR,@-Rn */
@@ -2250,6 +2277,7 @@ SH2_INLINE void STCMVBR(UINT32 n)
 	sh2->ea = sh2->r[n];
 	WL( sh2->ea, sh2->vbr );
 	sh2->sh2_icount--;
+	sh2->sh2_total_cycles += 1;
 }
 
 /*  STS     MACH,Rn */
@@ -2382,6 +2410,7 @@ SH2_INLINE void TAS(UINT32 n)
 	/* Bus Lock disable */
 	WB( sh2->ea, temp );
 	sh2->sh2_icount -= 3;
+	sh2->sh2_total_cycles += 3;
 }
 
 /*  TRAPA   #imm */
@@ -2400,6 +2429,7 @@ SH2_INLINE void TRAPA(UINT32 i)
 	change_pc(sh2->pc & AM);
 
 	sh2->sh2_icount -= 7;
+	sh2->sh2_total_cycles += 7;
 }
 
 /*  TST     Rm,Rn */
@@ -2433,6 +2463,7 @@ SH2_INLINE void TSTM(UINT32 i)
 	else
 		sh2->sr &= ~T;
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }
 
 /*  XOR     Rm,Rn */
@@ -2459,6 +2490,7 @@ SH2_INLINE void XORM(UINT32 i)
 	temp ^= imm;
 	WB( sh2->ea, temp );
 	sh2->sh2_icount -= 2;
+	sh2->sh2_total_cycles += 2;
 }
 
 /*  XTRCT   Rm,Rn */
@@ -3289,7 +3321,7 @@ int Sh2Run(int cycles)
 	do
 	{
 		if ( pSh2Ext->suspend && cps3speedhack ) {
-			sh2->sh2_total_cycles += cycles;
+			sh2->sh2_total_cycles += sh2->sh2_icount;
 			sh2->sh2_icount = 0;
 			break;
 		}

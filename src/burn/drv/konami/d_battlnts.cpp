@@ -376,6 +376,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	soundlatch = 0;
 	spritebank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -635,7 +637,7 @@ struct BurnDriver BurnDrvBattlnts = {
 	"battlnts", NULL, NULL, NULL, "1987",
 	"Battlantis (program code G)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, battlntsRomInfo, battlntsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
@@ -662,7 +664,7 @@ struct BurnDriver BurnDrvBattlntsa = {
 	"battlntsa", "battlnts", NULL, NULL, "1987",
 	"Battlantis (program code F)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, battlntsaRomInfo, battlntsaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4
@@ -689,7 +691,7 @@ struct BurnDriver BurnDrvBattlntsj = {
 	"battlntsj", "battlnts", NULL, NULL, "1987",
 	"Battlantis (Japan, program code E)\0", NULL, "Konami", "GX777",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, battlntsjRomInfo, battlntsjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BattlntsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4

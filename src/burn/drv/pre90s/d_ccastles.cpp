@@ -392,6 +392,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	PokeyReset();
 
 	x2212_reset();
+	HiscoreReset();
 
 	bank_latch = 0;
 	irq_state = 0;
@@ -783,7 +784,7 @@ struct BurnDriver BurnDrvCcastles = {
 	"ccastles", NULL, NULL, NULL, "1983",
 	"Crystal Castles (version 4)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastlesRomInfo, ccastlesRomName, NULL, NULL, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
@@ -821,7 +822,7 @@ struct BurnDriver BurnDrvCcastlesj = {
 	"ccastlesj", "ccastles", NULL, NULL, "1983",
 	"Crystal Castles (joystick version)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastlesjRomInfo, ccastlesjRomName, NULL, NULL, NULL, NULL, CcastlesjInputInfo, CcastlesjDIPInfo,
 	CcastlesjInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
@@ -852,7 +853,7 @@ struct BurnDriver BurnDrvCcastlesg = {
 	"ccastlesg", "ccastles", NULL, NULL, "1983",
 	"Crystal Castles (version 3, German)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastlesgRomInfo, ccastlesgRomName, NULL, NULL, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
@@ -884,7 +885,7 @@ struct BurnDriver BurnDrvCcastlesp = {
 	"ccastlesp", "ccastles", NULL, NULL, "1983",
 	"Crystal Castles (version 3, Spanish)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastlespRomInfo, ccastlespRomName, NULL, NULL, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
@@ -916,7 +917,7 @@ struct BurnDriver BurnDrvCcastlesf = {
 	"ccastlesf", "ccastles", NULL, NULL, "1983",
 	"Crystal Castles (version 3, French)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastlesfRomInfo, ccastlesfRomName, NULL, NULL, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
@@ -948,7 +949,7 @@ struct BurnDriver BurnDrvCcastles3 = {
 	"ccastles3", "ccastles", NULL, NULL, "1983",
 	"Crystal Castles (version 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastles3RomInfo, ccastles3RomName, NULL, NULL, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
@@ -980,7 +981,7 @@ struct BurnDriver BurnDrvCcastles2 = {
 	"ccastles2", "ccastles", NULL, NULL, "1983",
 	"Crystal Castles (version 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastles2RomInfo, ccastles2RomName, NULL, NULL, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3
@@ -1012,7 +1013,7 @@ struct BurnDriver BurnDrvCcastles1 = {
 	"ccastles1", "ccastles", NULL, NULL, "1983",
 	"Crystal Castles (version 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, ccastles1RomInfo, ccastles1RomName, NULL, NULL, NULL, NULL, CcastlesInputInfo, CcastlesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvReRedraw, DrvScan, &DrvRecalc, 0x20,
 	256, 232, 4, 3

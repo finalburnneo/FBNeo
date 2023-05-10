@@ -57,12 +57,10 @@ static ButtonToggle Diag;
 
 static INT32 gear_shifter[2];
 
-static INT16 x_target, y_target; // trisport x-tree's
-static INT16 x_accu, y_accu;
-
 static INT32 nCyclesExtra[5];
 
 static INT32 vb_offset = 0; // special timing config for blasted, trisport
+static INT32 scanline;
 
 static INT32 is_spyhunt2 = 0;
 static INT32 is_trisport = 0;
@@ -842,24 +840,10 @@ static void __fastcall trisport_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-static void trackball_tick()
-{
-	// trisport prefers 1 trackball tick per scanline
-
-	x_target = (INT16)BurnTrackballReadWord(0, 0);
-	y_target = (INT16)BurnTrackballReadWord(0, 1);
-
-	if (x_accu < x_target) x_accu++;
-	else if (x_accu > x_target) x_accu--;
-
-	if (y_accu < y_target) y_accu++;
-	else if (y_accu > y_target) y_accu--;
-}
-
 static UINT16 __fastcall trisport_main_read_word(UINT32 address)
 {
 	if ((address & 0x1f0000) == 0x080000) {
-		return 0xff | ((x_accu << 6) & 0x0f00) | ((y_accu << 10) & 0xf000);
+		return 0xff | ((BurnTrackballReadInterpolated(0, scanline) & 0xf) << 8) | ((BurnTrackballReadInterpolated(1, scanline) & 0xf) << 12);
 	}
 
 	if ((address & 0x1f0000) == 0x0a0000) {
@@ -942,11 +926,15 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	tcs_reset();
 	cvsd_reset();
 
+	HiscoreReset();
+
 	control_data = 0;
 
 	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 
 	gear_shifter[0] = gear_shifter[1] = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -1388,8 +1376,8 @@ static INT32 DrvFrame()
 
 		if (is_trisport) {
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_REVERSED);
-			BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x7f);
-//			BurnTrackballUpdate(0); // in frame!
+			BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x7f, 512);
+			BurnTrackballUpdate(0);
 		}
 	}
 
@@ -1402,13 +1390,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (is_trisport) {
-			if ((i & 0x3f) == 0) {
-				BurnTrackballUpdate(0);
-			}
-			trackball_tick();
-		}
-
+		scanline = i;
 		SekOpen(0);
 		if (i == 493) {
 			if (pBurnDraw) {
@@ -1523,11 +1505,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		if (is_trisport) {
 			BurnTrackballScan();
-
-			SCAN_VAR(x_target);
-			SCAN_VAR(y_target);
-			SCAN_VAR(x_accu);
-			SCAN_VAR(y_accu);
 		}
 
 		SCAN_VAR(control_data);
@@ -1737,7 +1714,7 @@ struct BurnDriver BurnDrvSpyhunt2 = {
 	"spyhunt2", NULL, NULL, NULL, "1987",
 	"Spy Hunter II (rev 2)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, spyhunt2RomInfo, spyhunt2RomName, NULL, NULL, NULL, NULL, Spyhunt2InputInfo, Spyhunt2DIPInfo,
 	Spyhunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -1781,7 +1758,7 @@ struct BurnDriver BurnDrvSpyhunt2a = {
 	"spyhunt2a", "spyhunt2", NULL, NULL, "1987",
 	"Spy Hunter II (rev 1)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, spyhunt2aRomInfo, spyhunt2aRomName, NULL, NULL, NULL, NULL, Spyhunt2InputInfo, Spyhunt2DIPInfo,
 	Spyhunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -1852,7 +1829,7 @@ struct BurnDriver BurnDrvBlasted = {
 	"blasted", NULL, NULL, NULL, "1988",
 	"Blasted\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, blastedRomInfo, blastedRomName, NULL, NULL, NULL, NULL, BlastedInputInfo, BlastedDIPInfo,
 	BlastedInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -1969,7 +1946,7 @@ struct BurnDriver BurnDrvArchrivl = {
 	"archrivl", NULL, NULL, NULL, "1989",
 	"Arch Rivals (rev 4.0 6/29/89)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, archrivlRomInfo, archrivlRomName, NULL, NULL, NULL, NULL, ArchrivlInputInfo, ArchrivlDIPInfo,
 	ArchrivlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2017,7 +1994,7 @@ struct BurnDriver BurnDrvArchrivla = {
 	"archrivla", "archrivl", NULL, NULL, "1989",
 	"Arch Rivals (rev 2.0 5/03/89)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, archrivlaRomInfo, archrivlaRomName, NULL, NULL, NULL, NULL, ArchrivlInputInfo, ArchrivlDIPInfo,
 	ArchrivlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2073,7 +2050,7 @@ struct BurnDriver BurnDrvArchrivlb = {
 	"archrivlb", "archrivl", NULL, NULL, "1989",
 	"Arch Rivals (rev 2.0 5/03/89, 8-way Joystick bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, archrivlbRomInfo, archrivlbRomName, NULL, NULL, NULL, NULL, ArchrivlbInputInfo, ArchrivlbDIPInfo,
 	ArchrivlbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2108,7 +2085,7 @@ struct BurnDriver BurnDrvPigskin = {
 	"pigskin", NULL, NULL, NULL, "1990",
 	"Pigskin 621AD (rev 1.1K 8/01/90)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pigskinRomInfo, pigskinRomName, NULL, NULL, NULL, NULL, PigskinInputInfo, PigskinDIPInfo,
 	PigskinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2143,7 +2120,7 @@ struct BurnDriver BurnDrvPigskina = {
 	"pigskina", "pigskin", NULL, NULL, "1990",
 	"Pigskin 621AD (rev 2.0 7/06/90)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pigskinaRomInfo, pigskinaRomName, NULL, NULL, NULL, NULL, PigskinInputInfo, PigskinDIPInfo,
 	PigskinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2178,7 +2155,7 @@ struct BurnDriver BurnDrvPigskinb = {
 	"pigskinb", "pigskin", NULL, NULL, "1990",
 	"Pigskin 621AD (rev 1.1 6/05/90)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pigskinbRomInfo, pigskinbRomName, NULL, NULL, NULL, NULL, PigskinInputInfo, PigskinDIPInfo,
 	PigskinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3

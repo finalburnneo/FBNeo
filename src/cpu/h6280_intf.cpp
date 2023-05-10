@@ -67,6 +67,8 @@ cpu_core_config H6280Config =
 	h6280Run,
 	h6280RunEnd,
 	h6280Reset,
+	h6280Scan,
+	h6280Exit,
 	0x200000,
 	0
 };

@@ -42,30 +42,32 @@ static UINT16 DrvInputs[3];
 
 static INT32 puzzlove = 0;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo SilvmilInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 8,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 9,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Silvmil)
@@ -146,7 +148,7 @@ static struct BurnDIPInfo PuzzlovekDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0xff, NULL			},
 	{0x14, 0xff, 0xff, 0xff, NULL			},
-	
+
 	{0   , 0xfe, 0   ,    2, "Demo_Sounds"	},
 	{0x14, 0x01, 0x01, 0x01, "Off"			},
 	{0x14, 0x01, 0x01, 0x00, "On"			},
@@ -186,7 +188,7 @@ static inline void DrvPaletteUpdate(INT32 offset)
 {
 	UINT8 r,g,b;
 	UINT16 pal = *((UINT16*)(DrvPalRAM + offset));
-	
+
 	r = (BURN_ENDIAN_SWAP_INT16(pal) >> 10) & 0x1f;
 	g = (BURN_ENDIAN_SWAP_INT16(pal) >>  5) & 0x1f;
 	b = (BURN_ENDIAN_SWAP_INT16(pal) >>  0) & 0x1f;
@@ -198,7 +200,7 @@ static inline void DrvPaletteUpdate(INT32 offset)
 	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall silvmil_write_byte(UINT32 address, UINT8 data)
+static void __fastcall silvmil_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -212,33 +214,33 @@ void __fastcall silvmil_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall silvmil_write_word(UINT32 address, UINT16 data)
+static void __fastcall silvmil_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
 		case 0x100002:
 			*fg_scroll_x = data & 0x3ff;
 		return;
-	
+
 		case 0x100004:
 			*fg_scroll_y = (data + 8) & 0x1ff;
 		return;
-	
+
 		case 0x100006:
 			*bg_scroll_x = (data + 4) & 0x3ff;
 		return;
-	
+
 		case 0x100008:
 			*bg_scroll_y = (data + 8) & 0x1ff;
 		return;
-	
+
 		case 0x270000:
 			*soundlatch = data;
 		return;
 	}
 }
 
-UINT8 __fastcall silvmil_read_byte(UINT32 address)
+static UINT8 __fastcall silvmil_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -249,7 +251,7 @@ UINT8 __fastcall silvmil_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall silvmil_read_word(UINT32 address)
+static UINT16 __fastcall silvmil_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -262,7 +264,7 @@ UINT16 __fastcall silvmil_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall silvmil_palette_write_byte(UINT32 address, UINT8 data)
+static void __fastcall silvmil_palette_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffff800) == 0x200000) {
 		DrvPalRAM[(address & 0x7ff) ^ 1] = data;
@@ -271,7 +273,7 @@ void __fastcall silvmil_palette_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall silvmil_palette_write_word(UINT32 address, UINT16 data)
+static void __fastcall silvmil_palette_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffff800) == 0x200000) {
 		*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
@@ -280,16 +282,13 @@ void __fastcall silvmil_palette_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall silvmil_sound_write(UINT16 address, UINT8 data)
+static void __fastcall silvmil_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
 		case 0xc000:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0xc001:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address&1, data);
 		return;
 
 		case 0xc002:
@@ -299,7 +298,7 @@ void __fastcall silvmil_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall silvmil_sound_read(UINT16 address)
+static UINT8 __fastcall silvmil_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -317,7 +316,7 @@ UINT8 __fastcall silvmil_sound_read(UINT16 address)
 	return 0;
 }
 
-void silvmilYM2151IrqHandler(INT32 nStatus)
+static void silvmilYM2151IrqHandler(INT32 nStatus)
 {
 	if (ZetGetActive() != -1)
 		ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
@@ -337,6 +336,10 @@ static INT32 DrvDoReset()
 
 	BurnYM2151Reset();
 	MSM6295Reset(0);
+
+	HiscoreReset();
+
+	nCyclesExtra = 0;
 
 	return 0;
 }
@@ -405,12 +408,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx, INT32 gfxlen)
 
 static INT32 DrvInit(INT32 game_select)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	puzzlove = game_select; // 1 puzzlove, 0 silmil
 
@@ -500,10 +498,11 @@ static INT32 DrvInit(INT32 game_select)
 	ZetSetReadHandler(silvmil_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&silvmilYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(4096000);
 
 	MSM6295Init(0, 1024000 / 132, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
@@ -527,7 +526,7 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -605,19 +604,7 @@ static void draw_sprites()
 
 		while (multi >= 0)
 		{
-			if (fy) {
-				if (fx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
-				}
-			} else {
-				if (fx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
-				}
-			}
+			Draw16x16MaskTile(pTransDraw, sprite - multi * inc, x, y - 16 * multi, fx, fy, color & 0x3f, 4, 0, 0, DrvGfxROM1);
 
 			multi--;
 		}
@@ -640,7 +627,7 @@ static void DrvPaletteRecalc()
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
-	
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -678,46 +665,30 @@ static INT32 DrvFrame()
 		DrvInputs[2] = (DrvDips[1] << 8) | DrvDips[0];
 	}
 
-	INT32 nSegment;
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 10;
 	INT32 nCyclesTotal[2] = { 12000000 / 60, 4096000 /*3579545?*/ / 60 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nCyclesTotal[0] / nInterleave;
-
-		SekRun(nSegment);
-
-		nSegment = nCyclesTotal[1] / nInterleave;
-
-		ZetRun(nSegment);
-
-		if (pBurnSoundOut) {
-			nSegment = nBurnSoundLen / nInterleave;
-
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-
-			nSoundBufferPos += nSegment;
-		}
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
-	}
-
 	ZetClose();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -726,7 +697,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -734,7 +705,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029698;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -747,6 +718,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -784,7 +757,7 @@ struct BurnDriver BurnDrvPuzzlove = {
 	"puzzlove", NULL, NULL, NULL, "1994",
 	"PuzzLove\0", NULL, "Para", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, puzzloveRomInfo, puzzloveRomName, NULL, NULL, NULL, NULL, SilvmilInputInfo, PuzzloveDIPInfo,
 	puzzloveInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
@@ -817,7 +790,7 @@ struct BurnDriver BurnDrvPuzzlovek = {
 	"puzzlovek", "puzzlove", NULL, NULL, "1994",
 	"PuzzLove (Korea)\0", NULL, "Para", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, puzzlovekRomInfo, puzzlovekRomName, NULL, NULL, NULL, NULL, SilvmilInputInfo, PuzzlovekDIPInfo,
 	puzzloveInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
@@ -861,7 +834,7 @@ struct BurnDriver BurnDrvSilvmil = {
 	"silvmil", NULL, NULL, NULL, "1995",
 	"Silver Millennium\0", NULL, "Para", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, silvmilRomInfo, silvmilRomName, NULL, NULL, NULL, NULL, SilvmilInputInfo, SilvmilDIPInfo,
 	silmilInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 320, 3, 4

@@ -268,6 +268,8 @@ static INT32 DrvDoReset()
 	BlmbyPotWheel = 0;
 	DrvToggle = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -704,7 +706,7 @@ struct BurnDriver BurnDrvBlmbycar = {
 	"blmbycar", NULL, NULL, NULL, "1994",
 	"Blomby Car\0", NULL, "ABM & Gecas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BlmbycarInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 384, 256, 4, 3
@@ -714,7 +716,7 @@ struct BurnDriver BurnDrvBlmbycaru = {
 	"blmbycaru", "blmbycar", NULL, NULL, "1994",
 	"Blomby Car (not encrypted)\0", NULL, "ABM & Gecas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 384, 256, 4, 3
@@ -724,7 +726,7 @@ struct BurnDriver BurnDrvWatrball = {
 	"watrball", NULL, NULL, NULL, "1996",
 	"Water Balls\0", NULL, "ABM", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, WatrballRomInfo, WatrballRomName, NULL, NULL, NULL, NULL, DrvInputInfo, WatrballDIPInfo,
 	WatrballInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 384, 240, 4, 3

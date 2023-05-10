@@ -438,7 +438,7 @@ void CpsClearScreen()
 		switch (nBurnBpp) {
 			case 4: {
 				UINT32* pClear = (UINT32*)pBurnDraw;
-				UINT32 nColour = CpsPal[0xbff ^ 15];
+				UINT32 nColour = (fFakeDip & 1) ? 0 : CpsPal[0xbff ^ 15];
 				for (INT32 i = 0; i < 384 * 224 / 8; i++) {
 					*pClear++ = nColour;
 					*pClear++ = nColour;
@@ -454,10 +454,11 @@ void CpsClearScreen()
 
 			case 3: {
 				UINT8* pClear = pBurnDraw;
-				UINT8 r = CpsPal[0xbff ^ 15];
+				UINT8 r = (CpsPal[0xbff ^ 15] >> 0) & 0xFF;
 				UINT8 g = (CpsPal[0xbff ^ 15] >> 8) & 0xFF;
 				UINT8 b = (CpsPal[0xbff ^ 15] >> 16) & 0xFF;
-				r &= 0xFF;
+				if (fFakeDip & 1) r = g = b = 0;
+
 				for (INT32 i = 0; i < 384 * 224; i++) {
 					*pClear++ = r;
 					*pClear++ = g;
@@ -469,6 +470,8 @@ void CpsClearScreen()
 			case 2: {
 				UINT32* pClear = (UINT32*)pBurnDraw;
 				UINT32 nColour = CpsPal[0xbff ^ 15] | CpsPal[0xbff ^ 15] << 16;
+				if (fFakeDip & 1) nColour = 0;
+
 				for (INT32 i = 0; i < 384 * 224 / 16; i++) {
 					*pClear++ = nColour;
 					*pClear++ = nColour;

@@ -73,7 +73,19 @@
  *  RDOP    read an opcode
  ***************************************************************/
 //#define RDOP() cpu_readop(PCW++); m6502_ICount -= 1
-#define RDOP() M6502ReadOp(PCW++); m6502_ICount -= 1
+static inline UINT8 read_op() {
+	UINT8 op;
+
+	m6502.fetching_opcode = 1;
+	op = M6502ReadOp(PCW++);
+	m6502.fetching_opcode = 0;
+
+	m6502_ICount -= 1;
+
+	return op;
+}
+
+#define RDOP() read_op()
 #define PEEKOP() M6502ReadOp(PCW)
 
 /***************************************************************

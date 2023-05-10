@@ -4,6 +4,7 @@
 #include "mc8123.h"
 #include "upd7759.h"
 #include "segapcm.h"
+#include "biquad.h"
 
 UINT8  System16InputPort0[8]  = {0, 0, 0, 0, 0, 0, 0, 0};
 UINT8  System16InputPort1[8]  = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -152,6 +153,8 @@ static INT32 nCyclesSegment;
 UINT32 System16ClockSpeed = 0;
 UINT32 System16Z80ClockSpeed = 0;
 
+static INT32 System18Startup = 0;
+
 static INT32 nExtraCycles[4];
 
 INT32 System16YM2413IRQInterval;
@@ -164,6 +167,8 @@ static UINT8 N7751Command;
 static UINT32 N7751RomAddress;
 static UINT32 UPD7759BankAddress;
 static UINT32 RF5C68PCMBankAddress;
+
+static BIQSTEREO biq_shelf;
 
 UINT8 *System16I8751InitialConfig = NULL;
 
@@ -403,6 +408,8 @@ static INT32 System16DoReset()
 	System16ColScroll = 0;
 	System16RowScroll = 0;
 	System16MCUData = 0;
+
+	System18Startup = 10;
 
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
 
@@ -2067,22 +2074,20 @@ INT32 System16Init()
 			BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		} else {
 			BurnYM2151Init(4000000);
-			BurnYM2151SetAllRoutes(0.43, BURN_SND_ROUTE_BOTH);
+			BurnYM2151SetAllRoutes(0.23, BURN_SND_ROUTE_BOTH);
 		}
 		
 		if (System16UPD7759DataSize) {
 			UPD7759Init(0, UPD7759_STANDARD_CLOCK, NULL);
 			UPD7759SetDrqCallback(0, System16UPD7759DrqCallback);
 			UPD7759SetSyncCallback(0, ZetTotalCycles, 5000000);
-			if (strstr(BurnDrvGetTextA(DRV_NAME), "tturf")) {
-				UPD7759SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
-			} else {
-				UPD7759SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-			}
-			UPD7759SetFilter(0, 2000);
+			UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+			UPD7759SetFilter(0, 7000);
 			BurnTimerAttachZet(5000000);
 		}
-		
+
+		biq_shelf.init(FILT_HIGHSHELF, nBurnSoundRate, 2000, 0.0, -8.0);
+
 		if (System16MSM6295RomSize) {
 			MSM6295Init(0, 1000000 / 132, 1);
 			MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
@@ -2627,6 +2632,8 @@ INT32 System16Exit()
 	
 	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN)) {
 		sega_315_5195_exit();
+
+		biq_shelf.exit();
 	}
 	
 	if (System16I8751RomNum) {
@@ -3007,6 +3014,8 @@ INT32 System16BFrame()
 			}
 		}
 
+		biq_shelf.filter_buffer(pBurnSoundOut, nBurnSoundLen); // ym high-shelf filter @ 2khz -8db
+
 		if (System16UPD7759DataSize) {
 			ZetOpen(0);
 			UPD7759Render(0, pBurnSoundOut, nBurnSoundLen);
@@ -3032,7 +3041,12 @@ INT32 System16BFrame()
 
 INT32 System18Frame()
 {
-	INT32 nInterleave = 800; // mwalk needs huge interleave
+	INT32 nInterleave = 100;
+
+	if (System18Startup > 0) {
+		System18Startup--;
+		nInterleave = 800; // mwalk needs huge interleave @ startup
+	}
 
 	if (HammerAway) nInterleave = 100;
 
@@ -3703,7 +3717,9 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
 			BurnYM3438Scan(nAction, pnMin);
 			RF5C68PCMScan(nAction, pnMin);
-			
+
+			SCAN_VAR(System18Startup);
+
 			if (nAction & ACB_WRITE) {
 				ZetOpen(0);
 				ZetMapArea(0xa000, 0xbfff, 0, System16Z80Rom + 0x10000 + RF5C68PCMBankAddress);

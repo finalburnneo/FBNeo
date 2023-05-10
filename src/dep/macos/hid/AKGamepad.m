@@ -43,7 +43,7 @@ static void gamepadInputValueCallback(void *context, IOReturn result, void *send
         registeredForEvents = NO;
         hidDevice = device;
         
-        IOObjectRetain((io_object_t) hidDevice);
+        CFRetain(hidDevice);
         
         _vendorId = 0;
         _productId = 0;
@@ -78,7 +78,7 @@ static void gamepadInputValueCallback(void *context, IOReturn result, void *send
 {
     [self unregisterFromEvents];
     
-    IOObjectRelease((io_object_t) hidDevice);
+    CFRelease(hidDevice);
 }
 
 - (void) registerForEvents

@@ -1,7 +1,7 @@
 // Nec V20/V30/V33/V25/V35 interface
 // Written by OopsWare
 // http://oopsware.googlepages.com
-// Heavily modified by iq_132 (Nov, 2011)
+// Heavily modified by iq_132 (Nov, 2011), dink (2023)
 
 #include "burnint.h"
 #include "nec_intf.h"
@@ -57,6 +57,9 @@ struct VezContext {
 	UINT8 * ppMemWrite[2048];
 	UINT8 * ppMemFetch[2048];
 	UINT8 * ppMemFetchData[2048];
+
+	INT32 reset;
+	INT32 halt;
 
 	// Handlers
  #ifdef FASTCALL
@@ -288,46 +291,70 @@ void VezSetDecode(UINT8 *table)
 	}
 }
 
-static INT32 core_idle(INT32 cycles)
-{
-	VezCurrentCPU->idle(cycles);
+// ## VezCPUPush() / VezCPUPop() ## internal helpers for sending signals to other vez's
+struct vezpstack {
+	INT32 nHostCPU;
+	INT32 nPushedCPU;
+};
+#define MAX_PSTACK 10
 
-	return cycles;
+static vezpstack pstack[MAX_PSTACK];
+static INT32 pstacknum = 0;
+
+void VezCPUPush(INT32 nCPU)
+{
+	vezpstack *p = &pstack[pstacknum++];
+
+	if (pstacknum + 1 >= MAX_PSTACK) {
+		bprintf(0, _T("VezCPUPush(): out of stack!  Possible infinite recursion?  Crash pending..\n"));
+	}
+
+	p->nPushedCPU = nCPU;
+
+	p->nHostCPU = VezGetActive();
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		if (p->nHostCPU != -1) VezClose();
+		VezOpen(p->nPushedCPU);
+	}
+}
+
+void VezCPUPop()
+{
+	vezpstack *p = &pstack[--pstacknum];
+
+	if (p->nHostCPU != p->nPushedCPU) {
+		VezClose();
+		if (p->nHostCPU != -1) VezOpen(p->nHostCPU);
+	}
 }
 
 static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
 {
-	INT32 active = nOpenedCPU;
-	if (active != cpu)
-	{
-		if (active != -1) VezClose();
-		VezOpen(cpu);
-	}
+	VezCPUPush(cpu);
 
 	VezCurrentCPU->cpu_set_irq_line(line & 0xffff, line >> 16, state);
 
-	if (active != cpu)
-	{
-		VezClose();
-		if (active != -1) VezOpen(active);
-	}
+	VezCPUPop();
 }
 
 cpu_core_config VezConfig =
 {
 	"nec v20-v35",
-	VezOpen,
-	VezClose,
+	VezCPUPush,
+	VezCPUPop,
 	cpu_readmem20,
 	VezCheatWrite,
 	VezGetActive,
 	VezTotalCycles,
 	VezNewFrame,
-	core_idle,
+	VezIdle,
 	core_set_irq,
 	VezRun,
 	VezRunEnd,
 	VezReset,
+	VezScan,
+	VezExit,
 	0x100000,
 	0
 };
@@ -479,6 +506,20 @@ void VezRunEnd()
 	VezCurrentCPU->runend();
 }
 
+void VezRunEnd(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezRunEnd called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezRunEnd called when no CPU open\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	VezRunEnd();
+
+	VezCPUPop();
+}
+
 INT32 VezIdle(INT32 cycles)
 {
 #if defined FBNEO_DEBUG
@@ -491,6 +532,21 @@ INT32 VezIdle(INT32 cycles)
 	return cycles;
 }
 
+INT32 VezIdle(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezIdle called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	INT32 nRet = VezIdle(nCycles);
+
+	VezCPUPop();
+
+	return nRet;
+}
+
 INT32 VezTotalCycles()
 {
 #if defined FBNEO_DEBUG
@@ -501,11 +557,25 @@ INT32 VezTotalCycles()
 	return VezCurrentCPU->total_cycles();
 }
 
+INT32 VezTotalCycles(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezTotalCycles called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	INT32 nRet = VezTotalCycles();
+
+	VezCPUPop();
+
+	return nRet;
+}
+
 INT32 VezGetActive()
 {
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetActive called without init\n"));
-	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezGetActive called when no CPU open\n"));
 #endif
 
 	return nOpenedCPU;
@@ -613,6 +683,120 @@ void VezReset()
 	VezCurrentCPU->cpu_reset();
 }
 
+void VezReset(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezReset called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	VezReset();
+
+	VezCPUPop();
+}
+
+void VezSetRESETLine(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetRESETLine called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetRESETLine called when no CPU open\n"));
+#endif
+
+	if (VezCurrentCPU->reset && nStatus == 0) {
+		VezCurrentCPU->cpu_reset();
+	}
+
+	VezCurrentCPU->reset = nStatus;
+}
+
+void VezSetRESETLine(INT32 nCPU, INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetRESETLine called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	VezSetRESETLine(nStatus);
+
+	VezCPUPop();
+}
+
+void VezSetHALT(INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetHALT called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetHALT called when no CPU open\n"));
+#endif
+
+	VezCurrentCPU->halt = nStatus;
+	if (nStatus) VezRunEnd(); // end timeslice
+}
+
+void VezSetHALT(INT32 nCPU, INT32 nStatus)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetHALT called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	VezSetHALT(nStatus);
+
+	VezCPUPop();
+}
+
+INT32 VezGetHALT()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetHALT called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezGetHALT called when no CPU open\n"));
+#endif
+
+	return VezCurrentCPU->halt;
+}
+
+INT32 VezGetHALT(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetHALT called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	INT32 nRet = VezGetHALT();
+
+	VezCPUPop();
+
+	return nRet;
+}
+
+INT32 VezGetRESETLine()
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetRESETLine called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezGetRESETLine called when no CPU open\n"));
+#endif
+
+	return VezCurrentCPU->reset;
+}
+
+INT32 VezGetRESETLine(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetRESETLine called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	INT32 nRet = VezGetRESETLine();
+
+	VezCPUPop();
+
+	return nRet;
+}
+
 INT32 VezRun(INT32 nCycles)
 {
 #if defined FBNEO_DEBUG
@@ -621,8 +805,27 @@ INT32 VezRun(INT32 nCycles)
 #endif
 
 	if (nCycles <= 0) return 0;
+	if (VezCurrentCPU->reset || VezCurrentCPU->halt) {
+		VezCurrentCPU->idle(nCycles); // doesn't return cycles...
+		return nCycles;
+	} else {
+		return VezCurrentCPU->cpu_execute(nCycles);
+	}
+}
 
-	return VezCurrentCPU->cpu_execute(nCycles);
+INT32 VezRun(INT32 nCPU, INT32 nCycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezRun called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	INT32 nRet = VezRun(nCycles);
+
+	VezCPUPop();
+
+	return nRet;
 }
 
 UINT32 VezGetPC(INT32 n)
@@ -656,6 +859,9 @@ INT32 VezScan(INT32 nAction)
 		struct VezContext *CPU = VezCPUContext[i];
 		if (CPU->scan) {
 			CPU->scan(i, nAction);
+
+			SCAN_VAR(CPU->reset);
+			SCAN_VAR(CPU->halt);
 		}
 	}
 	
@@ -680,4 +886,17 @@ void VezSetIRQLineAndVector(const INT32 line, const INT32 vector, const INT32 st
 	{
 		VezCurrentCPU->cpu_set_irq_line(line, vector, status);
 	}
+}
+
+void VezSetIRQLineAndVector(INT32 nCPU, const INT32 line, const INT32 vector, const INT32 status)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezSetIRQLineAndVector called without init\n"));
+#endif
+
+	VezCPUPush(nCPU);
+
+	VezSetIRQLineAndVector(line, vector, status);
+
+	VezCPUPop();
 }

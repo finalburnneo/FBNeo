@@ -133,12 +133,12 @@ static void capture_opcode_history_start(UINT16 reg_bc, UINT16 reg_ir);
 static void capture_opcode_history_finish();
 static void parse_script(const char *script_desc, CM_SCRIPT_BREAKDOWN *breakdown);
 static bool find_script();
-static void run_script();
+static UINT8 run_script();
 static int  get_ula_delay();
 static void make_ula_delay_lut();
 static int  get_memory_access_delay(UINT16 pc_address);
 static int  get_memory_is_contended(UINT16 pc_address);
-static void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg);
+static UINT8 store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg);
 
 static int		m_ula_variant;			// ULA_VARIANT_SINCLAIR  | ULA_VARIANT_AMSTRAD
 static const char*	m_ula_delay_sequence;		// "654321200"           | "10765432"
@@ -152,9 +152,8 @@ static int 		m_cycles_per_frame;
 static void		(*m_raster_cb)(int); 			//Let the driver know a good time (in T-States) to update the video raster position.
 static OPCODE_HISTORY	m_opcode_history;		// A list of reads/writes per opcode.
 static int		m_tstate_counter;		// The current t-state / cpu cycle.
-static int		m_irq_length;			// The current maskable irq length
 static int		m_selected_bank; 		// What ram bank 7ffd port has selected.
-
+static int Z80lastop; // for snow effect
 /****************************************************************************/
 /* The Z80 registers. HALT is set to 1 when the CPU is halted, the refresh  */
 /* register is calculated as follows: refresh=(Z80.r&127)|(Z80.r2&128)      */
@@ -643,9 +642,6 @@ static const int cc_xycb_contended[0x100] = {
 };
 
 
-static void take_interrupt(void);
-//void Z80Burn(int cycles);
-
 typedef void (*funcptr)(void);
 
 #define PROTOTYPES(tablename,prefix) \
@@ -896,18 +892,23 @@ Z80_INLINE UINT8 IN(INT16 port)
 	// For floating bus support, the read_byte triggers the
 	// 'spectrum_port_ula_r' callback which will require the tstate
 	// counter to be up-to-date.
-	store_rwinfo(port, -1, RWINFO_READ|RWINFO_IO_PORT, "in port");
-	return Z80IORead(port);
+	if (m_ula_variant != ULA_VARIANT_NONE) {
+		return store_rwinfo(port, -1, RWINFO_READ|RWINFO_IO_PORT, "in port");
+	} else {
+		return Z80IORead(port);
+	}
 }
 
 /***************************************************************
  * Output a byte to given I/O port
  ***************************************************************/
-//#define OUT(port,value) Z80IOWrite(port,value)
 Z80_INLINE void OUT(UINT16 port, UINT8 value)
 {
-	store_rwinfo(port, value, RWINFO_WRITE|RWINFO_IO_PORT, "out port");
-	Z80IOWrite(port, value);
+	if (m_ula_variant != ULA_VARIANT_NONE) {
+		store_rwinfo(port, value, RWINFO_WRITE|RWINFO_IO_PORT, "out port");
+	} else {
+		Z80IOWrite(port, value);
+	}
 }
 
 /***************************************************************
@@ -961,7 +962,7 @@ Z80_INLINE UINT8 ROP(void)
 {
 	unsigned pc = PCD;
 	PC++;
-	UINT8 res = cpu_readop(pc);
+	UINT8 res = Z80lastop = cpu_readop(pc);
 	store_rwinfo(((PAIR*)(&pc))->w.l, res, RWINFO_READ|RWINFO_MEMORY, "rop");
 	return res;
 }
@@ -1137,7 +1138,7 @@ static inline void RET_COND_SPECTRUM(int cond, UINT8 opcode)
 	POP( pc );													\
 	WZ = PC;													\
 	change_pc(PCD);												\
-	IFF1 = IFF2;												\
+	Z80.after_retn = TRUE;  									\
 }
 
 /***************************************************************
@@ -3661,7 +3662,7 @@ static void take_interrupt(void)
 {
 	int irq_vector = Z80Vector;
 
-	if (m_ula_variant != ULA_VARIANT_NONE && m_tstate_counter >= m_irq_length)
+	if (m_ula_variant != ULA_VARIANT_NONE && m_tstate_counter >= ((m_cycles_per_line == 228) ? 36 : 32))
 		return;
 
 	/* there isn't a valid previous program counter */
@@ -3696,7 +3697,7 @@ static void take_interrupt(void)
 	}
 
 //	LOG(("Z80 #%d single int. irq_vector $%02x\n", cpu_getactivecpu(), irq_vector));
-
+	R++;
 	/* Interrupt mode 2. Call [Z80.i:databyte] */
 	if( IM == 2 )
 	{
@@ -3705,6 +3706,7 @@ static void take_interrupt(void)
 		RM16( irq_vector, &Z80.pc );
 //		LOG(("Z80 #%d IM2 [$%04x] = $%04x\n",cpu_getactivecpu() , irq_vector, PCD));
 		/* CALL opcode timing */
+		//bprintf(0, _T("imm2: opcd: %d  exff: %d\n"),cc[Z80_TABLE_op][0xcd], cc[Z80_TABLE_ex][0xff]);
 		eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xcd] + cc[Z80_TABLE_ex][0xff]);
 	}
 	else
@@ -3715,6 +3717,7 @@ static void take_interrupt(void)
 		PUSH( pc );
 		PCD = 0x0038;
 		/* RST $38 + 'interrupt latency' cycles */
+		//bprintf(0, _T("imm1: opff: %d  exff: %d\n"),cc[Z80_TABLE_op][0xff], cc[Z80_TABLE_ex][0xff]);
 		eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xff] + cc[Z80_TABLE_ex][0xff]);
 	}
 	else
@@ -3723,6 +3726,7 @@ static void take_interrupt(void)
 		/* if neither of these were found we assume a 1 byte opcode */
 		/* was placed on the databus                                */
 //		LOG(("Z80 #%d IM0 $%04x\n",cpu_getactivecpu() , irq_vector));
+		//bprintf(0, _T("imm0: opff: %d  exff: %d\n"),cc[Z80_TABLE_op][0xff], cc[Z80_TABLE_ex][0xff]);
 		switch (irq_vector & 0xff0000)
 		{
 			case 0xcd0000:	/* call */
@@ -3740,7 +3744,7 @@ static void take_interrupt(void)
 				PUSH( pc );
 				PCD = irq_vector & 0x0038;
 				/* RST $xx + 2 cycles */
-				eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][PCD]);
+				eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xff]);
 				break;
 		}
 		/* 'interrupt latency' cycles */
@@ -3758,6 +3762,16 @@ void z80_set_cycle_tables_msx()
 	cc[Z80_TABLE_xy] = cc_xy_msx;
 	cc[Z80_TABLE_xycb] = cc_xycb_msx;
 	cc[Z80_TABLE_ex] = cc_ex_msx;
+}
+
+void z80_set_cycle_tables(const UINT8 *op, const UINT8 *cb, const UINT8 *ed, const UINT8 *xy, const UINT8 *xycb, const UINT8 *ex)
+{
+	if (op) cc[Z80_TABLE_op] = op;
+	if (cb) cc[Z80_TABLE_cb] = cb;
+	if (ed) cc[Z80_TABLE_ed] = ed;
+	if (xy) cc[Z80_TABLE_xy] = xy;
+	if (xycb) cc[Z80_TABLE_xycb] = xycb;
+	if (ex) cc[Z80_TABLE_ex] = ex;
 }
 
 void Z80Init()
@@ -3880,6 +3894,7 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 	int i;
 	const char *default_pattern = "00000000";
 	const char *ula_pattern 	= "65432100";
+	const char *ula_pattern_2a 	= "10765432";
 	const char *s128k_banks     = "1357";
 	const char *s128kpls2_banks = "4567";
 	m_raster_cb = (rastercallback) ? rastercallback : raster_dummy_callback;
@@ -3895,16 +3910,14 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			m_cycles_contention_start = 14361; //128k (48k is 14335)
 			m_cycles_per_line = 228;
 			m_cycles_per_frame = 70908; //228*311
-			m_irq_length = 36;
 			break;
-		case 1282: // +2
+		case 1282: // +2a (experimental)
 			m_ula_variant = ULA_VARIANT_AMSTRAD;
-			m_ula_delay_sequence = ula_pattern;
+			m_ula_delay_sequence = ula_pattern_2a;
 			m_contended_banks = s128kpls2_banks; // 128k
 			m_cycles_contention_start = 14361; //128k (48k is 14335)
 			m_cycles_per_line = 228;
 			m_cycles_per_frame = 70908; //228*311
-			m_irq_length = 36;
 			break;
 		case 48:
 			m_ula_variant = ULA_VARIANT_SINCLAIR;
@@ -3913,7 +3926,6 @@ void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 			m_cycles_contention_start = 14335;
 			m_cycles_per_line = 224;
 			m_cycles_per_frame = 69888; //224*312;
-			m_irq_length = 32;
 			break;
 		case 0:
 			m_ula_variant = ULA_VARIANT_NONE;
@@ -3997,6 +4009,7 @@ void Z80Reset()
 	Z80.nmi_pending = FALSE;
 	Z80.irq_state = Z80_CLEAR_LINE;
 	Z80.after_ei = FALSE;
+	Z80.after_retn = FALSE;
 	IX = IY = 0xffff; /* IX and IY are FFFF after a reset! */
 	IFF1 = 0;
 	IFF2 = 0;
@@ -4061,6 +4074,13 @@ int Z80Execute(int cycles)
 			take_interrupt();
 		Z80.after_ei = FALSE;
 
+		if (Z80.after_retn)
+		{
+			// https://floooh.github.io/2021/12/17/cycle-stepped-z80.html#the-ei-di-and-retiretn-instructions
+			IFF1 = IFF2; // happens during fetch of next opcode
+			Z80.after_retn = FALSE;
+		}
+
 		PRVPC = PCD;
 //		CALL_DEBUGGER(PCD);
 		R++;
@@ -4071,10 +4091,6 @@ int Z80Execute(int cycles)
 			capture_opcode_history_start((UINT16)BC,(UINT16)(I << 8));
 			EXEC_INLINE(op,ROP());
 			capture_opcode_history_finish();
-
-			// Elimiates sprite flicker on various games (E.g. Marauder and
-			// Stormlord) and makes Firefly playable.
-			m_raster_cb(m_tstate_counter);
 		}
 	} while( Z80.ICount > 0 && !Z80.end_run );
 
@@ -4306,9 +4322,19 @@ void ActiveZ80SetHL(int hl)
 	Z80.hl.w.l = hl;
 }
 
+int ActiveZ80GetLastOp()
+{
+	return Z80lastop;
+}
+
 int ActiveZ80GetI()
 {
 	return Z80.i;
+}
+
+int ActiveZ80GetR()
+{
+	return Z80.r;
 }
 
 int ActiveZ80GetIX()
@@ -4359,7 +4385,7 @@ int ActiveZ80GetVector()
 /**************************************************************************
  * Contended Memory Functions                                 [geecab 2018]
  **************************************************************************/
-void capture_opcode_history_start(UINT16 reg_bc, UINT16 reg_ir)
+static void capture_opcode_history_start(UINT16 reg_bc, UINT16 reg_ir)
 {
 	m_opcode_history.rw_count = 0;
 	m_opcode_history.tstate_start = m_tstate_counter;
@@ -4381,7 +4407,7 @@ void capture_opcode_history_start(UINT16 reg_bc, UINT16 reg_ir)
 	m_opcode_history.capturing = true;
 }
 
-void capture_opcode_history_finish()
+static void capture_opcode_history_finish()
 {
 	int i;
 	bool success = true;
@@ -4437,7 +4463,7 @@ void capture_opcode_history_finish()
 }
 
 
-bool find_script()
+static bool find_script()
 {
 	if(m_opcode_history.script == NULL)
 	{
@@ -4510,14 +4536,16 @@ bool find_script()
 }
 
 
-void run_script()
+static UINT8 run_script()
 {
-	if(!m_opcode_history.capturing || m_ula_variant == ULA_VARIANT_NONE) return;
+	UINT8 retval = 0xff;
+
+	if(!m_opcode_history.capturing || m_ula_variant == ULA_VARIANT_NONE) return retval;
 
 	if(!find_script())
 	{
 		//Stop here. We don't know what script this opcode uses (yet).
-		return;
+		return retval;
 	}
 
 	for(; m_opcode_history.element < m_opcode_history.breakdown->number_of_elements; m_opcode_history.element++)
@@ -4529,7 +4557,7 @@ void run_script()
 		if(se->rw_ix >= m_opcode_history.rw_count)
 		{
 			//Stop here. We don't have the rwinfo stored that will be required to process this script element (yet).
-			return;
+			return retval;
 		}
 
 		//Check if this is an optional element.
@@ -4537,14 +4565,15 @@ void run_script()
 		{
 			//Stop here. This is an optional script element and we are not sure (yet)
 	                //if this opcode will need to go down the optional path.
-			return;
+			return retval;
 		}
 
 
 		if(se->type == CMSE_TYPE_IO_PORT) //***Process PORT contention***
 		{
+			//bprintf(0, _T("port i/o CMSE_TYPE_IO_PORT\n"));
 			bool high_byte = false;
-			bool low_bit = false;
+			bool nlow_bit = false;
 
 			rw = &(m_opcode_history.rw[se->rw_ix]);
 			rw->flags |= RWINFO_PROCESSED;
@@ -4562,7 +4591,17 @@ void run_script()
 					m_opcode_history.rw[se->rw_ix].addr,
 					m_opcode_history.rw[se->rw_ix].val);
 #endif //DEBUG_CM
+
 				eat_cycles(CYCLES_UNCONTENDED, 4);
+
+				// IO: OUT x, x
+				if (rw->flags & RWINFO_WRITE) {
+					Z80IOWrite(rw->addr, rw->val);
+				}
+				// IO: IN x
+				if ((rw->flags & RWINFO_WRITE) == 0) {
+					retval = Z80IORead(rw->addr);
+				}
 			}
 			else //ULA_VARIANT_SINCLAIR
 			{
@@ -4575,15 +4614,9 @@ void run_script()
 				Yes         |  Reset  | C:1, C:3
 				Yes         |   Set   | C:1, C:1, C:1, C:1
 				*/
-				if (get_memory_is_contended(rw->addr))
-				{
-					high_byte  = true;
-				}
 
-				if(rw->addr & 0x0001)
-				{
-					low_bit = true;
-				}
+				high_byte = get_memory_is_contended(rw->addr); // "High port contention 2" (128K, fusetest)
+				nlow_bit = (rw->addr & 0x0001) == 0;
 
 #ifdef DEBUG_CM
 				printf("  IO  TState=%d ULA=%d - Addr=%04X (HiByte=%d LoBit=%d)\n",
@@ -4591,41 +4624,45 @@ void run_script()
 						get_ula_delay(),
 						rw->addr,
 						high_byte,
-						low_bit);
+						nlow_bit);
 #endif //DEBUG_CM
 
-				if((high_byte == false) && (low_bit == false))
-				{
-					//N:1, C:3
-					eat_cycles(CYCLES_UNCONTENDED, 1);
+				// early
+				if (high_byte) {
 					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
-					eat_cycles(CYCLES_UNCONTENDED, 3);
 				}
-				else if((high_byte == false) && (low_bit == true))
-				{
-					//N:4
-					eat_cycles(CYCLES_UNCONTENDED, 4);
+				eat_cycles(CYCLES_UNCONTENDED, 1);
+				// !early
+
+				// IO: OUT x, x
+				if (rw->flags & RWINFO_WRITE) {
+					Z80IOWrite(rw->addr, rw->val);
 				}
-				else if((high_byte == true) && (low_bit == false))
-				{
-					//C:1, C:3
+
+				// late
+				if (nlow_bit) {
 					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
-					eat_cycles(CYCLES_UNCONTENDED, 1);
-					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
-					eat_cycles(CYCLES_UNCONTENDED, 3);
+					eat_cycles(CYCLES_UNCONTENDED, 2);
+				} else {
+					if (high_byte) {
+						eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+						eat_cycles(CYCLES_UNCONTENDED, 1);
+						eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+						eat_cycles(CYCLES_UNCONTENDED, 1);
+						eat_cycles(CYCLES_CONTENDED, get_ula_delay());
+					} else {
+						eat_cycles(CYCLES_UNCONTENDED, 2);
+					}
 				}
-				else //((high_byte == true) && (low_bit == true))
-				{
-					//C:1, C:1, C:1, C:1
-					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
-					eat_cycles(CYCLES_UNCONTENDED, 1);
-					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
-					eat_cycles(CYCLES_UNCONTENDED, 1);
-					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
-					eat_cycles(CYCLES_UNCONTENDED, 1);
-					eat_cycles(CYCLES_CONTENDED, get_ula_delay());
-					eat_cycles(CYCLES_UNCONTENDED, 1);
+				// !late
+
+				// IO: IN x
+				if ((rw->flags & RWINFO_WRITE) == 0) {
+					retval = Z80IORead(rw->addr);
 				}
+
+				// lastly..
+				eat_cycles(CYCLES_UNCONTENDED, 1);
 			}
 		}
 		else if(se->type == CMSE_TYPE_MEMORY) //***Process Memory Address Contention***
@@ -4702,10 +4739,11 @@ void run_script()
 			//assert_always(false, "Uknown element type in contented memory script");
 		}
 	}
+	return retval;
 }
 
 
-void parse_script(const char *script, CM_SCRIPT_BREAKDOWN *breakdown)
+static void parse_script(const char *script, CM_SCRIPT_BREAKDOWN *breakdown)
 {
 	enum CMSE_STATE
 	{
@@ -4903,7 +4941,6 @@ void parse_script(const char *script, CM_SCRIPT_BREAKDOWN *breakdown)
 	breakdown->inst_cycles_total = *cycles_mandatory + *cycles_optional;
 }
 
-
 #if 1
 static int get_ula_delay()
 {
@@ -4955,13 +4992,22 @@ static void make_ula_delay_lut()
 	}
 }
 
+static int get_memory_access_delay(UINT16 pc_address)
+{
+	if (get_memory_is_contended(pc_address))
+	{
+		return get_ula_delay();
+	}
+	return 0;
+}
+
 static int get_memory_is_contended(UINT16 pc_address)
 {
-	if((pc_address >= 0x4000) && (pc_address <=0x7fff))
+	if((pc_address >= 0x4000) && (pc_address <= 0x7fff))
 	{
 		return 1;
 	}
-	else if((pc_address >= 0xc000) && (pc_address <=0xffff))
+	else if((pc_address >= 0xc000) && (pc_address <= 0xffff))
 	{
 		if(m_selected_bank > 0)
 		{
@@ -4979,16 +5025,7 @@ static int get_memory_is_contended(UINT16 pc_address)
 	return 0;
 }
 
-static int get_memory_access_delay(UINT16 pc_address)
-{
-	if (get_memory_is_contended(pc_address))
-	{
-		return get_ula_delay();
-	}
-	return 0;
-}
-
-void eat_cycles(int type, int cycles)
+static void eat_cycles(int type, int cycles)
 {
 	// When this function is called and type CYCLES_CONTENDED or CYCLES_UNCONTENDED is set,
 	// it means the run_script function is processing the opcode history and that cycles are
@@ -5022,19 +5059,28 @@ void eat_cycles(int type, int cycles)
 
 	Z80.ICount -= cycles;
 	m_tstate_counter += cycles;
+
 	if(m_tstate_counter >= m_cycles_per_frame) {
-		m_raster_cb(m_tstate_counter); // end frame
-		//bprintf(0, _T("z80.cpp: spec frame eof %d\n"), m_tstate_counter);
+		m_raster_cb(m_cycles_per_frame); // end frame
+		m_raster_cb(-1); // notify start next frame
+//		bprintf(0, _T("z80.cpp: spec frame eof %d\n"), m_tstate_counter);
 		m_tstate_counter -= m_cycles_per_frame;
 	}
 }
 
 
-void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
+static UINT8 store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
 {
 	RWINFO *rw;
+	UINT8 retval = 0xff;
 
-	if(!m_opcode_history.capturing || m_ula_variant == ULA_VARIANT_NONE) return;
+	if(!m_opcode_history.capturing && m_ula_variant != ULA_VARIANT_NONE) {
+		if (m_tstate_counter >= ((m_cycles_per_line == 228) ? 36 : 32)) { // interrupt not contended, logging during irq is not useful
+			bprintf(0, _T("not capturing?  tstate  %d  PC:  %x  addr/val/flags:  %x  %x  %x  (%S)\n"), m_tstate_counter, PCD, addr, val, flags, dbg);
+		}
+	}
+
+	if(!m_opcode_history.capturing || m_ula_variant == ULA_VARIANT_NONE) return 0;
 
 	if(m_opcode_history.rw_count >= MAX_RWINFO)
 	{
@@ -5050,19 +5096,18 @@ void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
 	rw->dbg = dbg;
 	m_opcode_history.rw_count++;
 
-	run_script();
-
 	//Originally, the intention was to update the screen raster each time
 	//any tstates were eaten (I.e. call the raster_cb from inside the
 	//eat_cycles function) which worked well but wasn't efficient.
 	//So below is the opimisation, it is based on the fact that the screen
 	//raster only needs to be updated immediately *before* a border or screen colour
-	//attribute write occurs.
+	//attribute write occurs.  (update before run_script() increments cycles -dink)
 	if(rw->flags & RWINFO_WRITE)
 	{
 		if(rw->flags & RWINFO_IO_PORT)
 		{
-			if(~addr & 1) //Border change
+			//if((addr & 0xff) == 0xfe) //Border change *breaks with fpga8all*
+			if (~addr & 1) //Border change
 			{
 				m_raster_cb(m_tstate_counter);
 			}
@@ -5070,11 +5115,18 @@ void store_rwinfo(UINT16 addr, UINT8 val, UINT16 flags, const char *dbg)
 		else if(rw->flags & RWINFO_MEMORY)
 		{
 			// Screen or attribute change (48K and 128K)
-			if((addr >= 0x4000) && (addr <= 0x5AFF))
+			if((addr >= 0x4000) && (addr <= 0x5AFF)) {
 				m_raster_cb(m_tstate_counter);
+			}
 			// Screen or attribute change (128K models - bank 5)
 			else if( (m_selected_bank == 5) && ((addr >= 0xC000) && (addr <= 0xDAFF)) )
+			{
 				m_raster_cb(m_tstate_counter);
+			}
 		}
 	}
+
+	retval = run_script();
+
+	return retval;
 }

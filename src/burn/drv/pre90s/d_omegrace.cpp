@@ -1,4 +1,4 @@
-// FB Alpha Omega Race driver moulde
+// FB Neo Omega Race driver moulde
 // Based on MAME driver by Bernd Wiebelt
 
 #include "tiles_generic.h"
@@ -286,6 +286,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	res_check();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -549,7 +551,7 @@ struct BurnDriver BurnDrvOmegrace = {
 	"omegrace", NULL, NULL, NULL, "1981",
 	"Omega Race (set 1)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, omegraceRomInfo, omegraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 600, 4, 3
@@ -585,6 +587,36 @@ struct BurnDriver BurnDrvOmegrace2 = {
 };
 
 
+// Omega Race (set 3, 7/27)
+// ROMs typewritten as O.R. with date 7/27 written by hand in red ink
+
+static struct BurnRomInfo omegrace3RomDesc[] = {
+	{ "omega_1_7-27.m7",			0x1000, 0xf8539d46, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "omega_2_7-27.l7",			0x1000, 0x9c3edb1a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "omega_3_7-27.k7",			0x1000, 0x6349130d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "omega_4_7-27.j7",			0x1000, 0x0a5ef64a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "o.r._vector_i_6-1-81.e1",	0x0800, 0x1d0fdf3a, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "o.r._vector_ii_6-1-81.f1",	0x0800, 0xd44c0814, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "o.r.r._audio_6-1-81.k5",		0x0800, 0x7d426017, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #1 Code
+
+	{ "dvgprom.bin",				0x0100, 0xd481e958, 3 | BRF_GRA },           //  7 Video PROM
+};
+
+STD_ROM_PICK(omegrace3)
+STD_ROM_FN(omegrace3)
+
+struct BurnDriver BurnDrvOmegrace3 = {
+	"omegrace3", "omegrace", NULL, NULL, "1981",
+	"Omega Race (set 3, 7/27)\0", NULL, "Midway", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	NULL, omegrace3RomInfo, omegrace3RomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	800, 600, 4, 3
+};
+
+
 // Delta Race
 
 static struct BurnRomInfo deltraceRomDesc[] = {
@@ -607,7 +639,7 @@ struct BurnDriver BurnDrvDeltrace = {
 	"deltrace", "omegrace", NULL, NULL, "1981",
 	"Delta Race\0", NULL, "bootleg (Allied Leisure)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, deltraceRomInfo, deltraceRomName, NULL, NULL, NULL, NULL, OmegraceInputInfo, OmegraceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	800, 600, 4, 3

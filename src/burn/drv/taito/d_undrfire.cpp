@@ -324,6 +324,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	interrupt5_timer = -1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1275,7 +1277,7 @@ struct BurnDriver BurnDrvUndrfire = {
 	"undrfire", NULL, NULL, NULL, "1993",
 	"Under Fire (World)\0", NULL, "Taito Corporation Japan", "K1100744A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, undrfireRomInfo, undrfireRomName, NULL, NULL, NULL, NULL, UndrfireInputInfo, NULL,
 	UndrfireInit, DrvExit, DrvFrame, UndrfireDraw, DrvScan, &DrvRecalc, 0x4000,
 	320, 232, 4, 3

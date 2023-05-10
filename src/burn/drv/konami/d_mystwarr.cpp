@@ -29,6 +29,7 @@
 #include "burn_ym2151.h"
 #include "k054539.h"
 #include "eeprom.h"
+#include "dtimer.h"
 
 #if defined _MSC_VER
  #define _USE_MATH_DEFINES
@@ -89,7 +90,6 @@ static UINT8 DrvDips[2];
 
 static INT32 nExtraCycles[2];
 
-static INT32 sound_nmi_enable = 0;
 static UINT8 sound_control = 0;
 static UINT16 control_data = 0;
 static UINT8 mw_irq_control = 0;
@@ -1838,7 +1838,6 @@ static INT32 DrvDoReset()
 	sprite_colorbase = 0;
 	cbparam = 0;
 	oinprion = 0;
-	sound_nmi_enable = 0;
 
 	superblend = 0; // for mystwarr alpha tile count
 	oldsuperblend = 0;
@@ -1970,8 +1969,22 @@ static void Metamrph_sprite_decode()
 	GfxDecode(0x10000, 4, 16, 16, Plane, XOffs, YOffs, 16*16*4, DrvGfxROM1, DrvGfxROMExp1);
 }
 
+static void sound_irq(INT32 param)
+{
+	if (sound_control & 0x10) {
+		ZetNmi();
+	}
+}
+
+static void sound_timer_init()
+{
+	K054539SetIRQCallback(0, sound_irq);
+}
+
 static INT32 MystwarrInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 1;
 
 	GenericTilesInit();
@@ -2050,7 +2063,7 @@ static INT32 MystwarrInit()
 
 	EEPROMInit(&mystwarr_eeprom_interface);
 
-	K054539Init(0, 48000, DrvSndROM, 0x400000);
+	K054539Init(0, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(0, 0, 0.80);
@@ -2062,7 +2075,9 @@ static INT32 MystwarrInit()
 	K054539_set_gain(0, 6, 2.00);
 	K054539_set_gain(0, 7, 2.00);
 
-	K054539Init(1, 48000, DrvSndROM, 0x400000);
+	sound_timer_init();
+
+	K054539Init(1, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(1, 0, 0.50);
@@ -2081,6 +2096,8 @@ static INT32 MystwarrInit()
 
 static INT32 MetamrphInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 2;
 
 	GenericTilesInit();
@@ -2162,7 +2179,7 @@ static INT32 MetamrphInit()
 
 	EEPROMInit(&mystwarr_eeprom_interface);
 
-	K054539Init(0, 48000, DrvSndROM, 0x400000);
+	K054539Init(0, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.40, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.40, BURN_SND_ROUTE_RIGHT);
 	K054539SetFlags(0, K054539_REVERSE_STEREO | K054539_UPDATE_AT_KEYON);
@@ -2175,7 +2192,9 @@ static INT32 MetamrphInit()
 	K054539_set_gain(0, 6, 2.40/2); // coin up, "go!"
 	K054539_set_gain(0, 7, 2.40/2); // "awaken!", punch sfx, voice horns flute
 
-	K054539Init(1, 48000, DrvSndROM, 0x400000);
+	sound_timer_init();
+
+	K054539Init(1, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_1, 1.40, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_2, 1.40, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(1, 0, 0.60/2); // horns, choir
@@ -2194,6 +2213,8 @@ static INT32 MetamrphInit()
 
 static INT32 ViostormInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 3;
 
 	GenericTilesInit();
@@ -2269,19 +2290,21 @@ static INT32 ViostormInit()
 
 	EEPROMInit(&mystwarr_eeprom_interface);
 
-	K054539Init(0, 48000, DrvSndROM, 0x400000);
+	K054539Init(0, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-	K054539_set_gain(0, 0, 2.00);
+	/*K054539_set_gain(0, 0, 2.00);
 	K054539_set_gain(0, 1, 2.00);
 	K054539_set_gain(0, 2, 2.00);
-	K054539_set_gain(0, 3, 2.00);
+	K054539_set_gain(0, 3, 2.00);*/
 	K054539_set_gain(0, 4, 2.00);
 	K054539_set_gain(0, 5, 2.00);
 	K054539_set_gain(0, 6, 2.00);
 	K054539_set_gain(0, 7, 2.00);
 
-	K054539Init(1, 48000, DrvSndROM, 0x400000);
+	sound_timer_init();
+
+	K054539Init(1, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
@@ -2292,6 +2315,8 @@ static INT32 ViostormInit()
 
 static INT32 MartchmpInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 4;
 
 	GenericTilesInit();
@@ -2372,7 +2397,7 @@ static INT32 MartchmpInit()
 
 	EEPROMInit(&mystwarr_eeprom_interface);
 
-	K054539Init(0, 48000, DrvSndROM, 0x400000);
+	K054539Init(0, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(0, 0, 1.40);
@@ -2384,7 +2409,9 @@ static INT32 MartchmpInit()
 	K054539_set_gain(0, 6, 1.40);
 	K054539_set_gain(0, 7, 1.40);
 
-	K054539Init(1, 48000, DrvSndROM, 0x400000);
+	sound_timer_init();
+
+	K054539Init(1, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(1, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
@@ -2443,6 +2470,8 @@ static void GaiapolisRozTilemapdraw()
 
 static INT32 GaiapolisInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 5;
 
 	GenericTilesInit();
@@ -2539,7 +2568,7 @@ static INT32 GaiapolisInit()
 #endif
 	}
 
-	K054539Init(0, 48000, DrvSndROM, 0x400000);
+	K054539Init(0, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(0, 0, 0.80);
@@ -2551,7 +2580,9 @@ static INT32 GaiapolisInit()
 	K054539_set_gain(0, 6, 2.00);
 	K054539_set_gain(0, 7, 2.00);
 
-	K054539Init(1, 48000, DrvSndROM, 0x400000);
+	sound_timer_init();
+
+	K054539Init(1, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(1, 0, 0.50);
@@ -2601,6 +2632,8 @@ static void DadandrnRozTilemapdraw()
 
 static INT32 DadandrnInit()
 {
+	BurnSetRefreshRate(59.185606);
+
 	nGame = 6;
 
 	GenericTilesInit();
@@ -2700,7 +2733,7 @@ static INT32 DadandrnInit()
 #endif
 	}
 
-	K054539Init(0, 48000, DrvSndROM, 0x400000);
+	K054539Init(0, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(0, 0, 1.00);
@@ -2712,7 +2745,9 @@ static INT32 DadandrnInit()
 	K054539_set_gain(0, 6, 2.00);
 	K054539_set_gain(0, 7, 2.00);
 
-	K054539Init(1, 48000, DrvSndROM, 0x400000);
+	sound_timer_init();
+
+	K054539Init(1, 18432000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(1, 0, 1.00);
@@ -2879,13 +2914,14 @@ static INT32 DrvFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
+	timerNewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { (INT32)((double)16000000 / 59.185606 + 0.5), (INT32)((double)8000000 / 59.185606) };
+	INT32 nCyclesTotal[3] = { (INT32)((double)16000000 / 59.185606 + 0.5), (INT32)((double)8000000 / 59.185606), (INT32)((double)18432000 / 59.185606) };
 	if (nGame == 4) { // martchmp
 		nCyclesTotal[0] = 22000000 / 60; // fix flickers & gfx corruption at end of fight.  only affects martchmp.
 	}
-	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 	INT32 drawn = 0;
 
 	SekOpen(0);
@@ -2959,10 +2995,7 @@ static INT32 DrvFrame()
 
 		CPU_RUN(0, Sek);
 		CPU_RUN(1, Zet);
-
-		if (((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) || (nCurrentFrame&1 && i==0)) {// && sound_nmi_enable && sound_control) { // iq_132
-			ZetNmi();
-		}
+		CPU_RUN(2, timer);
 	}
 
 	if (pBurnSoundOut) {
@@ -3008,7 +3041,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		K054539Scan(nAction, pnMin);
 		KonamiICScan(nAction);
 
-		SCAN_VAR(sound_nmi_enable);
 		SCAN_VAR(sound_control);
 		SCAN_VAR(control_data);
 		SCAN_VAR(mw_irq_control);

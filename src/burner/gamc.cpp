@@ -131,6 +131,21 @@ INT32 GamcMisc(struct GameInp* pgi, char* szi, INT32 nPlayer)
 				return 0;
 			}
 
+			if (strcmp(szi, "mah big") == 0) {
+				KEY(FBK_RETURN);
+				return 0;
+			}
+
+			if (strcmp(szi, "mah wup") == 0) {
+				KEY(FBK_RSHIFT);
+				return 0;
+			}
+
+			if (strcmp(szi, "mah small") == 0) {
+				KEY(FBK_BACK);
+				return 0;
+			}
+
 			if (strcmp(szi, "mah kan") == 0) {
 				KEY(FBK_LCONTROL);
 				return 0;

@@ -31,13 +31,7 @@
     TYPES & STRUCTURES
 ##########################################################################*/
 
-struct rectangle
-{
-	INT32 min_x;
-	INT32 max_x;
-	INT32 min_y;
-	INT32 max_y;
-};
+#include "rectangle.h"
 
 /* callback for special processing */
 typedef int (*atarimo_special_cb)(UINT16 *bitmap, const rectangle *clip, int code, int color, int xpos, int ypos, rectangle *mobounds);

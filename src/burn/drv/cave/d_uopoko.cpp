@@ -265,6 +265,8 @@ static INT32 DrvDoReset()
 	nIRQPending = 0;
 	nCyclesExtra = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -566,20 +568,20 @@ STD_ROM_PICK(uopokoj)
 STD_ROM_FN(uopokoj)
 
 struct BurnDriver BurnDrvUoPoko = {
-	"uopoko", NULL, NULL, NULL, "1999",
-	"Puzzle Uo Poko (International, ver. 98/02/06)\0", NULL, "Cave / Jaleco", "Cave",
+	"uopoko", NULL, NULL, NULL, "1998",
+	"Puzzle Uo Poko (World)\0", NULL, "Cave (Jaleco license)", "Cave",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_PUZZLE, 0,
 	NULL, uopokoRomInfo, uopokoRomName, NULL, NULL, NULL, NULL, uopokoInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
 struct BurnDriver BurnDrvUoPokoj = {
-	"uopokoj", "uopoko", NULL, NULL, "1999",
-	"Puzzle Uo Poko (Japan, ver. 98/02/06)\0", NULL, "Cave / Jaleco", "Cave",
-	L"\u30D1\u30BA\u30EB \u9B5A\u30DD\u30B3 \u3046\u304A\u307D\u3053 (Japan, ver. 98/02/06)\0Puzzle Uo Poko\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_PUZZLE, 0,
+	"uopokoj", "uopoko", NULL, NULL, "1998",
+	"Puzzle Uo Poko (Japan)\0", NULL, "Cave (Jaleco license)", "Cave",
+	L"Puzzle Uo Poko\0\u30D1\u30BA\u30EB \u9B5A\u30DD\u30B3 \u3046\u304A\u307D\u3053 (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_PUZZLE, 0,
 	NULL, uopokojRomInfo, uopokojRomName, NULL, NULL, NULL, NULL, uopokoInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3

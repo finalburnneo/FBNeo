@@ -149,35 +149,6 @@ static INT32 CpsLoadOne(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 	return 0;
 }
 
-static INT32 CpsLoadOnePang(UINT8 *Tile,INT32 nNum,INT32 nWord,INT32 nShift)
-{
-	INT32 i=0;
-	UINT8 *Rom = NULL; INT32 nRomLen = 0;
-	UINT8 *pt = NULL, *pr = NULL;
-
-	LoadUp(&Rom, &nRomLen, nNum);
-	if (Rom == NULL) {
-		return 1;
-	}
-
-	nRomLen &= ~1; // make sure even
-
-	for (i = 0x100000, pt = Tile, pr = Rom + 0x100000; i < nRomLen; pt += 8) {
-		UINT32 Pix; // Eight pixels
-		UINT8 b;
-		b = *pr++; i++; Pix = SepTable[b];
-		if (nWord) {
-			b = *pr++; i++; Pix |= SepTable[b] << 1;
-		}
-
-		Pix <<= nShift;
-		*((UINT32 *)pt) |= Pix;
-	}
-
-	BurnFree(Rom);
-	return 0;
-}
-
 static INT32 CpsLoadOneHack160(UINT8 *Tile, INT32 nNum, INT32 nWord, INT32 nType)
 {
 	INT32 i = 0, j = 0;
@@ -529,6 +500,38 @@ static INT32 CpsLoadOneBootlegSwap(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 n
 
 		Pix <<= nShift;
 		*((UINT32 *)pt) |= Pix;
+	}
+
+	BurnFree(Rom);
+	return 0;
+}
+
+static INT32 CpsLoadOneGulunpa(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
+{
+	UINT8* Rom = NULL; INT32 nRomLen = 0;
+	UINT8* pt = NULL, * pr = NULL;
+	INT32 i;
+
+	LoadUp(&Rom, &nRomLen, nNum);
+	if (Rom == NULL) {
+		return 1;
+	}
+
+	// patch first byte of ROM 4 pending redump (corrupt top line of 0 character, 8x8 tile data should match between ROM pairs)
+	Rom[0] = 0xff;
+
+	nRomLen &= ~1;								// make sure even
+
+	for (i = 0, pt = Tile, pr = Rom; i < nRomLen; pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32*)pt) |= Pix;
 	}
 
 	BurnFree(Rom);
@@ -1184,16 +1187,6 @@ INT32 CpsLoadTilesForgottnu(INT32 nStart)
 	return 0;
 }
 
-INT32 CpsLoadTilesPang(UINT8* Tile, INT32 nStart)
-{
-	CpsLoadOne(    Tile,     nStart,     1, 0);
-	CpsLoadOne(    Tile,     nStart + 1, 1, 2);
-	CpsLoadOnePang(Tile + 4, nStart,     1, 0);
-	CpsLoadOnePang(Tile + 4, nStart + 1, 1, 2);
-
-	return 0;
-}
-
 static INT32 CpsLoadTilesBootleg(UINT8 *Tile, INT32 nStart)
 {
 	CpsLoadOneBootleg(Tile, nStart + 0, 0, 0);
@@ -1490,6 +1483,14 @@ INT32 CpsLoadTilesWonder3b(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesPang3(INT32 nStart)
+{
+	CpsLoadOneSf2koryu(CpsGfx + 0x000000, nStart + 0, 1, 0);
+	CpsLoadOneSf2koryu(CpsGfx + 0x000000, nStart + 1, 1, 2);
+
+	return 0;
+}
+
 INT32 CpsLoadTilesPang3r1a(INT32 nStart)
 {
 	CpsLoadOne(CpsGfx + 0x000000, nStart + 0, 1, 0);
@@ -1501,6 +1502,66 @@ INT32 CpsLoadTilesPang3r1a(INT32 nStart)
 	CpsLoadOne(CpsGfx + 0x000004, nStart + 6, 1, 2);
 	CpsLoadOne(CpsGfx + 0x200004, nStart + 7, 1, 2);
 	
+	return 0;
+}
+
+INT32 CpsLoadTilesPang3b2(INT32 nStart)
+{
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 0, 0, 0);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 1, 0, 1);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 2, 0, 2);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 3, 0, 3);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 4, 0, 0);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 5, 0, 1);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 6, 0, 2);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 7, 0, 3);
+
+	return 0;
+}
+
+INT32 CpsLoadTilesPang3b4(INT32 nStart)
+{
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart +  0, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart +  1, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart +  2, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart +  3, 0, 0);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart +  4, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart +  5, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart +  6, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart +  7, 0, 1);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart +  8, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart +  9, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart + 10, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart + 11, 0, 2);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000000, nStart + 12, 0, 3);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x000004, nStart + 13, 0, 3);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200000, nStart + 14, 0, 3);
+	CpsLoadOneBootlegType2SmallSingle(CpsGfx + 0x200004, nStart + 15, 0, 3);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesPang3b5(INT32 nStart)
+{
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 0, 1, 0);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 1, 1, 2);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 2, 1, 0);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 3, 1, 2);
+	CpsLoadOne(CpsGfx + 0x200000, nStart + 4, 1, 0);
+	CpsLoadOne(CpsGfx + 0x200000, nStart + 5, 1, 2);
+	CpsLoadOne(CpsGfx + 0x200004, nStart + 6, 1, 0);
+	CpsLoadOne(CpsGfx + 0x200004, nStart + 7, 1, 2);
+
+	return 0;
+}
+
+INT32 CpsLoadTilesGulunpa(INT32 nStart)
+{
+	CpsLoadOne(CpsGfx +			0x000000, nStart + 0, 1, 0);
+	CpsLoadOne(CpsGfx +			0x000000, nStart + 1, 1, 2);
+	CpsLoadOne(CpsGfx +			0x000004, nStart + 2, 1, 0);
+	CpsLoadOneGulunpa(CpsGfx +	0x000004, nStart + 3, 1, 2);
+
 	return 0;
 }
 

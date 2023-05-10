@@ -291,6 +291,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -717,7 +719,7 @@ struct BurnDriver BurnDrvBackfire = {
 	"backfire", NULL, NULL, NULL, "1995",
 	"Backfire! (set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING, 0,
 	NULL, backfireRomInfo, backfireRomName, NULL, NULL, NULL, NULL, BackfireInputInfo, BackfireDIPInfo,
 	backfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	640, 240, 8, 3

@@ -260,6 +260,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	BurnWatchdogReset();
 
+	HiscoreReset();
+
 	nExtraCycles = 0;
 
 	return 0;
@@ -586,7 +588,7 @@ struct BurnDriver BurnDrvFoodf = {
 	"foodf", NULL, NULL, NULL, "1982",
 	"Food Fight (rev 3)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, foodfRomInfo, foodfRomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -622,7 +624,7 @@ struct BurnDriver BurnDrvFoodf2 = {
 	"foodf2", "foodf", NULL, NULL, "1982",
 	"Food Fight (rev 2)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, foodf2RomInfo, foodf2RomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -658,7 +660,7 @@ struct BurnDriver BurnDrvFoodf1 = {
 	"foodf1", "foodf", NULL, NULL, "1982",
 	"Food Fight (rev 1)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, foodf1RomInfo, foodf1RomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -694,7 +696,7 @@ struct BurnDriver BurnDrvFoodfc = {
 	"foodfc", "foodf", NULL, NULL, "1982",
 	"Food Fight (cocktail)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, foodfcRomInfo, foodfcRomName, NULL, NULL, NULL, NULL, FoodfInputInfo, FoodfDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

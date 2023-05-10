@@ -261,6 +261,8 @@ static INT32 DrvDoReset()
 
 	hold_coin.reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -590,7 +592,7 @@ struct BurnDriver BurnDrvDiscoboy = {
 	"discoboy", NULL, NULL, NULL, "1993",
 	"Disco Boy\0", NULL, "Soft Art Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, discoboyRomInfo, discoboyRomName, NULL, NULL, NULL, NULL, DiscoboyInputInfo, DiscoboyDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	240, 384, 3, 4
@@ -629,7 +631,7 @@ struct BurnDriver BurnDrvDiscoboyp = {
 	"discoboyp", "discoboy", NULL, NULL, "1993",
 	"Disco Boy (Promat license?)\0", NULL, "Soft Art Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_SHOOT | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, discoboypRomInfo, discoboypRomName, NULL, NULL, NULL, NULL, DiscoboyInputInfo, DiscoboyDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	240, 384, 3, 4

@@ -1,27 +1,45 @@
 // FB Neo Sega System 1/2 driver module
 // Based on MAME driver by Jarek Parchanski, Nicola Salmoria, Mirko Buffoni
 
-// Notes: runahead needs BDF_RUNAHEAD_DRAWSYNC flag because sprite collisions
-//        happen while drawing. -dink aug 2021
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"
 #include "bitswap.h"
 #include "mc8123.h"
 #include "8255ppi.h"
+#include "mcs51.h"
+#include "dtimer.h"
+#include "burn_gun.h"
 
-static UINT8 System1InputPort0[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 System1InputPort1[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 System1InputPort2[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 System1Dip[2]           = {0, 0};
-static UINT8 System1Input[3]         = {0x00, 0x00, 0x00 };
+static UINT8 System1InputPort0[8]    = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static UINT8 System1InputPort1[8]    = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static UINT8 System1InputPort2[8]    = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static UINT8 System1InputPort3[8]    = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static UINT8 System1Dip[3]           = { 0, 0, 0 };
+static UINT8 System1Input[4]         = { 0x00, 0x00, 0x00, 0x00 };
 static UINT8 System1Reset            = 0;
+
+static INT16 Analog[2];
+static INT32 sht_trigger             = 0;
+static INT32 is_shtngmst			 = 0;
+static INT32 is_nob                  = 0;
+static UINT8 nob_cpu_latch;
+static UINT8 nob_mcu_latch;
+static UINT8 nob_mcu_status;
 
 static UINT8 *Mem                    = NULL;
 static UINT8 *MemEnd                 = NULL;
 static UINT8 *RamStart               = NULL;
 static UINT8 *RamEnd                 = NULL;
+
+static INT32 has_dial = 0;
+
+static UINT8 *DrvMCURom;
+static INT32 has_mcu = 0;
+static UINT8 i8751Command;
+// i8751 MCU (choplift)
+static void DrvMCUReset(); // forward
+static void DrvMCUSync(); // ""
 
 static UINT8 *System1Rom1            = NULL;
 static UINT8 *System1Rom2            = NULL;
@@ -32,13 +50,14 @@ static UINT8 *System1Ram1            = NULL;
 static UINT8 *System1Ram2            = NULL;
 static UINT8 *System1SpriteRam       = NULL;
 static UINT8 *System1PaletteRam      = NULL;
+
 static UINT8 *System1BgRam           = NULL;
+static UINT8 *System1FgRam           = NULL;
 static UINT8 *System1VideoRam        = NULL;
+
 static UINT8 *System1ScrollXRam      = NULL;
 static UINT8 *System1BgCollisionRam  = NULL;
 static UINT8 *System1SprCollisionRam = NULL;
-static UINT8 *System1deRam           = NULL;
-static UINT8 *System1efRam           = NULL;
 static UINT8 *System1f4Ram           = NULL;
 static UINT8 *System1fcRam           = NULL;
 static UINT32 *System1Palette        = NULL;
@@ -66,17 +85,16 @@ static INT32 System1RomBank;
 static INT32 NoboranbInp16Step;
 static INT32 NoboranbInp17Step;
 static INT32 NoboranbInp23Step;
-static UINT8 BlockgalDial1;
-static UINT8 BlockgalDial2;
 
 static INT32 System1SpriteRomSize;
 static INT32 System1NumTiles;
 static INT32 System1SpriteXOffset;
 static INT32 System1ColourProms = 0;
 static INT32 System1BankedRom = 0;
-static INT32 IsSystem2 = 0;
 
+static INT32 IsSystem2 = 0;
 static INT32 Sys1UsePPI = 0; // For regulus/regulusu
+static INT32 EnforceBars = 0; // see notes in enforce_bars()
 
 // Set to 1 before init for doubled X (Sys1 only!), allows for smoother h-scrolling
 // used in Wonder Boy (WboyInit(), etc)
@@ -86,31 +104,29 @@ typedef void (*Decode)();
 static Decode DecodeFunction;
 static Decode TileDecodeFunction;
 
-typedef INT32 (*Render)();
-static Render System1Draw;
 static INT32 System1Render();
 static INT32 System2Render();
 
 typedef void (*MakeInputs)();
 static MakeInputs MakeInputsFunction;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
+static INT32 nCyclesExtra[3];
 
 /*==============================================================================================
 Input Definitions
 ===============================================================================================*/
 
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo BlockgalInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
-	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 0, "p1 left"   },
-	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 1, "p1 right"  },
+	A("P1 Paddle"		 , BIT_ANALOG_REL, &Analog[0]          , "p1 x-axis"),
 	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 6, "p1 fire 1" },
 
 	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
 	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
-	{"P2 Left"           , BIT_DIGITAL  , System1InputPort0 + 2, "p2 left"   },
-	{"P2 Right"          , BIT_DIGITAL  , System1InputPort0 + 3, "p2 right"  },
+	A("P2 Paddle"		 , BIT_ANALOG_REL, &Analog[1]          , "p2 x-axis"),
 	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort2 + 7, "p2 fire 1" },
 
 	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },
@@ -118,7 +134,7 @@ static struct BurnInputInfo BlockgalInputList[] = {
 	{"Dip 1"             , BIT_DIPSWITCH, System1Dip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH, System1Dip + 1       , "dip"       },
 };
-
+#undef A
 STDINPUTINFO(Blockgal)
 
 static struct BurnInputInfo FlickyInputList[] = {
@@ -313,7 +329,7 @@ static struct BurnInputInfo WmatchInputList[] = {
 
 STDINPUTINFO(Wmatch)
 
-static struct BurnInputInfo ChplftbInputList[] = {
+static struct BurnInputInfo ChopliftInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
@@ -337,10 +353,31 @@ static struct BurnInputInfo ChplftbInputList[] = {
 	{"Test"              , BIT_DIGITAL  , System1InputPort2 + 2, "diag"      },
 	{"Dip 1"             , BIT_DIPSWITCH, System1Dip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH, System1Dip + 1       , "dip"       },
-
 };
 
-STDINPUTINFO(Chplftb)
+STDINPUTINFO(Choplift)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo ShtngmstInputList[] = {
+	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
+
+	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort3 + 6, "p1 fire 1" },
+	A("P1 Gun X"		 , BIT_ANALOG_REL, &Analog[0],    "mouse x-axis"	),
+	A("P1 Gun Y"		 , BIT_ANALOG_REL, &Analog[1],    "mouse y-axis"	),
+
+	{"P2 Coin"           , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
+
+	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , System1InputPort2 + 3, "service"   },
+	{"Test"              , BIT_DIGITAL  , System1InputPort2 + 2, "diag"      },
+	{"Dip 1"             , BIT_DIPSWITCH, System1Dip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, System1Dip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH, System1Dip + 2       , "dip"       },
+};
+#undef A
+STDINPUTINFO(Shtngmst)
 
 static struct BurnInputInfo UfosensiInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
@@ -375,24 +412,24 @@ STDINPUTINFO(Ufosensi)
 
 static inline void System1ClearOpposites(UINT8* nJoystickInputs)
 {
-	if ((*nJoystickInputs & 0x30) == 0x30) {
-		*nJoystickInputs &= ~0x30;
+	if ((*nJoystickInputs & 0x30) == 0x00) {
+		*nJoystickInputs |= 0x30;
 	}
-	if ((*nJoystickInputs & 0xc0) == 0xc0) {
-		*nJoystickInputs &= ~0xc0;
+	if ((*nJoystickInputs & 0xc0) == 0x00) {
+		*nJoystickInputs |= 0xc0;
 	}
 }
 
 static inline void System1MakeInputs()
 {
 	// Reset Inputs
-	System1Input[0] = System1Input[1] = System1Input[2] = 0x00;
+	System1Input[0] = System1Input[1] = System1Input[2] = 0xff;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
-		System1Input[0] |= (System1InputPort0[i] & 1) << i;
-		System1Input[1] |= (System1InputPort1[i] & 1) << i;
-		System1Input[2] |= (System1InputPort2[i] & 1) << i;
+		System1Input[0] ^= (System1InputPort0[i] & 1) << i;
+		System1Input[1] ^= (System1InputPort1[i] & 1) << i;
+		System1Input[2] ^= (System1InputPort2[i] & 1) << i;
 	}
 
 	// Clear Opposites
@@ -400,19 +437,50 @@ static inline void System1MakeInputs()
 	System1ClearOpposites(&System1Input[1]);
 }
 
-static inline void BlockgalMakeInputs()
+static inline void ShtngmstMakeInputs()
 {
-	System1Input[2] = 0x00;
+	// Reset Inputs
+	System1Input[0] = System1Input[1] = System1Input[2] = System1Input[3] = 0xff;
 
+	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
-		System1Input[2] |= (System1InputPort2[i] & 1) << i;
+		System1Input[0] ^= (System1InputPort0[i] & 1) << i;
+		System1Input[1] ^= (System1InputPort1[i] & 1) << i;
+		System1Input[2] ^= (System1InputPort2[i] & 1) << i;
+		System1Input[3] ^= (System1InputPort3[i] & 1) << i;
 	}
 
-	if (System1InputPort0[0]) BlockgalDial1 += 0x04;
-	if (System1InputPort0[1]) BlockgalDial1 -= 0x04;
+	{ // gun trigger pulser: trigger must pulse 1 frame for HS entry to work
+		if (sht_trigger && ~System1Input[3] & 0x40) {
+			System1Input[3] |= 0x40;
+		}
+		sht_trigger = System1InputPort3[6];
+	}
 
-	if (System1InputPort0[2]) BlockgalDial2 += 0x04;
-	if (System1InputPort0[3]) BlockgalDial2 -= 0x04;;
+	BurnGunMakeInputs(0, Analog[0], Analog[1]);
+}
+
+static inline void BlockgalMakeInputs()
+{
+	System1Input[2] = 0xff;
+
+	for (INT32 i = 0; i < 8; i++) {
+		System1Input[2] ^= (System1InputPort2[i] & 1) << i;
+	}
+
+	// blockgal: the game uses an asynchronous dial.
+	// player could die @ far-right side of screen with value 0xff
+	// but the game re-starts with the paddle centered.
+	// the game doesn't always get it right - though - moving very fast
+	// (f.ex, with mouse) and changing direction at a corner can cause the
+	// player to get "stuck" for a few frames
+
+	BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+	BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x1f);
+	BurnTrackballUpdate(0);
+
+	System1Input[0] = BurnTrackballRead(0);
+	System1Input[1] = BurnTrackballRead(1);
 }
 
 #define SYSTEM1_COINAGE(dipval)								\
@@ -489,37 +557,38 @@ STDDIPINFO(Fourdwarrio)
 
 static struct BurnDIPInfo BlockgalDIPList[]=
 {
+	DIP_OFFSET(0x0a)
 	// Default Values
-	{0x0c, 0xff, 0xff, 0xd7, NULL                     },
-	{0x0d, 0xff, 0xff, 0xff, NULL                     },
+	{0x00, 0xff, 0xff, 0xd7, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x0c, 0x01, 0x01, 0x00, "Upright"                },
-	{0x0c, 0x01, 0x01, 0x01, "Cocktail"               },
+	{0x00, 0x01, 0x01, 0x00, "Upright"                },
+	{0x00, 0x01, 0x01, 0x01, "Cocktail"               },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x0c, 0x01, 0x02, 0x00, "Off"                    },
-	{0x0c, 0x01, 0x02, 0x02, "On"                     },
+	{0x00, 0x01, 0x02, 0x00, "Off"                    },
+	{0x00, 0x01, 0x02, 0x02, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Lives"                  },
-	{0x0c, 0x01, 0x08, 0x08, "2"                      },
-	{0x0c, 0x01, 0x08, 0x00, "3"                      },
+	{0x00, 0x01, 0x08, 0x08, "2"                      },
+	{0x00, 0x01, 0x08, 0x00, "3"                      },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0c, 0x01, 0x10, 0x10, "10k 30k 60k 100k 150k"  },
-	{0x0c, 0x01, 0x10, 0x00, "30k 50k 100k 200k 300k" },
+	{0x00, 0x01, 0x10, 0x10, "10k 30k 60k 100k 150k"  },
+	{0x00, 0x01, 0x10, 0x00, "30k 50k 100k 200k 300k" },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x0c, 0x01, 0x20, 0x20, "Off"                    },
-	{0x0c, 0x01, 0x20, 0x00, "On"                     },
+	{0x00, 0x01, 0x20, 0x20, "Off"                    },
+	{0x00, 0x01, 0x20, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x0c, 0x01, 0x80, 0x80, "Off"                    },
-	{0x0c, 0x01, 0x80, 0x00, "On"                     },
+	{0x00, 0x01, 0x80, 0x80, "Off"                    },
+	{0x00, 0x01, 0x80, 0x00, "On"                     },
 
 	// Dip 2
-	SYSTEM1_COINAGE(0x0d)
+	SYSTEM1_COINAGE(0x01)
 };
 
 STDDIPINFO(Blockgal)
@@ -1598,49 +1667,71 @@ static struct BurnDIPInfo WmatchDIPList[]=
 
 STDDIPINFO(Wmatch)
 
-static struct BurnDIPInfo ChplftbDIPList[]=
+static struct BurnDIPInfo ShtngmstDIPList[]=
 {
-   // Default Values
-   {0x13, 0xff, 0xff, 0xbe, NULL                     },
-   {0x14, 0xff, 0xff, 0xff, NULL                     },
+	DIP_OFFSET(0x0a)
+	{0x00, 0xff, 0xff, 0xfd, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
+	{0x02, 0xff, 0xff, 0xff, NULL					}, // "port 18"
 
-   // Dip 1
-   {0   , 0xfe, 0   , 2   , "Cabinet"                },
-   {0x13, 0x01, 0x01, 0x00, "Upright"                },
-   {0x13, 0x01, 0x01, 0x01, "Cocktail"               },
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
-   {0   , 0xfe, 0   , 3   , "Lives"                  },
-   {0x13, 0x01, 0x0c, 0x04, "3"                      },
-   {0x13, 0x01, 0x0c, 0x0c, "4"                      },
-   {0x13, 0x01, 0x06, 0x08, "5"                      },
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x00, 0x01, 0x0c, 0x0c, "3"					},
+	{0x00, 0x01, 0x0c, 0x08, "4"					},
+	{0x00, 0x01, 0x0c, 0x04, "5"					},
+	{0x00, 0x01, 0x0c, 0x00, "Infinite"				},
 
-   {0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-   {0x13, 0x01, 0x40, 0x40, "Off"                    },
-   {0x13, 0x01, 0x40, 0x00, "On"                     },
+	{0   , 0xfe, 0   ,    4, "Extra Player"			},
+	{0x00, 0x01, 0x30, 0x30, "100000 - 500000"		},
+	{0x00, 0x01, 0x30, 0x20, "150000 - 600000"		},
+	{0x00, 0x01, 0x30, 0x10, "200000 - 700000"		},
+	{0x00, 0x01, 0x30, 0x00, "300000 - 800000"		},
 
-   // Dip 2
-   {0   , 0xfe, 0   , 8   , "Coinage"                },
-   {0x14, 0x01, 0x07, 0x04, "4 Coins 1 Credit"       },
-   {0x14, 0x01, 0x07, 0x05, "3 Coins 1 Credit"       },
-   {0x14, 0x01, 0x07, 0x00, "4 Coins 2 Credits"      },
-   {0x14, 0x01, 0x07, 0x06, "2 Coins 1 Credit"       },
-   {0x14, 0x01, 0x07, 0x01, "3 Coins 2 Credits"      },
-   {0x14, 0x01, 0x07, 0x02, "2 Coins 1 Credits"      },
-   {0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credit"       },
-   {0x14, 0x01, 0x07, 0x03, "1 Coin  2 Credits"      },
+	{0   , 0xfe, 0   ,    2, "Shots per second"		},
+	{0x00, 0x01, 0x01, 0x01, "5"					},
+	{0x00, 0x01, 0x01, 0x00, "3"					},
 
-   {0   , 0xfe, 0   , 2   , "Allow Continue"         },
-   {0x14, 0x01, 0x10, 0x00, "Off"                    },
-   {0x14, 0x01, 0x10, 0x10, "On"                     },
-
-   {0   , 0xfe, 0   , 4   , "Mode"                   },
-   {0x14, 0x01, 0xc0, 0xc0, "Normal Game"            },
-   {0x14, 0x01, 0xc0, 0x80, "Free Play"              },
-   {0x14, 0x01, 0xc0, 0x40, "Test Mode"              },
-   {0x14, 0x01, 0xc0, 0x00, "Endless Game"           },
+	SYSTEM1_COINAGE(0x01)
 };
 
-STDDIPINFO(Chplftb)
+STDDIPINFO(Shtngmst)
+
+static struct BurnDIPInfo ChopliftDIPList[]=
+{
+	DIP_OFFSET(0x13)
+
+	{0x00, 0xff, 0xff, 0xdc, NULL						},
+	{0x01, 0xff, 0xff, 0xff, NULL						},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x00, 0x01, 0x01, 0x00, "Upright"					},
+	{0x00, 0x01, 0x01, 0x01, "Cocktail"					},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x00, 0x01, 0x02, 0x02, "Off"						},
+	{0x00, 0x01, 0x02, 0x00, "On"						},
+
+	{0   , 0xfe, 0   ,    4, "Lives"					},
+	{0x00, 0x01, 0x0c, 0x08, "2"						},
+	{0x00, 0x01, 0x0c, 0x0c, "3"						},
+	{0x00, 0x01, 0x0c, 0x04, "4"						},
+	{0x00, 0x01, 0x0c, 0x00, "Free Play"				},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"				},
+	{0x00, 0x01, 0x10, 0x10, "20k 70k 120k 170k"		},
+	{0x00, 0x01, 0x10, 0x00, "50k 100k 150k 200k"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"				},
+	{0x00, 0x01, 0x20, 0x00, "Hard"						},
+	{0x00, 0x01, 0x20, 0x20, "Easy"						},
+
+	SYSTEM1_COINAGE(0x01)
+};
+
+STDDIPINFO(Choplift)
 
 static struct BurnDIPInfo UfosensiDIPList[]=
 {
@@ -2354,21 +2445,21 @@ static struct BurnRomInfo NobRomDesc[] = {
 
 	{ "dm03.9h",           0x004000, 0x415adf76, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 
-	{ "dm01.12b",          0x008000, 0x446fbcdd, BRF_GRA },		  	  //  4 Tiles
-	{ "dm02.13b",          0x008000, 0xf12df039, BRF_GRA },		  	  //  5 Tiles
-	{ "dm00.10b",          0x008000, 0x35f396df, BRF_GRA },		  	  //  6 Tiles
+	{ "dm.bin",            0x001000, 0x6fde9dcb, BRF_ESS | BRF_PRG }, //  4 MCU
 
-	{ "dm04.5f",           0x008000, 0x2442b86d, BRF_GRA },		  	  //  7 Sprites
-	{ "dm06.5k",           0x008000, 0xe33743a6, BRF_GRA },		  	  //  8 Sprites
-	{ "dm05.5h",           0x008000, 0x7fbba01d, BRF_GRA },		  	  //  9 Sprites
-	{ "dm07.5l",           0x008000, 0x85e7a29f, BRF_GRA },		  	  // 10 Sprites
+	{ "dm01.12b",          0x008000, 0x446fbcdd, BRF_GRA },		  	  //  5 Tiles
+	{ "dm02.13b",          0x008000, 0xf12df039, BRF_GRA },		  	  //  6 Tiles
+	{ "dm00.10b",          0x008000, 0x35f396df, BRF_GRA },		  	  //  7 Tiles
 
-	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  	  // 11 Red PROM
-	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  	  // 12 Green PROM
-	{ "dm-12.ic3",         0x000100, 0xde394cee, BRF_GRA },		  	  // 13 Blue PROM
-	{ "dc-11.6a",          0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
+	{ "dm04.5f",           0x008000, 0x2442b86d, BRF_GRA },		  	  //  8 Sprites
+	{ "dm06.5k",           0x008000, 0xe33743a6, BRF_GRA },		  	  //  9 Sprites
+	{ "dm05.5h",           0x008000, 0x7fbba01d, BRF_GRA },		  	  // 10 Sprites
+	{ "dm07.5l",           0x008000, 0x85e7a29f, BRF_GRA },		  	  // 11 Sprites
 
-	{ "dm.bin",            0x001000, 0x6fde9dcb, BRF_PRG | BRF_OPT }, // 15 MCU
+	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  	  // 12 Red PROM
+	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  	  // 13 Green PROM
+	{ "dm-12.ic3",         0x000100, 0xde394cee, BRF_GRA },		  	  // 14 Blue PROM
+	{ "dc-11.6a",          0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Nob)
@@ -3427,6 +3518,43 @@ static struct BurnRomInfo WmatchRomDesc[] = {
 STD_ROM_PICK(Wmatch)
 STD_ROM_FN(Wmatch)
 
+// Shooting Master (8751 315-5159a)
+
+static struct BurnRomInfo shtngmstRomDesc[] = {
+	{ "epr-7100.ic18",	0x8000, 0x268ecb1d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "epr-7101.ic91",	0x8000, 0xebf5ff72, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-7102.ic92",	0x8000, 0xc890a4ad, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "epr-7043.ic126",	0x8000, 0x99a368ab, 2 | BRF_PRG | BRF_ESS }, //  3 soundcpu
+
+	{ "315-5159a.ic74",	0x1000, 0x1f774912, 3 | BRF_PRG | BRF_ESS }, //  4 mcu
+
+	{ "epr-7040.ic4",	0x8000, 0xf30769fa, 4 | BRF_GRA },           //  5 tiles
+	{ "epr-7041.ic5",	0x8000, 0xf3e273f9, 4 | BRF_GRA },           //  6
+	{ "epr-7042.ic6",	0x8000, 0x6841c917, 4 | BRF_GRA },           //  7
+
+	{ "epr-7110.ic26",	0x8000, 0x5d1a5048, 5 | BRF_GRA },           //  8 sprites
+	{ "epr-7106.ic22",	0x8000, 0xae7ab7a2, 5 | BRF_GRA },           //  9
+	{ "epr-7108.ic24",	0x8000, 0x816180ac, 5 | BRF_GRA },           // 10
+	{ "epr-7104.ic20",	0x8000, 0x84a679c5, 5 | BRF_GRA },           // 11
+	{ "epr-7109.ic25",	0x8000, 0x097f7481, 5 | BRF_GRA },           // 12
+	{ "epr-7105.ic21",	0x8000, 0x13111729, 5 | BRF_GRA },           // 13
+	{ "epr-7107.ic23",	0x8000, 0x8f50ea24, 5 | BRF_GRA },           // 14
+
+	{ "epr-7113.ic20",	0x0100, 0x5c0e1360, 6 | BRF_GRA },           // 15 color_proms
+	{ "epr-7112.ic14",	0x0100, 0x46fbd351, 6 | BRF_GRA },           // 16
+	{ "epr-7111.ic8",	0x0100, 0x8123b6b9, 6 | BRF_GRA },           // 17
+
+	{ "pr5317.ic37",	0x0100, 0x648350b8, 7 | BRF_GRA },           // 18 lookup_proms
+
+	{ "315-5137.ic10",	0x0104, 0x6ffd9e6f, 8 | BRF_OPT },           // 19 plds
+	{ "315-5138.ic11",	0x0104, 0xdd223015, 8 | BRF_OPT },           // 20
+	{ "315-5139.ic50",	0x00e7, 0x943d91b0, 8 | BRF_OPT },           // 21
+};
+
+STD_ROM_PICK(shtngmst)
+STD_ROM_FN(shtngmst)
+
 static struct BurnRomInfo ChopliftRomDesc[] = {
 	{ "epr-7124.ic90",       0x008000, 0x678d5c41, BRF_ESS | BRF_PRG }, 	//  0	Z80 #1 Program Code
 	{ "epr-7125.ic91",       0x008000, 0xf5283498, BRF_ESS | BRF_PRG }, 	//  1	Z80 #1 Program Code
@@ -3434,21 +3562,21 @@ static struct BurnRomInfo ChopliftRomDesc[] = {
 
 	{ "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, 	//  3	Z80 #2 Program Code
 
-	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  		//  4 Tiles
-	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  		//  5 Tiles
-	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  		//  6 Tiles
+	{ "315-5151.ic74",       0x001000, 0x1377a6ef, BRF_ESS | BRF_PRG },		//  4 mcu
 
-	{ "epr-7121.ic87",       0x008000, 0xf2b88f73, BRF_GRA },		 	 	//  7 Sprites
-	{ "epr-7120.ic86",       0x008000, 0x517d7fd3, BRF_GRA },		  		//  8 Sprites
-	{ "epr-7123.ic89",       0x008000, 0x8f16a303, BRF_GRA },		  		//  9 Sprites
-	{ "epr-7122.ic88",       0x008000, 0x7c93f160, BRF_GRA },		  		// 10 Sprites
+	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  		//  5 Tiles
+	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  		//  6 Tiles
+	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  		//  7 Tiles
 
-	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_GRA },		  		// 11 Red PROM
-	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_GRA },		  		// 12 Green PROM
-	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_GRA },		  		// 13 Blue PROM
+	{ "epr-7121.ic87",       0x008000, 0xf2b88f73, BRF_GRA },		 	 	//  8 Sprites
+	{ "epr-7120.ic86",       0x008000, 0x517d7fd3, BRF_GRA },		  		//  9 Sprites
+	{ "epr-7123.ic89",       0x008000, 0x8f16a303, BRF_GRA },		  		// 10 Sprites
+	{ "epr-7122.ic88",       0x008000, 0x7c93f160, BRF_GRA },		  		// 11 Sprites
 
-	{ "315-5151.ic74",       0x001000, 0x1377a6ef, BRF_OPT },				// 14 mcu
-	
+	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_GRA },		  		// 12 Red PROM
+	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_GRA },		  		// 13 Green PROM
+	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_GRA },		  		// 14 Blue PROM
+
 	{ "pr5317.ic28",         0x000100, 0x648350b8, BRF_OPT },				// 15 lookup_proms
 	
 	{ "315-5152.ic10",       0x000104, 0x2c9229b4, BRF_OPT },				// 16 plds
@@ -4601,6 +4729,7 @@ static INT32 MemIndex()
 	System1Rom1            = Next; Next += 0x040000;
 	System1Fetch1          = Next; Next += 0x040000;
 	System1Rom2            = Next; Next += 0x010000;
+	DrvMCURom              = Next; Next += 0x010000;
 	System1PromRed         = Next; Next += 0x000100;
 	System1PromGreen       = Next; Next += 0x000100;
 	System1PromBlue        = Next; Next += 0x000100;
@@ -4611,13 +4740,14 @@ static INT32 MemIndex()
 	System1Ram2            = Next; Next += 0x000800;
 	System1SpriteRam       = Next; Next += 0x000800;
 	System1PaletteRam      = Next; Next += 0x000800;
-	System1BgRam           = Next; Next += 0x000800;
 	System1VideoRam        = Next; Next += 0x004000;
+
+	System1BgRam           = System1VideoRam + 0x0000;
+	System1FgRam           = System1VideoRam + 0x0800;
+
 	System1ScrollXRam      = System1VideoRam + 0x7C0;
 	System1BgCollisionRam  = Next; Next += 0x000400;
 	System1SprCollisionRam = Next; Next += 0x000400;
-	System1deRam           = Next; Next += 0x000200;
-	System1efRam           = Next; Next += 0x000100;
 	System1f4Ram           = Next; Next += 0x000400;
 	System1fcRam           = Next; Next += 0x000400;
 	SpriteOnScreenMap      = Next; Next += (((wide_mode) ? 512 : 256) * 256);
@@ -4640,13 +4770,16 @@ Reset Functions
 static INT32 System1DoReset()
 {
 	if (IsSystem2 || Sys1UsePPI) {
-		ppi8255_reset(); // this resets the 8255ppi, needed or wbml reset fails (bad sound, or rom errors)
+		ppi8255_reset();
 	}
 
 	memset (RamStart, 0, RamEnd - RamStart);
 
     ZetReset(0);
 	ZetReset(1);
+	if (has_mcu) {
+		DrvMCUReset();
+	}
 
 	SN76496Reset();
 
@@ -4663,8 +4796,8 @@ static INT32 System1DoReset()
 	NoboranbInp16Step = 0;
 	NoboranbInp17Step = 0;
 	NoboranbInp23Step = 0;
-	BlockgalDial1 = 0;
-	BlockgalDial2 = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
 
 	HiscoreReset();
 
@@ -4701,7 +4834,7 @@ static inline void System2_bankswitch_w(UINT8 d)
 static inline void System2_videoram_bank_latch_w(UINT8 d)
 {
 	System1BgBankLatch = d;
-	System1BgBank = (d >> 1) & 0x03;	/* Select 4 banks of 4k, bit 2,1 */
+	System1BgBank = (d >> 1) & 0x03;
 
 	// iq_132
 	ZetMapMemory(System1VideoRam + System1BgBank * 0x1000, 0xe000, 0xefff, MAP_RAM);
@@ -4709,10 +4842,12 @@ static inline void System2_videoram_bank_latch_w(UINT8 d)
 
 static inline void __fastcall System1SoundLatchWrite(UINT8 d)
 {
+	INT32 cyc = ZetTotalCycles(0) - ZetTotalCycles(1);
+	if (cyc > 0) {
+		ZetRun(1, cyc);
+	}
 	System1SoundLatch = d;
 	ZetNmi(1);
-
-	return;
 }
 
 static UINT8 __fastcall System1Z801PortRead(UINT16 a)
@@ -4721,61 +4856,15 @@ static UINT8 __fastcall System1Z801PortRead(UINT16 a)
 
 	switch (a) {
 		case 0x00: {
-			return 0xff - System1Input[0];
+			return System1Input[0];
 		}
 
 		case 0x04: {
-			return 0xff - System1Input[1];
+			return System1Input[1];
 		}
 
 		case 0x08: {
-			return 0xff - System1Input[2];
-		}
-
-		case 0x0c: {
-			return System1Dip[0];
-		}
-
-		case 0x0d: {
-			return System1Dip[1];
-		}
-
-		case 0x10: {
-			return System1Dip[1];
-		}
-
-		case 0x11: {
-			return System1Dip[0];
-		}
-
-		case 0x15: {
-			return System1VideoMode;
-		}
-
-		case 0x19: {
-			return System1VideoMode;
-		}
-	}
-
-	//bprintf(PRINT_NORMAL, _T("IO Read %x\n"), a);
-	return 0;
-}
-
-static UINT8 __fastcall BlockgalZ801PortRead(UINT16 a)
-{
-	a &= 0xff;
-
-	switch (a) {
-		case 0x00: {
-			return BlockgalDial1;
-		}
-
-		case 0x04: {
-			return BlockgalDial2;
-		}
-
-		case 0x08: {
-			return 0xff - System1Input[2];
+			return System1Input[2];
 		}
 
 		case 0x0c: {
@@ -4813,15 +4902,15 @@ static UINT8 __fastcall NoboranbZ801PortRead(UINT16 a)
 
 	switch (a) {
 		case 0x00: {
-			return 0xff - System1Input[0];
+			return System1Input[0];
 		}
 
 		case 0x04: {
-			return 0xff - System1Input[1];
+			return System1Input[1];
 		}
 
 		case 0x08: {
-			return 0xff - System1Input[2];
+			return System1Input[2];
 		}
 
 		case 0x0c: {
@@ -4832,16 +4921,27 @@ static UINT8 __fastcall NoboranbZ801PortRead(UINT16 a)
 			return System1Dip[1];
 		}
 
+		case 0x18: {
+			if (has_mcu) {
+				DrvMCUSync();
+			}
+			return nob_cpu_latch;
+		}
+
+		case 0x1c: {
+			if (has_mcu) {
+				DrvMCUSync();
+				return nob_mcu_status;
+			}
+			return 0x80;
+		}
+
 		case 0x15: {
 			return System1VideoMode;
 		}
 
 		case 0x16: {
 			return NoboranbInp16Step;
-		}
-
-		case 0x1c: {
-			return 0x80;
 		}
 
 		case 0x22: {
@@ -4893,32 +4993,177 @@ static void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 	//bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);
 }
 
-static void __fastcall ChplftZ801PortWrite(UINT16 a, UINT8 d)
+// mcu stuff (choplift, shtngmst)
+
+static INT32 from_mcu = 0; // avoid recursion when mcu r/w ppi through z80's IO map
+
+static UINT8 mcu_read_port(INT32 port)
 {
-	a &= 0xff;
-	switch (a)
-	{
-		case 0x14: { System1SoundLatchWrite(d);    return; }
-		case 0x15: { System2_bankswitch_w(d);   return; }
+	if (port >= 0x0000 && port <= 0xffff) {
+		switch (i8751Command & 0x18) {
+			case 0x00: return ZetReadByte(port);
+			case 0x08: return System1Rom1[0x10000 + port];
+			case 0x10: {
+				from_mcu = 1;
+				UINT8 f = ZetReadIO(port);
+				from_mcu = 0;
+				return f;
+			}
+		}
+	}
+
+	return 0xff;
+}
+
+
+static void mcu_write_port(INT32 port, UINT8 data)
+{
+	if (port >= 0x0000 && port <= 0xffff) {
+		switch (i8751Command & 0x18) {
+			case 0x00: ZetWriteByte(port, data); return;
+			case 0x10: from_mcu = 1; ZetWriteIO(port, data); from_mcu = 0; return;
+		}
+	}
+
+	if (port == MCS51_PORT_P1) {
+		i8751Command = data;
+
+		ZetSetHALT(0, (data & 0x40) >> 6);
+		if (~data & 0x01) ZetSetIRQLine(0, 0, CPU_IRQSTATUS_HOLD);
+		return;
 	}
 }
 
-static UINT8 __fastcall ChplftZ801PortRead(UINT16 a)
+// Noboranka MCU (Dataeast Style)
+static UINT8 nob_mcu_read_port(INT32 port)
 {
-	a &= 0xff;
-	switch (a)
-	{
-		case 0x00: return 0xff - System1Input[0];
-		case 0x04: return 0xff - System1Input[1];
-		case 0x08: return 0xff - System1Input[2];
-		case 0x0c: return System1Dip[0];
-		case 0x0d: return System1Dip[1];
-		case 0x10: return System1Dip[1];
-		case 0x15: return System1BankSwitch;
-		case 0x16: return System1BgBankLatch;
-		case 0x19: return System1BankSwitch;
+	if (port == MCS51_PORT_P0) {
+		return nob_mcu_latch;
+	}
+
+	return 0xff;
+}
+
+static void nob_mcu_write_port(INT32 port, UINT8 data)
+{
+	switch (port) {
+		case MCS51_PORT_P0:
+			nob_mcu_latch = data;
+			break;
+		case MCS51_PORT_P1:
+			nob_mcu_status = data;
+			break;
+		case MCS51_PORT_P2:
+			if ((i8751Command ^ data) & 1 && (~data & 1)) {
+				nob_mcu_latch = nob_cpu_latch;
+			}
+			if ((i8751Command ^ data) & 2 && (~data & 2)) {
+				nob_cpu_latch = nob_mcu_latch;
+			}
+			if ((i8751Command ^ data) & 4 && (~data & 4)) {
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
+			}
+
+			i8751Command = data;
+			break;
+	}
+}
+
+static dtimer mcu_t0;
+
+static void t0_cb(INT32 cb)
+{
+	mcs51_set_irq_line(MCS51_T0_LINE, CPU_IRQSTATUS_ACK);
+	mcs51_set_irq_line(MCS51_T0_LINE, CPU_IRQSTATUS_NONE);
+}
+
+static void DrvMCUInit()
+{
+	mcs51_init();
+	mcs51_set_program_data(DrvMCURom);
+	mcs51_set_write_handler((is_nob) ? nob_mcu_write_port : mcu_write_port);
+	mcs51_set_read_handler((is_nob) ? nob_mcu_read_port : mcu_read_port);
+
+	timerInit();
+	if (is_nob == 0) {
+		timerAdd(mcu_t0, 0, t0_cb);
+		mcu_t0.start(usec_to_cycles(8000000/12, 2500), 0, 1, 1);
+	}
+
+	DrvMCUReset();
+}
+
+static void DrvMCUExit() {
+	mcs51_exit();
+}
+
+static void DrvMCUNewFrame()
+{
+	timerNewFrame();
+	mcs51NewFrame();
+}
+
+static INT32 DrvMCURun(INT32 cycles)
+{
+	INT32 cyc = mcs51Run(cycles);
+	timerRun(cyc);
+	return cyc;
+}
+
+static INT32 DrvMCUIdle(INT32 cycles)
+{
+	INT32 cyc = mcs51Idle(cycles);
+	timerIdle(cyc);
+	return cyc;
+}
+
+static INT32 DrvMCUTotalCycles()
+{
+	return mcs51TotalCycles();
+}
+
+static INT32 DrvMCUScan(INT32 nAction)
+{
+	mcs51_scan(nAction);
+	timerScan();
+
+	SCAN_VAR(i8751Command);
+	if (is_nob) {
+		SCAN_VAR(nob_cpu_latch);
+		SCAN_VAR(nob_mcu_latch);
+		SCAN_VAR(nob_mcu_status);
 	}
 	return 0;
+}
+
+static void DrvMCUVblank()
+{
+	if (is_nob == 0) {
+		mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+		mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
+	}
+}
+
+static void DrvMCUSync()
+{
+	INT32 todo = ((double)ZetTotalCycles(0) * (8000000/12) / 4000000) - mcs51TotalCycles();
+
+	if (todo > 0) {
+		DrvMCURun(todo);
+	}
+}
+
+static void DrvMCUReset()
+{
+	i8751Command = 0;
+	nob_cpu_latch = 0;
+	nob_mcu_latch = 0;
+	nob_mcu_status = 0;
+	mcs51Open(0);
+	mcs51_reset();
+	mcs51Close();
+
+	timerReset();
 }
 
 static void __fastcall BrainZ801PortWrite(UINT16 a, UINT8 d)
@@ -4951,7 +5196,6 @@ static void __fastcall NoboranbZ801PortWrite(UINT16 a, UINT8 d)
 
 	switch (a) {
 		case 0x14:
-		case 0x18:
 			System1SoundLatchWrite(d);
 			return;
 
@@ -4974,6 +5218,15 @@ static void __fastcall NoboranbZ801PortWrite(UINT16 a, UINT8 d)
 			return;
 		}
 
+		case 0x18: {
+			if (has_mcu) {
+				DrvMCUSync();
+				nob_cpu_latch = d;
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+			}
+			return;
+		}
+
 		case 0x24: {
 			NoboranbInp23Step = d;
 			return;
@@ -4985,102 +5238,48 @@ static void __fastcall NoboranbZ801PortWrite(UINT16 a, UINT8 d)
 
 static void __fastcall System1Z801ProgWrite(UINT16 a, UINT8 d)
 {
-	if (a >= 0xf000 && a <= 0xf3ff) { System1BgCollisionRam[a - 0xf000] = 0x7e; return; }
-	if (a >= 0xf800 && a <= 0xfbff) { System1SprCollisionRam[a - 0xf800] = 0x7e; return; }
-
-	switch (a) {
-		case 0xefbd: {
-			System1ScrollY = d;
-			break;
-		}
-
-		case 0xeffc: {
-			System1ScrollX[0] = d;
-			break;
-		}
-
-		case 0xeffd: {
-			System1ScrollX[1] = d;
-			break;
-		}
-	}
-
-	if (a >= 0xef00 && a <= 0xefff) {
-		System1efRam[a - 0xef00] = d;
-		return;
-	}
+	if (a >= 0xf000 && a <= 0xf3ff) { System1BgCollisionRam[a & 0x3ff] = 0x7e; return; }
+	if (a >= 0xf800 && a <= 0xfbff) { System1SprCollisionRam[a & 0x3ff] = 0x7e; return; }
 
 //	//bprintf(PRINT_NORMAL, _T("Prog Write %x, %x\n"), a, d);
 }
 
 static void __fastcall NoboranbZ801ProgWrite(UINT16 a, UINT8 d)
 {
-	if (a >= 0xc000 && a <= 0xc3ff) { System1BgCollisionRam[a - 0xc000] = 0x7e; return; }
-	if (a >= 0xc800 && a <= 0xcbff) { System1SprCollisionRam[a - 0xc800] = 0x7e; return; }
+	if (a >= 0xc000 && a <= 0xc3ff) { System1BgCollisionRam[a & 0x3ff] = 0x7e; return; }
+	if (a >= 0xc800 && a <= 0xcbff) { System1SprCollisionRam[a & 0x3ff] = 0x7e; return; }
 
-	switch (a) {
-		case 0xefbd: {
-			System1ScrollY = d;
-			break;
-		}
-
-		case 0xeffc: {
-			System1ScrollX[0] = d;
-			break;
-		}
-
-		case 0xeffd: {
-			System1ScrollX[1] = d;
-			break;
-		}
-	}
-
-	if (a >= 0xef00 && a <= 0xefff) {
-		System1efRam[a - 0xef00] = d;
-		return;
-	}
-
-//	//bprintf(PRINT_NORMAL, _T("Prog Write %x, %x\n"), a, d);
+	bprintf(PRINT_NORMAL, _T("Prog Write %x, %x\n"), a, d);
 }
 
 
 static UINT8 __fastcall System1Z802ProgRead(UINT16 a)
 {
-	switch (a) {
+	switch (a & ~0x1fff) {
 		case 0xe000: {
-			return System1SoundLatch;
-		}
-
-		case 0xffff: {
 			return System1SoundLatch;
 		}
 	}
 
-	//bprintf(PRINT_NORMAL, _T("Z80 2 Prog Read %x\n"), a);
+	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Read %x\tPC:  %x\n"), a, ZetGetPrevPC(-1));
 	return 0;
 }
 
 static void __fastcall System1Z802ProgWrite(UINT16 a, UINT8 d)
 {
-	switch (a) {
-		case 0xa000:
-		case 0xa001:
-		case 0xa002:
-		case 0xa003: {
+	switch (a & ~0x1fff) {
+		case 0xa000: {
 			SN76496Write(0, d);
 			return;
 		}
 
-		case 0xc000:
-		case 0xc001:
-		case 0xc002:
-		case 0xc003: {
+		case 0xc000: {
 			SN76496Write(1, d);
 			return;
 		}
 	}
 
-	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Write %x, %x\n"), a, d);
+	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Write %x, %x\tPC:  %x\n"), a, d, ZetGetPrevPC(-1));
 }
 
 static void System2PPI0WriteA(UINT8 data)
@@ -5091,6 +5290,12 @@ static void System2PPI0WriteA(UINT8 data)
 static void System2PPI0WriteB(UINT8 data)
 {
 	System2_bankswitch_w(data);
+	System1VideoMode = data;
+
+	if (has_mcu) {
+		if (from_mcu == 0) DrvMCUSync(); // don't let mcu derp itself
+		mcs51_set_irq_line(MCS51_INT1_LINE, (~data & 0x40) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	}
 }
 
 static void System2PPI0WriteC(UINT8 data)
@@ -5104,25 +5309,53 @@ static void System2PPI0WriteC(UINT8 data)
 static UINT8 __fastcall System2Z801PortRead(UINT16 a)
 {
 	a &= 0x1f;
-	switch (a)
-	{
-		case 0x00: return 0xff - System1Input[0];
-		case 0x04: return 0xff - System1Input[1];
-		case 0x08: return 0xff - System1Input[2];
+	switch (a & ~3) {
+		case 0x00: return System1Input[0];
+		case 0x04: return System1Input[1];
+		case 0x08: return System1Input[2];
+		case 0x10: return System1Dip[1];
+	}
+	switch (a & ~2) {
 		case 0x0c: return System1Dip[0];
 		case 0x0d: return System1Dip[1];
-		case 0x10: return System1Dip[1];
-		//case 0x15: return System1VideoMode;
-		//case 0x16: return System1BgBankLatch;
+	}
+	switch (a) {
 		case 0x14:
 		case 0x15:
 		case 0x16:
 		case 0x17: return ppi8255_r(0, a & 3);
-		//case 0x19: return System1VideoMode;
 	}
 
 	return 0;
 }
+
+static UINT8 __fastcall ShtngmstZ801PortRead(UINT16 a)
+{
+	a &= 0x1f;
+
+	switch (a) {
+		case 0x12:
+			return System1Input[3];
+		case 0x18:
+		case 0x19:
+		case 0x1a:
+		case 0x1b:
+			return System1Dip[2]; // mysterious port 18
+		case 0x1c:
+		case 0x1e: {
+			return BurnGunReturnX(0) - 16;
+		}
+		case 0x1d:
+		case 0x1f: {
+			UINT8 y = 0xff - BurnGunReturnY(0);
+			y = scalerange(y, 0, 0xff, 0x20, 0xff);
+			return y;
+		}
+	}
+
+	return System2Z801PortRead(a);
+}
+
 
 static void __fastcall System2Z801PortWrite(UINT16 a, UINT8 d)
 {
@@ -5135,31 +5368,7 @@ static void __fastcall System2Z801PortWrite(UINT16 a, UINT8 d)
 		case 0x17:
 			ppi8255_w(0, a & 3, d);
 		return;
-
-		//case 0x14: {System1SoundLatchWrite(d);		return;}
-		//case 0x15: {System2_bankswitch_w(d);		return;}
-		//case 0x16: {System2_videoram_bank_latch_w(d);	return;}
 	}
-}
-
-static void __fastcall System2Z801ProgWrite(UINT16 a, UINT8 d)
-{
-	if (a >= 0xf000 && a <= 0xf3ff) { System1BgCollisionRam[a - 0xf000] = 0x7e; return; }
-	if (a >= 0xf800 && a <= 0xfbff) { System1SprCollisionRam[a - 0xf800] = 0x7e; return; }
-	if (a >= 0xe000 && a <= 0xefff)
-	{
-		System1VideoRam[(0x1000*System1BgBank) + (a & 0xfff)] = d;
-		return;
-	}
-}
-
-static UINT8 __fastcall System2Z801ProgRead(UINT16 a)
-{
-	if (a >= 0xe000 && a <= 0xefff)
-	{
-		return System1VideoRam[(0x1000*System1BgBank) + (a & 0xfff)];
-	}
-	return 0;
 }
 
 /*==============================================================================================
@@ -5190,177 +5399,129 @@ static void CalcPenUsage()
 static INT32 TileXOffsets[8]      = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 TileXOffsetsWide[16] = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
 static INT32 TileYOffsets[8]      = { 0, 8, 16, 24, 32, 40, 48, 56 };
+static const UINT8 cc_op[0x100] = {
+	4*5+1*2,10*5+3*2, 7*5+1*2, 6*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+2*2, 4*5+1*2, 4*5+1*2,11*5+1*2, 7*5+1*2, 6*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+2*2, 4*5+1*2,
+	8*5+2*2,10*5+3*2, 7*5+1*2, 6*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+2*2, 4*5+1*2,12*5+2*2,11*5+1*2, 7*5+1*2, 6*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+2*2, 4*5+1*2,
+	7*5+2*2,10*5+3*2,16*5+3*2, 6*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+2*2, 4*5+1*2, 7*5+2*2,11*5+1*2,16*5+3*2, 6*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+2*2, 4*5+1*2,
+	7*5+2*2,10*5+3*2,13*5+3*2, 6*5+1*2,11*5+1*2,11*5+1*2,10*5+2*2, 4*5+1*2, 7*5+2*2,11*5+1*2,13*5+3*2, 6*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+2*2, 4*5+1*2,
+	4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	7*5+1*2, 7*5+1*2, 7*5+1*2, 7*5+1*2, 7*5+1*2, 7*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 4*5+1*2, 7*5+1*2, 4*5+1*2,
+	5*5+1*2,10*5+1*2,10*5+3*2,10*5+3*2,10*5+3*2,11*5+1*2, 7*5+2*2,11*5+1*2, 5*5+1*2,10*5+1*2,10*5+3*2, 4*5+1*2,10*5+3*2,17*5+3*2, 7*5+2*2,11*5+1*2,
+	5*5+1*2,10*5+1*2,10*5+3*2,11*5+2*2,10*5+3*2,11*5+1*2, 7*5+2*2,11*5+1*2, 5*5+1*2, 4*5+1*2,10*5+3*2,11*5+2*2,10*5+3*2, 4*5+1*2, 7*5+2*2,11*5+1*2,
+	5*5+1*2,10*5+1*2,10*5+3*2,19*5+1*2,10*5+3*2,11*5+1*2, 7*5+2*2,11*5+1*2, 5*5+1*2, 4*5+1*2,10*5+3*2, 4*5+1*2,10*5+3*2, 4*5+1*2, 7*5+2*2,11*5+1*2,
+	5*5+1*2,10*5+1*2,10*5+3*2, 4*5+1*2,10*5+3*2,11*5+1*2, 7*5+2*2,11*5+1*2, 5*5+1*2, 6*5+1*2,10*5+3*2, 4*5+1*2,10*5+3*2, 4*5+1*2, 7*5+2*2,11*5+1*2
+};
+
+static const UINT8 cc_cb[0x100] = {
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,15*5+2*2, 8*5+2*2
+};
+
+static const UINT8 cc_ed[0x100] = {
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2, 9*5+2*2,12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2, 9*5+2*2,
+12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2, 9*5+2*2,12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2, 9*5+2*2,
+12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2,18*5+2*2,12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2,18*5+2*2,
+12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2, 8*5+2*2,12*5+2*2,12*5+2*2,15*5+2*2,20*5+4*2, 8*5+2*2,14*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+16*5+2*2,16*5+2*2,16*5+2*2,16*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,16*5+2*2,16*5+2*2,16*5+2*2,16*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+16*5+2*2,16*5+2*2,16*5+2*2,16*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,16*5+2*2,16*5+2*2,16*5+2*2,16*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2,
+	8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2, 8*5+2*2
+};
+
+static const UINT8 cc_xy[0x100] = {
+( 4+4)*5+2*2,(10+4)*5+4*2,( 7+4)*5+2*2,( 6+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 7+4)*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(11+4)*5+2*2,( 7+4)*5+2*2,( 6+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 7+4)*5+3*2,( 4+4)*5+2*2,
+( 8+4)*5+3*2,(10+4)*5+4*2,( 7+4)*5+2*2,( 6+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 7+4)*5+3*2,( 4+4)*5+2*2,(12+4)*5+3*2,(11+4)*5+2*2,( 7+4)*5+2*2,( 6+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 7+4)*5+3*2,( 4+4)*5+2*2,
+( 7+4)*5+3*2,(10+4)*5+4*2,(16+4)*5+4*2,( 6+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 7+4)*5+3*2,( 4+4)*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,(16+4)*5+4*2,( 6+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 7+4)*5+3*2,( 4+4)*5+2*2,
+( 7+4)*5+3*2,(10+4)*5+4*2,(13+4)*5+4*2,( 6+4)*5+2*2,(23  )*5+3*2,(23  )*5+3*2,(19  )*5+4*2,( 4+4)*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,(13+4)*5+4*2,( 6+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 7+4)*5+3*2,( 4+4)*5+2*2,
+( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+(19  )*5+3*2,(19  )*5+3*2,(19  )*5+3*2,(19  )*5+3*2,(19  )*5+3*2,(19  )*5+3*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,( 4+4)*5+2*2,(19  )*5+3*2,( 4+4)*5+2*2,
+( 5+4)*5+2*2,(10+4)*5+2*2,(10+4)*5+4*2,(10+4)*5+4*2,(10+4)*5+4*2,(11+4)*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,( 5+4)*5+2*2,(10+4)*5+2*2,(10+4)*5+4*2,( 0  )*5    ,(10+4)*5+4*2,(17+4)*5+4*2,( 7+4)*5+3*2,(11+4)*5+2*2,
+( 5+4)*5+2*2,(10+4)*5+2*2,(10+4)*5+4*2,(11+4)*5+3*2,(10+4)*5+4*2,(11+4)*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,( 5+4)*5+2*2,( 4+4)*5+2*2,(10+4)*5+4*2,(11+4)*5+3*2,(10+4)*5+4*2,( 4  )*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,
+( 5+4)*5+2*2,(10+4)*5+2*2,(10+4)*5+4*2,(19+4)*5+2*2,(10+4)*5+4*2,(11+4)*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,( 5+4)*5+2*2,( 4+4)*5+2*2,(10+4)*5+4*2,( 4+4)*5+2*2,(10+4)*5+4*2,( 4  )*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,
+( 5+4)*5+2*2,(10+4)*5+2*2,(10+4)*5+4*2,( 4+4)*5+2*2,(10+4)*5+4*2,(11+4)*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2,( 5+4)*5+2*2,( 6+4)*5+2*2,(10+4)*5+4*2,( 4+4)*5+2*2,(10+4)*5+4*2,( 4  )*5+2*2,( 7+4)*5+3*2,(11+4)*5+2*2
+};
+
+static const UINT8 cc_xycb[0x100] = {
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,
+20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,
+20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,
+20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,20*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,
+23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2,23*5+4*2
+};
+
+/* extra cycles if jr/jp/call taken and 'interrupt latency' on rst 0-7 */
+static const UINT8 cc_ex[0x100] = {
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	5*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, /* DJNZ */
+	5*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 5*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, /* JR NZ/JR Z */
+	5*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 5*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, /* JR NC/JR C */
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5, 0*5,
+	5*5, 5*5, 5*5, 5*5, 0*5, 0*5, 0*5, 0*5, 5*5, 5*5, 5*5, 5*5, 0*5, 0*5, 0*5, 0*5, /* LDIR/CPIR/INIR/OTIR LDDR/CPDR/INDR/OTDR */
+	6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5, 6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5,
+	6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5, 6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5,
+	6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5, 6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5,
+	6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5, 6*5, 0*5, 0*5, 0*5, 7*5, 0*5, 0*5, 2*5
+};
 
 static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Num, INT32 nZ80Rom2Size, INT32 nTileRomNum, INT32 nTileRomSize, INT32 nSpriteRomNum, INT32 nSpriteRomSize, bool bReset)
-{
-	INT32 TilePlaneOffsets[3]  = { RGN_FRAC((nTileRomSize * nTileRomNum), 0, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 1, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 2, 3) };
-	INT32 nRet = 0, nLen, i, RomOffset;
-
-	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
-	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
-
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
-
-	System1TempRom = (UINT8*)BurnMalloc(0x18000);
-
-	// Load Z80 #1 Program roms
-	RomOffset = 0;
-	for (i = 0; i < nZ80Rom1Num; i++) {
-		nRet = BurnLoadRom(System1Rom1 + (i * nZ80Rom1Size), i + RomOffset, 1); if (nRet != 0) return 1;
-	}
-
-	if (System1BankedRom) {
-		memcpy(System1TempRom, System1Rom1, 0x18000);
-		memset(System1Rom1, 0, 0x18000);
-		memcpy(System1Rom1 + 0x00000, System1TempRom + 0x00000, 0x8000);
-		memcpy(System1Rom1 + 0x10000, System1TempRom + 0x08000, 0x8000);
-		memcpy(System1Rom1 + 0x08000, System1TempRom + 0x08000, 0x8000);
-		memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
-	}
-
-	if (DecodeFunction) DecodeFunction();
-
-	// Load Z80 #2 Program roms
-	RomOffset += nZ80Rom1Num;
-	for (i = 0; i < nZ80Rom2Num; i++) {
-		nRet = BurnLoadRom(System1Rom2 + (i * nZ80Rom2Size), i + RomOffset, 1); if (nRet != 0) return 1;
-	}
-
-	// Load and decode tiles
-	memset(System1TempRom, 0, 0x18000);
-	RomOffset += nZ80Rom2Num;
-	for (i = 0; i < nTileRomNum; i++) {
-		nRet = BurnLoadRom(System1TempRom + (i * nTileRomSize), i + RomOffset, 1);
-	}
-	if (TileDecodeFunction) TileDecodeFunction();
-
-	if (wide_mode) {
-		GfxDecode(System1NumTiles, 3, 16, 8, TilePlaneOffsets, TileXOffsetsWide, TileYOffsets, 0x40, System1TempRom, System1Tiles);
-	} else {
-		GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
-	}
-
-	CalcPenUsage();
-	BurnFree(System1TempRom);
-
-	// Load Sprite roms
-	RomOffset += nTileRomNum;
-	for (i = 0; i < nSpriteRomNum; i++) {
-		nRet = BurnLoadRom(System1Sprites + (i * nSpriteRomSize), i + RomOffset, 1);
-	}
-
-	// Load Colour proms
-	if (System1ColourProms) {
-		RomOffset += nSpriteRomNum;
-		nRet = BurnLoadRom(System1PromRed, 0 + RomOffset, 1);
-		nRet = BurnLoadRom(System1PromGreen, 1 + RomOffset, 1);
-		nRet = BurnLoadRom(System1PromBlue, 2 + RomOffset, 1);
-	}
-
-	// Setup the Z80 emulation
-	ZetInit(0);
-	ZetOpen(0);
-	ZetSetWriteHandler(System1Z801ProgWrite);
-	ZetSetInHandler(System1Z801PortRead);
-	ZetSetOutHandler(System1Z801PortWrite);
-	ZetMapArea(0x0000, 0x7fff, 0, System1Rom1);
-	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + 0x8000);
-	if (DecodeFunction) {
-		ZetMapArea(0x0000, 0x7fff, 2, System1Fetch1, System1Rom1);
-		ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + 0x8000, System1Rom1 + 0x8000);
-	} else {
-		ZetMapArea(0x0000, 0x7fff, 2, System1Rom1);
-		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x8000);
-	}
-	ZetMapArea(0xc000, 0xcfff, 0, System1Ram1);
-	ZetMapArea(0xc000, 0xcfff, 1, System1Ram1);
-	ZetMapArea(0xc000, 0xcfff, 2, System1Ram1);
-	ZetMapArea(0xd000, 0xd1ff, 0, System1SpriteRam);
-	ZetMapArea(0xd000, 0xd1ff, 1, System1SpriteRam);
-	ZetMapArea(0xd000, 0xd1ff, 2, System1SpriteRam);
-	ZetMapArea(0xd200, 0xd7ff, 0, System1Ram1 + 0x1000);
-	ZetMapArea(0xd200, 0xd7ff, 1, System1Ram1 + 0x1000);
-	ZetMapArea(0xd200, 0xd7ff, 2, System1Ram1 + 0x1000);
-	ZetMapArea(0xd800, 0xddff, 0, System1PaletteRam);
-	ZetMapArea(0xd800, 0xddff, 1, System1PaletteRam);
-	ZetMapArea(0xd800, 0xddff, 2, System1PaletteRam);
-	ZetMapArea(0xde00, 0xdfff, 0, System1deRam);
-	ZetMapArea(0xde00, 0xdfff, 1, System1deRam);
-	ZetMapArea(0xde00, 0xdfff, 2, System1deRam);
-	ZetMapArea(0xe000, 0xe7ff, 0, System1BgRam);
-	ZetMapArea(0xe000, 0xe7ff, 1, System1BgRam);
-	ZetMapArea(0xe000, 0xe7ff, 2, System1BgRam);
-	ZetMapArea(0xe800, 0xeeff, 0, System1VideoRam);
-	ZetMapArea(0xe800, 0xeeff, 1, System1VideoRam);
-	ZetMapArea(0xe800, 0xeeff, 2, System1VideoRam);
-	ZetMapArea(0xef00, 0xefff, 0, System1efRam);
-	ZetMapArea(0xef00, 0xefff, 2, System1efRam);
-	ZetMapArea(0xf000, 0xf3ff, 0, System1BgCollisionRam);
-	ZetMapArea(0xf000, 0xf3ff, 2, System1BgCollisionRam);
-	ZetMapArea(0xf400, 0xf7ff, 0, System1f4Ram);
-	ZetMapArea(0xf400, 0xf7ff, 1, System1f4Ram);
-	ZetMapArea(0xf400, 0xf7ff, 2, System1f4Ram);
-	ZetMapArea(0xf800, 0xfbff, 0, System1SprCollisionRam);
-	ZetMapArea(0xf800, 0xfbff, 2, System1SprCollisionRam);
-	ZetMapArea(0xfc00, 0xffff, 0, System1fcRam);
-	ZetMapArea(0xfc00, 0xffff, 1, System1fcRam);
-	ZetMapArea(0xfc00, 0xffff, 2, System1fcRam);
-	ZetClose();
-
-	ZetInit(1);
-	ZetOpen(1);
-	ZetSetReadHandler(System1Z802ProgRead);
-	ZetSetWriteHandler(System1Z802ProgWrite);
-	ZetMapArea(0x0000, 0x7fff, 0, System1Rom2);
-	ZetMapArea(0x0000, 0x7fff, 2, System1Rom2);
-	ZetMapArea(0x8000, 0x87ff, 0, System1Ram2);
-	ZetMapArea(0x8000, 0x87ff, 1, System1Ram2);
-	ZetMapArea(0x8000, 0x87ff, 2, System1Ram2);
-	ZetClose();
-
-	if (Sys1UsePPI) { // Regulus uses the PPI for sound
-		ppi8255_init(1);
-		ppi8255_set_write_ports(0, System2PPI0WriteA, NULL, System2PPI0WriteC);
-	}
-
-	memset(SpriteOnScreenMap, 255, ((wide_mode) ? 512 : 256) * 256);
-
-	System1SpriteXOffset = 1;
-
-	nCyclesTotal[0] = 4000000 / 60;
-	nCyclesTotal[1] = 4000000 / 60;
-
-	SN76489AInit(0, 2000000, 0);
-	SN76489AInit(1, 4000000, 1);
-	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
-    SN76496SetBuffered(ZetTotalCycles, 4000000);
-
-	GenericTilesInit();
-
-	MakeInputsFunction = System1MakeInputs;
-	System1Draw = System1Render;
-
-	// Reset the driver
-	if (bReset) System1DoReset();
-
-	return 0;
-}
-
-static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Num, INT32 nZ80Rom2Size, INT32 nTileRomNum, INT32 nTileRomSize, INT32 nSpriteRomNum, INT32 nSpriteRomSize, bool bReset)
 {
 	INT32 TilePlaneOffsets[3]  = { RGN_FRAC((nTileRomSize * nTileRomNum), 0, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 1, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 2, 3) };
 	INT32 nRet = 0, nLen, i, RomOffset;
 	struct BurnRomInfo ri;
 
 	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
-	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
+	System1SpriteRomSize = (nSpriteRomNum + is_shtngmst) * nSpriteRomSize;
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -5378,6 +5539,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		nRet = BurnLoadRom(System1Rom1 + (i * nZ80Rom1Size), i + RomOffset, 1); if (nRet != 0) return 1;
 		BurnDrvGetRomInfo(&ri, i);
 	}
+	RomOffset += nZ80Rom1Num;
 
 	if (System1BankedRom) {
 		memcpy(System1TempRom, System1Rom1, 0x40000);
@@ -5409,128 +5571,150 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	if (DecodeFunction) DecodeFunction();
 
 	// Load Z80 #2 Program roms
-	RomOffset += nZ80Rom1Num;
 	for (i = 0; i < nZ80Rom2Num; i++) {
 		nRet = BurnLoadRom(System1Rom2 + (i * nZ80Rom2Size), i + RomOffset, 1); if (nRet != 0) return 1;
+	}
+	RomOffset += nZ80Rom2Num;
+
+	if (has_mcu) {
+		bprintf(0, _T("Loading MCU @ %d\n"), RomOffset);
+		nRet = BurnLoadRom(DrvMCURom, RomOffset, 1);
+		RomOffset++; // account for mcu
 	}
 
 	// Load and decode tiles
 	memset(System1TempRom, 0, 0x20000);
-	RomOffset += nZ80Rom2Num;
 	for (i = 0; i < nTileRomNum; i++) {
-		nRet = BurnLoadRom(System1TempRom + (i * nTileRomSize), i + RomOffset, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(System1TempRom + (i * nTileRomSize), i + RomOffset, 1);
 	}
+	RomOffset += nTileRomNum;
 
 	if (TileDecodeFunction) TileDecodeFunction();
 
-	GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	if (wide_mode) {
+		GfxDecode(System1NumTiles, 3, 16, 8, TilePlaneOffsets, TileXOffsetsWide, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	} else {
+		GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	}
 
 	CalcPenUsage();
 	BurnFree(System1TempRom);
 
 	// Load Sprite roms
-	RomOffset += nTileRomNum;
+	if (is_shtngmst) memset(System1Sprites, 0xff, System1SpriteRomSize);
 	for (i = 0; i < nSpriteRomNum; i++) {
 		nRet = BurnLoadRom(System1Sprites + (i * nSpriteRomSize), i + RomOffset, 1);
 	}
+	RomOffset += nSpriteRomNum;
 
 	// Load Colour proms
 	if (System1ColourProms) {
-		RomOffset += nSpriteRomNum;
 		nRet = BurnLoadRom(System1PromRed, 0 + RomOffset, 1);
 		nRet = BurnLoadRom(System1PromGreen, 1 + RomOffset, 1);
 		nRet = BurnLoadRom(System1PromBlue, 2 + RomOffset, 1);
+		RomOffset += 3; // add color-prom count
 	}
 
 	// Setup the Z80 emulation
 	ZetInit(0);
 	ZetOpen(0);
-	ZetSetReadHandler(System2Z801ProgRead);
-	ZetSetWriteHandler(System2Z801ProgWrite);
-	ZetSetInHandler(System2Z801PortRead);
-	ZetSetOutHandler(System2Z801PortWrite);
+	z80_set_cycle_tables(&cc_op[0], &cc_cb[0], &cc_ed[0], &cc_xy[0], &cc_xycb[0], &cc_ex[0]);
+	if (IsSystem2) {
+		ZetSetWriteHandler(System1Z801ProgWrite);
+		ZetSetInHandler(System2Z801PortRead);
+		ZetSetOutHandler(System2Z801PortWrite);
 
-	ZetMapArea(0x0000, 0x7fff, 0, System1Rom1);
-	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + 0x8000);
-	if (DecodeFunction) {
-		ZetMapArea(0x0000, 0x7fff, 2, System1Rom1 + 0x20000, System1Rom1);
-		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x30000, System1Rom1 + 0x10000);  // 30 fetch, 10 for code(?)
+		ZetMapMemory(System1Rom1,			0x0000, 0x7fff, MAP_ROM);
+		ZetMapMemory(System1Rom1 + 0x8000,	0x8000, 0xbfff, MAP_ROM);
+		if (DecodeFunction) {
+			ZetMapArea(0x0000, 0x7fff, 2, System1Rom1 + 0x20000, System1Rom1);
+			ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x30000, System1Rom1 + 0x10000);  // 30 fetch, 10 for code(?)
+		}
 	} else {
-		ZetMapArea(0x0000, 0x7fff, 2, System1Rom1);
-		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x8000);
+		ZetSetWriteHandler(System1Z801ProgWrite);
+		ZetSetInHandler(System1Z801PortRead);
+		ZetSetOutHandler(System1Z801PortWrite);
+		ZetMapMemory(System1Rom1,			0x0000, 0x7fff, MAP_ROM);
+		ZetMapMemory(System1Rom1 + 0x8000,	0x8000, 0xbfff, MAP_ROM);
+		if (DecodeFunction) {
+			ZetMapArea(0x0000, 0x7fff, 2, System1Fetch1, System1Rom1);
+			ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + 0x8000, System1Rom1 + 0x8000);
+		}
 	}
-	ZetMapArea(0xc000, 0xcfff, 0, System1Ram1);
-	ZetMapArea(0xc000, 0xcfff, 1, System1Ram1);
-	ZetMapArea(0xc000, 0xcfff, 2, System1Ram1);
-	ZetMapArea(0xd000, 0xd7ff, 0, System1SpriteRam);
-	ZetMapArea(0xd000, 0xd7ff, 1, System1SpriteRam);
-	ZetMapArea(0xd000, 0xd7ff, 2, System1SpriteRam);
-	ZetMapArea(0xd800, 0xdfff, 0, System1PaletteRam);
-	ZetMapArea(0xd800, 0xdfff, 1, System1PaletteRam);
-	ZetMapArea(0xd800, 0xdfff, 2, System1PaletteRam);
-	ZetMapArea(0xf000, 0xf3ff, 0, System1BgCollisionRam);
-	ZetMapArea(0xf000, 0xf3ff, 2, System1BgCollisionRam);
-	ZetMapArea(0xf400, 0xf7ff, 0, System1f4Ram);
-	ZetMapArea(0xf400, 0xf7ff, 1, System1f4Ram);
-	ZetMapArea(0xf400, 0xf7ff, 2, System1f4Ram);
-	ZetMapArea(0xf800, 0xfbff, 0, System1SprCollisionRam);
-	ZetMapArea(0xf800, 0xfbff, 2, System1SprCollisionRam);
-	ZetMapArea(0xfc00, 0xffff, 0, System1fcRam);
-	ZetMapArea(0xfc00, 0xffff, 1, System1fcRam);
-	ZetMapArea(0xfc00, 0xffff, 2, System1fcRam);
+
+	ZetMapMemory(System1Ram1,		0xc000, 0xcfff, MAP_RAM);
+	ZetMapMemory(System1SpriteRam,	0xd000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(System1PaletteRam,	0xd800, 0xdfff, MAP_RAM);
+
+	System2_videoram_bank_latch_w(0);
+
+	if (!IsSystem2) {
+		// System1 has a static fg/bg page
+		System1BgRam = System1VideoRam + 0x0000;
+		System1FgRam = System1VideoRam + 0x0800;
+	}
+
+	ZetMapMemory(System1BgCollisionRam, 0xf000, 0xf3ff, MAP_ROM); // R/O
+	ZetMapMemory(System1f4Ram,			0xf400, 0xf7ff, MAP_RAM);
+	ZetMapMemory(System1SprCollisionRam,0xf800, 0xfbff, MAP_ROM); // R/O
+	ZetMapMemory(System1fcRam,			0xfc00, 0xffff, MAP_RAM);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(System1Z802ProgRead);
 	ZetSetWriteHandler(System1Z802ProgWrite);
-	ZetMapArea(0x0000, 0x7fff, 0, System1Rom2);
-	ZetMapArea(0x0000, 0x7fff, 2, System1Rom2);
-	ZetMapArea(0x8000, 0x87ff, 0, System1Ram2);
-	ZetMapArea(0x8000, 0x87ff, 1, System1Ram2);
-	ZetMapArea(0x8000, 0x87ff, 2, System1Ram2);
-	ZetMapArea(0x8800, 0x8fff, 0, System1Ram2);
-	ZetMapArea(0x8800, 0x8fff, 1, System1Ram2);
-	ZetMapArea(0x8800, 0x8fff, 2, System1Ram2);
+	ZetMapMemory(System1Rom2, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(System1Ram2, 0x8000, 0x87ff, MAP_RAM);
+	ZetMapMemory(System1Ram2, 0x8800, 0x8fff, MAP_RAM); // mirror
+	ZetMapMemory(System1Ram2, 0x9000, 0x97ff, MAP_RAM); // mirror
+	ZetMapMemory(System1Ram2, 0x9800, 0x9fff, MAP_RAM); // mirror
 	ZetClose();
 
-	memset(SpriteOnScreenMap, 255, 256 * 256);
+	if (has_mcu) {
+		DrvMCUInit();
+	}
 
-	System1SpriteXOffset = 1;
+	if (Sys1UsePPI) { // Regulus uses the PPI for sound
+		ppi8255_init(1);
+		ppi8255_set_write_ports(0, System2PPI0WriteA, NULL, System2PPI0WriteC);
+	}
+	if (IsSystem2) {
+		ppi8255_init(1);
+		ppi8255_set_write_ports(0, System2PPI0WriteA, System2PPI0WriteB, System2PPI0WriteC);
 
-	nCyclesTotal[0] = 4000000 / 60;
-	nCyclesTotal[1] = 4000000 / 60;
+		System1SpriteXOffset = 15;
+	} else {
+		System1SpriteXOffset = 1;
+	}
+
+	memset(SpriteOnScreenMap, 255, ((wide_mode) ? 512 : 256) * 256);
 
 	SN76489AInit(0, 2000000, 0);
 	SN76489AInit(1, 4000000, 1);
-	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.35, BURN_SND_ROUTE_BOTH);
     SN76496SetBuffered(ZetTotalCycles, 4000000);
 
 	GenericTilesInit();
 
 	MakeInputsFunction = System1MakeInputs;
 
-	System1BgRam = NULL;
-	System1SpriteXOffset = 15;
-
-	ZetOpen(0);
-	ZetMemCallback(0xf000, 0xf3ff, 1); // collision ram written through write handler
-	ZetMemCallback(0xf800, 0xfbff, 1); // ""
-	ZetClose();
-
-	ppi8255_init(1);
-	ppi8255_set_write_ports(0, System2PPI0WriteA, System2PPI0WriteB, System2PPI0WriteC);
-
-	System1Draw = System2Render;
-	memset(System1VideoRam, 0x00, 0x4000); // mapped through bank_latch
+	if (has_dial) {
+		BurnTrackballInit(1);
+	}
 
 	// Reset the driver
 	if (bReset) System1DoReset();
 
-	IsSystem2 = 1; // for banking etc.
-
 	return 0;
+}
+
+static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Num, INT32 nZ80Rom2Size, INT32 nTileRomNum, INT32 nTileRomSize, INT32 nSpriteRomNum, INT32 nSpriteRomSize, bool bReset)
+{
+	IsSystem2 = 1;
+
+	return System1Init(nZ80Rom1Num, nZ80Rom1Size, nZ80Rom2Num, nZ80Rom2Size, nTileRomNum, nTileRomSize, nSpriteRomNum, nSpriteRomSize, bReset);
 }
 
 static INT32 FourdwarrioInit()
@@ -5549,13 +5733,12 @@ static INT32 BlockgalInit()
 
 	DecodeFunction = blockgal_decode;
 
+	has_dial = 1;
+
 	nRet = System1Init(2, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 	BurnFree(System1MC8123Key);
 
 	if (nRet == 0) {
-		ZetOpen(0);
-		ZetSetInHandler(BlockgalZ801PortRead);
-		ZetClose();
 		MakeInputsFunction = BlockgalMakeInputs;
 	}
 
@@ -5763,58 +5946,50 @@ static INT32 NobbInit()
 	System1ColourProms = 1;
 	System1BankedRom = 1;
 
+	is_nob = 1;
+
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x8000, 4, 0x8000, 0);
 
 	if (nRet == 0) {
-		nCyclesTotal[0] = 8000000 / 60;
 		System1Rom2[0x02f9] = 0x28;
 
 		ZetOpen(0);
 		ZetSetWriteHandler(NoboranbZ801ProgWrite);
 		ZetSetInHandler(NoboranbZ801PortRead);
 		ZetSetOutHandler(NoboranbZ801PortWrite);
-		ZetMemCallback(0xc000, 0xffff, 0);
-		ZetMemCallback(0xc000, 0xffff, 1);
-		ZetMemCallback(0xc000, 0xffff, 2);
-		ZetMapArea(0xc000, 0xc3ff, 0, System1BgCollisionRam);
-		ZetMapArea(0xc000, 0xc3ff, 2, System1BgCollisionRam);
-		ZetMapArea(0xc400, 0xc7ff, 0, System1f4Ram);
-		ZetMapArea(0xc400, 0xc7ff, 1, System1f4Ram);
-		ZetMapArea(0xc400, 0xc7ff, 2, System1f4Ram);
-		ZetMapArea(0xc800, 0xcbff, 0, System1SprCollisionRam);
-		ZetMapArea(0xc800, 0xcbff, 2, System1SprCollisionRam);
-		ZetMapArea(0xcc00, 0xcfff, 0, System1fcRam);
-		ZetMapArea(0xcc00, 0xcfff, 1, System1fcRam);
-		ZetMapArea(0xcc00, 0xcfff, 2, System1fcRam);
-		ZetMapArea(0xd000, 0xd1ff, 0, System1SpriteRam);
-		ZetMapArea(0xd000, 0xd1ff, 1, System1SpriteRam);
-		ZetMapArea(0xd000, 0xd1ff, 2, System1SpriteRam);
-		ZetMapArea(0xd200, 0xd7ff, 0, System1Ram1 + 0x1000);
-		ZetMapArea(0xd200, 0xd7ff, 1, System1Ram1 + 0x1000);
-		ZetMapArea(0xd200, 0xd7ff, 2, System1Ram1 + 0x1000);
-		ZetMapArea(0xd800, 0xddff, 0, System1PaletteRam);
-		ZetMapArea(0xd800, 0xddff, 1, System1PaletteRam);
-		ZetMapArea(0xd800, 0xddff, 2, System1PaletteRam);
-		ZetMapArea(0xde00, 0xdfff, 0, System1deRam);
-		ZetMapArea(0xde00, 0xdfff, 1, System1deRam);
-		ZetMapArea(0xde00, 0xdfff, 2, System1deRam);
-		ZetMapArea(0xe000, 0xe7ff, 0, System1BgRam);
-		ZetMapArea(0xe000, 0xe7ff, 1, System1BgRam);
-		ZetMapArea(0xe000, 0xe7ff, 2, System1BgRam);
-		ZetMapArea(0xe800, 0xeeff, 0, System1VideoRam);
-		ZetMapArea(0xe800, 0xeeff, 1, System1VideoRam);
-		ZetMapArea(0xe800, 0xeeff, 2, System1VideoRam);
-		ZetMapArea(0xef00, 0xefff, 0, System1efRam);
-		ZetMapArea(0xef00, 0xefff, 2, System1efRam);
-		ZetMapArea(0xf000, 0xffff, 0, System1Ram1);
-		ZetMapArea(0xf000, 0xffff, 1, System1Ram1);
-		ZetMapArea(0xf000, 0xffff, 2, System1Ram1);
+		ZetUnmapMemory(0xc000, 0xcfff, MAP_RAM);
+		ZetMapMemory(System1BgCollisionRam,	0xc000, 0xc3ff, MAP_ROM); // .w in handler
+		ZetMapMemory(System1f4Ram,			0xc400, 0xc7ff, MAP_RAM);
+		ZetMapMemory(System1SprCollisionRam,0xc800, 0xcbff, MAP_ROM); // .w in handler
+		ZetMapMemory(System1fcRam,			0xcc00, 0xcfff, MAP_RAM);
+		ZetMapMemory(System1SpriteRam,		0xd000, 0xd7ff, MAP_RAM);
+		ZetMapMemory(System1PaletteRam,		0xd800, 0xdfff, MAP_RAM);
+		ZetMapMemory(System1Ram1,			0xf000, 0xffff, MAP_RAM);
 		ZetClose();
 
 		System1DoReset();
 	}
 
 	return nRet;
+}
+
+static INT32 NobInit()
+{
+	has_mcu = 1;
+	is_nob = 1;
+
+	INT32 rc = NobbInit();
+
+	if (!rc) {
+		bprintf(0, _T("nob: patching startup opcode\n"));
+		ZetOpen(0);
+		memcpy(System1Fetch1, System1Rom1, 0x100);
+		System1Fetch1[1] = 0x80;
+		ZetMapMemory(System1Fetch1, 0x0000, 0x00ff, MAP_FETCH);
+		ZetClose();
+	}
+
+	return rc;
 }
 
 static INT32 Pitfall2Init()
@@ -6002,31 +6177,51 @@ static INT32 WmatchInit()
 
 static INT32 ChplftbInit()
 {
-	INT32 nRet;
 	System1ColourProms = 1;
 	System1BankedRom = 1;
-	nRet = System1Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
+
+	INT32 nRet = System2Init(3, 0x8000, 1, 0x8000, 3, 0x8000, (is_shtngmst) ? 7 : 4, 0x8000, 1);
 
 	if (nRet == 0) {
-		System1RowScroll = 1;
-		ZetOpen(0);
-
-		ZetMapArea(0xe000, 0xe7ff, 0, System1VideoRam); //read
-		ZetMapArea(0xe000, 0xe7ff, 1, System1VideoRam);	//write
-		ZetMapArea(0xe000, 0xe7ff, 2, System1VideoRam); //fetch
-
-		ZetMapArea(0xe800, 0xeeff, 0, System1BgRam);
-		ZetMapArea(0xe800, 0xeeff, 1, System1BgRam);
-		ZetMapArea(0xe800, 0xeeff, 2, System1BgRam);
-
-		ZetSetInHandler(ChplftZ801PortRead);
-		ZetSetOutHandler(ChplftZ801PortWrite);
-		ZetClose();
+		System1RowScroll = (is_shtngmst) ? 0 : 1;
+		System1FgRam = System1VideoRam + 0x0000;
+		System1BgRam = System1VideoRam + 0x0800;
 	}
 
 	return nRet;
 }
 
+static INT32 ChopliftInit()
+{
+	has_mcu = 1;
+
+	INT32 nRet = ChplftbInit();
+	if (!nRet) {
+	}
+
+	return nRet;
+}
+
+static INT32 ShtngmstInit()
+{
+	EnforceBars = 1;
+	has_mcu = 1;
+	is_shtngmst = 1;
+
+	INT32 nRet = ChplftbInit();
+	if (!nRet) {
+
+		MakeInputsFunction = ShtngmstMakeInputs;
+
+		ZetOpen(0);
+		ZetSetInHandler(ShtngmstZ801PortRead);
+		ZetClose();
+
+		BurnGunInit(1, true);
+	}
+
+	return nRet;
+}
 
 static INT32 WbmlInit()
 {
@@ -6101,6 +6296,7 @@ static INT32 TokisensaInit()
 
 static INT32 UfosensiInit()
 {
+	EnforceBars = 1;
 	System1RowScroll = 1;
 
 	return WbmlInit();
@@ -6110,6 +6306,16 @@ static INT32 System1Exit()
 {
 	ZetExit();
 
+	if (has_mcu) {
+		DrvMCUExit();
+		has_mcu = 0;
+	}
+
+	if (has_dial) {
+		BurnTrackballExit();
+		has_dial = 0;
+	}
+
 	SN76496Exit();
 
 	if (IsSystem2 || Sys1UsePPI)
@@ -6118,6 +6324,12 @@ static INT32 System1Exit()
 	GenericTilesExit();
 
 	BurnFree(Mem);
+
+	if (is_shtngmst) {
+		BurnGunExit();
+		is_shtngmst = 0;
+	}
+	is_nob = 0;
 
 	System1SoundLatch = 0;
 	System1ScrollX[0] = System1ScrollX[1] = System1ScrollY = 0;
@@ -6129,8 +6341,6 @@ static INT32 System1Exit()
 	NoboranbInp16Step = 0;
 	NoboranbInp17Step = 0;
 	NoboranbInp23Step = 0;
-	BlockgalDial1 = 0;
-	BlockgalDial2 = 0;
 
 	System1SpriteRomSize = 0;
 	System1NumTiles = 0;
@@ -6144,11 +6354,11 @@ static INT32 System1Exit()
 	DecodeFunction = NULL;
 	TileDecodeFunction = NULL;
 	MakeInputsFunction = NULL;
-	System1Draw = NULL;
+
 	System1RowScroll = 0;
 	IsSystem2 = 0;
 	Sys1UsePPI = 0;
-
+	EnforceBars = 0;
 	wide_mode = 0;
 
 	return 0;
@@ -6176,7 +6386,7 @@ static void DrawPixel(INT32 x, INT32 y, INT32 SpriteNum, INT32 Colour)
 
 	SpriteOnScreenMap[(y * width) + x] = SpriteNum;
 
-	if (dx >= 0 && dx < nScreenWidth && dy >= 0 && dy < nScreenHeight) {
+	if (pBurnDraw && dx >= 0 && dx < nScreenWidth && dy >= 0 && dy < nScreenHeight) {
 		UINT16 *pPixel = pTransDraw + (dy * nScreenWidth);
 		pPixel[dx] = Colour;
 	}
@@ -6184,11 +6394,12 @@ static void DrawPixel(INT32 x, INT32 y, INT32 SpriteNum, INT32 Colour)
 	xr = ((x - System1BgScrollX) & 0xff) / 8;
 	yr = ((y - System1BgScrollY) & 0xff) / 8;
 
-	if(System1Draw != System2Render)
+	if (IsSystem2 == 0) {
 		if (System1BgRam[2 * (32 * yr + xr) + 1] & 0x10)
 		{
 			System1BgCollisionRam[0x20 + SpriteNum] = 0xff;
 		}
+	}
 }
 
 static void DrawSprite(INT32 Num)
@@ -6200,7 +6411,7 @@ static void DrawSprite(INT32 Num)
 
 	SpriteBase = System1SpriteRam + (0x10 * Num);
 	Src = (SpriteBase[7] << 8) | SpriteBase[6];
-	Bank = 0x8000 * (((SpriteBase[3] & 0x80) >> 7) + ((SpriteBase[3] & 0x40) >> 5));
+	Bank = 0x8000 * (((SpriteBase[3] & 0x80) >> 7) + ((SpriteBase[3] & 0x40) >> 5) + ((SpriteBase[3] & 0x20) >> 3));
 	Bank &= (System1SpriteRomSize - 1);
 	Skip = (SpriteBase[5] << 8) | SpriteBase[4];
 
@@ -6382,8 +6593,8 @@ static void System1DrawFgLayer(INT32 PriorityDraw)
 	for (Offs = 0; Offs < 0x700; Offs += 2) {
 		INT32 Code, Colour;
 
-		if ((System1VideoRam[Offs + 1] & 0x08) == PriorityDraw) {
-			Code = (System1VideoRam[Offs + 1] << 8) | System1VideoRam[Offs + 0];
+		if ((System1FgRam[Offs + 1] & 0x08) == PriorityDraw) {
+			Code = (System1FgRam[Offs + 1] << 8) | System1FgRam[Offs + 0];
 			Code = ((Code >> 4) & 0x800) | (Code & 0x7ff);
 			Colour = (Code >> 5) & 0x3f;
 
@@ -6472,13 +6683,18 @@ static INT32 System1Render()
 {
 	BurnTransferClear();
 	System1CalcPalette();
+
+	System1ScrollY = System1VideoRam[0x800+0x7bd];
+	System1ScrollX[0] = System1VideoRam[0x800+0x7fc];
+	System1ScrollX[1] = System1VideoRam[0x800+0x7fd];
+
 	if (nBurnLayer & 1) System1DrawBgLayer(-1);
 	if (nBurnLayer & 2) System1DrawFgLayer(0);
 	if (nBurnLayer & 4) System1DrawBgLayer(0);
 	if (nSpriteEnable & 1) System1DrawSprites();
 	if (nBurnLayer & 8) System1DrawBgLayer(1);
 	if (nSpriteEnable & 2) System1DrawFgLayer(1);
-	if (System1VideoMode & 0x010) BurnTransferClear();
+	if (System1VideoMode & 0x10) BurnTransferClear();
 	BurnTransferCopy(System1Palette);
 
 	return 0;
@@ -6558,6 +6774,16 @@ static void System2DrawBgLayer(INT32 trasp)
 	}
 }
 
+static void enforce_bars()
+{   // shtngmst, ufosensi:
+	// game uses black bars (columns) to hide tilemap-wrapping glitches
+	// but sometimes they go missing, and it looks aweful.
+	for (INT32 y = 0; y < nScreenHeight; y++) {
+		UINT16 *p = &pTransDraw[y * nScreenWidth];
+		memset(&p[  0], 0, 8*2);
+		memset(&p[248], 0, 8*2);
+	}
+}
 
 static INT32 System2Render()
 {
@@ -6567,7 +6793,8 @@ static INT32 System2Render()
 	if (nBurnLayer & 2) System1DrawSprites();
 	if (nBurnLayer & 4) System2DrawBgLayer(1);
 	if (nBurnLayer & 8) System2DrawFgLayer();
-	if (System1VideoMode & 0x010) BurnTransferClear();
+	if (System1VideoMode & 0x10) BurnTransferClear();
+	if (EnforceBars) enforce_bars();
 	BurnTransferCopy(System1Palette);
 
 	return 0;
@@ -6579,8 +6806,6 @@ Frame functions
 
 INT32 System1Frame()
 {
-	INT32 nInterleave = 10;
-
 	if (System1Reset)
 	{
 		System1DoReset();
@@ -6590,25 +6815,68 @@ INT32 System1Frame()
 
 	ZetNewFrame();
 
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	if (has_mcu) {
+		DrvMCUNewFrame();
+
+		mcs51Open(0);
+		DrvMCUIdle(nCyclesExtra[2]);
+		mcs51Close();
+	}
+	ZetIdle(1, nCyclesExtra[1]);
+
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 8000000 / 12 / 60 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
+		if (has_mcu) {
+			mcs51Open(0);
+		}
+
         CPU_RUN(0, Zet);
-        if (i == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+        if (i == nInterleave-1 && (has_mcu == 0 || is_nob)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (has_mcu) {
+			CPU_RUN_SYNCINT(2, DrvMCU);
+			if (i == nInterleave-1) DrvMCUVblank();
+		}
+
+		if (has_mcu) {
+			mcs51Close();
+		}
 		ZetClose();
 
 		ZetOpen(1);
-        CPU_RUN(1, Zet);
-        if (i == 2 || i == 4 || i == 6 || i == 8) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+        CPU_RUN_SYNCINT(1, Zet);
+		if ((i & 0x3f) == 0x3f) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = ZetTotalCycles(1) - nCyclesTotal[1];
+	if (has_mcu) {
+		mcs51Open(0);
+		nCyclesExtra[2] = mcs51TotalCycles() - nCyclesTotal[2];
+		mcs51Close();
+	}
+
+//	bprintf(0, _T("cyc debug:  %d\t%d\t%d\n"), nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2]);
 
 	if (pBurnSoundOut) {
         SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) System1Draw();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+
+		if (is_shtngmst) {
+			BurnGunDrawTargets();
+		}
+	} else {
+		// if video output disabled, we still have to draw sprites for HW
+		// collisions to work
+		System1DrawSprites();
+	}
 
 	return 0;
 }
@@ -6635,10 +6903,25 @@ static INT32 System1Scan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
+
+		if (has_mcu) {
+			DrvMCUScan(nAction);
+		}
+
 		SN76496Scan(nAction, pnMin);
 
 		if (IsSystem2 || Sys1UsePPI) {
 			ppi8255_scan();
+		}
+
+		if (is_shtngmst) {
+			BurnGunScan();
+
+			SCAN_VAR(sht_trigger);
+		}
+
+		if (has_dial) {
+			BurnTrackballScan();
 		}
 
 		SCAN_VAR(System1ScrollX);
@@ -6652,12 +6935,12 @@ static INT32 System1Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(NoboranbInp16Step);
 		SCAN_VAR(NoboranbInp17Step);
 		SCAN_VAR(NoboranbInp23Step);
-		SCAN_VAR(BlockgalDial1);
-		SCAN_VAR(BlockgalDial2);
 
 		SCAN_VAR(System1BankSwitch);
 		SCAN_VAR(System1BgBankLatch);
 		SCAN_VAR(System1BgBank);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (nAction & ACB_WRITE) {
 			if (System1BankedRom) {
@@ -6679,7 +6962,7 @@ struct BurnDriver BurnDrvFourdwarrio = {
 	"4dwarrio", NULL, NULL, NULL, "1985",
 	"4-D Warriors (315-5162)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_HORSHOOT, 0,
 	NULL, FourdwarrioRomInfo, FourdwarrioRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, FourdwarrioDIPInfo,
 	FourdwarrioInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6689,7 +6972,7 @@ struct BurnDriver BurnDrvBlockgal = {
 	"blockgal", NULL, NULL, NULL, "1987",
 	"Block Gal (MC-8123B, 317-0029)\0", NULL, "Sega / Vic Tokai", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_BREAKOUT, 0,
 	NULL, BlockgalRomInfo, BlockgalRomName, NULL, NULL, NULL, NULL, BlockgalInputInfo, BlockgalDIPInfo,
 	BlockgalInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -6699,7 +6982,7 @@ struct BurnDriver BurnDrvBrain = {
 	"brain", NULL, NULL, NULL, "1986",
 	"Brain\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_HORSHOOT, 0,
 	NULL, BrainRomInfo, BrainRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, BrainDIPInfo,
 	BrainInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6709,7 +6992,7 @@ struct BurnDriver BurnDrvBullfgt = {
 	"bullfgt", NULL, NULL, NULL, "1984",
 	"Bullfight (315-5065)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SPORTSMISC, 0,
 	NULL, BullfgtRomInfo, BullfgtRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, BullfgtDIPInfo,
 	BullfgtInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6719,7 +7002,7 @@ struct BurnDriver BurnDrvThetogyu = {
 	"thetogyu", "bullfgt", NULL, NULL, "1984",
 	"The Togyu (315-5065, Japan)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SPORTSMISC, 0,
 	NULL, ThetogyuRomInfo, ThetogyuRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, BullfgtDIPInfo,
 	ThetogyuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6729,7 +7012,7 @@ struct BurnDriver BurnDrvFlicky = {
 	"flicky", NULL, NULL, NULL, "1984",
 	"Flicky (128k Version, 315-5051)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyRomInfo, FlickyRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
 	FlickyInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6739,7 +7022,7 @@ struct BurnDriver BurnDrvFlickya = {
 	"flickya", "flicky", NULL, NULL, "1984",
 	"Flicky (128k Version, 315-5051, larger roms))\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyaRomInfo, FlickyaRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
 	FlickygInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6749,9 +7032,9 @@ struct BurnDriver BurnDrvFlickyg = {
 	"flickyg", "flicky", NULL, NULL, "1984",
 	"Flicky (128k Version, System 2, 315-5051, alt graphics)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickygRomInfo, FlickygRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
-	FlickygInit, System1Exit, System1Frame, System1Render, System1Scan,
+	FlickygInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -6759,7 +7042,7 @@ struct BurnDriver BurnDrvFlickys1 = {
 	"flickys1", "flicky", NULL, NULL, "1984",
 	"Flicky (64k Version, 315-5051, set 2)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Flickys1RomInfo, Flickys1RomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
 	Flicks1Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6769,9 +7052,9 @@ struct BurnDriver BurnDrvFlickys2 = {
 	"flickys2", "flicky", NULL, NULL, "1984",
 	"Flicky (128k Version, not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Flickys2RomInfo, Flickys2RomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
-	Flicks2Init, System1Exit, System1Frame, System1Render, System1Scan,
+	Flicks2Init, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -6779,9 +7062,9 @@ struct BurnDriver BurnDrvFlickys2g = {
 	"flickys2g", "flicky", NULL, NULL, "1984",
 	"Flicky (128k Version, System 2, not encrypted, alt graphics)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Flickys2gRomInfo, Flickys2gRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
-	Flicks2gInit, System1Exit, System1Frame, System1Render, System1Scan,
+	Flicks2gInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -6789,7 +7072,7 @@ struct BurnDriver BurnDrvFlickyo = {
 	"flickyo", "flicky", NULL, NULL, "1984",
 	"Flicky (64k Version, 315-5051, set 1)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyoRomInfo, FlickyoRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
 	Flicks1Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6799,7 +7082,7 @@ struct BurnDriver BurnDrvFlickyup = {
 	"flickyup", "flicky", NULL, NULL, "1984",
 	"Flicky (64k Version, on Up'n Down boardset)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyupRomInfo, FlickyupRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
 	Flicks1Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6809,29 +7092,29 @@ struct BurnDriver BurnDrvGardia = {
 	"gardia", NULL, NULL, NULL, "1986",
 	"Gardia (317-0006)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, GardiaRomInfo, GardiaRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
 	GardiaInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvGardiab = {
+struct BurnDriver BurnDrvGardiab = {
 	"gardiab", "gardia", NULL, NULL, "1986",
 	"Gardia (317-0007?, bootleg)\0", NULL, "Sega / Coreland", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, GardiabRomInfo, GardiabRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
-	GardiabInit, System1Exit, System1Frame, System1Render, System1Scan,
+	GardiabInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvGardiaj = {
+struct BurnDriver BurnDrvGardiaj = {
 	"gardiaj", "gardia", NULL, NULL, "1986",
 	"Gardia (Japan, 317-0006)\0", NULL, "Sega / Coreland", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, GardiajRomInfo, GardiajRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
-	GardiajInit, System1Exit, System1Frame, System1Render, System1Scan,
+	GardiajInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
 };
 
@@ -6839,7 +7122,7 @@ struct BurnDriver BurnDrvHvymetal = {
 	"hvymetal", NULL, NULL, NULL, "1985",
 	"Heavy Metal (315-5135)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, HvymetalRomInfo, HvymetalRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, HvymetalDIPInfo,
 	HvymetalInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6849,7 +7132,7 @@ struct BurnDriver BurnDrvImsorry = {
 	"imsorry", NULL, NULL, NULL, "1985",
 	"I'm Sorry (315-5110, US)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, ImsorryRomInfo, ImsorryRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, ImsorryDIPInfo,
 	ImsorryInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6859,7 +7142,7 @@ struct BurnDriver BurnDrvImsorryj = {
 	"imsorryj", "imsorry", NULL, NULL, "1985",
 	"Gonbee no I'm Sorry (315-5110, Japan)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, ImsorryjRomInfo, ImsorryjRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, ImsorryDIPInfo,
 	ImsorryInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6869,7 +7152,7 @@ struct BurnDriver BurnDrvMrviking = {
 	"mrviking", NULL, NULL, NULL, "1984",
 	"Mister Viking (315-5041)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, MrvikingRomInfo, MrvikingRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MrvikingDIPInfo,
 	MrvikingInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -6879,7 +7162,7 @@ struct BurnDriver BurnDrvMrvikingj = {
 	"mrvikingj", "mrviking", NULL, NULL, "1984",
 	"Mister Viking (315-5041, Japan)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, MrvikingjRomInfo, MrvikingjRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MrvikngjDIPInfo,
 	MrvikingInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -6889,7 +7172,7 @@ struct BurnDriver BurnDrvMyhero = {
 	"myhero", NULL, NULL, NULL, "1985",
 	"My Hero (US, not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, MyheroRomInfo, MyheroRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MyheroDIPInfo,
 	MyheroInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6899,7 +7182,7 @@ struct BurnDriver BurnDrvSscandal = {
 	"sscandal", "myhero", NULL, NULL, "1985",
 	"Seishun Scandal (315-5132, Japan)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, SscandalRomInfo, SscandalRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MyheroDIPInfo,
 	SscandalInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6909,7 +7192,7 @@ struct BurnDriver BurnDrvMyherobl = {
 	"myherobl", "myhero", NULL, NULL, "1985",
 	"My Hero (bootleg, 315-5132 encryption)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, MyheroblRomInfo, MyheroblRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MyheroDIPInfo,
 	MyheroblInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6919,7 +7202,7 @@ struct BurnDriver BurnDrvMyherok = {
 	"myherok", "myhero", NULL, NULL, "1985",
 	"My Hero (Korea)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, MyherokRomInfo, MyherokRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MyheroDIPInfo,
 	MyherokInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6929,9 +7212,9 @@ struct BurnDriver BurnDrvNob = {
 	"nob", NULL, NULL, NULL, "1986",
 	"Noboranka (Japan)\0", NULL, "Data East Corporation", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NobRomInfo, NobRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, NobbDIPInfo,
-	NobbInit, System1Exit, System1Frame, System1Render, System1Scan,
+	NobInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };
 
@@ -6939,7 +7222,7 @@ struct BurnDriver BurnDrvNobb = {
 	"nobb", "nob", NULL, NULL, "1986",
 	"Noboranka (Japan, bootleg)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NobbRomInfo, NobbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, NobbDIPInfo,
 	NobbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -6949,7 +7232,7 @@ struct BurnDriver BurnDrvPitfall2 = {
 	"pitfall2", NULL, NULL, NULL, "1985",
 	"Pitfall II (315-5093)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Pitfall2RomInfo, Pitfall2RomName, NULL, NULL, NULL, NULL, MyheroInputInfo, Pitfall2DIPInfo,
 	Pitfall2Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6959,7 +7242,7 @@ struct BurnDriver BurnDrvPitfall2a = {
 	"pitfall2a", "pitfall2", NULL, NULL, "1985",
 	"Pitfall II (315-5093, Flicky Conversion)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Pitfall2aRomInfo, Pitfall2aRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, Pitfall2DIPInfo,
 	Pitfall2Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6969,7 +7252,7 @@ struct BurnDriver BurnDrvPitfall2u = {
 	"pitfall2u", "pitfall2", NULL, NULL, "1985",
 	"Pitfall II (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Pitfall2uRomInfo, Pitfall2uRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, PitfalluDIPInfo,
 	PitfalluInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -6979,7 +7262,7 @@ struct BurnDriver BurnDrvRaflesia = {
 	"raflesia", NULL, NULL, NULL, "1986",
 	"Rafflesia (315-5162)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, RaflesiaRomInfo, RaflesiaRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RaflesiaDIPInfo,
 	RaflesiaInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -6989,7 +7272,7 @@ struct BurnDriver BurnDrvRaflesiau = {
 	"raflesiau", "raflesia", NULL, NULL, "1986",
 	"Rafflesia (not encrypted)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, RaflesiauRomInfo, RaflesiauRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, RaflesiaDIPInfo,
 	RaflesiauInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -6999,7 +7282,7 @@ struct BurnDriver BurnDrvRegulus = {
 	"regulus", NULL, NULL, NULL, "1983",
 	"Regulus (315-5033, rev. A)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, RegulusRomInfo, RegulusRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusDIPInfo,
 	RegulusInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -7009,7 +7292,7 @@ struct BurnDriver BurnDrvReguluso = {
 	"reguluso", "regulus", NULL, NULL, "1983",
 	"Regulus (315-5033)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, RegulusoRomInfo, RegulusoRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusoDIPInfo,
 	RegulusInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -7019,7 +7302,7 @@ struct BurnDriver BurnDrvRegulusu = {
 	"regulusu", "regulus", NULL, NULL, "1983",
 	"Regulus (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, RegulusuRomInfo, RegulusuRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusDIPInfo,
 	RegulusuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -7029,7 +7312,7 @@ struct BurnDriver BurnDrvSeganinj = {
 	"seganinj", NULL, NULL, NULL, "1985",
 	"Sega Ninja (315-5102)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, SeganinjRomInfo, SeganinjRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	SeganinjInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7039,7 +7322,7 @@ struct BurnDriver BurnDrvSeganinju = {
 	"seganinju", "seganinj", NULL, NULL, "1985",
 	"Sega Ninja (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, SeganinjuRomInfo, SeganinjuRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	SeganinuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7059,7 +7342,7 @@ struct BurnDriver BurnDrvNinja = {
 	"ninja", "seganinj", NULL, NULL, "1985",
 	"Ninja (315-5102)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NinjaRomInfo, NinjaRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	SeganinjInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7069,7 +7352,7 @@ struct BurnDriver BurnDrvNprinces = {
 	"nprinces", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (315-5051, 64k Ver. bootleg?)\0", NULL, "bootleg?", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NprincesRomInfo, NprincesRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincesInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7079,7 +7362,7 @@ struct BurnDriver BurnDrvNprinceso = {
 	"nprinceso", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (315-5098, 128k Ver.)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NprincesoRomInfo, NprincesoRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincsoInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7089,7 +7372,7 @@ struct BurnDriver BurnDrvNprincesu = {
 	"nprincesu", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (64k Ver. not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NprincesuRomInfo, NprincesuRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincsuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7099,7 +7382,7 @@ struct BurnDriver BurnDrvNprincesb = {
 	"nprincesb", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (315-5051?, 128k Ver. bootleg?)\0", NULL, "bootleg?", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NprincesbRomInfo, NprincesbRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincsbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7109,7 +7392,7 @@ struct BurnDriver BurnDrvSpatter = {
 	"spatter", NULL, NULL, NULL, "1984",
 	"Spatter (315-5xxx)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, SpatterRomInfo, SpatterRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SpatterDIPInfo,
 	SpatterInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 240, 224, 4, 3
@@ -7119,7 +7402,7 @@ struct BurnDriver BurnDrvSsanchan = {
 	"ssanchan", "spatter", NULL, NULL, "1984",
 	"Sanrin San Chan (Japan)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, SsanchanRomInfo, SsanchanRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SpatterDIPInfo,
 	SpatterInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 240, 224, 4, 3
@@ -7129,7 +7412,7 @@ struct BurnDriver BurnDrvStarjack = {
 	"starjack", NULL, NULL, NULL, "1983",
 	"Star Jacker (Sega)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, StarjackRomInfo, StarjackRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, StarjackDIPInfo,
 	StarjackInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -7139,7 +7422,7 @@ struct BurnDriver BurnDrvStarjacks = {
 	"starjacks", "starjack", NULL, NULL, "1983",
 	"Star Jacker (Stern)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, StarjacksRomInfo, StarjacksRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, StarjacsDIPInfo,
 	StarjackInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
@@ -7149,7 +7432,7 @@ struct BurnDriver BurnDrvSwat = {
 	"swat", NULL, NULL, NULL, "1984",
 	"SWAT (315-5048)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SHOOT, 0,
 	NULL, SwatRomInfo, SwatRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SwatDIPInfo,
 	SwatInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -7159,7 +7442,7 @@ struct BurnDriver BurnDrvTeddybb = {
 	"teddybb", NULL, NULL, NULL, "1985",
 	"TeddyBoy Blues (315-5115, New Ver.)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, TeddybbRomInfo, TeddybbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
 	TeddybbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7169,7 +7452,7 @@ struct BurnDriver BurnDrvTeddybbo = {
 	"teddybbo", "teddybb", NULL, NULL, "1985",
 	"TeddyBoy Blues (315-5115, Old Ver.)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, TeddybboRomInfo, TeddybboRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
 	TeddybbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7179,7 +7462,7 @@ struct BurnDriver BurnDrvTeddybbobl = {
 	"teddybbobl", "teddybb", NULL, NULL, "1985",
 	"TeddyBoy Blues (bootleg)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, TeddybboblRomInfo, TeddybboblRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
 	TeddybboblInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7189,7 +7472,7 @@ struct BurnDriver BurnDrvTokisens = {
 	"tokisens", NULL, NULL, NULL, "1987",
 	"Toki no Senshi - Chrono Soldier (MC-8123, 317-0040)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, tokisensRomInfo, tokisensRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TokisensDIPInfo,
 	TokisensInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -7199,7 +7482,7 @@ struct BurnDriver BurnDrvTokisensa = {
 	"tokisensa", "tokisens", NULL, NULL, "1987",
 	"Toki no Senshi - Chrono Soldier (prototype)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, tokisensaRomInfo, tokisensaRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TokisensaDIPInfo,
 	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -7209,7 +7492,7 @@ struct BurnDriver BurnDrvUpndown = {
 	"upndown", NULL, NULL, NULL, "1983",
 	"Up'n Down (315-5030)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RACING, 0,
 	NULL, UpndownRomInfo, UpndownRomName, NULL, NULL, NULL, NULL, UpndownInputInfo, UpndownDIPInfo,
 	UpndownInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -7219,7 +7502,7 @@ struct BurnDriver BurnDrvUpndownu = {
 	"upndownu", "upndown", NULL, NULL, "1983",
 	"Up'n Down (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RACING, 0,
 	NULL, UpndownuRomInfo, UpndownuRomName, NULL, NULL, NULL, NULL, UpndownInputInfo, UpndownDIPInfo,
 	UpndownuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -7229,7 +7512,7 @@ struct BurnDriver BurnDrvWboy = {
 	"wboy", NULL, NULL, NULL, "1986",
 	"Wonder Boy (set 1, 315-5177)\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyRomInfo, WboyRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	WboyInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7239,7 +7522,7 @@ struct BurnDriver BurnDrvWboyo = {
 	"wboyo", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (set 1, 315-5135)\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyoRomInfo, WboyoRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7249,7 +7532,7 @@ struct BurnDriver BurnDrvWboy2 = {
 	"wboy2", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (set 2, 315-5178)\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2RomInfo, Wboy2RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy2Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7259,7 +7542,7 @@ struct BurnDriver BurnDrvWboy2u = {
 	"wboy2u", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (set 2, not encrypted)\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2uRomInfo, Wboy2uRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy2uInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7269,7 +7552,7 @@ struct BurnDriver BurnDrvWboy3 = {
 	"wboy3", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (set 3, 315-5135)\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy3RomInfo, Wboy3RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7279,7 +7562,7 @@ struct BurnDriver BurnDrvWboy4 = {
 	"wboy4", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (set 4, 315-5162)\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy4RomInfo, Wboy4RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy4Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7289,7 +7572,7 @@ struct BurnDriver BurnDrvWboy5 = {
 	"wboy5", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (set 5, bootleg)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy5RomInfo, Wboy5RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7299,7 +7582,7 @@ struct BurnDriver BurnDrvWboyblt = {
 	"wboyblt", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboybltRomInfo, WboybltRomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
 	WboyoInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7309,7 +7592,7 @@ struct BurnDriver BurnDrvWboyu = {
 	"wboyu", "wboy", NULL, NULL, "1986",
 	"Wonder Boy (not encrypted)\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyuRomInfo, WboyuRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyuDIPInfo,
 	WboyuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7319,7 +7602,7 @@ struct BurnDriver BurnDrvWbdeluxe = {
 	"wbdeluxe", "wboy", NULL, NULL, "1986",
 	"Wonder Boy Deluxe\0", NULL, "Sega (Escape License)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WbdeluxeRomInfo, WbdeluxeRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WbdeluxeDIPInfo,
 	Wboy2uInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7329,19 +7612,29 @@ struct BurnDriver BurnDrvWmatch = {
 	"wmatch", NULL, NULL, NULL, "1984",
 	"Water Match (315-5064)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SPORTSMISC, 0,
 	NULL, WmatchRomInfo, WmatchRomName, NULL, NULL, NULL, NULL, WmatchInputInfo, WmatchDIPInfo,
 	WmatchInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 224, 240, 3, 4
 };
 
+struct BurnDriver BurnDrvShtngmst = {
+	"shtngmst", NULL, NULL, NULL, "1985",
+	"Shooting Master (8751 315-5159a)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_SHOOT, 0,
+	NULL, shtngmstRomInfo, shtngmstRomName, NULL, NULL, NULL, NULL, ShtngmstInputInfo, ShtngmstDIPInfo,
+	ShtngmstInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvChoplift = {
 	"choplift", NULL, NULL,  NULL, "1985",
-	"Choplifter (8751 315-5151)\0", "The (unprotected) or (bootleg) versions work fine.", "Sega", "System 1",
+	"Choplifter (8751 315-5151)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
-	NULL, ChopliftRomInfo, ChopliftRomName, NULL, NULL, NULL, NULL, ChplftbInputInfo, ChplftbDIPInfo,
-	ChplftbInit, System1Exit, System1Frame, System1Render, System1Scan,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, ChopliftRomInfo, ChopliftRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
+	ChopliftInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -7349,8 +7642,8 @@ struct BurnDriver BurnDrvChopliftu = {
 	"chopliftu", "choplift", NULL,  NULL, "1985",
 	"Choplifter (unprotected)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
-	NULL, ChopliftuRomInfo, ChopliftuRomName, NULL, NULL, NULL, NULL, ChplftbInputInfo, ChplftbDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, ChopliftuRomInfo, ChopliftuRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
 	ChplftbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
@@ -7359,8 +7652,8 @@ struct BurnDriver BurnDrvChopliftbl = {
 	"chopliftbl", "choplift", NULL,  NULL, "1985",
 	"Choplifter (bootleg)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
-	NULL, ChopliftblRomInfo, ChopliftblRomName, NULL, NULL, NULL, NULL, ChplftbInputInfo, ChplftbDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, ChopliftblRomInfo, ChopliftblRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
 	ChplftbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
@@ -7369,7 +7662,7 @@ struct BurnDriver BurnDrvUfosensi = {
 	"ufosensi", NULL, NULL, NULL, "1988",
 	"Ufo Senshi Yohko Chan (MC-8123, 317-0064)\0", NULL, "Sega", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, ufosensiRomInfo, ufosensiRomName, NULL, NULL, NULL, NULL, UfosensiInputInfo, UfosensiDIPInfo,
 	UfosensiInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7379,7 +7672,7 @@ struct BurnDriver BurnDrvWbml = {
 	"wbml", NULL, NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (Japan New Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlRomInfo, wbmlRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmlInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7389,7 +7682,7 @@ struct BurnDriver BurnDrvWbmljb = {
 	"wbmljb", "wbml", NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (Japan bootleg)\0", NULL, "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljbRomInfo, wbmljbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7399,7 +7692,7 @@ struct BurnDriver BurnDrvWbmljo = {
 	"wbmljo", "wbml", NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (Japan Old Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljoRomInfo, wbmljoRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmlInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7409,7 +7702,7 @@ struct BurnDriver BurnDrvWbmlb = {
 	"wbmlb", "wbml", NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (English bootleg set 1)\0", NULL, "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbRomInfo, wbmlbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7419,7 +7712,7 @@ struct BurnDriver BurnDrvWbmlbg = {
 	"wbmlbg", "wbml", NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (English bootleg set 2)\0", NULL, "bootleg (Galaxy Electronics)", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbgRomInfo, wbmlbgRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7429,7 +7722,7 @@ struct BurnDriver BurnDrvWbmlbge = {
 	"wbmlbge", "wbml", NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (English bootleg set 3)\0", NULL, "bootleg (Gecas)", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlbgeRomInfo, wbmlbgeRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7439,7 +7732,7 @@ struct BurnDriver BurnDrvWbmlvc = {
 	"wbmlvc", "wbml", NULL, NULL, "2009",
 	"Wonder Boy - Monster Land (English, Virtual Console)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlvcRomInfo, wbmlvcRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x600, 256, 224, 4, 3
@@ -7449,7 +7742,7 @@ struct BurnDriver BurnDrvWbmlvcd = {
 	"wbmlvcd", "wbml", NULL, NULL, "2009",
 	"Wonder Boy - Monster Land (decrypted bootleg of English, Virtual Console release)\0", NULL, "bootleg (mpatou)", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG , 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlvcdRomInfo, wbmlvcdRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7459,7 +7752,7 @@ struct BurnDriver BurnDrvWbmld = {
 	"wbmld", "wbml", NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (decrypted bootleg of Japan New Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmldRomInfo, wbmldRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7469,15 +7762,12 @@ struct BurnDriver BurnDrvWbmljod = {
 	"wbmljod", "wbml", NULL, NULL, "1987",
 	"Wonder Boy - Monster Land (decrypted bootleg of Japan Old Ver., MC-8123, 317-0043)\0", NULL, "bootleg (mpatou)", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljodRomInfo, wbmljodRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
-// shtngmst and clones
-// chplft parent [needs decoding]
-// gardiaj/b for JacKc
 // wboysys2
 // blckgalb
 // dakkochn

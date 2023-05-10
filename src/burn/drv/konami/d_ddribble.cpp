@@ -47,48 +47,48 @@ static INT32 charbank0;
 static INT32 charbank1;
 
 static struct BurnInputInfo DdribbleInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Ddribble)
 
 static struct BurnDIPInfo DdribbleDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xff, NULL				},
-	{0x15, 0xff, 0xff, 0x20, NULL				},
-	{0x16, 0xff, 0xff, 0xfd, NULL				},
+	{0x14, 0xff, 0xff, 0xff, NULL						},
+	{0x15, 0xff, 0xff, 0x20, NULL						},
+	{0x16, 0xff, 0xff, 0xfd, NULL						},
 
-	{0   , 0xfe, 0   ,   16, "Coin A"			},
-	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"		},
-	{0x14, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"		},
-	{0x14, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"		},
+	{0   , 0xfe, 0   ,   16, "Coin A"					},
+	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"			},
+	{0x14, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"			},
+	{0x14, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"			},
 	{0x14, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"		},
 	{0x14, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"		},
-	{0x14, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"		},
+	{0x14, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"			},
 	{0x14, 0x01, 0x0f, 0x00, "4 Coins 5 Credits"		},
 	{0x14, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"		},
 	{0x14, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"		},
@@ -100,13 +100,13 @@ static struct BurnDIPInfo DdribbleDIPList[]=
 	{0x14, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"		},
 	{0x14, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"		},
 
-	{0   , 0xfe, 0   ,   16, "Coin B"			},
-	{0x14, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"		},
-	{0x14, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"		},
-	{0x14, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"					},
+	{0x14, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"			},
+	{0x14, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"			},
+	{0x14, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"			},
 	{0x14, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"		},
 	{0x14, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"		},
-	{0x14, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"		},
+	{0x14, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"			},
 	{0x14, 0x01, 0xf0, 0x00, "4 Coins 5 Credits"		},
 	{0x14, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"		},
 	{0x14, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"		},
@@ -118,31 +118,31 @@ static struct BurnDIPInfo DdribbleDIPList[]=
 	{0x14, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"		},
 	{0x14, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"		},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x15, 0x01, 0x04, 0x00, "Upright"			},
-	{0x15, 0x01, 0x04, 0x04, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Cabinet"					},
+	{0x15, 0x01, 0x04, 0x00, "Upright"					},
+	{0x15, 0x01, 0x04, 0x04, "Cocktail"					},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x15, 0x01, 0x60, 0x60, "Easy"				},
-	{0x15, 0x01, 0x60, 0x40, "Normal"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"				},
+	{0x15, 0x01, 0x60, 0x60, "Easy"						},
+	{0x15, 0x01, 0x60, 0x40, "Normal"					},
 	{0x15, 0x01, 0x60, 0x20, "Difficult"				},
 	{0x15, 0x01, 0x60, 0x00, "Very Difficult"			},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x15, 0x01, 0x80, 0x80, "Off"				},
-	{0x15, 0x01, 0x80, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
+	{0x15, 0x01, 0x80, 0x80, "Off"						},
+	{0x15, 0x01, 0x80, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x16, 0x01, 0x01, 0x01, "Off"				},
-	{0x16, 0x01, 0x01, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"				},
+	{0x16, 0x01, 0x01, 0x01, "Off"						},
+	{0x16, 0x01, 0x01, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x16, 0x01, 0x04, 0x04, "Off"				},
-	{0x16, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"				},
+	{0x16, 0x01, 0x04, 0x04, "Off"						},
+	{0x16, 0x01, 0x04, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Allow vs match with 1 Credit"	},
-	{0x16, 0x01, 0x08, 0x08, "Off"				},
-	{0x16, 0x01, 0x08, 0x00, "On"				},
+	{0x16, 0x01, 0x08, 0x08, "Off"						},
+	{0x16, 0x01, 0x08, 0x00, "On"						},
 };
 
 STDDIPINFO(Ddribble)
@@ -327,6 +327,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -334,9 +336,9 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM0		= Next; Next += 0x010000;
-	DrvM6809ROM1		= Next; Next += 0x010000;
-	DrvM6809ROM2		= Next; Next += 0x010000;
+	DrvM6809ROM0	= Next; Next += 0x010000;
+	DrvM6809ROM1	= Next; Next += 0x010000;
+	DrvM6809ROM2	= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x040000;
 	DrvGfxROM1		= Next; Next += 0x080000;
@@ -359,8 +361,8 @@ static INT32 MemIndex()
 	DrvSprRAM0		= Next; Next += 0x001000;
 	DrvSprRAM1		= Next; Next += 0x001000;
 
-	DrvVidRegs[0]		= Next; Next += 0x000008;
-	DrvVidRegs[1]		= Next; Next += 0x000008;
+	DrvVidRegs[0]	= Next; Next += 0x000008;
+	DrvVidRegs[1]	= Next; Next += 0x000008;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -391,12 +393,7 @@ static void DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM0 + 0x00000,  0, 1)) return 1;
@@ -440,7 +437,7 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	M6809Init(3);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvPalRAM,		0x1800, 0x18ff, MAP_RAM);
 	M6809MapMemory(DrvFgRAM,		0x2000, 0x2fff, MAP_RAM);
@@ -452,6 +449,7 @@ static INT32 DrvInit()
 	M6809SetWriteHandler(ddrible_main_write);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvShareRAM,		0x0000, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvSndRAM,		0x2000, 0x27ff, MAP_RAM);
@@ -460,6 +458,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(ddribble_sub_read);
 	M6809Close();
 
+	M6809Init(2);
 	M6809Open(2);
 	M6809MapMemory(DrvSndRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvM6809ROM2 + 0x8000,	0x8000, 0xffff, MAP_ROM);
@@ -506,7 +505,7 @@ static INT32 DrvExit()
 	vlm5030Exit();
 	filter_rc_exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -577,19 +576,7 @@ static void draw_sprites(UINT8 *source, INT32 length, UINT8 *gfxbase, INT32 colo
 				INT32 ey = flipy ? (height - 1 - y) : y;
 				INT32 code = number + (ey * 2) + ex;
 
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx+x*16, (sy+y*16)-16, color, 4, 0, color_offset, gfxbase);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx+x*16, (sy+y*16)-16, color, 4, 0, color_offset, gfxbase);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx+x*16, (sy+y*16)-16, color, 4, 0, color_offset, gfxbase);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx+x*16, (sy+y*16)-16, color, 4, 0, color_offset, gfxbase);
-					}
-				}
+				Draw16x16MaskTile(pTransDraw, code, sx+x*16, (sy+y*16)-16, flipx, flipy, color, 4, 0, color_offset, gfxbase);
 			}
 		}
 
@@ -663,12 +650,12 @@ static INT32 DrvFrame()
 	{
 		M6809Open(0);
 		if (i == 240*MULT && (DrvVidRegs[0][4] & 2)) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		M6809Close();
 
 		M6809Open(1);
 		if (i == 240*MULT && (DrvVidRegs[1][4] & 2)) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
-		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		CPU_RUN(1, M6809);
 		M6809Close();
 
 		if ((i%MULT)==0) { // soundcpu doesn't like high sync, run 256 lines instead of 256*MULT
@@ -695,7 +682,7 @@ static INT32 DrvFrame()
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
-	
+
 	return 0;
 }
 
@@ -768,7 +755,7 @@ struct BurnDriver BurnDrvDdribble = {
 	"ddribble", NULL, NULL, NULL, "1986",
 	"Double Dribble\0", NULL, "Konami", "GX690",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, ddribbleRomInfo, ddribbleRomName, NULL, NULL, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3
@@ -811,7 +798,7 @@ struct BurnDriver BurnDrvDdribblep = {
 	"ddribblep", "ddribble", NULL, NULL, "1986",
 	"Double Dribble (prototype?)\0", NULL, "Konami", "GX690",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, ddribblepRomInfo, ddribblepRomName, NULL, NULL, NULL, NULL, DdribbleInputInfo, DdribbleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	256, 224, 4, 3

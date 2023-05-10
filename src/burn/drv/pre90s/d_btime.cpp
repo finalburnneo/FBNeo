@@ -1489,16 +1489,12 @@ static INT32 MmonkeyInit() // and lnc
 	M6502Open(0);
 	M6502SetWriteHandler(mmonkey_main_write);
 	M6502SetReadHandler(mmonkey_main_read);
-	M6502SetReadOpArgHandler(mmonkey_main_read);
-	M6502SetReadOpHandler(mmonkey_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
 	M6502SetWriteHandler(btime_sound_write);
 	M6502SetReadHandler(btime_sound_read);
-	M6502SetReadOpArgHandler(btime_sound_read);
-	M6502SetReadOpHandler(btime_sound_read);
 	M6502Close();
 
 	M6502Open(1);
@@ -1563,16 +1559,12 @@ static INT32 DiscoInit()
 	M6502Open(0);
 	M6502SetWriteHandler(disco_main_write);
 	M6502SetReadHandler(disco_main_read);
-	M6502SetReadOpArgHandler(disco_main_read);
-	M6502SetReadOpHandler(disco_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
 	M6502SetWriteHandler(disco_sound_write);
 	M6502SetReadHandler(disco_sound_read);
-	M6502SetReadOpArgHandler(disco_sound_read);
-	M6502SetReadOpHandler(disco_sound_read);
 	M6502Close();
 
 	M6502Open(1);
@@ -1658,16 +1650,12 @@ static INT32 BnjInit()
 	M6502Open(0);
 	M6502SetWriteHandler(bnj_main_write);
 	M6502SetReadHandler(bnj_main_read);
-	M6502SetReadOpArgHandler(bnj_main_read);
-	M6502SetReadOpHandler(bnj_main_read);
     M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
 	M6502SetWriteHandler(btime_sound_write);
 	M6502SetReadHandler(btime_sound_read);
-	M6502SetReadOpArgHandler(btime_sound_read);
-	M6502SetReadOpHandler(btime_sound_read);
 	M6502Close();
 
 	M6502Open(1);
@@ -1750,16 +1738,12 @@ static INT32 BtimeInit()
 	M6502Open(0);
 	M6502SetWriteHandler(btime_main_write);
 	M6502SetReadHandler(btime_main_read);
-	M6502SetReadOpArgHandler(btime_main_read);
-	M6502SetReadOpHandler(btime_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
 	M6502SetWriteHandler(btime_sound_write);
 	M6502SetReadHandler(btime_sound_read);
-	M6502SetReadOpArgHandler(btime_sound_read);
-	M6502SetReadOpHandler(btime_sound_read);
 	M6502Close();
 
 	AY8910Init(0, 1500000, 0);
@@ -1848,16 +1832,12 @@ static INT32 ZoarInit()
 	M6502Open(0);
 	M6502SetWriteHandler(zoar_main_write);
 	M6502SetReadHandler(zoar_main_read);
-	M6502SetReadOpArgHandler(zoar_main_read);
-	M6502SetReadOpHandler(zoar_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
 	M6502SetWriteHandler(btime_sound_write);
 	M6502SetReadHandler(btime_sound_read);
-	M6502SetReadOpArgHandler(btime_sound_read);
-	M6502SetReadOpHandler(btime_sound_read);
 	M6502Close();
 
 	AY8910Init(0, 3000000, 0);

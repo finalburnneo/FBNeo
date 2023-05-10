@@ -15,12 +15,6 @@ CheatInfo* pCheatInfo = NULL;
 static bool bCheatsEnabled = false;
 static INT32 cheat_core_init_pointer = 0;
 
-struct cheat_core {
-	cpu_core_config *cpuconfig;
-
-	INT32 nCPU;			// which cpu
-};
-
 static struct cheat_core cpus[CHEAT_MAXCPU];
 static cheat_core *cheat_ptr;
 static cpu_core_config *cheat_subptr;
@@ -37,6 +31,8 @@ static void dummy_irq(INT32, INT32, INT32) {}
 static INT32 dummy_run(INT32) { return 0; }
 static void dummy_runend() {}
 static void dummy_reset() {}
+static INT32 dummy_scan(INT32) { return 0; }
+static void dummy_exit() {}
 
 static cpu_core_config dummy_config  = {
 	"dummy",
@@ -52,6 +48,8 @@ static cpu_core_config dummy_config  = {
 	dummy_run,
 	dummy_runend,
 	dummy_reset,
+	dummy_scan,
+	dummy_exit,
 	~0UL,
 	0
 };
@@ -59,6 +57,12 @@ static cpu_core_config dummy_config  = {
 cheat_core *GetCpuCheatRegister(INT32 nCPU)
 {
 	return &cpus[nCPU];
+}
+
+cpu_core_config *GetCpuCoreConfig(INT32 nCPU)
+{
+	cheat_core *s_ptr = &cpus[nCPU];
+	return s_ptr->cpuconfig;
 }
 
 void CpuCheatRegister(INT32 nCPU, cpu_core_config *config)
@@ -228,6 +232,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 						pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
 
 						bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
+
 						if (pCurrentCheat->bWatchMode) {
 							bprintf(0, _T("Watch memory @ 0x%X (0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
 						} else
@@ -371,7 +376,7 @@ INT32 CheatApply()
 							UINT32 addr = 0;
 
 							for (INT32 i = 0; i < (pAddressInfo->nRelAddressBits + 1); i++) {
-								if (cheat_subptr->nAddressXor) { // big endian
+								if (cheat_subptr->nAddressFlags & 3) { // big endian
 									addr |= cheat_subptr->read(pAddressInfo->nAddress + (pAddressInfo->nRelAddressBits - i)) << (i * 8);
 								} else {
 									addr |= cheat_subptr->read(pAddressInfo->nAddress + i) << (i * 8);
@@ -381,7 +386,29 @@ INT32 CheatApply()
 							cheat_subptr->write(addr + pAddressInfo->nMultiByte + pAddressInfo->nRelAddressOffset, pAddressInfo->nValue);
 						} else {
 							// Normal cheat write
-							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+							INT32 addressXor = 0;
+							if (cheat_subptr->nAddressFlags & MB_CHEAT_ENDI_SWAP) {
+								// LE CPU's Require address swaps with multi-byte writes (tms34xxx, v60)
+								// (because cheat loader (burner/conc.cpp) stores everything in BE format)
+								switch (pAddressInfo->nTotalByte) {
+									case 2: addressXor = 1; break;
+									case 3:
+									case 4: addressXor = 3; break;
+								}
+							}
+
+							//bprintf(0, _T("byte size %x  byte number %x.\n"), pAddressInfo->nTotalByte, pAddressInfo->nMultiByte);
+							//bprintf(0, _T("address/value:  %x  %x  (xor: %x)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, addressXor);
+
+							UINT8 byteToWrite = pAddressInfo->nValue;
+
+							if (pCurrentCheat->bWriteWithMask) {
+								//bprintf(0, _T("write with mask!  %x\n"), pAddressInfo->nMask);
+								byteToWrite =  (byteToWrite & pAddressInfo->nMask);
+								byteToWrite |= (cheat_subptr->read(pAddressInfo->nAddress ^ addressXor) & ~pAddressInfo->nMask);
+							}
+
+							cheat_subptr->write(pAddressInfo->nAddress ^ addressXor, byteToWrite);
 							//bprintf(0, _T("normal cheat write %x -> %x\n"), pAddressInfo->nAddress, pAddressInfo->nValue);
 						}
 						pCurrentCheat->bModified = 1;

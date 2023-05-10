@@ -51,6 +51,8 @@ static UINT8 DrvDip[2] = {0, 0};
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo SkyskiprInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
@@ -492,6 +494,8 @@ static INT32 DrvDoReset()
 	m_prot1 = 0;
 	m_prot_shift = 0;
 
+	nCyclesExtra = 0;
+
 	return 0;
 }
 
@@ -909,7 +913,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 4000000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nCyclesExtra };
 
     ZetNewFrame();
 
@@ -921,6 +925,8 @@ static INT32 DrvFrame()
 			ZetNmi();
 	}
     ZetClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -957,6 +963,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m_prot0);
 		SCAN_VAR(m_prot1);
 		SCAN_VAR(m_prot_shift);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

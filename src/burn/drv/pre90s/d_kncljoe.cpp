@@ -300,6 +300,8 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 
+	HiscoreReset();
+
 	m6803_port1_data = 0;
 	m6803_port2_data = 0;
 
@@ -686,7 +688,7 @@ struct BurnDriver BurnDrvKncljoe = {
 	"kncljoe", NULL, NULL, NULL, "1985",
 	"Knuckle Joe (set 1)\0", NULL, "[Seibu Kaihatsu] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kncljoeRomInfo, kncljoeRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 4, 3
@@ -727,7 +729,7 @@ struct BurnDriver BurnDrvKncljoea = {
 	"kncljoea", "kncljoe", NULL, NULL, "1985",
 	"Knuckle Joe (set 2)\0", NULL, "[Seibu Kaihatsu] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kncljoeaRomInfo, kncljoeaRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 4, 3
@@ -768,7 +770,7 @@ struct BurnDriver BurnDrvBcrusher = {
 	"bcrusher", "kncljoe", NULL, NULL, "1985",
 	"Bone Crusher\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, bcrusherRomInfo, bcrusherRomName, NULL, NULL, NULL, NULL, KncljoeInputInfo, KncljoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 4, 3

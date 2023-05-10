@@ -195,25 +195,37 @@ STDINPUTINFO(Sys386i)
 static struct BurnInputInfo Spi_ejanhsInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy8 + 5,	"p1 start"	},
-	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
-	{"P1 B",			BIT_DIGITAL,	DrvJoy9 + 4,	"mah b"		},
-	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah c"		},
-	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
-	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
-	{"P1 F",			BIT_DIGITAL,	DrvJoy9 + 3,	"mah f"		},
-	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
-	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
-	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
-	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
-	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
-	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
-	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
-	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+
 	{"P1 Pon",			BIT_DIGITAL,	DrvJoy5 + 1,	"mah pon"	},
-	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
-	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
+	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
+	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
+	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
+
+	{"P1 Big",			BIT_DIGITAL,	DrvJoy6 + 0,	"mah big"	},
+	{"P1 Flip Flip",	BIT_DIGITAL,	DrvJoy6 + 1,	"mah ff"	},
+	{"P1 Double Up",	BIT_DIGITAL,	DrvJoy6 + 2,	"mah wup"	},
+	{"P1 Score",		BIT_DIGITAL,	DrvJoy6 + 3,	"mah score"	},
+	{"P1 Last Chance",	BIT_DIGITAL,	DrvJoy6 + 4,	"mah lc"	},
+	{"P1 Small",		BIT_DIGITAL,	DrvJoy6 + 5,	"mah small"	},
+
 	{"P1 Ron",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah ron"	},
+	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
+	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
+	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
+	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 4,	"mah c"		},
+
+	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
+	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
+	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
+	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
+	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
+
 	{"P1 Reach",		BIT_DIGITAL,	DrvJoy9 + 0,	"mah reach"	},
+	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
+	{"P1 F",			BIT_DIGITAL,	DrvJoy9 + 3,	"mah f"		},
+	{"P1 B",			BIT_DIGITAL,	DrvJoy9 + 4,	"mah b"		},
+	{"P1 Bet",			BIT_DIGITAL,	DrvJoy9 + 5,	"mah bet"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 2,	"diag"		},
@@ -226,28 +238,38 @@ STDINPUTINFO(Spi_ejanhs)
 static struct BurnInputInfo EjsakuraInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy8 + 5,	"p1 start"	},
-	{"P1 Payout",		BIT_DIGITAL,	DrvJoy9 + 11,	"payout"	},
-	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
-	{"P1 B",			BIT_DIGITAL,	DrvJoy6 + 0,	"mah b"		},
-	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah c"		},
-	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
-	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
-	{"P1 F",			BIT_DIGITAL,	DrvJoy6 + 1,	"mah f"		},
-	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
-	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
-	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
-	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
-	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
-	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
-	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
-	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+
 	{"P1 Pon",			BIT_DIGITAL,	DrvJoy5 + 1,	"mah pon"	},
-	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
-	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
-	{"P1 Ron",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah ron"	},
-	{"P1 Reach",		BIT_DIGITAL,	DrvJoy9 + 0,	"mah reach"	},
+	{"P1 L",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah l"		},
+	{"P1 H",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah h"		},
+	{"P1 D",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah d"		},
+
+	{"P1 Big",			BIT_DIGITAL,	DrvJoy6 + 0,	"mah big"	},
 	{"P1 Flip Flip",	BIT_DIGITAL,	DrvJoy6 + 1,	"mah ff"	},
+	{"P1 Double Up",	BIT_DIGITAL,	DrvJoy6 + 2,	"mah wup"	},
+	{"P1 Score",		BIT_DIGITAL,	DrvJoy6 + 3,	"mah score"	},
+	{"P1 Last Chance",	BIT_DIGITAL,	DrvJoy6 + 4,	"mah lc"	},
+	{"P1 Small",		BIT_DIGITAL,	DrvJoy6 + 5,	"mah small"	},
+
+	{"P1 Ron",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah ron"	},
+	{"P1 Chi",			BIT_DIGITAL,	DrvJoy7 + 1,	"mah chi"	},
+	{"P1 K",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah k"		},
+	{"P1 G",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah g"		},
+	{"P1 C",			BIT_DIGITAL,	DrvJoy7 + 4,	"mah c"		},
+
+	{"P1 Kan",			BIT_DIGITAL,	DrvJoy8 + 0,	"mah kan"	},
+	{"P1 M",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah m"		},
+	{"P1 I",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah i"		},
+	{"P1 E",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah e"		},
+	{"P1 A",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah a"		},
+
+	{"P1 Reach",		BIT_DIGITAL,	DrvJoy9 + 0,	"mah reach"	},
+	{"P1 N",			BIT_DIGITAL,	DrvJoy9 + 1,	"mah n"		},
+	{"P1 J",			BIT_DIGITAL,	DrvJoy9 + 2,	"mah j"		},
+	{"P1 F",			BIT_DIGITAL,	DrvJoy9 + 3,	"mah f"		},
+	{"P1 B",			BIT_DIGITAL,	DrvJoy9 + 4,	"mah b"		},
 	{"P1 Bet",			BIT_DIGITAL,	DrvJoy9 + 5,	"mah bet"	},
+	{"P1 Payout",		BIT_DIGITAL,	DrvJoy9 + 11,	"payout"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",	BIT_DIGITAL,	DrvJoy9 + 9,	"diag"		},
@@ -277,7 +299,7 @@ static struct BurnDIPInfo Spi_2buttonDIPList[]=
 
 static struct BurnDIPInfo Spi_ejanhsDIPList[]=
 {
-	DIP_OFFSET(0x18)
+	DIP_OFFSET(0x1F)
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 };
 
@@ -319,7 +341,7 @@ static void tilemap_dma_start_write()
 	{
 		if ((i & 1) && rowscroll_enable == 0) continue; // copy rowscroll data.. or not
 
-		memmove (&tilemap_ram[offsets[i]], &mainram[index], i == 6 ? 0x1000 : 0x800); // text is 1000
+		memmove(&tilemap_ram[offsets[i]], &mainram[index], i == 6 ? 0x1000 : 0x800); // text is 1000
 		index += 0x800/4;
 	}
 }
@@ -344,7 +366,7 @@ static void palette_dma_start_write()
 
 static void sprite_dma_start_write()
 {
-	memmove (&sprite_ram[0], &mainram[video_dma_address / 4], sprite_ram_size);
+	memmove(&sprite_ram[0], &mainram[video_dma_address / 4], sprite_ram_size);
 }
 
 static void oki_bankswitch(INT32 data)
@@ -465,7 +487,7 @@ static void common_write_dword(UINT32 address, UINT32 data)
 static INT32 ejanhs_encode(INT32 N)
 {
 	static const UINT8 encoding[6] = { 6, 5, 4, 3, 2, 7 };
-	static UINT8 state = ~DrvInputs[4 + N];
+	UINT8 state = ~DrvInputs[4 + N];
 
 	for (INT32 bit = 0; bit < 6; bit++)
 		if (state & (1 << bit))
@@ -491,11 +513,14 @@ static UINT32 common_read_dword(UINT32 address)
 			UINT32 ret = DrvInputs[0]; // FLIPSCREEN & ~0x8000;
 
 			if (BurnDrvGetGenreFlags() & GBF_MAHJONG) { // ejanhs
+				UINT32 ej = 0;
 				ret &= 0xffff4000;
-				ret |= ejanhs_encode(3) << 0;
-				ret |= ejanhs_encode(4) << 3;
-				ret |= ejanhs_encode(2) << 6;
-				ret |= ejanhs_encode(0) << 9;
+				ej |= ejanhs_encode(3) << 0;
+				ej |= ejanhs_encode(4) << 3;
+				ej |= ejanhs_encode(2) << 8;
+				ej |= ejanhs_encode(0) << 11;
+				ej = ~ej; // active low
+				ret |= (ej & 0x3f3f); // add bits from encoder
 			}
 
 			return ret; // inputs
@@ -935,7 +960,7 @@ static INT32 SeibuspiIRQCallback(INT32)
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
-		memset (AllRam, 0, RamEnd - AllRam);
+		memset(AllRam, 0, RamEnd - AllRam);
 	}
 
 	DrvRecalc = 1; // re-cache the palette (fixes seibu logo fade-in on reset rdftua etc)
@@ -997,8 +1022,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	fifoin_wpos = 0;
 	fifoout_rpos = 0;
 	fifoout_wpos = 0;
-	memset (fifoin_data, 0, sizeof(fifoin_data));
-	memset (fifoout_data, 0, sizeof(fifoout_data));
+	memset(fifoin_data, 0, sizeof(fifoin_data));
+	memset(fifoout_data, 0, sizeof(fifoout_data));
 	fifoin_read_request = 0;
 	fifoout_read_request = 0;
 	z80_prog_xfer_pos = 0;
@@ -1307,15 +1332,15 @@ static INT32 DrvGfxDecode(INT32 len0, INT32 len1, INT32 len2)
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM[0], len0);
+	memcpy(tmp, DrvGfxROM[0], len0);
 
 	GfxDecode(((len0 * 8) / 5) /   (8 * 8), 5,  8,  8, Plane0, XOffs0, YOffs0, 0x180, tmp, DrvGfxROM[0]);
 
-	memcpy (tmp, DrvGfxROM[1], len1);
+	memcpy(tmp, DrvGfxROM[1], len1);
 
 	GfxDecode(((len1 * 8) / 6) / (16 * 16), 6, 16, 16, Plane1, XOffs1, YOffs1, 0x600, tmp, DrvGfxROM[1]);
 
-	memcpy (tmp, DrvGfxROM[2], len2);
+	memcpy(tmp, DrvGfxROM[2], len2);
 
 	GfxDecode(((len2 * 8) / 6) / (16 * 16), 6, 16, 16, Plane2, XOffs2, YOffs2, 0x200, tmp, DrvGfxROM[2]);
 
@@ -1548,8 +1573,8 @@ static INT32 DrvLoadRom(bool bLoad)
 			if (bLoad) {
 				if (BurnLoadRomExt(DrvSndROM[0] + 0x0000000, i+0, 4, LD_GROUP((ri.nLen <= 0x100000) ? 1 : 2))) return 1;
 
-				memcpy (DrvSndROM[0] + 0x400000, DrvSndROM[0] + 0x200000, 0x200000);
-				memset (DrvSndROM[0] + 0x200000, 0, 0x200000);
+				memcpy(DrvSndROM[0] + 0x400000, DrvSndROM[0] + 0x200000, 0x200000);
+				memset(DrvSndROM[0] + 0x200000, 0, 0x200000);
 
 				if (ci.nType == ri.nType) {
 					if (BurnLoadRomExt(DrvSndROM[0] + 0x0800000, i+1, 4, LD_GROUP(1))) return 1;
@@ -2126,7 +2151,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+		memset(DrvInputs, 0xff, sizeof(DrvInputs));
 
 		for (INT32 i = 0; i < 32; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -2194,7 +2219,7 @@ static INT32 Sys386Frame()
 	i386NewFrame();
 
 	{
-		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+		memset(DrvInputs, 0xff, sizeof(DrvInputs));
 
 		for (INT32 i = 0; i < 32; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -2206,7 +2231,9 @@ static INT32 Sys386Frame()
 
 	INT32 nInterleave = 296; // vtotal
 	INT32 nCyclesTotal[1] = { 40000000 / 54 /*(((28636363)/4)/448)/296*/ }; // sys386i others are 25mhz
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
+
+	i386Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2216,6 +2243,10 @@ static INT32 Sys386Frame()
 			i386SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 	}
+
+	i386Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
@@ -2237,7 +2268,7 @@ static INT32 Sys386fFrame()
 	i386NewFrame();
 
 	{
-		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+		memset(DrvInputs, 0xff, sizeof(DrvInputs));
 
 		for (INT32 i = 0; i < 32; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -2259,7 +2290,9 @@ static INT32 Sys386fFrame()
 
 	INT32 nInterleave = 296; // vtotal
 	INT32 nCyclesTotal[1] = { 25000000 / 54 /*(((28636363)/4)/448)/296*/ };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
+
+	i386Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2269,6 +2302,10 @@ static INT32 Sys386fFrame()
 			i386SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 	}
+
+	i386Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
@@ -3283,7 +3320,7 @@ static void rdft_build_flash()
 		j = 0x1fffff;
 		while (DrvSndROM[0][0xa00000 + j - 1] == 0xff) j--;
 
-		memcpy (DrvSndROM[0] + 0x0a00000 + j, tmp, 0x200000 - j);
+		memcpy(DrvSndROM[0] + 0x0a00000 + j, tmp, 0x200000 - j);
 
 		BurnFree(tmp);
 	}
@@ -3922,8 +3959,12 @@ static struct BurnRomInfo rdft2RomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region80.u1053",	0x100000, 0xe2adaff5, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region80.u1053",	0x100000, 0xe2adaff5, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2)
@@ -3978,8 +4019,12 @@ static struct BurnRomInfo rdft2uRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region10.u1053",	0x100000, 0x4319d998, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region10.u1053",	0x100000, 0x4319d998, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2u)
@@ -4029,8 +4074,12 @@ static struct BurnRomInfo rdft2jRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2j)
@@ -4073,8 +4122,12 @@ static struct BurnRomInfo rdft2jaRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2ja)
@@ -4117,8 +4170,12 @@ static struct BurnRomInfo rdft2jbRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2jb)
@@ -4161,8 +4218,12 @@ static struct BurnRomInfo rdft2jcRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region01.u1053",	0x100000, 0x7ae7ab76, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2jc)
@@ -4205,8 +4266,12 @@ static struct BurnRomInfo rdft2itRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "seibu8.bin",						0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region92.u1053",	0x100000, 0x204d82d0, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region92.u1053",	0x100000, 0x204d82d0, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2it)
@@ -4249,8 +4314,12 @@ static struct BurnRomInfo rdft2aRomDesc[] = {
 
 	{ "raiden-f2__pcm.u0217",			0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "seibu__8.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region22.u1053",	0x100000, 0x5fee8413, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region22.u1053",	0x100000, 0x5fee8413, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2a)
@@ -4300,8 +4369,12 @@ static struct BurnRomInfo rdft2aaRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region24.u1053",	0x100000, 0x72a33dc4, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region24.u1053",	0x100000, 0x72a33dc4, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2aa)
@@ -4344,8 +4417,12 @@ static struct BurnRomInfo rdft2tRomDesc[] = {
 
 	{ "pcm.u0217",						0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "sound1.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region20.u1053",	0x100000, 0xf2051161, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region20.u1053",	0x100000, 0xf2051161, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2t)
@@ -4388,8 +4465,12 @@ static struct BurnRomInfo rdft2sRomDesc[] = {
 
 	{ "raiden-f2__pcm.u0217",			0x200000, 0x2edc30b5, 3 | BRF_PRG | BRF_ESS }, // 17 Sample Data (Mapped to i386)
 	{ "seibu__8.u0222",					0x080000, 0xb7bd3703, 3 | BRF_PRG | BRF_ESS }, // 18
+	
+	{ "rm81.u0529.bin",					0x000117, 0xacd55c8e, 0 | BRF_OPT },           // 19 PLDs
+	{ "rm82.u0330.bin",					0x000117, 0x64c71423, 0 | BRF_OPT },           // 20
+	{ "rm83.u0331.bin",					0x000117, 0x6e10d66b, 0 | BRF_OPT },           // 21
 
-	{ "flash0_blank_region9c.u1053",	0x100000, 0xd73d640c, 0 | BRF_SND },           // 19 Intel Flash (Samples)
+	{ "flash0_blank_region9c.u1053",	0x100000, 0xd73d640c, 0 | BRF_SND },           // 22 Intel Flash (Samples)
 };
 
 STD_ROM_PICK(rdft2s)
@@ -4719,7 +4800,7 @@ static void rdft2us_callback()
 		0x03, 0x01, 0x03, 0x01, 0x00, 0x00, 0x07, 0x05,	0x7F, 0xFF, 0x00, 0x00, 0x01, 0x03, 0x02, 0xFA
 	};
 
-	memcpy (DefaultEEPROM, EEPROMData, 32);
+	memcpy(DefaultEEPROM, EEPROMData, 32);
 
 	EEPROMInit(&seibuspi_eeprom);
 	has_eeprom = 1;
@@ -4870,7 +4951,7 @@ static void Rdft22kc_callback()
 		0x03, 0x01, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x03, 0x04, 0x3D
 	};
 
-	memcpy (DefaultEEPROM, EEPROMData, 32);
+	memcpy(DefaultEEPROM, EEPROMData, 32);
 }
 
 static INT32 Rdft22kcInit()

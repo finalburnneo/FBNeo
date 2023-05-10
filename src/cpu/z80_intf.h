@@ -11,6 +11,8 @@ extern INT32 nHasZet;
 void ZetWriteByte(UINT16 address, UINT8 data);
 UINT8 ZetReadByte(UINT16 address);
 void ZetWriteRom(UINT16 address, UINT8 data);
+UINT8 __fastcall ZetReadIO(UINT32 a);
+void __fastcall ZetWriteIO(UINT32 a, UINT8 d);
 INT32 ZetInit(INT32 nCount);
 void ZetDaisyInit(INT32 dev0, INT32 dev1);
 void ZetExit();

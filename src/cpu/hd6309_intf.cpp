@@ -11,40 +11,23 @@ static HD6309Ext *HD6309CPUContext = NULL;
 static INT32 nHD6309CyclesDone[MAX_CPU];
 INT32 nHD6309CyclesTotal;
 
-static void core_set_irq(INT32 cpu, INT32 line, INT32 state)
-{
-	INT32 active = nActiveCPU;
-
-	if (active != cpu)
-	{
-		HD6309Close();
-		HD6309Open(cpu);
-	}
-
-	HD6309SetIRQLine(line, state);
-
-	if (active != cpu)
-	{
-		HD6309Close();
-		HD6309Open(active);
-	}
-}
-
 cpu_core_config HD6309Config =
 {
 	"HD6309",
-	HD6309Open,
-	HD6309Close,
+	HD6309CPUPush, //HD6309Open,
+	HD6309CPUPop,//HD6309Close,
 	HD6309CheatRead,
 	HD6309CheatWriteRom,
 	HD6309GetActive,
 	HD6309TotalCycles,
 	HD6309NewFrame,
 	HD6309Idle,
-	core_set_irq,
+	HD6309SetIRQLine,
 	HD6309Run,
 	HD6309RunEnd,
 	HD6309Reset,
+	HD6309Scan,
+	HD6309Exit,
 	0x10000,
 	0
 };
@@ -78,7 +61,7 @@ struct hd6309pstack {
 static hd6309pstack pstack[MAX_PSTACK];
 static INT32 pstacknum = 0;
 
-static void HD6309CPUPush(INT32 nCPU)
+void HD6309CPUPush(INT32 nCPU)
 {
 	hd6309pstack *p = &pstack[pstacknum++];
 
@@ -96,7 +79,7 @@ static void HD6309CPUPush(INT32 nCPU)
 	}
 }
 
-static void HD6309CPUPop()
+void HD6309CPUPop()
 {
 	hd6309pstack *p = &pstack[--pstacknum];
 

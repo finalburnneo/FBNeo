@@ -33,18 +33,23 @@ static INT32 is_Bootleg;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
+static UINT8 DrvJoyF[8];
 static UINT8 DrvDips[1];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles;
+
 static struct BurnInputInfo AtetrisInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoyF + 0,	"p1 start"	},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 right"	},
 	{"P1 Button",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoyF + 4,	"p2 start"	},
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 right"	},
@@ -58,42 +63,44 @@ STDINPUTINFO(Atetris)
 
 static struct BurnDIPInfo AtetrisDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x00, NULL		},
+	DIP_OFFSET(0x0d)
+	{0x00, 0xff, 0xff, 0x00, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"	},
-	{0x0b, 0x01, 0x04, 0x00, "Off"		},
-	{0x0b, 0x01, 0x04, 0x04, "On"		},
+	{0   , 0xfe, 0   ,    2, "Freeze"		},
+	{0x00, 0x01, 0x04, 0x00, "Off"			},
+	{0x00, 0x01, 0x04, 0x04, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Freeze Step"	},
-	{0x0b, 0x01, 0x08, 0x00, "Off"		},
-	{0x0b, 0x01, 0x08, 0x08, "On"		},
+	{0x00, 0x01, 0x08, 0x00, "Off"			},
+	{0x00, 0x01, 0x08, 0x08, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x0b, 0x01, 0x80, 0x00, "Off"		},
-	{0x0b, 0x01, 0x80, 0x80, "On"		},
+	{0x00, 0x01, 0x80, 0x00, "Off"			},
+	{0x00, 0x01, 0x80, 0x80, "On"			},
 };
 
 STDDIPINFO(Atetris)
 
 static struct BurnDIPInfo AtetriscDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x00, NULL		},
+	DIP_OFFSET(0x0d)
+	{0x00, 0xff, 0xff, 0x00, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"	},
-	{0x0b, 0x01, 0x04, 0x00, "Off"		},
-	{0x0b, 0x01, 0x04, 0x04, "On"		},
+	{0   , 0xfe, 0   ,    2, "Freeze"		},
+	{0x00, 0x01, 0x04, 0x00, "Off"			},
+	{0x00, 0x01, 0x04, 0x04, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Freeze Step"	},
-	{0x0b, 0x01, 0x08, 0x00, "Off"		},
-	{0x0b, 0x01, 0x08, 0x08, "On"		},
+	{0x00, 0x01, 0x08, 0x00, "Off"			},
+	{0x00, 0x01, 0x08, 0x08, "On"			},
 
 	{0   , 0xfe, 0   ,    0, "Flip Controls"},
-	{0x0b, 0x01, 0x20, 0x00, "Off"		},
-	{0x0b, 0x01, 0x20, 0x20, "On"		},
+	{0x00, 0x01, 0x20, 0x00, "Off"			},
+	{0x00, 0x01, 0x20, 0x20, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x0b, 0x01, 0x80, 0x00, "Off"		},
-	{0x0b, 0x01, 0x80, 0x80, "On"		},
+	{0x00, 0x01, 0x80, 0x00, "Off"			},
+	{0x00, 0x01, 0x80, 0x80, "On"			},
 };
 
 STDDIPINFO(Atetrisc)
@@ -245,6 +252,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	watchdog = 0;
 	nvram_enable = 0;
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -290,12 +299,7 @@ static INT32 MemIndex()
 
 static INT32 CommonInit(INT32 boot)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv6502ROM, 0, 1)) return 1;
@@ -317,8 +321,6 @@ static INT32 CommonInit(INT32 boot)
 	M6502MapMemory(DrvNVRAM,		0x2600, 0x27ff, MAP_ROM);
 	M6502MapMemory(Drv6502ROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(atetris_read);
-	M6502SetReadOpHandler(atetris_read);
-	M6502SetReadOpArgHandler(atetris_read);
 	M6502SetWriteHandler(atetris_write);
 	M6502Close();
 
@@ -364,7 +366,7 @@ static INT32 DrvExit()
 	}
 	SlapsticExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -398,6 +400,9 @@ static INT32 DrvFrame()
 	}
 
 	{
+		if (DrvJoyF[0]) DrvJoy2[0] = 1; // fake start buttons
+		if (DrvJoyF[4]) DrvJoy2[4] = 1;
+
 		DrvInputs[0] = DrvDips[0] & 0xbc;
 		DrvInputs[1] = 0;
 		for (INT32 i = 0; i < 8; i++) {
@@ -408,7 +413,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[1] = { master_clock / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
@@ -433,6 +438,8 @@ static INT32 DrvFrame()
 	}
 
 	M6502Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		if (is_Bootleg) { // Bootleg set 2 sound system
@@ -486,11 +493,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 			pokey_scan(nAction, pnMin);
 		}
 
+		SCAN_VAR(watchdog);
 		SCAN_VAR(nvram_enable);
-	}
 
-	if (nAction & ACB_WRITE) {
-		DrvRecalc = 1;
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

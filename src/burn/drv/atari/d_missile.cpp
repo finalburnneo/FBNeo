@@ -343,21 +343,6 @@ static void missile_write(UINT16 address, UINT8 data)
 	bprintf (0, _T("Missed write! %4.4x, %2.2x\n"), address, data);
 }
 
-static UINT8 missile_readop(UINT16 address)
-{
-	if (address >= 0x5000) {
-		UINT8 op = DrvMainROM[address];
-
-		if (irq_state == 0 && (op & 0x1f) == 0x01) {
-			madsel_lastcycles = M6502TotalCycles();
-		}
-		return op;
-	}
-
-	bprintf(0, _T("Missed readop %x\n"), address);
-	return 0xff;
-}
-
 static UINT8 missile_read(UINT16 address)
 {
 	if (get_madsel()) {
@@ -373,6 +358,10 @@ static UINT8 missile_read(UINT16 address)
 
 	if (address >= 0x5000) {
 		ret = DrvMainROM[address];
+
+		if (irq_state == 0 && (ret & 0x1f) == 0x01 && M6502GetFetchStatus()) {
+			madsel_lastcycles = M6502TotalCycles();
+		}
 	}
 
 	if ((address & 0x7800) == 0x4000) {
@@ -429,6 +418,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	nExtraCycles[0] = 0;
 
 	DINK.reset();
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -501,8 +492,6 @@ static INT32 DrvInit()
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
 	M6502SetReadHandler(missile_read);
-	M6502SetReadOpHandler(missile_readop);
-	M6502SetReadOpArgHandler(missile_read);
 	M6502SetWriteHandler(missile_write);
 	M6502Close();
 
@@ -713,7 +702,7 @@ struct BurnDriver BurnDrvMissile = {
 	"missile", NULL, NULL, NULL, "1980",
 	"Missile Command (rev 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, missileRomInfo, missileRomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -740,7 +729,7 @@ struct BurnDriver BurnDrvMissile2 = {
 	"missile2", "missile", NULL, NULL, "1980",
 	"Missile Command (rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, missile2RomInfo, missile2RomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -767,7 +756,7 @@ struct BurnDriver BurnDrvMissile1 = {
 	"missile1", "missile", NULL, NULL, "1980",
 	"Missile Command (rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, missile1RomInfo, missile1RomName, NULL, NULL, NULL, NULL, MissileInputInfo, MissileDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -822,7 +811,7 @@ struct BurnDriver BurnDrvSuprmatk = {
 	"suprmatk", "missile", NULL, NULL, "1981",
 	"Super Missile Attack (for rev 1)\0", NULL, "Atari / General Computer Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, suprmatkRomInfo, suprmatkRomName, NULL, NULL, NULL, NULL, MissileInputInfo, SuprmatkDIPInfo,
 	SuprmatkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3
@@ -849,7 +838,7 @@ struct BurnDriver BurnDrvSuprmatkd = {
 	"suprmatkd", "missile", NULL, NULL, "1981",
 	"Super Missile Attack (not encrypted)\0", NULL, "Atari / General Computer Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, suprmatkdRomInfo, suprmatkdRomName, NULL, NULL, NULL, NULL, MissileInputInfo, SuprmatkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 231, 4, 3

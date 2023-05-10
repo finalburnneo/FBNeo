@@ -491,11 +491,11 @@ int DebugCreate();
 int PaletteViewerDialogCreate(HWND hParentWND);
 
 // ips_manager.cpp
-extern int nIpsSelectedLanguage;
-int GetIpsNumPatches();
+extern INT32 nIpsSelectedLanguage;
+INT32 GetIpsNumPatches();
 void LoadIpsActivePatches();
-int GetIpsNumActivePatches();
-int IpsManagerCreate(HWND hParentWND);
+INT32 GetIpsNumActivePatches();
+INT32 IpsManagerCreate(HWND hParentWND);
 void IpsPatchExit();
 
 // localise_download.cpp

@@ -44,6 +44,10 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra[2];
+
+static INT32 bootup_delay;
+
 static struct BurnInputInfo LiberateInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
@@ -267,7 +271,7 @@ static void bankswitch(INT32 data)
 		M6502MapMemory(DrvMainROM + 0x4000,		0x4000, 0x7fff, MAP_ROM);
 		M6502MapMemory(DrvMainROM + 0x0000,		0x8000, 0x80ff, MAP_ROM);
 	} else {
-		M6502MapMemory(NULL,					0x4000, 0x7fff, MAP_RAM);
+		M6502MapMemory(NULL,					0x4000, 0x7fff, MAP_RAM); // unmaps location
 		M6502MapMemory(DrvColRAM,				0x4000, 0x43ff, MAP_RAM);
 		M6502MapMemory(DrvVidRAM,				0x4400, 0x47ff, MAP_RAM);
 		M6502MapMemory(DrvSprRAM,				0x4800, 0x4fff, MAP_RAM);
@@ -313,11 +317,11 @@ static UINT8 liberate_main_read(UINT16 address)
 	{
 		address &= 0xf;
 
-		if (address == 0) return DrvInputs[0]; /* Player 1 controls */
-		if (address == 1) return DrvInputs[1]; /* Player 2 controls */
-		if (address == 2) return (DrvInputs[2] & 0x7f) | (*vblank & 0x80); /* Vblank, coins */
-		if (address == 3) return DrvDips[0]; /* Dip 1 */
-		if (address == 4) return DrvDips[1]; /* Dip 2 */
+		if (address == 0) return DrvInputs[0];
+		if (address == 1) return DrvInputs[1];
+		if (address == 2) return (DrvInputs[2] & 0x7f) | (*vblank & 0x80);
+		if (address == 3) return DrvDips[0];
+		if (address == 4) return DrvDips[1];
 
 		return 0xff;
 	}
@@ -443,6 +447,12 @@ static INT32 DrvDoReset()
 	irq_latch = 0;
 	input_bank = 0;
 
+	bootup_delay = 300; // frames
+
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -535,14 +545,9 @@ static void DrvNibbleSwap()
 	}
 }
 
-static void DrvCommonInit(INT32 gfxsize, INT32 bgsplit)
+static INT32 DrvCommonInit(INT32 gfxsize, INT32 bgsplit)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	M6502Init(0, TYPE_DECO16);
 	M6502Open(0);
@@ -582,11 +587,11 @@ static void DrvCommonInit(INT32 gfxsize, INT32 bgsplit)
 	GenericTilemapSetGfx(0, DrvGfxROM2, 3, 16, 16, 0x10000, 0, 3);
 	GenericTilemapSetGfx(1, DrvGfxROM0, 3,  8,  8, gfxsize, 0, 3);
 	GenericTilemapSetGfx(2, DrvGfxROM1, 3, 16, 16, gfxsize, 0, 3);
-	GenericTilemapCategoryConfig(0, 3);
 	GenericTilemapSetTransparent(1, 0);
-	GenericTilemapSetTransMask(0, 2, 0x0001);
 
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
+
+	return 0;
 }
 
 static INT32 LiberateInit()
@@ -665,6 +670,8 @@ static INT32 BoomrangInit()
 {
 	DrvCommonInit(0x20000,1);
 
+	GenericTilemapSetTransSplit(0, 0, 0x0001, 0x007e);
+
 	{
 		INT32 k = 0;
 		if (BurnLoadRom(DrvMainROM + 0x00000,  k,   1)) return 1;
@@ -696,6 +703,7 @@ static INT32 BoomrangInit()
 static INT32 BoomrangaInit()
 {
 	DrvCommonInit(0x20000,1);
+	GenericTilemapSetTransSplit(0, 0, 0x0001, 0x007e);
 
 	{
 		INT32 k = 0;
@@ -737,6 +745,7 @@ static INT32 BoomrangaInit()
 static INT32 KamikcabInit()
 {
 	DrvCommonInit(0x20000,1);
+	GenericTilemapSetTransSplit(0, 0, 0x0001, 0x007e);
 
 	{
 		INT32 k = 0;
@@ -768,6 +777,7 @@ static INT32 KamikcabInit()
 static INT32 YellowcbInit()
 {
 	DrvCommonInit(0x20000,1);
+	GenericTilemapSetTransSplit(0, 0, 0x0001, 0x007e);
 
 	{
 		INT32 k = 0;
@@ -811,7 +821,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -977,13 +987,13 @@ static INT32 BoomrangDraw()
 	if (background_disable) {
 		BurnTransferClear(32);
 	} else {
-		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1);
 	}
 
 	boomrang_draw_sprites(8);
 
 	if (background_disable == 0) {
-		if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1);
+		if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0);
 	}
 
 	boomrang_draw_sprites(0);
@@ -1036,15 +1046,15 @@ static INT32 DrvFrame()
 
     M6502NewFrame();
 
-	DrvMainROM[0] = DrvInputs[0]; /* Player 1 controls */
-	DrvMainROM[1] = DrvInputs[1]; /* Player 2 controls */
-	DrvMainROM[2] = DrvInputs[2] & 0x7f; /* Vblank, coins */
-	DrvMainROM[3] = DrvDips[0]; /* Dip 1 */
-	DrvMainROM[4] = DrvDips[1]; /* Dip 2 */
+	DrvMainROM[0] = DrvInputs[0];
+	DrvMainROM[1] = DrvInputs[1];
+	DrvMainROM[2] = DrvInputs[2] & 0x7f;
+	DrvMainROM[3] = DrvDips[0];
+	DrvMainROM[4] = DrvDips[1];
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 2000000 / 60, 1500000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	*vblank = 0;
 
@@ -1052,7 +1062,7 @@ static INT32 DrvFrame()
 	{
 		M6502Open(0);
 		CPU_RUN(0, M6502);
-		if (i == 240) take_interrupt();
+		if (i == 240 && bootup_delay == 0) take_interrupt();
 		M6502Close();
 
 		M6502Open(1);
@@ -1063,6 +1073,11 @@ static INT32 DrvFrame()
 
 		M6502Close();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	if (bootup_delay) bootup_delay--;
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -1100,6 +1115,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(irq_latch);
 		SCAN_VAR(input_bank);
+		SCAN_VAR(bootup_delay);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -1136,7 +1154,7 @@ struct BurnDriver BurnDrvLiberate = {
 	"liberate", NULL, NULL, NULL, "1984",
 	"Liberation\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, liberateRomInfo, liberateRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, LiberateDIPInfo,
 	LiberateInit, DrvExit, DrvFrame, LiberateDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1175,7 +1193,7 @@ struct BurnDriver BurnDrvDualaslt = {
 	"dualaslt", "liberate", NULL, NULL, "1984",
 	"Dual Assault\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, dualasltRomInfo, dualasltRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, DualasltDIPInfo,
 	DualasltInit, DrvExit, DrvFrame, LiberateDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1209,7 +1227,7 @@ struct BurnDriver BurnDrvBoomrang = {
 	"boomrang", NULL, NULL, NULL, "1983",
 	"Boomer Rang'r / Genesis (set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, boomrangRomInfo, boomrangRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, BoomrangDIPInfo,
 	BoomrangInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1250,7 +1268,7 @@ struct BurnDriver BurnDrvBoomranga = {
 	"boomranga", "boomrang", NULL, NULL, "1983",
 	"Boomer Rang'r / Genesis (set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, boomrangaRomInfo, boomrangaRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, BoomrangDIPInfo,
 	BoomrangaInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1283,7 +1301,7 @@ struct BurnDriver BurnDrvKamikcab = {
 	"kamikcab", NULL, NULL, NULL, "1984",
 	"Kamikaze Cabbie\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, kamikcabRomInfo, kamikcabRomName, NULL, NULL, NULL, NULL, KamikcabInputInfo, KamikcabDIPInfo,
 	KamikcabInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1321,7 +1339,7 @@ struct BurnDriver BurnDrvYellowcbj = {
 	"yellowcbj", "kamikcab", NULL, NULL, "1984",
 	"Yellow Cab (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, yellowcbjRomInfo, yellowcbjRomName, NULL, NULL, NULL, NULL, KamikcabInputInfo, KamikcabDIPInfo,
 	YellowcbInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1359,7 +1377,7 @@ struct BurnDriver BurnDrvYellowcbb = {
 	"yellowcbb", "kamikcab", NULL, NULL, "1984",
 	"Yellow Cab (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, yellowcbbRomInfo, yellowcbbRomName, NULL, NULL, NULL, NULL, KamikcabInputInfo, KamikcabDIPInfo,
 	YellowcbInit, DrvExit, DrvFrame, BoomrangDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4

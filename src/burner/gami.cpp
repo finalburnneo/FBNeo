@@ -17,6 +17,7 @@ INT32 nFireButtons = 0;
 
 bool bStreetFighterLayout = false;
 bool bLeftAltkeyMapped = false;
+bool bResetDrv = false;
 
 // These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
 UINT8 macroSystemPause = 0;
@@ -166,6 +167,7 @@ INT32 GameInpBlank(INT32 bDipSwitch)
 		struct BurnInputInfo bii;
 		memset(&bii, 0, sizeof(bii));
 		BurnDrvGetInputInfo(&bii, i);
+
 		if (bDipSwitch == 0 && (bii.nType & BIT_GROUP_CONSTANT)) {		// Don't blank the dip switches
 			continue;
 		}
@@ -179,6 +181,48 @@ INT32 GameInpBlank(INT32 bDipSwitch)
 			pgi->nInput = GIT_CONSTANT;
 			pgi->Input.Constant.nConst = *bii.pVal;
 		}
+
+		// Resolve game's key identities
+		// TODO: analogs, figure out what to do with multiple axis games (luckywld, metlhawk, ...)
+		if (0 == strcmp(bii.szInfo, "reset")) {
+			pgi->nIdent = GK_RESET;
+		}
+		if (0 == strcmp(bii.szInfo, "diag")) {
+			pgi->nIdent = GK_SERVICE_MODE;
+		}
+		if (0 == strcmp(bii.szInfo, "tilt")) {
+			pgi->nIdent = GK_TILT;
+		}
+
+		if (toupper(bii.szInfo[0]) == 'P' && bii.szInfo[1] >= '1' && bii.szInfo[1] <= '8') {
+			int nPlayer = bii.szInfo[1] - '0';
+
+			pgi->nIdent = gi_Player2nIdent(nPlayer);
+
+			if (0 == strcmp(bii.szInfo + 3, "coin")) {
+				pgi->nIdent |= GK_COIN;
+			}
+			if (0 == strcmp(bii.szInfo + 3, "start")) {
+				pgi->nIdent |= GK_START;
+			}
+			if (0 == strcmp(bii.szInfo + 3, "up")) {
+				pgi->nIdent |= GK_UP;
+			}
+			if (0 == strcmp(bii.szInfo + 3, "down")) {
+				pgi->nIdent |= GK_DOWN;
+			}
+			if (0 == strcmp(bii.szInfo + 3, "left")) {
+				pgi->nIdent |= GK_LEFT;
+			}
+			if (0 == strcmp(bii.szInfo + 3, "right")) {
+				pgi->nIdent |= GK_RIGHT;
+			}
+			if (0 == strncmp(bii.szInfo + 3, "fire", 4)) {
+				int fire = atoi(bii.szInfo + 8);
+				pgi->nIdent |= gi_Button2nIdent(fire);
+			}
+		}
+		//bprintf(0, _T("gami_debug:  %S - %x\n"), bii.szInfo, pgi->nIdent);
 	}
 
 	for (i = 0; i < nMacroCount; i++, pgi++) {
@@ -453,10 +497,8 @@ static void GameInpInitMacros()
 			if (bii.szName == NULL) {
 				bii.szName = "";
 			}
-			if (_stricmp(" Up", bii.szName + 2) == 0 ||
-				_stricmp(" Down", bii.szName + 2) == 0 ||
-				_stricmp(" Left", bii.szName + 2) == 0 ||
-				_stricmp(" Right", bii.szName + 2) == 0)
+			// Check if current input to be added matches player number to prevents duplicate macros
+			if ((UINT32) (bii.szName[1] - '0') == (nPlayer + 1))
 			{
 				sprintf(pgi->Macro.szName, "%s", bii.szName);
 
@@ -1140,6 +1182,8 @@ INT32 GameInpExit()
 
 	bStreetFighterLayout = false;
 	bLeftAltkeyMapped = false;
+
+	bResetDrv = false;
 
 	return 0;
 }

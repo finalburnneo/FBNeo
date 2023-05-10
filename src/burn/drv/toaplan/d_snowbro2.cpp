@@ -2,6 +2,7 @@
 // Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"
+#include "tiles_generic.h"
 // Snow Bros. 2
 
 static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -474,20 +475,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 LoadRoms()
-{
-	// Load 68000 ROM
-	BurnLoadRom(Rom01, 0, 1);
-
-	// Load GP9001 tile data
-	ToaLoadGP9001Tiles(GP9001ROM[0], 1, 4, nGP9001ROMSize[0]);
-
-	// Load MSM6295 ADPCM data
-	BurnLoadRom(MSM6295ROM, 5, 1);
-
-	return 0;
-}
-
 // Scan ram
 static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
@@ -515,7 +502,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
-static INT32 DrvInit()
+static INT32 DrvInit(INT32 (*pLoadRoms)())
 {
 	INT32 nLen;
 
@@ -536,8 +523,10 @@ static INT32 DrvInit()
 	MemIndex();													// Index the allocated memory
 
 	// Load the roms into memory
-	if (LoadRoms()) {
-		return 1;
+	if (pLoadRoms) {
+		if (pLoadRoms()) {
+			return 1;
+		}
 	}
 
 	{
@@ -570,7 +559,7 @@ static INT32 DrvInit()
 
 	BurnYM2151Init(27000000 / 8);
 	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
-	MSM6295Init(0, 27000000 / 10 / 132, 1);
+	MSM6295Init(0, 16000000 / 4 / MSM6295_PIN7_LOW, 1);
 	MSM6295SetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset(); // Reset machine
@@ -595,6 +584,24 @@ static struct BurnRomInfo snowbro2RomDesc[] = {
 STD_ROM_PICK(snowbro2)
 STD_ROM_FN(snowbro2)
 
+static INT32 Snowbro2LoadRoms()
+{
+	// Load 68000 ROM
+	BurnLoadRom(Rom01, 0, 1);
+
+	// Load GP9001 tile data
+	ToaLoadGP9001Tiles(GP9001ROM[0], 1, 4, nGP9001ROMSize[0]);
+
+	// Load MSM6295 ADPCM data
+	BurnLoadRom(MSM6295ROM, 5, 1);
+
+	return 0;
+}
+
+static INT32 Snowbro2Init()
+{
+	return DrvInit(Snowbro2LoadRoms);
+}
 
 struct BurnDriver BurnDrvSnowbro2 = {
 	"snowbro2", NULL, NULL, NULL, "1994",
@@ -602,7 +609,7 @@ struct BurnDriver BurnDrvSnowbro2 = {
 	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (Hanafram)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
 	NULL, snowbro2RomInfo, snowbro2RomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	Snowbro2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
 
@@ -629,13 +636,135 @@ static struct BurnRomInfo snowbro2nyRomDesc[] = {
 STD_ROM_PICK(snowbro2ny)
 STD_ROM_FN(snowbro2ny)
 
-
 struct BurnDriver BurnDrvSnowbro2ny = {
 	"snowbro2ny", "snowbro2", NULL, NULL, "1994",
 	"Snow Bros. 2 - with new elves (Nyanko)\0", NULL, "[Toaplan] Nyanko", "Toaplan GP9001 based",
 	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (Nyanko)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
 	NULL, snowbro2nyRomInfo, snowbro2nyRomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	Snowbro2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Snow Bros. 2 - With New Elves / Otenki Paradise (bootleg, set 1)
+
+static struct BurnRomInfo snowbro2bRomDesc[] = {
+	{ "sb2-prg1.u39",			0x040000, 0xe1fec8a2, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "sb2-prg0.u23",			0x040000, 0xb473cd57, BRF_PRG | BRF_ESS }, //  1
+
+	{ "sb2-gfx.u177",			0x200000, 0xebeec910, BRF_GRA },           //  2 GP9001 Tile data
+	{ "sb2-gfx.u175",			0x200000, 0xe349c75b, BRF_GRA },           //  3
+
+	{ "sb2-snd-4.u17",			0x080000, 0x638f341e, BRF_SND },           //  4 MSM6295 ADPCM data
+
+	{ "sb2-unk.u100",			0x008000, 0x456dd16e, BRF_OPT },           //  5 Unknown
+};
+
+
+STD_ROM_PICK(snowbro2b)
+STD_ROM_FN(snowbro2b)
+
+static INT32 Snowbro2bLoadRoms()
+{
+	// Load 68000 ROM
+	BurnLoadRom(Rom01 + 0, 1, 2);
+	BurnLoadRom(Rom01 + 1, 0, 2);
+
+	// Load GP9001 tile data
+	ToaLoadGP9001Tiles(GP9001ROM[0], 2, 2, nGP9001ROMSize[0]);
+
+	// Load MSM6295 ADPCM data
+	BurnLoadRom(MSM6295ROM, 4, 1);
+
+	return 0;
+}
+
+static INT32 Snowbro2bInit()
+{
+	return DrvInit(Snowbro2bLoadRoms);
+}
+
+struct BurnDriver BurnDrvSnowbro2b = {
+	"snowbro2b", "snowbro2", NULL, NULL, "1998",
+	"Snow Bros. 2 - With New Elves / Otenki Paradise (bootleg, set 1)\0", NULL, "bootleg", "Toaplan GP9001 based",
+	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (bootleg, set 1)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
+	NULL, snowbro2bRomInfo, snowbro2bRomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,
+	Snowbro2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Snow Bros. 2 - With New Elves / Otenki Paradise (bootleg, set 2)
+
+static struct BurnRomInfo snowbro2b2RomDesc[] = {
+	{ "rom10.bin",	0x80000, 0x3e96da41, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+
+	{ "rom07.bin",	0x80000, 0xc54ae0b3, BRF_GRA },           //  1 GP9001 Tile data
+	{ "rom05.bin",	0x80000, 0xaf3c74d1, BRF_GRA },           //  2
+	{ "rom08.bin",	0x40000, 0x72812088, BRF_GRA },           //  3
+	{ "rom06.bin",	0x40000, 0xc8f80774, BRF_GRA },           //  4
+	{ "rom03.bin",	0x80000, 0x42fecbd7, BRF_GRA },           //  5
+	{ "rom01.bin",	0x80000, 0xe7134937, BRF_GRA },           //  6
+	{ "rom04.bin",	0x40000, 0x3343b7a7, BRF_GRA },           //  7
+	{ "rom02.bin",	0x40000, 0xaf4d9551, BRF_GRA },           //  8
+
+	{ "rom09.bin",	0x80000, 0x638f341e, BRF_SND },           //  9 MSM6295 ADPCM data
+};
+
+
+STD_ROM_PICK(snowbro2b2)
+STD_ROM_FN(snowbro2b2)
+
+static INT32 Snowbro2b2LoadRoms()
+{
+	// Load 68000 ROM
+	BurnLoadRom(Rom01 + 0, 0, 1);
+
+	// Load & decode GP9001 tile data
+	{
+		INT32 Plane[4] = { 0x180000*8+8, 0x180000*8+0, 8, 0 };
+		INT32 XOffs[8] = { STEP8(0,1) };
+		INT32 YOffs[8] = { STEP8(0,16) };
+
+		UINT8 *tmp = (UINT8*)BurnMalloc(0x800000);
+
+		BurnLoadRom(GP9001ROM[0] + 0x000000, 1, 2);
+		BurnLoadRom(GP9001ROM[0] + 0x000001, 2, 2);
+		BurnLoadRom(GP9001ROM[0] + 0x100000, 3, 2);
+		BurnLoadRom(GP9001ROM[0] + 0x100001, 4, 2);
+		BurnLoadRom(GP9001ROM[0] + 0x180000, 5, 2);
+		BurnLoadRom(GP9001ROM[0] + 0x180001, 6, 2);
+		BurnLoadRom(GP9001ROM[0] + 0x280000, 7, 2);
+		BurnLoadRom(GP9001ROM[0] + 0x280001, 8, 2);
+
+		GfxDecode(0x18000, 4, 8, 8, Plane, XOffs, YOffs, 0x080, GP9001ROM[0], tmp);
+
+		for (INT32 i = 0; i < 0x600000; i+=2) {
+			GP9001ROM[0][i/2] = (tmp[i+1] << 4) | (tmp[i+0] & 0xf);
+		}
+
+		BurnFree (tmp);
+	}
+	
+	// Load MSM6295 ADPCM data
+	BurnLoadRom(MSM6295ROM, 9, 1);
+
+	return 0;
+}
+
+static INT32 Snowbro2b2Init()
+{
+	return DrvInit(Snowbro2b2LoadRoms);
+}
+
+struct BurnDriver BurnDrvSnowbro2b2 = {
+	"snowbro2b2", "snowbro2", NULL, NULL, "1994",
+	"Snow Bros. 2 - With New Elves / Otenki Paradise (bootleg, set 2)\0", NULL, "bootleg (Q Elec)", "Toaplan GP9001 based",
+	L"Snow Bros. 2 - with new elves\0\u304A\u3066\u3093\u304D\u30D1\u30E9\u30C0\u30A4\u30B9\0\u96EA\u4EBA\u5144\u5F1F\uFF12\0\uB208\uC0AC\uB78C\uD615\uC81C\uFF12 (bootleg, set 2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TOAPLAN_68K_ONLY, GBF_PLATFORM, 0,
+	NULL, snowbro2b2RomInfo, snowbro2b2RomName, NULL, NULL, NULL, NULL, snowbro2InputInfo, snowbro2DIPInfo,
+	Snowbro2b2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

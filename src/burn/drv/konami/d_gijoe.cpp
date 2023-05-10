@@ -440,6 +440,8 @@ static INT32 DrvDoReset()
 
 	irq6_timer = -1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -498,17 +500,21 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  4, 1)) return 1;
 
-		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  5, 4, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  6, 4, 2)) return 1;
+		// gijoeua has partial gfx dumps that are currently unused,
+		// they are being overridden by bad dumps, so let's skip them for now
+		INT32 skipped_roms = (strcmp(BurnDrvGetTextA(DRV_NAME), "gijoeua") == 0 ? 4 : 0);
 
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  7, 8, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  8, 8, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000004,  9, 8, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006, 10, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  5 + skipped_roms, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  6 + skipped_roms, 4, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x000000, 11, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  7 + skipped_roms, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  8 + skipped_roms, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000004,  9 + skipped_roms, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006, 10 + skipped_roms, 8, 2)) return 1;
 
-		if (BurnLoadRom(DrvEeprom  + 0x000000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x000000, 11 + skipped_roms, 1)) return 1;
+
+		if (BurnLoadRom(DrvEeprom  + 0x000000, 12 + skipped_roms, 1)) return 1;
 
 		K053247GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
 		K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x400000);
@@ -799,7 +805,7 @@ struct BurnDriver BurnDrvGijoe = {
 	"gijoe", NULL, NULL, NULL, "1992",
 	"G.I. Joe (World, EAB, set 1)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gijoeRomInfo, gijoeRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -836,7 +842,7 @@ struct BurnDriver BurnDrvGijoeea = {
 	"gijoeea", "gijoe", NULL, NULL, "1992",
 	"G.I. Joe (World, EB8, prototype?)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gijoeeaRomInfo, gijoeeaRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -873,7 +879,7 @@ struct BurnDriver BurnDrvGijoeu = {
 	"gijoeu", "gijoe", NULL, NULL, "1992",
 	"G.I. Joe (US, UAB)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gijoeuRomInfo, gijoeuRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -896,13 +902,13 @@ static struct BurnRomInfo gijoeuaRomDesc[] = {
 //	{ "069a10ah.d9",	0x040000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  6
 //	{ "069a09al.d3",	0x040000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  7
 //	{ "069a09ah.d5",	0x040000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  8
-//	{ "069a10bl.j7",	0x040000, 0x087d8e25, 3 | BRF_GRA }, 			  //  9
-//	{ "069a10bh.j9",	0x040000, 0xfc7ad198, 3 | BRF_GRA }, 			  // 10
-//	{ "069a09bl.j3",	0x040000, 0x385217cc, 3 | BRF_GRA }, 			  // 11
-//	{ "069a09bh.j5",	0x040000, 0xc6d43c8a, 3 | BRF_GRA }, 			  // 12
+	{ "069a10bl.j7",	0x040000, 0x087d8e25, 3 | BRF_GRA | BRF_OPT }, 			  //  5
+	{ "069a10bh.j9",	0x040000, 0xfc7ad198, 3 | BRF_GRA | BRF_OPT }, 			  //  6
+	{ "069a09bl.j3",	0x040000, 0x385217cc, 3 | BRF_GRA | BRF_OPT }, 			  //  7
+	{ "069a09bh.j5",	0x040000, 0xc6d43c8a, 3 | BRF_GRA | BRF_OPT }, 			  //  8
 // 	overlay standard ROMs for now
-	{ "069a10.18j",		0x100000, 0x4c6743ee, 3 | BRF_GRA },           //  5 K056832 Characters
-	{ "069a09.16j",		0x100000, 0xe6e36b05, 3 | BRF_GRA },           //  6
+	{ "069a10.18j",		0x100000, 0x4c6743ee, 3 | BRF_GRA },           //  9 K056832 Characters
+	{ "069a09.16j",		0x100000, 0xe6e36b05, 3 | BRF_GRA },           // 10
 
 //	{ "069a08al.k3",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 13 K053246 Sprites
 //	{ "069a08ah.n3",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 14
@@ -921,10 +927,10 @@ static struct BurnRomInfo gijoeuaRomDesc[] = {
 //	{ "069a06bl.l9",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 25
 //	{ "069a06bh.p9",	0x040000, 0x00000000, 4 | BRF_GRA | BRF_NODUMP }, // 26
 // 	overlay standard ROMs for now
-	{ "069a08.6h",		0x100000, 0x325477d4, 4 | BRF_GRA },           //  7 K053247 Sprites
-	{ "069a05.1h",		0x100000, 0xc4ab07ed, 4 | BRF_GRA },           //  8
-	{ "069a07.4h",		0x100000, 0xccaa3971, 4 | BRF_GRA },           //  9
-	{ "069a06.2h",		0x100000, 0x63eba8e1, 4 | BRF_GRA },           // 10
+	{ "069a08.6h",		0x100000, 0x325477d4, 4 | BRF_GRA },           // 11 K053247 Sprites
+	{ "069a05.1h",		0x100000, 0xc4ab07ed, 4 | BRF_GRA },           // 12
+	{ "069a07.4h",		0x100000, 0xccaa3971, 4 | BRF_GRA },           // 13
+	{ "069a06.2h",		0x100000, 0x63eba8e1, 4 | BRF_GRA },           // 14
 	
 //	{ "069a04a.g2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 27 k054539
 //	{ "069a04b.j2",		0x040000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, // 28
@@ -947,7 +953,7 @@ struct BurnDriver BurnDrvGijoeua = {
 	"gijoeua", "gijoe", NULL, NULL, "1992",
 	"G.I. Joe (US, UAA)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gijoeuaRomInfo, gijoeuaRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -984,7 +990,7 @@ struct BurnDriver BurnDrvGijoej = {
 	"gijoej", "gijoe", NULL, NULL, "1992",
 	"G.I. Joe (Japan, JAA)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gijoejRomInfo, gijoejRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -1021,7 +1027,7 @@ struct BurnDriver BurnDrvGijoea = {
 	"gijoea", "gijoe", NULL, NULL, "1992",
 	"G.I. Joe (Asia, AA)\0", NULL, "Konami", "GX069",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, gijoeaRomInfo, gijoeaRomName, NULL, NULL, NULL, NULL, GijoeInputInfo, GijoeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3

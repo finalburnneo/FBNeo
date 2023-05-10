@@ -302,6 +302,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(1);
 	AY8910Reset(2);
 
+	HiscoreReset();
+
 	vreg = 0;
 	scrollx = 0;
 	scrolly = 0;
@@ -769,7 +771,7 @@ struct BurnDriver BurnDrvMagmax = {
 	"magmax", NULL, NULL, NULL, "1985",
 	"Mag Max (set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, magmaxRomInfo, magmaxRomName, NULL, NULL, NULL, NULL, MagmaxInputInfo, MagmaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x210,
 	256, 224, 4, 3
@@ -825,7 +827,7 @@ struct BurnDriver BurnDrvMagmaxa = {
 	"magmaxa", "magmax", NULL, NULL, "1985",
 	"Mag Max (set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, magmaxaRomInfo, magmaxaRomName, NULL, NULL, NULL, NULL, MagmaxInputInfo, MagmaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x210,
 	256, 224, 4, 3

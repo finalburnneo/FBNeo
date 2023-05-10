@@ -272,6 +272,8 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	palette_bank = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -631,7 +633,7 @@ struct BurnDriver BurnDrvBigprowr = {
 	"bigprowr", NULL, NULL, NULL, "1983",
 	"The Big Pro Wrestling!\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, bigprowrRomInfo, bigprowrRomName, NULL, NULL, NULL, NULL, BigprowrInputInfo, BigprowrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	240, 256, 3, 4
@@ -675,7 +677,7 @@ struct BurnDriver BurnDrvTagteam = {
 	"tagteam", "bigprowr", NULL, NULL, "1983",
 	"Tag Team Wrestling\0", NULL, "Technos Japan (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, tagteamRomInfo, tagteamRomName, NULL, NULL, NULL, NULL, BigprowrInputInfo, TagteamDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	240, 256, 3, 4

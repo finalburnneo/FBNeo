@@ -1,4 +1,4 @@
-// FB Alpha Raiden II driver module
+// FB Neo Raiden II driver module
 // Based on MAME driver Olivier Galibert, Angelo Salese, David Haywood, Tomasz Slanina
 
 #include "tiles_generic.h"
@@ -1637,6 +1637,36 @@ static void __fastcall zeroteam_main_write(UINT32 address, UINT8 data)
 	}
 }
 
+static void __fastcall xsedae_main_write(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff000) == 0x0e000) {
+		DrvPalRAM[address & 0xfff] = data;
+		palette_update_entry(address & 0xffe);
+		return;
+	}
+
+	if ((address & 0xffc00) == 0x00000) {
+		DrvMainRAM[address] = data;
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x0470:
+		case 0x0471:
+		case 0x06cc:
+		case 0x06cd:
+		case 0x068e:
+		case 0x068f:
+		return;		// nop
+	}
+
+	if ((address & 0xffc00) == 0x00400) {
+		DrvMainRAM[address] = data;
+		rd2_cop_write(address, data);
+	}
+}
+
 static UINT8 __fastcall raiden2_main_read(UINT32 address)
 {
 	if ((address & 0xffc00) == 0x00000) {
@@ -1807,6 +1837,52 @@ static UINT8 __fastcall nzeroteam_main_read(UINT32 address)
 
 		case 0x74d:
 			return DrvInputs[1] >> 8; 
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall xsedae_main_read(UINT32 address)
+{
+	if ((address & 0xffc00) == 0x00000) {
+		return DrvMainRAM[address];
+	}
+
+	switch (address)
+	{
+		case 0x0740:
+			return DrvDips[0];
+			
+		case 0x0741:
+			return DrvDips[1];
+
+		case 0x0744:
+			return DrvInputs[0];
+			
+		case 0x0745:
+			return DrvInputs[0] >> 8;
+
+		case 0x0748:
+			return DrvInputs[1];
+			
+		case 0x0749:
+			return DrvInputs[1] >> 8;
+
+		case 0x074a:
+			return 0xff;
+			
+		case 0x074b:
+			return 0xff;
+
+		case 0x074c:
+			return DrvInputs[2];
+			
+		case 0x074d:
+			return DrvInputs[2] >> 8;
+	}
+
+	if ((address & 0xffc00) == 0x00400) {
+		return rd2_cop_read(address);
 	}
 
 	return 0;
@@ -2154,7 +2230,7 @@ static void DrvCreateAlphaTable(INT32 raiden2_alpha)
 {
 	memset (DrvAlphaTable, 0, 0x800); 
 
-	if (raiden2_alpha) { // raiden2/dx
+	if (raiden2_alpha == 1) { // raiden2/dx
 		DrvAlphaTable[0x380] = 1;
 		DrvAlphaTable[0x5de] = 1;
 		DrvAlphaTable[0x75c] = 1;
@@ -2179,7 +2255,7 @@ static void DrvCreateAlphaTable(INT32 raiden2_alpha)
 		memset (DrvAlphaTable + 0x77d, 1, 0x02);
 		memset (DrvAlphaTable + 0x7c8, 1, 0x08);
 	}
-	else // zero team
+	else if (raiden2_alpha == 0) // zero team
 	{
 		DrvAlphaTable[0x37e] = 1;
 		DrvAlphaTable[0x38e] = 1;
@@ -2538,6 +2614,44 @@ static void zeroteam_common_map()
 	VezClose();
 }
 
+static void xsedae_common_map()
+{
+	VezInit(0, V30_TYPE);
+	VezOpen(0);
+//	VezMapArea(0x00000, 0x007ff, 0, DrvMainRAM);
+//	VezMapArea(0x00000, 0x007ff, 1, DrvMainRAM); // handler
+	VezMapArea(0x00000, 0x007ff, 2, DrvMainRAM); // fetch (map shift is 11 bits (800))
+	VezMapArea(0x00800, 0x0b7ff, 0, DrvMainRAM + 0x00800);
+	VezMapArea(0x00800, 0x0b7ff, 1, DrvMainRAM + 0x00800);
+	VezMapArea(0x00800, 0x0b7ff, 2, DrvMainRAM + 0x00800);
+	VezMapArea(0x0b800, 0x0bfff, 0, DrvBgRAM);
+	VezMapArea(0x0b800, 0x0bfff, 1, DrvBgRAM);
+	VezMapArea(0x0b800, 0x0bfff, 2, DrvBgRAM);
+	VezMapArea(0x0c000, 0x0c7ff, 0, DrvFgRAM);
+	VezMapArea(0x0c000, 0x0c7ff, 1, DrvFgRAM);
+	VezMapArea(0x0c000, 0x0c7ff, 2, DrvFgRAM);
+	VezMapArea(0x0c800, 0x0cfff, 0, DrvMgRAM);
+	VezMapArea(0x0c800, 0x0cfff, 1, DrvMgRAM);
+	VezMapArea(0x0c800, 0x0cfff, 2, DrvMgRAM);
+	VezMapArea(0x0d000, 0x0dfff, 0, DrvTxRAM);
+	VezMapArea(0x0d000, 0x0dfff, 1, DrvTxRAM);
+	VezMapArea(0x0d000, 0x0dfff, 2, DrvTxRAM);
+	VezMapArea(0x0e000, 0x0efff, 0, DrvPalRAM);
+//	VezMapArea(0x0e000, 0x0efff, 1, DrvPalRAM); // handler
+	VezMapArea(0x0e000, 0x0efff, 2, DrvPalRAM);
+	VezMapArea(0x0f000, 0x0ffff, 0, DrvSprRAM);
+	VezMapArea(0x0f000, 0x0ffff, 1, DrvSprRAM);
+	VezMapArea(0x0f000, 0x0ffff, 2, DrvSprRAM);
+	VezMapArea(0x10000, 0x1ffff, 0, DrvMainRAM + 0x10000);
+	VezMapArea(0x10000, 0x1ffff, 1, DrvMainRAM + 0x10000);
+	VezMapArea(0x10000, 0x1ffff, 2, DrvMainRAM + 0x10000);
+	VezMapArea(0x20000, 0xfffff, 0, DrvMainROM + 0x20000);
+	VezMapArea(0x20000, 0xfffff, 2, DrvMainROM + 0x20000);
+	VezSetWriteHandler(xsedae_main_write);
+	VezSetReadHandler(xsedae_main_read);
+	VezClose();
+}
+
 static INT32 Raiden2Init()
 {
 	game_select = 0;
@@ -2865,12 +2979,13 @@ static INT32 XsedaeInit()
 
 		DrvGfxDecode();
 		DrvCreateTransTab();
-		DrvCreateAlphaTable(0);
+		DrvCreateAlphaTable(-1);
 	}
 
-	zeroteam_common_map();
+	xsedae_common_map();
 
 	seibu_sound_init(1|4, 0, 3579545, 3579545, 1022727 / 132);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -3364,9 +3479,7 @@ static INT32 DrvDraw()
 static INT32 ZeroteamDraw() // sprite priorities different
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x1000; i+=2) {
-			palette_update_entry(i);
-		}
+		palettedma();
 		DrvRecalc = 0;
 	}
 
@@ -3518,12 +3631,17 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(mg_bank);
 		SCAN_VAR(bg_bank);
 		SCAN_VAR(fg_bank);
+		SCAN_VAR(tx_bank);
 		SCAN_VAR(r2dx_gameselect);
 		SCAN_VAR(r2dx_okibank);
 
 		SeibuCopScan(nAction);
 
 		hold_coin.scan();
+
+		if (game_select == 4 || game_select == 6) {
+			EEPROMScan(nAction, pnMin);
+		}
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3537,12 +3655,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		VezClose();
 
 		DrvRecalc = 1;
-	}
-
-	if (nAction & ACB_NVRAM) {
-		if (game_select == 4 || game_select == 6) {
-			EEPROMScan(nAction, pnMin);
-		}
 	}
 
 	return 0;
@@ -3752,7 +3864,7 @@ STD_ROM_FN(raiden2sw)
 
 struct BurnDriver BurnDrvRaiden2sw = {
 	"raiden2sw", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Switzerland)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (Switzerland)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2swRomInfo, raiden2swRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -3841,6 +3953,48 @@ struct BurnDriver BurnDrvRaiden2nl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2nlRomInfo, raiden2nlRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Raiden II (Australia)
+
+static struct BurnRomInfo raiden2auRomDesc[] = {
+	{ "1.u0211",						0x080000, 0xc1fc70f5, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "2.u0212",						0x080000, 0x396410f9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",					0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  2 COPX MCU data
+
+	{ "5.u1110",						0x010000, 0xc2028ba2, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "7.u0724",						0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",		0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",		0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811",		0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",		0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837",		0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836",		0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "6.u1017",						0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "voice_2.u1018",					0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342",		0x000155, 0x057a9cdc, 0 | BRF_OPT },           // 13 Pals
+	{ "jj4b01__mmipal16l8bcn.u0341",	0x000117, 0x20931f21, 0 | BRF_OPT },           // 14
+};
+
+STD_ROM_PICK(raiden2au)
+STD_ROM_FN(raiden2au)
+
+struct BurnDriver BurnDrvRaiden2au = {
+	"raiden2au", "raiden2", NULL, NULL, "1993",
+	"Raiden II (Australia)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2auRomInfo, raiden2auRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
 	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3972,7 +4126,7 @@ struct BurnDriver BurnDrvRaiden2i = {
 };
 
 
-// Raiden II (Korea)
+// Raiden II (harder, Korea)
 
 static struct BurnRomInfo raiden2kRomDesc[] = {
 	{ "k1.u0211",					0x080000, 0x1fcc08cf, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4005,7 +4159,7 @@ STD_ROM_FN(raiden2k)
 
 struct BurnDriver BurnDrvRaiden2k = {
 	"raiden2k", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (harder, Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2kRomInfo, raiden2kRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4030,7 +4184,7 @@ http://www.gamefaqs.com/coinop/arcade/game/10729.html
 
 */
 
-// Raiden II (Easy Version, Korea?)
+// Raiden II (easier, Korea)
 
 static struct BurnRomInfo raiden2eRomDesc[] = {
 	{ "r2_prg_0.u0211",				0x080000, 0x2abc848c, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4063,7 +4217,7 @@ STD_ROM_FN(raiden2e)
 
 struct BurnDriver BurnDrvRaiden2e = {
 	"raiden2e", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Korea?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (easier, Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2eRomInfo, raiden2eRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4072,7 +4226,7 @@ struct BurnDriver BurnDrvRaiden2e = {
 };
 
 
-// Raiden II (Easy Version, Japan?)
+// Raiden II (easier, Japan)
 
 static struct BurnRomInfo raiden2eaRomDesc[] = {
 	{ "r2.1.u0211",					0x080000, 0xd7041be4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4105,7 +4259,7 @@ STD_ROM_FN(raiden2ea)
 
 struct BurnDriver BurnDrvRaiden2ea = {
 	"raiden2ea", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Japan?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (easier, Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2eaRomInfo, raiden2eaRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4114,7 +4268,7 @@ struct BurnDriver BurnDrvRaiden2ea = {
 };
 
 
-// Raiden II (Easy Version, US set 2)
+// Raiden II (easier, US set 2)
 // same as raiden2ea, different region
 
 static struct BurnRomInfo raiden2euRomDesc[] = {
@@ -4148,7 +4302,7 @@ STD_ROM_FN(raiden2eu)
 
 struct BurnDriver BurnDrvRaiden2eu = {
 	"raiden2eu", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, US set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (easier, US set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2euRomInfo, raiden2euRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4157,7 +4311,7 @@ struct BurnDriver BurnDrvRaiden2eu = {
 };
 
 
-// Raiden II (Easy Version, US set 1)
+// Raiden II (easier, US set 1)
 // sort of a mixture of raiden2e easy set with voice ROM of raiden2ea and 2f and a unique sound ROM
 
 static struct BurnRomInfo raiden2euaRomDesc[] = {
@@ -4193,7 +4347,7 @@ STD_ROM_FN(raiden2eua)
 
 struct BurnDriver BurnDrvRaiden2eua = {
 	"raiden2eua", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, US set 1)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (easier, US set 1)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2euaRomInfo, raiden2euaRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4202,7 +4356,7 @@ struct BurnDriver BurnDrvRaiden2eua = {
 };
 
 
-// Raiden II (Easy Version, Germany)
+// Raiden II (easier, Germany)
 // this is the same code revision as raiden2eua but a german region
 
 static struct BurnRomInfo raiden2egRomDesc[] = {
@@ -4238,7 +4392,7 @@ STD_ROM_FN(raiden2eg)
 
 struct BurnDriver BurnDrvRaiden2eg = {
 	"raiden2eg", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
+	"Raiden II (easier, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2egRomInfo, raiden2egRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4333,7 +4487,7 @@ struct BurnDriver BurnDrvRaiden2eub = {
 };
 
 
-// Raiden II (harder, Raiden DX Hardware)
+// Raiden II (harder, Raiden DX hardware, Korea)
 // this set is very weird, it's Raiden II on a Raiden DX board, I'm assuming for now that it uses Raiden DX graphics, but could be wrong.
 
 static struct BurnRomInfo raiden2dxRomDesc[] = {
@@ -4367,7 +4521,7 @@ STD_ROM_FN(raiden2dx)
 
 struct BurnDriver BurnDrvRaiden2dx = {
 	"raiden2dx", "raiden2", NULL, NULL, "1993",
-	"Raiden II (harder, Raiden DX Hardware)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (harder, Raiden DX hardware, Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2dxRomInfo, raiden2dxRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -4832,7 +4986,7 @@ struct BurnDriver BurnDrvRaidendxch = {
 
 /* Zero Team sets */
 
-// Zero Team USA (set 1, US, Fabtek license)
+// Zero Team USA (US)
 
 static struct BurnRomInfo zeroteamRomDesc[] = {
 	{ "seibu__1.u024.5k",		0x040000, 0x25aa5ba4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4866,7 +5020,7 @@ STD_ROM_FN(zeroteam)
 
 struct BurnDriver BurnDrvZeroteam = {
 	"zeroteam", NULL, NULL, NULL, "1993",
-	"Zero Team USA (set 1, US, Fabtek license)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team USA (US)\0", "Unemulated protection", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -4875,7 +5029,7 @@ struct BurnDriver BurnDrvZeroteam = {
 };
 
 
-// Zero Team (set 2, Japan? (earlier?))
+// Zero Team (Japan?, earlier?)
 // No licensee, original japan?
 
 static struct BurnRomInfo zeroteamaRomDesc[] = {
@@ -4910,7 +5064,7 @@ STD_ROM_FN(zeroteama)
 
 struct BurnDriver BurnDrvZeroteama = {
 	"zeroteama", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 2, Japan? (earlier?))\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Japan?, earlier?)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -4927,7 +5081,7 @@ problem of the 3.6v lithium battery dying and the missing keys to cause the spri
 // sets, using the sound and char ROMs from us set and code from later japan set. This would make sense if it was dumped
 // from a 'fixed, suicide free' modified us board where someone swapped in the later suicideless japan code ROMs.
 
-// Zero Team (set 3, Japan? (later batteryless))
+// Zero Team (Japan?, later batteryless)
 // No licensee, later japan?
 
 static struct BurnRomInfo zeroteambRomDesc[] = {
@@ -4962,7 +5116,7 @@ STD_ROM_FN(zeroteamb)
 
 struct BurnDriver BurnDrvZeroteamb = {
 	"zeroteamb", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 3, Japan? (later batteryless))\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Japan?, later batteryless)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteambRomInfo, zeroteambRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -4971,7 +5125,7 @@ struct BurnDriver BurnDrvZeroteamb = {
 };
 
 
-// Zero Team (set 4, Taiwan, Liang Hwa license)
+// Zero Team (Taiwan)
 // Liang Hwa, Taiwan licensee, no special word under logo on title
 
 static struct BurnRomInfo zeroteamcRomDesc[] = {
@@ -5006,7 +5160,7 @@ STD_ROM_FN(zeroteamc)
 
 struct BurnDriver BurnDrvZeroteamc = {
 	"zeroteamc", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 4, Taiwan, Liang Hwa license)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Taiwan)\0", "Unemulated protection", "Seibu Kaihatsu (Liang Hwa license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamcRomInfo, zeroteamcRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -5015,7 +5169,7 @@ struct BurnDriver BurnDrvZeroteamc = {
 };
 
 
-// Zero Team (set 5, Korea, Dream Soft license)
+// Zero Team (Korea)
 // Dream Soft, Korea licensee, no special word under logo on title; board had serial 'no 1041' on it.
 // this is weird, on other zt sets the ROM order is 1 3 2 4, but this one is 1 3 4 2. blame seibu or whoever marked the ROMs, which were labeled in pen
 
@@ -5051,7 +5205,7 @@ STD_ROM_FN(zeroteamd)
 
 struct BurnDriver BurnDrvZeroteamd = {
 	"zeroteamd", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 5, Korea, Dream Soft license)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Korea)\0", "Unemulated protection", "Seibu Kaihatsu (Dream Soft license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamdRomInfo, zeroteamdRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -5186,13 +5340,13 @@ static struct BurnRomInfo xsedaeRomDesc[] = {
 STD_ROM_PICK(xsedae)
 STD_ROM_FN(xsedae)
 
-struct BurnDriverD BurnDrvXsedae = {
+struct BurnDriver BurnDrvXsedae = {
 	"xsedae", NULL, NULL, NULL, "1993",
 	"X Se Dae Quiz (Korea)\0", NULL, "Dream Island", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, xsedaeRomInfo, xsedaeRomName, NULL, NULL, NULL, NULL, Raiden2InputInfo, XsedaeDIPInfo,
-	XsedaeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	XsedaeInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
 

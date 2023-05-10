@@ -1,4 +1,4 @@
-// FB Alpha Quantum driver module
+// FB Neo Quantum driver module
 // Based on MAME driver by Hedley Rainnie, Aaron Giles, Couriersud, and Paul Forgey
 
 #include "tiles_generic.h"
@@ -320,6 +320,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	res_check();
 
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -565,20 +568,20 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Quantum (rev 2)
 
 static struct BurnRomInfo quantumRomDesc[] = {
-	{ "136016.201",		0x2000, 0x7e7be63a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "136016.206",		0x2000, 0x2d8f5759, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136016.102",		0x2000, 0x408d34f4, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136016.107",		0x2000, 0x63154484, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "136016.203",		0x2000, 0xbdc52fad, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "136016.208",		0x2000, 0xdab4066b, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "136016.104",		0x2000, 0xbf271e5c, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "136016.109",		0x2000, 0xd2894424, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "136016.105",		0x2000, 0x13ec512c, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "136016.110",		0x2000, 0xacb50363, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "136016-201.2e",		0x2000, 0x7e7be63a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "136016-206.3e",		0x2000, 0x2d8f5759, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136016-102.2f",		0x2000, 0x408d34f4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136016-107.3f",		0x2000, 0x63154484, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136016-203.2hj",		0x2000, 0xbdc52fad, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "136016-208.3hj",		0x2000, 0xdab4066b, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "136016-104.2k",		0x2000, 0xbf271e5c, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "136016-109.3k",		0x2000, 0xd2894424, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "136016-105.2l",		0x2000, 0x13ec512c, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "136016-110.3l",		0x2000, 0xacb50363, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "136002-125.6h",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
+	{ "136002-125.6h",		0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
 
-	{ "cf2038n.1b",		0x00eb, 0xb372fa4f, 3 | BRF_OPT },           // 11 PLDs
+	{ "cf2038n.1b",			0x00eb, 0xb372fa4f, 3 | BRF_OPT },           // 11 PLDs
 };
 
 STD_ROM_PICK(quantum)
@@ -588,7 +591,7 @@ struct BurnDriver BurnDrvQuantum = {
 	"quantum", NULL, NULL, NULL, "1982",
 	"Quantum (rev 2)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, quantumRomInfo, quantumRomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	480, 640, 3, 4
@@ -598,20 +601,20 @@ struct BurnDriver BurnDrvQuantum = {
 // Quantum (rev 1)
 
 static struct BurnRomInfo quantum1RomDesc[] = {
-	{ "136016.101",		0x2000, 0x5af0bd5b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "136016.106",		0x2000, 0xf9724666, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136016.102",		0x2000, 0x408d34f4, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136016.107",		0x2000, 0x63154484, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "136016.103",		0x2000, 0x948f228b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "136016.108",		0x2000, 0xe4c48e4e, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "136016.104",		0x2000, 0xbf271e5c, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "136016.109",		0x2000, 0xd2894424, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "136016.105",		0x2000, 0x13ec512c, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "136016.110",		0x2000, 0xacb50363, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "136016-101.2e",		0x2000, 0x5af0bd5b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "136016-106.3e",		0x2000, 0xf9724666, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136016-102.2f",		0x2000, 0x408d34f4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136016-107.3f",		0x2000, 0x63154484, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136016-103.2hj",		0x2000, 0x948f228b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "136016-108.3hj",		0x2000, 0xe4c48e4e, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "136016-104.2k",		0x2000, 0xbf271e5c, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "136016-109.3k",		0x2000, 0xd2894424, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "136016-105.2l",		0x2000, 0x13ec512c, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "136016-110.3l",		0x2000, 0xacb50363, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "136002-125.6h",	0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
+	{ "136002-125.6h",		0x0100, 0x5903af03, 2 | BRF_GRA },           // 10 AVG PROM
 
-	{ "cf2038n.1b",		0x00eb, 0xb372fa4f, 3 | BRF_OPT },           // 11 PLDs
+	{ "cf2038n.1b",			0x00eb, 0xb372fa4f, 3 | BRF_OPT },           // 11 PLDs
 };
 
 STD_ROM_PICK(quantum1)
@@ -621,7 +624,7 @@ struct BurnDriver BurnDrvQuantum1 = {
 	"quantum1", "quantum", NULL, NULL, "1982",
 	"Quantum (rev 1)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, quantum1RomInfo, quantum1RomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	480, 640, 3, 4
@@ -635,8 +638,8 @@ static struct BurnRomInfo quantumpRomDesc[] = {
 	{ "quantump.3e",	0x2000, 0x12fc631f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "quantump.2f",	0x2000, 0xb64fab48, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "quantump.3f",	0x2000, 0xa52a9433, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "quantump.2h",	0x2000, 0x5b29cba3, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "quantump.3h",	0x2000, 0xc64fc03a, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "quantump.2hj",	0x2000, 0x5b29cba3, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "quantump.3hj",	0x2000, 0xc64fc03a, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "quantump.2k",	0x2000, 0x854f9c09, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "quantump.3k",	0x2000, 0x1aac576c, 1 | BRF_PRG | BRF_ESS }, //  7
 	{ "quantump.2l",	0x2000, 0x1285b5e7, 1 | BRF_PRG | BRF_ESS }, //  8
@@ -654,7 +657,7 @@ struct BurnDriver BurnDrvQuantump = {
 	"quantump", "quantum", NULL, NULL, "1982",
 	"Quantum (prototype)\0", NULL, "General Computer Corporation (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_VECTOR, 0,
 	NULL, quantumpRomInfo, quantumpRomName, NULL, NULL, NULL, NULL, QuantumInputInfo, QuantumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	480, 640, 3, 4

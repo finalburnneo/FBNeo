@@ -36,8 +36,8 @@ INT32 nHasZet = -1;
 cpu_core_config ZetConfig =
 {
 	"Z80",
-	ZetOpen,
-	ZetClose,
+	ZetCPUPush, //ZetOpen,
+	ZetCPUPop, //ZetClose,
 	ZetCheatRead,
 	ZetCheatWriteROM,
 	ZetGetActive,
@@ -48,6 +48,8 @@ cpu_core_config ZetConfig =
 	ZetRun,
 	ZetRunEnd,
 	ZetReset,
+	ZetScan,
+	ZetExit,
 	0x10000,
 	0
 };
@@ -947,8 +949,9 @@ void ZetSetHALT(INT32 nStatus)
 #endif
 
 	if (nOpenedCPU < 0) return;
-	
+
 	ZetCPUContext[nOpenedCPU]->BusReq = nStatus;
+	if (nStatus) ZetRunEnd(); // end current timeslice since we're halted
 }
 
 void ZetSetHALT(INT32 nCPU, INT32 nStatus)

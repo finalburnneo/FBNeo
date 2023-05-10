@@ -1,4 +1,4 @@
-// FB Alpha Deco Cassette driver module
+// FB Neo Deco Cassette driver module
 // Based on MAME driver by Juergen Buchmueller, David Haywood, Ajrhacker
 // Uses tape loader & protection code by Juergen Buchmueller, David Haywood
 // Some graphics routines by Juergen Buchmueller, David Haywood, Ajrhacker
@@ -216,12 +216,15 @@ static struct BurnDIPInfo DecocassDIPList[]=
 	{0x12, 0x01, 0xe0, 0x60, "E"			},
 	{0x12, 0x01, 0xe0, 0x40, "F"			},
 
-	{0   , 0xfe, 0   ,    5, "Bios Version"		},
+	{0   , 0xfe, 0   ,    8, "Bios Version"		},
 	{0x13, 0x01, 0x07, 0x00, "Japan A, Newer"	},
 	{0x13, 0x01, 0x07, 0x01, "Japan A, Older"	},
 	{0x13, 0x01, 0x07, 0x02, "USA B, Newer"		},
 	{0x13, 0x01, 0x07, 0x03, "USA B, Older"		},
-	{0x13, 0x01, 0x07, 0x04, "Bios D (Europe?)" },
+	{0x13, 0x01, 0x07, 0x04, "UK C, Newer"		},
+	{0x13, 0x01, 0x07, 0x05, "UK C, Older"		},
+	{0x13, 0x01, 0x07, 0x06, "Europe D, Newer"	},
+	{0x13, 0x01, 0x07, 0x07, "Europe D, Older"	},
 };
 
 STDDIPINFO(Decocass)
@@ -369,7 +372,7 @@ STDDIPINFOEXT(Ctisland, Decocass, Ctisland)
 static struct BurnDIPInfo Ctisland3DIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x04, NULL			},
+	{0x13, 0xff, 0xff, 0x06, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Lives"		},
 	{0x12, 0x01, 0x01, 0x01, "3"			},
@@ -420,7 +423,7 @@ static struct BurnDIPInfo CtowerDIPList[]=
 	DIP_OFFSET(0x15)
 	{0x00, 0xff, 0xff, 0xff, NULL			},
 	{0x01, 0xff, 0xff, 0x81, NULL			},
-	{0x02, 0xff, 0xff, 0x04, NULL			},
+	{0x02, 0xff, 0xff, 0x06, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
@@ -456,12 +459,13 @@ static struct BurnDIPInfo CtowerDIPList[]=
 	{0x01, 0x01, 0xe0, 0x60, "E"			},
 	{0x01, 0x01, 0xe0, 0x40, "F"			},
 
-	{0   , 0xfe, 0   ,    5, "Bios Version"		},
+	{0   , 0xfe, 0   ,    6, "Bios Version"		},
 	{0x02, 0x01, 0x07, 0x00, "Japan A, Newer"	},
 	{0x02, 0x01, 0x07, 0x01, "Japan A, Older"	},
 	{0x02, 0x01, 0x07, 0x02, "USA B, Newer"		},
 	{0x02, 0x01, 0x07, 0x03, "USA B, Older"		},
-	{0x02, 0x01, 0x07, 0x04, "Bios D (Europe?)" },
+	{0x02, 0x01, 0x07, 0x06, "Europe D, Newer"	},
+	{0x02, 0x01, 0x07, 0x07, "Europe D, Older"	},
 };
 
 STDDIPINFO(Ctower)
@@ -1307,6 +1311,20 @@ static struct BurnDIPInfo CflyballDIPList[]=
 };
 
 STDDIPINFOEXT(Cflyball,	Decocass,	Cflyball)
+
+static struct BurnDIPInfo CnebulaDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0x04, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x12, 0x01, 0x03, 0x03, "3"			},
+	{0x12, 0x01, 0x03, 0x02, "4"			},
+	{0x12, 0x01, 0x03, 0x01, "5"			},
+	{0x12, 0x01, 0x03, 0x00, "6"			},
+};
+
+STDDIPINFOEXT(Cnebula,	Decocass,	Cnebula)
 
 static struct BurnInputInfo CdsteljnInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
@@ -2668,7 +2686,7 @@ static INT32 DrvDoReset()
 	// call before cpu resets to catch vectors!
 	if (DrvDips[2] != 0xff) // widel multi
 	{
-		INT32 bios_sets = 5; // total bios sets supported
+		INT32 bios_sets = 8; // total bios sets supported
 		INT32 bios_select = ((DrvDips[2] % bios_sets) * 8) + 0x80;
 
 		if (BurnLoadRom(DrvMainBIOS, bios_select + 0, 1)) return 1; // main m6502 bios
@@ -2678,7 +2696,7 @@ static INT32 DrvDoReset()
 		}
 
 		// split type uses 1k rather than 2k rom
-		if (BurnLoadRom(DrvSoundBIOS + ((DrvDips[2] & 1) ? 0x400 : 0), bios_select + 2, 1)) return 1;
+		if (BurnLoadRom(DrvSoundBIOS + (((DrvDips[2] & 1)) ? 0x400 : 0), bios_select + 2, 1)) return 1;
 
 		// load the mcu bios
 		if (BurnLoadRom(DrvMCUROM, 0x80 + (bios_sets * 8), 1)) return 1;
@@ -2730,6 +2748,8 @@ static INT32 DrvDoReset()
 	decocass_init_common();
 
 	DrvInputs[2] = 0xc0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -2927,12 +2947,17 @@ static INT32 DrvExit()
 	type1_inmap = 0;
 	type1_outmap = 0;
 
+	BurnFree(type1_map); // cnebula
+	type1_map = NULL;
+
 	burgertime_mode = 0;
 	skater_mode = 0;
 
 	fourway_mode = 0;
 
 	e900_enable = 0;
+
+	cflyball_hack = false;
 
 	return 0;
 }
@@ -3494,6 +3519,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(firsttime);
 		SCAN_VAR(tape_bot_eot);
+
+		if (burgertime_mode) {
+			SCAN_VAR(last01);
+			SCAN_VAR(last02);
+			SCAN_VAR(ignext);
+		}
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3562,19 +3593,55 @@ static struct BurnRomInfo decocassRomDesc[] = {
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9e
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9f
 
-	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa0 - BIOS "D" - ctisland3, ctower (Main M6502)
+	{ "v0c-.7e",		0x1000, 0x9f505709, BRF_BIOS | BRF_PRG }, // 0xa0 - BIOS "C" - cnebula (Main M6502)
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa1
 
-	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xa2 - BIOS "D" (Sound M6502)
+	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xa2 - BIOS "C" (Sound M6502)
 
-	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xa3 - BIOS "D" (prom)
-	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xa4 - BIOS "D" (prom)
-	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xa5 - BIOS "D" (prom)
+	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xa3 - BIOS "C" (prom)
+	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xa4 - BIOS "C" (prom)
+	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xa5 - BIOS "C" (prom)
 
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa6
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa7
 
-	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xa8 - MCU BIOS (Shared)
+	{ "dsp-3_p0-c.m9",      0x0800, 0xc76c4057, BRF_BIOS | BRF_PRG }, // 0xa8 - BIOS "C" UK, Older (Main M6502)
+	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0xa9 - BIOS "C" UK, Older (Main M6502)
+
+	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0xaa - BIOS "C" UK, older (Sound M6502)
+
+	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0xab - BIOS "C" UK, older (prom)
+	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0xac - BIOS "C" UK, older (prom)
+	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0xad - BIOS "C" UK, older (prom)
+
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xae
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xaf
+
+	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xb0 - BIOS "D" - ctisland3, ctower (Main M6502)
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb1
+
+	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xb2 - BIOS "D" (Sound M6502)
+
+	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xb3 - BIOS "D" (prom)
+	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xb4 - BIOS "D" (prom)
+	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xb5 - BIOS "D" (prom)
+
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb6
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb7
+
+	{ "dsp-3_p0-d.m9",      0x0800, 0x4b7d72bc, BRF_BIOS | BRF_PRG }, // 0xb8 - BIOS "D" Europe, Older (Main M6502)
+	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0xb9 - BIOS "D" Europe, Older (Main M6502)
+
+	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0xba - BIOS "D" Europe, older (Sound M6502)
+
+	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0xbb - BIOS "D" Europe, older (prom)
+	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0xbc - BIOS "D" Europe, older (prom)
+	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0xbd - BIOS "D" Europe, older (prom)
+
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xbe
+	{ "",             	0x0000, 0x00000000, 0                  }, // 0xbf
+
+	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xc0 - MCU BIOS (Shared)
 };
 
 STD_ROM_PICK(decocass)
@@ -3620,7 +3687,7 @@ struct BurnDriver BurnDrvCtsttape = {
 	"ctsttape", NULL, "decocass", NULL, "1981",
 	"Test Tape (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, ctsttapeRomInfo, ctsttapeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtsttapeDIPInfo,
 	CtsttapeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3651,7 +3718,7 @@ struct BurnDriver BurnDrvChwy = {
 	"chwy", NULL, "decocass", NULL, "1980",
 	"Highway Chase (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, chwyRomInfo, chwyRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ChwyDIPInfo,
 	ChwyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3682,7 +3749,7 @@ struct BurnDriver BurnDrvCmanhat = {
 	"cmanhat", NULL, "decocass", NULL, "1981",
 	"Manhattan (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, cmanhatRomInfo, cmanhatRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CmanhatDIPInfo,
 	CmanhatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3715,7 +3782,7 @@ struct BurnDriver BurnDrvCterrani = {
 	"cterrani", NULL, "decocass", NULL, "1981",
 	"Terranean (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, cterraniRomInfo, cterraniRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CterraniDIPInfo,
 	CterraniInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3746,9 +3813,45 @@ struct BurnDriver BurnDrvCastfant = {
 	"castfant", NULL, "decocass", NULL, "1981",
 	"Astro Fantasia (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, castfantRomInfo, castfantRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CastfantDIPInfo,
 	CastfantInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	240, 256, 3, 4
+};
+
+// Nebula (DECO Cassette) (UK)
+
+static struct BurnRomInfo cnebulaRomDesc[] = {
+	{ "nebula2.pro",	0x0020, 0x75cae001, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+
+	{ "nebula2.cas",	0x5c00, 0xaaac39e6, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+};
+
+STDROMPICKEXT(cnebula, cnebula, decocass)
+STD_ROM_FN(cnebula)
+
+
+static INT32 CnebulaInit()
+{
+	UINT32 nebby = 0xeededdee;
+	UINT8 *nebby2 = (UINT8*)BurnMalloc(sizeof(nebby)*2);
+	for (INT32 i = 0; i < 8; i++) {
+		nebby2[7-i] = (((nebby<<(i*4)) & 0xf0000000) >> 28) ^ 0xf;
+		nebby2[i]  |= (i<<14)/nebby&3;
+	}
+
+	type1_map = nebby2;
+
+	return DecocassInit(decocass_type1_read, NULL);
+}
+
+struct BurnDriver BurnDrvCnebula = {
+	"cnebula", NULL, "decocass", NULL, "1981",
+	"Nebula (DECO Cassette) (UK)\0", NULL, "Data East Corporation", "Cassette System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	NULL, cnebulaRomInfo, cnebulaRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CnebulaDIPInfo,
+	CnebulaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
 
@@ -3777,7 +3880,7 @@ struct BurnDriver BurnDrvCsuperas = {
 	"csuperas", NULL, "decocass", NULL, "1981",
 	"Super Astro Fighter (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, csuperasRomInfo, csuperasRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CsuperasDIPInfo,
 	CsuperasInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3810,7 +3913,7 @@ struct BurnDriver BurnDrvCocean1a = {
 	"cocean1a", NULL, "decocass", NULL, "1981",
 	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
 	NULL, cocean1aRomInfo, cocean1aRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cocean1aDIPInfo,
 	Cocean1aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3832,7 +3935,7 @@ struct BurnDriver BurnDrvCocean6b = {
 	"cocean6b", "cocean1a", "decocass", NULL, "1981",
 	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6,US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
 	NULL, cocean6bRomInfo, cocean6bRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cocean6bDIPInfo,
 	Cocean1aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3863,7 +3966,7 @@ struct BurnDriver BurnDrvClocknch = {
 	"clocknch", NULL, "decocass", NULL, "1981",
 	"Lock'n'Chase (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, clocknchRomInfo, clocknchRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClocknchDIPInfo,
 	ClocknchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3896,7 +3999,7 @@ struct BurnDriver BurnDrvClocknchj = {
 	"clocknchj", "clocknch", "decocass", NULL, "1981",
 	"Lock'n'Chase (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, clocknchjRomInfo, clocknchjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClocknchjDIPInfo,
 	ClocknchjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3929,7 +4032,7 @@ struct BurnDriver BurnDrvCfboy0a1 = {
 	"cfboy0a1", NULL, "decocass", NULL, "1981",
 	"Flash Boy (vertical) [DECO Cassette MD] (No.12/Ver.0/Set.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, cfboy0a1RomInfo, cfboy0a1RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cfboy0a1DIPInfo,
 	Cfboy0a1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3960,7 +4063,7 @@ struct BurnDriver BurnDrvCprogolf = {
 	"cprogolf", NULL, "decocass", NULL, "1981",
 	"Tournament Pro Golf (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cprogolfRomInfo, cprogolfRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprogolfDIPInfo,
 	CprogolfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3991,7 +4094,7 @@ struct BurnDriver BurnDrvCprogolfj = {
 	"cprogolfj", "cprogolf", "decocass", NULL, "1981",
 	"Tournament Pro Golf (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cprogolfjRomInfo, cprogolfjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprogolfjDIPInfo,
 	CprogolfjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4013,7 +4116,7 @@ struct BurnDriver BurnDrvCprogolf18 = {
 	"cprogolf18", "cprogolf", "decocass", NULL, "1982",
 	"18 Challenge Pro Golf (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cprogolf18RomInfo, cprogolf18RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprogolfjDIPInfo,
 	CprogolfjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4042,7 +4145,7 @@ struct BurnDriver BurnDrvCdsteljn = {
 	"cdsteljn", NULL, "decocass", NULL, "1981",
 	"DS Telejan (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAHJONG, 0,
 	NULL, cdsteljnRomInfo, cdsteljnRomName, NULL, NULL, NULL, NULL, CdsteljnInputInfo, CdsteljnDIPInfo,
 	CdsteljnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4073,7 +4176,7 @@ struct BurnDriver BurnDrvCluckypo = {
 	"cluckypo", NULL, "decocass", NULL, "1981",
 	"Lucky Poker (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
 	NULL, cluckypoRomInfo, cluckypoRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CluckypoDIPInfo,
 	CluckypoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4113,7 +4216,7 @@ struct BurnDriver BurnDrvCtisland = {
 	"ctisland", NULL, "decocass", NULL, "1981",
 	"Treasure Island (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, ctislandRomInfo, ctislandRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtislandDIPInfo,
 	CtislandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4140,7 +4243,7 @@ struct BurnDriver BurnDrvCtisland2 = {
 	"ctisland2", "ctisland", "decocass", NULL, "1981",
 	"Treasure Island (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, ctisland2RomInfo, ctisland2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtislandDIPInfo,
 	CtislandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4182,7 +4285,7 @@ struct BurnDriver BurnDrvCtisland3 = {
 	"ctisland3", "ctisland", "decocass", NULL, "1981",
 	"Treasure Island (DECO Cassette) (Europe?)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, ctisland3RomInfo, ctisland3RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Ctisland3DIPInfo,
 	Ctisland3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4201,7 +4304,7 @@ struct BurnDriver BurnDrvCtower = {
 	"ctower", NULL, "decocass", NULL, "1981",
 	"The Tower (DECO Cassette) (Europe?)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, ctowerRomInfo, ctowerRomName, NULL, NULL, NULL, NULL, CtowerInputInfo, CtowerDIPInfo,
 	Cfboy0a1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4244,7 +4347,7 @@ struct BurnDriver BurnDrvCexplore = {
 	"cexplore", NULL, "decocass", NULL, "1982",
 	"Explorer (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, cexploreRomInfo, cexploreRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CexploreDIPInfo,
 	CexploreInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4273,7 +4376,7 @@ struct BurnDriver BurnDrvCdiscon1 = {
 	"cdiscon1", NULL, "decocass", NULL, "1982",
 	"Disco No.1 (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, cdiscon1RomInfo, cdiscon1RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cdiscon1DIPInfo,
 	Cdiscon1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4295,7 +4398,7 @@ struct BurnDriver BurnDrvCsweetht = {
 	"csweetht", "cdiscon1", "decocass", NULL, "1982",
 	"Sweet Heart (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, csweethtRomInfo, csweethtRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CsweethtDIPInfo,
 	Cdiscon1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4322,7 +4425,7 @@ struct BurnDriver BurnDrvCtornado = {
 	"ctornado", NULL, "decocass", NULL, "1982",
 	"Tornado (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, ctornadoRomInfo, ctornadoRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtornadoDIPInfo,
 	CtornadoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4349,7 +4452,7 @@ struct BurnDriver BurnDrvCmissnx = {
 	"cmissnx", NULL, "decocass", NULL, "1982",
 	"Mission-X (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, cmissnxRomInfo, cmissnxRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CmissnxDIPInfo,
 	CmissnxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4376,7 +4479,7 @@ struct BurnDriver BurnDrvCptennis = {
 	"cptennis", NULL, "decocass", NULL, "1982",
 	"Pro Tennis (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cptennisRomInfo, cptennisRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CptennisDIPInfo,
 	CptennisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4398,7 +4501,7 @@ struct BurnDriver BurnDrvCptennisj = {
 	"cptennisj", "cptennis", "decocass", NULL, "1982",
 	"Pro Tennis (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cptennisjRomInfo, cptennisjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CptennisjDIPInfo,
 	CptennisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4427,7 +4530,7 @@ struct BurnDriver BurnDrvCadanglr = {
 	"cadanglr", NULL, "decocass", NULL, "1982",
 	"Angler Dangler (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cadanglrRomInfo, cadanglrRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CfishingDIPInfo,
 	CadanglrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4449,7 +4552,7 @@ struct BurnDriver BurnDrvCfishing = {
 	"cfishing", "cadanglr", "decocass", NULL, "1982",
 	"Fishing (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cfishingRomInfo, cfishingRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CfishingjDIPInfo,
 	CadanglrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4481,7 +4584,7 @@ struct BurnDriver BurnDrvCbtime = {
 	"cbtime", NULL, "decocass", NULL, "1983",
 	"Burger Time (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, cbtimeRomInfo, cbtimeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CbtimeDIPInfo,
 	CbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4503,7 +4606,7 @@ struct BurnDriver BurnDrvChamburger = {
 	"chamburger", "cbtime", "decocass", NULL, "1982",
 	"Hamburger (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, chamburgerRomInfo, chamburgerRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ChamburgerDIPInfo,
 	CbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4532,7 +4635,7 @@ struct BurnDriver BurnDrvCburnrub = {
 	"cburnrub", NULL, "decocass", NULL, "1982",
 	"Burnin' Rubber (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
 	NULL, cburnrubRomInfo, cburnrubRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CburnrubDIPInfo,
 	CburnrubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4554,7 +4657,7 @@ struct BurnDriver BurnDrvCburnrub2 = {
 	"cburnrub2", "cburnrub", "decocass", NULL, "1982",
 	"Burnin' Rubber (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
 	NULL, cburnrub2RomInfo, cburnrub2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CburnrubDIPInfo,
 	CburnrubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4576,7 +4679,7 @@ struct BurnDriver BurnDrvCbnj = {
 	"cbnj", "cburnrub", "decocass", NULL, "1982",
 	"Bump 'n' Jump (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
 	NULL, cbnjRomInfo, cbnjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CburnrubDIPInfo,
 	CburnrubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4605,7 +4708,7 @@ struct BurnDriver BurnDrvCgraplop = {
 	"cgraplop", NULL, "decocass", NULL, "1983",
 	"Cluster Buster (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
 	NULL, cgraplopRomInfo, cgraplopRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
 	CgraplopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4634,7 +4737,7 @@ struct BurnDriver BurnDrvCgraplop2 = {
 	"cgraplop2", "cgraplop", "decocass", NULL, "1983",
 	"Graplop (no title screen) (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
 	NULL, cgraplop2RomInfo, cgraplop2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
 	Cgraplop2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4664,7 +4767,7 @@ struct BurnDriver BurnDrvClapapa = {
 	"clapapa", NULL, "decocass", NULL, "1983",
 	"Rootin' Tootin' / La-Pa-Pa (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, clapapaRomInfo, clapapaRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClapapaDIPInfo,
 	ClapapaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4686,7 +4789,7 @@ struct BurnDriver BurnDrvClapapa2 = {
 	"clapapa2", "clapapa", "decocass", NULL, "1983",
 	"Rootin' Tootin' (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, clapapa2RomInfo, clapapa2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClapapaDIPInfo,
 	ClapapaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4716,7 +4819,7 @@ struct BurnDriver BurnDrvCskater = {
 	"cskater", NULL, "decocass", NULL, "1983",
 	"Skater (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, cskaterRomInfo, cskaterRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CskaterDIPInfo,
 	CskaterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4745,7 +4848,7 @@ struct BurnDriver BurnDrvCprobowl = {
 	"cprobowl", NULL, "decocass", NULL, "1983",
 	"Pro Bowling (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cprobowlRomInfo, cprobowlRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprobowlDIPInfo,
 	CprobowlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4774,7 +4877,7 @@ struct BurnDriver BurnDrvCnightst = {
 	"cnightst", NULL, "decocass", NULL, "1983",
 	"Night Star (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, cnightstRomInfo, cnightstRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CnightstDIPInfo,
 	CnightstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4796,7 +4899,7 @@ struct BurnDriver BurnDrvCnightst2 = {
 	"cnightst2", "cnightst", "decocass", NULL, "1983",
 	"Night Star (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, cnightst2RomInfo, cnightst2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CnightstDIPInfo,
 	CnightstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4825,7 +4928,7 @@ struct BurnDriver BurnDrvCpsoccer = {
 	"cpsoccer", NULL, "decocass", NULL, "1983",
 	"Pro Soccer (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSFOOTBALL, 0,
 	NULL, cpsoccerRomInfo, cpsoccerRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CpsoccerDIPInfo,
 	CpsoccerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4847,7 +4950,7 @@ struct BurnDriver BurnDrvCpsoccerj = {
 	"cpsoccerj", "cpsoccer", "decocass", NULL, "1983",
 	"Pro Soccer (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSFOOTBALL, 0,
 	NULL, cpsoccerjRomInfo, cpsoccerjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CpsoccerjDIPInfo,
 	CpsoccerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4876,7 +4979,7 @@ struct BurnDriver BurnDrvCsdtenis = {
 	"csdtenis", NULL, "decocass", NULL, "1983",
 	"Super Doubles Tennis (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, csdtenisRomInfo, csdtenisRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CsdtenisDIPInfo,
 	CsdtenisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4915,7 +5018,7 @@ struct BurnDriver BurnDrvCzeroize = {
 	"czeroize", NULL, "decocass", NULL, "1983",
 	"Zeroize (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
 	NULL, czeroizeRomInfo, czeroizeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CzeroizeDIPInfo,
 	CzeroizeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4944,7 +5047,7 @@ struct BurnDriver BurnDrvCppicf = {
 	"cppicf", NULL, "decocass", NULL, "1984",
 	"Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cppicfRomInfo, cppicfRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CppicfDIPInfo,
 	CppicfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4966,7 +5069,7 @@ struct BurnDriver BurnDrvCppicf2 = {
 	"cppicf2", "cppicf", "decocass", NULL, "1984",
 	"Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cppicf2RomInfo, cppicf2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CppicfDIPInfo,
 	CppicfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4995,7 +5098,7 @@ struct BurnDriver BurnDrvCfghtice = {
 	"cfghtice", NULL, "decocass", NULL, "1984",
 	"Fighting Ice Hockey (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cfghticeRomInfo, cfghticeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CfghticeDIPInfo,
 	CfghticeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -5022,7 +5125,7 @@ struct BurnDriver BurnDrvCscrtry = {
 	"cscrtry", NULL, "decocass", NULL, "1984",
 	"Scrum Try (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cscrtryRomInfo, cscrtryRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CscrtryDIPInfo,
 	CscrtryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -5044,7 +5147,7 @@ struct BurnDriver BurnDrvCscrtry2 = {
 	"cscrtry2", "cscrtry", "decocass", NULL, "1984",
 	"Scrum Try (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, cscrtry2RomInfo, cscrtry2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CscrtryDIPInfo,
 	CscrtryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -5066,7 +5169,7 @@ struct BurnDriver BurnDrvCoozumou = {
 	"coozumou", NULL, "decocass", NULL, "1984",
 	"Oozumou - The Grand Sumo (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, coozumouRomInfo, coozumouRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CoozumouDIPInfo,
 	CscrtryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -5098,7 +5201,7 @@ struct BurnDriver BurnDrvCbdash = {
 	"cbdash", NULL, "decocass", NULL, "1985",
 	"Boulder Dash (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, cbdashRomInfo, cbdashRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CbdashDIPInfo,
 	CbdashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -5116,6 +5219,8 @@ STD_ROM_FN(cflyball)
 
 static INT32 CflyballInit()
 {
+	cflyball_hack = true;
+
 	return DecocassInit(decocass_nodongle_read,NULL);
 }
 
@@ -5123,7 +5228,7 @@ struct BurnDriver BurnDrvCflyball = {
 	"cflyball", NULL, "decocass", NULL, "1985",
 	"Flying Ball (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
 	NULL, cflyballRomInfo, cflyballRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CflyballDIPInfo,
 	CflyballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -5220,7 +5325,7 @@ struct BurnDriver BurnDrvDecomult = {
 	"decomult", NULL, "decocass", NULL, "2008",
 	"Deco Cassette System Multigame (ROM based)\0", NULL, "bootleg (David Widel)", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, decomultRomInfo, decomultRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, DecomultDIPInfo,
 	DecomultInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4

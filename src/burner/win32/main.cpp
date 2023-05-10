@@ -903,7 +903,8 @@ int ProcessCmdLine()
 	}
 
 	if (_tcslen(szName)) {
-		if (_tcscmp(szName, _T("-listinfo")) == 0) {
+		if (_tcscmp(szName, _T("-listinfo")) == 0 ||
+			_tcscmp(szName, _T("-listxml")) == 0) {
 			write_datfile(DAT_ARCADE_ONLY, stdout);
 			return 1;
 		}
@@ -1085,7 +1086,7 @@ int ProcessCmdLine()
 									break;
 								}
 								argv++;  // Filter out invalid spaces in parameters
-								}
+							}
 							argv = _tcstok(NULL, _T(","));
 						}
 
@@ -1105,13 +1106,16 @@ int ProcessCmdLine()
 					}
 
 					bDoIpsPatch = _tcsstr(szCmdLine, _T("-ips"));
-					if (bDoIpsPatch) LoadIpsActivePatches();
+					if (bDoIpsPatch) {
+						LoadIpsActivePatches();
+						GetIpsDrvDefine();	// Entry point: cmdline launch
+					}
 
 					if (DrvInit(i, true)) { // failed (bad romset, etc.)
 						nVidFullscreen = 0; // Don't get stuck in fullscreen mode
 					}
 
-					bDoIpsPatch = false;
+					IpsPatchExit();	// 
 					break;
 				}
 			}

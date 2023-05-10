@@ -383,6 +383,8 @@ static INT32 DrvDoReset()
 	memset (scrollx, 0, 3);
 	memset (scrolly, 0, 3);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -494,7 +496,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
-	MSM5232SetCapacitors(0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6);
+	MSM5232SetCapacitors(1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_0);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_1);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_2);
@@ -734,7 +736,7 @@ struct BurnDriver BurnDrvMsisaac = {
 	"msisaac", NULL, NULL, NULL, "1985",
 	"Metal Soldier Isaac II\0", "buggy game due to unemulated protection MCU", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_TAITO, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_SHOOT, 0,
 	NULL, msisaacRomInfo, msisaacRomName, NULL, NULL, NULL, NULL, MsisaacInputInfo, MsisaacDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4

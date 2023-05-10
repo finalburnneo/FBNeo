@@ -84,6 +84,7 @@ static struct BurnInputInfo PdriftInputList[] = {
 	{"Reset"             , BIT_DIGITAL   , &System16Reset         , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , System16Dip + 0        , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , System16Dip + 1        , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , System16Dip + 2        , "dip"       },
 };
 
 STDINPUTINFO(Pdrift)
@@ -289,6 +290,7 @@ static struct BurnDIPInfo PdriftDIPList[]=
 	// Default Values
 	{0x0a, 0xff, 0xff, 0xea, NULL                                 },
 	{0x0b, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0c, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 3   , "Cabinet"                            },
@@ -318,6 +320,10 @@ static struct BurnDIPInfo PdriftDIPList[]=
 
 	// Dip 2
 	YBOARD_COINAGE(0x0b)
+
+	{0   , 0xfe, 0   , 2   , "Steering Fix"               		  },
+	{0x0c, 0x01, 0x01, 0x00, "No"                                 },
+	{0x0c, 0x01, 0x01, 0x01, "Yes"                                },
 };
 
 STDDIPINFO(Pdrift)
@@ -327,6 +333,7 @@ static struct BurnDIPInfo PdrifteDIPList[]=
 	// Default Values
 	{0x0a, 0xff, 0xff, 0xea, NULL                                 },
 	{0x0b, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0c, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 3   , "Cabinet"                            },
@@ -354,6 +361,10 @@ static struct BurnDIPInfo PdrifteDIPList[]=
 
 	// Dip 2
 	YBOARD_COINAGE(0x0b)
+
+	{0   , 0xfe, 0   , 2   , "Steering Fix"               		  },
+	{0x0c, 0x01, 0x01, 0x00, "No"                                 },
+	{0x0c, 0x01, 0x01, 0x01, "Yes"                                },
 };
 
 STDDIPINFO(Pdrifte)
@@ -363,6 +374,7 @@ static struct BurnDIPInfo PdriftjDIPList[]=
 	// Default Values
 	{0x0a, 0xff, 0xff, 0xea, NULL                                 },
 	{0x0b, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0c, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 3   , "Cabinet"                            },
@@ -390,6 +402,10 @@ static struct BurnDIPInfo PdriftjDIPList[]=
 
 	// Dip 2
 	YBOARD_COINAGE(0x0b)
+
+	{0   , 0xfe, 0   , 2   , "Steering Fix"               		  },
+	{0x0c, 0x01, 0x01, 0x00, "No"                                 },
+	{0x0c, 0x01, 0x01, 0x01, "Yes"                                },
 };
 
 STDDIPINFO(Pdriftj)
@@ -1292,7 +1308,7 @@ static struct BurnRomInfo PdriftjRomDesc[] = {
 
 	{ "epr-11753.ic102",  0x10000, 0xe81f5748, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
-	{ "mpr-11894.ic107",  0x40000, 0xb1e573f2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11894.ic107",  0x40000, 0xb1e573f2, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11893.ic106",  0x40000, 0x58b40f19, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11892.ic105",  0x40000, 0x3248a758, SYS16_ROM_PCMDATA | BRF_SND },
 
@@ -1925,6 +1941,7 @@ static void PdriftAnalogTick()
 static UINT8 PdriftProcessAnalogControls(UINT16 value)
 {
 	PdriftAnalogTick();
+	PdriftAnalogTick(); // twice!
 
 	switch (value) {
 
@@ -1940,7 +1957,11 @@ static UINT8 PdriftProcessAnalogControls(UINT16 value)
 
 		// Steering
 		case 5: {
-			return Pdrift_analog_adder;
+			if (System16Dip[2] & 1) {
+				return Pdrift_analog_adder;
+			} else {
+				return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
+			}
 		}
 	}
 
@@ -2099,7 +2120,7 @@ struct BurnDriver BurnDrvGforce2 = {
 	"gforce2", NULL, NULL, NULL, "1988",
 	"Galaxy Force 2\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, Gforce2RomInfo, Gforce2RomName, NULL, NULL, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2119,7 +2140,7 @@ struct BurnDriver BurnDrvGforce2j = {
 	"gforce2j", "gforce2", NULL, NULL, "1988",
 	"Galaxy Force 2 (Japan)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, Gforce2jRomInfo, Gforce2jRomName, NULL, NULL, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2129,7 +2150,7 @@ struct BurnDriver BurnDrvGforce2ja = {
 	"gforce2ja", "gforce2", NULL, NULL, "1988",
 	"Galaxy Force 2 (Japan, Rev A)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, Gforce2jaRomInfo, Gforce2jaRomName, NULL, NULL, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2139,7 +2160,7 @@ struct BurnDriver BurnDrvGloc = {
 	"gloc", NULL, NULL, NULL, "1990",
 	"G-LOC Air Battle (World)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, GlocRomInfo, GlocRomName, NULL, NULL, NULL, NULL, GlocInputInfo, GlocDIPInfo,
 	GlocInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2149,7 +2170,7 @@ struct BurnDriver BurnDrvGlocu = {
 	"glocu", "gloc", NULL, NULL, "1990",
 	"G-LOC Air Battle (US)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, GlocuRomInfo, GlocuRomName, NULL, NULL, NULL, NULL, GlocInputInfo, GlocDIPInfo,
 	GlocInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2179,7 +2200,7 @@ struct BurnDriver BurnDrvPdrift = {
 	"pdrift", NULL, NULL, NULL, "1988",
 	"Power Drift (World, Rev A)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftRomInfo, PdriftRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
 	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2189,7 +2210,7 @@ struct BurnDriver BurnDrvPdrifta = {
 	"pdrifta", "pdrift", NULL, NULL, "1988",
 	"Power Drift (World)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftaRomInfo, PdriftaRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
 	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2199,7 +2220,7 @@ struct BurnDriver BurnDrvPdrifte = {
 	"pdrifte", "pdrift", NULL, NULL, "1988",
 	"Power Drift (World, Earlier)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdrifteRomInfo, PdrifteRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdrifteDIPInfo,
 	PdriftInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -2209,7 +2230,7 @@ struct BurnDriver BurnDrvPdriftj = {
 	"pdriftj", "pdrift", NULL, NULL, "1988",
 	"Power Drift (Japan)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftjRomInfo, PdriftjRomName, NULL, NULL, NULL, NULL, PdriftInputInfo, PdriftjDIPInfo,
 	PdriftjInit, YBoardExit, YBoardFrame, YBoardRender, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3

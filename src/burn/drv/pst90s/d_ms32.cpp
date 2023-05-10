@@ -107,6 +107,39 @@ static struct BurnInputInfo MS32InputList[] = {
 
 STDINPUTINFO(MS32)
 
+static struct BurnInputInfo MS32MahjongInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 16,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvMah1 + 0,	"p1 start"	},
+	{"P1 A",			BIT_DIGITAL,	DrvMah1 + 1,	"mah a"		},
+	{"P1 B",			BIT_DIGITAL,	DrvMah2 + 1,	"mah b"		},
+	{"P1 C",			BIT_DIGITAL,	DrvMah3 + 1,	"mah c"		},
+	{"P1 D",			BIT_DIGITAL,	DrvMah4 + 1,	"mah d"		},
+	{"P1 E",			BIT_DIGITAL,	DrvMah1 + 2,	"mah e"		},
+	{"P1 F",			BIT_DIGITAL,	DrvMah2 + 2,	"mah f"		},
+	{"P1 G",			BIT_DIGITAL,	DrvMah3 + 2,	"mah g"		},
+	{"P1 H",			BIT_DIGITAL,	DrvMah4 + 2,	"mah h"		},
+	{"P1 I",			BIT_DIGITAL,	DrvMah1 + 4,	"mah i"		},
+	{"P1 J",			BIT_DIGITAL,	DrvMah2 + 4,	"mah j"		},
+	{"P1 K",			BIT_DIGITAL,	DrvMah3 + 4,	"mah k"		},
+	{"P1 L",			BIT_DIGITAL,	DrvMah4 + 4,	"mah l"		},
+	{"P1 M",			BIT_DIGITAL,	DrvMah1 + 3,	"mah m"		},
+	{"P1 N",			BIT_DIGITAL,	DrvMah2 + 3,	"mah n"		},
+	{"P1 Pon",			BIT_DIGITAL,	DrvMah4 + 3,	"mah pon"	},
+	{"P1 Chi",			BIT_DIGITAL,	DrvMah3 + 3,	"mah chi"	},
+	{"P1 Kan",			BIT_DIGITAL,	DrvMah1 + 5,	"mah kan"	},
+	{"P1 Ron",			BIT_DIGITAL,	DrvMah3 + 5,	"mah ron"	},
+	{"P1 Reach",		BIT_DIGITAL,	DrvMah2 + 5,	"mah reach"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 18,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
+};
+
+STDINPUTINFO(MS32Mahjong)
+
 static struct BurnInputInfo Hayaosi2InputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 16,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 20,	"p1 start"	},
@@ -140,72 +173,6 @@ static struct BurnInputInfo Hayaosi2InputList[] = {
 };
 
 STDINPUTINFO(Hayaosi2)
-
-static struct BurnInputInfo KirarastInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 16,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvMah1 + 0,	"p1 start"	},
-	{"P1 A",			BIT_DIGITAL,	DrvMah1 + 1,	"mah a"		},
-	{"P1 B",			BIT_DIGITAL,	DrvMah2 + 1,	"mah b"		},
-	{"P1 C",			BIT_DIGITAL,	DrvMah3 + 1,	"mah c"		},
-	{"P1 D",			BIT_DIGITAL,	DrvMah4 + 1,	"mah d"		},
-	{"P1 E",			BIT_DIGITAL,	DrvMah1 + 2,	"mah e"		},
-	{"P1 F",			BIT_DIGITAL,	DrvMah2 + 2,	"mah f"		},
-	{"P1 G",			BIT_DIGITAL,	DrvMah3 + 2,	"mah g"		},
-	{"P1 H",			BIT_DIGITAL,	DrvMah4 + 2,	"mah h"		},
-	{"P1 I",			BIT_DIGITAL,	DrvMah1 + 4,	"mah i"		},
-	{"P1 J",			BIT_DIGITAL,	DrvMah2 + 4,	"mah j"		},
-	{"P1 K",			BIT_DIGITAL,	DrvMah1 + 5,	"mah k"		},
-	{"P1 L",			BIT_DIGITAL,	DrvMah4 + 4,	"mah l"		},
-	{"P1 M",			BIT_DIGITAL,	DrvMah1 + 3,	"mah m"		},
-	{"P1 N",			BIT_DIGITAL,	DrvMah2 + 3,	"mah n"		},
-	{"P1 Pon",			BIT_DIGITAL,	DrvMah4 + 3,	"mah pon"	},
-	{"P1 Chi",			BIT_DIGITAL,	DrvMah3 + 3,	"mah chi"	},
-	{"P1 Kan",			BIT_DIGITAL,	DrvMah1 + 5,	"mah kan"	},
-	{"P1 Ron",			BIT_DIGITAL,	DrvMah3 + 5,	"mah ron"	},
-	{"P1 Reach",		BIT_DIGITAL,	DrvMah2 + 5,	"mah reach"	},
-
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 18,	"service"	},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
-};
-
-STDINPUTINFO(Kirarast)
-
-static struct BurnInputInfo Suchie2InputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 16,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvMah1 + 0,	"p1 start"	},
-	{"P1 A",			BIT_DIGITAL,	DrvMah1 + 1,	"mah a"		},
-	{"P1 B",			BIT_DIGITAL,	DrvMah2 + 1,	"mah b"		},
-	{"P1 C",			BIT_DIGITAL,	DrvMah3 + 1,	"mah c"		},
-	{"P1 D",			BIT_DIGITAL,	DrvMah4 + 1,	"mah d"		},
-	{"P1 E",			BIT_DIGITAL,	DrvMah1 + 2,	"mah e"		},
-	{"P1 F",			BIT_DIGITAL,	DrvMah2 + 2,	"mah f"		},
-	{"P1 G",			BIT_DIGITAL,	DrvMah3 + 2,	"mah g"		},
-	{"P1 H",			BIT_DIGITAL,	DrvMah4 + 2,	"mah h"		},
-	{"P1 I",			BIT_DIGITAL,	DrvMah1 + 4,	"mah i"		},
-	{"P1 J",			BIT_DIGITAL,	DrvMah2 + 4,	"mah j"		},
-	{"P1 K",			BIT_DIGITAL,	DrvMah1 + 5,	"mah k"		},
-	{"P1 L",			BIT_DIGITAL,	DrvMah4 + 4,	"mah l"		},
-	{"P1 M",			BIT_DIGITAL,	DrvMah1 + 3,	"mah m"		},
-	{"P1 N",			BIT_DIGITAL,	DrvMah2 + 3,	"mah n"		},
-	{"P1 Pon",			BIT_DIGITAL,	DrvMah4 + 3,	"mah pon"	},
-	{"P1 Chi",			BIT_DIGITAL,	DrvMah3 + 3,	"mah chi"	},
-	{"P1 Kan",			BIT_DIGITAL,	DrvMah1 + 5,	"mah kan"	},
-	{"P1 Ron",			BIT_DIGITAL,	DrvMah3 + 5,	"mah ron"	},
-	{"P1 Reach",		BIT_DIGITAL,	DrvMah2 + 5,	"mah reach"	},
-
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 18,	"service"	},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
-};
-
-STDINPUTINFO(Suchie2)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo Wpksocv2InputList[] = {
@@ -2680,7 +2647,7 @@ struct BurnDriver BurnDrvSuchie2 = {
 	"Idol Janshi Suchie-Pai II (ver 1.1)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, suchie2RomInfo, suchie2RomName, NULL, NULL, NULL, NULL, Suchie2InputInfo, Suchie2DIPInfo,
+	NULL, suchie2RomInfo, suchie2RomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, Suchie2DIPInfo,
 	ss92048_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
 };
@@ -2726,7 +2693,7 @@ struct BurnDriver BurnDrvSuchie2o = {
 	"Idol Janshi Suchie-Pai II (ver 1.0)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, suchie2oRomInfo, suchie2oRomName, NULL, NULL, NULL, NULL, Suchie2InputInfo, Suchie2DIPInfo,
+	NULL, suchie2oRomInfo, suchie2oRomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, Suchie2DIPInfo,
 	ss92048_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
 };
@@ -2772,7 +2739,7 @@ struct BurnDriver BurnDrvKirarast = {
 	"Ryuusei Janshi Kirara Star\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, kirarastRomInfo, kirarastRomName, NULL, NULL, NULL, NULL, KirarastInputInfo, KirarastDIPInfo,
+	NULL, kirarastRomInfo, kirarastRomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, KirarastDIPInfo,
 	ss92047_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
 };
@@ -2817,7 +2784,7 @@ struct BurnDriver BurnDrvAkiss = {
 	"Mahjong Angel Kiss (ver 1.0)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, akissRomInfo, akissRomName, NULL, NULL, NULL, NULL, Suchie2InputInfo, Suchie2DIPInfo,
+	NULL, akissRomInfo, akissRomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, Suchie2DIPInfo,
 	ss92047_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
 };
@@ -2868,7 +2835,7 @@ struct BurnDriver BurnDrvBnstars1 = {
 	"Vs. Janshi Brandnew Stars\0", "Not currently emulated", "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, bnstars1RomInfo, bnstars1RomName, NULL, NULL, NULL, NULL, Suchie2InputInfo, Suchie2DIPInfo, //BnstarsInputInfo, BnstarsDIPInfo,
+	NULL, bnstars1RomInfo, bnstars1RomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, Suchie2DIPInfo, //BnstarsInputInfo, BnstarsDIPInfo,
 	ss92046_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
 };
@@ -2912,7 +2879,7 @@ struct BurnDriver BurnDrvBnstars = {
 	"Vs. Janshi Brandnew Stars (Ver 1.1, MegaSystem32 Version)\0", NULL, "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, bnstarsRomInfo, bnstarsRomName, NULL, NULL, NULL, NULL, Suchie2InputInfo, Suchie2DIPInfo,
+	NULL, bnstarsRomInfo, bnstarsRomName, NULL, NULL, NULL, NULL, MS32MahjongInputInfo, Suchie2DIPInfo,
 	ss92046_01_init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 224, 4, 3
 };

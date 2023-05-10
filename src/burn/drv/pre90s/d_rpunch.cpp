@@ -304,7 +304,7 @@ static void __fastcall rpunch_main_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0x0fc000) == 0x80000) {
 		*((UINT16*)(DrvVidRAM + (address & 0x3ffe))) = data;
-		m68k_ICount -= 4 * 2; // 4 cyc/byte penalty writing to vram
+		SekCyclesBurnRun(4 * 2); // 4 cyc/byte penalty writing to vram
 		return;
 	}
 
@@ -340,7 +340,7 @@ static void __fastcall rpunch_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0x0fc000) == 0x80000) {
 		DrvVidRAM[(address & 0x3fff) ^ 1] = data;
-		m68k_ICount -= 4 * 1;
+		SekCyclesBurnRun(4 * 1);
 		return;
 	}
 
@@ -484,6 +484,9 @@ static INT32 DrvDoReset()
 	crtc_timer = 0;
 
 	nExtraCycles = 0;
+
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -883,7 +886,7 @@ struct BurnDriver BurnDrvRabiolep = {
 	"rabiolep", NULL, NULL, NULL, "1987",
 	"Rabio Lepus (Japan)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, rabiolepRomInfo, rabiolepRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, RabiolepDIPInfo,
 	rpunchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -925,7 +928,7 @@ struct BurnDriver BurnDrvRpunch = {
 	"rpunch", "rabiolep", NULL, NULL, "1987",
 	"Rabbit Punch (US)\0", NULL, "V-System Co. (Bally/Midway/Sente license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, rpunchRomInfo, rpunchRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, RpunchDIPInfo,
 	rpunchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -1011,7 +1014,7 @@ struct BurnDriver BurnDrvSvolley = {
 	"svolley", NULL, NULL, NULL, "1989",
 	"Super Volleyball (Japan)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, svolleyRomInfo, svolleyRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
 	svolleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -1099,7 +1102,7 @@ struct BurnDriver BurnDrvSvolleyk = {
 	"svolleyk", "svolley", NULL, NULL, "1989",
 	"Super Volleyball (Korea)\0", NULL, "V-System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, svolleykRomInfo, svolleykRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
 	svolleykInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -1146,7 +1149,7 @@ struct BurnDriver BurnDrvSvolleyu = {
 	"svolleyu", "svolley", NULL, NULL, "1989",
 	"Super Volleyball (US)\0", NULL, "V-System Co. (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, svolleyuRomInfo, svolleyuRomName, NULL, NULL, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
 	svolleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3

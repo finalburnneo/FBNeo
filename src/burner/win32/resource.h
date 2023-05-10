@@ -465,6 +465,7 @@
 #define MENU_SETCPUCLOCK					10010
 #define MENU_RESETCPUCLOCK					10011
 #define MENU_EXIT                       	10012
+#define MENU_RESET                       	10013
 #define MENU_MEMCARD_CREATE					10020
 #define MENU_MEMCARD_SELECT					10021
 #define MENU_MEMCARD_INSERT					10022

@@ -36,6 +36,8 @@ static UINT8 DrvDip[3] = { 0, 0, 0 };
 static UINT8 DrvInput[3];
 static UINT8 DrvReset;
 
+static HoldCoin<2> hold_coin;
+
 static INT32 flipscreen = 0;
 
 static UINT8 dorunrunmode = 0;
@@ -599,6 +601,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	hold_coin.reset();
+
 	return 0;
 }
 
@@ -828,6 +832,9 @@ static INT32 DrvFrame()
 
 		CompileInput(DrvJoy, (void*)DrvInput, 3, 8, DrvJoyInit);
 
+		hold_coin.checklow(0, DrvInput[2], 1 << 5, 2);
+		hold_coin.checklow(1, DrvInput[2], 1 << 4, 2);
+
 		// Both DrvInput[0], not a typo!
 		ProcessJoystick(&DrvInput[0], 0, 1,3,2,0, INPUT_4WAY);
 		ProcessJoystick(&DrvInput[0], 1, 5,7,6,4, INPUT_4WAY | INPUT_MAKEACTIVELOW);
@@ -898,6 +905,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(nExtraCycles);
+
+		hold_coin.scan();
 	}
 
 	return 0;

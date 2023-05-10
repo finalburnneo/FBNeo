@@ -39,6 +39,8 @@ static UINT8 prot_p1;
 static UINT8 prot_p2;
 static UINT8 prot_latch;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 start"	},
@@ -468,6 +470,10 @@ static INT32 DrvDoReset()
 	dreamwld_oki_setbank(0, 0);
 	dreamwld_oki_setbank(1, 0); // dreamwld
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -859,7 +865,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = {(16000000 * 100) / 5779, (16000000 * 100) / 5779 / 12 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	SekOpen(0);
 
@@ -874,6 +880,9 @@ static INT32 DrvFrame()
 	}
 
 	SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
@@ -913,6 +922,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(prot_p1);
 		SCAN_VAR(prot_p2);
 		SCAN_VAR(prot_latch);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (nAction & ACB_WRITE) {
 			dreamwld_oki_setbank(0, DrvOkiBank[0]);
@@ -966,7 +977,7 @@ struct BurnDriver BurnDrvBaryon = {
 	"baryon", NULL, NULL, NULL, "1997",
 	"Baryon - Future Assault (set 1)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, baryonRomInfo, baryonRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BaryonDIPInfo,
 	BaryonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 304, 3, 4
@@ -1002,7 +1013,7 @@ struct BurnDriver BurnDrvBaryona = {
 	"baryona", "baryon", NULL, NULL, "1997",
 	"Baryon - Future Assault (set 2)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, baryonaRomInfo, baryonaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, BaryonDIPInfo,
 	BaryonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 304, 3, 4
@@ -1048,7 +1059,7 @@ struct BurnDriver BurnDrvCutefght = {
 	"cutefght", NULL, NULL, NULL, "1998",
 	"Cute Fighter\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, cutefghtRomInfo, cutefghtRomName, NULL, NULL, NULL, NULL, CommonInputInfo, CutefghtDIPInfo,
 	CutefghtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	304, 224, 4, 3
@@ -1089,7 +1100,7 @@ struct BurnDriver BurnDrvRolcrush = {
 	"rolcrush", NULL, NULL, NULL, "1999",
 	"Rolling Crush (version 1.07.E - 1999/02/11, Trust license)\0", NULL, "SemiCom / Exit (Trust license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, rolcrushRomInfo, rolcrushRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RolcrushDIPInfo,
 	RolcrushInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	304, 224, 4, 3
@@ -1125,7 +1136,7 @@ struct BurnDriver BurnDrvRolcrusha = {
 	"rolcrusha", "rolcrush", NULL, NULL, "1999",
 	"Rolling Crush (version 1.03.E - 1999/01/29)\0", NULL, "SemiCom / Exit", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, rolcrushaRomInfo, rolcrushaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RolcrushDIPInfo,
 	RolcrushInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	304, 224, 4, 3
@@ -1168,7 +1179,7 @@ struct BurnDriver BurnDrvGaialast = {
 	"gaialast", NULL, NULL, NULL, "1999",
 	"Gaia - The Last Choice of Earth\0", NULL, "SemiCom / XESS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, gaialastRomInfo, gaialastRomName, NULL, NULL, NULL, NULL, CommonInputInfo, GaialastDIPInfo,
 	GaialastInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	304, 224, 4, 3
@@ -1218,7 +1229,7 @@ struct BurnDriver BurnDrvDreamwld = {
 	"dreamwld", NULL, NULL, NULL, "2000",
 	"Dream World\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, dreamwldRomInfo, dreamwldRomName, NULL, NULL, NULL, NULL, CommonInputInfo, DreamwldDIPInfo,
 	DreamwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	304, 224, 4, 3

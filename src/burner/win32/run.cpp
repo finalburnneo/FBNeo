@@ -28,6 +28,9 @@ static bool bAppDoRewind = 0;
 
 static int nFastSpeed = 6;
 
+// in FFWD, the avi-writer still needs to write all frames (skipped or not)
+#define FFWD_GHOST_FRAME 0x8000
+
 // SlowMo T.A. feature
 int nSlowMo = 0;
 static int flippy = 0; // free running RunFrame() counter
@@ -251,10 +254,18 @@ int RunFrame(int bDraw, int bPause)
 		}
 
 		if (bDraw) {                            // Draw Frame
-			nFramesRendered++;
+			if ((bDraw & FFWD_GHOST_FRAME) == 0)
+				nFramesRendered++;
 
-			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED)) { // || bAppDoFast) { *todink: put this back in the if clause when not in WIP.
-				if (VidFrame()) {				// Do one frame w/o RunAhead
+			if (!bRunAhead || (BurnDrvGetFlags() & BDF_RUNAHEAD_DISABLED) || bAppDoFast) {
+				if (VidFrame()) {				// Do one normal frame (w/o RunAhead)
+
+					// VidFrame() failed, but we must run a driver frame because we have
+					// a clocked input.  Possibly from recording or netplay(!)
+					// Note: VidFrame() calls BurnDrvFrame() on success.
+					pBurnDraw = NULL;			// Make sure no image is drawn
+					BurnDrvFrame();
+
 					AudBlankSound();
 				}
 			} else {
@@ -265,13 +276,20 @@ int RunFrame(int bDraw, int bPause)
 				pBurnSoundOut = NULL;
 				nCurrentFrame++;
 				bBurnRunAheadFrame = 1;
-				VidFrame();
+
+				if (VidFrame()) {
+					// VidFrame() failed, but we must run a driver frame because we have
+					// an input.  Possibly from recording or netplay(!)
+					pBurnDraw = NULL;			// Make sure no image is drawn, since video failed this time 'round.
+					BurnDrvFrame();
+				}
+
 				bBurnRunAheadFrame = 0;
 				nCurrentFrame--;
 				StateRunAheadLoad();
 				pBurnSoundOut = pBurnSoundOut_temp; // restore pointer, for wav & avi writer
 			}
-		} else {								// frame skipping
+		} else {								// frame skipping / ffwd-frame (without avi writing)
 			pBurnDraw = NULL;					// Make sure no image is drawn
 			BurnDrvFrame();
 		}
@@ -300,6 +318,7 @@ int RunFrame(int bDraw, int bPause)
 	}
 
 	bPrevPause = bPause;
+	if (bDraw & FFWD_GHOST_FRAME) bDraw = 0; // ffwd-frame w/avi write, do not draw!
 	bPrevDraw = bDraw;
 
 	return 0;
@@ -335,7 +354,7 @@ static int RunGetNextSound(int bDraw)
 			if (nAviStatus) {
 				// Render frame with sound
 				pBurnSoundOut = nAudNextSound;
-				RunFrame(bDraw, 0);
+				RunFrame(bDraw | FFWD_GHOST_FRAME, 0);
 			} else {
 				RunFrame(0, 0);
 			}

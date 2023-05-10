@@ -240,6 +240,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	rsxoffs = 0;
 	rsyoffs = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -388,6 +390,7 @@ static INT32 DrvInit()
 
 	TaitoF3ES5506RomSize = 0x1000000;
 	TaitoF3SoundInit(1);
+	TaitoF3SoundIRQConfig(1);
 
 	EEPROMInit(&eeprom_interface_93C46);
 	EEPROMIgnoreErrMessage(1);
@@ -567,7 +570,8 @@ static void tc0610_draw_scanline(void *dest, INT32 scan_line, const poly_extent 
 
 static void tc0610_rotate_draw()
 {
-	struct rectangle clip = { 0, nScreenHeight-1, 0, nScreenWidth-1 };
+	struct rectangle clip;
+	clip.set(0, nScreenHeight-1, 0, nScreenWidth-1); // for some reason, this is correct
 
 	struct polygon
 	{
@@ -991,7 +995,7 @@ struct BurnDriver BurnDrvGalastrm = {
 	"galastrm", NULL, NULL, NULL, "1992",
 	"Galactic Storm (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, galastrmRomInfo, galastrmRomName, NULL, NULL, NULL, NULL, GalastrmInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 232, 4, 3

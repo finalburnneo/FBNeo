@@ -98,6 +98,7 @@ static UINT8  game_rotates = 0;
 static UINT8  nAutoFireCounter[2] 	= {0, 0};
 
 static INT32 nCyclesDone[3], nCyclesTotal[3], nExtraCycles[3];
+static INT32 nPrevBurnCPUSpeedAdjust;
 
 static INT32 slyspy_mode = 0;
 
@@ -483,8 +484,8 @@ static struct BurnDIPInfo BouldashDIPList[]=
 	{0x01, 0x01, 0x40, 0x40, "Yes"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x01, 0x01, 0x20, 0x80, "Off"                    },
-	{0x01, 0x01, 0x20, 0x00, "On"                     },
+	{0x01, 0x01, 0x00, 0x80, "Off"                    },
+	{0x01, 0x01, 0x00, 0x00, "On"                     },
 };
 
 STDDIPINFO(Bouldash)
@@ -2294,7 +2295,9 @@ static INT32 DrvDoReset()
 	RotateReset();
 
 	HiscoreReset();
-	
+
+	nPrevBurnCPUSpeedAdjust = -1;
+
 	return 0;
 }
 
@@ -4767,7 +4770,7 @@ static INT32 MidresInit()
 {
 	INT32 nRet = 0, nLen;
 	
-	BurnSetRefreshRate(57.41);
+	BurnSetRefreshRate(57.44);
 
 	Mem = NULL;
 	MemIndex();
@@ -4852,14 +4855,14 @@ static INT32 MidresInit()
 	
 	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, 1);
 	BurnTimerAttachYM3812(&H6280Config, 2000000);
-	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachSek(10000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.75, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.75, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.75, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.75, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 1.75, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 1.75, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 1.75, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295SetRoute(0, 1.80, BURN_SND_ROUTE_BOTH);
@@ -5396,19 +5399,15 @@ static void DrvRenderCharLayer()
 
 static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 {
-	UINT16 *SpriteRam = (UINT16*)DrvSpriteDMABufferRam;
-
-	INT32 offs = 0;
-
-	while (offs < 0x800 / 2)
+	UINT16 *spriteram = (UINT16*)DrvSpriteDMABufferRam;
+	const INT32 size = 0x800/2;
+	for (INT32 offs = 0; offs < size;)
 	{
-		INT32 sy = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs]);
-		INT32 sx = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 2]);
+		INT32 incy;
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2]);
 		INT32 color = sx >> 12;
-        INT32 incy;
-		INT32 mult;
-		INT32 flash = sx & 0x0800;
-
+		INT32 flash = sx & 0x800;
 		INT32 flipx = sy & 0x2000;
 		INT32 flipy = sy & 0x4000;
 		INT32 h = (1 << ((sy & 0x1800) >> 11));
@@ -5421,6 +5420,8 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 		sx = 240 - sx;
 		sy = 240 - sy;
 
+		INT32 mult = -16;
+
 		if (DrvFlipScreen)
 		{
 			sy = 240 - sy;
@@ -5432,23 +5433,25 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 		else
 			mult = -16;
 
+		if ((spriteram[offs] & 0x8000) == 0) {
+			offs+=4;
+			continue;
+		}
+
 		for (INT32 x = 0; x < w; x++)
 		{
-			INT32 code = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 1]) & 0x1fff;
-
-			code &= ~(h-1);
-
-			if (flipy)
-				incy = -1;
-			else
+			if (offs < size)
 			{
-				code += h-1;
-				incy = 1;
-			}
+				INT32 code = (BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]) & 0x1fff) & ~(h - 1);
 
-			for (INT32 y = 0; y < h; y++)
-			{
-				if (BURN_ENDIAN_SWAP_INT16(SpriteRam[offs]) & 0x8000)
+				if (spriteram[offs] & 0x4000) {
+					incy = -1;
+				} else {
+					code += h - 1;
+					incy = 1;
+				}
+
+				for (INT32 y = 0; y < h; y++)
 				{
 					INT32 draw = 0;
 					if (!flash || (GetCurrentFrame() & 1))
@@ -5461,26 +5464,11 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 
 					if (draw)
 					{
-						if (flipx) {
-							if (flipy) {
-								Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
-							} else {
-								Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
-							}
-						} else {
-							if (flipy) {
-								Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
-							} else {
-								Render16x16Tile_Mask_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
-							}
-						}
+						Draw16x16MaskTile(pTransDraw, (code - y * incy) & 0xfff, sx + (mult * x), (sy + (mult * y)) - 8, flipx, flipy, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
 					}
 				}
 			}
-
 			offs += 4;
-			if (offs >= 0x800 / 2)
-				return;
 		}
 	}
 }
@@ -5802,12 +5790,18 @@ static INT32 Dec1Frame()
 		SuperJoy2Rotate();
 	}
 
-	nCyclesTotal[0] = (INT32)((double)10000000 / 57.41);
-	if (Dec0Game == DEC1_GAME_MIDRES)
-		nCyclesTotal[0] = (INT32)((double)14000000 / 57.41);
-	nCyclesTotal[1] = (INT32)((double)2000000 / 57.41);
+	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust) {
+		// 68K CPU clock is 10MHz, modified by nBurnCPUSpeedAdjust
+		nCyclesTotal[0] = (INT32)((INT64)10000000.0 * 100 * nBurnCPUSpeedAdjust / (0x100 * nBurnFPS));
+		INT32 adj_mhz = (INT32)(10000000.0 * nBurnCPUSpeedAdjust / 0x100);
+		bprintf(0, _T("adjusted mhz / cycles per frame:  %d  /  %d\n"), adj_mhz, nCyclesTotal[0]);
+		BurnTimerAttachSek(adj_mhz);
+		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
+	}
+
+	nCyclesTotal[1] = (INT32)((double)2000000 / 57.44);
 	if (slyspy_mode)
-		nCyclesTotal[1] = (INT32)((double)3000000 / 57.41);
+		nCyclesTotal[1] = (INT32)((double)3000000 / 57.44);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	SekNewFrame();
@@ -5817,9 +5811,7 @@ static INT32 Dec1Frame()
 	h6280Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU;
-
-		nCurrentCPU = 0;
+		INT32 nCurrentCPU = 0;
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
@@ -5830,10 +5822,10 @@ static INT32 Dec1Frame()
 		nCurrentCPU = 1;
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 	}
-	
+
 	BurnTimerEndFrame(nCyclesTotal[0]);
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-	
+
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

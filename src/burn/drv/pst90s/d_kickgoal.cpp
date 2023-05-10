@@ -99,7 +99,7 @@ static void actionhw_sound_write(INT32 data)
 	else if (data == 0x78) // reset (?)
 	{
 		MSM6295Write(0, data);
-		memset (sound_sample, 0, sizeof(sound_sample));
+		memset(sound_sample, 0, sizeof(sound_sample));
 	}
 	else if (sound_new) // Play new sample
 	{
@@ -299,7 +299,7 @@ static tilemap_callback ( bg1 )
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
 	SekReset();
@@ -330,6 +330,8 @@ static INT32 DrvDoReset()
 	memset(sound_sample, 0, sizeof(sound_sample));
 	sound_new = 0;
 #endif
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -383,7 +385,7 @@ static INT32 DrvGfxDecode(INT32 length, INT32 type)
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM[1], length);
+	memcpy(tmp, DrvGfxROM[1], length);
 
 	if (type == 0) // kickgoal
 	{
@@ -627,7 +629,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+		memset(DrvInputs, 0xff, sizeof(DrvInputs));
 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -730,7 +732,7 @@ STD_ROM_FN(kickgoal)
 
 struct BurnDriver BurnDrvKickgoal = {
 	"kickgoal", NULL, NULL, NULL, "1995",
-	"Kick Goal (set 1)\0", NULL, "TCH", "Miscellaneous",
+	"Kick Goal (set 1)\0", NULL, "TCH / Proyesel", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, kickgoalRomInfo, kickgoalRomName, NULL, NULL, NULL, NULL, KickgoalInputInfo, NULL,
@@ -762,7 +764,7 @@ STD_ROM_FN(kickgoala)
 
 struct BurnDriver BurnDrvKickgoala = {
 	"kickgoala", "kickgoal", NULL, NULL, "1995",
-	"Kick Goal (set 2)\0", NULL, "TCH", "Miscellaneous",
+	"Kick Goal (set 2)\0", NULL, "TCH / Proyesel", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, kickgoalaRomInfo, kickgoalaRomName, NULL, NULL, NULL, NULL, KickgoalInputInfo, NULL,
@@ -796,9 +798,9 @@ STD_ROM_FN(actionhw)
 
 struct BurnDriver BurnDrvActionhw = {
 	"actionhw", NULL, NULL, NULL, "1995",
-	"Action Hollywood\0", NULL, "TCH", "Miscellaneous",
+	"Action Hollywood\0", NULL, "TCH / Proyesel", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, actionhwRomInfo, actionhwRomName, NULL, NULL, NULL, NULL, KickgoalInputInfo, NULL,
 	ActionhwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	352, 240, 4, 3

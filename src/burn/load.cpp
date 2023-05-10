@@ -6,16 +6,17 @@
 INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 {
 	INT32 nRet = 0, nLen = 0;
+	struct BurnRomInfo ri;
+
 	if (BurnExtLoadRom == NULL) return 1; // Load function was not defined by the application
 
 	// Find the length of the rom (as given by the current driver)
 	{
-		struct BurnRomInfo ri;
-		ri.nType=0;
-		ri.nLen=0;
+		ri.nType = 0;
+		ri.nLen = 0;
 		BurnDrvGetRomInfo(&ri,i);
-		if (ri.nType==0) return 0; // Empty rom slot - don't load anything and return success
-		nLen=ri.nLen;
+		if (ri.nType == 0) return 0; // Empty rom slot - don't load anything and return success
+		nLen = ri.nLen;
 	}
 
 	char* RomName = ""; //added by emufan
@@ -25,21 +26,27 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR))
 	{
-		if (bDoIpsPatch) { // Ipses larger than the length of the rom are allowed.
-			INT32 nIpsesMaxLen = GetIpsesMaxLen(RomName);
-			if (nIpsesMaxLen > nLen)
-				nLen = nIpsesMaxLen;
+		// Use temporary memory to load ROM, ips patching is also done here, enough space must be reserved.
+		if (bDoIpsPatch) {
+			if (0 == nIpsMemExpLen[EXP_FLAG]) {			// Unspecified nIpsMemExpLen[LOAD_ROM].
+				IpsApplyPatches(NULL, RomName, ri.nCrc, true);	// Get the maximum offset of ips.
+				if (nIpsMemExpLen[LOAD_ROM] > nLen) {	// ips offset is greater than rom length.
+					nLen = nIpsMemExpLen[LOAD_ROM];
+				}
+			} else {									// Customized nIpsMemExpLen[LOAD_ROM].
+				nLen += nIpsMemExpLen[LOAD_ROM];
+			}
 		}
 
-		INT32 nLoadLen=0;
-		UINT8 *Load=(UINT8 *)BurnMalloc(nLen);
-		if (Load==NULL) return 1;
-		memset(Load,0,nLen);
+		INT32 nLoadLen = 0;
+		UINT8* Load = (UINT8*)BurnMalloc(nLen);
+		if (Load == NULL) return 1;
+		memset(Load, 0, nLen);
 
 		// Load in the file
-		nRet=BurnExtLoadRom(Load,&nLoadLen,i);
-		if (bDoIpsPatch) IpsApplyPatches(Load, RomName);
-		if (nRet!=0) { if (Load) { BurnFree(Load); Load = NULL; } return 1; }
+		nRet = BurnExtLoadRom(Load, &nLoadLen, i);
+		if (bDoIpsPatch) IpsApplyPatches(Load, RomName, ri.nCrc);
+		if (nRet != 0) { if (Load) { BurnFree(Load); Load = NULL; } return 1; }
 
 		if (nLoadLen < 0) nLoadLen = 0;
 		if (nLoadLen > nLen || bDoIpsPatch) nLoadLen = nLen;
@@ -81,9 +88,12 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 		}
 	} else {
  		// If no XOR, and gap of 1, just copy straight in
-		nRet=BurnExtLoadRom(Dest,NULL,i);
-		if (bDoIpsPatch) IpsApplyPatches(Dest, RomName);
-		if (nRet!=0) return 1;
+		nRet = BurnExtLoadRom(Dest, NULL, i);
+		if (bDoIpsPatch) {
+			IpsApplyPatches(NULL, RomName, ri.nCrc, true);	// Get the maximum offset of ips. & megadrive needs.
+			IpsApplyPatches(Dest, RomName, ri.nCrc);
+		}
+		if (nRet != 0) return 1;
 
 		if (nFlags & LD_INVERT) {
 			for (INT32 n = 0; n < nLen; n++) {
@@ -101,33 +111,33 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 INT32 BurnLoadRom(UINT8 *Dest, INT32 i, INT32 nGap)
 {
-	return BurnLoadRomExt(Dest,i,nGap,0);
+	return BurnLoadRomExt(Dest, i, nGap, 0);
 }
 
 INT32 BurnXorRom(UINT8 *Dest, INT32 i, INT32 nGap)
 {
-	return BurnLoadRomExt(Dest,i,nGap,LD_XOR);
+	return BurnLoadRomExt(Dest, i, nGap, LD_XOR);
 }
 
 // Separate out a bitfield into Bit number 'nField' of each nibble in pDest
 // (end result: each dword in memory carries the 8 pixels of a tile line).
 INT32 BurnLoadBitField(UINT8 *pDest, UINT8 *pSrc, INT32 nField, INT32 nSrcLen)
 {
-	INT32 nPix=0;
+	INT32 nPix = 0;
 
-	for (nPix=0; nPix<(nSrcLen<<3); nPix++)
+	for (nPix = 0; nPix < (nSrcLen << 3); nPix++)
 	{
 		INT32 nBit;
 		// Get the bitplane pixel value (on or off)
-		nBit=(*pSrc)>>(7-(nPix&7)); nBit&=1;
+		nBit = (*pSrc) >> (7 - (nPix & 7)); nBit &= 1;
 		nBit<<=nField; // Move to correct bit for this field
 
 		// use low nibble for each even pixel
-		if ((nPix&1)==1) nBit<<=4; // use high nibble for each odd pixel
+		if ((nPix & 1) == 1) nBit <<= 4; // use high nibble for each odd pixel
 
 		*pDest|=nBit; // OR into destination
-		if ((nPix&1)==1) pDest++;
-		if ((nPix&7)==7) pSrc++;
+		if ((nPix & 1) == 1) pDest++;
+		if ((nPix & 7) == 7) pSrc++;
   	}
 
 	return 0;

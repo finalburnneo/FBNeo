@@ -26,6 +26,7 @@ static INT32 (*irqcallback)(INT32);
 void konami_set_irq_line(INT32 irqline, INT32 state);
 void konami_init(INT32 (*irqcallback)(INT32));
 void konami_set_irq_hold(INT32 irq);
+int konami_get_pc();
 
 static void core_set_irq(INT32 /*cpu*/, INT32 line, INT32 state)
 {
@@ -47,9 +48,16 @@ cpu_core_config konamiCPUConfig =
 	konamiRun,
 	konamiRunEnd,
 	konamiReset,
+	konamiCpuScan,
+	konamiExit,
 	0x10000,
 	0
 };
+
+UINT32 konamiGetPC(INT32)
+{
+	return konami_get_pc();
+}
 
 void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type)
 {

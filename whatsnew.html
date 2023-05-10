@@ -114,6 +114,123 @@
 <h2>FinalBurn Neo - What's New</h2>
 <p><a href="http://neo-source.com">http://neo-source.com - official site and forums</a></p>
 
+<h3>v1.0.0.0x</h3>
+<!-- new features -->
+<h4>New features</h4>
+<ul>
+<li>Run Ahead - reduce emulation latency by a frame [dink]</li>
+<li>Rewind - press a button and go back-in-time [dink]</li>
+<ul>
+	<li>Settings; "Input -> Rewind Settings"</li>
+	<li>Configurable key for Rewind &amp; Rewind Cancel in Game Inputs</li>
+	<li>or use the hard-coded pg-up key</li>
+</ul></li>
+<li>Slow-Mo T.A. - slow down emulation for Tool-Assist fun [dink]</li>
+<li>Auto-Fire updates: more speed options &amp; Button staggering</li>
+<ul><li>...for games like Konami's Track and Field / 88 Games</li></ul>
+<li>Add Volume selector to Audio menu [dink]</li>
+<li>Add OSD to the DX9 blitters [dink]</li>
+<li>Right-Stick Rotary support [pjft]</li>
+<ul>
+	<li>Dec0/Dec8: Heavy Barrel, Midnight Resistance, Gondomania</li>
+	<li>Konami: Jackal / Top Gunner</li>
+	<li>Alpha Denshi: Time Soldiers</li>
+	<li>Seta: Downtown, Caliber 50</li>
+	<li>SNK: Gwar, TNK3, Ikari Warriors, Victory Road, Bermuda Triangle, SAR, Ikari 3</li>
+</ul></li>
+<li>Add LUA support [JordiRos]</li>
+<li>Enhanced LUA support [NBeing]</li>
+<li>Add option: "With NVRAM" to Record from Power-On [dink]</li>
+<li>Add color overlay to Navarone [dink]</li>
+<li>Support Analog inputs w/Kaillera Netplay [dink]</li>
+<li>Ported HardFX Shaders from FC [dink]</li>
+<li>PCEngine vdp rework, fixes all previously broken games [dink]</li>
+<ul>
+	<li>Cadash</li>
+	<li>Niko Niko Pun</li>
+	<li>Dragon Egg</li>
+	<li>Ghost House</li>
+	<li>Air Zonk / PC Denjin - Punkic Cyborgs</li>
+	<li>Benkei Gaiden</li>
+	<li>Power Tennis</li>
+	<li>Xserd</li>
+</ul></li>
+<li>Megadrive now has a resize window/screen (dip) option for games that use 32col mode (256x224)  [dink]</li>
+<li>Heiankyo Alien gets full sound with samples [dink]</li>
+<li>AVI recording works with FFWD (toggle: shift-f1) [dink]</li>
+<li> []</li>
+</ul>
+<!-- fixes -->
+<h4>Fixes</h4>
+<ul>
+<li>Added "Hap's lsrd fix" to the konami cpu for proper parallax clouds in "Parodius Da!"</li>
+<li>Reworked Millipede driver for a better hardware palette emulation [dink]</li>
+<li>Fixed and updated the Atari "Rampart" driver, now fully working [dink]</li>
+<li>Fixed timer in tlcs90 cpu, fixes tempo in Super Spacefortress Macross [dink]</li>
+<li>Fixed SNK Vs. Capcom - Card Fighters 2 on Neogeo Pocket (tlcs900 cpu bugs w/timer and ldcf/andcf/orcf/xorcf16 ops) [dink]</li>
+<li>Fixed broken "Unable to go fullscreen" message [dink]</li>
+<li>Fixed sprite gaps in The Simpsons, Turtles in Time, and a few other Konami games [dink]</li>
+<li>Fixed glitchy scene transitions in Rabio Lepus / Rabbit Punch [dink]</li>
+<li>Fixed glitchy scene transitions in Sega System16 game Fantasy Zone [dink]</li>
+<li>Fixed XAudio2 plugin volume to be similar to DirectSound [dink]</li>
+<li>Fixed Thunder Hoop level 4 crash [Peter Ferrie]</li>
+<li>Fixed priority bug in In Your Face proto on Jaleco Megasystem [dink]</li>
+<li>Fixed 1-frame of input lag on Midway games [dink]</li>
+<li>Fixed sprites in Knuckle Joe [dink]</li>
+<li>Fixed sound bugs in Kabuki-Z [dink]</li>
+<li>Fixed bug in Battle Bakraid when left in attract mode for a long time [dink]</li>
+<li>Fixed a gfx bug in Liquid Kids level 6-1 [dink]</li>
+<li>Fixed HOMERUN screen in Baseball Stars Professional on NeoGeo [dink]</li>
+<li>Fixed Quinty / Mendel Palace on NES [dink]</li>
+<li>Fixed Choplifter and Noboranka on Sega System 1 / 2 [dink]</li>
+<li> []</li>
+</ul>
+<!-- new drivers -->
+<h4>New drivers</h4>
+<ul>
+<li>Added driver for Exerion [iq_132, dink]</li>
+<li>Added driver for N.Y. Captor [iq_132, dink]</li>
+<li>Added driver for Missile Command and Super Missile Attack [iq_132, dink]</li>
+<li>Added driver for Zero Hour w/sound [iq_132, dink, Otto_Pylotte]</li>
+<li>Added driver for Aka Zukin by Sigma [iq_132]</li>
+<li> []</li>
+<li> []</li>
+<li>Added driver for Bally Midway MCR-68K system: Arch Rivals, Blasted, Spy Hunter 2, Tri-Sports, Xenophobe, Pigskin 621AD [iq_132, dink]</li>
+<li>Added driver for Cave CV1000 system: Ibara, Deathsmiles, DoDonPachi DFK, Espgaluda II, Puzzle! Mushihime-Tama, Muchi Muchi Pork [dink]</li>
+<li>Added driver for Exidy 440 system: Cheyenne, Chiller, Crossbow, Hit 'n Miss, Top Secret, Showdown, Yukon [iq_132, dink]</li>
+<li>Added driver for SEGA System C-2: Bloxeed, Borench, Columns, Puyo Puyo, Puyo Puyo 2, Ribbit!, Thunder Force AC, etc. [iq_132, dink]</li>
+<li>Added driver for Bally Midway "Zwackery" [iq_132, dink]</li>
+<li>Added driver for Soft Art Co.'s "Disco Boy" [iq_132]</li>
+<li>Added driver for Videa's "GridLee" [iq_132, dink]</li>
+<li>Added driver for Jaleco "Field Combat" [iq_132, dink, hap]</li>
+<li>Added driver for "Lady Frog" and "Touche Me" [iq_132, dink]</li>
+<li>Added driver for "Marble Madness II" [iq_132, Haze]</li>
+<li>Added driver for "Power Balls" [iq_132]</li>
+<li>Added driver for Taito "Cycle Maabou" and "Sky Destroyer" [iq_132, dink]</li>
+<li>Added driver for Taito "Halley's Comet" and "Ben Bero Beh" [iq_132, dink]</li>
+<li>Added driver for Tayo "Chinese Hero", "Shanghai Kid" and "Dynamic Sky" [iq_132, dink, barbudreadmon, tumu]</li>
+<li>Added driver for Zaccaria "Jack Rabbit" and "Money Money" [iq_132, dink]</li>
+</ul>
+<!-- new game additions to existing drivers -->
+<h4>New additions / updates to existing drivers</h4>
+<ul>
+<li>Added "Maze Invaders (proto)" and "Warlords" to the Millipede driver [dink]</li>
+<li>Added support for 2bpp sprites in PC-Engine emulation [dink]</li>
+<li>Added Varia Metal to Metro driver, removed buggy old vmetal driver [iq_132]</li>
+<li>Added The Dice Game! on IREM M90 hw [Jonas Jago]</li>
+<li>Added Playball! to Williams [?]</li>
+<li>Added Mrs. Dynamite by Universal [Marco Kerstens, Sam Grech, Frank Palazzolo]</li>
+<li>Added Added Namennayo Cat's to Galaxian driver [dink]</li>
+<li>Added Harem to Galaxian driver [dink]</li>
+<li>Added Shooting Master to Sega System 1 [dink]</li>
+<li> []</li>
+<li> []</li>
+</ul>
+<!-- clones and updated romsets in drivers -->
+<h4>Clones and updated romsets in existing drivers</h4>
+<ul>
+</ul>
+
 <h3>v1.0.0.02</h3>
 <!-- fixes and features -->
 <h4>Fixes and new features</h4>

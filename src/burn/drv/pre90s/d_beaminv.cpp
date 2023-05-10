@@ -136,6 +136,8 @@ static INT32 DrvDoReset()
 
 	input_select = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -325,7 +327,7 @@ struct BurnDriverD BurnDrvBeaminv = {
 	"beaminv", NULL, NULL, NULL, "1979",
 	"Beam Invader\0", "No sound", "Teknon Kogyo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, beaminvRomInfo, beaminvRomName, NULL, NULL, NULL, NULL, BeaminvInputInfo, BeaminvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	216, 248, 3, 4
@@ -350,7 +352,7 @@ struct BurnDriverD BurnDrvPacominv = {
 	"pacominv", "beaminv", NULL, NULL, "1979",
 	"Pacom Invader\0", "No sound", "Pacom Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, pacominvRomInfo, pacominvRomName, NULL, NULL, NULL, NULL, BeaminvInputInfo, PacominvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	216, 248, 3, 4

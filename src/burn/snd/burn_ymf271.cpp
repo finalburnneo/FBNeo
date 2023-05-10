@@ -228,7 +228,7 @@ INT32 BurnYMF271Init(INT32 nClockFrequency, UINT8 *rom, INT32 romsize, void (*IR
 
 	nBurnYMF271SoundRate = nClockFrequency / 384; // hw rate based on input clock
 
-	nSampleSize = (UINT32)nBurnYMF271SoundRate * (1 << 16) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYMF271SoundRate * (1 << 16) / nBurnSoundRate;
 	bYMF271AddSignal = nAdd;
 
 	BurnTimerInit(&ymf271_timerover, NULL);

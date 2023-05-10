@@ -131,6 +131,8 @@ typedef void (*mcs48_ophandler)();
 extern const mcs48_ophandler s_upi41_opcodes[256];
 extern const mcs48_ophandler s_mcs48_opcodes[256];
 
+bool cflyball_hack = false;	// If true, gladiatr's coin1 & coin2 dip will not be controlled (the actual keypress result will always be 1c/5c & 2c/1c)
+
 struct MCS48_t {
 	UINT16      prevpc;             /* 16-bit previous program counter */
 	UINT16      pc;                 /* 16-bit program counter */
@@ -314,6 +316,12 @@ void mcs48Init(INT32 nCpu, INT32 subtype, UINT8 *prg)
 			mcs48->feature_mask = I8048_FEATURE;
 			mcs48->ram_mask = 0x7f;
 			mcs48->prg_mask = 0x7ff;
+			break;
+		case 8884:
+			mcs48->opcode_table = s_mcs48_opcodes;
+			mcs48->feature_mask = I8048_FEATURE;
+			mcs48->ram_mask = 0x3f;
+			mcs48->prg_mask = 0xfff;
 			break;
 		default:
 			bprintf(PRINT_ERROR, _T("mcs48Init(): Unsupported subtype!!\n"));
@@ -1451,7 +1459,8 @@ void mcs48_master_w(INT32 offset, UINT8 data)
 
 	/* data always goes to the input buffer */
 	mcs48->dbbi = data;
-	mcs48->dbbo = data; // hack needed for cflyball to fully boot -dink
+	if (cflyball_hack)
+		mcs48->dbbo = data; // hack needed for cflyball to fully boot -dink
 
 	/* set the appropriate flags */
 	if ((mcs48->sts & STS_IBF) == 0)

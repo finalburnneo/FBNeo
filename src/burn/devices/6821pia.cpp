@@ -733,6 +733,18 @@ UINT8 pia_get_ddr_a(int which)
 }
 
 
+UINT8 pia_get_a(int which)
+{
+	struct pia6821 *p = pia + which;
+	return (p->out_a & p->ddr_a) + (p->in_a & ~p->ddr_a);
+}
+
+UINT8 pia_get_b(int which)
+{
+	struct pia6821 *p = pia + which;
+	return p->out_b & p->ddr_b;
+}
+
 
 UINT8 pia_get_ddr_b(int which)
 {

@@ -123,6 +123,7 @@ static UINT8 *m_tsrc4;
 static UINT8 *m_tsrc_s4;
 static UINT32 m_x_count4;
 static UINT32 m_x_zoom4;
+static UINT16 m_pal_add[5];
 
 static UINT8 m_add_sat[256][256];
 
@@ -181,8 +182,9 @@ struct f3_playfield_line_inf
 	UINT8 *tsrc[256],*tsrc_s[256];
 	INT32 x_count[256];
 	UINT32 x_zoom[256];
-	UINT32 clip0[256];
-	UINT32 clip1[256];
+	UINT32 clip_in[256];
+	UINT32 clip_ex[256];
+	UINT16 pal_add[256];
 };
 
 struct f3_spritealpha_line_inf
@@ -190,12 +192,10 @@ struct f3_spritealpha_line_inf
 	UINT16 alpha_level[256];
 	UINT16 spri[256];
 	UINT16 sprite_alpha[256];
-	UINT32 sprite_clip0[256];
-	UINT32 sprite_clip1[256];
-	INT16 clip0_l[256];
-	INT16 clip0_r[256];
-	INT16 clip1_l[256];
-	INT16 clip1_r[256];
+	UINT32 sprite_clip_in[256];
+	UINT32 sprite_clip_ex[256];
+	INT16 clip_l[4][256];
+	INT16 clip_r[4][256];
 };
 
 
@@ -1497,10 +1497,11 @@ static void init_alpha_blend_func()
 	m_tsrc_s##pf_num=line_tmp->tsrc_s[y]; \
 	m_x_count##pf_num=line_tmp->x_count[y]; \
 	m_x_zoom##pf_num=line_tmp->x_zoom[y]; \
-	m_clip_al##pf_num=line_tmp->clip0[y]&0xffff; \
-	m_clip_ar##pf_num=line_tmp->clip0[y]>>16; \
-	m_clip_bl##pf_num=line_tmp->clip1[y]&0xffff; \
-	m_clip_br##pf_num=line_tmp->clip1[y]>>16; \
+	m_clip_al##pf_num=line_tmp->clip_in[y]&0xffff; \
+	m_clip_ar##pf_num=line_tmp->clip_in[y]>>16; \
+	m_clip_bl##pf_num=line_tmp->clip_ex[y]&0xffff; \
+	m_clip_br##pf_num=line_tmp->clip_ex[y]>>16; \
+	m_pal_add[pf_num] = line_tmp->pal_add[y]; \
 }
 
 #define CULC_PIXMAP_POINTER(pf_num) \
@@ -1536,7 +1537,7 @@ if(cx>=clip_als && cx<clip_ars-1 && !(cx>=clip_bls && cx<clip_brs)) \
 	{ \
 		m_tval=*m_tsrc##pf_num; \
 		if(m_tval&0xf0) \
-			if((*m_dpix_lp[pf_num][m_pval>>4])(clut[*m_src##pf_num])) {*dsti=m_dval;break;} \
+			if((*m_dpix_lp[pf_num][m_pval>>4])(clut[(*m_src##pf_num + m_pal_add[pf_num]) & 0x1fff])) {*dsti=m_dval;break;} \
 	}
 
 
@@ -1588,10 +1589,10 @@ static void draw_scanlines(INT32 xsize,INT16 *draw_line_num,
 		{
 			INT32 cx=0;
 
-			clip_als=m_sa_line_inf[0].sprite_clip0[y]&0xffff;
-			clip_ars=m_sa_line_inf[0].sprite_clip0[y]>>16;
-			clip_bls=m_sa_line_inf[0].sprite_clip1[y]&0xffff;
-			clip_brs=m_sa_line_inf[0].sprite_clip1[y]>>16;
+			clip_als=m_sa_line_inf[0].sprite_clip_in[y]&0xffff;
+			clip_ars=m_sa_line_inf[0].sprite_clip_in[y]>>16;
+			clip_bls=m_sa_line_inf[0].sprite_clip_ex[y]&0xffff;
+			clip_brs=m_sa_line_inf[0].sprite_clip_ex[y]>>16;
 
 			length=xsize;
 			dsti = dsti0;
@@ -1735,109 +1736,62 @@ static void visible_tile_check(
 		line_t->alpha_mode[line]|=0x80;
 }
 
-static void calculate_clip(INT32 y, UINT16 pri, UINT32* clip0, UINT32* clip1, int* line_enable)
+#define min(a,b) (((a)<(b))?(a):(b))
+#define max(a,b) (((a)>(b))?(a):(b))
+
+#define calc_clip(p) { \
+	clipl = max(sa_line->clip_l[p][y], clipl); \
+	clipr = min(sa_line->clip_r[p][y], clipr); \
+	};
+
+#define calc_clip_inv(p) { \
+	clipl = min(sa_line->clip_l[p][y], clipl); \
+	clipr = max(sa_line->clip_r[p][y], clipr); \
+	};
+
+static void calculate_clip(INT32 y, UINT16 pri, UINT32 *clip_in, UINT32 *clip_ex, INT32 *line_enable)
 {
-	const struct f3_spritealpha_line_inf *sa_line_t=&m_sa_line_inf[0];
+	const f3_spritealpha_line_inf *sa_line = &m_sa_line_inf[0];
 
-	switch (pri)
-	{
-	case 0x0100: /* Clip plane 1 enable */
-		{
-			if (sa_line_t->clip0_l[y] > sa_line_t->clip0_r[y])
-				*line_enable=0;
-			else
-				*clip0=(sa_line_t->clip0_l[y]) | (sa_line_t->clip0_r[y]<<16);
-			*clip1=0;
-		}
-		break;
-	case 0x0110: /* Clip plane 1 enable, inverted */
-		{
-			*clip1=(sa_line_t->clip0_l[y]) | (sa_line_t->clip0_r[y]<<16);
-			*clip0=0x7fff0000;
-		}
-		break;
-	case 0x0200: /* Clip plane 2 enable */
-		{
-			if (sa_line_t->clip1_l[y] > sa_line_t->clip1_r[y])
-				*line_enable=0;
-			else
-				*clip0=(sa_line_t->clip1_l[y]) | (sa_line_t->clip1_r[y]<<16);
-			*clip1=0;
-		}
-		break;
-	case 0x0220: /* Clip plane 2 enable, inverted */
-		{
-			*clip1=(sa_line_t->clip1_l[y]) | (sa_line_t->clip1_r[y]<<16);
-			*clip0=0x7fff0000;
-		}
-		break;
-	case 0x0300: /* Clip plane 1 & 2 enable */
-		{
-			INT32 clipl=0,clipr=0;
-
-			if (sa_line_t->clip1_l[y] > sa_line_t->clip0_l[y])
-				clipl=sa_line_t->clip1_l[y];
-			else
-				clipl=sa_line_t->clip0_l[y];
-
-			if (sa_line_t->clip1_r[y] < sa_line_t->clip0_r[y])
-				clipr=sa_line_t->clip1_r[y];
-			else
-				clipr=sa_line_t->clip0_r[y];
-
-			if (clipl > clipr)
-				*line_enable=0;
-			else
-				*clip0=(clipl) | (clipr<<16);
-			*clip1=0;
-		}
-		break;
-	case 0x0310: /* Clip plane 1 & 2 enable, plane 1 inverted */
-		{
-			if (sa_line_t->clip1_l[y] > sa_line_t->clip1_r[y])
-				line_enable=NULL;
-			else
-				*clip0=(sa_line_t->clip1_l[y]) | (sa_line_t->clip1_r[y]<<16);
-
-			*clip1=(sa_line_t->clip0_l[y]) | (sa_line_t->clip0_r[y]<<16);
-		}
-		break;
-	case 0x0320: /* Clip plane 1 & 2 enable, plane 2 inverted */
-		{
-			if (sa_line_t->clip0_l[y] > sa_line_t->clip0_r[y])
-				line_enable=NULL;
-			else
-				*clip0=(sa_line_t->clip0_l[y]) | (sa_line_t->clip0_r[y]<<16);
-
-			*clip1=(sa_line_t->clip1_l[y]) | (sa_line_t->clip1_r[y]<<16);
-		}
-		break;
-	case 0x0330: /* Clip plane 1 & 2 enable, both inverted */
-		{
-			INT32 clipl=0,clipr=0;
-
-			if (sa_line_t->clip1_l[y] < sa_line_t->clip0_l[y])
-				clipl=sa_line_t->clip1_l[y];
-			else
-				clipl=sa_line_t->clip0_l[y];
-
-			if (sa_line_t->clip1_r[y] > sa_line_t->clip0_r[y])
-				clipr=sa_line_t->clip1_r[y];
-			else
-				clipr=sa_line_t->clip0_r[y];
-
-			if (clipl > clipr)
-				*line_enable=0;
-			else
-				*clip1=(clipl) | (clipr<<16);
-			*clip0=0x7fff0000;
-		}
-		break;
-	default:
-		// Illegal clip mode
-		break;
+	/* landmakr and quizhuhu use clip planes 2 and 3,
+	   commandw enables all clip planes.
+	   only up to 2 valid clips ever used in existing games? */
+	UINT16 normal_planes = (pri >> 8) & (pri >> 4);
+	UINT16 invert_planes = (pri >> 8) & ~(pri >> 4);
+	// when bit 0x1000 set, invert bit ON is normal clip, OFF is inverted
+	if (pri & 0x1000) {
+		UINT16 temp = normal_planes;
+		normal_planes = invert_planes;
+		invert_planes = temp;
 	}
+
+	INT16 clipl = 0, clipr = 0x7fff;
+
+	if (normal_planes & 0x01) { calc_clip(0); };
+	if (normal_planes & 0x02) { calc_clip(1); };
+	if (normal_planes & 0x04) { calc_clip(2); };
+	if (normal_planes & 0x08) { calc_clip(3); };
+	if (clipl > clipr)
+		*line_enable = 0;
+	else
+		*clip_in = clipl | (clipr << 16);
+
+	// reset temp clip sides for the inverted/excluded window
+	clipl = 0x7fff; clipr = 0;
+	if (invert_planes & 0x01) { calc_clip_inv(0); };
+	if (invert_planes & 0x02) { calc_clip_inv(1); };
+	if (invert_planes & 0x04) { calc_clip_inv(2); };
+	if (invert_planes & 0x08) { calc_clip_inv(3); };
+	if (clipl > clipr)
+		*clip_ex = 0;
+	else
+		*clip_ex = clipl | (clipr << 16);
 }
+
+#undef min
+#undef max
+#undef calc_clip
+#undef calc_clip_inv
 
 static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UINT16 *f3_pf_data_n)
 {
@@ -1845,12 +1799,12 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 	struct f3_playfield_line_inf *line_t=&m_pf_line_inf[pos];
 
 	INT32 y,y_start,y_end,y_inc;
-	INT32 line_base,zoom_base,col_base,pri_base,inc;
+	INT32 line_base,zoom_base,col_base,pri_base,pal_add_base,inc;
 
 	INT32 line_enable;
 	INT32 colscroll=0,x_offset=0,line_zoom=0;
 	UINT32 _y_zoom[256];
-	UINT16 pri=0;
+	UINT16 pri=0, pal_add = 0;
 	INT32 bit_select=1<<pos;
 
 	INT32 _colscroll[256];
@@ -1865,6 +1819,7 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		zoom_base=0x81fe;// + (pos*0x200);
 		col_base =0x41fe + (pos*0x200);
 		pri_base =0xb1fe + (pos*0x200);
+		pal_add_base = 0x91fe + (pos << 9);
 		inc=-2;
 		y_start=255;
 		y_end=-1;
@@ -1879,6 +1834,7 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		zoom_base=0x8000;// + (pos*0x200);
 		col_base =0x4000 + (pos*0x200);
 		pri_base =0xb000 + (pos*0x200);
+		pal_add_base = 0x9000 + (pos << 9);
 		inc=2;
 		y_start=0;
 		y_end=256;
@@ -1898,36 +1854,40 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x700+(y)])&bit_select)
 				pri=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[pri_base/2])&0xffff;
 
-			// Zoom for playfields 1 & 3 is interleaved, as is the latch select
-			switch (pos)
-			{
-			case 0:
-				if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
-					line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x000)/2])&0xffff;
-				break;
-			case 1:
-				if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
-					line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
-				if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
-					line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
-				break;
-			case 2:
-				if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
-					line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x400)/2])&0xffff;
-				break;
-			case 3:
-				if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
-					line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
-				if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
-					line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
-				break;
-			default:
-				break;
+			if (y != y_start) {
+				// Zoom for playfields 1 & 3 is interleaved, as is the latch select
+				switch (pos)
+				{
+					case 0:
+						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
+							line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x000)/2])&0xffff;
+						break;
+					case 1:
+						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
+							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
+						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
+							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
+						break;
+					case 2:
+						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
+							line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x400)/2])&0xffff;
+						break;
+					case 3:
+						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
+							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
+						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
+							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
+						break;
+					default:
+						break;
+				}
 			}
-
 			// Column scroll only affects playfields 2 & 3
 			if (pos>=2 && BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x000+(y)])&bit_select)
 				colscroll=(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[col_base/2])>> 0)&0x3ff;
+
+			if (m_f3_line_ram[0x500 + y] & bit_select)
+				pal_add = (m_f3_line_ram[pal_add_base / 2] & 0x1ff) * 16;
 		}
 
 		if (!pri || (!flipscreen && y<24) || (flipscreen && y>231) ||
@@ -1951,36 +1911,28 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		_y_zoom[y] = (line_zoom&0xff) << 9;
 
 		/* Evaluate clipping */
-		/* Notes:
-		   kludge: line-disable breaks quizhuhu text & landmakr "you win / you lose" text. [april 23, 2017 -dink]
-		   somehow I think 0x0800 has nothing to do with line-disable.
-		   although tcobra2 uses this to clip the sides of the playfield
-		*/
-
-		if (pri&0x0800 && f3_game != QUIZHUHU && f3_game != LANDMAKR)
-		{
-			line_enable=0;
-		}
-		else if (pri&0x0330 && f3_game != PBOBBLE4) // kludge: clipping breaks win/lose animation [april 23, 2017 -dink]
+		if (pri & 0x0f00)
 		{
 			//fast path todo - remove line enable
-			calculate_clip(y, pri&0x0330, &line_t->clip0[y], &line_t->clip1[y], &line_enable);
+			calculate_clip(y, pri & 0x1ff0, &line_t->clip_in[y], &line_t->clip_ex[y], &line_enable);
 		}
 		else
 		{
 			/* No clipping */
-			line_t->clip0[y]=0x7fff0000;
-			line_t->clip1[y]=0;
+			line_t->clip_in[y] = 0x7fff0000;
+			line_t->clip_ex[y] = 0;
 		}
 
 		line_t->x_zoom[y]=0x10000 - (line_zoom&0xff00);
 		line_t->alpha_mode[y]=line_enable;
 		line_t->pri[y]=pri;
+		line_t->pal_add[y] = pal_add;
 
 		zoom_base+=inc;
 		line_base+=inc;
 		col_base +=inc;
 		pri_base +=inc;
+		pal_add_base += inc;
 		y +=y_inc;
 	}
 
@@ -2044,7 +1996,7 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 			if ((pos == 1) && ((((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x6200/2) + (y)])) >> 4) & 0xf) > 0xb)  && (f3_game==EACTION2)) line_t->alpha_mode[y] = 0x22;  //from shmupmame
 
 			/* If clipping enabled for this line have to disable 'all opaque' optimisation */
-			if (line_t->clip0[y]!=0x7fff0000 || line_t->clip1[y]!=0)
+			if (line_t->clip_in[y] != 0x7fff0000 || line_t->clip_ex[y] != 0)
 				line_t->alpha_mode[y]&=~0x80;
 
 			/* set pixmap index */
@@ -2122,18 +2074,16 @@ static void get_vram_info(INT32 sx, INT32 sy)
 		line_t->pri[y]=pri;
 
 		/* Evaluate clipping */
-		if (pri&0x0800)
-			line_enable=0;
-		else if (pri&0x0330)
+		if (pri & 0x0f00)
 		{
 			//fast path todo - remove line enable
-			calculate_clip(y, pri&0x0330, &line_t->clip0[y], &line_t->clip1[y], &line_enable);
+			calculate_clip(y, pri & 0x1ff0, &line_t->clip_in[y], &line_t->clip_ex[y], &line_enable);
 		}
 		else
 		{
 			/* No clipping */
-			line_t->clip0[y]=0x7fff0000;
-			line_t->clip1[y]=0;
+			line_t->clip_in[y] = 0x7fff0000;
+			line_t->clip_ex[y] = 0;
 		}
 
 		line_t->x_zoom[y]=0x10000;
@@ -2600,6 +2550,7 @@ static void get_spritealphaclip_info()
 	UINT16 spri=0;
 	UINT16 sprite_clip=0;
 	UINT16 clip0_low=0, clip0_high=0, clip1_low=0;
+	UINT16 clip2_low = 0, clip2_high = 0, clip3_low = 0;
 	INT32 alpha_level=0;
 	UINT16 sprite_alpha=0;
 
@@ -2629,53 +2580,63 @@ static void get_spritealphaclip_info()
 	{
 		/* The zoom, column and row values can latch according to control ram */
 		{
-			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x100+(y)])&1)
-				clip0_low=(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[clip_base_low/2])>> 0)&0xffff;
-			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x000+(y)])&4)
-				clip0_high=(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[clip_base_high/2])>> 0)&0xffff;
-			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x100+(y)])&2)
-				clip1_low=(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(clip_base_low+0x200)/2])>> 0)&0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x100 + y]) & 1) // 5000 control playfield 1
+				clip0_low = (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[clip_base_low / 2]) >> 0) & 0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x000 + y]) & 4) // 4000 control
+				clip0_high = (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[clip_base_high / 2]) >> 0) & 0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x100 + y]) & 2) // 5000 control playfield 2
+				clip1_low = (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(clip_base_low + 0x200) / 2]) >> 0) & 0xffff;
 
-			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0600/2)+(y)])&0x8)
-				spri=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[spri_base/2])&0xffff;
-			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0600/2)+(y)])&0x4)
-				sprite_clip=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(spri_base-0x200)/2])&0xffff;
-			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0400/2)+(y)])&0x1)
-				sprite_alpha=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(spri_base-0x1600)/2])&0xffff;
-			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0400/2)+(y)])&0x2)
-				alpha_level=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(spri_base-0x1400)/2])&0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x100 + y]) & 4) // 5000 control playfield 3
+				clip2_low = (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(clip_base_low + 0x400) / 2]) >> 0) & 0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x000 + y]) & 8) // 4000 control
+				clip2_high = (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(clip_base_high + 0x200) / 2]) >> 0) & 0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x100 + y]) & 8) // 5000 control playfield 4
+				clip3_low = (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(clip_base_low + 0x600) / 2]) >> 0) & 0xffff;
+
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0600 / 2) + y]) & 0x8)
+				spri = BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[spri_base / 2]) & 0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0600 / 2) + y]) & 0x4)
+				sprite_clip = BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(spri_base-0x200) / 2]) & 0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0400 / 2) + y]) & 0x1)
+				sprite_alpha = BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(spri_base-0x1600) / 2]) & 0xffff;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(0x0400 / 2) + y]) & 0x2)
+				alpha_level = BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(spri_base-0x1400) / 2]) & 0xffff;
 		}
 
 
 		line_t->alpha_level[y]=alpha_level;
 		line_t->spri[y]=spri;
 		line_t->sprite_alpha[y]=sprite_alpha;
-		line_t->clip0_l[y]=((clip0_low&0xff)|((clip0_high&0x1000)>>4)) - 47;
-		line_t->clip0_r[y]=(((clip0_low&0xff00)>>8)|((clip0_high&0x2000)>>5)) - 47;
-		line_t->clip1_l[y]=((clip1_low&0xff)|((clip0_high&0x4000)>>6)) - 47;
-		line_t->clip1_r[y]=(((clip1_low&0xff00)>>8)|((clip0_high&0x8000)>>7)) - 47;
-		if (line_t->clip0_l[y]<0) line_t->clip0_l[y]=0;
-		if (line_t->clip0_r[y]<0) line_t->clip0_r[y]=0;
-		if (line_t->clip1_l[y]<0) line_t->clip1_l[y]=0;
-		if (line_t->clip1_r[y]<0) line_t->clip1_r[y]=0;
+		line_t->clip_l[0][y] = ((clip0_low & 0xff) | ((clip0_high & 0x1000) >> 4)) - 47;
+		line_t->clip_r[0][y] = (((clip0_low & 0xff00) >> 8) | ((clip0_high & 0x2000) >> 5)) - 48;
+		line_t->clip_l[1][y] = ((clip1_low & 0xff) | ((clip0_high & 0x4000) >> 6)) - 47;
+		line_t->clip_r[1][y] = (((clip1_low & 0xff00) >> 8) | ((clip0_high & 0x8000) >> 7)) - 48;
+		line_t->clip_l[2][y] = ((clip2_low & 0xff) | ((clip2_high & 0x1000) >> 4)) - 47;
+		line_t->clip_r[2][y] = (((clip2_low & 0xff00) >> 8) | ((clip2_high & 0x2000) >> 5)) - 48;
+		line_t->clip_l[3][y] = ((clip3_low & 0xff) | ((clip2_high & 0x4000) >> 6)) - 47;
+		line_t->clip_r[3][y] = (((clip3_low & 0xff00) >> 8) | ((clip2_high & 0x8000) >> 7)) - 48;
+		if (line_t->clip_l[0][y] < 0) line_t->clip_l[0][y] = 0;
+		if (line_t->clip_r[0][y] < 0) line_t->clip_r[0][y] = 0;
+		if (line_t->clip_l[1][y] < 0) line_t->clip_l[1][y] = 0;
+		if (line_t->clip_r[1][y] < 0) line_t->clip_r[1][y] = 0;
+		if (line_t->clip_l[2][y] < 0) line_t->clip_l[2][y] = 0;
+		if (line_t->clip_r[2][y] < 0) line_t->clip_r[2][y] = 0;
+		if (line_t->clip_l[3][y] < 0) line_t->clip_l[3][y] = 0;
+		if (line_t->clip_r[3][y] < 0) line_t->clip_r[3][y] = 0;
 
 		/* Evaluate sprite clipping */
-		if (sprite_clip&0x080)
+		if (sprite_clip & 0xf0)
 		{
-			line_t->sprite_clip0[y]=0x7fff7fff;
-			line_t->sprite_clip1[y]=0;
-		}
-		else if (sprite_clip&0x33)
-		{
-			INT32 line_enable=1;
-			calculate_clip(y, ((sprite_clip&0x33)<<4), &line_t->sprite_clip0[y], &line_t->sprite_clip1[y], &line_enable);
-			if (line_enable==0)
-				line_t->sprite_clip0[y]=0x7fff7fff;
+			int line_enable = 1;
+			calculate_clip(y, ((sprite_clip & 0x1ff) << 4), &line_t->sprite_clip_in[y], &line_t->sprite_clip_ex[y], &line_enable);
+			if (line_enable == 0)
+				line_t->sprite_clip_in[y] = 0x7fff7fff;
 		}
 		else
 		{
-			line_t->sprite_clip0[y]=0x7fff0000;
-			line_t->sprite_clip1[y]=0;
+			line_t->sprite_clip_in[y] = 0x7fff0000;
+			line_t->sprite_clip_ex[y] = 0;
 		}
 
 		spri_base+=inc;
@@ -2757,8 +2718,10 @@ void TaitoF3DrawCommon(INT32 scanline_start)
 
 	/* Setup scroll */
 	sy_fix[0]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[4])&0xffff)<< 9) + (1<<16);
-	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
-	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
+//	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
+//	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
+	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + (1<<16);
+	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + (1<<16);
 	sy_fix[3]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[7])&0xffff)<< 9) + (1<<16);
 	sx_fix[0]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[0])&0xffc0)<<10) - (6<<16);
 	sx_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[1])&0xffc0)<<10) - (10<<16);

@@ -590,9 +590,6 @@ static void draw_sprites()
 		{
 			UINT16 x = spriteram[offs + 0x100] + ((spriteram[offs + 0x40] & 0x01) << 8) - 2;
 
-			if (/*(y < 0) || */(y >= 240))
-				continue;
-
 			if (flip_x)
 				x = x + 7;
 

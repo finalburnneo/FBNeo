@@ -422,7 +422,7 @@ struct speedy_s {
 
 static speedy_s gamelist[] = {
 	{ {"mushisam", "mushisamb", "\0", }, 				0xc04a2aa, 0xc0024d8 },
-	{ {"ibara", "mushisama", "\0", }, 					0xc04a0aa, 0xc0022f0 },
+	{ {"ibara", "ibarao", "mushisama", "\0", }, 		0xc04a0aa, 0xc0022f0 },
 	{ {"espgal2", "\0", }, 								0xc05177a, 0xc002310 },
 	{ {"mushitam", "mushitama", "\0", }, 				0xc04a0da, 0xc0022f0 },
 	{ {"ibarablk", "ibarablka", "\0", }, 				0xc05176a, 0xc002310 },
@@ -722,10 +722,10 @@ struct BurnDriver BurnDrvMushisamb = {
 };
 
 
-// Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)
+// Espgaluda II (2005/11/14.MASTER VER.)
 
 static struct BurnRomInfo espgal2RomDesc[] = {
-	{ "espgal2_u4",	0x0200000, 0x843608b8, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+	{ "espgal2_u4",	0x0200000, 0x2cb37c03, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
 
 	{ "u2",			0x8400000, 0x222f58c7, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
 
@@ -738,8 +738,8 @@ STD_ROM_FN(espgal2)
 
 struct BurnDriver BurnDrvEspgal2 = {
 	"espgal2", NULL, NULL, NULL, "2005",
-	"Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
-	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, NULL, NULL,
+	"Espgaluda II (2005/11/14.MASTER VER.)\0", NULL, "Cave (AMI license)", "CA013",
+	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14.MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, espgal2RomInfo, espgal2RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -747,10 +747,10 @@ struct BurnDriver BurnDrvEspgal2 = {
 };
 
 
-// Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)
+// Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)
 
 static struct BurnRomInfo espgal2aRomDesc[] = {
-	{ "espgal2a_u4",	0x0200000, 0x09c908bb, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+	{ "espgal2a_u4",	0x0200000, 0x843608b8, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
 
 	{ "u2",				0x8400000, 0x222f58c7, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
 
@@ -763,10 +763,35 @@ STD_ROM_FN(espgal2a)
 
 struct BurnDriver BurnDrvEspgal2a = {
 	"espgal2a", "espgal2", NULL, NULL, "2005",
+	"Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
+	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	NULL, espgal2aRomInfo, espgal2aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	240, 320, 3, 4
+};
+
+
+// Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)
+
+static struct BurnRomInfo espgal2bRomDesc[] = {
+	{ "espgal2b_u4",	0x0200000, 0x09c908bb, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+
+	{ "u2",				0x8400000, 0x222f58c7, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
+
+	{ "u23",			0x0400000, 0xb9a10c22, 3 | BRF_SND },           //  2 YMZ770 Samples
+	{ "u24",			0x0400000, 0xc76b1ec4, 3 | BRF_SND },           //  3
+};
+
+STD_ROM_PICK(espgal2b)
+STD_ROM_FN(espgal2b)
+
+struct BurnDriver BurnDrvEspgal2b = {
+	"espgal2b", "espgal2", NULL, NULL, "2005",
 	"Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
 	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
-	NULL, espgal2aRomInfo, espgal2aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
+	NULL, espgal2bRomInfo, espgal2bRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
 };
@@ -947,10 +972,10 @@ struct BurnDriver BurnDrvFutariblj = {
 };
 
 
-// Ibara (2005/03/22 MASTER VER..)
+// Ibara (2005/03/22 MASTER VER.., '06. 3. 7 ver.)
 
 static struct BurnRomInfo ibaraRomDesc[] = {
-	{ "u4",				0x0200000, 0x8e6c155d, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+	{ "ibara_u4",		0x0200000, 0xd5fb6657, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
 
 	{ "u2",				0x8400000, 0x55840976, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
 
@@ -963,10 +988,35 @@ STD_ROM_FN(ibara)
 
 struct BurnDriver BurnDrvIbara = {
 	"ibara", NULL, NULL, NULL, "2005",
-	"Ibara (2005/03/22 MASTER VER..)\0", NULL, "Cave (AMI license)", "CA012",
-	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER..)\0", NULL, NULL, NULL,
+	"Ibara (2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, "Cave (AMI license)", "CA012",
+	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibaraRomInfo, ibaraRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	240, 320, 3, 4
+};
+
+
+// Ibara (2005/03/22 MASTER VER..)
+
+static struct BurnRomInfo ibaraoRomDesc[] = {
+	{ "ibarao_u4",		0x0200000, 0x8e6c155d, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
+
+	{ "u2",				0x8400000, 0x55840976, 2 | BRF_PRG | BRF_ESS }, //  1 Flash
+
+	{ "u23",			0x0400000, 0xee5e585d, 3 | BRF_SND },           //  2 YMZ770 Samples
+	{ "u24",			0x0400000, 0xf0aa3cb6, 3 | BRF_SND },           //  3
+};
+
+STD_ROM_PICK(ibarao)
+STD_ROM_FN(ibarao)
+
+struct BurnDriver BurnDrvIbarao = {
+	"ibarao", "ibara", NULL, NULL, "2005",
+	"Ibara (2005/03/22 MASTER VER..)\0", NULL, "Cave (AMI license)", "CA012",
+	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER..)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	NULL, ibaraoRomInfo, ibaraoRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
 };
@@ -1290,7 +1340,7 @@ struct BurnDriver BurnDrvDsmbl = {
 	"dsmbl", NULL, NULL, NULL, "2008",
 	"Deathsmiles MegaBlack Label (2008/10/06 MEGABLACK LABEL VER)\0", NULL, "Cave (AMI license)", "CA017B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, dsmblRomInfo, dsmblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -1339,8 +1389,8 @@ STD_ROM_FN(ddpsdoj)
 struct BurnDriver BurnDrvDdpsdoj = {
 	"ddpsdoj", NULL, NULL, NULL, "2012",
 	"DoDonPachi SaiDaiOuJou (2012/ 4/20)\0", NULL, "Cave", "CA???",
-	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2012/4/20)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
+	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u6700\u5927\u5f80\u751f (2012/4/20)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ddpsdojRomInfo, ddpsdojRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	240, 320, 3, 4
@@ -1362,9 +1412,9 @@ STD_ROM_PICK(sdojak)
 STD_ROM_FN(sdojak)
 
 struct BurnDriver BurnDrvsdojak = {
-	"sdojak", "ddpsdoj", NULL, NULL, "2012",
-	"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0", NULL, "Cave", "CA???",
-	L"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2012/4/20)\0", NULL, NULL, NULL,
+	"sdojak", "ddpsdoj", NULL, NULL, "2021",
+	"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0", NULL, "hack", "CA???",
+	L"DoDonPachi SaiDaiOuJou & Knuckles (CaveDwellers Hack)\0\u6012\u9996\u9818\u8702 \u6700\u5927\u5f80\u751f & \u30ca\u30c3\u30af\u30eb\u30ba (CaveDwellers, 2021/12/01)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, sdojakRomInfo, sdojakRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,

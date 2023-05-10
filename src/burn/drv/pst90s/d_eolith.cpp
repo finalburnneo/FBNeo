@@ -838,6 +838,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	idle_cpu = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1208,7 +1210,7 @@ struct BurnDriver BurnDrvIronfort = {
 	"ironfort", NULL, NULL, NULL, "1998",
 	"Iron Fortress\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, ironfortRomInfo, ironfortRomName, NULL, NULL, NULL, NULL, IronfortInputInfo, IronfortDIPInfo,
 	IronfortInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1248,7 +1250,7 @@ struct BurnDriver BurnDrvIronfortc = {
 	"ironfortc", "ironfort", NULL, NULL, "1998",
 	"Gongtit Jiucoi Iron Fortress (Hong Kong)\0", NULL, "Eolith (Excellent Competence Ltd. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, ironfortcRomInfo, ironfortcRomName, NULL, NULL, NULL, NULL, IronfortcInputInfo, IronfortcDIPInfo,
 	IronfortcInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1663,7 +1665,7 @@ struct BurnDriver BurnDrvLandbrk = {
 	"landbrk", NULL, NULL, NULL, "1999",
 	"Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb ver 3.02)\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, landbrkRomInfo, landbrkRomName, NULL, NULL, NULL, NULL, LandbrkInputInfo, LandbrkDIPInfo,
 	LandbrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1712,7 +1714,7 @@ struct BurnDriver BurnDrvLandbrka = {
 	"landbrka", "landbrk", NULL, NULL, "1999",
 	"Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb ver 3.03) (AT89c52 protected)\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, landbrkaRomInfo, landbrkaRomName, NULL, NULL, NULL, NULL, LandbrkInputInfo, LandbrkDIPInfo,
 	LandbrkaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1761,7 +1763,7 @@ struct BurnDriver BurnDrvLandbrkb = {
 	"landbrkb", "landbrk", NULL, NULL, "1999",
 	"Land Breaker (World) / Miss Tang Ja Ru Gi (Korea) (pcb ver 1.0) (AT89c52 protected)\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, landbrkbRomInfo, landbrkbRomName, NULL, NULL, NULL, NULL, LandbrkInputInfo, LandbrkDIPInfo,
 	LandbrkbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1967,7 +1969,7 @@ struct BurnDriver BurnDrvCandy = {
 	"candy", NULL, NULL, NULL, "1999",
 	"Candy Candy\0", NULL, "Eolith", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, candyRomInfo, candyRomName, NULL, NULL, NULL, NULL, CandyInputInfo, CandyDIPInfo,
 	CandyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3

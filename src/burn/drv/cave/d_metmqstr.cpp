@@ -803,9 +803,9 @@ STD_ROM_FN(nmaster)
 
 struct BurnDriver BurnDrvmetmqstr = {
 	"metmqstr", NULL, NULL, NULL, "1995",
-	"Metamoqester (International)\0", NULL, "Banpresto / Pandorabox", "Cave",
+	"Metamoqester (World)\0", NULL, "Banpresto / Pandorabox", "Cave",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, 0,
 	NULL, metmqstrRomInfo, metmqstrRomName, NULL, NULL, NULL, NULL, metmqstrInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 384, 240, 4, 3
@@ -814,8 +814,8 @@ struct BurnDriver BurnDrvmetmqstr = {
 struct BurnDriver BurnDrvnmaster = {
 	"nmaster", "metmqstr", NULL, NULL, "1995",
 	"Oni - The Ninja Master (Japan)\0", NULL, "Banpresto / Pandorabox", "Cave",
-	L"\u7A4F\u5FCD - The Ninja Master (Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, 0,
+	L"Oni - The Ninja Master\0\u96a0\u5fcd - \u30b6\u30fb\u30cb\u30f3\u30b8\u30e3\u30de\u30b9\u30bf\u30fc (Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, 0,
 	NULL, nmasterRomInfo, nmasterRomName, NULL, NULL, NULL, NULL, metmqstrInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 384, 240, 4, 3

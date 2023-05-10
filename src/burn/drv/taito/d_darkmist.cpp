@@ -226,6 +226,8 @@ static INT32 DrvDoReset()
 
 	DrvRecalc = 1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -844,7 +846,7 @@ struct BurnDriver BurnDrvDarkmist = {
 	"darkmist", NULL, NULL, NULL, "1986",
 	"The Lost Castle In Darkmist\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, darkmistRomInfo, darkmistRomName, NULL, NULL, NULL, NULL, DarkmistInputInfo, DarkmistDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4

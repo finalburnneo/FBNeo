@@ -1,4 +1,4 @@
-// FB Alpha Bank Panic Driver Module
+// FB Neo Bank Panic Driver Module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -521,10 +521,50 @@ STD_ROM_FN(bankp)
 
 struct BurnDriver BurnDrvbankp = {
 	"bankp", NULL, NULL, NULL, "1984",
-	"Bank Panic\0", NULL, "[Sanritsu] Sega", "Miscellaneous",
+	"Bank Panic\0", NULL, "Sanritsu / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, bankpRomInfo, bankpRomName, NULL, NULL, NULL, NULL, bankpInputInfo, bankpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 224, 4, 3
+};
+
+
+// Bank Panic (Tecfri bootleg)
+
+static struct BurnRomInfo bankptRomDesc[] = {
+	{ "11.bin",			0x4000, 0x056755ce, 1 | BRF_ESS | BRF_PRG },    //  0 Z80 Code	
+	{ "10.bin",			0x4000, 0xd29b1598, 1 | BRF_ESS | BRF_PRG },    //  1	
+	{ "9.bin",			0x4000, 0x08a8137b, 1 | BRF_ESS | BRF_PRG },    //  2	
+	{ "12.bin",			0x2000, 0xc98ac200, 1 | BRF_ESS | BRF_PRG },    //  3	
+
+	{ "1.bin",			0x2000, 0xaef34a93, 2 | BRF_GRA },              //  4 Foreground Characters
+	{ "2.bin",			0x2000, 0xca13cb11, 2 | BRF_GRA },              //  5
+
+	{ "8.bin",			0x2000, 0xc4c4878b, 3 | BRF_GRA },              //  6 Background Characters
+	{ "7.bin",			0x2000, 0xa18165a1, 3 | BRF_GRA },              //  7
+	{ "6.bin",			0x2000, 0xb58aa8fa, 3 | BRF_GRA },              //  8
+	{ "5.bin",			0x2000, 0x1aa37fce, 3 | BRF_GRA },              //  9
+	{ "4.bin",			0x2000, 0x05f3a867, 3 | BRF_GRA },              // 10
+	{ "3.bin",			0x2000, 0x3fa337e1, 3 | BRF_GRA },              // 11
+
+	{ "82s123.bin",		0x0020, 0xeb70c5ae, 4 | BRF_GRA },              // 12 Color PROM
+	{ "6_82s129.bin",	0x0100, 0x0acca001, 4 | BRF_GRA },              // 13 Foreground Color LUT
+	{ "5_82s129.bin",	0x0100, 0xe53bafdb, 4 | BRF_GRA },              // 14 Background Color LUT
+
+	{ "82s153.bin",		0x025b, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 15 PALs
+	{ "pal16r4.bin",	0x0104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP }, // 16
+};
+
+STD_ROM_PICK(bankpt)
+STD_ROM_FN(bankpt)
+
+struct BurnDriver BurnDrvbankpt = {
+	"bankpt", "bankp", NULL, NULL, "1984",
+	"Bank Panic (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 3, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
+	NULL, bankptRomInfo, bankptRomName, NULL, NULL, NULL, NULL, bankpInputInfo, bankpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 224, 4, 3
 };
@@ -561,7 +601,7 @@ STD_ROM_FN(combh)
 
 struct BurnDriver BurnDrvcombh = {
 	"combh", NULL, NULL, NULL, "1987",
-	"Combat Hawk\0", NULL, "Sega / Sanritsu", "Miscellaneous",
+	"Combat Hawk\0", NULL, "Sanritsu / Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, combhRomInfo, combhRomName, NULL, NULL, NULL, NULL, combhInputInfo, combhDIPInfo,

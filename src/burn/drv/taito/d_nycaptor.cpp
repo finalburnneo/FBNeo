@@ -533,6 +533,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -758,7 +760,7 @@ static INT32 DrvInit(INT32 game_select)
 	AY8910SetAllRoutes(1, 0.05, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
-	MSM5232SetCapacitors(0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6);
+	MSM5232SetCapacitors(1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_0);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_1);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_2);
@@ -1101,7 +1103,7 @@ struct BurnDriver BurnDrvNycaptor = {
 	"nycaptor", NULL, NULL, NULL, "1985",
 	"N.Y. Captor\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, nycaptorRomInfo, nycaptorRomName, NULL, NULL, NULL, NULL, NycaptorInputInfo, NycaptorDIPInfo,
 	NycaptorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1236,7 +1238,7 @@ struct BurnDriver BurnDrvBronx = {
 	"bronx", "cyclshtg", NULL, NULL, "1986",
 	"Bronx\0", "GFX/layer priority issues", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, bronxRomInfo, bronxRomName, NULL, NULL, NULL, NULL, NycaptorInputInfo, BronxDIPInfo,
 	BronxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

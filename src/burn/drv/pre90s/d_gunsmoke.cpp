@@ -1,4 +1,4 @@
-// FB Alpha Gun.Smoke driver module
+// FB Neo Gun.Smoke driver module
 // Based on MAME driver by Paul Leaman
 
 #include "tiles_generic.h"
@@ -101,7 +101,7 @@ static struct BurnDIPInfo gunsmokeuDIPList[]=
 	{0x14, 0x01, 0x03, 0x00, "30k 100k 150k+"   },
 	{0x14, 0x01, 0x03, 0x02, "30k 100k"    	    },
 
-	{0   , 0xfe, 0   , 2   , "Lifes"            },
+	{0   , 0xfe, 0   , 2   , "Lives"            },
 	{0x14, 0x01, 0x04, 0x04, "3"     	        },
 	{0x14, 0x01, 0x04, 0x00, "5"    	        },
 };
@@ -612,7 +612,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Gun.Smoke (World, 851115)
+// Gun.Smoke (World, 1985-11-15)
 
 static struct BurnRomInfo gunsmokeRomDesc[] = {
 	{ "gs03.09n", 	  0x8000, 0x40a06cef, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -661,7 +661,7 @@ STD_ROM_FN(gunsmoke)
 
 struct BurnDriver BurnDrvGunsmoke = {
 	"gunsmoke", NULL, NULL, NULL, "1985",
-	"Gun.Smoke (World, 851115)\0", NULL, "Capcom", "Miscellaneous",
+	"Gun.Smoke (World, 1985-11-15)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, gunsmokeRomInfo, gunsmokeRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -670,7 +670,7 @@ struct BurnDriver BurnDrvGunsmoke = {
 };
 
 
-// Gun.Smoke (World, 851115) (bootleg)
+// Gun.Smoke (World, 1985-11-15) (bootleg)
 // based on world version, warning message patched out
 
 static struct BurnRomInfo gunsmokebRomDesc[] = {
@@ -720,7 +720,7 @@ STD_ROM_FN(gunsmokeb)
 
 struct BurnDriver BurnDrvGunsmokeb = {
 	"gunsmokeb", "gunsmoke", NULL, NULL, "1985",
-	"Gun.Smoke (World, 851115) (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Gun.Smoke (World, 1985-11-15) (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, gunsmokebRomInfo, gunsmokebRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -729,7 +729,7 @@ struct BurnDriver BurnDrvGunsmokeb = {
 };
 
 
-// Gun.Smoke (Japan, 851115)
+// Gun.Smoke (Japan, 1985-11-15)
 
 static struct BurnRomInfo gunsmokejRomDesc[] = {
 	{ "gsj_03.09n",   0x8000, 0xb56b5df6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -778,7 +778,7 @@ STD_ROM_FN(gunsmokej)
 
 struct BurnDriver BurnDrvGunsmokej = {
 	"gunsmokej", "gunsmoke", NULL, NULL, "1985",
-	"Gun.Smoke (Japan, 851115)\0", NULL, "Capcom", "Miscellaneous",
+	"Gun.Smoke (Japan, 1985-11-15)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, gunsmokejRomInfo, gunsmokejRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -787,7 +787,7 @@ struct BurnDriver BurnDrvGunsmokej = {
 };
 
 
-// Gun.Smoke (US, 860408)
+// Gun.Smoke (USA and Canada, 1986-04-08)
 
 static struct BurnRomInfo gunsmokeuRomDesc[] = {
 	{ "gsa_03.9n",    0x8000, 0x51dc3f76, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -835,8 +835,8 @@ STD_ROM_PICK(gunsmokeu)
 STD_ROM_FN(gunsmokeu)
 
 struct BurnDriver BurnDrvGunsmokeu = {
-	"gunsmokeu", "gunsmoke", NULL, NULL, "1985",
-	"Gun.Smoke (US, 860408)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
+	"gunsmokeu", "gunsmoke", NULL, NULL, "1986",
+	"Gun.Smoke (USA and Canada, 1986-04-08)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, gunsmokeuRomInfo, gunsmokeuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, gunsmokeuDIPInfo,
@@ -845,57 +845,56 @@ struct BurnDriver BurnDrvGunsmokeu = {
 };
 
 
-// Gun.Smoke (US, 851115, set 1)
-// has a small extra piece of code at 0x2f00 and a jump to it at 0x297b, otherwise the same as gunsmokeub including the datecode, chip had an 'A' stamped on it, bugfix?
+// Gun.Smoke (USA and Canada, 1986-01-20)
 
 static struct BurnRomInfo gunsmokeuaRomDesc[] = {
-	{ "gsr_03a.9n",	  0x8000, 0x2f6e6ad7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "gs04.10n",	  0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gs05.12n",     0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gsr_03y.09n",	0x8000, 0x1b42423f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "gsr_04y.10n",	0x8000, 0xa5ee595b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gsr_05y.12n",	0x8000, 0x1c9aca13, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "gs02.14h", 	  0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "gs02.14h",		0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "gs01.11f", 	  0x4000, 0xb61ece9b, 3 | BRF_GRA },	       //  4 Character Tiles
+	{ "gs01.11f",		0x4000, 0xb61ece9b, 3 | BRF_GRA },           //  4 Character Tiles
 
-	{ "gs13.06c", 	  0x8000, 0xf6769fc5, 4 | BRF_GRA },	       //  5 32x32 Tiles
-	{ "gs12.05c", 	  0x8000, 0xd997b78c, 4 | BRF_GRA },	       //  6
-	{ "gs11.04c", 	  0x8000, 0x125ba58e, 4 | BRF_GRA },	       //  7
-	{ "gs10.02c", 	  0x8000, 0xf469c13c, 4 | BRF_GRA },	       //  8
-	{ "gs09.06a", 	  0x8000, 0x539f182d, 4 | BRF_GRA },	       //  9
-	{ "gs08.05a", 	  0x8000, 0xe87e526d, 4 | BRF_GRA },	       // 10
-	{ "gs07.04a", 	  0x8000, 0x4382c0d2, 4 | BRF_GRA },	       // 11 
-	{ "gs06.02a", 	  0x8000, 0x4cafe7a6, 4 | BRF_GRA },	       // 12 
+	{ "gs13.06c",		0x8000, 0xf6769fc5, 4 | BRF_GRA },           //  5 32x32 Tiles
+	{ "gs12.05c",		0x8000, 0xd997b78c, 4 | BRF_GRA },           //  6
+	{ "gs11.04c",		0x8000, 0x125ba58e, 4 | BRF_GRA },           //  7
+	{ "gs10.02c",		0x8000, 0xf469c13c, 4 | BRF_GRA },           //  8
+	{ "gs09.06a",		0x8000, 0x539f182d, 4 | BRF_GRA },           //  9
+	{ "gs08.05a",		0x8000, 0xe87e526d, 4 | BRF_GRA },           // 10
+	{ "gs07.04a",		0x8000, 0x4382c0d2, 4 | BRF_GRA },           // 11 
+	{ "gs06.02a",		0x8000, 0x4cafe7a6, 4 | BRF_GRA },           // 12 
 
-	{ "gs22.06n", 	  0x8000, 0xdc9c508c, 5 | BRF_GRA },	       // 13 Sprites
-	{ "gs21.04n", 	  0x8000, 0x68883749, 5 | BRF_GRA },	       // 14
-	{ "gs20.03n", 	  0x8000, 0x0be932ed, 5 | BRF_GRA },	       // 15
-	{ "gs19.01n", 	  0x8000, 0x63072f93, 5 | BRF_GRA },	       // 16
-	{ "gs18.06l", 	  0x8000, 0xf69a3c7c, 5 | BRF_GRA },	       // 17
-	{ "gs17.04l", 	  0x8000, 0x4e98562a, 5 | BRF_GRA },	       // 18
-	{ "gs16.03l", 	  0x8000, 0x0d99c3b3, 5 | BRF_GRA },	       // 19
-	{ "gs15.01l", 	  0x8000, 0x7f14270e, 5 | BRF_GRA },	       // 20
+	{ "gs22.06n",		0x8000, 0xdc9c508c, 5 | BRF_GRA },           // 13 Sprites
+	{ "gs21.04n",		0x8000, 0x68883749, 5 | BRF_GRA },           // 14
+	{ "gs20.03n",		0x8000, 0x0be932ed, 5 | BRF_GRA },           // 15
+	{ "gs19.01n",		0x8000, 0x63072f93, 5 | BRF_GRA },           // 16
+	{ "gs18.06l",		0x8000, 0xf69a3c7c, 5 | BRF_GRA },           // 17
+	{ "gs17.04l",		0x8000, 0x4e98562a, 5 | BRF_GRA },           // 18
+	{ "gs16.03l",		0x8000, 0x0d99c3b3, 5 | BRF_GRA },           // 19
+	{ "gs15.01l",		0x8000, 0x7f14270e, 5 | BRF_GRA },           // 20
 
-	{ "gs14.11c", 	  0x8000, 0x0af4f7eb, 6 | BRF_GRA },	       // 21 Background Tilemaps
+	{ "gs14.11c",		0x8000, 0x0af4f7eb, 6 | BRF_GRA },           // 21 Background Tilemaps
 
-	{ "g-01.03b", 	  0x0100, 0x02f55589, 7 | BRF_GRA },	       // 22 Color DrvColPROMs
-	{ "g-02.04b", 	  0x0100, 0xe1e36dd9, 7 | BRF_GRA },	       // 23
-	{ "g-03.05b", 	  0x0100, 0x989399c0, 7 | BRF_GRA },	       // 24
-	{ "g-04.09d", 	  0x0100, 0x906612b5, 7 | BRF_GRA },	       // 25
-	{ "g-06.14a", 	  0x0100, 0x4a9da18b, 7 | BRF_GRA },	       // 26
-	{ "g-07.15a", 	  0x0100, 0xcb9394fc, 7 | BRF_GRA },	       // 27
-	{ "g-09.09f", 	  0x0100, 0x3cee181e, 7 | BRF_GRA },	       // 28
-	{ "g-08.08f", 	  0x0100, 0xef91cdd2, 7 | BRF_GRA },	       // 29
+	{ "g-01.03b",		0x0100, 0x02f55589, 7 | BRF_GRA },           // 22 Color DrvColPROMs
+	{ "g-02.04b",		0x0100, 0xe1e36dd9, 7 | BRF_GRA },           // 23
+	{ "g-03.05b",		0x0100, 0x989399c0, 7 | BRF_GRA },           // 24
+	{ "g-04.09d",		0x0100, 0x906612b5, 7 | BRF_GRA },           // 25
+	{ "g-06.14a",		0x0100, 0x4a9da18b, 7 | BRF_GRA },           // 26
+	{ "g-07.15a",		0x0100, 0xcb9394fc, 7 | BRF_GRA },           // 27
+	{ "g-09.09f",		0x0100, 0x3cee181e, 7 | BRF_GRA },           // 28
+	{ "g-08.08f",		0x0100, 0xef91cdd2, 7 | BRF_GRA },           // 29
 
-	{ "g-10.02j", 	  0x0100, 0x0eaf5158, 0 | BRF_OPT },	       // 30 Video Timing
-	{ "g-05.01f", 	  0x0100, 0x25c90c2a, 0 | BRF_OPT },	       // 31 Priority
+	{ "g-10.02j",		0x0100, 0x0eaf5158, 0 | BRF_OPT },           // 30 Video Timing
+	{ "g-05.01f",		0x0100, 0x25c90c2a, 0 | BRF_OPT },           // 31 Priority
 };
 
 STD_ROM_PICK(gunsmokeua)
 STD_ROM_FN(gunsmokeua)
 
 struct BurnDriver BurnDrvGunsmokeua = {
-	"gunsmokeua", "gunsmoke", NULL, NULL, "1986",
-	"Gun.Smoke (US, 851115, set 1)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
+	"gunsmokeua", "gunsmoke", NULL, NULL, "1985",
+	"Gun.Smoke (USA and Canada, 1986-01-20)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, gunsmokeuaRomInfo, gunsmokeuaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -904,11 +903,12 @@ struct BurnDriver BurnDrvGunsmokeua = {
 };
 
 
-// Gun.Smoke (US, 851115, set 2)
+// Gun.Smoke (USA and Canada, 1985-11-15, set 1)
+// has a small extra piece of code at 0x2f00 and a jump to it at 0x297b, otherwise the same as gunsmokeub including the datecode, chip had an 'A' stamped on it, bugfix?
 
 static struct BurnRomInfo gunsmokeubRomDesc[] = {
-	{ "gsr_03.9n",    0x8000, 0x592f211b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "gs04.10n",     0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gsr_03a.9n",	  0x8000, 0x2f6e6ad7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "gs04.10n",	  0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "gs05.12n",     0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "gs02.14h", 	  0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -952,8 +952,8 @@ STD_ROM_PICK(gunsmokeub)
 STD_ROM_FN(gunsmokeub)
 
 struct BurnDriver BurnDrvGunsmokeub = {
-	"gunsmokeub", "gunsmoke", NULL, NULL, "1986",
-	"Gun.Smoke (US, 851115, set 2)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
+	"gunsmokeub", "gunsmoke", NULL, NULL, "1985",
+	"Gun.Smoke (USA and Canada, 1985-11-15, set 1)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, gunsmokeubRomInfo, gunsmokeubRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -962,7 +962,65 @@ struct BurnDriver BurnDrvGunsmokeub = {
 };
 
 
-// Gun.Smoke (Germany, censored)
+// Gun.Smoke (USA and Canada, 1985-11-15, set 2)
+
+static struct BurnRomInfo gunsmokeucRomDesc[] = {
+	{ "gsr_03.9n",    0x8000, 0x592f211b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "gs04.10n",     0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gs05.12n",     0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "gs02.14h", 	  0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "gs01.11f", 	  0x4000, 0xb61ece9b, 3 | BRF_GRA },	       //  4 Character Tiles
+
+	{ "gs13.06c", 	  0x8000, 0xf6769fc5, 4 | BRF_GRA },	       //  5 32x32 Tiles
+	{ "gs12.05c", 	  0x8000, 0xd997b78c, 4 | BRF_GRA },	       //  6
+	{ "gs11.04c", 	  0x8000, 0x125ba58e, 4 | BRF_GRA },	       //  7
+	{ "gs10.02c", 	  0x8000, 0xf469c13c, 4 | BRF_GRA },	       //  8
+	{ "gs09.06a", 	  0x8000, 0x539f182d, 4 | BRF_GRA },	       //  9
+	{ "gs08.05a", 	  0x8000, 0xe87e526d, 4 | BRF_GRA },	       // 10
+	{ "gs07.04a", 	  0x8000, 0x4382c0d2, 4 | BRF_GRA },	       // 11 
+	{ "gs06.02a", 	  0x8000, 0x4cafe7a6, 4 | BRF_GRA },	       // 12 
+
+	{ "gs22.06n", 	  0x8000, 0xdc9c508c, 5 | BRF_GRA },	       // 13 Sprites
+	{ "gs21.04n", 	  0x8000, 0x68883749, 5 | BRF_GRA },	       // 14
+	{ "gs20.03n", 	  0x8000, 0x0be932ed, 5 | BRF_GRA },	       // 15
+	{ "gs19.01n", 	  0x8000, 0x63072f93, 5 | BRF_GRA },	       // 16
+	{ "gs18.06l", 	  0x8000, 0xf69a3c7c, 5 | BRF_GRA },	       // 17
+	{ "gs17.04l", 	  0x8000, 0x4e98562a, 5 | BRF_GRA },	       // 18
+	{ "gs16.03l", 	  0x8000, 0x0d99c3b3, 5 | BRF_GRA },	       // 19
+	{ "gs15.01l", 	  0x8000, 0x7f14270e, 5 | BRF_GRA },	       // 20
+
+	{ "gs14.11c", 	  0x8000, 0x0af4f7eb, 6 | BRF_GRA },	       // 21 Background Tilemaps
+
+	{ "g-01.03b", 	  0x0100, 0x02f55589, 7 | BRF_GRA },	       // 22 Color DrvColPROMs
+	{ "g-02.04b", 	  0x0100, 0xe1e36dd9, 7 | BRF_GRA },	       // 23
+	{ "g-03.05b", 	  0x0100, 0x989399c0, 7 | BRF_GRA },	       // 24
+	{ "g-04.09d", 	  0x0100, 0x906612b5, 7 | BRF_GRA },	       // 25
+	{ "g-06.14a", 	  0x0100, 0x4a9da18b, 7 | BRF_GRA },	       // 26
+	{ "g-07.15a", 	  0x0100, 0xcb9394fc, 7 | BRF_GRA },	       // 27
+	{ "g-09.09f", 	  0x0100, 0x3cee181e, 7 | BRF_GRA },	       // 28
+	{ "g-08.08f", 	  0x0100, 0xef91cdd2, 7 | BRF_GRA },	       // 29
+
+	{ "g-10.02j", 	  0x0100, 0x0eaf5158, 0 | BRF_OPT },	       // 30 Video Timing
+	{ "g-05.01f", 	  0x0100, 0x25c90c2a, 0 | BRF_OPT },	       // 31 Priority
+};
+
+STD_ROM_PICK(gunsmokeuc)
+STD_ROM_FN(gunsmokeuc)
+
+struct BurnDriver BurnDrvGunsmokeuc = {
+	"gunsmokeuc", "gunsmoke", NULL, NULL, "1985",
+	"Gun.Smoke (USA and Canada, 1985-11-15, set 2)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, gunsmokeucRomInfo, gunsmokeucRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
+	224, 256, 3, 4
+};
+
+
+// Gun.Smoke (Germany, 1985-11-15, censored)
 
 static struct BurnRomInfo gunsmokegRomDesc[] = {
 	{ "gsg03.09n",    0x8000, 0x8ad2754e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1010,8 +1068,8 @@ STD_ROM_PICK(gunsmokeg)
 STD_ROM_FN(gunsmokeg)
 
 struct BurnDriver BurnDrvGunsmokeg = {
-	"gunsmokeg", "gunsmoke", NULL, NULL, "1986",
-	"Gun.Smoke (Germany, censored)\0", NULL, "Capcom", "Miscellaneous",
+	"gunsmokeg", "gunsmoke", NULL, NULL, "1985",
+	"Gun.Smoke (Germany, 1985-11-15, censored)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, gunsmokegRomInfo, gunsmokegRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

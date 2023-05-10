@@ -1,4 +1,4 @@
-// FB Alpha Data East MLC Hardware driver module
+// FB Neo Data East MLC Hardware driver module
 // Based on MAME driver by Bryan Mcphail
 
 #include "tiles_generic.h"
@@ -423,6 +423,8 @@ static INT32 DrvDoReset()
 
 	scanline_timer = -1;
 	vblank_flip = ~0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -1244,7 +1246,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Avengers In Galactic Storm (US)
+// Avengers In Galactic Storm (US/Europe 1.0)
 
 static struct BurnRomInfo avengrgsRomDesc[] = {
 	{ "sf_00-0.7k",			0x080000, 0x7d20e2df, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -1282,16 +1284,16 @@ static INT32 AvengrgsInit()
 
 struct BurnDriver BurnDrvAvengrgs = {
 	"avengrgs", NULL, NULL, NULL, "1995",
-	"Avengers In Galactic Storm (US)\0", NULL, "Data East Corporation", "DECO MLC",
+	"Avengers In Galactic Storm (US/Europe 1.0\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, avengrgsRomInfo, avengrgsRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
 
-// Avengers In Galactic Storm (Japan)
+// Avengers In Galactic Storm (Japan 1.2)
 
 static struct BurnRomInfo avengrgsjRomDesc[] = {
 	{ "sd_00-2.7k",			0x080000, 0x136be46a, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -1324,9 +1326,9 @@ STD_ROM_FN(avengrgsj)
 
 struct BurnDriver BurnDrvAvengrgsj = {
 	"avengrgsj", "avengrgs", NULL, NULL, "1995",
-	"Avengers In Galactic Storm (Japan)\0", NULL, "Data East Corporation", "DECO MLC",
+	"Avengers In Galactic Storm (Japan 1.2)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, avengrgsjRomInfo, avengrgsjRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -1374,7 +1376,7 @@ struct BurnDriver BurnDrvAvengrgsbh = {
 	320, 240, 4, 3
 };
 
-// Skull Fang (World)
+// Skull Fang (Europe 1.13)
 
 static struct BurnRomInfo skullfngRomDesc[] = {
 	{ "sw00-0.2a",			0x080000, 0x9658d9ce, 1 | BRF_PRG | BRF_ESS }, //  0 Arm Code (Encrypted)
@@ -1405,16 +1407,16 @@ static INT32 SkullfngInit()
 
 struct BurnDriver BurnDrvSkullfng = {
 	"skullfng", NULL, NULL, NULL, "1996",
-	"Skull Fang (World)\0", NULL, "Data East Corporation", "DECO MLC",
+	"Skull Fang (Europe 1.13)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, skullfngRomInfo, skullfngRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	SkullfngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
 
 
-// Skull Fang (Japan)
+// Skull Fang - Kuhga Gaiden (Japan 1.09)
 
 static struct BurnRomInfo skullfngjRomDesc[] = {
 	{ "sh00-0.2a",			0x080000, 0xe50358e8, 1 | BRF_PRG | BRF_ESS }, //  0 Arm Code (Encrypted)
@@ -1440,16 +1442,16 @@ STD_ROM_FN(skullfngj)
 
 struct BurnDriver BurnDrvSkullfngj = {
 	"skullfngj", "skullfng", NULL, NULL, "1996",
-	"Skull Fang (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Skull Fang - Kuhga Gaiden (Japan 1.09)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, skullfngjRomInfo, skullfngjRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	SkullfngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
 
 
-// Skull Fang (Asia)
+// Skull Fang - Kuhga Gaiden (Asia 1.13)
 
 static struct BurnRomInfo skullfngaRomDesc[] = {
 	{ "sx00-0.2a",			0x080000, 0x749c0972, 1 | BRF_PRG | BRF_ESS }, //  0 Arm Code (Encrypted)
@@ -1475,16 +1477,16 @@ STD_ROM_FN(skullfnga)
 
 struct BurnDriver BurnDrvSkullfnga = {
 	"skullfnga", "skullfng", NULL, NULL, "1996",
-	"Skull Fang (Asia)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Skull Fang - Kuhga Gaiden (Asia 1.13)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, skullfngaRomInfo, skullfngaRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	SkullfngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
 
 
-// Stadium Hero '96 (World, EAJ)
+// Stadium Hero '96 (Europe, EAJ)
 
 static struct BurnRomInfo stadhr96RomDesc[] = {
 	{ "sh-eaj.2a",			0x080000, 0x10d1496a, 1 | BRF_PRG | BRF_ESS }, //  0 Arm Code (Encrypted)
@@ -1514,7 +1516,7 @@ static INT32 Stadhr96Init()
 
 struct BurnDriver BurnDrvStadhr96 = {
 	"stadhr96", NULL, NULL, NULL, "1996",
-	"Stadium Hero '96 (World, EAJ)\0", NULL, "Data East Corporation", "DECO MLC",
+	"Stadium Hero '96 (Europe, EAJ)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, stadhr96RomInfo, stadhr96RomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
@@ -1586,6 +1588,42 @@ struct BurnDriver BurnDrvStadhr96j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, stadhr96jRomInfo, stadhr96jRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
+	Stadhr96Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Stadium Hero '96 (Japan?, EAE)
+// currently not working: 'This game board is not compatible with country code of mother board. Do not use, or damage will occur and void warranty of both boards.'
+// according to a dumper: 'I ran into this issue a few years ago when I was "updating" some Stadium heros 96 boards to English. Some converted with an EPROM swap and other gave me the error.
+// It wound up being a small serial EEPROM that was added to the PCB(it was socketed IIRC, on the bottom side of the PCB) and when I removed, it booted fine.
+// The other SH 96's didn't have this part and was the only difference.
+
+static struct BurnRomInfo stadhr96j2RomDesc[] = {
+	{ "eae00-5.2a",		0x080000, 0x902b84e9, 1 | BRF_PRG | BRF_ESS }, //  0 Arm Code (Encrypted)
+	{ "eae01-5.2b",		0x080000, 0x16245497, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mcm-00.2e",		0x400000, 0xc1919c3c, 2 | BRF_GRA },           //  2 Sprites
+	{ "mcm-01.8m",		0x400000, 0x2255d47d, 2 | BRF_GRA },           //  3
+	{ "mcm-02.4e",		0x400000, 0x38c39822, 2 | BRF_GRA },           //  4
+	{ "mcm-03.10m",		0x400000, 0x4bd84ca7, 2 | BRF_GRA },           //  5
+	{ "mcm-04.6e",		0x400000, 0x7c0bd84c, 2 | BRF_GRA },           //  6
+	{ "mcm-05.11m",		0x400000, 0x476f03d7, 2 | BRF_GRA },           //  7
+
+	{ "eae02-0.6h",		0x080000, 0x57c30ca8, 3 | BRF_GRA },           //  8 Sprite Look-up Table
+
+	{ "mcm-06.6a",		0x400000, 0xfbc178f3, 4 | BRF_GRA },           //  9 YMZ280b Samples
+};
+
+STD_ROM_PICK(stadhr96j2)
+STD_ROM_FN(stadhr96j2)
+
+struct BurnDriver BurnDrvStadhr96j2 = {
+	"stadhr96j2", "stadhr96", NULL, NULL, "1996",
+	"Stadium Hero '96 (Japan?, EAE)\0", NULL, "Data East Corporation", "DECO MLC",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	NULL, stadhr96j2RomInfo, stadhr96j2RomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	Stadhr96Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

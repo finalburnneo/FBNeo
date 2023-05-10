@@ -1,9 +1,6 @@
 // FB Neo redclash/zerohour driver module
 // Based on MAME driver by David Haywood
 
-// Tofix:
-// Zero Hour colors for enemy sprites and top score (chars) are wrong
-
 // Zero Hour sample pack created by Otto_Pylotte October 2020
 
 #include "tiles_generic.h"
@@ -364,8 +361,13 @@ static void __fastcall redclash_write(UINT16 address, UINT8 data)
 static tilemap_callback( fg )
 {
 	INT32 code =  DrvVidRAM[offs];
+	INT32 color = (DrvVidRAM[offs] & 0x70) >> 4;
 
-	TILE_SET_INFO(0, code, (code & 0x70) >> 4, 0);
+	// score panel colors are determined differently: P1=5, TOP=4, P2=7
+	if ((offs & 0x1f) > 0x1b)
+		color = (((offs >> 5) + 12) & 0x1f) >> 3 ^ 7;
+
+	TILE_SET_INFO(0, code, color, 0);
 }
 
 static INT32 DrvDoReset()
@@ -379,6 +381,9 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	gfxbank = 0;
 	previous_coin = 0;
+
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -688,7 +693,8 @@ static void draw_sprites()
 			if ((DrvSprRAM[offs + i] & 0x80) == 0) continue;
 
 			INT32 attr  =  DrvSprRAM[offs + i + 1];
-			INT32 color =  DrvSprRAM[offs + i + 2] & 0x0f;
+			INT32 color =  DrvSprRAM[offs + i + 2] & 0x27;
+			color = ((color & 0x20) >> 2) | (color & 0x7);
 			INT32 sx    =  DrvSprRAM[offs + i + 3];
 			INT32 sy    = (DrvSprRAM[offs + i + 0] & 0x07) + (offs / 4);
 			INT32 size  = (DrvSprRAM[offs + i + 0] & 0x18) >> 3;
@@ -716,8 +722,12 @@ static void draw_bullets()
 {
 	for (INT32 offs = 0; offs < 0x20; offs++)
 	{
-		INT32 sx = 8 * offs + (DrvVidRAM[offs] & 0x07);
+		INT32 sx = 8 * offs;// + (DrvVidRAM[offs] & 0x07);
 		INT32 sy = 0xff - DrvVidRAM[offs + 0x20];
+
+		// width and color are from the same bitfield
+		INT32 width = 8 - (DrvVidRAM[offs] >> 5 & 6);
+		INT32 color = (DrvVidRAM[offs] >> 3 & 0x10) | 5;
 
 		if (flipscreen)
 		{
@@ -725,10 +735,17 @@ static void draw_bullets()
 		}
 
 		sx -= 8;
+		sx -= (DrvVidRAM[offs] >> 3) & 7;
 		sy -= 32;
 
-		if (sx >= 0 && sy >= 0 && sx < nScreenWidth && sy < nScreenHeight) {
-			pTransDraw[sy * nScreenWidth + sx] = 0x19;
+		for (INT32 y = 0; y < 2; y++)
+			for (INT32 x = 0; x < width; x++)
+			{
+				INT32 syy = sy - y;
+				INT32 sxx = sx + x;
+				if (sxx >= 0 && syy >= 0 && sxx < nScreenWidth && syy < nScreenHeight) {
+					pTransDraw[syy * nScreenWidth + sxx] = color;
+			}
 		}
 	}
 }
@@ -819,8 +836,8 @@ static INT32 DrvDraw()
 	BurnTransferClear(0x80); // black
 
 	if (nBurnLayer & 1) redclash_draw_stars(0x60, true, 0x00, 0xff);
-	if (nSpriteEnable & 1) draw_sprites();
 	if (nBurnLayer & 2) draw_bullets();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0);
 
@@ -966,7 +983,7 @@ struct BurnDriver BurnDrvZerohour = {
 	"zerohour", NULL, NULL, "zerohour", "1980",
 	"Zero Hour (set 1)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zerohourRomInfo, zerohourRomName, NULL, NULL, zerohourSampleInfo, zerohourSampleName, RedclashInputInfo, ZerohourDIPInfo,
 	ZerohourInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1000,7 +1017,7 @@ struct BurnDriver BurnDrvZerohoura = {
 	"zerohoura", "zerohour", NULL, "zerohour", "1980",
 	"Zero Hour (set 2)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zerohouraRomInfo, zerohouraRomName, NULL, NULL, zerohourSampleInfo, zerohourSampleName, RedclashInputInfo, ZerohourDIPInfo,
 	ZerohourInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1034,7 +1051,7 @@ struct BurnDriver BurnDrvZerohouri = {
 	"zerohouri", "zerohour", NULL, "zerohour", "1980",
 	"Zero Hour (Inder)\0", NULL, "bootleg (Inder SA)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zerohouriRomInfo, zerohouriRomName, NULL, NULL, zerohourSampleInfo, zerohourSampleName, RedclashInputInfo, ZerohourDIPInfo,
 	ZerohourInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1068,7 +1085,7 @@ struct BurnDriver BurnDrvRedclash = {
 	"redclash", NULL, NULL, NULL, "1981",
 	"Red Clash\0", "NO Sound", "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashRomInfo, redclashRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1099,7 +1116,7 @@ struct BurnDriver BurnDrvRedclasht = {
 	"redclasht", "redclash", NULL, NULL, "1981",
 	"Red Clash (Tehkan, set 1)\0", "NO Sound", "Kaneko (Tehkan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashtRomInfo, redclashtRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1130,7 +1147,7 @@ struct BurnDriver BurnDrvRedclashta = {
 	"redclashta", "redclash", NULL, NULL, "1981",
 	"Red Clash (Tehkan, set 2)\0", "NO Sound", "Kaneko (Tehkan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashtaRomInfo, redclashtaRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4
@@ -1161,7 +1178,7 @@ struct BurnDriver BurnDrvRedclashs = {
 	"redclashs", "redclash", NULL, NULL, "1982",
 	"Red Clash (Suntronics)\0", "NO Sound", "Kaneko (Suntronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, redclashsRomInfo, redclashsRomName, NULL, NULL, NULL, NULL, RedclashInputInfo, RedclashDIPInfo,
 	RedclashtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	192, 248, 3, 4

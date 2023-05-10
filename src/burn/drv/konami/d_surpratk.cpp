@@ -292,6 +292,8 @@ static INT32 DrvDoReset()
 
 	nExtraCycles = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -548,7 +550,7 @@ struct BurnDriver BurnDrvSuratk = {
 	"suratk", NULL, NULL, NULL, "1990",
 	"Surprise Attack (World ver. K)\0", NULL, "Konami", "GX911",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, suratkRomInfo, suratkRomName, NULL, NULL, NULL, NULL, SurpratkInputInfo, SurpratkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -575,7 +577,7 @@ struct BurnDriver BurnDrvSuratka = {
 	"suratka", "suratk", NULL, NULL, "1990",
 	"Surprise Attack (Asia ver. L)\0", NULL, "Konami", "GX911",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, suratkaRomInfo, suratkaRomName, NULL, NULL, NULL, NULL, SurpratkInputInfo, SurpratkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
@@ -602,7 +604,7 @@ struct BurnDriver BurnDrvSuratkj = {
 	"suratkj", "suratk", NULL, NULL, "1990",
 	"Surprise Attack (Japan ver. M)\0", NULL, "Konami", "GX911",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, suratkjRomInfo, suratkjRomName, NULL, NULL, NULL, NULL, SurpratkInputInfo, SuratkjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3

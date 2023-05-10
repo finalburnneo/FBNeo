@@ -81,6 +81,8 @@ static UINT8 DrvDip[2] = { 0, 0  };
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles;
+
 static INT16 Analog[2];
 static INT16 analog_last[2];
 
@@ -1511,6 +1513,10 @@ static INT32 DrvDoReset()
 	flipscreeny = 0;
 	joystick_select = 0;
 
+	nExtraCycles = 0;
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1767,8 +1773,6 @@ static void type1_sound_init()
 	M6502MapMemory(Drv6502ROM,		0xe000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(audio_write);
 	M6502SetReadHandler(audio_read);
-	M6502SetReadOpArgHandler(audio_read);
-	M6502SetReadOpHandler(audio_read);
 	M6502Close();
 
 	BurnSampleInit(0);
@@ -1977,7 +1981,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 5000000 / 60, (3579545 / 4) / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	VezOpen(0);
 	M6502Open(0);
@@ -2003,6 +2007,8 @@ static INT32 DrvFrame()
 	VezClose();
 	M6502Close();
 
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
@@ -2026,7 +2032,7 @@ static INT32 Drv2Frame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 5000000 / 60, 1000000 / 60, 1000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles, 0 };
 
 	VezOpen(0);
 
@@ -2049,13 +2055,13 @@ static INT32 Drv2Frame()
 
 	VezClose();
 
-	M6502Open(0);
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		sp0250_update(pBurnSoundOut, nBurnSoundLen);
 	}
-	M6502Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -2123,6 +2129,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(last_command);
 		SCAN_VAR(dac_data);
 		SCAN_VAR(analog_last);
+		SCAN_VAR(qbert_random);
+		SCAN_VAR(reactor_score);
+
+		SCAN_VAR(nRotateTime);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {
@@ -2685,7 +2697,7 @@ struct BurnDriver BurnDrvKrull = {
 	"krull", NULL, NULL, NULL, "1983",
 	"Krull\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, krullRomInfo, krullRomName, NULL, NULL, NULL, NULL, KrullInputInfo, KrullDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2842,7 +2854,7 @@ struct BurnDriver BurnDrvReactor = {
 	"reactor", NULL, NULL, "reactor", "1982",
 	"Reactor\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, reactorRomInfo, reactorRomName, NULL, NULL, reactorSampleInfo, reactorSampleName, ReactorInputInfo, ReactorDIPInfo,
 	DrvInitReactor, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3

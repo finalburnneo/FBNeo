@@ -7,6 +7,7 @@
 #include "sh2_intf.h"
 #include "lowpass2.h"
 #include "burn_gun.h"
+#include "dtimer.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -76,6 +77,8 @@ static UINT8 region = 0; /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
 static UINT32 Vblokbrk = 0;
 
 static class LowPass2 *LP1 = NULL, *LP2 = NULL;
+
+static dtimer irqtimers[3];
 
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
@@ -909,141 +912,10 @@ static UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
 #endif
 }
 
-// simple timer system -dink 2019, v2.1 (2022-upgreydde ver.)
-struct dtimer
-{
-	INT32 running;
-	UINT32 time_trig;
-	UINT32 time_current;
-	INT32 timer_param;
-	INT32 timer_prescaler;
-	UINT32 prescale_counter;
-	INT32 retrig;
-	void (*timer_exec)(int);
-
-	void scan() {
-		SCAN_VAR(running);
-		SCAN_VAR(time_trig);
-		SCAN_VAR(time_current);
-		SCAN_VAR(timer_param);
-		SCAN_VAR(timer_prescaler);
-		SCAN_VAR(prescale_counter);
-		SCAN_VAR(retrig);
-	}
-
-	void start(UINT32 trig_at, INT32 tparam, INT32 run_now, INT32 retrigger) {
-		running = run_now;
-		if (tparam != -1) timer_param = tparam;
-		time_trig = trig_at;
-		time_current = 0;
-		//prescale_counter = 0; <-- not here!
-		retrig = retrigger;
-		//if (counter) bprintf(0, _T("timer %d START:  %d  cycles - running: %d\n"), timer_param, time_trig, running);
-		//if (counter) bprintf(0, _T("timer %d   running %d - timeleft  %d  time_trig %d  time_current %d\n"), timer_param, running, time_trig - time_current, time_trig, time_current);
-	}
-
-	void init(INT32 tparam, void (*callback)(int)) {
-		config(tparam, callback);
-		reset();
-	}
-
-	void config(INT32 tparam, void (*callback)(int)) {
-		timer_param = tparam;
-		timer_exec = callback;
-		timer_prescaler = 1;// * ratio_multi;
-	}
-
-	void set_prescaler(INT32 prescale) {
-		timer_prescaler = prescale;
-	}
-
-	void run_prescale(INT32 cyc) {
-		prescale_counter += cyc;// * m_ratio;
-		while (prescale_counter >= timer_prescaler) {
-			prescale_counter -= timer_prescaler;
-
-			// note: we can't optimize this, f.ex:
-			//run(prescale_counter / timer_prescaler); prescale_counter %= timer_prescaler;
-			// why? when the timer hits, the prescaler can & will change.
-
-			// note2:
-			//run(1);  this is just the contents of run(1) from below
-			if (running) {
-				time_current += 1;
-
-				if (time_current >= time_trig) { // should be while (retrig needs this, not used by sh4)
-					//if (counter) bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
-
-					if (retrig == 0) {
-						running = 0;
-						//time_trig = -1;
-						//stop();
-						//break;
-					}
-					if (timer_exec) {
-						timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
-					}
-					//time_current -= time_trig;
-				}
-			}
-		}
-	}
-
-	void run(INT32 cyc) {
-		if (running) {
-			time_current += cyc;
-
-			if (time_current >= time_trig) {
-				//bprintf(0, _T("timer %d hits @ %d\n"), timer_param, time_current);
-
-				if (retrig == 0) {
-					running = 0;
-					//time_trig = -1;
-					//stop();
-					//break;
-				}
-				if (timer_exec) {
-					timer_exec(timer_param); // NOTE: this cb _might_ re-start/init the timer!
-				}
-				time_current -= time_trig;
-
-				//if (running == 0) break;
-			}
-		}
-	}
-
-	void reset() {
-		stop();
-		prescale_counter = 0; // this must be free-running (only reset here!)
-	}
-	void stop() {
-		if (retrig == 0) { running = 0; }
-		time_current = 0;
-	}
-	INT32 isrunning() {
-		return running;
-	}
-	UINT32 timeleft() {
-		return time_trig - time_current;
-	}
-
-	INT32 msec_to_cycles(INT32 mhz, double msec) {
-		return ((double)((double)mhz / 1000) * msec);
-	}
-	INT32 usec_to_cycles(INT32 mhz, double usec) {
-		return ((double)((double)mhz / 1000000) * usec);
-	}
-	INT32 nsec_to_cycles(INT32 mhz, double nsec) {
-		return ((double)((double)mhz / 1000000000) * nsec);
-	}
-};
-
 static void irq_cb(INT32 t_param)
 {
 	Sh2SetIRQLine(t_param, CPU_IRQSTATUS_HOLD);
 }
-
-static dtimer irqtimers[3];
 
 #ifdef LSB_FIRST
 static void BurnSwapEndian(UINT8 *src, INT32 len)
@@ -1130,9 +1002,7 @@ static INT32 DrvDoReset()
 	}
 	Sh2Close();
 
-	irqtimers[0].reset();
-	irqtimers[1].reset();
-	irqtimers[2].reset();
+	timerReset();
 
 	YMZ280BReset();
 
@@ -1235,15 +1105,16 @@ static INT32 DrvInit(INT32 bios)
 	memset(AllMem, 0, nLen);
 	MemIndex(nGfxLen0);
 
-	irqtimers[0].init(9, irq_cb);
+	timerInit();
+	timerAdd(irqtimers[0], 9, irq_cb);
 	irqtimers[0].start(1824, -1, 1, 1); // 1834 = 1 line @ 262 lpf!
 
 	// should be 8ms, using 8.13ms to correct music looping in sengekis
-	irqtimers[1].init(11, irq_cb);
-	irqtimers[1].start(irqtimers[1].msec_to_cycles(28636000, 8.13), -1, 1, 1);
+	timerAdd(irqtimers[1], 11, irq_cb);
+	irqtimers[1].start(msec_to_cycles(28636000, 8.13), -1, 1, 1);
 
-	irqtimers[2].init(15, irq_cb);
-	irqtimers[2].start(irqtimers[2].msec_to_cycles(28636000, 2), -1, 1, 1);
+	timerAdd(irqtimers[2], 15, irq_cb);
+	irqtimers[2].start(msec_to_cycles(28636000, 2), -1, 1, 1);
 
 	{
 		if (DrvLoad(1)) return 1;
@@ -1327,6 +1198,8 @@ static INT32 DrvExit()
 	Sh2Exit();
 	YMZ280BExit();
 	YMZ280BROM = NULL;
+
+	timerExit();
 
 	BurnFree(AllMem);
 
@@ -1873,9 +1746,7 @@ static INT32 DrvFrame()
 		nCyclesDone += ran;
 
 		// run timers
-		irqtimers[0].run(ran);
-		irqtimers[1].run(ran);
-		irqtimers[2].run(ran);
+		timerRun(ran);
 
 		if ((i & 7) == 0) {
 			// Render sound segment
@@ -1936,9 +1807,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		Sh2Scan(nAction);
-		irqtimers[0].scan();
-		irqtimers[1].scan();
-		irqtimers[2].scan();
+		timerScan();
 		YMZ280BScan(nAction, pnMin);
 
 		BurnTrackballScan(); // vblokbrk / sarukani paddle
@@ -2674,6 +2543,39 @@ struct BurnDriver BurnDrvGalpaniex = {
 };
 
 
+// Gals Panic SU (Korea, Gals Panic 4 re-release)
+
+static struct BurnRomInfo galpanisuRomDesc[] = {
+	{ "gpsu_e_1q07_00.6.5.u10",	0x100000, 0x3bf4c440, 1 | BRF_PRG | BRF_ESS }, //  0 user1
+	{ "gpsu_o_16d1_00.6.5.u8",	0x100000, 0xd4fef828, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gp4-100-00.u24",			0x200000, 0x1df61f01, 2 | BRF_GRA },           //  2 gfx1
+	{ "gp4-101-00.u20",			0x100000, 0x8e2c9349, 2 | BRF_GRA },           //  3
+
+	{ "gp4-200-00.u16",			0x200000, 0xf0781376, 3 | BRF_GRA },           //  4 gfx2
+	{ "gp4-201-00.u18",			0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
+
+	{ "gp4-300-00.u4",			0x200000, 0x8374663a, 5 | BRF_SND },           //  6 ymz
+	{ "gp4-301-01.u7",			0x200000, 0x886ef77f, 5 | BRF_SND },           //  7
+
+	{ "skns-r09.u9",			0x000117, 0xb02058d9, 0 | BRF_OPT },           //  8 plds
+	{ "skns-r11.u11",			0x000117, 0xa9f05af4, 0 | BRF_OPT },           //  9
+};
+
+STDROMPICKEXT(galpanisu, galpanisu, skns)
+STD_ROM_FN(galpanisu)
+
+struct BurnDriver BurnDrvGalpanisu = {
+	"galpanisu", "galpani4", "skns", NULL, "2000",
+	"Gals Panic SU (Korea, Gals Panic 4 re-release)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpanisuRomInfo, galpanisuRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	Galpani4kInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
 // Gals Panic DX (Asia)
 
 static struct BurnRomInfo galpanidxRomDesc[] = {
@@ -2693,6 +2595,8 @@ static struct BurnRomInfo galpanidxRomDesc[] = {
 STDROMPICKEXT(galpanidx, galpanidx, skns)
 STD_ROM_FN(galpanidx)
 
+// Same as GalpaniexInit()
+#if 0
 static INT32 GalpanidxInit()
 {
 	sprite_kludge_x = -5;
@@ -2700,6 +2604,7 @@ static INT32 GalpanidxInit()
 
 	return DrvInit(2 /*Asia*/);
 }
+#endif
 
 struct BurnDriver BurnDrvGalpanidx = {
 	"galpanidx", "galpani4", "skns", NULL, "2001",
@@ -2707,7 +2612,7 @@ struct BurnDriver BurnDrvGalpanidx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanidxRomInfo, galpanidxRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
-	GalpanidxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	GalpaniexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
 

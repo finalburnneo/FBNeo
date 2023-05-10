@@ -2044,7 +2044,7 @@ INT32 tlcs90Run(INT32 nCycles)
 				if (cpustate->timer_periods[i] <= 0)
 				{
 					cpustate->timer_cb[i](i);
-					cpustate->timer_periods[i] = cpustate->timer_periods_full[i]; // retrigger timer! 
+					cpustate->timer_periods[i] += cpustate->timer_periods_full[i]; // retrigger timer!
 				}
 			}
 		}

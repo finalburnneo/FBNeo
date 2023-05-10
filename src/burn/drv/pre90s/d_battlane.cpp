@@ -59,7 +59,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 7,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -68,46 +68,47 @@ STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xdf, NULL					},
-	{0x13, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x12, 0x01, 0x03, 0x00, "2 Coins 1 Credit"		},
-	{0x12, 0x01, 0x03, 0x03, "1 Coin  1 Credit"		},
-	{0x12, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credit"		},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credit"		},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x12, 0x01, 0x0c, 0x00, "2 Coins 1 Credit"		},
-	{0x12, 0x01, 0x0c, 0x0c, "1 Coin  1 Credit"		},
-	{0x12, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x0c, 0x00, "2 Coins 1 Credit"		},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credit"		},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x10, 0x00, "Off"					},
-	{0x12, 0x01, 0x10, 0x10, "On"					},
+	{0x00, 0x01, 0x10, 0x00, "Off"					},
+	{0x00, 0x01, 0x10, 0x10, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x12, 0x01, 0x20, 0x00, "Upright"				},
-	{0x12, 0x01, 0x20, 0x20, "Cocktail"				},
+	{0x00, 0x01, 0x20, 0x00, "Upright"				},
+	{0x00, 0x01, 0x20, 0x20, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x12, 0x01, 0xc0, 0xc0, "Easy"					},
-	{0x12, 0x01, 0xc0, 0x80, "Normal"				},
-	{0x12, 0x01, 0xc0, 0x40, "Hard"					},
-	{0x12, 0x01, 0xc0, 0x00, "Very Hard"			},
+	{0x00, 0x01, 0xc0, 0xc0, "Easy"					},
+	{0x00, 0x01, 0xc0, 0x80, "Normal"				},
+	{0x00, 0x01, 0xc0, 0x40, "Hard"					},
+	{0x00, 0x01, 0xc0, 0x00, "Very Hard"			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x13, 0x01, 0x03, 0x00, "Free Play"			},
-	{0x13, 0x01, 0x03, 0x01, "5"					},
-	{0x13, 0x01, 0x03, 0x02, "4"					},
-	{0x13, 0x01, 0x03, 0x03, "3"					},
+	{0x01, 0x01, 0x03, 0x00, "Free Play"			},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x02, "4"					},
+	{0x01, 0x01, 0x03, 0x03, "3"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x13, 0x01, 0x0c, 0x0c, "20k and 50k"			},
-	{0x13, 0x01, 0x0c, 0x08, "20k and 70k"			},
-	{0x13, 0x01, 0x0c, 0x04, "20k and 90k"			},
-	{0x13, 0x01, 0x0c, 0x00, "None"					},
+	{0x01, 0x01, 0x0c, 0x0c, "20k and 50k"			},
+	{0x01, 0x01, 0x0c, 0x08, "20k and 70k"			},
+	{0x01, 0x01, 0x0c, 0x04, "20k and 90k"			},
+	{0x01, 0x01, 0x0c, 0x00, "None"					},
 };
 
 STDDIPINFO(Drv)
@@ -210,6 +211,19 @@ inline static INT32 DrvYM3526SynchroniseStream(INT32 nSoundRate)
 	return (INT64)M6809TotalCycles() * nSoundRate / 1500000;
 }
 
+static tilemap_callback( bg )
+{
+	INT32 Attr = DrvTileRAM[offs + 0x400];
+	INT32 Code = DrvTileRAM[offs] + ((Attr & 0x01) << 8);
+
+	TILE_SET_INFO(0, Code, Attr >> 1, 0);
+}
+
+static tilemap_scan( bg )
+{
+	return (col & 0x0f) + (((row & 0x0f) + (col & 0x10)) << 4) + ((row & 0x10) << 5);
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -226,6 +240,7 @@ static INT32 DrvDoReset()
 	M6809Reset();
 	BurnYM3526Reset();
 	M6809Close();
+	HiscoreReset();
 
 	scrollx = 0;
 	scrollxhi = 0;
@@ -315,12 +330,7 @@ static void DrvCpuMap(INT32 cpu)
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM1 + 0x00000, 0, 1)) return 1;
@@ -346,6 +356,9 @@ static INT32 DrvInit()
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, bg_map_scan, bg_map_callback, 16, 16, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM1, 3, 16, 16, 0x200 * 16*16, 0x20, 0x03);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, -8, 0);
 
 	DrvDoReset();
 
@@ -359,7 +372,7 @@ static INT32 DrvExit()
 	M6809Exit();
 	BurnYM3526Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -402,8 +415,8 @@ static void draw_bmp_layer()
 					sy = 255 - y;
 					sx = 255 - x;
 				}
-
-				*(UINT16 *)(pTransDraw + (sy * nScreenWidth) + sx) = data;
+				if (sx > 7 && sy < nScreenHeight && sx < nScreenWidth)
+					*(UINT16 *)(pTransDraw + (sy * nScreenWidth) + (sx - 8)) = data;
 			}
 		}
 	}
@@ -438,6 +451,10 @@ static void draw_sprites()
 
 			if (attr & 0x10)
 			{
+				if (flipscreen) {
+					sy += 16;
+				}
+
 				if (!flipy) {
 					Draw16x16MaskTile(pTransDraw, code + 0, sx, sy, flipx, flipy, color, 3, 0, 0, DrvGfxROM0);
 					Draw16x16MaskTile(pTransDraw, code + 1, sx, sy-16, flipx, flipy, color, 3, 0, 0, DrvGfxROM0);
@@ -452,40 +469,24 @@ static void draw_sprites()
 	}
 }
 
-static void draw_bg_layer()
-{
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x1f) * 16;
-		INT32 sy = (offs / 0x20) * 16;
-
-		sx -= (scrollx + 8) & 0x1ff;
-		if (sx < -7) sx += 512;
-		sy -= scrolly;
-		if (sy < -7) sy += 512;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 ofst = ((offs & 0x1e0)>>1) + (offs & 0x20f) + ((offs & 0x10)<<4);
-
-		INT32 attr  = DrvTileRAM[ofst + 0x400];
-		INT32 code  = DrvTileRAM[ofst + 0x000] + ((attr & 0x01) << 8);
-		INT32 color = (attr >> 1) & 3;
-
-		Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 3, 0x20, DrvGfxROM1);
-	}
-}
-
 static INT32 DrvDraw()
 {
 	for (INT32 i = 0; i < 0x40; i++) {
 		DrvPaletteUpdate(i);
 	}
+
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_bg_layer();
+	GenericTilemapSetFlip(0, (flipscreen) ? TMAP_FLIPXY : 0);
+	GenericTilemapSetScrollX(0, scrollx);
+	GenericTilemapSetScrollY(0, scrolly);
+
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+
 	if (nSpriteEnable & 1) draw_sprites();
 	if (nBurnLayer & 2) draw_bmp_layer();
+
+	BurnTransferFlip(flipscreen, flipscreen); // coctail unflippy
 
 	BurnTransferCopy(DrvPalette);
 
@@ -605,10 +606,10 @@ struct BurnDriver BurnDrvBattlane = {
 	"battlane", NULL, NULL, NULL, "1986",
 	"Battle Lane! Vol. 5 (set 1)\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, battlaneRomInfo, battlaneRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
-	256, 256, 3, 4
+	256, 240, 3, 4
 };
 
 
@@ -639,10 +640,10 @@ struct BurnDriver BurnDrvBattlane2 = {
 	"battlane2", "battlane", NULL, NULL, "1986",
 	"Battle Lane! Vol. 5 (set 2)\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, battlane2RomInfo, battlane2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
-	256, 256, 3, 4
+	256, 240, 3, 4
 };
 
 
@@ -673,8 +674,8 @@ struct BurnDriver BurnDrvBattlane3 = {
 	"battlane3", "battlane", NULL, NULL, "1986",
 	"Battle Lane! Vol. 5 (set 3)\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, battlane3RomInfo, battlane3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
-	256, 256, 3, 4
+	256, 240, 3, 4
 };

@@ -1,4 +1,4 @@
-// FB Alpha Fairyland story driver module
+// FB Neo Fairyland story driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -52,6 +52,7 @@ static INT32 m_vol_ctrl[16];
 static UINT8 m_snd_ctrl0;
 static UINT8 m_snd_ctrl1;
 static UINT8 m_snd_ctrl2;
+static double ay_vol_divider;
 
 static struct BurnInputInfo FlstoryInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
@@ -711,7 +712,7 @@ static void AY_ayportA_write(UINT32 /*addr*/, UINT32 data)
 	if (data == 0xff) return; // ignore ay-init
 	m_snd_ctrl2 = data & 0xff;
 
-	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / ((select_game == 3) ? 1600.0 : 2000.0), BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / ay_vol_divider, BURN_SND_ROUTE_BOTH);
 }
 
 static void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
@@ -782,7 +783,7 @@ static UINT8 __fastcall flstory_sound_read(UINT16 address)
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	ZetReset(0);
 	ZetReset(1);
@@ -800,6 +801,8 @@ static INT32 DrvDoReset()
 	nmi_enable = 0;
 	pending_nmi = 0;
 	char_bank = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -1025,6 +1028,7 @@ static INT32 DrvInit()
 
 	DACInit(0, 0, 1, ZetTotalCycles, 4000000);
 	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	GenericTilesInit();
 
@@ -1246,7 +1250,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 5);
+		memset(DrvInputs, 0xff, 5);
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1364,6 +1368,7 @@ STD_ROM_FN(flstory)
 static INT32 flstoryInit()
 {
 	select_game = 0;
+	ay_vol_divider = 1600.0;
 
 	return DrvInit();
 }
@@ -1372,16 +1377,16 @@ struct BurnDriver BurnDrvFlstory = {
 	"flstory", NULL, NULL, NULL, "1985",
 	"The FairyLand Story\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, flstoryRomInfo, flstoryRomName, NULL, NULL, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
 	flstoryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
 
-// The FairyLand Story (Japan)
+// The FairyLand Story (earlier)
 
-static struct BurnRomInfo flstoryjRomDesc[] = {
+static struct BurnRomInfo flstoryoRomDesc[] = {
 	{ "cpu-a45.15",		0x4000, 0xf03fc969, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "cpu-a45.16",		0x4000, 0x311aa82e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "cpu-a45.17",		0x4000, 0xa2b5d17d, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1401,15 +1406,15 @@ static struct BurnRomInfo flstoryjRomDesc[] = {
 	{ "a45-20.mcu",		0x0800, 0x7d2cdd9b, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
 };
 
-STD_ROM_PICK(flstoryj)
-STD_ROM_FN(flstoryj)
+STD_ROM_PICK(flstoryo)
+STD_ROM_FN(flstoryo)
 
-struct BurnDriver BurnDrvFlstoryj = {
-	"flstoryj", "flstory", NULL, NULL, "1985",
-	"The FairyLand Story (Japan)\0", NULL, "Taito", "Miscellaneous",
+struct BurnDriver BurnDrvFlstoryo = {
+	"flstoryo", "flstory", NULL, NULL, "1985",
+	"The FairyLand Story (earlier)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, flstoryjRomInfo, flstoryjRomName, NULL, NULL, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, flstoryoRomInfo, flstoryoRomName, NULL, NULL, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
 	flstoryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -1446,6 +1451,7 @@ STD_ROM_FN(onna34ro)
 static INT32 onna34roInit()
 {
 	select_game = 1;
+	ay_vol_divider = 400.0;
 
 	return DrvInit();
 }
@@ -1454,7 +1460,7 @@ struct BurnDriver BurnDrvOnna34ro = {
 	"onna34ro", NULL, NULL, NULL, "1985",
 	"Onna Sansirou - Typhoon Gal\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
 	onna34roInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1490,6 +1496,7 @@ STD_ROM_FN(onna34ra)
 static INT32 onna34roaInit()
 {
 	select_game = 10;
+	ay_vol_divider = 400.0;
 
 	return DrvInit();
 }
@@ -1498,7 +1505,7 @@ struct BurnDriver BurnDrvOnna34ra = {
 	"onna34roa", "onna34ro", NULL, NULL, "1985",
 	"Onna Sansirou - Typhoon Gal (bootleg)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
 	onna34roaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1541,19 +1548,20 @@ STD_ROM_FN(victnine)
 static INT32 victnineInit()
 {
 	select_game = 2;
+	ay_vol_divider = 1600.0;
 
 	INT32 nRet = DrvInit();
-	
+
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-	
+
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvVictnine = {
+struct BurnDriver BurnDrvVictnine = {
 	"victnine", NULL, NULL, NULL, "1984",
 	"Victorious Nine\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, victnineRomInfo, victnineRomName, NULL, NULL, NULL, NULL, VictnineInputInfo, VictnineDIPInfo,
 	victnineInit, DrvExit, DrvFrame, victnineDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1562,6 +1570,7 @@ struct BurnDriverD BurnDrvVictnine = {
 static INT32 rumbaInit()
 {
 	select_game = 3;
+	ay_vol_divider = 1600.0;
 
 	INT32 nRet = DrvInit();
 
@@ -1594,7 +1603,7 @@ struct BurnDriver BurnDrvRumba = {
 	"rumba", NULL, NULL, NULL, "1984",
 	"Rumba Lumber\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, rumbaRomInfo, rumbaRomName, NULL, NULL, NULL, NULL, RumbaInputInfo, RumbaDIPInfo,
 	rumbaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

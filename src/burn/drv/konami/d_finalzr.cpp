@@ -296,6 +296,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -763,7 +765,7 @@ struct BurnDriver BurnDrvFinalizr = {
 	"finalizr", NULL, NULL, NULL, "1985",
 	"Finalizer - Super Transformation (set 1)\0", NULL, "Konami", "GX523",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrRomInfo, finalizrRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 272, 3, 4
@@ -799,7 +801,7 @@ struct BurnDriver BurnDrvFinalizra = {
 	"finalizra", "finalizr", NULL, NULL, "1985",
 	"Finalizer - Super Transformation (set 2)\0", NULL, "Konami", "GX523",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizraRomInfo, finalizraRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 272, 3, 4
@@ -841,7 +843,7 @@ struct BurnDriver BurnDrvFinalizrb = {
 	"finalizrb", "finalizr", NULL, NULL, "1985",
 	"Finalizer - Super Transformation (bootleg)\0", NULL, "bootleg", "GX523",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrbRomInfo, finalizrbRomName, NULL, NULL, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	bootlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 272, 3, 4

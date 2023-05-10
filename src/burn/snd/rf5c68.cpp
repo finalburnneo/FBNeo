@@ -195,7 +195,7 @@ void RF5C68PCMInit(INT32 clock, INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ, INT32 nA
 	soundbuf_l = (INT16*)BurnMalloc(our_freq * sizeof(INT16));
 	soundbuf_r = (INT16*)BurnMalloc(our_freq * sizeof(INT16));
 
-	nSampleSize = (UINT64)((UINT64)our_freq * (1 << 16)) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT64)((UINT64)our_freq * (1 << 16)) / nBurnSoundRate;
 	nPosition = 0;
 	nFractionalPosition = 0;
 

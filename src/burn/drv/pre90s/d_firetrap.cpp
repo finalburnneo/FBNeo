@@ -531,6 +531,8 @@ static INT32 DrvDoReset()
 	MSM5205Reset();
 	M6502Close();
 
+	HiscoreReset();
+
 	flipscreen = 0;
 	soundlatch = 0;
 	nmi_enable = 0;
@@ -684,8 +686,6 @@ static INT32 DrvInit()
 	M6502MapMemory(DrvM6502ROM,	0x8000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(firetrap_sound_write);
 	M6502SetReadHandler(firetrap_sound_read);
-	M6502SetReadOpArgHandler(firetrap_sound_read);
-	M6502SetReadOpHandler(firetrap_sound_read);
 	M6502Close();
 
 	BurnYM3526Init(3000000, NULL, &SynchroniseStream, 0);
@@ -1026,7 +1026,7 @@ struct BurnDriver BurnDrvFiretrap = {
 	"firetrap", NULL, NULL, NULL, "1986",
 	"Fire Trap (US, rev A)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapRomInfo, firetrapRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
@@ -1075,7 +1075,7 @@ struct BurnDriver BurnDrvFiretrapa = {
 	"firetrapa", "firetrap", NULL, NULL, "1986",
 	"Fire Trap (US)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapaRomInfo, firetrapaRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
@@ -1124,7 +1124,7 @@ struct BurnDriver BurnDrvFiretrapj = {
 	"firetrapj", "firetrap", NULL, NULL, "1986",
 	"Fire Trap (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapjRomInfo, firetrapjRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
@@ -1173,7 +1173,7 @@ struct BurnDriver BurnDrvFiretrapbl = {
 	"firetrapbl", "firetrap", NULL, NULL, "1986",
 	"Fire Trap (Japan bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapblRomInfo, firetrapblRomName, NULL, NULL, NULL, NULL, FiretrapblInputInfo, FiretrapblDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4

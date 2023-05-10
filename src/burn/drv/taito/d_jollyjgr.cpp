@@ -287,6 +287,8 @@ static INT32 DrvDoReset()
 	bitmap_disable = 0;
 	nmi_enable = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -343,12 +345,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (game == 0)
@@ -410,6 +407,7 @@ static INT32 DrvInit(INT32 game)
 
 	AY8910Init(0, 1789772, 0);
 	AY8910SetAllRoutes(0, (jollyjgrmode) ? 0.20 : 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -429,7 +427,7 @@ static INT32 DrvExit()
 	ZetExit();
 	AY8910Exit(0);
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	jollyjgrmode = 0;
 
@@ -596,6 +594,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		DrvInputs[0] = 0;
 		DrvInputs[1] = 0;
@@ -693,7 +693,7 @@ struct BurnDriver BurnDrvJollyjgr = {
 	"jollyjgr", NULL, NULL, NULL, "1982",
 	"Jolly Jogger\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE, 0,
 	NULL, jollyjgrRomInfo, jollyjgrRomName, NULL, NULL, NULL, NULL, JollyjgrInputInfo, JollyjgrDIPInfo,
 	JollyjgrInit, DrvExit, DrvFrame, JollyjgrDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -732,7 +732,7 @@ struct BurnDriver BurnDrvFspiderb = {
 	"fspiderb", NULL, NULL, NULL, "1981",
 	"Frog & Spiders (bootleg?)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_VERSHOOT, 0,
 	NULL, fspiderbRomInfo, fspiderbRomName, NULL, NULL, NULL, NULL, FspiderInputInfo, FspiderDIPInfo,
 	FspiderbInit, DrvExit, DrvFrame, FspiderbDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4

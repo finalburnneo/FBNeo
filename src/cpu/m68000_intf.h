@@ -126,7 +126,7 @@ void SekWriteWordROM(UINT32 a, UINT16 d);
 void SekWriteLongROM(UINT32 a, UINT32 d);
 
 INT32 SekInit(INT32 nCount, INT32 nCPUType);
-INT32 SekExit();
+void SekExit();
 
 void SekNewFrame();
 void SekSetCyclesScanline(INT32 nCycles);
@@ -229,6 +229,9 @@ inline static INT32 SekCurrentScanline()
 
 	return SekTotalCycles() / nSekCyclesScanline;
 }
+
+// Call this from a handler to decrease m68k_ICount
+void SekCyclesBurnRun(INT32 nCycles);
 
 // Mask off address bits (usually top, default is 0xffffff)
 void SekSetAddressMask(UINT32 nAddressMask);

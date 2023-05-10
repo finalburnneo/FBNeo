@@ -220,6 +220,8 @@ static INT32 DrvDoReset()
 	m_coins = 0;
 	e0_data = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -454,7 +456,7 @@ struct BurnDriver BurnDrvXyonix = {
 	"xyonix", NULL, NULL, NULL, "1989",
 	"Xyonix\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, xyonixRomInfo, xyonixRomName, NULL, NULL, NULL, NULL, XyonixInputInfo, XyonixDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3

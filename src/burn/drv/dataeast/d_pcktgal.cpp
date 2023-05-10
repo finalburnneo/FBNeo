@@ -253,6 +253,8 @@ static INT32 DrvDoReset()
 	msm5205next = 0;
 	memset (pf_control, 0, sizeof(pf_control));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -581,7 +583,7 @@ struct BurnDriver BurnDrvPcktgal = {
 	"pcktgal", NULL, NULL, NULL, "1987",
 	"Pocket Gal (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pcktgalRomInfo, pcktgalRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
@@ -615,8 +617,49 @@ struct BurnDriver BurnDrvPcktgalb = {
 	"pcktgalb", "pcktgal", NULL, NULL, "1987",
 	"Pocket Gal (Yada East bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pcktgalbRomInfo, pcktgalbRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// Pocket Gal / unknown card game
+// strange bootleg with 2 connected PCBs, one for the Pocket Gal bootleg and one for an unknown card game.
+// Pocket Gal used as cover for a stealth gambling game?
+
+static struct BurnRomInfo pcktgalbaRomDesc[] = {
+	// Pocket Gal PCB: standard chips emulated in this driver, with no Data East customs
+	{ "sex_v1.3",	0x10000, 0xe278da6b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+
+	{ "2_sex",		0x10000, 0xcb029b02, 2 | BRF_PRG | BRF_ESS }, //  1 DECO 222 Encrypted CPU
+
+	{ "5_sex",		0x10000, 0x3128dc7b, 3 | BRF_GRA },           //  2 Background Tiles
+	{ "6_sex",		0x10000, 0x0fc91eeb, 3 | BRF_GRA },           //  3
+
+	{ "3_sex",		0x08000, 0x58182daa, 4 | BRF_GRA },           //  4 Sprites
+	{ "4_sex",		0x08000, 0x33a67af6, 4 | BRF_GRA },           //  5
+
+	{ "prom1",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  6 Color PROMs / BAD DUMP
+	{ "prom2",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  7             / BAD DUMP
+
+	// unknown card game PCB: Z84C00AB6 (Z80), 2 scratched off chips (possibly I8255?), AY38912A/P, 4 8-dip banks
+	{ "7_sex.u45",	0x04000, 0x65b0b6d0, 7 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+
+	{ "8_sex.u35",	0x02000, 0x36e450e5, 8 | BRF_GRA },           //  9 Graphics
+	{ "9_sex.u36",	0x02000, 0xffcc1198, 8 | BRF_GRA },           // 10
+	{ "10_sex.u37",	0x02000, 0x73cf56a0, 8 | BRF_GRA },           // 11
+};
+
+STD_ROM_PICK(pcktgalba)
+STD_ROM_FN(pcktgalba)
+
+struct BurnDriver BurnDrvPcktgalba = {
+	"pcktgalba", "pcktgal", NULL, NULL, "1987",
+	"Pocket Gal / unknown card game\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	NULL, pcktgalbaRomInfo, pcktgalbaRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -650,7 +693,7 @@ struct BurnDriver BurnDrvPcktgal2 = {
 	"pcktgal2", "pcktgal", NULL, NULL, "1989",
 	"Pocket Gal 2 (English)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pcktgal2RomInfo, pcktgal2RomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
@@ -680,7 +723,7 @@ struct BurnDriver BurnDrvPcktgal2j = {
 	"pcktgal2j", "pcktgal", NULL, NULL, "1989",
 	"Pocket Gal 2 (Japanese)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, pcktgal2jRomInfo, pcktgal2jRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
@@ -710,7 +753,7 @@ struct BurnDriver BurnDrvSpool3 = {
 	"spool3", "pcktgal", NULL, NULL, "1989",
 	"Super Pool III (English)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, spool3RomInfo, spool3RomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
@@ -740,7 +783,7 @@ struct BurnDriver BurnDrvSpool3i = {
 	"spool3i", "pcktgal", NULL, NULL, "1990",
 	"Super Pool III (I-Vics)\0", NULL, "Data East Corporation (I-Vics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, spool3iRomInfo, spool3iRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3

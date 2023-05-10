@@ -59,6 +59,7 @@ typedef struct
 	UINT8   so_state;
 	UINT8   hold_irq;
 	UINT8   hold_nmi;
+	UINT8   delay_nmi;
 	UINT8   cpu7written;
 
 	INT32   IntOccured;
@@ -73,6 +74,8 @@ typedef struct
 	void	(*port_write)(UINT8 direction, UINT8 data);
 
 	int 	(*irq_callback)(int irqline);	/* IRQ callback */
+
+	int     fetching_opcode; // true when fetching opcode (no stating necessary)
 
 }	m6502_Regs;
 
@@ -141,11 +144,14 @@ int m6502_execute(int cycles);
 void m6502_set_irq_line(int irqline, int state);
 void m6502_set_irq_hold();
 void m6502_set_nmi_hold();
+void m6502_set_nmi_hold2();
+void m6502_set_pc(unsigned int pc_);
 UINT32 m6502_get_pc();
 UINT32 m6502_get_prev_pc();
 int m6502_releaseslice();
 int m6502_dec_icount(int todec);
 int m6502_get_segmentcycles();
+int m6502_get_fetch_status();
 
 void m65c02_init();
 void m65c02_reset();

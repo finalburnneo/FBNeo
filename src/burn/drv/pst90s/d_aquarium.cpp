@@ -261,6 +261,8 @@ static INT32 DrvDoReset()
 	Drv68KROM[0x000a5c] = DrvDips[2]; // set region (hack)
 	Drv68KROM[0x000a5d] = DrvDips[2];
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -762,7 +764,7 @@ struct BurnDriver BurnDrvAquarium = {
 	"aquarium", NULL, NULL, NULL, "1996",
 	"Aquarium (US)\0", NULL, "Excellent System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, aquariumRomInfo, aquariumRomName, NULL, NULL, NULL, NULL, AquariumInputInfo, AquariumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3

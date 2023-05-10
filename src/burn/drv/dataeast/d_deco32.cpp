@@ -3807,6 +3807,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 	}
 
+	if (nAction & ACB_NVRAM) {
+		if (game_select == 3) {
+			SCAN_VAR(m_eeprom);
+		}
+	}
+
 	return 0;
 }
 

@@ -467,7 +467,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		F8Scan(nAction,pnMin);
+		F8Scan(nAction);
 
 		SCAN_VAR(read_write);
 		SCAN_VAR(address_latch);

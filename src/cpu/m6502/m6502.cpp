@@ -45,6 +45,9 @@ static deco_function Cpu7Write[8] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, 
 
 extern INT32 M6502GetActive();
 
+static m6502_Regs m6502;
+#define m6502_ICount m6502.ICount
+
 #include "ops02.h"
 #include "ill02.h"
 
@@ -64,9 +67,6 @@ extern INT32 M6502GetActive();
 /****************************************************************************
  * The 6502 registers.
  ****************************************************************************/
-
-static m6502_Regs m6502;
-#define m6502_ICount m6502.ICount
 
 void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8))
 {
@@ -204,6 +204,11 @@ void m6502_set_context (void *src)
 	}
 }
 
+int m6502_get_fetch_status()
+{
+	return m6502.fetching_opcode;
+}
+
 void m6502_set_irq_hold()
 {
 	m6502.hold_irq = 1;
@@ -212,6 +217,14 @@ void m6502_set_irq_hold()
 void m6502_set_nmi_hold()
 {
 	m6502.hold_nmi = 1;
+}
+
+// for nes - ppuctrl transition to 0x80 during vblank takes nmi after
+// next opcode has executed
+void m6502_set_nmi_hold2()
+{
+	m6502.hold_nmi = 1;
+	m6502.delay_nmi = 2;
 }
 
 M6502_INLINE void m6502_take_irq(void)
@@ -298,6 +311,15 @@ int m6502_execute(int cycles)
 //		debugger_instruction_hook(Machine, PCD);
 
 		/* if an irq is pending, take it now */
+
+		if (m6502.delay_nmi > 0) {
+			m6502.delay_nmi--;
+			if (m6502.delay_nmi == 0) {
+				m6502.nmi_req = 1;
+				m6502_take_irq();
+			}
+		}
+
 		if( m6502.pending_irq == 1)
 			m6502_take_irq();
 
@@ -330,7 +352,7 @@ int m6502_execute(int cycles)
 					m6502.pending_irq = 1;
 				}
 			}
-			if( m6502.pending_irq == 1 || m6502.nmi_req == 1 )
+			if( m6502.pending_irq == 1 )
 				m6502_take_irq();
 			if ( m6502.pending_irq == 2 ) {
 				m6502.pending_irq = 1;
@@ -462,6 +484,11 @@ void m6502_set_irq_line(int irqline, int state)
 			m6502.IntOccured = m6502.ICount;
 		}
 	}
+}
+
+void m6502_set_pc(unsigned int pc_)
+{
+	m6502.pc.d = pc_;
 }
 
 UINT32 m6502_get_pc()

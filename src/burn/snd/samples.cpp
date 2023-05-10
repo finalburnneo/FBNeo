@@ -838,7 +838,8 @@ static void BurnSampleRender_INT(UINT32 pLen)
 			}
 
 			// if samples remaining are less than playlen, set playlen to samples remaining
-			if (playlen > (length - current_pos)) playlen = length - current_pos;
+			//if (playlen > (length - current_pos)) playlen = length - current_pos;
+			// commented above line oct.2022 (dink) - causes end of sample to be delayed until next sync
 		}
 
 		length *= 2; // (stereo) used to ensure position is within bounds

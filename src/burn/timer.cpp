@@ -142,17 +142,17 @@ void BurnOPLTimerCallback(INT32 c, double period)
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period);
 }
 
-void BurnOPMTimerCallback(INT32 c, double period)
+void BurnOPMTimerCallback(INT32 n, INT32 c, double period) // ym2151
 {
 	pCPURunEnd();
 	
 	if (period == 0.0) {
-		nTimerCount[c] = MAX_TIMER_VALUE;
+		nTimerCount[(n << 1) + c] = MAX_TIMER_VALUE;
 		return;
 	}
 
-	nTimerCount[c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
+	nTimerCount[(n << 1) + c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
+	nTimerCount[(n << 1) + c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 }
 
 void BurnOPNTimerCallback(INT32 n, INT32 c, INT32 cnt, double stepTime) // ym2203

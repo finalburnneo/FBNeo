@@ -512,6 +512,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	nmi_enabled = 0;
 	nmi_pending = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -643,7 +645,7 @@ static INT32 DrvInit()
 	AY8910SetPorts(1, NULL, NULL, AY1_PortA_write, NULL);
 
 	MSM5232Init(2000000, 1);
-	MSM5232SetCapacitors(0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6);
+	MSM5232SetCapacitors(1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_0);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_1);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_2);
@@ -1043,7 +1045,7 @@ struct BurnDriver BurnDrvBuggychl = {
 	"buggychl", NULL, NULL, NULL, "1984",
 	"Buggy Challenge\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, buggychlRomInfo, buggychlRomName, NULL, NULL, NULL, NULL, BuggychlInputInfo, BuggychlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1084,7 +1086,7 @@ struct BurnDriver BurnDrvBuggychlt = {
 	"buggychlt", "buggychl", NULL, NULL, "1984",
 	"Buggy Challenge (Tecfri)\0", NULL, "Taito Corporation (Tecfri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, buggychltRomInfo, buggychltRomName, NULL, NULL, NULL, NULL, BuggychlInputInfo, BuggychlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

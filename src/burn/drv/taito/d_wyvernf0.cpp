@@ -354,6 +354,8 @@ static INT32 DrvDoReset()
 
 	MSM5232Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -482,7 +484,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(1, 0.14, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
-	MSM5232SetCapacitors(0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6);
+	MSM5232SetCapacitors(1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6, 1e-6);
 	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_0);
 	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_1);
 	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_2);
@@ -748,7 +750,7 @@ struct BurnDriver BurnDrvWyvernf0 = {
 	"wyvernf0", NULL, NULL, NULL, "1985",
 	"Wyvern F-0 (Rev 1)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2,  HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2,  HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, wyvernf0RomInfo, wyvernf0RomName, NULL, NULL, NULL, NULL, Wyvernf0InputInfo, Wyvernf0DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -788,7 +790,7 @@ struct BurnDriver BurnDrvWyvernf0a = {
 	"wyvernf0a", "wyvernf0", NULL, NULL, "1985",
 	"Wyvern F-0\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2,  HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2,  HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, wyvernf0aRomInfo, wyvernf0aRomName, NULL, NULL, NULL, NULL, Wyvernf0InputInfo, Wyvernf0DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

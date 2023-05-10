@@ -215,7 +215,7 @@ INT32 BurnYMF262Init(INT32 nClockFrequency, void (*IRQCallback)(INT32, INT32), I
 
 	nBurnYMF262SoundRate = nClockFrequency / 288; // hw rate based on input clock
 
-	nSampleSize = (UINT32)nBurnYMF262SoundRate * (1 << 16) / nBurnSoundRate;
+	if (nBurnSoundRate) nSampleSize = (UINT32)nBurnYMF262SoundRate * (1 << 16) / nBurnSoundRate;
 	bYMF262AddSignal = nAdd;
 
 	BurnTimerInit(&ymf262_timerover, NULL);

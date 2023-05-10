@@ -33,6 +33,8 @@ cpu_core_config M6805Config =
 	m6805Run,
 	m6805RunEnd,
 	m6805Reset,
+	m6805Scan,
+	m6805Exit,
 	0x10000,
 	0
 };

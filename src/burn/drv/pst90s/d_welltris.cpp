@@ -424,6 +424,8 @@ static INT32 DrvDoReset()
 
 	BurnYM2610Reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -868,7 +870,7 @@ struct BurnDriver BurnDrvWelltris = {
 	"welltris", NULL, NULL, NULL, "1991",
 	"Welltris - Alexey Pajitnov's (World?, 2 players)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, welltrisRomInfo, welltrisRomName, NULL, NULL, NULL, NULL, WelltrisInputInfo, WelltrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
@@ -903,7 +905,7 @@ struct BurnDriver BurnDrvWelltrisj = {
 	"welltrisj", "welltris", NULL, NULL, "1991",
 	"Welltris - Alexey Pajitnov's (Japan, 2 players)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, welltrisjRomInfo, welltrisjRomName, NULL, NULL, NULL, NULL, WelltrisInputInfo, WelltrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3

@@ -774,7 +774,7 @@ INT32 BurnDrvCartridgeSetup(BurnCartrigeCommand nCommand)
 	BurnExtCartridgeSetupCallback(CART_INIT_END);
 
 #if defined FBNEO_DEBUG
-		bprintf(PRINT_NORMAL, _T("  * Loading"));
+		bprintf(PRINT_NORMAL, _T("  * Loading Cartridge\n"));
 #endif
 
 	if (BurnExtCartridgeSetupCallback(CART_INIT_START)) {
@@ -850,7 +850,9 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 // NOTE: Make sure this is called before any soundcore init!
 INT32 BurnSetRefreshRate(double dFrameRate)
 {
-	if (bForce60Hz) {
+	if (bForce60Hz && dFrameRate > 50.00) {
+		// Force 60hz w/ games that are near 60hz & avoid breaking
+		// vector (30-42hz), 30hz Midway, NES/MSX/Spectrum 50hz PAL mode.
 		dFrameRate = 60.00;
 	}
 
@@ -876,7 +878,7 @@ void BurnSetMouseDivider(INT32 nDivider)
 
 	nInputIntfMouseDivider = nDivider;
 
-	bprintf(0, _T("BurnSetMouseDivider() @ %d\n"), nDivider);
+	//bprintf(0, _T("BurnSetMouseDivider() @ %d\n"), nDivider);
 }
 
 inline static INT32 BurnClearSize(INT32 w, INT32 h)
@@ -1149,6 +1151,8 @@ void StateRewindInit()
 
 void StateRewindExit()
 {
+	bRewindStatus = REWINDSTATUS_DISABLED;
+
 	if (RewindBuffer != NULL) {
 		free (RewindBuffer);
 	}
@@ -1157,6 +1161,12 @@ void StateRewindExit()
 	}
 
 	thready.exit();
+}
+
+void StateRewindReInit() // enable / disable via ui
+{
+	StateRewindExit();
+	StateRewindInit();
 }
 
 static INT32 __cdecl RewindLenAcb(struct BurnArea* pba)
@@ -1557,6 +1567,12 @@ INT32 BurnSynchroniseStream(INT32 nSoundRate)
 double BurnGetTime()
 {
 	return (double)BurnTimerCPUTotalCycles() / BurnTimerCPUClockspeed;
+}
+
+// CPU Speed adjuster
+INT32 BurnSpeedAdjust(INT32 cyc)
+{
+	return (INT32)((INT64)cyc * nBurnCPUSpeedAdjust / 0x0100);
 }
 
 // ----------------------------------------------------------------------------

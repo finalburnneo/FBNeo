@@ -1,4 +1,4 @@
-// FB Alpha Pushman driver module
+// FB Neo Pushman driver module
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
@@ -405,6 +405,8 @@ static INT32 DrvDoReset()
 	latch = 0x400; // bballs
 	new_latch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -486,12 +488,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
@@ -572,7 +569,7 @@ static INT32 DrvExit()
 	
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	no_mcu = 0;
 
@@ -801,28 +798,33 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Pushman (Korea, set 1)
 
 static struct BurnRomInfo pushmanRomDesc[] = {
-	{ "pushman.012",	0x10000, 0x330762bc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "pushman.011",	0x10000, 0x62636796, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12.ic212.16n",			0x10000, 0x330762bc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "11.ic197.16l",			0x10000, 0x62636796, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "pushman.013",	0x08000, 0xadfe66c1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "13.ic216.4n",			0x08000, 0xadfe66c1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "pushman68705r3p.ic23",0x01000, 0xd7916657, 3 | BRF_PRG | BRF_ESS }, //  3 M68705 MCU Code
+	{ "pushman68705r3p.ic234",	0x01000, 0xd7916657, 3 | BRF_PRG | BRF_ESS }, //  3 M68705 MCU Code
 
-	{ "pushman.001",	0x08000, 0x626e5865, 4 | BRF_GRA },           //  4 Characters
+	{ "1.ic130.20g",			0x08000, 0x626e5865, 4 | BRF_GRA },           //  4 Characters
 
-	{ "pushman.004",	0x10000, 0x87aafa70, 5 | BRF_GRA },           //  5 Sprites
-	{ "pushman.005",	0x10000, 0x7fd1200c, 5 | BRF_GRA },           //  6
-	{ "pushman.002",	0x10000, 0x0a094ab0, 5 | BRF_GRA },           //  7
-	{ "pushman.003",	0x10000, 0x73d1f29d, 5 | BRF_GRA },           //  8
+	{ "4.ic58.1d",				0x10000, 0x87aafa70, 5 | BRF_GRA },           //  5 Sprites
+	{ "5.ic59.3d",				0x10000, 0x7fd1200c, 5 | BRF_GRA },           //  6
+	{ "2.ic56.1c",				0x10000, 0x0a094ab0, 5 | BRF_GRA },           //  7
+	{ "3.ic57.3c",				0x10000, 0x73d1f29d, 5 | BRF_GRA },           //  8
 
-	{ "pushman.006",	0x10000, 0x48ef3da6, 6 | BRF_GRA },           //  9 Tiles
-	{ "pushman.008",	0x10000, 0x4b6a3e88, 6 | BRF_GRA },           // 10
-	{ "pushman.007",	0x10000, 0xb70020bd, 6 | BRF_GRA },           // 11
-	{ "pushman.009",	0x10000, 0xcc555667, 6 | BRF_GRA },           // 12
+	{ "6.ic131.1h",				0x10000, 0x48ef3da6, 6 | BRF_GRA },           //  9 Tiles
+	{ "8.ic148.1j",				0x10000, 0x4b6a3e88, 6 | BRF_GRA },           // 10
+	{ "7.ic132.3h",				0x10000, 0xb70020bd, 6 | BRF_GRA },           // 11
+	{ "9.ic149.3j",				0x10000, 0xcc555667, 6 | BRF_GRA },           // 12
 
-	{ "pushman.010",	0x08000, 0xa500132d, 7 | BRF_GRA },           // 13 Tilemap
+	{ "10.ic189.7l",			0x08000, 0xa500132d, 7 | BRF_GRA },           // 13 Tilemap
 	
-	{ "n82s129an.ic82",	0x00100, 0xec80ae36, 0 | BRF_GRA },           // 14 Prom
+	{ "n82s129an.ic82.9e",		0x00100, 0xec80ae36, 0 | BRF_GRA },           // 14 Prom
+	
+	{ "ep600pc-3.ic193.11l",	0x0032f, 0xe2659b20, 0 | BRF_OPT },           // 15 PLDs
+	{ "hy18cv8s-30.ic245.20p",	0x00155, 0xc7b824f7, 0 | BRF_OPT },           // 16
+	{ "pal16r8acn.ic35.16b",	0x00104, 0xbfe1accc, 0 | BRF_OPT },           // 17
+	{ "pal16r8acn.ic52.17c",	0x00104, 0x5d032a7b, 0 | BRF_OPT },           // 18
 };
 
 STD_ROM_PICK(pushman)
@@ -832,7 +834,7 @@ struct BurnDriver BurnDrvPushman = {
 	"pushman", NULL, NULL, NULL, "1990",
 	"Pushman (Korea, set 1)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pushmanRomInfo, pushmanRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -873,7 +875,7 @@ struct BurnDriver BurnDrvPushmana = {
 	"pushmana", "pushman", NULL, NULL, "1990",
 	"Pushman (Korea, set 2)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pushmanaRomInfo, pushmanaRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -914,8 +916,49 @@ struct BurnDriver BurnDrvPushmans = {
 	"pushmans", "pushman", NULL, NULL, "1990",
 	"Pushman (American Sammy license)\0", NULL, "Comad (American Sammy license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pushmansRomInfo, pushmansRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
+	256, 224, 4, 3
+};
+
+
+// Pushman (Top Tronic license)
+
+static struct BurnRomInfo pushmantRomDesc[] = {
+	{ "12.ic212",				0x10000, 0xf5c77d86, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "11.ic197",				0x10000, 0x2e09ff08, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "13.ic216",				0x08000, 0xadfe66c1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "pushman68705r3p.ic23",	0x01000, 0xd7916657, 3 | BRF_PRG | BRF_ESS }, //  3 M68705 MCU Code
+
+	{ "1.ic130",				0x08000, 0x14497754, 4 | BRF_GRA },           //  4 Characters
+
+	{ "4.ic58",					0x10000, 0x69209214, 5 | BRF_GRA },           //  5 Sprites
+	{ "5.ic59",					0x10000, 0x75fc0ac4, 5 | BRF_GRA },           //  6
+	{ "2.ic56",					0x10000, 0x2bb8093f, 5 | BRF_GRA },           //  7
+	{ "3.ic57",					0x10000, 0x5f1c4e7a, 5 | BRF_GRA },           //  8
+
+	{ "6.ic131",				0x10000, 0xbd0f9025, 6 | BRF_GRA },           //  9 Tiles
+	{ "8.ic148",				0x10000, 0x591bd5c0, 6 | BRF_GRA },           // 10
+	{ "7.ic132",				0x10000, 0x208cb197, 6 | BRF_GRA },           // 11
+	{ "9.ic149",				0x10000, 0x77ee8577, 6 | BRF_GRA },           // 12
+
+	{ "10.ic189",				0x08000, 0x5f9ae9a1, 7 | BRF_GRA },           // 13 Tilemap
+
+	{ "n82s129an.ic82",			0x00100, 0xec80ae36, 0 | BRF_GRA },           // 14 Prom
+};
+
+STD_ROM_PICK(pushmant)
+STD_ROM_FN(pushmant)
+
+struct BurnDriver BurnDrvPushmant = {
+	"pushmant", "pushman", NULL, NULL, "1990",
+	"Pushman (Top Tronic license)\0", NULL, "Comad (Top Tronic license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, pushmantRomInfo, pushmantRomName, NULL, NULL, NULL, NULL, PushmanInputInfo, PushmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };
@@ -962,7 +1005,7 @@ struct BurnDriver BurnDrvBballs = {
 	"bballs", NULL, NULL, NULL, "1991",
 	"Bouncing Balls\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, bballsRomInfo, bballsRomName, NULL, NULL, NULL, NULL, BballsInputInfo, BballsDIPInfo,
 	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
@@ -1003,7 +1046,7 @@ struct BurnDriver BurnDrvBballsa = {
 	"bballsa", "bballs", NULL, NULL, "1991",
 	"Bouncing Balls (Adult)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, bballsaRomInfo, bballsaRomName, NULL, NULL, NULL, NULL, BballsInputInfo, BballsDIPInfo,
 	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3

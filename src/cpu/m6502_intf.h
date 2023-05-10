@@ -4,8 +4,6 @@ typedef UINT8 (*pReadPortHandler)(UINT16 a);
 typedef void (*pWritePortHandler)(UINT16 a, UINT8 d);
 typedef UINT8 (*pReadByteHandler)(UINT16 a);
 typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);
-typedef UINT8 (*pReadOpHandler)(UINT16 a);
-typedef UINT8 (*pReadOpArgHandler)(UINT16 a);
 
 struct M6502Ext {
 
@@ -24,9 +22,7 @@ struct M6502Ext {
 	pWritePortHandler WritePort;
 	pReadByteHandler ReadByte;
 	pWriteByteHandler WriteByte;
-	pReadOpHandler ReadOp;
-	pReadOpArgHandler ReadOpArg;
-	
+
 	INT32 nCyclesTotal;
 	INT32 nCyclesStall;
 };
@@ -72,16 +68,20 @@ void M6502SetReadPortHandler(UINT8 (*pHandler)(UINT16));
 void M6502SetWritePortHandler(void (*pHandler)(UINT16, UINT8));
 void M6502SetReadHandler(UINT8 (*pHandler)(UINT16));
 void M6502SetWriteHandler(void (*pHandler)(UINT16, UINT8));
-void M6502SetReadOpHandler(UINT8 (*pHandler)(UINT16));
-void M6502SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6502Scan(INT32 nAction);
+
+void M6502CPUPush(INT32 nCPU);
+void M6502CPUPop();
 
 void M6502SetOpcodeDecode(UINT8 *table);
 
 void M6502SetAddressMask(UINT16 RangeMask);
 
+void M6502SetPC(INT32 pc);
 UINT32 M6502GetPC(INT32);
 UINT32 M6502GetPrevPC(INT32);
+
+INT32 M6502GetFetchStatus();
 
 INT32 M6502TotalCycles();
 INT32 M6502TotalCycles(INT32 nCPU);

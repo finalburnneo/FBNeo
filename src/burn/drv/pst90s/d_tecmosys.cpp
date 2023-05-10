@@ -77,6 +77,7 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 4"	},
 
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 8,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Up",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		    BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
@@ -945,7 +946,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Deroon DeroDero
+// Deroon DeroDero (earlier, set 1)
 
 static struct BurnRomInfo deroonRomDesc[] = {
 	{ "t001.upau1",				0x080000, 0x14b92c18, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1007,7 +1008,7 @@ static INT32 DeroonInit()
 
 struct BurnDriver BurnDrvDeroon = {
 	"deroon", NULL, NULL, NULL, "1995",
-	"Deroon DeroDero\0", NULL, "Tecmo", "Miscellaneous",
+	"Deroon DeroDero (earlier, set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, deroonRomInfo, deroonRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
@@ -1016,14 +1017,14 @@ struct BurnDriver BurnDrvDeroon = {
 };
 
 
-// Deroon DeroDero (alt set)
-// maybe a bad dump - this set needs to be confirmed
+// Deroon DeroDero (earlier, set 2)
+// only main CPU program ROMs differ slightly from the deroon set (a routine is NOPed out at 0x711e-0x7152). Labels are original Tecmo. Low serial number.
 
 static struct BurnRomInfo deroonaRomDesc[] = {
-	{ "t.01",					0x080000, 0x7ad6c740, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "t.02",					0x080000, 0xe44f4430, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "t01.upau1",				0x080000, 0x7ad6c740, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "t02.upal1",				0x080000, 0xe44f4430, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "t003.bin",				0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "t003.uz1",				0x040000, 0x8bdfafa0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "t101.uah1",				0x200000, 0x74baf845, 3 | BRF_GRA },           //  3 Sprites
 	{ "t102.ual1",				0x200000, 0x1a02c4a3, 3 | BRF_GRA },           //  4
@@ -1048,8 +1049,8 @@ STD_ROM_PICK(deroona)
 STD_ROM_FN(deroona)
 
 struct BurnDriver BurnDrvDeroona = {
-	"deroona", "deroon", NULL, NULL, "1995",
-	"Deroon DeroDero (alt set)\0", NULL, "Tecmo", "Miscellaneous",
+	"deroona", "deroon", NULL, NULL, "1996",
+	"Deroon DeroDero (earlier, set 2)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, deroonaRomInfo, deroonaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
@@ -1057,7 +1058,7 @@ struct BurnDriver BurnDrvDeroona = {
 	320, 240, 4, 3
 };
 
-// Deroon DeroDero (newer)
+// Deroon DeroDero / Tecmo Stackers
 
 static struct BurnRomInfo deroon2RomDesc[] = {
 	{ "stk_t01.upau1",			0x080000, 0x90c794df, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1088,8 +1089,8 @@ STD_ROM_PICK(deroon2)
 STD_ROM_FN(deroon2)
 
 struct BurnDriver BurnDrvDeroon2 = {
-	"deroon2", "deroon", NULL, NULL, "1995",
-	"Deroon DeroDero (newer)\0", NULL, "Tecmo", "Miscellaneous",
+	"deroon2", "deroon", NULL, NULL, "1996",
+	"Deroon DeroDero / Tecmo Stackers\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, deroon2RomInfo, deroon2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,

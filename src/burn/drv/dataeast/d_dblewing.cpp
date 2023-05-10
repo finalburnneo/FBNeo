@@ -267,6 +267,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	sound_irq = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -708,7 +710,7 @@ struct BurnDriver BurnDrvDblewing = {
 	"dblewing", NULL, NULL, NULL, "1993",
 	"Double Wings (set 1)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, dblewingRomInfo, dblewingRomName, NULL, NULL, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 320, 3, 4
@@ -718,7 +720,7 @@ struct BurnDriver BurnDrvDblewinga = {
 	"dblewinga", "dblewing", NULL, NULL, "1993",
 	"Double Wings (set 2)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, dblewingaRomInfo, dblewingaRomName, NULL, NULL, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 320, 3, 4
@@ -728,7 +730,7 @@ struct BurnDriver BurnDrvDblewingb = {
 	"dblewingb", "dblewing", NULL, NULL, "1994",
 	"Double Wings (Asia)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, dblewingbRomInfo, dblewingbRomName, NULL, NULL, NULL, NULL, DblewingInputInfo, DblewingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 320, 3, 4

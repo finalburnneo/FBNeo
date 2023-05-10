@@ -1,3 +1,4 @@
+// FB Neo IPS Mangler^H^H^H^H^H^H^HManager
 #include "burner.h"
 
 #define NUM_LANGUAGES		12
@@ -8,7 +9,7 @@ static HWND hIpsDlg			= NULL;
 static HWND hParent			= NULL;
 static HWND hIpsList		= NULL;
 
-int nIpsSelectedLanguage		= 0;
+INT32 nIpsSelectedLanguage	= 0;
 static TCHAR szFullName[1024];
 static TCHAR szLanguages[NUM_LANGUAGES][32];
 static TCHAR szLanguageCodes[NUM_LANGUAGES][6];
@@ -16,8 +17,8 @@ static TCHAR szPngName[MAX_PATH];
 
 static HTREEITEM hItemHandles[MAX_NODES];
 
-static int nPatchIndex		= 0;
-static int nNumPatches		= 0;
+static INT32 nPatchIndex	= 0;
+static INT32 nNumPatches	= 0;
 static HTREEITEM hPatchHandlesIndex[MAX_NODES];
 static TCHAR szPatchFileNames[MAX_NODES][MAX_PATH];
 
@@ -27,7 +28,8 @@ static HBITMAP hPreview		= NULL;
 
 static TCHAR szDriverName[32];
 
-INT32 nIpsMaxFileLen = 0;
+static INT32 nRomOffset		= 0;
+UINT32 nIpsDrvDefine		= 0, nIpsMemExpLen[SND2_ROM + 1] = { 0 };
 
 TCHAR szIpsActivePatches[MAX_ACTIVE_PATCHES][MAX_PATH];
 
@@ -55,12 +57,12 @@ static TCHAR* GameIpsConfigName()
 	return szName;
 }
 
-int GetIpsNumPatches()
+INT32 GetIpsNumPatches()
 {
 	WIN32_FIND_DATA wfd;
 	HANDLE hSearch;
 	TCHAR szFilePath[MAX_PATH];
-	int Count = 0;
+	INT32 Count = 0;
 
 	_stprintf(szFilePath, _T("%s%s\\"), szAppIpsPath, BurnDrvGetText(DRV_NAME));
 	_tcscat(szFilePath, _T("*.dat"));
@@ -87,7 +89,7 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 	char* desc = NULL;
 	char langtag[10];
 
-	sprintf(langtag, "[%s]", TCHARToANSI(szLanguageCodes[nLang], NULL, 0));
+	sprintf(langtag, "[%s]", _TtoA(szLanguageCodes[nLang]));
 
 	fseek(fp, 0, SEEK_SET);
 
@@ -173,7 +175,7 @@ static void FillListBox()
 	TCHAR szFileName[MAX_PATH];
 	TCHAR *PatchDesc = NULL;
 	TCHAR PatchName[256];
-	int nHandlePos = 0;
+	INT32 nHandlePos = 0;
 
 	TV_INSERTSTRUCT TvItem;
 
@@ -187,7 +189,7 @@ static void FillListBox()
 	hSearch = FindFirstFile(szFilePathSearch, &wfd);
 
 	if (hSearch != INVALID_HANDLE_VALUE) {
-		int Done = 0;
+		INT32 Done = 0;
 
 		while (!Done ) {
 			memset(szFileName, '\0', MAX_PATH * sizeof(TCHAR));
@@ -214,7 +216,7 @@ static void FillListBox()
                     _stprintf(PatchDesc, _T("%s"), wfd.cFileName);
                 }
 
-				for (unsigned int i = 0; i < _tcslen(PatchDesc); i++) {
+				for (UINT32 i = 0; i < _tcslen(PatchDesc); i++) {
 					if (PatchDesc[i] == '\r' || PatchDesc[i] == '\n') break;
 					PatchName[i] = PatchDesc[i];
 				}
@@ -225,18 +227,17 @@ static void FillListBox()
 
 				// Check for categories
 				TCHAR *Tokens;
-				int nNumTokens = 0;
-				int nNumNodes = 0;
+				INT32 nNumTokens = 0, nNumNodes = 0;
 				TCHAR szCategory[256];
-				unsigned int nPatchNameLength = _tcslen(PatchName);
+				UINT32 nPatchNameLength = _tcslen(PatchName);
 
 				Tokens = _tcstok(PatchName, _T("/"));
 				while (Tokens != NULL) {
 					if (nNumTokens == 0) {
-						int bAddItem = 1;
+						INT32 bAddItem = 1;
 						// Check if item already exists
 						nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
-						for (int i = 0; i < nNumNodes; i++) {
+						for (INT32 i = 0; i < nNumNodes; i++) {
 							TCHAR Temp[256];
 							TVITEM Tvi;
 							memset(&Tvi, 0, sizeof(Tvi));
@@ -268,7 +269,7 @@ static void FillListBox()
 						HTREEITEM hNode = TVI_ROOT;
 						// See which category we should be in
 						nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);
-						for (int i = 0; i < nNumNodes; i++) {
+						for (INT32 i = 0; i < nNumNodes; i++) {
 							TCHAR Temp[256];
 							TVITEM Tvi;
 							memset(&Tvi, 0, sizeof(Tvi));
@@ -308,17 +309,17 @@ static void FillListBox()
 	nNumPatches = nPatchIndex;
 
 	// Expand all branches
-	int nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);;
-	for (int i = 0; i < nNumNodes; i++) {
+	INT32 nNumNodes = SendMessage(hIpsList, TVM_GETCOUNT, (WPARAM)0, (LPARAM)0);;
+	for (INT32 i = 0; i < nNumNodes; i++) {
 		SendMessage(hIpsList, TVM_EXPAND, TVE_EXPAND, (LPARAM)hItemHandles[i]);
 	}
 }
 
-int GetIpsNumActivePatches()
+INT32 GetIpsNumActivePatches()
 {
-	int nActivePatches = 0;
+	INT32 nActivePatches = 0;
 
-	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++) {
+	for (INT32 i = 0; i < MAX_ACTIVE_PATCHES; i++) {
 		if (_tcsicmp(szIpsActivePatches[i], _T(""))) nActivePatches++;
 	}
 
@@ -329,17 +330,17 @@ void LoadIpsActivePatches()
 {
     _tcscpy(szDriverName, BurnDrvGetText(DRV_NAME));
 
-	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++) {
+	for (INT32 i = 0; i < MAX_ACTIVE_PATCHES; i++) {
 		_stprintf(szIpsActivePatches[i], _T(""));
 	}
 
 	FILE* fp = _tfopen(GameIpsConfigName(), _T("rt"));
 	TCHAR szLine[MAX_PATH];
-	int nActivePatches = 0;
+	INT32 nActivePatches = 0;
 
     if (fp) {
 		while (_fgetts(szLine, sizeof(szLine), fp)) {
-			int nLen = _tcslen(szLine);
+			INT32 nLen = _tcslen(szLine);
 
 			// Get rid of the linefeed at the end
 			if (nLen > 0 && szLine[nLen - 1] == 10) {
@@ -362,10 +363,10 @@ static void CheckActivePatches()
 {
 	LoadIpsActivePatches();
 
-	int nActivePatches = GetIpsNumActivePatches();
+	INT32 nActivePatches = GetIpsNumActivePatches();
 
-	for (int i = 0; i < nActivePatches; i++) {
-		for (int j = 0; j < nNumPatches; j++) {
+	for (INT32 i = 0; i < nActivePatches; i++) {
+		for (INT32 j = 0; j < nNumPatches; j++) {
 			if (!_tcsicmp(szIpsActivePatches[i], szPatchFileNames[j])) {
 				_TreeView_SetCheckState(hIpsList, hPatchHandlesIndex[j], TRUE);
 			}
@@ -373,7 +374,7 @@ static void CheckActivePatches()
 	}
 }
 
-static int IpsManagerInit()
+static INT32 IpsManagerInit()
 {
 	// Get the games full name
 	TCHAR szText[1024] = _T("");
@@ -424,7 +425,7 @@ static int IpsManagerInit()
 	_stprintf(szLanguageCodes[10], _T("pl_PL"));
 	_stprintf(szLanguageCodes[11], _T("hu_HU"));
 
-	for (int i = 0; i < NUM_LANGUAGES; i++) {
+	for (INT32 i = 0; i < NUM_LANGUAGES; i++) {
 		SendDlgItemMessage(hIpsDlg, IDC_CHOOSE_LIST, CB_ADDSTRING, 0, (LPARAM)&szLanguages[i]);
 	}
 
@@ -454,7 +455,7 @@ static void RefreshPatch()
 		hBmp = NULL;
 	}
 
-	for (int i = 0; i < nNumPatches; i++) {
+	for (INT32 i = 0; i < nNumPatches; i++) {
 		if (hSelectHandle == hPatchHandlesIndex[i]) {
 			TCHAR *PatchDesc = NULL;
 
@@ -501,14 +502,14 @@ static void RefreshPatch()
 
 static void SavePatches()
 {
-	int nActivePatches = 0;
+	INT32 nActivePatches = 0;
 
-	for (int i = 0; i < MAX_ACTIVE_PATCHES; i++) {
+	for (INT32 i = 0; i < MAX_ACTIVE_PATCHES; i++) {
 		_stprintf(szIpsActivePatches[i], _T(""));
 	}
 
-	for (int i = 0; i < nNumPatches; i++) {
-		int nChecked = _TreeView_GetCheckState(hIpsList, hPatchHandlesIndex[i]);
+	for (INT32 i = 0; i < nNumPatches; i++) {
+		INT32 nChecked = _TreeView_GetCheckState(hIpsList, hPatchHandlesIndex[i]);
 
 		if (nChecked) {
 			_tcscpy(szIpsActivePatches[nActivePatches], szPatchFileNames[i]);
@@ -520,7 +521,7 @@ static void SavePatches()
 
 	if (fp) {
 		_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer, szDriverName, szFullName);
-		for (int i = 0; i < nActivePatches; i++) {
+		for (INT32 i = 0; i < nActivePatches; i++) {
 			TCHAR *Tokens;
 			TCHAR szFileName[MAX_PATH];
 			Tokens = _tcstok(szIpsActivePatches[i], _T("\\"));
@@ -540,7 +541,7 @@ static void IpsManagerExit()
 {
 	SendDlgItemMessage(hIpsDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 
-	for (int i = 0; i < NUM_LANGUAGES; i++) {
+	for (INT32 i = 0; i < NUM_LANGUAGES; i++) {
 		szLanguages[i][0] = _T('\0');
 		szLanguageCodes[i][0] = _T('\0');
 	}
@@ -551,7 +552,7 @@ static void IpsManagerExit()
 	nPatchIndex = 0;
 	nNumPatches = 0;
 
-	for (int i = 0; i < MAX_NODES; i++) {
+	for (INT32 i = 0; i < MAX_NODES; i++) {
 		szPatchFileNames[i][0] = _T('\0');
 	}
 
@@ -594,7 +595,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			SetWindowLongPtr (GetDlgItem(hIpsDlg, IDC_TREE1), GWL_STYLE, Style);
 
 			IpsManagerInit();
-			int nBurnDrvActiveOld = nBurnDrvActive;		// RockyWall Add
+			INT32 nBurnDrvActiveOld = nBurnDrvActive;	// RockyWall Add
 			WndInMid(hDlg, hScrnWnd);
 			SetFocus(hDlg);								// Enable Esc=close
 			nBurnDrvActive = nBurnDrvActiveOld;			// RockyWall Add
@@ -629,8 +630,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 
 		case WM_COMMAND: {
-			int wID = LOWORD(wParam);
-			int Notify = HIWORD(wParam);
+			INT32 wID = LOWORD(wParam), Notify = HIWORD(wParam);
 
 			if (Notify == BN_CLICKED) {
 				switch (wID) {
@@ -645,8 +645,8 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					}
 
 					case IDC_IPSMAN_DESELECTALL: {
-						for (int i = 0; i < nNumPatches; i++) {
-							for (int j = 0; j < nNumPatches; j++) {
+						for (INT32 i = 0; i < nNumPatches; i++) {
+							for (INT32 j = 0; j < nNumPatches; j++) {
 								_TreeView_SetCheckState(hIpsList, hPatchHandlesIndex[j], FALSE);
 							}
 						}
@@ -724,7 +724,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	return 0;
 }
 
-int IpsManagerCreate(HWND hParentWND)
+INT32 IpsManagerCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 
@@ -740,13 +740,13 @@ int IpsManagerCreate(HWND hParentWND)
 #define IPS_EXT		".ips"
 
 #define BYTE3_TO_UINT(bp) \
-     (((unsigned int)(bp)[0] << 16) & 0x00FF0000) | \
-     (((unsigned int)(bp)[1] << 8) & 0x0000FF00) | \
-     ((unsigned int)(bp)[2] & 0x000000FF)
+     (((UINT32)(bp)[0] << 16) & 0x00FF0000) | \
+     (((UINT32)(bp)[1] << 8) & 0x0000FF00) | \
+     (( UINT32)(bp)[2] & 0x000000FF)
 
 #define BYTE2_TO_UINT(bp) \
-    (((unsigned int)(bp)[0] << 8) & 0xFF00) | \
-    ((unsigned int) (bp)[1] & 0x00FF)
+    (((UINT32)(bp)[0] << 8) & 0xFF00) | \
+    (( UINT32)(bp)[1] & 0x00FF)
 
 bool bDoIpsPatch = false;
 
@@ -754,7 +754,7 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 {
 	char buf[6];
 	FILE* f = NULL;
-	int Offset, Size;
+	INT32 Offset = 0, Size = 0;
 	UINT8* mem8 = NULL;
 
 	if (NULL == (f = fopen(ips_path, "rb"))) {
@@ -772,9 +772,9 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 		}
 		return;
 	} else {
-		bprintf(0, _T("IPS - Patching with: %S.\n"), ips_path);
+		bprintf(0, _T("IPS - Patching with: %S. (%S)\n"), ips_path, (readonly) ? "Read-Only" : "Write");
 		UINT8 ch = 0;
-		int bRLE = 0;
+		INT32 bRLE = 0;
 		while (!feof(f)) {
 			// read patch address offset
 			fread(buf, 1, 3, f);
@@ -796,16 +796,21 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 			}
 
 			while (Size--) {
-				if (!readonly) mem8 = base + Offset; // When in the read-only state, the only thing is to get nIpsMaxFileLen, thus avoiding memory out-of-bounds.
+				if (!readonly) mem8 = base + Offset + nRomOffset;
                 Offset++;
-                if (Offset > nIpsMaxFileLen) nIpsMaxFileLen = Offset; // file size is growing
                 if (readonly) {
                     if (!bRLE) fgetc(f);
                 } else {
-                    *mem8 = bRLE ? ch : fgetc(f);
+					*mem8 = bRLE ? ch : fgetc(f);
                 }
 			}
 		}
+	}
+
+	// Avoid memory out-of-bounds due to ips offset greater than rom length.
+	if (readonly && (0 == nIpsMemExpLen[EXP_FLAG])) {	// Unspecified length.
+		nIpsMemExpLen[LOAD_ROM] = 0;					// Must be reset to 0 before getting the next ips offset.
+		nIpsMemExpLen[LOAD_ROM] = Offset;
 	}
 
 	fclose(f);
@@ -844,14 +849,67 @@ static char* stristr_int(const char* str1, const char* str2)
     return (*p2) ? NULL : (char*)r;
 }
 
-static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bool readonly)
+static UINT32 hexto32(const char *s)
+{
+	UINT32 val = 0;
+	char c;
+
+	while ((c = *s++)) {
+		UINT8 v = ((c & 0xf) + (c >> 6)) | ((c >> 3) & 0x8);
+		val = (val << 4) | (UINT32)v;
+    }
+
+	return val;
+}
+
+// strqtoken() - functionally identicle to strtok() w/ special treatment for
+// quoted strings.  -dink april 2023
+char *strqtoken(char *s, const char *delims)
+{
+	static char *prev_str = NULL;
+	char *token = NULL;
+
+	if (!s) s = prev_str;
+
+	s += strspn(s, delims);
+	if (s[0] == '\0') {
+		prev_str = s;
+		return NULL;
+	}
+
+	if (s[0] == '\"') { // time to grab quoted string!
+		token = ++s;
+		if ((s = strpbrk(token, "\""))) {
+			*(s++) = '\0';
+		}
+	} else {
+		token = s;
+	}
+
+	if ((s = strpbrk(s, delims))) {
+		*(s++) = '\0';
+		prev_str = s;
+	} else {
+		// we're at the end of the road
+		prev_str = (char*)memchr((void *)token, '\0', MAX_PATH);
+	}
+
+	return token;
+}
+
+static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UINT8* base, bool readonly)
 {
 	char s[MAX_PATH];
     char* p = NULL;
 	char* rom_name = NULL;
 	char* ips_name = NULL;
+	char* ips_offs = NULL;
+	char* ips_crc  = NULL;
+	UINT32 nIps_crc = 0;
 	FILE* fp = NULL;
 	unsigned long nIpsSize;
+
+	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
 
     if ((fp = fopen(patch_name, "rb")) != NULL) {
 		// get ips size
@@ -867,54 +925,61 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bo
 				if (strncmp(p, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE)) == 0)
 					p += strlen(UTF8_SIGNATURE);
 
-				if (p[0] == '[')	// '['
+				if (p[0] == '[')	// reached info-section of .dat file, time to leave.
 					break;
 
-                // Can support linetypes:
+                // Can support linetypes: (space or tab)
                 // "rom name.bin" "patch file.ips" CRC(abcd1234)
                 // romname.bin patchfile CRC(abcd1234)
-
-                if (p[0] == '\"') { // "quoted rom name with spaces.bin"
-                    p++;
-                    rom_name = strtok(p, "\"");
-                } else {
-                    rom_name = strtok(p, " \t\r\n");
-                }
+				#define DELIM_TOKENS " \t\r\n()"
+				rom_name = strqtoken(p, DELIM_TOKENS);
 
 				if (!rom_name)
 					continue;
 				if (*rom_name == '#')
 					continue;
-				if (_stricmp(rom_name, game_name))
+
+				ips_name = strqtoken(NULL, DELIM_TOKENS);
+				if (!ips_name) {
 					continue;
+				}
 
-                ips_name = strtok(NULL, "\r\n");
+				nIps_crc = 0;
+				nRomOffset = 0; // Reset to 0
+				if (NULL != (ips_offs = strqtoken(NULL, DELIM_TOKENS))) {	// Parameters of the offset increment
+					if (     0 == strcmp(ips_offs, "IPS_OFFSET_016")) nRomOffset = 0x1000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_032")) nRomOffset = 0x2000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_048")) nRomOffset = 0x3000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_064")) nRomOffset = 0x4000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_080")) nRomOffset = 0x5000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_096")) nRomOffset = 0x6000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_112")) nRomOffset = 0x7000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_128")) nRomOffset = 0x8000000;
+					else if (0 == strcmp(ips_offs, "IPS_OFFSET_144")) nRomOffset = 0x9000000;
 
-				if (ips_name[0] == '\t') ips_name++;
+					if (nRomOffset != 0) { // better get next token (crc)
+						ips_offs = strqtoken(NULL, DELIM_TOKENS);
+					}
+				}
 
-				if (!ips_name)
-					continue;
-
-                // remove crc portion, and end quote/spaces from ips name
-                char *c = stristr_int(ips_name, "crc");
-                if (c) {
-                    c--; // "derp.ips" CRC(abcd1234)\n"
-                         //           ^ we're now here.
-                    while (*c && (*c == ' ' || *c == '\t' || *c == '\"'))
-                    {
-                        *c = '\0';
-                        c--;
-                    }
-                }
-
-                // clean-up IPS name beginning (could be quoted or not)
-                while (ips_name && (ips_name[0] == '\t' || ips_name[0] == ' ' || ips_name[0] == '\"'))
-                    ips_name++;
+				if (ips_offs != NULL && stristr_int(ips_offs, "crc")) {
+					ips_crc = strqtoken(NULL, DELIM_TOKENS);
+					if (ips_crc) {
+						nIps_crc = hexto32(ips_crc);
+					}
+				}
 
                 char *has_ext = stristr_int(ips_name, ".ips");
 
-                bprintf(0, _T("ips name:[%S]\n"), ips_name);
-                bprintf(0, _T("rom name:[%S]\n"), rom_name);
+				if (_stricmp(rom_name, game_name))	// name don't match?
+					if (nIps_crc != crc)			// crc don't match?
+						continue;					// not our file. next!
+
+				if (!readonly) {
+					bprintf(0, _T("ips name:[%S]\n"), ips_name);
+					bprintf(0, _T("rom name:[%S]\n"), rom_name);
+					bprintf(0, _T("rom crc :[%x]\n"), nIps_crc);
+				}
 
 				char ips_path[MAX_PATH*2];
 				char ips_dir[MAX_PATH];
@@ -934,31 +999,56 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base, bo
 	}
 }
 
-void IpsApplyPatches(UINT8* base, char* rom_name)
+static UINT32 GetIpsDefineExpValue(char* szTmp)
 {
-	char ips_data[MAX_PATH];
+	if (NULL == (szTmp = strtok(NULL, " \t\r\n")))
+		return 0;
 
-	nIpsMaxFileLen = 0;
+	INT32 nRet = 0;
 
-	int nActivePatches = GetIpsNumActivePatches();
+	if (     0 == strcmp(szTmp, "EXP_VALUE_001")) nRet = 0x0010000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_002")) nRet = 0x0020000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_003")) nRet = 0x0030000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_004")) nRet = 0x0040000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_005")) nRet = 0x0050000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_006")) nRet = 0x0060000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_007")) nRet = 0x0070000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_008")) nRet = 0x0080000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_010")) nRet = 0x0100000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_020")) nRet = 0x0200000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_030")) nRet = 0x0300000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_040")) nRet = 0x0400000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_050")) nRet = 0x0500000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_060")) nRet = 0x0600000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_070")) nRet = 0x0700000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_080")) nRet = 0x0800000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_100")) nRet = 0x1000000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_200")) nRet = 0x2000000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_300")) nRet = 0x3000000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_400")) nRet = 0x4000000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_500")) nRet = 0x5000000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_600")) nRet = 0x6000000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_700")) nRet = 0x7000000;
+	else if (0 == strcmp(szTmp, "EXP_VALUE_800")) nRet = 0x8000000;
 
-	for (int i = 0; i < nActivePatches; i++) {
-		memset(ips_data, 0, MAX_PATH);
-		TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
-		DoPatchGame(ips_data, rom_name, base, false);
-	}
+	return nRet;
 }
 
-UINT32 GetIpsDrvDefine()
+// Run once to get the definition & definition values of the DAT files.
+// Suppress CPU usage caused by multiple runs.
+// Two entry points: cmdline Launch & SelOkay.
+void GetIpsDrvDefine()
 {
-	if (!bDoIpsPatch) return 0;
+	if (!bDoIpsPatch)
+		return;
 
-	UINT32 nRet = 0;
+	nIpsDrvDefine = 0;
+	memset(nIpsMemExpLen, 0, sizeof(nIpsMemExpLen));
 
 	char ips_data[MAX_PATH];
-	int nActivePatches = GetIpsNumActivePatches();
+	INT32 nActivePatches = GetIpsNumActivePatches();
 
-	for (int i = 0; i < nActivePatches; i++) {
+	for (INT32 i = 0; i < nActivePatches; i++) {
 		memset(ips_data, 0, MAX_PATH);
 		TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
 
@@ -977,93 +1067,116 @@ UINT32 GetIpsDrvDefine()
 					if (NULL == (tmp = strtok(ptr, " \t\r\n")))
 						continue;
 					if (0 != strcmp(tmp, "#define"))
-						continue;
+						break;
 					if (NULL == (tmp = strtok(NULL, " \t\r\n")))
 						break;
 
-					if (0 == strcmp(tmp, "IPS_USE_PROTECT")) {
-						nRet |= IPS_USE_PROTECT;
+					UINT32 nNewValue = 0;
+
+					if (0 == strcmp(tmp, "IPS_NOT_PROTECT")) {
+						nIpsDrvDefine |= IPS_NOT_PROTECT;
 						continue;
 					}
-
-					// Assignment is only allowed once
-					if (!INCLUDE_NEOP3(nRet)) {
-						if (0 == strcmp(tmp, "IPS_NEOP3_20000")) {
-							nRet |= IPS_NEOP3_20000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_NEOP3_40000")) {
-							nRet |= IPS_NEOP3_40000;
-							continue;
-						}
+					if (0 == strcmp(tmp, "IPS_PGM_SPRHACK")) {
+						nIpsDrvDefine |= IPS_PGM_SPRHACK;
+						continue;
 					}
-					if (!INCLUDE_PROG(nRet)) {
-						if (0 == strcmp(tmp, "IPS_PROG_100000")) {
-							nRet |= IPS_PROG_100000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_200000")) {
-							nRet |= IPS_PROG_200000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_300000")) {
-							nRet |= IPS_PROG_300000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_400000")) {
-							nRet |= IPS_PROG_400000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_500000")) {
-							nRet |= IPS_PROG_500000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_600000")) {
-							nRet |= IPS_PROG_600000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_700000")) {
-							nRet |= IPS_PROG_700000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_800000")) {
-							nRet |= IPS_PROG_800000;
-							continue;
-						}
-						if (0 == strcmp(tmp, "IPS_PROG_900000")) {
-							nRet |= IPS_PROG_900000;
-							continue;
-						}
+					if (0 == strcmp(tmp, "IPS_PGM_MAPHACK")) {
+						nIpsDrvDefine |= IPS_PGM_MAPHACK;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_PGM_SNDOFFS")) {
+						nIpsDrvDefine |= IPS_PGM_SNDOFFS;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_LOAD_EXPAND")) {
+						nIpsDrvDefine |= IPS_LOAD_EXPAND;
+						nIpsMemExpLen[EXP_FLAG] = 1;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[LOAD_ROM])
+							nIpsMemExpLen[LOAD_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_EXTROM_INCL")) {
+						nIpsDrvDefine |= IPS_EXTROM_INCL;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[EXTR_ROM])
+							nIpsMemExpLen[EXTR_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_PRG1_EXPAND")) {
+						nIpsDrvDefine |= IPS_PRG1_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[PRG1_ROM])
+							nIpsMemExpLen[PRG1_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_PRG2_EXPAND")) {
+						nIpsDrvDefine |= IPS_PRG2_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[PRG2_ROM])
+							nIpsMemExpLen[PRG2_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_GRA1_EXPAND")) {
+						nIpsDrvDefine |= IPS_GRA1_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA1_ROM])
+							nIpsMemExpLen[GRA1_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_GRA2_EXPAND")) {
+						nIpsDrvDefine |= IPS_GRA2_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA2_ROM])
+							nIpsMemExpLen[GRA2_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_GRA3_EXPAND")) {
+						nIpsDrvDefine |= IPS_GRA3_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[GRA3_ROM])
+							nIpsMemExpLen[GRA3_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_ACPU_EXPAND")) {
+						nIpsDrvDefine |= IPS_ACPU_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[ACPU_ROM])
+							nIpsMemExpLen[ACPU_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_SND1_EXPAND")) {
+						nIpsDrvDefine |= IPS_SND1_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[SND1_ROM])
+							nIpsMemExpLen[SND1_ROM] = nNewValue;
+						continue;
+					}
+					if (0 == strcmp(tmp, "IPS_SND2_EXPAND")) {
+						nIpsDrvDefine |= IPS_SND2_EXPAND;
+						if ((nNewValue = GetIpsDefineExpValue(tmp)) > nIpsMemExpLen[SND2_ROM])
+							nIpsMemExpLen[SND2_ROM] = nNewValue;
+						continue;
 					}
 				}
 			}
 			fclose(fp);
 		}
 	}
-
-	return nRet;
 }
 
-INT32 GetIpsesMaxLen(char* rom_name)
+void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly)
 {
-	INT32 nRet = -1;	// The function returns the last patched address if it succeeds, and -1 if it fails.
+	if (!bDoIpsPatch)
+		return;
 
-	if (NULL != rom_name) {
-		char ips_data[MAX_PATH];
-		nIpsMaxFileLen = 0;
-		int nActivePatches = GetIpsNumActivePatches();
+	char ips_data[MAX_PATH];
 
-		for (int i = 0; i < nActivePatches; i++) {
-			memset(ips_data, 0, MAX_PATH);
-			TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
-			DoPatchGame(ips_data, rom_name, NULL, true);
-			if (nIpsMaxFileLen > nRet) nRet = nIpsMaxFileLen;	// Returns the address with the largest length in ipses.
-		}
+	INT32 nActivePatches = GetIpsNumActivePatches();
+
+	for (INT32 i = 0; i < nActivePatches; i++) {
+		memset(ips_data, 0, MAX_PATH);
+		TCHARToANSI(szIpsActivePatches[i], ips_data, sizeof(ips_data));
+		DoPatchGame(ips_data, rom_name, crc, base, readonly);
 	}
-	return nRet;
 }
 
 void IpsPatchExit()
 {
-	bDoIpsPatch = false;
+	memset(nIpsMemExpLen, 0, sizeof(nIpsMemExpLen));
+
+	nIpsDrvDefine	= 0;
+	bDoIpsPatch		= false;
 }

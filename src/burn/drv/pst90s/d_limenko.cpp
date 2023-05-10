@@ -428,6 +428,8 @@ static INT32 DrvDoReset()
 	prev_sprites_count = 0;
 	memset (audiocpu_data, 0, sizeof(audiocpu_data)); // spotty
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -987,7 +989,7 @@ struct BurnDriver BurnDrvDynabomb = {
 	"dynabomb", NULL, NULL, NULL, "2000",
 	"Dynamite Bomber (Korea, Rev 1.5)\0", NULL, "Limenko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, dynabombRomInfo, dynabombRomName, NULL, NULL, NULL, NULL, Sb2003InputInfo, Sb2003DIPInfo,
 	DynabombInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 240, 4, 3

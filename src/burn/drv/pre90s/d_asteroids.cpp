@@ -51,6 +51,8 @@ static struct BurnInputInfo AsteroidInputList[] = {
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Hyperspace",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
 
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Diag Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 6,	"tilt"		},
@@ -71,6 +73,8 @@ static struct BurnInputInfo AsteroidbInputList[] = {
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 2"	},
 	{"P1 Hyperspace",	BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 3"	},
 
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 2,	"tilt"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -89,6 +93,8 @@ static struct BurnInputInfo AsterockInputList[] = {
 	{"P1 Fire",		    BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Hyperspace",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
@@ -109,6 +115,8 @@ static struct BurnInputInfo AstdeluxInputList[] = {
 	{"P1 Fire",		    BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Thrust",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Shield",	    BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 3"	},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Diag Step",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"	},
@@ -152,11 +160,11 @@ static struct BurnInputInfo LlandertInputList[] = {
 
 STDINPUTINFO(Llandert)
 
-#define DO 0xa    // getting tired of re-basing the dips. :P
+#define DO 0xb    // getting tired of re-basing the dips. :P
 
 static struct BurnDIPInfo AsteroidDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x84, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -203,7 +211,7 @@ STDDIPINFO(Asteroid)
 
 static struct BurnDIPInfo AerolitosDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x87, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -250,7 +258,7 @@ STDDIPINFO(Aerolitos)
 
 static struct BurnDIPInfo AsteroidbDIPList[]=
 {
-	DIP_OFFSET(0x9)
+	DIP_OFFSET(0xa)
 	{0x00, 0xff, 0xff, 0x84, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -285,7 +293,7 @@ STDDIPINFO(Asteroidb)
 
 static struct BurnDIPInfo AsterockDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x87, NULL					},
 	{0x01, 0xff, 0xff, 0x00, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -332,7 +340,7 @@ STDDIPINFO(Asterock)
 
 static struct BurnDIPInfo AstdeluxDIPList[]=
 {
-	DIP_OFFSET(0xa)
+	DIP_OFFSET(0xb)
 	{0x00, 0xff, 0xff, 0x80, NULL					},
 	{0x01, 0xff, 0xff, 0xfd, NULL					},
 	{0x02, 0xff, 0xff, 0x00, NULL					},
@@ -786,6 +794,7 @@ static INT32 res_check()
 
 		if (Height != 1080) {
 			vector_rescale((1080*640/480), 1080);
+			DrvRecalc = 1;
 			return 1;
 		}
 	} else {
@@ -794,6 +803,7 @@ static INT32 res_check()
 
 		if (Height != 480) {
 			vector_rescale(640, 480);
+			DrvRecalc = 1;
 			return 1;
 		}
 	}
@@ -1014,12 +1024,23 @@ static INT32 DrvExit()
 static void DrvPaletteInit()
 {
     for (INT32 i = 0; i < 0x20; i++) // color
-	{		
+	{
 		for (INT32 j = 0; j < 256; j++) // intensity
 		{
-			INT32 c = (0xff * j) / 0xff;
+			INT32 r = (0xff * j) / 0xff;
+			INT32 g = r;
+			INT32 b = r;
 
-			DrvPalette[i * 256 + j] = (c << 16) | (c << 8) | c; // must be 32bit palette! -dink (see vector.cpp)
+			if (astdelux) {
+				INT32 hires = (DrvDips[3] & 1);
+				INT32 plus = (hires) ? 0x00 : 0x40; // lores mode needs to be brighter
+
+				r = ((0x27+plus) * j) / 0xff;
+				g = ((0xa0+plus) * j) / 0xff;
+				b = ((0xa0+plus) * j) / 0xff;
+			}
+
+			DrvPalette[i * 256 + j] = (r << 16) | (g << 8) | b; // must be 32bit palette! -dink (see vector.cpp)
 		}
 	}
 }
@@ -1600,7 +1621,7 @@ struct BurnDriver BurnDrvAstdelux = {
 	"astdelux", NULL, NULL, NULL, "1980",
 	"Asteroids Deluxe (rev 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, astdeluxRomInfo, astdeluxRomName, NULL, NULL, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
 	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
@@ -1627,7 +1648,7 @@ struct BurnDriver BurnDrvAstdelux2 = {
 	"astdelux2", "astdelux", NULL, NULL, "1980",
 	"Asteroids Deluxe (rev 2)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, astdelux2RomInfo, astdelux2RomName, NULL, NULL, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
 	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3
@@ -1655,7 +1676,7 @@ struct BurnDriver BurnDrvAstdelux1 = {
 	"astdelux1", "astdelux", NULL, NULL, "1980",
 	"Asteroids Deluxe (rev 1)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, astdelux1RomInfo, astdelux1RomName, NULL, NULL, NULL, NULL, AstdeluxInputInfo, AstdeluxDIPInfo,
 	AstdeluxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	640, 480, 4, 3

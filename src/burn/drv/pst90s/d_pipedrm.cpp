@@ -923,7 +923,7 @@ struct BurnDriver BurnDrvPipedrm = {
 	"pipedrm", NULL, NULL, NULL, "1990",
 	"Pipe Dream (World)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pipedrmRomInfo, pipedrmRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
@@ -964,7 +964,7 @@ struct BurnDriver BurnDrvPipedrmu = {
 	"pipedrmu", "pipedrm", NULL, NULL, "1990",
 	"Pipe Dream (US)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pipedrmuRomInfo, pipedrmuRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
@@ -1005,7 +1005,7 @@ struct BurnDriver BurnDrvPipedrmj = {
 	"pipedrmj", "pipedrm", NULL, NULL, "1990",
 	"Pipe Dream (Japan)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pipedrmjRomInfo, pipedrmjRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
@@ -1046,7 +1046,7 @@ struct BurnDriver BurnDrvPipedrmt = {
 	"pipedrmt", "pipedrm", NULL, NULL, "1990",
 	"Pipe Dream (Taiwan)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pipedrmtRomInfo, pipedrmtRomName, NULL, NULL, NULL, NULL, PipedrmInputInfo, PipedrmDIPInfo,
 	pipedrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3

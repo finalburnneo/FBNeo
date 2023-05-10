@@ -677,7 +677,7 @@ struct BurnDriver BurnDrvCloak = {
 	"cloak", NULL, NULL, NULL, "1983",
 	"Cloak & Dagger (rev 5)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, cloakRomInfo, cloakRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
@@ -716,7 +716,7 @@ struct BurnDriver BurnDrvCloaksp = {
 	"cloaksp", "cloak", NULL, NULL, "1983",
 	"Cloak & Dagger (Spanish)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, cloakspRomInfo, cloakspRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
@@ -755,7 +755,7 @@ struct BurnDriver BurnDrvCloakfr = {
 	"cloakfr", "cloak", NULL, NULL, "1983",
 	"Cloak & Dagger (French)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, cloakfrRomInfo, cloakfrRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3
@@ -794,7 +794,7 @@ struct BurnDriver BurnDrvCloakgr = {
 	"cloakgr", "cloak", NULL, NULL, "1983",
 	"Cloak & Dagger (German)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, cloakgrRomInfo, cloakgrRomName, NULL, NULL, NULL, NULL, CloakInputInfo, CloakDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 232, 4, 3

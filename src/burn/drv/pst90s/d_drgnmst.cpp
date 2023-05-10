@@ -405,6 +405,8 @@ static INT32 DrvDoReset()
 	snd_flag = 0;
 	oki_command = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -791,7 +793,7 @@ struct BurnDriver BurnDrvDrgnmst = {
 	"drgnmst", NULL, NULL, NULL, "1994",
 	"Dragon Master (set 1)\0", NULL, "Unico", "Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, drgnmstRomInfo, drgnmstRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 224, 4, 3
@@ -826,7 +828,7 @@ struct BurnDriver BurnDrvDrgnmst2 = {
 	"drgnmst2", "drgnmst", NULL, NULL, "1994",
 	"Dragon Master (set 2)\0", NULL, "Unico", "Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, drgnmst2RomInfo, drgnmst2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 224, 4, 3

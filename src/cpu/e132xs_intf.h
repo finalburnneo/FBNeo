@@ -26,7 +26,7 @@ INT32 E132XSIdle(INT32);
 void E132XSReset();
 void E132XSExit();
 void E132XSNewFrame();
-void E132XSScan(INT32 nAction);
+INT32 E132XSScan(INT32 nAction);
 
 void E132XSSetIRQLine(INT32 line, INT32 state);
 

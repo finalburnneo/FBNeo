@@ -203,6 +203,8 @@ struct BurnDIPInfo {
 #define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
 #define CPU_RUN_TIMER_YM3812(num) do { BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameYM3812(nCyclesTotal[num]); } while (0)
 #define CPU_RUN_TIMER_YM3526(num) do { BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameYM3526(nCyclesTotal[num]); } while (0)
+// speed adjuster
+INT32 BurnSpeedAdjust(INT32 cyc);
 
 #define CPU_IRQSTATUS_NONE	0
 #define CPU_IRQSTATUS_ACK	1
@@ -399,35 +401,28 @@ void Reinitialise();
 // ---------------------------------------------------------------------------
 // IPS Control
 
-#define IPS_USE_PROTECT		(1 <<  0)	// Control protection.
+#define IPS_NOT_PROTECT		(1 <<  0)	// Protection switche for NeoGeo, etc.
+#define IPS_PGM_SPRHACK		(1 <<  1)	// For PGM hacks...
+#define IPS_PGM_MAPHACK		(1 <<  2)	// Id.
+#define IPS_PGM_SNDOFFS		(1 <<  3)	// Id.
+#define IPS_LOAD_EXPAND		(1 <<  4)	// Break the ips 16MB addressing limit.
+#define IPS_EXTROM_INCL		(1 <<  5)	// Extra rom.
+#define IPS_PRG1_EXPAND		(1 <<  6)	// Additional request for prg length.
+#define IPS_PRG2_EXPAND		(1 <<  7)	// Id.
+#define IPS_GRA1_EXPAND		(1 <<  8)	// Additional request for gfx length.
+#define IPS_GRA2_EXPAND		(1 <<  9)	// Id.
+#define IPS_GRA3_EXPAND		(1 << 10)	// Id.
+#define IPS_ACPU_EXPAND		(1 << 11)	// Additional request for audio cpu length.
+#define IPS_SND1_EXPAND		(1 << 12)	// Additional request for snd length.
+#define IPS_SND2_EXPAND		(1 << 13)	// Id.
 
-#define IPS_NEOP3_20000		(1 <<  1)	// Extra Rom
-#define IPS_NEOP3_40000		(1 <<  2)
-
-#define IPS_PROG_100000		(1 <<  3)
-#define IPS_PROG_200000		(1 <<  4)
-#define IPS_PROG_300000		(1 <<  5)
-#define IPS_PROG_400000		(1 <<  6)
-#define IPS_PROG_500000		(1 <<  7)
-#define IPS_PROG_600000		(1 <<  8)
-#define IPS_PROG_700000		(1 <<  9)
-#define IPS_PROG_800000		(1 << 10)
-#define IPS_PROG_900000		(1 << 11)
-
-#define INCLUDE_NEOP3(x)	((x & IPS_NEOP3_20000) || (x & IPS_NEOP3_40000))
-#define INCLUDE_PROG(x)		((x & IPS_PROG_100000) || (x & IPS_PROG_200000) || (x & IPS_PROG_300000) || (x & IPS_PROG_400000) || (x & IPS_PROG_500000) ||	\
-							 (x & IPS_PROG_600000) || (x & IPS_PROG_700000) || (x & IPS_PROG_800000) || (x & IPS_PROG_900000))
-
-#define IPS_NEOP3_VALUE(x)	((x & IPS_NEOP3_20000) ? 0x020000  : ((x & IPS_NEOP3_40000) ? 0x040000  : 0))
-#define IPS_PROG_VALUE(x)	((x & IPS_PROG_100000) ? 0x100000  : ((x & IPS_PROG_200000) ? 0x200000  : ((x & IPS_PROG_300000) ? 0x300000  : ((x & IPS_PROG_400000) ? 0x400000 : ((x & IPS_PROG_500000) ? 0x500000 :	\
-							((x & IPS_PROG_600000) ? 0x600000  : ((x & IPS_PROG_700000) ? 0x700000  : ((x & IPS_PROG_800000) ? 0x800000  : ((x & IPS_PROG_900000) ? 0x900000 : 0)))))))))
+enum IpsRomTypes { EXP_FLAG, LOAD_ROM, EXTR_ROM, PRG1_ROM, PRG2_ROM, GRA1_ROM, GRA2_ROM, GRA3_ROM, ACPU_ROM, SND1_ROM, SND2_ROM };
+extern UINT32 nIpsDrvDefine, nIpsMemExpLen[SND2_ROM + 1];
 
 extern bool bDoIpsPatch;
-extern INT32 nIpsMaxFileLen;
 
-void IpsApplyPatches(UINT8* base, char* rom_name);
-UINT32 GetIpsDrvDefine();
-INT32 GetIpsesMaxLen(char* rom_name);
+void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 rom_crc, bool readonly = false);
+void GetIpsDrvDefine();
 
 // ---------------------------------------------------------------------------
 // Flags used with the Burndriver structure

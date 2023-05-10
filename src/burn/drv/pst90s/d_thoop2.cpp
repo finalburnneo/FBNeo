@@ -292,6 +292,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	set_oki_bank(3);
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -684,6 +686,12 @@ static struct BurnRomInfo thoop2RomDesc[] = {
 	{ "th2-h12.h12",			0x400000, 0xb25c2d3e, 3 | BRF_GRA },           //  4
 
 	{ "th2-c1.c1",				0x100000, 0x8fac8c30, 4 | BRF_SND },           //  5 Samples
+	
+	{ "pal16r8-1.b16",  		0x000104, 0x27b1ca8b, 0 | BRF_OPT },		   //  6 Plds
+	{ "pal20l8-2.b23", 			0x000144, 0x87e5e6ab, 0 | BRF_OPT },
+	{ "pal16r4-3.e2", 			0x000104, 0x0488f37b, 0 | BRF_OPT },
+	{ "pal20l8-4.h15", 			0x000144, 0x49053906, 0 | BRF_OPT },
+	{ "palce16v8-5.h21", 		0x000117, 0xb651bc3b, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(thoop2)
@@ -693,7 +701,7 @@ struct BurnDriver BurnDrvThoop2 = {
 	"thoop2", NULL, NULL, NULL, "1994",
 	"TH Strikes Back (Non North America, Version 1.0, Checksum 020E0867)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, thoop2RomInfo, thoop2RomName, NULL, NULL, NULL, NULL, Thoop2InputInfo, Thoop2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -713,6 +721,12 @@ static struct BurnRomInfo thoop2aRomDesc[] = {
 	{ "th2-h12.h12",			0x400000, 0xb25c2d3e, 3 | BRF_GRA },           //  4
 
 	{ "th2-c1.c1",				0x100000, 0x8fac8c30, 4 | BRF_SND },           //  5 Samples
+	
+	{ "pal16r8-1.b16",  		0x000104, 0x27b1ca8b, 0 | BRF_OPT },		   //  6 Plds
+	{ "pal20l8-2.b23", 			0x000144, 0x87e5e6ab, 0 | BRF_OPT },
+	{ "pal16r4-3.e2", 			0x000104, 0x0488f37b, 0 | BRF_OPT },
+	{ "pal20l8-4.h15", 			0x000144, 0x49053906, 0 | BRF_OPT },
+	{ "palce16v8-5.h21", 		0x000117, 0xb651bc3b, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(thoop2a)
@@ -722,7 +736,7 @@ struct BurnDriver BurnDrvThoop2a = {
 	"thoop2a", "thoop2", NULL, NULL, "1994",
 	"TH Strikes Back (Non North America, Version 1.0, Checksum 020EB356)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, thoop2aRomInfo, thoop2aRomName, NULL, NULL, NULL, NULL, Thoop2InputInfo, Thoop2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

@@ -1,4 +1,4 @@
-// FB Alpha Sega Z80-3D system driver module
+// FB Neo Sega Z80-3D system driver module
 // Based on and large pieces copied from (video code & sound code) MAME driver by 
 // Alex Pasadyn, Howie Cohen, Frank Palazzolo, Ernesto Corvi, and Aaron Giles
 
@@ -12,6 +12,7 @@
 #include "8255ppi.h"
 #include "math.h"
 #include "burn_shift.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -980,6 +981,8 @@ static INT32 DrvDoReset()
 	buckrog_obch = 0;
 
 	DrvDial = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -2155,6 +2158,18 @@ static UINT32 buckrog_get_sprite_bits(sprite_info *sprinfo, UINT8 *plb)
 	return sprdata;
 }
 
+static inline UINT8 count_leading_zeros_32(UINT32 val)
+{
+	if (0 == val)
+		return 32U;
+
+	UINT8 count;
+	for (count = 0; INT32(val) >= 0; count++)
+		val <<= 1;
+
+	return count;
+}
+
 static void screen_update_buckrog()
 {
 	const UINT8 *pr5194 = &DrvColPROM[0x000];
@@ -2211,6 +2226,7 @@ static void screen_update_buckrog()
 				sprbits = buckrog_get_sprite_bits(&sprinfo, &plb);
 
 				/* the PLB bits go into an LS148 8-to-1 decoder and become MUX0-3 (PROM board SH 2/10) */
+				/*
 				if (plb == 0)
 					mux = 8;
 				else
@@ -2222,6 +2238,10 @@ static void screen_update_buckrog()
 						plb <<= 1;
 					}
 				}
+				*/
+				mux = count_leading_zeros_32(BITSWAP08(plb, 0, 1, 2, 3, 4, 5, 6, 7)) - 24;
+				if (8 == mux)
+					mux = 0x0f;
 
 				/* MUX then selects one of the Sprites and selects CD0-3 */
 				sprbits = (sprbits >> (mux & 0x07)) & 0x01010101;
@@ -2521,7 +2541,7 @@ struct BurnDriver BurnDrvTurbo = {
 	"turbo", NULL, NULL, "turbo", "1981",
 	"Turbo (program 1513-1515)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turboRomInfo, turboRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboDecInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
@@ -2582,7 +2602,7 @@ struct BurnDriver BurnDrvTurboa = {
 	"turboa", "turbo", NULL, "turbo", "1981",
 	"Turbo (encrypted, program 1262-1264)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turboaRomInfo, turboaRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
@@ -2643,7 +2663,7 @@ struct BurnDriver BurnDrvTurbob = {
 	"turbob", "turbo", NULL, "turbo", "1981",
 	"Turbo (encrypted, program 1363-1365 rev C)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turbobRomInfo, turbobRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
@@ -2704,7 +2724,7 @@ struct BurnDriver BurnDrvTurboc = {
 	"turboc", "turbo", NULL, "turbo", "1981",
 	"Turbo (encrypted, program 1363-1365 rev B)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turbocRomInfo, turbocRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
@@ -2765,7 +2785,7 @@ struct BurnDriver BurnDrvTurbod = {
 	"turbod", "turbo", NULL, "turbo", "1981",
 	"Turbo (encrypted, program 1363-1365 rev A)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turbodRomInfo, turbodRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboEncInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
@@ -2885,7 +2905,7 @@ struct BurnDriver BurnDrvTurbobl = {
 	"turbobl", "turbo", NULL, "turbo", "1981",
 	"Indianapolis (bootleg of Turbo)\0", NULL, "bootleg", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, turboblRomInfo, turboblRomName, NULL, NULL, turboSampleInfo, turboSampleName, TurboInputInfo, TurboDIPInfo,
 	TurboDecInit, DrvExit, TurboFrame, TurboDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 512, 3, 4
@@ -2961,7 +2981,7 @@ struct BurnDriver BurnDrvSubroc3d = {
 	"subroc3d", NULL, NULL, "subroc3d", "1982",
 	"Subroc-3D\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, subroc3dRomInfo, subroc3dRomName, NULL, NULL, subroc3dSampleInfo, subroc3dSampleName, Subroc3dInputInfo, Subroc3dDIPInfo,
 	Subroc3dInit, DrvExit, TurboFrame, Subroc3dDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 224, 4, 3
@@ -3026,7 +3046,7 @@ struct BurnDriver BurnDrvBuckrog = {
 	"buckrog", NULL, NULL, "buckrog", "1982",
 	"Buck Rogers: Planet of Zoom\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, buckrogRomInfo, buckrogRomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogEncInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3
@@ -3073,7 +3093,7 @@ struct BurnDriver BurnDrvBuckrogn = {
 	"buckrogn", "buckrog", NULL, "buckrog", "1982",
 	"Buck Rogers: Planet of Zoom (not encrypted, set 1)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, buckrognRomInfo, buckrognRomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogDecInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3
@@ -3120,7 +3140,7 @@ struct BurnDriver BurnDrvBuckrogn2 = {
 	"buckrogn2", "buckrog", NULL, "buckrog", "1982",
 	"Buck Rogers: Planet of Zoom (not encrypted, set 2)\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, buckrogn2RomInfo, buckrogn2RomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogDecInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3
@@ -3167,7 +3187,7 @@ struct BurnDriver BurnDrvZoom909 = {
 	"zoom909", "buckrog", NULL, "buckrog", "1982",
 	"Zoom 909\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zoom909RomInfo, zoom909RomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogEncInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3

@@ -496,78 +496,78 @@ STDDIPINFO(Hotmind)
 
 static struct BurnDIPInfo HrdtimesDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL					  },
+	{0x13, 0xff, 0xff, 0x7f, NULL					  },
 	{0x14, 0xff, 0xff, 0xff, NULL					  },
 
-	{0   , 0xfe, 0   ,    2, "Coin Slots"			  },
-	{0x13, 0x01, 0x01, 0x00, "Separate"				  },
-	{0x13, 0x01, 0x01, 0x01, "Common"				  },
+	{0   , 0xfe, 0   ,    4, "Lives"			  	  },
+	{0x13, 0x01, 0x03, 0x00, "1"					  },
+	{0x13, 0x01, 0x03, 0x02, "2"					  },
+	{0x13, 0x01, 0x03, 0x03, "3"					  },
+	{0x13, 0x01, 0x03, 0x01, "5"					  },
 
-	{0   , 0xfe, 0   ,    16, "Coinage"				  },
-	{0x13, 0x01, 0x1e, 0x14, "6 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x16, "5 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x18, "4 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x1a, "3 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x02, "8 Coins 3 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x1c, "2 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x04, "5 Coins 3 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x06, "3 Coins 2 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x1e, "1 Coin  1 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x08, "2 Coins 3 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x12, "1 Coin  2 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x10, "1 Coin  3 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x0e, "1 Coin  4 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x0c, "1 Coin  5 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x0a, "1 Coin  6 Credits"	  },
-	{0x13, 0x01, 0x1e, 0x00, "Free Play"			  },
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			  },
+	{0x13, 0x01, 0x0c, 0x0c, "Every 300k - 500k"	  },
+	{0x13, 0x01, 0x0c, 0x08, "Every 500k - 500k"	  },
+	{0x13, 0x01, 0x0c, 0x04, "Only 500k"			  },
+	{0x13, 0x01, 0x0c, 0x00, "No"					  },
 
-	{0   , 0xfe, 0   ,    4, "Coin A"				  },
-	{0x13, 0x01, 0x06, 0x00, "5 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x06, 0x02, "3 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x06, 0x04, "2 Coins 1 Credits"	  },
-	{0x13, 0x01, 0x06, 0x06, "1 Coin  1 Credits"	  },
+	{0   , 0xfe, 0   ,    4, "Difficulty"			  },
+	{0x13, 0x01, 0x30, 0x20, "Easy"					  },
+	{0x13, 0x01, 0x30, 0x30, "Normal"		  		  },
+	{0x13, 0x01, 0x30, 0x10, "Hard"					  },
+	{0x13, 0x01, 0x30, 0x00, "Very Hard"			  },
 
-	{0   , 0xfe, 0   ,    4, "Coin B"				  },
-	{0x13, 0x01, 0x18, 0x18, "1 Coin  2 Credits"	  },
-	{0x13, 0x01, 0x18, 0x10, "1 Coin  3 Credits"	  },
-	{0x13, 0x01, 0x18, 0x08, "1 Coin  5 Credits"	  },
-	{0x13, 0x01, 0x18, 0x00, "1 Coin  6 Credits"	  },
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		  },
+	{0x13, 0x01, 0x40, 0x00, "No"					  },
+	{0x13, 0x01, 0x40, 0x40, "Yes"					  },
 
-	{0   , 0xfe, 0   ,    2, "Credits to Start"		  },
-	{0x13, 0x01, 0x20, 0x20, "1"					  },
-	{0x13, 0x01, 0x20, 0x00, "2"					  },
-
-	{0   , 0xfe, 0   ,    2, "1 Life If Continue"	  },
-	{0x13, 0x01, 0x40, 0x40, "No"					  },
-	{0x13, 0x01, 0x40, 0x00, "Yes"					  },
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"			  },
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			  },
 	{0x13, 0x01, 0x80, 0x80, "Off"					  },
 	{0x13, 0x01, 0x80, 0x00, "On"					  },
 
-	{0   , 0xfe, 0   ,    4, "Lives"			  	  },
-	{0x14, 0x01, 0x03, 0x00, "1"					  },
-	{0x14, 0x01, 0x03, 0x02, "2"					  },
-	{0x14, 0x01, 0x03, 0x03, "3"					  },
-	{0x14, 0x01, 0x03, 0x01, "5"					  },
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			  },
+	{0x14, 0x01, 0x01, 0x00, "Separate"				  },
+	{0x14, 0x01, 0x01, 0x01, "Common"				  },
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			  },
-	{0x14, 0x01, 0x0c, 0x0c, "Every 300k - 500k"	  },
-	{0x14, 0x01, 0x0c, 0x08, "Every 500k - 500k"	  },
-	{0x14, 0x01, 0x0c, 0x04, "Only 500k"			  },
-	{0x14, 0x01, 0x0c, 0x00, "No"					  },
+	{0   , 0xfe, 0   ,    16, "Coinage"				  },
+	{0x14, 0x01, 0x1e, 0x14, "6 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x16, "5 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x18, "4 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x1a, "3 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x02, "8 Coins 3 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x1c, "2 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x04, "5 Coins 3 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x06, "3 Coins 2 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x1e, "1 Coin  1 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x08, "2 Coins 3 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x12, "1 Coin  2 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x10, "1 Coin  3 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x0e, "1 Coin  4 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x0c, "1 Coin  5 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x0a, "1 Coin  6 Credits"	  },
+	{0x14, 0x01, 0x1e, 0x00, "Free Play"			  },
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			  },
-	{0x14, 0x01, 0x30, 0x20, "Easy"					  },
-	{0x14, 0x01, 0x30, 0x30, "Normal"		  		  },
-	{0x14, 0x01, 0x30, 0x10, "Hard"					  },
-	{0x14, 0x01, 0x30, 0x00, "Very Hard"			  },
+	{0   , 0xfe, 0   ,    4, "Coin A"				  },
+	{0x14, 0x01, 0x06, 0x00, "5 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x06, 0x02, "3 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x06, 0x04, "2 Coins 1 Credits"	  },
+	{0x14, 0x01, 0x06, 0x06, "1 Coin  1 Credits"	  },
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		  },
-	{0x14, 0x01, 0x40, 0x00, "No"					  },
-	{0x14, 0x01, 0x40, 0x40, "Yes"					  },
+	{0   , 0xfe, 0   ,    4, "Coin B"				  },
+	{0x14, 0x01, 0x18, 0x18, "1 Coin  2 Credits"	  },
+	{0x14, 0x01, 0x18, 0x10, "1 Coin  3 Credits"	  },
+	{0x14, 0x01, 0x18, 0x08, "1 Coin  5 Credits"	  },
+	{0x14, 0x01, 0x18, 0x00, "1 Coin  6 Credits"	  },
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			  },
+	{0   , 0xfe, 0   ,    2, "Credits to Start"		  },
+	{0x14, 0x01, 0x20, 0x20, "1"					  },
+	{0x14, 0x01, 0x20, 0x00, "2"					  },
+
+	{0   , 0xfe, 0   ,    2, "1 Life If Continue"	  },
+	{0x14, 0x01, 0x40, 0x40, "No"					  },
+	{0x14, 0x01, 0x40, 0x00, "Yes"					  },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			  },
 	{0x14, 0x01, 0x80, 0x80, "Off"					  },
 	{0x14, 0x01, 0x80, 0x00, "On"					  },
 };
@@ -1082,6 +1082,8 @@ static INT32 DrvDoReset()
 	DrvOkiControl = 0;
 	DrvOkiCommand = 0;
 	DrvOkiBank = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -2241,7 +2243,7 @@ struct BurnDriver BurnDrvExcelsr = {
 	"excelsr", NULL, NULL, NULL, "1996",
 	"Excelsior (set 1)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, ExcelsrRomInfo, ExcelsrRomName, NULL, NULL, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
 	ExcelsrInit, DrvExit, DrvFrame, ExcelsrRender, DrvScan, &BurnRecalc, 0x400,
 	320, 240, 4, 3
@@ -2280,7 +2282,7 @@ struct BurnDriver BurnDrvExcelsra = {
 	"excelsra", "excelsr", NULL, NULL, "1996",
 	"Excelsior (set 2)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, ExcelsraRomInfo, ExcelsraRomName, NULL, NULL, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
 	ExcelsrInit, DrvExit, DrvFrame, ExcelsrRender, DrvScan, &BurnRecalc, 0x400,
 	320, 240, 4, 3
@@ -2358,7 +2360,7 @@ struct BurnDriver BurnDrvHrdtimes = {
 	"hrdtimes", NULL, NULL, NULL, "1994",
 	"Hard Times (set 1)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, hrdtimesRomInfo, hrdtimesRomName, NULL, NULL, NULL, NULL, HrdtimesInputInfo, HrdtimesDIPInfo,
 	HrdtimesInit, DrvExit, DrvFrame, HotmindRender, DrvScan, &BurnRecalc, 0x400,
 	320, 224, 4, 3
@@ -2389,7 +2391,7 @@ struct BurnDriver BurnDrvHrdtimesa = {
 	"hrdtimesa", "hrdtimes", NULL, NULL, "1994",
 	"Hard Times (set 2)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, hrdtimesaRomInfo, hrdtimesaRomName, NULL, NULL, NULL, NULL, HrdtimesInputInfo, HrdtimesDIPInfo,
 	HrdtimesInit, DrvExit, DrvFrame, HotmindRender, DrvScan, &BurnRecalc, 0x400,
 	320, 224, 4, 3
@@ -2463,7 +2465,7 @@ struct BurnDriver BurnDrvWbeachvl = {
 	"wbeachvl", NULL, NULL, NULL, "1995",
 	"World Beach Volley (set 1, PIC16C57 audio CPU)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wbeachvlRomInfo, wbeachvlRomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, WbeachvlDIPInfo,
 	WbeachvlInit, DrvExit, DrvFrame, WbeachvlRender, DrvScan, &BurnRecalc, 0x800,
 	320, 240, 4, 3
@@ -2541,7 +2543,7 @@ struct BurnDriver BurnDrvWbeachvl2 = {
 	"wbeachvl2", "wbeachvl", NULL, NULL, "1995",
 	"World Beach Volley (set 2)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wbeachvl2RomInfo, wbeachvl2RomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, WbeachvlDIPInfo,
 	WbeachvlInit, DrvExit, DrvFrame, WbeachvlRender, DrvScan, &BurnRecalc, 0x800,
 	320, 240, 4, 3
@@ -2579,7 +2581,7 @@ struct BurnDriver BurnDrvWbeachvl3 = {
 	"wbeachvl3", "wbeachvl", NULL, NULL, "1995",
 	"World Beach Volley (set 3)\0", NULL, "Playmark", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wbeachvl3RomInfo, wbeachvl3RomName, NULL, NULL, NULL, NULL, WbeachvlInputInfo, WbeachvlDIPInfo,
 	WbeachvlInit, DrvExit, DrvFrame, WbeachvlRender, DrvScan, &BurnRecalc, 0x800,
 	320, 240, 4, 3

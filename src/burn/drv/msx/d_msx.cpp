@@ -33172,10 +33172,10 @@ struct BurnDriver BurnDrvMSX_towerdamn = {
 	272, 228, 4, 3
 };
 
-// Uchu Yohei (HB, v1.4)
+// Uchu Yohei (HB, v1.6)
 
 static struct BurnRomInfo MSX_uchuyoheiRomDesc[] = {
-	{ "Uchu Yohei v1.4 (2023)(FranChesstein).rom",	131072, 0x11e8024e, BRF_PRG | BRF_ESS },
+	{ "Uchu Yohei v1.6 (2023)(FranChesstein).rom",	131072, 0x525bac33, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_uchuyohei, MSX_uchuyohei, msx_msx)
@@ -33183,7 +33183,7 @@ STD_ROM_FN(MSX_uchuyohei)
 
 struct BurnDriver BurnDrvMSX_uchuyohei = {
 	"msx_uchuyohei", NULL, "msx_msx", NULL, "2023",
-	"Uchu Yohei (HB, v1.4)\0", NULL, "FranChesstein", "MSX",
+	"Uchu Yohei (HB, v1.6)\0", NULL, "FranChesstein", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_uchuyoheiRomInfo, MSX_uchuyoheiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

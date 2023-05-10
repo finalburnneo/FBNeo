@@ -30547,10 +30547,10 @@ struct BurnDriver BurnDrvsms_snappysnorg = {
 	256, 192, 4, 3
 };
 
-// Where is it - The Quest for the 10th Island (HB, v1.01)
+// Where is it - The Quest for the 10th Island (HB, Ultimate ed.)
  
 static struct BurnRomInfo sms_whereisitRomDesc[] = {
-	{ "Where is it - The Quest for the 10th Island v1.01 (2023)(Ricco59).sms",	81920, 0x9ecafb4d, BRF_PRG | BRF_ESS },
+	{ "Where Is It - The Quest For The 10th Island (Ultimate)(2023)(Ricco59).sms",	81920, 0xcf9e65d4, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_whereisit)
@@ -30558,7 +30558,7 @@ STD_ROM_FN(sms_whereisit)
 
 struct BurnDriver BurnDrvsms_whereisit = {
 	"sms_whereisit", NULL, NULL, NULL, "2023",
-	"Where is it - The Quest for the 10th Island (HB, v1.01)\0", NULL, "Ricco59", "Sega Master System",
+	"Where Is It ? The Quest for the 10th Island (HB, Ultimate ed.)\0", NULL, "Ricco59", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_whereisitRomInfo, sms_whereisitRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

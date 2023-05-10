@@ -1725,10 +1725,10 @@
 	</game>
 	<game name="babyman2" romof="spectrum">
 		<comment>Homebrew</comment>
-		<description>Baby-man Vs Nappy Bird (48K) (HB)</description>
+		<description>Baby-man Vs Nappy Bird (48K) (HB, v1.01)</description>
 		<year>2023</year>
 		<manufacturer>PuttyCAD, Tin Soldiers</manufacturer>
-		<rom name="Babyman vs Nappy Bird 48K (2023)(PuttyCAD, Tin Soldiers).tap" size="23094" crc="f2c4fc89"/>
+		<rom name="Baby-man Vs Nappy Bird 48K v1.01 (2023)(PuttyCAD, Tin Soldiers).tap" size="23108" crc="70cf01bf"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11734,11 +11734,21 @@
 		<driver status="good"/>
 	</game>
 	<game name="meaniegolf" romof="spectrum">
-		<comment>Homebrew, Set '1.Keyboard' to use controller</comment>
+		<comment>Homebrew</comment>
 		<description>Meanie Golf (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Psychic Parrot</manufacturer>
-		<rom name="Meanie Golf 48K (2023)(PsychicParrot).tap" size="37024" crc="97119a14"/>
+		<rom name="Meanie Golf 48K (2023)(PsychicParrot).tap" size="37359" crc="58d9e059"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="meaniegolfb" cloneof="meaniegolf" romof="meaniegolf">
+		<comment>Homebrew</comment>
+		<description>Meanie Golf - Side B (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Psychic Parrot</manufacturer>
+		<rom name="Meanie Golf - Side B 48K (2023)(PsychicParrot).tap" size="39351" crc="21a61a8f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

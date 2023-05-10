@@ -5642,10 +5642,10 @@
 	</game>
 	<game name="whereisit">
 		<comment>Homebrew</comment>
-		<description>Where is it - The Quest for the 10th Island (HB, v1.01)</description>
+		<description>Where Is It ? The Quest for the 10th Island (HB, Ultimate ed.)</description>
 		<year>2023</year>
 		<manufacturer>Ricco59</manufacturer>
-		<rom name="Where is it - The Quest for the 10th Island v1.01 (2023)(Ricco59).sms" size="81920" crc="9ecafb4d"/>
+		<rom name="Where Is It - The Quest For The 10th Island (Ultimate)(2023)(Ricco59).sms" size="81920" crc="cf9e65d4"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -86,6 +86,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="5star">
+		<comment>Homebrew</comment>
+		<description>5-star Restaurant (HB)</description>
+		<year>2023</year>
+		<manufacturer>Wendel Scardua</manufacturer>
+		<rom name="5-star Restaurant (2023)(Wendel Scardua).nes" size="81936" crc="42658f47"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="720degrees">
 		<description>720 Degrees (USA)</description>
 		<year>1989</year>
@@ -3961,6 +3970,15 @@
 		<year>1989</year>
 		<manufacturer>Vic Tokai</manufacturer>
 		<rom name="Dengeki - Big Bang! (Japan).nes" size="262160" crc="4e0c2429"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="dengekien" cloneof="clashatdem" romof="clashatdem">
+		<comment>Hack</comment>
+		<description>Dengeki - Big Bang! (T-Eng, v2.8a)</description>
+		<year>2023</year>
+		<manufacturer>StripyMonk</manufacturer>
+		<rom name="Dengeki - Big Bang! (T-Eng)(2023)(StripyMonk).nes" size="262160" crc="6a89092e"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

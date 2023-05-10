@@ -157,6 +157,7 @@ DRV		BurnDrvcv_421;
 DRV		BurnDrvMSX_4x4offroad;
 DRV		BurnDrvgg_5in1fun;
 DRV		BurnSpec5in1tetris;
+DRV		BurnDrvnes_5star;
 DRV		BurnDrvMSX_50metres;
 DRV		BurnDrvmd_6pak;
 DRV		BurnDrvSixhundred;
@@ -3508,6 +3509,7 @@ DRV		BurnDrvCrazywar;
 DRV		BurnDrvnes_creatom;
 DRV		BurnDrvnes_creepybrawlers;
 DRV		BurnDrvMooncrsl;
+DRV		BurnDrvmd_criatura;
 DRV		BurnSpecCrimbo;
 DRV		BurnDrvnes_crimebusters;
 DRV		BurnSpecCrimebust;
@@ -4006,6 +4008,7 @@ DRV		BurnDrvmd_asteborg10;
 DRV		BurnDrvmd_asteborg;
 DRV		BurnSpecDemonslair;
 DRV		BurnDrvnes_dengeki;
+DRV		BurnDrvnes_dengekien;
 DRV		BurnSpecDenizen;
 DRV		BurnDrvDenjinmk;
 DRV		BurnDrvDenjinmka;
@@ -6444,6 +6447,7 @@ DRV		BurnDrvcv_ghostbst;
 DRV		BurnDrvnes_ghostbusters;
 DRV		BurnDrvmd_ghostbst1;
 DRV		BurnDrvmd_ghostbst;
+DRV		BurnDrvmd_ghostbstse;
 DRV		BurnSpecghostb2;
 DRV		BurnDrvMSX_ghostbs2;
 DRV		BurnDrvnes_ghostbustersii;
@@ -9677,6 +9681,7 @@ DRV		BurnDrvmd_mcdonaldjp;
 DRV		BurnDrvmd_mcdonaldu;
 DRV		BurnSpecMeanstreak;
 DRV		BurnSpecMeaniegolf;
+DRV		BurnSpecMeaniegolfb;
 DRV		BurnDrvMSX_mecha8;
 DRV		BurnDrvcv_mecha8;
 DRV		BurnDrvMSX_mecha8ex;
@@ -19754,6 +19759,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_4x4offroad,		// 4x4 Off-Road Racing (Euro)
 	&BurnDrvgg_5in1fun,			// 5 in 1 Funpak (USA)
 	&BurnSpec5in1tetris,		// 5 in 1 Tetris (128K)
+	&BurnDrvnes_5star,			// 5-star Restaurant (HB)
 	&BurnDrvMSX_50metres,		// 50 Metres (HB)
 	&BurnDrvmd_6pak,			// 6-Pak (USA)
 	&BurnDrvSixhundred,			// 600
@@ -20795,7 +20801,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_babyd,			// Baby's Day Out (USA, Prototype)
 	&BurnDrvmd_babydo,			// Baby's Day Out (USA, Prototype, Earlier)
 	&BurnSpecBabyman,			// Baby-man Vs Man-baby (48K) (HB)
-	&BurnSpecBabyman2,			// Baby-man Vs Nappy Bird (48K) (HB)
+	&BurnSpecBabyman2,			// Baby-man Vs Nappy Bird (48K) (HB, v1.01)
 	&BurnDrvbackfirt,			// Back Fire (Tecmo, bootleg)
 	&BurnDrvMSX_backgamj,		// Back Gammon (Jpn)
 	&BurnDrvMSX_backgamja,		// Back Gammon (Jpn, Alt)
@@ -23105,6 +23111,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_creatom,		// Creatom (Unl)
 	&BurnDrvnes_creepybrawlers,	// Creepy Brawlers (HB)
 	&BurnDrvMooncrsl,			// Cresta Mundo (Laguna S.A. Spanish Moon Cresta bootleg)
+	&BurnDrvmd_criatura,		// Criatura (HB)
 	&BurnSpecCrimbo,			// Crimbo: A Gloop Troops Tale (128K) (HB)
 	&BurnDrvnes_crimebusters,	// Crime Busters (USA)
 	&BurnSpecCrimebust,			// Crime Busters Featuring Bennie the Burglar (48K)
@@ -23603,6 +23610,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_asteborg,		// Demons of Asteborg v1.1 (HB)
 	&BurnSpecDemonslair,		// Demonslair (48K)
 	&BurnDrvnes_dengeki,		// Dengeki - Big Bang! (Japan)
+	&BurnDrvnes_dengekien,		// Dengeki - Big Bang! (T-Eng, v2.8a)
 	&BurnSpecDenizen,			// Denizen (128K)
 	&BurnDrvDenjinmk,			// Denjin Makai (set 1)
 	&BurnDrvDenjinmka,			// Denjin Makai (set 2)
@@ -26041,6 +26049,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_ghostbusters,	// Ghostbusters (USA)
 	&BurnDrvmd_ghostbst1,		// Ghostbusters (World)
 	&BurnDrvmd_ghostbst,		// Ghostbusters (World, v1.1)
+	&BurnDrvmd_ghostbstse,		// Ghostbusters - Special Edition (Hack, v1.1)
 	&BurnSpecghostb2,			// Ghostbusters II (128K) (Trainer)
 	&BurnDrvMSX_ghostbs2,		// Ghostbusters II (Euro)
 	&BurnDrvnes_ghostbustersii,	// Ghostbusters II (USA)
@@ -29274,6 +29283,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mcdonaldu,		// McDonald's Treasure Land Adventure (USA)
 	&BurnSpecMeanstreak,		// Mean Streak (128K)
 	&BurnSpecMeaniegolf,		// Meanie Golf (48K) (HB)
+	&BurnSpecMeaniegolfb,		// Meanie Golf - Side B (48K) (HB)
 	&BurnDrvMSX_mecha8,			// Mecha-8 (HB)
 	&BurnDrvcv_mecha8,			// Mecha-8 (SGM) (HB)
 	&BurnDrvMSX_mecha8ex,		// Mecha-8 EX (HB)
@@ -37665,7 +37675,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvVball,				// U.S. Championship V'ball (US)
 	&BurnDrvUsclssic,			// U.S. Classic
 	&BurnDrvCpsCawingj,			// U.S. Navy (901012 Japan)
-	&BurnDrvMSX_uchuyohei,		// Uchu Yohei (HB, v1.4)
+	&BurnDrvMSX_uchuyohei,		// Uchu Yohei (HB, v1.6)
 	&BurnDrvnes_uchusen,		// Uchusen - Ultimate PLOID Battle (HB)
 	&BurnDrvnes_uchusen2,		// Uchusen 2 - Blood Invasion Battle (HB)
 	&BurnDrvMSX_ugamma,			// Uchusen Gamma (HB)
@@ -38283,7 +38293,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_carmntimb,		// Where in Time Is Carmen Sandiego? (Bra)
 	&BurnDrvmd_carmntim,		// Where in Time Is Carmen Sandiego? (Euro, USA)
 	&BurnDrvMSX_whereisit,		// Where Is it - The Quest For the 10th Island (HB)
-	&BurnDrvsms_whereisit,		// Where is it - The Quest for the 10th Island (HB, v1.01)
+	&BurnDrvsms_whereisit,		// Where Is It ? The Quest for the 10th Island (HB, Ultimate ed.)
 	&BurnSpecWheretimestoodstill,// Where Time Stood Still (128K)
 	&BurnDrvnes_whereswaldo,	// Where's Waldo (USA)
 	&BurnDrvmd_whiprushs,		// Whip Rush (Hack, Spanish)

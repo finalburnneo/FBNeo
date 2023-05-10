@@ -17503,8 +17503,9 @@
 		<description>Samurai Shodown II Perfect (V. 1.1, Hack)</description>
 		<year>2023</year>
 		<manufacturer>Bear</manufacturer>
-		<rom name="063-p1pe.p1" size="2097152" crc="3987833f"/>
-		<rom name="063-p2pe.p2" size="131072" crc="e9cc1d72"/>
+		<rom name="063-p1pe.p1" size="1048576" crc="4327e4fa"/>
+		<rom name="063-p2pe.sp2" size="1048576" crc="0e6036ff"/>
+		<rom name="063-p3pe.p3" size="131072" crc="e9cc1d72"/>
 		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
 		<rom name="063-c1.c1" merge="063-c1.c1" size="2097152" crc="86cd307c"/>
 		<rom name="063-c2.c2" merge="063-c2.c2" size="2097152" crc="cdfcc4ca"/>

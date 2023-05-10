@@ -16887,10 +16887,10 @@
 	</game>
 	<game name="uchuyohei" romof="msx">
 		<comment>Homebrew</comment>
-		<description>Uchu Yohei (HB, v1.4)</description>
+		<description>Uchu Yohei (HB, v1.6)</description>
 		<year>2023</year>
 		<manufacturer>FranChesstein</manufacturer>
-		<rom name="Uchu Yohei v1.4 (2023)(FranChesstein).rom" size="131072" crc="11e8024e"/>
+		<rom name="Uchu Yohei v1.6 (2023)(FranChesstein).rom" size="131072" crc="525bac33"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

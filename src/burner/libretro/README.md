@@ -2,7 +2,7 @@
 
 ## Background
 
-FinalBurn Neo (also referred to as FBNeo or FBN) is a multi-system emulator (Arcade, consoles and computers) under active development, unlike MAME it's more focused on playability and advanced features than accuracy.
+FinalBurn Neo (also referred to as FBNeo or FBN) is a multi-system emulator (Arcade, consoles and computers) under active development. Unlike MAME it's more focused on playability and advanced features than preservation.
 It is the follow-up of FinalBurn and FinalBurn Alpha emulators.
 The libretro core provides wide compatibility with platforms and features supported by libretro.
 
@@ -154,7 +154,7 @@ Samples should be put under `SYSTEM_DIRECTORY/fbneo/samples`
 
 ## Hiscores
 
-Copy [hiscore.dat](https://github.com/libretro/FBNeo/tree/master/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores (or hiscore.dat might not be listing that romset), or the `hiscore.dat` entry for that game might simply be broken. You can request support in the issue tracker. Runahead now works with hiscores, it'll require fairly recent version of the core AND RetroArch though (support was added after 1.10.3 and is still only available through nightlies as of 2022-09-05).
+Copy [hiscore.dat](https://github.com/libretro/FBNeo/tree/master/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores, or `hiscore.dat` might have a missing or broken entry for that romset. You can request support in the issue tracker. Runahead now works with hiscores, it'll require fairly recent version of the core AND RetroArch though (support was added after 1.10.3 and is still only available through nightlies as of 2022-09-05).
 
 ## Run Ahead input lag reduction
 
@@ -170,7 +170,7 @@ They are either directly available from `Quick Menu > Core Options`, or from the
 
 ## Cheats
 
-You can either use the RetroArch cheat feature, or download a pack of FBNeo native cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip) and uncompress them into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder, then they'll become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`), using a MAME `cheat.dat` file should also work.
+You can either use the RetroArch cheat feature, or download a pack of FBNeo native cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip) and uncompress them into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder, then they'll become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`).
 
 ## Frequently asked questions
 

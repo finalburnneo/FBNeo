@@ -20698,8 +20698,8 @@ struct BurnDriver BurnDrvmslugxsc = {
 
 // Metal Slug X (Multifunction Hack)
 static struct BurnRomInfo mslugxdgRomDesc[] = {
-	{ "250-p1dg.p1",    0x100000, 0x095b7f44, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2dg.ep1",   0x400000, 0x431cb335, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1dg.p1",    0x100000, 0x66094a11, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2dg.ep1",   0x400000, 0xa6281469, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20722,7 +20722,7 @@ STD_ROM_FN(mslugxdg)
 
 struct BurnDriver BurnDrvmslugxdg = {
 	"mslugxdg", "mslugx", "neogeo", NULL, "2023",
-	"Metal Slug X (Multifunction Hack, 20230430)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X (Multifunction Hack, 20230507)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxdgRomInfo, mslugxdgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21167,9 +21167,9 @@ struct BurnDriver BurnDrvmslug5es = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Stone Turtle, Hack) 2023-03-09
+// Metal Slug 5 (Stone Turtle, Hack) 2023-05-07
 static struct BurnRomInfo mslug5sgRomDesc[] = {
-	{ "268-p1sg.bin",   0x600000, 0x8bf8a485, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1sg.bin",   0x600000, 0x83e7ac3d, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268d-s1.rom",    0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
 
@@ -21348,9 +21348,9 @@ struct BurnDriver BurnDrvmslug5f = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Boss Battle, Hack) - 2023-04-30
+// Metal Slug 5 (Boss Battle, Hack) - 2023-05-09
 static struct BurnRomInfo mslug5bossRomDesc[] = {
-	{ "268-p1boss.bin",   0x600000, 0xff3a4b86, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1boss.bin",   0x600000, 0xf396a043, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268d-s1.rom",      0x020000, 0x64952683, 2 | BRF_GRA },            //  2 Text layer tiles
 

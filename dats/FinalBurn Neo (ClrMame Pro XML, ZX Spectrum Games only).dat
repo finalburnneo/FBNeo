@@ -175,6 +175,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="3dseiatk" romof="spectrum">
+		<description>3D Seiddab Attack (16K)</description>
+		<year>1984</year>
+		<manufacturer>Hewson Consultants</manufacturer>
+		<rom name="3D Seiddab Attack 16K (1984)(Hewson Consultants).tap" size="8581" crc="22e97ea1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="3dsnooker" romof="spectrum">
 		<description>3D Snooker (48K)</description>
 		<year>1990</year>
@@ -5064,7 +5073,7 @@
 	</game>
 	<game name="danterrifik2" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Danterrifik 2 (128K) (HB)</description>
+		<description>Danterrifik II - The Nightmare Continues (128K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Toku Soft</manufacturer>
 		<rom name="Danterrifik 2 (2020)(Toku Soft).tap" size="49982" crc="478c7adf"/>
@@ -5075,10 +5084,21 @@
 	</game>
 	<game name="danterrifik3" romof="spec128">
 		<comment>Homebrew</comment>
-		<description>Danterrifik III (128K) (HB)</description>
+		<description>Danterrifik III - The Dark Age of Grotesque (128K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Toku Soft</manufacturer>
 		<rom name="Danterrifik 3 (2021)(TokuSoft).tap" size="46898" crc="9041c4da"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="danterrifik4" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Danterrifik IV - A New Beginning (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Toku Soft</manufacturer>
+		<rom name="Danterrifik IV A New Beginning 128K (2023)(Tokusoft).tap" size="36977" crc="33a71a90"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11296,6 +11316,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mach3" romof="spectrum">
+		<description>Mach 3 (Spanish) (48K)</description>
+		<year>1989</year>
+		<manufacturer>Loricels - Proein Soft Line</manufacturer>
+		<rom name="Mach 3 ES 48K (1989)(Loricels).tap" size="44944" crc="a7f9fe1b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mamienca" romof="spec128">
 		<description>Mad Mix 2 - En el Castillo de los Fantasmas (Spanish) (128K)</description>
 		<year>1990</year>
@@ -11838,6 +11867,17 @@
 		<year>1991</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Mercs (1991)(U.S. Gold).tap" size="191310" crc="8b4f3dc9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="merged" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>MERGED! (128K) (HB, v1.0.1)</description>
+		<year>2022</year>
+		<manufacturer>Dimon</manufacturer>
+		<rom name="MERGED! v1.0.1 128K (2022)(Dimon).tap" size="42454" crc="03f33f0a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -14188,6 +14228,36 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="plantonen" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Plantonio (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Kiuso</manufacturer>
+		<rom name="Plantonio EN 48K (2023)(Kiuso).tap" size="30373" crc="45a17b10"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="plantonpt" cloneof="plantonen" romof="plantonen">
+		<comment>Homebrew</comment>
+		<description>Plantonio (Portuguese) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Kiuso</manufacturer>
+		<rom name="Plantonio PT 48K (2023)(Kiuso).tap" size="30398" crc="c92e7e34"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="plantones" cloneof="plantonen" romof="plantonen">
+		<comment>Homebrew</comment>
+		<description>Plantonio (Spanish) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Kiuso</manufacturer>
+		<rom name="Plantonio ES 48K (2023)(Kiuso).tap" size="30422" crc="d7e7c178"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="platoon" romof="spec128">
 		<description>Platoon (128K)</description>
 		<year>1988</year>
@@ -14615,6 +14685,15 @@
 		<year>2020</year>
 		<manufacturer>EJVG</manufacturer>
 		<rom name="Puta Mili (2020)(EJVG).tap" size="39542" crc="e1014a13"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="puzzled" romof="spectrum">
+		<description>Puzzled! (48K)</description>
+		<year>1989</year>
+		<manufacturer>Guild, The</manufacturer>
+		<rom name="Puzzled! 48K (1989)(Guild, The).tap" size="47979" crc="5a86daa5"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15635,6 +15714,27 @@
 		<manufacturer>Dinamic Software</manufacturer>
 		<rom name="Rocky 48K (1985)(Dinamic).z80" size="38026" crc="79a0f6b2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rhs128" romof="spec128">
+		<comment>Press 'Space' to select and 'Enter' to set options</comment>
+		<description>Rocky Horror Show, The (128K)</description>
+		<year>1985</year>
+		<manufacturer>CRL Group</manufacturer>
+		<rom name="Rocky Horror Show, The 128K (1985)(CRL Group).tap" size="81739" crc="011957b4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rhs48" cloneof="rhs128" romof="rhs128">
+		<comment>Press 'Space' to select and 'Enter' to set options</comment>
+		<description>Rocky Horror Show, The (48K)</description>
+		<year>1985</year>
+		<manufacturer>CRL Group</manufacturer>
+		<rom name="Rocky Horror Show, The 48K (1985)(CRL Group).tap" size="49355" crc="12082319"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17233,6 +17333,17 @@
 		<year>2022</year>
 		<manufacturer>Amebatron Software</manufacturer>
 		<rom name="Speccy Quiz 128K ES (2022)(Amebatron Software).tap" size="44628" crc="9c3eb564"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="speccysoccer" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Speccy Soccer (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Voxel Tower</manufacturer>
+		<rom name="Speccy Soccer 128K (2023)(Voxel Tower).tap" size="106047" crc="a8eb8027"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -19802,6 +19913,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="vexed128" romof="spec128">
+		<comment>Homebrew, 'R': quit game - 'X': restart level</comment>
+		<description>Vexed (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Vexed 128K (2023)(Under4Mhz).tap" size="19699" crc="4847c86f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="vexed48" cloneof="vexed128" romof="vexed128">
+		<comment>Homebrew, 'R': quit game - 'X': restart level</comment>
+		<description>Vexed (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Vexed 48K (2023)(Under4Mhz).tap" size="17509" crc="18aa8b4a"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="viajecentterra" romof="spec128">
 		<description>Viaje al Centro de la Tierra (Spanish) (128K)</description>
 		<year>1989</year>
@@ -20650,6 +20782,15 @@
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
 		<rom name="Zenji 48K (1984)(Activision).tap" size="23232" crc="62e604e5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zipzap" romof="spectrum">
+		<description>Zip-Zap (48K)</description>
+		<year>1983</year>
+		<manufacturer>Imagine</manufacturer>
+		<rom name="Zip-Zap 48K (1983)(Imagine).tap" size="37207" crc="fcb30933"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

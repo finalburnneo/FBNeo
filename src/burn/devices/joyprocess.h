@@ -52,7 +52,7 @@ struct ButtonToggle {
 
 	INT32 Toggle(UINT8 &input) {
 		INT32 toggled = 0;
-		if (!last_state && input) {
+		if (!last_state && input && !bBurnRunAheadFrame) {
 			state ^= 1;
 			toggled = 1;
 		}

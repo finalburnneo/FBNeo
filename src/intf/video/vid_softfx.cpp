@@ -143,7 +143,7 @@ static bool MMXSupport()
 
 	return (nSignatureEDX >> 23) & 1;						// bit 23 of edx ndicates MMX support
 #else
-	return 0;
+	return 1;
 #endif
 }
 
@@ -259,6 +259,7 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 	nSoftFXEnlarge = true;
 	
 	if ((MMXSupport() == false && (SoftFXInfo[nSoftFXBlitter].nFlags & FXF_MMX)) || VidSoftFXCheckDepth(nSoftFXBlitter, nVidImageDepth) == 0) {
+		bprintf(0, _T("UHOH! bad.  \n"));
 		VidSoftFXExit();
 		return 1;
 	}

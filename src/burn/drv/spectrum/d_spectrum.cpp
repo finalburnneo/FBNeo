@@ -41504,7 +41504,7 @@ struct BurnDriver BurnSpecPlantonpt = {
 // Speccy Soccer (128K) (HB)
 
 static struct BurnRomInfo SpecSpeccysoccerRomDesc[] = {
-	{ "Speccy Soccer 128K (2023)(Voxel Tower).tap", 106039, 0xc6da79cc, BRF_ESS | BRF_PRG },
+	{ "Speccy Soccer 128K (2023)(Voxel Tower).tap", 106047, 0xa8eb8027, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSpeccysoccer, SpecSpeccysoccer, Spec128)

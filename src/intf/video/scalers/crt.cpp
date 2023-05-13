@@ -280,11 +280,10 @@ static inline void CRT_widthend_fast2(unsigned char *srcPtr,unsigned char *dstPt
 
 void CRTx22fast(unsigned char *srcPtr,unsigned char *dstPtr,int width, int height,int srcpitch,int pitch)
 {
-	const int bytepixel = 4;
-	int i;
+    const int bytepixel = 4;
+	int i = 0;
 
 	int R = 0,G = 0,B = 0,RS,GS,BS;
-	int l = 0;
 	int x,y;
 	int tmp = 0;
 	int lwidth = width-1;
@@ -298,9 +297,14 @@ void CRTx22fast(unsigned char *srcPtr,unsigned char *dstPtr,int width, int heigh
 	fading1 = 0xF8F8F8F8;
 	fading2 = 0x07070707;
 
+	int opitch = pitch>>2;
+	int pitcht = 0;
+
 	for(y = 0;y < height;y++)
 	{
 		int ys = (y*srcpitch);
+
+		tmp = pitcht;
 		for(x = 0;x < lwidth;x++)
 		{
 
@@ -325,10 +329,11 @@ void CRTx22fast(unsigned char *srcPtr,unsigned char *dstPtr,int width, int heigh
 
 		}
 		CRT_widthend_fast(srcPtr,dstPtr,i+0,tmp,bytepixel,2);
-		tmp +=2;
 
-		fading1 = 0xFEFEFEFE;
-		fading2 = 0x01010101;
+		//tmp+=2;
+
+		pitcht += opitch;
+		tmp = pitcht;
 
 		for(x = 0;x < lwidth;x++)
 		{
@@ -353,7 +358,9 @@ void CRTx22fast(unsigned char *srcPtr,unsigned char *dstPtr,int width, int heigh
 
 		}
 		CRT_widthend_fast2(srcPtr,dstPtr,i,tmp,bytepixel,2);
-		tmp +=2;
+
+		pitcht += opitch;
+		//tmp +=2;
 
 
 	}

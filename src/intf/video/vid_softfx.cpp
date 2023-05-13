@@ -42,13 +42,7 @@ void RenderEPXC(unsigned char*, unsigned int, unsigned char*, unsigned int, int,
 void ddt3x(unsigned char * src,  unsigned int srcPitch, unsigned char * dest, unsigned int dstPitch, int Xres, int Yres);
 
 
-#if defined __GNUC__
- #include "scale2x.h"
-#elif defined _MSC_VER && defined BUILD_X86_ASM
- #include "scale2x_vc.h"
- #define scale2x_16_mmx internal_scale2x_16_mmx
- #define scale2x_32_mmx internal_scale2x_32_mmx
-#endif
+#include "scale2x.h"
 #include "scale3x.h"
 
 #if defined BUILD_X86_ASM
@@ -84,7 +78,7 @@ extern "C" {
 
 static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] = {
 	{ _T("Plain Software Scale"),			2, 0	   },
-	{ _T("AdvanceMAME Scale2x"),			2, FXF_MMX },
+	{ _T("AdvanceMAME Scale2x"),			2, 0	   },
 	{ _T("AdvanceMAME Scale3x"),			3, 0	   },
 	{ _T("2xPM LQ"),						2, FXF_MMX },
 	{ _T("2xPM HQ"),						2, FXF_MMX },
@@ -618,15 +612,15 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			}
 			break;
 		}
-#if defined BUILD_X86_ASM
+
 		case FILTER_ADVMAME_SCALE_2X: {											// AdvanceMAME Scale2x blitter (16/32BPP only)
 			unsigned char* psp = pSoftFXImage;
 			unsigned char* psc = pSoftFXImage;
 			unsigned char* psn = pSoftFXImage + nSoftFXImagePitch;
 			if (nVidImageBPP == 2) {
-				scale2x_16_mmx((scale2x_uint16*)pd, (scale2x_uint16*)(pd + nPitch), (scale2x_uint16*)psp, (scale2x_uint16*)psc, (scale2x_uint16*)psn, nSoftFXImageWidth);
+				scale2x_16_def((scale2x_uint16*)pd, (scale2x_uint16*)(pd + nPitch), (scale2x_uint16*)psp, (scale2x_uint16*)psc, (scale2x_uint16*)psn, nSoftFXImageWidth);
 			} else {
-				scale2x_32_mmx((scale2x_uint32*)pd, (scale2x_uint32*)(pd + nPitch), (scale2x_uint32*)psp, (scale2x_uint32*)psc, (scale2x_uint32*)psn, nSoftFXImageWidth);
+				scale2x_32_def((scale2x_uint32*)pd, (scale2x_uint32*)(pd + nPitch), (scale2x_uint32*)psp, (scale2x_uint32*)psc, (scale2x_uint32*)psn, nSoftFXImageWidth);
 			}
 			psp -= nSoftFXImagePitch;
 
@@ -636,7 +630,7 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 					psp += nSoftFXImagePitch;
 					psc += nSoftFXImagePitch;
 					psn += nSoftFXImagePitch;
-					scale2x_16_mmx((scale2x_uint16*)pd, (scale2x_uint16*)(pd + nPitch), (scale2x_uint16*)psp, (scale2x_uint16*)psc, (scale2x_uint16*)psn, nSoftFXImageWidth);
+					scale2x_16_def((scale2x_uint16*)pd, (scale2x_uint16*)(pd + nPitch), (scale2x_uint16*)psp, (scale2x_uint16*)psc, (scale2x_uint16*)psn, nSoftFXImageWidth);
 				}
 			} else {
 				for (int y = 2; y < nSoftFXImageHeight; y++) {
@@ -644,7 +638,7 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 					psp += nSoftFXImagePitch;
 					psc += nSoftFXImagePitch;
 					psn += nSoftFXImagePitch;
-					scale2x_32_mmx((scale2x_uint32*)pd, (scale2x_uint32*)(pd + nPitch), (scale2x_uint32*)psp, (scale2x_uint32*)psc, (scale2x_uint32*)psn, nSoftFXImageWidth);
+					scale2x_32_def((scale2x_uint32*)pd, (scale2x_uint32*)(pd + nPitch), (scale2x_uint32*)psp, (scale2x_uint32*)psc, (scale2x_uint32*)psn, nSoftFXImageWidth);
 				}
 			}
 
@@ -652,24 +646,14 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			psp += nSoftFXImagePitch;
 			psc += nSoftFXImagePitch;
 			if (nVidImageBPP == 2) {
-				scale2x_16_mmx((scale2x_uint16*)pd, (scale2x_uint16*)(pd + nPitch), (scale2x_uint16*)psp, (scale2x_uint16*)psc, (scale2x_uint16*)psn, nSoftFXImageWidth);
+				scale2x_16_def((scale2x_uint16*)pd, (scale2x_uint16*)(pd + nPitch), (scale2x_uint16*)psp, (scale2x_uint16*)psc, (scale2x_uint16*)psn, nSoftFXImageWidth);
 			} else {
-				scale2x_32_mmx((scale2x_uint32*)pd, (scale2x_uint32*)(pd + nPitch), (scale2x_uint32*)psp, (scale2x_uint32*)psc, (scale2x_uint32*)psn, nSoftFXImageWidth);
+				scale2x_32_def((scale2x_uint32*)pd, (scale2x_uint32*)(pd + nPitch), (scale2x_uint32*)psp, (scale2x_uint32*)psc, (scale2x_uint32*)psn, nSoftFXImageWidth);
 			}
-
-#ifdef __GNUC__
-			__asm__ __volatile__(
-				"emms\n"
-			);
-#else
-			__asm {
-				emms;
-			}
-#endif
 
 			break;
 		}
-#endif
+
 		case FILTER_ADVMAME_SCALE_3X: {
 			unsigned char* src_prev = pSoftFXImage;
 			unsigned char* src_curr = pSoftFXImage;

@@ -235,7 +235,8 @@ static inline void scale2x_32_def(scale2x_uint32* dst0, scale2x_uint32* dst1, co
 /***************************************************************************/
 /* Scale2x MMX implementation */
 
-#if defined(__GNUC__) && defined(__i386__)
+#if 0
+//#if defined(__GNUC__) && defined(__i386__)
 
 /*
  * Apply the Scale2x effect at a single row.
@@ -878,7 +879,7 @@ static void scale2x_8_mmx(scale2x_uint8* dst0, scale2x_uint8* dst1, const scale2
 	scale2x_8_mmx_single(dst0, src0, src1, src2, count);
 	scale2x_8_mmx_single(dst1, src2, src1, src0, count);
 }
-#endif
+
 /**
  * Scale by a factor of 2 a row of pixels of 16 bits.
  * This function operates like scale2x_8_mmx() but for 16 bits pixels.
@@ -918,6 +919,7 @@ static void scale2x_32_mmx(scale2x_uint32* dst0, scale2x_uint32* dst1, const sca
 	scale2x_32_mmx_single(dst0, src0, src1, src2, count);
 	scale2x_32_mmx_single(dst1, src2, src1, src0, count);
 }
+#endif
 
 #endif
 

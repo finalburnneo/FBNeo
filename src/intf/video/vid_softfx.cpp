@@ -1,5 +1,8 @@
 // Software blitter effects
 
+// TODO: use .c/cpp version of scalers instead of asm (if avail.) for maximal
+// compatibility with 64bit exe
+
 #include "burner.h"
 #include "vid_softfx.h"
 #include "xbr.h"
@@ -80,8 +83,8 @@ static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] =
 	{ _T("Plain Software Scale"),			2, 0	   },
 	{ _T("AdvanceMAME Scale2x"),			2, 0	   },
 	{ _T("AdvanceMAME Scale3x"),			3, 0	   },
-	{ _T("2xPM LQ"),						2, FXF_MMX },
-	{ _T("2xPM HQ"),						2, FXF_MMX },
+	{ _T("2xPM LQ"),						2, 0	   },
+	{ _T("2xPM HQ"),						2, 0	   },
 	{ _T("Eagle Graphics"),					2, FXF_MMX },
 	{ _T("SuperEagle"),						2, FXF_MMX },
 	{ _T("2xSaI"),							2, FXF_MMX },
@@ -137,7 +140,10 @@ static bool MMXSupport()
 
 	return (nSignatureEDX >> 23) & 1;						// bit 23 of edx ndicates MMX support
 #else
-	return 1;
+	#if defined (BUILD_WIN32) && defined (BUILD_X64_EXE)
+		return 1;
+	#endif
+	return 0;
 #endif
 }
 
@@ -253,7 +259,6 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 	nSoftFXEnlarge = true;
 	
 	if ((MMXSupport() == false && (SoftFXInfo[nSoftFXBlitter].nFlags & FXF_MMX)) || VidSoftFXCheckDepth(nSoftFXBlitter, nVidImageDepth) == 0) {
-		bprintf(0, _T("UHOH! bad.  \n"));
 		VidSoftFXExit();
 		return 1;
 	}

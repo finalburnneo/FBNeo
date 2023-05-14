@@ -3713,8 +3713,9 @@ static void update_sprites()
 		}
 	}
 
-	if (sprite_control[0] & 2)
+	if (sprite_control[0] & 2) {
 		sprite_erase_buffer();
+	}
 
 	if (sprite_control[0] & 1)
 	{
@@ -4500,6 +4501,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetOpen(0);
 		ZetMapMemory(DrvZ80ROM + sound_bank * 0x2000, 0xa000, 0xbfff, MAP_ROM);
 		ZetClose();
+
+		// force sprite update
+		sprite_erase_buffer();
+		sprite_swap_buffers();
+		sprite_render_list();
 
 		if (is_multi32) {
 			pcm_bankswitch(pcm_bankdata);

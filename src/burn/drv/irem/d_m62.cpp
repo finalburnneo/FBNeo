@@ -71,6 +71,8 @@ static INT32 M62CharxTileDim = 0;
 static INT32 M62CharyTileDim = 0;
 static UINT32 bHasSamples = 0;
 
+static INT32 nExtraCycles[2];
+
 typedef void (*M62ExtendTileInfo)(INT32*, INT32*, INT32*, INT32*);
 static M62ExtendTileInfo M62ExtendTileInfoFunction;
 static void BattroadExtendTile(INT32* Code, INT32* Colour, INT32* Priority, INT32* xFlip);
@@ -1865,6 +1867,8 @@ static INT32 M62DoReset()
 	Ldrun3TopBottomMask = 0;
 	KidnikiBackgroundBank = 0;
 	SpelunkrPaletteBank = 0;
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -4634,8 +4638,8 @@ static INT32 M62Frame()
 	M62MakeInputs();
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, M62Z80Clock);
-	INT32 nCyclesTotal[2] = { ((double)M62Z80Clock * 100 / nBurnFPS), ((double)M62M6803Clock * 100 / nBurnFPS) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)M62Z80Clock * 100 / nBurnFPS), (INT32)((double)M62M6803Clock * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetNewFrame();
 	M6803NewFrame();
@@ -4668,6 +4672,9 @@ static INT32 M62Frame()
 
 	M6803Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -4714,6 +4721,8 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Ldrun3TopBottomMask);
 		SCAN_VAR(KidnikiBackgroundBank);
 		SCAN_VAR(SpelunkrPaletteBank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

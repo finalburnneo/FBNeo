@@ -31,6 +31,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles[2];
+
 static struct BurnInputInfo TroangelInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -168,6 +170,8 @@ static INT32 DrvDoReset()
 	IremSoundReset();
 
 	flipscreen = 0;
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -459,7 +463,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
 	INT32 nCyclesTotal[2] = { 3072000 / 57, 894886 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
 	M6803Open(0);
@@ -484,6 +488,9 @@ static INT32 DrvFrame()
 
 	M6803Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -512,6 +519,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		IremSoundScan(nAction, pnMin);
 
 		SCAN_VAR(flipscreen);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

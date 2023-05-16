@@ -114,10 +114,10 @@ static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] =
 	{ _T("4xBR (Squared) Filter"),			4, FXF_MMX },
 	{ _T("4xBR (Semi-Rounded) Filter"),		4, FXF_MMX },
 	{ _T("4xBR (Rounded) Filter"),			4, FXF_MMX },
-	{ _T("DDT3x"),                          3, FXF_MMX },
-	{ _T("CRT 2x2"),						2, 0 },
-	{ _T("CRT 3x3"),						3, 0 },
-	{ _T("CRT 4x4"),						4, 0 },
+	{ _T("DDT3x"),                          3, 0       },
+	{ _T("CRT 2x2"),						2, 0       },
+	{ _T("CRT 3x3"),						3, 0       },
+	{ _T("CRT 4x4"),						4, 0       },
 };
 
 static unsigned char* pSoftFXImage = NULL;

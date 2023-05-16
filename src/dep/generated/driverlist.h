@@ -3350,6 +3350,7 @@ DRV		BurnDrvnes_contra168in1;
 DRV		BurnDrvnes_contraforcec;
 DRV		BurnDrvnes_contraforce;
 DRV		BurnDrvnes_contraspirits;
+DRV		BurnDrvnes_convoy;
 DRV		BurnDrvCookbib;
 DRV		BurnDrvCookbiba;
 DRV		BurnDrvCookbib2c;
@@ -8935,6 +8936,7 @@ DRV		BurnDrvmd_lemming2;
 DRV		BurnDrvgg_lemming2;
 DRV		BurnDrvsms_lemming2;
 DRV		BurnDrvmd_lemming2u;
+DRV		BurnDrvnes_lemmingsimp;
 DRV		BurnDrvCrshrace;
 DRV		BurnDrvCrshrace2;
 DRV		BurnDrvCrshrace2a;
@@ -15068,6 +15070,8 @@ DRV		BurnDrvSpcmission;
 DRV		BurnSpecThehardy;
 DRV		BurnDrvsg1k_spacemnt;
 DRV		BurnDrvMSX_spacemouse;
+DRV		BurnDrvnes_spacemutdg;
+DRV		BurnDrvnes_spacemutjk;
 DRV		BurnDrvcv_panic;
 DRV		BurnDrvSpaceplt;
 DRV		BurnDrvSpaceplta;
@@ -22968,6 +22972,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_contraforcec,	// Contra Force (2nd option, T-Chi)
 	&BurnDrvnes_contraforce,	// Contra Force (USA)
 	&BurnDrvnes_contraspirits,	// Contra Spirits (Unl)
+	&BurnDrvnes_convoy,			// Convoy, The (HB)
 	&BurnDrvCookbib,			// Cookie & Bibi (set 1)
 	&BurnDrvCookbiba,			// Cookie & Bibi (set 2)
 	&BurnDrvCookbib2c,			// Cookie & Bibi 2 (English / Korean)
@@ -28553,6 +28558,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgg_lemming2,		// Lemmings 2 - The Tribes (Euro, Prototype)
 	&BurnDrvsms_lemming2,		// Lemmings 2 - The Tribes (Euro, Prototype)
 	&BurnDrvmd_lemming2u,		// Lemmings 2 - The Tribes (USA)
+	&BurnDrvnes_lemmingsimp,	// Lemmings Improvement (Hack)
 	&BurnDrvCrshrace,			// Lethal Crash Race (set 1)
 	&BurnDrvCrshrace2,			// Lethal Crash Race (set 2)
 	&BurnDrvCrshrace2a,			// Lethal Crash Race (set 2, alternate sound ROM)
@@ -29084,7 +29090,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_maniacmansionsw,// Maniac Mansion (Sweden)
 	&BurnDrvnes_maniacmansionuproto,// Maniac Mansion (USA) (Prototype)
 	&BurnDrvnes_maniacmansion,	// Maniac Mansion (USA)
-	&BurnDrvnes_maniacmanunc,	// Maniac Mansion Uncensored (Hack)
+	&BurnDrvnes_maniacmanunc,	// Maniac Mansion Uncensored (Hack, v2.0)
 	&BurnDrvpce_maniacpw,		// Maniac Pro Wres - Asu e no Tatakai
 	&BurnDrvManiacsqa,			// Maniac Square (protected, Version 1.0, Checksum CF2D)
 	&BurnDrvManiacsq,			// Maniac Square (protected, Version 1.0, Checksum DEEE)
@@ -34686,6 +34692,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecThehardy,			// Space Monsters meet The Hardy (128K) (HB)
 	&BurnDrvsg1k_spacemnt,		// Space Mountain (Jpn, OMV)
 	&BurnDrvMSX_spacemouse,		// Space Mouse (HB)
+	&BurnDrvnes_spacemutdg,		// Space Mutants - DG BGM (HB)
+	&BurnDrvnes_spacemutjk,		// Space Mutants - JK BGM (HB)
 	&BurnDrvcv_panic,			// Space Panic
 	&BurnDrvSpaceplt,			// Space Pilot (set 1)
 	&BurnDrvSpaceplta,			// Space Pilot (set 2)

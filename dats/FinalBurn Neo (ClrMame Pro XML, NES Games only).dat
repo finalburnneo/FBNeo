@@ -3421,6 +3421,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="convoy">
+		<comment>Homebrew</comment>
+		<description>Convoy, The (HB)</description>
+		<year>2023</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="Convoy, The (2023)(FG Software).nes" size="24592" crc="e187eabf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="coolworld">
 		<description>Cool World (USA)</description>
 		<year>1993</year>
@@ -9728,6 +9737,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="lemmingsimp" cloneof="lemmings" romof="lemmings">
+		<comment>Hack</comment>
+		<description>Lemmings Improvement (Hack)</description>
+		<year>2023</year>
+		<manufacturer>Nintendo Lemmings Improvement Team</manufacturer>
+		<rom name="Lemmings Improvement (2023)(Nintendo Lemmings Improvement Team).nes" size="262160" crc="892d1270"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="lethalweapon">
 		<description>Lethal Weapon (USA)</description>
 		<year>1993</year>
@@ -10441,10 +10459,10 @@
 	</game>
 	<game name="maniacmanunc" cloneof="maniacmansion" romof="maniacmansion">
 		<comment>Hack</comment>
-		<description>Maniac Mansion Uncensored (Hack)</description>
-		<year>2020</year>
-		<manufacturer>Gzip</manufacturer>
-		<rom name="Maniac Mansion Uncensored (Hack).nes" size="262160" crc="8a13acc3"/>
+		<description>Maniac Mansion Uncensored (Hack, v2.0)</description>
+		<year>2023</year>
+		<manufacturer>gzip</manufacturer>
+		<rom name="Maniac Mansion Uncensored v2.0 (2023)(gzip).nes" size="524304" crc="483e38f2"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15120,6 +15138,24 @@
 		<year>1985</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Space Invaders (Japan).nes" size="24592" crc="525c0dab"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="spacemutdg">
+		<comment>Homebrew</comment>
+		<description>Space Mutants - DG BGM (HB)</description>
+		<year>2023</year>
+		<manufacturer>T-Bone</manufacturer>
+		<rom name="Space Mutants DG (2023)(T-Bone).nes" size="524304" crc="3f73e619"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="spacemutjk" cloneof="spacemutdg" romof="spacemutdg">
+		<comment>Homebrew</comment>
+		<description>Space Mutants - JK BGM (HB)</description>
+		<year>2023</year>
+		<manufacturer>T-Bone</manufacturer>
+		<rom name="Space Mutants JK (2023)(T-Bone).nes" size="524304" crc="d202f6b6"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

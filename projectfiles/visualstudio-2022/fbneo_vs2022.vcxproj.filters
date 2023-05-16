@@ -3562,6 +3562,9 @@
     <ClCompile Include="..\..\src\burn\snd\tiamc1_snd.cpp">
       <Filter>Burn\snd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_lockon.cpp">
+      <Filter>Burn\drv\pre90s</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

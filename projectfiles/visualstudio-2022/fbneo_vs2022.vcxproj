@@ -215,6 +215,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_gridlee.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_iqblock.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_kingofbox.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_lockon.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_magmax.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_mcr3.cpp" />

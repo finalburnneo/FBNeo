@@ -15638,16 +15638,17 @@ struct BurnDriver BurnDrvnes_marioquest = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://www.romhacking.net/hacks/7784/
 static struct BurnRomInfo nes_maniacmanuncRomDesc[] = {
-	{ "Maniac Mansion Uncensored (Hack).nes",          262160, 0x8a13acc3, BRF_ESS | BRF_PRG },
+	{ "Maniac Mansion Uncensored v2.0 (2023)(gzip).nes",          524304, 0x483e38f2, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_maniacmanunc)
 STD_ROM_FN(nes_maniacmanunc)
 
 struct BurnDriver BurnDrvnes_maniacmanunc = {
-	"nes_maniacmanunc", "nes_maniacmansion", NULL, NULL, "2020",
-	"Maniac Mansion Uncensored (Hack)\0", NULL, "Gzip", "Miscellaneous",
+	"nes_maniacmanunc", "nes_maniacmansion", NULL, NULL, "2023",
+	"Maniac Mansion Uncensored (Hack, v2.0)\0", NULL, "gzip", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
 	NESGetZipName, nes_maniacmanuncRomInfo, nes_maniacmanuncRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -22398,6 +22399,23 @@ struct BurnDriver BurnDrvnes_bowbeast = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_convoyRomDesc[] = {
+	{ "Convoy, The (2023)(FG Software).nes",          24592, 0xe187eabf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_convoy)
+STD_ROM_FN(nes_convoy)
+
+struct BurnDriver BurnDrvnes_convoy = {
+	"nes_convoy", NULL, NULL, NULL, "2023",
+	"Convoy, The (HB)\0", NULL, "FG Software", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_convoyRomInfo, nes_convoyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_mystpillarsRomDesc[] = {
 	{ "Mystic Pillars (2008)(Sivak Games).nes",          524304, 0x420f1b1a, BRF_ESS | BRF_PRG },
 };
@@ -22462,6 +22480,40 @@ struct BurnDriver BurnDrvnes_spacecat = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_spacecatRomInfo, nes_spacecatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spacemutdgRomDesc[] = {
+	{ "Space Mutants DG (2023)(T-Bone).nes",          524304, 0x3f73e619, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spacemutdg)
+STD_ROM_FN(nes_spacemutdg)
+
+struct BurnDriver BurnDrvnes_spacemutdg = {
+	"nes_spacemutdg", NULL, NULL, NULL, "2023",
+	"Space Mutants - DG BGM (HB)\0", NULL, "T-Bone", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_spacemutdgRomInfo, nes_spacemutdgRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_spacemutjkRomDesc[] = {
+	{ "Space Mutants JK (2023)(T-Bone).nes",          524304, 0xd202f6b6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spacemutjk)
+STD_ROM_FN(nes_spacemutjk)
+
+struct BurnDriver BurnDrvnes_spacemutjk = {
+	"nes_spacemutjk", "nes_spacemutdg", NULL, NULL, "2023",
+	"Space Mutants - JK BGM (HB)\0", NULL, "T-Bone", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_spacemutjkRomInfo, nes_spacemutjkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -42470,6 +42522,24 @@ struct BurnDriver BurnDrvnes_lemmings = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_lemmingsRomInfo, nes_lemmingsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/hacks/7748/
+static struct BurnRomInfo nes_lemmingsimpRomDesc[] = {
+	{ "Lemmings Improvement (2023)(Nintendo Lemmings Improvement Team).nes",          262160, 0x892d1270, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lemmingsimp)
+STD_ROM_FN(nes_lemmingsimp)
+
+struct BurnDriver BurnDrvnes_lemmingsimp = {
+	"nes_lemmingsimp", "nes_lemmings", NULL, NULL, "2023",
+	"Lemmings Improvement (Hack)\0", NULL, "Nintendo Lemmings Improvement Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_lemmingsimpRomInfo, nes_lemmingsimpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

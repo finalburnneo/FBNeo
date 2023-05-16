@@ -2336,7 +2336,7 @@ struct BurnDriver BurnDrvDdungeon = {
 	"ddungeon", NULL, NULL, NULL, "1992",
 	"Dangerous Dungeons (set 1)\0", NULL, "Game Room", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
 	NULL, ddungeonRomInfo, ddungeonRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdungeonDIPInfo,
 	DdungeonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
@@ -2374,7 +2374,7 @@ struct BurnDriver BurnDrvDdungeone = {
 	"ddungeone", "ddungeon", NULL, NULL, "1992",
 	"Dangerous Dungeons (set 2)\0", NULL, "East Coast Coin Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
 	NULL, ddungeoneRomInfo, ddungeoneRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdungeonDIPInfo,
 	DdungeonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3

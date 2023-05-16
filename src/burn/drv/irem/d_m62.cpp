@@ -3261,7 +3261,9 @@ static INT32 HorizonLoadRoms()
 
 static void M62MachineInit()
 {
-//	BurnSetRefreshRate(55.0);
+	INT32 Width, Height;
+	BurnDrvGetVisibleSize(&Width, &Height);
+	BurnSetRefreshRate((Width == 384 ? 56.338028 : 55.017606));
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -4632,7 +4634,7 @@ static INT32 M62Frame()
 	M62MakeInputs();
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, M62Z80Clock);
-	INT32 nCyclesTotal[2] = { M62Z80Clock / 60, M62M6803Clock / 60 };
+	INT32 nCyclesTotal[2] = { ((double)M62Z80Clock * 100 / nBurnFPS), ((double)M62M6803Clock * 100 / nBurnFPS) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ZetNewFrame();

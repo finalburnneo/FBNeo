@@ -3267,7 +3267,7 @@ static void M62MachineInit()
 {
 	INT32 Width, Height;
 	BurnDrvGetVisibleSize(&Width, &Height);
-	BurnSetRefreshRate((Width == 384 ? 56.338028 : 55.017606));
+	BurnSetRefreshRate((Width == 384 ? 55.017606 : 56.338028));
 
 	ZetInit(0);
 	ZetOpen(0);

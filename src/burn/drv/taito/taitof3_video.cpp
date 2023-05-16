@@ -2028,7 +2028,7 @@ static void get_vram_info(INT32 sx, INT32 sy)
 
 	UINT16 pri=0;
 
-	const INT32 vram_width_mask=0x3ff;
+	const INT32 vram_width_mask=0x1ff;
 
 	if (flipscreen)
 	{

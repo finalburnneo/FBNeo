@@ -4,6 +4,7 @@ void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy);
 void epic12_exit();
 void epic12_reset();
 void epic12_scan(INT32 nAction, INT32 *pnMin);
+void epic12_set_blitterdelay_method(INT32 delay_method); // 0 = accurate, !0 = ancient
 void epic12_set_blitterdelay(INT32 delay, INT32 burn_cycles);
 void epic12_set_blitterthreading(INT32 value);
 void epic12_wait_blitterthread();

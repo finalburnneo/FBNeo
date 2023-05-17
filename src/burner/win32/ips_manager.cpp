@@ -931,15 +931,17 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
                 // Can support linetypes: (space or tab)
                 // "rom name.bin" "patch file.ips" CRC(abcd1234)
                 // romname.bin patchfile CRC(abcd1234)
+				#define DELIM_TOKENS_NAME " \t\r\n"
 				#define DELIM_TOKENS " \t\r\n()"
-				rom_name = strqtoken(p, DELIM_TOKENS);
+
+				rom_name = strqtoken(p, DELIM_TOKENS_NAME);
 
 				if (!rom_name)
 					continue;
 				if (*rom_name == '#')
 					continue;
 
-				ips_name = strqtoken(NULL, DELIM_TOKENS);
+				ips_name = strqtoken(NULL, DELIM_TOKENS_NAME);
 				if (!ips_name) {
 					continue;
 				}

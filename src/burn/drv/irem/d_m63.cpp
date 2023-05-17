@@ -52,6 +52,8 @@ static INT32 sy_offset;
 static INT32 char_color_offset;
 static INT32 sound_interrupt_count;
 
+static INT32 nExtraCycles[2];
+
 static struct BurnInputInfo WilytowrInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
@@ -479,6 +481,8 @@ static INT32 DrvDoReset()
 
 	DrvRecalc = 1;
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
 	HiscoreReset();
 
 	return 0;
@@ -826,9 +830,9 @@ static INT32 DrvFrame()
 	I8039NewFrame();
 	ZetNewFrame();
 
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
-	INT32 nCyclesDone[2]  = { 0, 0 };
 	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
 	I8039Open(0);
@@ -855,6 +859,9 @@ static INT32 DrvFrame()
 
 	I8039Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -890,6 +897,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sample_pos);
 		SCAN_VAR(sample_end);
 		SCAN_VAR(sample_sel);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

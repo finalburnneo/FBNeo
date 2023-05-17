@@ -680,7 +680,7 @@ static int vidCreateGameSurfaces()
 		VidSClearSurface(pEmuImage[3], 0, NULL);
 	}
 
-	if (nVidTransferMethod <= 0) {
+	if (nVidTransferMethod == 0) {
 
 		memset(&ddsd, 0, sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);
@@ -719,7 +719,7 @@ static int vidCreateGameSurfaces()
 	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
 
 	ddsd.ddsCaps.dwCaps = DDSCAPS_TEXTURE;
-	if (nVidTransferMethod > 0) {
+	if (nVidTransferMethod != 0) {
 		ddsd.ddsCaps.dwCaps2 = DDSCAPS2_HINTDYNAMIC | DDSCAPS2_TEXTUREMANAGE;
 	}
 
@@ -2137,7 +2137,7 @@ static int vidBurnToSurf()
 	memset(&ddsd, 0, sizeof(ddsd));
 	ddsd.dwSize = sizeof(ddsd);
 
-	if (nVidTransferMethod <= 0) {
+	if (nVidTransferMethod == 0) {
 		if (nPreScaleEffect) {
 
 			rect.right *= nPreScaleZoom;
@@ -2224,7 +2224,7 @@ static int vidFrame(bool bRedraw)			// bRedraw = 0
 		for (int i = 0; i < 4; i++) {
 
 			// Skip texture 0 if we're using DirectX texture management
-			if (nVidTransferMethod > 0 && i == 0) {
+			if (nVidTransferMethod != 0 && i == 0) {
 				continue;
 			}
 
@@ -2452,7 +2452,7 @@ static int vidGetSettings(InterfaceInfo* pInfo)
 		IntInfoAddStringModule(pInfo, szString);
 	}
 
-	if (nVidTransferMethod > 0) {
+	if (nVidTransferMethod != 0) {
 		TCHAR szString[MAX_PATH] = _T("");
 
 		_sntprintf(szString, MAX_PATH, _T("Using Direct3D texture management %s (%ix zoom)"), VidSoftFXGetEffect(nPreScaleEffect), nPreScaleZoom);

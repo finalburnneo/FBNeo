@@ -43,7 +43,8 @@ static INT32 DrvRearHorizScrollLo;
 static INT32 DrvRearHorizScrollHi;
 static INT32 DrvSampleAddress;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
+static INT32 nCyclesTotal[2];
+static INT32 nExtraCycles[2];
 
 static UINT8 DrvHasYM2203 = 0;
 static UINT8 DrvKikcubicDraw = 0;
@@ -958,6 +959,8 @@ static INT32 DrvDoReset()
 	DrvRearHorizScrollLo = 0;
 	DrvRearHorizScrollHi = 0;
 	DrvSampleAddress = 0;
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
 
 	HiscoreReset();
 
@@ -2283,7 +2286,7 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetNewFrame();
 
@@ -2310,6 +2313,9 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		if (DrvKikcubicDraw) {
@@ -2358,6 +2364,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvRearHorizScrollLo);
 		SCAN_VAR(DrvRearHorizScrollHi);
 		SCAN_VAR(DrvSampleAddress);
+
+		SCAN_VAR(nExtraCycles);
 	}
 	
 	if (nAction & ACB_WRITE) {

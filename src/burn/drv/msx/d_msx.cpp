@@ -33153,6 +33153,25 @@ struct BurnDriver BurnDrvMSX_pearlrain = {
 	272, 228, 4, 3
 };
 
+// Spellbound (HB)
+
+static struct BurnRomInfo MSX_spellboundRomDesc[] = {
+	{ "Spellbound (2023)(Mastropiero).rom",	32768, 0x4883feee, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_spellbound, MSX_spellbound, msx_msx)
+STD_ROM_FN(MSX_spellbound)
+
+struct BurnDriver BurnDrvMSX_spellbound = {
+	"msx_spellbound", NULL, "msx_msx", NULL, "2023",
+	"Spellbound (HB)\0", "The MSX port of classic ZX Spectrum 'Spellbound'", "Mastropiero", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
+	MSXGetZipName, MSX_spellboundRomInfo, MSX_spellboundRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Tower of Damnation (HB, v1.3)
 
 static struct BurnRomInfo MSX_towerdamnRomDesc[] = {

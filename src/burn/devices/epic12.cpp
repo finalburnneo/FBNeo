@@ -48,9 +48,12 @@ static void idle_blitter(UINT8 operation_size_bytes)
 }
 
 static UINT16* m_ram16;
+static UINT16* m_ram16_copy;
 static UINT32 m_gfx_addr;
+static UINT32 m_gfx_addr_shadowcopy;
 static UINT32 m_gfx_scroll_x, m_gfx_scroll_y;
 static UINT32 m_gfx_clip_x, m_gfx_clip_y;
+static UINT32 m_gfx_clip_x_shadowcopy, m_gfx_clip_y_shadowcopy;
 
 static int m_gfx_size;
 static UINT32 *m_bitmaps;
@@ -59,7 +62,6 @@ static rectangle m_clip;
 static UINT64 epic12_device_blit_delay;
 static int m_blitter_busy;
 
-static UINT16* m_use_ram;
 static int m_main_ramsize; // type D has double the main ram
 static int m_main_rammask;
 
@@ -304,6 +306,7 @@ void epic12_exit()
 	thready.exit();
 
 	BurnFree(m_bitmaps);
+	BurnFree(m_ram16_copy);
 
 	if (pal16) {
 		BurnFree(pal16);
@@ -316,7 +319,9 @@ void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy)
 	m_main_ramsize = ram_size;
 	m_main_rammask = ram_size - 1;
 
-	m_use_ram = m_ram16 = ram;
+	m_ram16 = ram;
+
+	m_ram16_copy = (UINT16*)BurnMalloc(ram_size);
 
 	dips = dippy;
 
@@ -329,10 +334,13 @@ void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy)
 	m_delay_scale = 50;
 	m_blitter_busy = 0;
 	m_gfx_addr = 0;
+	m_gfx_addr_shadowcopy = 0;
 	m_gfx_scroll_x = 0;
 	m_gfx_scroll_y = 0;
 	m_gfx_clip_x = 0;
 	m_gfx_clip_y = 0;
+	m_gfx_clip_x_shadowcopy = 0;
+	m_gfx_clip_y_shadowcopy = 0;
 	epic12_device_blit_delay = 0;
 
 	m_blit_delay_ns = 0;
@@ -387,10 +395,13 @@ void epic12_reset()
 
 	m_blitter_busy = 0;
 	m_gfx_addr = 0;
+	m_gfx_addr_shadowcopy = 0;
 	m_gfx_scroll_x = 0;
 	m_gfx_scroll_y = 0;
 	m_gfx_clip_x = 0;
 	m_gfx_clip_y = 0;
+	m_gfx_clip_x_shadowcopy = 0;
+	m_gfx_clip_y_shadowcopy = 0;
 	epic12_device_blit_delay = 0;
 	m_blit_delay_ns = 0;
 	m_blit_idle_op_bytes = 0;
@@ -398,17 +409,24 @@ void epic12_reset()
 	thready.reset();
 }
 
-static UINT16 READ_NEXT_WORD(UINT32 *addr)
+static inline UINT16 READ_NEXT_WORD(UINT32 *addr)
 {
-	UINT16 data = m_use_ram[((*addr & m_main_rammask) >> 1)];
+	const UINT16 data = m_ram16_copy[((*addr & m_main_rammask) >> 1)];
 
 	*addr += 2;
 
 	return data;
 }
 
-// git r dun!! (smb)
-#define COPY_NEXT_WORD READ_NEXT_WORD
+static inline UINT16 COPY_NEXT_WORD(UINT32 *addr)
+{
+	const UINT16 data = m_ram16[((*addr & m_main_rammask) >> 1)];
+	m_ram16_copy[((*addr & m_main_rammask) >> 1)] = data;
+
+	*addr += 2;
+
+	return data;
+}
 
 static void gfx_upload_shadow_copy(UINT32 *addr)
 {
@@ -891,8 +909,8 @@ static void gfx_create_shadow_copy()
 {
 	UINT32 addr = m_gfx_addr & 0x1fffffff;
 
-	m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-			   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+	m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+			   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 
 	while (1)
 	{
@@ -907,8 +925,8 @@ static void gfx_create_shadow_copy()
 
 			case 0xc000:
 				if (COPY_NEXT_WORD(&addr)) // cliptype
-					m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-							   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+					m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+							   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 				else
 					m_clip.set(0, 0x2000 - 1, 0, 0x1000 - 1);
 				idle_blitter(EP1C_CLIP_OPERATION_SIZE_BYTES);
@@ -934,9 +952,9 @@ static void gfx_create_shadow_copy()
 
 static void gfx_exec()
 {
-	UINT32 addr = m_gfx_addr & 0x1fffffff;
-	m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-			   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+	UINT32 addr = m_gfx_addr_shadowcopy & 0x1fffffff;
+	m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+			   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 
 //  logerror("GFX EXEC: %08X\n", addr);
 
@@ -952,8 +970,8 @@ static void gfx_exec()
 
 			case 0xc000:
 				if (READ_NEXT_WORD(&addr)) // cliptype
-					m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-							   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+					m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+							   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 				else
 					m_clip.set(0, 0x2000-1, 0, 0x1000-1);
 				break;
@@ -996,13 +1014,23 @@ void epic12_wait_blitterthread()
 	thready.notify_wait();
 }
 
-static void gfx_exec_write(UINT32 offset, UINT32 data)
+static void gfx_exec_write(UINT32 data)
 {
 //	if ( ACCESSING_BITS_0_7 )
 	{
 		if (data & 1)
 		{
 			thready.notify_wait();
+
+			m_gfx_clip_x_shadowcopy = m_gfx_clip_x;
+			m_gfx_clip_y_shadowcopy = m_gfx_clip_y;
+
+			// Create a copy of the blit list so we can safely thread it.
+			// Copying the Blitter operations will also estimate the delay needed for processing.
+			m_blit_delay_ns = 0;
+			gfx_create_shadow_copy();
+
+			m_gfx_addr_shadowcopy = m_gfx_addr;
 
 			if (m_delay_method) // old method
 			{
@@ -1021,10 +1049,6 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 					m_blitter_busy = 0;
 				}
 			} else {  // new method (buffis)
-				m_blit_delay_ns = 0;
-				// ... will also estimate the delay needed for processing.
-				gfx_create_shadow_copy();
-
 				// Every EP1C_VRAM_H_LINE_PERIOD_NANOSEC, the Blitter will block other operations, due
 				// to fetching a horizontal line from VRAM for output.
 				m_blit_delay_ns += floor( m_blit_delay_ns / EP1C_VRAM_H_LINE_PERIOD_NANOSEC ) * EP1C_VRAM_H_LINE_DURATION_NANOSEC;
@@ -1177,7 +1201,7 @@ void epic12_blitter_write(UINT32 offset, UINT32 data)
 	switch (offset)
 	{
 		case 0x04:
-			gfx_exec_write(offset,data);
+			gfx_exec_write(data);
 			break;
 
 		case 0x08:
@@ -1205,10 +1229,13 @@ void epic12_blitter_write(UINT32 offset, UINT32 data)
 void epic12_scan(INT32 nAction, INT32 *pnMin)
 {
 	SCAN_VAR(m_gfx_addr);
+//	SCAN_VAR(m_gfx_addr_shadowcopy); // probably not needed!
 	SCAN_VAR(m_gfx_scroll_x);
 	SCAN_VAR(m_gfx_scroll_y);
 	SCAN_VAR(m_gfx_clip_x);
 	SCAN_VAR(m_gfx_clip_y);
+//	SCAN_VAR(m_gfx_clip_x_shadowcopy);
+//	SCAN_VAR(m_gfx_clip_y_shadowcopy);
 	SCAN_VAR(epic12_device_blit_delay);
 	SCAN_VAR(m_delay_scale);
 	SCAN_VAR(m_blitter_busy);

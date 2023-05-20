@@ -24,7 +24,8 @@ static const int EP1C_CLIP_OPERATION_SIZE_BYTES = 2;
 // When looking at VRAM viewer in Special mode in Muchi Muchi Pork, draws 32 pixels outside of
 // the "clip area" is visible. This is likely why the frame buffers will have at least a 32 pixel offset
 // from the VRAM borders or other buffers in all games.
-static const int EP1C_CLIP_MARGIN = 32;
+static int EP1C_CLIP_MARGIN = 32;
+// note: configurable via dipsetting  -dink may 2023
 
 // Number of bytes that are read each time Blitter fetches operations from SRAM.
 static const int OPERATION_CHUNK_SIZE_BYTES = 64;
@@ -68,6 +69,8 @@ static int m_main_rammask;
 static int m_delay_method;
 static int m_delay_scale;
 static int m_burn_cycles;
+
+static INT32 sleep_on_busy = 1;
 
 static UINT8 epic12_device_colrtable[0x20][0x40];
 static UINT8 epic12_device_colrtable_rev[0x20][0x40];
@@ -326,7 +329,7 @@ void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy)
 	dips = dippy;
 
 	m_gfx_size = 0x2000 * 0x1000;
-	m_bitmaps = (UINT32*)BurnMalloc (0x2000 * 0x1000 * 4);
+	m_bitmaps = (UINT32*)BurnMalloc (m_gfx_size * 4);
 
 	m_clip.set(0, 0x2000-1, 0, 0x1000-1);
 
@@ -345,6 +348,9 @@ void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy)
 
 	m_blit_delay_ns = 0;
 	m_blit_idle_op_bytes = 0;
+
+	epic12_set_blitter_clipping_margin(1);
+	epic12_set_blitter_sleep_on_busy(1);
 
 	thready.init(run_blitter_cb);
 
@@ -365,6 +371,16 @@ void epic12_set_blitterdelay(INT32 delay, INT32 burn_cycles)
 void epic12_set_blitterdelay_method(INT32 delay_method) // 0 = accurate, !0 = ancient
 {
 	m_delay_method = delay_method;
+}
+
+void epic12_set_blitter_clipping_margin(INT32 c_margin_on) // ??? not sure.
+{
+	EP1C_CLIP_MARGIN = (c_margin_on) ? 32 : 0;
+}
+
+void epic12_set_blitter_sleep_on_busy(INT32 busysleep_on)
+{
+	sleep_on_busy = (busysleep_on) ? 1 : 0;
 }
 
 void epic12_reset()
@@ -994,21 +1010,6 @@ static void gfx_exec()
 }
 
 
-
-static UINT32 gfx_ready_read()
-{
-	if (m_blitter_busy)
-	{
-		//m_maincpu->spin_until_time(attotime::from_usec(10));
-		Sh3BurnCycles(m_burn_cycles); // 0x400 @ (12800000*8)
-		//bprintf(0, _T("%d frame - blitter busy read....."), nCurrentFrame);
-
-		return 0x00000000;
-	}
-	else
-		return 0x00000010;
-}
-
 void epic12_wait_blitterthread()
 {
 	thready.notify_wait();
@@ -1176,7 +1177,18 @@ UINT32 epic12_blitter_read(UINT32 offset)
 	switch (offset)
 	{
 		case 0x10:
-			return gfx_ready_read();
+			if (m_blitter_busy)
+			{
+				//m_maincpu->spin_until_time(attotime::from_usec(10));
+				if (sleep_on_busy) {
+					Sh3BurnCycles(m_burn_cycles); // 0x400 @ (12800000*8)
+				}
+				//bprintf(0, _T("%d frame - blitter busy read....."), nCurrentFrame);
+
+				return 0x00000000;
+			}
+			else
+				return 0x00000010;
 
 		case 0x24:
 			return 0xffffffff;

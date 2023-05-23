@@ -1861,6 +1861,9 @@ static bool retro_load_game_common()
 		if (bIsNeogeoCartGame)
 			set_neo_system_bios();
 
+		// Libretro doesn't want the refresh rate to be limited to 60hz
+		bSpeedLimit60hz = false;
+
 		// Initialize game driver
 		if(BurnDrvInit() == 0)
 			HandleMessage(RETRO_LOG_INFO, "[FBNeo] Initialized driver for %s\n", g_driver_name);

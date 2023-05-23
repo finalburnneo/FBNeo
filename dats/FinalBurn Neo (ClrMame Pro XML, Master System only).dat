@@ -5557,10 +5557,10 @@
 	</game>
 	<game name="vexed">
 		<comment>Homebrew</comment>
-		<description>Vexed (HB, v1.03)</description>
-		<year>2021</year>
+		<description>Vexed (HB, v1.07)</description>
+		<year>2021-23</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Vexed v1.03 (2021)(Under4Mhz).sms" size="32768" crc="bd34d592"/>
+		<rom name="Vexed v1.07 (2023)(Under4Mhz).sms" size="32768" crc="edfe0729"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

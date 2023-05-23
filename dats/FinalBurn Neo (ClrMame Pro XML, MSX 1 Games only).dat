@@ -14878,6 +14878,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spellbound" romof="msx">
+		<comment>Homebrew, The MSX port of classic ZX Spectrum 'Spellbound'</comment>
+		<description>Spellbound (HB)</description>
+		<year>2023</year>
+		<manufacturer>Mastropiero</manufacturer>
+		<rom name="Spellbound (2023)(Mastropiero).rom" size="32768" crc="4883feee"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spelunkr" romof="msx">
 		<description>Spelunker (Jpn)</description>
 		<year>1986</year>

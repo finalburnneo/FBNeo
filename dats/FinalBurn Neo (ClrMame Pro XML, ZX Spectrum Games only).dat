@@ -2940,6 +2940,39 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bruxolicoa" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Bruxolico - Side A (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Bruxolico - Side A 128K (2023)(Amaweks).tap" size="42030" crc="8241a244"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bruxolicob" cloneof="bruxolicoa" romof="bruxolicoa">
+		<comment>Homebrew</comment>
+		<description>Bruxolico - Side B (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Bruxolico - Side B 128K (2023)(Amaweks).tap" size="41955" crc="29332105"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bruxolicoc" cloneof="bruxolicoa" romof="bruxolicoa">
+		<comment>Homebrew</comment>
+		<description>Bruxolico - Side C (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Bruxolico - Side C 128K (2023)(Amaweks).tap" size="44079" crc="82c08c58"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bublbobl" romof="spec128">
 		<description>Bubble Bobble (128K)</description>
 		<year>1987</year>
@@ -5763,8 +5796,30 @@
 		<comment>Hack</comment>
 		<description>Dizzy III - Fantasy World Dizzy (Russian) (128K) (Hack)</description>
 		<year>199?</year>
-		<manufacturer>Codemasters</manufacturer>
+		<manufacturer>unknown</manufacturer>
 		<rom name="Dizzy 3 - Fantasy World Dizzy (1989)(Codemasters)[ru].tap" size="64532" crc="2a83e0d8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy3ce23" romof="spec128">
+		<comment>Hack</comment>
+		<description>Dizzy III - Fantasy World Dizzy 2023 Classic Edition (English) (128K) (Hack)</description>
+		<year>2023</year>
+		<manufacturer>Dr. Titus</manufacturer>
+		<rom name="Fantasy World Dizzy - 2023 Classic Edition ENG (2023)(Dr. Titus).tap" size="50676" crc="9c46058f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dizzy3ce23ru" cloneof="dizzy3ce23" romof="dizzy3ce23">
+		<comment>Hack</comment>
+		<description>Dizzy III - Fantasy World Dizzy 2023 Classic Edition (Russian) (128K) (Hack)</description>
+		<year>2023</year>
+		<manufacturer>Dr. Titus</manufacturer>
+		<rom name="Fantasy World Dizzy - 2023 Classic Edition RUS (2023)(Dr. Titus).tap" size="50986" crc="5fc99016"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -8931,6 +8986,26 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="hoardere" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Hoarder, The (English) (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>iadvd</manufacturer>
+		<rom name="Hoarder, The EN 48K (2020)(iadvd).tap" size="41367" crc="30a0539a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hoarders" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Hoarder, The (Spanish) (48K) (HB)</description>
+		<year>2020</year>
+		<manufacturer>iadvd</manufacturer>
+		<rom name="Hoarder, The ES 48K (2020)(iadvd).tap" size="41374" crc="1c7cee3d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hobbit128" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Hobbit, The (128K Edition) (HB)</description>
@@ -9368,6 +9443,27 @@
 		<rom name="Impossabubble (2018)(Dave Clarke).tap" size="46080" crc="7cd3626a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="impossamal128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Impossamal (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Impossamal 128K (2023)(The Mojon Twins).tap" size="48978" crc="b30c4dce"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="impossamal48" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Impossamal (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Impossamal 48K (2023)(The Mojon Twins).tap" size="41958" crc="da1579b8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13401,6 +13497,17 @@
 		<manufacturer>Javier Fopiani</manufacturer>
 		<rom name="Nosy (2020)(Javier Fopiani).tap" size="43998" crc="efb0331a"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nothing" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Nothing (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Gogin</manufacturer>
+		<rom name="Nothing v1.0 128K (2021)(Gogin).tap" size="46605" crc="11d0b7e2"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -19915,10 +20022,10 @@
 	</game>
 	<game name="vexed128" romof="spec128">
 		<comment>Homebrew, 'R': quit game - 'X': restart level</comment>
-		<description>Vexed (128K) (HB)</description>
+		<description>Vexed (128K) (HB, v1.07)</description>
 		<year>2023</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Vexed 128K (2023)(Under4Mhz).tap" size="19699" crc="4847c86f"/>
+		<rom name="Vexed 128K v1.07 (2023)(Under4Mhz).tap" size="18619" crc="64bdf56b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -19926,10 +20033,10 @@
 	</game>
 	<game name="vexed48" cloneof="vexed128" romof="vexed128">
 		<comment>Homebrew, 'R': quit game - 'X': restart level</comment>
-		<description>Vexed (48K) (HB)</description>
+		<description>Vexed (48K) (HB, v1.07)</description>
 		<year>2023</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Vexed 48K (2023)(Under4Mhz).tap" size="17509" crc="18aa8b4a"/>
+		<rom name="Vexed 48K v1.07 (2023)(Under4Mhz).tap" size="17827" crc="04e59624"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

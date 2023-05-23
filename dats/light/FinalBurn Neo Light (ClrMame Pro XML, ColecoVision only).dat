@@ -5449,10 +5449,10 @@
 	</game>
 	<game name="vexed" romof="coleco">
 		<comment>Homebrew</comment>
-		<description>Vexed (HB)</description>
-		<year>2021</year>
+		<description>Vexed (HB, v1.07)</description>
+		<year>2021-23</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Vexed (2021) (Under4MHz).rom" size="32768" crc="77893038"/>
+		<rom name="Vexed v1.07 (2023)(Under4Mhz).rom" size="32768" crc="e2630325"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

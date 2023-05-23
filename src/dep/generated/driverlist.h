@@ -2200,6 +2200,9 @@ DRV		BurnDrvMSX_brucelee;
 DRV		BurnSpecBruceleerx;
 DRV		BurnDrvmd_brutal;
 DRV		BurnDrvmd_brutalu;
+DRV		BurnSpecBruxolicoa;
+DRV		BurnSpecBruxolicob;
+DRV		BurnSpecBruxolicoc;
 DRV		BurnDrvmd_bubba;
 DRV		BurnDrvmd_bubbap;
 DRV		BurnDrvmd_bubbau;
@@ -4274,6 +4277,8 @@ DRV		BurnSpecDizzy2es23r;
 DRV		BurnSpecDizzy3andahalf;
 DRV		BurnSpecdizzy3;
 DRV		BurnSpecdizzy3ru;
+DRV		BurnSpecDizzy3ce23;
+DRV		BurnSpecDizzy3ce23ru;
 DRV		BurnSpecdizzy4;
 DRV		BurnSpecdizzy4_48;
 DRV		BurnSpecdizzy4ru;
@@ -7323,6 +7328,8 @@ DRV		BurnDrvtg_hitice;
 DRV		BurnDrvnes_hitlenofukc;
 DRV		BurnDrvnes_hitlenofuk;
 DRV		BurnDrvMSX_hitsuji;
+DRV		BurnSpecHoardere;
+DRV		BurnSpecHoarders;
 DRV		BurnSpecHobbit128;
 DRV		BurnSpechobbit2;
 DRV		BurnSpechobbit;
@@ -7607,6 +7614,8 @@ DRV		BurnDrvcv_impetus;
 DRV		BurnDrvMSX_impetus;
 DRV		BurnSpecImpossaball;
 DRV		BurnSpecImpossabubble;
+DRV		BurnSpecImpossamal128;
+DRV		BurnSpecImpossamal48;
 DRV		BurnSpecimpossamole;
 DRV		BurnDrvtg_impossam;
 DRV		BurnSpecImpmission;
@@ -11380,6 +11389,7 @@ DRV		BurnDrvNostromo;
 DRV		BurnSpecNosyen;
 DRV		BurnSpecNosyes;
 DRV		BurnSpecNosy;
+DRV		BurnSpecNothing;
 DRV		BurnDrvNouryokup;
 DRV		BurnDrvNouryoku;
 DRV		BurnDrvNova2001;
@@ -15148,6 +15158,7 @@ DRV		BurnDrvmd_speedbl2u;
 DRV		BurnDrvMSX_sbracer;
 DRV		BurnSpecSpekkuman;
 DRV		BurnSpecspellbound;
+DRV		BurnDrvMSX_spellbound;
 DRV		BurnDrvsms_spellcst;
 DRV		BurnDrvsms_spellcstc;
 DRV		BurnDrvSpelunkrj;
@@ -18350,8 +18361,9 @@ DRV		BurnDrvMSX_vesikauhu;
 DRV		BurnDrvMSX_vestron;
 DRV		BurnSpecVexed128;
 DRV		BurnSpecVexed48;
-DRV		BurnDrvcv_vexed;
 DRV		BurnDrvMSX_vexed;
+DRV		BurnDrvcv_vexed;
+DRV		BurnDrvgg_vexed;
 DRV		BurnDrvsg1k_vexed;
 DRV		BurnDrvsms_vexed;
 DRV		BurnDrvHangonvf;
@@ -21822,6 +21834,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBruceleerx,		// Bruce Lee RX (48K) (HB)
 	&BurnDrvmd_brutal,			// Brutal - Paws of Fury (Euro)
 	&BurnDrvmd_brutalu,			// Brutal - Paws of Fury (USA)
+	&BurnSpecBruxolicoa,		// Bruxolico - Side A (128K) (HB)
+	&BurnSpecBruxolicob,		// Bruxolico - Side B (128K) (HB)
+	&BurnSpecBruxolicoc,		// Bruxolico - Side C (128K) (HB)
 	&BurnDrvmd_bubba,			// Bubba'n'Stix (Euro)
 	&BurnDrvmd_bubbap,			// Bubba'n'Stix (Euro, Prototype)
 	&BurnDrvmd_bubbau,			// Bubba'n'Stix (USA)
@@ -23896,6 +23911,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecDizzy3andahalf,	// Dizzy III (Three).. and a Half (48K)
 	&BurnSpecdizzy3,			// Dizzy III - Fantasy World Dizzy (128K)
 	&BurnSpecdizzy3ru,			// Dizzy III - Fantasy World Dizzy (Russian) (128K) (Hack)
+	&BurnSpecDizzy3ce23,		// Dizzy III - Fantasy World Dizzy 2023 Classic Edition (English) (128K) (Hack)
+	&BurnSpecDizzy3ce23ru,		// Dizzy III - Fantasy World Dizzy 2023 Classic Edition (Russian) (128K) (Hack)
 	&BurnSpecdizzy4,			// Dizzy IV - Magicland Dizzy (128K)
 	&BurnSpecdizzy4_48,			// Dizzy IV - Magicland Dizzy (48K)
 	&BurnSpecdizzy4ru,			// Dizzy IV - Magicland Dizzy (Russian) (128K) (Hack)
@@ -26945,6 +26962,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_hitlenofukc,	// Hitler no Fukkatsu - Top Secret (China)
 	&BurnDrvnes_hitlenofuk,		// Hitler no Fukkatsu - Top Secret (Japan)
 	&BurnDrvMSX_hitsuji,		// Hitsuji-Ya (Jpn)
+	&BurnSpecHoardere,			// Hoarder, The (English) (48K) (HB)
+	&BurnSpecHoarders,			// Hoarder, The (Spanish) (48K) (HB)
 	&BurnSpecHobbit128,			// Hobbit, The (128K Edition) (HB)
 	&BurnSpechobbit2,			// Hobbit, The v1.0 (48K)
 	&BurnSpechobbit,			// Hobbit, The v1.2 (48K)
@@ -27229,6 +27248,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_impetus,		// Impetus (HB)
 	&BurnSpecImpossaball,		// Impossaball (48K)
 	&BurnSpecImpossabubble,		// Impossabubble (HB)
+	&BurnSpecImpossamal128,		// Impossamal (128K) (HB)
+	&BurnSpecImpossamal48,		// Impossamal (48K) (HB)
 	&BurnSpecimpossamole,		// Impossamole (128K)
 	&BurnDrvtg_impossam,		// Impossamole
 	&BurnSpecImpmission,		// Impossible Mission (48K)
@@ -31002,6 +31023,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecNosyen,			// Nosy (English) (128K) (HB)
 	&BurnSpecNosyes,			// Nosy (Spanish) (128K) (HB)
 	&BurnSpecNosy,				// Nosy - first version (48K) (HB)
+	&BurnSpecNothing,			// Nothing (128K) (HB)
 	&BurnDrvNouryokup,			// Nouryoku Koujou Iinkai (prototype)
 	&BurnDrvNouryoku,			// Nouryoku Koujou Iinkai
 	&BurnDrvNova2001,			// Nova 2001 (Japan)
@@ -34770,6 +34792,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_sbracer,		// Speedboat Racer (Euro)
 	&BurnSpecSpekkuman,			// Spekku-man (48K) (HB)
 	&BurnSpecspellbound,		// Spellbound (128K)
+	&BurnDrvMSX_spellbound,		// Spellbound (HB)
 	&BurnDrvsms_spellcst,		// SpellCaster (Euro, USA, Bra)
 	&BurnDrvsms_spellcstc,		// SpellCaster (Hack, Spanish v0,99)
 	&BurnDrvSpelunkrj,			// Spelunker (Japan)
@@ -37970,12 +37993,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_verytex,			// Verytex (Jpn)
 	&BurnDrvMSX_vesikauhu,		// Vesikauhu (HB, Tech-Demo)
 	&BurnDrvMSX_vestron,		// Vestron (Euro)
-	&BurnSpecVexed128,			// Vexed (128K) (HB)
-	&BurnSpecVexed48,			// Vexed (48K) (HB)
-	&BurnDrvcv_vexed,			// Vexed (HB)
+	&BurnSpecVexed128,			// Vexed (128K) (HB, v1.07)
+	&BurnSpecVexed48,			// Vexed (48K) (HB, v1.07)
 	&BurnDrvMSX_vexed,			// Vexed (HB)
-	&BurnDrvsg1k_vexed,			// Vexed (HB, v1.03)
-	&BurnDrvsms_vexed,			// Vexed (HB, v1.03)
+	&BurnDrvcv_vexed,			// Vexed (HB, v1.07)
+	&BurnDrvgg_vexed,			// Vexed (HB, v1.07)
+	&BurnDrvsg1k_vexed,			// Vexed (HB, v1.07)
+	&BurnDrvsms_vexed,			// Vexed (HB, v1.07)
 	&BurnDrvHangonvf,			// VF (bootleg of Hang-On)
 	&BurnSpecviajecentterra,	// Viaje al Centro de la Tierra (Spanish) (128K)
 	&BurnDrvMSX_viajecentro,	// Viaje al Centro de la Tierra (Spanish)

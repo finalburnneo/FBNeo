@@ -108,7 +108,7 @@ static const struct retro_core_option_v2_definition var_fbneo_force_60hz = {
 	"fbneo-force-60hz",
 	"Force 60Hz",
 	NULL,
-	"Force 60Hz instead of original refresh rate, it means the game won't run at the proper speed",
+	"Ignore game's original refresh rate and try to run it at 60hz instead. It will cause incorrect game speed and frame pacing. It will try to use your monitor's correct refresh rate instead of 60hz if this refresh rate is between 59hz and 61hz.",
 	NULL,
 	NULL,
 	{
@@ -1302,7 +1302,14 @@ void check_variables(void)
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		if (strcmp(var.value, "enabled") == 0)
+		{
 			bForce60Hz = true;
+			float refresh_rate;
+			if (environ_cb(RETRO_ENVIRONMENT_GET_TARGET_REFRESH_RATE, &refresh_rate)) {
+				if (refresh_rate > 59.00 || refresh_rate < 61.00)
+					dForcedFrameRate = (double)refresh_rate;
+			}
+		}
 		else
 			bForce60Hz = false;
 	}

@@ -29483,18 +29483,18 @@ struct BurnDriver BurnDrvsms_snake = {
 	256, 192, 4, 3
 };
 
-// Vexed (HB, v1.03)
+// Vexed (HB, v1.07)
 
 static struct BurnRomInfo sms_vexedRomDesc[] = {
-	{ "Vexed v1.03 (2021)(Under4Mhz).sms",	32768, 0xbd34d592, BRF_PRG | BRF_ESS },
+	{ "Vexed v1.07 (2023)(Under4Mhz).sms",	32768, 0xedfe0729, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_vexed)
 STD_ROM_FN(sms_vexed)
 
 struct BurnDriver BurnDrvsms_vexed = {
-	"sms_vexed", NULL, NULL, NULL, "2021",
-	"Vexed (HB, v1.03)\0", NULL, "Under4Mhz", "Sega Master System",
+	"sms_vexed", NULL, NULL, NULL, "2021-23",
+	"Vexed (HB, v1.07)\0", NULL, "Under4Mhz", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_vexedRomInfo, sms_vexedRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -30562,6 +30562,25 @@ struct BurnDriver BurnDrvsms_whereisit = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_whereisitRomInfo, sms_whereisitRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Vexed (HB, v1.07)
+
+static struct BurnRomInfo gg_vexedRomDesc[] = {
+	{ "Vexed v1.07 (2023)(Under4Mhz).gg",	32768, 0x86f38694, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_vexed)
+STD_ROM_FN(gg_vexed)
+
+struct BurnDriver BurnDrvgg_vexed = {
+	"gg_vexed", NULL, NULL, NULL, "2023",
+	"Vexed (HB, v1.07)\0", NULL, "Under4Mhz", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
+	GGGetZipName, gg_vexedRomInfo, gg_vexedRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

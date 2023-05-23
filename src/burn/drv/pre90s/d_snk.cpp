@@ -90,6 +90,7 @@ static UINT8  gwar_rot_last[2] = {0, 0};
 static UINT8  gwar_rot_cnt[2] = {0, 0};
 static UINT8  nAutoFireCounter[2] 	= {0, 0};
 
+static INT32 nExtraCycles[3];
 
 static struct BurnInputInfo PsychosInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
@@ -2118,16 +2119,17 @@ STDDIPINFO(Bermudat)
 
 // SNKWAVE code
 
+#include "stream.h"
+static Stream stream;
 #define CLOCK_SHIFT 8
 #define SNKWAVE_WAVEFORM_LENGTH 16
 
 // data about the sound system
-UINT32 snkwave_frequency;
-UINT32 snkwave_counter;
-INT32 snkwave_waveform_position;
+static UINT32 snkwave_frequency;
+static UINT32 snkwave_counter;
+static INT32 snkwave_waveform_position;
 // decoded waveform table
-INT16 snkwave_waveform[SNKWAVE_WAVEFORM_LENGTH];
-double snkwave_volume = 1.00;
+static INT16 snkwave_waveform[SNKWAVE_WAVEFORM_LENGTH];
 
 static void snkwave_reset()
 {
@@ -2138,8 +2140,20 @@ static void snkwave_reset()
 	memset(&snkwave_waveform, 0, sizeof(snkwave_waveform));
 }
 
-static void snkwave_render(INT16 *buffer, INT32 samples)
+static void snkwave_scan()
 {
+	SCAN_VAR(snkwave_frequency);
+	SCAN_VAR(snkwave_counter);
+	SCAN_VAR(snkwave_waveform_position);
+	SCAN_VAR(snkwave_waveform);
+}
+
+static void snkwave_update(INT16 **streams, INT32 samples)
+{
+	INT16 *buffer = streams[0];
+
+	memset(buffer, 0, samples * sizeof(INT16));
+
 	/* if no sound, we're done */
 	if (snkwave_frequency == 0xfff)
 		return;
@@ -2170,11 +2184,29 @@ static void snkwave_render(INT16 *buffer, INT32 samples)
 			}
 		}
 
-		*buffer = BURN_SND_CLIP(*buffer + (INT16)(out * snkwave_volume));
-		buffer++;
-		*buffer = BURN_SND_CLIP(*buffer + (INT16)(out * snkwave_volume));
-		buffer++;
+		*buffer++ = out;
 	}
+}
+
+static void snkwave_render(INT16 *output, INT32 samples_len)
+{
+	if (samples_len != nBurnSoundLen) {
+		bprintf(0, _T("snkwave_render(): once per frame, please!\n"));
+		return;
+	}
+
+	stream.render(output, samples_len);
+}
+
+static void snkwave_init(double volume)
+{
+	stream.init(8000000>>CLOCK_SHIFT, nBurnSoundRate, 1, 1, snkwave_update);
+	stream.set_volume(volume);
+}
+
+static void snkwave_exit()
+{
+	stream.exit();
 }
 
 static void snkwave_update_waveform(UINT32 offset, UINT8 data)
@@ -2187,6 +2219,8 @@ static void snkwave_update_waveform(UINT32 offset, UINT8 data)
 
 static void snkwave_w(UINT32 offset, UINT8 data)
 {
+	stream.update();
+
 	data &= 0x3f; // all registers are 6-bit
 
 	if (offset == 0)
@@ -4020,8 +4054,6 @@ static INT32 DrvDoReset()
 
 	snkwave_reset(); // can be run on reset for all games, no big deal.
 
-	HiscoreReset();
-
 	sound_status = 0;
 	soundlatch = 0;
 	flipscreen = 0;
@@ -4044,6 +4076,10 @@ static INT32 DrvDoReset()
 	tc32_posx = 0;
 
 	RotateReset();
+
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -4711,7 +4747,7 @@ static INT32 MarvinsInit()
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
-	snkwave_volume = 0.50;
+	snkwave_init(0.50);
 
 	GenericTilesInit();
 
@@ -4770,7 +4806,7 @@ static INT32 MadcrashInit()
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
-	snkwave_volume = 0.30; // for vangrd2
+	snkwave_init(0.30); // for vangrd2
 
 	GenericTilesInit();
 
@@ -4829,6 +4865,8 @@ static INT32 MadcrushInit()
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
+	snkwave_init(0.30);
+
 	GenericTilesInit();
 
 	game_select = 5;
@@ -4880,6 +4918,8 @@ static INT32 JcrossInit()
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
+
+	snkwave_init(0.30); // not this hw
 
 	GenericTilesInit();
 
@@ -4934,6 +4974,8 @@ static INT32 SgladiatInit()
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
 
+	snkwave_init(0.30); // not this hw
+
 	GenericTilesInit();
 
 	video_sprite_number = 25;
@@ -4985,6 +5027,8 @@ static INT32 Hal21Init()
 	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 4000000);
+
+	snkwave_init(0.30); // not this hw
 
 	GenericTilesInit();
 
@@ -5349,6 +5393,7 @@ static INT32 DrvExit()
 
 	if (game_select == 5)
 	{
+		snkwave_exit();
 		AY8910Exit(0);
 		AY8910Exit(1);
 	} else if (game_select == 7) {
@@ -6108,7 +6153,7 @@ static INT32 MarvinsFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3360000 / 60, 3360000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6128,6 +6173,10 @@ static INT32 MarvinsFrame()
 			ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		ZetClose();
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -6161,7 +6210,7 @@ static INT32 JcrossFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6186,6 +6235,10 @@ static INT32 JcrossFrame()
 		}
 		ZetClose();
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -6261,7 +6314,7 @@ static INT32 GwarFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6271,31 +6324,20 @@ static INT32 GwarFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER_YM3526(1);
 		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER_Y8950(2);
 		ZetClose();
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-	ZetClose();
-
-	ZetOpen(2);
-	BurnTimerEndFrameY8950(nCyclesTotal[2]);
-	ZetClose();
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
-		ZetOpen(1);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
-			
-		ZetOpen(2);
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) {
@@ -6352,7 +6394,7 @@ static INT32 AthenaFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6362,34 +6404,23 @@ static INT32 AthenaFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER_YM3526(1);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		if ((i&7)==7) // update 100x per frame
 		{
 			ZetOpen(2);
-			BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);
+			CPU_RUN_TIMER_Y8950(2);
 			ZetClose();
 		}
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-	ZetClose();
-
-	ZetOpen(2);
-	BurnTimerEndFrameY8950(nCyclesTotal[2]);
-	ZetClose();
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
-		ZetOpen(1);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
-			
-		ZetOpen(2);
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) {
@@ -6445,7 +6476,7 @@ static INT32 Tnk3Frame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6460,19 +6491,16 @@ static INT32 Tnk3Frame()
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER_YM3526(2);
 		ZetClose();
 	}
 
-	ZetOpen(2);
-
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -6502,7 +6530,7 @@ static INT32 FitegolfFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6518,20 +6546,17 @@ static INT32 FitegolfFrame()
 
 		if ((i&7)==7) { // update 100x per frame
 			ZetOpen(2);
-			BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[2] / nInterleave);
+			CPU_RUN_TIMER_YM3812(2);
 			ZetClose();
 		}
 	}
 
-	ZetOpen(2);
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[2]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -6561,7 +6586,7 @@ static INT32 ChopperFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6571,31 +6596,20 @@ static INT32 ChopperFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[1] / nInterleave);
+		CPU_RUN_TIMER_Y8950(1);
 		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER_YM3812(2);
 		ZetClose();
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameY8950(nCyclesTotal[1]);
-	ZetClose();
-
-	ZetOpen(2);
-	BurnTimerEndFrameYM3812(nCyclesTotal[2]);
-	ZetClose();
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
-		ZetOpen(2);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
-
-		ZetOpen(1);
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) {
@@ -6632,8 +6646,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 7 || game_select == 9)
 			BurnYM3812Scan(nAction, pnMin);
 
-		if (game_select == 5)
+		if (game_select == 5) {
 			AY8910Scan(nAction, pnMin);
+			snkwave_scan();
+		}
 
 		SCAN_VAR(sound_status);
 		SCAN_VAR(soundlatch);
@@ -6665,6 +6681,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nRotateTime);
 		SCAN_VAR(gwar_rot_last);
 		SCAN_VAR(gwar_rot_cnt);
+
+		SCAN_VAR(nExtraCycles);
 
 		if (nAction & ACB_WRITE) {
 			nRotateTime[0] = nRotateTime[1] = 0;

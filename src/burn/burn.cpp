@@ -48,6 +48,8 @@ UINT32 nCurrentFrame;			// Framecount for emulated game
 UINT32 nFramesEmulated;		// Counters for FPS	display
 UINT32 nFramesRendered;		//
 bool bForce60Hz = false;
+bool bSpeedLimit60hz = true;
+double dForcedFrameRate = 60.00;
 bool bBurnUseBlend = true;
 INT32 nBurnFPS = 6000;
 INT32 nBurnCPUSpeedAdjust = 0x0100;	// CPU speed adjustment (clock * nBurnCPUSpeedAdjust / 0x0100)
@@ -850,10 +852,13 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 // NOTE: Make sure this is called before any soundcore init!
 INT32 BurnSetRefreshRate(double dFrameRate)
 {
+	if (bSpeedLimit60hz && dFrameRate > 60.00)
+		dFrameRate = 60.00;
+
 	if (bForce60Hz && dFrameRate > 50.00) {
 		// Force 60hz w/ games that are near 60hz & avoid breaking
 		// vector (30-42hz), 30hz Midway, NES/MSX/Spectrum 50hz PAL mode.
-		dFrameRate = 60.00;
+		dFrameRate = dForcedFrameRate;
 	}
 
 	nBurnFPS = (INT32)(100.0 * dFrameRate);

@@ -24,7 +24,8 @@ static const int EP1C_CLIP_OPERATION_SIZE_BYTES = 2;
 // When looking at VRAM viewer in Special mode in Muchi Muchi Pork, draws 32 pixels outside of
 // the "clip area" is visible. This is likely why the frame buffers will have at least a 32 pixel offset
 // from the VRAM borders or other buffers in all games.
-static const int EP1C_CLIP_MARGIN = 32;
+static int EP1C_CLIP_MARGIN = 32;
+// note: configurable via dipsetting  -dink may 2023
 
 // Number of bytes that are read each time Blitter fetches operations from SRAM.
 static const int OPERATION_CHUNK_SIZE_BYTES = 64;
@@ -48,9 +49,12 @@ static void idle_blitter(UINT8 operation_size_bytes)
 }
 
 static UINT16* m_ram16;
+static UINT16* m_ram16_copy;
 static UINT32 m_gfx_addr;
+static UINT32 m_gfx_addr_shadowcopy;
 static UINT32 m_gfx_scroll_x, m_gfx_scroll_y;
 static UINT32 m_gfx_clip_x, m_gfx_clip_y;
+static UINT32 m_gfx_clip_x_shadowcopy, m_gfx_clip_y_shadowcopy;
 
 static int m_gfx_size;
 static UINT32 *m_bitmaps;
@@ -59,13 +63,14 @@ static rectangle m_clip;
 static UINT64 epic12_device_blit_delay;
 static int m_blitter_busy;
 
-static UINT16* m_use_ram;
 static int m_main_ramsize; // type D has double the main ram
 static int m_main_rammask;
 
 static int m_delay_method;
 static int m_delay_scale;
 static int m_burn_cycles;
+
+static INT32 sleep_on_busy = 1;
 
 static UINT8 epic12_device_colrtable[0x20][0x40];
 static UINT8 epic12_device_colrtable_rev[0x20][0x40];
@@ -304,6 +309,7 @@ void epic12_exit()
 	thready.exit();
 
 	BurnFree(m_bitmaps);
+	BurnFree(m_ram16_copy);
 
 	if (pal16) {
 		BurnFree(pal16);
@@ -316,12 +322,14 @@ void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy)
 	m_main_ramsize = ram_size;
 	m_main_rammask = ram_size - 1;
 
-	m_use_ram = m_ram16 = ram;
+	m_ram16 = ram;
+
+	m_ram16_copy = (UINT16*)BurnMalloc(ram_size);
 
 	dips = dippy;
 
 	m_gfx_size = 0x2000 * 0x1000;
-	m_bitmaps = (UINT32*)BurnMalloc (0x2000 * 0x1000 * 4);
+	m_bitmaps = (UINT32*)BurnMalloc (m_gfx_size * 4);
 
 	m_clip.set(0, 0x2000-1, 0, 0x1000-1);
 
@@ -329,14 +337,20 @@ void epic12_init(INT32 ram_size, UINT16 *ram, UINT8 *dippy)
 	m_delay_scale = 50;
 	m_blitter_busy = 0;
 	m_gfx_addr = 0;
+	m_gfx_addr_shadowcopy = 0;
 	m_gfx_scroll_x = 0;
 	m_gfx_scroll_y = 0;
 	m_gfx_clip_x = 0;
 	m_gfx_clip_y = 0;
+	m_gfx_clip_x_shadowcopy = 0;
+	m_gfx_clip_y_shadowcopy = 0;
 	epic12_device_blit_delay = 0;
 
 	m_blit_delay_ns = 0;
 	m_blit_idle_op_bytes = 0;
+
+	epic12_set_blitter_clipping_margin(1);
+	epic12_set_blitter_sleep_on_busy(1);
 
 	thready.init(run_blitter_cb);
 
@@ -357,6 +371,16 @@ void epic12_set_blitterdelay(INT32 delay, INT32 burn_cycles)
 void epic12_set_blitterdelay_method(INT32 delay_method) // 0 = accurate, !0 = ancient
 {
 	m_delay_method = delay_method;
+}
+
+void epic12_set_blitter_clipping_margin(INT32 c_margin_on) // ??? not sure.
+{
+	EP1C_CLIP_MARGIN = (c_margin_on) ? 32 : 0;
+}
+
+void epic12_set_blitter_sleep_on_busy(INT32 busysleep_on)
+{
+	sleep_on_busy = (busysleep_on) ? 1 : 0;
 }
 
 void epic12_reset()
@@ -387,10 +411,13 @@ void epic12_reset()
 
 	m_blitter_busy = 0;
 	m_gfx_addr = 0;
+	m_gfx_addr_shadowcopy = 0;
 	m_gfx_scroll_x = 0;
 	m_gfx_scroll_y = 0;
 	m_gfx_clip_x = 0;
 	m_gfx_clip_y = 0;
+	m_gfx_clip_x_shadowcopy = 0;
+	m_gfx_clip_y_shadowcopy = 0;
 	epic12_device_blit_delay = 0;
 	m_blit_delay_ns = 0;
 	m_blit_idle_op_bytes = 0;
@@ -398,17 +425,24 @@ void epic12_reset()
 	thready.reset();
 }
 
-static UINT16 READ_NEXT_WORD(UINT32 *addr)
+static inline UINT16 READ_NEXT_WORD(UINT32 *addr)
 {
-	UINT16 data = m_use_ram[((*addr & m_main_rammask) >> 1)];
+	const UINT16 data = m_ram16_copy[((*addr & m_main_rammask) >> 1)];
 
 	*addr += 2;
 
 	return data;
 }
 
-// git r dun!! (smb)
-#define COPY_NEXT_WORD READ_NEXT_WORD
+static inline UINT16 COPY_NEXT_WORD(UINT32 *addr)
+{
+	const UINT16 data = m_ram16[((*addr & m_main_rammask) >> 1)];
+	m_ram16_copy[((*addr & m_main_rammask) >> 1)] = data;
+
+	*addr += 2;
+
+	return data;
+}
 
 static void gfx_upload_shadow_copy(UINT32 *addr)
 {
@@ -891,8 +925,8 @@ static void gfx_create_shadow_copy()
 {
 	UINT32 addr = m_gfx_addr & 0x1fffffff;
 
-	m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-			   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+	m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+			   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 
 	while (1)
 	{
@@ -907,8 +941,8 @@ static void gfx_create_shadow_copy()
 
 			case 0xc000:
 				if (COPY_NEXT_WORD(&addr)) // cliptype
-					m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-							   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+					m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+							   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 				else
 					m_clip.set(0, 0x2000 - 1, 0, 0x1000 - 1);
 				idle_blitter(EP1C_CLIP_OPERATION_SIZE_BYTES);
@@ -934,9 +968,9 @@ static void gfx_create_shadow_copy()
 
 static void gfx_exec()
 {
-	UINT32 addr = m_gfx_addr & 0x1fffffff;
-	m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-			   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+	UINT32 addr = m_gfx_addr_shadowcopy & 0x1fffffff;
+	m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+			   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 
 //  logerror("GFX EXEC: %08X\n", addr);
 
@@ -952,8 +986,8 @@ static void gfx_exec()
 
 			case 0xc000:
 				if (READ_NEXT_WORD(&addr)) // cliptype
-					m_clip.set(m_gfx_clip_x - EP1C_CLIP_MARGIN, m_gfx_clip_x + 320 - 1 + EP1C_CLIP_MARGIN,
-							   m_gfx_clip_y - EP1C_CLIP_MARGIN, m_gfx_clip_y + 240 - 1 + EP1C_CLIP_MARGIN);
+					m_clip.set(m_gfx_clip_x_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_x_shadowcopy + 320 - 1 + EP1C_CLIP_MARGIN,
+							   m_gfx_clip_y_shadowcopy - EP1C_CLIP_MARGIN, m_gfx_clip_y_shadowcopy + 240 - 1 + EP1C_CLIP_MARGIN);
 				else
 					m_clip.set(0, 0x2000-1, 0, 0x1000-1);
 				break;
@@ -976,33 +1010,28 @@ static void gfx_exec()
 }
 
 
-
-static UINT32 gfx_ready_read()
-{
-	if (m_blitter_busy)
-	{
-		//m_maincpu->spin_until_time(attotime::from_usec(10));
-		Sh3BurnCycles(m_burn_cycles); // 0x400 @ (12800000*8)
-		//bprintf(0, _T("%d frame - blitter busy read....."), nCurrentFrame);
-
-		return 0x00000000;
-	}
-	else
-		return 0x00000010;
-}
-
 void epic12_wait_blitterthread()
 {
 	thready.notify_wait();
 }
 
-static void gfx_exec_write(UINT32 offset, UINT32 data)
+static void gfx_exec_write(UINT32 data)
 {
 //	if ( ACCESSING_BITS_0_7 )
 	{
 		if (data & 1)
 		{
 			thready.notify_wait();
+
+			m_gfx_clip_x_shadowcopy = m_gfx_clip_x;
+			m_gfx_clip_y_shadowcopy = m_gfx_clip_y;
+
+			// Create a copy of the blit list so we can safely thread it.
+			// Copying the Blitter operations will also estimate the delay needed for processing.
+			m_blit_delay_ns = 0;
+			gfx_create_shadow_copy();
+
+			m_gfx_addr_shadowcopy = m_gfx_addr;
 
 			if (m_delay_method) // old method
 			{
@@ -1021,10 +1050,6 @@ static void gfx_exec_write(UINT32 offset, UINT32 data)
 					m_blitter_busy = 0;
 				}
 			} else {  // new method (buffis)
-				m_blit_delay_ns = 0;
-				// ... will also estimate the delay needed for processing.
-				gfx_create_shadow_copy();
-
 				// Every EP1C_VRAM_H_LINE_PERIOD_NANOSEC, the Blitter will block other operations, due
 				// to fetching a horizontal line from VRAM for output.
 				m_blit_delay_ns += floor( m_blit_delay_ns / EP1C_VRAM_H_LINE_PERIOD_NANOSEC ) * EP1C_VRAM_H_LINE_DURATION_NANOSEC;
@@ -1152,7 +1177,18 @@ UINT32 epic12_blitter_read(UINT32 offset)
 	switch (offset)
 	{
 		case 0x10:
-			return gfx_ready_read();
+			if (m_blitter_busy)
+			{
+				//m_maincpu->spin_until_time(attotime::from_usec(10));
+				if (sleep_on_busy) {
+					Sh3BurnCycles(m_burn_cycles); // 0x400 @ (12800000*8)
+				}
+				//bprintf(0, _T("%d frame - blitter busy read....."), nCurrentFrame);
+
+				return 0x00000000;
+			}
+			else
+				return 0x00000010;
 
 		case 0x24:
 			return 0xffffffff;
@@ -1177,7 +1213,7 @@ void epic12_blitter_write(UINT32 offset, UINT32 data)
 	switch (offset)
 	{
 		case 0x04:
-			gfx_exec_write(offset,data);
+			gfx_exec_write(data);
 			break;
 
 		case 0x08:
@@ -1205,10 +1241,13 @@ void epic12_blitter_write(UINT32 offset, UINT32 data)
 void epic12_scan(INT32 nAction, INT32 *pnMin)
 {
 	SCAN_VAR(m_gfx_addr);
+//	SCAN_VAR(m_gfx_addr_shadowcopy); // probably not needed!
 	SCAN_VAR(m_gfx_scroll_x);
 	SCAN_VAR(m_gfx_scroll_y);
 	SCAN_VAR(m_gfx_clip_x);
 	SCAN_VAR(m_gfx_clip_y);
+//	SCAN_VAR(m_gfx_clip_x_shadowcopy);
+//	SCAN_VAR(m_gfx_clip_y_shadowcopy);
 	SCAN_VAR(epic12_device_blit_delay);
 	SCAN_VAR(m_delay_scale);
 	SCAN_VAR(m_blitter_busy);

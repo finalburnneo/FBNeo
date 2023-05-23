@@ -4579,18 +4579,18 @@ struct BurnDriver BurnDrvsg1k_snake = {
 	272, 228, 4, 3
 };
 
-// Vexed (HB, v1.03)
+// Vexed (HB, v1.07)
 
 static struct BurnRomInfo sg1k_vexedRomDesc[] = {
-	{ "Vexed v1.03 (2020)(Under4Mhz).sg",	32768, 0x6159a842, BRF_PRG | BRF_ESS },
+	{ "Vexed v1.07 (2023)(Under4Mhz).sg",	32768, 0x432cd0fc, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sg1k_vexed)
 STD_ROM_FN(sg1k_vexed)
 
 struct BurnDriver BurnDrvsg1k_vexed = {
-	"sg1k_vexed", NULL, NULL, NULL, "2020",
-	"Vexed (HB, v1.03)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	"sg1k_vexed", NULL, NULL, NULL, "2020-23",
+	"Vexed (HB, v1.07)\0", NULL, "Under4Mhz", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
 	SG1KGetZipName, sg1k_vexedRomInfo, sg1k_vexedRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,

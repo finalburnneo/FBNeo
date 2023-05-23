@@ -48,6 +48,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles[3];
+
 static Stream stream;
 
 struct voice_63701x
@@ -1064,6 +1066,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	memset (scroll, 0, sizeof(scroll));
 	memset (nBankData, 0, sizeof(nBankData));
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
 	HiscoreReset();
 
 	return 0;
@@ -1276,6 +1280,8 @@ static INT32 DrvROMload()
 
 static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 {
+	BurnSetRefreshRate(60.606061);
+
 	BurnAllocMemIndex();
 
 	{
@@ -1616,8 +1622,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 800;
-	INT32 nCyclesTotal[3] = { 1536000 / 60, 1536000 / 60, 1536000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesTotal[3] = { ((double)1536000 * 100 / nBurnFPS), ((double)1536000 * 100 / nBurnFPS), ((double)1536000 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1636,6 +1642,10 @@ static INT32 DrvFrame()
 		if (i == nInterleave - 1) HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		HD63701Close();
 	}
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
@@ -1694,6 +1704,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(scroll);
 		SCAN_VAR(nBankData);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

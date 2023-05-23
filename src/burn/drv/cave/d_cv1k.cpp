@@ -97,6 +97,14 @@ static struct BurnDIPInfo DefaultDIPList[]=
 	{0x02, 0x01, 0x20, 0x00, "Accurate (Buffis)"},
 	{0x02, 0x01, 0x20, 0x20, "Antiquity"		},
 
+	{0   , 0xfe, 0   ,    2, "Clip Margin (test)"},
+	{0x02, 0x01, 0x40, 0x40, "0  (off)"			},
+	{0x02, 0x01, 0x40, 0x00, "32 (on)"			},
+
+	{0   , 0xfe, 0   ,    2, "Busy Sleep (test)"},
+	{0x02, 0x01, 0x80, 0x80, "Off"				},
+	{0x02, 0x01, 0x80, 0x00, "On"				},
+
 	{0   , 0xfe, 0   , 0x20, "Blitter Delay"	},
 	{0x02, 0x01, 0x1f, 0x00, "Off"				},
 	{0x02, 0x01, 0x1f, 0x01, "50"				},
@@ -569,6 +577,10 @@ static INT32 DrvFrame()
 		epic12_set_blitterdelay((delay) ? ((delay - 1) + 50) : 0, speedhack_burn);
 		epic12_set_blitterthreading(DrvDips[1] & 1);
 		Sh3SetTimerGranularity(DrvDips[1] & 2);
+
+		// test stuff for el_rika
+		epic12_set_blitter_clipping_margin(!(DrvDips[2] & 0x40));
+		epic12_set_blitter_sleep_on_busy(!(DrvDips[2] & 0x80));
 	}
 
 	{

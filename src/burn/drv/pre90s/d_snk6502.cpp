@@ -44,6 +44,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles;
+
 static INT32 numSN = 0; // number of sn76477
 static INT32 bHasSamples = 0;
 
@@ -839,8 +841,6 @@ static INT32 DrvDoReset()
 	for (INT32 i = 0; i < numSN; i++)
 		SN76477_set_enable(i, 1); // active low enable
 
-	HiscoreReset();
-
 	DrvInputs[2] = 0;
 	backcolor = 0;
 	charbank = 0;
@@ -849,6 +849,10 @@ static INT32 DrvDoReset()
 	scrollx = 0;
 	scrolly = 0;
 	sasuke_counter = 0;
+
+	nExtraCycles = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -1629,7 +1633,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[1] = { 705562 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	M6502Open(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -1637,6 +1641,8 @@ static INT32 DrvFrame()
 		if (i == (nInterleave-1) && irqmask) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 	M6502Close();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 #if 0
 	if (pBurnSoundOut) {
@@ -1690,6 +1696,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6502Scan(nAction);
 
+		snk6502_sound_savestate(nAction, pnMin);
+		SN76477_scan(nAction, pnMin);
+
 		SCAN_VAR(backcolor);
 		SCAN_VAR(charbank);
 		SCAN_VAR(flipscreen);
@@ -1699,8 +1708,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(sasuke_counter);
 
-		snk6502_sound_savestate(nAction, pnMin);
-		SN76477_scan(nAction, pnMin);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

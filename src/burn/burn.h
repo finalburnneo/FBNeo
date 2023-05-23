@@ -203,6 +203,7 @@ struct BurnDIPInfo {
 #define CPU_RUN_TIMER(num) do { BurnTimerUpdate((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrame(nCyclesTotal[num]); } while (0)
 #define CPU_RUN_TIMER_YM3812(num) do { BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameYM3812(nCyclesTotal[num]); } while (0)
 #define CPU_RUN_TIMER_YM3526(num) do { BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameYM3526(nCyclesTotal[num]); } while (0)
+#define CPU_RUN_TIMER_Y8950(num) do { BurnTimerUpdateY8950((i + 1) * nCyclesTotal[num] / nInterleave); if (i == nInterleave - 1) BurnTimerEndFrameY8950(nCyclesTotal[num]); } while (0)
 // speed adjuster
 INT32 BurnSpeedAdjust(INT32 cyc);
 
@@ -256,6 +257,9 @@ extern UINT32 nFramesRendered;
 extern clock_t starttime;					// system time when emulation started and after roms loaded
 
 extern bool bForce60Hz;
+extern bool bSpeedLimit60hz;
+extern double dForcedFrameRate;
+
 extern bool bBurnUseBlend;
 
 extern INT32 nBurnFPS;

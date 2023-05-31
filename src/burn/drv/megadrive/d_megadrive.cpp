@@ -43507,7 +43507,7 @@ struct BurnDriver BurnDrvmd_lifeonmars = {
 // Mega Man The Sequel Wars - Episode Red (HB)
 
 static struct BurnRomInfo md_megamanswredRomDesc[] = {
-	{ "Mega Man The Sequel Wars - Episode Red (2023)(Woodfrog).bin", 4194304, 0xbb87ec69, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Man The Sequel Wars - Episode Red v1.1 (2023)(Woodfrog).bin", 4194304, 0x9c6433ce, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_megamanswred)
@@ -43515,7 +43515,7 @@ STD_ROM_FN(md_megamanswred)
 
 struct BurnDriver BurnDrvmd_megamanswred = {
 	"md_megamanswred", NULL, NULL, NULL, "2023",
-	"Mega Man The Sequel Wars - Episode Red (HB)\0", NULL, "Woodfrog", "Sega Megadrive",
+	"Mega Man The Sequel Wars - Episode Red (HB, v1.1)\0", NULL, "Woodfrog", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_megamanswredRomInfo, md_megamanswredRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

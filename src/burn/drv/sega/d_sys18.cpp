@@ -1007,6 +1007,41 @@ static struct BurnDIPInfo Wwally3pDIPList[]=
 
 STDDIPINFO(Wwally3p)
 
+static struct BurnDIPInfo AquarioDIPList[]=
+{
+	// Default Values
+	{0x16, 0xff, 0xff, 0xff, NULL                                 },
+	{0x17, 0xff, 0xff, 0x33, NULL                                 },
+
+	// Dip 1
+	SYSTEM18_COINAGE(0x16)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Credits to Start"                   },
+	{0x17, 0x01, 0x01, 0x01, "1"                                  },
+	{0x17, 0x01, 0x01, 0x00, "2"                                  },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x17, 0x01, 0x02, 0x02, "Off"                                },
+	{0x17, 0x01, 0x02, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 4   , "Number of Players"                  },
+	{0x17, 0x01, 0x0c, 0x00, "1"                                  },
+	{0x17, 0x01, 0x0c, 0x04, "2"                                  },
+	{0x17, 0x01, 0x0c, 0x0c, "2"                                  },
+	{0x17, 0x01, 0x0c, 0x08, "2"                                  },
+
+	{0   , 0xfe, 0   , 2   , "Difficulty"                         },
+	{0x17, 0x01, 0x10, 0x00, "Hard"                               },
+	{0x17, 0x01, 0x10, 0x10, "Normal"                             },
+
+	{0   , 0xfe, 0   , 2   , "Switch to Start"                    },
+	{0x17, 0x01, 0x20, 0x20, "Start"                              },
+	{0x17, 0x01, 0x20, 0x00, "Attack"                             },
+};
+
+STDDIPINFO(Aquario)
+
 #undef SYSTEM18_COINAGE
 
 /*====================================================
@@ -2570,6 +2605,30 @@ static struct BurnRomInfo Wwallyja3pRomDesc[] = {
 STD_ROM_PICK(Wwallyja3p)
 STD_ROM_FN(Wwallyja3p)
 
+static struct BurnRomInfo AquarioRomDesc[] = {
+	{ "a4.bin",         0x080000, 0xd2ac7be4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a6.bin",         0x080000, 0x058332a9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a5.bin",         0x080000, 0x1cef8145, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a7.bin",         0x080000, 0x504e4665, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "c1.bin",         0x080000, 0x93ad1357, SYS16_ROM_TILES | BRF_GRA },
+	{ "c2.bin",         0x080000, 0x4010d14b, SYS16_ROM_TILES | BRF_GRA },
+	{ "c3.bin",         0x080000, 0x3a3d0285, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "c10.bin",        0x080000, 0xc9ce76f9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "a10.bin",        0x080000, 0xb863e533, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "c11.bin",        0x080000, 0x06edb7bc, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "a11.bin",        0x080000, 0x8b568940, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "c12.bin",        0x080000, 0x0bb79c56, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "a12.bin",        0x080000, 0x0219923f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "c13.bin",        0x080000, 0x0beef46e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "a13.bin",        0x080000, 0x9ea5c73d, SYS16_ROM_SPRITES | BRF_GRA },
+};
+
+
+STD_ROM_PICK(Aquario)
+STD_ROM_FN(Aquario)
+
 /*====================================================
 Memory Handlers
 ====================================================*/
@@ -4077,5 +4136,15 @@ struct BurnDriver BurnDrvWwallyja3p = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_PUZZLE, 0,
 	NULL, Wwallyja3pRomInfo, Wwallyja3pRomName, NULL, NULL, NULL, NULL, Wwally3pInputInfo, Wwally3pDIPInfo,
 	WwallyInit, WwallyExit, System18Frame, System18Render, WwallyScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvAquario = {
+	"aquario", NULL, NULL, NULL, "2021",
+	"Clockwork Aquario (prototype)\0", "No sound", "Sega / Westone", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_PLATFORM, 0,
+	NULL, AquarioRomInfo, AquarioRomName, NULL, NULL, NULL, NULL, System18InputInfo, AquarioDIPInfo,
+	System18Bank40000Init, System18Exit, System18Frame, System18Render, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

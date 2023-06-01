@@ -680,8 +680,21 @@ static void gfx_draw_shadow_copy(UINT32 *addr)
 		return;
 	}
 
+	// Clip the blitter operations, to have the calculations only respect the area being written.
+	// It's not 100% clear this is how this is performed, but it is clear that there should be some amount of clipping
+	// applied here to match the hardware. This way seems most likely, and maps well to the delays seen on hardware.
+	// One example of this being utilized heavily is the transparent fog in Mushihimesama Futari Stage 1. This is drawn as
+	// 256x256 sprites, with large parts clipped away.
+
+	dst_x_start = MAX(dst_x_start, (UINT16)m_clip.min_x);
+	dst_y_start = MAX(dst_y_start, (UINT16)m_clip.min_y);
+	dst_x_end = MIN(dst_x_end, (UINT16)m_clip.max_x);
+	dst_y_end = MIN(dst_y_end, (UINT16)m_clip.max_y);
+	src_dimx = dst_x_end - dst_x_start + 1;
+	src_dimy = dst_y_end - dst_y_start + 1;
+
 	m_blit_idle_op_bytes = 0;  // Blitter no longer idle.
-	
+
 	// VRAM data is laid out in 32x32 pixel rows. Calculate amount of rows accessed. 
 	int src_num_vram_rows = calculate_vram_accesses(src_x_start, src_y_start, src_dimx, src_dimy);
 	int dst_num_vram_rows = calculate_vram_accesses(dst_x_start, dst_y_start, src_dimx, src_dimy);

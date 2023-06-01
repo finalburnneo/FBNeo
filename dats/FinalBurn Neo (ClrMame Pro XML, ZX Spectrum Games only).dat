@@ -5591,6 +5591,39 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dwtoozxenv2" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Devwill Too ZX v2.0 (English) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX v2.0 128K EN (2023)(Amaweks).tap" size="45098" crc="809ce1b8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dwtoozxptv2" cloneof="dwtoozxenv2" romof="dwtoozxenv2">
+		<comment>Homebrew</comment>
+		<description>Devwill Too ZX v2.0 (Portuguese) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX v2.0 128K PT (2023)(Amaweks).tap" size="45098" crc="a0e1f9df"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dwtoozxesv2" cloneof="dwtoozxenv2" romof="dwtoozxenv2">
+		<comment>Homebrew</comment>
+		<description>Devwill Too ZX v2.0 (Spanish) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX v2.0 128K ES (2023)(Amaweks).tap" size="45098" crc="545dbc02"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dilithium" romof="spectrum">
 		<description>Di-Lithium Lift (16K)</description>
 		<year>1983</year>

@@ -11419,6 +11419,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="megamanswred">
+		<comment>Homebrew</comment>
+		<description>Mega Man The Sequel Wars - Episode Red (HB, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>Woodfrog</manufacturer>
+		<rom name="Mega Man The Sequel Wars - Episode Red v1.1 (2023)(Woodfrog).bin" size="4194304" crc="9c6433ce"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mmworld">
 		<comment>Homebrew</comment>
 		<description>Mega Marble World (HB, v1.90)</description>

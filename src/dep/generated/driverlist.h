@@ -3102,6 +3102,7 @@ DRV		BurnDrvCloakgr;
 DRV		BurnDrvCloak;
 DRV		BurnDrvCloaksp;
 DRV		BurnDrvcv_Clock;
+DRV		BurnDrvAquario;
 DRV		BurnDrvCloud9;
 DRV		BurnDrvsms_cloudmst;
 DRV		BurnDrvfds_clucluland;
@@ -4111,6 +4112,9 @@ DRV		BurnDrvmd_devwillpro;
 DRV		BurnSpecDwtoozxen;
 DRV		BurnSpecDwtoozxpt;
 DRV		BurnSpecDwtoozxes;
+DRV		BurnSpecDwtoozxenv2;
+DRV		BurnSpecDwtoozxptv2;
+DRV		BurnSpecDwtoozxesv2;
 DRV		BurnDrvDharmag;
 DRV		BurnDrvDharmaj;
 DRV		BurnDrvDharmak;
@@ -9762,6 +9766,7 @@ DRV		BurnDrvnes_megaman5;
 DRV		BurnDrvnes_megaman6;
 DRV		BurnDrvnes_megamanx;
 DRV		BurnDrvnes_megamancx;
+DRV		BurnDrvmd_megamanswred;
 DRV		BurnSpecMmmv2;
 DRV		BurnDrvmd_mmworld;
 DRV		BurnDrvmd_mmworld2;
@@ -22736,6 +22741,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCloak,				// Cloak & Dagger (rev 5)
 	&BurnDrvCloaksp,			// Cloak & Dagger (Spanish)
 	&BurnDrvcv_Clock,			// Clock (HB)
+	&BurnDrvAquario,			// Clockwork Aquario (prototype)
 	&BurnDrvCloud9,				// Cloud 9 (prototype)
 	&BurnDrvsms_cloudmst,		// Cloud Master (Euro, USA)
 	&BurnDrvfds_clucluland,		// Clu Clu Land (Japan)
@@ -23745,6 +23751,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecDwtoozxen,			// Devwill Too ZX (English) (128K) (HB)
 	&BurnSpecDwtoozxpt,			// Devwill Too ZX (Portuguese) (128K) (HB)
 	&BurnSpecDwtoozxes,			// Devwill Too ZX (Spanish) (128K) (HB)
+	&BurnSpecDwtoozxenv2,		// Devwill Too ZX v2.0 (English) (128K) (HB)
+	&BurnSpecDwtoozxptv2,		// Devwill Too ZX v2.0 (Portuguese) (128K) (HB)
+	&BurnSpecDwtoozxesv2,		// Devwill Too ZX v2.0 (Spanish) (128K) (HB)
 	&BurnDrvDharmag,			// Dharma Doujou (Germany)
 	&BurnDrvDharmaj,			// Dharma Doujou (Japan)
 	&BurnDrvDharmak,			// Dharma Doujou (Korea)
@@ -29396,6 +29405,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_megaman6,		// Mega Man 6 (USA)
 	&BurnDrvnes_megamanx,		// Mega Man Age of Wily (GlobalHack)
 	&BurnDrvnes_megamancx,		// Mega Man CX (USA)
+	&BurnDrvmd_megamanswred,	// Mega Man The Sequel Wars - Episode Red (HB, v1.1)
 	&BurnSpecMmmv2,				// Mega Manic Mulholland (48K) (HB, v2.0)
 	&BurnDrvmd_mmworld,			// Mega Marble World (HB, v1.90)
 	&BurnDrvmd_mmworld2,		// Mega Marble World 2 (HB, v1.03)
@@ -33504,7 +33514,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSamsho2,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063)(NGH-063)
 	&BurnDrvSamsho2new,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Optimized)
 	&BurnDrvSamsho2sp,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)
-	&BurnDrvSamsho2pe,			// Samurai Shodown II Perfect (V. 1.1, Hack)
+	&BurnDrvSamsho2pe,			// Samurai Shodown II Perfect (V. 1.2, Hack)
 	&BurnDrvSamSho3h,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)
 	&BurnDrvSamSho3,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)
 	&BurnDrvSamSho4,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222)(NGH-222)

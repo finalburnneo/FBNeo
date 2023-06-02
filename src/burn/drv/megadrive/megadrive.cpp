@@ -2243,6 +2243,30 @@ static UINT16 __fastcall RockmanX3ExtraReadWord(UINT32 /*sekAddress*/)
 	return 0x0c;
 }
 
+static UINT8 __fastcall ChaoJiMjReadByte(UINT32 sekAddress)
+{
+	switch (sekAddress) {
+		case 0x400000: return 0x90;
+		case 0x400002: return 0xd3;
+	}
+
+	bprintf(PRINT_NORMAL, _T("ChaoJiMj Read Byte %x\n"), sekAddress);
+
+	return 0;
+}
+
+static UINT16 __fastcall ChaoJiMjReadWord(UINT32 sekAddress)
+{
+	switch (sekAddress) {
+		case 0x400000: return 0x9000;
+		case 0x400002: return 0xd300;
+	}
+
+	bprintf(PRINT_NORMAL, _T("ChaoJiMj Read Word %x\n"), sekAddress);
+
+	return 0;
+}
+
 static UINT8 __fastcall SbubExtraReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
@@ -2561,6 +2585,14 @@ static void SetupCustomCartridgeMappers()
 		SekSetWriteWordHandler(7, SquirrelKingExtraWriteWord);
 		SekClose();
 		bNoDebug = 1; // Games make a lot of unmapped word-writes
+	}
+
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CHAOJIMJ) {
+		SekOpen(0);
+		SekMapHandler(7, 0x400000, 0x400007, MAP_READ);
+		SekSetReadByteHandler(7, ChaoJiMjReadByte);
+		SekSetReadWordHandler(7, ChaoJiMjReadWord);
+		SekClose();
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE) {

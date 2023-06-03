@@ -41853,7 +41853,7 @@ STDROMPICKEXT(SpecMightyff, SpecMightyff, Spec128)
 STD_ROM_FN(SpecMightyff)
 
 struct BurnDriver BurnSpecMightyff = {
-	"spec_Mightyff", NULL, "spec_spec128", NULL, "2018-2023",
+	"spec_mightyff", NULL, "spec_spec128", NULL, "2018-2023",
 	"Mighty Final Fight (128K) (HB, v1.2)\0", "Q, A and SPACE to select options in title screen", "Sinc LAIR, SaNchez", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SCRFIGHT, 0,

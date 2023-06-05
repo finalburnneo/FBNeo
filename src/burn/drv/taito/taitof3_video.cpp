@@ -1854,7 +1854,8 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x700+(y)])&bit_select)
 				pri=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[pri_base/2])&0xffff;
 
-			if (y != y_start) {
+			//if (y != y_start) { // whats wrong here? breaks trstar
+			{
 				// Zoom for playfields 1 & 3 is interleaved, as is the latch select
 				switch (pos)
 				{
@@ -2718,10 +2719,13 @@ void TaitoF3DrawCommon(INT32 scanline_start)
 
 	/* Setup scroll */
 	sy_fix[0]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[4])&0xffff)<< 9) + (1<<16);
-//	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
-//	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
-	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + (1<<16);
-	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + (1<<16);
+
+	// kludge for landmakr tile layer off-by-1
+	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
+	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
+
+	//sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + (1<<16);
+	//sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + (1<<16);
 	sy_fix[3]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[7])&0xffff)<< 9) + (1<<16);
 	sx_fix[0]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[0])&0xffc0)<<10) - (6<<16);
 	sx_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[1])&0xffc0)<<10) - (10<<16);

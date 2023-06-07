@@ -3514,6 +3514,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="crabbieatk">
+		<comment>Homebrew</comment>
+		<description>Crabbie Attack! (HB)</description>
+		<year>2023</year>
+		<manufacturer>TurtleRescueNES</manufacturer>
+		<rom name="Crabbie Attack! (2023)(TurtleRescueNES).nes" size="524304" crc="9838a3d0"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="crapjob">
 		<comment>Homebrew</comment>
 		<description>Crap Job (HB)</description>
@@ -9996,6 +10005,15 @@
 		<year>1987</year>
 		<manufacturer>FCI</manufacturer>
 		<rom name="Lunar Pool (USA).nes" size="24592" crc="fa96cba2"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="lupin3gt" cloneof="mappy" romof="mappy">
+		<comment>Hack</comment>
+		<description>Lupin III: Gentle Thief (GlobalHack)</description>
+		<year>2023</year>
+		<manufacturer>ProtoPixel</manufacturer>
+		<rom name="Lupin III Gentle Thief (GlobHack)(2023)(ProtoPixel).nes" size="24592" crc="c5671156"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

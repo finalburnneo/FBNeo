@@ -3450,6 +3450,7 @@ DRV		BurnDrvnes_cowligam2ndadv;
 DRV		BurnDrvnes_cowligamadv;
 DRV		BurnDrvnes_cowligamlostadv;
 DRV		BurnSpecCozapoza;
+DRV		BurnDrvnes_crabbieatk;
 DRV		BurnSpecCrackdown;
 DRV		BurnDrvmd_crkdown1;
 DRV		BurnDrvmd_crkdown;
@@ -4737,6 +4738,7 @@ DRV		BurnDrvcv_drgnfire;
 DRV		BurnDrvDrgninjab2;
 DRV		BurnDrvDrgninjab;
 DRV		BurnDrvDrgninja;
+DRV		BurnSpecDragflame;
 DRV		BurnSpecdragonto;
 DRV		BurnDrvMSX_drainer;
 DRV		BurnDrvnes_draiocht;
@@ -5998,6 +6000,7 @@ DRV		BurnDrvcv_frntlnsce;
 DRV		BurnDrvcv_frontlin;
 DRV		BurnDrvcv_frostbite;
 DRV		BurnSpecfrostbyte;
+DRV		BurnSpecFrozpenguin;
 DRV		BurnSpecFruitmachinesim1;
 DRV		BurnSpecFruitmachinesim2;
 DRV		BurnDrvMSX_fruitpanic;
@@ -9196,6 +9199,7 @@ DRV		BurnSpeclrescue;
 DRV		BurnDrvLuplup10;
 DRV		BurnDrvLuplup29;
 DRV		BurnDrvLuplup;
+DRV		BurnDrvnes_lupin3gt;
 DRV		BurnDrvnes_lupinsanc;
 DRV		BurnDrvnes_lupinsanj;
 DRV		BurnDrvnes_lupinsansc;
@@ -11846,6 +11850,7 @@ DRV		BurnSpecPapyrus;
 DRV		BurnSpecParachute;
 DRV		BurnDrvMSX_pjoe;
 DRV		BurnSpecparadisecafe;
+DRV		BurnSpecParadroids;
 DRV		BurnDrvPturn;
 DRV		BurnDrvnes_parallelworld;
 DRV		BurnDrvpce_paranoia;
@@ -19405,6 +19410,7 @@ DRV		BurnDrvYouma;
 DRV		BurnDrvYouma2;
 DRV		BurnDrvnes_youngindjonchr;
 DRV		BurnSpecYoyogreatadventure;
+DRV		BurnSpecYoyorevenge;
 DRV		BurnDrvnes_ysc;
 DRV		BurnDrvnes_ysj;
 DRV		BurnDrvsms_ysj;
@@ -23089,6 +23095,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_cowligamadv,	// Cowlitz Gamers Adventure (HB)
 	&BurnDrvnes_cowligamlostadv,// Cowlitz Gamers Lost Adventure (HB)
 	&BurnSpecCozapoza,			// Coza De La Poza, La (Spanish) (128K) (HB)
+	&BurnDrvnes_crabbieatk,		// Crabbie Attack! (HB)
 	&BurnSpecCrackdown,			// Crack Down (128K)
 	&BurnDrvmd_crkdown1,		// Crack Down (Euro, Jpn)
 	&BurnDrvmd_crkdown,			// Crack Down (Euro, Jpn, Rev. A)
@@ -24376,6 +24383,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgninjab2,			// Dragonninja (bootleg with 68705)
 	&BurnDrvDrgninjab,			// Dragonninja (bootleg)
 	&BurnDrvDrgninja,			// Dragonninja (Japan)
+	&BurnSpecDragflame,			// Dragons of Flame (48K)
 	&BurnSpecdragonto,			// Dragontorc (48K)
 	&BurnDrvMSX_drainer,		// Drainer (Jpn)
 	&BurnDrvnes_draiocht,		// Draiocht (HB)
@@ -25637,6 +25645,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_frontlin,		// Front Line
 	&BurnDrvcv_frostbite,		// Frost Bite (HB)
 	&BurnSpecfrostbyte,			// Frost Byte (48K)
+	&BurnSpecFrozpenguin,		// Frozen Penguin (48K)
 	&BurnSpecFruitmachinesim1,	// Fruit Machine Simulator - Cash Bash (48K)
 	&BurnSpecFruitmachinesim2,	// Fruit Machine Simulator 2 - Mega Trek (128K)
 	&BurnDrvMSX_fruitpanic,		// Fruit Panic (Jpn)
@@ -28835,6 +28844,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvLuplup10,			// Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 1.05 / 981214)
 	&BurnDrvLuplup29,			// Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 2.9 / 990108)
 	&BurnDrvLuplup,				// Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 3.0 / 990128)
+	&BurnDrvnes_lupin3gt,		// Lupin III: Gentle Thief (GlobalHack)
 	&BurnDrvnes_lupinsanc,		// Lupin Sansei - Pandora no Isan (Hack, Spanish v1.0)
 	&BurnDrvnes_lupinsanj,		// Lupin Sansei - Pandora no Isan (Japan)
 	&BurnDrvnes_lupinsansc,		// Lupin Sansei - Pandora no Isan (T-Chi)
@@ -29740,7 +29750,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mightmag,		// Might and Magic - Gates to Another World (Euro, USA)
 	&BurnDrvmd_mightmg3,		// Might and Magic III - Isles of Terra (USA, Prototype)
 	&BurnDrvnes_mightybombjack,	// Mighty Bomb Jack (USA)
-	&BurnSpecMightyff,			// Mighty Final Fight (128K) (HB)
+	&BurnSpecMightyff,			// Mighty Final Fight (128K) (HB, v1.2)
 	&BurnDrvnes_mightfinfigc,	// Mighty Final Fight (Hack, Spanish v1.0)
 	&BurnDrvnes_mightfinfig,	// Mighty Final Fight (USA)
 	&BurnDrvMightguy,			// Mighty Guy
@@ -31485,6 +31495,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecParachute,			// Parachute (128K) (HB)
 	&BurnDrvMSX_pjoe,			// Parachuteless Joe (HB)
 	&BurnSpecparadisecafe,		// Paradise Cafe (Portuguese) (48K)
+	&BurnSpecParadroids,		// Paradroids (48K)
 	&BurnDrvPturn,				// Parallel Turn
 	&BurnDrvnes_parallelworld,	// Parallel World (Japan)
 	&BurnDrvpce_paranoia,		// Paranoia
@@ -38003,13 +38014,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_verytex,			// Verytex (Jpn)
 	&BurnDrvMSX_vesikauhu,		// Vesikauhu (HB, Tech-Demo)
 	&BurnDrvMSX_vestron,		// Vestron (Euro)
-	&BurnSpecVexed128,			// Vexed (128K) (HB, v1.07)
-	&BurnSpecVexed48,			// Vexed (48K) (HB, v1.07)
+	&BurnSpecVexed128,			// Vexed (128K) (HB, v1.08)
+	&BurnSpecVexed48,			// Vexed (48K) (HB, v1.08)
 	&BurnDrvMSX_vexed,			// Vexed (HB)
-	&BurnDrvcv_vexed,			// Vexed (HB, v1.07)
-	&BurnDrvgg_vexed,			// Vexed (HB, v1.07)
-	&BurnDrvsg1k_vexed,			// Vexed (HB, v1.07)
-	&BurnDrvsms_vexed,			// Vexed (HB, v1.07)
+	&BurnDrvcv_vexed,			// Vexed (HB, v1.08)
+	&BurnDrvgg_vexed,			// Vexed (HB, v1.08)
+	&BurnDrvsg1k_vexed,			// Vexed (HB, v1.08)
+	&BurnDrvsms_vexed,			// Vexed (HB, v1.08)
 	&BurnDrvHangonvf,			// VF (bootleg of Hang-On)
 	&BurnSpecviajecentterra,	// Viaje al Centro de la Tierra (Spanish) (128K)
 	&BurnDrvMSX_viajecentro,	// Viaje al Centro de la Tierra (Spanish)
@@ -39044,6 +39055,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvYouma2,				// Youma Ninpou Chou (Japan, alt)
 	&BurnDrvnes_youngindjonchr,	// Young Indiana Jones Chronicles, The (USA)
 	&BurnSpecYoyogreatadventure,// Yoyo's Great Adventure (128K) (HB)
+	&BurnSpecYoyorevenge,		// YoYo's Revenge (48K) (HB)
 	&BurnDrvnes_ysc,			// Ys (Hack, Spanish v1.1)
 	&BurnDrvnes_ysj,			// Ys (Japan)
 	&BurnDrvsms_ysj,			// Ys (Jpn)

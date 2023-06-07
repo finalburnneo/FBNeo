@@ -6334,6 +6334,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dragflame" romof="spectrum">
+		<description>Dragons of Flame (48K)</description>
+		<year>1990</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Dragons of Flame 48K (1990)(U.S. Gold).tap" size="79158" crc="ef1661a9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dragonto" romof="spectrum">
 		<comment>At title-screen press 'S' to start game</comment>
 		<description>Dragontorc (48K)</description>
@@ -7616,6 +7625,15 @@
 		<year>1986</year>
 		<manufacturer>Mikro-Gen</manufacturer>
 		<rom name="Frost Byte (1986)(Mikro-Gen).tap" size="49465" crc="895fc6d8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="frozpenguin" romof="spectrum">
+		<description>Frozen Penguin (48K)</description>
+		<year>1984</year>
+		<manufacturer>Silversoft</manufacturer>
+		<rom name="Frozen Penguin 48K (1984)(Silversoft).tap" size="22962" crc="2e713fc8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -12227,10 +12245,10 @@
 	</game>
 	<game name="mightyff" romof="spec128">
 		<comment>Homebrew, Q, A and SPACE to select options in title screen</comment>
-		<description>Mighty Final Fight (128K) (HB)</description>
-		<year>2018</year>
-		<manufacturer>SaNchez</manufacturer>
-		<rom name="Mighty Final Fight (2018)(SaNchez).tap" size="302096" crc="1697a6ed"/>
+		<description>Mighty Final Fight (128K) (HB, v1.2)</description>
+		<year>2018-2023</year>
+		<manufacturer>Sinc LAIR, SaNchez</manufacturer>
+		<rom name="Mighty Final Fight v1.2 128K (2023)(Sinc LAIR).tap" size="302058" crc="e2a30cd8"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -13976,6 +13994,15 @@
 		<year>1985</year>
 		<manufacturer>Damatta</manufacturer>
 		<rom name="Paradise Cafe PT (1985)(Damatta)[adult].z80" size="36975" crc="d0016cf2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="paradroids" romof="spectrum">
+		<description>Paradroids (48K)</description>
+		<year>1984</year>
+		<manufacturer>Mikro-Gen</manufacturer>
+		<rom name="Paradroids 48K (1984)(Mikro-Gen).tap" size="12325" crc="6c990e7b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20055,10 +20082,10 @@
 	</game>
 	<game name="vexed128" romof="spec128">
 		<comment>Homebrew, 'R': quit game - 'X': restart level</comment>
-		<description>Vexed (128K) (HB, v1.07)</description>
+		<description>Vexed (128K) (HB, v1.08)</description>
 		<year>2023</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Vexed 128K v1.07 (2023)(Under4Mhz).tap" size="18619" crc="64bdf56b"/>
+		<rom name="Vexed 128K v1.08 (2023)(Under4Mhz).tap" size="18657" crc="44fd70ed"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -20066,10 +20093,10 @@
 	</game>
 	<game name="vexed48" cloneof="vexed128" romof="vexed128">
 		<comment>Homebrew, 'R': quit game - 'X': restart level</comment>
-		<description>Vexed (48K) (HB, v1.07)</description>
+		<description>Vexed (48K) (HB, v1.08)</description>
 		<year>2023</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Vexed 48K v1.07 (2023)(Under4Mhz).tap" size="17827" crc="04e59624"/>
+		<rom name="Vexed 48K v1.08 (2023)(Under4Mhz).tap" size="17352" crc="ada67981"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20873,6 +20900,16 @@
 		<rom name="Yoyo's Great Adventure (2020)(Rafal Miazga).tap" size="48287" crc="a4f5b9b9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yoyorevenge" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>YoYo's Revenge (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>J Bizzel</manufacturer>
+		<rom name="YoYo's Revenge 48K (2023)(J Bizzel).tap" size="35245" crc="62a2ca40"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

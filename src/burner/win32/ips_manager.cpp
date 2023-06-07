@@ -973,9 +973,11 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 
                 char *has_ext = stristr_int(ips_name, ".ips");
 
-				if (_stricmp(rom_name, game_name))	// name don't match?
-					if (nIps_crc != crc)			// crc don't match?
-						continue;					// not our file. next!
+				if (_stricmp(rom_name, game_name))		// name don't match?
+					if (nIps_crc != crc) {				// crc don't match?
+						nIpsMemExpLen[LOAD_ROM] = 0;	// Must be reset to 0!
+						continue;						// not our file. next!
+					}
 
 				if (!readonly) {
 					bprintf(0, _T("ips name:[%S]\n"), ips_name);

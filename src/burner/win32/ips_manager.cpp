@@ -809,7 +809,6 @@ static void PatchFile(const char* ips_path, UINT8* base, bool readonly)
 
 	// Avoid memory out-of-bounds due to ips offset greater than rom length.
 	if (readonly && (0 == nIpsMemExpLen[EXP_FLAG])) {	// Unspecified length.
-		nIpsMemExpLen[LOAD_ROM] = 0;					// Must be reset to 0 before getting the next ips offset.
 		nIpsMemExpLen[LOAD_ROM] = Offset;
 	}
 
@@ -912,6 +911,8 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 	//bprintf(0, _T("DoPatchGame [%S][%S]\n"), patch_name, game_name);
 
     if ((fp = fopen(patch_name, "rb")) != NULL) {
+		bool bTarget = false;
+
 		// get ips size
 		fseek(fp, 0, SEEK_END);
 		nIpsSize = ftell(fp);
@@ -973,11 +974,11 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 
                 char *has_ext = stristr_int(ips_name, ".ips");
 
-				if (_stricmp(rom_name, game_name))		// name don't match?
-					if (nIps_crc != crc) {				// crc don't match?
-						nIpsMemExpLen[LOAD_ROM] = 0;	// Must be reset to 0!
-						continue;						// not our file. next!
-					}
+				if (_stricmp(rom_name, game_name))	// name don't match?
+					if (nIps_crc != crc)			// crc don't match?
+						continue;					// not our file. next!
+
+				bTarget = true;
 
 				if (!readonly) {
 					bprintf(0, _T("ips name:[%S]\n"), ips_name);
@@ -1000,6 +1001,11 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 			}
 		}
 		fclose(fp);
+
+		if (!bTarget && (0 == nIpsMemExpLen[EXP_FLAG])) {
+			// Must be reset to 0!
+			nIpsMemExpLen[LOAD_ROM] = 0;
+		}
 	}
 }
 

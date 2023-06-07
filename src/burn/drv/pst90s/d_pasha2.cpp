@@ -224,7 +224,7 @@ static UINT32 pasha2_io_read(UINT32 address)
 
 static inline void do_speedhack(UINT32 address)
 {
-	E132XSBurnCycles(1600); // wait states....:)
+	E132XSBurnCycles(1000); // wait states....:) (not really)
 	if (address == 0x95744) {
 		if (E132XSGetPC(0) == 0x8302) {
 			E132XSBurnUntilInt(); // kill cpu until interrupt

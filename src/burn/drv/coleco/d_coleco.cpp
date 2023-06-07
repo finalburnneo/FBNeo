@@ -8576,10 +8576,10 @@ struct BurnDriver BurnDrvcv_starfire = {
 	272, 228, 4, 3
 };
 
-// Vexed (HB, v1.07)
+// Vexed (HB, v1.08)
 
 static struct BurnRomInfo cv_vexedRomDesc[] = {
-	{ "Vexed v1.07 (2023)(Under4Mhz).rom",	32768, 0xe2630325, BRF_PRG | BRF_ESS },
+	{ "Vexed v1.08 (2023)(Under4Mhz).rom",	32768, 0x49b95339, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_vexed, cv_vexed, cv_coleco)
@@ -8587,7 +8587,7 @@ STD_ROM_FN(cv_vexed)
 
 struct BurnDriver BurnDrvcv_vexed = {
 	"cv_vexed", NULL, "cv_coleco", NULL, "2021-23",
-	"Vexed (HB, v1.07)\0", NULL, "Under4Mhz", "ColecoVision",
+	"Vexed (HB, v1.08)\0", NULL, "Under4Mhz", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PUZZLE, 0,
 	CVGetZipName, cv_vexedRomInfo, cv_vexedRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

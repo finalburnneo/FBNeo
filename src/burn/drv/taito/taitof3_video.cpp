@@ -1843,6 +1843,7 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		y_index_fx=sy;
 	}
 
+	UINT16* pfdata = f3_pf_data_n;
 	y=y_start;
 
 	while(y!=y_end)
@@ -1854,34 +1855,33 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x700+(y)])&bit_select)
 				pri=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[pri_base/2])&0xffff;
 
-			if (y != y_start) {
-				// Zoom for playfields 1 & 3 is interleaved, as is the latch select
-				switch (pos)
-				{
-					case 0:
-						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
-							line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x000)/2])&0xffff;
-						break;
-					case 1:
-						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
-							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
-						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
-							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
-						break;
-					case 2:
-						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
-							line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x400)/2])&0xffff;
-						break;
-					case 3:
-						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
-							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
-						if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
-							line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
-						break;
-					default:
-						break;
-				}
+			// Zoom for playfields 1 & 3 is interleaved, as is the latch select
+			switch (pos)
+			{
+				case 0:
+					if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
+						line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x000)/2])&0xffff;
+					break;
+				case 1:
+					if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
+						line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
+					if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
+						line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
+					break;
+				case 2:
+					if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&bit_select)
+						line_zoom=BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x400)/2])&0xffff;
+					break;
+				case 3:
+					if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x8)
+						line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x600)/2])&0xffff)&0xff00) | (line_zoom&0x00ff);
+					if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x400+(y)])&0x2)
+						line_zoom=((BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[(zoom_base+0x200)/2])&0xffff)&0x00ff) | (line_zoom&0xff00);
+					break;
+				default:
+					break;
 			}
+
 			// Column scroll only affects playfields 2 & 3
 			if (pos>=2 && BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x000+(y)])&bit_select)
 				colscroll=(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[col_base/2])>> 0)&0x3ff;
@@ -1936,8 +1936,14 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		y +=y_inc;
 	}
 
+	// ignore the first zoom value from ram and use the default
+	_y_zoom[y_start] = 0;
+	line_t->x_zoom[y_start] = 0x10000;
+
+	INT32 which_map_orig = which_map;
+
 	UINT8 *pmap = bitmap_flags[which_map];
-	UINT16 * tm = bitmap_layer[which_map];
+	//UINT16 * tm = bitmap_layer[which_map];
 	UINT16 * tmap = bitmap_layer[which_map];
 	INT32 map_width = bitmap_width[which_map];
 
@@ -1947,16 +1953,12 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		UINT32 x_index_fx;
 		UINT32 y_index;
 
-		/* The football games use values in the range 0x200-0x3ff where the crowd should be drawn - !?
+		/* lines with 0x0200 set in column scroll look up in alternate tilemaps
+		   playfield 3 2000 -> 4000, playfield 4 3000 -> 5000 (non-extended only?)
+		   used by kaiserkn (high scores), kirameki, football games (crowd, goals)
 
-		   This appears to cause it to reference outside of the normal tilemap RAM area into the unused
-		   area on the 32x32 tilemap configuration.. but exactly how isn't understood
-
-		    Until this is understood we're creating additional tilemaps for the otherwise unused area of
-		    RAM and forcing it to look up there.
-
-		    the crowd area still seems to 'lag' behind the pitch area however.. but these are the values
-		    in ram??
+		   there's some seemingly unrelated issue with the timing of y scrolling,
+		   causing the pitch to scroll ahead of crowd areas
 		*/
 		INT32 cs = _colscroll[y];
 
@@ -1964,18 +1966,25 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		{
 			if (extended_layers == 0)
 			{
-				if (which_map == 2) {
-					tmap = bitmap_layer[4];
-				}
-				if (which_map == 3) {
-					tmap = bitmap_layer[5];
+				if (which_map == 2 || which_map == 3) {
+					which_map += 2; // morph 2 -> 4, 3 -> 5
+					tmap = bitmap_layer[which_map];
+					pmap = bitmap_flags[which_map];
+					map_width = bitmap_width[which_map];
+
+					UINT16 *ram = (UINT16*)(TaitoF3PfRAM + (which_map * (0x1000 << extended_layers)));
+
+					f3_pf_data_n = ram;
 				}
 			}
 		}
 		else
 		{
-			tmap = tm;
+			which_map = which_map_orig;
+			tmap = bitmap_layer[which_map];
+			pmap = bitmap_flags[which_map];
 			map_width = bitmap_width[which_map];
+			f3_pf_data_n = pfdata;
 		}
 
 		/* set pixmap pointer */
@@ -2718,8 +2727,6 @@ void TaitoF3DrawCommon(INT32 scanline_start)
 
 	/* Setup scroll */
 	sy_fix[0]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[4])&0xffff)<< 9) + (1<<16);
-//	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
-//	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
 	sy_fix[1]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[5])&0xffff)<< 9) + (1<<16);
 	sy_fix[2]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[6])&0xffff)<< 9) + (1<<16);
 	sy_fix[3]=((BURN_ENDIAN_SWAP_INT16(m_f3_control_0[7])&0xffff)<< 9) + (1<<16);

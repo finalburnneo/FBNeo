@@ -16968,7 +16968,7 @@ struct BurnDriver BurnDrvnes_mappyc = {
 	"nes_mappyc", "nes_mappy", NULL, NULL, "2017",
 	"Mappy (T-Chi, v2.0)\0", NULL, "Jiu Ban", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
 	NESGetZipName, nes_mappycRomInfo, nes_mappycRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -22399,6 +22399,23 @@ struct BurnDriver BurnDrvnes_bowbeast = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_crabbieatkRomDesc[] = {
+	{ "Crabbie Attack! (2023)(TurtleRescueNES).nes",          524304, 0x9838a3d0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_crabbieatk)
+STD_ROM_FN(nes_crabbieatk)
+
+struct BurnDriver BurnDrvnes_crabbieatk = {
+	"nes_crabbieatk", NULL, NULL, NULL, "2023",
+	"Crabbie Attack! (HB)\0", NULL, "TurtleRescueNES", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_crabbieatkRomInfo, nes_crabbieatkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_convoyRomDesc[] = {
 	{ "Convoy, The (2023)(FG Software).nes",          24592, 0xe187eabf, BRF_ESS | BRF_PRG },
 };
@@ -22412,6 +22429,25 @@ struct BurnDriver BurnDrvnes_convoy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_convoyRomInfo, nes_convoyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Lupin III: Gentle Thief (GlobalHack)
+// https://www.romhacking.net/hacks/7803/
+static struct BurnRomInfo nes_lupin3gtRomDesc[] = {
+	{ "Lupin III Gentle Thief (GlobHack)(2023)(ProtoPixel).nes",          24592, 0xc5671156, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lupin3gt)
+STD_ROM_FN(nes_lupin3gt)
+
+struct BurnDriver BurnDrvnes_lupin3gt = {
+	"nes_lupin3gt", "nes_mappy", NULL, NULL, "2023",
+	"Lupin III: Gentle Thief (GlobalHack)\0", NULL, "ProtoPixel", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
+	NESGetZipName, nes_lupin3gtRomInfo, nes_lupin3gtRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -43405,7 +43441,7 @@ struct BurnDriver BurnDrvnes_mappy = {
 	"nes_mappy", NULL, NULL, NULL, "1984",
 	"Mappy (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
 	NESGetZipName, nes_mappyRomInfo, nes_mappyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

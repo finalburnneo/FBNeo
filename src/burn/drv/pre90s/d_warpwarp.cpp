@@ -1,14 +1,13 @@
 // Warp Warp emu-layer for FB Neo by dink, based on Mirko & Chris Hardy's MAME driver & sound core code by Juergen Buchmueller
 
 // todo: fix coctail mode
-// hook up real paddle (trackball driver)
-
 
 #include "tiles_generic.h"
 #include "driver.h"
 #include "z80_intf.h"
 #include "bitswap.h"
 #include "resnet.h"
+#include "burn_gun.h" // paddle
 #include <math.h>
 
 static UINT8 *AllMem;
@@ -35,7 +34,7 @@ static UINT8 DrvJoy4[8];
 static UINT8 DrvDip[2] = {0, 0};
 static UINT8 DrvInput[5];
 static UINT8 use_paddle = 0;
-static UINT8 Paddle = 0;
+static INT16 Analog[2];
 static UINT8 DrvReset;
 
 static UINT32 rockola = 0;
@@ -144,18 +143,20 @@ static struct BurnDIPInfo WarpwarprDIPList[]=
 
 STDDIPINFO(Warpwarpr)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo GeebeeInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"   },
 	{"P1 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"  },
 	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	A("P1 Paddle",  BIT_ANALOG_REL, &Analog[0],		"p1 z-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	    "dip"		},
 };
-
+#undef A
 STDINPUTINFO(Geebee)
 
 
@@ -187,19 +188,21 @@ static struct BurnDIPInfo GeebeeDIPList[]=
 
 STDDIPINFO(Geebee)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo BombbeeInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
 	{"P1 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	A("P1 Paddle",  BIT_ANALOG_REL, &Analog[0],		"p1 z-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	    "dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	    "dip"		},
 };
-
+#undef A
 STDINPUTINFO(Bombbee)
 
 
@@ -741,10 +744,10 @@ static void DrvMakeInputs()
 	}
 
 	if (use_paddle && !bBurnRunAheadFrame) {
-		if (DrvJoy4[0]) Paddle += 0x04;
-		if (DrvJoy4[1]) Paddle -= 0x04;
-		if (Paddle < 0x10) Paddle = 0x10;
-		if (Paddle > 0xa8) Paddle = 0xa8;
+		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+		BurnTrackballFrame(0, Analog[0], Analog[1], 0x01, 0x1f);
+		BurnTrackballUDLR(0, 0, 0, DrvJoy4[0], DrvJoy4[1], 4);
+		BurnTrackballUpdate(0);
 	}
 }
 
@@ -761,7 +764,7 @@ static UINT8 geebee_in_r(UINT8 offset)
 
 	if (offset == 3)
 	{
-		res = (use_paddle) ? Paddle : (DrvInput[2]);
+		res = (use_paddle) ? BurnTrackballRead(0) : (DrvInput[2]);
 
 		if (!use_paddle && !kaiteimode) // joystick-mode
 		{
@@ -821,7 +824,7 @@ static UINT8 warpwarp_dsw1_r(UINT8 offset)
 
 static UINT8 warpwarp_vol_r(UINT8 /*offset*/)
 {
-	INT32 res = (use_paddle) ? Paddle : DrvInput[2];
+	INT32 res = (use_paddle) ? BurnTrackballRead(0) : DrvInput[2];
 
 	if (!use_paddle) {
 		if (res & 1) return 0x0f;
@@ -966,7 +969,6 @@ static INT32 DrvDoReset()
 	ball_on = 0;
 	ball_h = 0;
 	ball_v = 0;
-	Paddle = 0;
 
 	warpwarp_sound_reset();
 
@@ -1114,6 +1116,11 @@ static INT32 DrvInit()
 
 	warpwarp_sound_init();
 
+	if (use_paddle) {
+		BurnTrackballInit(1);
+		BurnTrackballConfigStartStopPoints(0, 0x10, 0xac, 0x10, 0xac);
+	}
+
 	DrvDoReset();
 
 	return 0;
@@ -1128,6 +1135,10 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	warpwarp_sound_deinit();
+
+	if (use_paddle) {
+		BurnTrackballExit();
+	}
 
 	rockola = 0;
 	navaronemode = 0;
@@ -1269,11 +1280,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		warpwarp_sound_scan();
 
+		if (use_paddle) {
+			BurnTrackballScan();
+		}
+
 		SCAN_VAR(ball_on);
 		SCAN_VAR(ball_h);
 		SCAN_VAR(ball_v);
 		SCAN_VAR(geebee_bgw);
-		SCAN_VAR(Paddle);
 	}
 
 	return 0;

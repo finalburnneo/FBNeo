@@ -1196,47 +1196,90 @@ static void cop_dma_trigger_write(UINT16)
 	}
 }
 
+struct cop_sortstr {
+	UINT32 sortby;
+	UINT16 data;
+};
+
+static void merge(cop_sortstr arr[], cop_sortstr left[], int left_size, cop_sortstr right[], int right_size, int ascending) {
+    int i = 0, j = 0, k = 0;
+    int comparison;
+
+    while (i < left_size && j < right_size) {
+        if (ascending) {
+            comparison = (left[i].sortby <= right[j].sortby);
+        } else {
+            comparison = (left[i].sortby >= right[j].sortby);
+        }
+
+        if (comparison) {
+            arr[k] = left[i];
+            i++;
+        } else {
+            arr[k] = right[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < left_size) {
+        arr[k] = left[i];
+        i++;
+        k++;
+    }
+
+    while (j < right_size) {
+        arr[k] = right[j];
+        j++;
+        k++;
+    }
+}
+
+static void mergeSort(cop_sortstr arr[], int size, int ascending) {
+    if (size <= 1)
+        return;
+
+    int mid = size / 2;
+    cop_sortstr* left = (cop_sortstr*)BurnMalloc(mid * sizeof(cop_sortstr));
+    cop_sortstr* right = (cop_sortstr*)BurnMalloc((size - mid) * sizeof(cop_sortstr));
+
+    for (int i = 0; i < mid; i++)
+        left[i] = arr[i];
+
+    for (int i = mid; i < size; i++)
+        right[i - mid] = arr[i];
+
+    mergeSort(left, mid, ascending);
+    mergeSort(right, size - mid, ascending);
+    merge(arr, left, mid, right, size - mid, ascending);
+
+    BurnFree(left);
+    BurnFree(right);
+}
+
 static void cop_sort_dma_trig_write(UINT16 data)
 {
-	UINT16 sort_size;
+	UINT16 sort_size = data;
 
-	sort_size = data;
+	cop_sortstr *ss = (cop_sortstr*)BurnMalloc(sort_size * sizeof(cop_sortstr));
 
-	{
-		INT32 i,j;
-		UINT8 xchg_flag;
-		UINT32 addri,addrj;
-		UINT16 vali,valj;
-
-		/* TODO: use a better algorithm than bubble sort! */
-		for(i=2;i<sort_size;i+=2)
-		{
-			for(j=i-2;j<sort_size;j+=2)
-			{
-				addri = cop_sort_ram_addr+VezReadWord(cop_sort_lookup+i);
-				addrj = cop_sort_ram_addr+VezReadWord(cop_sort_lookup+j);
-
-				vali = VezReadWord(addri);
-				valj = VezReadWord(addrj);
-
-				switch(cop_sort_param)
-				{
-					case 2: xchg_flag = (vali > valj); break;
-					case 1: xchg_flag = (vali < valj); break;
-					default: xchg_flag = 0; break;
-				}
-
-				if(xchg_flag)
-				{
-					UINT16 xch_val;
-
-					xch_val = VezReadWord(cop_sort_lookup+i);
-					VezWriteWord(cop_sort_lookup+i,VezReadWord(cop_sort_lookup+j));
-					VezWriteWord(cop_sort_lookup+j,xch_val);
-				}
-			}
-		}
+	for (INT32 i = 0; i < sort_size; i++) {
+		ss[i].data = VezReadWord(cop_sort_lookup + (i << 1));
+		ss[i].sortby = VezReadLong(cop_sort_ram_addr + ss[i].data);
 	}
+
+	switch (cop_sort_param) {
+		case 1: mergeSort(ss, sort_size, 1); // <
+			break;
+		case 2: mergeSort(ss, sort_size, 0); // >
+			break;
+	}
+
+	for (INT32 i = 0; i < sort_size; i++) {
+		VezWriteWord(cop_sort_lookup + (i << 1), ss[i].data);
+	}
+
+	BurnFree(ss);
 }
 
 static void raiden2_crtc_write(INT32 offset, UINT8 data)
@@ -3479,7 +3522,13 @@ static INT32 DrvDraw()
 static INT32 ZeroteamDraw() // sprite priorities different
 {
 	if (DrvRecalc) {
-		palettedma();
+		if (game_select == 2 || game_select == 3) {
+			for (INT32 i = 0; i < 0x1000; i+=2) {
+				palette_update_entry(i);
+			}
+		} else {
+			palettedma();
+		}
 		DrvRecalc = 0;
 	}
 

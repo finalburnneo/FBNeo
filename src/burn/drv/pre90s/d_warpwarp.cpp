@@ -150,7 +150,7 @@ static struct BurnInputInfo GeebeeInputList[] = {
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"   },
 	{"P1 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"  },
 	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	A("P1 Paddle",  BIT_ANALOG_REL, &Analog[0],		"p1 z-axis"),
+	A("P1 Paddle",  BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,		"dip"		},
@@ -195,7 +195,7 @@ static struct BurnInputInfo BombbeeInputList[] = {
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
 	{"P1 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	A("P1 Paddle",  BIT_ANALOG_REL, &Analog[0],		"p1 z-axis"),
+	A("P1 Paddle",  BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},

@@ -16920,7 +16920,7 @@ static struct BurnRomInfo samsh5pfRomDesc[] = {
 
 	{ "273-m1.bin",  0x020000, 0x654e9236, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "273-v1d.bin", 0x800000, 0x3bf61586, 5 | BRF_SND },           // 11 Sound data
+	{ "273-v1d.bin", 0x800000, 0x28d57d10, 5 | BRF_SND },           // 11 Sound data
 	{ "273-v2d.bin", 0x800000, 0x95fe7646, 5 | BRF_SND },           // 12
 };
 

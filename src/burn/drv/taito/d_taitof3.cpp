@@ -6329,3 +6329,48 @@ struct BurnDriver BurnDrvLandmakrp = {
 	landmakrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
 };
+
+
+// Land Maker (English Translation Hack)
+// https://qcs.shsbs.xyz/share/ywy/land-maker-english-translation
+
+static struct BurnRomInfo landmakrheRomDesc[] = {
+	{ "e61-19he01.20",	0x080000, 0x585f410c, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e61-18he01.19",	0x080000, 0x58f9e498, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e61-17he01.18",	0x080000, 0x6e15a67b, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e61-16he01.17",	0x080000, 0x253c94b6, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "e61-03.12",		0x200000, 0xe8abfc46, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e61-02.08",		0x200000, 0x1dc4a164, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "e61-01.04",		0x200000, 0x6cdd8311, TAITO_SPRITESA },           //  6
+
+	{ "e61-09he01.47",	0x200000, 0xbac13c54, TAITO_CHARS_BYTESWAP },     //  7 Layer Tiles
+	{ "e61-08he01.45",	0x200000, 0x52288694, TAITO_CHARS_BYTESWAP },     //  8
+	{ "e61-07he01.43",	0x200000, 0xf521c022, TAITO_CHARS },              //  9
+
+	{ "e61-14.32",		0x040000, 0x18961bbb, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "e61-15.33",		0x040000, 0x2c64557a, TAITO_68KROM2_BYTESWAP },   // 11
+
+	{ "e61-04.38",		0x200000, 0xc27aec0c, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "e61-05.39",		0x200000, 0x83920d9d, TAITO_ES5505_BYTESWAP },    // 13
+	{ "e61-06.40",		0x200000, 0x2e717bfe, TAITO_ES5505_BYTESWAP },    // 14
+	
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 15 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 16
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 17
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 18
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 19
+};
+
+STD_ROM_PICK(landmakrhe)
+STD_ROM_FN(landmakrhe)
+
+struct BurnDriver BurnDrvLandmakrhe = {
+	"landmakrhe", "landmakr", NULL, NULL, "2023",
+	"Land Maker (English Translation Hack)\0", NULL, "hack (ywy)", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, landmakrheRomInfo, landmakrheRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	landmakrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 232, 4, 3
+};

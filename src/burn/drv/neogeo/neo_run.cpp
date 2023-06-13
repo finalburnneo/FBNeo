@@ -289,6 +289,9 @@ static bool bZ80BIOS; // game can map/unmap z80 bios when true
 
 static INT32 nNeoCDCyclesIRQ = 0, nNeoCDCyclesIRQPeriod = 0;
 
+static NeoReallocInfo NRI = { 0 };
+NeoReallocInfo* pNRI = &NRI;
+
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
 #endif
@@ -583,7 +586,7 @@ static INT32 LoadRoms()
 			BurnDrvGetRomInfo(&ri, pInfo->nCodeOffset + i);
 			nCodeSize[nNeoActiveSlot] += ri.nLen;
 		}
-		nCodeSize[nNeoActiveSlot] = (nCodeSize[nNeoActiveSlot] + 0x0FFFFF) & ~0x0FFFFF;
+		nCodeSize[nNeoActiveSlot] = ((nCodeSize[nNeoActiveSlot] + 0x0FFFFF) & ~0x0FFFFF) + pNRI->nCodeSize;
 
 		// Extend the length of[nCodeSize] to fit the ips of the hack games.
 		if (bDoIpsPatch)
@@ -626,6 +629,8 @@ static INT32 LoadRoms()
 			nSpriteSize[nNeoActiveSlot] += ri.nLen * 2;
 		}
 
+		nSpriteSize[nNeoActiveSlot] += pNRI->nSpriteSize;
+
 		// Keep actual ROMs length.
 		nSpriteRomSize = nSpriteSize[nNeoActiveSlot];
 
@@ -647,7 +652,7 @@ static INT32 LoadRoms()
 		if (nNeoTextROMSize[nNeoActiveSlot] == 0) {
 			if (pInfo->nTextOffset > 0) {
 				BurnDrvGetRomInfo(&ri, pInfo->nTextOffset);
-				nNeoTextROMSize[nNeoActiveSlot] = ri.nLen;
+				nNeoTextROMSize[nNeoActiveSlot] = ri.nLen + pNRI->nTextSize;
 
 				if (bDoIpsPatch)
 					nNeoTextROMSize[nNeoActiveSlot] += nIpsMemExpLen[GRA2_ROM];
@@ -664,7 +669,7 @@ static INT32 LoadRoms()
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + i);
 				if (ri.nLen > nMaxSize) nMaxSize = ri.nLen;
 			}
-			nYM2610ADPCMASize[nNeoActiveSlot] += nMaxSize * pInfo->nADPCMANum;
+			nYM2610ADPCMASize[nNeoActiveSlot] += (nMaxSize * pInfo->nADPCMANum + pNRI->nADPCMASize);
 			if (bDoIpsPatch)
 				nYM2610ADPCMASize[nNeoActiveSlot] += nIpsMemExpLen[SND1_ROM];
 
@@ -672,6 +677,8 @@ static INT32 LoadRoms()
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum + i);
 				nYM2610ADPCMBSize[nNeoActiveSlot] += ri.nLen;
 			}
+			nYM2610ADPCMBSize[nNeoActiveSlot] += pNRI->nADPCMBSize;
+
 			if (bDoIpsPatch)
 				nYM2610ADPCMBSize[nNeoActiveSlot] += nIpsMemExpLen[SND2_ROM];
 
@@ -841,6 +848,9 @@ static INT32 LoadRoms()
 		YM2610ADPCMBROM[nNeoActiveSlot] = YM2610ADPCMAROM[nNeoActiveSlot];
 		nYM2610ADPCMBSize[nNeoActiveSlot] = nYM2610ADPCMASize[nNeoActiveSlot];
 	}
+
+	// All reset to 0
+	memset(pNRI, 0, sizeof(NeoReallocInfo));
 
 	return 0;
 }

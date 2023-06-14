@@ -28,6 +28,14 @@ struct NeoGameInfo {
 	INT32 nNeoSRAMProtection;
 };
 
+struct NeoReallocInfo {
+	INT32 nCodeSize;
+	INT32 nTextSize;
+	INT32 nSpriteSize;
+	INT32 nADPCMASize;
+	INT32 nADPCMBSize;
+};
+
 struct NEO_CALLBACK {
 	void (*pInitialise)();
 	void (*pInstallHandlers)();
@@ -49,6 +57,8 @@ void NeoDecodeSprites(UINT8* pDest, INT32 nSize);
 void NeoDecodeSpritesCD(UINT8* pData, UINT8* pDest, INT32 nSize);
 
 // neo_run.cpp
+extern NeoReallocInfo* pNRI;
+
 extern UINT8* NeoGraphicsRAM;
 
 extern UINT8 nNeoNumSlots;

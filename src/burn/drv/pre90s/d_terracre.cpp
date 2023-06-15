@@ -286,7 +286,7 @@ static struct BurnDIPInfo HorekidDIPList[]=
 
 STDDIPINFO(Horekid)
 
-static UINT16 _fastcall TerracreCommonReadWord(UINT32 address)
+static UINT16 __fastcall TerracreCommonReadWord(UINT32 address)
 {
 	switch (address)
 	{
@@ -306,7 +306,7 @@ static UINT16 _fastcall TerracreCommonReadWord(UINT32 address)
 	return 0;
 }
 
-static void _fastcall TerracreCommonWriteWord(UINT32 address, UINT16 data)
+static void __fastcall TerracreCommonWriteWord(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{

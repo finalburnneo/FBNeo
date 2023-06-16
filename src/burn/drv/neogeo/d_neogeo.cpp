@@ -1550,13 +1550,14 @@ static struct BurnDIPInfo mslug5aksDIPList[] = {
 	// Fake DIPs
 	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // Stone Turtle
 
-	{0,    0xFE, 0,    6,    "Version change (Must reload)"	},
-	{0x06, 0x01, 0x1F, 0x00, "Stone Turtle"                 },
-	{0x06, 0x01, 0x1F, 0x01, "Remake FC2"                   },
-	{0x06, 0x01, 0x1F, 0x02, "Multifunction"                },
-	{0x06, 0x01, 0x1F, 0x04, "1v2 Mode"                     },
-	{0x06, 0x01, 0x1F, 0x08, "Vehicle Summon"               },
-	{0x06, 0x01, 0x1F, 0x10, "Boss Battles"                 },
+	{0,    0xFE, 0,    7,    "Version change (Must reload)"	},
+	{0x06, 0x01, 0x3F, 0x00, "Stone Turtle"                 },
+	{0x06, 0x01, 0x3F, 0x01, "Remake FC2"                   },
+	{0x06, 0x01, 0x3F, 0x02, "Multifunction"                },
+	{0x06, 0x01, 0x3F, 0x04, "1v2 Mode"                     },
+	{0x06, 0x01, 0x3F, 0x08, "Vehicle Summon"               },
+	{0x06, 0x01, 0x3F, 0x10, "Boss Battles"                 },
+	{0x06, 0x01, 0x3F, 0x20, "Survival"                     },
 };
 
 static struct BurnDIPInfo mslug5cDIPList[] = {
@@ -21595,8 +21596,8 @@ static struct BurnRomInfo mslugxaksRomDesc[] = {
 	{ "250-p1sc.p1",	0x100000, 0xe0792609, 0 | BRF_ESS | BRF_PRG }, // 13 68K code
 	{ "250-p2sc.ep1",	0x400000, 0x01f48336, 0 | BRF_ESS | BRF_PRG }, // 14
 
-	{ "250-c5sc.ec5",	0x800000, 0x916b7239, 0 | BRF_GRA },           // 15 Sprite data
-	{ "250-c6sc.ec6",	0x800000, 0x23016767, 0 | BRF_GRA },           // 16
+	{ "250-c5sc.c5",	0x800000, 0x916b7239, 0 | BRF_GRA },           // 15 Sprite data
+	{ "250-c6sc.c6",	0x800000, 0x23016767, 0 | BRF_GRA },           // 16
 
 	/* Multifunction - 20230522 */
 	{ "250-p1dg.p1",	0x100000, 0x9d740aed, 0 | BRF_ESS | BRF_PRG }, // 17 68K code
@@ -21841,7 +21842,7 @@ struct BurnDriver BurnDrvmslug3v = {
 #undef MSLUG3_ENCRYPTION_COMPONENT
 
 
-#define MSLUG3_DECRYPTION_SOUND											\
+#define MSLUG3_SOUND											\
 	{ "256-m1.m1",		0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG },	\
 	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },			\
 	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },			\
@@ -21867,7 +21868,7 @@ static struct BurnRomInfo mslug3ddRomDesc[] = {
 	{ "256-c7dd.c7",	0x800000, 0xec74423d, 3 | BRF_GRA },           //  9
 	{ "256-c8dd.c8",	0x800000, 0xa9fe9b98, 3 | BRF_GRA },           // 10
 
-	MSLUG3_DECRYPTION_SOUND
+	MSLUG3_SOUND
 
 	/* Komorebi - 20220511 */
 	{ "256-p1ki.p1",	0x100000, 0x16a83b0a, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
@@ -21917,7 +21918,7 @@ struct BurnDriver BurnDrvmslug3dd = {
 
 #define MSLUG3_DECRYPTION_COMPONENT	\
 	MSLUG3_DECRYPTION_GRAPHICS		\
-	MSLUG3_DECRYPTION_SOUND
+	MSLUG3_SOUND
 
 
 // Metal Slug 3 (Enemy Remix, Hack)
@@ -22118,7 +22119,7 @@ static struct BurnRomInfo mslug3aksRomDesc[] = {
 	{ "256-c7cq.c7",	0x800000, 0xb7bd7296, 3 | BRF_GRA },           //  9
 	{ "256-c8cq.c8",	0x800000, 0x638e5920, 3 | BRF_GRA },           // 10
 
-	MSLUG3_DECRYPTION_SOUND
+	MSLUG3_SOUND
 
 	/* Survival - 20230301 */
 	{ "256-p1sc.p1",	0x100000, 0xdc0b9622, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
@@ -22183,7 +22184,7 @@ struct BurnDriver BurnDrvmslug3aks = {
 };
 
 #undef MSLUG3_DECRYPTION_COMPONENT
-#undef MSLUG3_DECRYPTION_SOUND
+#undef MSLUG3_SOUND
 #undef MSLUG3_DECRYPTION_GRAPHICS
 
 
@@ -22416,8 +22417,8 @@ static struct BurnRomInfo mslug4ddRomDesc[] = {
 	MSLUG4_DECRYPTION_SOUND
 
 	/* Komorebi - 20220511 */
-	{ "263-p1ki.p1",	0x100000, 0x02ce0fcd, 0 | BRF_ESS | BRF_PRG }, // 14 68K code
-	{ "263-p2ki.sp2",	0x400000, 0x4569a092, 0 | BRF_ESS | BRF_PRG }, // 15
+	{ "263-p1ki.p1",	0x100000, 0x4e2363d3, 0 | BRF_ESS | BRF_PRG }, // 14 68K code
+	{ "263-p2ki.sp2",	0x400000, 0xe95f6bd8, 0 | BRF_ESS | BRF_PRG }, // 15
 };
 
 STDROMPICKEXT(mslug4dd, mslug4dd, neogeo)
@@ -22794,6 +22795,12 @@ static struct BurnRomInfo mslug5aksRomDesc[] = {
 
 	/* Boss Battles - 20230531 */
 	{ "268-p1bs.p1",	0x600000, 0x04fae8b3, 0 | BRF_ESS | BRF_PRG }, // 17 68K code
+
+	/* Survival - 20230612 */
+	{ "268-p1sv.p1",	0x600000, 0x71a0953f, 0 | BRF_ESS | BRF_PRG }, // 18 68K code
+
+	{ "268-c7sv.c7",	0x800000, 0x080b585a, 0 | BRF_GRA },           // 19 Sprite data
+	{ "268-c8sv.c8",	0x800000, 0xa6450c3a, 0 | BRF_GRA },           // 20
 };
 
 STDROMPICKEXT(mslug5aks, mslug5aks, neogeo)
@@ -22801,7 +22808,11 @@ STD_ROM_FN(mslug5aks)
 
 static void mslug5aksCallback()
 {
-	for (INT32 i = 0x01, nIndex = 13; i <= 0x10; i <<= 1, nIndex++) {
+	if (VerSwitcher & 0x20) {  // Survival c7 & c8
+		RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + 0x3000000, 19, 0, 2);
+	}
+
+	for (INT32 i = 0x01, nIndex = 13; i <= 0x20; i <<= 1, nIndex++) {
 		if (VerSwitcher & i) {
 			RomDiffPatch(Neo68KROMActive, nIndex, 0, 1);
 			return;

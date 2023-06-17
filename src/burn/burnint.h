@@ -174,7 +174,9 @@ struct cheat_core {
 	INT32 nCPU;			// which cpu
 };
 
+// cpu_core_config -> nAddressFlags
 #define MB_CHEAT_ENDI_SWAP 0x8000 // multibyte cheat needs swap on cheat-write
+// when MB_CHEAT_ENDI_SWAP is set, lsb can contain data bit-width of processor
 
 void CpuCheatRegister(INT32 type, cpu_core_config *config);
 

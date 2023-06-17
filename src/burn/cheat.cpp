@@ -390,10 +390,8 @@ INT32 CheatApply()
 							if (cheat_subptr->nAddressFlags & MB_CHEAT_ENDI_SWAP) {
 								// LE CPU's Require address swaps with multi-byte writes (tms34xxx, v60)
 								// (because cheat loader (burner/conc.cpp) stores everything in BE format)
-								switch (pAddressInfo->nTotalByte) {
-									case 2: addressXor = 1; break;
-									case 3:
-									case 4: addressXor = 3; break;
+								if (pAddressInfo->nTotalByte > 1) {
+									addressXor = ((cheat_subptr->nAddressFlags & 0x30) == 32) ? 3 : 1;
 								}
 							}
 

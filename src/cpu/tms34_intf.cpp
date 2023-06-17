@@ -122,7 +122,7 @@ cpu_core_config TMS34010Config =
 	TMS34010Scan,
 	TMS34010Exit,
 	0x100000000ULL,
-	MB_CHEAT_ENDI_SWAP // 0x8000 - LE but needs address swap when writing multibyte cheats
+	MB_CHEAT_ENDI_SWAP | 16 // LE (16bit databus) but needs address swap when writing multibyte cheats
 };
 // end cheat-engine hook-up
 

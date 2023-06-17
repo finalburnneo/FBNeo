@@ -711,6 +711,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bitlogic">
+		<comment>Homebrew</comment>
+		<description>BitLogic a Cyberpunk Arcade Adventure (HB)</description>
+		<year>2022-2023</year>
+		<manufacturer>OXiAB Studio</manufacturer>
+		<rom name="Bitlogic MSX2SMS (2023)(OXiAB Studio).sms" size="65536" crc="7145271f"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="blackblt">
 		<description>Black Belt (Euro, USA)</description>
 		<year>1986</year>
@@ -2763,10 +2772,10 @@
 	</game>
 	<game name="ksolitaire">
 		<comment>Homebrew</comment>
-		<description>Klondike Solitaire (HB)</description>
-		<year>2021</year>
+		<description>Klondike Solitaire (HB, v1.04)</description>
+		<year>2023</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Klondike Solitaire (2021)(Under4Mhz).sms" size="49152" crc="a4011448"/>
+		<rom name="Klondike Solitaire v1.04 (2023)(Under4Mhz).sms" size="49152" crc="52b870f3"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3010,10 +3019,10 @@
 	</game>
 	<game name="msolitaire">
 		<comment>Homebrew</comment>
-		<description>Mahjong Solitaire (HB)</description>
-		<year>2021</year>
+		<description>Mahjong Solitaire (HB, v1.16)</description>
+		<year>2023</year>
 		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Mahjong Solitaire (2021)(Under4Mhz).sms" size="32768" crc="bed37331"/>
+		<rom name="Mahjong Solitaire v1.16 (2023)(Under4Mhz).sms" size="32768" crc="d4dc268e"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

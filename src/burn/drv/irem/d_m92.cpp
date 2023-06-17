@@ -56,6 +56,8 @@ static UINT8 DrvJoy4[8];
 static UINT8 DrvInput[9];
 static UINT8 DrvReset = 0;
 
+static HoldCoin<4> hold_coin;
+
 static INT32 m92_main_bank;
 
 static INT32 graphics_mask[2] = { 0, 0 };
@@ -1617,6 +1619,8 @@ static INT32 DrvDoReset()
 		}
 	}
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -2090,6 +2094,8 @@ static void compile_inputs()
 		DrvInput[4] |= (DrvButton[i] & 1) << i;
 	}
 
+	hold_coin.check(0, DrvInput[4], 1 << 2, 2);
+
 	// Clear Opposites
 	DrvClearOpposites(&DrvInput[0]);
 	DrvClearOpposites(&DrvInput[1]);
@@ -2278,6 +2284,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m92_sprite_buffer_busy);
 		SCAN_VAR(m92_sprite_buffer_timer);
 		SCAN_VAR(m92_main_bank);
+
+		hold_coin.scan();
 
 		if (nAction & ACB_WRITE) {
 			VezOpen(0);

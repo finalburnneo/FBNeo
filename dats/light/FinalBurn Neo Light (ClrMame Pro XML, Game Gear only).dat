@@ -3829,6 +3829,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="pegged">
+		<comment>Homebrew</comment>
+		<description>Pegged (HB, v1.02)</description>
+		<year>2023</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Pegged v1.02 (2023)(Under4Mhz).gg" size="32768" crc="a3e06e7a"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pengo">
 		<description>Pengo (Euro, USA)</description>
 		<year>1991</year>

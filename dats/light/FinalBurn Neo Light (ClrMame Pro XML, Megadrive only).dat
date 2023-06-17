@@ -1146,6 +1146,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="astebros">
+		<comment>Homebrew</comment>
+		<description>Astebros (HB)</description>
+		<year>2023</year>
+		<manufacturer>NeoFID Studios</manufacturer>
+		<rom name="Astebros (2023)(NeoFID Studios).bin" size="15466496" crc="0833390c"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="astergre">
 		<description>Asterix and the Great Rescue (Euro)</description>
 		<year>1993</year>

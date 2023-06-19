@@ -19964,11 +19964,11 @@ struct BurnDriver BurnDrvkof99t = {
 	{ "257-v4.v4",		0x400000, 0x764bbd6b, 5 | BRF_SND },
 
 #define KOF2000_DECRYPTION_SOUND										\
-	{ "262-m1d.m1",		0x020000, 0x2fb0a8a5, 4 | BRF_ESS | BRF_PRG },	\
+	{ "257-m1d.m1",		0x040000, 0xd404db70, 4 | BRF_ESS | BRF_PRG },	\
 	KOF2000_SAMPLES
 
 #define KOF2000_ENCRYPTION_SOUND										\
-	{ "262-m1.m1",		0x040000, 0x4b749113, 4 | BRF_ESS | BRF_PRG },	\
+	{ "257-m1.m1",		0x040000, 0x4b749113, 4 | BRF_ESS | BRF_PRG },	\
 	KOF2000_SAMPLES
 
 #define KOF2000_ENCRYPTION_COMPONENTS							\
@@ -20016,8 +20016,8 @@ struct BurnDriver BurnDrvkof2kps2 = {
 // YZKOF 20220720
 
 static struct BurnRomInfo kof2kotcRomDesc[] = {
-	{ "257-p1otc.p1",	0x100000, 0x5eac9c50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "257-p2otc.sp2",	0x400000, 0x75b632fe, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "257-p1otc.p1",	0x100000, 0xdde67c6b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "257-p2otc.sp2",	0x400000, 0xe1095f50, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "257-s1otc.s1",	0x080000, 0x4370c5e2, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20028,7 +20028,7 @@ static struct BurnRomInfo kof2kotcRomDesc[] = {
 	{ "257-m1otc.m1",	0x040000, 0x80ebc3aa, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	KOF2000_SAMPLES
-	{ "257-v5otc.v4",	0x400000, 0x54df285f, 5 | BRF_SND },           // 16
+	{ "257-v5otc.v5",	0x400000, 0x54df285f, 5 | BRF_SND },           // 16
 };
 
 STDROMPICKEXT(kof2kotc, kof2kotc, neogeo)
@@ -20038,7 +20038,7 @@ struct BurnDriver BurnDrvkof2kotc = {
 	"kof2kotc", "kof2000", "neogeo", NULL, "2022",
 	"The King of Fighters 2000 - OTC (Hack)\0", "ZERO only enabled in AES mode", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof2kotcRomInfo, kof2kotcRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neoaesDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3

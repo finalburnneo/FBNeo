@@ -75,11 +75,9 @@ static struct BurnInputInfo pceInputList[] = {
 
 STDINPUTINFO(pce)
 
-static struct BurnDIPInfo pceDIPList[] = {
+static struct BurnDIPInfo pceDIPList[] =
+{
 	DIP_OFFSET(0x3d)
-	{0x00, 0xff, 0xff, 0x00, NULL						},
-	{0x01, 0xff, 0xff, 0x00, NULL						},
-	{0x02, 0xff, 0xff, 0x01, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Joystick Type Player 1"	},
 	{0x00, 0x01, 0x03, 0x00, "2-buttons"				},
@@ -115,7 +113,22 @@ static struct BurnDIPInfo pceDIPList[] = {
 	{0x02, 0x01, 0x80, 0x80, "HQ (High CPU Usage)"		},
 };
 
-STDDIPINFO(pce)
+static struct BurnDIPInfo pcedefaultsDIPList[] =
+{
+	{0x00, 0xff, 0xff, 0x00, NULL						},
+	{0x01, 0xff, 0xff, 0x00, NULL						},
+	{0x02, 0xff, 0xff, 0x01, NULL						},
+};
+
+static struct BurnDIPInfo pceHQSoundDIPList[] =
+{
+	{0x00, 0xff, 0xff, 0x00, NULL						},
+	{0x01, 0xff, 0xff, 0x00, NULL						},
+	{0x02, 0xff, 0xff, 0x81, NULL						},
+};
+
+STDDIPINFOEXT(pce, pcedefaults, pce)
+STDDIPINFOEXT(pce_hq_sound, pceHQSound, pce)
 
 
 // 1943 Kai (Japan)
@@ -2149,7 +2162,7 @@ struct BurnDriver BurnDrvpce_gekisboy = {
 	"Gekisha Boy (Japan)\0", NULL, "Irem", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ACTION | GBF_ADV, 0,
-	PceGetZipName, pce_gekisboyRomInfo, pce_gekisboyRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_gekisboyRomInfo, pce_gekisboyRomName, NULL, NULL, NULL, NULL, pceInputInfo, pce_hq_soundDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2168,7 +2181,7 @@ struct BurnDriver BurnDrvpce_photoboy = {
 	"Photograph Boy (Hack, English)\0", NULL, "LaytonLoztew", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ACTION | GBF_ADV, 0,
-	PceGetZipName, pce_photoboyRomInfo, pce_photoboyRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_photoboyRomInfo, pce_photoboyRomName, NULL, NULL, NULL, NULL, pceInputInfo, pce_hq_soundDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };

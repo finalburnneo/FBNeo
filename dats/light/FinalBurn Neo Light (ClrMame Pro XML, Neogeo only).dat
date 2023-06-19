@@ -22783,7 +22783,7 @@
 		<rom name="257-c6.c6" merge="257-c6.c6" size="8388608" crc="fa7200d5"/>
 		<rom name="257-c7.c7" merge="257-c7.c7" size="8388608" crc="7da11fe4"/>
 		<rom name="257-c8.c8" merge="257-c8.c8" size="8388608" crc="b1afa60b"/>
-		<rom name="262-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
+		<rom name="257-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
 		<rom name="257-v1.v1" merge="257-v1.v1" size="4194304" crc="17cde847"/>
 		<rom name="257-v2.v2" merge="257-v2.v2" size="4194304" crc="1afb20ff"/>
 		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>
@@ -22834,8 +22834,8 @@
 		<description>The King of Fighters 2000 - OTC (Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="257-p1otc.p1" size="1048576" crc="5eac9c50"/>
-		<rom name="257-p2otc.sp2" size="4194304" crc="75b632fe"/>
+		<rom name="257-p1otc.p1" size="1048576" crc="dde67c6b"/>
+		<rom name="257-p2otc.sp2" size="4194304" crc="e1095f50"/>
 		<rom name="257-s1otc.s1" size="524288" crc="4370c5e2"/>
 		<rom name="257-c1d.c1" size="8388608" crc="abcdd424"/>
 		<rom name="257-c2d.c2" size="8388608" crc="cda33778"/>
@@ -22850,7 +22850,7 @@
 		<rom name="257-v2.v2" merge="257-v2.v2" size="4194304" crc="1afb20ff"/>
 		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>
 		<rom name="257-v4.v4" merge="257-v4.v4" size="4194304" crc="764bbd6b"/>
-		<rom name="257-v5otc.v4" size="4194304" crc="54df285f"/>
+		<rom name="257-v5otc.v5" size="4194304" crc="54df285f"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -22907,7 +22907,7 @@
 		<rom name="257-c6d.c6" size="8388608" crc="8599cc5b"/>
 		<rom name="257-c7ps2.c7" size="8388608" crc="93c343ec"/>
 		<rom name="257-c8ps2.c8" size="8388608" crc="ba92f698"/>
-		<rom name="262-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
+		<rom name="257-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
 		<rom name="257-v1.v1" merge="257-v1.v1" size="4194304" crc="17cde847"/>
 		<rom name="257-v2.v2" merge="257-v2.v2" size="4194304" crc="1afb20ff"/>
 		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>
@@ -22969,7 +22969,7 @@
 		<rom name="257-c6d.c6" size="8388608" crc="8599cc5b"/>
 		<rom name="257-c7sp.c7" size="8388608" crc="110f72a3"/>
 		<rom name="257-c8sp.c8" size="8388608" crc="4347f6af"/>
-		<rom name="262-m1d.m1" size="131072" crc="2fb0a8a5"/>
+		<rom name="257-m1d.m1" size="262144" crc="d404db70"/>
 		<rom name="257-v1.v1" merge="257-v1.v1" size="4194304" crc="17cde847"/>
 		<rom name="257-v2.v2" merge="257-v2.v2" size="4194304" crc="1afb20ff"/>
 		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>
@@ -23037,7 +23037,7 @@
 		<rom name="257-c6pls.c6" size="8388608" crc="ac4a8edc"/>
 		<rom name="257-c7pls.c7" size="8388608" crc="608ffca9"/>
 		<rom name="257-c8pls.c8" size="8388608" crc="73280ea8"/>
-		<rom name="262-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
+		<rom name="257-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
 		<rom name="257-v1.v1" merge="257-v1.v1" size="4194304" crc="17cde847"/>
 		<rom name="257-v2.v2" merge="257-v2.v2" size="4194304" crc="1afb20ff"/>
 		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>
@@ -23098,7 +23098,7 @@
 		<rom name="257xxx-c6.c6" size="8388608" crc="68adf255"/>
 		<rom name="257xxx-c7.c7" size="8388608" crc="8c6b22b3"/>
 		<rom name="257xxx-c8.c8" size="8388608" crc="6223bd1d"/>
-		<rom name="262-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
+		<rom name="257-m1.m1" merge="257-m1.m1" size="262144" crc="4b749113"/>
 		<rom name="257-v1.v1" merge="257-v1.v1" size="4194304" crc="17cde847"/>
 		<rom name="257-v2.v2" merge="257-v2.v2" size="4194304" crc="1afb20ff"/>
 		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>

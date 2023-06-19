@@ -13,7 +13,7 @@
 		<clrmamepro forcenodump="ignore"/>
 	</header>
 	<game name="aeroblst">
-		<description>Aero Blasters</description>
+		<description>Aero Blasters (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="aero blasters (usa).pce" size="524288" crc="b03e0b32"/>
@@ -21,7 +21,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="airzonk">
-		<description>Air Zonk</description>
+		<description>Air Zonk (USA)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="air zonk (usa).pce" size="524288" crc="933d5bcc"/>
@@ -29,7 +29,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="acrush">
-		<description>Alien Crush</description>
+		<description>Alien Crush (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="alien crush (usa).pce" size="262144" crc="ea488494"/>
@@ -37,7 +37,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ballistx">
-		<description>Ballistix</description>
+		<description>Ballistix (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Psygnosis</manufacturer>
 		<rom name="ballistix (usa).pce" size="262144" crc="420fa189"/>
@@ -45,7 +45,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="batlroyl">
-		<description>Battle Royale</description>
+		<description>Battle Royale (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="battle royale (usa).pce" size="524288" crc="e70b01af"/>
@@ -53,7 +53,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blazlazr">
-		<description>Blazing Lazers</description>
+		<description>Blazing Lazers (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="blazing lazers (usa).pce" size="393216" crc="b4a1b0f6"/>
@@ -61,7 +61,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="blodwolf">
-		<description>Bloody Wolf</description>
+		<description>Bloody Wolf (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Data East</manufacturer>
 		<rom name="bloody wolf (usa).pce" size="524288" crc="37baf6bc"/>
@@ -69,7 +69,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombmn93">
-		<description>Bomberman '93</description>
+		<description>Bomberman '93 (USA)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bomberman '93 (usa).pce" size="524288" crc="56171c1c"/>
@@ -77,7 +77,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bombman">
-		<description>Bomberman</description>
+		<description>Bomberman (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="bomberman (usa).pce" size="262144" crc="5f6f3c2a"/>
@@ -85,7 +85,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonk3">
-		<description>Bonk III - Bonk's Big Adventure</description>
+		<description>Bonk III - Bonk's Big Adventure (USA)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="bonk iii - bonk's big adventure (usa).pce" size="1048576" crc="5a3f76d8"/>
@@ -93,7 +93,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonk">
-		<description>Bonk's Adventure</description>
+		<description>Bonk's Adventure (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="bonk's adventure (usa).pce" size="393216" crc="599ead9b"/>
@@ -101,7 +101,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bonk2">
-		<description>Bonk's Revenge</description>
+		<description>Bonk's Revenge (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="bonk's revenge (usa).pce" size="524288" crc="14250f9a"/>
@@ -109,7 +109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="boxyboy">
-		<description>Boxyboy</description>
+		<description>Boxyboy (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="boxyboy (usa).pce" size="131072" crc="605be213"/>
@@ -117,7 +117,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bravoman">
-		<description>Bravoman</description>
+		<description>Bravoman (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="bravoman (usa).pce" size="524288" crc="cca08b02"/>
@@ -126,7 +126,7 @@
 	</game>
 	<game name="cadash">
 		<comment>Bad graphics</comment>
-		<description>Cadash</description>
+		<description>Cadash (USA)</description>
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
 		<rom name="cadash (usa).pce" size="524288" crc="bb0b3aef"/>
@@ -135,7 +135,7 @@
 	</game>
 	<game name="forevbox">
 		<comment>Bad sound</comment>
-		<description>Champions Forever Boxing</description>
+		<description>Champions Forever Boxing (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="champions forever boxing (usa).pce" size="524288" crc="15ee889a"/>
@@ -143,7 +143,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chewman">
-		<description>Chew Man Fu</description>
+		<description>Chew Man Fu (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="chew man fu (usa).pce" size="262144" crc="8cd13e9a"/>
@@ -151,7 +151,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chinawar">
-		<description>China Warrior</description>
+		<description>China Warrior (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="china warrior (usa).pce" size="262144" crc="a2ee361d"/>
@@ -159,7 +159,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cratermz">
-		<description>Cratermaze</description>
+		<description>Cratermaze (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="cratermaze (usa).pce" size="262144" crc="9033e83a"/>
@@ -167,7 +167,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cybrcore">
-		<description>Cyber Core</description>
+		<description>Cyber Core (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="cyber core (usa).pce" size="393216" crc="4cfb6e3e"/>
@@ -175,7 +175,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="darkwing">
-		<description>Darkwing Duck</description>
+		<description>Darkwing Duck (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="darkwing duck (usa).pce" size="524288" crc="4ac97606"/>
@@ -183,7 +183,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="daviscup">
-		<description>Davis Cup Tennis</description>
+		<description>Davis Cup Tennis (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="davis cup tennis (usa).pce" size="524288" crc="9edab596"/>
@@ -191,7 +191,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="deadmoon">
-		<description>Dead Moon</description>
+		<description>Dead Moon (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="dead moon (usa).pce" size="524288" crc="f5d98b0b"/>
@@ -199,7 +199,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="deepblue">
-		<description>Deep Blue</description>
+		<description>Deep Blue (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="deep blue (usa).pce" size="262144" crc="16b40b44"/>
@@ -207,7 +207,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="devlcrsh">
-		<description>Devil's Crush - Naxat Pinball</description>
+		<description>Devil's Crush - Naxat Pinball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="devil's crush - naxat pinball (usa).pce" size="393216" crc="157b4492"/>
@@ -215,7 +215,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddungw">
-		<description>Double Dungeons - W</description>
+		<description>Double Dungeons - W (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="double dungeons - w (usa).pce" size="262144" crc="4a1a8c60"/>
@@ -223,7 +223,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dspirit">
-		<description>Dragon Spirit</description>
+		<description>Dragon Spirit (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="dragon spirit (usa).pce" size="262144" crc="086f148c"/>
@@ -231,7 +231,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dragcrse">
-		<description>Dragon's Curse</description>
+		<description>Dragon's Curse (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="dragon's curse (usa).pce" size="262144" crc="7d2c4b09"/>
@@ -239,7 +239,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dropoff">
-		<description>Drop.Off</description>
+		<description>Drop.Off (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="drop.off (usa).pce" size="262144" crc="fea27b32"/>
@@ -247,7 +247,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dungexpl">
-		<description>Dungeon Explorer</description>
+		<description>Dungeon Explorer (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="dungeon explorer (usa).pce" size="393216" crc="4ff01515"/>
@@ -255,7 +255,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="falcon">
-		<description>Falcon</description>
+		<description>Falcon (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="falcon (usa).pce" size="524288" crc="0bc0a12b"/>
@@ -263,7 +263,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantzone">
-		<description>Fantasy Zone</description>
+		<description>Fantasy Zone (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="fantasy zone (usa).pce" size="262144" crc="e8c3573d"/>
@@ -271,7 +271,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="finallap">
-		<description>Final Lap Twin</description>
+		<description>Final Lap Twin (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="final lap twin (usa).pce" size="393216" crc="26408ea3"/>
@@ -279,7 +279,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galaga90">
-		<description>Galaga '90</description>
+		<description>Galaga '90 (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="galaga '90 (usa).pce" size="262144" crc="2909dec6"/>
@@ -287,7 +287,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ghostman">
-		<description>Ghost Manor</description>
+		<description>Ghost Manor (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="ghost manor (usa).pce" size="524288" crc="2db4c1fd"/>
@@ -295,7 +295,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunboat">
-		<description>Gunboat</description>
+		<description>Gunboat (USA)</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="gunboat (usa).pce" size="524288" crc="f370b58e"/>
@@ -303,7 +303,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hitice">
-		<description>Hit the Ice - VHL - The Official Video Hockey League</description>
+		<description>Hit the Ice - VHL - The Official Video Hockey League (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="hit the ice - vhl the official video hockey league (usa).pce" size="393216" crc="8b29c3aa"/>
@@ -311,7 +311,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="impossam">
-		<description>Impossamole</description>
+		<description>Impossamole (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Gremlin Graphics</manufacturer>
 		<rom name="impossamole (usa).pce" size="524288" crc="e2470f5f"/>
@@ -319,7 +319,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jjnjeff">
-		<description>J.J. &amp; Jeff</description>
+		<description>J.J. &amp; Jeff (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
 		<rom name="j.j. &amp; jeff (usa).pce" size="262144" crc="e01c5127"/>
@@ -327,7 +327,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nicklaus">
-		<description>Jack Nicklaus' Turbo Golf</description>
+		<description>Jack Nicklaus' Turbo Golf (USA)</description>
 		<year>1990</year>
 		<manufacturer>Accolade</manufacturer>
 		<rom name="jack nicklaus' turbo golf (usa).pce" size="262144" crc="83384572"/>
@@ -335,7 +335,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jchan">
-		<description>Jackie Chan's Action Kung Fu</description>
+		<description>Jackie Chan's Action Kung Fu (USA)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="jackie chan's action kung fu (usa).pce" size="524288" crc="9d2f6193"/>
@@ -343,7 +343,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="keithcor">
-		<description>Keith Courage in Alpha Zones</description>
+		<description>Keith Courage in Alpha Zones (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="keith courage in alpha zones (usa).pce" size="262144" crc="474d7a72"/>
@@ -351,7 +351,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kingcasn">
-		<description>King of Casino</description>
+		<description>King of Casino (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="king of casino (usa).pce" size="262144" crc="2f2e2240"/>
@@ -359,7 +359,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="klax">
-		<description>Klax</description>
+		<description>Klax (USA)</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
 		<rom name="klax (usa).pce" size="262144" crc="0f1b59b4"/>
@@ -367,7 +367,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="loht">
-		<description>Legend of Hero Tonma</description>
+		<description>Legend of Hero Tonma (USA)</description>
 		<year>1991</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="legend of hero tonma (usa).pce" size="524288" crc="3c131486"/>
@@ -375,7 +375,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legaxe2">
-		<description>Legendary Axe II, The</description>
+		<description>Legendary Axe II, The (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="legendary axe ii, the (usa).pce" size="262144" crc="220ebf91"/>
@@ -383,7 +383,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legaxe">
-		<description>Legendary Axe, The</description>
+		<description>Legendary Axe, The (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="legendary axe, the (usa).pce" size="262144" crc="2d211007"/>
@@ -391,7 +391,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="magchase">
-		<description>Magical Chase</description>
+		<description>Magical Chase (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="magical chase (usa).pce" size="524288" crc="95cd2979"/>

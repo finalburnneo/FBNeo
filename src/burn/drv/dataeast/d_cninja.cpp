@@ -49,6 +49,8 @@ static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
 
+static INT32 nExtraCycles[2];
+
 static INT32 scanline;
 static INT32 irq_mask;
 static INT32 irq_timer;
@@ -1010,6 +1012,8 @@ static INT32 DrvDoReset()
 	irq_mask = 0;
 	irq_timer = -1;
 
+	memset(nExtraCycles, 0, sizeof(nExtraCycles));
+
 	HiscoreReset();
 
 	return 0;
@@ -1093,7 +1097,7 @@ static UINT16 deco_104_port_c_cb()
 
 static INT32 CninjaInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1189,7 +1193,7 @@ static INT32 CninjaInit()
 
 static INT32 EdrandyInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1291,7 +1295,7 @@ static INT32 EdrandyInit()
 
 static INT32 MutantfInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(57.79965);
 
 	BurnAllocMemIndex();
 
@@ -1405,7 +1409,7 @@ static INT32 MutantfInit()
 
 static INT32 CninjablInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1501,7 +1505,7 @@ static INT32 CninjablInit()
 
 static INT32 StoneageInit()
 {
-	BurnSetRefreshRate(58.00);
+	BurnSetRefreshRate(58.238857);
 
 	BurnAllocMemIndex();
 
@@ -1618,7 +1622,7 @@ static INT32 StoneageInit()
 
 static INT32 Robocop2Init()
 {
-	BurnSetRefreshRate(57.80);
+	BurnSetRefreshRate(57.79965);
 
 	BurnAllocMemIndex();
 
@@ -2227,8 +2231,8 @@ static INT32 CninjaFrame()
 
 	INT32 nInterleave = 232; //58 * 4
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { ((double)12000000 * 100 / nBurnFPS), ((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
 
@@ -2258,6 +2262,9 @@ static INT32 CninjaFrame()
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	BurnTimerEndFrame(nCyclesTotal[1]);
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -2297,8 +2304,8 @@ static INT32 EdrandyFrame()
 
 	INT32 nInterleave = 256; // scanlines
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { ((double)12000000 * 100 / nBurnFPS), ((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
 	
@@ -2334,6 +2341,9 @@ static INT32 EdrandyFrame()
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -2373,8 +2383,8 @@ static INT32 Robocop2Frame()
 
 	INT32 nInterleave = 256;	// scanlines
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { ((double)12000000 * 100 / nBurnFPS), ((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
 	
@@ -2416,6 +2426,9 @@ static INT32 Robocop2Frame()
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -2454,8 +2467,8 @@ static INT32 MutantfFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { ((double)12000000 * 100 / nBurnFPS), ((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();
 
@@ -2480,6 +2493,9 @@ static INT32 MutantfFrame()
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -2517,8 +2533,8 @@ static INT32 StoneageFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 3579545 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { ((double)12000000 * 100 / nBurnFPS), ((double)3579545 * 100 / nBurnFPS) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -2546,6 +2562,9 @@ static INT32 StoneageFrame()
 	}
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -2595,6 +2614,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(DrvOkiBank);
 		DrvYM2151WritePort(0, DrvOkiBank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -2629,6 +2650,8 @@ static INT32 StoneageScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irq_timer);
 
 		SCAN_VAR(DrvOkiBank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

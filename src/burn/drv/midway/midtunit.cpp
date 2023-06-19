@@ -1081,7 +1081,7 @@ INT32 TUnitInit()
 
 	if (TUnitIsMKTurbo) {
 		TMS34010SetReadHandler(13, MKTurboProtRead);
-		TMS34010MapHandler(13, 0xFF800000, 0xffffffff, MAP_READ);
+		TMS34010MapHandler(13, 0xffffe000, 0xffffffff, MAP_READ);
 	}
 
 	if (TUnitIsMK2) {

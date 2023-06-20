@@ -2,12 +2,125 @@
 #include <string.h>
 
 #define MAX_LST_GAMES		25000
+#define MAX_LSTEX_GAMES		250
 #define MAX_LST_LINE_LEN	256
 
 TCHAR szGamelistLocalisationTemplate[MAX_PATH] = _T("");
 bool nGamelistLocalisationActive = false;
 static int nCodePage = CP_ACP;
+static TCHAR szGamelistExLocalisationTemplate[MAX_PATH] = _T("");
 static TCHAR *szLongNamesArray[MAX_LST_GAMES];
+static TCHAR* szLongNamesExArray[MAX_LSTEX_GAMES];
+
+void BurnerDoGameListExLocalisation()
+{
+#if defined (_UNICODE)
+	if (!nGamelistLocalisationActive) return;
+
+	const TCHAR szExt[] = _T(".glt");
+
+	_tcscpy(szGamelistExLocalisationTemplate, szGamelistLocalisationTemplate);
+
+	if (NULL != szGamelistExLocalisationTemplate) {
+		PTCHAR pszPos = _tcsstr(szGamelistExLocalisationTemplate, szExt);	// Point to ".glt"
+
+		if (NULL != pszPos) {
+			pszPos[0] = _T('\0');
+		}
+
+		_tcscat(szGamelistExLocalisationTemplate, _T("ex"));
+		_tcscat(szGamelistExLocalisationTemplate, szExt);
+
+		pszPos = NULL;
+	}
+
+	FILE* fp = _tfopen(szGamelistExLocalisationTemplate, _T("rt"));
+	if (fp) {
+		TCHAR* szShortNamesArray[MAX_LSTEX_GAMES];
+		TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
+		int nTokenPos = 0;
+		int nArrayPos = 0;
+		int nNumGames = 0;
+
+		// Allocate arrays to read the file into
+		for (int i = 0; i < MAX_LSTEX_GAMES; i++) {
+			szLongNamesExArray[i] = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
+			szShortNamesArray[i]  = (TCHAR*)malloc( 33               * sizeof(TCHAR));
+			memset(szLongNamesExArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
+			memset(szShortNamesArray[i],  _T('\0'), 33               * sizeof(TCHAR));
+		}
+
+		char szTemp[MAX_LST_LINE_LEN];
+
+		while (fgets(szTemp, sizeof(szTemp), fp)) {
+			if (szTemp[0] == '/' && szTemp[1] == '/') {
+				continue;
+			}
+
+			if (!strncmp(szTemp, "codepage=", 9)) {
+				if ((strlen(szTemp) - 10) == 4) {
+					nCodePage = (szTemp[9] - '0') * 1000;
+					nCodePage += (szTemp[10] - '0') * 100;
+					nCodePage += (szTemp[11] - '0') * 10;
+					nCodePage += (szTemp[12] - '0');
+				}
+				if ((strlen(szTemp) - 10) == 3) {
+					nCodePage = (szTemp[9] - '0') * 100;
+					nCodePage += (szTemp[10] - '0') * 10;
+					nCodePage += (szTemp[11] - '0');
+				}
+				continue;
+			}
+
+			// Get rid of the linefeed at the end
+			int nLen = strlen(szTemp);
+			if (nLen > 0 && szTemp[nLen - 1] == 10) {
+				szTemp[nLen - 1] = 0;
+				nLen--;
+			}
+
+			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
+
+			TCHAR* Tokens;
+
+			// Read the file into arrays
+			Tokens = _tcstok(szLine, _T("\t"));
+			while (Tokens != NULL) {
+				if (nTokenPos == 0) {
+					wcscpy(szShortNamesArray[nArrayPos], Tokens);
+					// szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+				}
+
+				if (nTokenPos == 1) {
+					wcscpy(szLongNamesExArray[nArrayPos], Tokens);
+					// szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+				}
+
+				Tokens = _tcstok(NULL, _T("\t"));
+				nTokenPos++;
+			}
+
+			nTokenPos = 0;
+			nArrayPos++;
+		}
+		nNumGames = nArrayPos;
+
+		for (int i = 0; i < nNumGames; i++) {
+			BurnLocalisationSetNameEx(TCHARToANSI(szShortNamesArray[i], NULL, 0), szLongNamesExArray[i], nNumGames);
+		}
+
+		// tidy up
+		for (int i = 0; i < MAX_LSTEX_GAMES; i++) {
+			if (szShortNamesArray[i]) {
+				free(szShortNamesArray[i]);
+				szShortNamesArray[i] = NULL;
+			}
+		}
+
+		fclose(fp);
+	}
+#endif
+}
 
 void BurnerDoGameListLocalisation()
 {
@@ -127,6 +240,12 @@ void BurnerExitGameListLocalisation()
 			free(szLongNamesArray[i]);
 			szLongNamesArray[i] = NULL;
 		}
+		if (i < MAX_LSTEX_GAMES) {
+			if (szLongNamesExArray[i]) {
+				free(szLongNamesExArray[i]);
+				szLongNamesExArray[i] = NULL;
+			}
+		}
 	}
 
 	nCodePage = CP_ACP;
@@ -201,3 +320,7 @@ int FBALocaliseGamelistCreateTemplate()
 
 	return 0;
 }
+
+#undef MAX_LST_LINE_LEN
+#undef MAX_LSTEX_GAMES
+#undef MAX_LST_GAMES

@@ -19,6 +19,7 @@ INT32 nBurnVer = BURN_VERSION;		// Version number of the library
 
 UINT32 nBurnDrvCount = 0;		// Count of game drivers
 UINT32 nBurnDrvActive = ~0U;	// Which game driver is selected
+INT32 nBurnDrvSubActive = -1;	// Which sub-game driver is selected
 UINT32 nBurnDrvSelect[8] = { ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U }; // Which games are selected (i.e. loaded but not necessarily active)
 
 bool bBurnUseMMX;
@@ -444,6 +445,28 @@ void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 	}
 }
 #endif
+
+#if defined (_UNICODE)
+void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
+{
+	if (-1 == nBurnDrvSubActive) return;
+
+	char szShortNames[33] = { 0 };
+	sprintf(szShortNames, "%s[0x%02x]", pDriver[nBurnDrvActive]->szShortName, nBurnDrvSubActive);
+
+	for (UINT32 i = 0; i < nNumGames; i++) {
+		if (!strcmp(szName, szShortNames)) {
+			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
+			return;
+		}
+	}
+}
+#endif
+
+void BurnDrvSetFullNameA(char* pszFullNameA)
+{
+	pDriver[nBurnDrvActive]->szFullNameA = pszFullNameA;
+}
 
 // Get the zip names for the driver
 extern "C" INT32 BurnDrvGetZipName(char** pszName, UINT32 i)

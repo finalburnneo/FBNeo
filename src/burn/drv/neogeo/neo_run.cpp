@@ -4490,8 +4490,6 @@ INT32 NeoExit()
 
 	nNeoSystemType = 0;
 
-	nBurnDrvSubActive = -1;
-
 	return 0;
 }
 

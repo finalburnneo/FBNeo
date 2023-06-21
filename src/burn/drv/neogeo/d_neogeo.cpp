@@ -10,7 +10,7 @@
 #endif
 
 static UINT8 VerSwitcher = 0;		// Fake Dip
-static char* pszFullNameA = NULL;	// For sub-games
+static char* pszCustomNameA = NULL;	// For sub-games
 
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
@@ -17646,23 +17646,20 @@ static INT32 Samsho2spInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Samurai Shodown II / Shin Samurai Spirits - Special 2017 (Hack)\0";
+			pszCustomNameA = "Samurai Shodown II / Shin Samurai Spirits - Special 2017 (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Samurai Shodown II / Shin Samurai Spirits - Optimized (Hack)\0";
+			pszCustomNameA = "Samurai Shodown II / Shin Samurai Spirits - Optimized (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Samurai Shodown II / Shin Samurai Spirits - Infinite Power (Hack)\0";
+			pszCustomNameA = "Samurai Shodown II / Shin Samurai Spirits - Infinite Power (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = Samsho2spCallback;
@@ -17943,39 +17940,36 @@ static INT32 sengoku3hsInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Sengoku 3 / Sengoku Densho 2001 - Feng Shen (Hack)\0";
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Feng Shen (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Sengoku 3 / Sengoku Densho 2001 - Feng Shen (earlier, Hack)\0";
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Feng Shen (earlier, Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Sengoku 3 / Sengoku Densho 2001 - Green Blue (Hack)\0";
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Green Blue (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Sengoku 3 / Sengoku Densho 2001 - Green Blue (earlier, Hack)\0";
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Green Blue (earlier, Hack)\0";
 			break;
 
 		case 0x08:
-			pszFullNameA = "Sengoku 3 / Sengoku Densho 2001 - Infinite Power (Hack)\0";
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Infinite Power (Hack)\0";
 			break;
 
 		case 0x10:
-			pszFullNameA = "Sengoku 3 / Sengoku Densho 2001 (Set 1, Full Decryption)\0";
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 (Set 1, Full Decryption)\0";
 			break;
 
 		case 0x20:
-			pszFullNameA = "Sengoku 3 / Sengoku Densho 2001 (Set 2, Full Decryption)\0";
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 (Set 2, Full Decryption)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = sengoku3hsCallback;
@@ -18121,23 +18115,20 @@ static INT32 DoubledrspInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Double Dragon - Special 2017 (Hack)\0";
+			pszCustomNameA = "Double Dragon - Special 2017 (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Double Dragon - Optimized (Hack)\0";
+			pszCustomNameA = "Double Dragon - Optimized (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Double Dragon - Plus (Hack)\0";
+			pszCustomNameA = "Double Dragon - Plus (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	NeoCallbackActive->pInitialise = doubledrspCallback;
 
@@ -18502,21 +18493,18 @@ static INT32 kof96aeInit()
 {
 	nBurnDrvSubActive = (VerSwitcher & 0x01);
 
-		switch (nBurnDrvSubActive) {
-			case 0x00:
-				pszFullNameA = "The King of Fighters '96 - Anniversary Edition (Build 2.3.0320, Hack)\0";
-				break;
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters '96 - Anniversary Edition (Build 2.3.0320, Hack)\0";
+			break;
 
-			case 0x01:
-				pszFullNameA = "The King of Fighters '96 - Anniversary Edition (earlier, Hack)\0";
-				break;
+		case 0x01:
+			pszCustomNameA = "The King of Fighters '96 - Anniversary Edition (earlier, Hack)\0";
+			break;
 
-			default:
-				break;
+		default:
+			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof96aeCallback;
@@ -18847,23 +18835,20 @@ static INT32 kof97tInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters '97 - Optimized (Hack)\0";
+			pszCustomNameA = "The King of Fighters '97 - Optimized (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters '97 - Optimized 2020 (Hack)\0";
+			pszCustomNameA = "The King of Fighters '97 - Optimized 2020 (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "The King of Fighters '97 - Strengthen Innovation (Hack)\0";
+			pszCustomNameA = "The King of Fighters '97 - Strengthen Innovation (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (VerSwitcher & 0x01) {
 		pNRI->nSpriteSize = 0x800000;
@@ -18935,19 +18920,16 @@ static INT32 kof97aeInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters '97 - Anniversary Edition (Build 2.1.0212, Hack))\0";
+			pszCustomNameA = "The King of Fighters '97 - Anniversary Edition (Build 2.1.0212, Hack))\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters '97 - Anniversary Edition (Build 2.1.1811, Hack)\0";
+			pszCustomNameA = "The King of Fighters '97 - Anniversary Edition (Build 2.1.1811, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof97aeCallback;
@@ -19280,19 +19262,16 @@ static INT32 kof98aeInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "King of Fighters '98 - Anniversary Edition (2016, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Anniversary Edition (2016, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "King of Fighters '98 - Anniversary Edition (2007, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Anniversary Edition (2007, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof98aeCallback;
@@ -19443,23 +19422,20 @@ static INT32 kof98cbInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "King of Fighters '98 - Combo (Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Combo (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "King of Fighters '98 - Combo Plus (Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Combo Plus (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "King of Fighters '98 - Combo (GOTVG, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Combo (GOTVG, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		if (VerSwitcher & 0x01) {
@@ -19572,19 +19548,16 @@ static INT32 kof98mixInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "King of Fighters '98 - Unlimited (2015, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Unlimited (2015, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "King of Fighters '98 - Unlimited (2011, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Unlimited (2011, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof98mixCallback;
@@ -19665,19 +19638,16 @@ static INT32 kof98pfeInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "King of Fighters '98 - Plus Final Edition (2019, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Plus Final Edition (2019, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "King of Fighters '98 - Plus Final Edition (2017, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Plus Final Edition (2017, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	NeoCallbackActive->pInitialise = kof98pfePatchCallback;
 
@@ -19773,19 +19743,16 @@ static INT32 kof98eckInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "King of Fighters '98 - Easy Combo King (GOTVG, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Easy Combo King (GOTVG, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "King of Fighters '98 - Easy Combo King (YZKOF, Hack)\0";
+			pszCustomNameA = "King of Fighters '98 - Easy Combo King (YZKOF, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof98eckCallback;
@@ -20175,27 +20142,24 @@ static INT32 kof99tInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters '99 - Plus (Hack)\0";
+			pszCustomNameA = "The King of Fighters '99 - Plus (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters '99 - Evolution (Hack)\0";
+			pszCustomNameA = "The King of Fighters '99 - Evolution (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "The King of Fighters '99 - Fluent and Refreshing (Hack)\0";
+			pszCustomNameA = "The King of Fighters '99 - Fluent and Refreshing (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "The King of Fighters '99 - Millennium Battle (Full Decryption)\0";
+			pszCustomNameA = "The King of Fighters '99 - Millennium Battle (Full Decryption)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof99tCallback;
@@ -20382,27 +20346,24 @@ static INT32 kof2kspInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters 2000 - Special Edition (Final, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2000 - Special Edition (Final, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters 2000 - Special Edition (GOTVG, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2000 - Special Edition (GOTVG, Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "The King of Fighters 2000 - Optimized (Hack)\0";
+			pszCustomNameA = "The King of Fighters 2000 - Optimized (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "The King of Fighters 2000 (Full Decryption)\0";
+			pszCustomNameA = "The King of Fighters 2000 (Full Decryption)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof2kspCallback;
@@ -20600,19 +20561,16 @@ static INT32 kof2k1bsInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters 2001 - Boss (Hack)\0";
+			pszCustomNameA = "The King of Fighters 2001 - Boss (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters 2001 - Ultimate (Hack)\0";
+			pszCustomNameA = "The King of Fighters 2001 - Ultimate (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		pNRI->nCodeSize = 0x100000;
@@ -20736,23 +20694,20 @@ static INT32 kf2k1rsInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters 2001 - Remix Ultra (v2.3, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2001 - Remix Ultra (v2.3, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters 2001 - Remix Pro (v1.02 Final, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2001 - Remix Pro (v1.02 Final, Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "The King of Fighters 2001 - (Full Decryption)\0";
+			pszCustomNameA = "The King of Fighters 2001 - (Full Decryption)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kf2k1rsCallback;
@@ -20871,27 +20826,24 @@ static INT32 kf2k2ps2Init()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters 2002 - PlayStation 2 (Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 0.4, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 0.4, Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 1.0, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 1.0, Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 1.0 Public Test, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 1.0 Public Test, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		if (VerSwitcher & 0x06)
@@ -20986,23 +20938,20 @@ static INT32 kf2k23rdInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters 2002 - 3rd Strike of Orochi (GOTVG, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - 3rd Strike of Orochi (GOTVG, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters 2002 - 3rd Strike of Orochi (YZKOF, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - 3rd Strike of Orochi (YZKOF, Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "The King of Fighters 2002 (Full Decryption)\0";
+			pszCustomNameA = "The King of Fighters 2002 (Full Decryption)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kf2k23rdCallback;
@@ -21271,19 +21220,16 @@ static INT32 kf2k2pl17Init()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters 2002 - Plus 2017 (20201022, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - Plus 2017 (20201022, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters 2002 - Plus 2017 (20200222, Hack)\0";
+			pszCustomNameA = "The King of Fighters 2002 - Plus 2017 (20200222, Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kf2k2pl17Callback;
@@ -21434,19 +21380,16 @@ static INT32 kof2003tInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "The King of Fighters 2003 - Plus (Hack)\0";
+			pszCustomNameA = "The King of Fighters 2003 - Plus (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "The King of Fighters 2003 (Full Decryption)\0";
+			pszCustomNameA = "The King of Fighters 2003 (Full Decryption)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof2003tCallback;
@@ -21624,23 +21567,20 @@ static INT32 mslugaksInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug - Multifunction (Hack)\0";
+			pszCustomNameA = "Metal Slug - Multifunction (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug - 1v2 Mode (Hack)\0";
+			pszCustomNameA = "Metal Slug - 1v2 Mode (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug - Origins (Hack)\0";
+			pszCustomNameA = "Metal Slug - Origins (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugaksCallback;
@@ -21824,31 +21764,28 @@ static INT32 mslug2aksInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 2 - Multifunction (Hack)\0";
+			pszCustomNameA = "Metal Slug 2 - Multifunction (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 2 - Survival (Hack)\0";
+			pszCustomNameA = "Metal Slug 2 - Survival (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 2 - Enemy Remix (Hack)\0";
+			pszCustomNameA = "Metal Slug 2 - Enemy Remix (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug 2 - Weapon Storage (Hack)\0";
+			pszCustomNameA = "Metal Slug 2 - Weapon Storage (Hack)\0";
 			break;
 
 		case 0x08:
-			pszFullNameA = "Metal Slug 2 - 1v2 Mode (Hack)\0";
+			pszCustomNameA = "Metal Slug 2 - 1v2 Mode (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug2aksCallback;
@@ -21980,23 +21917,20 @@ static INT32 mslugxcbInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug X - Multi Vehicle (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Multi Vehicle (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug X - Enemy Remix (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Enemy Remix (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug X - Infinite Firepower (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Infinite Firepower (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugxcbCallback;
@@ -22070,39 +22004,36 @@ static INT32 mslugx2rInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug X - 2R (Hack)\0";
+			pszCustomNameA = "Metal Slug X - 2R (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug X - Blue (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Blue (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug X - AzStar Soda Remix FC2 (Hack)\0";
+			pszCustomNameA = "Metal Slug X - AzStar Soda Remix FC2 (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug X - 2R Blue (Hack)\0";
+			pszCustomNameA = "Metal Slug X - 2R Blue (Hack)\0";
 			break;
 
 		case 0x08:
-			pszFullNameA = "Metal Slug X - 2R 1v2 Mode (Hack)\0";
+			pszCustomNameA = "Metal Slug X - 2R 1v2 Mode (Hack)\0";
 			break;
 
 		case 0x10:
-			pszFullNameA = "Metal Slug X - Warriors (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Warriors (Hack)\0";
 			break;
 
 		case 0x20:
-			pszFullNameA = "Metal Slug X - Wuji (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Wuji (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugx2rCallback;
@@ -22214,31 +22145,28 @@ static INT32 mslugxaksInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug X - Legendary (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Legendary (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug X - Survival (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Survival (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug X - Multifunction (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Multifunction (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug X - 1v2 Mode (Hack)\0";
+			pszCustomNameA = "Metal Slug X - 1v2 Mode (Hack)\0";
 			break;
 
 		case 0x08:
-			pszFullNameA = "Metal Slug X - Extreme Space (Hack)\0";
+			pszCustomNameA = "Metal Slug X - Extreme Space (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugxaksCallback;
@@ -22468,19 +22396,16 @@ static INT32 mslug3ddInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 3 - Early Summer Starry Night (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Early Summer Starry Night (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 3 - Komorebi (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Komorebi (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	// Komorebi
 	if (nBurnDrvSubActive) {
@@ -22570,19 +22495,16 @@ static INT32 mslug3seInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 3 - Special Edition (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Special Edition (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 3 (NGH-2560) (Decrypted C)\0";
+			pszCustomNameA = "Metal Slug 3 (NGH-2560) (Decrypted C)\0";
 			break;
 
 		default:
 		break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3seCallback;
@@ -22693,27 +22615,24 @@ static INT32 mslug3cbInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 3 - Pigeon Slug (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Pigeon Slug (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 3 - Last Bullet Remix (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Last Bullet Remix (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 3 - Shop Edition (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Shop Edition (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug 3 - Onimusha Samanosuke (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Onimusha Samanosuke (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3cbCallback;
@@ -22810,27 +22729,24 @@ static INT32 mslug3aksInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 3 - Legendary (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Legendary (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 3 - Survival (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Survival (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 3 - Vehicle Summon (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Vehicle Summon (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug 3 - Multifunction (Hack)\0";
+			pszCustomNameA = "Metal Slug 3 - Multifunction (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3aksCallback;
@@ -22982,23 +22898,20 @@ static INT32 mslug4cbInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 4 - Last Bullet Remix (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - Last Bullet Remix (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 4 - Last Bullet Remix (Without body armor, Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - Last Bullet Remix (Without body armor, Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 4 - Random Ammunition (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - Random Ammunition (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	// Last Bullet Remix (Without body armor)
 	// Random Ammunition
@@ -23072,23 +22985,20 @@ static INT32 mslug4aInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 4 (20th Anniversary, Hack)\0";
+			pszCustomNameA = "Metal Slug 4 (20th Anniversary, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 4 - 20th Anniversary ((Level patch, Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - 20th Anniversary ((Level patch, Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 4 - The Longest Battle (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - The Longest Battle (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug4aCallback;
@@ -23146,19 +23056,16 @@ static INT32 mslug4ddInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 4 - Early Summer Starry Night (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - Early Summer Starry Night (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 4 - Komorebi (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - Komorebi (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug4ddCallback;
@@ -23201,19 +23108,16 @@ static INT32 mslug4aksInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 4 - Multifunction (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - Multifunction (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 4 - 1v2 Mode (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - 1v2 Mode (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug4ddCallback;
@@ -23271,23 +23175,20 @@ static INT32 mslug4cInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 4 - Enemy Remix (Hack)\0";
+			pszCustomNameA = "Metal Slug 4 - Enemy Remix (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 4 (NGM-2630) (Decrypted C)\0";
+			pszCustomNameA = "Metal Slug 4 (NGM-2630) (Decrypted C)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 4 (NGH-2630) (Decrypted C)\0";
+			pszCustomNameA = "Metal Slug 4 (NGH-2630) (Decrypted C)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug4cCallback;
@@ -23434,27 +23335,24 @@ static INT32 mslug5exInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 5 - Extend (v1.2, Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Extend (v1.2, Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 5 - Plus (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Plus (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 5 (Full Decryption)\0";
+			pszCustomNameA = "Metal Slug 5 (Full Decryption)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug 5 (Not Encrypted)\0";
+			pszCustomNameA = "Metal Slug 5 (Not Encrypted)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5exCallback;
@@ -23550,19 +23448,16 @@ static INT32 mslug5cbInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 5 - New Battle (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - New Battle (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 5 - Fierce Battle (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Fierce Battle (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	// Fierce Battle
 	if (nBurnDrvSubActive) {
@@ -23645,39 +23540,36 @@ static INT32 mslug5aksInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 5 - Stone Turtle (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Stone Turtle (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 5 - Remake FC2 (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Remake FC2 (Hack)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 5 - Multifunction (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Multifunction (Hack)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug 5 - 1v2 Mode (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - 1v2 Mode (Hack)\0";
 			break;
 
 		case 0x08:
-			pszFullNameA = "Metal Slug 5 - Vehicle Summon (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Vehicle Summon (Hack)\0";
 			break;
 
 		case 0x10:
-			pszFullNameA = "Metal Slug 5 - Boss Battles (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Boss Battles (Hack)\0";
 			break;
 
 		case 0x20:
-			pszFullNameA = "Metal Slug 5 - Survival (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Survival (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5aksCallback;
@@ -23723,19 +23615,16 @@ static INT32 mslug5cInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 5 - Enemy Remix (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Enemy Remix (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 5 - Devil Enemy Remix (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Devil Enemy Remix (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5cCallback;
@@ -23776,19 +23665,16 @@ static INT32 mslug5xInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 5 - X (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - X (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 5 - Enemy Enhance (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Enemy Enhance (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5cCallback;
@@ -23829,19 +23715,16 @@ static INT32 mslug5ddInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 5 - Early Summer Starry Night (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Early Summer Starry Night (Hack)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 5 - Komorebi (Hack)\0";
+			pszCustomNameA = "Metal Slug 5 - Komorebi (Hack)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5cCallback;
@@ -25554,11 +25437,11 @@ static void mslug3xCallback()
 	// Select a version other than the release version.
 	switch (VerSwitcher & 0x1f) {
 		case 0x01:	/* Public Beta */
-			nIndex[0] = 6; nIndex[1] = 7;
+			nIndex[0] =  6; nIndex[1] =  7;
 			break;
 
 		case 0x02:	/* Development 0 */
-			nIndex[0] = 9; nIndex[1] = 11;
+			nIndex[0] =  9; nIndex[1] = 11;
 			break;
 
 		case 0x04:	/* Development 1 */
@@ -25591,35 +25474,32 @@ static INT32 mslug3xInit()
 
 	switch (nBurnDrvSubActive) {
 		case 0x00:
-			pszFullNameA = "Metal Slug 3X (Release)\0";
+			pszCustomNameA = "Metal Slug 3X (Release)\0";
 			break;
 
 		case 0x01:
-			pszFullNameA = "Metal Slug 3X (Public Beta)\0";
+			pszCustomNameA = "Metal Slug 3X (Public Beta)\0";
 			break;
 
 		case 0x02:
-			pszFullNameA = "Metal Slug 3X (Development 0)\0";
+			pszCustomNameA = "Metal Slug 3X (Development 0)\0";
 			break;
 
 		case 0x04:
-			pszFullNameA = "Metal Slug 3X (Development 1)\0";
+			pszCustomNameA = "Metal Slug 3X (Development 1)\0";
 			break;
 
 		case 0x08:
-			pszFullNameA = "Metal Slug 3X (Development 2)\0";
+			pszCustomNameA = "Metal Slug 3X (Development 2)\0";
 			break;
 
 		case 0x10:
-			pszFullNameA = "Metal Slug 3X (Development 3)\0";
+			pszCustomNameA = "Metal Slug 3X (Development 3)\0";
 			break;
 
 		default:
 			break;
 	}
-
-	BurnDrvSetFullNameA(pszFullNameA);
-	BurnerDoGameListExLocalisation();
 
 	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3xCallback;

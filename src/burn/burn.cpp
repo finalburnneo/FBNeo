@@ -22,6 +22,8 @@ UINT32 nBurnDrvActive = ~0U;	// Which game driver is selected
 INT32 nBurnDrvSubActive = -1;	// Which sub-game driver is selected
 UINT32 nBurnDrvSelect[8] = { ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U }; // Which games are selected (i.e. loaded but not necessarily active)
 
+char* pszCustomNameA = NULL;
+
 bool bBurnUseMMX;
 #if defined BUILD_A68K
 bool bBurnUseASMCPUEmulation = false;
@@ -463,9 +465,18 @@ void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
 }
 #endif
 
-void BurnDrvSetFullNameA(char* pszFullNameA)
+static void BurnDrvSetFullNameA()
 {
-	pDriver[nBurnDrvActive]->szFullNameA = pszFullNameA;
+	// If not NULL, then FullNameA is customized
+	if (NULL == pszCustomNameA) return;
+
+	char szFullNameA[256] = "\0";
+	INT32 nLen = strlen(pszCustomNameA);
+
+	if (nLen > 256) nLen = 256;
+	strncpy(szFullNameA, pszCustomNameA, nLen);
+
+	pDriver[nBurnDrvActive]->szFullNameA = szFullNameA;
 }
 
 // Get the zip names for the driver
@@ -719,6 +730,11 @@ extern "C" INT32 BurnDrvInit()
 
 	nReturnValue = pDriver[nBurnDrvActive]->Init();	// Forward to drivers function
 
+	if (-1 != nBurnDrvSubActive) {
+		BurnDrvSetFullNameA();
+		BurnerDoGameListExLocalisation();
+	}
+
 	nMaxPlayers = pDriver[nBurnDrvActive]->Players;
 
 	nCurrentFrame = 0;
@@ -732,6 +748,7 @@ extern "C" INT32 BurnDrvInit()
 		starttime = 0;
 	}
 #endif
+
 
 	return nReturnValue;
 }
@@ -770,12 +787,16 @@ extern "C" INT32 BurnDrvExit()
 
 	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function
 
+	pszCustomNameA = NULL;	// Rest to NULL;
+	nBurnDrvSubActive = -1;	// Rest to -1;
+
 	BurnExitMemoryManager();
 #if defined FBNEO_DEBUG
 	DebugTrackerExit();
 #endif
 
 	BurnRestoreSizeAspect_Internal();
+
 
 	return nRet;
 }

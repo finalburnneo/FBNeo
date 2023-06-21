@@ -10,7 +10,6 @@
 #endif
 
 static UINT8 VerSwitcher = 0;		// Fake Dip
-static char* pszCustomNameA = NULL;	// For sub-games
 
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },

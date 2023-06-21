@@ -470,13 +470,7 @@ static void BurnDrvSetFullNameA()
 	// If not NULL, then FullNameA is customized
 	if (NULL == pszCustomNameA) return;
 
-	char szFullNameA[256] = "\0";
-	INT32 nLen = strlen(pszCustomNameA);
-
-	if (nLen > 256) nLen = 256;
-	strncpy(szFullNameA, pszCustomNameA, nLen);
-
-	pDriver[nBurnDrvActive]->szFullNameA = szFullNameA;
+	pDriver[nBurnDrvActive]->szFullNameA = pszCustomNameA;
 }
 
 // Get the zip names for the driver
@@ -749,7 +743,6 @@ extern "C" INT32 BurnDrvInit()
 	}
 #endif
 
-
 	return nReturnValue;
 }
 
@@ -787,7 +780,6 @@ extern "C" INT32 BurnDrvExit()
 
 	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function
 
-	pszCustomNameA = NULL;	// Rest to NULL;
 	nBurnDrvSubActive = -1;	// Rest to -1;
 
 	BurnExitMemoryManager();
@@ -796,7 +788,6 @@ extern "C" INT32 BurnDrvExit()
 #endif
 
 	BurnRestoreSizeAspect_Internal();
-
 
 	return nRet;
 }

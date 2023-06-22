@@ -4380,9 +4380,6 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(DrvMCURom + 0x00000, 30, 1); if (nRet != 0) return 1;
 	DrvMCUInit();
 
-	BurnTimerAttachNull(10000000); // YM2203 timer, not attached to Sek
-	bTimerNullCPU = 1;
-
 	BurnFree(DrvTempRom);
 
 	RotateSetGunPosRAM(Drv68KRam + (0x66+1), Drv68KRam + (0xaa+1), 4);
@@ -5783,7 +5780,6 @@ static INT32 Dec1Frame()
 		nCyclesTotal[0] = (INT32)((INT64)10000000.0 * 100 * nBurnCPUSpeedAdjust / (0x100 * nBurnFPS));
 		INT32 adj_mhz = (INT32)(10000000.0 * nBurnCPUSpeedAdjust / 0x100);
 		bprintf(0, _T("adjusted mhz / cycles per frame:  %d  /  %d\n"), adj_mhz, nCyclesTotal[0]);
-		BurnTimerAttachSek(adj_mhz);
 		nPrevBurnCPUSpeedAdjust = nBurnCPUSpeedAdjust;
 	}
 

@@ -2161,7 +2161,6 @@ static INT32 MachineInit()
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3526Init(3000000, NULL, 1);
-	BurnTimerAttachYM3526(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	if (BublboblCallbackFunction()) return 1;
@@ -2886,7 +2885,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 j = (i+224) % nInterleave;
 		ZetOpen(0);
-		CPU_RUN_TIMER_YM3526(0);
+		CPU_RUN(0, Zet);
 		if (j == 224 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 

@@ -9,7 +9,6 @@
 #include "burn_ym2203.h"
 #include "burn_ym2151.h"
 #include "msm6295.h"
-#include "timer.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -49,45 +48,47 @@ static UINT16 DrvInputs[3];
 
 static INT32 DrvOkiBank;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo ThndzoneInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p3 coin"	},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p3 coin"	},
+	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
+	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
+	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p3 right"	},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p3 fire 1"	},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 fire 2"	},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy2 + 15,	"p4 coin"	},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
+	{"P4 Coin",			BIT_DIGITAL,	DrvJoy2 + 15,	"p4 coin"	},
+	{"P4 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
+	{"P4 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
+	{"P4 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p4 right"	},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p4 fire 1"	},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p4 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Thndzone)
@@ -394,28 +395,12 @@ static void __fastcall dassault_sub_write_byte(UINT32 address, UINT8 )
 
 static void set_cpuA_irq(INT32 state)
 {
-	if (SekGetActive() == 0) { // main
-		SekSetIRQLine(5, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-	} else {
-		SekClose();
-		SekOpen(0);
-		SekSetIRQLine(5, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-		SekClose();
-		SekOpen(1);
-	}
+	SekSetIRQLine(0, 5, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void set_cpuB_irq(INT32 state)
 {
-	if (SekGetActive() == 1) { // sub
-		SekSetIRQLine(6, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-	} else {
-		SekClose();
-		SekOpen(1);
-		SekSetIRQLine(6, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-		SekClose();
-		SekOpen(0);
-	}
+	SekSetIRQLine(1, 6, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void __fastcall dassault_irq_write_word(UINT32 address, UINT16 data)
@@ -502,6 +487,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -554,12 +541,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM0 + 0x000001,  0, 2)) return 1;
@@ -669,7 +651,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(1,			dassault_irq_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 0.50, 2013750, 0.25);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.50, 2013750, 0.25);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
@@ -689,7 +671,7 @@ static INT32 DrvExit()
 	SekExit();
 	deco16SoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -869,10 +851,9 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3] = { 14000000 / 60, 14000000 / 60, 4027500 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], 0 };
+
 	h6280NewFrame();
 	h6280Open(0);
 
@@ -881,41 +862,28 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		SekOpen(1);
-		nCyclesDone[1] += SekRun(nCyclesDone[0] - nCyclesDone[1]);
+		CPU_RUN(1, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 
 		if (i == 248) deco16_vblank = 0x08;
-
-		if (pBurnSoundOut && i%7 == 6) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 7);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[2]);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -948,6 +916,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16Scan();
 
 		SCAN_VAR(DrvOkiBank);
+		SCAN_VAR(nCyclesExtra);
+	}
+
+	if (nAction & ACB_WRITE) {
 		DrvYM2151WritePort(0, DrvOkiBank);
 	}
 

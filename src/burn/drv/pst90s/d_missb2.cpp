@@ -426,7 +426,7 @@ static INT32 DrvInit(INT32 type)
 	ZetClose();
 
 	BurnYM3526Init(3000000, NULL, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 3000000);
+	BurnTimerAttach(&ZetConfig, 3000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / 132, 1);
@@ -573,36 +573,29 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
 		if (sound_cpu_in_reset) {
-			nCyclesDone[1] += nCyclesTotal[1] / nInterleave;
-			ZetIdle(nCyclesTotal[1] / nInterleave);
+			CPU_IDLE(1, Zet);
 		} else {
-			nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+			CPU_RUN(1, Zet);
 		}
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
+		CPU_RUN_TIMER(2);
 		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
-
-	ZetOpen(2);
-
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

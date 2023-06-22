@@ -888,7 +888,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / 132, 1);
@@ -1141,7 +1141,6 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nCyclesSegment;
 	INT32 nInterleave = 64;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -1151,26 +1150,21 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+		CPU_RUN(0, Sek);
+		CPU_RUN_TIMER(1);
 
-		nCyclesDone[0] += SekRun(nCyclesSegment);
-
-		nCyclesSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 		if (i & 1) ZetNmi();
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-	
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+
+	ZetClose();
+	SekClose();
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

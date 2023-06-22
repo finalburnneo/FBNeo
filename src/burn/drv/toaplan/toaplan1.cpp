@@ -67,7 +67,7 @@ inline void toaplan1SynchroniseZ80(INT32 nExtraCycles)
 
 	nToa1Cycles68KSync = nCycles - nExtraCycles;
 
-	BurnTimerUpdateYM3812(nCycles);
+	BurnTimerUpdate(nCycles);
 }
 
 UINT8 __fastcall toaplan1ReadByteZ80RAM(UINT32 sekAddress)

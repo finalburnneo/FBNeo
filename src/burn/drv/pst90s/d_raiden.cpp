@@ -845,10 +845,10 @@ static INT32 DrvFrame()
 		if (i == (nInterleave - 1)) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[2] / nInterleave));
+		CPU_RUN_TIMER(2);
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[2]);
+	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -857,8 +857,6 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	return 0;
 }

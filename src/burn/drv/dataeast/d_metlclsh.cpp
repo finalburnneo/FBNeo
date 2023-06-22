@@ -398,11 +398,10 @@ static INT32 DrvInit()
 	M6809Close();
 
 	BurnYM3526Init(3000000, &DrvYM3526IrqHandler, 0);
-	BurnTimerAttachYM3526(&M6809Config, 1500000);
+	BurnTimerAttach(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachM6809(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
@@ -571,37 +570,26 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256*2; // game prefers high interleave for main/sub shared ram communication
 	INT32 nCyclesTotal[2] =  { (1500000 * 100) / nBurnFPS, (1500000 * 100) / nBurnFPS };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		vblank = (i >= 240*2) ? 1 : 0;
 
 		M6809Open(0);
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, M6809);
 		M6809Close();
 
 		M6809Open(1);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		M6809Close();
 	}
-
-	M6809Open(1);
-	BurnTimerEndFrame(nCyclesTotal[1]);
-	M6809Close();
-
-	M6809Open(0);
-	BurnTimerEndFrameYM3526(nCyclesTotal[0]);
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		M6809Close();
-
-		M6809Open(1);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	M6809Close();
-	
 	if (pBurnDraw) {
 		DrvDraw();
 	}

@@ -394,7 +394,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 3579545, DrvSndROM, 0x20000, NULL, 0, NULL, &DrvSynchroniseStream, 1);
-	BurnTimerAttachY8950(&M6809Config, 1000000);
+	BurnTimerAttach(&M6809Config, 1000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -579,13 +579,13 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateY8950((i + 1) * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		sound_interrupt();
 	}
 
 	SekClose();
 
-	BurnTimerEndFrameY8950(nCyclesTotal[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);

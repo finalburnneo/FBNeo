@@ -386,11 +386,10 @@ static INT32 DrvInit()
 	M6502Close();
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttach(&SekConfig, 10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.43, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.43, BURN_SND_ROUTE_BOTH);
@@ -535,6 +534,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 32;
 	INT32 nCyclesTotal[2] = { 10000000 / 58, 1500000 / 58 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	M6502Open(0);
@@ -543,27 +543,24 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		CPU_RUN(0, Sek);
 		if (i == 1) vblank = 0;
 		if (i == 30) {
 			vblank = 1;
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
-		
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	M6502Close();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	SekClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

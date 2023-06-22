@@ -552,7 +552,7 @@ static INT32 SauroInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 2500000, NULL, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	sp0256_init(DrvSndROM, 3120000);
@@ -613,7 +613,7 @@ static INT32 TrckydocInit()
 	ZetInit(1); // Just here to let us use same reset routine
 
 	BurnYM3812Init(1, 2500000, NULL, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 5000000);
+	BurnTimerAttach(&ZetConfig, 5000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -797,21 +797,15 @@ static INT32 SauroFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3812((nCyclesTotal[1] / nInterleave) * (i + 1));
+		CPU_RUN_TIMER(1);
 		if ((i & 0xf) == 0xf) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 8x per frame
 		ZetClose();
 	}
-
-	ZetOpen(1);
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		if (sp0256_inuse) sp0256_update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -843,22 +837,21 @@ static INT32 TrckydocFrame()
 
 	INT32 nInterleave = 128;
 	INT32 nCyclesTotal[1] = { 5000000 / 56 };
+	//INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		BurnTimerUpdateYM3812((nCyclesTotal[0] / nInterleave) * (i + 1));
+		CPU_RUN_TIMER(0);
 		if (i == 120) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // vblank
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
+	ZetClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

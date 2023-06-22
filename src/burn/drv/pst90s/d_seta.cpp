@@ -7284,7 +7284,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 		has_2203 = 1;
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachYM3812(&SekConfig, 16000000);
+	BurnTimerAttach(&SekConfig, 16000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, (has_2203) ? 2.00 : 1.00, BURN_SND_ROUTE_BOTH); // tndrcade (has_2203) needs louder fm3812
 
 	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, 1);
@@ -8033,6 +8033,7 @@ static void Drv68k_Tndrcade_FrameCallback()
 {
 	INT32 nInterleave = 16;
 	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (2000000 * 100) / refresh_rate };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekNewFrame();
 	M6502NewFrame();
@@ -8042,26 +8043,21 @@ static void Drv68k_Tndrcade_FrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		BurnTimerUpdateYM3812((i+1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave-1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-	
+
 		BurnTimerUpdate((i+1) * (nCyclesTotal[1] / nInterleave));
 		if (i == 4) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	SekClose();
 	M6502Close();
 
 	if (pBurnSoundOut) {
-		SekOpen(0);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		SekClose();
-		M6502Open(0);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		M6502Close();
 	}
 }
 
@@ -8193,7 +8189,7 @@ static void CrazyfghtFrameCallback()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		BurnTimerUpdateYM3812((i+1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdate((i+1) * (nCyclesTotal[0] / nInterleave));
 
 		if ((i % 48) == 0) {
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
@@ -8204,7 +8200,7 @@ static void CrazyfghtFrameCallback()
 		}
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
+	BurnTimerEndFrame(nCyclesTotal[0]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

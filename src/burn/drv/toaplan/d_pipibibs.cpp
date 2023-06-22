@@ -398,7 +398,7 @@ static INT32 DrvInit()
 
 	nToa1Cycles68KSync = 0;
 	BurnYM3812Init(1, 3375000, &toaplan1FMIRQHandler, pipibibsSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3375000);
+	BurnTimerAttach(&ZetConfig, 3375000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	nSpriteYOffset =  0x0001;
@@ -503,11 +503,11 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - SekTotalCycles();
 		SekRun(nCyclesSegment);
 
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 	}
 
 	nToa1Cycles68KSync = SekTotalCycles();
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}

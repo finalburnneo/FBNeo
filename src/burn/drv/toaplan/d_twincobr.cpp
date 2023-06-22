@@ -1176,7 +1176,7 @@ static INT32 DrvInit(INT32 game_select, INT32 nibble_mcu)
 	tms32010_rom = (UINT16*)DrvMCUROM;
 
 	BurnYM3812Init(1, 3500000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3500000);
+	BurnTimerAttach(&ZetConfig, 3500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
@@ -1395,7 +1395,7 @@ static INT32 DrvFrame()
 			CPU_RUN(2, tms32010);
 		}
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (i == 240) {
 			if (pBurnDraw) {
@@ -1405,14 +1405,12 @@ static INT32 DrvFrame()
 		}
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
 

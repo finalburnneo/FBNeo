@@ -1145,7 +1145,7 @@ static INT32 DrvInit(INT32 loadtype, INT32 sektype, INT32 zettype) // 0 nmg, 1 p
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);
@@ -1361,7 +1361,7 @@ static INT32 DrvFrame()
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		BurnTimerEndFrameYM3812(nTotalCycles[1]);
+		BurnTimerEndFrame(nTotalCycles[1]);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}

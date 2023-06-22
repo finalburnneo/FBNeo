@@ -693,6 +693,7 @@ extern "C" INT32 BurnDrvInit()
 	BurnInitMemoryManager();
 	BurnRandomInit();
 	BurnSoundDCFilterReset();
+	BurnTimerPreInit();
 
 	nReturnValue = pDriver[nBurnDrvActive]->Init();	// Forward to drivers function
 

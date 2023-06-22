@@ -840,11 +840,10 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	// aliencha
 	BurnYMF278BInit(33868800, DrvSndROM[2], 0x200000, &DrvFMIRQHandler);
 	BurnYMF278BSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
-	BurnTimerAttachZet(6000000);
+	BurnTimerAttachZet((lordgun) ? 5000000 : 6000000);
 
 	// lordgun
 	BurnYM3812Init(1, 3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 5000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);
@@ -1292,18 +1291,16 @@ static INT32 lordgunFrame()
 
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		lordgunDraw();
@@ -1335,19 +1332,17 @@ static INT32 alienchaFrame()
 		CPU_RUN(0, Sek);
 
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

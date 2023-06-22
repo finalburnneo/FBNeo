@@ -28,7 +28,7 @@ typedef INT8 OPLSAMPLE;
 #endif
 
 
-typedef void (*OPL_TIMERHANDLER)(int channel,double interval_Sec);
+typedef void (*OPL_TIMERHANDLER)(int n,int channel,double interval_Sec);
 typedef void (*OPL_IRQHANDLER)(int param,int irq);
 typedef void (*OPL_UPDATEHANDLER)(INT32 param,INT32 min_interval_us);
 typedef void (*OPL_PORTHANDLER_W)(int param,unsigned char data);

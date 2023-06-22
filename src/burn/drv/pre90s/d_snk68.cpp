@@ -1228,7 +1228,7 @@ static INT32 DrvInit(INT32 game)
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &powFMIRQHandler, &powSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSnd0);
@@ -1554,14 +1554,15 @@ static INT32 DrvFrame()
 	SekRun(nTotalCycles[0]);
 	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	BurnTimerEndFrame(nTotalCycles[1]);
+
+	ZetClose();
+	SekClose();
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

@@ -894,7 +894,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 		M6809Close();
 
 		BurnYM3812Init(1, 4000000, NULL, 0);
-		BurnTimerAttachYM3812(&M6809Config, 2216750);
+		BurnTimerAttach(&M6809Config, 2216750);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -1250,7 +1250,7 @@ static INT32 BigkarnkFrame()
 		}
 
 		CPU_RUN(0, Sek);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	SekClose();

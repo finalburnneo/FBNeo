@@ -264,14 +264,17 @@ INT32 BurnYM2151Init(INT32 nClockFrequency, INT32 use_timer)
 		nBurnYM2151SoundRate >>= 1;
 	}
 
+	INT32 timer_chipbase = 0;
+
 	if (use_timer)
 	{
 		bprintf(0, _T("YM2151: Using FM-Timer.\n"));
 		YM2151BurnTimer = 1;
-		BurnTimerInit(&ym2151_timer_over, NULL);
+		timer_chipbase = BurnTimerInit(&ym2151_timer_over, NULL, (bYM2151_MultiChip) ? 2 : 1);
+		bprintf(0, _T("BurnTimer chip_base: %d\n"), timer_chipbase);
 	}
 
-	YM2151Init((bYM2151_MultiChip) ? 2 : 1, nClockFrequency, nBurnYM2151SoundRate, (YM2151BurnTimer) ? BurnOPMTimerCallback : NULL);
+	YM2151Init((bYM2151_MultiChip) ? 2 : 1, timer_chipbase, nClockFrequency, nBurnYM2151SoundRate, (YM2151BurnTimer) ? BurnOPMTimerCallback : NULL);
 
 	pBuffer = (INT16*)BurnMalloc(65536 * 4 * sizeof(INT16));
 	memset(pBuffer, 0, 65536 * 4 * sizeof(INT16));

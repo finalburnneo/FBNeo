@@ -47,6 +47,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo ActfancrInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -403,6 +405,8 @@ static INT32 DrvDoReset()
 
 	control_select = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -508,12 +512,7 @@ static void Dec0SoundInit()
 
 static INT32 ActfanInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv6280ROM + 0x00000,  0, 1)) return 1;
@@ -572,12 +571,7 @@ static INT32 ActfanInit()
 
 static INT32 TriothepInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv6280ROM + 0x00000,  0, 1)) return 1;
@@ -647,7 +641,7 @@ static INT32 DrvExit()
 	h6280Exit();
 	M6502Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -811,19 +805,7 @@ static void draw_sprites()
 
 				for (INT32 y = 0; y < h; y++)
 				{
-					if (flipy) {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code - y * incy, sx + (mult * x), sy + (mult * y) - 8, color, 4, 0, gfx_config[1], DrvGfxROM1);
-						} else {
-							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code - y * incy, sx + (mult * x), sy + (mult * y) - 8, color, 4, 0, gfx_config[1], DrvGfxROM1);
-						}
-					} else {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code - y * incy, sx + (mult * x), sy + (mult * y) - 8, color, 4, 0, gfx_config[1], DrvGfxROM1);
-						} else {
-							Render16x16Tile_Mask_Clip(pTransDraw, code - y * incy, sx + (mult * x), sy + (mult * y) - 8, color, 4, 0, gfx_config[1], DrvGfxROM1);
-						}
-					}
+					Draw16x16MaskTile(pTransDraw, code - y * incy, sx + (mult * x), sy + (mult * y) - 8, flipx, flipy, color, 4, 0, gfx_config[1], DrvGfxROM1);
 				}
 			}
 
@@ -881,7 +863,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 32;
 	INT32 nCyclesTotal[2] = { 7159066 / 60, 1500000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	h6280Open(0);
 	M6502Open(0);
@@ -902,6 +884,8 @@ static INT32 DrvFrame()
 
 	M6502Close();
 	h6280Close();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -941,6 +925,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(control_select);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

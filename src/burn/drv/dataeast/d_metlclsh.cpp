@@ -39,6 +39,8 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo MetlclshInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
@@ -68,46 +70,47 @@ STDINPUTINFO(Metlclsh)
 
 static struct BurnDIPInfo MetlclshDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x3f, NULL			},
-	{0x13, 0xff, 0xff, 0xdf, NULL			},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0x3f, NULL					},
+	{0x01, 0xff, 0xff, 0xdf, NULL					},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x00, "2"			},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
+	{0   , 0xfe, 0   ,    2, "Lives"				},
+	{0x00, 0x01, 0x01, 0x00, "2"					},
+	{0x00, 0x01, 0x01, 0x01, "3"					},
 
-	{0   , 0xfe, 0   ,    2, "Enemies Speed"	},
-	{0x12, 0x01, 0x02, 0x02, "Low"			},
-	{0x12, 0x01, 0x02, 0x00, "High"			},
+	{0   , 0xfe, 0   ,    2, "Enemies Speed"		},
+	{0x00, 0x01, 0x02, 0x02, "Low"					},
+	{0x00, 0x01, 0x02, 0x00, "High"					},
 
-	{0   , 0xfe, 0   ,    2, "Enemies Energy"	},
-	{0x12, 0x01, 0x04, 0x04, "Low"			},
-	{0x12, 0x01, 0x04, 0x00, "High"			},
+	{0   , 0xfe, 0   ,    2, "Enemies Energy"		},
+	{0x00, 0x01, 0x04, 0x04, "Low"					},
+	{0x00, 0x01, 0x04, 0x00, "High"					},
 
-	{0   , 0xfe, 0   ,    2, "Time"			},
-	{0x12, 0x01, 0x08, 0x00, "75"			},
-	{0x12, 0x01, 0x08, 0x08, "90"			},
+	{0   , 0xfe, 0   ,    2, "Time"					},
+	{0x00, 0x01, 0x08, 0x00, "75"					},
+	{0x00, 0x01, 0x08, 0x08, "90"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x12, 0x01, 0x10, 0x10, "Off"			},
-	{0x12, 0x01, 0x10, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x10, 0x10, "Off"					},
+	{0x00, 0x01, 0x10, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x13, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0   , 0xfe, 0   ,    4, "Coinage"				},
+	{0x01, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x20, 0x20, "Off"			},
-	{0x13, 0x01, 0x20, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x20, 0x20, "Off"					},
+	{0x01, 0x01, 0x20, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Infinite Energy"	},
-	{0x13, 0x01, 0x40, 0x40, "Off"			},
-	{0x13, 0x01, 0x40, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Infinite Energy"		},
+	{0x01, 0x01, 0x40, 0x40, "Off"					},
+	{0x01, 0x01, 0x40, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Infinite Lives"	},
-	{0x13, 0x01, 0x80, 0x80, "Off"			},
-	{0x13, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Infinite Lives"		},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Metlclsh)
@@ -120,11 +123,8 @@ static void metlclsh_main_write(UINT16 address, UINT8 data)
 		return;	//nop
 
 		case 0xc0c2:
-			M6809Close();
-			M6809Open(1);
-			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6809Close();
-			M6809Open(0);
+			M6809SetIRQLine(1, 0, CPU_IRQSTATUS_ACK);
+			M6809RunEnd();
 		return;
 
 		case 0xc0c3:
@@ -157,7 +157,7 @@ static UINT8 metlclsh_main_read(UINT16 address)
 			return DrvInputs[1];
 
 		case 0xc003:
-			return DrvInputs[2] | (vblank * 0x80);
+			return (DrvInputs[2] & ~0x80) | (vblank * 0x80);
 
 		case 0xd000:
 		case 0xd001:
@@ -195,16 +195,14 @@ static void metlclsh_sub_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xc000:
-			if ((data & 0x04) == 0)
+			if (~data & 0x04) {
 				gfxbank = data & 3;
+			}
 		return;
 
 		case 0xc0c0:
-			M6809Close();
-			M6809Open(0);
-			M6809SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
-			M6809Close();
-			M6809Open(1);
+			M6809SetIRQLine(0, 0x20, CPU_IRQSTATUS_ACK);
+			M6809RunEnd();
 		return;
 
 		case 0xc0c1:
@@ -232,14 +230,12 @@ static void metlclsh_sub_write(UINT16 address, UINT8 data)
 
 static void DrvYM3526IrqHandler(INT32, INT32 nStatus)
 {
-	if (M6809GetActive() == -1) return;
-
-	M6809SetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	M6809SetIRQLine(0, 0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static tilemap_scan( bg )
 {
-	return  (row & 7) + ((row & ~7) << 4) + ((col & 0xf) << 3) + ((col & ~0xf) << 4);
+	return (row & 7) + ((row & ~7) << 4) + ((col & 0xf) << 3) + ((col & ~0xf) << 4);
 }
 
 static tilemap_callback( bg )
@@ -272,6 +268,8 @@ static INT32 DrvDoReset()
 	gfxbank = 0;
 	flipscreen = 0;
 	scrollx[0] = scrollx[1] = 0;
+
+	nCyclesExtra = 0;
 
 	HiscoreReset();
 
@@ -348,12 +346,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x00000,  0, 1)) return 1;
@@ -398,8 +391,8 @@ static INT32 DrvInit()
 	M6809Close();
 
 	BurnYM3526Init(3000000, &DrvYM3526IrqHandler, 0);
-	BurnTimerAttach(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachM6809(1500000);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
@@ -430,7 +423,7 @@ static INT32 DrvExit()
 	BurnYM2203Exit();
 	BurnYM3526Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -451,19 +444,7 @@ static void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT3
 {
 	sy -= 16;
 
-	if (flipy) {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM0);
-		} else {
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM0);
-		}
-	} else {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM0);
-		} else {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM0);
-		}
-	}
+	Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0, DrvGfxROM0);
 }
 
 static void draw_sprites()
@@ -558,32 +539,32 @@ static INT32 DrvFrame()
 		}
 
 		// coins trigger nmi on sub cpu
-		M6809Open(1);
 		if (prev[0] == 0xc0 && (DrvInputs[1] & 0xc0) != 0xc0) {
-			M6809SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+			M6809SetIRQLine(1, 0x20, CPU_IRQSTATUS_ACK);
 		}
 		if (prev[1] == 0x40 && (DrvInputs[2] & 0x40) != 0x40) {
-			M6809SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+			M6809SetIRQLine(1, 0x20, CPU_IRQSTATUS_ACK);
 		}
-		M6809Close();
 	}
 
-	INT32 nInterleave = 256*2; // game prefers high interleave for main/sub shared ram communication
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] =  { (1500000 * 100) / nBurnFPS, (1500000 * 100) / nBurnFPS };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { 0, nCyclesExtra };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		vblank = (i >= 240*2) ? 1 : 0;
+		vblank = (i >= 240) ? 1 : 0;
 
 		M6809Open(0);
-		CPU_RUN(0, M6809);
+		CPU_RUN_TIMER(0);
 		M6809Close();
 
 		M6809Open(1);
-		CPU_RUN_TIMER(1);
+		CPU_RUN(1, M6809);
 		M6809Close();
 	}
+
+	nCyclesExtra = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
@@ -617,15 +598,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	{
 		M6809Scan(nAction);
 
-		M6809Open(0);
 		BurnYM3526Scan(nAction, pnMin);
 		BurnYM2203Scan(nAction, pnMin);
-		M6809Close();
 
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(scrollx);
 		SCAN_VAR(bankdata);
 		SCAN_VAR(gfxbank);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE)

@@ -2,7 +2,6 @@
 
 #include "neogeo.h"
 #include "bitswap.h"
-#include "driverlist.h"
 
 #if !defined ROM_VERIFY
 	// enable to match Neo Geo BIOS to MAME's (also affects dipswitches -- leaves only the MVS BIOS option)

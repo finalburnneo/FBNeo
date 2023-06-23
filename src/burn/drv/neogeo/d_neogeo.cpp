@@ -2,13 +2,14 @@
 
 #include "neogeo.h"
 #include "bitswap.h"
+#include "driverlist.h"
 
 #if !defined ROM_VERIFY
 	// enable to match Neo Geo BIOS to MAME's (also affects dipswitches -- leaves only the MVS BIOS option)
 	// #define ROM_VERIFY
 #endif
 
-static UINT8 VerSwitcher = 0; // Fake Dip
+static UINT8 VerSwitcher = 0;		// Fake Dip
 
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
@@ -1428,20 +1429,23 @@ static struct BurnDIPInfo mslugxcbDIPList[] = {
 	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // Multi Vehicle
 
 	{0,    0xFE, 0,    2,    "Version change (Must reload)"	},
-	{0x06, 0x01, 0x01, 0x00, "Multi Vehicle"                },
-	{0x06, 0x01, 0x01, 0x01, "Enemy Remix"                  },
+	{0x06, 0x01, 0x03, 0x00, "Multi Vehicle"                },
+	{0x06, 0x01, 0x03, 0x01, "Enemy Remix"                  },
+	{0x06, 0x01, 0x03, 0x02, "Infinite Firepower"           },
 };
 
 static struct BurnDIPInfo mslugx2rDIPList[] = {
 	// Fake DIPs
 	{0x06, 0xFF, 0xFF, 0x00, NULL                           },  // 2R
 
-	{0,    0xFE, 0,    5,    "Version change (Must reload)"	},
-	{0x06, 0x01, 0x0F, 0x00, "2R"                           },
-	{0x06, 0x01, 0x0F, 0x01, "Blue"                         },
-	{0x06, 0x01, 0x0F, 0x02, "AzStar Soda Remix FC2"        },
-	{0x06, 0x01, 0x0F, 0x04, "2R Blue"                      },
-	{0x06, 0x01, 0x0F, 0x08, "2R 1v2 Mode"                  },
+	{0,    0xFE, 0,    7,    "Version change (Must reload)"	},
+	{0x06, 0x01, 0x3F, 0x00, "2R"                           },
+	{0x06, 0x01, 0x3F, 0x01, "Blue"                         },
+	{0x06, 0x01, 0x3F, 0x02, "AzStar Soda Remix FC2"        },
+	{0x06, 0x01, 0x3F, 0x04, "2R Blue"                      },
+	{0x06, 0x01, 0x3F, 0x08, "2R 1v2 Mode"                  },
+	{0x06, 0x01, 0x3F, 0x10, "Warriors"                     },
+	{0x06, 0x01, 0x3F, 0x20, "Wuji"                         },
 };
 
 static struct BurnDIPInfo mslugxaksDIPList[] = {
@@ -17607,7 +17611,7 @@ static struct BurnRomInfo samsho2spRomDesc[] = {
 	{ "063-p3new.p3",	0x020000, 0x0bab6abd, 0 | BRF_ESS | BRF_PRG }, // 19
 
 	/* Infinite Power - 20230410*/
-	{ "063-p1jq.p1",	0x100000, 0x4b202e25, 0 | BRF_ESS | BRF_PRG }, // 20 68k code diff patch
+	{ "063-p1jq.p1",	0x100000, 0x4b202e25, 0 | BRF_ESS | BRF_PRG }, // 20 68k code
 	{ "063-p2jq.sp2",	0x100000, 0xa03ead44, 0 | BRF_ESS | BRF_PRG }, // 21
 
 	{ "063-s1.s1",		0x020000, 0x64a5cd66, 0 | BRF_GRA },           // 22 Text layer tiles
@@ -17636,13 +17640,33 @@ static void Samsho2spCallback()
 
 static INT32 Samsho2spInit()
 {
-	if (VerSwitcher & 0x03) {
+
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Samurai Shodown II / Shin Samurai Spirits - Special 2017 (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Samurai Shodown II / Shin Samurai Spirits - Optimized (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Samurai Shodown II / Shin Samurai Spirits - Infinite Power (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = Samsho2spCallback;
 	}
 
 	INT32 nRet = NeoInit();
 
-	if ((0 == nRet) && ((VerSwitcher & 0x03) < 0x02)) {
+	if ((0 == nRet) && (nBurnDrvSubActive < 0x02)) {
 		NeoMapExtraRom(0x200000, 0x20000);
 	}
 
@@ -17676,7 +17700,7 @@ struct BurnDriver BurnDrvSamsho2pe = {
 	"samsho2pe", "samsho2", "neogeo", NULL, "2023",
 	"Samurai Shodown II Perfect (V. 1.2, Hack)\0", NULL, "Bear", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, FBF_SAMSHO,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	Samsho2spInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
@@ -17911,7 +17935,42 @@ static void sengoku3hsCallback()
 
 static INT32 sengoku3hsInit()
 {
-	if (VerSwitcher & 0x3f) {
+	nBurnDrvSubActive = (VerSwitcher & 0x3f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Feng Shen (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Feng Shen (earlier, Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Green Blue (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Green Blue (earlier, Hack)\0";
+			break;
+
+		case 0x08:
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 - Infinite Power (Hack)\0";
+			break;
+
+		case 0x10:
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 (Set 1, Full Decryption)\0";
+			break;
+
+		case 0x20:
+			pszCustomNameA = "Sengoku 3 / Sengoku Densho 2001 (Set 2, Full Decryption)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = sengoku3hsCallback;
 	}
 
@@ -18051,11 +18110,30 @@ static void doubledrspCallback()
 
 static INT32 DoubledrspInit()
 {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Double Dragon - Special 2017 (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Double Dragon - Optimized (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Double Dragon - Plus (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
 	NeoCallbackActive->pInitialise = doubledrspCallback;
 
 	INT32 nRet = NeoInit();
 
-	if ((0 == nRet) && (0 == (VerSwitcher & 0x03))) {
+	if ((0 == nRet) && (0 == nBurnDrvSubActive)) {
 		NeoMapExtraRom(0x200000, 0x20000);
 	}
 
@@ -18064,7 +18142,7 @@ static INT32 DoubledrspInit()
 
 struct BurnDriver BurnDrvdoubledrsp = {
 	"doubledrsp", "doubledr", "neogeo", NULL, "2017",
-	"Double Dragon - Special 2017 (Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
+	"Double Dragon (Series Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, doubledrspRomInfo, doubledrspRomName, NULL, NULL, NULL, NULL, neoverswInputInfo, doubledrspDIPInfo,
@@ -18375,7 +18453,7 @@ static struct BurnRomInfo kof96aeRomDesc[] = {
 	{ "214-v2.v2",		0x400000, 0x25929059, 5 | BRF_SND },           // 17
 	{ "214-v3ae.v3",	0x400000, 0xf85673b0, 5 | BRF_SND },           // 18
 
-	/* Old Build - 20070000 */
+	/* earlier - 20070000 */
 	{ "214-p1aeo.p1",	0x100000, 0x47660e7c, 0 | BRF_ESS | BRF_PRG }, // 19 68K code
 	{ "214-p2aeo.sp2",	0x400000, 0x824ff3eb, 0 | BRF_ESS | BRF_PRG }, // 20
 
@@ -18412,13 +18490,28 @@ static void kof96aeCallback()
 
 static INT32 kof96aeInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters '96 - Anniversary Edition (Build 2.3.0320, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters '96 - Anniversary Edition (earlier, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof96aeCallback;
 	}
 
 	INT32 nRet = NeoInit();
 
-	if ((0 == nRet) && (VerSwitcher & 0x01)) {
+	if ((0 == nRet) && nBurnDrvSubActive) {
 		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 2), 29, 0, 1);
 	}
 
@@ -18620,7 +18713,7 @@ struct BurnDriver BurnDrvkof97cbt = {
 static struct BurnRomInfo kof97tRomDesc[] = {
 	/* Optimized - 20140829 */
 	{ "232-p1t.p1",		0x100000, 0x45834e9b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "232-p1t.sp2",	0x400000, 0xd9e51750, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "232-p2t.sp2",	0x400000, 0xd9e51750, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "232-s1.s1",		0x020000, 0x8514ecf5, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -18635,7 +18728,7 @@ static struct BurnRomInfo kof97tRomDesc[] = {
 
 	/* Optimized 2020 - 20200000 */
 	{ "232-p1tp.p1",	0x100000, 0x53d9851d, 0 | BRF_ESS | BRF_PRG }, // 13 68K code
-	{ "232-p1tp.sp2",	0x400000, 0x6d448462, 0 | BRF_ESS | BRF_PRG }, // 14
+	{ "232-p2tp.sp2",	0x400000, 0x6d448462, 0 | BRF_ESS | BRF_PRG }, // 14
 
 	{ "232-s1tp.s1",	0x020000, 0xe338d57f, 0 | BRF_GRA },           // 15 Text layer
 
@@ -18646,7 +18739,7 @@ static struct BurnRomInfo kof97tRomDesc[] = {
 
 	/* Strengthen Innovation - 20230129 */
 	{ "232-p1st.p1",	0x100000, 0x32b4ce56, 0 | BRF_ESS | BRF_PRG }, // 20 68K code
-	{ "232-p1st.sp2",	0x400000, 0xb0aee031, 0 | BRF_ESS | BRF_PRG }, // 21
+	{ "232-p2st.sp2",	0x400000, 0xb0aee031, 0 | BRF_ESS | BRF_PRG }, // 21
 
 	{ "232-c1st.c1",	0x800000, 0x57633aca, 0 | BRF_GRA },           // 22 Sprite data
 	{ "232-c2st.c2",	0x800000, 0x831ec266, 0 | BRF_GRA },           // 23
@@ -18737,6 +18830,25 @@ static void kof97tCallback()
 
 static INT32 kof97tInit()
 {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters '97 - Optimized (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters '97 - Optimized 2020 (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "The King of Fighters '97 - Strengthen Innovation (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
 	if (VerSwitcher & 0x01) {
 		pNRI->nSpriteSize = 0x800000;
 	}
@@ -18803,7 +18915,22 @@ static void kof97aeCallback()
 
 static INT32 kof97aeInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters '97 - Anniversary Edition (Build 2.1.0212, Hack))\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters '97 - Anniversary Edition (Build 2.1.1811, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof97aeCallback;
 	}
 
@@ -18811,7 +18938,7 @@ static INT32 kof97aeInit()
 }
 
 struct BurnDriver BurnDrvkof97ae = {
-	"kof97ae", "kof97", "neogeo", NULL, "2018",
+	"kof97ae", "kof97", "neogeo", NULL, "2018-2020",
 	"The King of Fighters '97 - Anniversary Edition (Hack)\0", "Other versions are selected in the dipswitch", "EGHT", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
@@ -19130,7 +19257,22 @@ static void kof98aeCallback()
 
 static INT32 kof98aeInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x0f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "King of Fighters '98 - Anniversary Edition (2016, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "King of Fighters '98 - Anniversary Edition (2007, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof98aeCallback;
 	}
 
@@ -19275,7 +19417,26 @@ static void kof98cbCallback()
 
 static INT32 kof98cbInit()
 {
-	if (VerSwitcher & 0x03) {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "King of Fighters '98 - Combo (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "King of Fighters '98 - Combo Plus (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "King of Fighters '98 - Combo (GOTVG, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		if (VerSwitcher & 0x01) {
 			pNRI->nCodeSize = 0x0440000;
 			pNRI->nSpriteSize = 0x2000000;
@@ -19382,7 +19543,22 @@ static void kof98mixCallback()
 
 static INT32 kof98mixInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "King of Fighters '98 - Unlimited (2015, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "King of Fighters '98 - Unlimited (2011, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof98mixCallback;
 	}
 
@@ -19457,6 +19633,21 @@ static void kof98pfePatchCallback()
 
 static INT32 kof98pfeInit()
 {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "King of Fighters '98 - Plus Final Edition (2019, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "King of Fighters '98 - Plus Final Edition (2017, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
 	NeoCallbackActive->pInitialise = kof98pfePatchCallback;
 
 	INT32 nRet = NeoInit();
@@ -19547,13 +19738,28 @@ static void kof98eckCallback()
 
 static INT32 kof98eckInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "King of Fighters '98 - Easy Combo King (GOTVG, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "King of Fighters '98 - Easy Combo King (YZKOF, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof98eckCallback;
 	}
 
 	INT32 nRet = NeoInit();
 
-	if ((0 == nRet) && (VerSwitcher & 0x01)) {
+	if ((0 == nRet) && nBurnDrvSubActive) {
 		for (INT32 nIndex = 28, nOffset = 0; nIndex <= 31; nIndex ++, nOffset += 0x400000) {
 			RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + nOffset, nIndex, 0, 1);
 		}
@@ -19903,17 +20109,20 @@ static void kof99tCallback()
 	INT32 nIndex = 0;
 
 	switch (VerSwitcher & 0x07) {
-	case 0x01:
-		nIndex = 16;
-		break;
-	case 0x02:
-		nIndex = 19;
-		break;
-	case 0x04:
-		nIndex = 21;
-		break;
-	default:
-		break;
+		case 0x01:
+			nIndex = 16;
+			break;
+
+		case 0x02:
+			nIndex = 19;
+			break;
+
+		case 0x04:
+			nIndex = 21;
+			break;
+
+		default:
+			break;
 	}
 
 	RomDiffPatch(Neo68KROMActive + 0x000000, nIndex + 0, 0, 1);
@@ -19928,7 +20137,30 @@ static void kof99tCallback()
 
 static INT32 kof99tInit()
 {
-	if (VerSwitcher & 0x07) {
+	nBurnDrvSubActive = (VerSwitcher & 0x07);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters '99 - Plus (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters '99 - Evolution (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "The King of Fighters '99 - Fluent and Refreshing (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "The King of Fighters '99 - Millennium Battle (Full Decryption)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof99tCallback;
 	}
 
@@ -19937,7 +20169,7 @@ static INT32 kof99tInit()
 
 struct BurnDriver BurnDrvkof99t = {
 	"kof99t", "kof99", "neogeo", NULL, "1999-2023",
-	"The King of Fighters '99 - Plus (Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
+	"The King of Fighters '99 - Millennium Battle (Series Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99tRomInfo, kof99tRomName, NULL, NULL, NULL, NULL, neoverswInputInfo, kof99tDIPInfo,
@@ -20083,17 +20315,20 @@ static void kof2kspCallback()
 	INT32 nIndex = 0;
 
 	switch (VerSwitcher & 0x07) {
-	case 0x01:
-		nIndex = 16;
-		break;
-	case 0x02:
-		nIndex = 17;
-		break;
-	case 0x04:
-		nIndex = 21;
-		break;
-	default:
-		break;
+		case 0x01:
+			nIndex = 16;
+			break;
+
+		case 0x02:
+			nIndex = 17;
+			break;
+
+		case 0x04:
+			nIndex = 21;
+			break;
+
+		default:
+			break;
 	}
 
 	RomDiffPatch(Neo68KROMActive, nIndex, 0, 1);
@@ -20106,7 +20341,30 @@ static void kof2kspCallback()
 
 static INT32 kof2kspInit()
 {
-	if (VerSwitcher & 0x07) {
+	nBurnDrvSubActive = (VerSwitcher & 0x07);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters 2000 - Special Edition (Final, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters 2000 - Special Edition (GOTVG, Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "The King of Fighters 2000 - Optimized (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "The King of Fighters 2000 (Full Decryption)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof2kspCallback;
 	}
 
@@ -20298,7 +20556,22 @@ static void kof2k1bsCallback()
 
 static INT32 kof2k1bsInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters 2001 - Boss (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters 2001 - Ultimate (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		pNRI->nCodeSize = 0x100000;
 		pNRI->nSpriteSize = 0x3000000;
 		NeoCallbackActive->pInitialise = kof2k1bsCallback;
@@ -20306,7 +20579,7 @@ static INT32 kof2k1bsInit()
 
 	INT32 nRet = NeoInit();
 
-	if ((0 == nRet) && (VerSwitcher & 0x01)) {
+	if ((0 == nRet) && nBurnDrvSubActive) {
 		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 3), 28, 0, 1);  // Sound data
 	}
 
@@ -20416,7 +20689,26 @@ static void kf2k1rsCallback()
 
 static INT32 kf2k1rsInit()
 {
-	if (VerSwitcher & 0x03) {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters 2001 - Remix Ultra (v2.3, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters 2001 - Remix Pro (v1.02 Final, Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "The King of Fighters 2001 - (Full Decryption)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kf2k1rsCallback;
 	}
 
@@ -20529,7 +20821,30 @@ static void kf2k2ps2Callback()
 
 static INT32 kf2k2ps2Init()
 {
-	if (VerSwitcher & 0x07) {
+	nBurnDrvSubActive = (VerSwitcher & 0x07);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 0.4, Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 1.0, Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "The King of Fighters 2002 - PlayStation 2 (Ver 1.0 Public Test, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		if (VerSwitcher & 0x06)
 			pNRI->nCodeSize = 0x020000;
 
@@ -20618,7 +20933,26 @@ static void kf2k23rdCallback()
 
 static INT32 kf2k23rdInit()
 {
-	if (VerSwitcher & 0x03) {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters 2002 - 3rd Strike of Orochi (GOTVG, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters 2002 - 3rd Strike of Orochi (YZKOF, Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "The King of Fighters 2002 (Full Decryption)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kf2k23rdCallback;
 	}
 
@@ -20881,7 +21215,22 @@ static void kf2k2pl17Callback()
 
 static INT32 kf2k2pl17Init()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters 2002 - Plus 2017 (20201022, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters 2002 - Plus 2017 (20200222, Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kf2k2pl17Callback;
 	}
 
@@ -21026,7 +21375,22 @@ static void kof2003tCallback()
 
 static INT32 kof2003tInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "The King of Fighters 2003 - Plus (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "The King of Fighters 2003 (Full Decryption)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = kof2003tCallback;
 	}
 
@@ -21198,7 +21562,26 @@ static void mslugaksCallback()
 
 static INT32 mslugaksInit()
 {
-	if (VerSwitcher & 0x03) {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug - Multifunction (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug - 1v2 Mode (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug - Origins (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugaksCallback;
 	}
 
@@ -21260,7 +21643,7 @@ struct BurnDriver BurnDrvmslug2unity = {
 };
 
 
-// Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2, Hack)
+// Metal Slug 2 - Friendly Fire FC2 (Hack)
 // Modified by CXZInc, Alice愛麗絲
 // 20210415
 
@@ -21276,7 +21659,7 @@ STD_ROM_FN(mslug2fm)
 
 struct BurnDriver BurnDrvmslug2fm = {
 	"mslug2fm", "mslug2", "neogeo", NULL, "2021",
-	"Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 - Friendly Fire FC2 (Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2fmRomInfo, mslug2fmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21285,7 +21668,7 @@ struct BurnDriver BurnDrvmslug2fm = {
 };
 
 
-// Metal Slug 2 - Super Vehicle-001/II (Early Summer Starry Night, Hack)
+// Metal Slug 2 - Early Summer Starry Night (Hack)
 // Modified by 浅蹊m~
 // GOTVG 20220511
 
@@ -21308,7 +21691,7 @@ STD_ROM_FN(mslug2dd)
 
 struct BurnDriver BurnDrvmslug2dd = {
 	"mslug2dd", "mslug2", "neogeo", NULL, "2022",
-	"Metal Slug 2 - Super Vehicle-001/II (Early Summer Starry Night, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 - Early Summer Starry Night (Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2ddRomInfo, mslug2ddRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21351,24 +21734,24 @@ static void mslug2aksCallback()
 	RomDiffPatch(Neo68KROMActive + 0x100000, nIndex, 0, 1);
 
 	switch (VerSwitcher & 0x0f) {
-	case 0x01:
-		nIndex = 10;
-		break;
+		case 0x01:
+			nIndex = 10;
+			break;
 
-	case 0x02:
-		nIndex = 12;
-		break;
+		case 0x02:
+			nIndex = 12;
+			break;
 
-	case 0x04:
-		nIndex = 14;
-		break;
+		case 0x04:
+			nIndex = 14;
+			break;
 
-	case 0x08:
-		nIndex = 15;
-		break;
+		case 0x08:
+			nIndex = 15;
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	RomDiffPatch(Neo68KROMActive + 0x000000, nIndex, 0, 1);
@@ -21376,7 +21759,34 @@ static void mslug2aksCallback()
 
 static INT32 mslug2aksInit()
 {
-	if (VerSwitcher & 0x0f) {
+	nBurnDrvSubActive = (VerSwitcher & 0x0f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 2 - Multifunction (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 2 - Survival (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 2 - Enemy Remix (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug 2 - Weapon Storage (Hack)\0";
+			break;
+
+		case 0x08:
+			pszCustomNameA = "Metal Slug 2 - 1v2 Mode (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug2aksCallback;
 	}
 
@@ -21394,7 +21804,7 @@ struct BurnDriver BurnDrvmslug2aks = {
 };
 
 
-// Metal Slug 2 - Super Vehicle-001/II (Extraction Green Turbo, Hack)
+// Metal Slug 2 - Extraction Green Turbo (Hack)
 // Modified by Zhengpheng
 // 20210916
 
@@ -21416,7 +21826,7 @@ STD_ROM_FN(mslug2eg)
 
 struct BurnDriver BurnDrvmslug2eg = {
 	"mslug2eg", "mslug2", "neogeo", NULL, "2021",
-	"Metal Slug 2 - Super Vehicle-001/II (Extraction Green Turbo, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug 2 - Extraction Green Turbo (Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2egRomInfo, mslug2egRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21482,7 +21892,11 @@ static struct BurnRomInfo mslugxcbRomDesc[] = {
 
 	/* Enemy Remix - 20131028 */
 	{ "250-p1.p1",		0x100000, 0x81f1f60b, 0 | BRF_ESS | BRF_PRG }, // 13 68K code
-	{ "250-p2c2.ep1",	0x400000, 0x5d1c52cd, 0 | BRF_ESS | BRF_PRG }, // 14 
+	{ "250-p2c2.ep1",	0x400000, 0x5d1c52cd, 0 | BRF_ESS | BRF_PRG }, // 14
+
+	/* Infinite Firepower - 20210320 */
+	{ "250-p1max.p1",	0x100000, 0xa507546f, 0 | BRF_ESS | BRF_PRG }, // 15 68K code
+	{ "250-p2max.ep1",	0x400000, 0x9cf91e0f, 0 | BRF_ESS | BRF_PRG }, // 16
 };
 
 STDROMPICKEXT(mslugxcb, mslugxcb, neogeo)
@@ -21490,13 +21904,34 @@ STD_ROM_FN(mslugxcb)
 
 static void mslugxcbCallback()
 {
-	RomDiffPatch(Neo68KROMActive + 0x000000, 13, 0, 1);
-	RomDiffPatch(Neo68KROMActive + 0x100000, 14, 0, 1);
+	INT32 nIndex = (VerSwitcher & 0x01) ? 13 : 15;
+
+	RomDiffPatch(Neo68KROMActive + 0x000000, nIndex + 0, 0, 1);
+	RomDiffPatch(Neo68KROMActive + 0x100000, nIndex + 1, 0, 1);
 }
 
 static INT32 mslugxcbInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug X - Multi Vehicle (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug X - Enemy Remix (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug X - Infinite Firepower (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugxcbCallback;
 	}
 
@@ -21504,7 +21939,7 @@ static INT32 mslugxcbInit()
 }
 
 struct BurnDriver BurnDrvmslugxcb = {
-	"mslugxcb", "mslugx", "neogeo", NULL, "2013",
+	"mslugxcb", "mslugx", "neogeo", NULL, "2013-2021",
 	"Metal Slug X - Super Vehicle-001 (Modified by CB, Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo MVS",
 	L"Metal Slug X - Super Vehicle-001 (Modified by \u78c1\u66b4\u7ebf\u5708, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
@@ -21538,6 +21973,14 @@ static struct BurnRomInfo mslugx2rRomDesc[] = {
 	/* 2R 1v2 Mode - 20200519 */
 	{ "250-p12r1v2.p1",		0x100000, 0xd13fd368, 0 | BRF_ESS | BRF_PRG }, // 19 68K code
 	{ "250-p22r1v2.ep1",	0x400000, 0x730e94a2, 0 | BRF_ESS | BRF_PRG }, // 20
+
+	/* Warriors - 20210403 */
+	{ "250-p1xr.p1",		0x100000, 0xbea1f7e5, 0 | BRF_ESS | BRF_PRG }, // 21 68K code
+	{ "250-p2xr.ep1",		0x400000, 0x0efc5d67, 0 | BRF_ESS | BRF_PRG }, // 22
+
+	/* Wuji - 20210403 */
+	{ "250-p1sv.p1",		0x100000, 0x1b213460, 0 | BRF_ESS | BRF_PRG }, // 21 68K code
+	{ "250-p2sv.ep1",		0x400000, 0x718d6d66, 0 | BRF_ESS | BRF_PRG }, // 22
 };
 
 STDROMPICKEXT(mslugx2r, mslugx2r, neogeo)
@@ -21545,7 +21988,7 @@ STD_ROM_FN(mslugx2r)
 
 static void mslugx2rCallback()
 {
-	for (INT32 i = 0x01, nIndex = 13; i <= 0x08; i <<= 1, nIndex += 2)
+	for (INT32 i = 0x01, nIndex = 13; i <= 0x20; i <<= 1, nIndex += 2)
 	{
 		if (VerSwitcher & i) {
 			RomDiffPatch(Neo68KROMActive + 0x000000, nIndex + 0, 0, 1);
@@ -21556,7 +21999,42 @@ static void mslugx2rCallback()
 
 static INT32 mslugx2rInit()
 {
-	if (VerSwitcher & 0x0f) {
+	nBurnDrvSubActive = (VerSwitcher & 0x3f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug X - 2R (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug X - Blue (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug X - AzStar Soda Remix FC2 (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug X - 2R Blue (Hack)\0";
+			break;
+
+		case 0x08:
+			pszCustomNameA = "Metal Slug X - 2R 1v2 Mode (Hack)\0";
+			break;
+
+		case 0x10:
+			pszCustomNameA = "Metal Slug X - Warriors (Hack)\0";
+			break;
+
+		case 0x20:
+			pszCustomNameA = "Metal Slug X - Wuji (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugx2rCallback;
 	}
 
@@ -21633,26 +22111,26 @@ static void mslugxaksCallback()
 	}
 
 	switch (VerSwitcher & 0x0f) {
-	case 0x01:  // Survival
-		nIndex = 13;
-		RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + 0x2000000, 15, 0, 2);
-		break;
+		case 0x01:  // Survival
+			nIndex = 13;
+			RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + 0x2000000, 15, 0, 2);
+			break;
 
-	case 0x02:  // Multifunction
-		nIndex = 17;
-		break;
+		case 0x02:  // Multifunction
+			nIndex = 17;
+			break;
 
-	case 0x04:  // 1v2 Mode
-		nIndex = 22;
-		break;
+		case 0x04:  // 1v2 Mode
+			nIndex = 22;
+			break;
 
-	case 0x08:  // Extreme Space
-		nIndex = 24;
-		RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + 0x0000000, 26, 0, 2);
-		break;
+		case 0x08:  // Extreme Space
+			nIndex = 24;
+			RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + 0x0000000, 26, 0, 2);
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	// 68K code
@@ -21662,7 +22140,34 @@ static void mslugxaksCallback()
 
 static INT32 mslugxaksInit()
 {
-	if (VerSwitcher & 0x0f) {
+	nBurnDrvSubActive = (VerSwitcher & 0x0f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug X - Legendary (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug X - Survival (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug X - Multifunction (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug X - 1v2 Mode (Hack)\0";
+			break;
+
+		case 0x08:
+			pszCustomNameA = "Metal Slug X - Extreme Space (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslugxaksCallback;
 	}
 
@@ -21842,12 +22347,12 @@ struct BurnDriver BurnDrvmslug3v = {
 #undef MSLUG3_ENCRYPTION_COMPONENT
 
 
-#define MSLUG3_SOUND											\
-	{ "256-m1.m1",		0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG },	\
-	{ "256-v1.v1",		0x400000, 0xf2690241, 5 | BRF_SND },			\
-	{ "256-v2.v2",		0x400000, 0x7e2a10bd, 5 | BRF_SND },			\
-	{ "256-v3.v3",		0x400000, 0x0eaec17c, 5 | BRF_SND },			\
-	{ "256-v4.v4",		0x400000, 0x9b4b22d4, 5 | BRF_SND },
+#define MSLUG3_SOUND												\
+	{ "256-m1.m1",	0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG },	\
+	{ "256-v1.v1",	0x400000, 0xf2690241, 5 | BRF_SND },			\
+	{ "256-v2.v2",	0x400000, 0x7e2a10bd, 5 | BRF_SND },			\
+	{ "256-v3.v3",	0x400000, 0x0eaec17c, 5 | BRF_SND },			\
+	{ "256-v4.v4",	0x400000, 0x9b4b22d4, 5 | BRF_SND },
 
 
 // Metal Slug 3 (Modified by 浅蹊m~, Hack)
@@ -21886,8 +22391,23 @@ static void mslug3ddCallback()
 
 static INT32 mslug3ddInit()
 {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 3 - Early Summer Starry Night (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 3 - Komorebi (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
 	// Komorebi
-	if (VerSwitcher & 0x01) {
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3ddCallback;
 	}
 
@@ -21970,7 +22490,22 @@ static void mslug3seCallback()
 
 static INT32 mslug3seInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 3 - Special Edition (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 3 (NGH-2560) (Decrypted C)\0";
+			break;
+
+		default:
+		break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3seCallback;
 	}
 
@@ -22050,20 +22585,20 @@ static void mslug3cbCallback()
 	RomDiffPatch(NeoZ80ROMActive, nIndex, 0, 1);
 
 	switch (VerSwitcher & 0x07) {  // 68K code
-	case 0x01:  // Last Bullet Remix
-		nIndex = 16;
-		break;
+		case 0x01:  // Last Bullet Remix
+			nIndex = 16;
+			break;
 
-	case 0x02:  // Shop Edition
-		nIndex = 21;
-		break;
+		case 0x02:  // Shop Edition
+			nIndex = 21;
+			break;
 
-	case 0x04:  // Onimusha Samanosuke
-		nIndex = 23;
-		break;
+		case 0x04:  // Onimusha Samanosuke
+			nIndex = 23;
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	RomDiffPatch(Neo68KROMActive, nIndex, 0, 1);
@@ -22075,13 +22610,36 @@ static void mslug3cbCallback()
 
 static INT32 mslug3cbInit()
 {
-	if (VerSwitcher & 0x07) {
+	nBurnDrvSubActive = (VerSwitcher & 0x07);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 3 - Pigeon Slug (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 3 - Last Bullet Remix (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 3 - Shop Edition (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug 3 - Onimusha Samanosuke (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3cbCallback;
 	}
 
 	INT32 nRet = NeoInit();
 
-	if ((0 == nRet) && (VerSwitcher & 0x07)) {
+	if ((0 == nRet) && (nBurnDrvSubActive)) {
 		INT32 nIndex = (VerSwitcher & 0x04) ? 26 : 20;  // Sound data
 
 		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + 0xc00000, nIndex, 0, 1);
@@ -22104,9 +22662,9 @@ struct BurnDriver BurnDrvmslug3cb = {
 // Metal Slug 3 (Modified by 合金弹头爱克斯, Hack)
 
 static struct BurnRomInfo mslug3aksRomDesc[] = {
-	/* Legendary - 20230604 */
-	{ "256-p1cq.p1",	0x100000, 0xa03172bf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-p2cq.sp2",	0x400000, 0xf6734391, 1 | BRF_ESS | BRF_PRG }, //  1
+	/* Legendary - 20230612 */
+	{ "256-p1cq.p1",	0x100000, 0xa1d0a37a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-p2cq.sp2",	0x400000, 0x8585d898, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "256-s1d.s1",		0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -22166,7 +22724,30 @@ static void mslug3aksCallback()
 
 static INT32 mslug3aksInit()
 {
-	if (VerSwitcher & 0x07) {
+	nBurnDrvSubActive = (VerSwitcher & 0x07);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 3 - Legendary (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 3 - Survival (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 3 - Vehicle Summon (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug 3 - Multifunction (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3aksCallback;
 	}
 
@@ -22312,9 +22893,28 @@ static void mslug4cbCallback()
 
 static INT32 mslug4cbInit()
 {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 4 - Last Bullet Remix (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 4 - Last Bullet Remix (Without body armor, Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 4 - Random Ammunition (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
 	// Last Bullet Remix (Without body armor)
 	// Random Ammunition
-	if (VerSwitcher & 0x03) {
+	if (nBurnDrvSubActive) {
 		if (VerSwitcher & 0x02)
 			pNRI->nSpriteSize = 0x800000;
 
@@ -22380,7 +22980,26 @@ static void mslug4aCallback()
 
 static INT32 mslug4aInit()
 {
-	if (VerSwitcher & 0x03) {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 4 (20th Anniversary, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 4 - 20th Anniversary ((Level patch, Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 4 - The Longest Battle (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug4aCallback;
 	}
 
@@ -22426,15 +23045,28 @@ STD_ROM_FN(mslug4dd)
 
 static void mslug4ddCallback()
 {
-	// Komorebi
-	// 1v2 Mode
 	RomDiffPatch(Neo68KROMActive + 0x000000, 14, 0, 1);
 	RomDiffPatch(Neo68KROMActive + 0x100000, 15, 0, 1);
 }
 
 static INT32 mslug4ddInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 4 - Early Summer Starry Night (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 4 - Komorebi (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug4ddCallback;
 	}
 
@@ -22469,13 +23101,37 @@ static struct BurnRomInfo mslug4aksRomDesc[] = {
 STDROMPICKEXT(mslug4aks, mslug4aks, neogeo)
 STD_ROM_FN(mslug4aks)
 
+static INT32 mslug4aksInit()
+{
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 4 - Multifunction (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 4 - 1v2 Mode (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
+		NeoCallbackActive->pInitialise = mslug4ddCallback;
+	}
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvmslug4aks = {
 	"mslug4aks", "mslug4", "neogeo", NULL, "2017-2019",
 	"Metal Slug 4 (Modified by AKS, Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo",
 	L"Metal Slug 4 (Modified by \u5408\u91d1\u5f39\u5934\u7231\u514b\u65af, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug4aksRomInfo, mslug4aksRomName, NULL, NULL, NULL, NULL, neoverswInputInfo, mslug4aksDIPInfo,
-	mslug4ddInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug4aksInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -22514,7 +23170,26 @@ static void mslug4cCallback()
 
 static INT32 mslug4cInit()
 {
-	if (VerSwitcher & 0x03) {
+	nBurnDrvSubActive = (VerSwitcher & 0x03);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 4 - Enemy Remix (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 4 (NGM-2630) (Decrypted C)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 4 (NGH-2630) (Decrypted C)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug4cCallback;
 	}
 
@@ -22627,22 +23302,22 @@ static void mslug5exCallback()
 
 	switch (VerSwitcher & 0x07)
 	{
-	case 0x01:
-		nIndex = 13;
-		RomDiffPatch(Neo68KROMActive + 0x300000, 15, 0, 1);
-		RomDiffPatch(NeoTextROM[nNeoActiveSlot], 16, 0, 1);
-		break;
+		case 0x01:
+			nIndex = 13;
+			RomDiffPatch(Neo68KROMActive + 0x300000, 15, 0, 1);
+			RomDiffPatch(NeoTextROM[nNeoActiveSlot], 16, 0, 1);
+			break;
 
-	case 0x02:
-		nIndex = 17;
-		break;
+		case 0x02:
+			nIndex = 17;
+			break;
 
-	case 0x04:
-		nIndex = 19;
-		break;
+		case 0x04:
+			nIndex = 19;
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	RomDiffPatch(Neo68KROMActive, nIndex, 0, 1);
@@ -22655,7 +23330,30 @@ static void mslug5exCallback()
 
 static INT32 mslug5exInit()
 {
-	if (VerSwitcher & 0x07) {
+	nBurnDrvSubActive = (VerSwitcher & 0x07);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 5 - Extend (v1.2, Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 5 - Plus (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 5 (Full Decryption)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug 5 (Not Encrypted)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5exCallback;
 	}
 
@@ -22745,8 +23443,23 @@ static void mslug5cbCallback()
 
 static INT32 mslug5cbInit()
 {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 5 - New Battle (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 5 - Fierce Battle (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
 	// Fierce Battle
-	if (VerSwitcher & 0x01) {
+	if (nBurnDrvSubActive) {
 		pNRI->nADPCMASize = 0x037520 - 0x0002f0;
 		NeoCallbackActive->pInitialise = mslug5cbCallback;
 	}
@@ -22754,7 +23467,7 @@ static INT32 mslug5cbInit()
 	INT32 nRet = NeoInit();
 
 	// Fierce Battle
-	if ((0 == nRet) && (VerSwitcher & 0x01)) {
+	if ((0 == nRet) && nBurnDrvSubActive) {
 		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + 0x000000, 19, 0, 1);
 		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + 0x800000, 20, 0, 1);
 	}
@@ -22822,7 +23535,42 @@ static void mslug5aksCallback()
 
 static INT32 mslug5aksInit()
 {
-	if (VerSwitcher & 0x1f) {
+	nBurnDrvSubActive = (VerSwitcher & 0x3f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 5 - Stone Turtle (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 5 - Remake FC2 (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 5 - Multifunction (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug 5 - 1v2 Mode (Hack)\0";
+			break;
+
+		case 0x08:
+			pszCustomNameA = "Metal Slug 5 - Vehicle Summon (Hack)\0";
+			break;
+
+		case 0x10:
+			pszCustomNameA = "Metal Slug 5 - Boss Battles (Hack)\0";
+			break;
+
+		case 0x20:
+			pszCustomNameA = "Metal Slug 5 - Survival (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5aksCallback;
 	}
 
@@ -22857,15 +23605,27 @@ STD_ROM_FN(mslug5c)
 
 static void mslug5cCallback()
 {
-	// Komorebi
-	// Enemy Enhance
-	// Devil Enemy Remix
 	RomDiffPatch(Neo68KROMActive, 13, 0, 1);
 }
 
 static INT32 mslug5cInit()
 {
-	if (VerSwitcher & 0x01) {
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 5 - Enemy Remix (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 5 - Devil Enemy Remix (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug5cCallback;
 	}
 
@@ -22898,13 +23658,37 @@ static struct BurnRomInfo mslug5xRomDesc[] = {
 STDROMPICKEXT(mslug5x, mslug5x, neogeo)
 STD_ROM_FN(mslug5x)
 
+static INT32 mslug5xInit()
+{
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 5 - X (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 5 - Enemy Enhance (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
+		NeoCallbackActive->pInitialise = mslug5cCallback;
+	}
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvmslug5x = {
 	"mslug5x", "mslug5", "neogeo", NULL, "2022",
 	"Metal Slug 5 (Modified by YouGuDuoLa, Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo",
 	L"Metal Slug 5 (Modified by \u5c24\u53e4\u6735\u62c9, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5xRomInfo, mslug5xRomName, NULL, NULL, NULL, NULL, neoverswInputInfo, mslug5xDIPInfo,
-	mslug5cInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug5xInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -22924,13 +23708,37 @@ static struct BurnRomInfo mslug5ddRomDesc[] = {
 STDROMPICKEXT(mslug5dd, mslug5dd, neogeo)
 STD_ROM_FN(mslug5dd)
 
+static INT32 mslug5ddInit()
+{
+	nBurnDrvSubActive = (VerSwitcher & 0x01);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 5 - Early Summer Starry Night (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 5 - Komorebi (Hack)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
+		NeoCallbackActive->pInitialise = mslug5cCallback;
+	}
+
+	return NeoInit();
+}
+
 struct BurnDriver BurnDrvmslug5dd = {
 	"mslug5dd", "mslug5", "neogeo", NULL, "2022",
 	"Metal Slug 5 (Modified by QianXi, Hack)\0", "Other versions are selected in the dipswitch", "hack", "Neo Geo",
 	L"Metal Slug 5 (Modified by \u6d45\u8e4am~, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5ddRomInfo, mslug5ddRomName, NULL, NULL, NULL, NULL, neoverswInputInfo, mslug5ddDIPInfo,
-	mslug5cInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslug5ddInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -24627,28 +25435,28 @@ static void mslug3xCallback()
 
 	// Select a version other than the release version.
 	switch (VerSwitcher & 0x1f) {
-	case 0x01:	/* Public Beta */
-		nIndex[0] = 6; nIndex[1] = 7;
-		break;
+		case 0x01:	/* Public Beta */
+			nIndex[0] =  6; nIndex[1] =  7;
+			break;
 
-	case 0x02:	/* Development 0 */
-		nIndex[0] = 9; nIndex[1] = 11;
-		break;
+		case 0x02:	/* Development 0 */
+			nIndex[0] =  9; nIndex[1] = 11;
+			break;
 
-	case 0x04:	/* Development 1 */
-		nIndex[0] = 15; nIndex[1] = 16;
-		break;
+		case 0x04:	/* Development 1 */
+			nIndex[0] = 15; nIndex[1] = 16;
+			break;
 
-	case 0x08:	/* Development 2 */
-		nIndex[0] = 20; nIndex[1] = 21;
-		break;
+		case 0x08:	/* Development 2 */
+			nIndex[0] = 20; nIndex[1] = 21;
+			break;
 
-	case 0x10:	/* Development 3 */
-		nIndex[0] = 25; nIndex[1] = 26;
-		break;
+		case 0x10:	/* Development 3 */
+			nIndex[0] = 25; nIndex[1] = 26;
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	RomDiffPatch(Neo68KROMActive, nIndex[0], 0, 1);
@@ -24661,7 +25469,38 @@ static void mslug3xCallback()
 
 static INT32 mslug3xInit()
 {
-	if (VerSwitcher & 0x1f) {
+	nBurnDrvSubActive = (VerSwitcher & 0x1f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Metal Slug 3X (Release)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Metal Slug 3X (Public Beta)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Metal Slug 3X (Development 0)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Metal Slug 3X (Development 1)\0";
+			break;
+
+		case 0x08:
+			pszCustomNameA = "Metal Slug 3X (Development 2)\0";
+			break;
+
+		case 0x10:
+			pszCustomNameA = "Metal Slug 3X (Development 3)\0";
+			break;
+
+		default:
+			break;
+	}
+
+	if (nBurnDrvSubActive) {
 		NeoCallbackActive->pInitialise = mslug3xCallback;
 	}
 

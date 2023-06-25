@@ -19013,7 +19013,7 @@ struct BurnDriver BurnDrvmslug4a = {
 // GOTVG Metal Slug 5 (Multifunction Hack 20170523)
 // mslug5hp00 in HBMAME. renamed from mslug5g
 static struct BurnRomInfo mslug5dRomDesc[] = {
-	{ "268-p1d.p1",     0x600000, 0x3be747ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "268-p1dg.p1",    0x600000, 0x3be747ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "268-s1d.s1",     0x020000, 0x64952683, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -20930,8 +20930,8 @@ static struct BurnRomInfo mslug3cqRomDesc[] = {
 	{ "256-c4d.c4",      0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
 	{ "256-c5d.c5",      0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
 	{ "256-c6d.c6",      0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
-	{ "256-c7d.c7",      0x800000, 0xb8e017de, 3 | BRF_GRA },           //  9
-	{ "256-c8d.c8",      0x800000, 0xdef95742, 3 | BRF_GRA },           // 10
+	{ "256-c7cq.c7",     0x800000, 0xb8e017de, 3 | BRF_GRA },           //  9
+	{ "256-c8cq.c8",     0x800000, 0xdef95742, 3 | BRF_GRA },           // 10
 
 	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 

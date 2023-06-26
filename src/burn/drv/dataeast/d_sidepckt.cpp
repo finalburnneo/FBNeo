@@ -41,6 +41,8 @@ static UINT8 DrvSoundLatch;
 typedef INT32 (*SidePcktLoadRoms)();
 static SidePcktLoadRoms LoadRomsFunction;
 
+static INT32 nCyclesExtra[3];
+
 static struct BurnInputInfo DrvInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 coin"   },
@@ -561,16 +563,18 @@ static INT32 DrvDoReset()
 {
 	M6809Open(0);
 	M6809Reset();
-	BurnYM2203Reset();
 	DrvMCUReset();
 	M6809Close();
 
 	M6502Open(0);
 	M6502Reset();
+	BurnYM2203Reset();
 	BurnYM3526Reset();
 	M6502Close();
 
 	DrvSoundLatch = 0;
+
+	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 
 	HiscoreReset();
 
@@ -858,7 +862,7 @@ static INT32 DrvDraw()
 static INT32 DrvFrame()
 {
 	INT32 nCyclesTotal[3] = { 2000000 / 58, 1500000 / 58, 8000000 / 12 / 58 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, nCyclesExtra[2] };
 	INT32 nInterleave = 100;
 
 	if (DrvReset) DrvDoReset();
@@ -885,6 +889,9 @@ static INT32 DrvFrame()
 
 	M6809Close();
 	M6502Close();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -924,6 +931,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM3526Scan(nAction, pnMin);
 
 		SCAN_VAR(DrvSoundLatch);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

@@ -39,6 +39,8 @@ static UINT8 DrvDips[1];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo PcktgalInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
@@ -252,6 +254,8 @@ static INT32 DrvDoReset()
 	soundtoggle = 0;
 	msm5205next = 0;
 	memset (pf_control, 0, sizeof(pf_control));
+
+	nCyclesExtra = 0;
 
 	HiscoreReset();
 
@@ -483,7 +487,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, 1500000);
 	INT32 nCyclesTotal[2] = { 2000000 / 60, 1500000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -497,6 +501,8 @@ static INT32 DrvFrame()
 		MSM5205Update();
 		M6502Close();
 	}
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -538,6 +544,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundtoggle);
 		SCAN_VAR(msm5205next);
 		SCAN_VAR(pf_control);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE)

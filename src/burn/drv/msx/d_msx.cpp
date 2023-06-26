@@ -27496,7 +27496,7 @@ struct BurnDriver BurnDrvMSX_no = {
 	272, 228, 4, 3
 };
 
-// Sabotaje (Spa)
+// Sabotaje (Spanish)
 
 static struct BurnRomInfo MSX_sabotajeRomDesc[] = {
 	{ "Sabotaje (1988)(P.J. Software)(es)[RUN'CAS-'].cas",	35367, 0x38af0372, BRF_PRG | BRF_ESS },
@@ -33001,6 +33001,25 @@ struct BurnDriver BurnDrvMSX_terekines = {
 	272, 228, 4, 3
 };
 
+// Bloktris (HB)
+
+static struct BurnRomInfo MSX_bloktrisRomDesc[] = {
+	{ "Bloktris (2023)(Under4Mhz).rom",	32768, 0x0b855dd6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_bloktris, MSX_bloktris, msx_msx)
+STD_ROM_FN(MSX_bloktris)
+
+struct BurnDriver BurnDrvMSX_bloktris = {
+	"msx_bloktris", NULL, "msx_msx", NULL, "2023",
+	"Bloktris (HB)\0", NULL, "Under4Mhz", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_bloktrisRomInfo, MSX_bloktrisRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Bomb Jack (HB, v1.2)
 
 static struct BurnRomInfo MSX_bombjackRomDesc[] = {
@@ -33016,6 +33035,44 @@ struct BurnDriver BurnDrvMSX_bombjack = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_ACTION, 0,
 	MSXGetZipName, MSX_bombjackRomInfo, MSX_bombjackRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Cracky (HB)
+
+static struct BurnRomInfo MSX_crackyRomDesc[] = {
+	{ "Cracky (2023)(Inufuto).cas",	7237, 0x8d43ce2a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_cracky, MSX_cracky, msx_msx)
+STD_ROM_FN(MSX_cracky)
+
+struct BurnDriver BurnDrvMSX_cracky = {
+	"msx_cracky", NULL, "msx_msx", NULL, "2023",
+	"Cracky (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, MSX_crackyRomInfo, MSX_crackyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Flubber in the Upside Down World (HB, v1.2)
+
+static struct BurnRomInfo MSX_flubberRomDesc[] = {
+	{ "Flubber in the Upside Down World v1.2 (2023)(Amaury Carvalho).rom",	49152, 0x7b0425f8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_flubber, MSX_flubber, msx_msx)
+STD_ROM_FN(MSX_flubber)
+
+struct BurnDriver BurnDrvMSX_flubber = {
+	"msx_flubber", NULL, "msx_msx", NULL, "2023",
+	"Flubber in the Upside Down World (HB, v1.2)\0", NULL, "Amaury Carvalho", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_flubberRomInfo, MSX_flubberRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -33096,6 +33153,25 @@ struct BurnDriver BurnDrvMSX_gelatino2s = {
 	272, 228, 4, 3
 };
 
+// M-Force (HB, v2)
+
+static struct BurnRomInfo MSX_mforcev2RomDesc[] = {
+	{ "M-Force v2 (2023)(Chikuwa Teikoku).rom",	32768, 0xc63f95e3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mforcev2, MSX_mforcev2, msx_msx)
+STD_ROM_FN(MSX_mforcev2)
+
+struct BurnDriver BurnDrvMSX_mforcev2 = {
+	"msx_mforcev2", NULL, "msx_msx", NULL, "2023",
+	"M-Force (HB, v2)\0", NULL, "Chikuwa Teikoku", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
+	MSXGetZipName, MSX_mforcev2RomInfo, MSX_mforcev2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Pentacorn Quest (HB, v1.1)
 
 static struct BurnRomInfo MSX_pentaquestRomDesc[] = {
@@ -33168,6 +33244,25 @@ struct BurnDriver BurnDrvMSX_spellbound = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
 	MSXGetZipName, MSX_spellboundRomInfo, MSX_spellboundRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Tenebra (HB)
+
+static struct BurnRomInfo MSX_tenebraRomDesc[] = {
+	{ "Tenebra (2023)(Haplo).rom",	16384, 0x9c59bd5a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_tenebra, MSX_tenebra, msx_msx)
+STD_ROM_FN(MSX_tenebra)
+
+struct BurnDriver BurnDrvMSX_tenebra = {
+	"msx_tenebra", NULL, "msx_msx", NULL, "2023",
+	"Tenebra (HB)\0", NULL, "Haplo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE, 0,
+	MSXGetZipName, MSX_tenebraRomInfo, MSX_tenebraRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

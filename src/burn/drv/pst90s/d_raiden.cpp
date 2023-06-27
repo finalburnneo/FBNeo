@@ -828,7 +828,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 400;
-	INT32 nCyclesTotal[3] = { 10000000 / 60, 10000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[3] = { (INT32)(10000000 / 59.6), (INT32)(10000000 / 59.6), (INT32)(3579545 / 59.6) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	ZetOpen(0);

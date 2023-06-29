@@ -1411,7 +1411,7 @@ static inline void snowbrosSynchroniseZ80(INT32 nExtraCycles)
 
 	nCycles68KSync = nCycles - nExtraCycles;
 
-	BurnTimerUpdateYM3812(nCycles);
+	BurnTimerUpdate(nCycles);
 }
 
 // Callbacks for the FM chip
@@ -2086,7 +2086,7 @@ static UINT8 __fastcall SnowbrosZ80PortRead(UINT16 a)
 			return BurnYM3812Read(0, 0);
 		case 0x04: {
 			if (ZetTotalCycles() > nCycles68KSync) {
-				BurnTimerUpdateEndYM3812();
+				BurnTimerUpdateEnd();
 			}
 			return HyperpacSoundLatch;
 		}
@@ -2819,7 +2819,7 @@ static INT32 HoneydolInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3000000, &snowbrosFMIRQHandler, &HoneydolSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
@@ -2959,7 +2959,7 @@ static INT32 SnowbrosInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3000000, &snowbrosFMIRQHandler, &snowbrosSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -3959,7 +3959,7 @@ static INT32 HoneydolFrame()
 	}
 
 	nCycles68KSync = SekTotalCycles();
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
@@ -4004,10 +4004,10 @@ static INT32 SnowbrosFrame()
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		// Run Z80
-		BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[1] / nInterleave);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut)
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

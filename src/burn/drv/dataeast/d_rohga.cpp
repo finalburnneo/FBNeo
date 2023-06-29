@@ -50,6 +50,8 @@ static INT32 DrvOkiBank;
 static INT32 WizdfireEnglish = 0;
 static INT32 DrvHangzo = 0;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo RohgaInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -685,6 +687,8 @@ static INT32 DrvDoReset()
 
 	DrvYM2151WritePort(0, (DrvHangzo) ? 0 : 3);
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -778,12 +782,7 @@ static INT32 RohgaInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -864,7 +863,6 @@ static INT32 RohgaInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.48, 1006875, 0.70, 2013750, 0.30);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -877,12 +875,7 @@ static INT32 WizdfireInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -966,7 +959,6 @@ static INT32 WizdfireInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.80, 1006875, 2.00, 2013750, 0.40);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -986,12 +978,7 @@ static INT32 SchmeisrInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -1069,7 +1056,6 @@ static INT32 SchmeisrInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.80, 1006875, 1.00, 2013750, 0.40);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -1082,12 +1068,7 @@ static INT32 HangzoInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -1166,7 +1147,6 @@ static INT32 HangzoInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.55, 1006875, 0.65, 2013750, 0.20);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	DrvHangzo = 1;
 
@@ -1181,12 +1161,7 @@ static INT32 NitrobalInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -1281,7 +1256,6 @@ static INT32 NitrobalInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.50, 1006875, 0.50, 2013750, 0.30);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
-	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -1299,7 +1273,7 @@ static INT32 DrvExit()
 
 	deco16SoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	WizdfireEnglish = 0;
 	DrvHangzo = 0;
@@ -1825,12 +1799,11 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 2685000 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	h6280NewFrame();
-	
+
 	SekOpen(0);
 	h6280Open(0);
 
@@ -1839,35 +1812,26 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		CPU_RUN(1, h6280);
+		CPU_RUN_TIMER(1);
 
 		if (i == 248) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 			deco16_vblank = 0x08;
+
 			if (pBurnDraw) {
 				BurnDrvRedraw();
 			}
 		}
-
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-	}
-	
 	h6280Close();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	return 0;
 }
@@ -1896,6 +1860,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16Scan();
 
 		SCAN_VAR(DrvOkiBank);
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

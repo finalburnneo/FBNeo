@@ -1565,11 +1565,7 @@ static INT32 FghthistCommonInit(INT32 z80_sound, UINT32 speedhack)
 	sndlen[1] = 0x080000;
 	sndlen[2] = 0;
 
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRomExt(DrvARMROM + 0x000000,  0, 4, LD_GROUP(2))) return 1;
@@ -1703,11 +1699,7 @@ static INT32 CaptavenCommonInit(INT32 has_z80, UINT32 speedhack)
 	sndlen[1] = 0x080000;
 	sndlen[2] = 0;
 
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvARMROM + 0x000000,     0, 4)) return 1;
@@ -1838,11 +1830,7 @@ static INT32 NslasherCommonInit(INT32 has_z80, UINT32 speedhack)
 	sndlen[1] = 0x080000;
 	sndlen[2] = 0;
 
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRomExt(DrvARMROM + 0x000000,  0, 4, LD_GROUP(2))) return 1;
@@ -1992,11 +1980,7 @@ static INT32 TattassCommonInit(INT32 has_z80, UINT32 speedhack)
 	sndlen[1] = 0;
 	sndlen[2] = 0;
 
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRomExt(DrvARMROM + 0x000000,  0, 4, LD_GROUP(2))) return 1;
@@ -2163,11 +2147,7 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	sndlen[1] = 0x080000;
 	sndlen[2] = 0x080000;
 
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvARMROM + 0x000000,     0, 4)) return 1;
@@ -2336,7 +2316,7 @@ static INT32 DrvExit()
 		uses_gun = 0;
 	}
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	raster1_irq_cb = NULL;
 	raster2_irq_cb = NULL;
@@ -3524,6 +3504,7 @@ static INT32 DrvFrame()
 	}
 
 	ArmNewFrame();
+	h6280NewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
@@ -3545,7 +3526,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 274;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { (INT32)((double)7000000 / 57.799650), (INT32)((double)deco16_sound_cpuclock / 57.799650) };
 	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -3561,7 +3541,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Arm);
-		CPU_RUN(1, h6280);
+		CPU_RUN_TIMER(1);
 
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
@@ -3580,22 +3560,10 @@ static INT32 DrvFrame()
 			if (game_select == 1 || game_select == 2) irq_callback(1);
 			deco16_vblank = 1;
 		}
-
-		if (pBurnSoundOut && (i%4==3)) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();

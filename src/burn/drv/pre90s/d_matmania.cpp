@@ -599,6 +599,7 @@ static INT32 DrvInit(INT32 game)
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetBuffered(M6502TotalCycles, 1200000);
 
 	// maniach
 	m67805_taito_init(DrvMCUROM, DrvMCURAM, &maniach_m68705_interface);
@@ -614,7 +615,7 @@ static INT32 DrvInit(INT32 game)
 
 	// maniach
 	BurnYM3526Init(3600000, DrvYM3526IRQHandler, 0);
-	BurnTimerAttachYM3526(&M6809Config, 1500000);
+	BurnTimerAttach(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// both
@@ -755,7 +756,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1500000 / 60, 1200000 / 60, 3000000 / 4 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	vblank = 1;
 
@@ -773,8 +773,7 @@ static INT32 DrvFrame()
 		if (maniach)
 		{
 			M6809Open(0);
-			BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[0] / nInterleave));
-
+			CPU_RUN_TIMER(0); // 1, but running at 1500000
 			M6809Close();
 
 			m6805Open(0);
@@ -787,37 +786,15 @@ static INT32 DrvFrame()
 			CPU_RUN(1, M6502);
 			if ((i % 17) == 0) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			M6502Close();
-
-			// Render Sound Segment
-			if (pBurnSoundOut && (i%8)==7) {
-				INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				AY8910Render(pSoundBuf, nSegmentLength);
-				nSoundBufferPos += nSegmentLength;
-			}
 		}
-	}
-	if (maniach) {
-		M6809Open(0);
-		BurnTimerEndFrameYM3526(nCyclesTotal[0]);
-		M6809Close();
 	}
 
 	if (pBurnSoundOut) {
 		if (maniach) {
-			M6809Open(0);
 			BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
-			M6809Close();
 		} else {
-			// Make sure the buffer is entirely filled.
-			if (pBurnSoundOut) {
-				INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				if (nSegmentLength) {
-					AY8910Render(pSoundBuf, nSegmentLength);
-				}
-			}
+			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		}
 	}

@@ -485,7 +485,7 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 	{
 		case 0:
 			BurnYM3812Init(1, freq1, &DrvFMIRQHandler, 0);
-			BurnTimerAttachYM3812(&ZetConfig,freq0);
+			BurnTimerAttach(&ZetConfig,freq0);
 		break;
 
 		case 1:

@@ -404,7 +404,7 @@ INT32 BurnYM2610Init(INT32 nClockFrequency, UINT8* YM2610ADPCMAROM, INT32* nYM26
 {
 	DebugSnd_YM2610Initted = 1;
 	
-	BurnTimerInit(&YM2610TimerOver, GetTimeCallback);
+	INT32 timer_chipbase = BurnTimerInit(&YM2610TimerOver, GetTimeCallback);
 
 	BurnYM2610StreamCallback = StreamCallback;
 
@@ -428,7 +428,7 @@ INT32 BurnYM2610Init(INT32 nClockFrequency, UINT8* YM2610ADPCMAROM, INT32* nYM26
 	if (!nBurnYM2610SoundRate) nBurnYM2610SoundRate = 44100;
 
 	AY8910InitYM(0, nClockFrequency, nBurnYM2610SoundRate, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
-	YM2610Init(1, nClockFrequency, nBurnYM2610SoundRate, (void**)(&YM2610ADPCMAROM), nYM2610ADPCMASize, (void**)(&YM2610ADPCMBROM), nYM2610ADPCMBSize, &BurnOPNTimerCallback, IRQCallback);
+	YM2610Init(1, timer_chipbase, nClockFrequency, nBurnYM2610SoundRate, (void**)(&YM2610ADPCMAROM), nYM2610ADPCMASize, (void**)(&YM2610ADPCMBROM), nYM2610ADPCMBSize, &BurnOPNTimerCallback, IRQCallback);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * 6 * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * 6 * sizeof(INT16));

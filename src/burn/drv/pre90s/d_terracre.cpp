@@ -577,7 +577,7 @@ static void DrvSoundInit()
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.20, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnYM3526Init(4000000, NULL, 0);
-		BurnTimerAttachYM3526(&ZetConfig, 4000000);
+		BurnTimerAttach(&ZetConfig, 4000000);
 		BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -798,11 +798,7 @@ static INT32 DrvFrame()
 		SekClose();
 
 		ZetOpen(0);
-		if (has_ym2203) {
-			CPU_RUN_TIMER(0);
-		} else {
-			CPU_RUN_TIMER_YM3526(0);
-		}
+		CPU_RUN_TIMER(0);
 		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}

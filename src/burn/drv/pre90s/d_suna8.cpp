@@ -1336,7 +1336,7 @@ static INT32 HardheadInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3000000, (0 ? &sound_type1_fm_irq_handler : NULL), 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3000000);
+	BurnTimerAttach(&ZetConfig, 3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);
@@ -1415,7 +1415,7 @@ static INT32 SparkmanInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);
@@ -1567,7 +1567,7 @@ static INT32 StarfighInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);
@@ -1759,7 +1759,7 @@ static INT32 Hardhea2Init()
 	ZetClose();
 
 	BurnYM3812Init(1, 3000000, sound_type1_fm_irq_handler, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);
@@ -2109,7 +2109,7 @@ static INT32 HardheadFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -2218,7 +2218,7 @@ static INT32 Hardhea2Frame()
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -2282,7 +2282,7 @@ static INT32 SparkmanFrame() // & starfigh
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}

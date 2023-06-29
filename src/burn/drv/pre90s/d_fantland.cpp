@@ -663,7 +663,7 @@ static INT32 WheelrunInit()
 	ZetClose();
 
 	BurnYM3526Init(3500000, &DrvYM3526IrqHandler, &SynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 9000000);
+	BurnTimerAttach(&ZetConfig, 9000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	SN76489AInit(0, 3500000, 1);
@@ -841,14 +841,10 @@ static INT32 FantlandFrame()
 		VezClose();
 	}
 
-	VezOpen(1);
-
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	VezClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -919,18 +915,16 @@ static INT32 WheelrunFrame()
 		CPU_RUN(0, Vez);
 		if (i == (nInterleave - 1) && nmi_enable) VezSetIRQLineAndVector(0x20, 0, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
+	ZetClose();
+	VezClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
         SN76496Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	VezClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

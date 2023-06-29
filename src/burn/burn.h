@@ -267,7 +267,10 @@ extern INT32 nBurnCPUSpeedAdjust;
 
 extern UINT32 nBurnDrvCount;			// Count of game drivers
 extern UINT32 nBurnDrvActive;			// Which game driver is selected
+extern INT32 nBurnDrvSubActive;			// Which sub-game driver is selected
 extern UINT32 nBurnDrvSelect[8];		// Which games are selected (i.e. loaded but not necessarily active)
+
+extern char* pszCustomNameA;
 
 extern INT32 nMaxPlayers;
 
@@ -328,6 +331,9 @@ INT32 BurnSetProgressRange(double dProgressRange);
 INT32 BurnUpdateProgress(double dProgressStep, const TCHAR* pszText, bool bAbs);
 
 void BurnLocalisationSetName(char *szName, TCHAR *szLongName);
+void BurnLocalisationSetNameEx(char* szName, TCHAR * szLongName, INT32 nNumGames);
+
+void BurnerDoGameListExLocalisation();
 
 void BurnGetLocalTime(tm *nTime);                   // Retrieve local-time of machine w/tweaks for netgame and input recordings
 UINT16 BurnRandom();                                // State-able Random Number Generator (0-32767)

@@ -780,7 +780,7 @@ static INT32 DrvInit(INT32 game)
 
 	// dac0 -> dac1 -> dc-offset removal -> ym3526 -> OUT
 	BurnYM3526Init(4000000, NULL, &DrvYM3526SynchroniseStream, 1);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.85, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, ZetTotalCycles, 4000000);
@@ -967,7 +967,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		CPU_RUN_TIMER_YM3526(1);
+		CPU_RUN_TIMER(1);
 		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}

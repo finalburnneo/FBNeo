@@ -165,7 +165,7 @@ static void spdodgeb_main_write(UINT16 address, UINT8 data)
 		case 0x3002:
 			soundlatch = data;
 			M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			BurnTimerUpdateYM3812(M6502TotalCycles());
+			BurnTimerUpdate(M6502TotalCycles());
 		return;
 
 		case 0x3004:
@@ -546,7 +546,7 @@ static INT32 DrvInit()
 	HD63701Close();
 
 	BurnYM3812Init(1, 3000000, &DrvFMIRQHandler, 0);
-	BurnTimerAttachYM3812(&M6809Config, 2000000);
+	BurnTimerAttach(&M6809Config, 2000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, DrvSynchroniseStream, 384000, adpcm_int_0, MSM5205_S48_4B, 1);
@@ -748,23 +748,21 @@ static INT32 DrvFrame()
 			if (pBurnDraw) DrvPartialDraw(i);
 		}
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		MSM5205UpdateScanline(i);
 
 		mcu_sync(); // HD63701
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	M6502Close();
+	M6809Close();
+	HD63701Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	M6809Close();
-	HD63701Close();
 
 	if (pBurnDraw) {
 		DrvPartialDrawFinish();

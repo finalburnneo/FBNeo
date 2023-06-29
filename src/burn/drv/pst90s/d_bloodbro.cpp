@@ -839,9 +839,8 @@ static INT32 DrvFrame()
 		seibu_coin_input = (DrvJoy1[1] << 1) | DrvJoy1[0];
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 1000;
-	INT32 nTotalCycles[2] = { 10000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -849,24 +848,21 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nTotalCycles[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		CPU_RUN(0, Sek);
 
-		BurnTimerUpdateYM3812((nTotalCycles[1] / nInterleave) * (i+1));
+		CPU_RUN_TIMER(1);
 	}
 
 	if (nGameSelect == 0) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO); // bloodbro
 	if (nGameSelect == 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); // skysmash
 	if (nGameSelect == 2) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); // weststry
 
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

@@ -478,7 +478,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3579545, NULL, DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3579545);
+	BurnTimerAttach(&ZetConfig, 3579545);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	K007232Init(0, 3579545, DrvSndROM, 0x80000); // no idea...
@@ -747,7 +747,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, konami);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
@@ -756,7 +756,6 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
-	bprintf(0, _T("extra %d\n"), nExtraCycles);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

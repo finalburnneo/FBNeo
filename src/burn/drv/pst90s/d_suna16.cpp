@@ -1460,7 +1460,7 @@ static INT32 BestbestInit()
 	ZetClose();
 
 	BurnYM3526Init(3000000, &bestbestFMIRQHandler, &bestbestSynchroniseStream, 1);
-	BurnTimerAttachYM3526(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 0);
@@ -1867,7 +1867,7 @@ static INT32 BestbestFrame()
 		if (i == (nInterleave    )-1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		ZetOpen(1);
@@ -1876,14 +1876,11 @@ static INT32 BestbestFrame()
 	}
 	SekClose();
 
-	ZetOpen(0);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

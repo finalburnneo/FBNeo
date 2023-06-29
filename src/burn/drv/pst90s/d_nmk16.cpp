@@ -5904,7 +5904,7 @@ static INT32 SeibuSoundFrame()
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
@@ -11203,7 +11203,7 @@ static INT32 TomagicFrame()
 			NMK16BufferSpriteRam();
 		}
 
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {
@@ -11274,7 +11274,7 @@ static INT32 TomagicInit()
 	BurnSetRefreshRate(56.18);
 
 	BurnYM3812Init(1, 3000000, &DrvYM2203IrqHandler, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3000000);
+	BurnTimerAttach(&ZetConfig, 3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 3000000 / MSM6295_PIN7_LOW, 1);

@@ -30,6 +30,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 soundlatch;
 static UINT16 DrvVidCtrl[2][4];
+static INT32 bac06_bank;
 
 static INT32 vblank;
 
@@ -38,6 +39,8 @@ static UINT8 DrvJoy2[16];
 static UINT16 DrvInputs[2];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
+
+static INT32 nCyclesExtra;
 
 static struct BurnInputInfo StadheroInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
@@ -70,59 +73,78 @@ STDINPUTINFO(Stadhero)
 
 static struct BurnDIPInfo StadheroDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xff, NULL					},
-	{0x15, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x14, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
-	{0x14, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x14, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x14, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x14, 0x01, 0x0c, 0x00, "3 Coins 1 Credits"	},
-	{0x14, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"	},
-	{0x14, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x14, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0c, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x14, 0x01, 0x20, 0x00, "Off"					},
-	{0x14, 0x01, 0x20, 0x20, "On"					},
+	{0x00, 0x01, 0x20, 0x00, "Off"					},
+	{0x00, 0x01, 0x20, 0x20, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x14, 0x01, 0x40, 0x40, "Off"					},
-	{0x14, 0x01, 0x40, 0x00, "On"					},
+	{0x00, 0x01, 0x40, 0x40, "Off"					},
+	{0x00, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Time (1P Vs CPU)"		},
-	{0x15, 0x01, 0x03, 0x02, "600"					},
-	{0x15, 0x01, 0x03, 0x03, "500"					},
-	{0x15, 0x01, 0x03, 0x01, "450"					},
-	{0x15, 0x01, 0x03, 0x00, "400"					},
+	{0x01, 0x01, 0x03, 0x02, "600"					},
+	{0x01, 0x01, 0x03, 0x03, "500"					},
+	{0x01, 0x01, 0x03, 0x01, "450"					},
+	{0x01, 0x01, 0x03, 0x00, "400"					},
 
 	{0   , 0xfe, 0   ,    4, "Time (1P Vs 2P)"		},
-	{0x15, 0x01, 0x0c, 0x08, "270"					},
-	{0x15, 0x01, 0x0c, 0x0c, "210"					},
-	{0x15, 0x01, 0x0c, 0x04, "180"					},
-	{0x15, 0x01, 0x0c, 0x00, "120"					},
+	{0x01, 0x01, 0x0c, 0x08, "270"					},
+	{0x01, 0x01, 0x0c, 0x0c, "210"					},
+	{0x01, 0x01, 0x0c, 0x04, "180"					},
+	{0x01, 0x01, 0x0c, 0x00, "120"					},
 
 	{0   , 0xfe, 0   ,    4, "Final Set"			},
-	{0x15, 0x01, 0x30, 0x20, "3 Credits"			},
-	{0x15, 0x01, 0x30, 0x30, "4 Credits"			},
-	{0x15, 0x01, 0x30, 0x10, "5 Credits"			},
-	{0x15, 0x01, 0x30, 0x00, "6 Credits"			},
+	{0x01, 0x01, 0x30, 0x20, "3 Credits"			},
+	{0x01, 0x01, 0x30, 0x30, "4 Credits"			},
+	{0x01, 0x01, 0x30, 0x10, "5 Credits"			},
+	{0x01, 0x01, 0x30, 0x00, "6 Credits"			},
 };
 
 STDDIPINFO(Stadhero)
 
+static void bac06_dobank()
+{
+	SekMapMemory(DrvVidRAM + (bac06_bank * 0x2000), 0x260000, 0x261fff, MAP_RAM);
+}
+
 static void __fastcall stadhero_main_write_word(UINT32 address, UINT16 data)
-{	
+{
 	if ((address & 0xffffe8) == 0x240000) {
-		DrvVidCtrl[(address>>4)&1][(address / 2) & 3] = data;
+		INT32 pf  = (address >> 4) & 1;
+		INT32 reg = (address  / 2) & 3;
+
+		DrvVidCtrl[pf][reg] = data;
+
+		if (pf == 0 && reg == 2) {
+			bac06_bank = data & 1;
+
+			bac06_dobank();
+		}
 		return;
 	}
 
 	switch (address)
 	{
+		case 0x30c004:
+			SekSetIRQLine(5, CPU_IRQSTATUS_NONE);
+			return;
+
 		case 0x30c006:
 			soundlatch = data & 0xff;
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // pulse
@@ -152,16 +174,13 @@ static UINT16 __fastcall stadhero_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x30c000:
-		case 0x30c001:
 			return DrvInputs[0];
 
 		case 0x30c004:
-		case 0x30c005:
 			return DrvDips[0] + (DrvDips[1] * 256);
 
 		case 0x30c002:
-		case 0x30c003:
-			return (DrvInputs[1] & 0x7f) | ((DrvInputs[1] & 0x7f) << 8) | (vblank ? 0x8080 : 0);
+			return (((DrvInputs[1] & 0x7f) | (vblank ? 0x80 : 0)) << 8) | (BurnRandom() & 0x3f);
 	}
 
 	return 0;
@@ -183,11 +202,12 @@ static UINT8 __fastcall stadhero_main_read_byte(UINT32 address)
 		case 0x30c005:
 			return DrvDips[0];
 
+		case 0x30c003:
+			return BurnRandom() & 0x3f;
+
 		case 0x30c002:
 			return (DrvInputs[1] & 0x7f) | (vblank ? 0x80 : 0);
 
-		case 0x30c003:
-			return BurnRandom() & 0x3f;
 	}
 
 	return 0;
@@ -209,6 +229,7 @@ static void stadhero_sound_write(UINT16 address, UINT8 data)
 
 		case 0x3800:
 			MSM6295Write(0, data);
+		return;
 	}
 }
 
@@ -247,6 +268,8 @@ static INT32 DrvDoReset()
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
+	bac06_bank = 0;
+	bac06_dobank();
 	SekReset();
 	BurnYM2203Reset();
 	SekClose();
@@ -259,6 +282,10 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 
 	soundlatch = 0;
+
+	nCyclesExtra = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -281,10 +308,10 @@ static INT32 MemIndex()
 	AllRam			= Next;
 
 	DrvM6502RAM		= Next; Next += 0x000600;
-	DrvVidRAM		= Next; Next += 0x002000;
+	DrvVidRAM		= Next; Next += 0x004000;
 	DrvTxtRAM		= Next; Next += 0x000800;
 	DrvPalRAM		= Next; Next += 0x000800;
-	Drv68KRAM		= Next; Next += 0x00c000;
+	Drv68KRAM		= Next; Next += 0x004000;
 	DrvSprRAM		= Next; Next += 0x000800;
 
 	RamEnd			= Next;
@@ -328,12 +355,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
@@ -386,11 +408,10 @@ static INT32 DrvInit()
 	M6502Close();
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttach(&SekConfig, 10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.43, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.43, BURN_SND_ROUTE_BOTH);
@@ -424,7 +445,7 @@ static INT32 DrvExit()
 	BurnYM3812Exit();
 	MSM6295Exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -507,7 +528,7 @@ static INT32 DrvDraw()
 	bac06_draw_layer(DrvVidRAM, DrvVidCtrl, NULL, NULL, DrvGfxROM0, 0, 0xfff, DrvGfxROM1, 0x200, 0x7ff, 2, 1);
 
 	draw_sprites();
-	
+
 	GenericTilemapDraw(0, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
@@ -533,37 +554,37 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 32;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 10000000 / 58, 1500000 / 58 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekOpen(0);
 	M6502Open(0);
 
-	vblank = 1;
+	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 1) vblank = 0;
-		if (i == 30) {
+		if (i == 248) {
 			vblank = 1;
-			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			SekSetIRQLine(5, CPU_IRQSTATUS_ACK);
 		}
-		
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+
+		CPU_RUN(0, Sek);
+
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	M6502Close();
+	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	SekClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -575,7 +596,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}
@@ -598,8 +619,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(DrvVidCtrl);
+		SCAN_VAR(bac06_bank);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
+	}
+
+	if (nAction & ACB_WRITE) {
+		SekOpen(0);
+		bac06_dobank();
+		SekClose();
 	}
 
 	return 0;

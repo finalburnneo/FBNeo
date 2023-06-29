@@ -661,7 +661,7 @@ static int cdimgLoadSector(int LBA, char* pBuffer)
 	{
 		dprintf(_T("*** couldn't read from file - iso corrupt or truncated?\n"));
 
-		cdimgStop();
+		//cdimgStop(); - stopping here will break puzzle bobble!  game needs fail @ end of image w/o stopping :)
 
 		return 0;
 	}

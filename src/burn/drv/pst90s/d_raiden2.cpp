@@ -3597,19 +3597,15 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Vez);
 		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, CPU_IRQSTATUS_ACK);
 
-		if (seibu_fm_type == 0) {
-			CPU_RUN_TIMER_YM3812(1);
-		} else {
-			CPU_RUN_TIMER(1);
-		}
-	}
-
-	if (pBurnSoundOut) {
-		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
+		CPU_RUN_TIMER(1);
 	}
 
 	VezClose();
 	ZetClose();
+
+	if (pBurnSoundOut) {
+		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

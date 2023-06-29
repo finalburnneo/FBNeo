@@ -30452,6 +30452,25 @@ struct BurnDriver BurnDrvsms_bitlogic = {
 	256, 192, 4, 3
 };
 
+// Bloktris (HB)
+
+static struct BurnRomInfo sms_bloktrisRomDesc[] = {
+	{ "Bloktris (2023)(Under4Mhz).sms",	262144, 0x2d679b72, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_bloktris)
+STD_ROM_FN(sms_bloktris)
+
+struct BurnDriver BurnDrvsms_bloktris = {
+	"sms_bloktris", NULL, NULL, NULL, "2023",
+	"Bloktris (HB)\0", NULL, "Under4Mhz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_bloktrisRomInfo, sms_bloktrisRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Castle Escape (HB)
 
 static struct BurnRomInfo sms_castlescapeRomDesc[] = {

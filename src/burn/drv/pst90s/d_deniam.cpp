@@ -440,11 +440,11 @@ static INT32 DrvInit()
 
 	if (nGame != 2) {
 		BurnYM3812Init(1, 3125000, &deniam16YM3812IrqHandler, 0);
-		BurnTimerAttachYM3812(&ZetConfig, 6250000);
+		BurnTimerAttach(&ZetConfig, 6250000);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnYM3812Init(1, 3125000, NULL, 0);
-		BurnTimerAttachYM3812(&SekConfig, 12500000);
+		BurnTimerAttach(&SekConfig, 12500000);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -743,7 +743,7 @@ static INT32 DrvFrame()
 
 		if (nGame == 2) continue;
 
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);

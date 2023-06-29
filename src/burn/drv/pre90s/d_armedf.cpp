@@ -1083,7 +1083,7 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 	}
 
 	BurnYM3812Init(1, 4000000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 6000000);
+	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 6000000);
@@ -1374,7 +1374,7 @@ static INT32 DrvFrame()
 	{
 		CPU_RUN(0, Sek);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
 
@@ -1391,17 +1391,15 @@ static INT32 DrvFrame()
 		}
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-
 	SekSetIRQLine(irqline, (usemcu) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_AUTO);
+
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

@@ -4730,3 +4730,22 @@ struct BurnDriver BurnDrvsg1k_sgthelmet = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
+
+// Bloktris (HB)
+
+static struct BurnRomInfo sg1k_bloktrisRomDesc[] = {
+	{ "Bloktris (2023)(Under4Mhz).sg",	49152, 0x7febcd40, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_bloktris)
+STD_ROM_FN(sg1k_bloktris)
+
+struct BurnDriver BurnDrvsg1k_bloktris = {
+	"sg1k_bloktris", NULL, NULL, NULL, "2023",
+	"Bloktris (HB)\0", NULL, "Under4Mhz", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_PUZZLE, 0,
+	SG1KGetZipName, sg1k_bloktrisRomInfo, sg1k_bloktrisRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};

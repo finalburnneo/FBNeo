@@ -104,6 +104,15 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bloktris">
+		<comment>Homebrew</comment>
+		<description>Bloktris (HB)</description>
+		<year>2023</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Bloktris (2023)(Under4Mhz).sg" size="49152" crc="7febcd40"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bombjack">
 		<description>Bomb Jack (Jpn)</description>
 		<year>1985</year>

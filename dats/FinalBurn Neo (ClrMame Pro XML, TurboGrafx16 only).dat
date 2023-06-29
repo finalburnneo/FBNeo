@@ -399,7 +399,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="miltrymd">
-		<description>Military Madness</description>
+		<description>Military Madness (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="military madness (usa).pce" size="393216" crc="93f316f7"/>
@@ -407,31 +407,31 @@
 		<driver status="good"/>
 	</game>
 	<game name="motoroad">
-		<description>Moto Roader</description>
+		<description>Moto Roader (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="moto roader (usa).pce" size="262144" crc="e2b0d544"/>
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neutopi2">
-		<description>Neutopia II</description>
-		<year>1992</year>
-		<manufacturer>NEC</manufacturer>
-		<rom name="neutopia ii (usa).pce" size="786432" crc="c4ed4307"/>
-		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="neutopia">
-		<description>Neutopia</description>
+		<description>Neutopia (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="neutopia (usa).pce" size="393216" crc="a9a94e1b"/>
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="neutopi2">
+		<description>Neutopia II (USA)</description>
+		<year>1992</year>
+		<manufacturer>NEC</manufacturer>
+		<rom name="neutopia ii (usa).pce" size="786432" crc="c4ed4307"/>
+		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="advislnd">
-		<description>New Adventure Island</description>
+		<description>New Adventure Island (USA)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="new adventure island (usa).pce" size="524288" crc="756a1802"/>
@@ -439,7 +439,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nightcr">
-		<description>Night Creatures</description>
+		<description>Night Creatures (USA)</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="night creatures (usa).pce" size="524288" crc="c159761b"/>
@@ -447,7 +447,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nspirit">
-		<description>Ninja Spirit</description>
+		<description>Ninja Spirit (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Irem</manufacturer>
 		<rom name="ninja spirit (usa).pce" size="524288" crc="de8af1c1"/>
@@ -455,7 +455,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="griffon">
-		<description>Order of the Griffon</description>
+		<description>Order of the Griffon (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="order of the griffon (usa).pce" size="524288" crc="fae0fc60"/>
@@ -463,7 +463,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ordyne">
-		<description>Ordyne</description>
+		<description>Ordyne (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="ordyne (usa).pce" size="524288" crc="e7bf2a74"/>
@@ -471,7 +471,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacland">
-		<description>Pac-Land</description>
+		<description>Pac-Land (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="pac-land (usa).pce" size="262144" crc="d6e30ccd"/>
@@ -479,7 +479,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="panzakb">
-		<description>Panza Kick Boxing</description>
+		<description>Panza Kick Boxing (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="panza kick boxing (usa).pce" size="524288" crc="a980e0e9"/>
@@ -487,7 +487,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="parasol">
-		<description>Parasol Stars - The Story of Bubble Bobble III</description>
+		<description>Parasol Stars - The Story of Bubble Bobble III (USA)</description>
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
 		<rom name="parasol stars - the story of bubble bobble iii (usa).pce" size="393216" crc="e6458212"/>
@@ -495,7 +495,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pgolf">
-		<description>Power Golf</description>
+		<description>Power Golf (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="power golf (usa).pce" size="393216" crc="ed1d3843"/>
@@ -503,7 +503,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychos">
-		<description>Psychosis</description>
+		<description>Psychosis (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="psychosis (usa).pce" size="262144" crc="6cc10824"/>
@@ -511,7 +511,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rtype">
-		<description>R-Type</description>
+		<description>R-Type (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="r-type (usa).pce" size="524288" crc="91ce5156"/>
@@ -519,7 +519,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="raiden">
-		<description>Raiden</description>
+		<description>Raiden (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="raiden (usa).pce" size="786432" crc="bc59c31e"/>
@@ -527,7 +527,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samuraig">
-		<description>Samurai-Ghost</description>
+		<description>Samurai-Ghost (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="samurai-ghost (usa).pce" size="524288" crc="77a924b7"/>
@@ -535,7 +535,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shockman">
-		<description>Shockman</description>
+		<description>Shockman (USA)</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="shockman (usa).pce" size="524288" crc="2774462c"/>
@@ -543,7 +543,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sidearms">
-		<description>Sidearms - Hyper Dyne</description>
+		<description>Sidearms - Hyper Dyne (USA)</description>
 		<year>1989</year>
 		<manufacturer>Radiance Software</manufacturer>
 		<rom name="sidearms - hyper dyne (usa).pce" size="262144" crc="d1993c9f"/>
@@ -551,7 +551,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="silentd">
-		<description>Silent Debuggers</description>
+		<description>Silent Debuggers (USA)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="silent debuggers (usa).pce" size="524288" crc="fa7e5d66"/>
@@ -559,7 +559,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sinistrn">
-		<description>Sinistron</description>
+		<description>Sinistron (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="sinistron (usa).pce" size="393216" crc="4f6e2dbd"/>
@@ -567,7 +567,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="soldblad">
-		<description>Soldier Blade</description>
+		<description>Soldier Blade (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="soldier blade (usa).pce" size="524288" crc="4bb68b13"/>
@@ -575,7 +575,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="somerass">
-		<description>Somer Assault</description>
+		<description>Somer Assault (USA)</description>
 		<year>1992</year>
 		<manufacturer>Atlus</manufacturer>
 		<rom name="somer assault (usa).pce" size="524288" crc="8fcaf2e9"/>
@@ -583,7 +583,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wbeach">
-		<description>Sonic Spike - World Championship Beach Volleyball</description>
+		<description>Sonic Spike - World Championship Beach Volleyball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="sonic spike - world championship beach volleyball (usa).pce" size="262144" crc="f74e5eb3"/>
@@ -591,7 +591,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sharrier">
-		<description>Space Harrier</description>
+		<description>Space Harrier (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="space harrier (usa).pce" size="524288" crc="43b05eb8"/>
@@ -599,7 +599,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="splatth">
-		<description>Splatterhouse</description>
+		<description>Splatterhouse (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Namco</manufacturer>
 		<rom name="splatterhouse (usa).pce" size="524288" crc="d00ca74f"/>
@@ -607,7 +607,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sssoldr">
-		<description>Super Star Soldier</description>
+		<description>Super Star Soldier (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="super star soldier (usa).pce" size="524288" crc="db29486f"/>
@@ -615,7 +615,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="svolley">
-		<description>Super Volleyball</description>
+		<description>Super Volleyball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="super volleyball (usa).pce" size="262144" crc="245040b3"/>
@@ -623,7 +623,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chasehq">
-		<description>Taito Chase H.Q.</description>
+		<description>Taito Chase H.Q. (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="taito chase h.q. (usa).pce" size="393216" crc="9298254c"/>
@@ -631,7 +631,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="taknhoop">
-		<description>Takin' It to the Hoop</description>
+		<description>Takin' It to the Hoop (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="takin' it to the hoop (usa).pce" size="262144" crc="e9d51797"/>
@@ -639,7 +639,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="talespin">
-		<description>TaleSpin</description>
+		<description>TaleSpin (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="talespin (usa).pce" size="524288" crc="bae9cecc"/>
@@ -647,7 +647,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tigerrod">
-		<description>Tiger Road</description>
+		<description>Tiger Road (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tiger road (usa).pce" size="393216" crc="985d492d"/>
@@ -655,7 +655,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="timcrus">
-		<description>Time Cruise</description>
+		<description>Time Cruise (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="time cruise (usa).pce" size="524288" crc="02c39660"/>
@@ -663,7 +663,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="timeball">
-		<description>Timeball</description>
+		<description>Timeball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="timeball (usa).pce" size="131072" crc="5d395019"/>
@@ -671,7 +671,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tricky">
-		<description>Tricky Kick</description>
+		<description>Tricky Kick (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tricky kick (usa).pce" size="262144" crc="48e6fd34"/>
@@ -679,7 +679,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="turrican">
-		<description>Turrican</description>
+		<description>Turrican (USA)</description>
 		<year>1991</year>
 		<manufacturer>Ballistic</manufacturer>
 		<rom name="turrican (usa).pce" size="262144" crc="eb045edf"/>
@@ -687,7 +687,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvbasket">
-		<description>TV Sports Basketball</description>
+		<description>TV Sports Basketball (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tv sports basketball (usa).pce" size="524288" crc="ea54d653"/>
@@ -695,7 +695,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvfootbl">
-		<description>TV Sports Football</description>
+		<description>TV Sports Football (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tv sports football (usa).pce" size="393216" crc="5e25b557"/>
@@ -703,7 +703,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tvhockey">
-		<description>TV Sports Hockey</description>
+		<description>TV Sports Hockey (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="tv sports hockey (usa).pce" size="393216" crc="97fe5bcf"/>
@@ -711,7 +711,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="veigues">
-		<description>Veigues - Tactical Gladiator</description>
+		<description>Veigues - Tactical Gladiator (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="veigues - tactical gladiator (usa).pce" size="393216" crc="99d14fb7"/>
@@ -719,7 +719,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="victoryr">
-		<description>Victory Run</description>
+		<description>Victory Run (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="victory run (usa).pce" size="262144" crc="85cbd045"/>
@@ -727,7 +727,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vigilant">
-		<description>Vigilante</description>
+		<description>Vigilante (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="vigilante (usa).pce" size="393216" crc="79d49a0d"/>
@@ -735,7 +735,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wcbasebl">
-		<description>World Class Baseball</description>
+		<description>World Class Baseball (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="world class baseball (usa).pce" size="262144" crc="4186d0c0"/>
@@ -743,7 +743,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wctennis">
-		<description>World Court Tennis</description>
+		<description>World Court Tennis (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="world court tennis (usa).pce" size="262144" crc="a4457df0"/>
@@ -751,7 +751,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wscomp">
-		<description>World Sports Competition</description>
+		<description>World Sports Competition (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
 		<rom name="world sports competition (usa).pce" size="524288" crc="4b93f0ac"/>
@@ -759,7 +759,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yobro">
-		<description>Yo, Bro</description>
+		<description>Yo, Bro (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
 		<rom name="yo, bro (usa).pce" size="524288" crc="3ca7db48"/>

@@ -753,6 +753,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bloktris">
+		<comment>Homebrew</comment>
+		<description>Bloktris (HB)</description>
+		<year>2023</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Bloktris (2023)(Under4Mhz).sms" size="262144" crc="2d679b72"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bombraid">
 		<description>Bomber Raid (World)</description>
 		<year>1989</year>

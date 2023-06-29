@@ -3765,7 +3765,7 @@
 	</game>
 	<game name="doubledrsp" cloneof="doubledr" romof="doubledr">
 		<comment>Hack, Other versions are selected in the dipswitch</comment>
-		<description>Double Dragon - Special 2017 (Hack)</description>
+		<description>Double Dragon (Series Hack)</description>
 		<year>2017</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="082-p1sp.p1" size="1048576" crc="8ea8ee3d"/>
@@ -8242,7 +8242,7 @@
 	</game>
 	<game name="mslug2dd" cloneof="mslug2" romof="mslug2">
 		<comment>Hack</comment>
-		<description>Metal Slug 2 - Super Vehicle-001/II (Early Summer Starry Night, Hack)</description>
+		<description>Metal Slug 2 - Early Summer Starry Night (Hack)</description>
 		<year>2022</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="241-p1dd.p1" size="1048576" crc="da22fd32"/>
@@ -8298,7 +8298,7 @@
 	</game>
 	<game name="mslug2eg" cloneof="mslug2" romof="mslug2">
 		<comment>Hack</comment>
-		<description>Metal Slug 2 - Super Vehicle-001/II (Extraction Green Turbo, Hack)</description>
+		<description>Metal Slug 2 - Extraction Green Turbo (Hack)</description>
 		<year>2021</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="241-p1eg.p1" size="1048576" crc="bb312904"/>
@@ -8356,7 +8356,7 @@
 	</game>
 	<game name="mslug2fm" cloneof="mslug2" romof="mslug2">
 		<comment>Hack</comment>
-		<description>Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2, Hack)</description>
+		<description>Metal Slug 2 - Friendly Fire FC2 (Hack)</description>
 		<year>2021</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="241-p1fm.p1" size="1048576" crc="487173f6"/>
@@ -8953,8 +8953,8 @@
 		<description>Metal Slug 3 (Modified by AKS, Hack)</description>
 		<year>2017-2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="256-p1cq.p1" size="1048576" crc="a03172bf"/>
-		<rom name="256-p2cq.sp2" size="4194304" crc="f6734391"/>
+		<rom name="256-p1cq.p1" size="1048576" crc="a1d0a37a"/>
+		<rom name="256-p2cq.sp2" size="4194304" crc="8585d898"/>
 		<rom name="256-s1d.s1" size="131072" crc="8458fff9"/>
 		<rom name="256-c1d.c1" size="8388608" crc="3540398c"/>
 		<rom name="256-c2d.c2" size="8388608" crc="bdd220f0"/>
@@ -11080,7 +11080,7 @@
 	<game name="mslugxcb" cloneof="mslugx" romof="mslugx">
 		<comment>Hack, Other versions are selected in the dipswitch</comment>
 		<description>Metal Slug X - Super Vehicle-001 (Modified by CB, Hack)</description>
-		<year>2013</year>
+		<year>2013-2021</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="250-p1c1.p1" size="1048576" crc="e74f36c2"/>
 		<rom name="250-p2c1.ep1" size="4194304" crc="e954b8aa"/>
@@ -11097,6 +11097,8 @@
 		<rom name="250-v3.v3" merge="250-v3.v3" size="2097152" crc="2ca65102"/>
 		<rom name="250-p1.p1" merge="250-p1.p1" size="1048576" crc="81f1f60b"/>
 		<rom name="250-p2c2.ep1" size="4194304" crc="5d1c52cd"/>
+		<rom name="250-p1max.p1" size="1048576" crc="a507546f"/>
+		<rom name="250-p2max.ep1" size="4194304" crc="9cf91e0f"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -11164,6 +11166,10 @@
 		<rom name="250-p22reb.ep1" size="4194304" crc="3866eb68"/>
 		<rom name="250-p12r1v2.p1" size="1048576" crc="d13fd368"/>
 		<rom name="250-p22r1v2.ep1" size="4194304" crc="730e94a2"/>
+		<rom name="250-p1xr.p1" size="1048576" crc="bea1f7e5"/>
+		<rom name="250-p2xr.ep1" size="4194304" crc="0efc5d67"/>
+		<rom name="250-p1sv.p1" size="1048576" crc="1b213460"/>
+		<rom name="250-p2sv.ep1" size="4194304" crc="718d6d66"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -15818,8 +15824,8 @@
 		<description>Samurai Shodown II Perfect (V. 1.2, Hack)</description>
 		<year>2023</year>
 		<manufacturer>Bear</manufacturer>
-		<rom name="063-p1pe.p1" size="1048576" crc="a21d27ba"/>
-		<rom name="063-p2pe.sp2" size="1048576" crc="2c5baf10"/>
+		<rom name="063-p1pe.p1" size="1048576" crc="7c527a45"/>
+		<rom name="063-p2pe.sp2" size="1048576" crc="e14bfaae"/>
 		<rom name="063-p3pe.p3" size="131072" crc="efe257ce"/>
 		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
 		<rom name="063-c1.c1" merge="063-c1.c1" size="2097152" crc="86cd307c"/>
@@ -20220,7 +20226,7 @@
 	<game name="kof97ae" cloneof="kof97" romof="kof97">
 		<comment>Hack, Other versions are selected in the dipswitch</comment>
 		<description>The King of Fighters '97 - Anniversary Edition (Hack)</description>
-		<year>2018</year>
+		<year>2018-2020</year>
 		<manufacturer>EGHT</manufacturer>
 		<rom name="232-p1ae.p1" size="1048576" crc="cecc4f64"/>
 		<rom name="232-p2ae.sp2" size="4194304" crc="228aa8d1"/>
@@ -20466,7 +20472,7 @@
 		<year>2014-2023</year>
 		<manufacturer>Other versions are selected in the dipswitch</manufacturer>
 		<rom name="232-p1t.p1" size="1048576" crc="45834e9b"/>
-		<rom name="232-p1t.sp2" size="4194304" crc="d9e51750"/>
+		<rom name="232-p2t.sp2" size="4194304" crc="d9e51750"/>
 		<rom name="232-s1.s1" merge="232-s1.s1" size="131072" crc="8514ecf5"/>
 		<rom name="232-c1t.c1" size="8388608" crc="b7f5a3b9"/>
 		<rom name="232-c2t.c2" size="8388608" crc="959d6d78"/>
@@ -20479,14 +20485,14 @@
 		<rom name="232-v2.v2" merge="232-v2.v2" size="4194304" crc="2304e744"/>
 		<rom name="232-v3.v3" merge="232-v3.v3" size="4194304" crc="759eb954"/>
 		<rom name="232-p1tp.p1" size="1048576" crc="53d9851d"/>
-		<rom name="232-p1tp.sp2" size="4194304" crc="6d448462"/>
+		<rom name="232-p2tp.sp2" size="4194304" crc="6d448462"/>
 		<rom name="232-s1tp.s1" size="131072" crc="e338d57f"/>
 		<rom name="232-c1tp.c1" size="8388608" crc="848040cb"/>
 		<rom name="232-c2tp.c2" size="8388608" crc="d01ad7c9"/>
 		<rom name="232-c5tp.c5" size="8388608" crc="7bb13ff4"/>
 		<rom name="232-c6tp.c6" size="8388608" crc="6846a8a5"/>
 		<rom name="232-p1st.p1" size="1048576" crc="32b4ce56"/>
-		<rom name="232-p1st.sp2" size="4194304" crc="b0aee031"/>
+		<rom name="232-p2st.sp2" size="4194304" crc="b0aee031"/>
 		<rom name="232-c1st.c1" size="8388608" crc="57633aca"/>
 		<rom name="232-c2st.c2" size="8388608" crc="831ec266"/>
 		<rom name="232-c3st.c3" size="8388608" crc="b092e64f"/>
@@ -22127,7 +22133,7 @@
 	</game>
 	<game name="kof99t" cloneof="kof99" romof="kof99">
 		<comment>Hack, Other versions are selected in the dipswitch</comment>
-		<description>The King of Fighters '99 - Plus (Hack)</description>
+		<description>The King of Fighters '99 - Millennium Battle (Series Hack)</description>
 		<year>1999-2023</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="152-p1t.p1" size="1048576" crc="b89ba128"/>

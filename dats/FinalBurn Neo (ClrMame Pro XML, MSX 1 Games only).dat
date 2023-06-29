@@ -2034,6 +2034,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bloktris" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Bloktris (HB)</description>
+		<year>2023</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Bloktris (2023)(Under4Mhz).rom" size="32768" crc="0b855dd6"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bloody" romof="msx">
 		<description>Bloody (Spanish)</description>
 		<year>1987</year>
@@ -3972,6 +3984,18 @@
 		<year>2009</year>
 		<manufacturer>Paxanga Soft</manufacturer>
 		<rom name="cow.rom" size="16384" crc="790623de"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cracky" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Cracky (HB)</description>
+		<year>2023</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Cracky (2023)(Inufuto).cas" size="7237" crc="8d43ce2a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6064,6 +6088,18 @@
 		<year>1983</year>
 		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="flipper slipper (japan) (alt 1).rom" size="16384" crc="f0b5fe8d"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="flubber" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Flubber in the Upside Down World (HB, v1.2)</description>
+		<year>2023</year>
+		<manufacturer>Amaury Carvalho</manufacturer>
+		<rom name="Flubber in the Upside Down World v1.2 (2023)(Amaury Carvalho).rom" size="49152" crc="7b0425f8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9647,6 +9683,18 @@
 		<year>1986</year>
 		<manufacturer>Blue Ribbon Software</manufacturer>
 		<rom name="m-droid (19xx)(blue ribbon software)[run'cas-'].cas" size="39574" crc="03869d9e"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mforcev2" romof="msx">
+		<comment>Homebrew</comment>
+		<description>M-Force (HB, v2)</description>
+		<year>2023</year>
+		<manufacturer>Chikuwa Teikoku</manufacturer>
+		<rom name="M-Force v2 (2023)(Chikuwa Teikoku).rom" size="32768" crc="c63f95e3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15956,6 +16004,18 @@
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
 		<rom name="temptati.rom" size="131072" crc="2d46f211"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tenebra" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Tenebra (HB)</description>
+		<year>2023</year>
+		<manufacturer>Haplo</manufacturer>
+		<rom name="Tenebra (2023)(Haplo).rom" size="16384" crc="9c59bd5a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

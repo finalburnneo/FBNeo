@@ -142,6 +142,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly) {}
 INT32 GetIpsesMaxLen(char* rom_name) {return -1;}
 bool GetIpsDrvProtection() { return false; };
 void GetIpsDrvDefine() {}
+void BurnerDoGameListExLocalisation() {}
 UINT32 nIpsDrvDefine		= 0, nIpsMemExpLen[SND2_ROM + 1] = { 0 };
 UINT32 nStartFrame = 0;
 INT32 FreezeInput(UINT8** buf, INT32* size) { return 0; }

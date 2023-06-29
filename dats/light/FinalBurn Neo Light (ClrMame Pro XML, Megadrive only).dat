@@ -4439,9 +4439,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="xfires" cloneof="xfire" romof="xfire">
+		<comment>Hack</comment>
 		<description>Cross Fire (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Kyugo</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="cross fire (hack, spanish).bin" size="524288" crc="628b2c53"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -8984,6 +8985,40 @@
 		<year>1994</year>
 		<manufacturer>Electronic Arts</manufacturer>
 		<rom name="img international tour tennis (euro, usa).bin" size="2097152" crc="e04ffc2b"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crashdum">
+		<description>Incredible Crash Dummies, The (Euro, USA)</description>
+		<year>1993</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="mpr-16259.ic1" size="1048576" crc="1f6e574a"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crashdump" cloneof="crashdum" romof="crashdum">
+		<comment>Prototype</comment>
+		<description>Incredible Crash Dummies, The (USA, Prototype)</description>
+		<year>1993</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="incredible crash dummies, the (usa) (beta).bin" size="1048576" crc="623a920f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hulk">
+		<description>Incredible Hulk, The (Euro, USA)</description>
+		<year>1994</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="incredible hulk, the (euro, usa).bin" size="2097152" crc="84a5a2dc"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="incredib" cloneof="tick" romof="tick">
+		<comment>Hack</comment>
+		<description>Incredibles, The (Rus) (Unl)</description>
+		<year>199?</year>
+		<manufacturer>Glorysun</manufacturer>
+		<rom name="the incredibles (unl).bin" size="2097152" crc="31f7af7c"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17177,7 +17212,7 @@
 		<comment>Hack</comment>
 		<description>Shadow of the Beast (Hack, Enhanced Colors)</description>
 		<year>2014</year>
-		<manufacturer>Victor Interactive Software - Pyron</manufacturer>
+		<manufacturer>Pyron</manufacturer>
 		<rom name="shadow of the beast (enhanced colors).md" size="1048576" crc="7eaa73de"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17185,7 +17220,7 @@
 	<game name="beasts" cloneof="beast" romof="beast">
 		<description>Shadow of the Beast (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>jackic</manufacturer>
 		<rom name="shadow of the beast (hack, spanish).bin" size="1048576" crc="de6b78e7"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17207,9 +17242,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="beast2s" cloneof="beast2" romof="beast2">
+		<comment>Hack</comment>
 		<description>Shadow of the Beast II (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Electronic Arts</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="shadow of the beast ii (hack, spanish).bin" size="1048576" crc="03b05238"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17390,18 +17426,11 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shindarkj" cloneof="shindark" romof="shindark">
-		<description>Shining and the Darkness (Jpn)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-13807.bin" size="1048576" crc="496af51c"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="shinfrces" cloneof="shinfrce" romof="shinfrce">
+		<comment>Hack</comment>
 		<description>Shining Force (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>RMGlitch</manufacturer>
 		<rom name="shining force (hack, spanish).bin" size="2621440" crc="be1677da"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17415,6 +17444,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrcep" cloneof="shinfrce" romof="shinfrce">
+		<comment>Prototype</comment>
 		<description>Shining Force (USA, Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
@@ -17447,6 +17477,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrc2p2" cloneof="shinfrc2" romof="shinfrc2">
+		<comment>Prototype</comment>
 		<description>Shining Force II (USA, Prototype, 19940404)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -17455,6 +17486,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrc2p1" cloneof="shinfrc2" romof="shinfrc2">
+		<comment>Prototype</comment>
 		<description>Shining Force II (USA, Prototype, 19940607)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
@@ -17494,7 +17526,16 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="shindarkj" cloneof="shindark" romof="shindark">
+		<description>Shining in the Darkness (Jpn)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-13807.bin" size="1048576" crc="496af51c"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shinfrc2t" cloneof="shinfrc2" romof="shinfrc2">
+		<comment>Hack</comment>
 		<description>Shining Tactics Absolute Final Edition (Hack)</description>
 		<year>2014</year>
 		<manufacturer>Dark Claw</manufacturer>
@@ -17809,6 +17850,22 @@
 		<year>2017</year>
 		<manufacturer>Piko Interactive</manufacturer>
 		<rom name="Smart Mouse (HB).bin" size="524288" crc="fb01c832"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfstw">
+		<description>Smurfs Travel the World, The (Euro)</description>
+		<year>1996</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="smurfs travel the world, the (euro).bin" size="1048576" crc="b28bdd69"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="smurfs">
+		<description>Smurfs, The (Euro, Rev. A)</description>
+		<year>1995</year>
+		<manufacturer>Infogrames</manufacturer>
+		<rom name="mpr-17019a.ic1" size="1048576" crc="88b30eff"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18784,6 +18841,14 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spatter">
+		<description>Spatter (Mega Drive Mini 2 Edition)</description>
+		<year>2022</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Spatter (2022)(Mega Drive Mini 2 Ed.).bin" size="524288" crc="84081204"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="spax">
 		<comment>Homebrew</comment>
 		<description>Spax (HB)</description>
@@ -19065,6 +19130,14 @@
 		<year>1990</year>
 		<manufacturer>NCS</manufacturer>
 		<rom name="star cruiser (jpn).bin" size="524288" crc="2b75b52f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="starmobile">
+		<description>Star Mobile (Mega Drive Mini 2 Edition)</description>
+		<year>2022</year>
+		<manufacturer>Mindware</manufacturer>
+		<rom name="Star Mobile (2022)(Mega Drive Mini 2 Ed.).bin" size="262144" crc="39466559"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20283,6 +20356,14 @@
 		<year>1989</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super league (jpn).bin" size="524288" crc="ea13cb1d"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="suploco">
+		<description>Super Locomotive (Mega Drive Mini 2 Edition)</description>
+		<year>2022</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Super Locomotive (2022)(Mega Drive Mini 2 Ed.).bin" size="262144" crc="c2840b00"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21505,39 +21586,6 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="crashdum">
-		<description>The Incredible Crash Dummies (Euro, USA)</description>
-		<year>1993</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="mpr-16259.ic1" size="1048576" crc="1f6e574a"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="crashdump" cloneof="crashdum" romof="crashdum">
-		<description>The Incredible Crash Dummies (USA, Prototype)</description>
-		<year>1993</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="incredible crash dummies, the (usa) (beta).bin" size="1048576" crc="623a920f"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="hulk">
-		<description>The Incredible Hulk (Euro, USA)</description>
-		<year>1994</year>
-		<manufacturer>U.S. Gold</manufacturer>
-		<rom name="incredible hulk, the (euro, usa).bin" size="2097152" crc="84a5a2dc"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="incredib" cloneof="tick" romof="tick">
-		<comment>Hack</comment>
-		<description>The Incredibles (Rus) (Unl)</description>
-		<year>199?</year>
-		<manufacturer>Glorysun</manufacturer>
-		<rom name="the incredibles (unl).bin" size="2097152" crc="31f7af7c"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="itchy">
 		<description>The Itchy and Scratchy Game (USA, Prototype)</description>
 		<year>1994</year>
@@ -21611,38 +21659,6 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurfs">
-		<description>The Smurfs (Euro, Rev. A)</description>
-		<year>1995</year>
-		<manufacturer>Infogrames</manufacturer>
-		<rom name="mpr-17019a.ic1" size="1048576" crc="88b30eff"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="smurfstw">
-		<description>The Smurfs Travel the World (Euro)</description>
-		<year>1996</year>
-		<manufacturer>Infogrames</manufacturer>
-		<rom name="smurfs travel the world, the (euro).bin" size="1048576" crc="b28bdd69"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="tick">
-		<description>The Tick (USA)</description>
-		<year>1994</year>
-		<manufacturer>Fox Interactive</manufacturer>
-		<rom name="tick, the (usa).bin" size="2097152" crc="425132f0"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="youngind">
-		<description>The Young Indiana Jones Chronicles (USA, Prototype)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unknown&gt;</manufacturer>
-		<rom name="young indiana jones chronicles, the (usa) (prototype).bin" size="524288" crc="44f6be35"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="themeprk">
 		<description>Theme Park (Euro, USA)</description>
 		<year>1995</year>
@@ -21668,9 +21684,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tf2s" cloneof="tf2" romof="tf2">
-		<description>Thunder Force II (Hack. Spanish)</description>
+		<comment>Hack</comment>
+		<description>Thunder Force II (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>TechnoSoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="thunder force ii (Hack. Spanish).bin" size="524288" crc="12ee6c63"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21684,9 +21701,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tf3s" cloneof="tf3" romof="tf3">
+		<comment>Hack</comment>
 		<description>Thunder Force III (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>TechnoSoft</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="thunder force iii (hack, spanish).bin" size="524288" crc="70fcc2db"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21700,6 +21718,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tf3p" cloneof="tf3" romof="tf3">
+		<comment>Prototype</comment>
 		<description>Thunder Force III (Prototype, 19900801)</description>
 		<year>1990</year>
 		<manufacturer>Technosoft</manufacturer>
@@ -21716,9 +21735,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tf4s" cloneof="tf4" romof="tf4">
+		<comment>Hack</comment>
 		<description>Thunder Force IV (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Technosoft</manufacturer>
+		<manufacturer>m0sca</manufacturer>
 		<rom name="thunder force iv (hack, spanish).bin" size="1048576" crc="04845342"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21732,9 +21752,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tfoxs" cloneof="tfox" romof="tfox">
+		<comment>Hack</comment>
 		<description>Thunder Fox (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Published</manufacturer>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="thunder fox (hack, spanish).bin" size="1048576" crc="a1b50389"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21798,6 +21819,14 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tick">
+		<description>Tick, The (USA)</description>
+		<year>1994</year>
+		<manufacturer>Fox Interactive</manufacturer>
+		<rom name="tick, the (usa).bin" size="2097152" crc="425132f0"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="timedom" cloneof="socket" romof="socket">
 		<description>Time Dominator 1st (Jpn, Kor)</description>
 		<year>1994</year>
@@ -21831,9 +21860,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="tinheads" cloneof="tinhead" romof="tinhead">
+		<comment>Hack</comment>
 		<description>TinHead (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Ballistic</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="tinhead (hack, spanish).bin" size="1048576" crc="7619b6cb"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24938,6 +24968,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="youngind">
+		<comment>Prototype</comment>
+		<description>Young Indiana Jones Chronicles, The (USA, Prototype)</description>
+		<year>199?</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="young indiana jones chronicles, the (usa) (prototype).bin" size="524288" crc="44f6be35"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ys3j" cloneof="ys3" romof="ys3">
 		<description>Ys - Wanderers from Ys (Jpn)</description>
 		<year>1991</year>
@@ -24955,9 +24994,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="yuyumte" cloneof="yuyusf" romof="yuyusf">
+		<comment>Hack</comment>
 		<description>Yu Yu Hakusho - Makyou Toitsusen (Hack, English)</description>
 		<year>2007</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Jon Najar</manufacturer>
 		<rom name="yuu yuu hakusho - makyou toitsusen (english translation).bin" size="3145728" crc="0f041d2e"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -24972,16 +25012,17 @@
 	</game>
 	<game name="yuyusf">
 		<description>Yu Yu Hakusho - Sunset Fighters (Bra)</description>
-		<year>199?</year>
+		<year>1994</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="yuu yuu hakusho - sunset fighters (bra).bin" size="3145728" crc="fe3fb8ee"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="yuyusfs" cloneof="yuyusf" romof="yuyusf">
+		<comment>Hack</comment>
 		<description>Yu Yu Hakusho - Sunset Fighters (Hack, Spanish)</description>
 		<year>2020</year>
-		<manufacturer>Segfa</manufacturer>
+		<manufacturer>Max1323</manufacturer>
 		<rom name="yu yu hakusho - sunset fighters (hack, spanish).bin" size="3145728" crc="28d92080"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

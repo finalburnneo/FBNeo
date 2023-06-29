@@ -1,200 +1,6 @@
 #include "burnint.h"
 #include "burn_ym3526.h"
 
-// Timer Related
-
-#define MAX_TIMER_VALUE ((1 << 30) - 65536)
-
-static double dTimeYM3526;									// Time elapsed since the emulated machine was started
-
-static INT32 nTimerCount[2], nTimerStart[2];
-
-// Callbacks
-static INT32 (*pTimerOverCallback)(INT32, INT32);
-static double (*pTimerTimeCallback)();
-
-static INT32 nCPUClockspeed = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
-static INT32 (*pCPURun)(INT32) = NULL;
-static void (*pCPURunEnd)() = NULL;
-
-// ---------------------------------------------------------------------------
-// Running time
-
-static double BurnTimerTimeCallbackDummy()
-{
-	return 0.0;
-}
-
-extern "C" double BurnTimerGetTimeYM3526()
-{
-	return dTimeYM3526 + pTimerTimeCallback();
-}
-
-// ---------------------------------------------------------------------------
-// Update timers
-
-static INT32 nTicksTotal, nTicksDone, nTicksExtra;
-
-INT32 BurnTimerUpdateYM3526(INT32 nCycles)
-{
-	INT32 nIRQStatus = 0;
-
-	nTicksTotal = MAKE_TIMER_TICKS(nCycles, nCPUClockspeed);
-
-	while (nTicksDone < nTicksTotal) {
-		INT32 nTimer, nCyclesSegment, nTicksSegment;
-
-		// Determine which timer fires first
-		if (nTimerCount[0] <= nTimerCount[1]) {
-			nTicksSegment = nTimerCount[0];
-		} else {
-			nTicksSegment = nTimerCount[1];
-		}
-		if (nTicksSegment > nTicksTotal) {
-			nTicksSegment = nTicksTotal;
-		}
-
-		nCyclesSegment = MAKE_CPU_CYLES(nTicksSegment + nTicksExtra, nCPUClockspeed);
-
-		pCPURun(nCyclesSegment - pCPUTotalCycles());
-
-		nTicksDone = MAKE_TIMER_TICKS(pCPUTotalCycles() + 1, nCPUClockspeed) - 1;
-
-		nTimer = 0;
-		if (nTicksDone >= nTimerCount[0]) {
-			if (nTimerStart[0] == MAX_TIMER_VALUE) {
-				nTimerCount[0] = MAX_TIMER_VALUE;
-			} else {
-				nTimerCount[0] += nTimerStart[0];
-			}
-			nTimer |= 1;
-		}
-		if (nTicksDone >= nTimerCount[1]) {
-			if (nTimerStart[1] == MAX_TIMER_VALUE) {
-				nTimerCount[1] = MAX_TIMER_VALUE;
-			} else {
-				nTimerCount[1] += nTimerStart[1];
-			}
-			nTimer |= 2;
-		}
-		if (nTimer & 1) {
-			nIRQStatus |= pTimerOverCallback(0, 0);
-		}
-		if (nTimer & 2) {
-			nIRQStatus |= pTimerOverCallback(0, 1);
-		}
-	}
-
-	return nIRQStatus;
-}
-
-void BurnTimerEndFrameYM3526(INT32 nCycles)
-{
-	int nTicks = MAKE_TIMER_TICKS(nCycles, nCPUClockspeed);
-
-	BurnTimerUpdateYM3526(nCycles);
-
-	if (nTimerCount[0] < MAX_TIMER_VALUE) {
-		nTimerCount[0] -= nTicks;
-	}
-	if (nTimerCount[1] < MAX_TIMER_VALUE) {
-		nTimerCount[1] -= nTicks;
-	}
-
-	nTicksDone -= nTicks;
-	if (nTicksDone < 0) {
-		nTicksDone = 0;
-	}
-}
-
-void BurnTimerUpdateEndYM3526()
-{
-	pCPURunEnd();
-
-	nTicksTotal = 0;
-}
-
-void BurnOPLTimerCallbackYM3526(INT32 c, double period)
-{
-	pCPURunEnd();
-
-	if (period == 0.0) {
-		nTimerCount[c] = MAX_TIMER_VALUE;
-		return;
-	}
-
-	nTimerCount[c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
-}
-
-void BurnTimerScanYM3526(INT32 nAction, INT32* pnMin)
-{
-	if (pnMin && *pnMin < 0x029521) {
-		*pnMin = 0x029521;
-	}
-
-	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(nTimerCount);
-		SCAN_VAR(nTimerStart);
-		SCAN_VAR(dTimeYM3526);
-
-		SCAN_VAR(nTicksDone);
-	}
-}
-
-void BurnTimerExitYM3526()
-{
-	nCPUClockspeed = 0;
-	pCPUTotalCycles = NULL;
-	pCPURun = NULL;
-	pCPURunEnd = NULL;
-
-	return;
-}
-
-void BurnTimerResetYM3526()
-{
-	nTimerCount[0] = nTimerCount[1] = MAX_TIMER_VALUE;
-	nTimerStart[0] = nTimerStart[1] = MAX_TIMER_VALUE;
-
-	dTimeYM3526 = 0.0;
-
-	nTicksDone = 0;
-}
-
-INT32 BurnTimerInitYM3526(INT32 (*pOverCallback)(INT32, INT32), double (*pTimeCallback)())
-{
-	BurnTimerExitYM3526();
-
-	pTimerOverCallback = pOverCallback;
-	pTimerTimeCallback = pTimeCallback ? pTimeCallback : BurnTimerTimeCallbackDummy;
-
-	BurnTimerResetYM3526();
-
-	return 0;
-}
-
-INT32 BurnTimerAttachYM3526(cpu_core_config *ptr, INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = ptr->totalcycles;
-	pCPURun = ptr->run;
-	pCPURunEnd = ptr->runend;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nClockspeed) - 1;
-
-	return 0;
-}
-
-static INT32 YM3526SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)pCPUTotalCycles() * nSoundRate / nCPUClockspeed;
-}
-
-
-// Sound Related
-
 void (*BurnYM3526Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
 
 static INT32 (*BurnYM3526StreamCallback)(INT32 nSoundRate);
@@ -388,7 +194,7 @@ void BurnYM3526Reset()
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Reset called without init\n"));
 #endif
 
-	BurnTimerResetYM3526();
+	BurnTimerReset();
 
 	YM3526ResetChip(0);
 }
@@ -403,7 +209,7 @@ void BurnYM3526Exit()
 
 	YM3526Shutdown();
 
-	BurnTimerExitYM3526();
+	BurnTimerExit();
 
 	BurnFree(pBuffer);
 	
@@ -414,14 +220,14 @@ void BurnYM3526Exit()
 
 INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal)
 {
-	return BurnYM3526Init(nClockFrequency, IRQCallback, YM3526SynchroniseStream, bAddSignal);
+	return BurnYM3526Init(nClockFrequency, IRQCallback, BurnSynchroniseStream, bAddSignal);
 }
 
 INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
 {
 	DebugSnd_YM3526Initted = 1;
 	
-	BurnTimerInitYM3526(&YM3526TimerOver, NULL);
+	INT32 timer_chipbase = BurnTimerInit(&YM3526TimerOver, NULL);
 
 	BurnYM3526StreamCallback = StreamCallback;
 
@@ -447,7 +253,7 @@ INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 
 	YM3526Init(1, nClockFrequency, nBurnYM3526SoundRate);
 	YM3526SetIRQHandler(0, IRQCallback, 0);
-	YM3526SetTimerHandler(0, &BurnOPLTimerCallbackYM3526, 0);
+	YM3526SetTimerHandler(0, &BurnOPLTimerCallback, timer_chipbase + 0);
 	YM3526SetUpdateHandler(0, &BurnYM3526UpdateRequest, 0);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * sizeof(INT16));
@@ -483,9 +289,9 @@ void BurnYM3526Scan(INT32 nAction, INT32* pnMin)
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Scan called without init\n"));
 #endif
 
-	BurnTimerScanYM3526(nAction, pnMin);
+	BurnTimerScan(nAction, pnMin);
 	FMOPLScan(FM_OPL_SAVESTATE_YM3526, 0, nAction, pnMin);
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(nYM3526Position);
 	}

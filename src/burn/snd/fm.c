@@ -662,6 +662,8 @@ typedef struct
 	/* Extention Timer and IRQ handler */
 	FM_TIMERHANDLER	Timer_Handler;
 	FM_IRQHANDLER	IRQ_Handler;
+
+	INT32   chip_base; // chip base# for timer callback
 } FM_ST;
 
 
@@ -682,6 +684,8 @@ typedef struct
 /* OPN/A/B common state */
 typedef struct
 {
+	INT32   chip_base; // chip base# for timer callback
+
 	UINT8	type;			/* chip type */
 	FM_ST	ST;				/* general state */
 	FM_3SLOT SL3;			/* 3 slot mode state */
@@ -808,7 +812,7 @@ INLINE void set_timers( FM_ST *ST, int n, int v )
 		{
 			ST->TBC = ( 256-ST->TB)<<4;
 			/* External timer handler */
-			if (ST->Timer_Handler) (ST->Timer_Handler)(n,1,ST->TBC,ST->TimerBase);
+			if (ST->Timer_Handler) (ST->Timer_Handler)(n + ST->chip_base,1,ST->TBC,ST->TimerBase);
 		}
 	}
 	else
@@ -816,7 +820,7 @@ INLINE void set_timers( FM_ST *ST, int n, int v )
 		if( ST->TBC != 0 )
 		{
 			ST->TBC = 0;
-			if (ST->Timer_Handler) (ST->Timer_Handler)(n,1,0,ST->TimerBase);
+			if (ST->Timer_Handler) (ST->Timer_Handler)(n + ST->chip_base,1,0,ST->TimerBase);
 		}
 	}
 	/* load a */
@@ -826,7 +830,7 @@ INLINE void set_timers( FM_ST *ST, int n, int v )
 		{
 			ST->TAC = (1024-ST->TA);
 			/* External timer handler */
-			if (ST->Timer_Handler) (ST->Timer_Handler)(n,0,ST->TAC,ST->TimerBase);
+			if (ST->Timer_Handler) (ST->Timer_Handler)(n + ST->chip_base,0,ST->TAC,ST->TimerBase);
 		}
 	}
 	else
@@ -834,7 +838,7 @@ INLINE void set_timers( FM_ST *ST, int n, int v )
 		if( ST->TAC != 0 )
 		{
 			ST->TAC = 0;
-			if (ST->Timer_Handler) (ST->Timer_Handler)(n,0,0,ST->TimerBase);
+			if (ST->Timer_Handler) (ST->Timer_Handler)(n + ST->chip_base,0,0,ST->TimerBase);
 		}
 	}
 }
@@ -847,7 +851,7 @@ INLINE void TimerAOver(FM_ST *ST)
 	if(ST->mode & 0x04) FM_STATUS_SET(ST,0x01);
 	/* clear or reload the counter */
 	ST->TAC = (1024-ST->TA);
-	if (ST->Timer_Handler) (ST->Timer_Handler)(ST->index,0,ST->TAC,ST->TimerBase);
+	if (ST->Timer_Handler) (ST->Timer_Handler)(ST->index + ST->chip_base,0,ST->TAC,ST->TimerBase);
 }
 /* Timer B Overflow */
 INLINE void TimerBOver(FM_ST *ST)
@@ -856,7 +860,7 @@ INLINE void TimerBOver(FM_ST *ST)
 	if(ST->mode & 0x08) FM_STATUS_SET(ST,0x02);
 	/* clear or reload the counter */
 	ST->TBC = ( 256-ST->TB)<<4;
-	if (ST->Timer_Handler) (ST->Timer_Handler)(ST->index,1,ST->TBC,ST->TimerBase);
+	if (ST->Timer_Handler) (ST->Timer_Handler)(ST->index + ST->chip_base,1,ST->TBC,ST->TimerBase);
 }
 
 
@@ -2466,7 +2470,7 @@ static void YM2203_save_state(void)
    'clock' is the chip clock in Hz
    'rate' is sampling rate
 */
-int YM2203Init(int num, int clock, int rate,
+int YM2203Init(int num, int chipbase, int clock, int rate,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler)
 {
 	int i;
@@ -2491,6 +2495,9 @@ int YM2203Init(int num, int clock, int rate,
 		return (-1);
 	}
 	for ( i = 0 ; i < YM2203NumChips; i++ ) {
+		FM2203[i].OPN.chip_base = chipbase;
+		FM2203[i].OPN.ST.chip_base = chipbase;
+
 		FM2203[i].OPN.ST.index = i;
 		FM2203[i].OPN.type = TYPE_YM2203;
 		FM2203[i].OPN.P_CH = FM2203[i].CH;
@@ -3230,7 +3237,7 @@ static void YM2608_deltat_status_reset(UINT8 which, UINT8 changebits)
 	FM_STATUS_RESET(&(FM2608[which].OPN.ST), changebits);
 }
 /* YM2608(OPNA) */
-int YM2608Init(int num, int clock, int rate,
+int YM2608Init(int num, int chipbase, int clock, int rate,
                void **pcmrom,int *pcmsize, UINT8 *irom,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler)
 {
@@ -3259,6 +3266,9 @@ int YM2608Init(int num, int clock, int rate,
 	}
 
 	for ( i = 0 ; i < YM2608NumChips; i++ ) {
+		FM2608[i].OPN.chip_base = chipbase;
+		FM2608[i].OPN.ST.chip_base = chipbase;
+
 		FM2608[i].OPN.ST.index = i;
 		FM2608[i].OPN.type = TYPE_YM2608;
 		FM2608[i].OPN.P_CH = FM2608[i].CH;
@@ -3957,7 +3967,7 @@ static void YM2610_deltat_status_reset(UINT8 which, UINT8 changebits)
 	FM2610[which].adpcm_arrivedEndAddress &= (~changebits);
 }
 
-int YM2610Init(int num, int clock, int rate,
+int YM2610Init(int num, int chipbase, int clock, int rate,
                void **pcmroma,int *pcmsizea,void **pcmromb,int *pcmsizeb,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler)
 
@@ -3986,6 +3996,10 @@ int YM2610Init(int num, int clock, int rate,
 
 	for ( i = 0 ; i < YM2610NumChips; i++ ) {
 		YM2610 *F2610 = &(FM2610[i]);
+
+		FM2610->OPN.chip_base = chipbase;
+		FM2610->OPN.ST.chip_base = chipbase;
+
 		/* FM */
 		F2610->OPN.ST.index = i;
 		F2610->OPN.type = TYPE_YM2610;
@@ -4476,7 +4490,7 @@ static void YM2612_save_state(void)
 #endif /* _STATE_H */
 
 /* initialize YM2612 emulator(s) */
-int YM2612Init(int num, int clock, int rate,
+int YM2612Init(int num, int chipbase, int clock, int rate,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler)
 {
 	int i;
@@ -4502,6 +4516,9 @@ int YM2612Init(int num, int clock, int rate,
 	}
 
 	for ( i = 0 ; i < YM2612NumChips; i++ ) {
+		FM2612[i].OPN.chip_base = chipbase;
+		FM2612[i].OPN.ST.chip_base = chipbase;
+
 		FM2612[i].OPN.ST.index = i;
 		FM2612[i].OPN.type = TYPE_YM2612;
 		FM2612[i].OPN.P_CH = FM2612[i].CH;

@@ -814,7 +814,7 @@ static INT32 DrvInit(INT32 nMcuType)
 	}
 	
 	BurnYM3526Init(3000000, &DrvFMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6809Config, 1500000);
+	BurnTimerAttach(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
@@ -1031,56 +1031,44 @@ static INT32 DrvDraw()
 static INT32 DrvFrame()
 {
 	INT32 nInterleave = MSM5205CalcInterleave(0, 12000000 / 8);
-	
+
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
 	INT32 nCyclesTotal[3] = { (12000000 / 8) / 60, (12000000 / 8) / 60, (12000000 / 4) / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nCyclesSegment;
-	
+
 	DrvVBlank = 0;
-	
+
 	M6502NewFrame();
 	M6809NewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-		
 		M6502Open(0);
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += M6502Run(nCyclesSegment);
+		CPU_RUN(0, M6502);
 		if (i == ((nInterleave / 10) * 7)) DrvVBlank = 1;
 		if (i ==  (nInterleave / 2)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		if (i == ((nInterleave / 10) * 9)) M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_HOLD);
 		M6502Close();
-		
+
 		if (!DisableMCUEmulation) {
 			m6805Open(0);
-			nCurrentCPU = 2;
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += m6805Run(nCyclesSegment);
+			CPU_RUN(2, m6805);
 			m6805Close();
 		}
-		
+
 		M6809Open(0);
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		MSM5205Update();
 		M6809Close();
 	}
-	
-	M6809Open(0);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
+
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	M6809Close();
-	
+
 	if (pBurnDraw) DrvDraw();
 
 	return 0;

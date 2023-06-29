@@ -842,7 +842,7 @@ static INT32 DrvInit()
 	tms32010_rom = (UINT16*)DrvMCUROM;
 
 	BurnYM3812Init(1, 3500000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3500000);
+	BurnTimerAttach(&ZetConfig, 3500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
@@ -1063,7 +1063,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		if (i == 240) {
@@ -1077,15 +1077,9 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetOpen(1);
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	return 0;
 }

@@ -670,7 +670,7 @@ static INT32 MightguyInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, NULL, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.85, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 4000000);
@@ -877,7 +877,7 @@ static INT32 MightguyFrame()
 
 		ZetOpen(1);
 		INT32 lastcyc = ZetTotalCycles();
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (dac_intrl_table[i]) { // clock-in the dac @ prot_dac_freq (see dac_recalc_freq())
 			mightguy_prot_dac_clk();
@@ -893,16 +893,10 @@ static INT32 MightguyFrame()
 		ZetClose();
 	}
 
-	ZetOpen(1);
-
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

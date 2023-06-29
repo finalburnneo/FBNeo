@@ -5,6 +5,7 @@
 #include "m68000_intf.h"
 #include "deco16ic.h"
 #include "h6280_intf.h"
+#include "burn_ym2151.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -32,6 +33,8 @@ static UINT8 DrvJoy2[16];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
+
+static INT32 nCyclesExtra;
 
 static struct BurnInputInfo SupbtimeInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -259,6 +262,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -478,7 +483,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(UINT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(UINT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -486,12 +491,11 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 232;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	h6280NewFrame();
-	
+
 	SekOpen(0);
 	h6280Open(0);
 
@@ -500,32 +504,22 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Sek);
-		CPU_RUN(1, h6280);
+		CPU_RUN_TIMER(1);
 
 		if (i == 206) {
 			deco16_vblank = 0x08;
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
 	}
 
 	h6280Close();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -537,7 +531,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029722;
 	}
@@ -556,6 +550,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

@@ -553,7 +553,7 @@ static INT32 PaddlemaInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
@@ -641,7 +641,7 @@ static INT32 TnextspcInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
@@ -769,17 +769,15 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Sek);
 		if (i == 248) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
-	}
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		CPU_RUN_TIMER(1);
 	}
 
 	ZetClose();
 	SekClose();
+
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();

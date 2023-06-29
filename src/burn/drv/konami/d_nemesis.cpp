@@ -2515,7 +2515,7 @@ static void CitybombSoundInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3579545, NULL, DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3579545);
+	BurnTimerAttach(&ZetConfig, 3579545);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	K007232Init(0,  3579545, K007232ROM, 0x80000);
@@ -3881,7 +3881,7 @@ static INT32 CitybombFrame()
 		if (*m68k_irq_enable && (i == nInterleave - 1))
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 	}
 
 	if (pBurnSoundOut) {

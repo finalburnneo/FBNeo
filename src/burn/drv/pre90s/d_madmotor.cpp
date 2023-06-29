@@ -46,28 +46,30 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo MadmotorInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Madmotor)
@@ -214,6 +216,8 @@ static INT32 DrvDoReset()
 
 	memset (pf_control, 0, sizeof(pf_control));
 
+	nCyclesExtra = 0;
+
 	return 0;
 }
 
@@ -290,12 +294,7 @@ static void DrvProgDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
@@ -373,7 +372,7 @@ static INT32 DrvExit()
 
 	deco16SoundExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -435,19 +434,7 @@ static void draw_sprites()
 
 				for (INT32 y = 0; y < high; y++)
 				{
-					if (flipy) {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code - y * incy, sx + (-16 * x), sy + (-16 * y), color, 4, 0, 0x100, DrvGfxROM3);
-						} else {
-							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code - y * incy, sx + (-16 * x), sy + (-16 * y), color, 4, 0, 0x100, DrvGfxROM3);
-						}
-					} else {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code - y * incy, sx + (-16 * x), sy + (-16 * y), color, 4, 0, 0x100, DrvGfxROM3);
-						} else {
-							Render16x16Tile_Mask_Clip(pTransDraw, code - y * incy, sx + (-16 * x), sy + (-16 * y), color, 4, 0, 0x100, DrvGfxROM3);
-						}
-					}
+					Draw16x16MaskTile(pTransDraw, code - y * incy, sx + (-16 * x), sy + (-16 * y), flipx, flipy, color, 4, 0, 0x100, DrvGfxROM3);
 				}
 			}
 		}
@@ -497,9 +484,8 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 12000000 / 60, 4026500 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
-	
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
+
 	SekOpen(0);
 	h6280Open(0);
 
@@ -507,36 +493,24 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Sek);
+
 		if (i == 248) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			vblank = 1;
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
-
-		if (pBurnSoundOut && i%4 == 3) { // this fixes small tempo fluxuations in cninja
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		}
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		CPU_RUN_TIMER(1);
 	}
 
 	h6280Close();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -566,6 +540,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		SCAN_VAR(pf_control);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

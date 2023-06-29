@@ -19,7 +19,10 @@ INT32 nBurnVer = BURN_VERSION;		// Version number of the library
 
 UINT32 nBurnDrvCount = 0;		// Count of game drivers
 UINT32 nBurnDrvActive = ~0U;	// Which game driver is selected
+INT32 nBurnDrvSubActive = -1;	// Which sub-game driver is selected
 UINT32 nBurnDrvSelect[8] = { ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U }; // Which games are selected (i.e. loaded but not necessarily active)
+
+char* pszCustomNameA = NULL;
 
 bool bBurnUseMMX;
 #if defined BUILD_A68K
@@ -445,6 +448,31 @@ void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 }
 #endif
 
+#if defined (_UNICODE)
+void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
+{
+	if (-1 == nBurnDrvSubActive) return;
+
+	char szShortNames[33] = { 0 };
+	sprintf(szShortNames, "%s[0x%02x]", pDriver[nBurnDrvActive]->szShortName, nBurnDrvSubActive);
+
+	for (UINT32 i = 0; i < nNumGames; i++) {
+		if (!strcmp(szName, szShortNames)) {
+			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
+			return;
+		}
+	}
+}
+#endif
+
+static void BurnDrvSetFullNameA()
+{
+	// If not NULL, then FullNameA is customized
+	if (NULL == pszCustomNameA) return;
+
+	pDriver[nBurnDrvActive]->szFullNameA = pszCustomNameA;
+}
+
 // Get the zip names for the driver
 extern "C" INT32 BurnDrvGetZipName(char** pszName, UINT32 i)
 {
@@ -693,8 +721,14 @@ extern "C" INT32 BurnDrvInit()
 	BurnInitMemoryManager();
 	BurnRandomInit();
 	BurnSoundDCFilterReset();
+	BurnTimerPreInit();
 
 	nReturnValue = pDriver[nBurnDrvActive]->Init();	// Forward to drivers function
+
+	if (-1 != nBurnDrvSubActive) {
+		BurnDrvSetFullNameA();
+		BurnerDoGameListExLocalisation();
+	}
 
 	nMaxPlayers = pDriver[nBurnDrvActive]->Players;
 
@@ -746,6 +780,8 @@ extern "C" INT32 BurnDrvExit()
 	pBurnDrvPalette = NULL;
 
 	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function
+
+	nBurnDrvSubActive = -1;	// Rest to -1;
 
 	BurnExitMemoryManager();
 #if defined FBNEO_DEBUG

@@ -2529,7 +2529,7 @@ static void common_sound_init(void (__fastcall *write_port)(UINT16, UINT8), UINT
 	ZetClose();
 
 	BurnYM3812Init(1, 3500000, &toaplan1YM3812IrqHandler, toaplan1SynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3500000);
+	BurnTimerAttach(&ZetConfig, 3500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 }
 
@@ -3177,7 +3177,7 @@ static INT32 DrvFrame()
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		if (has_dsp) {
 			if (dsp_on) {
@@ -3188,14 +3188,12 @@ static INT32 DrvFrame()
 		}
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];

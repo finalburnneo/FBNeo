@@ -462,7 +462,7 @@ static INT32 DrvInit()
 	K007420SetOffsets(0, 16);
 
 	BurnYM3812Init(2, 3000000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM3812SetRoute(1, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -554,14 +554,11 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, HD6309);
-		//HD6309Run(nCyclesTotal[0] / nInterleave);
 
 		if (i == 240 && K007342_irq_enabled()) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
-
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

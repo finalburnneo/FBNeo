@@ -1690,12 +1690,11 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		if (seibu_fm_type == 0) {
-			CPU_RUN_TIMER_YM3812(1);
-		} else {
-			CPU_RUN_TIMER(1);
-		}
+		CPU_RUN_TIMER(1);
 	}
+
+	ZetClose();
+	SekClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1707,9 +1706,6 @@ static INT32 DrvFrame()
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
-
-	ZetClose();
-	SekClose();
 
 	return 0;
 }

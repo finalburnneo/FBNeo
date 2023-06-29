@@ -3859,7 +3859,7 @@ static INT32 JumppopInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3500000, NULL, JumppopSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 3500000);
+	BurnTimerAttach(&ZetConfig, 3500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
@@ -4716,7 +4716,7 @@ static INT32 JumppopFrame()
 		SekClose();
 
 		ZetOpen(0);
-		CPU_RUN_TIMER_YM3812(1);
+		CPU_RUN_TIMER(1);
 		ZetNmi();
 		ZetClose();
 	}

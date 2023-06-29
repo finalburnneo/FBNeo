@@ -1,6 +1,11 @@
 // FB Alpha Chelnov / Karnov / Wonder Planet driver module
 // Based on MAME driver by Bryan McPhail
 
+// Karnov: Game has a bug (weird!) - dink
+// Explanation: Karnov level #3(?) - a snakey-thing that snakes through
+// the air; if you die while this thing is still alive, the sound
+// will never stop.  Even after game over.
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "m6502_intf.h"
@@ -51,9 +56,12 @@ static UINT8 DrvReset;
 static bool bUseAsm68KCoreOldValue = false;
 #endif
 
-enum { KARNOV=0, CHELNOV, WNDRPLNT };
-static INT32 microcontroller_id;
 static INT32 vblank;
+
+enum { KARNOV = 0, CHELNOV, WNDRPLNT };
+static INT32 is_game;
+
+static INT32 nCyclesExtra[3];
 
 static struct BurnInputInfo KarnovInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
@@ -531,7 +539,7 @@ static void karnov_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 karnov_sound_read(UINT16 address)
+static UINT8 karnov_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -549,8 +557,6 @@ static void DrvYM3526FMIRQHandler(INT32, INT32 nStatus)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
@@ -566,6 +572,8 @@ static INT32 DrvDoReset()
 
 	M6502Close();
 	SekClose();
+
+	memset(nCyclesExtra, 0, sizeof(nCyclesExtra));
 
 	HiscoreReset();
 
@@ -671,7 +679,7 @@ static INT32 DrvInit(INT32 mcuid)
 {
 	BurnAllocMemIndex();
 
-	microcontroller_id = mcuid;
+	is_game = mcuid;
 
 	{
 		if (BurnLoadRom(Drv68KROM + 0x000001,  0, 2)) return 1;
@@ -690,7 +698,7 @@ static INT32 DrvInit(INT32 mcuid)
 		if (BurnLoadRom(DrvGfxROM1 + 0x40000, 10, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x60000, 11, 1)) return 1;
 
-		if (microcontroller_id == CHELNOV) {
+		if (is_game == CHELNOV) {
 			if (BurnLoadRom(DrvGfxROM2 + 0x00000, 12, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x20000, 13, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x40000, 14, 1)) return 1;
@@ -754,11 +762,10 @@ static INT32 DrvInit(INT32 mcuid)
 	DrvMCUInit();
 
 	BurnYM3526Init(3000000, &DrvYM3526FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachSek(10000000);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -791,7 +798,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_txt_layer(INT32 swap)
+static void draw_txt_layer()
 {
 	UINT16 *vram = (UINT16*)DrvVidRAM;
 	for (INT32 offs = 0x20; offs < 0x3e0; offs++)
@@ -799,7 +806,7 @@ static void draw_txt_layer(INT32 swap)
 		INT32 sx = (offs & 0x1f) << 3;
 		INT32 sy = (offs >> 5) << 3;
 
-		if (swap) {
+		if (is_game == WNDRPLNT) {
 			INT32 t = sx;
 			sx = sy;
 			sy = t;
@@ -810,7 +817,7 @@ static void draw_txt_layer(INT32 swap)
 			sx ^= 0xf8;
 		}
 
-		if (microcontroller_id == WNDRPLNT) {
+		if (is_game == WNDRPLNT) {
 			sy -= 8;
 		}
 
@@ -909,11 +916,9 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x300; i++) {
-			INT32 d = Palette[i];
-
-			UINT8 r = d >> 16;
-			UINT8 g = d >> 8;
-			UINT8 b = d >> 0;
+			UINT8 r = Palette[i] >> 16;
+			UINT8 g = Palette[i] >> 8;
+			UINT8 b = Palette[i] >> 0;
 
 			DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}
@@ -922,7 +927,7 @@ static INT32 DrvDraw()
 
 	draw_bg_layer();
 	draw_sprites();
-	draw_txt_layer(microcontroller_id == WNDRPLNT);
+	draw_txt_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -957,7 +962,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 10000000 / 60, 1500000 / 60, 8000000 / 60 / 12 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, nCyclesExtra[2] };
 
 	M6502Open(0);
 	SekOpen(0);
@@ -969,28 +974,28 @@ static INT32 DrvFrame()
 		if (i == 240) {
 			vblank = 0x00;
 			SekSetIRQLine(7, CPU_IRQSTATUS_AUTO);
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, Sek);
 
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 
 		CPU_RUN(2, DrvMCU);
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();
 	M6502Close();
 
-	if (pBurnDraw) {
-		DrvDraw();
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+
+	if (pBurnSoundOut) {
+		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	return 0;
@@ -1018,22 +1023,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		DrvMCUScan(nAction);
 
-		SekOpen(0);
-		M6502Open(0);
 		BurnYM3526Scan(nAction, pnMin);
 		BurnYM2203Scan(nAction, pnMin);
-		M6502Close();
-		SekClose();
 
-#if 0
-		if (nAction & ACB_WRITE) {
-			// Prevent hung sounds on savestate load (weird!) - dink
-			// Explanation: Karnov level #3(?) - a snakey-thing that snakes through
-			// the air; if you die while this thing is still alive, the sound
-			// will never stop.  Even after game over.
-			BurnYM2203Reset();
-		}
-#endif
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

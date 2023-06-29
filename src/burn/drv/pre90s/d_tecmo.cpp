@@ -760,7 +760,7 @@ static INT32 RygarInit()
 	}
 
 	BurnYM3812Init(1, 4000000, &TecmoFMIRQHandler, &TecmoSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 1);
@@ -846,7 +846,7 @@ static INT32 SilkwormInit()
 	}
 
 	BurnYM3812Init(1, 4000000, &TecmoFMIRQHandler, &TecmoSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 1);
@@ -925,7 +925,7 @@ static INT32 GeminiInit()
 	}
 
 	BurnYM3812Init(1, 4000000, &TecmoFMIRQHandler, &TecmoSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	if (DrvHasADPCM) {
@@ -1165,18 +1165,15 @@ static INT32 DrvFrame()
 			ZetNmi();
 			DrvEnableNmi = 0;
 		}
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		if (DrvHasADPCM)  MSM5205Update();
 		ZetClose();
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		if (DrvHasADPCM) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();

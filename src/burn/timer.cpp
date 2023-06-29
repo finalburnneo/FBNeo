@@ -6,11 +6,17 @@
 
 double dTime;									// Time elapsed since the emulated machine was started
 
+static INT32 nIndex;
+
 #define TIMER_MAX 8
 static INT32 nTimerCount[TIMER_MAX], nTimerStart[TIMER_MAX];
 
+static INT32 nTimerChips[TIMER_MAX];
+
 // Callbacks
-static INT32 (*pTimerOverCallback)(INT32, INT32);
+typedef INT32 (*tpTimerOverCallback)(INT32, INT32);
+static tpTimerOverCallback pTimerOverCallback[TIMER_MAX];
+
 static double (*pTimerTimeCallback)();
 
 INT32 BurnTimerCPUClockspeed = 0;
@@ -81,7 +87,8 @@ INT32 BurnTimerUpdate(INT32 nCycles)
 				}
 				//bprintf(PRINT_NORMAL, _T("  - timer %d fired\n"), i);
 
-				nIRQStatus |= pTimerOverCallback(i>>1, i&1);
+//				bprintf(0, _T("over_callback[%d](%d, %d)\n"), i>>1,nTimerChips[i>>1], i&1);
+				nIRQStatus |= pTimerOverCallback[i>>1](nTimerChips[i>>1], i&1);
 			}
 		}
 	}
@@ -126,18 +133,18 @@ static INT32 BurnTimerExtraCallbackDummy()
 	return 0;
 }
 */
-void BurnOPLTimerCallback(INT32 c, double period)
+void BurnOPLTimerCallback(INT32 n, INT32 c, double period)
 {
 	pCPURunEnd();
 
 	if (period == 0.0) {
-		nTimerCount[c] = MAX_TIMER_VALUE;
+		nTimerCount[(n << 1) + c] = MAX_TIMER_VALUE;
 //		bprintf(PRINT_NORMAL, _T("  - timer %i stopped\n"), c);
 		return;
 	}
 
-	nTimerCount[c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
+	nTimerCount[(n << 1) + c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
+	nTimerCount[(n << 1) + c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period);
 }
@@ -155,7 +162,7 @@ void BurnOPMTimerCallback(INT32 n, INT32 c, double period) // ym2151
 	nTimerCount[(n << 1) + c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 }
 
-void BurnOPNTimerCallback(INT32 n, INT32 c, INT32 cnt, double stepTime) // ym2203
+void BurnOPNTimerCallback(INT32 n, INT32 c, INT32 cnt, double stepTime) // ym2203, ym2610, ym2612, ym2608
 {
 	pCPURunEnd();
 	
@@ -302,6 +309,8 @@ void BurnTimerExit()
 	pCPURun = NULL;
 	pCPURunEnd = NULL;
 
+	pTimerTimeCallback = NULL;
+
 	return;
 }
 
@@ -316,16 +325,46 @@ void BurnTimerReset()
 	nTicksDone = 0;
 }
 
-INT32 BurnTimerInit(INT32 (*pOverCallback)(INT32, INT32), double (*pTimeCallback)())
+// inits in BurnDrvInit()
+void BurnTimerPreInit()
 {
 	BurnTimerExit();
 
-	pTimerOverCallback = pOverCallback;
-	pTimerTimeCallback = pTimeCallback ? pTimeCallback : BurnTimerTimeCallbackDummy;
+	nIndex = 0;
+}
+
+// initted by soundcore[s], (or anything)
+// Each chip gets 2 timers
+
+// BurnTimerSetOneshot / BurnTimerSetRetrig, use (baseIndex << 1) + timer#
+// for the first param.  baseIndex is the return value from BurnTimerInit()
+// timer# can be 0, 1
+
+INT32 BurnTimerInit(INT32 (*pOverCallback)(INT32, INT32), double (*pTimeCallback)(), INT32 nChips)
+{
+	INT32 nChipBaseIndex = nIndex;
+	bprintf(0, _T("BurnTimerInit: base index %d, #chips %d\n"), nIndex, nChips);
+
+	if (nIndex + (nChips * 2) >= TIMER_MAX) {
+		bprintf(PRINT_ERROR, _T("BurnTimer: Init overflows, increase TIMER_MAX?\n"));
+		return 0;
+	}
+
+	for (INT32 chipnum = 0; chipnum < nChips; chipnum++) {
+		pTimerOverCallback[nIndex] = pOverCallback;
+		nTimerChips[nIndex] = chipnum; // base chip#
+		//bprintf(0, _T("nTimerChips[%d] = %d\n"), nIndex, chipnum);
+		nIndex++;
+	}
+
+	if (pTimerTimeCallback == NULL || pTimerTimeCallback == BurnTimerTimeCallbackDummy) {
+		// Make sure we don't overwrite a good callback with NULL in subsequent core init's (some soundcores..)
+		pTimerTimeCallback = pTimeCallback ? pTimeCallback : BurnTimerTimeCallbackDummy;
+	}
 
 	BurnTimerReset();
 
-	return 0;
+	return nChipBaseIndex;
 }
 
 // Null CPU, for a FM timer that isn't attached to anything.

@@ -577,7 +577,7 @@ static INT32 DrvInit()
 	ToaPalInit();
 
 	BurnYM3812Init(1, 27000000 / 8, &toaplan1FMIRQHandler, &tekipakiSynchroniseStream, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 10000000);
+	BurnTimerAttach(&ZetConfig, 10000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	DrvDoReset();			// Reset machine
@@ -681,10 +681,10 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

@@ -576,7 +576,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnY8950Init(2, 3579545, DrvSndROM0, 0x40000, DrvSndROM1, 0x80000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachY8950(&ZetConfig, 3579545);
+	BurnTimerAttach(&ZetConfig, 3579545);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnY8950SetRoute(1, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -869,10 +869,10 @@ static INT32 DrvFrame()
 		if (i == ((nScreenHeight * 100) / 256)) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		BurnTimerUpdateY8950((i + 1) * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 
-	BurnTimerEndFrameY8950(nCyclesTotal[2]);
+	BurnTimerEndFrame(nCyclesTotal[2]);
 
 	if (pBurnSoundOut) {
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);

@@ -2617,18 +2617,26 @@ static void NeoCDProcessCommand()
 		NeoCDCommsStatusFIFO[1] = 15;
 	}
 
+	switch (NeoCDCommsCommandFIFO[1]) {
+		case 3: // weird extended-status commands?
+		case 2:
+			NeoCDCommsCommandFIFO[0] = 0; // morph this command to "status"
+			break;
+	}
+
 	switch (NeoCDCommsCommandFIFO[0]) {
-		case 0:
+		case 0: // status
 			break;
 		case 1:
 //								bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			CDEmuStop();
 
-			NeoCDAssyStatus = 0x0E;
+			NeoCDAssyStatus = 0xf0;
 			bNeoCDLoadSector = false;
 			break;
 		case 2:
 //								bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
+
 			NeoCDCommsStatusFIFO[1] = NeoCDCommsCommandFIFO[3];
 			switch (NeoCDCommsCommandFIFO[3]) {
 
@@ -2776,6 +2784,8 @@ static void NeoCDProcessCommand()
 				LC8951RegistersW[10] &= ~4; // audio mode
 			}
 
+			NeoCDCommsStatusFIFO[1] = 2;
+
 			NeoCDAssyStatus = 1;
 			bNeoCDLoadSector = true;
 			break;
@@ -2842,7 +2852,7 @@ static void NeoCDProcessCommand()
 		case 13:
 		case 14:
 		case 15:
-//			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
+			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			NeoCDAssyStatus = 9;
 			bNeoCDLoadSector = false;
 			break;
@@ -3134,16 +3144,22 @@ static void NeoCDCommsControl(UINT8 clock, UINT8 send)
 
 						NeoCDProcessCommand();
 
-						if (NeoCDCommsCommandFIFO[0]) {
+						if (1 || NeoCDCommsCommandFIFO[0]) {
 
 							if (NeoCDAssyStatus == 1) {
 								if (CDEmuGetStatus() == idle) {
+									bprintf(0, _T("-- idle derp? --\n"));
 									NeoCDAssyStatus = 0x0E;
 									bNeoCDLoadSector = false;
 								}
 							}
 
-							NeoCDCommsStatusFIFO[0] = NeoCDAssyStatus;
+							// prepare status packet from processed command
+
+							NeoCDCommsStatusFIFO[0] = (NeoCDAssyStatus & 0x0f);
+
+							// "STOP" command needs a slight delay after execution
+							if (NeoCDAssyStatus == 0xf0) NeoCDAssyStatus = 0x09;
 
 							// compute checksum
 
@@ -3190,7 +3206,15 @@ static void NeoCDReadSector()
 			NeoCDSectorLBA++;
 			NeoCDSectorLBA = CDEmuLoadSector(NeoCDSectorLBA, NeoCDSectorData) - 1;
 
-			if (LC8951RegistersW[10] & 0x80) {
+			if (LC8951RegistersW[10] & 0x80) {                                      // DECEN (sector decoder enabled)
+
+				if (nIRQControl & 0x10) {
+					// raster irq enabled while loading & decoding?  this bothers street hoops w/PR #1029
+					// recreate: disable this block :) boot, select demo, press X - loads insanely slow
+					bprintf(0, _T("NeoGeoCD: disabling raster irq while loading data from CD\n"));
+					nIRQControl &= ~0x10;
+				}
+
 				LC8951UpdateHeader();
 
 				LC8951RegistersR[12] = 0x80;										// STAT0

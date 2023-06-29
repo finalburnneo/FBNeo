@@ -1721,11 +1721,10 @@ static INT32 DrvInit()
 	DrvMCUInit(0);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachHD6309(12000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -1986,7 +1985,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 12000000 / 58, 1500000 / 58, 12000000 / 12 / 58 };
-	//INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	M6502Open(0);
 	HD6309Open(0);
@@ -2001,25 +2000,22 @@ static INT32 DrvFrame()
 			if (*nmi_enable) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, HD6309);
 
 		if (realMCU) {
 			DrvMCUSync();
 		}
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	HD6309Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	HD6309Close();
-	M6502Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -2569,14 +2565,13 @@ static INT32 CobraInit()
 	M6502Close();
 
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachM6809(2000000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.53, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.53, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.53, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -2724,7 +2719,7 @@ static INT32 CobraFrame()
 
 	INT32 nInterleave = 32;
 	INT32 nCyclesTotal[2] = { 2000000 / 58, 1500000 / 58 };
-	//INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6502Open(0);
 	M6809Open(0);
@@ -2738,21 +2733,18 @@ static INT32 CobraFrame()
 			vblank = 0;
 			M6809SetIRQLine(0x20 /*NMI*/, CPU_IRQSTATUS_AUTO);
 		}
+		CPU_RUN(0, M6809);
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	M6809Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6809Close();
-	M6502Close();
 
 	if (pBurnDraw) {
 		CobraDraw();
@@ -3257,14 +3249,13 @@ static INT32 SrdarwinInit()
 	DrvMCUInit(1); // srdarwin
 
 	BurnYM2203Init(1, 1500000, NULL, 0);
-	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.23, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttach(&M6502Config, 1500000);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
-	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -3445,7 +3436,7 @@ static INT32 SrdarwinFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 2000000 / 58, 1500000 / 58, 12000000 / 12 / 58 };
-	//INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	M6502Open(0);
 	M6809Open(0);
@@ -3460,25 +3451,22 @@ static INT32 SrdarwinFrame()
 			M6809SetIRQLine(0x20 /*NMI*/, CPU_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, M6809);
 
 		if (realMCU) {
 			DrvMCUSync();
 		}
 
-		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	M6809Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6809Close();
-	M6502Close();
 
 	if (pBurnDraw) {
 		SrdarwinDraw();
@@ -4088,11 +4076,10 @@ static INT32 GondoInit()
 	}
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachHD6309(12000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -4296,7 +4283,7 @@ static INT32 GondoFrame()
 
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[3] = { 12000000 / 58, 1500000 / 58, 12000000 / 12 / 58 };
-	//INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6502Open(0);
 	HD6309Open(0);
@@ -4318,25 +4305,22 @@ static INT32 GondoFrame()
 			if (*nmi_enable) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		CPU_RUN(0, HD6309);
 
 		if (realMCU) {
 			DrvMCUSync();
 		}
 
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
+	HD6309Close();
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	HD6309Close();
-	M6502Close();
 
 	return 0;
 }
@@ -4770,11 +4754,10 @@ static INT32 OscarInit()
 	M6502Close();
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachHD6309(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
@@ -4879,23 +4862,18 @@ static INT32 OscarFrame()
 		HD6309Close();
 
 		HD6309Open(1);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN(1, HD6309);
 		HD6309Close();
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
+
+		CPU_RUN_TIMER(2);
 	}
 
-	HD6309Open(1);
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	HD6309Close();
 
 	if (pBurnDraw) {
 		OscarDraw();
@@ -5314,11 +5292,10 @@ static INT32 LastmissInit()
 	DrvMCUInit(2);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -5505,8 +5482,8 @@ static INT32 LastmissFrame()
 		}
 
 		M6809Open(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave)); // M6502, but sound syncs to 6809
+		CPU_RUN(0, M6809);
+		CPU_RUN_TIMER(2); // why here?
 		M6809Close();
 
 		M6809Open(1);
@@ -5521,17 +5498,12 @@ static INT32 LastmissFrame()
 		M6809Close();
 	}
 
-	M6809Open(0);
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	M6809Close();
 
 	return 0;
 }
@@ -6045,11 +6017,10 @@ static INT32 CsilverInit()
 	}
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachYM3526(&M6502Config, 1500000);
+	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);
-	BurnTimerAttachM6809(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -6100,8 +6071,8 @@ static INT32 CsilverFrame()
 		if (i == 8) vblank = 0x00;
 
 		M6809Open(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave)); // M6502, but sound syncs to M6809
+		CPU_RUN(0, M6809);
+		CPU_RUN_TIMER(2); // M6502, but sound syncs to M6809
 		M6809Close();
 
 		M6809Open(1);
@@ -6117,18 +6088,13 @@ static INT32 CsilverFrame()
 		M6809Close();
 	}
 
-	M6809Open(0);
-	BurnTimerEndFrame(nCyclesTotal[0]);
-	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
+	M6502Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6502Close();
-	M6809Close();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

@@ -20698,7 +20698,7 @@ struct BurnDriver BurnDrvmslugxsc = {
 
 // Metal Slug X (Multifunction Hack)
 static struct BurnRomInfo mslugxdgRomDesc[] = {
-	{ "250-p1dg.p1",    0x100000, 0x9d740aed, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p1dg.p1",    0x100000, 0xf86ea146, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2dg.ep1",   0x400000, 0xef0c263f, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1.s1",      0x020000, 0xfb6f441d, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -20722,7 +20722,7 @@ STD_ROM_FN(mslugxdg)
 
 struct BurnDriver BurnDrvmslugxdg = {
 	"mslugxdg", "mslugx", "neogeo", NULL, "2023",
-	"Metal Slug X (Multifunction Hack, 20230521)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X (Multifunction Hack, 20230626)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxdgRomInfo, mslugxdgRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

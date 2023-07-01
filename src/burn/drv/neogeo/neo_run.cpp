@@ -98,9 +98,6 @@ static INT32 NEO_RASTER_IRQ_TWEAK = 0; // spinmast prefers offset of 3 here.
 // If defined, adjust the Z80 speed along with the 68000 when overclocking
 #define Z80_SPEED_ADJUST
 
-// If defined, use kludges to better align raster effects in some games (e.g. mosyougi)
-#define RASTER_KLUDGE
-
 // If defined, use the bAllowRasters variable to enable/disable raster effects
 // #define RASTERS_OPTIONAL
 
@@ -110,12 +107,8 @@ static INT32 NEO_RASTER_IRQ_TWEAK = 0; // spinmast prefers offset of 3 here.
  static const INT32 nZ80Clockspeed = 4000000;
 #endif
 
-#if defined RASTER_KLUDGE
- static UINT16 nScanlineOffset;
-#else
  // 0xF8 is correct as verified on MVS hardware
  static const UINT16 nScanlineOffset = 0xF8;
-#endif
 
 #if defined RASTERS_OPTIONAL
  static bool bAllowRasters = false;
@@ -309,7 +302,7 @@ static UINT8 nTransferWriteEnable; // not used
 
 static bool NeoCDOBJBankUpdate[4];
 
-static bool bNeoCDCommsClock, bNeoCDCommsSend;
+static bool bNeoCDCommsClock;
 
 static UINT8 NeoCDCommsCommandFIFO[10] = { 0, };
 static UINT8 NeoCDCommsStatusFIFO[10]  = { 0, };
@@ -1569,7 +1562,6 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			SCAN_VAR(NeoCDOBJBankUpdate);
 
 			SCAN_VAR(bNeoCDCommsClock);
-			SCAN_VAR(bNeoCDCommsSend);
 
 			SCAN_VAR(NeoCDCommsCommandFIFO);
 			SCAN_VAR(NeoCDCommsStatusFIFO);
@@ -2511,15 +2503,18 @@ static UINT8 NeoCDCommsread()
 	return ret;
 }
 
+static void NeoCDCommsFifoPositionReset()
+{
+	bNeoCDCommsClock = true;
+	NeoCDCommsWordCount = 0;
+}
+
 static void NeoCDCommsReset()
 {
-	bNeoCDCommsSend  = false;
-	bNeoCDCommsClock = true;
+	NeoCDCommsFifoPositionReset();
 
 	memset(NeoCDCommsCommandFIFO, 0, sizeof(NeoCDCommsCommandFIFO));
 	memset(NeoCDCommsStatusFIFO,  0, sizeof(NeoCDCommsStatusFIFO));
-
-	NeoCDCommsWordCount = 0;
 
 	NeoCDAssyStatus = 9;
 
@@ -2631,11 +2626,14 @@ static void NeoCDProcessCommand()
 //								bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
 			CDEmuStop();
 
-			NeoCDAssyStatus = 0xf0;
+			NeoCDAssyStatus = 0x90; // delayed
 			bNeoCDLoadSector = false;
 			break;
 		case 2:
 //								bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
+
+			// handle delayed status (in most significant nibble)
+			if (NeoCDAssyStatus & 0xf0) NeoCDAssyStatus >>= 4;
 
 			NeoCDCommsStatusFIFO[1] = NeoCDCommsCommandFIFO[3];
 			switch (NeoCDCommsCommandFIFO[3]) {
@@ -2789,37 +2787,6 @@ static void NeoCDProcessCommand()
 			NeoCDAssyStatus = 1;
 			bNeoCDLoadSector = true;
 			break;
-
-#if 0
-			if (LC8951RegistersW[10] & 4) {
-
-				if (CDEmuGetStatus() == playing) {
-					//bprintf(PRINT_ERROR, _T("*** Switching CD mode to CD-ROM while in audio mode!(PC: 0x%06X)\n"), SekGetPC(-1));
-				}
-
-				NeoCDSectorLBA  = NeoCDCommsCommandFIFO[2] * (10 * CD_FRAMES_MINUTE);
-				NeoCDSectorLBA += NeoCDCommsCommandFIFO[3] * ( 1 * CD_FRAMES_MINUTE);
-				NeoCDSectorLBA += NeoCDCommsCommandFIFO[4] * (10 * CD_FRAMES_SECOND);
-				NeoCDSectorLBA += NeoCDCommsCommandFIFO[5] * ( 1 * CD_FRAMES_SECOND);
-				NeoCDSectorLBA += NeoCDCommsCommandFIFO[6] * (10                   );
-				NeoCDSectorLBA += NeoCDCommsCommandFIFO[7] * ( 1                   );
-
-				CDEmuStartRead();
-//				LC8951RegistersR[1] |= 0x20;
-			} else {
-
-				if (CDEmuGetStatus() == reading) {
-					//bprintf(PRINT_ERROR, _T("*** Switching CD mode to audio while in CD-ROM mode!(PC: 0x%06X)\n"), SekGetPC(-1));
-				}
-
-				CDEmuPlay((NeoCDCommsCommandFIFO[2] * 16) + NeoCDCommsCommandFIFO[3], (NeoCDCommsCommandFIFO[4] * 16) + NeoCDCommsCommandFIFO[5], (NeoCDCommsCommandFIFO[6] * 16) + NeoCDCommsCommandFIFO[7]);
-			}
-
-			NeoCDAssyStatus = 1;
-			bNeoCDLoadSector = true;
-
-			break;
-#endif
 		}
 		case 4:
 //			bprintf(PRINT_ERROR, _T("    CD comms received command %i\n"), NeoCDCommsCommandFIFO[0]);
@@ -3119,6 +3086,17 @@ static void NeoCDDoDMA()
 	}
 }
 
+static UINT8 NeoCDFifoChecksum(UINT8 *s)
+{
+	INT32 sum = 0x05;
+
+	for (INT32 i = 0; i < 9; i++) {
+		sum += s[i];
+	}
+
+	return ~sum & 0x0f;
+}
+
 static void NeoCDCommsControl(UINT8 clock, UINT8 send)
 {
 	if (clock && !bNeoCDCommsClock) {
@@ -3127,74 +3105,39 @@ static void NeoCDCommsControl(UINT8 clock, UINT8 send)
 			NeoCDCommsWordCount = 0;
 
 			if (send) {
-
 				// command receive complete
 
 				if (NeoCDCommsCommandFIFO[0]) {
-					INT32  sum = 0;
 
-//					bprintf(PRINT_NORMAL, _T("  - CD mechanism command receive completed : 0x"));
-					for (INT32 i = 0; i < 9; i++) {
-//						bprintf(PRINT_NORMAL, _T("%X"), NeoCDCommsCommandFIFO[i]);
-						sum += NeoCDCommsCommandFIFO[i];
-					}
-					sum = ~(sum + 5) & 0x0F;
-//					bprintf(PRINT_NORMAL, _T(" (CS 0x%X, %s)\n"), NeoCDCommsCommandFIFO[9], (sum == NeoCDCommsCommandFIFO[9]) ? _T("OK") : _T("NG"));
-					if (sum == NeoCDCommsCommandFIFO[9]) {
+					if (NeoCDFifoChecksum(&NeoCDCommsCommandFIFO[0]) == NeoCDCommsCommandFIFO[9]) {
 
 						NeoCDProcessCommand();
 
-						if (1 || NeoCDCommsCommandFIFO[0]) {
-
-							if (NeoCDAssyStatus == 1) {
-								if (CDEmuGetStatus() == idle) {
-									bprintf(0, _T("-- idle derp? --\n"));
-									NeoCDAssyStatus = 0x0E;
-									bNeoCDLoadSector = false;
-								}
-							}
-
-							// prepare status packet from processed command
-
-							NeoCDCommsStatusFIFO[0] = (NeoCDAssyStatus & 0x0f);
-
-							// "STOP" command needs a slight delay after execution
-							if (NeoCDAssyStatus == 0xf0) NeoCDAssyStatus = 0x09;
-
-							// compute checksum
-
-							sum = 0;
-
-							for (INT32 i = 0; i < 9; i++) {
-								sum += NeoCDCommsStatusFIFO[i];
-							}
-							NeoCDCommsStatusFIFO[9] = ~(sum + 5) & 0x0F;
+						if (NeoCDAssyStatus == 1 && CDEmuGetStatus() == idle) {
+							bprintf(0, _T("--- NeoGeoCD: playing stopped\n"));
+							NeoCDAssyStatus = 9;
+							bNeoCDLoadSector = false;
 						}
+
+						// prepare status packet from processed command
+						NeoCDCommsStatusFIFO[0] = (NeoCDAssyStatus & 0x0f);
+
+						// compute checksum of status packet
+						NeoCDCommsStatusFIFO[9] = NeoCDFifoChecksum(&NeoCDCommsStatusFIFO[0]);
 					}
 				}
 			} else {
-
 				// status send complete
 
 //				if (NeoCDCommsStatusFIFO[0] || NeoCDCommsStatusFIFO[1]) {
-//					INT32  sum = 0;
-//
 //					bprintf(PRINT_NORMAL, _T("  - CD mechanism status send completed : 0x"));
 //					for (INT32 i = 0; i < 9; i++) {
 //						bprintf(PRINT_NORMAL, _T("%X"), NeoCDCommsStatusFIFO[i]);
-//						sum += NeoCDCommsStatusFIFO[i];
 //					}
-//					sum = ~(sum + 5) & 0x0F;
-//					bprintf(PRINT_NORMAL, _T(" (CS 0x%X, %s)\n"), NeoCDCommsStatusFIFO[9], (sum == NeoCDCommsStatusFIFO[9]) ? _T("OK") : _T("NG"));
-//				}
-
-//				if (NeoCDAssyStatus == 0xE) {
-//					NeoCDAssyStatus = 9;
+//					bprintf(PRINT_NORMAL, _T(" (CS 0x%X, %s)\n"), NeoCDCommsStatusFIFO[9], (NeoCDFifoChecksum(&NeoCDCommsStatusFIFO[0]) == NeoCDCommsStatusFIFO[9]) ? _T("OK") : _T("NG"));
 //				}
 			}
-
 		}
-		bNeoCDCommsSend = send;
 	}
 	bNeoCDCommsClock = clock;
 }
@@ -3459,6 +3402,7 @@ static void __fastcall neogeoWriteByteCDROM(UINT32 sekAddress, UINT8 byteValue)
 
 		case 0x0181:
 			bNeoCDIRQEnabled = (byteValue != 0);
+			NeoCDCommsFifoPositionReset();
 			break;
 
 		case 0x0183: {
@@ -4096,20 +4040,11 @@ static INT32 NeoInitCommon()
 	bRenderLineByLine = false;
 #endif
 
-#if defined RASTER_KLUDGE
-	nScanlineOffset = 0xF8;									// correct as verified on MVS hardware
-#endif
-
 	NEO_RASTER_IRQ_TWEAK = 0;
 
 	// These games rely on reading the line counter for synchronising raster effects
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "mosyougi")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "moshougi")) {
 		bRenderLineByLine = true;
-
-#if defined RASTER_KLUDGE
-		nScanlineOffset = 0xFB;
-#endif
-
 	}
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "neodrift")) {
 		bRenderLineByLine = true;

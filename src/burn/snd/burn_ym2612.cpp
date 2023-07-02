@@ -310,7 +310,7 @@ INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	
 	if (num > MAX_YM2612) num = MAX_YM2612;
 
-	INT32 timer_chipbase = BurnTimerInit(&YM2612TimerOver, GetTimeCallback);
+	INT32 timer_chipbase = BurnTimerInit(&YM2612TimerOver, GetTimeCallback, num);
 
 	BurnYM2612StreamCallback = StreamCallback;
 

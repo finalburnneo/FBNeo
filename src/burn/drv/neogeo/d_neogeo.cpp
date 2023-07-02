@@ -5751,6 +5751,9 @@ struct BurnDriver BurnDrvMSlug2 = {
 	0x1000, 304, 224, 4, 3
 };
 
+// Metal Slug 2 (Friendly Fire FC2, Hack)
+// Modified by CXZInc/Alice愛麗絲
+
 static struct BurnRomInfo mslug2fmRomDesc[] = {
 	{ "241-p1fm.p1",    0x100000, 0x487173f6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2fm.sp2",   0x200000, 0x37a118fc, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -5781,6 +5784,9 @@ struct BurnDriver BurnDrvMSlug2fm = {
 	0x1000, 304, 224, 4, 3
 };
 
+// Metal Slug 2 (Enemy Remix, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug2rRomDesc[] = {
 	{ "241-p1r.p1",   0x100000, 0xf882d50d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2.sp2",   0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -5810,6 +5816,9 @@ struct BurnDriver BurnDrvMSlug2r = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// Metal Slug 2 (Survival, Hack)
+// Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug2ctRomDesc[] = {
 	{ "241-p1ct.p1",    0x100000, 0x78ad6864, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -6418,6 +6427,9 @@ struct BurnDriver BurnDrvMSlugX = {
 	0x1000, 304, 224, 4, 3
 };
 
+// Metal Slug X (Blue Hack)
+// Modified by 隐藏玩家
+
 static struct BurnRomInfo mslugxebRomDesc[] = {
 	{ "250-p1eb.p1",    0x100000, 0x764d1bb1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2eb.ep1",   0x400000, 0xa51363d1, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -6450,6 +6462,9 @@ struct BurnDriver BurnDrvMSlugXeb = {
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// Metal Slug X (Extreme Space, Hack)
+// Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslugxlbRomDesc[] = {
 	{ "250-p1lb.p1",    0x100000, 0x41fc71cc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -6484,6 +6499,9 @@ struct BurnDriver BurnDrvMSlugXlb = {
 	0x1000, 304, 224, 4, 3
 };
 
+// Metal Slug X (Enemy Remix, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslugxc2RomDesc[] = {
 	{ "250-p1.p1",      0x100000, 0x81f1f60b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2c2.ep1",   0x400000, 0x5d1c52cd, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -6516,6 +6534,9 @@ struct BurnDriver BurnDrvMSlugXc2 = {
 	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// Metal Slug X (AzStar Soda Remix FC2 Hack)
+// Modified by Soda/Alice愛麗絲
 
 static struct BurnRomInfo mslugxsrfRomDesc[] = {
 	{ "250-p1srf.p1",    0x100000, 0xaed327fe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -13955,6 +13976,9 @@ struct BurnDriver BurnDrvmslug4 = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Metal Slug 4 (Enemy Remix, Hack)
+// Modified by Tuhr123
+
 static struct BurnRomInfo mslug4cRomDesc[] = {
 	{ "263-p1c.p1",    0x100000, 0xf8145f8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "263-p2.sp2",    0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -18408,6 +18432,7 @@ struct BurnDriver BurnDrvneon = {
 
 
 // Metal Slug 5 (New Battle, Hack)
+// Modified by 磁暴线圈
 
 static struct BurnRomInfo mslug5wRomDesc[] = {
 	{ "268-p1w.p1",    0x100000, 0xb0c126da, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -18693,8 +18718,9 @@ struct BurnDriver BurnDrvkof10thd = {
 	0x1000,	304, 224, 4, 3
 };
 
-// GOTVG  Metal Slug - Super Vehicle-001 (Multifunction Hack 20180430)
-// mslugs18 in HBMAME.
+// Metal Slug (Multifunction Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslugdgRomDesc[] = {
 	{ "201-p1dg.p1",    0x200000, 0x0a739521, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
@@ -18724,8 +18750,9 @@ struct BurnDriver BurnDrvmslugdg = {
 	0x1000,	304, 224, 4, 3
 };
 
-// GOTVG Metal Slug 2 - Super Vehicle-001/II (Multifunction Hack 20170509)
-// mslug2s26 in HBMAME.
+// Metal Slug 2 (Multifunction Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug2dgRomDesc[] = {
 	{ "241-p1dg.p1",    0x100000, 0x00c455e7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2dg.sp2",   0x200000, 0x1bf6b12a, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -18756,8 +18783,9 @@ struct BurnDriver BurnDrvmslug2dg = {
 	0x1000, 304, 224, 4, 3
 };
 
-// FBA4DROID/GOTVG Metal Slug 3 (Multifunction Hack 20190119)
-// Fixed the max attack bars in mslug3g have not been visible (s1) by alicemsu (20220614)
+// Metal Slug 3 (Multifunction Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug3gRomDesc[] = {
 	{ "256-ph1g.p1",    0x100000, 0xb23bd9b7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2g.sp2",   0x400000, 0x8053a3fb, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -18793,6 +18821,9 @@ struct BurnDriver BurnDrvmslug3g = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
+
+// Metal Slug 3 (Enemy Remix, Hack)
+// Modified by Tuhr123
 
 static struct BurnRomInfo mslug3cRomDesc[] = {
 	{ "256-ph1c.p1",    0x100000, 0x05c99714, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -18830,7 +18861,9 @@ struct BurnDriver BurnDrvmslug3c = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Blue Hack, 20130227)
+// Metal Slug 3 (Blue Hack)
+// Modified by 隐藏玩家
+
 static struct BurnRomInfo mslug3ebRomDesc[] = {
 	{ "ms3eb.neo-sma",   0x040000, 0x2a9935c2, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
 	
@@ -18870,7 +18903,9 @@ struct BurnDriver BurnDrvmslug3eb = {
 };
 
 
-// Metal Slug 3 (Last Bullet Remix Hack) 2023-05-06
+// Metal Slug 3 (Last Bullet Remix, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslug3lwRomDesc[] = {
 	{ "256-ph1lw.p1",    0x100000,  0x94527837, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2lw.sp2",   0x400000,  0x08ee1fe3, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -18903,7 +18938,9 @@ struct BurnDriver BurnDrvmslug3lw = {
 	0x1000, 304, 224, 4, 3
 };
 
-// GOTVG  Metal Slug 4 (Multifunction Hack 20171225)
+// Metal Slug 4 (Multifunction Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug4dgRomDesc[] = {
 	{ "263-p1dg.p1",    0x100000, 0x36dfa877, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "263-p2dg.sp2",   0x400000, 0xcf6feb75, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -18938,7 +18975,9 @@ struct BurnDriver BurnDrvmslug4dg = {
 	0x1000,	304, 224, 4, 3
 };
 
-// GOTVG Metal Slug 4 (Last Bullet Hack)
+// Metal Slug 4 (Last Bullet Remix)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslug4lwRomDesc[] = {
 	{ "263-p1lw.p1",    0x100000, 0xad713169, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "263-p2lw.sp2",   0x800000, 0x5aa184e7, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -18973,7 +19012,8 @@ struct BurnDriver BurnDrvmslug4lw = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 4 (20th Anniversary GOTVG Hack)
+// Metal Slug 4 (20th Anniversary, Hack)
+// Modified by 明天再努力吧
 
 static struct BurnRomInfo mslug4aRomDesc[] = {
 	{ "263-p1a.p1",    0x100000, 0x54dae71f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -19010,8 +19050,9 @@ struct BurnDriver BurnDrvmslug4a = {
 };
 
 
-// GOTVG Metal Slug 5 (Multifunction Hack 20170523)
-// mslug5hp00 in HBMAME. renamed from mslug5g
+// Metal Slug 5 (Multifunction Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug5dRomDesc[] = {
 	{ "268-p1dg.p1",    0x600000, 0x3be747ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
@@ -19046,6 +19087,9 @@ struct BurnDriver BurnDrvmslug5d = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// Metal Slug 5 (Enemy Remix, Hack)
+// Modified by Tuhr123
 
 static struct BurnRomInfo mslug5cRomDesc[] = {
 	{ "268-p1c.p1",    0x600000, 0xe876d1e7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -19082,6 +19126,9 @@ struct BurnDriver BurnDrvmslug5c = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Metal Slug 5 (X, Hack)
+// Modified by 尤古朵拉
+
 static struct BurnRomInfo mslug5xRomDesc[] = {
 	{ "268-p1x.p1",     0x600000, 0xafffcd5b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
@@ -19116,6 +19163,9 @@ struct BurnDriver BurnDrvmslug5x = {
 	NeoInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// Metal Slug 5 (Devil Enemy Remix, Hack)
+// Modified by Tuhr123
 
 static struct BurnRomInfo mslug5mgRomDesc[] = {
 	{ "268-p1mg.p1",    0x600000, 0x1fc7de70, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -19152,7 +19202,9 @@ struct BurnDriver BurnDrvmslug5mg = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 [Remake Final Ver. Fightcade 2] [Hack]
+// Metal Slug 5 (Remake FC2 Hack)
+// Modified by 合金弹头爱克斯/Alice愛麗絲
+
 static struct BurnRomInfo mslug5sgfRomDesc[] = {
 	{ "268-p1sgf.p1",    0x600000, 0xb1fbb850, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
@@ -19881,7 +19933,8 @@ struct BurnDriver BurnDrvTeot = {
 	0x1000, 304, 224, 4, 3
 };
 
-// mslugunity - Metal Slug Unity (Timer added version)
+// Metal Slug Unity (Added Timer, 20210205)
+// Modified by Alice愛麗絲/合金弹头爱克斯/CXZInc
 
 static struct BurnRomInfo mslugunityRomDesc[] = {
 	{ "201-p1uni.p1",   0x200000, 0xa3186dfd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -19913,7 +19966,8 @@ struct BurnDriver BurnDrvmslugunity = {
 };
 
 
-// mslug2unity - Metal Slug 2 Unity (Timer added version)
+// Metal Slug 2 Unity (Added Timer, 20210122)
+// Modified by Alice愛麗絲/合金弹头爱克斯/CXZInc
 
 static struct BurnRomInfo mslug2unityRomDesc[] = {
 	{ "241-p1uni.p1",    0x100000, 0x1562cf23, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -19945,7 +19999,8 @@ struct BurnDriver BurnDrvmslug2unity = {
 	0x1000, 304, 224, 4, 3
 };
 
-// mslugxunity - Metal Slug X Unity (Timer added version)
+// Metal Slug X Unity (Added Timer)
+// Modified by Alice愛麗絲/合金弹头爱克斯/CXZInc
 
 static struct BurnRomInfo mslugxunityRomDesc[] = {
 	{ "250-p1uni.p1",   0x100000, 0x36102d34, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -19981,7 +20036,8 @@ struct BurnDriver BurnDrvmslugxunity = {
 };
 
 
-// mslug3unity - Metal Slug 3 Unity (Timer added version)
+// Metal Slug 3 Unity (Added Timer)
+// Modified by Alice愛麗絲/合金弹头爱克斯/CXZInc
 
 static struct BurnRomInfo mslug3unityRomDesc[] = {
 	{ "ms3uni.neo-sma",     0x040000, 0x3c6c536b, 9 | BRF_ESS | BRF_PRG }, //  0 68K code		/ stored in the custom chip
@@ -20020,7 +20076,8 @@ struct BurnDriver BurnDrvmslug3unity = {
 	0x1000, 304, 224, 4, 3
 };
 
-// mslug4unity - Metal Slug 4 Unity (Timer added version)
+// Metal Slug 4 Unity (Added Timer)
+// Modified by Alice愛麗絲/合金弹头爱克斯/CXZInc
 
 static struct BurnRomInfo mslug4unityRomDesc[] = {
 	{ "263-p1uni.p1",   0x100000, 0xef3501b6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -20056,7 +20113,8 @@ struct BurnDriver BurnDrvmslug4unity = {
 	0x1000, 304, 224, 4, 3
 };
 
-// mslug5unity - Metal slug 5 Unity (Timer added version)
+// Metal Slug 5 Unity (Added Timer)
+// Modified by Alice愛麗絲/合金弹头爱克斯/CXZInc
 
 static struct BurnRomInfo mslug5unityRomDesc[] = {
 	{ "268-p1cruni.p1",   0x400000, 0xced9f5a8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -20363,7 +20421,10 @@ struct BurnDriver BurnDrvkof98evo = {
 };
 
 // GOTVG Mslug hacks part 2
-// Metal Slug (1v2 Mode, Hack)
+
+// Metal Slug (1v2 Mode,Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug1v2RomDesc[] = {
 	{ "201-p11v2.p1",   0x200000, 0xc6a2f0e9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
@@ -20395,6 +20456,8 @@ struct BurnDriver BurnDrvmslug1v2 = {
 
 
 // Metal Slug 2 (Weapon Storage, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug2pRomDesc[] = {
 	{ "241-p1p.p1",   0x100000, 0xfe803784, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2.sp2",   0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -20426,6 +20489,8 @@ struct BurnDriver BurnDrvMSlug2p = {
 };
 
 // Metal Slug 2 (1v2 Mode, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug21v2RomDesc[] = {
 	{ "241-p11v2.p1",   0x100000, 0xc3efed6c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "241-p2.sp2",     0x200000, 0x38883f44, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -20457,7 +20522,7 @@ struct BurnDriver BurnDrvMslug21v2 = {
 };
 
 // Metal Slug 2 (Extraction Green Turbo, Hack)
-// 20210916
+// Modified by Zhengpheng
 
 static struct BurnRomInfo mslug2egRomDesc[] = {
 	{ "241-p1eg.p1",    0x100000, 0xbb312904, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -20493,6 +20558,8 @@ struct BurnDriver BurnDrvMSlug2eg = {
 
 
 // Metal Slug X (Multi Vehicle, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslugxc1RomDesc[] = {
 	{ "250-p1c1.p1",    0x100000, 0xe74f36c2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2c1.ep1",   0x400000, 0xe954b8aa, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -20527,6 +20594,8 @@ struct BurnDriver BurnDrvMSlugXc1 = {
 };
 
 // Metal Slug X (1v2 Mode, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslugx1v2RomDesc[] = {
 	{ "250-p11v2.p1",   0x100000, 0x0cf1f95b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2.ep1",     0x400000, 0x1fda2e12, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -20561,6 +20630,8 @@ struct BurnDriver BurnDrvMSlugX1v2 = {
 };
 
 // Metal Slug X (2R, Hack)
+// Modified by Soda
+
 static struct BurnRomInfo mslugx2rRomDesc[] = {
 	{ "250-p12r.p1",    0x100000, 0x721f11aa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p22r.ep1",   0x400000, 0x4f875278, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -20595,6 +20666,8 @@ struct BurnDriver BurnDrvMSlugX2r = {
 };
 
 // Metal Slug X (2R Blue, Hack)
+// Modified by Soda/隐藏玩家
+
 static struct BurnRomInfo mslugx2rebRomDesc[] = {
 	{ "250-p12reb.p1",    0x100000, 0xdba3f1a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p22reb.ep1",   0x400000, 0x3866eb68, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -20629,6 +20702,8 @@ struct BurnDriver BurnDrvMSlugX2reb = {
 };
 
 // Metal Slug X (2R 1v2 Mode, Hack)
+// Modified by Soda/隐藏玩家
+
 static struct BurnRomInfo mslugx2r1v2RomDesc[] = {
 	{ "250-p12r1v2.p1",    0x100000, 0xd13fd368, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p22r1v2.ep1",   0x400000, 0x730e94a2, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -20662,7 +20737,9 @@ struct BurnDriver BurnDrvMSlugX2r1v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X (Survival, Hack) 2022-12-31
+// Metal Slug X (Survival, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-p1sc.p1",    0x100000, 0xcdf2ddfe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2sc.ep1",   0x400000, 0xd53de7e6, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -20697,6 +20774,8 @@ struct BurnDriver BurnDrvmslugxsc = {
 };
 
 // Metal Slug X (Multifunction Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslugxdgRomDesc[] = {
 	{ "250-p1dg.p1",    0x100000, 0xf86ea146, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "250-p2dg.ep1",   0x400000, 0xef0c263f, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -20732,6 +20811,8 @@ struct BurnDriver BurnDrvmslugxdg = {
 
 
 // Metal Slug 3 (Onimusha Samanosuke, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslug3gwRomDesc[] = {
 	{ "256-ph1gw.p1",   0x100000, 0xfafde0b4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2.sp2",    0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -20769,6 +20850,8 @@ struct BurnDriver BurnDrvmslug3gw = {
 };
 
 // Metal Slug 3 (SE Special Edition, Hack)
+// Modified by ??
+
 static struct BurnRomInfo mslug3seRomDesc[] = {
 	{ "256-ph1se.p1",   0x100000, 0x46330db5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2.sp2",     0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -20806,6 +20889,8 @@ struct BurnDriver BurnDrvmslug3se = {
 };
 
 // Metal Slug 3 (Vehicle Summon, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug3zhRomDesc[] = {
 	{ "256-ph1zh.p1",    0x100000, 0x257fa6b9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2zh.sp2",   0x400000, 0xbadc753c, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -20843,6 +20928,8 @@ struct BurnDriver BurnDrvmslug3zh = {
 };
 
 // Metal Slug 3 (Shop Edition, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslug3sdRomDesc[] = {
 	{ "256-ph1sd.p1",    0x100000, 0xe1e21cc4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2sd.sp2",   0x400000, 0x7343335b, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -20880,6 +20967,8 @@ struct BurnDriver BurnDrvmslug3sd = {
 };
 
 // Metal Slug 3 (1v2 Mode, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug31v2RomDesc[] = {
 	{ "ms31v2.neo-sma",   0x040000, 0x1c090500, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
 
@@ -20917,7 +21006,9 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Legendary Version, Hack) 2023-03-28
+// Metal Slug 3 (Legendary Version, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug3cqRomDesc[] = {
 	{ "256-ph1cq.p1",    0x100000, 0x7b4dd96c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2cq.sp2",   0x400000, 0xa9cad8f1, 1 | BRF_ESS | BRF_PRG }, //  1 
@@ -20955,7 +21046,9 @@ struct BurnDriver BurnDrvmslug3cq = {
 };
 
 
-// Metal Slug 4 (Random Ammunition, Hack) - p2 fix 2023-02-25
+// Metal Slug 4 (Random Ammunition, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslug4ammorRomDesc[] = {
 	{ "263-p1amr.p1",    0x100000, 0x21b68d31, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 	{ "263-p2lw.sp2",    0x800000, 0x5aa184e7, 1 | BRF_ESS | BRF_PRG },  //  1
@@ -20990,7 +21083,9 @@ struct BurnDriver BurnDrvmslug4ammor = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 4 (Last bullet without body armor, Hack) - p2 fix 2023-02-25
+// Metal Slug 4 (Last bullet without body armor, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslug4lwqRomDesc[] = {
 	{ "263-p1lwq.p1",    0x100000, 0x9ebe335e, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 	{ "263-p2lw.sp2",    0x800000, 0x5aa184e7, 1 | BRF_ESS | BRF_PRG },  //  1
@@ -21026,6 +21121,7 @@ struct BurnDriver BurnDrvmslug4lwq = {
 };
 
 // Metal Slug 4 (The Longest Battle, Hack)
+// Modified by 明天再努力吧
 
 static struct BurnRomInfo mslug4qRomDesc[] = {
 	{ "263-p1q.p1",    0x100000, 0x1b5121b6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -21060,6 +21156,9 @@ struct BurnDriver BurnDrvmslug4q = {
 	mslug4Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// Metal Slug 4 (1v2 Mode, Hack)
+// Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug41v2RomDesc[] = {
 	{ "263-p11v2.p1",   0x100000, 0xdddca463, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -21096,6 +21195,8 @@ struct BurnDriver BurnDrvmslug41v2 = {
 
 
 // Metal Slug 5 (Enemy Enhance, Hack)
+// Modified by 尤古朵拉
+
 static struct BurnRomInfo mslug5dbjRomDesc[] = {
 	{ "268-p1dbj.p1",    0x600000, 0x1527c4dd, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
@@ -21131,7 +21232,9 @@ struct BurnDriver BurnDrvmslug5dbj = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Extremely Simplified, Hack) 2023-02-08
+// Metal Slug 5 (Extremely Simplified, Hack)
+// Modified by 明天再努力吧
+
 static struct BurnRomInfo mslug5esRomDesc[] = {
 	{ "268-p1es.p1",    0x600000, 0x760cd052, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
@@ -21167,7 +21270,9 @@ struct BurnDriver BurnDrvmslug5es = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Stone Turtle, Hack)
+// Metal Slug 5 (Stone Turtle Hack, 20230517)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug5sgRomDesc[] = {
 	{ "268-p1sg.p1",    0x600000, 0x1b6a6163, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
@@ -21204,6 +21309,8 @@ struct BurnDriver BurnDrvmslug5sg = {
 };
 
 // Metal Slug 5 (Vehicle Summon, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug5zhRomDesc[] = {
 	{ "268-p1zh.p1",    0x600000, 0xdc057a7a, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
@@ -21240,6 +21347,8 @@ struct BurnDriver BurnDrvmslug5zh = {
 };
 
 // Metal Slug 5 (1v2 Mode, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug51v2RomDesc[] = {
 	{ "268-p11v2.p1",    0x600000, 0x953d6e11, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
@@ -21276,6 +21385,8 @@ struct BurnDriver BurnDrvmslug51v2 = {
 };
 
 // Metal Slug 5 (Extend Ver, Hack)
+// Modified by WillNie/AKS
+
 static struct BurnRomInfo mslug5extRomDesc[] = {
 	{ "268-p1ext.p1",    0x600000, 0x7ff5364b, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
@@ -21312,6 +21423,8 @@ struct BurnDriver BurnDrvmslug5ext = {
 };
 
 // Metal Slug 5 (Fierce Battle, Hack)
+// Modified by 磁暴线圈
+
 static struct BurnRomInfo mslug5fRomDesc[] = {
 	{ "268-p1f.p1",      0x100000, 0x6be7043d, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 	{ "268-p2w.p2",      0x400000, 0xf06c589a, 1 | BRF_ESS | BRF_PRG },  //  1
@@ -21349,6 +21462,8 @@ struct BurnDriver BurnDrvmslug5f = {
 };
 
 // Metal Slug 5 (Boss Battle, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug5bossRomDesc[] = {
 	{ "268-p1boss.p1",    0x600000, 0x15a8de68, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
@@ -21384,7 +21499,9 @@ struct BurnDriver BurnDrvmslug5boss = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Survival, Hack) 2023-06-12
+// Metal Slug 5 (Survival, Hack)
+// Modified by 合金弹头爱克斯
+
 static struct BurnRomInfo mslug5svRomDesc[] = {
 	{ "268-p1sv.p1",   0x600000, 0x71a0953f, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 

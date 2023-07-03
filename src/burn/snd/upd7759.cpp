@@ -12,6 +12,7 @@
 #define FRAC_MASK			(FRAC_ONE - 1)
 
 static INT32 SlaveMode = 0;
+static INT32 TimerIndex = 0;
 
 /* chip states */
 enum
@@ -351,7 +352,7 @@ static void UPD7759SlaveModeUpdate()
 	/* set a timer to go off when that is done */
 
 	if (Chip->state != STATE_IDLE) {
-		BurnTimerSetRetrig(0, (double)Chip->clocks_left * Chip->clock_period);
+		BurnTimerSetRetrig((TimerIndex << 1) + 0, (double)Chip->clocks_left * Chip->clock_period);
 	}
 }
 
@@ -558,6 +559,7 @@ void UPD7759Init(INT32 chip, INT32 clock, UINT8* pSoundData)
 	memset(Chip, 0, sizeof(upd7759_chip));
 
 	SlaveMode = 0;
+	TimerIndex = 0;
 
 	Chip->ChipNum = chip;
 
@@ -587,7 +589,7 @@ void UPD7759Init(INT32 chip, INT32 clock, UINT8* pSoundData)
 		SlaveMode = 0;
 	} else {
 		SlaveMode = 1;
-		BurnTimerInit(&slave_timer_cb, NULL); // for high-freq timer
+		TimerIndex = BurnTimerInit(&slave_timer_cb, NULL); // for high-freq timer
 	}
 	
 	Chip->reset = 1;

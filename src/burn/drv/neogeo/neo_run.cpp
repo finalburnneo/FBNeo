@@ -132,6 +132,7 @@ UINT8 NeoInput[32]   = { 0, };
 UINT8 NeoDiag[2]	 = { 0, 0 };
 UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
+UINT8 NeoCDBios = 0;
 
 static UINT8 OldDebugDip[2] = { 0, 0 };
 
@@ -439,6 +440,7 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 {
 	// Neo CD
 	if (nNeoSystemType & NEO_SYS_CD) {
+		BurnLoadRom(Neo68KBIOS,	0 + (NeoCDBios & 3), 1);
 		return 0;
 	}
 
@@ -761,6 +763,8 @@ static INT32 LoadRoms()
 			}
 		}
 	}
+
+	bprintf(0, _T("code size: %x\n"), nCodeSize[nNeoActiveSlot]);
 
 	Neo68KROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(nCodeSize[nNeoActiveSlot]);	// 68K cartridge ROM
 	if (Neo68KROM[nNeoActiveSlot] == NULL) {
@@ -2883,7 +2887,8 @@ static void NeoCDDoDMA()
 			break;
 		}
 
-		case 0xE2DD: {
+		case 0xE2DD:
+		case 0xF2DD: {
 //			bprintf(PRINT_NORMAL, _T("    copy: 0x%08X - 0x%08X <- 0x%08X - 0x%08X, skip odd bytes\n"), NeoCDDMAAddress2, NeoCDDMAAddress2 + NeoCDDMACount * 2, NeoCDDMAAddress1, NeoCDDMAAddress1 + NeoCDDMACount * 4);
 
 			//  - DMA controller 0x7E -> 0xE2DD (PC: 0xC0A190)
@@ -3013,6 +3018,7 @@ static void NeoCDDoDMA()
 			break;
 		}
 
+		case 0xFF89:
 		case 0xFFC5: {
 //			bprintf(PRINT_NORMAL, _T("    copy: 0x%08X - 0x%08X <- LC8951 external buffer\n"), NeoCDDMAAddress1, NeoCDDMAAddress1 + NeoCDDMACount * 2);
 
@@ -3246,7 +3252,7 @@ static UINT16 __fastcall neogeoReadWordCDROM(UINT32 sekAddress)
 			break;
 
 		case 0x011C:
-			return ~((0x10 | (NeoSystem & 3)) << 8);
+			return ~(((((NeoCDBios & 3) == 0) ? 0x10 : 0x00) | (NeoSystem & 3)) << 8);
 	}
 
 //	bprintf(PRINT_NORMAL, _T("  - NGCD port 0x%06X read (word, PC: 0x%06X)\n"), sekAddress, SekGetPC(-1));
@@ -3707,11 +3713,12 @@ static INT32 neogeoReset()
 		OldDebugDip[1] = NeoDebugDip[1] = 0;
 	}
 
-#if 1 && defined FBNEO_DEBUG
 	if (nNeoSystemType & NEO_SYS_CD) {
+#if 1 && defined FBNEO_DEBUG
 		bprintf(PRINT_IMPORTANT, _T("  - Emulating Neo CD system.\n"));
-	}
 #endif
+		NeoLoad68KBIOS(NeoSystem & 0x3f);
+	}
 
 	NeoSetSystemType();
 
@@ -4322,8 +4329,8 @@ INT32 NeoCDInit()
 
 	Neo68KFix[0] = Neo68KROM[0];
 
-	BurnLoadRom(Neo68KBIOS,	0, 1);
-	BurnLoadRom(NeoZoomROM,	1, 1);
+	BurnLoadRom(Neo68KBIOS,	0 + (NeoCDBios & 3), 1);
+	BurnLoadRom(NeoZoomROM,	4, 1);
 
 	// Create copy of 68K with BIOS vector table
 	memcpy(NeoVectorActive + 0x00, Neo68KBIOS, 0x0100);

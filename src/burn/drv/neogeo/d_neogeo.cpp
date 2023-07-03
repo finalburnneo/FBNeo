@@ -330,6 +330,7 @@ static struct BurnInputInfo neoCDInputList[] = {
 	{"Test",		BIT_DIGITAL,	NeoDiag + 0,	"diag"},			// 15
 
 	{"System",		BIT_DIPSWITCH,	&NeoSystem,		"dip"},				// 16
+	{"BIOS",		BIT_DIPSWITCH,	&NeoCDBios,		"dip"},				// 17
 };
 
 STDINPUTINFO(neoCD)
@@ -891,31 +892,24 @@ static struct BurnDIPInfo neoFakeDIPList[] = {
 STDDIPINFOEXT(neoMVS, neoKOF, neoFake)
 
 static struct BurnDIPInfo neoCDDIPList[] = {
-	// Offset
-	{0x16,	0xF0, 0x00,	0x00, NULL},
+
+	DIP_OFFSET(0x16)
 
 	// Defaults
-	{0x00,	0xFF, 0xFF,	0x02, NULL},
+	{0x00,	0xFF, 0xFF,	0x01, NULL				},
+	{0x01,	0xFF, 0xFF,	0x00, NULL				}, // bios selektor
 
 	// Region
-	{0,		0xFE, 0,	4,	  "Region"},
-	{0x00,	0x01, 0x03,	0x00, "Japan"},
-	{0x00,	0x01, 0x03,	0x01, "USA"},
-	{0x00,	0x01, 0x03,	0x02, "Europe"},
-	{0x00,	0x01, 0x03,	0x03, "Portugese"},
+	{0,		0xFE, 0,	4,	  "Region"			},
+	{0x00,	0x01, 0x03,	0x00, "Japan"			},
+	{0x00,	0x01, 0x03,	0x01, "USA"				},
+	{0x00,	0x01, 0x03,	0x02, "Europe"			},
+	{0x00,	0x01, 0x03,	0x03, "Portugese"		},
 
-#if 0
-
-	// Memory card
-	{0,		0xFD, 0,	2,	  "Memory card"},
-	{0x00,	0x01, 0x80,	0x80, "Writable"},
-	{0x00,	0x01, 0x80,	0x00, "Write-protected"},
-	{0,		0xFD, 0,	2,	  "New card type"},
-	{0x00,	0x01, 0x40,	0x40, "1 Megabit"},
-	{0x00,	0x01, 0x40,	0x00, "Normal"},
-
-#endif
-
+	// CD BIOS
+	{0,		0xFD, 0,	2,    "BIOS"			},
+	{0x01,	0x01, 0x03,	0x00, "Neo CDZ"			},
+	{0x01,	0x01, 0x03,	0x01, "UniBios 3.3"		},
 };
 
 STDDIPINFO(neoCD)
@@ -2011,8 +2005,11 @@ struct BurnDriver BurnDrvNeoGeoMV4F = {
 // Neo Geo CDZ system
 
 static struct BurnRomInfo neocdzRomDesc[] = {
-	{ "neocd.bin",      0x080000, 0xDF9DE490, BRF_ESS | BRF_PRG | BRF_BIOS },
-	{ "000-lo.lo",      0x020000, 0x5a86cff2, BRF_ESS | BRF_PRG | BRF_BIOS },
+	{ "neocd.bin",            0x080000, 0xDF9DE490, BRF_ESS | BRF_PRG | BRF_BIOS },
+	{ "neocd-unibios33.bin",  0x080000, 0xff3abc59, BRF_ESS | BRF_PRG | BRF_BIOS }, // by razoola!
+	{ "",                     0x000000, 0x00000000, 0                            }, // spacer woman, she just wants to love you
+	{ "",                     0x000000, 0x00000000, 0                            }, // spacer woman, she just wants to love you
+	{ "000-lo.lo",            0x020000, 0x5a86cff2, BRF_ESS | BRF_PRG | BRF_BIOS },
 };
 
 STD_ROM_PICK(neocdz)

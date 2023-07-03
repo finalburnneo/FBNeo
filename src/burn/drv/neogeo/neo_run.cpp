@@ -440,7 +440,13 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 {
 	// Neo CD
 	if (nNeoSystemType & NEO_SYS_CD) {
-		BurnLoadRom(Neo68KBIOS,	0 + (NeoCDBios & 3), 1);
+		INT32 rom_pos = 0 + (nNewBIOS & 3);
+		char* pszFn = NULL;
+		BurnDrvGetRomName(&pszFn, rom_pos, 0);
+
+		if (pszFn) bprintf(0, _T("NeoGeo CD: Loading BIOS  \"%S\".\n"), pszFn);
+
+		BurnLoadRom(Neo68KBIOS,	rom_pos, 1);
 		return 0;
 	}
 
@@ -3717,7 +3723,7 @@ static INT32 neogeoReset()
 #if 1 && defined FBNEO_DEBUG
 		bprintf(PRINT_IMPORTANT, _T("  - Emulating Neo CD system.\n"));
 #endif
-		NeoLoad68KBIOS(NeoSystem & 0x3f);
+		NeoLoad68KBIOS(0 + (NeoCDBios & 3));
 	}
 
 	NeoSetSystemType();
@@ -4329,7 +4335,7 @@ INT32 NeoCDInit()
 
 	Neo68KFix[0] = Neo68KROM[0];
 
-	BurnLoadRom(Neo68KBIOS,	0 + (NeoCDBios & 3), 1);
+	NeoLoad68KBIOS(0 + (NeoCDBios & 3));
 	BurnLoadRom(NeoZoomROM,	4, 1);
 
 	// Create copy of 68K with BIOS vector table

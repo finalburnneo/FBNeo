@@ -22829,15 +22829,15 @@ struct BurnDriver BurnDrvnes_tctwh = {
 };
 
 static struct BurnRomInfo nes_bobsixsevenRomDesc[] = {
-	{ "Bobby Six Seven (Rev2)(2022)(calgames).nes",          524304, 0x81920aa8, BRF_ESS | BRF_PRG },
+	{ "Bobby Six Seven - Time Traveling Detective (2023)(Calgames).nes",          524304, 0xbc33f79b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_bobsixseven)
 STD_ROM_FN(nes_bobsixseven)
 
 struct BurnDriver BurnDrvnes_bobsixseven = {
-	"nes_bobsixseven", NULL, NULL, NULL, "2022",
-	"Bobby Six Seven: Time Travelling Detective (HB, Rev2)\0", NULL, "CalGames", "Miscellaneous",
+	"nes_bobsixseven", NULL, NULL, NULL, "2022-23",
+	"Bobby Six Seven: Time Travelling Detective (HB)\0", NULL, "CalGames", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bobsixsevenRomInfo, nes_bobsixsevenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32837,18 +32837,36 @@ struct BurnDriver BurnDrvnes_chubbycherub = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_chuukataisenRomDesc[] = {
+static struct BurnRomInfo nes_chuukataisenjRomDesc[] = {
 	{ "Chuuka Taisen (Japan).nes",          262160, 0xe3beb057, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chuukataisenj)
+STD_ROM_FN(nes_chuukataisenj)
+
+struct BurnDriver BurnDrvnes_chuukataisenj = {
+	"nes_chuukataisenj", "nes_chuukataisen", NULL, NULL, "1989",
+	"Chuuka Taisen (Japan)\0", NULL, "Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_chuukataisenjRomInfo, nes_chuukataisenjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/translations/1697/
+static struct BurnRomInfo nes_chuukataisenRomDesc[] = {
+	{ "Chuuka Taisen (T-Eng)(2012)(Stardust Crusaders).nes",          262160, 0x8cdbc48f, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_chuukataisen)
 STD_ROM_FN(nes_chuukataisen)
 
 struct BurnDriver BurnDrvnes_chuukataisen = {
-	"nes_chuukataisen", NULL, NULL, NULL, "1989",
-	"Chuuka Taisen (Japan)\0", NULL, "Taito", "Miscellaneous",
+	"nes_chuukataisen", NULL, NULL, NULL, "2012",
+	"Chuuka Taisen - Cloud Master (T-Eng)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_chuukataisenRomInfo, nes_chuukataisenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -33316,6 +33334,24 @@ struct BurnDriver BurnDrvnes_contraspirits = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_contraspiritsRomInfo, nes_contraspiritsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/hacks/7877/
+static struct BurnRomInfo nes_contraspiritfixRomDesc[] = {
+	{ "Contra Spirits (Hack, ending fixed)(2023)(the jabu).nes",          524304, 0xed96cb51, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_contraspiritfix)
+STD_ROM_FN(nes_contraspiritfix)
+
+struct BurnDriver BurnDrvnes_contraspiritfix = {
+	"nes_contraspiritfix", "nes_contraspirits", NULL, NULL, "2023",
+	"Contra Spirits (Hack, ending fixed)\0", NULL, "the jabu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_contraspiritfixRomInfo, nes_contraspiritfixRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

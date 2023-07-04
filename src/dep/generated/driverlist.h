@@ -3059,6 +3059,7 @@ DRV		BurnDrvDrgw3100;
 DRV		BurnDrvDrgw3103;
 DRV		BurnDrvDrgw2100j;
 DRV		BurnDrvDrgw2101j;
+DRV		BurnDrvnes_chuukataisenj;
 DRV		BurnDrvnes_chuukataisen;
 DRV		BurnSpeccircuitry;
 DRV		BurnDrvnes_circuscaper;
@@ -3368,6 +3369,7 @@ DRV		BurnDrvnes_contracs;
 DRV		BurnDrvnes_contra168in1;
 DRV		BurnDrvnes_contraforcec;
 DRV		BurnDrvnes_contraforce;
+DRV		BurnDrvnes_contraspiritfix;
 DRV		BurnDrvnes_contraspirits;
 DRV		BurnDrvnes_convoy;
 DRV		BurnDrvCookbib;
@@ -21616,7 +21618,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBoblbobl,			// Bobble Bobble (bootleg of Bubble Bobble)
 	&BurnSpecbobbybearing,		// Bobby Bearing (48K)
 	&BurnSpecBobbycarrot,		// Bobby Carrot (128K) (HB)
-	&BurnDrvnes_bobsixseven,	// Bobby Six Seven: Time Travelling Detective (HB, Rev2)
+	&BurnDrvnes_bobsixseven,	// Bobby Six Seven: Time Travelling Detective (HB)
 	&BurnDrvnes_bobl,			// BoBL (HB, v1.1)
 	&BurnDrvnes_boblv2,			// BoBL (HB, v1.2)
 	&BurnDrvpce_bodycon2,		// Body Conquest II (Japan)
@@ -22709,7 +22711,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrgw3103,			// Chuugokuryuu 3 Special (ver. 103, japan)
 	&BurnDrvDrgw2100j,			// Chuugokuryuu II (V100, Japan)
 	&BurnDrvDrgw2101j,			// Chuugokuryuu II (V101, Japan)
-	&BurnDrvnes_chuukataisen,	// Chuuka Taisen (Japan)
+	&BurnDrvnes_chuukataisenj,	// Chuuka Taisen (Japan)
+	&BurnDrvnes_chuukataisen,	// Chuuka Taisen - Cloud Master (T-Eng)
 	&BurnSpeccircuitry,			// Circuitry (48K) (HB, v1.1)
 	&BurnDrvnes_circuscaper,	// Circus Caper (USA)
 	&BurnDrvCircuscc,			// Circus Charlie (Centuri)
@@ -23018,6 +23021,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_contra168in1,	// Contra 168-in-1 (Unl)
 	&BurnDrvnes_contraforcec,	// Contra Force (2nd option, T-Chi)
 	&BurnDrvnes_contraforce,	// Contra Force (USA)
+	&BurnDrvnes_contraspiritfix,// Contra Spirits (Hack, ending fixed)
 	&BurnDrvnes_contraspirits,	// Contra Spirits (Unl)
 	&BurnDrvnes_convoy,			// Convoy, The (HB)
 	&BurnDrvCookbib,			// Cookie & Bibi (set 1)

@@ -2190,10 +2190,10 @@
 	</game>
 	<game name="bobsixseven">
 		<comment>Homebrew</comment>
-		<description>Bobby Six Seven: Time Travelling Detective (HB, Rev2)</description>
-		<year>2022</year>
+		<description>Bobby Six Seven: Time Travelling Detective (HB)</description>
+		<year>2022-23</year>
 		<manufacturer>CalGames</manufacturer>
-		<rom name="Bobby Six Seven (Rev2)(2022)(calgames).nes" size="524304" crc="81920aa8"/>
+		<rom name="Bobby Six Seven - Time Traveling Detective (2023)(Calgames).nes" size="524304" crc="bc33f79b"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3129,11 +3129,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="chuukataisen">
+	<game name="chuukataisenj" cloneof="chuukataisen" romof="chuukataisen">
 		<description>Chuuka Taisen (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Chuuka Taisen (Japan).nes" size="262160" crc="e3beb057"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="chuukataisen">
+		<comment>Hack</comment>
+		<description>Chuuka Taisen - Cloud Master (T-Eng)</description>
+		<year>2012</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Chuuka Taisen (T-Eng)(2012)(Stardust Crusaders).nes" size="262160" crc="8cdbc48f"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -3410,6 +3419,15 @@
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Contra Force (USA).nes" size="262160" crc="83d69922"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="contraspiritfix" cloneof="contraspirits" romof="contraspirits">
+		<comment>Hack</comment>
+		<description>Contra Spirits (Hack, ending fixed)</description>
+		<year>2023</year>
+		<manufacturer>the jabu</manufacturer>
+		<rom name="Contra Spirits (Hack, ending fixed)(2023)(the jabu).nes" size="524304" crc="ed96cb51"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

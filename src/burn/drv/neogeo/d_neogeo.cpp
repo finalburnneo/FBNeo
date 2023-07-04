@@ -9438,6 +9438,8 @@ static INT32 kof10thScan(INT32 nAction, INT32* pnMin)
 static void kof10thInstallHandlers()
 {
 	// Install RAM handlers
+	kof10thExtraRAMA = Neo68KROMActive + 0x7e0000;
+	kof10thExtraRAMB = Neo68KROMActive + 0x1fe000;
 	SekMapMemory(kof10thExtraRAMA, 0x0e0000, 0x0fffff, MAP_ROM); // Text RAM on range 0x0e0000 - 0x0fffff
 	SekMapMemory(kof10thExtraRAMB, 0x2fe000, 0x2fffff, MAP_ROM); // Extra 68K RAM
 
@@ -9468,8 +9470,6 @@ static INT32 kof10thInit()
 	nRet = NeoInit();
 
 	if (nRet == 0) {
-		kof10thExtraRAMA = Neo68KROMActive + 0x7e0000;
-		kof10thExtraRAMB = Neo68KROMActive + 0x1fe000;
 		memset(kof10thExtraRAMA, 0, 0x20000);
 		memset(kof10thExtraRAMB, 0, 0x02000);
 	}

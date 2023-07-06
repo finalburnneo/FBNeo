@@ -320,6 +320,7 @@ int CreateDatfileWindows(int bType)
 
 	TCHAR szConsoleString[64];
 	_sntprintf(szConsoleString, 64, _T(""));
+	if (bType == DAT_NEOGEO_ONLY) _sntprintf(szConsoleString, 64, _T(", Neo Geo only"));
 	if (bType == DAT_MEGADRIVE_ONLY) _sntprintf(szConsoleString, 64, _T(", Megadrive only"));
 	if (bType == DAT_PCENGINE_ONLY) _sntprintf(szConsoleString, 64, _T(", PC-Engine only"));
 	if (bType == DAT_TG16_ONLY) _sntprintf(szConsoleString, 64, _T(", TurboGrafx16 only"));
@@ -409,6 +410,9 @@ int CreateAllDatfilesWindows()
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(""));
 	create_datfile(szFilename, DAT_ARCADE_ONLY);
+
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Neo Geo only"));
+	create_datfile(szFilename, DAT_NEOGEO_ONLY);
 
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Megadrive only"));
 	create_datfile(szFilename, DAT_MEGADRIVE_ONLY);
@@ -2317,6 +2321,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_ARCADE_ONLY);
+			}
+			break;
+
+		case MENU_CLRMAME_PRO_XML_NEOGEO_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_NEOGEO_ONLY);
 			}
 			break;
 

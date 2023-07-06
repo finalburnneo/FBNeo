@@ -909,6 +909,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 
+		if (_tcscmp(szName, _T("-listinfoneogeoonly")) == 0) {
+			write_datfile(DAT_NEOGEO_ONLY, stdout);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listinfomdonly")) == 0) {
 			write_datfile(DAT_MEGADRIVE_ONLY, stdout);
 			return 1;

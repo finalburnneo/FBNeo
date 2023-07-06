@@ -2085,7 +2085,7 @@ static UINT8 __fastcall salamand_sound_read(UINT16 address)
 			return BurnYM2151Read();
 
 		case 0xe000:
-			return nCurrentFrame & 1;
+			return vlm5030_bsy(0);
 	}
 
 	return 0;

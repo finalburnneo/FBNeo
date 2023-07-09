@@ -2093,7 +2093,7 @@
 	<game name="boggy84" romof="msx">
 		<description>Boggy '84 (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="boggy '84 (japan).rom" size="8192" crc="ec089246"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2104,7 +2104,7 @@
 	<game name="boggy84b" cloneof="boggy84" romof="boggy84">
 		<description>Boggy '84 (Jpn, Alt 2)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="boggy '84 (japan) (alt 2).rom" size="8192" crc="a4bf1253"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2115,7 +2115,7 @@
 	<game name="boggy84a" cloneof="boggy84" romof="boggy84">
 		<description>Boggy '84 (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="boggy '84 (japan) (alt 1).rom" size="16384" crc="22e8b312"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -2923,7 +2923,7 @@
 	<game name="captchef" romof="msx">
 		<description>Captain Chef (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia - Colpax</manufacturer>
 		<rom name="captain chef (japan).rom" size="8192" crc="8e985857"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -5139,6 +5139,18 @@
 		<year>2020</year>
 		<manufacturer>UltraNarwhal</manufacturer>
 		<rom name="duckstroma (2020)(ultranarwhal).rom" size="32768" crc="80e31215"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="duckstromapt2" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Duckstroma pt.2 (HB)</description>
+		<year>2023</year>
+		<manufacturer>UltraNarwhal</manufacturer>
+		<rom name="Duckstroma pt.2 (2023)(UltraNarwhal).rom" size="32768" crc="42fb7415"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8383,7 +8395,7 @@
 	<game name="jumpcstr" romof="msx">
 		<description>Jump Coaster (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="jump coaster (japan).rom" size="8192" crc="c15a25da"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -10471,6 +10483,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="minecmd" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Mine Command (HB)</description>
+		<year>2023</year>
+		<manufacturer>Fred Rique</manufacturer>
+		<rom name="Mine Command (2023)(Fred Rique).rom" size="49152" crc="7137fcc4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="minefind" romof="msx">
 		<comment>Homebrew</comment>
 		<description>Mine Finder (HB, v1.2)</description>
@@ -11068,7 +11092,7 @@
 	<game name="mrdo" romof="msx">
 		<description>Mr. Do (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="mr. do (japan).rom" size="8192" crc="4098d71d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -11101,7 +11125,7 @@
 	<game name="mrdowild" romof="msx">
 		<description>Mr. Do's Wild Ride (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="mr. do's wild ride (japan).rom" size="16384" crc="6786a7ee"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12405,7 +12429,7 @@
 	<game name="peetan" romof="msx">
 		<description>Peetan (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia - Colpax</manufacturer>
 		<rom name="peetan (japan).rom" size="8192" crc="941069ae"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -12758,7 +12782,7 @@
 	<game name="pinkychs" romof="msx">
 		<description>Pinky Chase (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="pinky chase (japan).rom" size="16384" crc="b5b40df0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -14044,7 +14068,7 @@
 	<game name="saurus" romof="msx">
 		<description>Saurusland (Jpn)</description>
 		<year>1983</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Tomy - Colpax</manufacturer>
 		<rom name="saurus land (japan).rom" size="16384" crc="5f2fe556"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15669,7 +15693,7 @@
 	<game name="suppachi" romof="msx">
 		<description>Super Pachinko (Jpn)</description>
 		<year>1985</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia - Colpax</manufacturer>
 		<rom name="super pachinko (japan).rom" size="16384" crc="8aebddd2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -15682,6 +15706,28 @@
 		<year>198?</year>
 		<manufacturer>Sieco</manufacturer>
 		<rom name="sieco_superpenguin_(sieco).rom" size="32768" crc="0555a6e9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="superpierrot" romof="msx">
+		<description>Super Pierrot (Jpn)</description>
+		<year>1987</year>
+		<manufacturer>Nippon Columbia - Universal</manufacturer>
+		<rom name="Super Pierrot (1987)(Nippon Columbia - Universal).rom" size="131072" crc="73efe840"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="superpierrota" cloneof="superpierrot" romof="superpierrot">
+		<description>Super Pierrot (Jpn, Alt)</description>
+		<year>1987</year>
+		<manufacturer>Nippon Columbia - Universal</manufacturer>
+		<rom name="Super Pierrot (1987, Alt)(Nippon Columbia - Universal).rom" size="131072" crc="4af5dff8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -17334,7 +17380,7 @@
 	<game name="wbells" romof="msx">
 		<description>Wedding Bells (Jpn)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="wedding bells (1984)(nippon columbia - colpax - universal).rom" size="16384" crc="00585f00"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -17345,7 +17391,7 @@
 	<game name="wbellsa" cloneof="wbells" romof="wbells">
 		<description>Wedding Bells (Jpn, Alt)</description>
 		<year>1984</year>
-		<manufacturer>Nihon Columbia</manufacturer>
+		<manufacturer>Nippon Columbia</manufacturer>
 		<rom name="wedding bells (1984)(nippon columbia - colpax - universal)[a].rom" size="16384" crc="c41c55cb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>

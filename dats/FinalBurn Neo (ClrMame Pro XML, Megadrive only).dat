@@ -7043,6 +7043,14 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="fantazone">
+		<description>Fantasy Zone (Mega Drive Mini 2 Edition)</description>
+		<year>2022</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Fantasy Zone (2022)(Mega Drive Mini 2 Ed.).bin" size="2621440" crc="da31f3ac"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="fastest1">
 		<description>Fastest 1 (Jpn)</description>
 		<year>1991</year>
@@ -8988,6 +8996,23 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="immortal">
+		<description>Immortal, The (Euro, USA)</description>
+		<year>1991-93</year>
+		<manufacturer>Electronic Arts</manufacturer>
+		<rom name="immortal, the (euro, usa).bin" size="1048576" crc="f653c508"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="immortals" cloneof="immortal" romof="immortal">
+		<comment>Hack</comment>
+		<description>Immortal, The (Hack, Spanish)</description>
+		<year>2020</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the immortal (hack, spanish).bin" size="1048576" crc="2b411d4a"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="crashdum">
 		<description>Incredible Crash Dummies, The (Euro, USA)</description>
 		<year>1993</year>
@@ -9262,6 +9287,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="itchy">
+		<comment>Prototype</comment>
+		<description>Itchy and Scratchy Game, The (USA, Prototype)</description>
+		<year>1994</year>
+		<manufacturer>Acclaim Entertainment</manufacturer>
+		<rom name="itchy and scratchy game, the (usa) (prototype).bin" size="1048576" crc="81b7725d"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="izzyqst">
 		<description>Izzy's Quest for the Olympic Rings (Euro, USA)</description>
 		<year>1995</year>
@@ -9469,6 +9503,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jellyboy">
+		<comment>Prototype</comment>
 		<description>Jelly Boy (Euro, Prototype)</description>
 		<year>199?</year>
 		<manufacturer>Electronic Arts</manufacturer>
@@ -9525,10 +9560,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="jewelmss" cloneof="jewelms" romof="jewelms">
-		<description>Jewel Master (Hack, Spanish)</description>
-		<year>2017</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="jewel master (hack, spanish).bin" size="524288" crc="d084b98c"/>
+		<comment>Hack</comment>
+		<description>Jewel Master (Hack, Spanish, v2.0)</description>
+		<year>2022</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="Jewel Master T-Spa v2.0 (2022)(Wave).bin" size="524288" crc="ff242e3d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10417,6 +10453,14 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="lawnmowr">
+		<description>Lawnmower Man, The (Euro, USA)</description>
+		<year>1994</year>
+		<manufacturer>Time Warner Interactive</manufacturer>
+		<rom name="lawnmower man, the (euro, usa).bin" size="1048576" crc="a7cacd59"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="wukonge" cloneof="wukong" romof="wukong">
 		<description>Legend Of Wukong (Hack, English) (SRAM Patched)</description>
 		<year>2008</year>
@@ -10753,6 +10797,23 @@
 		<year>1992</year>
 		<manufacturer>Interplay</manufacturer>
 		<rom name="lost vikings, the (usa).bin" size="1048576" crc="7ba49edb"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostwrld">
+		<description>Lost World, The - Jurassic Park (Euro, USA)</description>
+		<year>1997</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="lost world, the - jurassic park (euro, usa).bin" size="4194304" crc="140a284c"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lostwrlds" cloneof="lostwrld" romof="lostwrld">
+		<comment>Hack</comment>
+		<description>Lost World, The - Jurassic Park (Hack, Spanish)</description>
+		<year>2018</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="the lost world - jurassic park (hack, spanish).bin" size="4194304" crc="629e1312"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14111,6 +14172,23 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="osomatsu-kun hachamecha gekijou (jpn).bin" size="262144" crc="2453350c"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ottifant">
+		<description>Ottifants, The (Euro)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ottifants, the (euro).bin" size="1048576" crc="41ac8003"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ottifantg" cloneof="ottifant" romof="ottifant">
+		<comment>Prototype</comment>
+		<description>Ottifants, The (Ger, Prototype)</description>
+		<year>1993</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="ottifants, the (germany) (beta).bin" size="1048576" crc="c6e3dd23"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21570,30 +21648,6 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="immortal">
-		<description>The Immortal (Euro, USA)</description>
-		<year>1993</year>
-		<manufacturer>Electronic Arts</manufacturer>
-		<rom name="immortal, the (euro, usa).bin" size="1048576" crc="f653c508"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="immortals" cloneof="immortal" romof="immortal">
-		<description>The Immortal (Hack, Spanish)</description>
-		<year>2020</year>
-		<manufacturer>Electronic Arts</manufacturer>
-		<rom name="the immortal (hack, spanish).bin" size="1048576" crc="2b411d4a"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="itchy">
-		<description>The Itchy and Scratchy Game (USA, Prototype)</description>
-		<year>1994</year>
-		<manufacturer>Acclaim Entertainment</manufacturer>
-		<rom name="itchy and scratchy game, the (usa) (prototype).bin" size="1048576" crc="81b7725d"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="killshow" cloneof="fatalrew" romof="fatalrew">
 		<description>The Killing Game Show (Jpn)</description>
 		<year>1993</year>
@@ -21607,47 +21661,6 @@
 		<year>1999</year>
 		<manufacturer>X Boy</manufacturer>
 		<rom name="king of fighters 99 (unl).bin" size="3145728" crc="ab82afbe"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lawnmowr">
-		<description>The Lawnmower Man (Euro, USA)</description>
-		<year>1994</year>
-		<manufacturer>Time Warner Interactive</manufacturer>
-		<rom name="lawnmower man, the (euro, usa).bin" size="1048576" crc="a7cacd59"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lostwrld">
-		<description>The Lost World - Jurassic Park (Euro, USA)</description>
-		<year>1997</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="lost world, the - jurassic park (euro, usa).bin" size="4194304" crc="140a284c"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="lostwrlds" cloneof="lostwrld" romof="lostwrld">
-		<description>The Lost World - Jurassic Park (Hack, Spanish)</description>
-		<year>2020</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="the lost world - jurassic park (hack, spanish).bin" size="4194304" crc="629e1312"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ottifant">
-		<description>The Ottifants (Euro)</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ottifants, the (euro).bin" size="1048576" crc="41ac8003"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ottifantg" cloneof="ottifant" romof="ottifant">
-		<comment>Prototype</comment>
-		<description>The Ottifants (Ger, Prototype)</description>
-		<year>1993</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="ottifants, the (germany) (beta).bin" size="1048576" crc="c6e3dd23"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -23657,7 +23670,7 @@
 	</game>
 	<game name="immortalj" cloneof="immortal" romof="immortal">
 		<description>Wizard of the Immortal (Jpn)</description>
-		<year>1993</year>
+		<year>1991-93</year>
 		<manufacturer>Electronic Arts Victor</manufacturer>
 		<rom name="wizard of the immortal (jpn).bin" size="2097152" crc="c99fad92"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>

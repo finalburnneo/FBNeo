@@ -1,4 +1,4 @@
-// FB Alpha Data East 8-bit driver module
+// FB Neo Data East 8-bit driver module
 // Based on MAME driver by Bryan McPhail and Stephane Humbert
 
 #include "tiles_generic.h"
@@ -1620,12 +1620,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	INT32 is_ghostb = 0;
 
@@ -1747,7 +1742,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -2481,12 +2476,7 @@ static INT32 CobraInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "cobracomib") ||
@@ -3184,12 +3174,7 @@ static INT32 SrdarwinInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x20000,  0, 1)) return 1;
@@ -3948,12 +3933,7 @@ static INT32 GondoInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "garyoret")) {
 		if (BurnLoadRom(DrvMainROM + 0x08000,  0, 1)) return 1;
@@ -4693,12 +4673,7 @@ static INT32 OscarInit()
 {
 	BurnSetRefreshRate(57.44);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM   + 0x08000,  0, 1)) return 1;
@@ -5185,12 +5160,7 @@ static INT32 LastmissInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (!strncmp(BurnDrvGetTextA(DRV_NAME), "lastm", 5)) {
@@ -5941,12 +5911,7 @@ static INT32 CsilverInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x08000,  0, 1)) return 1;
@@ -6155,6 +6120,9 @@ static struct BurnRomInfo csilverRomDesc[] = {
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
 	{ "dx-8.19a",		0x01000, 0xc0266263, 7 }, // 15 i8751 microcontroller
+
+	// BPROM type MB7122E for priority (Not yet used), location on alternate board unknown
+	{ "dx-15.b10",		0x00400, 0xdcbfec4e, 0 }, // 16 proms
 };
 
 STD_ROM_PICK(csilver)
@@ -6181,31 +6149,34 @@ struct BurnDriver BurnDrvCsilver = {
 };
 
 
-// Captain Silver (Japan revision 3)
+// Captain Silver (Japan, revision 2)
 
 static struct BurnRomInfo csilverjRomDesc[] = {
-	{ "dx03-3.a4",		0x08000, 0x02dd8cfc, 1 }, //  0 maincpu
-	{ "dx01.a2",		0x10000, 0x570fb50c, 1 }, //  1
-	{ "dx02.a3",		0x10000, 0x58625890, 1 }, //  2
+	{ "dx03-2.18d",			0x08000, 0x02dd8cfc, 1 }, //  0 maincpu
+	{ "dx01.12d",			0x10000, 0x570fb50c, 1 }, //  1
+	{ "dx02.13d",			0x10000, 0x58625890, 1 }, //  2
 
-	{ "dx04-1.a5",		0x10000, 0x29432691, 2 }, //  3 sub
+	{ "dx04-1.19d",			0x10000, 0x29432691, 2 }, //  3 sub
 
-	{ "dx05.a6",		0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
+	{ "dx05.3f",			0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
 
-	{ "dx00.a1",		0x08000, 0xf01ef985, 4 }, //  5 gfx1
+	{ "dx00.3d",			0x08000, 0xf01ef985, 4 }, //  5 gfx1
 
-	{ "dx14.b5",		0x10000, 0x80f07915, 5 }, //  6 gfx2
-	{ "dx13.b4",		0x10000, 0xd32c02e7, 5 }, //  7
-	{ "dx12.b3",		0x10000, 0xac78b76b, 5 }, //  8
+	{ "dx14.15k",			0x10000, 0x80f07915, 5 }, //  6 gfx2
+	{ "dx13.13k",			0x10000, 0xd32c02e7, 5 }, //  7
+	{ "dx12.10k",			0x10000, 0xac78b76b, 5 }, //  8
 
-	{ "dx06.a7",		0x10000, 0xb6fb208c, 6 }, //  9 gfx3
-	{ "dx07.a8",		0x10000, 0xee3e1817, 6 }, // 10
-	{ "dx08.a9",		0x10000, 0x705900fe, 6 }, // 11
-	{ "dx09.a10",		0x10000, 0x3192571d, 6 }, // 12
-	{ "dx10.b1",		0x10000, 0x3ef77a32, 6 }, // 13
-	{ "dx11.b2",		0x10000, 0x9cf3d5b8, 6 }, // 14
+	{ "dx06.5f",			0x10000, 0xb6fb208c, 6 }, //  9 gfx3
+	{ "dx07.7f",			0x10000, 0xee3e1817, 6 }, // 10
+	{ "dx08.8f",			0x10000, 0x705900fe, 6 }, // 11
+	{ "dx09.10f",			0x10000, 0x3192571d, 6 }, // 12
+	{ "dx10.12f",			0x10000, 0x3ef77a32, 6 }, // 13
+	{ "dx11.13f",			0x10000, 0x9cf3d5b8, 6 }, // 14
 
 	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
+
+	// BPROM type MB7122E for priority (Not yet used), location on alternate board unknown
+	{ "dx-15.b10",			0x00400, 0xdcbfec4e, 0 }, // 16 proms
 };
 
 STD_ROM_PICK(csilverj)
@@ -6213,7 +6184,7 @@ STD_ROM_FN(csilverj)
 
 struct BurnDriver BurnDrvCsilverj = {
 	"csilverj", "csilver", NULL, NULL, "1987",
-	"Captain Silver (Japan revision 3)\0", NULL, "Data East Corporation", "DEC8",
+	"Captain Silver (Japan, revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
@@ -6226,28 +6197,31 @@ struct BurnDriver BurnDrvCsilverj = {
 /* Same IC positions to World set */
 
 static struct BurnRomInfo csilverjaRomDesc[] = {
-	{ "dx03-1.18d",		0x08000, 0xd42905be, 1 }, //  0 maincpu
-	{ "dx01.12d",		0x10000, 0x570fb50c, 1 }, //  1
-	{ "dx02.13d",		0x10000, 0x58625890, 1 }, //  2
+	{ "dx03-1.18d",			0x08000, 0xd42905be, 1 }, //  0 maincpu
+	{ "dx01.12d",			0x10000, 0x570fb50c, 1 }, //  1
+	{ "dx02.13d",			0x10000, 0x58625890, 1 }, //  2
 
-	{ "dx04-1.19d",		0x10000, 0x29432691, 2 }, //  3 sub
+	{ "dx04-1.19d",			0x10000, 0x29432691, 2 }, //  3 sub
 
-	{ "dx05.3f",		0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
+	{ "dx05.3f",			0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
 
-	{ "dx00.3d",		0x08000, 0xf01ef985, 4 }, //  5 gfx1
+	{ "dx00.3d",			0x08000, 0xf01ef985, 4 }, //  5 gfx1
 
-	{ "dx14.15k",		0x10000, 0x80f07915, 5 }, //  6 gfx2
-	{ "dx13.13k",		0x10000, 0xd32c02e7, 5 }, //  7
-	{ "dx12.10k",		0x10000, 0xac78b76b, 5 }, //  8
+	{ "dx14.15k",			0x10000, 0x80f07915, 5 }, //  6 gfx2
+	{ "dx13.13k",			0x10000, 0xd32c02e7, 5 }, //  7
+	{ "dx12.10k",			0x10000, 0xac78b76b, 5 }, //  8
 
-	{ "dx06.5f",		0x10000, 0xb6fb208c, 6 }, //  9 gfx3
-	{ "dx07.7f",		0x10000, 0xee3e1817, 6 }, // 10
-	{ "dx08.8f",		0x10000, 0x705900fe, 6 }, // 11
-	{ "dx09.10f",		0x10000, 0x3192571d, 6 }, // 12
-	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
-	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
+	{ "dx06.5f",			0x10000, 0xb6fb208c, 6 }, //  9 gfx3
+	{ "dx07.7f",			0x10000, 0xee3e1817, 6 }, // 10
+	{ "dx08.8f",			0x10000, 0x705900fe, 6 }, // 11
+	{ "dx09.10f",			0x10000, 0x3192571d, 6 }, // 12
+	{ "dx10.12f",			0x10000, 0x3ef77a32, 6 }, // 13
+	{ "dx11.13f",			0x10000, 0x9cf3d5b8, 6 }, // 14
 
 	{ "id8751h_japan.mcu",	0x01000, 0x6e801217, 7 }, // 15 i8751 microcontroller
+
+	// BPROM type MB7122E for priority (Not yet used), location on alternate board unknown
+	{ "dx-15.b10",			0x00400, 0xdcbfec4e, 0 }, // 16 proms
 };
 
 STD_ROM_PICK(csilverja)

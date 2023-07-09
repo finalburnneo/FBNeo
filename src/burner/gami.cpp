@@ -15,6 +15,8 @@ INT32 nAnalogSpeed;
 
 INT32 nFireButtons = 0;
 
+INT32 nSubDrvSelected = -1;	// Cmdline parameter
+
 bool bStreetFighterLayout = false;
 bool bLeftAltkeyMapped = false;
 bool bResetDrv = false;
@@ -1372,6 +1374,29 @@ static INT32 StringToInp(struct GameInp* pgi, TCHAR* s)
 	return 1;
 }
 
+static INT32 ConfigSubDrv(struct GameInp* pgi, TCHAR* s)
+{
+	if (nSubDrvSelected >= 0) {
+		if (nSubDrvSelected > 8) nSubDrvSelected = 8;
+
+		UINT8 nIndex[9] = { 0x00,0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80 };
+		TCHAR* szRet = NULL;
+
+		szRet = LabelCheck(s, _T("constant"));
+		if (szRet) {
+			pgi->nInput = GIT_CONSTANT;
+			pgi->Input.Constant.nConst = nIndex[nSubDrvSelected];
+			*(pgi->Input.pVal) = pgi->Input.Constant.nConst;
+
+			nSubDrvSelected = -1;
+			return 0;	// Succeed
+		}
+	}
+
+	nSubDrvSelected = -1;
+	return 1;	// Failed
+}
+
 // ---------------------------------------------------------------------------
 // Convert an input to a string for config files
 
@@ -2336,6 +2361,13 @@ INT32 GameInpRead(TCHAR* szVal, bool bOverWrite)
 	}
 
 	if (bOverWrite || GameInp[i].nInput == 0) {
+		// Command line to start a subgame - find the game configuration
+		if ((0 == _tcscmp(_T("Dip Ex"), szQuote)) && (nSubDrvSelected >= 0)) {
+			if (0 == ConfigSubDrv(GameInp + i, szEnd)) {
+				return 0;
+			}
+		}
+
 		// Parse the input description into the GameInp structure
 		StringToInp(GameInp + i, szEnd);
 	}

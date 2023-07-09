@@ -101,6 +101,8 @@ extern INT32 nAnalogSpeed;
 
 extern INT32 nFireButtons;
 
+extern INT32 nSubDrvSelected;
+
 extern bool bStreetFighterLayout;
 extern bool bLeftAltkeyMapped;
 extern bool bResetDrv;

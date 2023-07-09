@@ -410,7 +410,9 @@ static int GameInfoInit()
 
 	// Check for board roms
 	if (BurnDrvGetTextA(DRV_BOARDROM)) {
-		char szBoardName[12] = "";
+		// spec_spectrum (14 characters)
+		// spec_spec128  (13 characters)
+		char szBoardName[14] = "";
 		unsigned int nOldDrvSelect = nBurnDrvActive;
 		strcpy(szBoardName, BurnDrvGetTextA(DRV_BOARDROM));
 

@@ -6193,7 +6193,7 @@ struct BurnDriver BurnDrvCsilverj = {
 };
 
 
-// Captain Silver (Japan revision 1)
+// Captain Silver (Japan, revision 1)
 /* Same IC positions to World set */
 
 static struct BurnRomInfo csilverjaRomDesc[] = {
@@ -6229,7 +6229,7 @@ STD_ROM_FN(csilverja)
 
 struct BurnDriver BurnDrvCsilverja = {
 	"csilverja", "csilver", NULL, NULL, "1987",
-	"Captain Silver (Japan revision 1)\0", NULL, "Data East Corporation", "DEC8",
+	"Captain Silver (Japan, revision 1)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverjaRomInfo, csilverjaRomName, NULL, NULL, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,

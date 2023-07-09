@@ -2,6 +2,7 @@
 #include "burner.h"
 #include <commdlg.h>
 #include "inputbuf.h"
+#include "neocdlist.h"
 
 #include <io.h>
 
@@ -1149,6 +1150,19 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	}
 }
 
+static TCHAR *GetDrvName() // for both arcade & neocd
+{
+	static TCHAR szName[MAX_PATH] = _T("");
+
+	if (NeoCDInfo_ID()) {
+		_stprintf(szName, _T("ngcd_%s"), NeoCDInfo_Text(DRV_NAME));
+	} else {
+		_stprintf(szName, _T("%s"), BurnDrvGetText(DRV_NAME));
+	}
+
+	return szName;
+}
+
 static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 {
 	if (Msg == WM_INITDIALOG) {
@@ -1161,7 +1175,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 
 		memset(&wfd, 0, sizeof(WIN32_FIND_DATA));
 		if (bDrvOkay) {
-			_stprintf(szFindPath, _T("recordings\\%s*.fr"), BurnDrvGetText(DRV_NAME));
+			_stprintf(szFindPath, _T("recordings\\%s*.fr"), GetDrvName());
 		}
 
 		hFind = FindFirstFile(szFindPath, &wfd);
@@ -1309,10 +1323,10 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 		wchar_t szFilename[MAX_PATH];
 
 		INT32 i = 0;
-		_stprintf(szFilename, _T("%s.fr"), BurnDrvGetText(DRV_NAME));
+		_stprintf(szFilename, _T("%s.fr"), GetDrvName());
 		wcscpy(szPath, szFilename);
 		while(VerifyRecordingAccessMode(szPath, 0) == 1) {
-			_stprintf(szFilename, _T("%s-%d.fr"), BurnDrvGetText(DRV_NAME), ++i);
+			_stprintf(szFilename, _T("%s-%d.fr"), GetDrvName(), ++i);
 			wcscpy(szPath, szFilename);
 		}
 
@@ -1347,7 +1361,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 					return TRUE;
 				case IDC_BROWSE:
 					{
-						_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
+						_stprintf(szChoice, _T("%s"), GetDrvName());
 						MakeOfn(szFilter);
 						ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_RECORD, true);
 						ofn.Flags |= OFN_OVERWRITEPROMPT;
@@ -1371,7 +1385,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 						}
 
 						// add "romset," to beginning of metadata
-						_stprintf(wszMetadata, _T("%s,%s"), BurnDrvGetText(DRV_NAME), szAuthInfo);
+						_stprintf(wszMetadata, _T("%s,%s"), GetDrvName(), szAuthInfo);
 					} else {
 						_tcscpy(wszMetadata, szAuthInfo);
 					}

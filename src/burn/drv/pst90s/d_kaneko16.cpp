@@ -111,6 +111,7 @@ static INT32 Kaneko16ParseSpriteType1(INT32 i, struct tempsprite *s);
 static INT32 Kaneko16ParseSpriteType2(INT32 i, struct tempsprite *s);
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
+static INT32 nCyclesExtra;
 
 static INT32 Kaneko16Watchdog;
 
@@ -3265,6 +3266,8 @@ static INT32 Kaneko16DoReset()
 	memset(Kaneko16Layer0Regs, 0, 0x10 * sizeof(UINT16));
 	memset(Kaneko16Layer1Regs, 0, 0x10 * sizeof(UINT16));
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -3389,6 +3392,8 @@ static INT32 ShogwarrDoReset()
 
 	Kaneko16Watchdog = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -3398,7 +3403,7 @@ static INT32 ShogwarrDoReset()
 Memory Handlers
 ===============================================================================================*/
 
-UINT8 __fastcall BerlwallReadByte(UINT32 a)
+static UINT8 __fastcall BerlwallReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x500000:
@@ -3437,7 +3442,7 @@ UINT8 __fastcall BerlwallReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
+static void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x500000:
@@ -3479,7 +3484,7 @@ void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall BerlwallReadWord(UINT32 a)
+static UINT16 __fastcall BerlwallReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x500000: {
@@ -3520,7 +3525,7 @@ UINT16 __fastcall BerlwallReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
+static void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x480000: {
@@ -3593,7 +3598,7 @@ void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall BlazeonReadByte(UINT32 a)
+static UINT8 __fastcall BlazeonReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc00000: {
@@ -3633,7 +3638,7 @@ UINT8 __fastcall BlazeonReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall BlazeonWriteByte(UINT32 a, UINT8 d)
+static void __fastcall BlazeonWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xd00000: {
@@ -3655,7 +3660,7 @@ void __fastcall BlazeonWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall BlazeonReadWord(UINT32 a)
+static UINT16 __fastcall BlazeonReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0xc00000: {
@@ -3685,7 +3690,7 @@ UINT16 __fastcall BlazeonReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall BlazeonWriteWord(UINT32 a, UINT16 /*d*/)
+static void __fastcall BlazeonWriteWord(UINT32 a, UINT16 /*d*/)
 {
 	switch (a) {
 		case 0xd00000: {
@@ -3699,7 +3704,7 @@ void __fastcall BlazeonWriteWord(UINT32 a, UINT16 /*d*/)
 	}
 }
 
-UINT8 __fastcall ExplbrkrReadByte(UINT32 a)
+static UINT8 __fastcall ExplbrkrReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x400001: {
@@ -3744,7 +3749,7 @@ UINT8 __fastcall ExplbrkrReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall ExplbrkrWriteByte(UINT32 a, UINT8 d)
+static void __fastcall ExplbrkrWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x40000f:
@@ -3785,7 +3790,7 @@ void __fastcall ExplbrkrWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall ExplbrkrReadWord(UINT32 a)
+static UINT16 __fastcall ExplbrkrReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0xa00000: {
@@ -3806,7 +3811,7 @@ UINT16 __fastcall ExplbrkrReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall ExplbrkrWriteWord(UINT32 a, UINT16 d)
+static void __fastcall ExplbrkrWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x400000:
@@ -3881,7 +3886,7 @@ void __fastcall ExplbrkrWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall MgcrystlReadByte(UINT32 a)
+static UINT8 __fastcall MgcrystlReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x400001: {
@@ -3922,7 +3927,7 @@ UINT8 __fastcall MgcrystlReadByte(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall GtmrReadByte(UINT32 a)
+static UINT8 __fastcall GtmrReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x900014: {
@@ -3959,7 +3964,7 @@ UINT8 __fastcall GtmrReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
+static void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x600000:
@@ -4064,7 +4069,7 @@ void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall GtmrReadWord(UINT32 a)
+static UINT16 __fastcall GtmrReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x800000: {
@@ -4143,7 +4148,7 @@ UINT16 __fastcall GtmrReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
+static void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x2a0000: {
@@ -4257,7 +4262,7 @@ void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
+static UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
 {
 	a &= 0xff;
 
@@ -4278,7 +4283,7 @@ UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall Kaneko16Z80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall Kaneko16Z80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 
@@ -4856,9 +4861,9 @@ static INT32 BlazeonInit()
 static INT32 WingforcInit()
 {
 	INT32 nRet = 0, nLen;
-	
-	//BurnSetRefreshRate(59.1854); // hmm, this causes clicks in audio. let's just give it the cycles/per frame it wants instead. (see WingforcFrame())
-	
+
+	BurnSetRefreshRate(59.1854);
+
 	Kaneko16NumSprites = 0x4000;
 	Kaneko16NumTiles = 0x4000;
 	Kaneko16NumTiles2 = 0;
@@ -6900,7 +6905,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	return BurnHighCol(r, g, b, 0);
 }
 
-INT32 Kaneko16CalcPalette(INT32 num)
+static INT32 Kaneko16CalcPalette(INT32 num)
 {
 	INT32 i;
 	UINT16* ps;
@@ -7359,7 +7364,7 @@ static INT32 ExplbrkrFrame()
 
 	INT32 nInterleave = 256;
 	nCyclesTotal[0] = 12000000 / 60;
-	nCyclesDone[0] = 0;
+	nCyclesDone[0] = nCyclesExtra;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
@@ -7370,9 +7375,10 @@ static INT32 ExplbrkrFrame()
 		SekClose();
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-		BurnSoundDCFilter();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -7392,7 +7398,8 @@ static INT32 BlazeonFrame()
 	INT32 nInterleave = 10;
 	nCyclesTotal[0] = 12000000 / 60;
 	nCyclesTotal[1] = 4000000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = nCyclesExtra;
+	nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
@@ -7407,10 +7414,10 @@ static INT32 BlazeonFrame()
 		ZetClose();
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
-		ZetOpen(0);
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	if (pBurnDraw) BurnDrvRedraw();
@@ -7430,7 +7437,8 @@ static INT32 WingforcFrame()
 	nCyclesTotal[0] = (INT32)(16000000 / 59.1854);
 	nCyclesTotal[1] = (INT32)(4000000 / 59.1854);
 
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = nCyclesExtra;
+	nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		SekOpen(0);
@@ -7445,10 +7453,10 @@ static INT32 WingforcFrame()
 		ZetClose();
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
-		ZetOpen(0);
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -7467,7 +7475,7 @@ static INT32 GtmrFrame()
 
 	INT32 nInterleave = 256;
 	nCyclesTotal[0] = 16000000 / 60;
-	nCyclesDone[0] = 0;
+	nCyclesDone[0] = nCyclesExtra;
 
 	SekOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -7477,6 +7485,8 @@ static INT32 GtmrFrame()
 		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	}
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
@@ -7502,7 +7512,8 @@ static INT32 ShogwarrFrame()
 
 	INT32 nInterleave = 256;
 	nCyclesTotal[0] = (12000000 * 100) / 5918;
-	nCyclesDone[0] = 0;
+	nCyclesDone[0] = nCyclesExtra;
+
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -7520,6 +7531,8 @@ static INT32 ShogwarrFrame()
 	}
 
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnSoundClear();
@@ -7575,6 +7588,8 @@ static INT32 Kaneko16Scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Kaneko16Brightness);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 
 		if (Kaneko16Bg15) {
 			SCAN_VAR(Kaneko16Bg15Reg);

@@ -1157,6 +1157,7 @@ BEGIN
         POPUP    "Generate dat file"
         BEGIN
 	        MENUITEM "Generate dat (Arcade only)...",			MENU_CLRMAME_PRO_XML
+	        MENUITEM "Generate dat (Neo Geo only)...",			MENU_CLRMAME_PRO_XML_NEOGEO_ONLY
 	        MENUITEM "Generate dat (Megadrive only)...",		MENU_CLRMAME_PRO_XML_MD_ONLY
 			MENUITEM "Generate dat (PC-Engine only)...",		MENU_CLRMAME_PRO_XML_PCE_ONLY
 			MENUITEM "Generate dat (TurboGrafx16 only)...",		MENU_CLRMAME_PRO_XML_TG16_ONLY

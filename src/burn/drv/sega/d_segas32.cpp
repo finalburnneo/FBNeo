@@ -174,6 +174,7 @@ static INT32 SingleScreenModeChangeCheck();
 
 static INT32 has_gun = 0;
 static INT32 clr_opposites = 0;
+static INT32 opaquey_hack = 0;
 
 static struct BurnInputInfo ArabfgtInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p1 coin"	},
@@ -2598,6 +2599,8 @@ static INT32 DrvExit()
 	can_modechange = 0;
 	clr_opposites = 0;
 
+	opaquey_hack = 0;
+
 	CURVE = NULL;
 
 	return 0;
@@ -2933,7 +2936,7 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 		GenericTilemapDraw(0, 1 + i, 0);
 	}
 
-	INT32 opaque = 0;
+	INT32 opaque = (opaquey_hack) ? ((m_videoram[0x1ff8e/2] >> (8 + bgnum)) & 1) : 0;
 	INT32 flipx, flipy;
 
 	compute_tilemap_flips(bgnum, flipx, flipy);
@@ -5167,6 +5170,8 @@ static INT32 DarkedgeInit()
 
 	clr_opposites = 2;
 
+	opaquey_hack = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -6733,6 +6738,8 @@ static INT32 RadrInit()
 
 	custom_io_write_0  = f1en_custom_io_write;
 	custom_io_read_0 = analog_custom_io_read;
+
+	opaquey_hack = 1;
 
 	DrvDoReset();
 

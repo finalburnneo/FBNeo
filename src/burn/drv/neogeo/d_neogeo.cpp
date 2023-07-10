@@ -17079,35 +17079,35 @@ struct BurnDriver BurnDrvSamsho2sp = {
 // Samurai Shodown II Perfect Hack - 2023-06-27
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",    0x100000, 0x7c527a45, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "063-p2pe.sp2",   0x100000, 0xe14bfaae, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "063-p3pe.p3",    0x020000, 0xefe257ce, 0 | BRF_ESS | BRF_PRG }, //  2
+	{ "063-p1pe.p1",	0x100000, 0x72a2a1de, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p2pe.sp2",	0x100000, 0x998d61c7, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063-p3pe.p3",	0x020000, 0xb5a452a3, 0 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
-	{ "063-s1.s1",      0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "063-s1.s1",		0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "063-c1.c1",      0x200000, 0x86cd307c, 3 | BRF_GRA },           //  4 Sprite data
-	{ "063-c2.c2",      0x200000, 0xcdfcc4ca, 3 | BRF_GRA },           //  5
-	{ "063-c3.c3",      0x200000, 0x7a63ccc7, 3 | BRF_GRA },           //  6
-	{ "063-c4.c4",      0x200000, 0x751025ce, 3 | BRF_GRA },           //  7
-	{ "063-c5.c5",      0x200000, 0x20d3a475, 3 | BRF_GRA },           //  8
-	{ "063-c6.c6",      0x200000, 0xae4c0a88, 3 | BRF_GRA },           //  9
-	{ "063-c7.c7",      0x200000, 0x2df3cbcf, 3 | BRF_GRA },           // 10
-	{ "063-c8.c8",      0x200000, 0x1ffc6dfa, 3 | BRF_GRA },           // 11
+	{ "063-c1.c1",		0x200000, 0x86cd307c, 3 | BRF_GRA },           //  4 Sprite data
+	{ "063-c2.c2",		0x200000, 0xcdfcc4ca, 3 | BRF_GRA },           //  5
+	{ "063-c3.c3",		0x200000, 0x7a63ccc7, 3 | BRF_GRA },           //  6
+	{ "063-c4.c4",		0x200000, 0x751025ce, 3 | BRF_GRA },           //  7
+	{ "063-c5.c5",		0x200000, 0x20d3a475, 3 | BRF_GRA },           //  8
+	{ "063-c6.c6",		0x200000, 0xae4c0a88, 3 | BRF_GRA },           //  9
+	{ "063-c7.c7",		0x200000, 0x2df3cbcf, 3 | BRF_GRA },           // 10
+	{ "063-c8.c8",		0x200000, 0x1ffc6dfa, 3 | BRF_GRA },           // 11
 
-	{ "063-m1.m1",      0x020000, 0x56675098, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code
+	{ "063-m1.m1",		0x020000, 0x56675098, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code
 
-	{ "063-v1.v1",      0x200000, 0x37703f91, 5 | BRF_SND },           // 13 Sound data
-	{ "063-v2.v2",      0x200000, 0x0142bde8, 5 | BRF_SND },           // 14
-	{ "063-v3.v3",      0x200000, 0xd07fa5ca, 5 | BRF_SND },           // 15
-	{ "063-v4.v4",      0x100000, 0x24aab4bb, 5 | BRF_SND },           // 16
+	{ "063-v1.v1",		0x200000, 0x37703f91, 5 | BRF_SND },           // 13 Sound data
+	{ "063-v2.v2",		0x200000, 0x0142bde8, 5 | BRF_SND },           // 14
+	{ "063-v3.v3",		0x200000, 0xd07fa5ca, 5 | BRF_SND },           // 15
+	{ "063-v4.v4",		0x100000, 0x24aab4bb, 5 | BRF_SND },           // 16
 };
 
 STDROMPICKEXT(samsho2pe, samsho2pe, neogeo)
 STD_ROM_FN(samsho2pe)
 
 struct BurnDriver BurnDrvSamsho2pe = {
-	"samsho2pe", "samsho2", "neogeo", NULL, "2023",
-	"Samurai Shodown II Perfect (V. 1.2, Hack)\0", NULL, "Bear", "Neo Geo MVS",
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.2, hack)\0", NULL, "Bear", "Neo Geo MVS",
+	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 1.2, hack)\0", NULL, NULL, NULL,
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

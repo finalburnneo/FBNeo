@@ -1116,12 +1116,12 @@ struct BurnDriver BurnDrvHatrisj = {
 // Hatris (show version)
 
 static struct BurnRomInfo hatrispRomDesc[] = {
-	{ "3-6show.ic8",	0x08000, 0xbbcaddbf, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "3-6show.ic8",	0x08000, 0xe1cf7403, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
 	{ "3-6.ic94",		0x08000, 0xe0b05b71, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
 	{ "b0.ic76+",		0x20000, 0x60346041, 3 | BRF_GRA },           //  2 Background tiles
-	{ "b1.ic76",		0x08000, 0xe8e2db07, 3 | BRF_GRA },           //  3
+	{ "b1.ic76",		0x20000, 0xe8e2db07, 3 | BRF_GRA },           //  3
 
 	{ "a0.ic51+",		0x20000, 0x7b7bc619, 4 | BRF_GRA },           //  4 Foreground tiles
 	{ "a1.ic51",		0x20000, 0xf74d4168, 4 | BRF_GRA },           //  5

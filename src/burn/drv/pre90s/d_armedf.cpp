@@ -2114,8 +2114,8 @@ static struct BurnRomInfo terrafuaRomDesc[] = {
 	{ "3.6h",		0x10000, 0x02f9d05a, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "7.4e",		0x10000, 0xfde8de7e, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "2.4h",		0x10000, 0xdb987414, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "6.3e",		0x08000, 0x962585bf, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "1.3h",		0x08000, 0x3f060451, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "6.3e",		0x10000, 0x962585bf, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1.3h",		0x10000, 0x3f060451, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "11.17k",		0x10000, 0xd4d60a51, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
 

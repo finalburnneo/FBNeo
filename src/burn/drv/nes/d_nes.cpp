@@ -32357,3 +32357,22 @@ struct BurnDriver BurnDrvnes_pentablocat = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tecmo Super Bowl (Tapmeter, Hack)
+// Modified by: bruddog
+static struct BurnRomInfo nes_tsbtapmeterRomDesc[] = {
+	{ "Tecmo Super Bowl Tapmeter v1.0.0 (2016)(bruddog).nes",          393232, 0x18f884f0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tsbtapmeter)
+STD_ROM_FN(nes_tsbtapmeter)
+
+struct BurnDriver BurnDrvnes_tsbtapmeter = {
+	"nes_tsbtapmeter", "nes_tecmosuperbowl", NULL, NULL, "2016",
+	"Tecmo Super Bowl Tapmeter (v1.0.0, hack)\0", NULL, "bruddog", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_tsbtapmeterRomInfo, nes_tsbtapmeterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+

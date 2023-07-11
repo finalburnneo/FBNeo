@@ -13911,8 +13911,8 @@ DRV		BurnDrvSamShoh;
 DRV		BurnDrvSamsho;
 DRV		BurnDrvSamShoa;
 DRV		BurnDrvSamsho2;
-DRV		BurnDrvSamsho2sp;
 DRV		BurnDrvSamsho2pe;
+DRV		BurnDrvSamsho2sp;
 DRV		BurnDrvSamSho3h;
 DRV		BurnDrvSamSho3;
 DRV		BurnDrvSamSho4;
@@ -17019,6 +17019,7 @@ DRV		BurnDrvTerrafj;
 DRV		BurnDrvTerrafb;
 DRV		BurnDrvTerrafjb;
 DRV		BurnDrvTerrafu;
+DRV		BurnDrvterrafua;
 DRV		BurnDrvTerraf;
 DRV		BurnSpecTerrahawks;
 DRV		BurnSpecTerramex;
@@ -33569,8 +33570,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSamsho,				// Samurai Shodown / Samurai Spirits (NGM-045)
 	&BurnDrvSamShoa,			// Samurai Shodown / Samurai Spirits (NGM-045, alt board)
 	&BurnDrvSamsho2,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063 ~ NGH-063)
+	&BurnDrvSamsho2pe,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.2, Hack)
 	&BurnDrvSamsho2sp,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen Special 2017 (Hack)
-	&BurnDrvSamsho2pe,			// Samurai Shodown II Perfect (V. 1.2, Hack)
 	&BurnDrvSamSho3h,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)
 	&BurnDrvSamSho3,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)
 	&BurnDrvSamSho4,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222 ~ NGH-222)
@@ -36677,6 +36678,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvTerrafb,			// Terra Force (Japan, bootleg set 2)
 	&BurnDrvTerrafjb,			// Terra Force (Japan, bootleg with additional Z80)
 	&BurnDrvTerrafu,			// Terra Force (US)
+	&BurnDrvterrafua,			// Terra Force (US, alternate sound)
 	&BurnDrvTerraf,				// Terra Force
 	&BurnSpecTerrahawks,		// Terrahawks (128K) (HB)
 	&BurnSpecTerramex,			// Terramex (128K)

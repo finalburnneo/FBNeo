@@ -15748,36 +15748,28 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="samsho2sp" cloneof="samsho2" romof="samsho2">
-		<comment>Hack, Other versions are selected in the dipswitch</comment>
-		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen Special 2017 (Hack)</description>
-		<year>2017</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="063-p1sp.p1" size="1048576" crc="ed466b3d"/>
-		<rom name="063-p2sp.sp2" size="1048576" crc="6e1aef70"/>
-		<rom name="063-p3sp.p3" size="131072" crc="f9079ea3"/>
-		<rom name="063-s1sp.s1" size="131072" crc="1951a907"/>
+	<game name="samsho2pe" cloneof="samsho2" romof="samsho2">
+		<comment>Hack</comment>
+		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.2, Hack)</description>
+		<year>2023</year>
+		<manufacturer>Bear</manufacturer>
+		<rom name="063-p1pe.p1" size="1048576" crc="72a2a1de"/>
+		<rom name="063-p2pe.sp2" size="1048576" crc="998d61c7"/>
+		<rom name="063-p3pe.p3" size="131072" crc="b5a452a3"/>
+		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
 		<rom name="063-c1.c1" merge="063-c1.c1" size="2097152" crc="86cd307c"/>
 		<rom name="063-c2.c2" merge="063-c2.c2" size="2097152" crc="cdfcc4ca"/>
 		<rom name="063-c3.c3" merge="063-c3.c3" size="2097152" crc="7a63ccc7"/>
 		<rom name="063-c4.c4" merge="063-c4.c4" size="2097152" crc="751025ce"/>
 		<rom name="063-c5.c5" merge="063-c5.c5" size="2097152" crc="20d3a475"/>
 		<rom name="063-c6.c6" merge="063-c6.c6" size="2097152" crc="ae4c0a88"/>
-		<rom name="063-c7sp.c7" size="2097152" crc="dbebced2"/>
-		<rom name="063-c8sp.c8" size="2097152" crc="bf70b93c"/>
+		<rom name="063-c7.c7" merge="063-c7.c7" size="2097152" crc="2df3cbcf"/>
+		<rom name="063-c8.c8" merge="063-c8.c8" size="2097152" crc="1ffc6dfa"/>
 		<rom name="063-m1.m1" merge="063-m1.m1" size="131072" crc="56675098"/>
 		<rom name="063-v1.v1" merge="063-v1.v1" size="2097152" crc="37703f91"/>
 		<rom name="063-v2.v2" merge="063-v2.v2" size="2097152" crc="0142bde8"/>
 		<rom name="063-v3.v3" merge="063-v3.v3" size="2097152" crc="d07fa5ca"/>
 		<rom name="063-v4.v4" merge="063-v4.v4" size="1048576" crc="24aab4bb"/>
-		<rom name="063-p1new.p1" size="1048576" crc="c2e62f51"/>
-		<rom name="063-p2new.sp2" size="1048576" crc="d00663be"/>
-		<rom name="063-p3new.p3" size="131072" crc="0bab6abd"/>
-		<rom name="063-p1jq.p1" size="1048576" crc="4b202e25"/>
-		<rom name="063-p2jq.sp2" size="1048576" crc="a03ead44"/>
-		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
-		<rom name="063-c7jq.c7" size="2097152" crc="9d414581"/>
-		<rom name="063-c8jq.c8" size="2097152" crc="4ecffd87"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -15819,28 +15811,36 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="samsho2pe" cloneof="samsho2" romof="samsho2">
-		<comment>Hack</comment>
-		<description>Samurai Shodown II Perfect (V. 1.2, Hack)</description>
-		<year>2023</year>
-		<manufacturer>Bear</manufacturer>
-		<rom name="063-p1pe.p1" size="1048576" crc="7c527a45"/>
-		<rom name="063-p2pe.sp2" size="1048576" crc="e14bfaae"/>
-		<rom name="063-p3pe.p3" size="131072" crc="efe257ce"/>
-		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
+	<game name="samsho2sp" cloneof="samsho2" romof="samsho2">
+		<comment>Hack, Other versions are selected in the dipswitch</comment>
+		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen Special 2017 (Hack)</description>
+		<year>2017</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="063-p1sp.p1" size="1048576" crc="ed466b3d"/>
+		<rom name="063-p2sp.sp2" size="1048576" crc="6e1aef70"/>
+		<rom name="063-p3sp.p3" size="131072" crc="f9079ea3"/>
+		<rom name="063-s1sp.s1" size="131072" crc="1951a907"/>
 		<rom name="063-c1.c1" merge="063-c1.c1" size="2097152" crc="86cd307c"/>
 		<rom name="063-c2.c2" merge="063-c2.c2" size="2097152" crc="cdfcc4ca"/>
 		<rom name="063-c3.c3" merge="063-c3.c3" size="2097152" crc="7a63ccc7"/>
 		<rom name="063-c4.c4" merge="063-c4.c4" size="2097152" crc="751025ce"/>
 		<rom name="063-c5.c5" merge="063-c5.c5" size="2097152" crc="20d3a475"/>
 		<rom name="063-c6.c6" merge="063-c6.c6" size="2097152" crc="ae4c0a88"/>
-		<rom name="063-c7.c7" merge="063-c7.c7" size="2097152" crc="2df3cbcf"/>
-		<rom name="063-c8.c8" merge="063-c8.c8" size="2097152" crc="1ffc6dfa"/>
+		<rom name="063-c7sp.c7" size="2097152" crc="dbebced2"/>
+		<rom name="063-c8sp.c8" size="2097152" crc="bf70b93c"/>
 		<rom name="063-m1.m1" merge="063-m1.m1" size="131072" crc="56675098"/>
 		<rom name="063-v1.v1" merge="063-v1.v1" size="2097152" crc="37703f91"/>
 		<rom name="063-v2.v2" merge="063-v2.v2" size="2097152" crc="0142bde8"/>
 		<rom name="063-v3.v3" merge="063-v3.v3" size="2097152" crc="d07fa5ca"/>
 		<rom name="063-v4.v4" merge="063-v4.v4" size="1048576" crc="24aab4bb"/>
+		<rom name="063-p1new.p1" size="1048576" crc="c2e62f51"/>
+		<rom name="063-p2new.sp2" size="1048576" crc="d00663be"/>
+		<rom name="063-p3new.p3" size="131072" crc="0bab6abd"/>
+		<rom name="063-p1jq.p1" size="1048576" crc="4b202e25"/>
+		<rom name="063-p2jq.sp2" size="1048576" crc="a03ead44"/>
+		<rom name="063-s1.s1" merge="063-s1.s1" size="131072" crc="64a5cd66"/>
+		<rom name="063-c7jq.c7" size="2097152" crc="9d414581"/>
+		<rom name="063-c8jq.c8" size="2097152" crc="4ecffd87"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

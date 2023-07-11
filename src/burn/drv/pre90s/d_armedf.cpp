@@ -1,4 +1,4 @@
-// FB Alpha Armed Formation driver module
+// FB Neo Armed Formation driver module
 // Based on MAME driver by Carlos A. Lozano, Phil Stroffolino, and Takahiro Nogi
 //
 // nb1414m4 hooked up to Kozure Ookami July 8 2015 -dink
@@ -2102,6 +2102,48 @@ struct BurnDriver BurnDrvTerrafu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafuRomInfo, terrafuRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Terra Force (US, alternate sound)
+
+static struct BurnRomInfo terrafuaRomDesc[] = {
+	{ "8.6e",		0x10000, 0xfea6dd64, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3.6h",		0x10000, 0x02f9d05a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "7.4e",		0x10000, 0xfde8de7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2.4h",		0x10000, 0xdb987414, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6.3e",		0x10000, 0x962585bf, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1.3h",		0x10000, 0x3f060451, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "11.17k",		0x10000, 0xd4d60a51, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
+
+	{ "9.11e",		0x08000, 0xbc6f7cbc, 3 | BRF_GRA },           //  7 Characters
+
+	{ "5.15h",		0x10000, 0x25d23dfd, 4 | BRF_GRA },           //  8 Foreground Tiles
+	{ "4.13h",		0x10000, 0xb9b0fe27, 4 | BRF_GRA },           //  9
+
+	{ "15.8a",		0x10000, 0x2144d8e0, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "14.6a",		0x10000, 0x744f5c9e, 5 | BRF_GRA },           // 11
+
+	{ "12.7d",		0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
+	{ "13.9d",		0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
+
+	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA },           // 14 MCU data
+
+	{ "0302.11j",	0x00100, 0x0dc8cb70, 8 | BRF_OPT },           // 15 Proms
+};
+
+STD_ROM_PICK(terrafua)
+STD_ROM_FN(terrafua)
+
+struct BurnDriver BurnDrvterrafua = {
+	"terrafua", "terraf", NULL, NULL, "1987",
+	"Terra Force (US, alternate sound)\0", NULL, "Nichibutsu USA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, terrafuaRomInfo, terrafuaRomName, NULL, NULL, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

@@ -2147,7 +2147,7 @@ INT32 cps3Frame()
 	Sh2NewFrame();
 
 	INT32 nInterleave = 4;
-	INT32 nCyclesTotal[1] = { 25000000 / 60 };
+	INT32 nCyclesTotal[1] = { (INT32)((double)25000000 * 100 / nBurnFPS) };
 	INT32 nCyclesDone[1] = { nExtraCycles };
 
 	Sh2Idle(nExtraCycles);

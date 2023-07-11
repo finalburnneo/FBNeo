@@ -15782,6 +15782,26 @@ struct BurnDriver BurnDrvnes_bowsette2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Super Mario Bros. 2 - Wacky Quest (Hack)
+// https://www.romhacking.net/hacks/6920/
+
+static struct BurnRomInfo nes_smb2wqRomDesc[] = {
+	{ "Super Mario Bros. 2 - Wacky Quest (2022)(ray8).nes",          262160, 0x30af8965, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_smb2wq)
+STD_ROM_FN(nes_smb2wq)
+
+struct BurnDriver BurnDrvnes_smb2wq = {
+	"nes_smb2wq", "nes_smb2", NULL, NULL, "2022",
+	"Super Mario Bros. 2 - Wacky Quest (Hack)\0", NULL, "ray8", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_smb2wqRomInfo, nes_smb2wqRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Super Mario Unlimited Deluxe
 // http://www.romhacking.net/hacks/5546/
 static struct BurnRomInfo nes_smbunldlxRomDesc[] = {
@@ -22433,6 +22453,23 @@ struct BurnDriver BurnDrvnes_convoy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_donsolRomDesc[] = {
+	{ "Donsol v.15 (2017)(Rek & Devine).nes",          24592, 0xa140826e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_donsol)
+STD_ROM_FN(nes_donsol)
+
+struct BurnDriver BurnDrvnes_donsol = {
+	"nes_donsol", NULL, NULL, NULL, "2017",
+	"Donsol (HB, v15)\0", NULL, "Rek & Devine", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MISC | GBF_RPG, 0,
+	NESGetZipName, nes_donsolRomInfo, nes_donsolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Lupin III: Gentle Thief (GlobalHack)
 // https://www.romhacking.net/hacks/7803/
 static struct BurnRomInfo nes_lupin3gtRomDesc[] = {
@@ -26776,15 +26813,15 @@ struct BurnDriver BurnDrvnes_nimnom = {
 
 // https://www.romhacking.net/hacks/144/
 static struct BurnRomInfo nes_smbdxRomDesc[] = {
-	{ "Super Mario Bros. DX - Anniversary Edition (Hack, v4.2).nes",          40976, 0x03df519c, BRF_ESS | BRF_PRG },
+	{ "Super Mario Bros. DX - Anniversary Edition v4.4 (2023)(flamepanther).nes",          40976, 0x448bd601, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_smbdx)
 STD_ROM_FN(nes_smbdx)
 
 struct BurnDriver BurnDrvnes_smbdx = {
-	"nes_smbdx", "nes_smb", NULL, NULL, "2022",
-	"Super Mario Bros. DX - Anniversary Edition (Hack, v4.2)\0", NULL, "Flamephanter", "Miscellaneous",
+	"nes_smbdx", "nes_smb", NULL, NULL, "2022-23",
+	"Super Mario Bros. DX - Anniversary Edition (Hack, v4.4)\0", NULL, "flamephanter", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_smbdxRomInfo, nes_smbdxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -26810,6 +26847,7 @@ struct BurnDriver BurnDrvnes_smbroop = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://www.romhacking.net/hacks/6803/
 static struct BurnRomInfo nes_musheavenRomDesc[] = {
 	{ "Mushroom Heaven (2022)(sinksadventure).nes",          40976, 0xd5ce9457, BRF_ESS | BRF_PRG },
 };
@@ -26823,6 +26861,24 @@ struct BurnDriver BurnDrvnes_musheaven = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_musheavenRomInfo, nes_musheavenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/hacks/7915/
+static struct BurnRomInfo nes_celestemarioRomDesc[] = {
+	{ "Celeste Mario's Zap & Dash! (2023)(w7n).nes",          393232, 0xabc3bc39, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_celestemario)
+STD_ROM_FN(nes_celestemario)
+
+struct BurnDriver BurnDrvnes_celestemario = {
+	"nes_celestemario", "nes_smb", NULL, NULL, "2023",
+	"Celeste Mario's Zap & Dash! (Hack)\0", NULL, "w7n", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_celestemarioRomInfo, nes_celestemarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -51901,6 +51957,24 @@ struct BurnDriver BurnDrvnes_tetrisj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_tetrisjRomInfo, nes_tetrisjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/hacks/7914/
+static struct BurnRomInfo nes_tetrisjccRomDesc[] = {
+	{ "Tetris (BPS) - CC Edition (2023)(climax).nes",          49168, 0xe0ea2f20, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tetrisjcc)
+STD_ROM_FN(nes_tetrisjcc)
+
+struct BurnDriver BurnDrvnes_tetrisjcc = {
+	"nes_tetrisjcc", "nes_tetris", NULL, NULL, "2023",
+	"Tetris (BPS) - Conventional-Controls Edition (Hack)\0", NULL, "climax", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_tetrisjccRomInfo, nes_tetrisjccRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

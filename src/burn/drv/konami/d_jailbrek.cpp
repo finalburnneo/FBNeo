@@ -410,7 +410,7 @@ static INT32 DrvExit()
 	vlm5030Exit();
 	SN76496Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }

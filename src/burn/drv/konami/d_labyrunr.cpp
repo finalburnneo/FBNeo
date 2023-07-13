@@ -5,6 +5,7 @@
 #include "hd6309_intf.h"
 #include "burn_ym2203.h"
 #include "konamiic.h"
+#include "k007121.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -21,7 +22,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRAM0;
 static UINT8 *DrvVidRAM1;
 static UINT8 *DrvScrollRAM;
-static UINT8 *K007121CtrlRAM;
 static UINT8 *DrvTransTab;
 
 static UINT32 *DrvPalette;
@@ -68,103 +68,102 @@ STDINPUTINFO(Labyrunr)
 
 static struct BurnDIPInfo LabyrunrDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x5e, NULL			},
-	{0x14, 0xff, 0xff, 0xf7, NULL			},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0x5e, NULL					},
+	{0x02, 0xff, 0xff, 0xf7, NULL					},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
-	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x12, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x12, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x12, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
+	{0x00, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x12, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x12, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x12, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x12, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x12, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x12, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x12, 0x01, 0xf0, 0x00, "None"			},
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
+	{0x00, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0xf0, 0x00, "None"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x03, 0x03, "2"			},
-	{0x13, 0x01, 0x03, 0x02, "3"			},
-	{0x13, 0x01, 0x03, 0x01, "5"			},
-	{0x13, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "2"					},
+	{0x01, 0x01, 0x03, 0x02, "3"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x13, 0x01, 0x04, 0x00, "Upright"		},
-	{0x13, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x13, 0x01, 0x18, 0x18, "30000 70000"		},
-	{0x13, 0x01, 0x18, 0x10, "40000 80000"		},
-	{0x13, 0x01, 0x18, 0x08, "40000"		},
-	{0x13, 0x01, 0x18, 0x00, "50000"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x18, 0x18, "30000 70000"			},
+	{0x01, 0x01, 0x18, 0x10, "40000 80000"			},
+	{0x01, 0x01, 0x18, 0x08, "40000"				},
+	{0x01, 0x01, 0x18, 0x00, "50000"				},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x60, 0x60, "Easy"			},
-	{0x13, 0x01, 0x60, 0x40, "Normal"		},
-	{0x13, 0x01, 0x60, 0x20, "Hard"			},
-	{0x13, 0x01, 0x60, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x60, 0x60, "Easy"					},
+	{0x01, 0x01, 0x60, 0x40, "Normal"				},
+	{0x01, 0x01, 0x60, 0x20, "Hard"					},
+	{0x01, 0x01, 0x60, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x80, 0x80, "Off"			},
-	{0x13, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x01, 0x01, "Off"			},
-	{0x14, 0x01, 0x01, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x02, 0x01, 0x01, 0x01, "Off"					},
+	{0x02, 0x01, 0x01, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Upright Controls"	},
-	{0x14, 0x01, 0x02, 0x02, "Single"		},
-	{0x14, 0x01, 0x02, 0x00, "Dual"			},
+	{0   , 0xfe, 0   ,    2, "Upright Controls"		},
+	{0x02, 0x01, 0x02, 0x02, "Single"				},
+	{0x02, 0x01, 0x02, 0x00, "Dual"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x14, 0x01, 0x04, 0x04, "Off"			},
-	{0x14, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x02, 0x01, 0x04, 0x04, "Off"					},
+	{0x02, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x14, 0x01, 0x08, 0x08, "3 Times"		},
-	{0x14, 0x01, 0x08, 0x00, "5 Times"		},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x02, 0x01, 0x08, 0x08, "3 Times"				},
+	{0x02, 0x01, 0x08, 0x00, "5 Times"				},
 };
 
 STDDIPINFO(Labyrunr)
 
 static void bankswitch(INT32 data)
 {
-	if (data != HD6309Bank) {
-		HD6309Bank = data;
-		HD6309MapMemory(DrvHD6309ROM + 0x10000 + ((HD6309Bank & 7) * 0x4000), 0x4000, 0x7fff, MAP_ROM);
-	}
+	HD6309Bank = data;
+	HD6309MapMemory(DrvHD6309ROM + 0x10000 + ((HD6309Bank & 7) * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 }
 
 static void labyrunr_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff8) == 0x0000) { // 0x0000 - 0x0007
-		K007121CtrlRAM[address & 7] = data;
+		k007121_ctrl_write(0, address & 7, data);
 		return;
 	}
 
@@ -189,19 +188,10 @@ static void labyrunr_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x0800:
-			BurnYM2203Write(0, 1, data);
-		return;
-
 		case 0x0801:
-			BurnYM2203Write(0, 0, data);
-		return;
-
 		case 0x0900:
-			BurnYM2203Write(1, 1, data);
-		return;
-
 		case 0x0901:
-			BurnYM2203Write(1, 0, data);
+			BurnYM2203Write((address >> 8) & 1, ~address & 1, data);
 		return;
 
 		case 0x0c00:
@@ -217,7 +207,7 @@ static void labyrunr_write(UINT16 address, UINT8 data)
 static UINT8 labyrunr_read(UINT16 address)
 {
 	if ((address & 0xfff8) == 0x0000) {
-		return K007121CtrlRAM[address & 7];
+		return k007121_ctrl_read(0, address & 7);
 	}
 
 	if (address >= 0x0020 && address <= 0x005f) {
@@ -231,16 +221,10 @@ static UINT8 labyrunr_read(UINT16 address)
 	switch (address)
 	{
 		case 0x0800:
-			return BurnYM2203Read(0, 1);
-
 		case 0x0801:
-			return BurnYM2203Read(0, 0);
-
 		case 0x0900:
-			return BurnYM2203Read(1, 1);
-
 		case 0x0901:
-			return BurnYM2203Read(1, 0);
+			return BurnYM2203Read((address >> 8) & 1, ~address & 1);
 
 		case 0x0a00:
 			return DrvInputs[1];
@@ -278,10 +262,11 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	HD6309Open(0);
 	HD6309Reset();
-	HD6309Bank = -1;
 	bankswitch(0);
 	BurnYM2203Reset();
 	HD6309Close();
+
+	k007121_reset();
 
 	K051733Reset();
 
@@ -317,8 +302,6 @@ static INT32 MemIndex()
 	DrvVidRAM0      = Next; Next += 0x000800;
 	DrvVidRAM1      = Next; Next += 0x000800;
 	DrvScrollRAM    = Next; Next += 0x000040;
-
-	K007121CtrlRAM  = Next; Next += 0x000008;
 
 	RamEnd          = Next;
 	MemEnd          = Next;
@@ -364,12 +347,7 @@ static void DrvExpandLookupTable()
 
 static INT32 CommonInit(INT32 nLoadType)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvHD6309ROM + 0x10000,  0, 1)) return 1;
@@ -392,6 +370,8 @@ static INT32 CommonInit(INT32 nLoadType)
 
 		DrvGfxExpand(DrvGfxROM, 0x40000);
 		DrvExpandLookupTable();
+
+		k007121_init(0, (0x80000 / (8 * 8)) - 1);
 	}
 
 	HD6309Init(0);
@@ -433,18 +413,18 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
 
 static void draw_layer(INT32 layer, INT32 category)
 {
-	INT32 c1 = K007121CtrlRAM[1];
-	INT32 c3 = K007121CtrlRAM[3];
-	INT32 c4 = K007121CtrlRAM[4];
-	INT32 c5 = K007121CtrlRAM[5];
-	INT32 c6 = K007121CtrlRAM[6];
+	INT32 c1 = k007121_ctrl_read(0, 1);
+	INT32 c3 = k007121_ctrl_read(0, 3);
+	INT32 c4 = k007121_ctrl_read(0, 4);
+	INT32 c5 = k007121_ctrl_read(0, 5);
+	INT32 c6 = k007121_ctrl_read(0, 6);
 
 	INT32 colscroll = ((c1&6) == 6);
 
@@ -453,56 +433,39 @@ static void draw_layer(INT32 layer, INT32 category)
 	INT32 b2 = ((c5 >> 4) & 3) + 0;
 	INT32 b3 = ((c5 >> 6) & 3) - 1;
 
-	INT32 xscroll_enable = 1;
 	INT32 yscroll_enable = 1;
 
-	INT32 scrollx = K007121CtrlRAM[0];
-	INT32 scrolly = K007121CtrlRAM[2];
+	INT32 scrollx = k007121_ctrl_read(0, 0);
+	INT32 scrolly = k007121_ctrl_read(0, 2);
 
 	INT32 mask = c4 >> 4;
 
 	INT32 opaque = 0;
 	INT32 min_x = 0;
 	INT32 max_x = nScreenWidth;
-	INT32 x_offset = 0;
 
 	UINT8 *vidram = (layer) ? DrvVidRAM1 : DrvVidRAM0;
 
+	INT32 follower = 0;
+
 	if (c3 & 0x20)
-	{ // ------------> game ending mode <------------
+	{ // ------------> game ending, title, intro mode <------------
 		opaque = 0;
 
-		if (c1 & 0x01)
-		{
-			if (layer == 0) {
-				min_x = nScreenWidth - scrollx + 8;
-			}
+		follower = (scrollx < 40) ? ((~c1 & 0x01) | 0x100) : 0;
 
-			if (layer == 1) {
-				if (scrollx < 40) {
-					min_x = 40 - scrollx;
-					max_x = nScreenWidth - scrollx;
-				} else
-					max_x = nScreenWidth - scrollx + 8;
-			}
-		}
-		else
-		{
-			if (layer == 0) {
-				if (scrollx < 40) {
-					min_x = 40 - scrollx;
-					max_x = nScreenWidth - scrollx;
-				} else
-					max_x = nScreenWidth - scrollx + 8;
-			}
-
-			if (layer == 1) {
-				min_x = nScreenWidth - scrollx + 8;
-			}
+		if (layer == (0 ^ (~c1 & 0x01))) {
+			min_x = nScreenWidth - scrollx + 8;
 		}
 
-		if (min_x < 16) min_x = 16;
-		if (max_x > nScreenWidth - 16) max_x = nScreenWidth - 16;
+		if (layer == (1 ^ (~c1 & 0x01))) {
+			if (scrollx < 40) {
+				min_x = 40 - scrollx;
+				max_x = nScreenWidth - scrollx + 8;
+			} else {
+				max_x = nScreenWidth - scrollx + 8;
+			}
+		}
 
 		scrollx -= 40;
 	}
@@ -510,142 +473,68 @@ static void draw_layer(INT32 layer, INT32 category)
 	{ // ------------> regular game mode <------------
 		if (layer == 0) { // playfield
 			min_x = 40;
-			max_x = 264; // leave room for bottom HUD (sprites)
-			x_offset = 40;
+			max_x = 280;
+			scrollx -= 40;
 			opaque = 1;
 		}
 		if (layer == 1) { // top HUD
-			yscroll_enable = xscroll_enable = 0;
+			yscroll_enable = scrollx = 0;
 			max_x = 40;
 			opaque = 1;
 		}
 	}
 
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x1f) * 8;
-		INT32 sy = (offs / 0x20) * 8;
-
-		if (yscroll_enable) {
-			if (colscroll && sx >= 16) {
-			   sy -= DrvScrollRAM[(sx / 8) - 2];
+	for (INT32 iiter = 0; iiter < (((follower & 0x100) >> 8) + 1); iiter++) {
+		if (nBurnLayer & 8) {
+			if (follower & 0x100 && iiter > 0) {
+				if (layer == (follower & 0x01)) {
+					min_x = 0;
+					max_x = 40 - k007121_ctrl_read(0, 0) - 8;
+					if (max_x < 0) max_x = 0;
+				}
 			}
-			sy -= scrolly;
+			GenericTilesSetClip(min_x, max_x, 0, nScreenHeight);
+		}
+
+		for (INT32 offs = 0; offs < 32 * 32; offs++)
+		{
+			INT32 sx = (offs & 0x1f) * 8;
+			INT32 sy = (offs / 0x20) * 8;
+
+			if (yscroll_enable) {
+				if (colscroll && sx >= 16) {
+					sy -= DrvScrollRAM[(sx / 8) - 2];
+				}
+				sy -= scrolly;
+			}
+
+			sy -= 16;
 			if (sy < -7) sy += 256;
-		}
 
-		if (xscroll_enable) {
-			sx -= scrollx;
-			if (sx < -7) sx += 256;
-		}
+			INT32 attr = vidram[offs];
+			INT32 code = vidram[offs + 0x400];
 
-		sx += x_offset;
-		sy -= 16;
+			if (layer == 0 && (attr & 0x40) >> 6 != category) continue;
 
-		if (sx <= (min_x-8) || sx >= max_x) continue;
+			INT32 bank = ((attr >> 7) & 1) | ((attr >> b0) & 2) | ((attr >> b1) & 4) | ((attr >> b2) & 8) | ((attr >> b3) & 0x10) | ((c3 & 1) << 5);
 
-		INT32 attr = vidram[offs];
-		INT32 code = vidram[offs + 0x400];
+			code += ((bank & ~(mask << 1)) | ((c4 & mask) << 1)) << 8;
 
-		if (layer == 0 && (attr&0x40)>>6 != category) continue;
+			INT32 color = ((c6 & 0x30) << 1) | (attr & 7) | 0x10;
 
-		INT32 bank = ((attr >> 7) & 1) | ((attr >> b0) & 2) | ((attr >> b1) & 4) | ((attr >> b2) & 8) | ((attr >> b3) & 0x10) | ((c3 & 1) << 5);
+			{
+				if (DrvTransTab[code&0x1fff] && !opaque) continue;
 
-		code += ((bank & ~(mask << 1)) | ((c4 & mask) << 1)) << 8;
-
-		INT32 color = ((c6 & 0x30) << 1) | (attr & 7) | 0x10;
-
-		{
-			if (DrvTransTab[code&0x1fff] && !opaque) continue;
-
-			UINT8 *gfx = DrvGfxROM + (code & 0x1fff) * 0x40;
-			color<<=4;
-
-			for (INT32 y = 0; y < 8; y++) {
-				for (INT32 x = 0; x < 8; x++) {
-					if ((sy+y) < 0 || (sy+y) >= nScreenHeight || (sx+x) < min_x || (sx+x) >= max_x) continue;
-
-					INT32 pxl = gfx[(y*8)+x];
-
-					if (pxl || opaque) {
-						pTransDraw[(sy+y)*nScreenWidth+(sx+x)] = pxl+color;
-						pPrioDraw[(sy+y)*nScreenWidth+(sx+x)] = (c3 & 0x20) ? 1 : 0;
+				for (INT32 x_wrap = scrollx - 0x100; x_wrap < nScreenWidth; x_wrap += 0x100) {
+					if (opaque) {
+						Draw8x8Tile(pTransDraw, code & 0x1fff, sx - x_wrap, sy, 0, 0, color, 4, 0, DrvGfxROM);
+					} else {
+						Draw8x8MaskTile(pTransDraw, code & 0x1fff, sx - x_wrap, sy, 0, 0, color, 4, 0, 0, DrvGfxROM);
 					}
 				}
 			}
 		}
-	}
-}
-
-static void k007121_sprites_draw(UINT8 *gfx, UINT32 */*palette*/, UINT8 *source, INT32 base_color, INT32 global_x_offset, INT32 bank_base, UINT32 /*priority*/)
-{
-	INT32 flipscreen = K007121CtrlRAM[7] & 0x08;
-	flipscreen = 0; // disabled, for 2p/2joy game (coctail)
-
-	for (INT32 i = 0; i < 0x40; i++)
-	{
-		INT32 number = source[0];
-		INT32 sprite_bank = source[1] & 0x0f;
-		INT32 sx = source[3];
-		INT32 sy = source[2];
-		INT32 attr = source[4];
-		INT32 xflip = source[4] & 0x10;
-		INT32 yflip = source[4] & 0x20;
-		INT32 color = base_color + ((source[1] & 0xf0) >> 4);
-		INT32 width, height;
-		static const INT32 x_offset[4] = {0x0,0x1,0x4,0x5};
-		static const INT32 y_offset[4] = {0x0,0x2,0x8,0xa};
-		INT32 x, y, ex, ey, flipx, flipy, destx, desty;
-
-		if (attr & 0x01) sx -= 256;
-		if (sy >= 240) sy -= 256;
-
-		number += ((sprite_bank & 0x3) << 8) + ((attr & 0xc0) << 4);
-		number = number << 2;
-		number += (sprite_bank >> 2) & 3;
-
-		{
-			number += bank_base;
-
-			switch (attr & 0xe)
-			{
-				case 0x06: width = height = 1; break;
-				case 0x04: width = 1; height = 2; number &= (~2); break;
-				case 0x02: width = 2; height = 1; number &= (~1); break;
-				case 0x00: width = height = 2; number &= (~3); break;
-				case 0x08: width = height = 4; number &= (~3); break;
-				default: width = 1; height = 1;
-			}
-
-			for (y = 0; y < height; y++)
-			{
-				for (x = 0; x < width; x++)
-				{
-					ex = xflip ? (width - 1 - x) : x;
-					ey = yflip ? (height - 1 - y) : y;
-
-					if (flipscreen)
-					{
-						flipx = !xflip;
-						flipy = !yflip;
-						destx = 248 - (sx + x * 8);
-						desty = 248 - (sy + y * 8);
-					}
-					else
-					{
-						flipx = xflip;
-						flipy = yflip;
-						destx = global_x_offset + sx + x * 8;
-						desty = sy + y * 8;
-					}
-
-					if (!DrvTransTab[(number + x_offset[ex] + y_offset[ey])&0x1fff])
-						RenderTileTranstab(pTransDraw, gfx, (number + x_offset[ex] + y_offset[ey])&0x1fff, color<<4, 0, destx, desty - 16, flipx, flipy, 8, 8, DrvSprTranspLut);
-				}
-			}
-		}
-
-		source += 5;
+		GenericTilesClearClip();
 	}
 }
 
@@ -685,10 +574,12 @@ static INT32 DrvDraw()
 
 	BurnTransferClear(0x800);
 
+	k007121_ctrl_write(0, 7, k007121_ctrl_read(0, 7) & ~8); // sprites: disable screen flipping
+
 	if (nBurnLayer & 1) draw_layer(0, 0);
-	if (nSpriteEnable & 1) k007121_sprites_draw(DrvGfxROM, DrvPalette, DrvSprRAM, (K007121CtrlRAM[6] & 0x30) * 2, 40,0, (K007121CtrlRAM[3] & 0x40) >> 5);
-	if (nBurnLayer & 1) draw_layer(0, 1);
-	if (nBurnLayer & 2) draw_layer(1, 0);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, DrvSprTranspLut, DrvSprRAM, (k007121_ctrl_read(0, 6) & 0x30) * 2, 40,16, 0, (k007121_ctrl_read(0, 3) & 0x40) >> 5, 0);
+	if (nBurnLayer & 2) draw_layer(0, 1);
+	if (nBurnLayer & 4) draw_layer(1, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -724,28 +615,26 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 4000000 / 60;
+	INT32 nCyclesTotal[1] = { 4000000 / 60 };
 
 	HD6309Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		BurnTimerUpdate((i + 1) * (nCyclesTotal / nInterleave));
+		CPU_RUN_TIMER(0);
 
-		if ((i & 0x3f) == 0x00 && (K007121CtrlRAM[7] & 0x01)) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		if ((i & 0x3f) == 0x00 && (k007121_ctrl_read(0, 7) & 0x01)) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		if (i == 254) { // any other timing causes junk between scene fades at the beginning of stage 1 and after the centipede is killed in the castle
-			if (K007121CtrlRAM[7] & 0x02) HD6309SetIRQLine(0x00, CPU_IRQSTATUS_HOLD);
+		if (i == nInterleave-1) {
+			if (k007121_ctrl_read(0, 7) & 0x02) HD6309SetIRQLine(0x00, CPU_IRQSTATUS_HOLD);
 		}
 	}
 
-	BurnTimerEndFrame(nCyclesTotal);
+	HD6309Close();
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	HD6309Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -776,16 +665,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 
 		SCAN_VAR(HD6309Bank);
+		SCAN_VAR(watchdog);
+
+		k007121_scan(nAction);
 
 		K051733Scan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {
-		INT32 bank = HD6309Bank;
-		HD6309Bank = -1;
-
 		HD6309Open(0);
-		bankswitch(bank);
+		bankswitch(HD6309Bank);
 		HD6309Close();
 	}
 
@@ -796,8 +685,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Trick Trap (World?)
 
 static struct BurnRomInfo tricktrpRomDesc[] = {
-	{ "771e04",		0x10000, 0xba2c7e20, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
-	{ "771e03",		0x10000, 0xd0d68036, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "771e04",			0x10000, 0xba2c7e20, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
+	{ "771e03",			0x10000, 0xd0d68036, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "771e01a",		0x10000, 0x103ffa0d, 2 | BRF_GRA },           //  2 Graphics Tiles
 	{ "771e01c",		0x10000, 0xcfec5be9, 2 | BRF_GRA },           //  3

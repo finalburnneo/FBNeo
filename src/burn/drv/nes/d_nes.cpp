@@ -22470,6 +22470,23 @@ struct BurnDriver BurnDrvnes_donsol = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo nes_forcebotRomDesc[] = {
+	{ "Force Bot (2022)(erockbrox).nes",          262160, 0x4418bbb3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_forcebot)
+STD_ROM_FN(nes_forcebot)
+
+struct BurnDriver BurnDrvnes_forcebot = {
+	"nes_forcebot", NULL, NULL, NULL, "2022",
+	"Force Bot (HB)\0", NULL, "erockbrox", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_forcebotRomInfo, nes_forcebotRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Lupin III: Gentle Thief (GlobalHack)
 // https://www.romhacking.net/hacks/7803/
 static struct BurnRomInfo nes_lupin3gtRomDesc[] = {
@@ -22673,6 +22690,23 @@ struct BurnDriver BurnDrvnes_tenebra = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MAZE, 0,
 	NESGetZipName, nes_tenebraRomInfo, nes_tenebraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_waldos4everRomDesc[] = {
+	{ "Waldos Forever (2021)(Dispensary 33).nes",          524304, 0x94c04ac4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_waldos4ever)
+STD_ROM_FN(nes_waldos4ever)
+
+struct BurnDriver BurnDrvnes_waldos4ever = {
+	"nes_waldos4ever", NULL, NULL, NULL, "2021",
+	"Waldos Forever (HB)\0", NULL, "Dispensary 33", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_waldos4everRomInfo, nes_waldos4everRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

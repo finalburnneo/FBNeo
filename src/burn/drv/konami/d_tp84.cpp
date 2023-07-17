@@ -50,169 +50,173 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra[3];
+
 static struct BurnInputInfo Tp84InputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Tp84)
 
 static struct BurnDIPInfo Tp84DIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x52, NULL			},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0x52, NULL					},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
-	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x12, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x12, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x12, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
+	{0x00, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x12, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x12, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x12, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x12, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x12, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x12, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x12, 0x01, 0xf0, 0x00, "Invalid"		},
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
+	{0x00, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0xf0, 0x00, "Invalid"				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x03, 0x03, "2"			},
-	{0x13, 0x01, 0x03, 0x02, "3"			},
-	{0x13, 0x01, 0x03, 0x01, "5"			},
-	{0x13, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "2"					},
+	{0x01, 0x01, 0x03, 0x02, "3"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x13, 0x01, 0x04, 0x00, "Upright"		},
-	{0x13, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x13, 0x01, 0x18, 0x18, "10000 and every 50000"},
-	{0x13, 0x01, 0x18, 0x10, "20000 and every 60000"},
-	{0x13, 0x01, 0x18, 0x08, "30000 and every 70000"},
-	{0x13, 0x01, 0x18, 0x00, "40000 and every 80000"},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x18, 0x18, "10000 and every 50000"},
+	{0x01, 0x01, 0x18, 0x10, "20000 and every 60000"},
+	{0x01, 0x01, 0x18, 0x08, "30000 and every 70000"},
+	{0x01, 0x01, 0x18, 0x00, "40000 and every 80000"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x60, 0x60, "Easy"			},
-	{0x13, 0x01, 0x60, 0x40, "Normal"		},
-	{0x13, 0x01, 0x60, 0x20, "Hard"			},
-	{0x13, 0x01, 0x60, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x60, 0x60, "Easy"					},
+	{0x01, 0x01, 0x60, 0x40, "Normal"				},
+	{0x01, 0x01, 0x60, 0x20, "Hard"					},
+	{0x01, 0x01, 0x60, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x80, 0x80, "Off"			},
-	{0x13, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Tp84)
 
 static struct BurnDIPInfo Tp84aDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x52, NULL			},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0x52, NULL					},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
-	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x12, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x12, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x12, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0   , 0xfe, 0   ,    16, "Coin A"				},
+	{0x00, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0x0f, 0x00, "Free Play"			},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x12, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x12, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x12, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x12, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x12, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x12, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x12, 0x01, 0xf0, 0x00, "Invalid"		},
+	{0   , 0xfe, 0   ,    16, "Coin B"				},
+	{0x00, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x00, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x00, 0x01, 0xf0, 0x00, "Invalid"				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x03, 0x03, "3"			},
-	{0x13, 0x01, 0x03, 0x02, "4"			},
-	{0x13, 0x01, 0x03, 0x01, "5"			},
-	{0x13, 0x01, 0x03, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0x03, 0x03, "3"					},
+	{0x01, 0x01, 0x03, 0x02, "4"					},
+	{0x01, 0x01, 0x03, 0x01, "5"					},
+	{0x01, 0x01, 0x03, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x13, 0x01, 0x04, 0x00, "Upright"		},
-	{0x13, 0x01, 0x04, 0x04, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"				},
+	{0x01, 0x01, 0x04, 0x00, "Upright"				},
+	{0x01, 0x01, 0x04, 0x04, "Cocktail"				},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x13, 0x01, 0x18, 0x18, "10000 and every 50000"},
-	{0x13, 0x01, 0x18, 0x10, "20000 and every 60000"},
-	{0x13, 0x01, 0x18, 0x08, "30000 and every 70000"},
-	{0x13, 0x01, 0x18, 0x00, "40000 and every 80000"},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x01, 0x01, 0x18, 0x18, "10000 and every 50000"},
+	{0x01, 0x01, 0x18, 0x10, "20000 and every 60000"},
+	{0x01, 0x01, 0x18, 0x08, "30000 and every 70000"},
+	{0x01, 0x01, 0x18, 0x00, "40000 and every 80000"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x60, 0x60, "Easy"			},
-	{0x13, 0x01, 0x60, 0x40, "Normal"		},
-	{0x13, 0x01, 0x60, 0x20, "Hard"			},
-	{0x13, 0x01, 0x60, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x60, 0x60, "Easy"					},
+	{0x01, 0x01, 0x60, 0x40, "Normal"				},
+	{0x01, 0x01, 0x60, 0x20, "Hard"					},
+	{0x01, 0x01, 0x60, 0x00, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x80, 0x80, "Off"			},
-	{0x13, 0x01, 0x80, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Tp84a)
@@ -454,6 +458,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	watchdog = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -487,8 +493,8 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM0		= Next; Next += 0x008000;
-	DrvM6809ROM1		= Next; Next += 0x002000;
+	DrvM6809ROM0	= Next; Next += 0x008000;
+	DrvM6809ROM1	= Next; Next += 0x002000;
 	DrvZ80ROM		= Next; Next += 0x002000;
 
 	DrvGfxROM0		= Next; Next += 0x010000;
@@ -496,7 +502,7 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000500;
 
-	DrvTransTable		= Next; Next += 0x001000;
+	DrvTransTable	= Next; Next += 0x001000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 
@@ -515,9 +521,9 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pSoundBuffer[0]		= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16) * 2;
-	pSoundBuffer[1]		= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16) * 2;
-	pSoundBuffer[2]		= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16) * 2;
+	pSoundBuffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16) * 2;
+	pSoundBuffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16) * 2;
+	pSoundBuffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16) * 2;
 
 	MemEnd			= Next;
 
@@ -526,12 +532,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM0 + 0x00000,  0, 1)) return 1;
@@ -622,12 +623,7 @@ static INT32 DrvInit()
 
 static INT32 DrvbInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM0 + 0x00000,  0, 1)) return 1;
@@ -785,19 +781,8 @@ static void draw_bg_layer()
 		INT32 flipy =  attr & 0x80;
 		INT32 flipx =  attr & 0x40;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			}
-		}
+
+		Draw8x8Tile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 2, 0, DrvGfxROM0);
 	}
 }
 
@@ -818,19 +803,7 @@ static void draw_fg_layer()
 		INT32 flipy =  attr & 0x80;
 		INT32 flipx =  attr & 0x40;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 2, 0, DrvGfxROM0);
 	}
 }
 
@@ -920,32 +893,33 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1536000 / 60, 1536000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		scanline = i;
 
 		M6809Open(0);
-		INT32 nSegment = ((i + 1) * nCyclesTotal[0]) / nInterleave;
-		nCyclesDone[0] += M6809Run(nSegment - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 		if (i == 240) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		M6809Close();
 
 		M6809Open(1);
-		nSegment = ((i + 1) * nCyclesTotal[1]) / nInterleave;
-		nCyclesDone[1] += M6809Run(nSegment - nCyclesDone[1]);
+		CPU_RUN(1, M6809);
 		if (i == 240 && sub_irqmask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		M6809Close();
 
 		ZetOpen(0);
-		nSegment = ((i + 1) * nCyclesTotal[2]) / nInterleave;
-		nCyclesDone[2] += ZetRun(nSegment - nCyclesDone[2]);
+		CPU_RUN(2, Zet);
 		ZetClose();
 
 		memcpy (DrvSprBuf + i * 0x60, DrvSprRAM + 0x7a0, 0x60);
 
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
 
     if (pBurnSoundOut) {
         BurnSoundClear();
@@ -993,6 +967,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(scrollx);
 		SCAN_VAR(scrolly);
 		SCAN_VAR(sub_irqmask);
+		SCAN_VAR(watchdog);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

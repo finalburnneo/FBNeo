@@ -2816,6 +2816,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="celestemario" cloneof="smb" romof="smb">
+		<comment>Hack</comment>
+		<description>Celeste Mario's Zap &amp; Dash! (Hack)</description>
+		<year>2023</year>
+		<manufacturer>w7n</manufacturer>
+		<rom name="Celeste Mario's Zap &amp; Dash! (2023)(w7n).nes" size="393232" crc="abc3bc39"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="chacknpop">
 		<description>Chack'n Pop (Japan)</description>
 		<year>1985</year>
@@ -4347,6 +4356,15 @@
 		<year>1983</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Donkey Kong Jr. (World) (Rev A).nes" size="24592" crc="2a794ccb"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="donsol">
+		<comment>Homebrew</comment>
+		<description>Donsol (HB, v15)</description>
+		<year>2017</year>
+		<manufacturer>Rek &amp; Devine</manufacturer>
+		<rom name="Donsol v.15 (2017)(Rek &amp; Devine).nes" size="24592" crc="a140826e"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6255,6 +6273,15 @@
 		<year>1991</year>
 		<manufacturer>Culture Brain</manufacturer>
 		<rom name="Flying Warriors (USA).nes" size="262160" crc="7dab215c"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="forcebot">
+		<comment>Homebrew</comment>
+		<description>Force Bot (HB)</description>
+		<year>2022</year>
+		<manufacturer>erockbrox</manufacturer>
+		<rom name="Force Bot (2022)(erockbrox).nes" size="262160" crc="4418bbb3"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15977,6 +16004,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="smb2wq" cloneof="smb2" romof="smb2">
+		<comment>Hack</comment>
+		<description>Super Mario Bros. 2 - Wacky Quest (Hack)</description>
+		<year>2022</year>
+		<manufacturer>ray8</manufacturer>
+		<rom name="Super Mario Bros. 2 - Wacky Quest (2022)(ray8).nes" size="262160" crc="30af8965"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="smb2j">
 		<comment>Hack</comment>
 		<description>Super Mario Bros. 2 J (Japan, MMC3 Conversion)</description>
@@ -16041,10 +16077,10 @@
 	</game>
 	<game name="smbdx" cloneof="smb" romof="smb">
 		<comment>Hack</comment>
-		<description>Super Mario Bros. DX - Anniversary Edition (Hack, v4.2)</description>
-		<year>2022</year>
-		<manufacturer>Flamephanter</manufacturer>
-		<rom name="Super Mario Bros. DX - Anniversary Edition (Hack, v4.2).nes" size="40976" crc="03df519c"/>
+		<description>Super Mario Bros. DX - Anniversary Edition (Hack, v4.4)</description>
+		<year>2022-23</year>
+		<manufacturer>flamephanter</manufacturer>
+		<rom name="Super Mario Bros. DX - Anniversary Edition v4.4 (2023)(flamepanther).nes" size="40976" crc="448bd601"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -17022,6 +17058,15 @@
 		<year>1988</year>
 		<manufacturer>Bullet-Proof Software</manufacturer>
 		<rom name="Tetris (BPS) (Japan).nes" size="49168" crc="6cb86f4e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tetrisjcc" cloneof="tetris" romof="tetris">
+		<comment>Hack</comment>
+		<description>Tetris (BPS) - Conventional-Controls Edition (Hack)</description>
+		<year>2023</year>
+		<manufacturer>climax</manufacturer>
+		<rom name="Tetris (BPS) - CC Edition (2023)(climax).nes" size="49168" crc="e0ea2f20"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -18155,6 +18200,15 @@
 		<year>2018</year>
 		<manufacturer>chronix</manufacturer>
 		<rom name="Wai Wai World 2 - SOS!! Paseri Jou (T-Eng).nes" size="393232" crc="45fadda1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="waldos4ever">
+		<comment>Homebrew</comment>
+		<description>Waldos Forever (HB)</description>
+		<year>2021</year>
+		<manufacturer>Dispensary 33</manufacturer>
+		<rom name="Waldos Forever (2021)(Dispensary 33).nes" size="524304" crc="94c04ac4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -2731,6 +2731,7 @@ DRV		BurnDrvpce_cdsysb;		// no comment [NOT WORKING]
 DRV		BurnDrvpce_cdsysa;		// no comment [NOT WORKING]
 DRV		BurnDrvpce_cdsys;		// no comment [NOT WORKING]
 #endif
+DRV		BurnDrvnes_celestemario;
 DRV		BurnDrvCencourt;
 DRV		BurnSpecCentibug;
 DRV		BurnDrvCentiped3;
@@ -4105,6 +4106,7 @@ DRV		BurnDrvDevstors2;
 DRV		BurnDrvDevstorsv;
 DRV		BurnDrvDevstorsx;
 DRV		BurnDrvDevstors;
+DRV		BurnDrvmd_devinpii;
 DRV		BurnSpecDeviants;
 DRV		BurnDrvpce_devlcrsh;
 DRV		BurnDrvmd_devlcrsh;
@@ -4481,6 +4483,7 @@ DRV		BurnDrvDonpachij;
 DRV		BurnDrvDonpachikr;
 DRV		BurnDrvDonpachi;
 DRV		BurnDrvMSX_donpan;
+DRV		BurnDrvnes_donsol;
 DRV		BurnSpecDonume;
 DRV		BurnSpecDonums;
 DRV		BurnDrvnes_doodleworld;
@@ -5900,6 +5903,7 @@ DRV		BurnSpecfootman3;
 DRV		BurnSpecfoty;
 DRV		BurnSpecfoty2;
 DRV		BurnDrvMSX_ffruit;
+DRV		BurnDrvnes_forcebot;
 DRV		BurnDrvForcebrk;
 DRV		BurnDrvgg_foreman;
 DRV		BurnDrvmd_foreman;
@@ -16255,6 +16259,7 @@ DRV		BurnDrvnes_smb;
 DRV		BurnDrvmd_smbbc;
 DRV		BurnDrvnes_smb2c;
 DRV		BurnDrvnes_smb2;
+DRV		BurnDrvnes_smb2wq;
 DRV		BurnDrvnes_smb2j;
 DRV		BurnDrvnes_smb3cast;
 DRV		BurnDrvnes_smb3c;
@@ -17042,6 +17047,7 @@ DRV		BurnDrvAtetrisb;
 DRV		BurnDrvAtetrisb2;
 DRV		BurnDrvTetrisbl;
 DRV		BurnDrvnes_tetrisj;
+DRV		BurnDrvnes_tetrisjcc;
 DRV		BurnDrvAtetrisc;
 DRV		BurnDrvAtetrisc2;
 DRV		BurnDrvtetrsark;
@@ -18608,6 +18614,7 @@ DRV		BurnDrvUltracin;
 DRV		BurnDrvfds_wakusatogai;
 DRV		BurnSpecWaldolife;
 DRV		BurnSpecWaldolifes;
+DRV		BurnDrvnes_waldos4ever;
 DRV		BurnDrvnes_wall;
 DRV		BurnDrvWallc;
 DRV		BurnDrvWallca;
@@ -22390,6 +22397,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_cdsysa,			// CD-Rom System Card (v2.0) [no comment, NOT WORKING]
 	&BurnDrvpce_cdsys,			// CD-Rom System Card (v2.1) [no comment, NOT WORKING]
 #endif
+	&BurnDrvnes_celestemario,	// Celeste Mario's Zap & Dash! (Hack)
 	&BurnDrvCencourt,			// Center Court (World, 4 Players, prototype, MC-8123B)
 	&BurnSpecCentibug,			// Centi-Bug - aka Centipede (16K)
 	&BurnDrvCentiped3,			// Centipede (revision 3)
@@ -23764,6 +23772,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDevstorsv,			// Devastators (ver. V)
 	&BurnDrvDevstorsx,			// Devastators (ver. X)
 	&BurnDrvDevstors,			// Devastators (ver. Z)
+	&BurnDrvmd_devinpii,		// Devi and Pii (Japan) (Mega Drive Mini 2 Edition)
 	&BurnSpecDeviants,			// Deviants (128K)
 	&BurnDrvpce_devlcrsh,		// Devil Crash - Naxat Pinball (Japan)
 	&BurnDrvmd_devlcrsh,		// Devil Crash MD (Jpn)
@@ -24140,6 +24149,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDonpachikr,			// DonPachi (Korea, ver. 1.12, 95/05/2x)
 	&BurnDrvDonpachi,			// DonPachi (USA, ver. 1.12, 95/05/2x)
 	&BurnDrvMSX_donpan,			// Donpan (Jpn)
+	&BurnDrvnes_donsol,			// Donsol (HB, v15)
 	&BurnSpecDonume,			// Donum (English) (128K) (HB)
 	&BurnSpecDonums,			// Donum (Spanish) (128K) (HB)
 	&BurnDrvnes_doodleworld,	// Doodle World (HB)
@@ -25559,6 +25569,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecfoty,				// Footballer of the Year (48K)
 	&BurnSpecfoty2,				// Footballer of the Year 2 (48K)
 	&BurnDrvMSX_ffruit,			// Forbidden Fruit (Spanish)
+	&BurnDrvnes_forcebot,		// Force Bot (HB)
 	&BurnDrvForcebrk,			// Force Break (bootleg)
 	&BurnDrvgg_foreman,			// Foreman for Real (World)
 	&BurnDrvmd_foreman,			// Foreman for Real (World)
@@ -35914,6 +35925,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smbbc,			// Super Mario Bros. + Battle City (Rus)
 	&BurnDrvnes_smb2c,			// Super Mario Bros. 2 (Hack, Spanish v1.0)
 	&BurnDrvnes_smb2,			// Super Mario Bros. 2 (USA) (Rev A)
+	&BurnDrvnes_smb2wq,			// Super Mario Bros. 2 - Wacky Quest (Hack)
 	&BurnDrvnes_smb2j,			// Super Mario Bros. 2 J (Japan, MMC3 Conversion)
 	&BurnDrvnes_smb3cast,		// Super Mario Bros. 3 (Hack, Spanish v1.0)
 	&BurnDrvnes_smb3c,			// Super Mario Bros. 3 (T-Chi)
@@ -35922,7 +35934,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_smb3mi,			// Super Mario Bros. 3Mix (Hack)
 	&BurnDrvmd_smb4md,			// Super Mario Bros. 4 MD
 	&BurnDrvnes_smbchredi,		// Super Mario Bros. Christmas Edition (Hack)
-	&BurnDrvnes_smbdx,			// Super Mario Bros. DX - Anniversary Edition (Hack, v4.2)
+	&BurnDrvnes_smbdx,			// Super Mario Bros. DX - Anniversary Edition (Hack, v4.4)
 	&BurnDrvnes_smbendssmbha1,	// Super Mario Bros. Ende's SMB (Hack)
 	&BurnDrvnes_smben,			// Super Mario Bros. Enhanced (Hack)
 	&BurnDrvnes_smbspeh,		// Super Mario Bros. Special (Hack, Triforce89)
@@ -36701,6 +36713,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAtetrisb2,			// Tetris (bootleg set 2)
 	&BurnDrvTetrisbl,			// Tetris (bootleg)
 	&BurnDrvnes_tetrisj,		// Tetris (BPS) (Japan)
+	&BurnDrvnes_tetrisjcc,		// Tetris (BPS) - Conventional-Controls Edition (Hack)
 	&BurnDrvAtetrisc,			// Tetris (cocktail set 1)
 	&BurnDrvAtetrisc2,			// Tetris (cocktail set 2)
 	&BurnDrvtetrsark,			// Tetris (D.R. Korea)
@@ -38267,6 +38280,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_wakusatogai,	// Wakusei Aton Gaiden (Japan)
 	&BurnSpecWaldolife,			// Waldo's Life (English) (128K) (HB)
 	&BurnSpecWaldolifes,		// Waldo's Life (Spanish) (128K) (HB)
+	&BurnDrvnes_waldos4ever,	// Waldos Forever (HB)
 	&BurnDrvnes_wall,			// Wall (HB, Tech-Demo)
 	&BurnDrvWallc,				// Wall Crash (set 1)
 	&BurnDrvWallca,				// Wall Crash (set 2)

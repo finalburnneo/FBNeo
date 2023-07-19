@@ -35,6 +35,8 @@ static UINT8 DrvReset;
 
 static INT32 watchdog;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo ShaolinsInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -214,6 +216,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	watchdog = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -322,12 +326,7 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x2000,  0, 1)) return 1;
@@ -384,7 +383,7 @@ static INT32 DrvExit()
 	M6809Exit();
 	SN76496Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -475,7 +474,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 1536000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	M6809Open(0);
 
@@ -489,11 +488,13 @@ static INT32 DrvFrame()
 		if (i == 240) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
-    if (pBurnSoundOut) {
+	M6809Close();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
         SN76496Update(pBurnSoundOut, nBurnSoundLen);
     }
-
-	M6809Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -520,6 +521,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6809Scan(nAction);
 
 		SN76496Scan(nAction, pnMin);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

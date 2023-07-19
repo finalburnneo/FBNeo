@@ -46,6 +46,8 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 static INT32 watchdog;
 
+static INT32 nCyclesExtra[3];
+
 static struct BurnInputInfo JunofrstInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -392,6 +394,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	watchdog = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -439,12 +443,7 @@ static void M6809Decode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x0a000,  0, 1)) return 1;
@@ -533,7 +532,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	filter_rc_exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -612,7 +611,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1536000 / 60, 1789750 / 60, 8000000 / 15 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	M6809Open(0);
 	ZetOpen(0);
@@ -630,6 +629,14 @@ static INT32 DrvFrame()
 		CPU_RUN(2, I8039);
 	}
 
+	I8039Close();
+	M6809Close();
+	ZetClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+
 	if (pBurnSoundOut) {
 		AY8910RenderInternal(nBurnSoundLen);
 		filter_rc_update(0, pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen);
@@ -638,10 +645,6 @@ static INT32 DrvFrame()
 
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	I8039Close();
-	M6809Close();
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -683,6 +686,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(previous_sound_irq);
 		SCAN_VAR(bankdata);
+		SCAN_VAR(watchdog);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

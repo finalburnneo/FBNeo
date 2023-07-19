@@ -35,6 +35,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -201,6 +203,8 @@ static INT32 DrvDoReset()
 	irqtrigger = 0;
 	flipscreen = 0;
 	irq_enable = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
 	HiscoreReset();
 
@@ -472,7 +476,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 1789772 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -485,6 +489,9 @@ static INT32 DrvFrame()
 		CPU_RUN(1, Zet);
 		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		TimepltSndUpdate(pBurnSoundOut, nBurnSoundLen);
@@ -519,6 +526,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irqtrigger);
 		SCAN_VAR(irq_enable);
 		SCAN_VAR(flipscreen);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

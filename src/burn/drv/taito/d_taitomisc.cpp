@@ -58,15 +58,14 @@ static INT32 banked_z80 = 0;
 static UINT16 *pTopspeedTempDraw = NULL;
 static UINT16 *DrvPriBmp	= NULL;
 
+static INT32 nCyclesExtra[4];
+
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
 static struct BurnInputInfo DariusInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort2 + 2, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort2 + 3, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort2 + 2, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , TaitoInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort0 + 3, "p1 left"   },
@@ -74,6 +73,8 @@ static struct BurnInputInfo DariusInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort2 + 3, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , TaitoInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort1 + 3, "p2 left"   },
@@ -92,14 +93,14 @@ STDINPUTINFO(Darius)
 
 static struct BurnInputInfo OpwolfInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 coin"        },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort1 + 4, "p1 start"       },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort0 + 1, "p2 coin"        },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 coin"        },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort1 + 4, "p1 start"       },
 	A("P1 Gun X"         , BIT_ANALOG_REL, &TaitoAnalogPort0  , "mouse x-axis"   ),
 	A("P1 Gun Y"         , BIT_ANALOG_REL, &TaitoAnalogPort1  , "mouse y-axis"   ),
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort1 + 0, "mouse button 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort1 + 1, "mouse button 2" },
+
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort0 + 1, "p2 coin"        },
 
 	{"Reset"             , BIT_DIGITAL   , &TaitoReset        , "reset"          },
 	{"Service"           , BIT_DIGITAL   , TaitoInputPort1 + 2, "service"        },
@@ -112,20 +113,19 @@ STDINPUTINFO(Opwolf)
 
 static struct BurnInputInfo RbislandInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort2 + 4, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL   , TaitoInputPort2 + 5, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort2 + 6, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort2 + 7, "p1 fire 2" },
 
-	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 left"   },
-	{"P2 Right"          , BIT_DIGITAL   , TaitoInputPort3 + 5, "p2 right"  },
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
+	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL   , TaitoInputPort3 + 6, "p2 fire 1" },
-	{"P2 Fire 2"         , BIT_DIGITAL   , TaitoInputPort3 + 7, "p2 fire 2" },
+	{"P2 Fire 2"         , BIT_DIGITAL   , TaitoInputPort3 + 5, "p2 fire 2" },
 
 	{"Reset"             , BIT_DIGITAL   , &TaitoReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TaitoInputPort0 + 7, "service"   },
@@ -138,15 +138,15 @@ STDINPUTINFO(Rbisland)
 
 static struct BurnInputInfo JumpingInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort0 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort0 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 4, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort1 + 7, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL   , TaitoInputPort1 + 6, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort1 + 1, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort1 + 2, "p1 fire 2" },
+
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort0 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
 
 	{"Reset"             , BIT_DIGITAL   , &TaitoReset        , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , TaitoDip + 0       , "dip"       },
@@ -157,11 +157,8 @@ STDINPUTINFO(Jumping)
 
 static struct BurnInputInfo RastanInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort3 + 5, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort3 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort3 + 6, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort3 + 5, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort3 + 3, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , TaitoInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , TaitoInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort0 + 2, "p1 left"   },
@@ -169,6 +166,8 @@ static struct BurnInputInfo RastanInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort0 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL   , TaitoInputPort0 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort3 + 6, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , TaitoInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort1 + 2, "p2 left"   },
@@ -187,8 +186,8 @@ STDINPUTINFO(Rastan)
 
 static struct BurnInputInfo TopspeedInputList[] =
 {
-	{"P1 Coin"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"        },
-	{"P1 Start"           , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"       },
+	{"P1 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 3, "p1 coin"        },
+	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"       },
 
 	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis"      ),
 	A("P1 Fire 1 (Accelerator)" , BIT_ANALOG_REL, &TaitoAnalogPort1      , "p1 fire 1"      ),
@@ -197,7 +196,7 @@ static struct BurnInputInfo TopspeedInputList[] =
 	{"P1 Fire 3 (Nitro)" , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 3"      },
 	{"P1 Fire 4 (Gear)"  , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 4"      },
 
-	{"P2 Coin"            , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"        },
+	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"        },
 
 	{"Reset"             , BIT_DIGITAL   , &TaitoReset            , "reset"          },
 	{"Service"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 4, "service"        },
@@ -210,17 +209,16 @@ STDINPUTINFO(Topspeed)
 
 static struct BurnInputInfo VolfiedInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL   , TaitoInputPort2 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL   , TaitoInputPort2 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort2 + 4, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL   , TaitoInputPort2 + 5, "p1 right"  },
 	{"P1 Fire 1"         , BIT_DIGITAL   , TaitoInputPort2 + 6, "p1 fire 1" },
 
+	{"P2 Coin"           , BIT_DIGITAL   , TaitoInputPort1 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL   , TaitoInputPort0 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL   , TaitoInputPort3 + 1, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , TaitoInputPort3 + 2, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 7, "p2 left"   },
@@ -241,64 +239,17 @@ STDINPUTINFO(Volfied)
 static void DariusMakeInputs()
 {
 	// Reset Inputs
-	TaitoInput[0] = 0xff;
-	TaitoInput[1] = 0xff;
-	TaitoInput[2] = 0xfc;
-	TaitoInput[3] = 0xff;
-
-	if (TaitoInputPort0[0]) TaitoInput[0] -= 0x01;
-	if (TaitoInputPort0[1]) TaitoInput[0] -= 0x02;
-	if (TaitoInputPort0[2]) TaitoInput[0] -= 0x04;
-	if (TaitoInputPort0[3]) TaitoInput[0] -= 0x08;
-	if (TaitoInputPort0[4]) TaitoInput[0] -= 0x10;
-	if (TaitoInputPort0[5]) TaitoInput[0] -= 0x20;
-	if (TaitoInputPort0[6]) TaitoInput[0] -= 0x40;
-	if (TaitoInputPort0[7]) TaitoInput[0] -= 0x80;
-
-	if (TaitoInputPort1[0]) TaitoInput[1] -= 0x01;
-	if (TaitoInputPort1[1]) TaitoInput[1] -= 0x02;
-	if (TaitoInputPort1[2]) TaitoInput[1] -= 0x04;
-	if (TaitoInputPort1[3]) TaitoInput[1] -= 0x08;
-	if (TaitoInputPort1[4]) TaitoInput[1] -= 0x10;
-	if (TaitoInputPort1[5]) TaitoInput[1] -= 0x20;
-	if (TaitoInputPort1[6]) TaitoInput[1] -= 0x40;
-	if (TaitoInputPort1[7]) TaitoInput[1] -= 0x80;
-
-	if (TaitoInputPort2[0]) TaitoInput[2] |= 0x01;
-	if (TaitoInputPort2[1]) TaitoInput[2] |= 0x02;
-	if (TaitoInputPort2[2]) TaitoInput[2] -= 0x04;
-	if (TaitoInputPort2[3]) TaitoInput[2] -= 0x08;
-	if (TaitoInputPort2[4]) TaitoInput[2] -= 0x10;
-	if (TaitoInputPort2[5]) TaitoInput[2] -= 0x20;
-	if (TaitoInputPort2[6]) TaitoInput[2] -= 0x40;
-	if (TaitoInputPort2[7]) TaitoInput[2] -= 0x80;
+	UINT32 DrvJoyInit[4] = { 0xff, 0xff, 0xfc, 0xff };
+	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
+	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
 }
 
 static void OpwolfMakeInputs()
 {
 	// Reset Inputs
-	TaitoInput[0] = 0xfc;
-	TaitoInput[1] = 0xff;
-	TaitoInput[2] = 0xff;
-	TaitoInput[3] = 0xff;
-
-	if (TaitoInputPort0[0]) TaitoInput[0] |= 0x01;
-	if (TaitoInputPort0[1]) TaitoInput[0] |= 0x02;
-	if (TaitoInputPort0[2]) TaitoInput[0] -= 0x04;
-	if (TaitoInputPort0[3]) TaitoInput[0] -= 0x08;
-	if (TaitoInputPort0[4]) TaitoInput[0] -= 0x10;
-	if (TaitoInputPort0[5]) TaitoInput[0] -= 0x20;
-	if (TaitoInputPort0[6]) TaitoInput[0] -= 0x40;
-	if (TaitoInputPort0[7]) TaitoInput[0] -= 0x80;
-
-	if (TaitoInputPort1[0]) TaitoInput[1] -= 0x01;
-	if (TaitoInputPort1[1]) TaitoInput[1] -= 0x02;
-	if (TaitoInputPort1[2]) TaitoInput[1] -= 0x04;
-	if (TaitoInputPort1[3]) TaitoInput[1] -= 0x08;
-	if (TaitoInputPort1[4]) TaitoInput[1] -= 0x10;
-	if (TaitoInputPort1[5]) TaitoInput[1] -= 0x20;
-	if (TaitoInputPort1[6]) TaitoInput[1] -= 0x40;
-	if (TaitoInputPort1[7]) TaitoInput[1] -= 0x80;
+	UINT32 DrvJoyInit[4] = { 0xfc, 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
+	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
 
 	BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
 
@@ -308,28 +259,9 @@ static void OpwolfMakeInputs()
 static void OpwolfbMakeInputs()
 {
 	// Reset Inputs
-	TaitoInput[0] = 0xfc;
-	TaitoInput[1] = 0xff;
-	TaitoInput[2] = 0xff;
-	TaitoInput[3] = 0xff;
-
-	if (TaitoInputPort0[0]) TaitoInput[0] |= 0x01;
-	if (TaitoInputPort0[1]) TaitoInput[0] |= 0x02;
-	if (TaitoInputPort0[2]) TaitoInput[0] -= 0x04;
-	if (TaitoInputPort0[3]) TaitoInput[0] -= 0x08;
-	if (TaitoInputPort0[4]) TaitoInput[0] -= 0x10;
-	if (TaitoInputPort0[5]) TaitoInput[0] -= 0x20;
-	if (TaitoInputPort0[6]) TaitoInput[0] -= 0x40;
-	if (TaitoInputPort0[7]) TaitoInput[0] -= 0x80;
-
-	if (TaitoInputPort1[0]) TaitoInput[1] -= 0x01;
-	if (TaitoInputPort1[1]) TaitoInput[1] -= 0x02;
-	if (TaitoInputPort1[2]) TaitoInput[1] -= 0x04;
-	if (TaitoInputPort1[3]) TaitoInput[1] -= 0x08;
-	if (TaitoInputPort1[4]) TaitoInput[1] -= 0x10;
-	if (TaitoInputPort1[5]) TaitoInput[1] -= 0x20;
-	if (TaitoInputPort1[6]) TaitoInput[1] -= 0x40;
-	if (TaitoInputPort1[7]) TaitoInput[1] -= 0x80;
+	UINT32 DrvJoyInit[4] = { 0xfc, 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
+	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
 
 	BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
 }
@@ -337,46 +269,9 @@ static void OpwolfbMakeInputs()
 static void RbislandMakeInputs()
 {
 	// Reset Inputs
-	TaitoInput[0] = 0xff;
-	TaitoInput[1] = 0xfc;
-	TaitoInput[2] = 0xff;
-	TaitoInput[3] = 0xff;
-
-	if (TaitoInputPort0[0]) TaitoInput[0] -= 0x01;
-	if (TaitoInputPort0[1]) TaitoInput[0] -= 0x02;
-	if (TaitoInputPort0[2]) TaitoInput[0] -= 0x04;
-	if (TaitoInputPort0[3]) TaitoInput[0] -= 0x08;
-	if (TaitoInputPort0[4]) TaitoInput[0] -= 0x10;
-	if (TaitoInputPort0[5]) TaitoInput[0] -= 0x20;
-	if (TaitoInputPort0[6]) TaitoInput[0] -= 0x40;
-	if (TaitoInputPort0[7]) TaitoInput[0] -= 0x80;
-
-	if (TaitoInputPort1[0]) TaitoInput[1] |= 0x01;
-	if (TaitoInputPort1[1]) TaitoInput[1] |= 0x02;
-	if (TaitoInputPort1[2]) TaitoInput[1] -= 0x04;
-	if (TaitoInputPort1[3]) TaitoInput[1] -= 0x08;
-	if (TaitoInputPort1[4]) TaitoInput[1] -= 0x10;
-	if (TaitoInputPort1[5]) TaitoInput[1] -= 0x20;
-	if (TaitoInputPort1[6]) TaitoInput[1] -= 0x40;
-	if (TaitoInputPort1[7]) TaitoInput[1] -= 0x80;
-
-	if (TaitoInputPort2[0]) TaitoInput[2] -= 0x01;
-	if (TaitoInputPort2[1]) TaitoInput[2] -= 0x02;
-	if (TaitoInputPort2[2]) TaitoInput[2] -= 0x04;
-	if (TaitoInputPort2[3]) TaitoInput[2] -= 0x08;
-	if (TaitoInputPort2[4]) TaitoInput[2] -= 0x10;
-	if (TaitoInputPort2[5]) TaitoInput[2] -= 0x20;
-	if (TaitoInputPort2[6]) TaitoInput[2] -= 0x40;
-	if (TaitoInputPort2[7]) TaitoInput[2] -= 0x80;
-
-	if (TaitoInputPort3[0]) TaitoInput[3] -= 0x01;
-	if (TaitoInputPort3[1]) TaitoInput[3] -= 0x02;
-	if (TaitoInputPort3[2]) TaitoInput[3] -= 0x04;
-	if (TaitoInputPort3[3]) TaitoInput[3] -= 0x08;
-	if (TaitoInputPort3[4]) TaitoInput[3] -= 0x10;
-	if (TaitoInputPort3[5]) TaitoInput[3] -= 0x20;
-	if (TaitoInputPort3[6]) TaitoInput[3] -= 0x40;
-	if (TaitoInputPort3[7]) TaitoInput[3] -= 0x80;
+	UINT32 DrvJoyInit[4] = { 0xff, 0xfc, 0xff, 0xff };
+	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
+	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
 
 	cchip_loadports(TaitoInput[0], TaitoInput[1], TaitoInput[2], TaitoInput[3]);
 }
@@ -384,102 +279,28 @@ static void RbislandMakeInputs()
 static void JumpingMakeInputs()
 {
 	// Reset Inputs
-	TaitoInput[0] = 0xff;
-	TaitoInput[1] = 0xff;
-	TaitoInput[2] = 0xff;
-	TaitoInput[3] = 0xff;
-
-	if (TaitoInputPort0[0]) TaitoInput[0] -= 0x01;
-	if (TaitoInputPort0[1]) TaitoInput[0] -= 0x02;
-	if (TaitoInputPort0[2]) TaitoInput[0] -= 0x04;
-	if (TaitoInputPort0[3]) TaitoInput[0] -= 0x08;
-	if (TaitoInputPort0[4]) TaitoInput[0] -= 0x10;
-	if (TaitoInputPort0[5]) TaitoInput[0] -= 0x20;
-	if (TaitoInputPort0[6]) TaitoInput[0] -= 0x40;
-	if (TaitoInputPort0[7]) TaitoInput[0] -= 0x80;
-
-	if (TaitoInputPort1[0]) TaitoInput[1] -= 0x01;
-	if (TaitoInputPort1[1]) TaitoInput[1] -= 0x02;
-	if (TaitoInputPort1[2]) TaitoInput[1] -= 0x04;
-	if (TaitoInputPort1[3]) TaitoInput[1] -= 0x08;
-	if (TaitoInputPort1[4]) TaitoInput[1] -= 0x10;
-	if (TaitoInputPort1[5]) TaitoInput[1] -= 0x20;
-	if (TaitoInputPort1[6]) TaitoInput[1] -= 0x40;
-	if (TaitoInputPort1[7]) TaitoInput[1] -= 0x80;
+	UINT32 DrvJoyInit[4] = { 0xff, 0xff, 0xff, 0xff };
+	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
+	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
 }
 
 static void RastanMakeInputs()
 {
 	// Reset Inputs
-	TaitoInput[0] = 0xff;
-	TaitoInput[1] = 0xff;
-	TaitoInput[2] = 0x8f;
-	TaitoInput[3] = 0x1f;
-
-	if (TaitoInputPort0[0]) TaitoInput[0] -= 0x01;
-	if (TaitoInputPort0[1]) TaitoInput[0] -= 0x02;
-	if (TaitoInputPort0[2]) TaitoInput[0] -= 0x04;
-	if (TaitoInputPort0[3]) TaitoInput[0] -= 0x08;
-	if (TaitoInputPort0[4]) TaitoInput[0] -= 0x10;
-	if (TaitoInputPort0[5]) TaitoInput[0] -= 0x20;
-	if (TaitoInputPort0[6]) TaitoInput[0] -= 0x40;
-	if (TaitoInputPort0[7]) TaitoInput[0] -= 0x80;
-
-	if (TaitoInputPort1[0]) TaitoInput[1] -= 0x01;
-	if (TaitoInputPort1[1]) TaitoInput[1] -= 0x02;
-	if (TaitoInputPort1[2]) TaitoInput[1] -= 0x04;
-	if (TaitoInputPort1[3]) TaitoInput[1] -= 0x08;
-	if (TaitoInputPort1[4]) TaitoInput[1] -= 0x10;
-	if (TaitoInputPort1[5]) TaitoInput[1] -= 0x20;
-	if (TaitoInputPort1[6]) TaitoInput[1] -= 0x40;
-	if (TaitoInputPort1[7]) TaitoInput[1] -= 0x80;
-
-	if (TaitoInputPort3[0]) TaitoInput[3] -= 0x01;
-	if (TaitoInputPort3[1]) TaitoInput[3] -= 0x02;
-	if (TaitoInputPort3[2]) TaitoInput[3] -= 0x04;
-	if (TaitoInputPort3[3]) TaitoInput[3] -= 0x08;
-	if (TaitoInputPort3[4]) TaitoInput[3] -= 0x10;
-	if (TaitoInputPort3[5]) TaitoInput[3] |= 0x20;
-	if (TaitoInputPort3[6]) TaitoInput[3] |= 0x40;
-	if (TaitoInputPort3[7]) TaitoInput[3] |= 0x80;
+	UINT32 DrvJoyInit[4] = { 0xff, 0xff, 0x8f, 0x1f };
+	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
+	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
 }
 
 static void TopspeedMakeInputs()
 {
 	// Reset Inputs
-	TC0220IOCInput[0] = 0x13;
-	TC0220IOCInput[1] = 0x0f;
-	TC0220IOCInput[2] = 0xff;
-
-	if (TC0220IOCInputPort0[0]) TC0220IOCInput[0] -= 0x01;
-	if (TC0220IOCInputPort0[1]) TC0220IOCInput[0] -= 0x02;
-	if (TC0220IOCInputPort0[2]) TC0220IOCInput[0] |= 0x04;
-	if (TC0220IOCInputPort0[3]) TC0220IOCInput[0] |= 0x08;
-	if (TC0220IOCInputPort0[4]) TC0220IOCInput[0] -= 0x10;
-	if (TC0220IOCInputPort0[5]) TC0220IOCInput[0] |= 0x20;
-	if (TC0220IOCInputPort0[6]) TC0220IOCInput[0] |= 0x40;
-	if (TC0220IOCInputPort0[7]) TC0220IOCInput[0] |= 0x80;
-
-	if (TC0220IOCInputPort1[0]) TC0220IOCInput[1] -= 0x01;
-	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
-	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
-	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-//	if (TC0220IOCInputPort1[4]) TC0220IOCInput[1] |= 0x10;
+	UINT32 DrvJoyInit[3] = { 0x13, 0x0f, 0xff };
+	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 
 	BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]);
 	TC0220IOCInput[1] |= ((bBurnShiftStatus) ? 0x00 : 0x10);
-	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] |= 0x20;
-	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] |= 0x40;
-	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] |= 0x80;
-
-	if (TC0220IOCInputPort2[0]) TC0220IOCInput[2] -= 0x01;
-	if (TC0220IOCInputPort2[1]) TC0220IOCInput[2] -= 0x02;
-	if (TC0220IOCInputPort2[2]) TC0220IOCInput[2] -= 0x04;
-	if (TC0220IOCInputPort2[3]) TC0220IOCInput[2] -= 0x08;
-	if (TC0220IOCInputPort2[4]) TC0220IOCInput[2] -= 0x10;
-	if (TC0220IOCInputPort2[5]) TC0220IOCInput[2] -= 0x20;
-	if (TC0220IOCInputPort2[6]) TC0220IOCInput[2] -= 0x40;
-	if (TC0220IOCInputPort2[7]) TC0220IOCInput[2] -= 0x80;
 
 	if ((TC0220IOCDip[0] & 3) == 2)
 	{ // digital pedals
@@ -501,13 +322,11 @@ static void TopspeedMakeInputs()
 	}
 }
 
-
 static void VolfiedMakeInputs()
 {
 	// Reset Inputs
 	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
 	UINT32 DrvJoyInit[4] = { 0xff, 0xfc, 0xff, 0xff };
-
 	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
 
 	ProcessJoystick(&TaitoInput[2], 0, 2,3,4,5, INPUT_4WAY | INPUT_ISACTIVELOW);
@@ -855,7 +674,7 @@ STDDIPINFO(Opwolfb)
 static struct BurnDIPInfo RbislandDIPList[]=
 {
 	// Default Values
-	{0x0f, 0xff, 0xff, 0xfe, NULL                             },
+	{0x0f, 0xff, 0xff, 0xff, NULL                             },
 	{0x10, 0xff, 0xff, 0xbf, NULL                             },
 
 	// Dip 1
@@ -965,7 +784,7 @@ STDDIPINFO(Jumping)
 static struct BurnDIPInfo RastanDIPList[]=
 {
 	// Default Values
-	{0x13, 0xff, 0xff, 0xfe, NULL                             },
+	{0x13, 0xff, 0xff, 0xff, NULL                             },
 	{0x14, 0xff, 0xff, 0xff, NULL                             },
 
 	// Dip 1
@@ -1026,7 +845,7 @@ STDDIPINFO(Rastan)
 static struct BurnDIPInfo RastsagaDIPList[]=
 {
 	// Default Values
-	{0x13, 0xff, 0xff, 0xfe, NULL                             },
+	{0x13, 0xff, 0xff, 0xff, NULL                             },
 	{0x14, 0xff, 0xff, 0xff, NULL                             },
 
 	// Dip 1
@@ -1200,7 +1019,7 @@ STDDIPINFO(Fullthrl)
 static struct BurnDIPInfo VolfiedDIPList[]=
 {
 	// Default Values
-	{0x11, 0xff, 0xff, 0xfe, NULL                             },
+	{0x11, 0xff, 0xff, 0xff, NULL                             },
 	{0x12, 0xff, 0xff, 0x7f, NULL                             },
 
 	// Dip 1
@@ -1262,7 +1081,7 @@ STDDIPINFO(Volfied)
 static struct BurnDIPInfo VolfiedjDIPList[]=
 {
 	// Default Values
-	{0x11, 0xff, 0xff, 0xfe, NULL                             },
+	{0x11, 0xff, 0xff, 0xff, NULL                             },
 	{0x12, 0xff, 0xff, 0x7f, NULL                             },
 
 	// Dip 1
@@ -1324,7 +1143,7 @@ STDDIPINFO(Volfiedj)
 static struct BurnDIPInfo VolfieduDIPList[]=
 {
 	// Default Values
-	{0x11, 0xff, 0xff, 0xfe, NULL                             },
+	{0x11, 0xff, 0xff, 0xff, NULL                             },
 	{0x12, 0xff, 0xff, 0x7f, NULL                             },
 
 	// Dip 1
@@ -2476,12 +2295,16 @@ static INT32 DariusDoReset()
 		DariusDefVol[i] = (INT32)(100.0f / (float)pow(10.0f, (32.0f - (i * (32.0f / (float)(0xf)))) / 20.0f));
 	}
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = nCyclesExtra[3] = 0;
+
 	return 0;
 }
 
 static INT32 RbislandDoReset()
 {
 	TaitoDoReset();
+
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = nCyclesExtra[3] = 0;
 
 	return 0;
 }
@@ -2499,6 +2322,8 @@ static INT32 OpwolfDoReset()
 	MSM5205ResetWrite(0, 1);
 	MSM5205ResetWrite(1, 1);
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = nCyclesExtra[3] = 0;
+
 	return 0;
 }
 
@@ -2509,6 +2334,8 @@ static INT32 RastanDoReset()
 	RastanADPCMPos = 0;
 	RastanADPCMData = -1;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = nCyclesExtra[3] = 0;
+
 	return 0;
 }
 
@@ -2518,6 +2345,8 @@ static INT32 VolfiedDoReset()
 
 	VolfiedVidCtrl = 0;
 	VolfiedVidMask = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = nCyclesExtra[3] = 0;
 
 	return 0;
 }
@@ -2540,15 +2369,17 @@ static INT32 TopspeedDoReset()
 	MSM5205SetRoute(0, 0.00, BURN_SND_ROUTE_BOTH); // set by audiocpu
 	MSM5205SetRoute(1, 0.00, BURN_SND_ROUTE_BOTH); // set by audiocpu
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = nCyclesExtra[3] = 0;
+
 	return 0;
 }
 
 static void TaitoMiscCpuAReset(UINT16 d)
 {
 	TaitoCpuACtrl = d;
-	if (!(TaitoCpuACtrl & 1)) {
-		SekReset(1);
-	}
+
+	bprintf(0, _T("sub reset line %x\n"), d);
+	SekSetRESETLine(1, ~TaitoCpuACtrl & 1);
 }
 
 static UINT8 __fastcall Darius68K1ReadByte(UINT32 a)
@@ -4647,11 +4478,12 @@ static INT32 OpwolfInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
 	ZetClose();
 
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.65, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.65, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(4000000);
 
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 1);
@@ -4768,11 +4600,12 @@ static INT32 OpwolfbInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, TaitoZ80Ram2               );
 	ZetClose();
 
-	BurnYM2151Init(4000000);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.65, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.65, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(4000000);
 
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 1);
@@ -4844,6 +4677,7 @@ static INT32 RbislandInit()
 
 	PC080SNInit(0, TaitoNumChar, 0, 16, 0, 0);
 	PC090OJInit(TaitoNumSpriteA, 0, 16, 0);
+	PC090OJSetDisableFlipping(1);
 	TC0140SYTInit(0);
 
 	// Setup the 68000 emulation
@@ -4875,10 +4709,11 @@ static INT32 RbislandInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
 	ZetClose();
 
-	BurnYM2151Init(16000000 / 4);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(4000000);
 
 	GenericTilesInit();
 
@@ -5032,6 +4867,7 @@ static INT32 RastanInit()
 
 	PC080SNInit(0, TaitoNumChar, 0, 8, 0, 0);
 	PC090OJInit(TaitoNumSpriteA, 0, 8, 0);
+	PC090OJSetDisableFlipping(1);
 	TC0140SYTInit(0);
 
 	// Setup the 68000 emulation
@@ -5061,10 +4897,11 @@ static INT32 RastanInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
 	ZetClose();
 
-	BurnYM2151Init(16000000 / 4);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RastanBankSwitch);
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(4000000);
 
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, RastanMSM5205Vck, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
@@ -5173,10 +5010,11 @@ static INT32 TopspeedInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
 	ZetClose();
 
-	BurnYM2151Init(16000000 / 4);
+	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&TopspeedBankSwitch);
 	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(4000000);
 
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, TopspeedMSM5205Vck, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.00, BURN_SND_ROUTE_BOTH);
@@ -5843,6 +5681,10 @@ static INT32 VolfiedDraw()
 	}
 
 	PC090OJDrawSprites(TaitoSpritesA);
+
+	if (PC090OJGetFlipped()) {
+		BurnTransferFlip(1, 1);
+	}
 	BurnTransferCopy(TaitoPalette);
 
 	return 0;
@@ -5852,84 +5694,51 @@ static INT32 TaitoMiscFrame()
 {
 	INT32 nInterleave = 10;
 	if (TaitoNumMSM5205) nInterleave = MSM5205CalcInterleave(0, 8000000 / 2);
-	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[4] = { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1], nTaitoCyclesTotal[2], 12000000 / 60 /*cchip*/};
+	INT32 nCyclesDone[4] = { nCyclesExtra[0], 0, nCyclesExtra[2], nCyclesExtra[3] };
 
 	if (TaitoReset) TaitoResetFunction();
 
 	TaitoMakeInputsFunction();
 
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = nTaitoCyclesDone[2] = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000 # 1
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 9) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
+		CPU_RUN(0, Sek);
+		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		// Run Z80
-		if (TaitoNumZ80s >= 1) {
-			nCurrentCPU = 1;
+		if (TaitoNumZ80s > 0) {
 			ZetOpen(0);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
-			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
+			CPU_RUN_TIMER(1);
 			if (TaitoNumMSM5205) MSM5205Update();
 			ZetClose();
 		}
 
-		if (TaitoNumZ80s == 2) {
-			nCurrentCPU = 2;
+		if (TaitoNumZ80s > 1) {
 			ZetOpen(1);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
-			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
-			if (i == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			CPU_RUN(2, Zet);
+			if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			ZetClose();
 		}
 
 		if (cchip_active) {
-			cchip_run(12000000 / 60 / nInterleave);
-			if (i == 9) cchip_interrupt();
-		}
-
-		// Render sound segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			if (TaitoNumZ80s >= 1) ZetOpen(0);
-			if (TaitoNumYM2151) BurnYM2151Render(pSoundBuf, nSegmentLength);
-			if (TaitoNumZ80s >= 1) ZetClose();
-			nSoundBufferPos += nSegmentLength;
+			CPU_RUN(3, cchip_);
+			if (i == nInterleave - 1) cchip_interrupt();
 		}
 	}
 
-	// Make sure the buffer is entirely filled.
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			if (TaitoNumZ80s >= 1) ZetOpen(0);
-			if (TaitoNumYM2151) BurnYM2151Render(pSoundBuf, nSegmentLength);
-			if (TaitoNumZ80s >= 1) ZetClose();
-		}
-	}
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// 1 - timer (BurnTimer keeps track)
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nCyclesExtra[3] = nCyclesDone[3] - nCyclesTotal[3];
 
 	if (pBurnSoundOut) {
-		if (TaitoNumZ80s >= 1) ZetOpen(0);
+		if (TaitoNumYM2151) BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		if (TaitoNumMSM5205 >= 2) MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
-		if (TaitoNumZ80s >= 1) ZetClose();
 	}
 
 	if (pBurnDraw) BurnDrvRedraw();
@@ -5940,61 +5749,46 @@ static INT32 TaitoMiscFrame()
 static INT32 DariusFrame()
 {
 	INT32 nInterleave = MSM5205CalcInterleave(0, 8000000 / 2);
+	INT32 nCyclesTotal[4] = { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1], nTaitoCyclesTotal[2], nTaitoCyclesTotal[3] };
+	INT32 nCyclesDone[4] = { nCyclesExtra[0], nCyclesExtra[1], 0, nCyclesExtra[3] };
 
 	if (TaitoReset) TaitoResetFunction();
 
 	TaitoMakeInputsFunction();
 
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = nTaitoCyclesDone[2] = nTaitoCyclesDone[3] = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000 # 1
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		// Run 68000 # 2
-		if ((TaitoCpuACtrl & 0x01)) {
-			nCurrentCPU = 1;
-			SekOpen(1);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
-			SekClose();
-		}
+		SekOpen(1);
+		CPU_RUN(1, Sek);
+		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
+		SekClose();
 
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[2] / nInterleave));
+		CPU_RUN_TIMER(2);
 		ZetClose();
 
-		nCurrentCPU = 3;
 		ZetOpen(1);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
-		nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
+		CPU_RUN(3, Zet);
 		MSM5205Update();
 		ZetClose();
 	}
 
-	ZetOpen(0);
-	BurnTimerEndFrame(nTaitoCyclesTotal[2]);
-	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	ZetClose();
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	// 2 - timer (BurnTimer keeps track)
+	nCyclesExtra[3] = nCyclesDone[3] - nCyclesTotal[3];
 
-	ZetOpen(1);
-	if (pBurnSoundOut) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
-	ZetClose();
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) BurnDrvRedraw();
 
@@ -6004,43 +5798,38 @@ static INT32 DariusFrame()
 static INT32 JumpingFrame()
 {
 	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[3] = { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1], 12000000 / 60 /*cchip*/ };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, nCyclesExtra[2] };
 
 	if (TaitoReset) TaitoResetFunction();
 
 	TaitoMakeInputsFunction();
 
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000 # 1
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		// Run Z80
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		if (cchip_active) { // volfied
-			cchip_run(12000000 / 60 / nInterleave);
-			if (i == 9) cchip_interrupt();
+			CPU_RUN(2, cchip_);
+			if (i == nInterleave - 1) cchip_interrupt();
 		}
 	}
 
-	ZetOpen(0);
-	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
-	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	ZetClose();
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) BurnDrvRedraw();
 
@@ -6051,84 +5840,46 @@ static INT32 TopspeedFrame()
 {
 	INT32 nInterleave = 133;
 	if (TaitoNumMSM5205) nInterleave = MSM5205CalcInterleave(0, 4000000);
-	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[3] = { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1], nTaitoCyclesTotal[2] };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], 0 };
 
 	if (TaitoReset) TaitoResetFunction();
 
 	TaitoMakeInputsFunction();
 
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = nTaitoCyclesDone[2] = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000 # 1
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1) && (GetCurrentFrame() > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		if (i == (nInterleave - 3)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		// Run 68000 # 2
-		if (TaitoCpuACtrl & 0x01) {
-			nCurrentCPU = 1;
-			SekOpen(1);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == (nInterleave - 1) && (GetCurrentFrame() > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-			if (i == (nInterleave - 3)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
-			SekClose();
-		}
+		SekOpen(1);
+		CPU_RUN(1, Sek);
+		if (i == (nInterleave - 1) && (GetCurrentFrame() > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 3)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
+		SekClose();
 
-		// Run Z80
 		if (TaitoNumZ80s >= 1) {
-			nCurrentCPU = 2;
 			ZetOpen(0);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
-			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
-
+			CPU_RUN_TIMER(2);
 			z80ctcmini_execute(4000000/16/60/nInterleave);
 
 			if (TaitoNumMSM5205) MSM5205Update();
 			ZetClose();
 		}
-
-		// Render sound segment
-	    if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			if (TaitoNumZ80s >= 1) ZetOpen(0);
-			if (TaitoNumYM2151) BurnYM2151Render(pSoundBuf, nSegmentLength);
-			if (TaitoNumZ80s >= 1) ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
-	// Make sure the buffer is entirely filled.
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			if (TaitoNumZ80s >= 1) ZetOpen(0);
-			if (TaitoNumYM2151) BurnYM2151Render(pSoundBuf, nSegmentLength);
-			if (TaitoNumZ80s >= 1) ZetClose();
-		}
-	}
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
-		if (TaitoNumZ80s >= 1) ZetOpen(0);
+		if (TaitoNumYM2151) BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		if (TaitoNumMSM5205&2) MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
-		if (TaitoNumZ80s >= 1) ZetClose();
 	}
 
 	if (pBurnDraw) BurnDrvRedraw();

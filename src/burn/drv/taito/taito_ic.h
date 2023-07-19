@@ -78,6 +78,8 @@ void TC0100SCNSetGfxMask(INT32 Chip, INT32 Mask);
 void TC0100SCNSetGfxBank(INT32 Chip, INT32 Bank);
 void TC0100SCNSetCharLayerGranularity(INT32 nGranularity);
 void TC0100SCNSetClipArea(INT32 Chip, INT32 ClipWidth, INT32 ClipHeight, INT32 ClipStartX);
+void TC0100SCNSetFlippedOffsets(INT32 XOffs, INT32 YOffs); // see note in tc0100scn.cpp
+INT32 TC0100SCNGetFlipped(INT32 Chip);
 void TC0100SCNSetPaletteOffset(INT32 Chip, INT32 PaletteOffset);
 void TC0100SCNExit();
 void TC0100SCNScan(INT32 nAction);

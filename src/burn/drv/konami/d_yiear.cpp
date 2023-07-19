@@ -34,6 +34,8 @@ static UINT8 DrvReset;
 
 static UINT8 sn76496_latch;
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo YiearInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -221,6 +223,8 @@ static INT32 DrvDoReset()
 
 	sn76496_latch = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -307,12 +311,7 @@ static INT32 DrvInit()
 	//setting refresh above 60 causes clicky audio on some systems!
 	//BurnSetRefreshRate(60.58);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvM6809ROM + 0x0000,  0, 1)) return 1;
@@ -365,7 +364,7 @@ static INT32 DrvExit()
 	vlm5030Exit();
 	SN76496Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -382,19 +381,7 @@ static void draw_layer()
 		INT32 flipx = attr & 0x80;
 		INT32 flipy = attr & 0x40;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, 0, 4, 0x10, DrvGfxROM0);
-			} else {
-				Render8x8Tile_FlipY(pTransDraw, code, sx, sy, 0, 4, 0x10, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_FlipX(pTransDraw, code, sx, sy, 0, 4, 0x10, DrvGfxROM0);
-			} else {
-				Render8x8Tile(pTransDraw, code, sx, sy, 0, 4, 0x10, DrvGfxROM0);
-			}
-		}
+		Draw8x8Tile(pTransDraw, code, sx, sy, flipx, flipy, 0, 4, 0x10, DrvGfxROM0);
 	}
 }
 
@@ -417,19 +404,7 @@ static void draw_sprites()
 
 		if (offs < 0x26) sy++;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, 0, 4, 0, 0, DrvGfxROM1);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, 0, 4, 0, 0, DrvGfxROM1);
 	}
 }
 
@@ -469,13 +444,13 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { 1536000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[1] = { nCyclesExtra };
 
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		CPU_RUN(0, M6809);
 
 		if (*nmi_enable && (i & 0x1f) == 0) // copy shao-lin's road
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // 480x/second (8x/frame)
@@ -483,12 +458,14 @@ static INT32 DrvFrame()
 		if (i == 240 && *irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
+	M6809Close();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
         SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	M6809Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -518,6 +495,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SN76496Scan(nAction, pnMin);
 
 		SCAN_VAR(sn76496_latch);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

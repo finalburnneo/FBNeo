@@ -12,6 +12,8 @@ UINT8 TC0100SCNCharLayerUpdate[TC0100SCN_MAX_CHIPS];
 UINT8 TC0100SCNCharLayerGranularity;
 UINT8 TC0100SCNCharRamUpdate[TC0100SCN_MAX_CHIPS];
 INT32 TC0100SCNDblWidth[TC0100SCN_MAX_CHIPS];
+INT32 TC0100SCNFlipXOffset;
+INT32 TC0100SCNFlipYOffset;
 static UINT8 *TC0100SCNChars[TC0100SCN_MAX_CHIPS];
 static INT32 BgScrollX[TC0100SCN_MAX_CHIPS];
 static INT32 BgScrollY[TC0100SCN_MAX_CHIPS];
@@ -41,6 +43,18 @@ static INT32 liquid_kludge = 0;
 void TC0100SCNLiquidKludge()
 {
 	liquid_kludge = 23 - 8;
+}
+
+void TC0100SCNSetFlippedOffsets(INT32 XOffs, INT32 YOffs)
+{
+	// affects all layers except X on char (TC: bonzeadv 2p coctail)
+	TC0100SCNFlipXOffset = XOffs;
+	TC0100SCNFlipYOffset = YOffs;
+}
+
+INT32 TC0100SCNGetFlipped(INT32 Chip)
+{
+	return TC0100SCNFlip[Chip];
 }
 
 #define PLOTPIXEL(x, po) if (pTileData[x]) {pPixel[x] = nPalette | pTileData[x] | po;}
@@ -224,19 +238,24 @@ void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priorit
 					x = (Columns * 8) - 8 - x;
 					yFlip = !yFlip;
 					y = 512 - 8 - y;
+
+					x += TC0100SCNFlipXOffset;
+					y += TC0100SCNFlipYOffset;
 				}
 
-				if (xFlip) {
-					if (yFlip) {
-						RenderTile_FlipXY(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+				if (x >= 0 && x <= WidthMask && y >= 0 && y <= HeightMask) {
+					if (xFlip) {
+						if (yFlip) {
+							RenderTile_FlipXY(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						} else {
+							RenderTile_FlipX(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						}
 					} else {
-						RenderTile_FlipX(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
-					}
-				} else {
-					if (yFlip) {
-						RenderTile_FlipY(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
-					} else {
-						RenderTile(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						if (yFlip) {
+							RenderTile_FlipY(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						} else {
+							RenderTile(pTC0100SCNBgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						}
 					}
 				}
 
@@ -321,19 +340,24 @@ void TC0100SCNRenderFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priorit
 					x = (Columns * 8) - 8 - x;
 					yFlip = !yFlip;
 					y = 512 - 8 -y;
+
+					x += TC0100SCNFlipXOffset;
+					y += TC0100SCNFlipYOffset;
 				}
 
-				if (xFlip) {
-					if (yFlip) {
-						RenderTile_FlipXY(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+				if (x >= 0 && x <= WidthMask && y >= 0 && y <= HeightMask) {
+					if (xFlip) {
+						if (yFlip) {
+							RenderTile_FlipXY(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						} else {
+							RenderTile_FlipX(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						}
 					} else {
-						RenderTile_FlipX(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
-					}
-				} else {
-					if (yFlip) {
-						RenderTile_FlipY(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
-					} else {
-						RenderTile(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						if (yFlip) {
+							RenderTile_FlipY(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						} else {
+							RenderTile(pTC0100SCNFgTempDraw[Chip], Code, x, y, Colour, TC0100SCNColourDepth[Chip], TC0100SCNPaletteOffset[Chip], Columns * 8, pSrc);
+						}
 					}
 				}
 
@@ -426,6 +450,9 @@ void TC0100SCNRenderCharLayer(INT32 Chip, INT32 Priority)
 				x = TC0100SCNClipWidth[Chip] - x;  // hmmm.... -dink
 				yFlip = !yFlip;
 				y = TC0100SCNClipHeight[Chip] + 8 - y;
+
+				//x += TC0100SCNFlipXOffset; // bonze adv, 2p coctail - x char layer isn't offset like the other layers
+				y += TC0100SCNFlipYOffset;
 			}
 
 			if (!TC0100SCNDblWidth[Chip]) {
@@ -537,6 +564,9 @@ void TC0100SCNInit(INT32 Chip, INT32 nNumTiles, INT32 xOffset, INT32 yOffset, IN
 	TC0100SCNBgLayerUpdate[Chip] = 1;
 	TC0100SCNCharLayerUpdate[Chip] = 1;
 	TC0100SCNCharRamUpdate[Chip] = 1;
+
+	TC0100SCNFlipXOffset = 0;
+	TC0100SCNFlipYOffset = 0;
 
 	TC0100SCNCharLayerGranularity = 2; // 2 everything else, 4 underfire
 

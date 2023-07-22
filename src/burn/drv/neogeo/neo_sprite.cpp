@@ -84,6 +84,8 @@ void NeoSpriteCalcLimit()
 // Include the tile rendering functions
 #include "neo_sprite_func.h"
 
+static UINT8 nSpriteDisableLut[0x200];
+
 INT32 NeoRenderSprites()
 {
 	if (nLastBPP != nBurnBpp ) {
@@ -115,6 +117,44 @@ INT32 NeoRenderSprites()
 		}
 	}
 
+	if ((nSpriteEnable != 0xff) || (nBurnLayer & 0x04) == 0)
+	{
+		memset (nSpriteDisableLut, 0xff, sizeof(nSpriteDisableLut));
+
+		INT32 nDisableSelect = 0;
+		UINT16 *SizeAttribute = (UINT16*)(NeoGraphicsRAM + 0x010400);
+
+		for (INT32 nBank = 0; nBank < nMaxSpriteBank; nBank++)
+		{
+			if (SizeAttribute[nBank] & 0x40) continue;
+
+			if (SizeAttribute[nBank] & 0x3f)
+			{
+				INT32 nWidth = 1;
+
+				for (INT32 nOffset = 1; nOffset < 0x20; nOffset++)
+				{
+					if (SizeAttribute[nBank+nOffset] & 0x40)
+					{
+						nWidth++;
+					}
+					else break;
+				}
+
+				if (nWidth >= 4)
+				{
+			//		bprintf (0, _T("Found: %d [%d]\n"), nBank, nDisableSelect);
+
+					for (INT32 nOffset = 0; nOffset < nWidth; nOffset++) {
+						nSpriteDisableLut[nBank + nOffset] = nDisableSelect;
+					}
+
+					nDisableSelect++;
+				}
+			}
+		}
+	}
+
 	for (INT32 nBank = 0; nBank < nMaxSpriteBank; nBank++) {
 		INT32 zBank = (nBank + nStart) % MAX_SPRITEBANK;
 		BankAttrib01 = *((UINT16*)(NeoGraphicsRAM + 0x010000 + (zBank << 1)));
@@ -136,6 +176,27 @@ INT32 NeoRenderSprites()
 			nBankSize  = BankAttrib02 & 0x3F;
 
 //			if (nBankSize > 0x10 && nSliceStart == 0x10) bprintf(PRINT_NORMAL, _T("bank: %04X, x: %04X, y: %04X, zoom: %02X, size: %02X.\n"), zBank, nBankXPos, nBankYPos, nBankYZoom, nBankSize);
+		}
+
+		if (nSpriteEnable != 0xff)
+		{
+			if (nSpriteDisableLut[nBank] < 8)
+			{
+				if ((nSpriteEnable & (1 << nSpriteDisableLut[nBank])) == 0)
+				{
+		//			bprintf (0, _T("Bank Type1 %d [%d] disabled\n"), nBank, nSpriteDisableLut[nBank]);
+					continue;
+				}
+			}
+		}
+
+		if ((nBurnLayer & 0x04) == 0)
+		{
+			if (nSpriteDisableLut[nBank] == 0xff)
+			{
+		//		bprintf (0, _T("Bank Type2 %d [%d] disabled\n"), nBank, nSpriteDisableLut[nBank]);
+				continue;
+			}
 		}
 
 		if (nBankSize) {

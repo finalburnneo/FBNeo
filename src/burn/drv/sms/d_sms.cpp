@@ -21763,6 +21763,26 @@ struct BurnDriver BurnDrvgg_pstrike2 = {
 };
 
 
+// GG Aleste 3 (Japan)
+
+static struct BurnRomInfo gg_ggaleste3RomDesc[] = {
+	{ "GG Aleste 3 (2020)(M2).gg",	0x100000, 0x717fd9e3, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_ggaleste3)
+STD_ROM_FN(gg_ggaleste3)
+
+struct BurnDriver BurnDrvgg_ggaleste3 = {
+	"gg_ggaleste3", NULL, NULL, NULL, "2020",
+	"GG Aleste 3 (Japan)\0", NULL, "M2", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_ggaleste3RomInfo, gg_ggaleste3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
 // Predator 2 (Euro, USA, SMS Mode)
 
 static struct BurnRomInfo gg_predatr2RomDesc[] = {

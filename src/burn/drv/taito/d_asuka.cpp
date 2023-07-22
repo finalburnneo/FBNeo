@@ -17,6 +17,8 @@ static INT32 AsukaADPCMPos;
 static INT32 AsukaADPCMData;
 static HoldCoin<2> hold_coin;
 
+static INT32 nCyclesExtra[3];
+
 static struct BurnInputInfo CadashInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 3,	"p1 start"	},
@@ -526,7 +528,7 @@ STDDIPINFO(Earthjkr)
 
 static struct BurnDIPInfo BonzeadvDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xfe, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL			},
 	{0x14, 0xff, 0xff, 0xbf, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
@@ -1144,6 +1146,8 @@ static INT32 DrvDoReset()
 
 	hold_coin.reset();
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
+
 	return 0;
 }
 
@@ -1367,18 +1371,20 @@ static INT32 DrvDraw()
 	BurnTransferClear();
 
 	if (TC0100SCNBottomLayer(0)) {
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
-		if ((PC090OJSpriteCtrl & 0x8000)) PC090OJDrawSprites(TaitoSpritesA);
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (!(Disable & 0x02) && nBurnLayer & 1) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
+		if ((PC090OJSpriteCtrl & 0x8000) && nSpriteEnable & 1) PC090OJDrawSprites(TaitoSpritesA);
+		if (!(Disable & 0x01) && nBurnLayer & 2) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
 	} else {
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoChars);
-		if ((PC090OJSpriteCtrl & 0x8000)) PC090OJDrawSprites(TaitoSpritesA);
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (!(Disable & 0x01) && nBurnLayer & 1) TC0100SCNRenderBgLayer(0, 1, TaitoChars);
+		if ((PC090OJSpriteCtrl & 0x8000) && nSpriteEnable & 1) PC090OJDrawSprites(TaitoSpritesA);
+		if (!(Disable & 0x02) && nBurnLayer & 2) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
 	}
 
-	if (!(PC090OJSpriteCtrl & 0x8000)) PC090OJDrawSprites(TaitoSpritesA);
+	if (!(PC090OJSpriteCtrl & 0x8000) && nSpriteEnable & 2) PC090OJDrawSprites(TaitoSpritesA);
 
-	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+	if (!(Disable & 0x04) && nBurnLayer & 4) TC0100SCNRenderCharLayer(0);
+
+	if (TC0100SCNGetFlipped(0)) BurnTransferFlip(1, 1);
 
 	BurnTransferCopy(TC0110PCRPalette);
 
@@ -1395,13 +1401,13 @@ static INT32 CadashFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+
 	SekOpen(0);
 	ZetOpen(0);
 
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1411,13 +1417,15 @@ static INT32 CadashFrame()
 		if (i == 0) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	}
 
+	ZetClose();
+	SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	ZetClose();
-	SekClose();
-	
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -1437,14 +1445,14 @@ static INT32 EtoFrame() // Using for asuka too, but needs msm5205
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+
 	SekOpen(0);
 	ZetOpen(0);
 
 	INT32 nInterleave = 100;
 	if (TaitoNumMSM5205) nInterleave = MSM5205CalcInterleave(0, 4000000);
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1456,18 +1464,20 @@ static INT32 EtoFrame() // Using for asuka too, but needs msm5205
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
+	ZetClose();
+	SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-	ZetClose();
-	SekClose();
-	
 	if (pBurnDraw) {
 		DrvDraw();
 	}
-	
+
 	return 0;
 }
 
@@ -1505,7 +1515,7 @@ static INT32 BonzeFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 8000000 / 60, 4000000 / 60, 12000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, nCyclesExtra[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1520,12 +1530,16 @@ static INT32 BonzeFrame()
 		}
 	}
 
+	ZetClose();
+	SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// timer - not needed! (BurnTimer keeps track)
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
-	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1562,11 +1576,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(TaitoWatchdog);
 		SCAN_VAR(TaitoZ80Bank);
 
-		ZetOpen(0); // ZetOpen() here because it uses ZetMapArea() in the PortHandler of the YM
+		SCAN_VAR(nCyclesExtra);
+
 		if (TaitoNumYM2151) BurnYM2151Scan(nAction, pnMin);
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
-		ZetClose();
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -2453,7 +2467,13 @@ STD_ROM_FN(bonzeadv)
 
 static INT32 BonzeInit()
 {
-	return CommonInit(Bonze68KSetup, BonzeZ80Setup, BonzeSoundSetup, 0);
+	INT32 rc = CommonInit(Bonze68KSetup, BonzeZ80Setup, BonzeSoundSetup, 0);
+
+	if (!rc) {
+		TC0100SCNSetFlippedOffsets(6, -16);
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvBonzeadv = {

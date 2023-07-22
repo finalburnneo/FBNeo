@@ -51,7 +51,9 @@ void PC090OJDrawSprites(UINT8 *pSrc);
 void PC090OJBufferSprites();
 void PC090OJReset();
 void PC090OJInit(INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT32 UseBuffer);
+void PC090OJSetDisableFlipping(INT32 val);
 void PC090OJSetPaletteOffset(INT32 Offset);
+INT32 PC090OJGetFlipped();
 void PC090OJExit();
 void PC090OJScan(INT32 nAction);
 

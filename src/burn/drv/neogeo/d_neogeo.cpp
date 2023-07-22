@@ -20510,24 +20510,25 @@ static struct BurnRomInfo kof2k1bsRomDesc[] = {
 
 	KOF2001_DECRYPTION_SOUND
 
-	/* Ultimate - 20230403 */
-	{ "262-p1ult.p1",		0x100000, 0x9cdf05a3, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
-	{ "262-p2ult.sp2",		0x500000, 0x58dee764, 0 | BRF_ESS | BRF_PRG }, // 17
+	/* Ultimate - 20230606 */
+	{ "262-p1ult.p1",		0x100000, 0xaed528a4, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
+	{ "262-p2ult.sp2",		0x500000, 0x2e1c48b6, 0 | BRF_ESS | BRF_PRG }, // 17
 
-	{ "262-s1pkz.s1",		0x020000, 0x73efb81d, 0 | BRF_GRA },           // 18 Text layer tiles
+	{ "262-s1ult.s1",		0x020000, 0xe8cb20be, 0 | BRF_GRA },           // 18 Text layer tiles
 
-	{ "262-c7ult.c7",		0x800000, 0xb2b503ea, 0 | BRF_GRA },           // 19
-	{ "262-c8ult.c8",		0x800000, 0x9c89c168, 0 | BRF_GRA },           // 20
-	{ "262-c9ult.c9",		0x800000, 0xba727f2f, 0 | BRF_GRA },           // 21
-	{ "262-c10ult.c10",		0x800000, 0x4d17b48e, 0 | BRF_GRA },           // 22
+	{ "262-c7ult.c7",		0x800000, 0xcd11861e, 0 | BRF_GRA },           // 19
+	{ "262-c8ult.c8",		0x800000, 0xc0e84cc1, 0 | BRF_GRA },           // 20
+	{ "262-c9ult.c9",		0x800000, 0x61d8520b, 0 | BRF_GRA },           // 21
+	{ "262-c10ult.c10",		0x800000, 0x3cf38156, 0 | BRF_GRA },           // 22
 	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 0 | BRF_GRA },           // 23
 	{ "265-c8d.c8",			0x800000, 0xbef667a3, 0 | BRF_GRA },           // 24
 	{ "262-c13dlt.c13",		0x800000, 0x40f7bd65, 0 | BRF_GRA },           // 25
 	{ "262-c14ult.c14",		0x800000, 0x2471c450, 0 | BRF_GRA },           // 26
 
-	{ "262-m1ult.m1",		0x040000, 0x32eaec0e, 0 | BRF_ESS | BRF_PRG }, // 27 Z80 code
+	{ "262-m1ult.m1",		0x040000, 0xbca3e52e, 0 | BRF_ESS | BRF_PRG }, // 27 Z80 code
 
 	{ "262-v4ult-08-e0.v4",	0x400000, 0x55602d94, 0 | BRF_SND },           // 28 Sound data
+	{ "262-v5ult-08-e0.v5",	0x400000, 0x6ded9758, 0 | BRF_SND },           // 29
 };
 
 STDROMPICKEXT(kof2k1bs, kof2k1bs, neogeo)
@@ -20566,8 +20567,9 @@ static INT32 kof2k1bsInit()
 	}
 
 	if (nBurnDrvSubActive) {
-		pNRI->nCodeSize = 0x100000;
+		pNRI->nCodeSize	  = 0x0100000;
 		pNRI->nSpriteSize = 0x3000000;
+		pNRI->nADPCMASize = 0x0400000;
 		NeoCallbackActive->pInitialise = kof2k1bsCallback;
 	}
 
@@ -20575,6 +20577,7 @@ static INT32 kof2k1bsInit()
 
 	if ((0 == nRet) && nBurnDrvSubActive) {
 		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 3), 28, 0, 1);  // Sound data
+		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 4), 29, 0, 1);
 	}
 
 	return nRet;
@@ -21526,8 +21529,8 @@ static struct BurnRomInfo mslugaksRomDesc[] = {
 
 	MSLUG_COMPONENT
 
-	/* 1v2 Mode - 20230302 */
-	{ "201-p11v2.p1",	0x200000, 0xc6a2f0e9, 1 | BRF_ESS | BRF_PRG }, //  9 68K code
+	/* 1v2 Mode - 20230626 */
+	{ "201-p11v2.p1",	0x200000, 0x45822261, 1 | BRF_ESS | BRF_PRG }, //  9 68K code
 
 	/* Origins - 20230301 */
 	{ "201-p1qy.p1",	0x200000, 0x1226d6b8, 1 | BRF_ESS | BRF_PRG }, // 10 68K code
@@ -22071,8 +22074,8 @@ static struct BurnRomInfo mslugxaksRomDesc[] = {
 	{ "250-c5sc.c5",	0x800000, 0x916b7239, 0 | BRF_GRA },           // 15 Sprite data
 	{ "250-c6sc.c6",	0x800000, 0x23016767, 0 | BRF_GRA },           // 16
 
-	/* Multifunction - 20230522 */
-	{ "250-p1dg.p1",	0x100000, 0x9d740aed, 0 | BRF_ESS | BRF_PRG }, // 17 68K code
+	/* Multifunction - 20230626 */
+	{ "250-p1dg.p1",	0x100000, 0xf86ea146, 0 | BRF_ESS | BRF_PRG }, // 17 68K code
 	{ "250-p2dg.ep1",	0x400000, 0xef0c263f, 0 | BRF_ESS | BRF_PRG }, // 18
 
 	{ "250-s1.s1",		0x020000, 0xfb6f441d, 0 | BRF_GRA },           // 19 Text layer tiles
@@ -23500,8 +23503,8 @@ static struct BurnRomInfo mslug5aksRomDesc[] = {
 	/* Vehicle Summon - 20180918 */
 	{ "268-p1zh.p1",	0x600000, 0xdc057a7a, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
 
-	/* Boss Battles - 20230531 */
-	{ "268-p1bs.p1",	0x600000, 0x04fae8b3, 0 | BRF_ESS | BRF_PRG }, // 17 68K code
+	/* Boss Battles - 20230626 */
+	{ "268-p1bs.p1",	0x600000, 0x3ec95964, 0 | BRF_ESS | BRF_PRG }, // 17 68K code
 
 	/* Survival - 20230612 */
 	{ "268-p1sv.p1",	0x600000, 0x71a0953f, 0 | BRF_ESS | BRF_PRG }, // 18 68K code
@@ -25514,7 +25517,7 @@ static INT32 mslug3xInit()
 struct BurnDriver BurnDrvmslug3x = {
 	"mslug3x", NULL, "neogeo", NULL, "2022",
 	"Metal Slug 3X (Complete Collection)\0", "Other versions are selected in the dipswitch", "WillNie", "Neo Geo AES",
-	L"Metal Slug 3X (Complete Collection)\0\u5408\u91d1\u5f48\u982d\u5f69\u86cb\u6bcd\u8266\u5927\u6c7a\u6230 (\u958b\u767c\u5168\u96c6)\0", NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, FBF_MSLUG,
 	NULL, mslug3xRomInfo, mslug3xRomName, NULL, NULL, NULL, NULL, aesverswInputInfo, mslug3xDIPInfo,
 	mslug3xInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

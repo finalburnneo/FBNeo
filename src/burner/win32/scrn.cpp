@@ -737,7 +737,7 @@ static void OnPaint(HWND hWnd)
 
 		// draw menu
 		if (!nVidFullscreen) {
-			RedrawWindow(hRebar, NULL, NULL, RDW_FRAME | RDW_UPDATENOW | RDW_ALLCHILDREN);
+			RedrawWindow(hRebar, NULL, NULL, RDW_FRAME /*| RDW_UPDATENOW*/ | RDW_ALLCHILDREN);
 		}
 	}
 }

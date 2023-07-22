@@ -21766,7 +21766,7 @@ struct BurnDriver BurnDrvgg_pstrike2 = {
 // GG Aleste 3 (Japan)
 
 static struct BurnRomInfo gg_ggaleste3RomDesc[] = {
-	{ "GG Aleste 3 (2020)(M2)",	0x100000, 0x717fd9e3, BRF_PRG | BRF_ESS },
+	{ "GG Aleste 3 (2020)(M2).gg",	0x100000, 0x717fd9e3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_ggaleste3)

@@ -1950,6 +1950,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ggaleste3">
+		<description>GG Aleste 3 (Japan)</description>
+		<year>2020</year>
+		<manufacturer>M2</manufacturer>
+		<rom name="GG Aleste 3 (2020)(M2).gg" size="1048576" crc="717fd9e3"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ggdora">
 		<description>GG Doraemon - Noranosuke no Yabou (Jpn)</description>
 		<year>1993</year>

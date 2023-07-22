@@ -16760,6 +16760,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="tsbtapmeter" cloneof="tecmosuperbowl" romof="tecmosuperbowl">
+		<comment>Hack</comment>
+		<description>Tecmo Super Bowl Tapmeter (v1.0.0, hack)</description>
+		<year>2016</year>
+		<manufacturer>Bruddog</manufacturer>
+		<rom name="Tecmo Super Bowl Tapmeter v1.0.0 (2016)(Bruddog).nes" size="393232" crc="18f884f0"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="tecmoworcupsoc">
 		<description>Tecmo World Cup Soccer (Japan)</description>
 		<year>1990</year>

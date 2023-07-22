@@ -2402,6 +2402,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="blacula" romof="spectrum">
+		<comment>Prototype</comment>
+		<description>Blacula (Prototype) (48K)</description>
+		<year>19??</year>
+		<manufacturer>unknown</manufacturer>
+		<rom name="Blacula 48K Prototype (199x)(unreleased).tap" size="43419" crc="817288d8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bladewarrior" romof="spectrum">
 		<comment>Select 'Sinclair Stick' to use controller</comment>
 		<description>Blade Warrior (48K)</description>
@@ -5314,6 +5324,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="darkveile" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Dark Veil, The (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Dark Veil, The EN 48K (2023)(Furillo Productions).tap" size="37894" crc="2087c681"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="darklostpages" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Dark, The - Lost Pages (128K) (HB)</description>
@@ -5462,6 +5482,15 @@
 		<year>1983</year>
 		<manufacturer>Micromega</manufacturer>
 		<rom name="Deathchase (1983)(Micromega).z80" size="11245" crc="040769a4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="deathscape" romof="spectrum">
+		<description>Deathscape (48K)</description>
+		<year>1987</year>
+		<manufacturer>Starlight Software</manufacturer>
+		<rom name="Deathscape 48K (1987)(Starlight Software).tap" size="48009" crc="72540c22"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6557,6 +6586,17 @@
 		<year>2020</year>
 		<manufacturer>UltraNarwhal</manufacturer>
 		<rom name="Duckstroma v1.02 (2020)(UltraNarwhal).z80" size="41142" crc="f75a1350"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="duckstromapt2" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Duckstroma pt.2 (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>UltraNarwhal</manufacturer>
+		<rom name="Duckstroma pt.2 128K (2023)(UltraNarwhal).z80" size="41584" crc="f14f99e0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -10205,6 +10245,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jam" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Jam! (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Teknamic Software</manufacturer>
+		<rom name="Jam! 48K (2023)(Teknamic Software).tap" size="12492" crc="9be21edc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jankyjoe" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Janky Joe in Retro Hell (128K) (HB)</description>
@@ -12049,12 +12099,29 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="masters" romof="spectrum">
-		<comment>Trainer Pokes</comment>
+	<game name="mastersarcade" romof="spectrum">
+		<description>Masters of the Universe - The Arcade Game (48K)</description>
+		<year>1987</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Masters of the Universe - The Arcade Game 48K (1987)(U.S. Gold).tap" size="48552" crc="5bc7a995"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mastersmovie" romof="spectrum">
 		<description>Masters of the Universe - The Movie (48K)</description>
 		<year>1987</year>
 		<manufacturer>Gremlin Graphics</manufacturer>
-		<rom name="Masters of the Universe - The Movie 48K (1987)(Gremlin Graphics).tap" size="42086" crc="8bcea841"/>
+		<rom name="Masters of the Universe - The Movie 48K (1987)(Gremlin Graphics).tap" size="44676" crc="d4f3892a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mastersadv" romof="spectrum">
+		<description>Masters of the Universe - The Super Adventure (48K)</description>
+		<year>1987</year>
+		<manufacturer>U.S. Gold</manufacturer>
+		<rom name="Masters of the Universe - The Super Adventure 48K (1987)(U.S. Gold).z80" size="42460" crc="504d562f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13091,8 +13158,19 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mrdo" romof="spec128">
+		<comment>Homebrew, Arcade conversion</comment>
+		<description>Mr. Do! (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Adrian Singh</manufacturer>
+		<rom name="Mr. Do! (2019)(Adrian Singh).tap" size="59653" crc="e3983c0e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mrheli" romof="spectrum">
-		<description>Mr Heli (48K)</description>
+		<description>Mr. Heli (48K)</description>
 		<year>1989</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Mr Heli 48K (1989)(Firebird).tap" size="126724" crc="bf869699"/>
@@ -13102,7 +13180,7 @@
 	</game>
 	<game name="mrheli128rm" cloneof="mrheli" romof="mrheli">
 		<comment>Hack, Trainer version</comment>
-		<description>Mr Heli Remastered (128K) (Graphics Hack)</description>
+		<description>Mr. Heli Remastered (128K) (Graphics Hack)</description>
 		<year>2014</year>
 		<manufacturer>Rafal Miazga</manufacturer>
 		<rom name="Mr Heli 128K Remastered (2014)(Rafal Miazga).tap" size="56737" crc="5beeb928"/>
@@ -13111,14 +13189,12 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mrdo" romof="spec128">
-		<comment>Homebrew, Arcade conversion</comment>
-		<description>Mr. Do! (128K) (HB)</description>
-		<year>2019</year>
-		<manufacturer>Adrian Singh</manufacturer>
-		<rom name="Mr. Do! (2019)(Adrian Singh).tap" size="59653" crc="e3983c0e"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+	<game name="mrweems" romof="spectrum">
+		<description>Mr. Weems and the She Vampires (48K)</description>
+		<year>1987</year>
+		<manufacturer>Piranha</manufacturer>
+		<rom name="Mr. Weems and the She Vampires 48K (1987)(Piranha).tap" size="54672" crc="4b04200a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17352,6 +17428,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="slidezx" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Slide-ZX UPG Edition (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>highriser</manufacturer>
+		<rom name="Slide-ZX UPG Edition (2023)(highriser).tap" size="45682" crc="199ec73d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="slightmg" romof="spec128">
 		<description>Slightly Magic (128K)</description>
 		<year>1990</year>
@@ -17802,7 +17888,18 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="speccyquiz" romof="spec128">
+	<game name="speccyqen" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Speccy Quiz (English) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Amebatron Software</manufacturer>
+		<rom name="Speccy Quiz 128K EN (2023)(Amebatron Software).tap" size="44664" crc="ef3cef0e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="speccyqes" cloneof="speccyqen" romof="speccyqen">
 		<comment>Homebrew</comment>
 		<description>Speccy Quiz (Spanish) (128K) (HB)</description>
 		<year>2022</year>
@@ -17821,6 +17918,15 @@
 		<rom name="Speccy Soccer 128K (2023)(Voxel Tower).tap" size="106047" crc="a8eb8027"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="spdelivery" romof="spectrum">
+		<description>Special Delivery (48K)</description>
+		<year>1984</year>
+		<manufacturer>Creative Sparks</manufacturer>
+		<rom name="Special Delivery 48K (1984)(Creative Sparks).tap" size="27053" crc="83bbf568"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18251,6 +18357,46 @@
 		<manufacturer>C64CD Studios</manufacturer>
 		<rom name="Stercore 48K (2018)(C64CD Studios).tap" size="24174" crc="8b8a630b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stifflip1en" romof="spec128">
+		<description>Stifflip &amp; Co. - part 1 (English) (128K)</description>
+		<year>1987</year>
+		<manufacturer>Palace Software</manufacturer>
+		<rom name="Stifflip and Co. - part1 EN (1987)(Palace Software).tap" size="56817" crc="c5a6eb1c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stifflip1es" cloneof="stifflip1en" romof="stifflip1en">
+		<description>Stifflip &amp; Co. - part 1 (Spanish) (128K)</description>
+		<year>1987</year>
+		<manufacturer>Palace Software</manufacturer>
+		<rom name="Stifflip and Co. - part1 ES (1987)(Palace Software).tap" size="56790" crc="53bc50dd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stifflip2en" cloneof="stifflip1en" romof="stifflip1en">
+		<description>Stifflip &amp; Co. - part 2 epilogue (English) (128K)</description>
+		<year>1987</year>
+		<manufacturer>Palace Software</manufacturer>
+		<rom name="Stifflip and Co. - part2 epilogue EN (1987)(Palace Software).tap" size="56817" crc="f5798ea4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="stifllip2es" cloneof="stifflip1en" romof="stifflip1en">
+		<description>Stifflip &amp; Co. - part 2 epilogue (Spanish) (128K)</description>
+		<year>1987</year>
+		<manufacturer>Palace Software</manufacturer>
+		<rom name="Stifflip and Co. - part2 epilogue ES (1987)(Palace Software).tap" size="56790" crc="15936e89"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -19158,6 +19304,15 @@
 		<rom name="Teenage Mutant Hero Turtles - The Coin-Op (1991)(Image Works).tap" size="155263" crc="a1ea1547"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tempest" romof="spectrum">
+		<description>Tempest (48K)</description>
+		<year>1986</year>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="Tempest 48K (1986)(Electric Dreams).tap" size="35221" crc="805e8742"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20393,6 +20548,16 @@
 		<year>1985</year>
 		<manufacturer>Firebird Software</manufacturer>
 		<rom name="Vectron 48K (1985)(Firebird).tap" size="49343" crc="ec6217eb"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="darkveils" cloneof="darkveile" romof="darkveile">
+		<comment>Homebrew</comment>
+		<description>Velo Oscuro, El (Spanish) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Dark Veil, The ES 48K (2023)(Furillo Productions).tap" size="39208" crc="76e0b33b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

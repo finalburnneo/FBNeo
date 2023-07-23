@@ -4786,6 +4786,8 @@ INT32 MegadriveFrame()
 #endif
 	}
 
+	SekRunM68k((INT32)((INT64)CYCLES_M68K_LINE * (nBurnCPUSpeedAdjust - 0x100) / 0x0100));
+
 	if (pBurnDraw) MegadriveDraw();
 
 	if (Z80HasBus && !MegadriveZ80Reset) {

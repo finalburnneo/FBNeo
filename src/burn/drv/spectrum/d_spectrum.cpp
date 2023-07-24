@@ -42796,7 +42796,7 @@ struct BurnDriver BurnSpecDuckstromapt2 = {
 // Jam! (48K) (HB)
 
 static struct BurnRomInfo SpecJamRomDesc[] = {
-	{ "Jam! 48K (2023)(Teknamic Software).tap", 12492, 0x9be21edc, BRF_ESS | BRF_PRG },
+	{ "Jam! 48K (2023)(Teknamic Software).tap", 12492, 0xb4fa933d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJam, SpecJam, Spectrum)

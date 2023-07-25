@@ -21763,7 +21763,7 @@ struct BurnDriver BurnDrvgg_pstrike2 = {
 };
 
 
-// GG Aleste 3 (Japan)
+// GG Aleste 3 (Jpn)
 
 static struct BurnRomInfo gg_ggaleste3RomDesc[] = {
 	{ "GG Aleste 3 (2020)(M2).gg",	0x100000, 0x717fd9e3, BRF_PRG | BRF_ESS },
@@ -21774,7 +21774,7 @@ STD_ROM_FN(gg_ggaleste3)
 
 struct BurnDriver BurnDrvgg_ggaleste3 = {
 	"gg_ggaleste3", NULL, NULL, NULL, "2020",
-	"GG Aleste 3 (Japan)\0", NULL, "M2", "Sega Game Gear",
+	"GG Aleste 3 (Jpn)\0", NULL, "M2 Co.", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
 	GGGetZipName, gg_ggaleste3RomInfo, gg_ggaleste3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,

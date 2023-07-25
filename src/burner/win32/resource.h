@@ -211,6 +211,7 @@
 #define IDC_LAYER3							20204
 #define IDC_LAYER4							20205
 #define IDC_SHOW							20206
+#define IDC_SHOTKEEP						20207
 
 #define IDC_LENGTH                      20255
 #define IDC_FRAMES                      20256

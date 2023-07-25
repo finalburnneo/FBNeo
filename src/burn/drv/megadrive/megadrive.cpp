@@ -4659,6 +4659,9 @@ INT32 MegadriveFrame()
 
 	for (INT32 y=0; y<lines; y++) {
 
+		if (y > lines_vis && nBurnCPUSpeedAdjust > 0x100)
+			SekRunM68k((INT32)((INT64)CYCLES_M68K_LINE * (nBurnCPUSpeedAdjust - 0x100) / 0x0100));
+
 		Scanline = y;
 
 		if (y < lines_vis) {

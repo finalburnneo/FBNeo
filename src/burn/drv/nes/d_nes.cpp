@@ -22387,6 +22387,23 @@ struct BurnDriver BurnDrvnes_airballp = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_pelusagaRomDesc[] = {
+	{ "Pelusa Saga - Kaji's Trials (2023)(Broke Studio).nes",          524304, 0xbc461bfe, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pelusaga)
+STD_ROM_FN(nes_pelusaga)
+
+struct BurnDriver BurnDrvnes_pelusaga = {
+	"nes_pelusaga", NULL, NULL, NULL, "2023",
+	"Pelusa Saga - Kaji's Trials (HB)\0", NULL, "Broke Studio", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_pelusagaRomInfo, nes_pelusagaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_5starRomDesc[] = {
 	{ "5-star Restaurant (2023)(Wendel Scardua).nes",          81936, 0x42658f47, BRF_ESS | BRF_PRG },
 };
@@ -36004,16 +36021,35 @@ struct BurnDriver BurnDrvnes_egyptj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_egyptRomDesc[] = {
+// https://www.romhacking.net/translations/524/
+static struct BurnRomInfo nes_egyptoRomDesc[] = {
 	{ "Egypt (T-Eng).nes",          65552, 0xbb7f1c06, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_egypto)
+STD_ROM_FN(nes_egypto)
+
+struct BurnDriver BurnDrvnes_egypto = {
+	"nes_egypto", "nes_egypt", NULL, NULL, "2016",
+	"Egypt (T-Eng, old version)\0", NULL, "Dodgy Translations", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_egyptoRomInfo, nes_egyptoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/translations/7002/
+static struct BurnRomInfo nes_egyptRomDesc[] = {
+	{ "Egypt T-Eng v1.0a (2023)(BlackPaladin).nes",          65552, 0x0095e346, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_egypt)
 STD_ROM_FN(nes_egypt)
 
 struct BurnDriver BurnDrvnes_egypt = {
-	"nes_egypt", NULL, NULL, NULL, "2016",
-	"Egypt (T-Eng)\0", NULL, "Dodgy Translations", "Miscellaneous",
+	"nes_egypt", NULL, NULL, NULL, "2023",
+	"Egypt (T-Eng, v1.0a)\0", NULL, "BlackPaladin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_egyptRomInfo, nes_egyptRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

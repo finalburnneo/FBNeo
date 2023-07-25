@@ -14,10 +14,10 @@
 #include "burner.h"
 
 static HWND hSFactdlg=NULL;
-unsigned char layerBackup;
 
 static bool bShotsFactory;
 static bool bOldPause;
+static int bKeepLayerCfg = 0;
 
 void ToggleSprite(unsigned char PriNum)
 {
@@ -28,6 +28,8 @@ void ToggleSprite(unsigned char PriNum)
 
 static int SFactdUpdate()
 {
+	CheckDlgButton(hSFactdlg,IDC_SHOTKEEP,(bKeepLayerCfg)?BST_CHECKED:BST_UNCHECKED);
+
 	CheckDlgButton(hSFactdlg,IDC_LAYER1,(nBurnLayer & 1)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_LAYER2,(nBurnLayer & 2)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_LAYER3,(nBurnLayer & 4)?BST_CHECKED:BST_UNCHECKED);
@@ -45,28 +47,23 @@ static int SFactdUpdate()
 
 static int SFactdInit()
 {
-	layerBackup=nBurnLayer;
+	bKeepLayerCfg = 0;
+
 	bRunPause=1;
-	CheckDlgButton(hSFactdlg,IDC_LAYER1,(nBurnLayer & 1)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_LAYER2,(nBurnLayer & 2)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_LAYER3,(nBurnLayer & 4)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_LAYER4,(nBurnLayer & 8)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE1,(nSpriteEnable & 0x01)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE2,(nSpriteEnable & 0x02)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE3,(nSpriteEnable & 0x04)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE4,(nSpriteEnable & 0x08)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE5,(nSpriteEnable & 0x10)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE6,(nSpriteEnable & 0x20)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE7,(nSpriteEnable & 0x40)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_SPRITE8,(nSpriteEnable & 0x80)?BST_CHECKED:BST_UNCHECKED);
+
+	SFactdUpdate();
+
 	return 0;
 }
 
 
 static int SFactdExit()
 {
-	nBurnLayer = layerBackup;
-	nSpriteEnable = 0xFF;
+	if (bKeepLayerCfg == 0) {
+		nBurnLayer = 0xff;
+		nSpriteEnable = 0xff;
+	}
+
 	hSFactdlg = NULL;
 	bShotsFactory = 0;
 	bRunPause = bOldPause;
@@ -120,6 +117,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 				MakeScreenShot();
 				SFactdUpdate();
 			}
+		}
+		if (Id==IDC_SHOTKEEP && Notify==BN_CLICKED)
+		{
+			bKeepLayerCfg ^= 1;
+			SFactdUpdate();
 		}
 		if (Id==IDC_LAYER1 && Notify==BN_CLICKED)
 		{

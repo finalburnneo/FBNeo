@@ -5228,12 +5228,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="egypt">
+	<game name="egypto" cloneof="egypt" romof="egypt">
 		<comment>Hack</comment>
-		<description>Egypt (T-Eng)</description>
+		<description>Egypt (T-Eng, old version)</description>
 		<year>2016</year>
 		<manufacturer>Dodgy Translations</manufacturer>
 		<rom name="Egypt (T-Eng).nes" size="65552" crc="bb7f1c06"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="egypt">
+		<comment>Hack</comment>
+		<description>Egypt (T-Eng, v1.0a)</description>
+		<year>2023</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Egypt T-Eng v1.0a (2023)(BlackPaladin).nes" size="65552" crc="0095e346"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12690,6 +12699,15 @@
 		<year>1990</year>
 		<manufacturer>Sanritsu</manufacturer>
 		<rom name="Peepar Time (Japan).nes" size="49168" crc="532c30e1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="pelusaga">
+		<comment>Homebrew</comment>
+		<description>Pelusa Saga - Kaji's Trials (HB)</description>
+		<year>2023</year>
+		<manufacturer>Broke Studio</manufacturer>
+		<rom name="Pelusa Saga - Kaji's Trials (2023)(Broke Studio).nes" size="524304" crc="bc461bfe"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -1951,9 +1951,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggaleste3">
-		<description>GG Aleste 3 (Japan)</description>
+		<description>GG Aleste 3 (Jpn)</description>
 		<year>2020</year>
-		<manufacturer>M2</manufacturer>
+		<manufacturer>M2 Co.</manufacturer>
 		<rom name="GG Aleste 3 (2020)(M2).gg" size="1048576" crc="717fd9e3"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

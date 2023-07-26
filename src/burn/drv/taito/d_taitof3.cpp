@@ -9,9 +9,6 @@
 	  -> if a coin is pressed, it instead presses the service coin :)
 	  -> scfinals also displays a weird/corrupt version string in service mode(!!)
 	  note: this was a 68ec020 cpu-core interface bug in handling odd 32bit reads/writes
-
-	- todo -
-	kirameki sound banking
 */
 
 //#define USE_CPU_SPEEDHACKS
@@ -41,7 +38,6 @@ static UINT16 DrvInputs[5];
 static INT16 DrvAxis[2];
 static UINT8 previous_coin;
 
-static INT32 sound_cpu_in_reset = 0;
 static INT32 watchdog;
 static INT32 nCyclesExtra;
 
@@ -309,10 +305,19 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 	}
 }
 
+static void kirameki_snd_bankswitch(INT32 offset)
+{
+	if (f3_game == KIRAMEKI) {
+		offset = ((offset / 2) & 0x1e) + 1;
+		offset -= (offset > 7) ? 8 : 0;
+		TaitoF3SetBankKirameki(offset);
+	}
+}
+
 static void __fastcall f3_main_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xffff80) == 0x300000) {
-		// sound_bankswitch_w
+		kirameki_snd_bankswitch(a & 0x7f);
 		return;
 	}
 
@@ -322,13 +327,12 @@ static void __fastcall f3_main_write_long(UINT32 a, UINT32 d)
 	}
 
 	if ((a & 0xfffffc) == 0xc80000) {
-		sound_cpu_in_reset = 0;
+		SekSetRESETLine(1, 0);
 		return;
 	}
 
 	if ((a & 0xfffffc) == 0xc80100) {
-		SekReset(1);
-		sound_cpu_in_reset = 1;
+		SekSetRESETLine(1, 1);
 		return;
 	}
 }
@@ -336,7 +340,7 @@ static void __fastcall f3_main_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_main_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffff80) == 0x300000) {
-		// sound bankswitch
+		kirameki_snd_bankswitch(a & 0x7f);
 		return;
 	}
 
@@ -351,13 +355,12 @@ static void __fastcall f3_main_write_word(UINT32 a, UINT16 d)
 	}
 
 	if ((a & 0xfffffc) == 0xc80000) {
-		sound_cpu_in_reset = 0;
+		SekSetRESETLine(1, 0);
 		return;
 	}
 
 	if ((a & 0xfffffc) == 0xc80100) {
-		SekReset(1);
-		sound_cpu_in_reset = 1;
+		SekSetRESETLine(1, 1);
 		return;
 	}
 }
@@ -365,7 +368,7 @@ static void __fastcall f3_main_write_word(UINT32 a, UINT16 d)
 static void __fastcall f3_main_write_byte(UINT32 a, UINT8 d)
 {
 	if ((a & 0xffff80) == 0x300000) {
-		// sound bankswitch
+		kirameki_snd_bankswitch(a & 0x7f);
 		return;
 	}
 
@@ -375,13 +378,12 @@ static void __fastcall f3_main_write_byte(UINT32 a, UINT8 d)
 	}
 
 	if ((a & 0xfffffc) == 0xc80000) {
-		sound_cpu_in_reset = 0;
+		SekSetRESETLine(1, 0);
 		return;
 	}
 
 	if ((a & 0xfffffc) == 0xc80100) {
-		SekReset(1);
-		sound_cpu_in_reset = 1;
+		SekSetRESETLine(1, 1);
 		return;
 	}
 }
@@ -851,7 +853,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 		f3_palette_landmakr_onreset();
 	}
 
-	sound_cpu_in_reset = 1;
 	watchdog = 0;
 	previous_coin = 0;
 
@@ -1076,6 +1077,8 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 	UINT8 *sprites = TaitoSpritesA;
 	UINT8 *tiles = TaitoChars;
 	UINT8 *samples = TaitoES5505Rom + ((TaitoF3ES5506RomSize == 0x1000000) ? 0x400000 : 0);
+
+	if (f3_game == KIRAMEKI) samples = TaitoES5505Rom;
 
 	INT32 prevsize = 0;
 	INT32 prevtype = 0;
@@ -1577,8 +1580,7 @@ static INT32 DrvFrame()
 		SekClose();
 
 		if ((BurnDrvGetFlags() & BDF_BOOTLEG) == 0) {
-			if (sound_cpu_in_reset == 0)
-				TaitoF3CpuUpdate(nInterleave, i);
+			TaitoF3CpuUpdate(nInterleave, i);
 		}
 	}
 
@@ -1715,7 +1717,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		TaitoF3SoundScan(nAction, pnMin);
-		SCAN_VAR(sound_cpu_in_reset);
+
 		if (f3_game == ARKRETRN) BurnTrackballScan();
 
 		EEPROMScan(nAction, pnMin);
@@ -5735,7 +5737,7 @@ static INT32 kiramekiInit()
 
 struct BurnDriver BurnDrvKirameki = {
 	"kirameki", NULL, NULL, NULL, "1997",
-	"Kirameki Star Road (Ver 2.10J 1997/08/29)\0", "No sound", "Taito Corporation", "Taito F3 System",
+	"Kirameki Star Road (Ver 2.10J 1997/08/29)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_QUIZ, 0,
 	NULL, kiramekiRomInfo, kiramekiRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,

@@ -335,6 +335,13 @@ void TaitoF3SoundExit()
 	mb87078_exit();
 }
 
+void TaitoF3SetBankKirameki(INT32 bank)
+{
+	SekCPUPush(TaitoF3CpuNum);
+	SekMapMemory(TaitoF3SoundRom + 0x000000 + (bank * 0x20000), 0xc20000, 0xc3ffff, MAP_ROM);
+	SekCPUPop();
+}
+
 void TaitoF3SoundInit(INT32 cpunum)
 {
 	TaitoF3CpuNum = cpunum;

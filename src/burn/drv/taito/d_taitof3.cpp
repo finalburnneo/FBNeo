@@ -523,13 +523,13 @@ static void DrvPivotExpand(UINT16 offset)
 static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT32*)(TaitoVideoRam + (a & 0x1ffc))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
+		*((UINT32*)(TaitoVideoRam + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT32*)(DrvVRAMRAM + (a & 0x1ffc))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
+		*((UINT32*)(DrvVRAMRAM + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT32((d << 16) | (d >> 16));
 		DrvVRAMExpand(a);
 		return;
 	}
@@ -538,13 +538,13 @@ static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 static void __fastcall f3_VRAM_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffe000) == 0x61c000) {
-		*((UINT16*)(TaitoVideoRam + (a & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(d);
+		*((UINT16*)(TaitoVideoRam + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT16(d);
 		dirty_tile_count[9] = 1;
 		return;
 	}
 
 	if ((a & 0xffe000) == 0x61e000) {
-		*((UINT16*)(DrvVRAMRAM + (a & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(d);
+		*((UINT16*)(DrvVRAMRAM + (a & 0x1fff))) = BURN_ENDIAN_SWAP_INT16(d);
 		DrvVRAMExpand(a);
 		return;
 	}

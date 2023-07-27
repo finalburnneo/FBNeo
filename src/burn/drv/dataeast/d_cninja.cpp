@@ -1621,7 +1621,7 @@ static INT32 StoneageInit()
 
 static INT32 Robocop2Init()
 {
-	BurnSetRefreshRate(57.79965);
+// 	BurnSetRefreshRate(57.79965); causes glitch in music, avoid
 
 	BurnAllocMemIndex();
 
@@ -1720,7 +1720,7 @@ static INT32 Robocop2Init()
 	SekSetReadByteHandler(0,		robocop2_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.50);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
@@ -2349,7 +2349,7 @@ static INT32 Robocop2Frame()
 	}
 
 	INT32 nInterleave = 256;	// scanlines
-	INT32 nCyclesTotal[2] = { (INT32)((double)12000000 * 100 / nBurnFPS), (INT32)((double)4027500 * 100 / nBurnFPS) };
+	INT32 nCyclesTotal[2] = { (INT32)((double)14000000 / 57.79965), (INT32)((double)4027500 / 57.79965) };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	h6280NewFrame();

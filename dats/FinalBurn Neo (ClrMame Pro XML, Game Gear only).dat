@@ -21,7 +21,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aaharima">
-		<description>Aa Harimanada (Jpn)</description>
+		<description>Aa Harimanada (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aa harimanada (japan).bin" size="524288" crc="1d17d2a0"/>
@@ -29,7 +29,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aerialasj" cloneof="aerialas" romof="aerialas">
-		<description>Aerial Assault (Jpn, v1.1)</description>
+		<description>Aerial Assault (Japan, v1.1)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aerial assault (japan) (v1.1).bin" size="131072" crc="04fe6dde"/>
@@ -45,7 +45,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alexkidd">
-		<description>Alex Kidd in Miracle World (Tw, SMS Mode) (Unl)</description>
+		<description>Alex Kidd in Miracle World (Taiwan, SMS Mode) (Unl)</description>
 		<year>198?</year>
 		<manufacturer>Hung Tao Hsin</manufacturer>
 		<rom name="alex kidd in miracle world [sms-gg] (tw).bin" size="131072" crc="6f8e46cf"/>
@@ -61,7 +61,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="alien3j" cloneof="alien3" romof="alien3">
-		<description>Alien 3 (Jpn)</description>
+		<description>Alien 3 (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="alien 3 (jp).bin" size="262144" crc="06f6eebb"/>
@@ -77,7 +77,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aliensynj" cloneof="aliensyn" romof="aliensyn">
-		<description>Alien Syndrome (Jpn)</description>
+		<description>Alien Syndrome (Japan)</description>
 		<year>1992</year>
 		<manufacturer>SIMS Co. - Sega</manufacturer>
 		<rom name="alien syndrome (japan).bin" size="131072" crc="ffe4ed47"/>
@@ -117,7 +117,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="arliel" cloneof="crystalw" romof="crystalw">
-		<description>Arliel - Crystal Densetsu (Jpn)</description>
+		<description>Arliel - Crystal Densetsu (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14389.ic1" size="262144" crc="35fa3f68"/>
@@ -211,7 +211,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="axbattlrj" cloneof="axbattlr" romof="axbattlr">
-		<description>Ax Battler - Golden Axe Densetsu (Jpn, v1.5)</description>
+		<description>Ax Battler - Golden Axe Densetsu (Japan, v1.5)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ax battler - golden axe densetsu (japan) (v1.5).bin" size="262144" crc="dfcf555f"/>
@@ -236,7 +236,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgp2j" cloneof="smgp2" romof="smgp2">
-		<description>Ayrton Senna's Super Monaco GP II (Jpn)</description>
+		<description>Ayrton Senna's Super Monaco GP II (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15044.ic1" size="262144" crc="661faeff"/>
@@ -260,7 +260,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="bakubakuj" cloneof="bakubaku" romof="bakubaku">
-		<description>Baku Baku Animal - Sekai Shiikugakari Senshu-ken (Jpn)</description>
+		<description>Baku Baku Animal - Sekai Shiikugakari Senshu-ken (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18706-s.ic1" size="262144" crc="7174b802"/>
@@ -309,7 +309,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="btoads">
-		<description>Battletoads (Euro, Jpn)</description>
+		<description>Battletoads (Euro, Japan)</description>
 		<year>1993</year>
 		<manufacturer>Tradewest - Sega</manufacturer>
 		<rom name="battletoads (japan, europe).bin" size="262144" crc="cb3cd075"/>
@@ -503,27 +503,27 @@
 		<driver status="good"/>
 	</game>
 	<game name="berlin">
-		<description>Berlin no Kabe - The Berlin Wall (Jpn)</description>
+		<description>Berlin no Kabe - The Berlin Wall (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Kaneko</manufacturer>
 		<rom name="berlin no kabe (japan).bin" size="262144" crc="325b1797"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sailorms">
-		<description>Bishoujo Senshi Sailor Moon S (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Bandai</manufacturer>
-		<rom name="mpr-17715.ic1" size="524288" crc="fe7374d2"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="sailormse" cloneof="sailorms" romof="sailorms">
 		<comment>Hack</comment>
-		<description>Bishoujo Senshi Sailor Moon S (T-Eng, v1.1)</description>
+		<description>Bishoujo Senshi Sailor Moon S (Hack, English v1.1)</description>
 		<year>2019</year>
 		<manufacturer>Supper</manufacturer>
 		<rom name="bishoujo senshi sailor moon s (t-eng1.1).gg" size="1048576" crc="a9a6f271"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sailorms">
+		<description>Bishoujo Senshi Sailor Moon S (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="mpr-17715.ic1" size="524288" crc="fe7374d2"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -640,7 +640,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="busterb">
-		<description>Buster Ball (Jpn)</description>
+		<description>Buster Ball (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Riverhill Software</manufacturer>
 		<rom name="buster ball (japan).bin" size="131072" crc="7cb079d0"/>
@@ -648,7 +648,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="busterf">
-		<description>Buster Fight (Jpn)</description>
+		<description>Buster Fight (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="buster fight (japan).bin" size="262144" crc="a72a1753"/>
@@ -672,7 +672,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="carlicen">
-		<description>Car Licence (Jpn)</description>
+		<description>Car Licence (Japan)</description>
 		<year>199?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="car licence (japan).bin" size="524288" crc="f6a697f8"/>
@@ -944,7 +944,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chicago">
-		<description>Chicago Syndicate (USA, Bra)</description>
+		<description>Chicago Syndicate (USA, Brazil)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18190-s.ic1" size="524288" crc="6b0fcec3"/>
@@ -1016,25 +1016,25 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cocakid">
-		<description>Coca Cola Kid (Jpn)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-16686-s.ic1" size="524288" crc="c7598b81"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="cocakide" cloneof="cocakid" romof="cocakid">
 		<comment>Hack</comment>
-		<description>Coca Cola Kid (T-Eng, v1.1)</description>
+		<description>Coca Cola Kid (Hack, English v1.1)</description>
 		<year>2018</year>
 		<manufacturer>SMS Power!</manufacturer>
 		<rom name="Coca-Cola Kid T-Eng v1.1 (2018)(SMS Power).gg" size="524288" crc="ea32dbc5"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cocakid">
+		<description>Coca Cola Kid (Japan)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-16686-s.ic1" size="524288" crc="c7598b81"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="columns">
-		<description>Columns (Euro, USA, Bra)</description>
+		<description>Columns (Euro, USA, Brazil)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13696.ic1" size="32768" crc="83fa26d9"/>
@@ -1042,7 +1042,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="columnsj" cloneof="columns" romof="columns">
-		<description>Columns (Jpn)</description>
+		<description>Columns (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="columns [v1] (jp).bin" size="32768" crc="ac37e092"/>
@@ -1050,7 +1050,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="columnsj1" cloneof="columns" romof="columns">
-		<description>Columns (Jpn, Older)</description>
+		<description>Columns (Japan, Older)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="columns (japan).bin" size="32768" crc="f3ca6676"/>
@@ -1081,20 +1081,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="crayon">
-		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Bandai</manufacturer>
-		<rom name="mpr-17805.ic1" size="524288" crc="03d28eab"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="crayone" cloneof="crayon" romof="crayon">
 		<comment>Hack</comment>
-		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (T-Eng)</description>
+		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (Hack, English)</description>
 		<year>2018</year>
 		<manufacturer>Psyklax</manufacturer>
 		<rom name="Crayon Shin-Chan - Taiketsu! Tankam Panic!! (T-Eng).gg" size="524288" crc="48c18828"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="crayon">
+		<description>Crayon Shin-chan - Taiketsu! Kantamu Panic!! (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Bandai</manufacturer>
+		<rom name="mpr-17805.ic1" size="524288" crc="03d28eab"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1207,7 +1207,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="devilish">
-		<description>Devilish (Euro, Bra)</description>
+		<description>Devilish (Euro, Brazil)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="devilish (europe).bin" size="131072" crc="d43ac6c5"/>
@@ -1215,7 +1215,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="devilishj" cloneof="devilish" romof="devilish">
-		<description>Devilish (Jpn)</description>
+		<description>Devilish (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Genki</manufacturer>
 		<rom name="devilish (japan).bin" size="131072" crc="25db174f"/>
@@ -1231,7 +1231,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdin">
-		<description>Disney's Aladdin (Euro, USA, Bra)</description>
+		<description>Disney's Aladdin (Euro, USA, Brazil)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aladdin (usa, europe).bin" size="524288" crc="7a41c1dc"/>
@@ -1239,7 +1239,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aladdinj" cloneof="aladdin" romof="aladdin">
-		<description>Disney's Aladdin (Jpn)</description>
+		<description>Disney's Aladdin (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="aladdin (japan).bin" size="524288" crc="770e95e1"/>
@@ -1407,7 +1407,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="donald42" cloneof="deepduck" romof="deepduck">
-		<description>Donald Duck no 4-Tsu no Hihou (Jpn)</description>
+		<description>Donald Duck no 4-Tsu no Hihou (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="donald duck no 4-tsu no hihou (japan).bin" size="524288" crc="4457e7c0"/>
@@ -1415,7 +1415,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="donaldld" cloneof="luckydim" romof="luckydim">
-		<description>Donald Duck no Lucky Dime (Jpn)</description>
+		<description>Donald Duck no Lucky Dime (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="donald duck no lucky dime (japan).bin" size="262144" crc="2d98bd87"/>
@@ -1423,7 +1423,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="donaldmw">
-		<description>Donald no Magical World (Jpn)</description>
+		<description>Donald no Magical World (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="donald no magical world (japan) (en,ja).bin" size="524288" crc="87b8b612"/>
@@ -1431,7 +1431,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="doraemon">
-		<description>Doraemon - Waku Waku Pocket Paradise (Jpn)</description>
+		<description>Doraemon - Waku Waku Pocket Paradise (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="doraemon - waku waku pocket paradise (japan).bin" size="524288" crc="733292a6"/>
@@ -1506,7 +1506,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dcrystalj" cloneof="dcrystal" romof="dcrystal">
-		<description>Dragon Crystal - Tsurani no Meikyuu (Jpn)</description>
+		<description>Dragon Crystal - Tsurani no Meikyuu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dragon crystal - tsurani no meikyuu (japan).bin" size="131072" crc="89f12e1e"/>
@@ -1522,7 +1522,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dunkkids">
-		<description>Dunk Kids (Jpn)</description>
+		<description>Dunk Kids (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17023.ic1" size="524288" crc="77ed48f5"/>
@@ -1538,7 +1538,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="dheadj" cloneof="dhead" romof="dhead">
-		<description>Dynamite Headdy (Jpn)</description>
+		<description>Dynamite Headdy (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="dynamite headdy (japan).bin" size="524288" crc="f6af4b6b"/>
@@ -1597,7 +1597,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="eccoj" cloneof="ecco" romof="ecco">
-		<description>Ecco the Dolphin (Jpn)</description>
+		<description>Ecco the Dolphin (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16428-f.ic1" size="524288" crc="a32eb9d5"/>
@@ -1613,7 +1613,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ecco2j" cloneof="ecco2" romof="ecco2">
-		<description>Ecco the Dolphin II - The Tides of Time (Jpn)</description>
+		<description>Ecco the Dolphin II - The Tides of Time (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ecco the dolphin ii (japan).bin" size="524288" crc="ba9cef4f"/>
@@ -1628,20 +1628,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="eternleg">
-		<description>Eternal Legend - Eien no Densetsu (Jpn)</description>
-		<year>1991</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="eternal legend - eien no densetsu (japan).bin" size="262144" crc="04302bbd"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="eternlege" cloneof="eternleg" romof="eternleg">
 		<comment>Hack</comment>
-		<description>Eternal Legend - Eien no Densetsu (T-Eng)</description>
+		<description>Eternal Legend - Eien no Densetsu (Hack, English)</description>
 		<year>2020</year>
 		<manufacturer>Supper</manufacturer>
 		<rom name="eternal legend (t-eng).gg" size="1048576" crc="ab7ab2e3"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eternleg">
+		<description>Eternal Legend - Eien no Densetsu (Japan)</description>
+		<year>1991</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="eternal legend - eien no densetsu (japan).bin" size="262144" crc="04302bbd"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1695,7 +1695,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="faceball">
-		<description>Faceball 2000 (Jpn)</description>
+		<description>Faceball 2000 (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Riverhill Software</manufacturer>
 		<rom name="faceball 2000 (japan).bin" size="262144" crc="aaf6f87d"/>
@@ -1703,7 +1703,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="factoryp">
-		<description>Factory Panic (Euro, Bra)</description>
+		<description>Factory Panic (Euro, Brazil)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14238.ic1" size="131072" crc="59e3be92"/>
@@ -1719,7 +1719,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantzone">
-		<description>Fantasy Zone Gear (Euro, Jpn)</description>
+		<description>Fantasy Zone Gear (Euro, Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sanritsu</manufacturer>
 		<rom name="fantasy zone gear (japan, europe).bin" size="131072" crc="d69097e8"/>
@@ -1759,7 +1759,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fifaj" cloneof="fifa" romof="fifa">
-		<description>FIFA International Soccer (Jpn)</description>
+		<description>FIFA International Soccer (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Electronic Arts Victor</manufacturer>
 		<rom name="fifa international soccer (japan).bin" size="524288" crc="78159325"/>
@@ -1791,7 +1791,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fray">
-		<description>Fray - Shugyou Hen (Jpn)</description>
+		<description>Fray - Shugyou Hen (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Micro Cabin</manufacturer>
 		<rom name="fray - shugyou hen (japan).bin" size="262144" crc="e123d9b8"/>
@@ -1799,7 +1799,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fredcoupj" cloneof="fredcoup" romof="fredcoup">
-		<description>Fred Couples' Golf (Jpn)</description>
+		<description>Fred Couples' Golf (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="fred couples' golf (japan).bin" size="524288" crc="b1196cd7"/>
@@ -1815,6 +1815,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="frogger">
+		<comment>Prototype</comment>
 		<description>Frogger (USA, Prototype)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
@@ -1823,7 +1824,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="slamdunk">
-		<description>From TV Animation - Slam Dunk - Shouri e no Starting 5 (Jpn)</description>
+		<description>From TV Animation - Slam Dunk - Shouri e no Starting 5 (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="from tv animation - slam dunk - shouri e no starting 5 (japan).bin" size="524288" crc="751dad4c"/>
@@ -1831,7 +1832,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gloc">
-		<description>G-LOC Air Battle (Euro, USA, Bra)</description>
+		<description>G-LOC Air Battle (Euro, USA, Brazil)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="g-loc air battle (usa, europe).bin" size="131072" crc="18de59ed"/>
@@ -1839,7 +1840,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="glocj1" cloneof="gloc" romof="gloc">
-		<description>G-LOC Air Battle (Jpn, v0)</description>
+		<description>G-LOC Air Battle (Japan, v0)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="g-loc air battle (japan).bin" size="131072" crc="2333f615"/>
@@ -1847,7 +1848,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="glocj" cloneof="gloc" romof="gloc">
-		<description>G-LOC Air Battle (Jpn, v1.1)</description>
+		<description>G-LOC Air Battle (Japan, v1.1)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="g-loc air battle (japanv1.1).bin" size="131072" crc="33237f50"/>
@@ -1855,7 +1856,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="galaga91" cloneof="galaga2" romof="galaga2">
-		<description>Galaga '91 (Jpn)</description>
+		<description>Galaga '91 (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="galaga '91 (japan).bin" size="131072" crc="0593ba24"/>
@@ -1871,7 +1872,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gamble">
-		<description>Gamble Panic (Jpn)</description>
+		<description>Gamble Panic (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gamble panic (japan).bin" size="524288" crc="09534742"/>
@@ -1879,7 +1880,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gambler">
-		<description>Gambler Jikochuushinha (Jpn)</description>
+		<description>Gambler Jikochuushinha (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gambler jikochuushinha (japan).bin" size="262144" crc="423803a7"/>
@@ -1887,7 +1888,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggorby" cloneof="factoryp" romof="factoryp">
-		<description>Ganbare Gorby! (Jpn)</description>
+		<description>Ganbare Gorby! (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ganbare gorby! (japan).bin" size="131072" crc="a1f2f4a1"/>
@@ -1903,7 +1904,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="garousp" cloneof="fatfursp" romof="fatfursp">
-		<description>Garou Densetsu Special (Jpn)</description>
+		<description>Garou Densetsu Special (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Takara</manufacturer>
 		<rom name="mpr-17432.ic1" size="524288" crc="9afb6f33"/>
@@ -1911,7 +1912,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gearstad" cloneof="batterup" romof="batterup">
-		<description>Gear Stadium (Jpn)</description>
+		<description>Gear Stadium (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="gear stadium (japan).bin" size="131072" crc="0e300223"/>
@@ -1919,7 +1920,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gearstah">
-		<description>Gear Stadium Heiseiban (Jpn)</description>
+		<description>Gear Stadium Heiseiban (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="gear stadium heiseiban (japan).bin" size="131072" crc="a0530664"/>
@@ -1943,7 +1944,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggaleste">
-		<description>GG Aleste (Jpn)</description>
+		<description>GG Aleste (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Compile</manufacturer>
 		<rom name="gg aleste (japan).bin" size="262144" crc="1b80a75b"/>
@@ -1951,7 +1952,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggaleste3">
-		<description>GG Aleste 3 (Jpn)</description>
+		<description>GG Aleste 3 (Japan)</description>
 		<year>2020</year>
 		<manufacturer>M2 Co.</manufacturer>
 		<rom name="GG Aleste 3 (2020)(M2).gg" size="1048576" crc="717fd9e3"/>
@@ -1959,7 +1960,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggdora">
-		<description>GG Doraemon - Noranosuke no Yabou (Jpn)</description>
+		<description>GG Doraemon - Noranosuke no Yabou (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gg doraemon - noranosuke no yabou (japan).bin" size="262144" crc="9a8b2c16"/>
@@ -1967,7 +1968,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggport">
-		<description>GG Portrait - Pai Chen (Jpn)</description>
+		<description>GG Portrait - Pai Chen (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gg portrait - pai chen (japan).bin" size="524288" crc="695cc120"/>
@@ -1975,7 +1976,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ggport1">
-		<description>GG Portrait - Yuuki Akira (Jpn)</description>
+		<description>GG Portrait - Yuuki Akira (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gg portrait - yuuki akira (japan).bin" size="524288" crc="51159f8f"/>
@@ -1991,7 +1992,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinobij" cloneof="shinobi" romof="shinobi">
-		<description>GG Shinobi, The (Jpn)</description>
+		<description>GG Shinobi, The (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="gg shinobi, the (japan).bin" size="262144" crc="83926bd1"/>
@@ -2007,20 +2008,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="godzilla">
-		<description>Godzilla - Kaijuu Daishingeki (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="godzilla - kaijuu daishingeki (japan).bin" size="524288" crc="4cf97801"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="godzillae" cloneof="godzilla" romof="godzilla">
 		<comment>Hack</comment>
-		<description>Godzilla - Kaijuu Daishingeki (T-Eng, v1.1)</description>
+		<description>Godzilla - Kaijuu Daishingeki (Hack, English v1.1)</description>
 		<year>2019</year>
 		<manufacturer>Supper</manufacturer>
 		<rom name="godzilla - kaijuu daishingeki (english translation).gg" size="1048576" crc="fc0ac103"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="godzilla">
+		<description>Godzilla - Kaijuu Daishingeki (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="godzilla - kaijuu daishingeki (japan).bin" size="524288" crc="4cf97801"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2033,7 +2034,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gpriderj" cloneof="gprider" romof="gprider">
-		<description>GP Rider (Jpn)</description>
+		<description>GP Rider (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16589.ic1" size="524288" crc="7a26ec6a"/>
@@ -2058,7 +2059,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="griffin">
-		<description>Griffin (Jpn)</description>
+		<description>Griffin (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Riot</manufacturer>
 		<rom name="griffin (japan).bin" size="131072" crc="a93e8b0f"/>
@@ -2066,7 +2067,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="gunstar">
-		<description>Gunstar Heroes (Jpn)</description>
+		<description>Gunstar Heroes (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17847-f.ic1" size="524288" crc="c3c52767"/>
@@ -2074,7 +2075,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="halleyw">
-		<description>Halley Wars (Euro, USA, Bra)</description>
+		<description>Halley Wars (Euro, USA, Brazil)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="halley wars (usa, europe).bin" size="131072" crc="7e9dea46"/>
@@ -2082,7 +2083,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="halleywj" cloneof="halleyw" romof="halleyw">
-		<description>Halley Wars (Jpn)</description>
+		<description>Halley Wars (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="halley wars (japan).bin" size="131072" crc="def5a5d0"/>
@@ -2090,7 +2091,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="headbust">
-		<description>Head Buster (Jpn)</description>
+		<description>Head Buster (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Masaya</manufacturer>
 		<rom name="head buster (japan).bin" size="131072" crc="7e689995"/>
@@ -2098,7 +2099,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="heavyw" cloneof="georgeko" romof="georgeko">
-		<description>Heavy Weight Champ (Jpn)</description>
+		<description>Heavy Weight Champ (Japan)</description>
 		<year>1991</year>
 		<manufacturer>SIMS</manufacturer>
 		<rom name="heavy weight champ (japan).bin" size="131072" crc="beed9150"/>
@@ -2114,7 +2115,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ddanpei">
-		<description>Honoo no Toukyuuji - Dodge Danpei (Jpn)</description>
+		<description>Honoo no Toukyuuji - Dodge Danpei (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="honoo no toukyuuji - dodge danpei (japan).bin" size="131072" crc="dfa805a0"/>
@@ -2146,7 +2147,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hyokkohj">
-		<description>Hyokkori Hyoutanjima - Hyoutanjima no Daikoukai (Jpn)</description>
+		<description>Hyokkori Hyoutanjima - Hyoutanjima no Daikoukai (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14690-f.ic1" size="131072" crc="42389270"/>
@@ -2154,7 +2155,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hypyak92">
-		<description>Hyper Pro Yakyuu '92 (Jpn)</description>
+		<description>Hyper Pro Yakyuu '92 (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14759.ic1" size="131072" crc="056cae74"/>
@@ -2162,7 +2163,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wakevamp" cloneof="mastdark" romof="mastdark">
-		<description>In the Wake of Vampire (Jpn)</description>
+		<description>In the Wake of Vampire (Japan)</description>
 		<year>1992</year>
 		<manufacturer>SIMS Co.</manufacturer>
 		<rom name="mpr-15156.ic1" size="262144" crc="dab0f265"/>
@@ -2218,7 +2219,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jleagu94">
-		<description>J.League GG Pro Striker '94 (Jpn)</description>
+		<description>J.League GG Pro Striker '94 (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16821.ic1" size="524288" crc="a12a28a0"/>
@@ -2226,7 +2227,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jleague">
-		<description>J.League Soccer - Dream Eleven (Jpn)</description>
+		<description>J.League Soccer - Dream Eleven (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="j.league soccer - dream eleven (japan).bin" size="524288" crc="abddf0eb"/>
@@ -2266,7 +2267,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jangpun2">
-		<description>Jang Pung II (Kor, SMS Mode)</description>
+		<description>Jang Pung II (Korea, SMS Mode)</description>
 		<year>1993</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="jang pung ii (k) [s].bin" size="262144" crc="76c5bdfb"/>
@@ -2298,7 +2299,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="joemontj" cloneof="joemont" romof="joemont">
-		<description>Joe Montana's Football (Jpn)</description>
+		<description>Joe Montana's Football (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14319.ic1" size="262144" crc="4a98678b"/>
@@ -2322,7 +2323,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="junctionj" cloneof="junction" romof="junction">
-		<description>Junction (Jpn)</description>
+		<description>Junction (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Micronet</manufacturer>
 		<rom name="junction (japan).bin" size="131072" crc="a8ef36a7"/>
@@ -2370,7 +2371,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jparkj" cloneof="jpark" romof="jpark">
-		<description>Jurassic Park (Jpn)</description>
+		<description>Jurassic Park (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="jurassic park (japan).bin" size="524288" crc="2f536ae3"/>
@@ -2378,7 +2379,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sainttal">
-		<description>Kaitou Saint Tale (Jpn)</description>
+		<description>Kaitou Saint Tale (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="kaitou saint tale (japan).bin" size="524288" crc="937fd52b"/>
@@ -2394,7 +2395,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yaiba">
-		<description>Kenyuu Densetsu Yaiba (Jpn)</description>
+		<description>Kenyuu Densetsu Yaiba (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="kenyuu densetsu yaiba (japan).bin" size="524288" crc="d9ce3f4c"/>
@@ -2402,7 +2403,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kickrush" cloneof="tengenwc" romof="tengenwc">
-		<description>Kick and Rush (Jpn)</description>
+		<description>Kick and Rush (Japan)</description>
 		<year>1993</year>
 		<manufacturer>SIMS</manufacturer>
 		<rom name="kick and rush (japan).bin" size="262144" crc="fd14ce00"/>
@@ -2410,7 +2411,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kineticc">
-		<description>Kinetic Connection (Jpn)</description>
+		<description>Kinetic Connection (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13610.ic1" size="131072" crc="4af7f2aa"/>
@@ -2418,7 +2419,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zenki">
-		<description>Kishin Douji Zenki (Jpn)</description>
+		<description>Kishin Douji Zenki (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18210.ic1" size="524288" crc="7d622bdd"/>
@@ -2442,7 +2443,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kunichan">
-		<description>Kuni-chan no Game Tengoku (Jpn)</description>
+		<description>Kuni-chan no Game Tengoku (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="kuni-chan no game tengoku (japan).bin" size="262144" crc="398f2358"/>
@@ -2450,7 +2451,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kunichn2">
-		<description>Kuni-chan no Game Tengoku Part 2 (Jpn)</description>
+		<description>Kuni-chan no Game Tengoku Part 2 (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="kuni-chan no game tengoku part 2 (japan).bin" size="262144" crc="f3774c65"/>
@@ -2570,7 +2571,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lionkingj" cloneof="lionking" romof="lionking">
-		<description>Lion King, The (Jpn)</description>
+		<description>Lion King, The (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="lion king, the (disney's) (jp).bin" size="524288" crc="c78b8637"/>
@@ -2628,20 +2629,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lunar">
-		<description>Lunar - Sanposuru Gakuen (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Game Arts</manufacturer>
-		<rom name="lunar - sanposuru gakuen (japan).bin" size="524288" crc="58459edd"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="lunare" cloneof="lunar" romof="lunar">
 		<comment>Hack</comment>
-		<description>Lunar - Sanposuru Gakuen (T-Eng)</description>
+		<description>Lunar - Sanposuru Gakuen (Hack, English)</description>
 		<year>2009</year>
 		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="lunar - sanposuru gakuen (english translation).gg" size="1048576" crc="19f3f168"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lunar">
+		<description>Lunar - Sanposuru Gakuen (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Game Arts</manufacturer>
+		<rom name="lunar - sanposuru gakuen (japan).bin" size="524288" crc="58459edd"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2662,49 +2663,58 @@
 		<driver status="good"/>
 	</game>
 	<game name="madoumna">
-		<description>Madou Monogatari A - Dokidoki Vacation (Jpn)</description>
+		<description>Madou Monogatari A - Dokidoki Vacation (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Compile</manufacturer>
 		<rom name="madou monogatari a - dokidoki vacation (japan).bin" size="524288" crc="7ec95282"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="madoumone" cloneof="madoumon" romof="madoumon">
+		<comment>Hack</comment>
+		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)</description>
+		<year>2010</year>
+		<manufacturer>SSTranslations</manufacturer>
+		<rom name="madou monogatari i - 3-tsu no madoukyuu (english translation).gg" size="524288" crc="b289011d"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="madoumon">
-		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (Jpn)</description>
+		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="madou monogatari i - 3-tsu no madoukyuu (japan).bin" size="524288" crc="00c34d94"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="madoumone" cloneof="madoumon" romof="madoumon">
-		<comment>Hack</comment>
-		<description>Madou Monogatari I - 3-Tsu no Madoukyuu (T-Eng)</description>
-		<year>2010</year>
-		<manufacturer>Sega - SSTranslations</manufacturer>
-		<rom name="madou monogatari i - 3-tsu no madoukyuu (english translation).gg" size="524288" crc="b289011d"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="madoumn2">
-		<description>Madou Monogatari II - Arle 16-Sai (Jpn)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-16616.ic1" size="524288" crc="12eb2287"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="madoumn2e" cloneof="madoumn2" romof="madoumn2">
 		<comment>Hack</comment>
-		<description>Madou Monogatari II - Arle 16-Sai (T-Eng, v1.2)</description>
+		<description>Madou Monogatari II - Arle 16-Sai (Hack, English v1.2)</description>
 		<year>2020</year>
 		<manufacturer>Supper</manufacturer>
 		<rom name="madou monogatari ii - arle 16-sai (T+Eng1.2).gg" size="1048576" crc="ef7d7c02"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="madoumn2">
+		<description>Madou Monogatari II - Arle 16-Sai (Japan)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-16616.ic1" size="524288" crc="12eb2287"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="madoumn3e" cloneof="madoumn3" romof="madoumn3">
+		<comment>Hack</comment>
+		<description>Madou Monogatari III - Kyuukyoku Joou-sama (Hack, English v1.2)</description>
+		<year>2020</year>
+		<manufacturer>Supper</manufacturer>
+		<rom name="madou monogatari iii - kyuukyoku joou-sama (english translation).gg" size="1048576" crc="e90126c0"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="madoumn3a" cloneof="madoumn3" romof="madoumn3">
-		<description>Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.0)</description>
+		<description>Madou Monogatari III - Kyuukyoku Joou-sama (Japan, v1.0)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="madou monogatari iii - kyuukyoku joou-sama (japan).bin" size="524288" crc="0a634d79"/>
@@ -2712,41 +2722,32 @@
 		<driver status="good"/>
 	</game>
 	<game name="madoumn3">
-		<description>Madou Monogatari III - Kyuukyoku Joou-sama (Jpn, v1.1)</description>
+		<description>Madou Monogatari III - Kyuukyoku Joou-sama (Japan, v1.1)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="madou monogatari iii - kyuukyoku joou-sama (japan) (v1.1).bin" size="524288" crc="568f4825"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="madoumn3e" cloneof="madoumn3" romof="madoumn3">
-		<comment>Hack</comment>
-		<description>Madou Monogatari III - Kyuukyoku Joou-sama (T-Eng, v1.2)</description>
-		<year>2020</year>
-		<manufacturer>Supper</manufacturer>
-		<rom name="madou monogatari iii - kyuukyoku joou-sama (english translation).gg" size="1048576" crc="e90126c0"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="rayearth">
-		<description>Magic Knight Rayearth (Jpn)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="mpr-17115.ic1" size="524288" crc="8f82a6b9"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="rayearthe" cloneof="rayearth" romof="rayearth">
 		<comment>Hack</comment>
-		<description>Magic Knight Rayearth (T-Eng)</description>
+		<description>Magic Knight Rayearth (Hack, English)</description>
 		<year>2018</year>
 		<manufacturer>Filler</manufacturer>
 		<rom name="Magic Knight Rayearth T-Eng (2018)(Filler).gg" size="524288" crc="6c9b8b15"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="rayearth">
+		<description>Magic Knight Rayearth (Japan)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="mpr-17115.ic1" size="524288" crc="8f82a6b9"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rayeart2">
-		<description>Magic Knight Rayearth 2 - Making of Magic Knight (Jpn)</description>
+		<description>Magic Knight Rayearth 2 - Making of Magic Knight (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18183-s.ic1" size="524288" crc="1c2c2b04"/>
@@ -2762,7 +2763,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mtaruru">
-		<description>Magical Taruruuto-kun (Jpn)</description>
+		<description>Magical Taruruuto-kun (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Tsukuda Original</manufacturer>
 		<rom name="magical taruruuto-kun (japan).bin" size="131072" crc="6e1cc23c"/>
@@ -2779,7 +2780,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mappy">
-		<description>Mappy (Jpn)</description>
+		<description>Mappy (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="mappy (japan).bin" size="131072" crc="01d2dd2a"/>
@@ -2819,7 +2820,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbibl">
-		<description>Megami Tensei Gaiden - Last Bible (Jpn)</description>
+		<description>Megami Tensei Gaiden - Last Bible (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="megami tensei gaiden - last bible (japan).bin" size="524288" crc="2e4ec17b"/>
@@ -2836,7 +2837,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="lastbibs">
-		<description>Megami Tensei Gaiden - Last Bible S (Jpn)</description>
+		<description>Megami Tensei Gaiden - Last Bible S (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="megami tensei gaiden - last bible s (japan).bin" size="524288" crc="4ec30806"/>
@@ -2852,7 +2853,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="legndillj" cloneof="legndill" romof="legndill">
-		<description>Mickey Mouse Densetsu no Oukoku - Legend of Illusion (Jpn)</description>
+		<description>Mickey Mouse Densetsu no Oukoku - Legend of Illusion (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mickey mouse densetsu no oukoku - legend of illusion (japan).bin" size="524288" crc="fe12a92f"/>
@@ -2860,7 +2861,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="castlillj" cloneof="castlill" romof="castlill">
-		<description>Mickey Mouse no Castle Illusion (Jpn, SMS Mode)</description>
+		<description>Mickey Mouse no Castle Illusion (Japan, SMS Mode)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mickey mouse no castle illusion (japan).bin" size="262144" crc="9942b69b"/>
@@ -2868,7 +2869,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="landillj" cloneof="landill" romof="landill">
-		<description>Mickey Mouse no Mahou no Crystal (Jpn)</description>
+		<description>Mickey Mouse no Mahou no Crystal (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mickey mouse no mahou no crystal (japan).bin" size="524288" crc="0117c3df"/>
@@ -2941,20 +2942,20 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moldoran">
-		<description>Moldorian - Hikari to Yami no Sister (Jpn)</description>
-		<year>1994</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="moldorian - hikari to yami no sister (japan).bin" size="524288" crc="4d5d15fb"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="moldorane" cloneof="moldoran" romof="moldoran">
 		<comment>Hack</comment>
-		<description>Moldorian - Hikari to Yami no Sister (T-Eng, v1.1)</description>
+		<description>Moldorian - Hikari to Yami no Sister (Hack, English v1.1)</description>
 		<year>2019</year>
 		<manufacturer>Supper</manufacturer>
 		<rom name="moldorian - hikari to yami no shisutaa (t-eng1.1).gg" size="1048576" crc="7ab0081f"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="moldoran">
+		<description>Moldorian - Hikari to Yami no Sister (Japan)</description>
+		<year>1994</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="moldorian - hikari to yami no sister (japan).bin" size="524288" crc="4d5d15fb"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2976,7 +2977,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mworld2" cloneof="wboydtrp" romof="wboydtrp">
-		<description>Monster World II - Dragon no Wana (Jpn)</description>
+		<description>Monster World II - Dragon no Wana (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="monster world ii - dragon no wana (japan).bin" size="262144" crc="ea89e0e7"/>
@@ -2992,7 +2993,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mkj" cloneof="mk" romof="mk">
-		<description>Mortal Kombat (Jpn, v3.3)</description>
+		<description>Mortal Kombat (Japan, v3.3)</description>
 		<year>1993</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="mortal kombat (japan) (v3.3).bin" size="524288" crc="dbff0461"/>
@@ -3024,7 +3025,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazopuyo1" cloneof="nazopuyo" romof="nazopuyo">
-		<description>Nazo Puyo (Jpn, v0)</description>
+		<description>Nazo Puyo (Japan, v0)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nazo puyo (japan).bin" size="131072" crc="bcce5fd4"/>
@@ -3032,7 +3033,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazopuyo">
-		<description>Nazo Puyo (Jpn, v1.1)</description>
+		<description>Nazo Puyo (Japan, v1.1)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nazo puyo (japan)(v1.1).bin" size="131072" crc="d8d11f8d"/>
@@ -3040,7 +3041,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazpuyo2">
-		<description>Nazo Puyo 2 (Jpn)</description>
+		<description>Nazo Puyo 2 (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nazo puyo 2 (japan).bin" size="262144" crc="73939de4"/>
@@ -3048,7 +3049,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nazpyoar">
-		<description>Nazo Puyo Arle no Roux (Jpn)</description>
+		<description>Nazo Puyo Arle no Roux (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16849.ic1" size="262144" crc="54ab42a4"/>
@@ -3057,7 +3058,7 @@
 	</game>
 	<game name="nazpyoarp" cloneof="nazpyoar" romof="nazpyoar">
 		<comment>Prototype</comment>
-		<description>Nazo Puyo Arle no Roux (Jpn, Prototype)</description>
+		<description>Nazo Puyo Arle no Roux (Japan, Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="nazo puyo arle no roux (japan) (development edition).bin" size="262144" crc="4c874466"/>
@@ -3343,7 +3344,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nbajamj" cloneof="nbajam" romof="nbajam">
-		<description>NBA Jam (Jpn)</description>
+		<description>NBA Jam (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Acclaim Entertainment</manufacturer>
 		<rom name="nba jam (japan).bin" size="524288" crc="a49e9033"/>
@@ -3685,7 +3686,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ngaidenj" cloneof="ngaiden" romof="ngaiden">
-		<description>Ninja Gaiden (Jpn)</description>
+		<description>Ninja Gaiden (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ninja gaiden (japan).bin" size="131072" crc="20ef017a"/>
@@ -3693,7 +3694,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninku">
-		<description>Ninku (Jpn)</description>
+		<description>Ninku (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18000.ic1" size="524288" crc="c3056e15"/>
@@ -3701,7 +3702,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninku2">
-		<description>Ninku 2 - Tenkuuryuu e no Michi (Jpn)</description>
+		<description>Ninku 2 - Tenkuuryuu e no Michi (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18695.ic1" size="524288" crc="06247dd2"/>
@@ -3709,7 +3710,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninkug">
-		<description>Ninku Gaiden - Hiroyuki Daikatsugeki (Jpn)</description>
+		<description>Ninku Gaiden - Hiroyuki Daikatsugeki (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18313.ic1" size="524288" crc="9140f239"/>
@@ -3717,7 +3718,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nomowsb">
-		<description>Nomo's World Series Baseball (Jpn)</description>
+		<description>Nomo's World Series Baseball (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18562.ic1" size="524288" crc="4ed45bda"/>
@@ -3733,7 +3734,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="olympglda" cloneof="olympgld" romof="olympgld">
-		<description>Olympic Gold (Jpn, USA, v0, SMS Mode)</description>
+		<description>Olympic Gold (Japan, USA, v0, SMS Mode)</description>
 		<year>1992</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="olympic gold (japan, usa) (en,fr,de,es,it,nl,pt,sv).bin" size="262144" crc="a2f9c7af"/>
@@ -3757,7 +3758,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="outrunj" cloneof="outrun" romof="outrun">
-		<description>Out Run (Jpn)</description>
+		<description>Out Run (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="out run (japan).bin" size="131072" crc="d58cb27c"/>
@@ -3765,7 +3766,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="outrneur">
-		<description>Out Run Europa (Euro, Bra, SMS Mode)</description>
+		<description>Out Run Europa (Euro, Brazil, SMS Mode)</description>
 		<year>1992</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="out run europa (euro).bin" size="262144" crc="01eab89d"/>
@@ -3798,7 +3799,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pacmanj" cloneof="pacman" romof="pacman">
-		<description>Pac-Man (Jpn)</description>
+		<description>Pac-Man (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="mpr-13660.ic1" size="131072" crc="a16c5e58"/>
@@ -3814,7 +3815,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="panzer">
-		<description>Panzer Dragoon Mini (Jpn)</description>
+		<description>Panzer Dragoon Mini (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="panzer dragoon mini (japan).bin" size="524288" crc="e9783cea"/>
@@ -3855,7 +3856,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pengoj" cloneof="pengo" romof="pengo">
-		<description>Pengo (Jpn)</description>
+		<description>Pengo (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pengo (japan).bin" size="32768" crc="ce863dba"/>
@@ -3863,7 +3864,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="inudais">
-		<description>Pet Club Inu Daisuki! (Jpn)</description>
+		<description>Pet Club Inu Daisuki! (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pet club inu daisuki! (japan).bin" size="524288" crc="b42d8430"/>
@@ -3871,7 +3872,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="nekodais">
-		<description>Pet Club Neko Daisuki! (Jpn)</description>
+		<description>Pet Club Neko Daisuki! (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="neko daisuki! (japan).bin" size="524288" crc="3679be80"/>
@@ -3919,27 +3920,27 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstaradv">
-		<description>Phantasy Star Adventure (Jpn)</description>
+		<description>Phantasy Star Adventure (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="phantasy star adventure (japan).bin" size="131072" crc="1a51579d"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pstargdn">
-		<description>Phantasy Star Gaiden (Jpn)</description>
-		<year>1992</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="phantasy star gaiden (japan).bin" size="262144" crc="a942514a"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="pstargdne" cloneof="pstargdn" romof="pstargdn">
 		<comment>Hack</comment>
-		<description>Phantasy Star Gaiden (T-Eng)</description>
+		<description>Phantasy Star Gaiden (Hack, English)</description>
 		<year>1999</year>
 		<manufacturer>Dynamic-Designs, Taskforce</manufacturer>
 		<rom name="phantasy star gaiden (english translation).gg" size="262144" crc="1c98154a"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pstargdn">
+		<description>Phantasy Star Gaiden (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="phantasy star gaiden (japan).bin" size="262144" crc="a942514a"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3960,7 +3961,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pocketj">
-		<description>Pocket Jansou (Jpn)</description>
+		<description>Pocket Jansou (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="pocket jansou (japan).bin" size="131072" crc="cc90c723"/>
@@ -4000,7 +4001,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="popbreak">
-		<description>Pop Breaker (Jpn)</description>
+		<description>Pop Breaker (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Micro Cabin</manufacturer>
 		<rom name="pop breaker (japan).bin" size="131072" crc="71deba5a"/>
@@ -4008,7 +4009,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="popeye">
-		<description>Popeye no Beach Volleyball (Jpn)</description>
+		<description>Popeye no Beach Volleyball (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Technos Japan</manufacturer>
 		<rom name="popeye no beach volleyball (japan).bin" size="524288" crc="3ef66810"/>
@@ -4024,7 +4025,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pstrike2">
-		<description>Power Strike II (Euro) ~ GG Aleste II (Jpn)</description>
+		<description>Power Strike II (Euro) ~ GG Aleste II (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="power strike ii (japan, europe).bin" size="262144" crc="09de1528"/>
@@ -4064,7 +4065,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="proyak91">
-		<description>Pro Yakyuu '91, The (Jpn)</description>
+		<description>Pro Yakyuu '91, The (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pro yakyuu '91, the (japan).bin" size="131072" crc="6d3a10d3"/>
@@ -4072,7 +4073,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="proyak94">
-		<description>Pro Yakyuu GG League '94 (Jpn)</description>
+		<description>Pro Yakyuu GG League '94 (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="pro yakyuu gg league '94 (japan).bin" size="524288" crc="a1a19135"/>
@@ -4081,7 +4082,7 @@
 	</game>
 	<game name="proyakgg">
 		<comment>Game doesn't work</comment>
-		<description>Pro Yakyuu GG League (Jpn)</description>
+		<description>Pro Yakyuu GG League (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15564.ic1" size="262144" crc="2da8e943"/>
@@ -4089,7 +4090,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychicw">
-		<description>Psychic World (Euro, USA, Bra)</description>
+		<description>Psychic World (Euro, USA, Brazil)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="psychic world (usa, europe) (v1.1).bin" size="131072" crc="73779b22"/>
@@ -4097,7 +4098,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="psychicwj" cloneof="psychicw" romof="psychicw">
-		<description>Psychic World (Jpn)</description>
+		<description>Psychic World (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="psychic world (japan).bin" size="131072" crc="afcc7828"/>
@@ -4105,7 +4106,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puttputt">
-		<description>Putt and Putter (Euro, USA, Bra)</description>
+		<description>Putt and Putter (Euro, USA, Brazil)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="putt and putter (usa, europe).bin" size="131072" crc="ecc301dd"/>
@@ -4113,7 +4114,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puttputtj" cloneof="puttputt" romof="puttputt">
-		<description>Putt and Putter (Jpn)</description>
+		<description>Putt and Putter (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="putt and putter (japan).bin" size="131072" crc="407ac070"/>
@@ -4121,7 +4122,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puyopuyo">
-		<description>Puyo Puyo (Jpn)</description>
+		<description>Puyo Puyo (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15464.ic1" size="262144" crc="d173a06f"/>
@@ -4129,7 +4130,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="puyopuy2">
-		<description>Puyo Puyo 2 (Jpn)</description>
+		<description>Puyo Puyo 2 (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Compile</manufacturer>
 		<rom name="mpr-17537.ic1" size="524288" crc="3ab2393b"/>
@@ -4137,7 +4138,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tantr">
-		<description>Puzzle and Action Tant~R (Jpn)</description>
+		<description>Puzzle and Action Tant~R (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16607.ic1" size="524288" crc="09151743"/>
@@ -4145,7 +4146,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobble" cloneof="bam" romof="bam">
-		<description>Puzzle Bobble (Jpn)</description>
+		<description>Puzzle Bobble (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="puzzle bobble (japan).bin" size="262144" crc="8e54ee04"/>
@@ -4153,7 +4154,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ichirgg">
-		<description>Puzzlle and Action Ichidant~R GG (Jpn)</description>
+		<description>Puzzlle and Action Ichidant~R GG (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="ichidant~r gg (japan).bin" size="524288" crc="9f64c2bb"/>
@@ -4169,7 +4170,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizgear">
-		<description>Quiz Gear Fight!!, The (Jpn)</description>
+		<description>Quiz Gear Fight!!, The (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17816.ic1" size="524288" crc="736cdb76"/>
@@ -4194,7 +4195,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rastan">
-		<description>Rastan Saga (Jpn, SMS Mode)</description>
+		<description>Rastan Saga (Japan, SMS Mode)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="rastan saga (japan).bin" size="262144" crc="9c76fb3a"/>
@@ -4202,7 +4203,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="revenged" cloneof="wboy" romof="wboy">
-		<description>Revenge of Drancon (USA, Bra)</description>
+		<description>Revenge of Drancon (USA, Brazil)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="revenge of drancon (usa).bin" size="131072" crc="03e9c607"/>
@@ -4210,7 +4211,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="riddickj" cloneof="riddick" romof="riddick">
-		<description>Riddick Bowe Boxing (Jpn)</description>
+		<description>Riddick Bowe Boxing (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Micronet</manufacturer>
 		<rom name="riddick bowe boxing (japan).bin" size="262144" crc="a45fffb7"/>
@@ -4318,25 +4319,25 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="royalstn">
-		<description>Royal Stone - Hirakareshi Toki no Tobira (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="royal stone - hirakareshi toki no tobira (japan).bin" size="524288" crc="445d7cd2"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="royalstne" cloneof="royalstn" romof="royalstn">
 		<comment>Hack</comment>
-		<description>Royal Stone - Hirakareshi Toki no Tobira (T-Eng)</description>
+		<description>Royal Stone - Hirakareshi Toki no Tobira (Hack, English)</description>
 		<year>2013</year>
 		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="royal stone - hirakareshi toki no tobira (english translation).gg" size="524288" crc="e4677b07"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="royalstn">
+		<description>Royal Stone - Hirakareshi Toki no Tobira (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="royal stone - hirakareshi toki no tobira (japan).bin" size="524288" crc="445d7cd2"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ryukyu" cloneof="solitarp" romof="solitarp">
-		<description>Ryuukyuu (Jpn)</description>
+		<description>Ryuukyuu (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Face</manufacturer>
 		<rom name="mpr-13884.ic1" size="131072" crc="95efd52b"/>
@@ -4360,7 +4361,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samspir" cloneof="samsho" romof="samsho">
-		<description>Samurai Spirits (Jpn)</description>
+		<description>Samurai Spirits (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Takara</manufacturer>
 		<rom name="samurai spirits (japan).bin" size="524288" crc="93fd73dc"/>
@@ -4368,7 +4369,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="scratchgj" cloneof="scratchg" romof="scratchg">
-		<description>Scratch Golf (Jpn)</description>
+		<description>Scratch Golf (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Vic Tokai</manufacturer>
 		<rom name="mpr-16454.ic1" size="262144" crc="ec0f2c72"/>
@@ -4384,7 +4385,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sdgundam">
-		<description>SD Gundam - Winner's History (Jpn)</description>
+		<description>SD Gundam - Winner's History (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="mpr-17848.ic1" size="524288" crc="5e2b39b8"/>
@@ -4417,7 +4418,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shadam" cloneof="defoasis" romof="defoasis">
-		<description>Shadam Crusader - Harukanaru Oukoku (Jpn)</description>
+		<description>Shadam Crusader - Harukanaru Oukoku (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shadam crusader - harukanaru oukoku (japan).bin" size="524288" crc="09f9ed60"/>
@@ -4425,7 +4426,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shangh2a" cloneof="shangh2" romof="shangh2">
-		<description>Shanghai II (Jpn, v0)</description>
+		<description>Shanghai II (Japan, v0)</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="shanghai ii (japan).bin" size="131072" crc="2ae8c75f"/>
@@ -4433,7 +4434,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shangh2">
-		<description>Shanghai II (Jpn, v1)</description>
+		<description>Shanghai II (Japan, v1)</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="mpr-13494.ic1" size="131072" crc="81314249"/>
@@ -4449,7 +4450,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="shikinjo">
-		<description>Shikinjou (Jpn)</description>
+		<description>Shikinjou (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="shikinjou (japan).bin" size="131072" crc="9c5c7f53"/>
@@ -4457,32 +4458,32 @@
 		<driver status="good"/>
 	</game>
 	<game name="shinfrcg">
-		<description>Shining Force Gaiden - Ensei, Jashin no Kuni e (Jpn)</description>
+		<description>Shining Force Gaiden - Ensei, Jashin no Kuni e (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="shining force gaiden - ensei, jashin no kuni e (japan).bin" size="524288" crc="4d1f4699"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shinfrgf">
-		<description>Shining Force Gaiden - Final Conflict (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="shining force gaiden - final conflict (japan).bin" size="524288" crc="6019fe5e"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="shinfrgfe" cloneof="shinfrgf" romof="shinfrgf">
 		<comment>Hack</comment>
-		<description>Shining Force Gaiden - Final Conflict (T-Eng)</description>
+		<description>Shining Force Gaiden - Final Conflict (Hack, English)</description>
 		<year>2006</year>
 		<manufacturer>Shining Force Central</manufacturer>
 		<rom name="shining force gaiden - final conflict (english translation).gg" size="524288" crc="23bac434"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="shinfrgf">
+		<description>Shining Force Gaiden - Final Conflict (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="shining force gaiden - final conflict (japan).bin" size="524288" crc="6019fe5e"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shinfrg2" cloneof="shinfrc2" romof="shinfrc2">
-		<description>Shining Force Gaiden II - Jashin no Kakusei (Jpn)</description>
+		<description>Shining Force Gaiden II - Jashin no Kakusei (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15570 j07.u1" size="524288" crc="30374681"/>
@@ -4566,7 +4567,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skweek" cloneof="slider" romof="slider">
-		<description>Skweek (Jpn)</description>
+		<description>Skweek (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Victor</manufacturer>
 		<rom name="skweek (japan).bin" size="131072" crc="3d9c92c7"/>
@@ -4622,7 +4623,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonictls" cloneof="sonicc" romof="sonicc">
-		<description>Sonic and Tails (Jpn)</description>
+		<description>Sonic and Tails (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic and tails (japan).bin" size="524288" crc="8ac0dade"/>
@@ -4630,7 +4631,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonictlss" cloneof="sonicc" romof="sonicc">
-		<description>Sonic and Tails (Jpn, Jitsuenyou Sample)</description>
+		<description>Sonic and Tails (Japan, Jitsuenyou Sample)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic and tails [demo] (jp).bin" size="524288" crc="e0e3fb6a"/>
@@ -4638,7 +4639,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonictl2" cloneof="sonictri" romof="sonictri">
-		<description>Sonic and Tails 2 (Jpn)</description>
+		<description>Sonic and Tails 2 (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic and tails 2 (japan).bin" size="524288" crc="496bce64"/>
@@ -4646,7 +4647,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicbls">
-		<description>Sonic Blast (Euro, USA) ~ G Sonic (Jpn)</description>
+		<description>Sonic Blast (Euro, USA) ~ G Sonic (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-19071-s.ic2" size="1048576" crc="031b9da9"/>
@@ -4708,7 +4709,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicc">
-		<description>Sonic Chaos (Euro, USA, Bra)</description>
+		<description>Sonic Chaos (Euro, USA, Brazil)</description>
 		<year>199?</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15973-f.ic1" size="524288" crc="663f2abb"/>
@@ -4716,7 +4717,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicdr">
-		<description>Sonic Drift (Jpn)</description>
+		<description>Sonic Drift (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic drift (japan).bin" size="524288" crc="68f0a776"/>
@@ -4724,7 +4725,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicdrs" cloneof="sonicdr" romof="sonicdr">
-		<description>Sonic Drift (Jpn, Demo Sample)</description>
+		<description>Sonic Drift (Japan, Demo Sample)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic drift (japan) (sample).bin" size="524288" crc="baac1fc0"/>
@@ -4732,7 +4733,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicdr2">
-		<description>Sonic Drift 2 (Jpn, USA)</description>
+		<description>Sonic Drift 2 (Japan, USA)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17623.ic1" size="524288" crc="d6e8a305"/>
@@ -4936,7 +4937,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonic">
-		<description>Sonic The Hedgehog (Euro, Jpn, v1)</description>
+		<description>Sonic The Hedgehog (Euro, Japan, v1)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-14459a.ic1" size="262144" crc="d163356e"/>
@@ -4944,7 +4945,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sonicj" cloneof="sonic" romof="sonic">
-		<description>Sonic The Hedgehog (Jpn, USA, v0)</description>
+		<description>Sonic The Hedgehog (USA, Japan, v0)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="sonic the hedgehog (japan).bin" size="262144" crc="3e31cb8c"/>
@@ -4994,7 +4995,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sokoban">
-		<description>Soukoban (Jpn)</description>
+		<description>Soukoban (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Riverhill Software</manufacturer>
 		<rom name="soukoban (japan).bin" size="131072" crc="0f3e3840"/>
@@ -5449,7 +5450,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor">
-		<description>Streets of Rage (World) ~ Bare Knuckle (Jpn)</description>
+		<description>Streets of Rage (World) ~ Bare Knuckle (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="streets of rage (world).bin" size="262144" crc="3d8bcf1d"/>
@@ -5466,7 +5467,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="sor2">
-		<description>Streets of Rage II (World) ~ Bare Knuckle II - Shitou e no Chingonka (Jpn)</description>
+		<description>Streets of Rage II (World) ~ Bare Knuckle II - Shitou e no Chingonka (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15665.ic1" size="524288" crc="0b618409"/>
@@ -5498,7 +5499,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supercolj" cloneof="supercol" romof="supercol">
-		<description>Super Columns (Jpn)</description>
+		<description>Super Columns (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17865.ic1" size="131072" crc="2a100717"/>
@@ -5569,7 +5570,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="supgolfj" cloneof="supgolf" romof="supgolf">
-		<description>Super Golf (Jpn)</description>
+		<description>Super Golf (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sigma Enterprises</manufacturer>
 		<rom name="super golf (japan).bin" size="131072" crc="528cbbce"/>
@@ -5593,7 +5594,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smomo3">
-		<description>Super Momotarou Dentetsu III (Jpn)</description>
+		<description>Super Momotarou Dentetsu III (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Hudson</manufacturer>
 		<rom name="mpr-18440.ic1" size="524288" crc="b731bb80"/>
@@ -5601,7 +5602,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgp">
-		<description>Super Monaco GP (Euro, USA, Bra)</description>
+		<description>Super Monaco GP (Euro, USA, Brazil)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-13771.ic1" size="131072" crc="fcf12547"/>
@@ -5609,7 +5610,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="smgpj" cloneof="smgp" romof="smgp">
-		<description>Super Monaco GP (Jpn)</description>
+		<description>Super Monaco GP (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="super monaco gp (japan).bin" size="131072" crc="4f686c4a"/>
@@ -5641,7 +5642,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stetris">
-		<description>Super Tetris (Kor, SMS Mode?)</description>
+		<description>Super Tetris (Korea, SMS Mode?)</description>
 		<year>199?</year>
 		<manufacturer>Unknown</manufacturer>
 		<rom name="super tetris (k) [s][!].bin" size="65536" crc="bd1cc7df"/>
@@ -5666,27 +5667,27 @@
 		<driver status="good"/>
 	</game>
 	<game name="surfninj">
-		<description>Surf Ninjas (USA, Bra)</description>
+		<description>Surf Ninjas (USA, Brazil)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="surf ninjas (usa).bin" size="524288" crc="284482a8"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sylvan">
-		<description>Sylvan Tale (Jpn)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="sylvan tale (japan).bin" size="524288" crc="45ef2062"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="sylvane" cloneof="sylvan" romof="sylvan">
 		<comment>Hack</comment>
-		<description>Sylvan Tale (T-Eng)</description>
+		<description>Sylvan Tale (Hack, English)</description>
 		<year>2001</year>
 		<manufacturer>Aeon Genesis</manufacturer>
 		<rom name="sylvan tale (english translation).gg" size="524288" crc="5d803486"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sylvan">
+		<description>Sylvan Tale (Japan)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="sylvan tale (japan).bin" size="524288" crc="45ef2062"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5699,7 +5700,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="t2agj" cloneof="t2ag" romof="t2ag">
-		<description>T2 - The Arcade Game (Jpn)</description>
+		<description>T2 - The Arcade Game (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Acclaim</manufacturer>
 		<rom name="t2 - the arcade game (jp).bin" size="524288" crc="0b1ba87f"/>
@@ -5715,7 +5716,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tailskyp">
-		<description>Tails no Skypatrol (Jpn)</description>
+		<description>Tails no Skypatrol (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tails no skypatrol (japan).bin" size="262144" crc="88618afa"/>
@@ -5723,7 +5724,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="taisnmj">
-		<description>Taisen Mahjong HaoPai (Jpn)</description>
+		<description>Taisen Mahjong HaoPai (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taisen mahjong haopai (japan).bin" size="131072" crc="cf9c607c"/>
@@ -5731,7 +5732,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="taisnmj2">
-		<description>Taisen Mahjong HaoPai 2 (Jpn)</description>
+		<description>Taisen Mahjong HaoPai 2 (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="taisen mahjong haopai 2 (japan).bin" size="524288" crc="20527530"/>
@@ -5739,7 +5740,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="daisenrg">
-		<description>Taisen-gata Daisenryaku G (Jpn)</description>
+		<description>Taisen-gata Daisenryaku G (Japan)</description>
 		<year>1991</year>
 		<manufacturer>SystemSoft</manufacturer>
 		<rom name="mpr-14246.ic1" size="262144" crc="7b7717b8"/>
@@ -5747,7 +5748,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="chasehqj" cloneof="chasehq" romof="chasehq">
-		<description>Taito Chase H.Q. (Jpn, SMS Mode)</description>
+		<description>Taito Chase H.Q. (Japan, SMS Mode)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="taito chase h.q. (japan).bin" size="131072" crc="7bb81e3d"/>
@@ -5771,7 +5772,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tamalymp">
-		<description>Tama and Friends Sanchoume Kouen - Tamalympic (Jpn)</description>
+		<description>Tama and Friends Sanchoume Kouen - Tamalympic (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tama and friends sanchoume kouen - tamalympic (japan).bin" size="262144" crc="dd1d2ebf"/>
@@ -5779,7 +5780,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tarot">
-		<description>Tarot no Yakata (Jpn)</description>
+		<description>Tarot no Yakata (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tarot no yakata (japan).bin" size="131072" crc="57834c03"/>
@@ -5795,7 +5796,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="proyaktl">
-		<description>Tatakae! Pro Yakyuu Twin League (Jpn)</description>
+		<description>Tatakae! Pro Yakyuu Twin League (Japan)</description>
 		<year>1995</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tatakae! pro yakyuu twin league (japan).bin" size="524288" crc="bec57602"/>
@@ -6108,7 +6109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tomjermvj" cloneof="tomjermv" romof="tomjermv">
-		<description>Tom and Jerry - The Movie (Jpn)</description>
+		<description>Tom and Jerry - The Movie (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="tom and jerry - the movie (jp).bin" size="262144" crc="a1453efa"/>
@@ -6124,7 +6125,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="torarete">
-		<description>Torarete Tamaru ka!? (Jpn)</description>
+		<description>Torarete Tamaru ka!? (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16707.ic1" size="524288" crc="5bcf9b97"/>
@@ -6140,7 +6141,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ultsoccr">
-		<description>Ultimate Soccer (Euro, Jpn, Bra)</description>
+		<description>Ultimate Soccer (Euro, Japan, Brazil)</description>
 		<year>1993</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15827.ic1" size="262144" crc="820965a3"/>
@@ -6181,7 +6182,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="vfmini" cloneof="vfa" romof="vfa">
-		<description>Virtua Fighter Mini (Jpn)</description>
+		<description>Virtua Fighter Mini (Japan)</description>
 		<year>1996</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-18679-s.ic1" size="1048576" crc="c05657f8"/>
@@ -6197,7 +6198,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wagyan">
-		<description>Wagyan Land (Jpn)</description>
+		<description>Wagyan Land (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="mpr-13930.ic1" size="262144" crc="29e697b2"/>
@@ -6205,7 +6206,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wagyana" cloneof="wagyan" romof="wagyan">
-		<description>Wagyan Land (Jpn, Alt)</description>
+		<description>Wagyan Land (Japan, Alt)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
 		<rom name="wagan land (j) [a1].bin" size="262144" crc="d5369192"/>
@@ -6255,7 +6256,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wintolj" cloneof="wintol" romof="wintol">
-		<description>Winter Olympics - Lillehammer '94 (Jpn)</description>
+		<description>Winter Olympics - Lillehammer '94 (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16350.ic1" size="524288" crc="d5195a39"/>
@@ -6287,7 +6288,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wboyj" cloneof="wboy" romof="wboy">
-		<description>Wonder Boy (Jpn)</description>
+		<description>Wonder Boy (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="wonder boy (japan).bin" size="131072" crc="9977fcb3"/>
@@ -6344,7 +6345,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="wderby">
-		<description>World Derby (Jpn)</description>
+		<description>World Derby (Japan)</description>
 		<year>1994</year>
 		<manufacturer>CRI</manufacturer>
 		<rom name="world derby (japan).bin" size="524288" crc="1e81861f"/>
@@ -6500,7 +6501,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yuyu">
-		<description>Yu Yu Hakusho - Horobishimono no Gyakushuu (Jpn)</description>
+		<description>Yu Yu Hakusho - Horobishimono no Gyakushuu (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-16456.ic1" size="524288" crc="88ebbf9e"/>
@@ -6508,7 +6509,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="yuyu2">
-		<description>Yu Yu Hakusho 2 - Gekitou! Nanakyou no Tatakai (Jpn)</description>
+		<description>Yu Yu Hakusho 2 - Gekitou! Nanakyou no Tatakai (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-17084.ic1" size="524288" crc="46ae9159"/>
@@ -6516,7 +6517,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zangear">
-		<description>Zan Gear (Jpn)</description>
+		<description>Zan Gear (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Wolf Team</manufacturer>
 		<rom name="zan gear (japan).bin" size="131072" crc="141aaf96"/>
@@ -6540,7 +6541,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zoolj" cloneof="zool" romof="zool">
-		<description>Zool no Yume Bouken (Jpn)</description>
+		<description>Zool no Yume Bouken (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Infocom</manufacturer>
 		<rom name="zool no yume bouken (japan).bin" size="262144" crc="e35ef7ed"/>

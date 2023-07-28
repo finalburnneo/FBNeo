@@ -2138,7 +2138,7 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 tIniStruct gamehw_cfg[] = {
 	{_T("CPS-1/CPS-2/CPS-3 hardware"),	_T("config/presets/cps.ini"),		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, HARDWARE_CAPCOM_CPS2, HARDWARE_CAPCOM_CPS3, 0 }, "$info=" },
 	{_T("Neo-Geo hardware"),			_T("config/presets/neogeo.ini"),	{ HARDWARE_SNK_NEOGEO, 0 }, 		"$info="		},
-	{_T("Neo-Geo hardware"),			_T("config/presets/neogeo.ini"),	{ HARDWARE_SNK_NEOCD, 0 },			"$neocd="		},
+	{_T("Neo-Geo hardware"),			_T("config/presets/neogeocd.ini"),	{ HARDWARE_SNK_NEOCD, 0 },			"$neocd="		},
 	{_T("Neo Geo Pocket hardware"),     _T("config/presets/ngp.ini"),       { HARDWARE_SNK_NGP, 0 },			"$ngp="			},
 	{_T("Neo Geo Pocket hardware"),		_T("config/presets/ngp.ini"),		{ HARDWARE_SNK_NGPC, 0 },			"$ngpc="		},
 	{_T("NES hardware"),				_T("config/presets/nes.ini"),		{ HARDWARE_NES, 0 },				"$nes="			},

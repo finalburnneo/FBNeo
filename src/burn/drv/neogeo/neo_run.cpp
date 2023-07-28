@@ -4577,6 +4577,8 @@ static INT32 NeoSekRun(const INT32 nCycles)
 	return nCyclesExecutedTotal;
 }
 
+static INT32 in_cd_ffwd = 0;
+
 INT32 NeoFrame()
 {
 	//bprintf(0, _T("%X,"), SekReadWord(0x108)); // show game-id
@@ -5106,6 +5108,16 @@ INT32 NeoFrame()
 	if (pBurnSoundOut) {
 		if ((nNeoSystemType & NEO_SYS_CD) && !(LC8951RegistersW[10] & 4))
 			CDEmuGetSoundBuffer(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	// neocd super-speed-loader hack for the impatient
+	if (nNeoSystemType & NEO_SYS_CD && in_cd_ffwd == 0 && NeoCDBios & 0x80) {
+		in_cd_ffwd = 1;
+		while (NeoCDAssyStatus == 1 && bNeoCDLoadSector && LC8951RegistersW[10] & 4) {
+			NeoFrame();
+			if (pBurnSoundOut) BurnSoundClear();
+		}
+		in_cd_ffwd = 0;
 	}
 
 	return 0;

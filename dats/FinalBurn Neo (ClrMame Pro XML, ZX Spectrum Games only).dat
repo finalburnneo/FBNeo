@@ -1381,6 +1381,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="artura" romof="spectrum">
+		<description>Artura (48K)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Artura 48K (1988)(Gremlin Graphics).tap" size="48556" crc="a7d3f227"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ascend" romof="spectrum">
 		<comment>Homebrew, AY Sound support</comment>
 		<description>Ascend (48K) (HB)</description>
@@ -2791,6 +2800,25 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bringsa" romof="spectrum">
+		<description>Bored of the Rings v2 - side A (48K)</description>
+		<year>1985</year>
+		<manufacturer>Delta 4</manufacturer>
+		<rom name="Bored of the Rings v2 - side A (1985)(Delta 4).tap" size="91867" crc="9361bca3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bringsb" cloneof="bringsa" romof="bringsa">
+		<comment>PSW: Work for money, spend money, spend for love, love for money</comment>
+		<description>Bored of the Rings v2 - side B (48K)</description>
+		<year>1985</year>
+		<manufacturer>Delta 4</manufacturer>
+		<rom name="Bored of the Rings v2 - side B (1985)(Delta 4).tap" size="69048" crc="2f287c8a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bosconian" romof="spec128">
 		<description>Bosconian '87 (128K)</description>
 		<year>1987</year>
@@ -3239,6 +3267,16 @@
 		<manufacturer>Loriciels</manufacturer>
 		<rom name="Bumpy (1989)(Loriciels).tap" size="45878" crc="c79bed54"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="butcherhill" romof="spec128">
+		<description>Butcher Hill (128K)</description>
+		<year>1989</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Butcher Hill 128K (1989)(Gremlin Graphics).tap" size="143515" crc="20f2abbb"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13540,6 +13578,25 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="nestory2" romof="spectrum">
+		<description>NeverEnding Story II, The (48K)</description>
+		<year>1990</year>
+		<manufacturer>Linel</manufacturer>
+		<rom name="Neverending Story II, The 48K (1990)(Linel).tap" size="187826" crc="4d4ca801"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="nestory" romof="spec128">
+		<description>NeverEnding Story, The (128K)</description>
+		<year>1985</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="NeverEnding Story, The 128K (1985)(Ocean).tap" size="86648" crc="ccc97acd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tnzs" romof="spec128">
 		<description>New Zealand Story, The (128K)</description>
 		<year>1989</year>
@@ -14429,6 +14486,15 @@
 		<year>2020</year>
 		<manufacturer>PROSM Software</manufacturer>
 		<rom name="Patrick Paddle (2020)(PROSM Software).tap" size="13883" crc="952f6855"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pedro" romof="spectrum">
+		<description>Pedro (48K)</description>
+		<year>1984</year>
+		<manufacturer>Imagine Software</manufacturer>
+		<rom name="Pedro 48K (1984)(Imagine).tap" size="27328" crc="4c759deb"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16389,6 +16455,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="roust" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Roust (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>highriser</manufacturer>
+		<rom name="Roust 128K (2018)(highriser).tap" size="46458" crc="cf1fa81b"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="rubicon" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Rubicon (128K) (HB, v1.1)</description>
@@ -16537,6 +16614,28 @@
 		<manufacturer>Zeppelin Games</manufacturer>
 		<rom name="Sabotage 48K (1988)(Zeppelin Games).tap" size="43408" crc="b83fb136"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="saboterdc1" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Saboteur Deep Cover - part 1 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Retro Fusion Annual 2022</manufacturer>
+		<rom name="Saboteur Deep Cover - part 1 128K (2022)(Retro Fusion Annual 2022).tap" size="103189" crc="affc02c5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="saboterdc2" cloneof="saboterdc1" romof="saboterdc1">
+		<comment>Homebrew</comment>
+		<description>Saboteur Deep Cover - part 2 (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Retro Fusion Annual 2022</manufacturer>
+		<rom name="Saboteur Deep Cover - part 2 128K (2022)(Retro Fusion Annual 2022).tap" size="116482" crc="4723ffec"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17377,6 +17476,16 @@
 		<manufacturer>Anhot Studio</manufacturer>
 		<rom name="Sixsixsixsix (2020)(Anhot Studio).tap" size="42560" crc="aaae62a6"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="skatecrazy" romof="spec128">
+		<description>Skate Crazy (128K)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Skate Crazy 128K (1988)(Gremlin Graphics).tap" size="127196" crc="efd46948"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21477,7 +21586,7 @@
 	<game name="zipzap" romof="spectrum">
 		<description>Zip-Zap (48K)</description>
 		<year>1983</year>
-		<manufacturer>Imagine</manufacturer>
+		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Zip-Zap 48K (1983)(Imagine).tap" size="37207" crc="fcb30933"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -21612,6 +21721,17 @@
 		<manufacturer>ref</manufacturer>
 		<rom name="ZX Frogger 48K (2021)(ref).tap" size="22766" crc="12907894"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zxlarry" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>ZX Larry (128K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Rafal Miazga</manufacturer>
+		<rom name="ZX Larry 128K (2019)(Rafal Miazga).tap" size="48364" crc="d4a981d5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

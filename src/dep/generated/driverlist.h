@@ -958,6 +958,7 @@ DRV		BurnDrvAof3;
 DRV		BurnDrvmd_arttool;
 DRV		BurnDrvcv_artduel;
 DRV		BurnDrvpce_arttool;
+DRV		BurnSpecArtura;
 DRV		BurnDrvMSX_arya;
 DRV		BurnDrvsms_tvcolos;
 //		BurnDrvAs1;				// no comment [NOT WORKING]
@@ -2112,6 +2113,8 @@ DRV		BurnDrvBrdrlins;		// No sound
 DRV		BurnDrvBrdrlinet;		// No sound [NOT WORKING]
 DRV		BurnDrvBrdrline;		// No sound
 #endif
+DRV		BurnSpecBringsa;
+DRV		BurnSpecBringsb;
 DRV		BurnDrvBorenchj;
 DRV		BurnDrvBorench;
 DRV		BurnDrvBorencha;
@@ -2393,6 +2396,7 @@ DRV		BurnDrvMSX_butampana;
 DRV		BurnDrvMSX_butampan;
 DRV		BurnDrvButasanj;
 DRV		BurnDrvButasan;
+DRV		BurnSpecButcherhill;
 DRV		BurnDrvnes_buzzwaldog;
 DRV		BurnDrvMSX_buzzoff;
 DRV		BurnDrvBuzzard;
@@ -11096,6 +11100,8 @@ DRV		BurnDrvpce_neutopia;
 DRV		BurnDrvtg_neutopia;
 DRV		BurnDrvpce_neutopi2;
 DRV		BurnDrvtg_neutopi2;
+DRV		BurnSpecNestory2;
+DRV		BurnSpecNestory;
 DRV		BurnDrvmd_n3dgdevi;
 DRV		BurnDrvmd_n3dgaugu;
 DRV		BurnDrvmd_n3dgpebb;
@@ -11956,6 +11962,7 @@ DRV		BurnDrvpce_cputest;		// no comment
 DRV		BurnDrvMSX_pearlrain;
 DRV		BurnDrvmd_pebble;
 DRV		BurnDrvmd_pebbleu;
+DRV		BurnSpecPedro;
 DRV		BurnDrvcv_peekaboo;
 DRV		BurnDrvnes_peekaboopoker;
 DRV		BurnDrvPeekaboo;
@@ -13749,6 +13756,7 @@ DRV		BurnDrvRopeman;
 DRV		BurnDrvMSX_rotors;
 DRV		BurnDrvRoughrac;
 DRV		BurnDrvRoundup;
+DRV		BurnSpecRoust;
 DRV		BurnDrvroute16bl;
 DRV		BurnDrvroute16a;
 DRV		BurnDrvroute16b;
@@ -13830,6 +13838,8 @@ DRV		BurnSpecSabotage;
 DRV		BurnDrvMSX_sabotaje;
 DRV		BurnDrvSabotenb;
 DRV		BurnDrvSabotenba;
+DRV		BurnSpecSaboterdc1;
+DRV		BurnSpecSaboterdc2;
 DRV		BurnSpecSabotur2speed;
 DRV		BurnSpecsabotur2;
 DRV		BurnSpecsabotur2std_48;
@@ -14576,6 +14586,7 @@ DRV		BurnSpecsitoponsgp;
 DRV		BurnSpecSixsixsixsix;
 DRV		BurnDrvMSX_skateair;
 DRV		BurnDrvnes_skateboy;
+DRV		BurnSpecSkatecrazy;
 DRV		BurnDrvnes_skateordie;
 DRV		BurnDrvnes_skateordie2;
 DRV		BurnSpecSkateball;
@@ -19661,6 +19672,7 @@ DRV		BurnSpecZxdestroyer;
 DRV		BurnSpecZxenigma;
 DRV		BurnSpecZxfm2005;
 DRV		BurnSpecZxfrogger;
+DRV		BurnSpecZxlarry;
 DRV		BurnSpecZxparachute;
 DRV		BurnSpecSpec1282aBIOS;
 DRV		BurnSpecSpec128BIOS;
@@ -20634,6 +20646,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_arttool,			// Art Tool
 	&BurnDrvcv_artduel,			// Artillery Duel
 	&BurnDrvpce_arttool,		// Artist Tool (Japan)
+	&BurnSpecArtura,			// Artura (48K)
 	&BurnDrvMSX_arya,			// Arya (HB)
 	&BurnDrvsms_tvcolos,		// As Aventuras da TV Colosso (Brazil)
 //	&BurnDrvAs1,				// AS-1 Controller [no comment, NOT WORKING]
@@ -21788,6 +21801,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBrdrlinet,			// Borderline (Tranquillizer Gun conversion) [No sound, NOT WORKING]
 	&BurnDrvBrdrline,			// Borderline [No sound]
 #endif
+	&BurnSpecBringsa,			// Bored of the Rings v2 - side A (48K)
+	&BurnSpecBringsb,			// Bored of the Rings v2 - side B (48K)
 	&BurnDrvBorenchj,			// Borench (Japan)
 	&BurnDrvBorench,			// Borench (set 1)
 	&BurnDrvBorencha,			// Borench (set 2)
@@ -22069,6 +22084,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_butampan,		// Butamaru Pants. Pig Mock (Jpn)
 	&BurnDrvButasanj,			// Butasan (Japan, Japanese)
 	&BurnDrvButasan,			// Butasan - Pig's & Bomber's (Japan, English)
+	&BurnSpecButcherhill,		// Butcher Hill (128K)
 	&BurnDrvnes_buzzwaldog,		// Buzz & Waldog (USA) (Unl) (Prototype)
 	&BurnDrvMSX_buzzoff,		// Buzz Off! (Euro)
 	&BurnDrvBuzzard,			// Buzzard
@@ -30772,6 +30788,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvtg_neutopia,		// Neutopia (USA)
 	&BurnDrvpce_neutopi2,		// Neutopia II (Japan)
 	&BurnDrvtg_neutopi2,		// Neutopia II (USA)
+	&BurnSpecNestory2,			// NeverEnding Story II, The (48K)
+	&BurnSpecNestory,			// NeverEnding Story, The (128K)
 	&BurnDrvmd_n3dgdevi,		// New 3D Golf Simulation - Devil's Course (Jpn)
 	&BurnDrvmd_n3dgaugu,		// New 3D Golf Simulation - Harukanaru Augusta (Jpn)
 	&BurnDrvmd_n3dgpebb,		// New 3D Golf Simulation - Pebble Beach no Hatou (Jpn)
@@ -31632,6 +31650,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_pearlrain,		// Pearl Rain (HB)
 	&BurnDrvmd_pebble,			// Pebble Beach Golf Links (Euro)
 	&BurnDrvmd_pebbleu,			// Pebble Beach Golf Links (USA)
+	&BurnSpecPedro,				// Pedro (48K)
 	&BurnDrvcv_peekaboo,		// Peek-A-Boo (HB)
 	&BurnDrvnes_peekaboopoker,	// Peek-A-Boo Poker (Unl)
 	&BurnDrvPeekaboo,			// Peek-a-Boo! (Japan, ver. 1.1)
@@ -33425,6 +33444,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_rotors,			// Rotors (Jpn)
 	&BurnDrvRoughrac,			// Rough Racer (Japan, Floppy Based, FD1094 317-0058-06b)
 	&BurnDrvRoundup,			// Round-Up
+	&BurnSpecRoust,				// Roust (128K) (HB)
 	&BurnDrvroute16bl,			// Route 16 (bootleg)
 	&BurnDrvroute16a,			// Route 16 (Centuri license, set 1)
 	&BurnDrvroute16b,			// Route 16 (Centuri license, set 2)
@@ -33506,6 +33526,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_sabotaje,		// Sabotaje (Spanish)
 	&BurnDrvSabotenb,			// Saboten Bombers (set 1)
 	&BurnDrvSabotenba,			// Saboten Bombers (set 2)
+	&BurnSpecSaboterdc1,		// Saboteur Deep Cover - part 1 (128K) (HB)
+	&BurnSpecSaboterdc2,		// Saboteur Deep Cover - part 2 (128K) (HB)
 	&BurnSpecSabotur2speed,		// Saboteur II - Avenging Angel (128K) (Speed-up Hack)
 	&BurnSpecsabotur2,			// Saboteur II - Avenging Angel (128K)
 	&BurnSpecsabotur2std_48,	// Saboteur II - Avenging Angel (48K)
@@ -34252,6 +34274,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSixsixsixsix,		// Sixsixsixsix (Russian) (48K) (HB)
 	&BurnDrvMSX_skateair,		// Skate Air (HB)
 	&BurnDrvnes_skateboy,		// Skate Boy (Spain) (Gluk Video) (Unl)
+	&BurnSpecSkatecrazy,		// Skate Crazy (128K)
 	&BurnDrvnes_skateordie,		// Skate or Die (USA)
 	&BurnDrvnes_skateordie2,	// Skate or Die 2 - The Search for Double Trouble (USA)
 	&BurnSpecSkateball,			// Skateball (48K)
@@ -39337,6 +39360,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecZxenigma,			// ZX Enigma Machine (48K) (HB)
 	&BurnSpecZxfm2005,			// ZX Football Manager 2005 (128K) (HB)
 	&BurnSpecZxfrogger,			// ZX Frogger (48K) (HB)
+	&BurnSpecZxlarry,			// ZX Larry (128K) (HB)
 	&BurnSpecZxparachute,		// ZX Parachute (16K) (HB)
 	&BurnSpecSpec1282aBIOS,		// ZX Spectrum 128 +2a BIOS [BIOS Only, NOT WORKING]
 	&BurnSpecSpec128BIOS,		// ZX Spectrum 128 BIOS [BIOS Only, NOT WORKING]

@@ -237,12 +237,9 @@ static INT32 DrvGfxDecode() // 0, 100
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
+
+	BurnSetRefreshRate(57.00);
 
 	{
 		if (BurnLoadRom(DrvZ80ROM   + 0x0000,  0, 1)) return 1;
@@ -308,18 +305,23 @@ static INT32 DrvExit()
 	ZetExit();
 	IremSoundExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
 
-static void DrvPaletteInitOne(UINT8 *prom, UINT32 *dst, INT32 len)
+static void DrvPaletteInitOne(UINT8 *prom, UINT32 *dst, INT32 len, INT32 tiles)
 {
 	for (INT32 i = 0; i < len; i++)
 	{
 		INT32 bit0 = 0;
 		INT32 bit1 = (*prom >> 6) & 0x01;
 		INT32 bit2 = (*prom >> 7) & 0x01;
+
+		if (tiles && (i > 0x1f && i < 0x6a)) {
+			bit1 = (*prom >> 7) & 0x01;
+			bit2 = (*prom >> 6) & 0x01;
+		}
 		INT32 r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 
 		bit0 = (*prom >> 3) & 0x01;
@@ -341,8 +343,8 @@ static void DrvPaletteInit()
 {
 	UINT32 tmp[16];
 
-	DrvPaletteInitOne(DrvColPROM + 0x000, DrvPalette, 0x100);
-	DrvPaletteInitOne(DrvColPROM + 0x100, tmp, 0x10);
+	DrvPaletteInitOne(DrvColPROM + 0x000, DrvPalette, 0x100, 1);
+	DrvPaletteInitOne(DrvColPROM + 0x100, tmp, 0x10, 0);
 
 	for (INT32 i = 0; i < 256; i++) {
 		DrvPalette[0x100 + i] = tmp[(DrvColPROM[0x110 + i] & 0xf) ^ 0xf];
@@ -462,7 +464,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
-	INT32 nCyclesTotal[2] = { 3072000 / 57, 894886 / 60 };
+	INT32 nCyclesTotal[2] = { 3072000 / 57, 894886 / 57 };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);

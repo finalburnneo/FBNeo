@@ -32,7 +32,7 @@ static HBRUSH hWhiteBGBrush;
 bool bNeoCDListScanSub			= false;
 bool bNeoCDListScanOnlyISO		= false;
 TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdz/");
-TCHAR szNeoCDGamesDir[MAX_PATH] = _T("/neocdiso/");
+TCHAR szNeoCDGamesDir[MAX_PATH] = _T("neocdiso/");
 
 static int nSelectedItem = -1;
 

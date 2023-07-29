@@ -125,8 +125,8 @@ static void Darius2dMakeInputs()
 static void WarriorbMakeInputs()
 {
 	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xf7 };
-	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
-	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
+	UINT8 *DrvJoy[3] = { TC0510NIOInputPort0, TC0510NIOInputPort1, TC0510NIOInputPort2 };
+	CompileInput(DrvJoy, (void*)TC0510NIOInput, 3, 8, DrvJoyInit);
 }
 
 static struct BurnDIPInfo Darius2DIPList[]=

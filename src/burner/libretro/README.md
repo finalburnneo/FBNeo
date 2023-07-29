@@ -6,7 +6,19 @@ FinalBurn Neo (also referred to as FBNeo or FBN) is a multi-system emulator (Arc
 It is the follow-up of FinalBurn and FinalBurn Alpha emulators.
 The libretro core provides wide compatibility with platforms and features supported by libretro.
 
-For the most part, FBNeo is just as accurate as current MAME, occasionally we even find out a few games are more faithful to the pcb videos. The main difference with MAME is that FBNeo doesn't mind including "quality of life" hacks, while MAME is about absolute preservation. "Quality of life" hacks include things like improving original game's sound, having control alternatives that didn't exist on original cabinet, or dramatically reducing hardware requirements by cutting what we deem as unnecessary corners in the emulation code.
+## Difference from MAME
+
+FBNeo strives for accuracy, just like MAME. There are some arcade boards where one or the other will be more accurate, but for the most part they should be equally accurate.
+The main difference with MAME is that FBNeo doesn't mind including "quality of life" hacks, while MAME is about absolute preservation. "Quality of life" hacks include things like :
+* improving original game's sound (some games like "Burger Time" have noise which was clearly unintended by their developpers, we are removing it)
+* implementing alternative colors for games where the colors don't look right (sometimes there are controversies about which colors are right for an arcade board, like "Tropical Angel", we implement alternative colors as dipswitches)
+* having control alternatives that didn't exist on original cabinet (play rotary stick games like twin-stick shooters, use lightguns in "Rambo 3", use simplified 8-way directional controls for "Battlezone", ...)
+* improving the gaming experience by cutting what we deem as uncecessary aspect of emulation (you won't need to spend 20 minutes "installing" CPS-3 games)
+* reducing hardware requirements by cutting what we deem as unnecessary corners in the emulation code
+* supporting popular romhacks 
+* ...
+
+Note: some of those "quality of life" hacks might be doable with programming skills and lua language on MAME
 
 ## License and changelog
 

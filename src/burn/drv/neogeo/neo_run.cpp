@@ -5110,12 +5110,12 @@ INT32 NeoFrame()
 			CDEmuGetSoundBuffer(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	// neocd super-speed-loader hack for the impatient
+	// neocdz super-speed-loader hack for the impatient
 	if (nNeoSystemType & NEO_SYS_CD && in_cd_ffwd == 0 && NeoCDBios & 0x80) {
 		in_cd_ffwd = 1;
-		while (NeoCDAssyStatus == 1 && bNeoCDLoadSector && LC8951RegistersW[10] & 4) {
+		INT32 cnt = 0;
+		while (NeoCDAssyStatus == 1 && bNeoCDLoadSector && LC8951RegistersW[10] & 4 && ++cnt < 15) {
 			NeoFrame();
-			if (pBurnSoundOut) BurnSoundClear();
 		}
 		in_cd_ffwd = 0;
 	}

@@ -1621,7 +1621,7 @@ static INT32 StoneageInit()
 
 static INT32 Robocop2Init()
 {
-// 	BurnSetRefreshRate(57.79965); causes glitch in music, avoid
+ 	BurnSetRefreshRate(57.79); //57.79965
 
 	BurnAllocMemIndex();
 
@@ -1720,7 +1720,12 @@ static INT32 Robocop2Init()
 	SekSetReadByteHandler(0,		robocop2_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.50);
+	// re: weird huc6280 cpu speed math below in deco16SoundInit()
+	// it makes the music line up properly at 57.79965hz. I think this is a bug
+	// in the ym2151 core (timing?), because when MAME changed to Giles's ymfm
+	// it stopped being a problem there.
+
+	deco16SoundInit(DrvHucROM, DrvHucRAM, (INT32)((double)4027500 * 57.79 / 60), 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.50);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);

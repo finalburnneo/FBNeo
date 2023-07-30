@@ -228,6 +228,11 @@ void HiscoreSearch_internal(FILE *fp, const char *name)
 							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
 						}
 
+						if (!strcmp(name, "quantum") && HiscoreMemRange[nHiscoreNumRanges].Address == 0x1b5aa) {
+							bprintf(0, _T("-- dbreed noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);
+							HiscoreMemRange[nHiscoreNumRanges].NoConfirm = 1;
+						}
+
 						// same thing, with ledstorm, ledstorm 2011[u,p] & madgear[j]
 						if ((!strcmp(name, "leds2011") || !strcmp(name, "leds2011u") || !strcmp(name, "leds2011p") || !strcmp(name, "ledstorm") || !strcmp(name, "madgear") || !strcmp(name, "madgearj")) && HiscoreMemRange[nHiscoreNumRanges].Address == 0xff87c9) {
 							bprintf(0, _T("-- leds2011 noConfirm hack for address range %x\n"), HiscoreMemRange[nHiscoreNumRanges].Address);

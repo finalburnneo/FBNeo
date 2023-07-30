@@ -3379,7 +3379,7 @@ static void System18RenderTextLayer(INT32 PriorityDraw, INT32 tpri)
 			Priority = (Code >> 15) & 1;
 
 			if (Priority == PriorityDraw) {
-				Colour = (Code >> 9) & 0x07;
+				Colour = (Code >> ((AltModeKludge) ? 8 : 9)) & 0x07;
 				Code &= (AltModeKludge) ? 0xff : 0x1ff;
 
 				Code += System16TileBanks[0] * System16TileBankSize;

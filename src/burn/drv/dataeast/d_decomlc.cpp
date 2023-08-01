@@ -1284,7 +1284,7 @@ static INT32 AvengrgsInit()
 
 struct BurnDriver BurnDrvAvengrgs = {
 	"avengrgs", NULL, NULL, NULL, "1995",
-	"Avengers In Galactic Storm (US/Europe 1.0\0", NULL, "Data East Corporation", "DECO MLC",
+	"Avengers In Galactic Storm (US/Europe 1.0)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, avengrgsRomInfo, avengrgsRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,

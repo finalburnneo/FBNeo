@@ -22315,7 +22315,7 @@ struct BurnDriver BurnDrvCpsKnightsu = {
 
 struct BurnDriver BurnDrvCpsKnightsj = {
 	"knightsj", "knights", NULL, NULL, "1991",
-	"Knights of the Round (Japan 911127, B-Board 91634B-2))\0", NULL, "Capcom", "CPS1",
+	"Knights of the Round (Japan 911127, B-Board 91634B-2)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KnightsjRomInfo, KnightsjRomName, NULL, NULL, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
@@ -22365,7 +22365,7 @@ struct BurnDriver BurnDrvCpsKnightsb3 = {
 
 struct BurnDriver BurnDrvCpsKnightsb4 = {
 	"knightsb4", "knights", NULL, NULL, "1991",
-	"Knights of the Round (bootleg set 4 (with YM2151 + 2xMSM5205), 911127 etc)\0", NULL, "bootleg", "CPS1",
+	"Knights of the Round (bootleg with YM2151 + 2xMSM5205, 911127 etc, set 4)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb4RomInfo, Knightsb4RomName, NULL, NULL, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
@@ -22375,7 +22375,7 @@ struct BurnDriver BurnDrvCpsKnightsb4 = {
 
 struct BurnDriver BurnDrvCpsKnightsb5 = {
 	"knightsb5", "knights", NULL, NULL, "1991",
-	"Knights of the Round (bootleg set 5, 911127 Japan)\0", NULL, "bootleg", "CPS1",
+	"Knights of the Round (bootleg, 911127 Japan, set 5)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb5RomInfo, Knightsb5RomName, NULL, NULL, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
@@ -23285,7 +23285,7 @@ struct BurnDriver BurnDrvCpsSf2thndr2 = {
 
 struct BurnDriver BurnDrvCpsSf2b = {
 	"sf2b", "sf2", NULL, NULL, "1992",
-	"Street Fighter II: The World Warrior (bootleg, 910214 etc, set 1  (with YM2151 + 2xMSM5205))\0", "row scroll issues", "bootleg", "CPS1",
+	"Street Fighter II: The World Warrior (bootleg with YM2151 + 2xMSM5205, set 1, 910214 etc)\0", "row scroll issues", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2bRomInfo, Sf2bRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

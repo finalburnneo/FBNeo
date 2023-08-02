@@ -386,6 +386,18 @@ void UPD7759Update(INT32 chip, INT16 *pSoundBuf, INT32 nLength)
 	Chip->pos = Pos;
 }
 
+void UPD7759Render(INT16* pSoundBuf, INT32 samples)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugSnd_UPD7759Initted) bprintf(PRINT_ERROR, _T("UPD7759Render called without init\n"));
+#endif
+
+	for (INT32 i = 0; i <= nNumChips; i++) // first chip 0, second chip 1...
+	{
+		UPD7759Update(i, pSoundBuf, samples);
+	}
+}
+
 void UPD7759Reset()
 {
 #if defined FBNEO_DEBUG
@@ -451,6 +463,11 @@ void UPD7759Init(INT32 chip, INT32 clock, UINT8* pSoundData)
 	UPD7759Reset();
 }
 
+void UPD7759SetStartDelay(INT32 chip, INT32 nDelay)
+{
+
+}
+
 void UPD7759SetRoute(INT32 chip, double nVolume, INT32 nRouteDir)
 {
 #if defined FBNEO_DEBUG
@@ -472,6 +489,11 @@ void UPD7759SetDrqCallback(INT32 chip, drqcallback Callback)
 
 	Chip = Chips[chip];
 	Chip->drqcallback = Callback;
+}
+
+void UPD7759SetSyncCallback(INT32 chip, INT32(*pCPUCyclesCB)(), INT32 nCPUMhz)
+{
+
 }
 
 INT32 UPD7759BusyRead(INT32 chip)

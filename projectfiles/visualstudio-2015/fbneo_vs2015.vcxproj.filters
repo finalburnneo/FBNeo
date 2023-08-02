@@ -4227,6 +4227,9 @@
     <ClCompile Include="..\..\src\intf\audio\win32\aud_wasapi.cpp">
       <Filter>interfaces\audio\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp">
+      <Filter>Burn\drv\sega</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

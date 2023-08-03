@@ -5876,8 +5876,8 @@ STD_ROM_FN(Sfa2uhc)
 // Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899, Ver.2009-04-24)
 
 static struct BurnRomInfo Sfz2adlRomDesc[] = {
-	{ "szaj-dl.03a",   0x080000, 0x67bc6f45, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "szaj-dl.04a",   0x080000, 0xb124800a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szajdl.03a",    0x080000, 0x67bc6f45, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szajdl.04a",    0x080000, 0xb124800a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "szaj.05a",      0x080000, 0xc88ebf88, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "szaj.06a",      0x080000, 0x35ed5b7a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "szaj.07a",      0x080000, 0x975dcb3e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -8690,6 +8690,7 @@ static struct BurnRomInfo XmvsfbRomDesc[] = {
 
 	{ "xvs.01",        0x020000, 0x3999e93a, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "xvs.02",        0x020000, 0x101bdee9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
 	
@@ -8700,7 +8701,7 @@ STD_ROM_PICK(Xmvsfb)
 STD_ROM_FN(Xmvsfb)
 
 static struct BurnRomInfo XmvsfcphRomDesc[] = {
-	{ "xvse.03f",      0x080000, 0xd0d03ddf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsecph.03f",   0x080000, 0xd0d03ddf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvse.04f",      0x080000, 0xef015aef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvs.05a",       0x080000, 0x7db6025d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvs.06a",       0x080000, 0xe8e2c75c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11139,7 +11140,7 @@ struct BurnDriver BurnDrvCpsSpf2th = {
 
 struct BurnDriver BurnDrvCpsSpf2tb = {
 	"spf2tb", "spf2t", NULL, NULL, "200?",
-	"Super Puzzle Fighter II Turbo (Boss Hack)\0", NULL, "Hack", "CPS2",
+	"Super Puzzle Fighter II Turbo (Boss Hack)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2tbRomInfo, Spf2tbRomName, NULL, NULL, NULL, NULL, Spf2tInputInfo, NULL,
@@ -12815,8 +12816,8 @@ STD_ROM_PICK(Sfa3ud)
 STD_ROM_FN(Sfa3ud)
 
 static struct BurnRomInfo Sfa3xlRomDesc[] = {
-	{ "sz3e-xl.03c",   0x080000, 0x9411ced4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3e-xl.04c",   0x080000, 0x01a7b266, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3exl.03c",    0x080000, 0x9411ced4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3exl.04c",    0x080000, 0x01a7b266, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3.05c",       0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3.06c",       0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3.07c",       0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -13275,8 +13276,8 @@ STD_ROM_PICK(Ssf2xjr1d)
 STD_ROM_FN(Ssf2xjr1d)
 
 static struct BurnRomInfo Ssf2xjr1trnRomDesc[] = {
-	{ "sfxj.03c",      0x080000, 0x37b25225, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfxj.04a",      0x080000, 0xbf2ae059, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxjtrn.03c",   0x080000, 0x37b25225, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxjtrn.04a",   0x080000, 0xbf2ae059, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxj.05",       0x080000, 0xf4ff18f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxj.06a",      0x080000, 0x260d0370, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxj.07",       0x080000, 0x1324d02a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -13905,9 +13906,9 @@ struct BurnDriver BurnDrvCpsSfaud = {
 
 struct BurnDriver BurnDrvCpsSfa2uhc = {
 	"sfa2uhc", "sfa2", "sfa2ur1", NULL, "2009",
-	"Street Fighter Alpha 2 - Unlock Hidden Characters (Hack By Yumeji)\0", NULL, "Hack", "CPS2",
+	"Street Fighter Alpha 2 - Unlock Hidden Characters (Hack By Yumeji)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa2uhcRomInfo, Sfa2uhcRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -13915,9 +13916,9 @@ struct BurnDriver BurnDrvCpsSfa2uhc = {
 
 struct BurnDriver BurnDrvCpsSfz2adl = {
 	"sfz2adl", "sfz2al", "sfz2alj", NULL, "2009",
-	"Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899, Ver.2009-04-24)\0", NULL, "Hack", "CPS2",
+	"Street Fighter Zero 2 Alpha - Dragon Level (Hack by pipi899, Ver.2009-04-24)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz2adlRomInfo, Sfz2adlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Sfa2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -13965,9 +13966,9 @@ struct BurnDriver BurnDrvCpsSfa3ud = {
 
 struct BurnDriver BurnDrvCpsSfa3xl = {
 	"sfa3xl", "sfa3", NULL, NULL, "2009",
-	"Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10)\0", NULL, "Hack", "CPS2",
+	"Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa3xlRomInfo, Sfa3xlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -13975,9 +13976,9 @@ struct BurnDriver BurnDrvCpsSfa3xl = {
 
 struct BurnDriver BurnDrvCpsSfa3fp = {
 	"sfa3fp", "sfa3", NULL, NULL, "2016",
-	"Street Fighter Alpha 3 Full Power (Ver.2016-09-05, Hack)\0", NULL, "Hack", "CPS2",
+	"Street Fighter Alpha 3 Full Power (Ver.2016-09-05, Hack)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa3fpRomInfo, Sfa3fpRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -14115,7 +14116,7 @@ struct BurnDriver BurnDrvCpsSsf2xjr1d = {
 
 struct BurnDriver BurnDrvCpsSsf2xjr1trn = {
 	"ssf2xjr1trn", "ssf2t", NULL, NULL, "1994",
-	"Super Street Fighter II X - GMC Trainer (super street fighter 2 X 940223 Japan)\0", NULL, "Hack", "CPS2",
+	"Super Street Fighter II X - GMC Trainer (super street fighter 2 X 940223 Japan)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2xjr1trnRomInfo, Ssf2xjr1trnRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

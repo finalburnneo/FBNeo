@@ -7870,26 +7870,26 @@ struct BurnDriver BurnDrvkof2001h = {
 // Version 2004-05-07 Hack By Jason FGCH
 
 static struct BurnRomInfo kof2001ruRomDesc[] = {
-	{ "2k1ru-p1.p1",       0x100000, 0x3377ebee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "2k1ru-p2.p2",       0x400000, 0x394bcc59, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "262-p1ru.p1",		0x100000, 0x3377ebee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "262-p2ru.sp2",		0x400000, 0x394bcc59, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "2k1ru-s1.s1",       0x020000, 0xa5d90035, 2 | BRF_GRA },     //  2 Text layer tiles
+	{ "262-s1ru.s1",		0x020000, 0xa5d90035, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "262-c1d.c1",        0x800000, 0x103225b1, 3 | BRF_GRA },     //  3 Sprite Data
-	{ "262-c2d.c2",        0x800000, 0xf9d05d99, 3 | BRF_GRA },     //  4
-	{ "262-c3d.c3",        0x800000, 0x4c7ec427, 3 | BRF_GRA },     //  5
-	{ "262-c4d.c4",        0x800000, 0x1d237aa6, 3 | BRF_GRA },     //  6
-	{ "262-c5d.c5",        0x800000, 0xc2256db5, 3 | BRF_GRA },     //  7
-	{ "262-c6d.c6",        0x800000, 0x8d6565a9, 3 | BRF_GRA },     //  8
-	{ "262-c7d.c7",        0x800000, 0xd1408776, 3 | BRF_GRA },     //  9
-	{ "262-c8d.c8",        0x800000, 0x954d0e16, 3 | BRF_GRA },     //  10
+	{ "262-c1d.c1",			0x800000, 0x103225b1, 3 | BRF_GRA },           //  3 Sprite Data
+	{ "262-c2d.c2",			0x800000, 0xf9d05d99, 3 | BRF_GRA },           //  4
+	{ "262-c3d.c3",			0x800000, 0x4c7ec427, 3 | BRF_GRA },           //  5
+	{ "262-c4d.c4",			0x800000, 0x1d237aa6, 3 | BRF_GRA },           //  6
+	{ "262-c5d.c5",			0x800000, 0xc2256db5, 3 | BRF_GRA },           //  7
+	{ "262-c6d.c6",			0x800000, 0x8d6565a9, 3 | BRF_GRA },           //  8
+	{ "262-c7d.c7",			0x800000, 0xd1408776, 3 | BRF_GRA },           //  9
+	{ "262-c8d.c8",			0x800000, 0x954d0e16, 3 | BRF_GRA },           // 10
 
-	{ "2k1ru-m1d.m1",      0x020000, 0x2fb0a8a5, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "262-m1d.m1",			0x020000, 0x2fb0a8a5, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "262-v1-08-e0.v1",   0x400000, 0x83d49ecf, 5 | BRF_SND },           // 12 Sound data
-	{ "262-v2-08-e0.v2",   0x400000, 0x003f1843, 5 | BRF_SND },           // 13
-	{ "262-v3-08-e0.v3",   0x400000, 0x2ae38dbe, 5 | BRF_SND },           // 14
-	{ "262-v4-08-e0.v4",   0x400000, 0x26ec4dd9, 5 | BRF_SND },           // 15
+	{ "262-v1-08-e0.v1",	0x400000, 0x83d49ecf, 5 | BRF_SND },           // 12 Sound data
+	{ "262-v2-08-e0.v2",	0x400000, 0x003f1843, 5 | BRF_SND },           // 13
+	{ "262-v3-08-e0.v3",	0x400000, 0x2ae38dbe, 5 | BRF_SND },           // 14
+	{ "262-v4-08-e0.v4",	0x400000, 0x26ec4dd9, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kof2001ru, kof2001ru, neogeo)
@@ -13765,7 +13765,7 @@ static struct BurnRomInfo brkrevextRomDesc[] = {
 
 	{ "245-s1.s1",       0x020000, 0xe7660a5d, 2 | BRF_GRA },           //  1 Text layer tiles
 
-																		/* The chip labels and sizes are correct */
+	/* The chip labels and sizes are correct */
 	{ "245-c1.c1",       0x400000, 0x68d4ae76, 3 | BRF_GRA },           //  2 Sprite data
 	{ "245-c2.c2",       0x400000, 0xfdee05cd, 3 | BRF_GRA },           //  3 
 	{ "245-c3.c3",       0x400000, 0x645077f3, 3 | BRF_GRA },           //  4 
@@ -14685,24 +14685,24 @@ struct BurnDriver BurnDrvbangbedp = {
 
 static struct BurnRomInfo doubledrspRomDesc[] = {
 	{ "082-p1sp.p1",  0x100000, 0x8ea8ee3d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "082-p2sp.p2",  0x100000, 0x0e2616ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "082-p3sp.p3",  0x020000, 0x8b4839c4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code	
+	{ "082-p2sp.p2",  0x100000, 0x0e2616ab, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "082-p3sp.p3",  0x020000, 0x8b4839c4, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
-	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
 
-	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
-	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  3 					/ TC5316200
-	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4 					/ TC5316200
-	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5 					/ TC5316200
-	{ "082-c5sp.c5",  0x200000, 0xb9c799fe, 3 | BRF_GRA },           //  6 					/ TC5316200
-	{ "082-c6sp.c6",  0x200000, 0x11569bc9, 3 | BRF_GRA },           //  7 					/ TC5316200
-	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8 					/ TC538200
-	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9 					/ TC538200
+	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  4 Sprite data		/ TC5316200
+	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "082-c5sp.c5",  0x200000, 0xb9c799fe, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "082-c6sp.c6",  0x200000, 0x11569bc9, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           // 10 					/ TC538200
+	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           // 11 					/ TC538200
 
-	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
+	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code			/ TC531001
 
-	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
-	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 13 Sound data		/ TC5316200
+	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 14 					/ TC5316200
 };
 
 STDROMPICKEXT(doubledrsp, doubledrsp, neogeo)
@@ -15037,24 +15037,24 @@ struct BurnDriver BurnDrvtotc = {
 // The King of Fighters 2000 (Playstation 2 ver. , EGHT hack)
 
 static struct BurnRomInfo kof2000ps2RomDesc[] = {
-	{ "257ps2-p1.bin", 0x100000, 0x56941018, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "257ps2-p2.bin", 0x400000, 0x1669a5ad, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "257-p1ps2.p1",	0x100000, 0x56941018, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "257-p2ps2.sp2",	0x400000, 0x1669a5ad, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "257-c1_decrypted.bin",    0x800000, 0xabcdd424, 3 | BRF_GRA }, //  2 Sprite data
-	{ "257-c2_decrypted.bin",    0x800000, 0xcda33778, 3 | BRF_GRA }, //  3 
-	{ "257-c3_decrypted.bin",    0x800000, 0x087fb15b, 3 | BRF_GRA }, //  4 
-	{ "257-c4_decrypted.bin",    0x800000, 0xfe9dfde4, 3 | BRF_GRA }, //  5 
-	{ "257-c5_decrypted.bin",    0x800000, 0x03ee4bf4, 3 | BRF_GRA }, //  6 
-	{ "257-c6_decrypted.bin",    0x800000, 0x8599cc5b, 3 | BRF_GRA }, //  7 
-	{ "257-c7_decrypted.bin",    0x800000, 0x93c343ec, 3 | BRF_GRA }, //  8 
-	{ "257-c8_decrypted.bin",    0x800000, 0xba92f698, 3 | BRF_GRA }, //  9 
+	{ "257-c1d.c1",		0x800000, 0xabcdd424, 3 | BRF_GRA },           //  2 Sprite data
+	{ "257-c2d.c2",		0x800000, 0xcda33778, 3 | BRF_GRA },           //  3 
+	{ "257-c3d.c3",		0x800000, 0x087fb15b, 3 | BRF_GRA },           //  4 
+	{ "257-c4d.c4",		0x800000, 0xfe9dfde4, 3 | BRF_GRA },           //  5 
+	{ "257-c5d.c5",		0x800000, 0x03ee4bf4, 3 | BRF_GRA },           //  6 
+	{ "257-c6d.c6",		0x800000, 0x8599cc5b, 3 | BRF_GRA },           //  7 
+	{ "257-c7ps2.c7",	0x800000, 0x93c343ec, 3 | BRF_GRA },           //  8 
+	{ "257-c8ps2.c8",	0x800000, 0xba92f698, 3 | BRF_GRA },           //  9 
 
-	{ "257-m1.m1",    0x040000, 0x4b749113, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "257-m1.m1",		0x040000, 0x4b749113, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 	
-	{ "257-v1.v1",    0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
-	{ "257-v2.v2",    0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12 
-	{ "257-v3.v3",    0x400000, 0x4605036a, 5 | BRF_SND },           // 13 
-	{ "257-v4.v4",    0x400000, 0x764bbd6b, 5 | BRF_SND },           // 14 
+	{ "257-v1.v1",		0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
+	{ "257-v2.v2",		0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12 
+	{ "257-v3.v3",		0x400000, 0x4605036a, 5 | BRF_SND },           // 13 
+	{ "257-v4.v4",		0x400000, 0x764bbd6b, 5 | BRF_SND },           // 14 
 };
 
 STDROMPICKEXT(kof2000ps2, kof2000ps2, neogeo)
@@ -15071,25 +15071,25 @@ struct BurnDriver BurnDrvkof2000ps2 = {
 };
 
 static struct BurnRomInfo kof2000otcRomDesc[] = {
-	{ "kof2000otc-p1.bin", 		0x100000, 0x11dbf4dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "kof2000otc-p2.bin", 		0x400000, 0xe1095f50, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "257-p1otc.p1",	0x100000, 0x11dbf4dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "257-p2otc.sp2",	0x400000, 0xe1095f50, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "257-c1_decrypted.bin",   0x800000, 0xabcdd424, 3 | BRF_GRA }, 		   //  2 Sprite data
-	{ "257-c2_decrypted.bin",   0x800000, 0xcda33778, 3 | BRF_GRA }, 		   //  3
-	{ "257-c3_decrypted.bin",   0x800000, 0x087fb15b, 3 | BRF_GRA }, 		   //  4
-	{ "257-c4_decrypted.bin",   0x800000, 0xfe9dfde4, 3 | BRF_GRA }, 		   //  5
-	{ "257-c5_decrypted.bin",   0x800000, 0x03ee4bf4, 3 | BRF_GRA }, 		   //  6
-	{ "257-c6_decrypted.bin",   0x800000, 0x8599cc5b, 3 | BRF_GRA }, 		   //  7
-	{ "kof2000otc-c7.bin",    	0x800000, 0xb2cd7102, 3 | BRF_GRA }, 		   //  8
-	{ "kof2000otc-c8.bin",   	0x800000, 0xd11c3b66, 3 | BRF_GRA }, 		   //  9
+	{ "257-c1d.c1",		0x800000, 0xabcdd424, 3 | BRF_GRA }, 		   //  2 Sprite data
+	{ "257-c2d.c2",		0x800000, 0xcda33778, 3 | BRF_GRA }, 		   //  3
+	{ "257-c3d.c3",		0x800000, 0x087fb15b, 3 | BRF_GRA }, 		   //  4
+	{ "257-c4d.c4",		0x800000, 0xfe9dfde4, 3 | BRF_GRA }, 		   //  5
+	{ "257-c5d.c5",		0x800000, 0x03ee4bf4, 3 | BRF_GRA }, 		   //  6
+	{ "257-c6d.c6",		0x800000, 0x8599cc5b, 3 | BRF_GRA }, 		   //  7
+	{ "257-c7otc.c7",	0x800000, 0xb2cd7102, 3 | BRF_GRA }, 		   //  8
+	{ "257-c8otc.c8",	0x800000, 0xd11c3b66, 3 | BRF_GRA }, 		   //  9
 
-	{ "257-m1.m1",    			0x040000, 0x80ebc3aa, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "257-m1otc.m1",	0x040000, 0x80ebc3aa, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "257-v1.v1",    			0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
-	{ "257-v2.v2",    			0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12
-	{ "257-v3.v3",    			0x400000, 0x4605036a, 5 | BRF_SND },           // 13
-	{ "257-v4.v4",    			0x400000, 0x764bbd6b, 5 | BRF_SND },           // 14
-	{ "kof2000otc-v5.bin",    	0x400000, 0x54df285f, 5 | BRF_SND },           // 15
+	{ "257-v1.v1",		0x400000, 0x17cde847, 5 | BRF_SND },           // 11 Sound data
+	{ "257-v2.v2",		0x400000, 0x1afb20ff, 5 | BRF_SND },           // 12
+	{ "257-v3.v3",		0x400000, 0x4605036a, 5 | BRF_SND },           // 13
+	{ "257-v4.v4",		0x400000, 0x764bbd6b, 5 | BRF_SND },           // 14
+	{ "257-v5otc.v5",	0x400000, 0x54df285f, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kof2000otc, kof2000otc, neogeo)
@@ -15303,26 +15303,26 @@ struct BurnDriver BurnDrvkf2k2plc = {
 // The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)
 
 static struct BurnRomInfo kf2k2ps2RomDesc[] = {
-	{ "265ps2-p1.bin",   		0x100000, 0x336c4ca8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265ps2-p2.bin",   		0x500000, 0xcb0032bf, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265-p1ps2o.p1",		0x100000, 0x336c4ca8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p2ps2o.sp2",		0x500000, 0xcb0032bf, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "265ps2-s1.bin",   		0x020000, 0x714ade47, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265-s1ps2.s1",		0x020000, 0x714ade47, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "265-c1_decrypted.bin", 	0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
-	{ "265-c2_decrypted.bin", 	0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4 
-	{ "265-c3_decrypted.bin", 	0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
-	{ "265-c4_decrypted.bin", 	0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
-	{ "265-c5_decrypted.bin", 	0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
-	{ "265-c6_decrypted.bin", 	0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
-	{ "265ps2-c7.bin",   		0x800000, 0x1b1d35fb, 3 | BRF_GRA },           //  9 
-	{ "265ps2-c8.bin",   		0x800000, 0xa5e35d11, 3 | BRF_GRA },           // 10 
-	{ "265ps2-c9.bin",   		0x800000, 0xaa8bbc97, 3 | BRF_GRA },           // 11
-	{ "265ps2-c10.bin",  		0x800000, 0x9832713d, 3 | BRF_GRA },           // 12 
+	{ "265-c1d.c1", 		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265-c2d.c2", 		0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4 
+	{ "265-c3d.c3", 		0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
+	{ "265-c4d.c4", 		0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
+	{ "265-c5d.c5", 		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
+	{ "265-c6d.c6", 		0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
+	{ "265-c7ps2o.c7",		0x800000, 0x1b1d35fb, 3 | BRF_GRA },           //  9 
+	{ "265-c8ps2o.c8",		0x800000, 0xa5e35d11, 3 | BRF_GRA },           // 10 
+	{ "265-c9ps2o.c9",		0x800000, 0xaa8bbc97, 3 | BRF_GRA },           // 11
+	{ "265-c10ps2o.c10",	0x800000, 0x9832713d, 3 | BRF_GRA },           // 12 
 
-	{ "265-m1.bin",      		0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
+	{ "265-m1.m1",			0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
 
-	{ "265-v1.bin",      		0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 14 Sound data
-	{ "265-v2.bin",      		0x800000, 0xda41d6f9, 5 | BRF_SND },           // 15 
+	{ "265-v1.v1",			0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 14 Sound data
+	{ "265-v2.v2",			0x800000, 0xda41d6f9, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kf2k2ps2, kf2k2ps2, neogeo)
@@ -15356,28 +15356,28 @@ struct BurnDriver BurnDrvkf2k2ps2 = {
 // The King of Fighters 2002 (PlayStation 2, Hack)
 
 static struct BurnRomInfo kf2k2ps2bRomDesc[] = {
-	{ "265-p1ps2.p1",		0x100000, 0x9da95b36, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265-p2ps2.sp2",		0x500000, 0x9846db3a, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265-p1ps2.p1",	0x100000, 0x9da95b36, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p2ps2.sp2",	0x500000, 0x9846db3a, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "265-s1ps2.s1",		0x020000, 0x714ade47, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265-s1ps2.s1",	0x020000, 0x714ade47, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "265-c1ps2.c1",		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
-	{ "265-c2ps2.c2",		0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4 
-	{ "265-c3ps2.c3",		0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
-	{ "265-c4ps2.c4",		0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
-	{ "265-c5ps2.c5",		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
-	{ "265-c6ps2.c6",		0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
-	{ "265-c7ps2.c7",		0x800000, 0xf0897b93, 3 | BRF_GRA },           //  9 
-	{ "265-c8ps2.c8",		0x800000, 0x8d27a4a6, 3 | BRF_GRA },           // 10 
-	{ "265-c9ps2.c9",		0x800000, 0x9939c08a, 3 | BRF_GRA },           // 11
-	{ "265-c10ps2.c10",		0x800000, 0xc724c069, 3 | BRF_GRA },           // 12 
+	{ "265-c1d.c1",		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265-c2d.c2",		0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4 
+	{ "265-c3d.c3",		0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
+	{ "265-c4d.c4",		0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
+	{ "265-c5d.c5",		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
+	{ "265-c6d.c6",		0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
+	{ "265-c7ps2.c7",	0x800000, 0xf0897b93, 3 | BRF_GRA },           //  9 
+	{ "265-c8ps2.c8",	0x800000, 0x8d27a4a6, 3 | BRF_GRA },           // 10 
+	{ "265-c9ps2.c9",	0x800000, 0x9939c08a, 3 | BRF_GRA },           // 11
+	{ "265-c10ps2.c10",	0x800000, 0xc724c069, 3 | BRF_GRA },           // 12 
 
-	{ "265-m1ps2.m1",		0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
+	{ "265-m1ps2.m1",	0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
 
-	{ "265-v1sp2.v1",		0x400000, 0x13d98607, 5 | BRF_SND },           // 14 Sound data
-	{ "265-v2sp2.v2",		0x400000, 0x9cf74677, 5 | BRF_SND },           // 15 
-	{ "265-v3sp2.v3",		0x400000, 0x8e9448b5, 5 | BRF_SND },           // 16
-	{ "265-v4sp2.v4",		0x400000, 0x067271b5, 5 | BRF_SND },           // 17 
+	{ "265-v1nd.v1",	0x400000, 0x13d98607, 5 | BRF_SND },           // 14 Sound data
+	{ "265-v2nd.v2",	0x400000, 0x9cf74677, 5 | BRF_SND },           // 15 
+	{ "265-v3nd.v3",	0x400000, 0x8e9448b5, 5 | BRF_SND },           // 16
+	{ "265-v4nd.v4",	0x400000, 0x067271b5, 5 | BRF_SND },           // 17 
 };
 
 STDROMPICKEXT(kf2k2ps2b, kf2k2ps2b, neogeo)
@@ -15474,7 +15474,7 @@ struct BurnDriver BurnDrvkf2k4pls = {
 static struct BurnRomInfo kof95spRomDesc[] = {
 	{ "084-p1sp.p1",  0x100000, 0x8bcca012, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
 	{ "084-p2sp.p2",  0x100000, 0x5cb1af9e, 1 | BRF_ESS | BRF_PRG }, //  1			
-	{ "084-p3sp.p3",  0x020000, 0x030e71cb, 1 | BRF_ESS | BRF_PRG }, //  2			
+	{ "084-p3sp.p3",  0x020000, 0x030e71cb, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	{ "084-s1sp.s1",  0x020000, 0x83cbae60, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
 
@@ -15553,26 +15553,26 @@ struct BurnDriver BurnDrvKof95sp = {
 // Kof2002 (hack omg)
 
 static struct BurnRomInfo kof2k2omgRomDesc[] = {
-	{ "265omg.p1",    0x3bd4c1, 0x62174834, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265omg.p2",    0x400000, 0x6fadc5c3, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265omg.p1",		0x3bd4c1, 0x62174834, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg.p2",		0x400000, 0x6fadc5c3, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "265omg.s1",    0x020000, 0x6145daf4, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265omg.s1",		0x020000, 0x6145daf4, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "265xxx.c1",    0x800000, 0x745b343e, 3 | BRF_GRA },           //  3 Sprite data
-	{ "265xxx.c2",    0x800000, 0x2aab7f98, 3 | BRF_GRA },           //  4 
-	{ "265ori.c3",    0x800000, 0xe5074eea, 3 | BRF_GRA },           //  5 
-	{ "265ori.c4",    0x800000, 0xf6eb1ff2, 3 | BRF_GRA },           //  6 
-	{ "265d.c5",      0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
-	{ "265d.c6",      0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
-	{ "265ori.c7",    0x800000, 0x0e9f6adb, 3 | BRF_GRA },           //  9 
-	{ "265ori.c8",    0x800000, 0x9961799e, 3 | BRF_GRA },           // 10 
+	{ "265xxx.c1",		0x800000, 0x745b343e, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265xxx.c2",		0x800000, 0x2aab7f98, 3 | BRF_GRA },           //  4 
+	{ "265ori.c3",		0x800000, 0xe5074eea, 3 | BRF_GRA },           //  5 
+	{ "265ori.c4",		0x800000, 0xf6eb1ff2, 3 | BRF_GRA },           //  6 
+	{ "265-c5d.c5",		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
+	{ "265-c6d.c6",		0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
+	{ "265ori.c7",		0x800000, 0x0e9f6adb, 3 | BRF_GRA },           //  9 
+	{ "265ori.c8",		0x800000, 0x9961799e, 3 | BRF_GRA },           // 10 
 
-	{ "265ori.m1",    0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "265ori.m1",		0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "265nu.v1",     0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
-	{ "265nu.v2",     0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
-	{ "265nu.v3",     0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
-	{ "265nu.v4",     0x400000, 0x067271b5, 5 | BRF_SND },           // 15
+	{ "265-v1nd.v1",	0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
+	{ "265-v2nd.v2",	0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
+	{ "265-v3nd.v3",	0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
+	{ "265-v4nd.v4",	0x400000, 0x067271b5, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kof2k2omg, kof2k2omg, neogeo)
@@ -15604,24 +15604,24 @@ struct BurnDriver BurnDrvkof2k2omg = {
 // Kof2002 (Omega v0.8)
 
 static struct BurnRomInfo kof2k2omg8RomDesc[] = {
-	{ "265omg8.p1",   0x100000, 0x53086581, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265omg8.p2",   0x400000, 0x40228fe5, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265omg8.p1",		0x100000, 0x53086581, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg8.p2",		0x400000, 0x40228fe5, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "265omg8.s1",   0x020000, 0x65351d40, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265omg8.s1",		0x020000, 0x65351d40, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "265omg8.c1",   0x800000, 0xe144302d, 3 | BRF_GRA },           //  3 Sprite data
-	{ "265omg8.c2",   0x800000, 0xb10c6958, 3 | BRF_GRA },           //  4 
-	{ "265omg8.c3",   0x800000, 0x2367927c, 3 | BRF_GRA },           //  5 
-	{ "265omg8.c4",   0x800000, 0x4ad48c29, 3 | BRF_GRA },           //  6 
-	{ "365ru.c5",     0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
-	{ "365ru.c6",     0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
-	{ "265omg8.c7",   0x800000, 0x890c2a4a, 3 | BRF_GRA },           //  9 
-	{ "265omg8.c8",   0x800000, 0xb726009d, 3 | BRF_GRA },           // 10 
+	{ "265omg8.c1",		0x800000, 0xe144302d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265omg8.c2",		0x800000, 0xb10c6958, 3 | BRF_GRA },           //  4 
+	{ "265omg8.c3",		0x800000, 0x2367927c, 3 | BRF_GRA },           //  5 
+	{ "265omg8.c4",		0x800000, 0x4ad48c29, 3 | BRF_GRA },           //  6 
+	{ "365ru.c5",		0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
+	{ "365ru.c6",		0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
+	{ "265omg8.c7",		0x800000, 0x890c2a4a, 3 | BRF_GRA },           //  9 
+	{ "265omg8.c8",		0x800000, 0xb726009d, 3 | BRF_GRA },           // 10 
 
-	{ "265omg8.m1",   0x040000, 0x9a3d5c65, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "265omg8.m1",		0x040000, 0x9a3d5c65, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "kf10-v1.bin",  0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 12 Sound data
-	{ "kf10-v2.bin",  0x800000, 0xb8c475a4, 5 | BRF_SND },           // 13
+	{ "kf10-v1.bin",	0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 12 Sound data
+	{ "kf10-v2.bin",	0x800000, 0xb8c475a4, 5 | BRF_SND },           // 13
 };
 
 STDROMPICKEXT(kof2k2omg8, kof2k2omg8, neogeo)
@@ -15640,26 +15640,26 @@ struct BurnDriver BurnDrvkof2k2omg8 = {
 // Kof2002 (Omega v0.9 beta)
 
 static struct BurnRomInfo kof2k2omg9bRomDesc[] = {
-	{ "265-p1.p1",    0x100000, 0x9ede7323, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265omg9b.p2",  0x400000, 0xa171b684, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265-p1.p1",		0x100000, 0x9ede7323, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg9b.p2",	0x400000, 0xa171b684, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "265omg9b.s1",  0x020000, 0x7e3f391a, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265omg9b.s1",	0x020000, 0x7e3f391a, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "265omg9b.c1",  0x800000, 0xc8314ae2, 3 | BRF_GRA },           //  3 Sprite data
-	{ "265omg9b.c2",  0x800000, 0xe0ddced5, 3 | BRF_GRA },           //  4 
-	{ "265omg9b.c3",  0x800000, 0x6898f6e2, 3 | BRF_GRA },           //  5 
-	{ "265omg9b.c4",  0x800000, 0x9232e491, 3 | BRF_GRA },           //  6 
-	{ "365ru.c5",     0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
-	{ "365ru.c6",     0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
-	{ "265omg9b.c7",  0x800000, 0x6954ef57, 3 | BRF_GRA },           //  9 
-	{ "265omg9b.c8",  0x800000, 0x3e394883, 3 | BRF_GRA },           // 10 
+	{ "265omg9b.c1",	0x800000, 0xc8314ae2, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265omg9b.c2",	0x800000, 0xe0ddced5, 3 | BRF_GRA },           //  4 
+	{ "265omg9b.c3",	0x800000, 0x6898f6e2, 3 | BRF_GRA },           //  5 
+	{ "265omg9b.c4",	0x800000, 0x9232e491, 3 | BRF_GRA },           //  6 
+	{ "365ru.c5",		0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
+	{ "365ru.c6",		0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
+	{ "265omg9b.c7",	0x800000, 0x6954ef57, 3 | BRF_GRA },           //  9 
+	{ "265omg9b.c8",	0x800000, 0x3e394883, 3 | BRF_GRA },           // 10 
 
-	{ "265omg8.m1",   0x040000, 0x9a3d5c65, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "265omg8.m1",		0x040000, 0x9a3d5c65, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "265nu.v1",     0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
-	{ "265nu.v2",     0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
-	{ "265nu.v3",     0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
-	{ "265nu.v4",     0x400000, 0x067271b5, 5 | BRF_SND },           // 15
+	{ "265-v1nd.v1",	0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
+	{ "265-v2nd.v2",	0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
+	{ "265-v3nd.v3",	0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
+	{ "265-v4nd.v4",	0x400000, 0x067271b5, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kof2k2omg9b, kof2k2omg9b, neogeo)
@@ -15678,26 +15678,26 @@ struct BurnDriver BurnDrvkof2k2omg9b = {
 // Kof2002 (Omega v0.9)
 
 static struct BurnRomInfo kof2k2omg9RomDesc[] = {
-	{ "265-p1.p1",    0x100000, 0x9ede7323, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265omg9.p2",   0x400000, 0xcd503fcf, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265-p1.p1",		0x100000, 0x9ede7323, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg9.p2",		0x400000, 0xcd503fcf, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "265omg9.s1",   0x020000, 0x4562fb20, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265omg9.s1",		0x020000, 0x4562fb20, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "265omg9b.c1",  0x800000, 0xc8314ae2, 3 | BRF_GRA },           //  3 Sprite data
-	{ "265omg9b.c2",  0x800000, 0xe0ddced5, 3 | BRF_GRA },           //  4 
-	{ "265omg9b.c3",  0x800000, 0x6898f6e2, 3 | BRF_GRA },           //  5 
-	{ "265omg9b.c4",  0x800000, 0x9232e491, 3 | BRF_GRA },           //  6 
-	{ "365ru.c5",     0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
-	{ "365ru.c6",     0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
-	{ "265omg9b.c7",  0x800000, 0x6954ef57, 3 | BRF_GRA },           //  9 
-	{ "265omg9b.c8",  0x800000, 0x3e394883, 3 | BRF_GRA },           // 10 
+	{ "265omg9b.c1",	0x800000, 0xc8314ae2, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265omg9b.c2",	0x800000, 0xe0ddced5, 3 | BRF_GRA },           //  4 
+	{ "265omg9b.c3",	0x800000, 0x6898f6e2, 3 | BRF_GRA },           //  5 
+	{ "265omg9b.c4",	0x800000, 0x9232e491, 3 | BRF_GRA },           //  6 
+	{ "365ru.c5",		0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
+	{ "365ru.c6",		0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
+	{ "265omg9b.c7",	0x800000, 0x6954ef57, 3 | BRF_GRA },           //  9 
+	{ "265omg9b.c8",	0x800000, 0x3e394883, 3 | BRF_GRA },           // 10 
 
-	{ "265ori.m1",    0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "265ori.m1",		0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "265nu.v1",     0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
-	{ "265nu.v2",     0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
-	{ "265nu.v3",     0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
-	{ "265nu.v4",     0x400000, 0x067271b5, 5 | BRF_SND },           // 15
+	{ "265-v1nd.v1",	0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
+	{ "265-v2nd.v2",	0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
+	{ "265-v3nd.v3",	0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
+	{ "265-v4nd.v4",	0x400000, 0x067271b5, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kof2k2omg9, kof2k2omg9, neogeo)
@@ -15718,14 +15718,14 @@ struct BurnDriver BurnDrvkof2k2omg9 = {
 // GOTVG 20201022
 
 static struct BurnRomInfo kof2k2plusRomDesc[] = {
-	{ "265-p1pls.p1",		0x100000, 0x059da6f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265-p2pls.p2",		0x500000, 0x7ad26451, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "265-p3pls.p3",		0x020000, 0x80aacc1f, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+	{ "265-p1pl17.p1",		0x100000, 0x059da6f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p2pl17.sp2",		0x500000, 0x7ad26451, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "265-p3pl17.p3",		0x020000, 0x80aacc1f, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
-	{ "265-s1pls.s1",		0x020000, 0x96bdd036, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "265-s1pl17.s1",		0x020000, 0x96bdd036, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "265-c1pls.c1",		0x800000, 0x93cf6345, 3 | BRF_GRA },           //  4 Sprite data
-	{ "265-c2pls.c2",		0x800000, 0xd7373d66, 3 | BRF_GRA },           //  5
+	{ "265-c1pl17.c1",		0x800000, 0x93cf6345, 3 | BRF_GRA },           //  4 Sprite data
+	{ "265-c2pl17.c2",		0x800000, 0xd7373d66, 3 | BRF_GRA },           //  5
 	{ "265-c3d.c3",			0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5
 	{ "265-c4d.c4", 		0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6
 	{ "265-c5d.c5", 		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
@@ -15733,10 +15733,10 @@ static struct BurnRomInfo kof2k2plusRomDesc[] = {
 	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  9
 	{ "265-c8d.c8",			0x800000, 0xbef667a3, 3 | BRF_GRA },           // 10
 
-																		   /* Encrypted */
+	/* Encrypted */
 	{ "265-m1.m1",			0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-																		   /* Encrypted */
+	/* Encrypted */
 	{ "265-v1.v1",			0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 12 Sound data
 	{ "265-v2.v2",			0x800000, 0xda41d6f9, 5 | BRF_SND },           // 13
 };
@@ -15829,29 +15829,29 @@ struct BurnDriver BurnDrvKof96a = {
 // The King of Fighters '96 (Anniversary Edition, EGHT hack)
 
 static struct BurnRomInfo kof96aeRomDesc[] = {
-	{ "214-p1ae.bin",   0x100000, 0x47660e7c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "214-p2ae.bin",   0x400000, 0x824ff3eb, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "214-p1aeo.p1",	0x100000, 0x47660e7c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "214-p2aeo.sp2",	0x400000, 0x824ff3eb, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "214-s1ae.bin",   0x020000, 0x203b3aaf, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "214-s1aeo.s1",	0x020000, 0x203b3aaf, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "214-c1ae.bin",   0x400000, 0xb308c1f9, 3 | BRF_GRA },           //  3 Sprite data
-	{ "214-c2ae.bin",   0x400000, 0x220a92b2, 3 | BRF_GRA },           //  4 
-	{ "214-c3.c3",      0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 
-	{ "214-c4.c4",      0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 
-	{ "214-c5ae.bin",   0x400000, 0x6e03cb0c, 3 | BRF_GRA },           //  7 
-	{ "214-c6ae.bin",   0x400000, 0xa90bc55d, 3 | BRF_GRA },           //  8 
-	{ "214-c7ae.bin",   0x400000, 0x08021fd6, 3 | BRF_GRA },           //  9 
-	{ "214-c8ae.bin",   0x400000, 0xbbd21b08, 3 | BRF_GRA },           // 10 
-	{ "214-c9ae.bin",   0x400000, 0x57e5bf80, 3 | BRF_GRA },           // 11
-	{ "214-c10ae.bin",  0x400000, 0xcbe44c81, 3 | BRF_GRA },           // 12 
-	{ "214-c11ae.bin",  0x400000, 0x5c7ddc8b, 3 | BRF_GRA },           // 13
-	{ "214-c12ae.bin",  0x400000, 0x48d8b574, 3 | BRF_GRA },           // 14 
+	{ "214-c1ae.c1",	0x400000, 0xb308c1f9, 3 | BRF_GRA },           //  3 Sprite data
+	{ "214-c2ae.c2",	0x400000, 0x220a92b2, 3 | BRF_GRA },           //  4 
+	{ "214-c3.c3",		0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 
+	{ "214-c4.c4",		0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 
+	{ "214-c5aeo.c5",	0x400000, 0x6e03cb0c, 3 | BRF_GRA },           //  7 
+	{ "214-c6aeo.c6",	0x400000, 0xa90bc55d, 3 | BRF_GRA },           //  8 
+	{ "214-c7ae.c7",	0x400000, 0x08021fd6, 3 | BRF_GRA },           //  9 
+	{ "214-c8ae.c8",	0x400000, 0xbbd21b08, 3 | BRF_GRA },           // 10 
+	{ "214-c9aeo.c9",	0x400000, 0x57e5bf80, 3 | BRF_GRA },           // 11
+	{ "214-c10aeo.c10",	0x400000, 0xcbe44c81, 3 | BRF_GRA },           // 12 
+	{ "214-c11aeo.c11",	0x400000, 0x5c7ddc8b, 3 | BRF_GRA },           // 13
+	{ "214-c12aeo.c12",	0x400000, 0x48d8b574, 3 | BRF_GRA },           // 14 
 
-	{ "214-m1ae.bin",   0x020000, 0xc9dd0348, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
+	{ "214-m1aeo.m1",	0x020000, 0xc9dd0348, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
 
-	{ "214-v1.v1",      0x400000, 0x63f7b045, 5 | BRF_SND },           // 16 Sound data
-	{ "214-v2.v2",      0x400000, 0x25929059, 5 | BRF_SND },           // 17 
-	{ "214-v3ae.bin",   0x400000, 0x143923a7, 5 | BRF_SND },           // 18 
+	{ "214-v1.v1",		0x400000, 0x63f7b045, 5 | BRF_SND },           // 16 Sound data
+	{ "214-v2.v2",		0x400000, 0x25929059, 5 | BRF_SND },           // 17 
+	{ "214-v3aeo.v3",	0x400000, 0x143923a7, 5 | BRF_SND },           // 18 
 };
 
 STDROMPICKEXT(kof96ae, kof96ae, neogeo)
@@ -15870,10 +15870,10 @@ struct BurnDriver BurnDrvkof96ae = {
 // The King of Fighters '96 (The Anniversary Edition 2.0, Build 2.3.0320)
 
 static struct BurnRomInfo kof96ae20RomDesc[] = {
-	{ "214-p1ae2.p1",		0x100000, 0xc718ea76, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "214-p2ae2.p2",		0x400000, 0x2638be07, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "214-p1ae.p1",	0x100000, 0xc718ea76, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "214-p2ae.p2",	0x400000, 0x2638be07, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "214-s1ae2.s1",   	0x020000, 0xb9626494, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "214-s1ae.s1",	0x020000, 0xb9626494, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "214-c1ae2.c1",	0x800000, 0xa7466eea, 3 | BRF_GRA },           //  3 Sprite data
 	{ "214-c2ae2.c2",	0x800000, 0x6ff22256, 3 | BRF_GRA },           //  4
@@ -15882,11 +15882,11 @@ static struct BurnRomInfo kof96ae20RomDesc[] = {
 	{ "214-c5ae2.c5",	0x800000, 0xed71e6bb, 3 | BRF_GRA },           //  7
 	{ "214-c6ae2.c6",	0x800000, 0x059fa364, 3 | BRF_GRA },           //  8
 
-	{ "214-m1ae2.m1",	0x020000, 0x3a4a7c21, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "214-m1ae.m1",	0x020000, 0x3a4a7c21, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
 	{ "214-v1.v1",		0x400000, 0x63f7b045, 5 | BRF_SND },           // 16 Sound data
 	{ "214-v2.v2",		0x400000, 0x25929059, 5 | BRF_SND },           // 17
-	{ "214-v3ae2.v3",	0x400000, 0xf85673b0, 5 | BRF_SND },           // 18
+	{ "214-v3ae.v3",	0x400000, 0xf85673b0, 5 | BRF_SND },           // 18
 };
 
 STDROMPICKEXT(kof96ae20, kof96ae20, neogeo)
@@ -15905,28 +15905,28 @@ struct BurnDriver BurnDrvkof96ae20 = {
 // The King of Fighters '96 (Chinese Edition ver 1.0, hack)
 
 static struct BurnRomInfo kof96cnRomDesc[] = {
-	{ "214cn-p1.bin", 0x100000, 0xa8c25f0a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "214cn-p2.bin", 0x200000, 0x0edface5, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "214cn-p3.bin", 0x500000, 0x8724a441, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "214-p1cn.p1",	0x100000, 0xa8c25f0a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "214-p2cn.sp2",	0x200000, 0x0edface5, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "214-p3cn.p3",	0x500000, 0x8724a441, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "214cn-s1.bin", 0x020000, 0xf917527a, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "214-s1cn.s1",	0x020000, 0xf917527a, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "214-c1.bin",   0x400000, 0x7ecf4aa2, 3 | BRF_GRA },           //  4 Sprite data
-	{ "214-c2.bin",   0x400000, 0x05b54f37, 3 | BRF_GRA },           //  5 
-	{ "214-c3.bin",   0x400000, 0x64989a65, 3 | BRF_GRA },           //  6 
-	{ "214-c4.bin",   0x400000, 0xafbea515, 3 | BRF_GRA },           //  7 
-	{ "214-c5.bin",   0x400000, 0x2a3bbd26, 3 | BRF_GRA },           //  8 
-	{ "214-c6.bin",   0x400000, 0x44d30dc7, 3 | BRF_GRA },           //  9 
-	{ "214-c7.bin",   0x400000, 0x3687331b, 3 | BRF_GRA },           // 10 
-	{ "214-c8.bin",   0x400000, 0xfa1461ad, 3 | BRF_GRA },           // 11 
-	{ "214cn-c9.bin", 0x400000, 0xa9f811d2, 3 | BRF_GRA },           // 12
-	{ "214cn-c10.bin",0x400000, 0x1147406a, 3 | BRF_GRA },           // 13 
+	{ "214-c1.c1",		0x400000, 0x7ecf4aa2, 3 | BRF_GRA },           //  4 Sprite data
+	{ "214-c2.c2",		0x400000, 0x05b54f37, 3 | BRF_GRA },           //  5 
+	{ "214-c3.c3",		0x400000, 0x64989a65, 3 | BRF_GRA },           //  6 
+	{ "214-c4.c4",		0x400000, 0xafbea515, 3 | BRF_GRA },           //  7 
+	{ "214-c5.c5",		0x400000, 0x2a3bbd26, 3 | BRF_GRA },           //  8 
+	{ "214-c6.c6",		0x400000, 0x44d30dc7, 3 | BRF_GRA },           //  9 
+	{ "214-c7.c7",		0x400000, 0x3687331b, 3 | BRF_GRA },           // 10 
+	{ "214-c8.c8",		0x400000, 0xfa1461ad, 3 | BRF_GRA },           // 11 
+	{ "214-c9cn.c9",	0x400000, 0xa9f811d2, 3 | BRF_GRA },           // 12
+	{ "214-c10cn.c10",	0x400000, 0x1147406a, 3 | BRF_GRA },           // 13 
 
-	{ "214-m1.bin",   0x020000, 0xdabc427c, 4 | BRF_ESS | BRF_PRG }, // 14 Z80 code
+	{ "214-m1.m1",		0x020000, 0xdabc427c, 4 | BRF_ESS | BRF_PRG }, // 14 Z80 code
 
-	{ "214-v1.bin",   0x400000, 0x63f7b045, 5 | BRF_SND },           // 15 Sound data
-	{ "214-v2.bin",   0x400000, 0x25929059, 5 | BRF_SND },           // 16 
-	{ "214-v3.bin",   0x200000, 0x92a2257d, 5 | BRF_SND },           // 17 
+	{ "214-v1.v1",		0x400000, 0x63f7b045, 5 | BRF_SND },           // 15 Sound data
+	{ "214-v2.v2",		0x400000, 0x25929059, 5 | BRF_SND },           // 16 
+	{ "214-v3.v3",		0x200000, 0x92a2257d, 5 | BRF_SND },           // 17 
 };
 
 STDROMPICKEXT(kof96cn, kof96cn, neogeo)
@@ -15946,25 +15946,25 @@ struct BurnDriver BurnDrvkof96cn = {
 // Version 1.5 By SNK2003
 
 static struct BurnRomInfo kof96rssRomDesc[] = {
-	{ "214rss.p1",    0x300000, 0x93abe27c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
-	{ "214-p2.sp2",   0x200000, 0x002ccb73, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
+	{ "214-p1rss.p1",	0x300000, 0x93abe27c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
+	{ "214-p2.sp2",		0x200000, 0x002ccb73, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 
-	{ "214rss.s1",    0x020000, 0xf304df75, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+	{ "214-s1rss.s1",	0x020000, 0xf304df75, 2 | BRF_GRA },           //  2 Text layer tiles	/ TC531000
 
-	{ "214-c1.c1",    0x400000, 0x7ecf4aa2, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
-	{ "214-c2.c2",    0x400000, 0x05b54f37, 3 | BRF_GRA },           //  4 					/ TC5332205
-	{ "214-c3.c3",    0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 					/ TC5332205
-	{ "214-c4.c4",    0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 					/ TC5332205
-	{ "214-c5.c5",    0x400000, 0x2a3bbd26, 3 | BRF_GRA },           //  7 					/ TC5332205
-	{ "214-c6.c6",    0x400000, 0x44d30dc7, 3 | BRF_GRA },           //  8 					/ TC5332205
-	{ "214-c7.c7",    0x400000, 0x3687331b, 3 | BRF_GRA },           //  9 					/ TC5332205
-	{ "214-c8.c8",    0x400000, 0xfa1461ad, 3 | BRF_GRA },           // 10 					/ TC5332205
+	{ "214-c1.c1",		0x400000, 0x7ecf4aa2, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "214-c2.c2",		0x400000, 0x05b54f37, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "214-c3.c3",		0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "214-c4.c4",		0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "214-c5.c5",		0x400000, 0x2a3bbd26, 3 | BRF_GRA },           //  7 					/ TC5332205
+	{ "214-c6.c6",		0x400000, 0x44d30dc7, 3 | BRF_GRA },           //  8 					/ TC5332205
+	{ "214-c7.c7",		0x400000, 0x3687331b, 3 | BRF_GRA },           //  9 					/ TC5332205
+	{ "214-c8.c8",		0x400000, 0xfa1461ad, 3 | BRF_GRA },           // 10 					/ TC5332205
 
-	{ "214-m1.m1",    0x020000, 0xdabc427c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
+	{ "214-m1.m1",		0x020000, 0xdabc427c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "214-v1.v1",    0x400000, 0x63f7b045, 5 | BRF_SND },           // 12 Sound data		/ TC5332204
-	{ "214-v2.v2",    0x400000, 0x25929059, 5 | BRF_SND },           // 13 					/ TC5332204
-	{ "214-v3.v3",    0x200000, 0x92a2257d, 5 | BRF_SND },           // 14 					/ TC5316200
+	{ "214-v1.v1",		0x400000, 0x63f7b045, 5 | BRF_SND },           // 12 Sound data			/ TC5332204
+	{ "214-v2.v2",		0x400000, 0x25929059, 5 | BRF_SND },           // 13 					/ TC5332204
+	{ "214-v3.v3",		0x200000, 0x92a2257d, 5 | BRF_SND },           // 14 					/ TC5316200
 };
 
 STDROMPICKEXT(kof96rss, kof96rss, neogeo)
@@ -16046,23 +16046,23 @@ struct BurnDriver BurnDrvkof96ep = {
 // The King of Fighters '97 (10th Anniversary Chinese Edition, EGHT hack)
 
 static struct BurnRomInfo kof97cnRomDesc[] = {
-	{ "232cn-p1.bin", 0x100000, 0x082933c8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "232cn-p2.bin", 0x600000, 0xd22d3ca3, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "232-p1cn.p1",	0x100000, 0x082933c8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232-p2cn.sp2",	0x600000, 0xd22d3ca3, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "232cn-s1.bin", 0x020000, 0xde5ad278, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "232-s1cn.s1",	0x020000, 0xde5ad278, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "232cn-c1.bin", 0x800000, 0x8c3d2c0c, 3 | BRF_GRA },           //  3 Sprite data
-	{ "232cn-c2.bin", 0x800000, 0x43ce69ae, 3 | BRF_GRA },           //  4 
-	{ "232-c3.bin",   0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
-	{ "232-c4.bin",   0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
-	{ "232-c5.bin",   0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7 
-	{ "232-c6.bin",   0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8 
+	{ "232-c1cn.c1",	0x800000, 0x8c3d2c0c, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232-c2cn.c2",	0x800000, 0x43ce69ae, 3 | BRF_GRA },           //  4 
+	{ "232-c3.c3",		0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
+	{ "232-c4.c4",		0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
+	{ "232-c5.c5",		0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7 
+	{ "232-c6.c6",		0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8 
 
-	{ "232-m1.bin",   0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "232-m1.m1",		0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "232-v1.bin",   0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
-	{ "232-v2.bin",   0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
-	{ "232-v3.bin",   0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
+	{ "232-v1.v1",		0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",		0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
+	{ "232-v3.v3",		0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(kof97cn, kof97cn, neogeo)
@@ -16203,23 +16203,23 @@ struct BurnDriver BurnDrvKof97oro = {
 // The King of Fighters '97 - Final Battle (hack)
 
 static struct BurnRomInfo kof97xtRomDesc[] = {
-	{ "232xt-p1.bin", 0x100000, 0x2e4f4e3b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "232xt-p2.bin", 0x400000, 0x6d4503ce, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "232-p1xt.p1",	0x100000, 0x2e4f4e3b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232-p2xt.sp2",	0x400000, 0x6d4503ce, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "232xt-s1.bin", 0x020000, 0xd6fe166f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "232-s1xt.s1",	0x020000, 0xd6fe166f, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "232xt-c1.bin", 0x800000, 0xd504bf4a, 3 | BRF_GRA },           //  3 Sprite data
-	{ "232xt-c2.bin", 0x800000, 0x942ea708, 3 | BRF_GRA },           //  4 
-	{ "232-c3.bin",   0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
-	{ "232-c4.bin",   0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
-	{ "232xt-c5.bin", 0x800000, 0xc1bd2375, 3 | BRF_GRA },           //  7 
-	{ "232xt-c6.bin", 0x800000, 0xa7c8506a, 3 | BRF_GRA },           //  8 
+	{ "232-c1xt.c1",	0x800000, 0xd504bf4a, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232-c2xt.c2",	0x800000, 0x942ea708, 3 | BRF_GRA },           //  4 
+	{ "232-c3.c3",		0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
+	{ "232-c4.c4",		0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
+	{ "232-c5xt.c5",	0x800000, 0xc1bd2375, 3 | BRF_GRA },           //  7 
+	{ "232-c6xt.c6",	0x800000, 0xa7c8506a, 3 | BRF_GRA },           //  8 
 
-	{ "232-m1.bin",   0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "232-m1.m1",		0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "232-v1.bin",   0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
-	{ "232-v2.bin",   0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
-	{ "232-v3.bin",   0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
+	{ "232-v1.v1",		0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",		0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
+	{ "232-v3.v3",		0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(kof97xt, kof97xt, neogeo)
@@ -16238,23 +16238,23 @@ struct BurnDriver BurnDrvkof97xt = {
 // The King of Fighters '97 Random Select Optimized Edition (Hack)
 
 static struct BurnRomInfo kof97tRomDesc[] = {
-	{ "232t-p1.bin", 0x100000, 0x53D9851D, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "232t-p2.bin", 0x400000, 0xD9E51750, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "232-p1tp.p1",	0x100000, 0x53d9851d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232-p2tp.sp2",	0x400000, 0xd9e51750, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "232t-s1.bin", 0x020000, 0x87C6585D, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "232-s1tp.s1",	0x020000, 0x87c6585d, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "232t-c1.bin", 0x800000, 0x848040CB, 3 | BRF_GRA },           //  3 Sprite data
-	{ "232t-c2.bin", 0x800000, 0xD01AD7C9, 3 | BRF_GRA },           //  4 
-	{ "232-c3.bin",  0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
-	{ "232-c4.bin",  0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
-	{ "232t-c5.bin", 0x800000, 0x7BB13FF4, 3 | BRF_GRA },           //  7 
-	{ "232t-c6.bin", 0x800000, 0x6846A8A5, 3 | BRF_GRA },           //  8 
+	{ "232-c1tp.c1",	0x800000, 0x848040cb, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232-c2tp.c2",	0x800000, 0xd01ad7c9, 3 | BRF_GRA },           //  4 
+	{ "232-c3.c3",		0x800000, 0x581d6618, 3 | BRF_GRA },           //  5 
+	{ "232-c4.c4",		0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6 
+	{ "232-c5tp.c5",	0x800000, 0x7bb13ff4, 3 | BRF_GRA },           //  7 
+	{ "232-c6tp.c6",	0x800000, 0x6846a8a5, 3 | BRF_GRA },           //  8 
 
-	{ "232-m1.bin",  0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "232-m1.m1",		0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "232-v1.bin",  0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
-	{ "232-v2.bin",  0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
-	{ "232-v3.bin",  0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
+	{ "232-v1.v1",		0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",		0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
+	{ "232-v3.v3",		0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
 };
 
 STDROMPICKEXT(kof97t, kof97t, neogeo)
@@ -16274,26 +16274,26 @@ struct BurnDriver BurnDrvkof97t = {
 // Hack by AndyChan
 
 static struct BurnRomInfo kof97aeRomDesc[] = {
-	{ "232ae-p1.p1",		0x100000, 0xcecc4f64, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
-	{ "232ae-p2.sp2",		0x400000, 0x228aa8d1, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "232-p1ae.p1",		0x100000, 0xcecc4f64, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
+	{ "232-p2ae.sp2",		0x400000, 0x228aa8d1, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "232ae-s1.s1",		0x020000, 0x30a6b3b8, 2 | BRF_GRA },			//  2 Text layer tiles
+	{ "232-s1ae.s1",		0x020000, 0x30a6b3b8, 2 | BRF_GRA },			//  2 Text layer tiles
 
-	{ "232ae-c1.c1",		0x800000, 0x5f0133eb, 3 | BRF_GRA },			//  3 Sprite data
-	{ "232ae-c2.c2",		0x800000, 0x136b8449, 3 | BRF_GRA },			//  4
+	{ "232-c1ae.c1",		0x800000, 0x5f0133eb, 3 | BRF_GRA },			//  3 Sprite data
+	{ "232-c2ae.c2",		0x800000, 0x136b8449, 3 | BRF_GRA },			//  4
 	{ "232-c3.c3",			0x800000, 0x581d6618, 3 | BRF_GRA },			//  5
 	{ "232-c4.c4",			0x800000, 0x49bb1e68, 3 | BRF_GRA },			//  6
-	{ "232ae-c5.c5",		0x800000, 0x8167b444, 3 | BRF_GRA },			//  7
-	{ "232ae-c6.c6",		0x800000, 0xa410f3ca, 3 | BRF_GRA },			//  8
-	{ "232ae-c7.c7",		0x800000, 0x50a48a56, 3 | BRF_GRA },			//  9
-	{ "232ae-c8.c8",		0x800000, 0x80d7ec00, 3 | BRF_GRA },			//  10
+	{ "232-c5ae.c5",		0x800000, 0x8167b444, 3 | BRF_GRA },			//  7
+	{ "232-c6ae.c6",		0x800000, 0xa410f3ca, 3 | BRF_GRA },			//  8
+	{ "232-c7ae.c7",		0x800000, 0x50a48a56, 3 | BRF_GRA },			//  9
+	{ "232-c8ae.c8",		0x800000, 0x80d7ec00, 3 | BRF_GRA },			//  10
 
-	{ "232ae-m1.m1",		0x020000, 0xf7b7ee13, 4 | BRF_ESS | BRF_PRG },	//  11 Z80 code
+	{ "232-m1ae.m1",		0x020000, 0xf7b7ee13, 4 | BRF_ESS | BRF_PRG },	//  11 Z80 code
 
 	{ "232-v1.v1",			0x400000, 0x22a2b5b5, 5 | BRF_SND },			//  12 Sound data
 	{ "232-v2.v2",			0x400000, 0x2304e744, 5 | BRF_SND },			//  13
 	{ "232-v3.v3",			0x400000, 0x759eb954, 5 | BRF_SND },			//  14
-	{ "232ae-v4.v4",		0x200000, 0x7d37caa0, 5 | BRF_SND },			//  15
+	{ "232-v4ae.v4",		0x200000, 0x7d37caa0, 5 | BRF_SND },			//  15
 };
 
 STDROMPICKEXT(kof97ae, kof97ae, neogeo)
@@ -16314,38 +16314,38 @@ struct BurnDriver BurnDrvkof97ae = {
 static struct BurnRomInfo kof98aeRomDesc[] = {
 	// Rom information
 	/* 
-	242-p1ae.bin c9188c66 : original P1
-	242-p1ae.bin 23a80b3e : kensou 2624+BD bug[by mhloveke520]
-	242-p2ae.bin 609fac6b : original P2
-	242-p2ae.bin 99b3e5cc : squat error fixes[by Bing Yan Dream]
+	242-p1ae.bin  c9188c66 : original P1
+	242-p1aeo.p1  23a80b3e : kensou 2624+BD bug[by mhloveke520]
+	242-p2ae.bin  609fac6b : original P2
+	242-p2aeo.sp2 99b3e5cc : squat error fixes[by Bing Yan Dream]
 	*/
-//	{ "242-p1ae.bin", 0x100000, 0xc9188c66, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242-p1ae.bin", 0x100000, 0x23a80b3e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-//	{ "242-p2ae.bin", 0x600000, 0x609fac6b, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "242-p2ae.bin", 0x600000, 0x99b3e5cc, 1 | BRF_ESS | BRF_PRG }, //  1 
+//	{ "242-p1ae.bin",	0x100000, 0xc9188c66, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242-p1aeo.p1",	0x100000, 0x23a80b3e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+//	{ "242-p2ae.bin",	0x600000, 0x609fac6b, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242-p2aeo.sp1",	0x600000, 0x99b3e5cc, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "242-s1ae.bin", 0x020000, 0xf1fee5c0, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1aeo.s1",	0x020000, 0xf1fee5c0, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242-c1ae.bin", 0x800000, 0x0319cfc9, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242-c2ae.bin", 0x800000, 0x553f6714, 3 | BRF_GRA },           //  4 
-	{ "242-c3.bin",   0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
-	{ "242-c4.bin",   0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
-	{ "242-c5ae.bin", 0x800000, 0x71641718, 3 | BRF_GRA },           //  7 
-	{ "242-c6ae.bin", 0x800000, 0x982ba2b3, 3 | BRF_GRA },           //  8 
-	{ "242-c7ae.bin", 0x800000, 0x8d495552, 3 | BRF_GRA },           //  9 
-	{ "242-c8ae.bin", 0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10 
-	{ "242-c9ae.bin", 0x800000, 0x128256d1, 3 | BRF_GRA },           // 11
-	{ "242-c91ae.bin",0x800000, 0x4bd8412d, 3 | BRF_GRA },           // 12
-	{ "242-c92ae.bin",0x800000, 0xe893277f, 3 | BRF_GRA },           // 13
-	{ "242-c93ae.bin",0x800000, 0xf165589e, 3 | BRF_GRA },           // 14
+	{ "242-c1aeo.c1",	0x800000, 0x0319cfc9, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2aeo.c2",	0x800000, 0x553f6714, 3 | BRF_GRA },           //  4 
+	{ "242-c3.c3",		0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
+	{ "242-c4.c4",		0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
+	{ "242-c5ae.c5",	0x800000, 0x71641718, 3 | BRF_GRA },           //  7 
+	{ "242-c6ae.c6",	0x800000, 0x982ba2b3, 3 | BRF_GRA },           //  8 
+	{ "242-c7ae.c7",	0x800000, 0x8d495552, 3 | BRF_GRA },           //  9 
+	{ "242-c8ae.c8",	0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10 
+	{ "242-c9ae.c9",	0x800000, 0x128256d1, 3 | BRF_GRA },           // 11
+	{ "242-c10ae.c10",	0x800000, 0x4bd8412d, 3 | BRF_GRA },           // 12
+	{ "242-c11aeo.c11",	0x800000, 0xe893277f, 3 | BRF_GRA },           // 13
+	{ "242-c12aeo.c12",	0x800000, 0xf165589e, 3 | BRF_GRA },           // 14
 
-	{ "242-m1ae.bin", 0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
+	{ "242-m1ae.m1",	0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
 
-	{ "242-v1.bin",   0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
-	{ "242-v2.bin",   0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
-	{ "242-v3.bin",   0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
-	{ "242-v4.bin",   0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
-	{ "242-v5ae.bin", 0x400000, 0xafdd9660, 5 | BRF_SND },           // 20
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
+	{ "242-v5ae.v5",	0x400000, 0xafdd9660, 5 | BRF_SND },           // 20
 };
 
 STDROMPICKEXT(kof98ae, kof98ae, neogeo)
@@ -16366,33 +16366,33 @@ struct BurnDriver BurnDrvkof98ae = {
 // Update team : GSC2007 [program], Dream [graphics], Bing Yan Dream [Color]
 
 static struct BurnRomInfo kof98ae2016RomDesc[] = {
-//	{ "242ae-p1.bin", 0x100000, 0xc7fddbd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242ae-p1.p1",  0x100000, 0xd69ecaa9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-//	{ "242ae-p2.bin", 0x600000, 0xd84dbe5b, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "242ae-p2.sp2", 0x600000, 0xac1e9e79, 1 | BRF_ESS | BRF_PRG }, //  1 
+//	{ "242ae-p1.bin",	0x100000, 0xc7fddbd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242-p1ae.p1",	0x100000, 0xd69ecaa9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+//	{ "242ae-p2.bin",	0x600000, 0xd84dbe5b, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242-p2ae.sp2",	0x600000, 0xac1e9e79, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "242ae-s1.s1",  0x040000, 0x345c20b0, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1ae.s1",	0x040000, 0x345c20b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242ae-c1.c1",  0x800000, 0x086ec060, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242ae-c2.c2",  0x800000, 0x16b9a9a2, 3 | BRF_GRA },           //  4 
-	{ "242-c3.c3",    0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
-	{ "242-c4.c4",    0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
-	{ "242ae-c5.c5",  0x800000, 0x71641718, 3 | BRF_GRA },           //  7 
-	{ "242ae-c6.c6",  0x800000, 0x982ba2b3, 3 | BRF_GRA },           //  8 
-	{ "242ae-c7.c7",  0x800000, 0x8d495552, 3 | BRF_GRA },           //  9 
-	{ "242ae-c8.c8",  0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10 
-	{ "242ae-c9.c9",  0x800000, 0x128256d1, 3 | BRF_GRA },           // 11
-	{ "242ae-c10.c10",0x800000, 0x4bd8412d, 3 | BRF_GRA },           // 12
-	{ "242ae-c11.c11",0x800000, 0x56d361cb, 3 | BRF_GRA },           // 13
-	{ "242ae-c12.c12",0x800000, 0xf8cb115b, 3 | BRF_GRA },           // 14
+	{ "242-c1ae.c1",	0x800000, 0x086ec060, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2ae.c2",	0x800000, 0x16b9a9a2, 3 | BRF_GRA },           //  4 
+	{ "242-c3.c3",		0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
+	{ "242-c4.c4",		0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
+	{ "242-c5ae.c5",	0x800000, 0x71641718, 3 | BRF_GRA },           //  7 
+	{ "242-c6ae.c6",	0x800000, 0x982ba2b3, 3 | BRF_GRA },           //  8 
+	{ "242-c7ae.c7",	0x800000, 0x8d495552, 3 | BRF_GRA },           //  9 
+	{ "242-c8ae.c8",	0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10 
+	{ "242-c9ae.c9",	0x800000, 0x128256d1, 3 | BRF_GRA },           // 11
+	{ "242-c10ae.c10",	0x800000, 0x4bd8412d, 3 | BRF_GRA },           // 12
+	{ "242-c11ae.c11",	0x800000, 0x56d361cb, 3 | BRF_GRA },           // 13
+	{ "242-c12ae.c12",	0x800000, 0xf8cb115b, 3 | BRF_GRA },           // 14
 
-	{ "242ae-m1.m1",  0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
+	{ "242-m1ae.m1",	0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
 
-	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
-	{ "242-v2.v2",    0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
-	{ "242-v3.v3",    0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
-	{ "242-v4.v4",    0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
-	{ "242ae-v5.v5",  0x400000, 0xafdd9660, 5 | BRF_SND },           // 20
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
+	{ "242-v5ae.v5",	0x400000, 0xafdd9660, 5 | BRF_SND },           // 20
 };
 
 STDROMPICKEXT(kof98ae2016, kof98ae2016, neogeo)
@@ -16412,26 +16412,26 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 /* Ivex hack - 2018/05/05 version */
 
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x2565e431, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.sp2", 	0x400000, 0xd34a4d38, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242-p1cb.p1",	0x100000, 0x2565e431, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242-p2cb.sp2",	0x400000, 0xd34a4d38, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1cb.s1",	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242cb-c1.c1", 	0x800000, 0x066db0a6, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242cb-c2.c2", 	0x800000, 0x99d0b0fa, 3 | BRF_GRA },           //  4 
-	{ "242cb-c3.c3", 	0x800000, 0xea84bdae, 3 | BRF_GRA },           //  5 
-	{ "242cb-c4.c4",    0x800000, 0x2c17ac8e, 3 | BRF_GRA },           //  6 
-	{ "242-c5.c5", 		0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7 
-	{ "242-c6.c6", 		0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8 
-	{ "242-c7.c7", 		0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9 
-	{ "242-c8.c8", 		0x800000, 0xc823e045, 3 | BRF_GRA },           // 10 
+	{ "242-c1cb.c1",	0x800000, 0x066db0a6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2cb.c2",	0x800000, 0x99d0b0fa, 3 | BRF_GRA },           //  4 
+	{ "242-c3cb.c3",	0x800000, 0xea84bdae, 3 | BRF_GRA },           //  5 
+	{ "242-c4cb.c4",	0x800000, 0x2c17ac8e, 3 | BRF_GRA },           //  6 
+	{ "242-c5.c5",		0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7 
+	{ "242-c6.c6",		0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8 
+	{ "242-c7.c7",		0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9 
+	{ "242-c8.c8",		0x800000, 0xc823e045, 3 | BRF_GRA },           // 10 
 	
-	{ "242cb-m1.m1", 	0x040000, 0xdb046fc4, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-m1cb.m1",	0x040000, 0xdb046fc4, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "242-v1.v1",   	0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
-	{ "242-v2.v2",   	0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
-	{ "242-v3.v3",   	0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
-	{ "242-v4.v4",   	0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
 };
 
 STDROMPICKEXT(kof98cb, kof98cb, neogeo)
@@ -16452,31 +16452,31 @@ struct BurnDriver BurnDrvkof98cb = {
 // Last update to ver. 20200407
 
 static struct BurnRomInfo kof99aeRomDesc[] = {
-	{ "kof99ae_p1.bin",   	   0x100000, 0x4c63e81c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "kof99ae_p2.bin",        0x400000, 0xf3f47f41, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "kof99ae_p3.bin",        0x400000, 0xbc85cf02, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "152-p1ae.p1",	0x100000, 0x4c63e81c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "152-p2ae.sp2",	0x400000, 0xf3f47f41, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "152-p3ae.p3",	0x400000, 0xbc85cf02, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "kof99ae_s1.bin",        0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "251-s1ae.s1",	0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "kof99ae_c1.bin",   	   0x800000, 0x7eabea6c, 3 | BRF_GRA },           //  4 Sprite data
-	{ "kof99ae_c2.bin",   	   0x800000, 0xe5a5bc5c, 3 | BRF_GRA },           //  5
-	{ "kof99ae_c3.bin",   	   0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  6
-	{ "kof99ae_c4.bin",   	   0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  7
-	{ "kof99ae_c5.bin",   	   0x800000, 0x9746268c, 3 | BRF_GRA },           //  8
-	{ "kof99ae_c6.bin",   	   0x800000, 0x238b3e71, 3 | BRF_GRA },           //  9
-	{ "kof99ae_c7.bin",   	   0x800000, 0x963c28ab, 3 | BRF_GRA },           // 10
-	{ "kof99ae_c8.bin",   	   0x800000, 0x43f1e92e, 3 | BRF_GRA },           // 11
-	{ "kof99ae_c9.bin",   	   0x800000, 0x86a3550d, 3 | BRF_GRA },           // 12
-	{ "kof99ae_c10.bin",       0x800000, 0x986bb897, 3 | BRF_GRA },           // 13
-	{ "kof99ae_c11.bin",       0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 14
-	{ "kof99ae_c12.bin",       0x800000, 0xa7541483, 3 | BRF_GRA },           // 15
+	{ "251-c1ae.c1",	0x800000, 0x7eabea6c, 3 | BRF_GRA },           //  4 Sprite data
+	{ "251-c2ae.c2",	0x800000, 0xe5a5bc5c, 3 | BRF_GRA },           //  5
+	{ "251-c3d.c3",		0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  6
+	{ "251-c4d.c4",		0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  7
+	{ "251-c5d.c5",		0x800000, 0x9746268c, 3 | BRF_GRA },           //  8
+	{ "251-c6d.c6",		0x800000, 0x238b3e71, 3 | BRF_GRA },           //  9
+	{ "251-c7ae.c7",	0x800000, 0x963c28ab, 3 | BRF_GRA },           // 10
+	{ "251-c8ae.c8",	0x800000, 0x43f1e92e, 3 | BRF_GRA },           // 11
+	{ "251-c9ae.c9",	0x800000, 0x86a3550d, 3 | BRF_GRA },           // 12
+	{ "251-c10ae.c10",	0x800000, 0x986bb897, 3 | BRF_GRA },           // 13
+	{ "251-c11ae.c11",	0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 14
+	{ "251-c12ae.c12",	0x800000, 0xa7541483, 3 | BRF_GRA },           // 15
 
-	{ "kof99ae_m1.bin",        0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, // 16 Z80 code
+	{ "251-m1ae.m1",	0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, // 16 Z80 code
 
-	{ "kof99ae_v1.bin",        0x400000, 0xceaa3bae, 5 | BRF_SND },           // 17 Sound data
-	{ "kof99ae_v2.bin",        0x400000, 0x07d70650, 5 | BRF_SND },           // 18
-	{ "kof99ae_v3.bin",        0x400000, 0x821901da, 5 | BRF_SND },           // 19
-	{ "kof99ae_v4.bin",        0x200000, 0xb49e6178, 5 | BRF_SND },           // 20
+	{ "251-v1ae.v1",	0x400000, 0xceaa3bae, 5 | BRF_SND },           // 17 Sound data
+	{ "251-v2ae.v2",	0x400000, 0x07d70650, 5 | BRF_SND },           // 18
+	{ "251-v3.v3",		0x400000, 0x821901da, 5 | BRF_SND },           // 19
+	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },           // 20
 };
 
 STDROMPICKEXT(kof99ae, kof99ae, neogeo)
@@ -16537,25 +16537,25 @@ struct BurnDriver BurnDrvlastblada = {
 // Version number: Ver 1.1-FINAL
 
 static struct BurnRomInfo lastbladspRomDesc[] = {
-	{ "234sp2.p1",    0x100000, 0xf8adc621, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "234sp.p2",     0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "234sp2.p3",    0x020000, 0x3c1770df, 0 | BRF_ESS | BRF_PRG }, //  1
+	{ "234-p1sp.p1",	0x100000, 0xf8adc621, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "234-p2sp.sp2",	0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "234-p3sp.p3",	0x020000, 0x3c1770df, 0 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
-	{ "234-s1.s1",    0x020000, 0x95561412, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "234-s1.s1",		0x020000, 0x95561412, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "234-c1.c1",    0x800000, 0x9f7e2bd3, 3 | BRF_GRA },           //  3 Sprite data
-	{ "234-c2.c2",    0x800000, 0x80623d3c, 3 | BRF_GRA },           //  4 
-	{ "234-c3.c3",    0x800000, 0x91ab1a30, 3 | BRF_GRA },           //  5 
-	{ "234-c4.c4",    0x800000, 0x3d60b037, 3 | BRF_GRA },           //  6 
-	{ "234-c5sp.c5",  0x400000, 0x4ea22fe0, 3 | BRF_GRA },           //  7 
-	{ "234-c6sp.c6",  0x400000, 0xa863c882, 3 | BRF_GRA },           //  8 
+	{ "234-c1.c1",		0x800000, 0x9f7e2bd3, 3 | BRF_GRA },           //  4 Sprite data
+	{ "234-c2.c2",		0x800000, 0x80623d3c, 3 | BRF_GRA },           //  5 
+	{ "234-c3.c3",		0x800000, 0x91ab1a30, 3 | BRF_GRA },           //  6 
+	{ "234-c4.c4",		0x800000, 0x3d60b037, 3 | BRF_GRA },           //  7 
+	{ "234-c5sp.c5",	0x400000, 0x4ea22fe0, 3 | BRF_GRA },           //  8 
+	{ "234-c6sp.c6",	0x400000, 0xa863c882, 3 | BRF_GRA },           //  9 
 
-	{ "234-m1.m1",    0x020000, 0x087628ea, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "234-m1.m1",		0x020000, 0x087628ea, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "234-v1.v1",    0x400000, 0xed66b76f, 5 | BRF_SND },           // 10 Sound data
-	{ "234-v2.v2",    0x400000, 0xa0e7f6e2, 5 | BRF_SND },           // 11 
-	{ "234-v3.v3",    0x400000, 0xa506e1e2, 5 | BRF_SND },           // 12 
-	{ "234-v4.v4",    0x400000, 0x0e34157f, 5 | BRF_SND },           // 13 
+	{ "234-v1.v1",		0x400000, 0xed66b76f, 5 | BRF_SND },           // 11 Sound data
+	{ "234-v2.v2",		0x400000, 0xa0e7f6e2, 5 | BRF_SND },           // 12 
+	{ "234-v3.v3",		0x400000, 0xa506e1e2, 5 | BRF_SND },           // 13 
+	{ "234-v4.v4",		0x400000, 0x0e34157f, 5 | BRF_SND },           // 14 
 };
 
 STDROMPICKEXT(lastbladsp, lastbladsp, neogeo)
@@ -17014,7 +17014,7 @@ struct BurnDriver BurnDrvSamShoa = {
 static struct BurnRomInfo samsho2spRomDesc[] = {
 	{ "063-p1sp.p1",    0x100000, 0xed466b3d, 1 | BRF_ESS | BRF_PRG }, //  0 68k code
 	{ "063-p2sp.sp2",   0x100000, 0x6e1aef70, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "063-p3sp.p3",    0x020000, 0xf9079ea3, 0 | BRF_ESS | BRF_PRG }, //  2
+	{ "063-p3sp.p3",    0x020000, 0xf9079ea3, 0 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	{ "063-s1sp.s1",    0x020000, 0x1951a907, 2 | BRF_GRA },           //  3 Text layer tiles 	/ TC531000
 
@@ -18474,28 +18474,28 @@ struct BurnDriver BurnDrvMslug5w = {
 // Kof'98 Mix (2011-10-01)
 
 static struct BurnRomInfo kof98mixRomDesc[] = {
-	{ "242mix.p1",	0x100000, 0x4a0525b1, 1 | BRF_ESS | BRF_PRG }, //  0 maincpu
-	{ "242mix.p2",	0x400000, 0x75aeef82, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1mix.p1",	0x100000, 0x4a0525b1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2mix.sp2",	0x400000, 0x75aeef82, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "242mix.s1",  0x020000, 0x07999beb, 2 | BRF_GRA },		   //  2 Text data
+	{ "242-s1mix.s1",	0x020000, 0x07999beb, 2 | BRF_GRA },		   //  2 Text layer tiles
 
-	{ "242-c1.c1",	0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 sprites
-	{ "242-c2.c2",	0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
-	{ "242-c3.c3",	0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
-	{ "242-c4.c4",	0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
-	{ "242-c5.c5",	0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
-	{ "242-c6.c6",	0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
-	{ "242mix.c7",	0x800000, 0x374eb904, 3 | BRF_GRA },           //  9
-	{ "242mix.c8",	0x800000, 0xeddd2789, 3 | BRF_GRA },           // 10
-	{ "242mix.c9",	0x800000, 0x83ef6611, 3 | BRF_GRA },           // 11
-	{ "242mix.c10",	0x800000, 0xc22c67f8, 3 | BRF_GRA },           // 12
+	{ "242-c1.c1",		0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2.c2",		0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
+	{ "242-c3.c3",		0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",		0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5.c5",		0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
+	{ "242-c6.c6",		0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
+	{ "242-c7mix.c7",	0x800000, 0x374eb904, 3 | BRF_GRA },           //  9
+	{ "242-c8mix.c8",	0x800000, 0xeddd2789, 3 | BRF_GRA },           // 10
+	{ "242-c9mix.c9",	0x800000, 0x83ef6611, 3 | BRF_GRA },           // 11
+	{ "242-c10mix.c10",	0x800000, 0xc22c67f8, 3 | BRF_GRA },           // 12
 
-	{ "242-mg1.m1", 0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
+	{ "242-mg1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
 
-	{ "242-v1.v1",	0x400000, 0xb9ea8051, 5 | BRF_SND },           // 14 ymsnd
-	{ "242-v2.v2",	0x400000, 0xcc11106e, 5 | BRF_SND },           // 15
-	{ "242-v3.v3",	0x400000, 0x044ea4e1, 5 | BRF_SND },           // 16
-	{ "242-v4.v4",	0x400000, 0x7985ea30, 5 | BRF_SND },           // 17
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 14 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 15
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 16
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 17
 };
 
 STDROMPICKEXT(kof98mix, kof98mix, neogeo)
@@ -18520,27 +18520,27 @@ struct BurnDriver BurnDrvKof98mix = {
 };
 
 static struct BurnRomInfo kof98pfeRomDesc[] = {
-	{ "242pfe.p1",  0x100000, 0x23876d95, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
-	{ "242pfe.p2",  0x400000, 0xDFA686E9, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
-	{ "242pfe.p3",  0x020000, 0x930ea34e, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "242-p1pfe.p1",	0x100000, 0x23876d95, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2pfe.sp2",	0x400000, 0xdfa686e9, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p3pfe.p3",	0x020000, 0x930ea34e, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
-	{ "242pfe.s1",  0x020000, 0x7f4dbf23, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000qw
+	{ "242-s1pfe.s1",	0x020000, 0x7f4dbf23, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "242hx73.c1", 0x800000, 0x379654a5, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242hx73.c2", 0x800000, 0x9c71fa3d, 3 | BRF_GRA },           //  4 
-	{ "242.c3",     0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
-	{ "242.c4",     0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
-	{ "242.c5",     0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7 
-	{ "242.c6",     0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8 
-	{ "242pfe.c7",  0x800000, 0x02f09b2e, 3 | BRF_GRA },           //  9 
-	{ "242pfe.c8",  0x800000, 0xd43ab3e6, 3 | BRF_GRA },           // 10 
+	{ "242-c1pfe.c1",	0x800000, 0x379654a5, 3 | BRF_GRA },           //  4 Sprite data
+	{ "242-c2pfe.c2",	0x800000, 0x9c71fa3d, 3 | BRF_GRA },           //  5 
+	{ "242.c3",			0x800000, 0x22127b4f, 3 | BRF_GRA },           //  6 
+	{ "242.c4",			0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  7 
+	{ "242.c5",			0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  8 
+	{ "242.c6",			0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  9 
+	{ "242-c7pfe.c7",	0x800000, 0x02f09b2e, 3 | BRF_GRA },           // 10 
+	{ "242-c8pfe.c8",	0x800000, 0xd43ab3e6, 3 | BRF_GRA },           // 11 
 
-	{ "242-mg1.m1", 0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-mg1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code
 
-	{ "242.v1",     0x400000, 0xb9ea8051, 5 | BRF_SND },           // 12 Sound data
-	{ "242.v2",     0x400000, 0xcc11106e, 5 | BRF_SND },           // 13 
-	{ "242.v3",     0x400000, 0x044ea4e1, 5 | BRF_SND },           // 14 
-	{ "242.v4",     0x400000, 0x7985ea30, 5 | BRF_SND },           // 15 
+	{ "242.v1",			0x400000, 0xb9ea8051, 5 | BRF_SND },           // 13 Sound data
+	{ "242.v2",			0x400000, 0xcc11106e, 5 | BRF_SND },           // 14 
+	{ "242.v3",			0x400000, 0x044ea4e1, 5 | BRF_SND },           // 15 
+	{ "242.v4",			0x400000, 0x7985ea30, 5 | BRF_SND },           // 16 
 };
 
 STDROMPICKEXT(kof98pfe, kof98pfe, neogeo)
@@ -18603,26 +18603,26 @@ struct BurnDriver BurnDrvkof98pfe = {
 // The King of Fighters '98 (Ratio hack)
 
 static struct BurnRomInfo kof98ratioRomDesc[] = {
-	{ "242-ratio.p1", 0x100000, 0x9171669d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "242-p2.sp2",   0x400000, 0x980aba4c, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1rto.p1",	0x100000, 0x9171669d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2.sp2",		0x400000, 0x980aba4c, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "242-s1.s1",    0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1.s1",		0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242-c1.c1",    0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242-c2.c2",    0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
-	{ "242-c3.c3",    0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
-	{ "242-c4.c4",    0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
-	{ "242-c5.c5",    0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
-	{ "242-c6.c6",    0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
-	{ "242-c7.c7",    0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9
-	{ "242-c8.c8",    0x800000, 0xc823e045, 3 | BRF_GRA },           // 10
+	{ "242-c1.c1",		0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2.c2",		0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
+	{ "242-c3.c3",		0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",		0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5.c5",		0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
+	{ "242-c6.c6",		0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
+	{ "242-c7.c7",		0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9
+	{ "242-c8.c8",		0x800000, 0xc823e045, 3 | BRF_GRA },           // 10
 
-	{ "242-mg1.m1",   0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-mg1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 12 Sound data
-	{ "242-v2.v2",    0x400000, 0xcc11106e, 5 | BRF_SND },           // 13
-	{ "242-v3.v3",    0x400000, 0x044ea4e1, 5 | BRF_SND },           // 14
-	{ "242-v4.v4",    0x400000, 0x7985ea30, 5 | BRF_SND },           // 15
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 12 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 13
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 14
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kof98ratio, kof98ratio, neogeo)
@@ -18642,26 +18642,26 @@ struct BurnDriver BurnDrvKof98ratio = {
 /* Hack by gunloc941 - YZKOF Build 2020-04-09 */
 
 static struct BurnRomInfo kof98eck20RomDesc[] = {
-	{ "98eck20-p1.bin", 	0x100000, 0x0ced4a93, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "98eck20-p2.bin", 	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1ey.p1",	0x100000, 0x0ced4a93, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2ey.sp2",	0x400000, 0xef36876a, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "98eck20-s1.bin", 	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1ey.s1",	0x020000, 0x5a498ed2, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "98eck20-c1.bin", 	0x800000, 0xd528dab9, 3 | BRF_GRA },           //  3 Sprite data
-	{ "98eck20-c2.bin", 	0x800000, 0x73556130, 3 | BRF_GRA },           //  4
-	{ "98eck20-c3.bin", 	0x800000, 0x4091bca0, 3 | BRF_GRA },           //  5
-	{ "98eck20-c4.bin",     0x800000, 0x56918bab, 3 | BRF_GRA },           //  6
-	{ "98eck20-c5.bin",     0x800000, 0x76252bdc, 3 | BRF_GRA },           //  7
-	{ "98eck20-c6.bin",     0x800000, 0x13d5b9b7, 3 | BRF_GRA },           //  8
-	{ "98eck20-c7.bin",     0x800000, 0x1b3a6aa9, 3 | BRF_GRA },           //  9
-	{ "98eck20-c8.bin",     0x800000, 0xef3390ca, 3 | BRF_GRA },           // 10
+	{ "242-c1ey.c1",	0x800000, 0xd528dab9, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2ey.c2",	0x800000, 0x73556130, 3 | BRF_GRA },           //  4
+	{ "242-c3ey.c3",	0x800000, 0x4091bca0, 3 | BRF_GRA },           //  5
+	{ "242-c4ey.c4",	0x800000, 0x56918bab, 3 | BRF_GRA },           //  6
+	{ "242-c5ey.c5",	0x800000, 0x76252bdc, 3 | BRF_GRA },           //  7
+	{ "242-c6ey.c6",	0x800000, 0x13d5b9b7, 3 | BRF_GRA },           //  8
+	{ "242-c7ey.c7",	0x800000, 0x1b3a6aa9, 3 | BRF_GRA },           //  9
+	{ "242-c8ey.c8",	0x800000, 0xef3390ca, 3 | BRF_GRA },           // 10
 
-	{ "98eck20-mg1.bin", 	0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-mg1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "98eck20-v1.bin",   	0x400000, 0xb5650f76, 5 | BRF_SND },           // 16 Sound data
-	{ "98eck20-v2.bin",   	0x400000, 0xb43b83ee, 5 | BRF_SND },           // 17
-	{ "98eck20-v3.bin",   	0x400000, 0x59c53922, 5 | BRF_SND },           // 18
-	{ "98eck20-v4.bin",   	0x400000, 0x46ca6f5e, 5 | BRF_SND },           // 19
+	{ "242-v1ey.v1",	0x400000, 0xb5650f76, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2ey.v2",	0x400000, 0xb43b83ee, 5 | BRF_SND },           // 17
+	{ "242-v3ey.v3",	0x400000, 0x59c53922, 5 | BRF_SND },           // 18
+	{ "242-v4ey.v4",	0x400000, 0x46ca6f5e, 5 | BRF_SND },           // 19
 };
 
 STDROMPICKEXT(kof98eck20, kof98eck20, neogeo)
@@ -18678,31 +18678,31 @@ struct BurnDriver BurnDrvkof98eck20 = {
 };
 
 static struct BurnRomInfo kof10thdRomDesc[] = {
-	{ "363d.p1",      0x800000, 0x30c82f4c, 1 | BRF_ESS | BRF_PRG }, // 1 68K code
+	{ "kf10-p1d.bin",	0x800000, 0x30c82f4c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "363d.s1",      0x020000, 0x3c757cb1, 2 | BRF_GRA },           // 2 Text layer tiles / TC531000
+	{ "kf10-s1d.bin",	0x020000, 0x3c757cb1, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "kf10-c1a.bin", 0x400000, 0x3bbc0364, 3 | BRF_GRA },           // 3 Sprite data
-	{ "kf10-c2a.bin", 0x400000, 0x91230075, 3 | BRF_GRA },           // 4
-	{ "kf10-c1b.bin", 0x400000, 0xb5abfc28, 3 | BRF_GRA },           // 5
-	{ "kf10-c2b.bin", 0x400000, 0x6cc4c6e1, 3 | BRF_GRA },           // 6
-	{ "kf10-c3a.bin", 0x400000, 0x5b3d4a16, 3 | BRF_GRA },           // 7
-	{ "kf10-c4a.bin", 0x400000, 0xc6f3419b, 3 | BRF_GRA },           // 8
-	{ "kf10-c3b.bin", 0x400000, 0x9d2bba19, 3 | BRF_GRA },           // 9
-	{ "kf10-c4b.bin", 0x400000, 0x5a4050cb, 3 | BRF_GRA },           // 10
-	{ "kf10-c5a.bin", 0x400000, 0xa289d1e1, 3 | BRF_GRA },           // 11
-	{ "kf10-c6a.bin", 0x400000, 0xe6494b5d, 3 | BRF_GRA },           // 12
-	{ "kf10-c5b.bin", 0x400000, 0x404fff02, 3 | BRF_GRA },           // 13
-	{ "kf10-c6b.bin", 0x400000, 0xf2ccfc9e, 3 | BRF_GRA },           // 14
-	{ "kf10-c7a.bin", 0x400000, 0xbe79c5a8, 3 | BRF_GRA },           // 15
-	{ "kf10-c8a.bin", 0x400000, 0xa5952ca4, 3 | BRF_GRA },           // 16
-	{ "kf10-c7b.bin", 0x400000, 0x3fdb3542, 3 | BRF_GRA },           // 17
-	{ "kf10-c8b.bin", 0x400000, 0x661b7a52, 3 | BRF_GRA },           // 18
+	{ "kf10-c1a.bin",	0x400000, 0x3bbc0364, 3 | BRF_GRA },           //  2 Sprite data
+	{ "kf10-c2a.bin",	0x400000, 0x91230075, 3 | BRF_GRA },           //  3
+	{ "kf10-c1b.bin",	0x400000, 0xb5abfc28, 3 | BRF_GRA },           //  4
+	{ "kf10-c2b.bin",	0x400000, 0x6cc4c6e1, 3 | BRF_GRA },           //  5
+	{ "kf10-c3a.bin",	0x400000, 0x5b3d4a16, 3 | BRF_GRA },           //  6
+	{ "kf10-c4a.bin",	0x400000, 0xc6f3419b, 3 | BRF_GRA },           //  7
+	{ "kf10-c3b.bin",	0x400000, 0x9d2bba19, 3 | BRF_GRA },           //  8
+	{ "kf10-c4b.bin",	0x400000, 0x5a4050cb, 3 | BRF_GRA },           //  9
+	{ "kf10-c5a.bin",	0x400000, 0xa289d1e1, 3 | BRF_GRA },           // 10
+	{ "kf10-c6a.bin",	0x400000, 0xe6494b5d, 3 | BRF_GRA },           // 11
+	{ "kf10-c5b.bin",	0x400000, 0x404fff02, 3 | BRF_GRA },           // 12
+	{ "kf10-c6b.bin",	0x400000, 0xf2ccfc9e, 3 | BRF_GRA },           // 13
+	{ "kf10-c7a.bin",	0x400000, 0xbe79c5a8, 3 | BRF_GRA },           // 14
+	{ "kf10-c8a.bin",	0x400000, 0xa5952ca4, 3 | BRF_GRA },           // 15
+	{ "kf10-c7b.bin",	0x400000, 0x3fdb3542, 3 | BRF_GRA },           // 16
+	{ "kf10-c8b.bin",	0x400000, 0x661b7a52, 3 | BRF_GRA },           // 17
 
-	{ "kf10-m1.bin",  0x020000, 0xf6fab859, 4 | BRF_ESS | BRF_PRG }, // 19 Z80 code
+	{ "kf10-m1.bin",	0x020000, 0xf6fab859, 4 | BRF_ESS | BRF_PRG }, // 18 Z80 code
 
-	{ "kf10-v1.bin",  0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 20 Sound data
-	{ "kf10-v2.bin",  0x800000, 0xb8c475a4, 5 | BRF_SND },           // 21 
+	{ "kf10-v1.bin",	0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 19 Sound data
+	{ "kf10-v2.bin",	0x800000, 0xb8c475a4, 5 | BRF_SND },           // 20 
 };
 
 STDROMPICKEXT(kof10thd, kof10thd, neogeo)
@@ -19245,23 +19245,23 @@ struct BurnDriver BurnDrvmslug5sgf = {
 // *IVEX KOF 97 COMBO HACK WITH RANDOM SELECT* //
 
 static struct BurnRomInfo kof97rcRomDesc[] = {
-	{ "232-rc.p1",    0x100000, 0x1d476235, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "232-rc.sp2",   0x400000, 0x406e4a4b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "232-p1rc.p1",	0x100000, 0x1d476235, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232-p2rc.sp2",	0x400000, 0x406e4a4b, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "232-rc.s1",    0x020000, 0xd4957067, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "232-s1rc.s1",	0x020000, 0xd4957067, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "232-rc.c1",    0x800000, 0xe2fe7d7a, 3 | BRF_GRA },           //  3 Sprite data
-	{ "232-rc.c2",    0x800000, 0xd0746893, 3 | BRF_GRA },           //  4
-	{ "232-c3.c3",    0x800000, 0x581d6618, 3 | BRF_GRA },           //  5
-	{ "232-c4.c4",    0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6
-	{ "232-c5.c5",    0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7
-	{ "232-c6.c6",    0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8
+	{ "232-c1rc.c1",	0x800000, 0xe2fe7d7a, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232-c2rc.c2",	0x800000, 0xd0746893, 3 | BRF_GRA },           //  4
+	{ "232-c3.c3",		0x800000, 0x581d6618, 3 | BRF_GRA },           //  5
+	{ "232-c4.c4",		0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6
+	{ "232-c5.c5",		0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7
+	{ "232-c6.c6",		0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8
 
-	{ "232-m1.m1",    0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "232-m1.m1",		0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "232-v1.v1",    0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
-	{ "232-v2.v2",    0x400000, 0x2304e744, 5 | BRF_SND },           // 11
-	{ "232-v3.v3",    0x400000, 0x759eb954, 5 | BRF_SND },           // 12
+	{ "232-v1.v1",		0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",		0x400000, 0x2304e744, 5 | BRF_SND },           // 11
+	{ "232-v3.v3",		0x400000, 0x759eb954, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(kof97rc, kof97rc, neogeo)
@@ -19280,23 +19280,23 @@ struct BurnDriver BurnDrvkof97rc = {
 // The King of Fighters '97 - Combo Training Version 2018 (Hack)
 
 static struct BurnRomInfo kof97cbtRomDesc[] = {
-	{ "97cbt-p1.bin",       0x100000, 0x323e4263, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "97cbt-p2.bin",       0x400000, 0x91c0cfdb, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "232-p1cbt.bin",	0x100000, 0x323e4263, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232-p2cbt.bin",	0x400000, 0x91c0cfdb, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "KOF97cbt-s1.bin",    0x020000, 0xd4957067, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "232-s1cbt.bin",	0x020000, 0xd4957067, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "KOF97cbt-c1.bin",    0x800000, 0xea16b711, 3 | BRF_GRA },           //  3 Sprite data
-	{ "KOF97cbt-c2.bin",    0x800000, 0xb7bef674, 3 | BRF_GRA },           //  4
-	{ "232-c3.c3",          0x800000, 0x581d6618, 3 | BRF_GRA },           //  5
-	{ "232-c4.c4",          0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6
-	{ "KOF97cbt-c5.bin",    0x400000, 0x6fe02054, 3 | BRF_GRA },           //  7
-	{ "KOF97cbt-c6.bin",    0x400000, 0x0f96c84a, 3 | BRF_GRA },           //  8
+	{ "232-c1cbt.bin",	0x800000, 0xea16b711, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232-c2cbt.bin",	0x800000, 0xb7bef674, 3 | BRF_GRA },           //  4
+	{ "232-c3.c3",		0x800000, 0x581d6618, 3 | BRF_GRA },           //  5
+	{ "232-c4.c4",		0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6
+	{ "232-c5cbt.bin",	0x400000, 0x6fe02054, 3 | BRF_GRA },           //  7
+	{ "232-c6cbt.bin",	0x400000, 0x0f96c84a, 3 | BRF_GRA },           //  8
 
-	{ "232-m1.m1",          0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "232-m1.m1",		0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "232-v1.v1",          0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
-	{ "232-v2.v2",          0x400000, 0x2304e744, 5 | BRF_SND },           // 11
-	{ "232-v3.v3",          0x400000, 0x759eb954, 5 | BRF_SND },           // 12
+	{ "232-v1.v1",		0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",		0x400000, 0x2304e744, 5 | BRF_SND },           // 11
+	{ "232-v3.v3",		0x400000, 0x759eb954, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(kof97cbt, kof97cbt, neogeo)
@@ -19316,26 +19316,26 @@ struct BurnDriver BurnDrvkof97cbt = {
 // Hacked by Ice Flame Fantasy
 
 static struct BurnRomInfo kof97invplusRomDesc[] = {
-	{ "232inv-p1.p1",		0x100000, 0x149e80cb, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
-	{ "232inv-p2.sp2",		0x400000, 0xf11c77d0, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "232-p1inv.p1",		0x100000, 0x149e80cb, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
+	{ "232-p2inv.sp2",		0x400000, 0xf11c77d0, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "232inv-s1.s1",		0x020000, 0xde61d11c, 2 | BRF_GRA },			//  2 Text layer tiles
+	{ "232-s1inv.s1",		0x020000, 0xde61d11c, 2 | BRF_GRA },			//  2 Text layer tiles
 
-	{ "232inv-c1.c1",		0x800000, 0xb496fb6e, 3 | BRF_GRA },			//  3 Sprite data
-	{ "232inv-c2.c2",		0x800000, 0xff3fde05, 3 | BRF_GRA },			//  4
-	{ "232inv-c3.c3",		0x800000, 0x46db93d9, 3 | BRF_GRA },			//  5
-	{ "232inv-c4.c4",		0x800000, 0xb1a4ac4a, 3 | BRF_GRA },			//  6
-	{ "232inv-c5.c5",		0x800000, 0x1a921988, 3 | BRF_GRA },			//  7
-	{ "232inv-c6.c6",		0x800000, 0x07630b58, 3 | BRF_GRA },			//  8
-	{ "232inv-c7.c7",		0x400000, 0x6d51eaeb, 3 | BRF_GRA },			//  9
-	{ "232inv-c8.c8",		0x400000, 0x632bcf8e, 3 | BRF_GRA },			//  10
+	{ "232-c1inv.c1",		0x800000, 0xb496fb6e, 3 | BRF_GRA },			//  3 Sprite data
+	{ "232-c2inv.c2",		0x800000, 0xff3fde05, 3 | BRF_GRA },			//  4
+	{ "232-c3inv.c3",		0x800000, 0x46db93d9, 3 | BRF_GRA },			//  5
+	{ "232-c4inv.c4",		0x800000, 0xb1a4ac4a, 3 | BRF_GRA },			//  6
+	{ "232-c5inv.c5",		0x800000, 0x1a921988, 3 | BRF_GRA },			//  7
+	{ "232-c6inv.c6",		0x800000, 0x07630b58, 3 | BRF_GRA },			//  8
+	{ "232-c7inv.c7",		0x400000, 0x6d51eaeb, 3 | BRF_GRA },			//  9
+	{ "232-c8inv.c8",		0x400000, 0x632bcf8e, 3 | BRF_GRA },			//  10
 
-	{ "232inv-m1.m1",		0x020000, 0x7b933dd8, 4 | BRF_ESS | BRF_PRG },	//  11 Z80 code
+	{ "232-m1inv.m1",		0x020000, 0x7b933dd8, 4 | BRF_ESS | BRF_PRG },	//  11 Z80 code
 
 	{ "232-v1.v1",			0x400000, 0x22a2b5b5, 5 | BRF_SND },			//  12 Sound data
 	{ "232-v2.v2",			0x400000, 0x2304e744, 5 | BRF_SND },			//  13
 	{ "232-v3.v3",			0x400000, 0x759eb954, 5 | BRF_SND },			//  14
-	{ "232inv-v4.v4",		0x400000, 0x225996c3, 5 | BRF_SND },			//  15
+	{ "232-v4inv.v4",		0x400000, 0x225996c3, 5 | BRF_SND },			//  15
 };
 
 STDROMPICKEXT(kof97invplus, kof97invplus, neogeo)
@@ -19353,26 +19353,26 @@ struct BurnDriver BurnDrvkof97invplus = {
 
 // The King of Fighters 2002 - 3rd Strike of Orochi (Hack by EGCG/EGHT)
 static struct BurnRomInfo kf2k23rdRomDesc[] = {
-	{ "kf2k23rd-p1.rom",      0x100000, 0xeb84d68f, 1 | BRF_ESS | BRF_PRG }, // 0 68K code
-	{ "kf2k23rd-p2.rom",      0x400000, 0x293bbf78, 1 | BRF_ESS | BRF_PRG }, // 1
+	{ "265-p13rd.p1",	0x100000, 0xeb84d68f, 1 | BRF_ESS | BRF_PRG }, // 0 68K code
+	{ "265-p23rdg.sp2",	0x400000, 0x293bbf78, 1 | BRF_ESS | BRF_PRG }, // 1
 
-	{ "kf2k23rd-s1.rom",      0x020000, 0x67e7cbe1, 2 | BRF_GRA },           // 2 Text layer tiles / TC531000
+	{ "265-s13rd.s1",	0x020000, 0x67e7cbe1, 2 | BRF_GRA },           // 2 Text layer tiles / TC531000
 
-	{ "kf2k23rd-c1.rom",      0x800000, 0x7efa6ef7, 3 | BRF_GRA },           // 3 Sprite data
-	{ "kf2k23rd-c2.rom",      0x800000, 0xaa82948b, 3 | BRF_GRA },           // 4
-	{ "kf2k23rd-c3.rom",      0x800000, 0x959fad0b, 3 | BRF_GRA },           // 5
-	{ "kf2k23rd-c4.rom",      0x800000, 0x2558972f, 3 | BRF_GRA },           // 6
-	{ "kf2k23rd-c5.rom",      0x800000, 0x74bba7c6, 3 | BRF_GRA },           // 7
-	{ "kf2k23rd-c6.rom",      0x800000, 0xe20d2216, 3 | BRF_GRA },           // 8
-	{ "kf2k23rd-c7.rom",      0x800000, 0x201e75e0, 3 | BRF_GRA },           // 9
-	{ "kf2k23rd-c8.rom",      0x800000, 0xff0fd53b, 3 | BRF_GRA },           // 10
+	{ "265-c1d.c1",		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           // 3 Sprite data
+	{ "265-c2d.c2",		0x800000, 0xaa82948b, 3 | BRF_GRA },           // 4
+	{ "265-c3d.c3",		0x800000, 0x959fad0b, 3 | BRF_GRA },           // 5
+	{ "265-c43rd.c4",	0x800000, 0x2558972f, 3 | BRF_GRA },           // 6
+	{ "265-c5d.c5",		0x800000, 0x74bba7c6, 3 | BRF_GRA },           // 7
+	{ "265-c6d.c6",		0x800000, 0xe20d2216, 3 | BRF_GRA },           // 8
+	{ "265-c73rd.c7",	0x800000, 0x201e75e0, 3 | BRF_GRA },           // 9
+	{ "265-c83rd.c6",	0x800000, 0xff0fd53b, 3 | BRF_GRA },           // 10
 
-	{ "kf2k23rd-m1.rom",      0x020000, 0x1c661a4b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "265-m1d.m1",		0x020000, 0x1c661a4b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "kf2k23rd-v1.rom",      0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
-	{ "kf2k23rd-v2.rom",      0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
-	{ "kf2k23rd-v3.rom",      0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
-	{ "kf2k23rd-v4.rom",      0x400000, 0x067271b5, 5 | BRF_SND },           // 15
+	{ "265-v1nd.v1",	0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
+	{ "265-v2nd.v2",	0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
+	{ "265-v3nd.v3",	0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
+	{ "265-v4nd.v4",	0x400000, 0x067271b5, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kf2k23rd, kf2k23rd, neogeo)
@@ -19391,26 +19391,26 @@ struct BurnDriver BurnDrvkf2k23rd = {
 // The King of Fighters '99 - Remix Pro V2.0 Final (Hack By FCHT - FightChina Hackteam)
 
 static struct BurnRomInfo kof99rp2fRomDesc[] = {
-	{ "kf99rp2f-p1.rom",   	   0x100000, 0x1c5fd0ad, 1 | BRF_ESS | BRF_PRG }, // 0 68K code
-	{ "kf99rp2f-p2.rom",       0x400000, 0x01E111B3, 1 | BRF_ESS | BRF_PRG }, // 1
+	{ "251-p1rp.p1",	0x100000, 0x1c5fd0ad, 1 | BRF_ESS | BRF_PRG }, // 0 68K code
+	{ "251-p2rp.sp2",	0x400000, 0x01e111b3, 1 | BRF_ESS | BRF_PRG }, // 1
 
-	{ "kf99rp2f-s1.rom",       0x020000, 0xca942904, 2 | BRF_GRA },           // 2 Text layer tiles
+	{ "251-s1rp.s1",	0x020000, 0xca942904, 2 | BRF_GRA },           // 2 Text layer tiles
 
-	{ "kf99rp2f-c1.rom",   	   0x800000, 0xf0409101, 3 | BRF_GRA },           // 3 Sprite data
-	{ "kf99rp2f-c2.rom",   	   0x800000, 0x3a9eff54, 3 | BRF_GRA },           // 4
-	{ "kf99rp2f-c3.rom",   	   0x800000, 0xb047c9d5, 3 | BRF_GRA },           // 5
-	{ "kf99rp2f-c4.rom",   	   0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           // 6
-	{ "kf99rp2f-c5.rom",   	   0x800000, 0xdd023649, 3 | BRF_GRA },           // 7
-	{ "kf99rp2f-c6.rom",   	   0x800000, 0xb8f60a8c, 3 | BRF_GRA },           // 8
-	{ "kf99rp2f-c7.rom",   	   0x800000, 0x1dfd5103, 3 | BRF_GRA },           // 9
-	{ "kf99rp2f-c8.rom",   	   0x800000, 0x23fe3c43, 3 | BRF_GRA },           // 10
+	{ "251-c1rp.c1",	0x800000, 0xf0409101, 3 | BRF_GRA },           // 3 Sprite data
+	{ "251-c2rp.c2",	0x800000, 0x3a9eff54, 3 | BRF_GRA },           // 4
+	{ "251-c3d.c3",		0x800000, 0xb047c9d5, 3 | BRF_GRA },           // 5
+	{ "251-c4d.c4",		0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           // 6
+	{ "251-c5rp.c5",	0x800000, 0xdd023649, 3 | BRF_GRA },           // 7
+	{ "251-c6rp.c6",	0x800000, 0xb8f60a8c, 3 | BRF_GRA },           // 8
+	{ "251-c7rp.c7",	0x800000, 0x1dfd5103, 3 | BRF_GRA },           // 9
+	{ "251-c8rp.c8",	0x800000, 0x23fe3c43, 3 | BRF_GRA },           // 10
 
-	{ "kf99rp2f-m1.rom",       0x020000, 0x0cb24d46, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "251-m1rp.m1",	0x020000, 0x0cb24d46, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "kf99rp2f-v1.rom",       0x400000, 0xef2eecc8, 5 | BRF_SND },           // 12 Sound data
-	{ "kf99rp2f-v2.rom",       0x400000, 0x73e211ca, 5 | BRF_SND },           // 13
-	{ "kf99rp2f-v3.rom",       0x400000, 0x403628da, 5 | BRF_SND },           // 14
-	{ "kf99rp2f-v4.rom",       0x200000, 0xb49e6178, 5 | BRF_SND },           // 15
+	{ "251-v1.v1",		0x400000, 0xef2eecc8, 5 | BRF_SND },           // 12 Sound data
+	{ "251-v2.v2",		0x400000, 0x73e211ca, 5 | BRF_SND },           // 13
+	{ "251-v3rp.v3",	0x400000, 0x403628da, 5 | BRF_SND },           // 14
+	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },           // 15
 };
 
 STDROMPICKEXT(kof99rp2f, kof99rp2f, neogeo)
@@ -19429,26 +19429,26 @@ struct BurnDriver BurnDrvkof99rp2f = {
 // The King of Fighters '99 - Evolution Ultra Remix (Hack By Yashional)
 
 static struct BurnRomInfo kof99eurRomDesc[] = {
-	{ "kf99eur.p1",    0x100000, 0x66fa20fd, 1 | BRF_ESS | BRF_PRG }, //  0
-	{ "kf99eur.p2",    0x400000, 0xaec93904, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "251-p1eur.p1",	0x100000, 0x66fa20fd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "251-p2eur.sp2",	0x400000, 0xaec93904, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "kf99eur.s1",    0x020000, 0xa6747969, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "251-s1eur.s1",	0x020000, 0xa6747969, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "kf99eur.c1",    0x800000, 0xc7e8bf32, 3 | BRF_GRA },           //  3 Sprite data
-	{ "kf99eur.c2",    0x800000, 0x4e8f9f7d, 3 | BRF_GRA },           //  4
-	{ "kf99eur.c3",    0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5
-	{ "kf99eur.c4",    0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6
-	{ "kf99eur.c5",    0x800000, 0x9746268c, 3 | BRF_GRA },           //  7
-	{ "kf99eur.c6",    0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8
-	{ "kf99eur.c7",    0x800000, 0xf0b5ff02, 3 | BRF_GRA },           //  9
-	{ "kf99eur.c8",    0x800000, 0x7107b8d5, 3 | BRF_GRA },           //  10
+	{ "251-c1eur.c1",	0x800000, 0xc7e8bf32, 3 | BRF_GRA },           //  3 Sprite data
+	{ "251-c2eur.c2",	0x800000, 0x4e8f9f7d, 3 | BRF_GRA },           //  4
+	{ "251-c3d.c3",		0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5
+	{ "251-c4d.c4",		0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6
+	{ "251-c5d.c5",		0x800000, 0x9746268c, 3 | BRF_GRA },           //  7
+	{ "251-c6d.c6",		0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8
+	{ "251-c7eur.c7",	0x800000, 0xf0b5ff02, 3 | BRF_GRA },           //  9
+	{ "251-c8eur.c8",	0x800000, 0x7107b8d5, 3 | BRF_GRA },           //  10
 
-	{ "kf99eur.m1",    0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+	{ "251-m1ae.m1",	0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
 
-	{ "kf99eur.v1",    0x400000, 0x4ae46226, 5 | BRF_SND },           //  12 Sound data
-	{ "kf99eur.v2",    0x400000, 0x07d70650, 5 | BRF_SND },           //  13
-	{ "251-v3.v3",     0x400000, 0x821901da, 5 | BRF_SND },           //  14
-	{ "251-v4.v4",     0x200000, 0xb49e6178, 5 | BRF_SND },           //  15
+	{ "251-v1eur.v1",	0x400000, 0x4ae46226, 5 | BRF_SND },           //  12 Sound data
+	{ "251-v2ae.v2",	0x400000, 0x07d70650, 5 | BRF_SND },           //  13
+	{ "251-v3.v3",		0x400000, 0x821901da, 5 | BRF_SND },           //  14
+	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },           //  15
 };
 
 STDROMPICKEXT(kof99eur, kof99eur, neogeo)
@@ -19475,26 +19475,26 @@ struct BurnDriver BurnDrvkof99eur = {
 // The King of Fighters '99 - Summer Revolution (Hack By FCHT - FightChina Hackteam)
 
 static struct BurnRomInfo kof99srRomDesc[] = {
-	{ "kf99sr-p1.bin",    0x100000, 0xb96da0bf, 1 | BRF_ESS | BRF_PRG }, //  0
-	{ "kf99sr-p2.bin",    0x400000, 0x9f1d1660, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "152-p1sr.p1",	0x100000, 0xb96da0bf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "152-p2sr.sp2",	0x400000, 0x9f1d1660, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "kf99sr-s1.bin",    0x020000, 0x08055c7a, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "251-s1sr.s1",	0x020000, 0x08055c7a, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "kf99sr-c1.bin",    0x800000, 0xb3d88546, 3 | BRF_GRA },           //  3 Sprite data
-	{ "kf99sr-c2.bin",    0x800000, 0x915c8634, 3 | BRF_GRA },           //  4
-	{ "kf99sr-c3.bin",    0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5
-	{ "kf99sr-c4.bin",    0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6
-	{ "kf99sr-c5.bin",    0x800000, 0x9746268c, 3 | BRF_GRA },           //  7
-	{ "kf99sr-c6.bin",    0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8
-	{ "kf99sr-c7.bin",    0x800000, 0x65de862c, 3 | BRF_GRA },           //  9
-	{ "kf99sr-c8.bin",    0x800000, 0x3ff457fe, 3 | BRF_GRA },           //  10
+	{ "251-c1d.c1",		0x800000, 0xb3d88546, 3 | BRF_GRA },           //  3 Sprite data
+	{ "251-c2d.c2",		0x800000, 0x915c8634, 3 | BRF_GRA },           //  4
+	{ "251-c3d.c3",		0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5
+	{ "251-c4d.c4",		0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6
+	{ "251-c5d.c5",		0x800000, 0x9746268c, 3 | BRF_GRA },           //  7
+	{ "251-c6d.c6",		0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8
+	{ "251-c7sr.c7",	0x800000, 0x65de862c, 3 | BRF_GRA },           //  9
+	{ "251-c8sr.c8",	0x800000, 0x3ff457fe, 3 | BRF_GRA },           //  10
 
-	{ "kf99sr-m1.bin",    0x020000, 0x5e74539c, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+	{ "251-m1.m1",		0x020000, 0x5e74539c, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
 
-	{ "kf99sr-v1.bin",    0x400000, 0xef2eecc8, 5 | BRF_SND },           //  12 Sound data
-	{ "kf99sr-v2.bin",    0x400000, 0x73e211ca, 5 | BRF_SND },           //  13
-	{ "kf99sr-v3.bin",    0x400000, 0x821901da, 5 | BRF_SND },           //  14
-	{ "kf99sr-v4.bin",    0x200000, 0xb49e6178, 5 | BRF_SND },           //  15
+	{ "251-v1.v1",		0x400000, 0xef2eecc8, 5 | BRF_SND },           //  12 Sound data
+	{ "251-v2.v2",		0x400000, 0x73e211ca, 5 | BRF_SND },           //  13
+	{ "251-v3.v3",		0x400000, 0x821901da, 5 | BRF_SND },           //  14
+	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },           //  15
 };
 
 STDROMPICKEXT(kof99sr, kof99sr, neogeo)
@@ -19513,23 +19513,23 @@ struct BurnDriver BurnDrvkof99sr = {
 // The King of Fighters 2003 - PlayStation 2 (Hack By EGCG)
 
 static struct BurnRomInfo kf2k3ps2RomDesc[] = {
-	{ "kf2k3ps2-p1.bin",    0x800000, 0x8e66056d, 1 | BRF_ESS | BRF_PRG }, //  0
+	{ "271-p1ps2.p1",	0x800000, 0x8e66056d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "kf2k3ps2-s1.bin",    0x020000, 0xc2e48e98, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "271-s1ps2.s1",	0x020000, 0xc2e48e98, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "kf2k3ps2-c1.bin",    0x800000, 0xe42fc226, 3 | BRF_GRA },           //  2 Sprite data
-	{ "kf2k3ps2-c2.bin",    0x800000, 0x1b5e3b58, 3 | BRF_GRA },           //  3
-	{ "kf2k3ps2-c3.bin",    0x800000, 0xd334fdd9, 3 | BRF_GRA },           //  4
-	{ "kf2k3ps2-c4.bin",    0x800000, 0x0d457699, 3 | BRF_GRA },           //  5
-	{ "kf2k3ps2-c5.bin",    0x800000, 0x8a91aae4, 3 | BRF_GRA },           //  6
-	{ "kf2k3ps2-c6.bin",    0x800000, 0x9f8674b8, 3 | BRF_GRA },           //  7
-	{ "kf2k3ps2-c7.bin",    0x800000, 0x0ff993d7, 3 | BRF_GRA },           //  8
-	{ "kf2k3ps2-c8.bin",    0x800000, 0x22e36002, 3 | BRF_GRA },           //  9
+	{ "271-c1d.c1",		0x800000, 0xe42fc226, 3 | BRF_GRA },           //  2 Sprite data
+	{ "271-c2d.c2",		0x800000, 0x1b5e3b58, 3 | BRF_GRA },           //  3
+	{ "271-c3d.c3",		0x800000, 0xd334fdd9, 3 | BRF_GRA },           //  4
+	{ "271-c4d.c4",		0x800000, 0x0d457699, 3 | BRF_GRA },           //  5
+	{ "271-c5d.c5",		0x800000, 0x8a91aae4, 3 | BRF_GRA },           //  6
+	{ "271-c6d.c6",		0x800000, 0x9f8674b8, 3 | BRF_GRA },           //  7
+	{ "271-c7ps2.c7",	0x800000, 0x0ff993d7, 3 | BRF_GRA },           //  8
+	{ "271-c8ps2.c8",	0x800000, 0x22e36002, 3 | BRF_GRA },           //  9
 
-	{ "kf2k3ps2-m1.bin",    0x080000, 0x4374cb5c, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
+	{ "271-m1ps2.m1",	0x080000, 0x4374cb5c, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
 
-	{ "kf2k3ps2-v1.bin",    0x800000, 0xdd6c6a85, 5 | BRF_SND },           //  11 Sound data
-	{ "kf2k3ps2-v2.bin",    0x800000, 0x0e84f8c1, 5 | BRF_SND },           //  12
+	{ "271-v1d.v1",		0x800000, 0xdd6c6a85, 5 | BRF_SND },           //  11 Sound data
+	{ "271-v2d.v2",		0x800000, 0x0e84f8c1, 5 | BRF_SND },           //  12
 };
 
 STDROMPICKEXT(kf2k3ps2, kf2k3ps2, neogeo)
@@ -19549,26 +19549,26 @@ struct BurnDriver BurnDrvkf2k3ps2 = {
 /* Hack by gunloc941 - Build 2019-02-17 */
 
 static struct BurnRomInfo kof98eckvsRomDesc[] = {
-	{ "98eckvs-p1.bin", 	0x100000, 0xb3afd80f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "98eckvs-p2.bin", 	0x400000, 0x5d59e3ae, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1eg.p1",	0x100000, 0xb3afd80f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2eg.sp2",	0x400000, 0x5d59e3ae, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "98eckvs-s1.bin", 	0x020000, 0xf91c29d2, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1eg.s1",	0x020000, 0xf91c29d2, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "98eckvs-c1.bin", 	0x800000, 0xd3da4dc1, 3 | BRF_GRA },           //  3 Sprite data
-	{ "98eckvs-c2.bin", 	0x800000, 0xf5a5d149, 3 | BRF_GRA },           //  4
-	{ "98eckvs-c3.bin", 	0x800000, 0x0689e5b1, 3 | BRF_GRA },           //  5
-	{ "98eckvs-c4.bin",     0x800000, 0x5cc4d647, 3 | BRF_GRA },           //  6
-	{ "98eckvs-c5.bin",     0x800000, 0x1531b766, 3 | BRF_GRA },           //  7
-	{ "98eckvs-c6.bin",     0x800000, 0x04131307, 3 | BRF_GRA },           //  8
-	{ "98eckvs-c7.bin",     0x800000, 0x6f879c38, 3 | BRF_GRA },           //  9
-	{ "98eckvs-c8.bin",     0x800000, 0x89c797df, 3 | BRF_GRA },           // 10
+	{ "242-c1eg.c1",	0x800000, 0xd3da4dc1, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2eg.c2",	0x800000, 0xf5a5d149, 3 | BRF_GRA },           //  4
+	{ "242-c3eg.c3",	0x800000, 0x0689e5b1, 3 | BRF_GRA },           //  5
+	{ "242-c4eg.c4",	0x800000, 0x5cc4d647, 3 | BRF_GRA },           //  6
+	{ "242-c5eg.c5",	0x800000, 0x1531b766, 3 | BRF_GRA },           //  7
+	{ "242-c6eg.c6",	0x800000, 0x04131307, 3 | BRF_GRA },           //  8
+	{ "242-c7eg.c7",	0x800000, 0x6f879c38, 3 | BRF_GRA },           //  9
+	{ "242-c8eg.c8",	0x800000, 0x89c797df, 3 | BRF_GRA },           // 10
 
-	{ "98eckvs-mg1.bin", 	0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-mg1.m1",		0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "98eckvs-v1.bin",   	0x400000, 0x32da3c63, 5 | BRF_SND },           // 16 Sound data
-	{ "98eckvs-v2.bin",   	0x400000, 0x246edf6d, 5 | BRF_SND },           // 17
-	{ "98eckvs-v3.bin",   	0x400000, 0x308b0393, 5 | BRF_SND },           // 18
-	{ "98eckvs-v4.bin",   	0x400000, 0x00276d91, 5 | BRF_SND },           // 19
+	{ "242-v1eg.v1",	0x400000, 0x32da3c63, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2eg.v2",	0x400000, 0x246edf6d, 5 | BRF_SND },           // 17
+	{ "242-v3eg.v3",	0x400000, 0x308b0393, 5 | BRF_SND },           // 18
+	{ "242-v4eg.v4",	0x400000, 0x00276d91, 5 | BRF_SND },           // 19
 };
 
 STDROMPICKEXT(kof98eckvs, kof98eckvs, neogeo)
@@ -19587,23 +19587,23 @@ struct BurnDriver BurnDrvkof98eckvs = {
 // The King of Fighters 10th Anniversary 2019 (Optimized Hack By ????)
 
 static struct BurnRomInfo kof10thuoRomDesc[] = {
-	{ "kf10udo-p1.p1",   0x800000, 0x956ac7f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "kf10-p1uo.bin",	0x800000, 0x956ac7f9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "kf10udo-s1.s1",   0x020000, 0x0EBE5645, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "kf10-s1uo.bin",	0x020000, 0x0ebe5645, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "kf10udo-c1.c1",   0x800000, 0x2491AF91, 3 | BRF_GRA },           //  3 Sprite data
-	{ "kf10udo-c2.c2",   0x800000, 0x47FF1D91, 3 | BRF_GRA },           //  4
-	{ "kf10udo-c3.c3",   0x800000, 0x959FAD0B, 3 | BRF_GRA },           //  5
-	{ "kf10udo-c4.c4",   0x800000, 0xEFE6A468, 3 | BRF_GRA },           //  6
-	{ "kf10udo-c5.c5",   0x800000, 0x74BBA7C6, 3 | BRF_GRA },           //  7
-	{ "kf10udo-c6.c6",   0x800000, 0xE20D2216, 3 | BRF_GRA },           //  8
-	{ "kf10udo-c7.c7",   0x800000, 0x8A5B561C, 3 | BRF_GRA },           //
-	{ "kf10udo-c8.c8",   0x800000, 0xBEF667A3, 3 | BRF_GRA },           //
+	{ "kf10-c1uo.bin",	0x800000, 0x2491af91, 3 | BRF_GRA },           //  2 Sprite data
+	{ "kf10-c2uo.bin",	0x800000, 0x47ff1d91, 3 | BRF_GRA },           //  3
+	{ "kf10-c3d.bin",	0x800000, 0x959fad0b, 3 | BRF_GRA },           //  4
+	{ "kf10-c4d.bin",	0x800000, 0xefe6a468, 3 | BRF_GRA },           //  5
+	{ "kf10-c5d.bin",	0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  6
+	{ "kf10-c6d.bin",	0x800000, 0xe20d2216, 3 | BRF_GRA },           //  7
+	{ "kf10-c7d.bin",	0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  8
+	{ "kf10-c8d.bin",	0x800000, 0xbef667a3, 3 | BRF_GRA },           //  9
 
-	{ "kf10udo-m1.m1",   0x020000, 0xF6FAB859, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "kf10-m1.bin",	0x020000, 0xf6fab859, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "kf10udo-v1.v1",   0x800000, 0x0FC9A58D, 5 | BRF_SND },           // 10 Sound data
-	{ "kf10udo-v2.v2",   0x800000, 0xB8C475A4, 5 | BRF_SND },           // 11
+	{ "kf10-v1.bin",	0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 11 Sound data
+	{ "kf10-v2.bin",	0x800000, 0xb8c475a4, 5 | BRF_SND },           // 12
 
 };
 
@@ -19623,24 +19623,24 @@ struct BurnDriver BurnDrvkof10thuo = {
 // The King of Fighters 2002 Remix Ultra 3.5 - Hack By FCHT
 
 static struct BurnRomInfo kf2k2ru35RomDesc[] = {
-	{ "kf2k2ru35-p1.bin",   0x100000, 0x8da72d5c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "kf2k2ru35-p2.bin",   0x400000, 0x75185760, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "265-p1ru.p1",	0x100000, 0x8da72d5c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p2ru.sp2",	0x400000, 0x75185760, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "kf2k2ru35-s1.bin",   0x020000, 0xbd19c308, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265-s1ru.s1",	0x020000, 0xbd19c308, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "kf2k2ru35-c1.bin",   0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
-	{ "kf2k2ru35-c2.bin",   0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
-	{ "kf2k2ru35-c3.bin",   0x800000, 0xca656090, 3 | BRF_GRA },           //  5
-	{ "kf2k2ru35-c4.bin",   0x800000, 0xeb898849, 3 | BRF_GRA },           //  6
-	{ "kf2k2ru35-c5.bin",   0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
-	{ "kf2k2ru35-c6.bin",   0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8
-	{ "kf2k2ru35-c7.bin",   0x800000, 0x2a9d505c, 3 | BRF_GRA },           //  9
-	{ "kf2k2ru35-c8.bin",   0x800000, 0x93d8501f, 3 | BRF_GRA },           // 10
+	{ "265-c1d.c1",		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265-c2d.c2",		0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
+	{ "265-c3ru.c3",	0x800000, 0xca656090, 3 | BRF_GRA },           //  5
+	{ "265-c4ru.c4",	0x800000, 0xeb898849, 3 | BRF_GRA },           //  6
+	{ "265-c5d.c5",		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
+	{ "265-c6d.c6",		0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8
+	{ "265-c7ru.c7",	0x800000, 0x2a9d505c, 3 | BRF_GRA },           //  9
+	{ "265-c8ru.c8",	0x800000, 0x93d8501f, 3 | BRF_GRA },           // 10
 
-	{ "kf2k2ru35-m1.bin",   0x020000, 0x9956ccd8, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "265-m1ru.m1",	0x020000, 0x9956ccd8, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "kf2k2ru35-v1.bin",   0x800000, 0x6e7e3508, 5 | BRF_SND },           // 12 Sound data
-	{ "kf2k2ru35-v2.bin",   0x800000, 0x2157b90f, 5 | BRF_SND },           // 13
+	{ "265-v1ru.v1",	0x800000, 0x6e7e3508, 5 | BRF_SND },           // 12 Sound data
+	{ "265-v2ru.v2",	0x800000, 0x2157b90f, 5 | BRF_SND },           // 13
 };
 
 STDROMPICKEXT(kf2k2ru35, kf2k2ru35, neogeo)
@@ -19659,7 +19659,7 @@ struct BurnDriver BurnDrvkf2k2ru35 = {
 // The King of Fighters 2002 Same Character (Hack By DDJ)
 
 static struct BurnRomInfo kof2002scRomDesc[] = {
-	{ "265sc-p1.p1",  0x100000, 0x015ed6b2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265-p1sc.p1",  0x100000, 0x015ed6b2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "265-p2.sp2",   0x400000, 0x327266b8, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "265-c1.c1",    0x800000, 0x2b65a656, 3 | BRF_GRA },           //  2 Sprite data
@@ -19694,29 +19694,29 @@ struct BurnDriver BurnDrvkof2002sc = {
 // Fixed Timer Over bug in p1 (TimerFix patch)
 
 static struct BurnRomInfo kof2002mRomDesc[] = {
-	{ "2k2m-p1.bin",  0x100000, 0xa49937ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "2k2m-p2.bin",  0x400000, 0x046a1232, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "2k2m-p1.bin",	0x100000, 0xa49937ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "2k2m-p2.bin",	0x400000, 0x046a1232, 1 | BRF_ESS | BRF_PRG }, //  1
 	
-	{ "2k2m-s1.bin",  0x020000, 0x80922b39, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "2k2m-s1.bin",	0x020000, 0x80922b39, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "2k2m-c1.bin",  0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
-	{ "2k2m-c2.bin",  0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
-	{ "2k2m-c3.bin",  0x800000, 0x102a78a9, 3 | BRF_GRA },           //  5
-	{ "2k2m-c4.bin",  0x800000, 0xee9d72b8, 3 | BRF_GRA },           //  6
-	{ "2k2m-c5.bin",  0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
-	{ "2k2m-c6.bin",  0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8
-	{ "2k2m-c7.bin",  0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  9
-	{ "2k2m-c8.bin",  0x800000, 0xbef667a3, 3 | BRF_GRA },           //  10
-	{ "2k2m-c9.bin",  0x800000, 0xe0ab7f55, 3 | BRF_GRA },           //  11
-	{ "2k2m-c10.bin", 0x800000, 0x97f53698, 3 | BRF_GRA },           //  12
+	{ "265-c1d.c1",		0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265-c2d.c2",		0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4
+	{ "2k2m-c3.bin",	0x800000, 0x102a78a9, 3 | BRF_GRA },           //  5
+	{ "2k2m-c4.bin",	0x800000, 0xee9d72b8, 3 | BRF_GRA },           //  6
+	{ "265-c5d.c5",		0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7
+	{ "265-c6d.c6",		0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8
+	{ "265-c7d.c7",		0x800000, 0x8a5b561c, 3 | BRF_GRA },           //  9
+	{ "265-c8d.c8",		0x800000, 0xbef667a3, 3 | BRF_GRA },           //  10
+	{ "2k2m-c9.bin",	0x800000, 0xe0ab7f55, 3 | BRF_GRA },           //  11
+	{ "2k2m-c10.bin",	0x800000, 0x97f53698, 3 | BRF_GRA },           //  12
 
-	{ "2k2m-m1.bin",  0x020000, 0xce706bc7, 4 | BRF_ESS | BRF_PRG }, //  13 Z80 code
+	{ "2k2m-m1.bin",	0x020000, 0xce706bc7, 4 | BRF_ESS | BRF_PRG }, //  13 Z80 code
 
-	{ "2k2m-v1.bin",  0x400000, 0x13d98607, 5 | BRF_SND },           //  14 Sound data
-	{ "2k2m-v2.bin",  0x400000, 0x9cf74677, 5 | BRF_SND },           //  15
-	{ "2k2m-v3.bin",  0x400000, 0x8e9448b5, 5 | BRF_SND },           //  16
-    { "2k2m-v4.bin",  0x400000, 0x067271b5, 5 | BRF_SND },           //  17
-    { "2k2m-v5.bin",  0x400000, 0x86ce1fd1, 5 | BRF_SND },           //  18
+	{ "265-v1nd.v1",	0x400000, 0x13d98607, 5 | BRF_SND },           //  14 Sound data
+	{ "265-v2nd.v2",	0x400000, 0x9cf74677, 5 | BRF_SND },           //  15
+	{ "265-v3nd.v3",	0x400000, 0x8e9448b5, 5 | BRF_SND },           //  16
+    { "265-v4nd.v4",	0x400000, 0x067271b5, 5 | BRF_SND },           //  17
+    { "2k2m-v5.bin",	0x400000, 0x86ce1fd1, 5 | BRF_SND },           //  18
 };
 
 STDROMPICKEXT(kof2002m, kof2002m, neogeo)
@@ -20157,27 +20157,27 @@ struct BurnDriver BurnDrvmslug5unity = {
 // Version 2004-03-01 Hack By Jason,Kim & Raymonose
 
 static struct BurnRomInfo kof2k1rpRomDesc[] = {
-	{ "262rp-p1.p1",           0x100000, 0xe9e42e55, 1 | BRF_ESS | BRF_PRG },	//  0 68K code
-	{ "262rp-sp2.sp2",         0x400000, 0x91668d86, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "262-p1rp.p1",		0x100000, 0xe9e42e55, 1 | BRF_ESS | BRF_PRG },		//  0 68K code
+	{ "262-p2rp.sp2",		0x400000, 0x91668d86, 1 | BRF_ESS | BRF_PRG },		//  1
 
-	{ "262rp-s1.s1",           0x020000, 0x492f5efe, 2 | BRF_GRA },				//  2 Text layer tiles
+	{ "262-s1rp.s1",		0x020000, 0x492f5efe, 2 | BRF_GRA },				//  2 Text layer tiles
 
 	/* Encrypted */
-	{ "262-c1-08-e0.c1",       0x800000, 0x99cc785a, 3 | BRF_GRA },				//  3 Sprite data
-	{ "262-c2-08-e0.c2",       0x800000, 0x50368cbf, 3 | BRF_GRA },				//  4
-	{ "262-c3-08-e0.c3",       0x800000, 0xfb14ff87, 3 | BRF_GRA },				//  5
-	{ "262-c4-08-e0.c4",       0x800000, 0x4397faf8, 3 | BRF_GRA },				//  6
-	{ "262-c5-08-e0.c5",       0x800000, 0x91f24be4, 3 | BRF_GRA },				//  7
-	{ "262-c6-08-e0.c6",       0x800000, 0xa31e4403, 3 | BRF_GRA },				//  8
-	{ "262-c7-08-e0.c7",       0x800000, 0x54d9d1ec, 3 | BRF_GRA },				//  9
-	{ "262-c8-08-e0.c8",       0x800000, 0x59289a6b, 3 | BRF_GRA },				// 10
+	{ "262-c1-08-e0.c1",	0x800000, 0x99cc785a, 3 | BRF_GRA },				//  3 Sprite data
+	{ "262-c2-08-e0.c2",	0x800000, 0x50368cbf, 3 | BRF_GRA },				//  4
+	{ "262-c3-08-e0.c3",	0x800000, 0xfb14ff87, 3 | BRF_GRA },				//  5
+	{ "262-c4-08-e0.c4",	0x800000, 0x4397faf8, 3 | BRF_GRA },				//  6
+	{ "262-c5-08-e0.c5",	0x800000, 0x91f24be4, 3 | BRF_GRA },				//  7
+	{ "262-c6-08-e0.c6",	0x800000, 0xa31e4403, 3 | BRF_GRA },				//  8
+	{ "262-c7-08-e0.c7",	0x800000, 0x54d9d1ec, 3 | BRF_GRA },				//  9
+	{ "262-c8-08-e0.c8",	0x800000, 0x59289a6b, 3 | BRF_GRA },				// 10
 
-	{ "262rp-m1d.m1",          0x020000, 0x2fb0a8a5, 4 | BRF_ESS | BRF_PRG },	// 11 Z80 code
+	{ "262-m1d.m1",			0x020000, 0x2fb0a8a5, 4 | BRF_ESS | BRF_PRG },	// 11 Z80 code
 
-	{ "262-v1-08-e0.v1",       0x400000, 0x83d49ecf, 5 | BRF_SND },				// 12 Sound data
-	{ "262-v2-08-e0.v2",       0x400000, 0x003f1843, 5 | BRF_SND },				// 13
-	{ "262-v3-08-e0.v3",       0x400000, 0x2ae38dbe, 5 | BRF_SND },				// 14
-	{ "262-v4-08-e0.v4",       0x400000, 0x26ec4dd9, 5 | BRF_SND },				// 15
+	{ "262-v1-08-e0.v1",	0x400000, 0x83d49ecf, 5 | BRF_SND },				// 12 Sound data
+	{ "262-v2-08-e0.v2",	0x400000, 0x003f1843, 5 | BRF_SND },				// 13
+	{ "262-v3-08-e0.v3",	0x400000, 0x2ae38dbe, 5 | BRF_SND },				// 14
+	{ "262-v4-08-e0.v4",	0x400000, 0x26ec4dd9, 5 | BRF_SND },				// 15
 };
 
 STDROMPICKEXT(kof2k1rp, kof2k1rp, neogeo)
@@ -20196,19 +20196,19 @@ struct BurnDriver BurnDrvkof2k1rp = {
 // The King of Fighters 2000 SP XXX (Hack)
 
 static struct BurnRomInfo kof2kxxxRomDesc[] = {
-	{ "257xxx-p1.p1",    0x100000, 0xb88cd5eb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "257xxx-p2.sp2",   0x400000, 0x1a10f2be, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "257-p1xxx.p1",    0x100000, 0xb88cd5eb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "257-p2xxx.sp2",   0x400000, 0x1a10f2be, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
-	{ "257xxx-c1.c1",    0x800000, 0x3006a5e4, 3 | BRF_GRA },           //  2 Sprite data
-	{ "257xxx-c2.c2",    0x800000, 0x366fd118, 3 | BRF_GRA },           //  3
-	{ "257xxx-c3.c3",    0x800000, 0x5b16d7e3, 3 | BRF_GRA },           //  4
-	{ "257xxx-c4.c4",    0x800000, 0x7e57dfc1, 3 | BRF_GRA },           //  5
-	{ "257xxx-c5.c5",    0x800000, 0x671904f4, 3 | BRF_GRA },           //  6
-	{ "257xxx-c6.c6",    0x800000, 0x68adf255, 3 | BRF_GRA },           //  7
-	{ "257xxx-c7.c7",    0x800000, 0x8c6b22b3, 3 | BRF_GRA },           //  8
-	{ "257xxx-c8.c8",    0x800000, 0x6223bd1d, 3 | BRF_GRA },           //  9
+	{ "257-c1xxx.c1",    0x800000, 0x3006a5e4, 3 | BRF_GRA },           //  2 Sprite data
+	{ "257-c2xxx.c2",    0x800000, 0x366fd118, 3 | BRF_GRA },           //  3
+	{ "257-c3xxx.c3",    0x800000, 0x5b16d7e3, 3 | BRF_GRA },           //  4
+	{ "257-c4xxx.c4",    0x800000, 0x7e57dfc1, 3 | BRF_GRA },           //  5
+	{ "257-c5xxx.c5",    0x800000, 0x671904f4, 3 | BRF_GRA },           //  6
+	{ "257-c6xxx.c6",    0x800000, 0x68adf255, 3 | BRF_GRA },           //  7
+	{ "257-c7xxx.c7",    0x800000, 0x8c6b22b3, 3 | BRF_GRA },           //  8
+	{ "257-c8xxx.c8",    0x800000, 0x6223bd1d, 3 | BRF_GRA },           //  9
 
 	/* Encrypted */
 	{ "257-m1.m1",       0x040000, 0x4b749113, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
@@ -20237,23 +20237,23 @@ struct BurnDriver BurnDrvkof2kxxx = {
 // Hack By 0 Day-S,Eddids,Hiker
 
 static struct BurnRomInfo kf2k3ps2spRomDesc[] = {
-	{ "271ps2sp.p1",     0x400000, 0xa2b1cd0b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "271ps2sp.p2",     0x400000, 0xc2321f79, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "271ps2sp.p3",     0x100000, 0x48af7f48, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "271-p1ps2sp.p1",		0x400000, 0xa2b1cd0b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "271-p2ps2sp.p2",		0x400000, 0xc2321f79, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "271-p3ps2sp.p3",		0x100000, 0x48af7f48, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "271ps2sp.c1",     0x800000, 0x3c43a170, 3 | BRF_GRA },           //  3 Sprite data
-	{ "271ps2sp.c2",     0x800000, 0xd8a64d42, 3 | BRF_GRA },           //  4
-	{ "271ps2sp.c3",     0x800000, 0xd818be4e, 3 | BRF_GRA },           //  5
-	{ "271ps2sp.c4",     0x800000, 0xeb8bd6d6, 3 | BRF_GRA },           //  6
-	{ "271ps2sp.c5",     0x800000, 0x53bb6706, 3 | BRF_GRA },           //  7
-	{ "271ps2sp.c6",     0x800000, 0x993254d5, 3 | BRF_GRA },           //  8
-	{ "271ps2sp.c7",     0x800000, 0x51db8ffe, 3 | BRF_GRA },           //  9
-	{ "271ps2sp.c8",     0x800000, 0x7dad01ab, 3 | BRF_GRA },           // 10
+	{ "271-c1ps2sp.c1",		0x800000, 0x3c43a170, 3 | BRF_GRA },           //  3 Sprite data
+	{ "271-c2ps2sp.c2",		0x800000, 0xd8a64d42, 3 | BRF_GRA },           //  4
+	{ "271-c3ps2sp.c3",		0x800000, 0xd818be4e, 3 | BRF_GRA },           //  5
+	{ "271-c4ps2sp.c4",		0x800000, 0xeb8bd6d6, 3 | BRF_GRA },           //  6
+	{ "271-c5ps2sp.c5",		0x800000, 0x53bb6706, 3 | BRF_GRA },           //  7
+	{ "271-c6ps2sp.c6",		0x800000, 0x993254d5, 3 | BRF_GRA },           //  8
+	{ "271-c7ps2sp.c7",		0x800000, 0x51db8ffe, 3 | BRF_GRA },           //  9
+	{ "271-c8ps2sp.c8",		0x800000, 0x7dad01ab, 3 | BRF_GRA },           // 10
 
-	{ "271-m1c.m1",      0x080000, 0xf5515629, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "271-m1c.m1",			0x080000, 0xf5515629, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "271-v1c.v1",      0x800000, 0xffa3f8c7, 5 | BRF_SND },           // 12 Sound data
-	{ "271-v2c.v2",      0x800000, 0x5382c7d1, 5 | BRF_SND },           // 13
+	{ "271-v1c.v1",			0x800000, 0xffa3f8c7, 5 | BRF_SND },           // 12 Sound data
+	{ "271-v2c.v2",			0x800000, 0x5382c7d1, 5 | BRF_SND },           // 13
 };
 
 STDROMPICKEXT(kf2k3ps2sp, kf2k3ps2sp, neogeo)
@@ -20274,23 +20274,23 @@ struct BurnDriver BurnDrvkf2k3ps2sp = {
 // "Timer Go to 0 when Round Started" Fixed in .p1 (Patch made By GaTo)
 
 static struct BurnRomInfo kof97evnRomDesc[] = {
-	{ "232evn-p1.p1",  0x100000, 0xf047c328, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "232evn-p2.sp2", 0x400000, 0x5cbb2499, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "232-p1evn.p1",	0x100000, 0xf047c328, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232-p2evn.sp2",	0x400000, 0x5cbb2499, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "232-s1.s1",     0x020000, 0x8514ecf5, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "232-s1.s1",		0x020000, 0x8514ecf5, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "232-c1.c1",     0x800000, 0x5f8bf0a1, 3 | BRF_GRA },           //  3 Sprite data
-	{ "232-c2.c2",     0x800000, 0xe4d45c81, 3 | BRF_GRA },           //  4
-	{ "232-c3.c3",     0x800000, 0x581d6618, 3 | BRF_GRA },           //  5
-	{ "232-c4.c4",     0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6
-	{ "232-c5.c5",     0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7
-	{ "232-c6.c6",     0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8
+	{ "232-c1.c1",		0x800000, 0x5f8bf0a1, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232-c2.c2",		0x800000, 0xe4d45c81, 3 | BRF_GRA },           //  4
+	{ "232-c3.c3",		0x800000, 0x581d6618, 3 | BRF_GRA },           //  5
+	{ "232-c4.c4",		0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6
+	{ "232-c5.c5",		0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7
+	{ "232-c6.c6",		0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8
 
-	{ "232-m1.m1",     0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "232-m1.m1",		0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
-	{ "232-v1.v1",     0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
-	{ "232-v2.v2",     0x400000, 0x2304e744, 5 | BRF_SND },           // 11
-	{ "232-v3.v3",     0x400000, 0x759eb954, 5 | BRF_SND },           // 12
+	{ "232-v1.v1",		0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",		0x400000, 0x2304e744, 5 | BRF_SND },           // 11
+	{ "232-v3.v3",		0x400000, 0x759eb954, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(kof97evn, kof97evn, neogeo)
@@ -20347,26 +20347,26 @@ struct BurnDriver BurnDrvkof98bc2k2 = {
 // The King of Fighters '98 Same Character (Neutrality Hack By GSC2007, Ver.2020-08-09)
 
 static struct BurnRomInfo kof98scnRomDesc[] = {
-	{ "242scn-p1.p1", 0x100000, 0x3107058a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "242-p2.sp2",   0x400000, 0x980aba4c, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1scn.p1",	0x100000, 0x3107058a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2.sp2",		0x400000, 0x980aba4c, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "242-s1.s1",    0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1.s1",		0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242-c1.c1",    0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242-c2.c2",    0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
-	{ "242-c3.c3",    0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
-	{ "242-c4.c4",    0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
-	{ "242-c5.c5", 	  0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
-	{ "242-c6.c6", 	  0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
-	{ "242-c7.c7", 	  0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9
-	{ "242-c8.c8", 	  0x800000, 0xc823e045, 3 | BRF_GRA },           // 10
+	{ "242-c1.c1",		0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2.c2",		0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
+	{ "242-c3.c3",		0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",		0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5.c5",		0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
+	{ "242-c6.c6",		0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
+	{ "242-c7.c7",		0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9
+	{ "242-c8.c8",		0x800000, 0xc823e045, 3 | BRF_GRA },           // 10
 
-	{ "242-m1.m1",    0x040000, 0x4ef7016b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-m1.m1",		0x040000, 0x4ef7016b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
-	{ "242-v2.v2",    0x400000, 0xcc11106e, 5 | BRF_SND },           // 17
-	{ "242-v3.v3",    0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18
-	{ "242-v4.v4",    0x400000, 0x7985ea30, 5 | BRF_SND },           // 19
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 17
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 19
 };
 
 STDROMPICKEXT(kof98scn, kof98scn, neogeo)
@@ -20385,26 +20385,26 @@ struct BurnDriver BurnDrvkof98scn = {
 // The King of Fighters '98 Evolution (Hack By NEO Edit Team)
 
 static struct BurnRomInfo kof98evoRomDesc[] = {
-	{ "242evo-pn1.p1", 0x100000, 0xf9a22b2f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "242evo-p2.sp2", 0x400000, 0x65547465, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "242-p1evo.p1",	0x100000, 0xf9a22b2f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2evo.sp2",	0x400000, 0x65547465, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "242-s1.s1",     0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242-s1.s1",		0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242-c1.c1",     0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242-c2.c2",     0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
-	{ "242-c3.c3",     0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
-	{ "242-c4.c4",     0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
-	{ "242-c5.c5", 	   0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
-	{ "242-c6.c6", 	   0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
-	{ "242evo-c7.c7",  0x800000, 0x35839069, 3 | BRF_GRA },           //  9
-	{ "242evo-c8.c8",  0x800000, 0x9744d47f, 3 | BRF_GRA },           // 10
+	{ "242-c1.c1",		0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2.c2",		0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
+	{ "242-c3.c3",		0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",		0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5.c5",		0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
+	{ "242-c6.c6",		0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
+	{ "242-c7evo.c7",	0x800000, 0x35839069, 3 | BRF_GRA },           //  9
+	{ "242-c8evo.c8",	0x800000, 0x9744d47f, 3 | BRF_GRA },           // 10
 
-	{ "242-m1.m1",     0x040000, 0x4ef7016b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "242-m1.m1",		0x040000, 0x4ef7016b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "242-v1.v1",     0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
-	{ "242-v2.v2",     0x400000, 0xcc11106e, 5 | BRF_SND },           // 17
-	{ "242-v3.v3",     0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18
-	{ "242-v4.v4",     0x400000, 0x7985ea30, 5 | BRF_SND },           // 19
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 17
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 19
 };
 
 STDROMPICKEXT(kof98evo, kof98evo, neogeo)

@@ -3163,7 +3163,7 @@ static void NeoCDReadSector()
 
 			if (LC8951RegistersW[10] & 0x80) {                                      // DECEN (sector decoder enabled)
 
-				if (nIRQControl & 0x10) {
+				if (nIRQControl & 0x10 && SekReadWord(0x108) == 0x79) {
 					// raster irq enabled while loading & decoding?  this bothers street hoops w/PR #1029
 					// recreate: disable this block :) boot, select demo, press X - loads insanely slow
 					bprintf(0, _T("NeoGeoCD: disabling raster irq while loading data from CD\n"));

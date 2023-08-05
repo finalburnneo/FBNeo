@@ -17489,6 +17489,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="skatecrazy1" cloneof="skatecrazy" romof="skatecrazy">
+		<comment>Z80 memory snapshot version</comment>
+		<description>Skate Crazy - Part 1 (48K-128K)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Skate Crazy - Part 1 (1988)(Gremlin Graphics).z80" size="50655" crc="16add75c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="skatecrazy2" cloneof="skatecrazy" romof="skatecrazy">
+		<comment>Z80 memory snapshot version</comment>
+		<description>Skate Crazy - Part 2 (48K)</description>
+		<year>1988</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Skate Crazy - Part 2 (1988)(Gremlin Graphics).z80" size="35524" crc="82d5426e"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="skateball" romof="spectrum">
 		<description>Skateball (48K)</description>
 		<year>1988</year>

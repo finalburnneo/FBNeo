@@ -225,6 +225,7 @@
 #define IDC_REPLAYTIME                  20264
 #define IDC_SHOWMOVEMENT                20265
 #define IDC_STARTPAUSED                 20266
+#define IDC_NGCD_WARN                   20267
 
 #define IDC_STATIC_SYS                  	20300
 #define IDC_STATIC_OPT                  	20301

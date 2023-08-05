@@ -26154,9 +26154,47 @@ struct BurnDriver BurnSpecSkatecrazy = {
 	"spec_skatecrazy", NULL, "spec_spec128", NULL, "1988",
 	"Skate Crazy (128K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecSkatecrazyRomInfo, SpecSkatecrazyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Skate Crazy - Part 1 (48K-128K)
+
+static struct BurnRomInfo SpecSkatecrazy1RomDesc[] = {
+	{ "Skate Crazy - Part 1 (1988)(Gremlin Graphics).z80", 50655, 0x16add75c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSkatecrazy1, SpecSkatecrazy1, Spec128)
+STD_ROM_FN(SpecSkatecrazy1)
+
+struct BurnDriver BurnSpecSkatecrazy1 = {
+	"spec_skatecrazy1", "spec_skatecrazy", "spec_spec128", NULL, "1988",
+	"Skate Crazy - Part 1 (48K-128K)\0", "Z80 memory snapshot version", "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	SpectrumGetZipName, SpecSkatecrazy1RomInfo, SpecSkatecrazy1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Skate Crazy - Part 2 (48K)
+
+static struct BurnRomInfo SpecSkatecrazy2RomDesc[] = {
+	{ "Skate Crazy - Part 2 (1988)(Gremlin Graphics).z80", 35524, 0x82d5426e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSkatecrazy2, SpecSkatecrazy2, Spectrum)
+STD_ROM_FN(SpecSkatecrazy2)
+
+struct BurnDriver BurnSpecSkatecrazy2 = {
+	"spec_skatecrazy2", "spec_skatecrazy", "spec_spectrum", NULL, "1988",
+	"Skate Crazy - Part 2 (48K)\0", "Z80 memory snapshot version", "Gremlin Graphics", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecSkatecrazy2RomInfo, SpecSkatecrazy2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

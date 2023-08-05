@@ -792,6 +792,7 @@ BEGIN
                     WS_TABSTOP,97,25,99,10
     CONTROL         "Start Paused",IDC_STARTPAUSED,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,207,25,57,10
+    LTEXT           "WARNING: Start NeoGeo CD game before loading replay file!!!",IDC_NGCD_WARN,11,104,240,10
 END
 
 IDD_RECORDINP DIALOGEX 0, 0, 276, 98

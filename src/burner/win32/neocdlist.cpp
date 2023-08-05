@@ -118,6 +118,7 @@ struct NGCDGAME games[] =
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
+	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
 };
 
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
@@ -154,7 +155,7 @@ int GetNeoCDTitle(unsigned int nGameID)
 {
 	game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
 	memset(game, 0, sizeof(NGCDGAME));
-	//bprintf(0, _T("unk GAME ID %x\n"), nGameID);
+
 	if(GetNeoGeoCDInfo(nGameID)) {
 		memcpy(game, GetNeoGeoCDInfo(nGameID), sizeof(NGCDGAME));
 
@@ -168,6 +169,7 @@ int GetNeoCDTitle(unsigned int nGameID)
 
 		return 1;
 	} else {
+		bprintf(0, _T("NeoGeoCD Unknown GAME ID %x\n"), nGameID);
 		//SetNeoCDTitle(FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
 	}
 
@@ -261,7 +263,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 				iso9660_ReadOffset(&LEN_FI, fp, lOffset + 32, 1, sizeof(UINT8));
 
 				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(UINT8));
-				strncpy(File, File, LEN_FI);
+				//strncpy(File, File, LEN_FI);
 				File[LEN_FI] = 0;
 
 				// Treasure of Caribbean (c) 1994 / (c) 2011 NCI

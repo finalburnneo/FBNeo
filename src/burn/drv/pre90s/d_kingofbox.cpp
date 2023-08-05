@@ -29,7 +29,7 @@ static INT32 nmi_enable;
 static INT32 palette_bank;
 static INT32 soundlatch;
 static INT32 flipscreen;
-static INT32 extra_cycles[4];
+static INT32 nCyclesExtra[4];
 static INT32 vblank;
 
 static UINT8 input_state = 0;
@@ -222,36 +222,23 @@ static void __fastcall kingobox_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf803: // kingobox
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_HOLD);
 			scrolly = data; // ??
+		return;
 
 		case 0xd801: // ringking
-			ZetClose();
-			ZetOpen(2);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(2, 0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0xd802: // ringking
 		case 0xf804: // kingobox
-			ZetClose();
-			ZetOpen(1);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(1, 0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0xd803: // ringking
 		case 0xf807: // kingobox
 			soundlatch = data;
-			ZetClose();
-			ZetOpen(3);
-			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
+			ZetSetIRQLine(3, 0, CPU_IRQSTATUS_HOLD);
 		return;
 	}
 }
@@ -371,13 +358,14 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 
-	HiscoreReset();
-
 	scrolly = 0;
 	nmi_enable = 0;
 	palette_bank = 0;
 	flipscreen = 0;
-	memset (extra_cycles, 0, sizeof(extra_cycles));
+
+	memset (nCyclesExtra, 0, sizeof(nCyclesExtra));
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -615,12 +603,7 @@ static void RingkingColpromFix()
 
 static INT32 RingkingInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -726,7 +709,7 @@ static INT32 DrvExit()
 
 	input_state = 0;
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -839,7 +822,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[4] = { 4000000 / 60, 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 nCyclesDone[4] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2], nCyclesExtra[3] };
 
 	vblank = 1;
 
@@ -866,6 +849,11 @@ static INT32 DrvFrame()
 		ZetNmi(); // 100x per frame
 		ZetClose();
 	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nCyclesExtra[3] = nCyclesDone[3] - nCyclesTotal[3];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -902,7 +890,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(palette_bank);
 		SCAN_VAR(flipscreen);
-		SCAN_VAR(extra_cycles);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

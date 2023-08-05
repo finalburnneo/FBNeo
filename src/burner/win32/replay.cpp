@@ -928,6 +928,9 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 
 		EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
 
+		// hide neocdz warning for now
+		ShowWindow(GetDlgItem(hDlg, IDC_NGCD_WARN), SW_HIDE);
+
 		if(bClear) {
 			return;
 		}
@@ -1147,6 +1150,12 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		SetDlgItemTextW(hDlg, IDC_METADATA, wszAuthorInfo);
 		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, szRecordedFrom);
 		SetDlgItemTextA(hDlg, IDC_REPLAYTIME, szRecordedTime);
+
+		if (!_tcsncmp(wszStartupGame, _T("neocdz"), 6) || !_tcsncmp(wszStartupGame, _T("ngcd_"), 5) ||
+		    _tcsstr(szChoice, _T("ngcd_")) ) {
+			// Neo Geo CD game, show nice warning :)
+			ShowWindow(GetDlgItem(hDlg, IDC_NGCD_WARN), SW_SHOW);
+		}
 	}
 }
 
@@ -1385,7 +1394,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 						}
 
 						// add "romset," to beginning of metadata
-						_stprintf(wszMetadata, _T("%s,%s"), GetDrvName(), szAuthInfo);
+						_stprintf(wszMetadata, _T("%s,%s"), BurnDrvGetText(DRV_NAME), szAuthInfo);
 					} else {
 						_tcscpy(wszMetadata, szAuthInfo);
 					}

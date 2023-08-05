@@ -48,7 +48,8 @@ struct GAMELIST {
 	TCHAR	szPublisher[100];
 };
 
-static GAMELIST ngcd_list[100];
+#define MAX_NGCD	200
+static GAMELIST ngcd_list[MAX_NGCD];
 static int nListItems = 0;
 
 // CD image stuff
@@ -59,7 +60,7 @@ static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID)
 {
 	NGCDGAME* game;
 
-	if(GetNeoGeoCDInfo(nGameID))
+	if(GetNeoGeoCDInfo(nGameID) && nListItems < MAX_NGCD)
 	{
 		game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
 		memset(game, 0, sizeof(NGCDGAME));
@@ -765,13 +766,7 @@ static void NeoCDList_Clean()
 	hProcessThread = NULL;
 	ProcessThreadID = 0;
 
-	for(int x = 0; x < 100; x++) {
-		for(int y = 0; y < 99; y++) {
-			memset(&ngcd_list[x].szTracks[y], 0, sizeof(TCHAR) * 256);
-		}
-		ngcd_list[x].bFoundCUE = false;
-	}
-	memset(&ngcd_list, 0, (sizeof(GAMELIST) * 100));
+	memset(&ngcd_list, 0, sizeof(ngcd_list));
 
 	hProcParent			= NULL;
 	bProcessingList		= false;

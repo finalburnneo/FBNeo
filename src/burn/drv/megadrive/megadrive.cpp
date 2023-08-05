@@ -1880,26 +1880,30 @@ static void __fastcall LK3WriteWord(UINT32 address, UINT16 data)
 	SEK_DEF_WRITE_WORD(7, address, data);
 }
 
-static UINT8 __fastcall RedclifProtReadByte(UINT32 /*sekAddress*/)
+static UINT8 __fastcall RedclifProtReadByte(UINT32 sekAddress)
 {
+	//bprintf(PRINT_NORMAL, _T("RedclifeProt Read byte %x  pc %x\n"), sekAddress, SekGetPC(-1));
+
 	return (UINT8)-0x56;
 }
 
 static UINT16 __fastcall RedclifProtReadWord(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("RedclifeProt Read Word %x\n"), sekAddress);
+	bprintf(PRINT_NORMAL, _T("RedclifeProt Read word %x  pc %x\n"), sekAddress, SekGetPC(-1));
 
 	return 0;
 }
 
-static UINT8 __fastcall RedclifProt2ReadByte(UINT32 /*sekAddress*/)
+static UINT8 __fastcall RedclifProt2ReadByte(UINT32 sekAddress)
 {
+	//bprintf(PRINT_NORMAL, _T("RedclifeProt2 Read byte %x  pc %x\n"), sekAddress, SekGetPC(-1));
+
 	return 0x55;
 }
 
 static UINT16 __fastcall RedclifProt2ReadWord(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("RedclifeProt2 Read Word %x\n"), sekAddress);
+	bprintf(PRINT_NORMAL, _T("RedclifeProt2 Read word %x  pc %x\n"), sekAddress, SekGetPC(-1));
 
 	return 0;
 }
@@ -2515,13 +2519,16 @@ static void SetupCustomCartridgeMappers()
 	}
 
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_REDCL_EN) {
-		OriginalRom = (UINT8*)BurnMalloc(0x200005);
-		memcpy(OriginalRom, RomMain, 0x200005);
-		for (UINT32 i = 0; i < RomSize; i++) {
-			OriginalRom[i] ^= 0x40;
-		}
+		if (RomSize == 0x200005) {
+			bprintf(0, _T("Redcliff - decrypting rom\n"));
+			OriginalRom = (UINT8*)BurnMalloc(0x200005);
+			memcpy(OriginalRom, RomMain, 0x200005);
+			for (UINT32 i = 0; i < RomSize; i++) {
+				OriginalRom[i] ^= 0x40;
+			}
 
-		memcpy(RomMain + 0x000000, OriginalRom + 0x000004, 0x200000);
+			memcpy(RomMain + 0x000000, OriginalRom + 0x000004, 0x200000);
+		}
 
 		SekOpen(0);
 		SekMapHandler(7, 0x400000, 0x400001, MAP_READ);

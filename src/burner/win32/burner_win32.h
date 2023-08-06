@@ -349,6 +349,7 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img);
 HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 HBITMAP PNGLoadBitmapBuffer(HWND hWnd, unsigned char* buffer, int bufferLength, int nWidth, int nHeight, int nPreset);
 HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
+int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 
 // cona.cpp
 extern int nIniVersion;

@@ -47,6 +47,7 @@ struct NGCDGAME games[] =
 	{ _T("tophuntr")	, _T("Top Hunter - Roddy & Cathy")							, _T("1994")	, _T("SNK")					, 0x0046 },		//
 	{ _T("fatfury2")	, _T("Fatal Fury 2 / Garou Densetsu 2 - Aratanaru Tatakai")	, _T("1994")	, _T("SNK")					, 0x0047 },		//
 	{ _T("janshin")		, _T("Janshin Densetsu - Quest of the Jongmaster")			, _T("1995")	, _T("Yubis")				, 0x0048 },		//
+	{ _T("androdunos")	, _T("Andro Dunos")											, _T("1992")	, _T("Visco")				, 0x0049 },		//
 	{ _T("treascb")		, _T("Treasure of the Caribbean")							, _T("1994")	, _T("FACE/NCI")			, 0x1048 },		// custom id
 	{ _T("ncommand")	, _T("Ninja Commando")										, _T("1992")	, _T("SNK")					, 0x0050 },		//
 	{ _T("viewpoin")	, _T("Viewpoint")											, _T("1992")	, _T("Sammy/Aicom")			, 0x0051 },		//
@@ -73,10 +74,12 @@ struct NGCDGAME games[] =
 	{ _T("quizkof")		, _T("Quiz King of Fighters")								, _T("1993")	, _T("SNK/Saurus")			, 0x0080 },		//
 	{ _T("ssideki3")	, _T("Super Sidekicks 3 - The Next Glory / Tokuten Oh 3 - Eikoue No Chousen"), _T("1995") , _T("SNK")	, 0x0081 },		//
 	{ _T("doubledr")	, _T("Double Dragon")										, _T("1995")	, _T("Technos")				, 0x0082 },		//
+	{ _T("doubledrps1")	, _T("Double Dragon (PS1 OST)")								, _T("1995")	, _T("Technos")				, 0x1082 },		//
 	{ _T("pbobblen")	, _T("Puzzle Bobble / Bust-A-Move")							, _T("1994")	, _T("SNK")					, 0x0083 },		//
 	{ _T("kof95")		, _T("The King of Fighters '95 (JP-US)")					, _T("1995")	, _T("SNK")					, 0x0084 },		//
 	{ _T("kof95r1")		, _T("The King of Fighters '95 (JP-US)(Rev 1)")				, _T("1995")	, _T("SNK")					, 0x1084 },		//
-	{ _T("ssrpg")		, _T("Shinsetsu Samurai Spirits - Bushidohretsuden")		, _T("1997")	, _T("SNK")					, 0x0085 },		//
+	{ _T("ssrpg")		, _T("Samurai Shodown RPG / Shinsetsu Samurai Spirits - Bushidohretsuden")		, _T("1997")	, _T("SNK")					, 0x0085 },		//
+	{ _T("ssrpgfr")		, _T("Samurai Shodown RPG (French Translation)")			, _T("1997")	, _T("SNK")					, 0x1085 },		//
 	{ _T("samsho3")		, _T("Samurai Shodown 3 / Samurai Spirits 3")				, _T("1995")	, _T("SNK")					, 0x0087 },		//
 	{ _T("stakwin")		, _T("Stakes Winner - GI Kanzen Seiha Heno Machi")			, _T("1995")	, _T("Saurus")				, 0x0088 },		//
 	{ _T("pulstar")		, _T("Pulstar")												, _T("1995")	, _T("Aicom")				, 0x0089 },		//
@@ -184,7 +187,7 @@ void iso9660_ReadOffset(UINT8 *Dest, FILE* fp, unsigned int lOffset, unsigned in
 	fread(Dest, lLength, lSize, fp);
 }
 
-static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
+static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHAR*), TCHAR *pszFile, FILE* fp, int nSector)
 {
 	unsigned int	lBytesRead			= 0;
 	unsigned int	lOffset				= 0;
@@ -217,7 +220,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 			{
 				if(bRevisionQueve) {
 					bRevisionQueve = false;
-					GetNeoCDTitle(nRevisionQueveID);
+					pfEntryCallBack(nRevisionQueveID, pszFile);
 				}
 				return;
 			}
@@ -263,8 +266,17 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 				iso9660_ReadOffset(&LEN_FI, fp, lOffset + 32, 1, sizeof(UINT8));
 
 				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(UINT8));
-				//strncpy(File, File, LEN_FI);
 				File[LEN_FI] = 0;
+
+				// Double Dragon PS1 OST
+				if (nID == 0x0082 && wcsstr(pszFile, _T("OST"))) {
+					nID = 0x1082;
+				}
+
+				// Samurai Shodown RPG (FR)
+				if (nID == 0x0085 && wcsstr(pszFile, _T("(FR)"))) {
+					nID = 0x1085;
+				}
 
 				// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
 				if(nID == 0x0048 && Data[0x67] == 0x08) {
@@ -301,7 +313,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 				if(nID == 0x0229) {
 					bRevisionQueve = false;
 
-					GetNeoCDTitle(nID);
+					pfEntryCallBack(nID, pszFile);
 					break;
 				}
 
@@ -314,7 +326,7 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 					continue;
 				}
 
-				GetNeoCDTitle(nID);
+				pfEntryCallBack(nID, pszFile);
 				break;
 			}
 		}
@@ -339,8 +351,14 @@ static void NeoCDList_iso9660_CheckDirRecord(FILE* fp, int nSector)
 	}
 }
 
+static void NeoCDList_Callback(INT32 nID, TCHAR *pszFile)
+{
+	GetNeoCDTitle(nID);
+}
+
+
 // Check the specified ISO, and proceed accordingly
-static int NeoCDList_CheckISO(TCHAR* pszFile)
+int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 {
 	if(!pszFile) {
 		// error
@@ -422,7 +440,7 @@ static int NeoCDList_CheckISO(TCHAR* pszFile)
 #endif
 
 						// Process the Root Directory Records
-						NeoCDList_iso9660_CheckDirRecord(fp, nRootSector);
+						NeoCDList_iso9660_CheckDirRecord(pfEntryCallBack, pszFile, fp, nRootSector);
 
 						// Path Table Records are not processed, since NeoGeo CD should not have subdirectories
 						// ...
@@ -466,7 +484,7 @@ int GetNeoGeoCD_Identifier()
 			// Read ISO and look for 68K ROM standard program header, ID is always there
 			// Note: This function works very quick, doesn't compromise performance :)
 			// it just read each sector first 264 bytes aproximately only.
-			NeoCDList_CheckISO(GetIsoPath());
+			NeoCDList_CheckISO(GetIsoPath(), NeoCDList_Callback);
 
 		} else {
 

@@ -13,6 +13,7 @@ struct NGCDGAME games[] =
 // ---------------------------------------------------------------------------------------------------------------------------------------------//
 //	* Name				* Title														* Year			* Company					* Game ID		//
 // ---------------------------------------------------------------------------------------------------------------------------------------------//
+	{ _T("placeholder")	, _T("Empty Placeholder")									, _T("")		, _T("")					, 0x0000 },		//
 	{ _T("nam1975")		, _T("NAM-1975")											, _T("1990")	, _T("SNK")					, 0x0001 },		//
 	{ _T("bstars")		, _T("Baseball Stars Professional")							, _T("1991")	, _T("SNK")					, 0x0002 },		//
 	{ _T("tpgolf")		, _T("Top Player's Golf")									, _T("1990")	, _T("SNK")					, 0x0003 },		//
@@ -122,6 +123,7 @@ struct NGCDGAME games[] =
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
+	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2022")	, _T("Blastar")				, 0x2023 },		//
 };
 
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)

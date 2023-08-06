@@ -65,8 +65,10 @@ static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID)
 
 		memcpy(game, GetNeoGeoCDInfo(nGameID), sizeof(NGCDGAME));
 
-		TCHAR szNGCDID[12];
-		_stprintf(szNGCDID, _T("%04X"), nGameID);
+		TCHAR szNGCDID[12] = _T("");
+		if (nGameID != 0x0000) {
+			_stprintf(szNGCDID, _T("%04X"), nGameID);
+		}
 
 		LVITEM lvi;
 		ZeroMemory(&lvi, sizeof(lvi));
@@ -77,7 +79,12 @@ static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID)
 		lvi.mask			= LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
 		lvi.cchTextMax		= 255;
 		TCHAR szTitle[256];
-		_stprintf(szTitle, _T("%s"), game->pszTitle);
+		if (nGameID == 0x0000) {
+			// placeholder entry, argument (pszFile) instead of game name
+			_stprintf(szTitle, _T("%s"), pszFile);
+		} else {
+			_stprintf(szTitle, _T("%s"), game->pszTitle);
+		}
 		lvi.pszText			= szTitle;
 
 		int nItem = ListView_InsertItem(hListView, &lvi);
@@ -896,7 +903,10 @@ static unsigned __stdcall NeoCDList_DoProc(void*)
 
 	bProcessingList = true;
 	ListView_DeleteAllItems(hListView);
+	NeoCDList_AddGame(_T("--- [  Please Wait: Searching for games!  ] ---"), 0x0000);
 	NeoCDList_ScanDir(hListView, szNeoCDGamesDir);
+
+	ListView_DeleteItem(hListView, 0); // delete "Please Wait" line :)
 
 	ListViewSort(SORT_ASCENDING, 0);
 	SetFocus(hListView);

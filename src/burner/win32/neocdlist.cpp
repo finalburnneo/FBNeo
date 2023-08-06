@@ -123,7 +123,7 @@ struct NGCDGAME games[] =
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
-	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2022")	, _T("Blastar")				, 0x2023 },		//
+	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2023")	, _T("Blastar")				, 0x2022 },		//
 };
 
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)

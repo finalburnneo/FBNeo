@@ -290,7 +290,7 @@ size_t retro_serialize_size()
 	TweakScanFlags(nAction);
 
 	// Store previous size
-	INT32 nStateLenPrev = nStateLen;
+	//INT32 nStateLenPrev = nStateLen;
 
 	// Compute size
 	nStateLen = 0;
@@ -310,8 +310,8 @@ size_t retro_serialize_size()
 	// The frontend doesn't handle it well when different savestates
 	// with different sizes are used concurrently for runahead & rewind,
 	// so we always keep the largest computed size
-	if (nStateLenPrev > nStateLen)
-		nStateLen = nStateLenPrev;
+	//if (nStateLenPrev > nStateLen)
+	//	nStateLen = nStateLenPrev;
 
 	return nStateLen;
 }

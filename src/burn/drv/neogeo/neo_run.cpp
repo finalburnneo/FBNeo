@@ -1947,8 +1947,9 @@ static UINT8 ReadInput3(INT32 nOffset)
 
 static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 {
-	if (sekAddress >= 0x200000 && sekAddress <= 0x2fffff)
-		return ~0; // data from open bus should be read here
+	if ( (sekAddress >= 0x200000 && sekAddress <= 0x2fffff) ||
+		 (sekAddress & 0xf00000) == 0xd00000
+		) return ~0; // data from open bus should be read here
 
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:
@@ -1991,8 +1992,9 @@ static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 
 static UINT16 __fastcall neogeoReadWord(UINT32 sekAddress)
 {
-	if (sekAddress >= 0x200000 && sekAddress <= 0x2fffff)
-		return ~0; // data from open bus should be read here
+	if ( (sekAddress >= 0x200000 && sekAddress <= 0x2fffff) ||
+		 (sekAddress & 0xf00000) == 0xd00000
+		) return ~0; // data from open bus should be read here
 
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:

@@ -2941,6 +2941,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="linerunner">
+		<comment>Homebrew</comment>
+		<description>Line Runner (HB, v1.3)</description>
+		<year>2023</year>
+		<manufacturer>Louis The SEGA Nerd</manufacturer>
+		<rom name="Line Runner v1.3 (2023)(Louis The SEGA Nerd).sms" size="32768" crc="93f690b5"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lordswrdj" cloneof="lordswrd" romof="lordswrd">
 		<description>Lord of Sword (Japan)</description>
 		<year>1988</year>
@@ -3255,11 +3264,11 @@
 		<driver status="good"/>
 	</game>
 	<game name="mcmaster">
-		<comment>Homebrew</comment>
-		<description>Monaco Master (HB, v2.9)</description>
+		<comment>Homebrew, YM2413 FM sound chip supported</comment>
+		<description>Monaco Master (HB, v2.9.2)</description>
 		<year>2023</year>
 		<manufacturer>Louis The SEGA Nerd</manufacturer>
-		<rom name="Monaco Master v2.9 (2023)(Louis The SEGA Nerd).sms" size="65536" crc="db0071cf"/>
+		<rom name="Monaco Master v2.9.2 (2023)(Louis The SEGA Nerd).sms" size="81920" crc="355330b6"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4831,6 +4840,15 @@
 		<year>2021</year>
 		<manufacturer>haroldoop</manufacturer>
 		<rom name="Sub Rescue v0.3 (2021)(haroldoop).sms" size="32768" crc="06a41efd"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="subassault">
+		<comment>Homebrew</comment>
+		<description>Sub-Assault (HB, v1.4)</description>
+		<year>2023</year>
+		<manufacturer>Louis The SEGA Nerd</manufacturer>
+		<rom name="Sub-Assault v1.4 (2023)(Louis The SEGA Nerd).sms" size="49152" crc="57234578"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -911,7 +911,7 @@
 		<comment>Homebrew</comment>
 		<description>Alien Astro Frenzy (48K) (HB)</description>
 		<year>2021</year>
-		<manufacturer>Vintage Software</manufacturer>
+		<manufacturer>Vintage Software Systems</manufacturer>
 		<rom name="Alien Astro Frenzy (2021)(Vintage Software).z80" size="27028" crc="4c32aff8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -1416,6 +1416,17 @@
 		<manufacturer>Melbourne House</manufacturer>
 		<rom name="Asterix and the Magic Cauldron (1986)(Melbourne House).tap" size="48507" crc="38447018"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="asteroidsrx" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Asteroids RX (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>highriser</manufacturer>
+		<rom name="Asteroids RX (2021)(highriser).tap" size="43917" crc="e94e7cea"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2892,6 +2903,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bouncberty" romof="spectrum">
+		<comment>Use keys 'Q, A, P, L' to move the character</comment>
+		<description>Bouncing Berty (16K)</description>
+		<year>1984</year>
+		<manufacturer>PowerSoftware</manufacturer>
+		<rom name="Bouncing Berty 16K (1984)(PowerSoftware).tap" size="14436" crc="ad0e32a7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bbredux" romof="spectrum">
 		<comment>Homebrew</comment>
 		<description>Bouncing Bomb Redux (48K) (HB)</description>
@@ -3866,7 +3887,7 @@
 		<comment>Homebrew</comment>
 		<description>Chez Maxime ZX (French) (128K) (HB)</description>
 		<year>2022</year>
-		<manufacturer>Highrise</manufacturer>
+		<manufacturer>highriser</manufacturer>
 		<rom name="Chez Maxime ZX 128K (2022)(highriser).tap" size="48799" crc="ab6b980b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -4751,6 +4772,15 @@
 		<year>2014</year>
 		<manufacturer>Alessandro Grussu</manufacturer>
 		<rom name="Cousin Horace - Intro (2014)(Alessandro Grussu).tap" size="10958" crc="9d6cab93"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cbshootout" romof="spectrum">
+		<description>Cowboy Shootout (16K)</description>
+		<year>1983</year>
+		<manufacturer>Micro Power</manufacturer>
+		<rom name="Cowboy Shootout 16K (1983)(Micro Power).tap" size="8879" crc="274ecc03"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6230,6 +6260,15 @@
 		<year>2022</year>
 		<manufacturer>Zosya Entertainment</manufacturer>
 		<rom name="Don Quixote 16K (2022)(Zosya Entertainment).tap" size="12842" crc="a341a789"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dontpanic" romof="spectrum">
+		<description>Don't Panic! (16K)</description>
+		<year>1985</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Don't Panic! 16K (1985)(Firebird).z80" size="15293" crc="75879d60"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -11250,6 +11289,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="leapfrog" romof="spectrum">
+		<comment>Press 'S' to start game</comment>
+		<description>Leapfrog (16K)</description>
+		<year>1983</year>
+		<manufacturer>CDS Microsystems</manufacturer>
+		<rom name="Leapfrog 16K (1983)(CDS Microsystems).tap" size="14349" crc="03de02e5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ledstorm" romof="spec128">
 		<description>LED Storm - Rally 2011 (128K)</description>
 		<year>1988</year>
@@ -15364,6 +15413,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="quadron" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Quadron (48K) (HB, v1.23)</description>
+		<year>2019</year>
+		<manufacturer>Andrew Beale</manufacturer>
+		<rom name="Quadron v1.23 48K (2019)(Andrew Beale).tap" size="48026" crc="1f761019"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="quartet" romof="spectrum">
 		<comment>To start a game session press 'S' and after ENTER</comment>
 		<description>Quartet (48K)</description>
@@ -16131,6 +16190,17 @@
 		<year>2022</year>
 		<manufacturer>RetroSouls</manufacturer>
 		<rom name="RINGO (2022)(RetroSouls).tap" size="58931" crc="5d65b662"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rivgangsext" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Rival Gangs EXT (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Presh</manufacturer>
+		<rom name="Rival Gangs EXT 128K (2022)(Presh).tap" size="101721" crc="4bb86663"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -17664,7 +17734,7 @@
 		<comment>Homebrew</comment>
 		<description>Snowed Under  (128K) (HB)</description>
 		<year>2021</year>
-		<manufacturer>Highrise, Gabriele Amore</manufacturer>
+		<manufacturer>highriser, Gabriele Amore</manufacturer>
 		<rom name="Snowed Under  128K (2021)(Highrise).tap" size="56461" crc="f90c37b5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -17675,7 +17745,7 @@
 		<comment>Homebrew</comment>
 		<description>Snowed Under (48K) (HB)</description>
 		<year>2021</year>
-		<manufacturer>Highrise, Gabriele Amore</manufacturer>
+		<manufacturer>highriser, Gabriele Amore</manufacturer>
 		<rom name="Snowed Under 48K (2021)(Highrise).tap" size="44322" crc="7e180aaa"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -18889,6 +18959,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="supalienbl" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Super Alien Blast (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Vintage Software Systems</manufacturer>
+		<rom name="Super Alien Blast 48K (2021)(Vintage Software Systems).z80" size="26442" crc="a4b43504"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sbman2r" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Super Bomberman 2 Remix (128K) (HB, v1.1)</description>
@@ -18989,6 +19069,16 @@
 		<year>1988</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Super Hero (1988)(Codemasters).tap" size="51573" crc="26d19439"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="supmeteorbl" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Super Meteor Blast (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Vintage Software Systems</manufacturer>
+		<rom name="Super Meteor Blast 48K (2021)(Vintage Software Systems).z80" size="26792" crc="9198c2de"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -19568,7 +19658,7 @@
 		<comment>Homebrew</comment>
 		<description>Terrapins ZX (English) (128K) (HB)</description>
 		<year>2017</year>
-		<manufacturer>Highrise</manufacturer>
+		<manufacturer>highriser</manufacturer>
 		<rom name="Terrapins ZX EN 128K (2017)(Highrise).tap" size="48853" crc="b90d0afa"/>
 		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
 		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
@@ -19581,7 +19671,7 @@
 		<comment>Homebrew</comment>
 		<description>Terrapins ZX (Spanish) (128K) (HB)</description>
 		<year>2017</year>
-		<manufacturer>Highrise</manufacturer>
+		<manufacturer>highriser</manufacturer>
 		<rom name="Terrapins ZX ES 128K (2017)(Highrise).tap" size="48854" crc="16a8bd5f"/>
 		<rom name="zx128_2a_0.rom" merge="zx128_2a_0.rom" size="16384" crc="30c9f490"/>
 		<rom name="zx128_2a_1.rom" merge="zx128_2a_1.rom" size="16384" crc="a7916b3f"/>
@@ -21119,6 +21209,16 @@
 		<rom name="Winter Games (1986)(U.S. Gold).tap" size="119630" crc="5ab9f21c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wwworm" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Winter Wonder Worm (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Bob Fossil</manufacturer>
+		<rom name="Winter Wonder Worm 48K (2022)(Bob Fossil).tap" size="5353" crc="39d13cd1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

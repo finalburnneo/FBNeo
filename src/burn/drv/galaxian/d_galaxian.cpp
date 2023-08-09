@@ -13327,7 +13327,10 @@ static INT32 CkonggInit()
 	GalPostLoadCallbackFunction = CkonggPostLoad;
 	
 	nRet = GalInit();
-	
+
+	GalSet4WAY( 0, GalInputPort0 + 4, GalInputPort0 + 5, GalInputPort0 + 2, GalInputPort0 + 3 );
+	GalSet4WAY( 1, GalInputPort0 + 1, GalInputPort1 + 5, GalInputPort1 + 2, GalInputPort1 + 3 );
+
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 	
 	GalSpriteClipStart = 7;
@@ -13365,7 +13368,10 @@ static INT32 CkongmcInit()
 	GalPostLoadCallbackFunction = CkongmcPostLoad;
 	
 	nRet = GalInit();
-	
+
+	GalSet4WAY( 0, GalInputPort0 + 4, GalInputPort0 + 7, GalInputPort0 + 2, GalInputPort0 + 3 );
+	GalSet4WAY( 1, GalInputPort0 + 1, GalInputPort1 + 5, GalInputPort1 + 2, GalInputPort1 + 3 );
+
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 	
 	GalSpriteClipStart = 7;
@@ -18361,7 +18367,10 @@ static INT32 CkongsInit()
 	KonamiSoundInit();
 	
 	KonamiPPIInit();
-	
+
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 1, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 	
 	GalSpriteClipStart = 7;
@@ -18433,7 +18442,10 @@ static INT32 DevilfshInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
-	
+
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
 	GalNumChars = 0x100;
 	GalNumSprites = 0x40;
 	CharPlaneOffsets[1] = 0x8000;
@@ -18507,6 +18519,9 @@ static INT32 DevilfshgbInit()
 	GalPostLoadCallbackFunction = DevilfshgbRearrangeRom;
 
 	nRet = GalInit();
+
+	GalSet4WAY( 0, GalInputPort0 + 7, GalInputPort0 + 5, GalInputPort0 + 2, GalInputPort0 + 3 );
+	GalSet4WAY( 1, GalInputPort0 + 6, GalInputPort1 + 5, GalInputPort1 + 2, GalInputPort1 + 3 );
 
 	GalNumChars = 0x100;
 	GalNumSprites = 0x40;
@@ -22180,6 +22195,18 @@ static INT32 ScobraInit()
 	return nRet;
 }
 
+static INT32 ArmorcarInit()
+{
+	INT32 rc = ScobraInit();
+
+	if (!rc) {
+		GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+		GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+	}
+
+	return rc;
+}
+
 static INT32 ScobraeInit()
 {
 	INT32 nRet;
@@ -23112,7 +23139,7 @@ struct BurnDriver BurnDrvArmorcar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, ArmorcarRomInfo, ArmorcarRomName, NULL, NULL, NULL, NULL, AtlantisInputInfo, ArmorcarDIPInfo,
-	ScobraInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	ArmorcarInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -23122,7 +23149,7 @@ struct BurnDriver BurnDrvArmorcar2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Armorcar2RomInfo, Armorcar2RomName, NULL, NULL, NULL, NULL, AtlantisInputInfo, ArmorcarDIPInfo,
-	ScobraInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	ArmorcarInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

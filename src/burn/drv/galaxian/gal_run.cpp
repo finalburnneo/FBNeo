@@ -91,8 +91,49 @@ UINT8 Dingo = 0;
 UINT8 Harem = 0;
 UINT8 Namenayo = 0;
 
+INT32 Gal4Way				 = 0;
+UINT8 *GalUDLR[2][4]		 = { { NULL, NULL, NULL, NULL }, { NULL, NULL, NULL, NULL } };
+
+void GalInit4WAY()
+{
+	Gal4Way = 0;
+	memset(GalUDLR, 0, sizeof(GalUDLR));
+}
+
+void GalSet4WAY(INT32 player, UINT8 *u, UINT8 *d, UINT8 *l, UINT8 *r)
+{
+	Gal4Way = 1 + player;
+
+	GalUDLR[player][0] = u;
+	GalUDLR[player][1] = d;
+	GalUDLR[player][2] = l;
+	GalUDLR[player][3] = r;
+}
+
 static inline void GalMakeInputs()
 {
+	if (Gal4Way) {
+		// Some games on this hw spread u/d/l/r across different inputs.
+		// Since ProcessJoystick() doesn't support this:
+		// Compile raw inputs to a single input for ProcessJoystick()
+		// then update the raw inputs w/the result.
+		UINT8 inp0 = 0;
+		UINT8 inp1 = 0;
+
+		for (INT32 i = 0; i < 4; i++) {
+			inp0 |= *GalUDLR[0][i] << i;
+			if (Gal4Way > 1) inp1 |= *GalUDLR[1][i] << i;
+		}
+
+		ProcessJoystick(&inp0,  0,  0, 1, 2, 3,  INPUT_4WAY);
+		ProcessJoystick(&inp1,  1,  0, 1, 2, 3,  INPUT_4WAY);
+
+		for (INT32 i = 0; i < 4; i++) {
+			*GalUDLR[0][i] = (inp0 & (1 << i)) >> i;
+			if (Gal4Way > 1) *GalUDLR[1][i] = (inp1 & (1 << i)) >> i;
+		}
+	}
+
 	// Reset Inputs
 	GalInput[0] = GalInput[1] = GalInput[2] = GalInput[3] = GalInput[4] = 0x00;
 
@@ -606,7 +647,9 @@ INT32 GalInit()
 	GalMemIndex();
 
 	if (GalLoadRoms(1)) return 1;
-	
+
+	GalInit4WAY(); // disable by default
+
 	// Setup the Z80 emulation
 	if (GalSoundType != GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) {
 		if (GalZ80Rom3Size) {

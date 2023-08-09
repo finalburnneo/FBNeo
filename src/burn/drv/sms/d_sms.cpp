@@ -30548,10 +30548,29 @@ struct BurnDriver BurnDrvsms_leknievel = {
 	256, 192, 4, 3
 };
 
-// Monaco Master (HB, v2.9)
+// Line Runner (HB, v1.3)
+
+static struct BurnRomInfo sms_linerunnerRomDesc[] = {
+	{ "Line Runner v1.3 (2023)(Louis The SEGA Nerd).sms",	32768, 0x93f690b5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_linerunner)
+STD_ROM_FN(sms_linerunner)
+
+struct BurnDriver BurnDrvsms_linerunner = {
+	"sms_linerunner", NULL, NULL, NULL, "2023",
+	"Line Runner (HB, v1.3)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_linerunnerRomInfo, sms_linerunnerRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Monaco Master (HB, v2.9.2)
 
 static struct BurnRomInfo sms_mcmasterRomDesc[] = {
-	{ "Monaco Master v2.9 (2023)(Louis The SEGA Nerd).sms",	65536, 0xdb0071cf, BRF_PRG | BRF_ESS },
+	{ "Monaco Master v2.9.2 (2023)(Louis The SEGA Nerd).sms",	81920, 0x355330b6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_mcmaster)
@@ -30559,10 +30578,10 @@ STD_ROM_FN(sms_mcmaster)
 
 struct BurnDriver BurnDrvsms_mcmaster = {
 	"sms_mcmaster", NULL, NULL, NULL, "2023",
-	"Monaco Master (HB, v2.9)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	"Monaco Master (HB, v2.9.2)\0", "YM2413 FM sound chip supported", "Louis The SEGA Nerd", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_RACING, 0,
-	SMSGetZipName, sms_mcmasterRomInfo, sms_mcmasterRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_mcmasterRomInfo, sms_mcmasterRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -30601,6 +30620,25 @@ struct BurnDriver BurnDrvsms_snappysnorg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_snappysnorgRomInfo, sms_snappysnorgRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Sub-Assault (HB, v1.4)
+
+static struct BurnRomInfo sms_subassaultRomDesc[] = {
+	{ "Sub-Assault v1.4 (2023)(Louis The SEGA Nerd).sms",	49152, 0x57234578, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_subassault)
+STD_ROM_FN(sms_subassault)
+
+struct BurnDriver BurnDrvsms_subassault = {
+	"sms_subassault", NULL, NULL, NULL, "2023",
+	"Sub-Assault (HB, v1.4)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
+	SMSGetZipName, sms_subassaultRomInfo, sms_subassaultRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

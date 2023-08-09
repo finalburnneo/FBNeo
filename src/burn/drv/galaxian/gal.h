@@ -199,6 +199,10 @@ extern UINT8 GalFakeDip;
 extern INT32           GalAnalogPort0;
 extern INT32           GalAnalogPort1;
 
+extern INT32 Gal4Way;
+extern UINT8 *GalUDLR[2][4];
+void GalSet4WAY(INT32 player, UINT8 *u, UINT8 *d, UINT8 *l, UINT8 *r);
+
 extern UINT8 *GalMem;
 extern UINT8 *GalMemEnd;
 extern UINT8 *GalRamStart;

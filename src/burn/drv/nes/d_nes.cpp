@@ -22593,6 +22593,25 @@ struct BurnDriver BurnDrvnes_pentablocat = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Shovel Knight (GlobalHack)
+// https://www.romhacking.net/hacks/7992/
+static struct BurnRomInfo nes_shovelknightRomDesc[] = {
+	{ "Shovel Knight GlobalHack (2023)(Roket).nes",          655376, 0x86e3c42d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_shovelknight)
+STD_ROM_FN(nes_shovelknight)
+
+struct BurnDriver BurnDrvnes_shovelknight = {
+	"nes_shovelknight", NULL, NULL, NULL, "2023",
+	"Shovel Knight (GlobalHack)\0", NULL, "Roket", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
+	NESGetZipName, nes_shovelknightRomInfo, nes_shovelknightRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_spacecatRomDesc[] = {
 	{ "Space Cat (2023).nes",          524304, 0x809a6b97, BRF_ESS | BRF_PRG },
 };
@@ -34039,6 +34058,41 @@ struct BurnDriver BurnDrvnes_daysofthunder = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_daysofthunderRomInfo, nes_daysofthunderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/translations/7022/
+static struct BurnRomInfo nes_ddeburasRomDesc[] = {
+	{ "Daikaijuu Deburas T-Eng (2023)(BlackPaladin).nes",          524304, 0x9c135435, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ddeburas)
+STD_ROM_FN(nes_ddeburas)
+
+struct BurnDriver BurnDrvnes_ddeburas = {
+	"nes_ddeburas", NULL, NULL, NULL, "2023",
+	"Daikaijuu Deburas ~ Giant Monster Flaburas (T-Eng)\0", NULL, "BlackPaladin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_ddeburasRomInfo, nes_ddeburasRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_ddeburasjRomDesc[] = {
+	{ "Daikaijuu Deburas (J)(1990)(Data East).nes",          393232, 0x7fdf1bb3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ddeburasj)
+STD_ROM_FN(nes_ddeburasj)
+
+struct BurnDriver BurnDrvnes_ddeburasj = {
+	"nes_ddeburasj", "nes_ddeburas", NULL, NULL, "1990",
+	"Daikaijuu Deburas (Japan)\0", NULL, "Data East", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_ddeburasjRomInfo, nes_ddeburasjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -48674,6 +48728,41 @@ struct BurnDriver BurnDrvnes_salamander = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_HORSHOOT | GBF_VERSHOOT, 0,
 	NESGetZipName, nes_salamanderRomInfo, nes_salamanderRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// https://www.romhacking.net/translations/210/
+static struct BurnRomInfo nes_sanriocupRomDesc[] = {
+	{ "Sanrio Cup - Pon Pon Volley T-Eng (2014)(Gaijin Productions).nes",          65552, 0x74df8f28, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sanriocup)
+STD_ROM_FN(nes_sanriocup)
+
+struct BurnDriver BurnDrvnes_sanriocup = {
+	"nes_sanriocup", NULL, NULL, NULL, "2014",
+	"Sanrio Cup - Pon Pon Volley (T-Eng)\0", NULL, "Gaijin Productions", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_sanriocupRomInfo, nes_sanriocupRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+static struct BurnRomInfo nes_sanriocupjRomDesc[] = {
+	{ "Sanrio Cup - Pon Pon Volley (J)(1992)(Character Soft).nes",          65552, 0x96447ea5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sanriocupj)
+STD_ROM_FN(nes_sanriocupj)
+
+struct BurnDriver BurnDrvnes_sanriocupj = {
+	"nes_sanriocupj", "nes_sanriocup", NULL, NULL, "1992",
+	"Sanrio Cup - Pon Pon Volley (Japan)\0", NULL, "Character Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_sanriocupjRomInfo, nes_sanriocupjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

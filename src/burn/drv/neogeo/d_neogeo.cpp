@@ -15372,21 +15372,14 @@ static void sbpCallback()
 {
 	UINT16* ROM = (UINT16*)Neo68KROMActive;
 
-	for (INT32 i = 0x200 / 2; i < 0x2000 / 2; i++) {
-		UINT16 OrigData = ROM[i];
-		UINT16 Data =  BITSWAP16(OrigData, 11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4);
-
-		if (i == 0xf5e) {
-			ROM[i] = OrigData;
-		} else {
-			ROM[i] = Data;
-		}
+	for (INT32 i = 0x1000; i < 0x1080; i++) {
+		Neo68KROMActive[i] = ((Neo68KROMActive[i] >> 4) & 0x0f) | ((Neo68KROMActive[i] << 4) & 0xf0);
 	}
 
-	// stop the game overwriting the text layer data
 	ROM[0x2a6f8 / 2] = 0x4e71;
 	ROM[0x2a6fa / 2] = 0x4e71;
 	ROM[0x2a6fc / 2] = 0x4e71;
+	ROM[0x3ff2d / 2] = 0x7001;
 
 	nNeoTextROMSize[nNeoActiveSlot] = 0x20000;
 }
@@ -15402,7 +15395,7 @@ struct BurnDriverD BurnDrvsbp = {
 	"sbp", NULL, "neogeo", NULL, "2004",
 	"Super Bubble Pop\0", NULL, "Vektorlogic", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, sbpRomInfo, sbpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	sbpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3

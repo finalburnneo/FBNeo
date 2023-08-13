@@ -22387,6 +22387,24 @@ struct BurnDriver BurnDrvnes_airballp = {
 
 // Homebrew (hand-added)
 
+// https://www.romhacking.net/forum/index.php?topic=29783.0
+static struct BurnRomInfo nes_elflandRomDesc[] = {
+	{ "Elfland (1992)(TipTop).nes",          65552, 0x93c86e5d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_elfland)
+STD_ROM_FN(nes_elfland)
+
+struct BurnDriver BurnDrvnes_elfland = {
+	"nes_elfland", NULL, NULL, NULL, "1992",
+	"Elfland\0", "Ripped from 200-in-1 multicard from Dacicus", "TipTop", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_elflandRomInfo, nes_elflandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 static struct BurnRomInfo nes_pelusagaRomDesc[] = {
 	{ "Pelusa Saga - Kaji's Trials (2023)(Broke Studio).nes",          524304, 0xbc461bfe, BRF_ESS | BRF_PRG },
 };

@@ -17454,6 +17454,40 @@ struct BurnDriver BurnDrvLb2b = {
 };
 
 
+// Karnov's Revenge / Fighter's History Dynamite - Revolution
+// https://gamehackfan.github.io/karnovre/
+
+static struct BurnRomInfo karnovreRomDesc[] = {
+	{ "066-p1kre.p1",	0x100000, 0x06b066a0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "066-s1.s1",		0x020000, 0xbae5d5e5, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "066-c1.c1",		0x200000, 0x09dfe061, 3 | BRF_GRA },           //  2 Sprite data
+	{ "066-c2.c2",		0x200000, 0xe0f6682a, 3 | BRF_GRA },           //  3
+	{ "066-c3.c3",		0x200000, 0xa673b4f7, 3 | BRF_GRA },           //  4
+	{ "066-c4.c4",		0x200000, 0xcb3dc5f4, 3 | BRF_GRA },           //  5
+	{ "066-c5.c5",		0x200000, 0x9a28785d, 3 | BRF_GRA },           //  6
+	{ "066-c6.c6",		0x200000, 0xc15c01ed, 3 | BRF_GRA },           //  7
+
+	{ "066-m1.m1",		0x020000, 0x030beae4, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	{ "066-v1.v1",		0x200000, 0x0b7ea37a, 5 | BRF_SND },           //  9 Sound data
+};
+
+STDROMPICKEXT(karnovre, karnovre, neogeo)
+STD_ROM_FN(karnovre)
+
+struct BurnDriver BurnDrvkarnovre = {
+	"karnovre", "karnovr", "neogeo", NULL, "2023",
+	"Karnov's Revenge / Fighter's History Dynamite (Revolution v0.1, Hack)\0", NULL, "GameHackFan", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, karnovreRomInfo, karnovreRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Treasure of the Caribbean
 
 static struct BurnRomInfo totcRomDesc[] = {

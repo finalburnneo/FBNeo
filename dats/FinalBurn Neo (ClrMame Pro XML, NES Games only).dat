@@ -3727,6 +3727,23 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="ddeburasj" cloneof="ddeburas" romof="ddeburas">
+		<description>Daikaijuu Deburas (Japan)</description>
+		<year>1990</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="Daikaijuu Deburas (J)(1990)(Data East).nes" size="393232" crc="7fdf1bb3"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="ddeburas">
+		<comment>Hack</comment>
+		<description>Daikaijuu Deburas ~ Giant Monster Flaburas (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Daikaijuu Deburas T-Eng (2023)(BlackPaladin).nes" size="524304" crc="9c135435"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="daikunogensan">
 		<description>Daiku no Gen-san (Japan)</description>
 		<year>1991</year>
@@ -5260,6 +5277,15 @@
 		<year>1987</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Elevator Action (USA).nes" size="40976" crc="d415571f"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="elfland">
+		<comment>Ripped from 200-in-1 multicard from Dacicus</comment>
+		<description>Elfland</description>
+		<year>1992</year>
+		<manufacturer>TipTop</manufacturer>
+		<rom name="Elfland (1992)(TipTop).nes" size="65552" crc="93c86e5d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12453,6 +12479,14 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="overobj">
+		<description>Over Obj</description>
+		<year>2023</year>
+		<manufacturer>Little Sound</manufacturer>
+		<rom name="Over Obj (2023)(Little Sound).nes" size="262160" crc="b9fd4de8"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="overlord">
 		<description>Overlord (USA)</description>
 		<year>1993</year>
@@ -14414,6 +14448,23 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="sanriocupj" cloneof="sanriocup" romof="sanriocup">
+		<description>Sanrio Cup - Pon Pon Volley (Japan)</description>
+		<year>1992</year>
+		<manufacturer>Character Soft</manufacturer>
+		<rom name="Sanrio Cup - Pon Pon Volley (J)(1992)(Character Soft).nes" size="65552" crc="96447ea5"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="sanriocup">
+		<comment>Hack</comment>
+		<description>Sanrio Cup - Pon Pon Volley (T-Eng)</description>
+		<year>2014</year>
+		<manufacturer>Gaijin Productions</manufacturer>
+		<rom name="Sanrio Cup - Pon Pon Volley T-Eng (2014)(Gaijin Productions).nes" size="65552" crc="74df8f28"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="sansaranagaj" cloneof="sansaranaga" romof="sansaranaga">
 		<description>Sansara Naga (Japan)</description>
 		<year>1990</year>
@@ -14745,6 +14796,15 @@
 		<year>1989</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Shooting Range (USA).nes" size="65552" crc="ca35a3a2"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="shovelknight">
+		<comment>Hack, Homebrew</comment>
+		<description>Shovel Knight (GlobalHack)</description>
+		<year>2023</year>
+		<manufacturer>Roket</manufacturer>
+		<rom name="Shovel Knight GlobalHack (2023)(Roket).nes" size="655376" crc="86e3c42d"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

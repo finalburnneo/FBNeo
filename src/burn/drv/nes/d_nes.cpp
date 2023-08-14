@@ -22387,6 +22387,23 @@ struct BurnDriver BurnDrvnes_airballp = {
 
 // Homebrew (hand-added)
 
+static struct BurnRomInfo nes_overobjRomDesc[] = {
+	{ "Over Obj (2023)(Little Sound).nes",          262160, 0xb9fd4de8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_overobj)
+STD_ROM_FN(nes_overobj)
+
+struct BurnDriver BurnDrvnes_overobj = {
+	"nes_overobj", NULL, NULL, NULL, "2023",
+	"Over Obj\0", NULL, "Little Sound", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_overobjRomInfo, nes_overobjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // https://www.romhacking.net/forum/index.php?topic=29783.0
 static struct BurnRomInfo nes_elflandRomDesc[] = {
 	{ "Elfland (1992)(TipTop).nes",          65552, 0x93c86e5d, BRF_ESS | BRF_PRG },

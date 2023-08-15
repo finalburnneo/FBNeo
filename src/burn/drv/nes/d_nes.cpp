@@ -19381,6 +19381,25 @@ struct BurnDriver BurnDrvnes_legenzelrd = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Legend of Zelda, The - Ancient Dungeon (Hack, v3.0)
+// https://www.romhacking.net/hacks/7358/
+static struct BurnRomInfo nes_legenzeladRomDesc[] = {
+	{ "Legend of Zelda, The - Ancient Dungeon v3.0 (2023)(arnpoly).nes",          131088, 0x2846a6b8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legenzelad)
+STD_ROM_FN(nes_legenzelad)
+
+struct BurnDriver BurnDrvnes_legenzelad = {
+	"nes_legenzelad", "nes_legenzel", NULL, NULL, "2023",
+	"Legend of Zelda, The - Ancient Dungeon (Hack, v3.0)\0", NULL, "arnpoly", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_legenzeladRomInfo, nes_legenzeladRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 //Lion King, The (Europe) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_lionkingthecRomDesc[] = {
@@ -26893,9 +26912,9 @@ STD_ROM_FN(nes_legenzeldx)
 
 struct BurnDriver BurnDrvnes_legenzeldx = {
 	"nes_legenzeldx", "nes_legenzel", NULL, NULL, "2014",
-	"Legend of Zelda DX, The (HB, Graphics Hack)\0", NULL, "pacnsacdave", "Miscellaneous",
+	"Legend of Zelda DX, The (Graphics Hack)\0", NULL, "pacnsacdave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_legenzeldxRomInfo, nes_legenzeldxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

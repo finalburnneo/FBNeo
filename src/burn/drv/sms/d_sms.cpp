@@ -17832,8 +17832,27 @@ struct BurnDriver BurnDrvgg_sainttal = {
 	"gg_sainttal", NULL, NULL, NULL, "1996",
 	"Kaitou Saint Tale (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MINIGAMES | GBF_ADV, 0,
 	GGGetZipName, gg_sainttalRomInfo, gg_sainttalRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Kaitou Saint Tale (Hack, English)
+
+static struct BurnRomInfo gg_sainttaleRomDesc[] = {
+	{ "Kaitou Saint Tale T-Eng (2021)(Matt's Messy Room).gg",	540672, 0xa54621a4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_sainttale)
+STD_ROM_FN(gg_sainttale)
+
+struct BurnDriver BurnDrvgg_sainttale = {
+	"gg_sainttale", "gg_sainttal", NULL, NULL, "2021",
+	"Kaitou Saint Tale (Hack, English)\0", NULL, "Matt's Messy Room", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MINIGAMES | GBF_ADV, 0,
+	GGGetZipName, gg_sainttaleRomInfo, gg_sainttaleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -30453,6 +30472,25 @@ struct BurnDriver BurnDrvsms_sutoroku = {
 	256, 192, 4, 3
 };
 
+// Bishoujo Mahjong Puzzle (HB)
+
+static struct BurnRomInfo gg_bmpuzzleRomDesc[] = {
+	{ "Bishoujo Mahjong Puzzle (2022)(Habit Soft).gg",	262144, 0x57122381, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_bmpuzzle)
+STD_ROM_FN(gg_bmpuzzle)
+
+struct BurnDriver BurnDrvgg_bmpuzzle = {
+	"gg_bmpuzzle", NULL, NULL, NULL, "2022",
+	"Bishoujo Mahjong Puzzle (HB)\0", NULL, "Habit Soft", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
+	GGGetZipName, gg_bmpuzzleRomInfo, gg_bmpuzzleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // BitLogic a Cyberpunk Arcade Adventure (HB)
 
 static struct BurnRomInfo sms_bitlogicRomDesc[] = {
@@ -30601,6 +30639,25 @@ struct BurnDriver BurnDrvgg_mcmastergg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_RACING, 0,
 	GGGetZipName, gg_mcmasterggRomInfo, gg_mcmasterggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Princess Gardening (HB)
+
+static struct BurnRomInfo gg_prgardenRomDesc[] = {
+	{ "Princess Gardening (2022)(Habit Soft).gg",	262144, 0x8129b269, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_prgarden)
+STD_ROM_FN(gg_prgarden)
+
+struct BurnDriver BurnDrvgg_prgarden = {
+	"gg_prgarden", NULL, NULL, NULL, "2022",
+	"Princess Gardening (HB)\0", NULL, "Habit Soft", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
+	GGGetZipName, gg_prgardenRomInfo, gg_prgardenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

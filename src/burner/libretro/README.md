@@ -225,7 +225,7 @@ This libretro port also supports various features which are usually buggy or tot
 
 ### Neogeo CD doesn't work, why ?
 There are several things to know :
-* You need a copy of neocdz.zip and neogeo.zip in your libretro system directory
+* You need a copy of neocdz.zip and neogeo.zip in your bios folder
 * You need to add `--subsystem neocd` to the command line, or to place your games in a `neocd` folder
 * Supported format are ccd/sub/img (trurip), and single file MODE1/2352 cue/bin (use utilities like "CDmage" to convert your iso if needed), **they must not be compressed**
 
@@ -262,6 +262,21 @@ You might also want to make sure you are running the game at the correct speed, 
 
 ### I have a black screen in neogeo games, why ?
 Most likely because you have an incomplete `neogeo` romset and you changed the bios in core options for some reason. `MVS Asia/Europe ver. 6 (1 slot)` is the default bios and the only one that will cause a "white screen of death" if missing from your `neogeo` romset. If you select another neogeo bios while not having the corresponding file, you won't get the "white screen of death", instead you'll have a black screen with some sound playing. This issue will only happen if you didn't follow the instructions about romsets.
+
+### My favorite combo button is not available, why ?
+Retroarch doesn't allow cores to declare buttons and map them later, meaning the number of different "actions" available is limited by the number of buttons available on the retropad model.
+
+Removing that limitation was asked in https://github.com/libretro/RetroArch/issues/6718, then again in https://github.com/libretro/RetroArch/issues/11273, i won't add more macros as long as this limitation hasn't been removed. If you want more macros, go spam those issues, preferably the later.
+
+The currently available neogeo combos were decided in https://github.com/libretro/FBNeo/issues/51, i won't replace them, but i'll seriously consider removing all of them if i keep having users complaining about them every month.
+
+Note that there was also a request to add a retroarch macro mapper in https://github.com/libretro/RetroArch/issues/8209.
+
+### I can't enable hardcore mode in RetroAchievements, why ?
+This feature doesn't accept achievements made with a romhack, so you need to disable the `Allow patched romsets` core option.
+
+### Where is SYSTEM_DIRECTORY ?
+Open your `retroarch.cfg` file and look for `system_directory`, or check `Settings > Directory > System/BIOS`.
 
 ## External Links
 

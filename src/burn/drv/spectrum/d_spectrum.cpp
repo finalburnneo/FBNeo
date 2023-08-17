@@ -42651,7 +42651,7 @@ STDROMPICKEXT(SpecHoarders, SpecHoarders, Spectrum)
 STD_ROM_FN(SpecHoarders)
 
 struct BurnDriver BurnSpecHoarders = {
-	"spec_hoarders", NULL, "spec_spectrum", NULL, "2020",
+	"spec_hoarders", "spec_hoardere", "spec_spectrum", NULL, "2020",
 	"Hoarder, The (Spanish) (48K) (HB)\0", NULL, "iadvd", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
@@ -42689,7 +42689,7 @@ STDROMPICKEXT(SpecImpossamal48, SpecImpossamal48, Spectrum)
 STD_ROM_FN(SpecImpossamal48)
 
 struct BurnDriver BurnSpecImpossamal48 = {
-	"spec_impossamal48", NULL, "spec_spectrum", NULL, "2023",
+	"spec_impossamal48", "spec_impossamal128", "spec_spectrum", NULL, "2023",
 	"Impossamal (48K) (HB)\0", NULL, "The Mojon Twins", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,

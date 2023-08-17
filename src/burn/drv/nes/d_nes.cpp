@@ -943,6 +943,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x8c4f37e2) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (Japan)
 	NESMode |= (ROMCRC == 0x17336a80) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (T-Eng)
 	NESMode |= (ROMCRC == 0xc0b4bce5) ? RAM_RANDOM : 0; // Terminator 2 (T2) - Judgement Day
+	NESMode |= (ROMCRC == 0xdfdec378) ? RAM_RANDOM : 0; // Huang Di (Player jumps through the top of screen without this)
 	NESMode |= (ROMCRC == 0x4d58c832) ? IS_PAL : 0; // Hammerin' Harry
 	NESMode |= (ROMCRC == 0x149e367f) ? IS_PAL : 0; // Lion King, The
 	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
@@ -10886,7 +10887,7 @@ static INT32 DrvDoReset()
 		memset(NES_CPU_RAM, 0x00, 0x800);  // only cleared @ power-on
 
 		if (NESMode & RAM_RANDOM) { // Some games prefer random RAM @ power-on
-			UINT8 Pattern[0x08] = { 0x00, 0x5a, 0x01, 0x49, 0xe5, 0xf8, 0xa5, 0x10 };
+			UINT8 Pattern[0x08] = { 0x01, 0x5a, 0x01, 0x49, 0xe5, 0xf8, 0xa5, 0x10 };
 
 			for (INT32 i = 0; i < 0x800; i++) {
 				NES_CPU_RAM[i] = Pattern[i & 0x07];

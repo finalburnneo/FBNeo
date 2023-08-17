@@ -943,6 +943,7 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	NESMode |= (ROMCRC == 0x8c4f37e2) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (Japan)
 	NESMode |= (ROMCRC == 0x17336a80) ? RAM_RANDOM : 0; // Minna no Taabou no Nakayoshi Daisakusen (T-Eng)
 	NESMode |= (ROMCRC == 0xc0b4bce5) ? RAM_RANDOM : 0; // Terminator 2 (T2) - Judgement Day
+	NESMode |= (ROMCRC == 0xdfdec378) ? RAM_RANDOM : 0; // Huang Di (Player jumps through the top of screen without this)
 	NESMode |= (ROMCRC == 0x4d58c832) ? IS_PAL : 0; // Hammerin' Harry
 	NESMode |= (ROMCRC == 0x149e367f) ? IS_PAL : 0; // Lion King, The
 	NESMode |= (ROMCRC == 0xbf80b241) ? IS_PAL : 0; // Mr. Gimmick
@@ -10886,7 +10887,7 @@ static INT32 DrvDoReset()
 		memset(NES_CPU_RAM, 0x00, 0x800);  // only cleared @ power-on
 
 		if (NESMode & RAM_RANDOM) { // Some games prefer random RAM @ power-on
-			UINT8 Pattern[0x08] = { 0x00, 0x5a, 0x01, 0x49, 0xe5, 0xf8, 0xa5, 0x10 };
+			UINT8 Pattern[0x08] = { 0x01, 0x5a, 0x01, 0x49, 0xe5, 0xf8, 0xa5, 0x10 };
 
 			for (INT32 i = 0; i < 0x800; i++) {
 				NES_CPU_RAM[i] = Pattern[i & 0x07];
@@ -19381,6 +19382,25 @@ struct BurnDriver BurnDrvnes_legenzelrd = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+//Legend of Zelda, The - Ancient Dungeon (Hack, v3.0)
+// https://www.romhacking.net/hacks/7358/
+static struct BurnRomInfo nes_legenzeladRomDesc[] = {
+	{ "Legend of Zelda, The - Ancient Dungeon v3.0 (2023)(arnpoly).nes",          131088, 0x2846a6b8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_legenzelad)
+STD_ROM_FN(nes_legenzelad)
+
+struct BurnDriver BurnDrvnes_legenzelad = {
+	"nes_legenzelad", "nes_legenzel", NULL, NULL, "2023",
+	"Legend of Zelda, The - Ancient Dungeon (Hack, v3.0)\0", NULL, "arnpoly", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_legenzeladRomInfo, nes_legenzeladRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 //Lion King, The (Europe) - Castellano v1.0
 // https://www.romhacking.net/
 static struct BurnRomInfo nes_lionkingthecRomDesc[] = {
@@ -22383,6 +22403,24 @@ struct BurnDriver BurnDrvnes_airballp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// https://www.romhacking.net/forum/index.php?topic=29783.0
+static struct BurnRomInfo nes_elflandRomDesc[] = {
+	{ "Elfland (1992)(TipTop).nes",          65552, 0x93c86e5d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_elfland)
+STD_ROM_FN(nes_elfland)
+
+struct BurnDriver BurnDrvnes_elfland = {
+	"nes_elfland", NULL, NULL, NULL, "1992",
+	"Elfland (Unl)\0", "Ripped from 200-in-1 multicard from Dacicus", "TipTop", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_elflandRomInfo, nes_elflandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // END of "Non Homebrew (hand-added!)"
 
 // Homebrew (hand-added)
@@ -22396,28 +22434,10 @@ STD_ROM_FN(nes_overobj)
 
 struct BurnDriver BurnDrvnes_overobj = {
 	"nes_overobj", NULL, NULL, NULL, "2023",
-	"Over Obj\0", NULL, "Little Sound", "Miscellaneous",
+	"Over Obj (HB)\0", NULL, "Little Sound", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_overobjRomInfo, nes_overobjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// https://www.romhacking.net/forum/index.php?topic=29783.0
-static struct BurnRomInfo nes_elflandRomDesc[] = {
-	{ "Elfland (1992)(TipTop).nes",          65552, 0x93c86e5d, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_elfland)
-STD_ROM_FN(nes_elfland)
-
-struct BurnDriver BurnDrvnes_elfland = {
-	"nes_elfland", NULL, NULL, NULL, "1992",
-	"Elfland\0", "Ripped from 200-in-1 multicard from Dacicus", "TipTop", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_elflandRomInfo, nes_elflandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -26893,9 +26913,9 @@ STD_ROM_FN(nes_legenzeldx)
 
 struct BurnDriver BurnDrvnes_legenzeldx = {
 	"nes_legenzeldx", "nes_legenzel", NULL, NULL, "2014",
-	"Legend of Zelda DX, The (HB, Graphics Hack)\0", NULL, "pacnsacdave", "Miscellaneous",
+	"Legend of Zelda DX, The (Graphics Hack)\0", NULL, "pacnsacdave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_legenzeldxRomInfo, nes_legenzeldxRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

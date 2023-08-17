@@ -1279,7 +1279,7 @@ struct BurnDriver BurnDrvPbillian = {
 	"pbillian", NULL, NULL, NULL, "1986",
 	"Prebillian\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
 	NULL, pbillianRomInfo, pbillianRomName, NULL, NULL, NULL, NULL, PbillianInputInfo, PbillianDIPInfo,
 	PbillianInit, DrvExit, DrvFrame, PbillianDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1328,7 +1328,7 @@ struct BurnDriver BurnDrvPbillianb = {
 	"pbillianb", "pbillian", NULL, NULL, "1987",
 	"Prebillian (bootleg)\0", NULL, "bootleg (Game Corp.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
 	NULL, pbillianbRomInfo, pbillianbRomName, NULL, NULL, NULL, NULL, PbillianbInputInfo, PbillianbDIPInfo,
 	PbillianbInit, DrvExit, DrvFrame, PbillianDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1382,7 +1382,7 @@ struct BurnDriver BurnDrvHotsmash = {
 	"hotsmash", NULL, NULL, NULL, "1987",
 	"Vs. Hot Smash\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_BALLPADDLE, 0,
 	NULL, hotsmashRomInfo, hotsmashRomName, NULL, NULL, NULL, NULL, HotsmashInputInfo, HotsmashDIPInfo,
 	HotsmashInit, DrvExit, DrvFrame, PbillianDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1433,7 +1433,7 @@ struct BurnDriver BurnDrvSqix = {
 	"sqix", NULL, NULL, NULL, "1987",
 	"Super Qix (World/Japan, V1.2)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, sqixRomInfo, sqixRomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	SqixInit, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1461,7 +1461,7 @@ struct BurnDriver BurnDrvSqixr1 = {
 	"sqixr1", "sqix", NULL, NULL, "1987",
 	"Super Qix (World/Japan, V1.1)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, sqixr1RomInfo, sqixr1RomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	SqixInit, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1489,7 +1489,7 @@ struct BurnDriver BurnDrvSqixr0 = {
 	"sqixr0", "sqix", NULL, NULL, "1987",
 	"Super Qix (World/Japan, V1.0)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, sqixr0RomInfo, sqixr0RomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	SqixInit, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1517,7 +1517,7 @@ struct BurnDriver BurnDrvSqixu = {
 	"sqixu", "sqix", NULL, NULL, "1987",
 	"Super Qix (US)\0", NULL, "Kaneko / Taito (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, sqixuRomInfo, sqixuRomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	SqixInit, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1569,7 +1569,7 @@ struct BurnDriverD BurnDrvSqixb1 = {
 	"sqixb1", "sqix", NULL, NULL, "1987",
 	"Super Qix (bootleg of V1.0, 8031 MCU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, sqixb1RomInfo, sqixb1RomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	Sqixb1Init, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1619,7 +1619,7 @@ struct BurnDriver BurnDrvSqixb2 = {
 	"sqixb2", "sqix", NULL, NULL, "1987",
 	"Super Qix (bootleg, No MCU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, sqixb2RomInfo, sqixb2RomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	Sqixb2Init, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1708,9 +1708,9 @@ static INT32 PerestroInit()
 
 struct BurnDriver BurnDrvPerestro = {
 	"perestro", NULL, NULL, NULL, "1994",
-	"Perestroika Girls\0", NULL, "Promat", "Miscellaneous",
+	"Perestroika Girls\0", NULL, "Promat Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, perestroRomInfo, perestroRomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	PerestroInit, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1732,10 +1732,10 @@ STD_ROM_PICK(perestrof)
 STD_ROM_FN(perestrof)
 
 struct BurnDriver BurnDrvPerestrof = {
-	"perestrof", "perestro", NULL, NULL, "1994",
-	"Perestroika Girls (Fuuki license)\0", NULL, "Promat (Fuuki license)", "Miscellaneous",
+	"perestrof", "perestro", NULL, NULL, "1993",
+	"Perestroika Girls (Fuuki license)\0", NULL, "Promat/Fuuki Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, perestrofRomInfo, perestrofRomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
 	PerestroInit, DrvExit, DrvFrame, SqixDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

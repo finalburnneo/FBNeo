@@ -9340,7 +9340,7 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hoarders" romof="spectrum">
+	<game name="hoarders" cloneof="hoardere" romof="hoardere">
 		<comment>Homebrew</comment>
 		<description>Hoarder, The (Spanish) (48K) (HB)</description>
 		<year>2020</year>
@@ -9811,13 +9811,13 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="impossamal48" romof="spectrum">
+	<game name="impossamal48" cloneof="impossamal128" romof="impossamal128">
 		<comment>Homebrew</comment>
 		<description>Impossamal (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Impossamal 48K (2023)(The Mojon Twins).tap" size="41958" crc="da1579b8"/>
-		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -1768,6 +1768,7 @@ DRV		BurnDrvbirdiy;
 DRV		BurnSpecBirdycant;
 DRV		BurnSpecBiscuitsih;
 DRV		BurnDrvBishi;
+DRV		BurnDrvgg_bmpuzzle;
 DRV		BurnDrvSailorMoonjee;
 DRV		BurnDrvmd_sailormne;
 DRV		BurnDrvmd_sailormn;
@@ -8281,6 +8282,7 @@ DRV		BurnDrvKaiserkn;
 DRV		BurnDrvKaiteids;
 DRV		BurnDrvKaitein;
 DRV		BurnDrvKaitei;
+DRV		BurnDrvgg_sainttale;
 DRV		BurnDrvgg_sainttal;
 DRV		BurnDrvpce_shubibi;
 DRV		BurnDrvpce_shubibi2;
@@ -8995,6 +8997,7 @@ DRV		BurnDrvnes_legenzeldx;
 DRV		BurnDrvnes_legenzelrd;
 DRV		BurnDrvnes_legenzeli;
 DRV		BurnDrvnes_legenzel;
+DRV		BurnDrvnes_legenzelad;
 DRV		BurnDrvtg_legaxe2;
 DRV		BurnDrvtg_legaxe;
 DRV		BurnDrvLwingsb;
@@ -12627,6 +12630,7 @@ DRV		BurnDrvmd_ppersiar;
 DRV		BurnDrvmd_ppersia2r;
 DRV		BurnDrvmd_ppersia2;
 DRV		BurnDrvmd_ppersia2s;
+DRV		BurnDrvgg_prgarden;
 DRV		BurnDrvcv_princessquest;
 DRV		BurnDrvMSX_princessquest;
 DRV		BurnDrvnes_princtominsalki;
@@ -21506,6 +21510,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBirdycant,			// Birdy Cantabile (48K) (HB)
 	&BurnSpecBiscuitsih,		// Biscuits In Hell (48K-128K) (HB)
 	&BurnDrvBishi,				// Bishi Bashi Championship Mini Game Senshuken (ver JAA, 3 Players)
+	&BurnDrvgg_bmpuzzle,		// Bishoujo Mahjong Puzzle (HB)
 	&BurnDrvSailorMoonjee,		// Bishoujo Senshi Sailor Moon (Enhanced Edition v5 Final, Hack)
 	&BurnDrvmd_sailormne,		// Bishoujo Senshi Sailor Moon (Hack, English)
 	&BurnDrvmd_sailormn,		// Bishoujo Senshi Sailor Moon (Japan)
@@ -24840,7 +24845,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvElvact2u,			// Elevator Action II (Ver 2.2A 1995/02/20)
 	&BurnDrvElvactrj,			// Elevator Action Returns (Ver 2.2J 1995/02/20)
 	&BurnDrvElvactr,			// Elevator Action Returns (Ver 2.2O 1995/02/20)
-	&BurnDrvnes_elfland,		// Elfland
+	&BurnDrvnes_elfland,		// Elfland (Unl)
 	&BurnDrvMSX_elidon,			// Elidon (Euro)
 	&BurnDrvmd_elimdowns,		// Eliminate Down (Hack, Spanish)
 	&BurnDrvmd_elimdown,		// Eliminate Down (Japan)
@@ -28019,6 +28024,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKaiteids,			// Kaitei Daisensou (Japan)
 	&BurnDrvKaitein,			// Kaitei Takara Sagashi (Namco license)
 	&BurnDrvKaitei,				// Kaitei Takara Sagashi
+	&BurnDrvgg_sainttale,		// Kaitou Saint Tale (Hack, English)
 	&BurnDrvgg_sainttal,		// Kaitou Saint Tale (Japan)
 	&BurnDrvpce_shubibi,		// Kaizou Choujin Shubibinman (Japan)
 	&BurnDrvpce_shubibi2,		// Kaizou Choujin Shubibinman 2 - Aratanaru Teki (Japan)
@@ -28729,10 +28735,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_wukongs,			// Legend Of Wukong (Hack, Spanish) (SRAM Patched)
 	&BurnDrvnes_triforcegc,		// Legend of Zelda - Triforce of the Gods (China)
 	&BurnDrvnes_triforceg,		// Legend of Zelda - Triforce of the Gods (T-Eng)
-	&BurnDrvnes_legenzeldx,		// Legend of Zelda DX, The (HB, Graphics Hack)
+	&BurnDrvnes_legenzeldx,		// Legend of Zelda DX, The (Graphics Hack)
 	&BurnDrvnes_legenzelrd,		// Legend of Zelda Redux, The (Hack, v3.1)
 	&BurnDrvnes_legenzeli,		// Legend of Zelda, The (Hack, Italian v1.0)
 	&BurnDrvnes_legenzel,		// Legend of Zelda, The (USA) (Rev A)
+	&BurnDrvnes_legenzelad,		// Legend of Zelda, The - Ancient Dungeon (Hack, v3.0)
 	&BurnDrvtg_legaxe2,			// Legendary Axe II, The (USA)
 	&BurnDrvtg_legaxe,			// Legendary Axe, The (USA)
 	&BurnDrvLwingsb,			// Legendary Wings (bootleg)
@@ -31442,7 +31449,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_orunners,		// OutRunners (USA)
 	&BurnDrvOrunners,			// OutRunners (World)
 	&BurnDrvnes_overhorizon,	// Over Horizon (Japan)
-	&BurnDrvnes_overobj,		// Over Obj
+	&BurnDrvnes_overobj,		// Over Obj (HB)
 	&BurnDrvovertop,			// Over Top
 	&BurnSpecOverlander,		// Overlander (128K)
 	&BurnDrvnes_overlord,		// Overlord (USA)
@@ -32365,6 +32372,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_ppersia2r,		// Prince of Persia 2 - Remastered Edition (Hack, v1.5)
 	&BurnDrvmd_ppersia2,		// Prince of Persia 2 - The Shadow and the Flame (Euro, Prototype)
 	&BurnDrvmd_ppersia2s,		// Prince of Persia 2 - The Shadow and the Flame (Hack, Spanish)
+	&BurnDrvgg_prgarden,		// Princess Gardening (HB)
 	&BurnDrvcv_princessquest,	// Princess Quest (HB)
 	&BurnDrvMSX_princessquest,	// Princess Quest (HB)
 	&BurnDrvnes_princtominsalki,// Princess Tomato in Salad Kingdom (USA)

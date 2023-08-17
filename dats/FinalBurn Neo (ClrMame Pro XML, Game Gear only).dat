@@ -510,6 +510,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bmpuzzle">
+		<comment>Homebrew</comment>
+		<description>Bishoujo Mahjong Puzzle (HB)</description>
+		<year>2022</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="Bishoujo Mahjong Puzzle (2022)(Habit Soft).gg" size="262144" crc="57122381"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sailormse" cloneof="sailorms" romof="sailorms">
 		<comment>Hack</comment>
 		<description>Bishoujo Senshi Sailor Moon S (Hack, English v1.1)</description>
@@ -2378,6 +2387,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sainttale" cloneof="sainttal" romof="sainttal">
+		<comment>Hack</comment>
+		<description>Kaitou Saint Tale (Hack, English)</description>
+		<year>2021</year>
+		<manufacturer>Matt's Messy Room</manufacturer>
+		<rom name="Kaitou Saint Tale T-Eng (2021)(Matt's Messy Room).gg" size="540672" crc="a54621a4"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sainttal">
 		<description>Kaitou Saint Tale (Japan)</description>
 		<year>1996</year>
@@ -4061,6 +4079,15 @@
 		<year>1992</year>
 		<manufacturer>Domark</manufacturer>
 		<rom name="prince of persia (usa, europe).bin" size="262144" crc="311d2863"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="prgarden">
+		<comment>Homebrew</comment>
+		<description>Princess Gardening (HB)</description>
+		<year>2022</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="Princess Gardening (2022)(Habit Soft).gg" size="262144" crc="8129b269"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

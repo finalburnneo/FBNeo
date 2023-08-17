@@ -5281,8 +5281,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="elfland">
-		<comment>Ripped from 200-in-1 multicard from Dacicus</comment>
-		<description>Elfland</description>
+		<comment>Hack, Ripped from 200-in-1 multicard from Dacicus</comment>
+		<description>Elfland (Unl)</description>
 		<year>1992</year>
 		<manufacturer>TipTop</manufacturer>
 		<rom name="Elfland (1992)(TipTop).nes" size="65552" crc="93c86e5d"/>
@@ -9741,8 +9741,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="legenzeldx" cloneof="legenzel" romof="legenzel">
-		<comment>Hack, Homebrew</comment>
-		<description>Legend of Zelda DX, The (HB, Graphics Hack)</description>
+		<comment>Hack</comment>
+		<description>Legend of Zelda DX, The (Graphics Hack)</description>
 		<year>2014</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="legend of zelda dx (2014)(pacnsacdave).nes" size="131088" crc="0698579d"/>
@@ -9772,6 +9772,15 @@
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Legend of Zelda, The (USA) (Rev A).nes" size="131088" crc="02bb0c56"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="legenzelad" cloneof="legenzel" romof="legenzel">
+		<comment>Hack</comment>
+		<description>Legend of Zelda, The - Ancient Dungeon (Hack, v3.0)</description>
+		<year>2023</year>
+		<manufacturer>arnpoly</manufacturer>
+		<rom name="Legend of Zelda, The - Ancient Dungeon v3.0 (2023)(arnpoly).nes" size="131088" crc="2846a6b8"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -12480,7 +12489,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="overobj">
-		<description>Over Obj</description>
+		<comment>Homebrew</comment>
+		<description>Over Obj (HB)</description>
 		<year>2023</year>
 		<manufacturer>Little Sound</manufacturer>
 		<rom name="Over Obj (2023)(Little Sound).nes" size="262160" crc="b9fd4de8"/>

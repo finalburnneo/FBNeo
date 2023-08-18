@@ -26467,6 +26467,101 @@ struct BurnDriver BurnSpecSootysweep = {
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 
+// Jack Dragon (128K) (HB)
+
+static struct BurnRomInfo SpecJdragon128RomDesc[] = {
+	{ "Jack Dragon 128K (2023)(Psychic Parrot).tap", 31657, 0x2940167d, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJdragon128, SpecJdragon128, Spec128)
+STD_ROM_FN(SpecJdragon128)
+
+struct BurnDriver BurnSpecJdragon128 = {
+	"spec_jdragon128", NULL, "spec_spec128", NULL, "2023",
+	"Jack Dragon (128K) (HB)\0", NULL, "Psychic Parrot", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecJdragon128RomInfo, SpecJdragon128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Jack Dragon (48K) (HB)
+
+static struct BurnRomInfo SpecJdragon48RomDesc[] = {
+	{ "Jack Dragon 48K (2023)(Psychic Parrot).tap", 31418, 0x553da903, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecJdragon48, SpecJdragon48, Spectrum)
+STD_ROM_FN(SpecJdragon48)
+
+struct BurnDriver BurnSpecJdragon48 = {
+	"spec_jdragon48", "spec_jdragon128", "spec_spectrum", NULL, "2023",
+	"Jack Dragon (48K) (HB)\0", NULL, "Psychic Parrot", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecJdragon48RomInfo, SpecJdragon48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ziona Quest - Training (128K) (HB)
+
+static struct BurnRomInfo SpecZquesttRomDesc[] = {
+	{ "Ziona Quest - Training 128K (2023)(Iamai).tap", 55749, 0xa614eac8, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZquestt, SpecZquestt, Spec128)
+STD_ROM_FN(SpecZquestt)
+
+struct BurnDriver BurnSpecZquestt = {
+	"spec_zquestt", NULL, "spec_spec128", NULL, "2023",
+	"Ziona Quest - Training (128K) (HB)\0", NULL, "Iamai", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecZquesttRomInfo, SpecZquesttRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Ziona Quest - Game (128K) (HB)
+
+static struct BurnRomInfo SpecZquestgRomDesc[] = {
+	{ "Ziona Quest - Game 128K (2023)(Iamai).tap", 57048, 0x8ff580cd, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZquestg, SpecZquestg, Spec128)
+STD_ROM_FN(SpecZquestg)
+
+struct BurnDriver BurnSpecZquestg = {
+	"spec_zquestg", "spec_zquestt", "spec_spec128", NULL, "2023",
+	"Ziona Quest - Game (128K) (HB)\0", NULL, "Iamai", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecZquestgRomInfo, SpecZquestgRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Zoinho (Spanish) (48K) (HB)
+
+static struct BurnRomInfo SpecZoinhoRomDesc[] = {
+	{ "Zoinho 48K (2021)(Bitnamic).tap", 29137, 0xa64d5e5a, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecZoinho, SpecZoinho, Spectrum)
+STD_ROM_FN(SpecZoinho)
+
+struct BurnDriver BurnSpecZoinho = {
+	"spec_zoinho", NULL, "spec_spectrum", NULL, "2021",
+	"Zoinho (Spanish) (48K) (HB)\0", "5-left, 6-forward, 7-back, 8-right, 0-jump", "Bitnamic", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecZoinhoRomInfo, SpecZoinhoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Black Star (48K) (HB)
 
 static struct BurnRomInfo SpecblackstarRomDesc[] = {

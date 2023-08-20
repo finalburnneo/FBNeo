@@ -161,7 +161,7 @@ STDINPUTINFO(Superqix)
 
 static struct BurnDIPInfo PbillianOffsetDIPList[]=
 {
-	DIP_OFFSET(0x0e)
+	DIP_OFFSET(0x0c)
 };
 
 static struct BurnDIPInfo PbillianbOffsetDIPList[]=

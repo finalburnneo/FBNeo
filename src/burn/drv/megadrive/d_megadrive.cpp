@@ -17804,6 +17804,24 @@ struct BurnDriver BurnDrvmd_legobatman = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Lego Pirates of the Caribbean (Russia) (Unl)
+static struct BurnRomInfo md_legopocRomDesc[] = {
+	{ "Lego Pirates of the Caribbean (Unl)(2014)(BMB).bin", 1048576, 0x3d2cd306, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_legopoc)
+STD_ROM_FN(md_legopoc)
+
+struct BurnDriver BurnDrvmd_legopoc = {
+	"md_legopoc", NULL, NULL, NULL, "2014",
+	"Lego Pirates of the Caribbean (Russia) (Unl)\0", NULL, "BMB", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_legopocRomInfo, md_legopocRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Lemmings (Euro)
 static struct BurnRomInfo md_lemmingsRomDesc[] = {
 	{ "mpr-15233.bin", 0x100000, 0x6a1a4579, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

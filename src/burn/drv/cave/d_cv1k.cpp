@@ -435,7 +435,7 @@ struct speedy_s {
 static speedy_s gamelist[] = {
 	{ {"mushisam", "mushisamb", "\0", }, 				0xc04a2aa, 0xc0024d8 },
 	{ {"ibara", "ibarao", "mushisama", "\0", }, 		0xc04a0aa, 0xc0022f0 },
-	{ {"espgal2", "\0", }, 								0xc05177a, 0xc002310 },
+	{ {"espgal2", "espgal2a", "espgal2b", "\0", }, 		0xc05177a, 0xc002310 },
 	{ {"mushitam", "mushitama", "\0", }, 				0xc04a0da, 0xc0022f0 },
 	{ {"ibarablk", "ibarablka", "\0", }, 				0xc05176a, 0xc002310 },
 	{ {"futari15", "futari15a", "futari10", "\0", }, 	0xc05176a, 0xc002310 },

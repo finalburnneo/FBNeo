@@ -56,6 +56,28 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="10thframe" romof="msx">
+		<description>10th Frame (Euro)</description>
+		<year>1986</year>
+		<manufacturer>Access Software</manufacturer>
+		<rom name="10th Frame (Euro)(1987)(Access Software).rom" size="65536" crc="a6e02c26"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="10thframea" cloneof="10thframe" romof="10thframe">
+		<description>10th Frame (Euro, Alt)</description>
+		<year>1986</year>
+		<manufacturer>Access Software</manufacturer>
+		<rom name="10th Frame (Euro, Alt)(1987)(Access Software).rom" size="65536" crc="62faf29c"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="180" romof="msx">
 		<description>180 Degrees (Euro)</description>
 		<year>1986</year>
@@ -129,6 +151,17 @@
 		<year>1985</year>
 		<manufacturer>Alligata</manufacturer>
 		<rom name="3D Knockout (1985)(Alligata).rom" size="32768" crc="ed706601"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="3dtennis" romof="msx">
+		<description>3D Tennis (Japan)</description>
+		<year>1983</year>
+		<manufacturer>ASCII Corp.</manufacturer>
+		<rom name="3D Tennis (Japan)(1983)(ASCII Corp.).rom" size="32768" crc="30cf9142"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2302,6 +2335,17 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="boom" romof="msx">
+		<description>Boom! (Euro)</description>
+		<year>1985</year>
+		<manufacturer>Aackosoft - Eurosoft</manufacturer>
+		<rom name="Boom! (Euro)(1985)(Aackosoft).rom" size="16384" crc="076be943"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="boomrang" romof="msx">
 		<description>Boomerang (Japan)</description>
 		<year>1984</year>
@@ -2802,6 +2846,18 @@
 		<year>198?</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="cpkids.rom" size="32768" crc="2ab67576"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cacorm" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Cacorm (HB)</description>
+		<year>2022</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Cacorm (2022)(Inufuto).rom" size="8357" crc="d32b2732"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4436,6 +4492,28 @@
 		<year>2010</year>
 		<manufacturer>Darkstone</manufacturer>
 		<rom name="DAQ Lord of Idar (2010)(Darkstone).rom" size="32768" crc="39cd51da"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="david2" romof="msx">
+		<description>David II (Japan)</description>
+		<year>1984</year>
+		<manufacturer>ASCII Corp.</manufacturer>
+		<rom name="David II (Japan)(1984)(ASCII Corp.).rom" size="16384" crc="e04bffe5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="david2a" cloneof="david2" romof="david2">
+		<description>David II (Japan, Alt)</description>
+		<year>1984</year>
+		<manufacturer>ASCII Corp.</manufacturer>
+		<rom name="David II (Japan, Alt)(1984)(ASCII Corp.).rom" size="16384" crc="2b091d98"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7600,6 +7678,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="hopman" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Hopman (HB)</description>
+		<year>2023</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Hopman (2023)(Inufuto).rom" size="9803" crc="d262daa4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hopper" romof="msx">
 		<description>Hopper (Euro)</description>
 		<year>1986</year>
@@ -8624,6 +8714,28 @@
 		<year>2011</year>
 		<manufacturer>GameCast Entertainment</manufacturer>
 		<rom name="killmice.rom" size="65536" crc="783afacb"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="killstation" romof="msx">
+		<description>Killer Station (Japan)</description>
+		<year>1983</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Killer Station (Japan)(1983)(Hudson Soft).rom" size="16384" crc="73f37230"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="killstationa" cloneof="killstation" romof="killstation">
+		<description>Killer Station (Japan, Alt)</description>
+		<year>1983</year>
+		<manufacturer>Hudson Soft</manufacturer>
+		<rom name="Killer Station (Japan, Alt)(1983)(Hudson Soft).rom" size="8192" crc="ea7a3d09"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -10555,6 +10667,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mint" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Mint (HB)</description>
+		<year>2023</year>
+		<manufacturer>meichnpp</manufacturer>
+		<rom name="Mint (2023)(meichnpp).rom" size="16384" crc="dfecb0ee"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mirai" romof="msx">
 		<description>Mirai (Japan)</description>
 		<year>1987</year>
@@ -10854,6 +10978,17 @@
 		<year>2008</year>
 		<manufacturer>Infinite</manufacturer>
 		<rom name="MJTT.ROM" size="131072" crc="7b5e126f"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="moonland" romof="msx">
+		<description>Moon Landing (Japan)</description>
+		<year>1983</year>
+		<manufacturer>ASCII Corp.</manufacturer>
+		<rom name="Moon Landing (1983)(ASCII Corp.).rom" size="16384" crc="8a2c11da"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11241,6 +11376,17 @@
 		<year>1983</year>
 		<manufacturer>Microsoft / ASCII</manufacturer>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msxpanic" romof="msx">
+		<description>MSX Panic (Euro, French)</description>
+		<year>1986</year>
+		<manufacturer>EVA Soft</manufacturer>
+		<rom name="MSX Panic (Euro, Fr)(1986)(EVA Soft).rom" size="32768" crc="a2a7dfe1"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

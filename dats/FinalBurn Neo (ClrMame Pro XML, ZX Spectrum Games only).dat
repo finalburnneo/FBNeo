@@ -1099,6 +1099,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="am3dpool" romof="spectrum">
+		<description>American 3D Pool (48K)</description>
+		<year>1992</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="American 3D Pool 48K (1992)(Zeppelin Games).tap" size="29882" crc="03f6cba6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="attwrest" romof="spectrum">
 		<description>American Tag-Team Wrestling (48K)</description>
 		<year>1992</year>
@@ -2740,6 +2749,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bombbot" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Bomber Bot (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Bomber Bot 128K (2023)(Gabriele Amore).tap" size="56471" crc="37d131f3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bombpengo" romof="spec128">
 		<comment>Homebrew</comment>
 		<description>Bomber Pengo (128K) (HB)</description>
@@ -3743,6 +3763,15 @@
 		<rom name="Chain Reaction (1987)(Durell).tap" size="51862" crc="42c4cd17"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ch3dsnooker" romof="spectrum">
+		<description>Championship 3D Snooker (48K)</description>
+		<year>1992</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="Championship 3D Snooker 48K (1992)(Zeppelin Games).tap" size="29038" crc="2d955668"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5793,12 +5822,34 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dwtoozxenv2" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Devwill Too ZX (English) (128K) (HB, v2.0)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX v2.0 128K EN (2023)(Amaweks).tap" size="45098" crc="809ce1b8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dwtoozxpt" cloneof="dwtoozxen" romof="dwtoozxen">
 		<comment>Homebrew</comment>
 		<description>Devwill Too ZX (Portuguese) (128K) (HB)</description>
 		<year>2020</year>
 		<manufacturer>Amaweks</manufacturer>
 		<rom name="Devwill Too ZX 128K PT (2020)(Amaweks).tap" size="47275" crc="d8b4d123"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dwtoozxptv2" cloneof="dwtoozxenv2" romof="dwtoozxenv2">
+		<comment>Homebrew</comment>
+		<description>Devwill Too ZX (Portuguese) (128K) (HB, v2.0)</description>
+		<year>2023</year>
+		<manufacturer>Amaweks</manufacturer>
+		<rom name="Devwill Too ZX v2.0 128K PT (2023)(Amaweks).tap" size="45098" crc="a0e1f9df"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -5815,31 +5866,9 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dwtoozxenv2" romof="spec128">
-		<comment>Homebrew</comment>
-		<description>Devwill Too ZX v2.0 (English) (128K) (HB)</description>
-		<year>2023</year>
-		<manufacturer>Amaweks</manufacturer>
-		<rom name="Devwill Too ZX v2.0 128K EN (2023)(Amaweks).tap" size="45098" crc="809ce1b8"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="dwtoozxptv2" cloneof="dwtoozxenv2" romof="dwtoozxenv2">
-		<comment>Homebrew</comment>
-		<description>Devwill Too ZX v2.0 (Portuguese) (128K) (HB)</description>
-		<year>2023</year>
-		<manufacturer>Amaweks</manufacturer>
-		<rom name="Devwill Too ZX v2.0 128K PT (2023)(Amaweks).tap" size="45098" crc="a0e1f9df"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="dwtoozxesv2" cloneof="dwtoozxenv2" romof="dwtoozxenv2">
 		<comment>Homebrew</comment>
-		<description>Devwill Too ZX v2.0 (Spanish) (128K) (HB)</description>
+		<description>Devwill Too ZX (Spanish) (128K) (HB, v2.0)</description>
 		<year>2023</year>
 		<manufacturer>Amaweks</manufacturer>
 		<rom name="Devwill Too ZX v2.0 128K ES (2023)(Amaweks).tap" size="45098" crc="545dbc02"/>
@@ -7549,6 +7578,15 @@
 		<year>2008</year>
 		<manufacturer>Miguel Angel Rodriguez Jodar</manufacturer>
 		<rom name="Fireman (2008)(Miguel Angel Rodriguez Jodar).tap" size="18452" crc="f7853e31"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="firemansam" romof="spectrum">
+		<description>Fireman Sam - The Hero Next Door (48K)</description>
+		<year>1991</year>
+		<manufacturer>Alternative Software</manufacturer>
+		<rom name="Fireman Sam - The Hero Next Door 48K (1991)(Alternative).tap" size="87975" crc="b813c820"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10296,6 +10334,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jdragon128" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Jack Dragon (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Psychic Parrot</manufacturer>
+		<rom name="Jack Dragon 128K (2023)(PsychicParrot).tap" size="31657" crc="2940167d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="jdragon48" cloneof="jdragon128" romof="jdragon128">
+		<comment>Homebrew</comment>
+		<description>Jack Dragon (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Psychic Parrot</manufacturer>
+		<rom name="Jack Dragon 48K (2023)(PsychicParrot).tap" size="31418" crc="553da903"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jacknipper" romof="spectrum">
 		<description>Jack the Nipper (48K)</description>
 		<year>1986</year>
@@ -11264,6 +11323,16 @@
 		<year>2021</year>
 		<manufacturer>Poe Games</manufacturer>
 		<rom name="Last Escape (2021)(Ariel Endaraues).tap" size="60031" crc="3ec22c35"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lastmission" romof="spec128">
+		<description>Last Mission, The (Spanish) (128K)</description>
+		<year>1987</year>
+		<manufacturer>Opera Soft</manufacturer>
+		<rom name="Last Mission, The 128K ES (1987)(Opera Soft).tap" size="45998" crc="2e93fbe9"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15087,6 +15156,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="potsworth" romof="spec128">
+		<description>Potsworth &amp; Co. (128K)</description>
+		<year>1992</year>
+		<manufacturer>Hi-Tec Software</manufacturer>
+		<rom name="Potsworth &amp; Co. 128K (1992)(Hi-Tec).tap" size="130851" crc="23ac170e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pdrift" romof="spec128">
 		<description>Power Drift (128K)</description>
 		<year>1989</year>
@@ -18081,6 +18160,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spacegun" romof="spec128">
+		<comment>Press 'K' during titles to use controller</comment>
+		<description>Space Gun (128K)</description>
+		<year>1992</year>
+		<manufacturer>Ocean</manufacturer>
+		<rom name="Space Gun 128K (1992)(Ocean).tap" size="155343" crc="d467691f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sharrier" romof="spectrum">
 		<description>Space Harrier (48K)</description>
 		<year>1986</year>
@@ -18848,10 +18938,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="sfight" romof="spectrum">
-		<description>Street Fighter (Trainer) (48K)</description>
+		<description>Street Fighter (48K)</description>
 		<year>1988</year>
 		<manufacturer>Go!</manufacturer>
-		<rom name="Street Fighter (1988)(Go!).tap" size="70328" crc="293c4d02"/>
+		<rom name="Street Fighter 48K (1988)(Go!).tap" size="91844" crc="7d79c29b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21801,11 +21891,43 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="zquestg" cloneof="zquestt" romof="zquestt">
+		<comment>Homebrew</comment>
+		<description>Ziona Quest - Game (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Iamai</manufacturer>
+		<rom name="Ziona Quest - Game 128K (2023)(Iamai).tap" size="57048" crc="8ff580cd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zquestt" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Ziona Quest - Training (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Iamai</manufacturer>
+		<rom name="Ziona Quest - Training 128K (2023)(Iamai).tap" size="55749" crc="a614eac8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="zipzap" romof="spectrum">
 		<description>Zip-Zap (48K)</description>
 		<year>1983</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Zip-Zap 48K (1983)(Imagine).tap" size="37207" crc="fcb30933"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zoinho" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Zoinho (Spanish) (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Bitnamic</manufacturer>
+		<rom name="Zoinho 48K (2021)(Bitnamic).tap" size="29137" crc="a64d5e5a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

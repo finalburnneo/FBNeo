@@ -1943,7 +1943,7 @@
 	<game name="blckonyxen" cloneof="blckonyx" romof="blckonyx">
 		<comment>Hack</comment>
 		<description>Black Onyx, The (Hack, English v1.2)</description>
-		<year>1985-2011</year>
+		<year>2011</year>
 		<manufacturer>Polaris</manufacturer>
 		<rom name="Black Onyx, The T-Eng v1.2 (2011)(Polaris).rom" size="32768" crc="b97baccc"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -1986,11 +1986,11 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blaggerenh" romof="msx">
-		<comment>Homebrew</comment>
-		<description>Blagger Enhanced (HB)</description>
+	<game name="blaggerenh" cloneof="blagger" romof="blagger">
+		<comment>Hack</comment>
+		<description>Blagger Enhanced (Hack)</description>
 		<year>2013</year>
-		<manufacturer>MicroCabin / JLTURSAN</manufacturer>
+		<manufacturer>JLTurSan</manufacturer>
 		<rom name="blaggere.rom" size="16384" crc="bdbdf44a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
@@ -9565,18 +9565,6 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="reliquia" romof="msx">
-		<comment>Homebrew</comment>
-		<description>La Reliquia (HB)</description>
-		<year>2020</year>
-		<manufacturer>Roolandoo</manufacturer>
-		<rom name="la reliquia (2020)(roolando).rom" size="32768" crc="8a251dba"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="laptick2" romof="msx">
 		<description>Laptick 2 (Japan)</description>
 		<year>1986</year>
@@ -12087,7 +12075,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="norseman" romof="msx">
-		<description>Norseman (HB)</description>
+		<description>Norseman (Euro)</description>
 		<year>1984</year>
 		<manufacturer>Electric Software</manufacturer>
 		<rom name="Norseman (1984)(Electric Software).rom" size="32768" crc="a24441b8"/>
@@ -13759,11 +13747,35 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="relic" romof="msx">
+		<comment>Homebrew</comment>
+		<description>Relic, The (English) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="the relic (2020)(roolandoo).rom" size="32768" crc="4ff53c97"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="relics" romof="msx">
 		<description>Relics (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Bothtec</manufacturer>
 		<rom name="cxk381000" size="131072" crc="b612d79a"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="reliquia" cloneof="relic" romof="relic">
+		<comment>Homebrew</comment>
+		<description>Reliquia, La (Spanish) (HB)</description>
+		<year>2020</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="la reliquia (2020)(roolando).rom" size="32768" crc="8a251dba"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14747,8 +14759,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="skyfox" romof="msx">
-		<comment>Homebrew</comment>
-		<description>SkyFox - Paina (HB)</description>
+		<description>SkyFox - Paina (Euro)</description>
 		<year>1989</year>
 		<manufacturer>Pasi Kettunen</manufacturer>
 		<rom name="SkyFox - Paina (Pasi Kettunen) (1989).rom" size="8192" crc="efb971a4"/>
@@ -15045,7 +15056,7 @@
 	<game name="spacemouse" romof="msx">
 		<comment>Homebrew</comment>
 		<description>Space Mouse (HB)</description>
-		<year>201x</year>
+		<year>201?</year>
 		<manufacturer>H. Kobo</manufacturer>
 		<rom name="Space Mouse (H. Kobo, 201x).rom" size="131072" crc="b55702f7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
@@ -16469,18 +16480,6 @@
 		<year>1986</year>
 		<manufacturer>CDS Micro Systems</manufacturer>
 		<rom name="ice king, the (1986)(cds micro systems)(gb)[run'cas-'][martos].cas" size="38487" crc="160cad54"/>
-		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
-		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
-		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
-		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="relic" cloneof="reliquia" romof="reliquia">
-		<comment>Homebrew</comment>
-		<description>The Relic (HB)</description>
-		<year>2020</year>
-		<manufacturer>Roolandoo</manufacturer>
-		<rom name="the relic (2020)(roolandoo).rom" size="32768" crc="4ff53c97"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

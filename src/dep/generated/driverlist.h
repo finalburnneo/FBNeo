@@ -8842,7 +8842,6 @@ DRV		BurnDrvMSX_labbaye;
 DRV		BurnDrvMSX_abadcrim;
 DRV		BurnDrvMSX_lacorona;
 DRV		BurnDrvLagirl;
-DRV		BurnDrvMSX_reliquia;
 DRV		BurnDrvmd_laruss95;
 DRV		BurnDrvLabyrunr;
 DRV		BurnDrvLabyrunrk;
@@ -13417,6 +13416,7 @@ DRV		BurnSpecRegulus;
 DRV		BurnDrvRegulusu;
 DRV		BurnDrvnes_reknum2;
 DRV		BurnDrvnes_reknum1;
+DRV		BurnDrvMSX_relic;
 DRV		BurnDrvMSX_relics;
 DRV		BurnDrvfds_relics;
 DRV		BurnDrvRelief;
@@ -13424,6 +13424,7 @@ DRV		BurnDrvRelief2;
 DRV		BurnDrvRelief3;
 DRV		BurnSpecrelic;
 DRV		BurnSpecLareliquia;
+DRV		BurnDrvMSX_reliquia;
 DRV		BurnDrvcv_rtheflag;
 DRV		BurnDrvnes_renstisho;
 DRV		BurnSpecrenegade128;
@@ -17479,7 +17480,6 @@ DRV		BurnDrvGhostb;
 DRV		BurnDrvGhostb3a;		// no comment [NOT WORKING]
 #endif
 DRV		BurnDrvGhostb3;
-DRV		BurnDrvMSX_relic;
 DRV		BurnDrvRoishtar;
 DRV		BurnDrvSimpsons2pa;
 DRV		BurnDrvSimpsons2pj;
@@ -21607,7 +21607,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBladestl,			// Blades of Steel (version T, Joystick)
 	&BurnDrvmd_bladeven,		// Blades of Vengeance (Euro, USA)
 	&BurnDrvmd_bladevens,		// Blades Of Vengeance (Hack, Spanish)
-	&BurnDrvMSX_blaggerenh,		// Blagger Enhanced (HB)
+	&BurnDrvMSX_blaggerenh,		// Blagger Enhanced (Hack)
 	&BurnDrvMSX_blagger,		// Blagger MSX (Japan)
 	&BurnDrvBlandiap,			// Blandia (prototype)
 	&BurnDrvBlandia,			// Blandia
@@ -28610,7 +28610,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_abadcrim,		// La Abadia del Crimen (Euro, Spanish)
 	&BurnDrvMSX_lacorona,		// La Corona Encantada (HB)
 	&BurnDrvLagirl,				// LA Girl
-	&BurnDrvMSX_reliquia,		// La Reliquia (HB)
 	&BurnDrvmd_laruss95,		// La Russa Baseball 95 (USA, Oceania)
 	&BurnDrvLabyrunr,			// Labyrinth Runner (Japan)
 	&BurnDrvLabyrunrk,			// Labyrinth Runner (World Ver. K)
@@ -31243,7 +31242,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecNonamed,			// Nonamed (48K)
 	&BurnDrvMSX_nonamed,		// Nonamed (Euro, Spanish)
 	&BurnDrvmd_normy,			// Normy's Beach Babe-O-Rama (Euro, USA)
-	&BurnDrvMSX_norseman,		// Norseman (HB)
+	&BurnDrvMSX_norseman,		// Norseman (Euro)
 	&BurnSpecnorthnsouth,		// North & South (128K)
 	&BurnDrvMSX_northnsouth,	// North & South (Euro, M3)
 	&BurnDrvnes_northsouthi,	// North & South (Hack, Italian v2.0)
@@ -33185,6 +33184,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRegulusu,			// Regulus (not encrypted)
 	&BurnDrvnes_reknum2,		// Reknum - Souls Adventure (HB)
 	&BurnDrvnes_reknum1,		// Reknum - The Awakening (HB)
+	&BurnDrvMSX_relic,			// Relic, The (English) (HB)
 	&BurnDrvMSX_relics,			// Relics (Japan)
 	&BurnDrvfds_relics,			// Relics - Ankoku Yousai (Japan)
 	&BurnDrvRelief,				// Relief Pitcher (set 1, 07 Jun 1992 / 28 May 1992)
@@ -33192,6 +33192,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvRelief3,			// Relief Pitcher (set 3, 10 Apr 1992 / 08 Apr 1992)
 	&BurnSpecrelic,				// Reliquia, La (English) (128K) (HB)
 	&BurnSpecLareliquia,		// Reliquia, La (Spanish) (128K) (HB)
+	&BurnDrvMSX_reliquia,		// Reliquia, La (Spanish) (HB)
 	&BurnDrvcv_rtheflag,		// Remember the Flag (HB)
 	&BurnDrvnes_renstisho,		// Ren & Stimpy Show, The - Buckeroo$! (USA)
 	&BurnSpecrenegade128,		// Renegade (128K)
@@ -34495,7 +34496,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSkywolf,			// Sky Wolf (set 1)
 	&BurnDrvSkywolf2,			// Sky Wolf (set 2)
 	&BurnDrvSkywolf3,			// Sky Wolf (set 3)
-	&BurnDrvMSX_skyfox,			// SkyFox - Paina (HB)
+	&BurnDrvMSX_skyfox,			// SkyFox - Paina (Euro)
 	&BurnDrvMSX_skygaldo,		// Skygaldo (Japan)
 	&BurnDrvMSX_skyhawk,		// Skyhawk (Euro)
 	&BurnDrvnes_slalom,			// Slalom (USA)
@@ -37247,7 +37248,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGhostb3a,			// The Real Ghostbusters (US 3 Players, revision 2) [no comment, NOT WORKING]
 #endif
 	&BurnDrvGhostb3,			// The Real Ghostbusters (US 3 Players, revision 3B?)
-	&BurnDrvMSX_relic,			// The Relic (HB)
 	&BurnDrvRoishtar,			// The Return of Ishtar
 	&BurnDrvSimpsons2pa,		// The Simpsons (2 Players Asia)
 	&BurnDrvSimpsons2pj,		// The Simpsons (2 Players Japan)

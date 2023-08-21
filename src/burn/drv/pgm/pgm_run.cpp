@@ -798,7 +798,7 @@ INT32 pgmInit()
 	BurnSetRefreshRate(((BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB) || pgm_cave_refresh) ? 59.17 : 60.00);
 
 	nEnableArm7 = (BurnDrvGetHardwareCode() / HARDWARE_IGS_USE_ARM_CPU) & 1;
-	OldCodeMode = ((HackCodeDip & 1) || (bDoIpsPatch)) ? 1 : 0;
+	OldCodeMode = ((HackCodeDip & 1) || (bDoIpsPatch) || (NULL != pDataRomDesc)) ? 1 : 0;
 
 	if (0 == nPGMSpriteBufferHack) {
 		nPGMSpriteBufferHack = (nIpsDrvDefine & IPS_PGM_SPRHACK) ? 1 : 0;

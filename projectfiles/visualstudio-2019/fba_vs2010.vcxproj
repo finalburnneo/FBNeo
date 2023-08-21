@@ -72,6 +72,7 @@
     <ClCompile Include="..\..\src\burner\win32\progress.cpp" />
     <ClCompile Include="..\..\src\burner\win32\replay.cpp" />
     <ClCompile Include="..\..\src\burner\win32\res.cpp" />
+    <ClCompile Include="..\..\src\burner\win32\romdata.cpp" />
     <ClCompile Include="..\..\src\burner\win32\roms.cpp" />
     <ClCompile Include="..\..\src\burner\win32\run.cpp" />
     <ClCompile Include="..\..\src\burner\win32\scrn.cpp" />
@@ -276,6 +277,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_mexico86.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_nycaptor.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_qix.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\taito\d_superqix.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_undrfire.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf262.cpp" />
     <ClCompile Include="..\..\src\burn\snd\burn_ymf271.cpp" />

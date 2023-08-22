@@ -2130,6 +2130,7 @@ DRV		BurnDrvBorench;
 DRV		BurnDrvBorencha;
 DRV		BurnDrvMSX_borfese;
 DRV		BurnDrvMSX_borfes;
+DRV		BurnSpecBorielrun;
 DRV		BurnSpecBosconian;
 DRV		BurnSpecbossthe;
 DRV		BurnDrvBotanic;
@@ -2157,6 +2158,7 @@ DRV		BurnDrvBballsa;
 DRV		BurnDrvBballs;
 DRV		BurnSpecBouncberty;
 DRV		BurnDrvMSX_bouncblock;
+DRV		BurnSpecBbomb;
 DRV		BurnSpecBbredux;
 DRV		BurnSpecbounder;
 DRV		BurnDrvMSX_bounder;
@@ -2729,6 +2731,7 @@ DRV		BurnDrvCninjabl;
 DRV		BurnDrvCninjau;
 DRV		BurnDrvCninja1;
 DRV		BurnDrvCninja;
+DRV		BurnSpecCavemania;
 DRV		BurnDrvMSX_Caverndeath;
 DRV		BurnDrvMSX_caverns;
 DRV		BurnDrvcv_caverns;
@@ -3330,6 +3333,7 @@ DRV		BurnDrvMSX_cpachi;
 DRV		BurnDrvMSX_condori;
 DRV		BurnDrvMSX_condorib;
 DRV		BurnDrvMSX_condoria;
+DRV		BurnSpecConquest;
 DRV		BurnDrvnes_conan;
 DRV		BurnDrvCondorn;
 DRV		BurnDrvCondor;
@@ -6584,6 +6588,8 @@ DRV		BurnDrvGteikoku;
 DRV		BurnDrvcv_ggarden;
 DRV		BurnDrvsg1k_girlgard;
 DRV		BurnDrvsg1k_girlgardt;
+DRV		BurnSpecGladtr128;
+DRV		BurnSpecGladtr48;
 DRV		BurnDrvGladiatr;
 DRV		BurnDrvSgladiat;
 DRV		BurnDrvMSX_glass;
@@ -8948,6 +8954,7 @@ DRV		BurnSpecLasttrain1;
 DRV		BurnSpecLasttrain2;
 DRV		BurnSpecLastvampire;
 DRV		BurnSpecLava16k;
+DRV		BurnSpecLavabirds;
 DRV		BurnDrvnes_lawestj;
 DRV		BurnDrvnes_laweste;
 DRV		BurnDrvnes_lawnmower;
@@ -10115,6 +10122,7 @@ DRV		BurnDrvmd_mickmacku;
 DRV		BurnDrvmd_mickmackup;
 DRV		BurnDrvsms_mickmack;
 DRV		BurnDrvgg_mickmack;
+DRV		BurnSpecMickeydongw;
 DRV		BurnDrvmd_mmania;
 DRV		BurnDrvmd_mmanias;
 DRV		BurnDrvmd_mmaniaj;
@@ -10777,6 +10785,7 @@ DRV		BurnDrvnes_multidude;
 DRV		BurnDrvcv_multiverse;
 DRV		BurnDrvMnchmobl;
 DRV		BurnSpecMuncher;
+DRV		BurnSpecMuncher16;
 DRV		BurnSpecmundialfutbol;
 DRV		BurnDrvMSX_mundoper;
 DRV		BurnSpecMunsters;
@@ -19753,6 +19762,7 @@ DRV		BurnSpecZxenigma;
 DRV		BurnSpecZxfm2005;
 DRV		BurnSpecZxfrogger;
 DRV		BurnSpecZxlarry;
+DRV		BurnSpecZxoilpgw;
 DRV		BurnSpecZxparachute;
 DRV		BurnSpecSpec1282aBIOS;
 DRV		BurnSpecSpec128BIOS;
@@ -21898,6 +21908,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBorencha,			// Borench (set 2)
 	&BurnDrvMSX_borfese,		// Borfes and the Five Demons (Hack, English)
 	&BurnDrvMSX_borfes,			// Borfes to 5-nin no Akuma - An Adventure Story (Japan)
+	&BurnSpecBorielrun,			// Boriel Runner (48K) (HB)
 	&BurnSpecBosconian,			// Bosconian '87 (128K)
 	&BurnSpecbossthe,			// Boss, The (48K)
 	&BurnDrvBotanic,			// Botanic (English / Spanish)
@@ -21925,6 +21936,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBballs,				// Bouncing Balls
 	&BurnSpecBouncberty,		// Bouncing Berty (16K)
 	&BurnDrvMSX_bouncblock,		// Bouncing Block (Euro, Spanish)
+	&BurnSpecBbomb,				// Bouncing Bomb (48K)
 	&BurnSpecBbredux,			// Bouncing Bomb Redux (48K) (HB)
 	&BurnSpecbounder,			// Bounder (48K)
 	&BurnDrvMSX_bounder,		// Bounder (Euro)
@@ -22497,6 +22509,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCninjau,			// Caveman Ninja (US ver 4)
 	&BurnDrvCninja1,			// Caveman Ninja (World ver 1)
 	&BurnDrvCninja,				// Caveman Ninja (World ver 4)
+	&BurnSpecCavemania,			// Cavemania (48K)
 	&BurnDrvMSX_Caverndeath,	// Cavern of Death (Euro, Spanish)
 	&BurnDrvMSX_caverns,		// Caverns of Titan (HB)
 	&BurnDrvcv_caverns,			// Caverns of Titan (SGM) (HB)
@@ -23098,6 +23111,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_condori,		// Con-Dori (Japan)
 	&BurnDrvMSX_condorib,		// Con-Dori (Japan, Alt 2)
 	&BurnDrvMSX_condoria,		// Con-Dori (Japan, Alt)
+	&BurnSpecConquest,			// Con-Quest (48K)
 	&BurnDrvnes_conan,			// Conan (USA)
 	&BurnDrvCondorn,			// Condor (S C Novar bootleg of Phoenix)
 	&BurnDrvCondor,				// Condor (Sidam bootleg of Phoenix)
@@ -26352,6 +26366,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_ggarden,			// Girl's Garden (HB)
 	&BurnDrvsg1k_girlgard,		// Girl's Garden (Japan)
 	&BurnDrvsg1k_girlgardt,		// Girl's Garden (Taiwan)
+	&BurnSpecGladtr128,			// Gladiator (128K)
+	&BurnSpecGladtr48,			// Gladiator (48K)
 	&BurnDrvGladiatr,			// Gladiator (US)
 	&BurnDrvSgladiat,			// Gladiator 1984
 	&BurnDrvMSX_glass,			// Glass (Euro, Spanish)
@@ -28716,6 +28732,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecLasttrain2,		// Last Train to Tranz-Central - Part 2 (128K) (HB)
 	&BurnSpecLastvampire,		// Last Vampire, The (48K)
 	&BurnSpecLava16k,			// Lava - Speed up version (16K) (HB)
+	&BurnSpecLavabirds,			// Lava Birds, The (128K) (HB)
 	&BurnDrvnes_lawestj,		// Law of the West (Japan)
 	&BurnDrvnes_laweste,		// Law of the West (T-Eng)
 	&BurnDrvnes_lawnmower,		// Lawn Mower (HB)
@@ -29883,6 +29900,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mickmackup,		// Mick & Mack as the Global Gladiators (USA, Prototype)
 	&BurnDrvsms_mickmack,		// Mick and Mack as the Global Gladiators (Euro, Brazil)
 	&BurnDrvgg_mickmack,		// Mick and Mack as the Global Gladiators (Euro, USA)
+	&BurnSpecMickeydongw,		// Mickey and Donald Game & Watch (48K) (HB)
 	&BurnDrvmd_mmania,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (Euro)
 	&BurnDrvmd_mmanias,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (Hack, Spanish)
 	&BurnDrvmd_mmaniaj,			// Mickey Mania - The Timeless Adventures of Mickey Mouse (Japan)
@@ -30545,6 +30563,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvcv_multiverse,		// Multiverse (HB)
 	&BurnDrvMnchmobl,			// Munch Mobile (US)
 	&BurnSpecMuncher,			// Muncher Eats Chewits, The (128K)
+	&BurnSpecMuncher16,			// Muncher! (16K)
 	&BurnSpecmundialfutbol,		// Mundial de Futbol (Spanish) (128K)
 	&BurnDrvMSX_mundoper,		// Mundo Perdido, El (Euro, Spanish)
 	&BurnSpecMunsters,			// Munsters, The (128K)
@@ -39521,6 +39540,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecZxfm2005,			// ZX Football Manager 2005 (128K) (HB)
 	&BurnSpecZxfrogger,			// ZX Frogger (48K) (HB)
 	&BurnSpecZxlarry,			// ZX Larry (128K) (HB)
+	&BurnSpecZxoilpgw,			// ZX Oil Panic Game & Watch (48K) (HB)
 	&BurnSpecZxparachute,		// ZX Parachute (16K) (HB)
 	&BurnSpecSpec1282aBIOS,		// ZX Spectrum 128 +2a BIOS [BIOS Only, NOT WORKING]
 	&BurnSpecSpec128BIOS,		// ZX Spectrum 128 BIOS [BIOS Only, NOT WORKING]

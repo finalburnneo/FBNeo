@@ -2861,6 +2861,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="borielrun" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Boriel Runner (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>briefer</manufacturer>
+		<rom name="Boriel Runner 48K (2023)(briefer).tap" size="30251" crc="c58a6829"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bosconian" romof="spec128">
 		<description>Bosconian '87 (128K)</description>
 		<year>1987</year>
@@ -2940,6 +2950,16 @@
 		<year>1984</year>
 		<manufacturer>PowerSoftware</manufacturer>
 		<rom name="Bouncing Berty 16K (1984)(PowerSoftware).tap" size="14436" crc="ad0e32a7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bbomb" romof="spectrum">
+		<comment>Press a key to start, '9' to move left, '0' to move right</comment>
+		<description>Bouncing Bomb (48K)</description>
+		<year>1986</year>
+		<manufacturer>Phil Ruston</manufacturer>
+		<rom name="Bouncing Bomb 48K (1986)(Phil Ruston).z80" size="49216" crc="86f9c286"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3723,6 +3743,15 @@
 		<year>1984</year>
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Cavelon 48K (1984)(Ocean).tap" size="33603" crc="df2fa332"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cavemania" romof="spectrum">
+		<description>Cavemania (48K)</description>
+		<year>1990</year>
+		<manufacturer>Atlantis Software</manufacturer>
+		<rom name="Cavemania 48K (1990)(Atlantis Software).tap" size="48245" crc="156c837d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -4594,6 +4623,15 @@
 		<rom name="Complica DX (2015)(Einar Saukas).tap" size="48389" crc="4a72648f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="conquest" romof="spectrum">
+		<description>Con-Quest (48K)</description>
+		<year>1986</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Con-Quest 48K (1986)(Mastertronic).tap" size="48762" crc="77e76fe8"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -8491,6 +8529,25 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gladtr128" romof="spec128">
+		<description>Gladiator (128K)</description>
+		<year>1986</year>
+		<manufacturer>Domark</manufacturer>
+		<rom name="Gladiator 128K (1986)(Domark).tap" size="70662" crc="ca8e9327"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gladtr48" cloneof="gladtr128" romof="gladtr128">
+		<description>Gladiator (48K)</description>
+		<year>1986</year>
+		<manufacturer>Domark</manufacturer>
+		<rom name="Gladiator 48K (1986)(Domark).tap" size="45249" crc="902ff9d8"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="glazx128" romof="spec128">
 		<comment>Homebrew, 2 players mode only</comment>
 		<description>GlaZX (128K) (HB)</description>
@@ -11389,6 +11446,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="lavabirds" romof="spec128">
+		<comment>Homebrew</comment>
+		<description>Lava Birds, The (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Quantum Sheep</manufacturer>
+		<rom name="Lava Birds, The 128K (2022)(Quantum Sheep).tap" size="37340" crc="4ff095cf"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lazertag" romof="spectrum">
 		<description>Lazer Tag (48K)</description>
 		<year>1988</year>
@@ -12646,6 +12714,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mickeydongw" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>Mickey and Donald Game &amp; Watch (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Menyiques</manufacturer>
+		<rom name="Mickey and Donald G&amp;W 48K (2023)(Menyiques).tap" size="37646" crc="93b6eb9d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mickeymouse" romof="spectrum">
 		<comment>SPACE: change weapon</comment>
 		<description>Mickey Mouse - The Computer Game (48K)</description>
@@ -13442,6 +13520,16 @@
 		<rom name="Muncher Eats Chewits, The 128K (1988)(Gremlin Graphics).tap" size="120973" crc="16db8cd7"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="muncher16" romof="spectrum">
+		<comment>S: start - Z: left - X: right - K: up - M: down</comment>
+		<description>Muncher! (16K)</description>
+		<year>1982</year>
+		<manufacturer>Silversoft</manufacturer>
+		<rom name="Muncher! 16K (1982)(Silversoft).tap" size="8192" crc="3e72dda7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -22072,6 +22160,16 @@
 		<rom name="ZX Larry 128K (2019)(Rafal Miazga).tap" size="48364" crc="d4a981d5"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="zxoilpgw" romof="spectrum">
+		<comment>Homebrew</comment>
+		<description>ZX Oil Panic Game &amp; Watch (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Menyiques</manufacturer>
+		<rom name="ZX Oil Panic G&amp;W 48K (2021)(Menyiques).tap" size="24803" crc="5cc0012c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

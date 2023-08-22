@@ -1097,7 +1097,7 @@ int ProcessCmdLine()
 								fp = _tfopen(szDat, _T("r"));
 								if (fp) {	// ips dat exists
 									fclose(fp);
-									memset(szDatList[nList], T('\0'), MAX_PATH * sizeof(TCHAR));
+									memset(szDatList[nList], _T('\0'), MAX_PATH * sizeof(TCHAR));
 									if (_tcsstr(argv, _T(".dat"))) {
 										_stprintf(szDatList[nList++], _T("%s"), argv);
 									} else {

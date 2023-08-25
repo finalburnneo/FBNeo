@@ -853,7 +853,6 @@ BEGIN
     POPUP "Game"
     BEGIN
         MENUITEM "Load game...\tF6",					MENU_LOAD
-        MENUITEM "Load game from Romdata...\tCtrl+R",	MENU_LOAD_ROMDATA
         MENUITEM "Play via Kaillera...",				MENU_STARTNET
         POPUP "Most recent games..."
 		BEGIN
@@ -1634,7 +1633,6 @@ BEGIN
     VK_SUBTRACT, MENU_CHEATSEARCH_DECREASE, CONTROL, VIRTKEY, NOINVERT
     VK_ADD,     MENU_CHEATSEARCH_INCREASE, CONTROL, VIRTKEY, NOINVERT
 	"W",	MENU_QUIT, CONTROL, VIRTKEY, NOINVERT
-	"R",	MENU_LOAD_ROMDATA, 	CONTROL, VIRTKEY, NOINVERT
 END
 
 /////////////////////////////////////////////////////////////////////////////

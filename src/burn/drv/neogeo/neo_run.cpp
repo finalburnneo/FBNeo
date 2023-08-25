@@ -4036,27 +4036,8 @@ static INT32 NeoInitCommon()
 	}
 
 	// Mapping extra rom.
-	// For ips
-	if (bDoIpsPatch && (nIpsMemExpLen[EXTR_ROM] > 0)) {
+	if (bDoIpsPatch && (nIpsMemExpLen[EXTR_ROM] > 0))
 		SekMapMemory(Neo68KROMActive + (nAllCodeSize - nIpsMemExpLen[EXTR_ROM]), 0x900000, 0x900000 + (nIpsMemExpLen[EXTR_ROM] - 1), MAP_ROM);
-	}
-	// For romdata
-	if ((NULL != pDataRomDesc) && (NULL != pRDI->szExtraRom))
-	{
-		UINT32 nRomLen = 0, nExtraRomLen = 0;
-		for (INT32 i = 0; i < pRDI->nDescCount; i++) {
-			if (1 == (pDataRomDesc[i].nType & 7)) {								// P Roms
-				nRomLen += pDataRomDesc[i].nLen;
-
-				if (0 == strcmp(pDataRomDesc[i].szName, pRDI->szExtraRom)) {	// Extra rom
-					nExtraRomLen = pDataRomDesc[i].nLen;
-				}
-			}
-		}
-		if ((nExtraRomLen > 0) && (nExtraRomLen < nRomLen)) {
-			SekMapMemory(Neo68KROMActive + (nRomLen - nExtraRomLen), 0x900000, 0x900000 + (nExtraRomLen - 1), MAP_ROM);
-		}
-	}
 
 	ZetClose();
 	SekClose();

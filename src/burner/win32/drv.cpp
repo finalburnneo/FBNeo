@@ -8,7 +8,7 @@ TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = {
 	{ _T("") },
 	{ _T("") },
 	{ _T("") },
-	{ _T("roms/romdata/") },
+	{ _T("") },
 	{ _T("roms/channelf/") },
 	{ _T("roms/ngp/") },
 	{ _T("roms/nes/") },
@@ -70,8 +70,6 @@ static int DoLibInit()					// Do Init of Burn library driver
 {
 	int nRet = 0;
 
-	RomDataInit();
-
 	if (DrvBzipOpen()) {
 		return 1;
 	}
@@ -81,8 +79,6 @@ static int DoLibInit()					// Do Init of Burn library driver
 	}
 
 	nRet = BurnDrvInit();
-
-	RomDataSetFullName();
 
 	BzipClose();
 
@@ -329,8 +325,6 @@ int DrvExit()
 	CDEmuExit();
 
 	BurnExtCartridgeSetupCallback = NULL;
-
-	RomDataExit();
 
 	nBurnDrvActive = ~0U;			// no driver selected
 

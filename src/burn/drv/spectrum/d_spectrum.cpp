@@ -42228,7 +42228,7 @@ struct BurnDriver BurnSpecBombbot = {
 // Boriel Runner (48K) (HB)
 
 static struct BurnRomInfo SpecBorielrunRomDesc[] = {
-	{ "Boriel Runner 48K (2023)(briefer).tap", 30251, 0xc58a6829, BRF_ESS | BRF_PRG },
+	{ "Boriel Runner v1.1 48K (2023)(briefer).tap", 30250, 0xbbab58ff, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBorielrun, SpecBorielrun, Spectrum)
@@ -42236,7 +42236,7 @@ STD_ROM_FN(SpecBorielrun)
 
 struct BurnDriver BurnSpecBorielrun = {
 	"spec_borielrun", NULL, "spec_spectrum", NULL, "2023",
-	"Boriel Runner (48K) (HB)\0", NULL, "briefer", "ZX Spectrum",
+	"Boriel Runner (48K) (HB, v1.1)\0", NULL, "briefer", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
 	SpectrumGetZipName, SpecBorielrunRomInfo, SpecBorielrunRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,

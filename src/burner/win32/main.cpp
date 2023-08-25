@@ -1087,7 +1087,7 @@ int ProcessCmdLine()
 							argv -= nIndex;	// Returns the first digit of a string
 
 							while (argv[0] != '\0') {
-								memset(szDat, '\0', MAX_PATH * sizeof(TCHAR));
+								memset(szDat, _T('\0'), MAX_PATH * sizeof(TCHAR));
 								if (_tcsstr(argv, _T(".dat"))) {
 									_stprintf(szDat, _T("%s%s/%s"), szAppIpsPath, BurnDrvGetText(DRV_NAME), argv);
 								} else {
@@ -1097,7 +1097,7 @@ int ProcessCmdLine()
 								fp = _tfopen(szDat, _T("r"));
 								if (fp) {	// ips dat exists
 									fclose(fp);
-									memset(szDatList[nList], '\0', MAX_PATH * sizeof(TCHAR));
+									memset(szDatList[nList], _T('\0'), MAX_PATH * sizeof(TCHAR));
 									if (_tcsstr(argv, _T(".dat"))) {
 										_stprintf(szDatList[nList++], _T("%s"), argv);
 									} else {
@@ -1203,6 +1203,7 @@ static void CreateSupportFolders()
 		{_T("roms/fds/")},
 		{_T("roms/ngp/")},
 		{_T("roms/channelf/")},
+		{_T("roms/romdata/")},
 		{_T("\0")} // END of list
 	};
 
@@ -1248,6 +1249,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("config/ips")},
 		{_T("config/localisation")},
 		{_T("config/presets")},
+		{_T("config/romdata")},
 		{_T("recordings")},
 		{_T("roms")},
 		{_T("savestates")},

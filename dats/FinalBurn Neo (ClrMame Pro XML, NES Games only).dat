@@ -636,6 +636,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="akairingo">
+		<comment>Homebrew</comment>
+		<description>Akai Ringo to Midori no Inko (HB)</description>
+		<year>2023</year>
+		<manufacturer>Okunyon</manufacturer>
+		<rom name="Akai Ringo to Midori no Inko (2023)(Okunyon).nes" size="40976" crc="4a2ae602"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="akira">
 		<comment>Hack</comment>
 		<description>Akira (Hack, T-Eng)</description>
@@ -7519,6 +7528,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="haraforce">
+		<comment>Homebrew</comment>
+		<description>HaraForce (HB, v1.00)</description>
+		<year>2022</year>
+		<manufacturer>Impact Soft</manufacturer>
+		<rom name="HaraForce v1.00 (2022)(Impact Soft).nes" size="73744" crc="7a6faca7"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="haratylerhg">
 		<comment>Homebrew</comment>
 		<description>Haratyler HG (HB, v1.10)</description>
@@ -13805,6 +13823,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="revgems">
+		<comment>Homebrew</comment>
+		<description>Revolving Gems (HB)</description>
+		<year>2023</year>
+		<manufacturer>Kyoske Maeda</manufacturer>
+		<rom name="Revolving Gems (2023)(Kyoske Maeda).nes" size="65552" crc="a159af5a"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="rickrolled">
 		<comment>Demo, Homebrew</comment>
 		<description>Rick Rolled! (HB, Tech-Demo)</description>
@@ -17664,10 +17691,10 @@
 	</game>
 	<game name="touhourououmu">
 		<comment>Homebrew</comment>
-		<description>Touhou Rououmu - Perfect Cherry Blossom (HB, v0.71)</description>
-		<year>2019</year>
-		<manufacturer>takahirox</manufacturer>
-		<rom name="TouhouRououmu (HB).nes" size="524304" crc="0f240b9c"/>
+		<description>Touhou Rououmu - Perfect Cherry Blossom (HB, v1.00a)</description>
+		<year>2023</year>
+		<manufacturer>Kyoske Maeda</manufacturer>
+		<rom name="Touhou Rououmu v1.00a (2023)(Kyoske Maeda).nes" size="524304" crc="843a8cf8"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

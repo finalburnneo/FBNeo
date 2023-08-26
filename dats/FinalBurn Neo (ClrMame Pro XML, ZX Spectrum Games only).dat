@@ -2863,10 +2863,10 @@
 	</game>
 	<game name="borielrun" romof="spectrum">
 		<comment>Homebrew</comment>
-		<description>Boriel Runner (48K) (HB)</description>
+		<description>Boriel Runner (48K) (HB, v1.1)</description>
 		<year>2023</year>
 		<manufacturer>briefer</manufacturer>
-		<rom name="Boriel Runner 48K (2023)(briefer).tap" size="30251" crc="c58a6829"/>
+		<rom name="Boriel Runner v1.1 48K (2023)(briefer).tap" size="30250" crc="bbab58ff"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

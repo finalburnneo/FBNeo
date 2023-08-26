@@ -25362,6 +25362,35 @@ struct BurnDriver BurnDrvngmontst = {
 	0x1000,	304, 224, 4, 3
 };
 
+// 240p Test Suite
+// https://artemiourbina.itch.io/240p-test-suite
+
+static struct BurnRomInfo testsuite240pRomDesc[] = {
+	{ "2501-p1.p1",    0x100000, 0x69196380, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "2501-s1.s1",    0x020000, 0x5023f1ee, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "2501-c1.c1",    0x100000, 0x1df22c5b, 3 | BRF_GRA },           //  2 Sprite data
+	{ "2501-c2.c2",    0x100000, 0x68fbb87d, 3 | BRF_GRA },           //  3
+
+	{ "2501-m1.m1",    0x010000, 0x25058131, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "2501-v1.v1",    0x080000, 0x74730639, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(testsuite240p, testsuite240p, neogeo)
+STD_ROM_FN(testsuite240p)
+
+struct BurnDriver BurnDrvtestsuite240p = {
+	"testsuite240p", NULL, "neogeo", NULL, "2023",
+	"240p Test Suite (v1.0)\0", NULL, "Artemio", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, testsuite240pRomInfo, testsuite240pRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Xeno Crisis (NGM-BB01 ~ NGH-BB01)
 /* MVS AND AES VERSION */
 

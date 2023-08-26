@@ -1045,6 +1045,63 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 		}
 
+		case MENU_LOAD_ROMDATA: {
+			if (bDrvOkay) break;
+
+			if (NULL == pDataRomDesc) {
+				TCHAR szFilter[100] = { 0 };
+				_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
+				memcpy(szFilter + _tcslen(szFilter), _T(" (*.dat)\0*.dat\0\0"), 16 * sizeof(TCHAR));
+
+				memset(&ofn, 0, sizeof(OPENFILENAME));
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = hScrnWnd;
+				ofn.lpstrFilter = szFilter;
+				ofn.lpstrFile = szChoice;
+				ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
+				ofn.lpstrInitialDir = _T(".\\config\\romdata\\");
+				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
+				ofn.lpstrDefExt = _T("dat");
+
+				BOOL nOpenDlg = GetOpenFileName(&ofn);
+
+				if (0 == nOpenDlg) break;
+
+				SplashDestroy(1);
+				StopReplay();
+
+				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+
+				bLoading = 1;
+				AudSoundStop();			// Stop while the dialog is active or we're loading ROMs
+
+				char* szDrvName = RomdataGetDrvName(szChoice);
+				INT32 nGame = BurnDrvGetIndex(szDrvName);
+
+				if ((NULL == szDrvName) || (-1 == nGame)) {
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
+					FBAPopupDisplay(PUF_TYPE_WARNING);
+
+					bLoading = 0;
+					break;
+				}
+
+//				DrvExit();
+				DrvInit(nGame, true);	// Init the game driver
+				MenuEnableItems();
+				bAltPause = 0;
+				AudSoundPlay();			// Restart sound
+				bLoading = 0;
+				if (bVidAutoSwitchFull) {
+					nVidFullscreen = 1;
+					POST_INITIALISE_MESSAGE;
+				}
+
+				POST_INITIALISE_MESSAGE;
+				break;
+			}
+		}
+
 		case MENU_PREVIOUSGAMES1:
 		case MENU_PREVIOUSGAMES2:
 		case MENU_PREVIOUSGAMES3:
@@ -1183,6 +1240,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				VidExit();
 			}
 			if (bDrvOkay) {
+				memset(szChoice, _T('\0'), MAX_PATH * sizeof(TCHAR));
+
 				StopReplay();
 #ifdef INCLUDE_AVI_RECORDING
 				AviStop();

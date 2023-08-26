@@ -3565,6 +3565,12 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_lockon.cpp">
       <Filter>Burn\drv\pre90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burner\win32\romdata.cpp">
+      <Filter>burner\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\taito\d_superqix.cpp">
+      <Filter>burn\drv\taito</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">

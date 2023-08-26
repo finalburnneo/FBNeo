@@ -45,9 +45,9 @@ void BurnerDoGameListExLocalisation()
 		// Allocate arrays to read the file into
 		for (int i = 0; i < MAX_LSTEX_GAMES; i++) {
 			szLongNamesExArray[i] = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
-			szShortNamesArray[i]  = (TCHAR*)malloc( 33               * sizeof(TCHAR));
+			szShortNamesArray[i]  = (TCHAR*)malloc( 100              * sizeof(TCHAR));
 			memset(szLongNamesExArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
-			memset(szShortNamesArray[i],  _T('\0'), 33               * sizeof(TCHAR));
+			memset(szShortNamesArray[i],  _T('\0'), 100              * sizeof(TCHAR));
 		}
 
 		char szTemp[MAX_LST_LINE_LEN];
@@ -137,9 +137,9 @@ void BurnerDoGameListLocalisation()
 		// Allocate arrays to read the file into
 		for (int i = 0; i < MAX_LST_GAMES; i++) {
 			szLongNamesArray[i] = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
-			szShortNamesArray[i] = (TCHAR*)malloc(33 * sizeof(TCHAR));
+			szShortNamesArray[i] = (TCHAR*)malloc(100 * sizeof(TCHAR));
 			memset(szLongNamesArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
-			memset(szShortNamesArray[i], _T('\0'), 33 * sizeof(TCHAR));
+			memset(szShortNamesArray[i], _T('\0'), 100 * sizeof(TCHAR));
 		}
 
 		char szTemp[MAX_LST_LINE_LEN];

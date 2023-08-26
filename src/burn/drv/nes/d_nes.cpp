@@ -8151,6 +8151,29 @@ static void mapper11_map()
 	mapper_map_chr( 8, 0, mapper_regs[0] >> 4);
 }
 
+// --[ mapper 471: haratyler, haraforce
+static void mapper471_write(UINT16 address, UINT8 data)
+{
+	if (address & 0x8000) {
+		mapper_regs[0] = address & 1;
+
+		M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+
+		mapper_map();
+	}
+}
+
+static void mapper471_map()
+{
+	mapper_map_prg(32, 0, mapper_regs[0] & 0x1);
+	mapper_map_chr( 8, 0, mapper_regs[0] & 0x1);
+}
+
+static void mapper471_scanline()
+{
+	mapper_irq(0);
+}
+
 // --[ mapper 152: (Arkanoid II, Pocket Zaurus: Juu Ouken no Nazo, ...)
 static void mapper152_write(UINT16 address, UINT8 data)
 {
@@ -9110,7 +9133,7 @@ static INT32 mapper_init(INT32 mappernum)
 		}
 
 		case 38: {
-			cart_exp_write = mapper38_write; // 8000 - ffff
+			cart_exp_write = mapper38_write; // 6000 - 7fff
 			mapper_map   = mapper38_map;
 		    mapper_map();
 			retval = 0;
@@ -9147,6 +9170,16 @@ static INT32 mapper_init(INT32 mappernum)
 			mapper_map   = mapper112_map;
 			mapper_map_prg(8, 2, -2);
 			mapper_map_prg(8, 3, -1);
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 471: {
+			mapper_write = mapper471_write; // 8000 - ffff
+			psg_area_write = mapper471_write; // 4020 - 5fff (need this to get rid of unmapped debug spam)
+			mapper_map   = mapper471_map;
+			mapper_scanline = mapper471_scanline;
 		    mapper_map();
 			retval = 0;
 			break;
@@ -22721,7 +22754,7 @@ struct BurnDriver BurnDrvnes_fullquietrv = {
 
 // HaraForce (HB, v1.00)
 static struct BurnRomInfo nes_haraforceRomDesc[] = {
-	{ "HaraForce v1.00 (2022)(Impact Soft).nes",          73744, 0x9fce66e0, BRF_ESS | BRF_PRG },
+	{ "HaraForce v1.00 (2022)(Impact Soft).nes",          73744, 0x7a6faca7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_haraforce)

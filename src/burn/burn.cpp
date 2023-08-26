@@ -6,6 +6,10 @@
 //#include "burn_sound.h" // included in burnint.h
 #include "driverlist.h"
 
+#if defined(BUILD_SDL) || defined(BUILD_SDL2)
+#include <wchar.h>
+#endif
+
 #ifndef __LIBRETRO__
 // filler function, used if the application is not printing debug messages
 static INT32 __cdecl BurnbprintfFiller(INT32, TCHAR* , ...) { return 0; }
@@ -542,7 +546,7 @@ extern "C" wchar_t* BurnDrvGetFullNameW(UINT32 i)
 	return pDriver[i]->szFullNameW;
 }
 
-extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, UINT32 i)
+extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i)
 {
 	if ((-1 == i) || (NULL == szName)) return -1;
 
@@ -562,7 +566,7 @@ extern "C" INT32 BurnDrvGetZipName(char** pszName, UINT32 i)
 	return BurnGetZipName(pszName, i);											// Forward to general function
 }
 
-extern "C" INT32 BurnDrvSetZipName(char* szName, UINT32 i)
+extern "C" INT32 BurnDrvSetZipName(char* szName, INT32 i)
 {
 	if ((NULL == szName) || (-1 == i)) return -1;
 

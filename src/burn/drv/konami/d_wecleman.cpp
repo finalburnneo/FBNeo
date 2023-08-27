@@ -1,6 +1,10 @@
 // FinalBurn Neo Konami Hot Chase and WEC Le Mans 24 driver module
 // Based on MAME driver by Luca Elia
 
+// TOFIX -TODINK-
+// weird clicks when song changes.  if k007232Reset() isn't called on soundlatch==0,
+// game repeats sounds like madness.  uhoh.
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"

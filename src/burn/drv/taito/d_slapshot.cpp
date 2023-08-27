@@ -15,6 +15,8 @@ static TaitoF2SpriteBufferUpdate TaitoF2SpriteBufferFunction;
 static INT32 CheckTimeKeeper = 0; // for gun auto-calibration
 static INT32 Opwolf3mode = 0;
 
+static INT32 nCyclesExtra;
+
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
 #endif
@@ -285,17 +287,19 @@ static INT32 SlapshotDoReset()
 
 	CheckTimeKeeper = 1;
 
+	nCyclesExtra = 0;
+
 	return 0;
 }
 
-UINT8 __fastcall Slapshot68KReadByte(UINT32 a)
+static UINT8 __fastcall Slapshot68KReadByte(UINT32 a)
 {
 	if (a >= 0xa00000 && a <= 0xa03fff) {
-		return TimeKeeperRead((a - 0xa00000) >> 1);
+		return TimeKeeperRead((a & 0x3fff) >> 1);
 	}
 	
 	if (a >= 0xc00000 && a <= 0xc0000f) {
-		return TC0640FIORead((a - 0xc00000) >> 1);
+		return TC0640FIORead((a & 0x0f) >> 1);
 	}
 	
 	if (a >= 0xc00020 && a <= 0xc0002f) {
@@ -303,7 +307,7 @@ UINT8 __fastcall Slapshot68KReadByte(UINT32 a)
 		
 		if (a == 0xc00026) return (TC0640FIOInput[2] & 0xef) | (TaitoDip[0] & 0x10);
 		
-		return TC0640FIORead((a - 0xc00020) >> 1);
+		return TC0640FIORead((a & 0x0f) >> 1);
 	}
 	
 	switch (a) {
@@ -315,19 +319,19 @@ UINT8 __fastcall Slapshot68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Slapshot68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Slapshot68KWriteByte(UINT32 a, UINT8 d)
 {
 	if (a <= 0x0fffff) return;
 	
 	if (a >= 0xa00000 && a <= 0xa03fff) {
-		TimeKeeperWrite((a - 0xa00000) >> 1, d);
+		TimeKeeperWrite((a & 0x3fff) >> 1, d);
 		return;
 	}
 
 	TC0360PRIHalfWordWrite_Map(0xb00000)
 
 	if (a >= 0xc00000 && a <= 0xc0000f) {
-		TC0640FIOWrite((a - 0xc00000) >> 1, d);
+		TC0640FIOWrite((a & 0x0f) >> 1, d);
 		return;
 	}
 	
@@ -352,7 +356,7 @@ void __fastcall Slapshot68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Slapshot68KReadWord(UINT32 a)
+static UINT16 __fastcall Slapshot68KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -363,7 +367,7 @@ UINT16 __fastcall Slapshot68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Slapshot68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Slapshot68KWriteWord(UINT32 a, UINT16 d)
 {
 	if (a < 0x10000) return; // silly bad writes to rom area
 
@@ -372,7 +376,7 @@ void __fastcall Slapshot68KWriteWord(UINT32 a, UINT16 d)
 	TC0480SCPCtrlWordWrite_Map(0x830000)
 	
 	if (a >= 0xc00000 && a <= 0xc0000f) {
-		TC0640FIOWrite((a - 0xc00000) >> 1, d);
+		TC0640FIOWrite((a & 0x0f) >> 1, d);
 		return;
 	}
 	
@@ -383,7 +387,7 @@ void __fastcall Slapshot68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Opwolf3Gun68KReadByte(UINT32 a)
+static UINT8 __fastcall Opwolf3Gun68KReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xe00000: {
@@ -418,7 +422,7 @@ UINT8 __fastcall Opwolf3Gun68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Opwolf3Gun68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Opwolf3Gun68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xe00000:
@@ -435,7 +439,7 @@ void __fastcall Opwolf3Gun68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Opwolf3Gun68KReadWord(UINT32 a)
+static UINT16 __fastcall Opwolf3Gun68KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -446,7 +450,7 @@ UINT16 __fastcall Opwolf3Gun68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Opwolf3Gun68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Opwolf3Gun68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		default: {
@@ -455,7 +459,13 @@ void __fastcall Opwolf3Gun68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall SlapshotZ80Read(UINT16 a)
+static void bank_switch()
+{
+	ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+	ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+}
+
+static UINT8 __fastcall SlapshotZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe000: {
@@ -474,7 +484,7 @@ UINT8 __fastcall SlapshotZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall SlapshotZ80Write(UINT16 a, UINT8 d)
+static void __fastcall SlapshotZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xe000: {
@@ -509,8 +519,7 @@ void __fastcall SlapshotZ80Write(UINT16 a, UINT8 d)
 		
 		case 0xf200: {
 			TaitoZ80Bank = (d - 1) & 7;
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+			bank_switch();
 			return;
 		}
 		
@@ -873,8 +882,6 @@ static void Opwolf3Defaults()
 
 static INT32 SlapshotFrame()
 {
-	INT32 nInterleave = 100;
-
 	if (TaitoReset) SlapshotDoReset();
 
 	if (CheckTimeKeeper) {
@@ -885,45 +892,40 @@ static INT32 SlapshotFrame()
 		}
 	}
 
-
 	TaitoMakeInputsFunction();
-	
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
+
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[2] = { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1]};
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+
 	if ((GetCurrentFrame() % 60) == 0) TimeKeeperTick();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000 #1
-		nCurrentCPU = 0;
 		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+		CPU_RUN(0, Sek);
 		if (i == 83) { SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); }
 		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
-		
+
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 	}
-	
-	ZetOpen(0);
-	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+	// 1 - timer (BurnTimer keeps track)
+
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
-	
+
 	TaitoF2HandleSpriteBuffering();
-	
+
 	if (pBurnDraw) BurnDrvRedraw();
-	
+
 	TaitoF2SpriteBufferFunction();
 
 	return 0;
@@ -954,19 +956,17 @@ static INT32 SlapshotScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2610Scan(nAction, pnMin);
-		
-		SCAN_VAR(TC0640FIOInput);
+
 		SCAN_VAR(TaitoZ80Bank);
-		SCAN_VAR(nTaitoCyclesDone);
-		SCAN_VAR(nTaitoCyclesSegment);
 		SCAN_VAR(TaitoF2SpriteBank);
 		SCAN_VAR(TaitoF2SpriteBankBuffered);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 	
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-		ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+		bank_switch();
 		ZetClose();
 	}
 	

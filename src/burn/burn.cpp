@@ -118,10 +118,12 @@ extern "C" INT32 BurnLibInit()
 					strcpy(pszShortName[i], pDriver[i]->szShortName);
 					pDriver[i]->szShortName = pszShortName[i];
 				}
+#if defined (_UNICODE)
 				if (NULL != pDriver[i]->szFullNameW) {
 					wcscpy(pszFullName[i], pDriver[i]->szFullNameW);
 				}
 				pDriver[i]->szFullNameW = pszFullName[i];
+#endif
 			}
 		}
 	}
@@ -546,8 +548,10 @@ extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, UINT32 i)
 {
 	if ((-1 == i) || (NULL == szName)) return -1;
 
+#if defined (_UNICODE)
 	memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
 	wcscpy(pszFullName[i], szName);
+#endif
 
 	return 0;
 }

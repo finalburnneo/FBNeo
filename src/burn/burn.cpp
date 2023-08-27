@@ -509,7 +509,7 @@ void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
 	for (UINT32 i = 0; i < nNumGames; i++) {
 		if (0 == strcmp(szName, szShortNames)) {
 //			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
-			memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+			memset(pszFullName[nBurnDrvActive], L'\0', MAX_PATH * sizeof(wchar_t));
 			_tcscpy(pszFullName[nBurnDrvActive], szLongName);
 			return;
 		}
@@ -544,7 +544,7 @@ extern "C" wchar_t* BurnDrvGetFullNameW(UINT32 i)
 	return pDriver[i]->szFullNameW;
 }
 
-extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, UINT32 i)
+extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i)
 {
 	if ((-1 == i) || (NULL == szName)) return -1;
 
@@ -566,7 +566,7 @@ extern "C" INT32 BurnDrvGetZipName(char** pszName, UINT32 i)
 	return BurnGetZipName(pszName, i);											// Forward to general function
 }
 
-extern "C" INT32 BurnDrvSetZipName(char* szName, UINT32 i)
+extern "C" INT32 BurnDrvSetZipName(char* szName, INT32 i)
 {
 	if ((NULL == szName) || (-1 == i)) return -1;
 

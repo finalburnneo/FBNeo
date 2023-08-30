@@ -172,7 +172,7 @@ struct RomDataInfo {
 extern RomDataInfo* pRDI;
 extern BurnRomInfo* pDataRomDesc;
 
-char* RomdataGetDrvName(TCHAR* szFile);
+char* RomdataGetDrvName();
 void RomDataSetFullName();
 void RomDataInit();
 void RomDataExit();

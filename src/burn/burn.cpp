@@ -523,7 +523,7 @@ extern "C" INT32 BurnDrvGetIndex(char* szName)
 
 	for (INT32 i = 0; i < nBurnDrvCount; i++) {
 		if (0 == strcmp(szName, pDriver[i]->szShortName)) {
-			nBurnDrvActive = i;
+//			nBurnDrvActive = i;
 			return i;
 		}
 	}

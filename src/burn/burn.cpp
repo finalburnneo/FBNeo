@@ -108,11 +108,11 @@ extern "C" INT32 BurnLibInit()
 
 		if ((NULL != pszShortName) && (NULL != pszFullName)) {
 			for (UINT32 i = 0; i < nBurnDrvCount; i++) {
-				pszShortName[i] = (char*)malloc(100 * sizeof(char));
-				pszFullName[i] = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
+				pszShortName[i] = (char*)malloc(100);
+				pszFullName[i] = (wchar_t*)malloc(MAX_PATH);
 
-				memset(pszShortName[i], '\0', 100 * sizeof(char));
-				memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+				memset(pszShortName[i], '\0', 100);
+				memset(pszFullName[i], '\0', MAX_PATH);
 
 				if (NULL != pszShortName[i]) {
 					strcpy(pszShortName[i], pDriver[i]->szShortName);
@@ -491,7 +491,7 @@ void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 		nBurnDrvActive = i;
 		if (!strcmp(szName, pDriver[i]->szShortName)) {
 //			pDriver[i]->szFullNameW = szLongName;
-			memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+			memset(pszFullName[i], '\0', MAX_PATH);
 			_tcscpy(pszFullName[i], szLongName);
 		}
 	}
@@ -509,7 +509,7 @@ void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
 	for (UINT32 i = 0; i < nNumGames; i++) {
 		if (0 == strcmp(szName, szShortNames)) {
 //			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
-			memset(pszFullName[nBurnDrvActive], L'\0', MAX_PATH * sizeof(wchar_t));
+			memset(pszFullName[nBurnDrvActive], '\0', MAX_PATH);
 			_tcscpy(pszFullName[nBurnDrvActive], szLongName);
 			return;
 		}
@@ -549,7 +549,7 @@ extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i)
 	if ((-1 == i) || (NULL == szName)) return -1;
 
 #if defined (_UNICODE)
-	memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+	memset(pszFullName[i], '\0', MAX_PATH);
 	wcscpy(pszFullName[i], szName);
 #endif
 

@@ -108,8 +108,8 @@ static INT32 LoadRomdata()
 	TCHAR szBuf[MAX_PATH] = { 0 };
 	TCHAR* pszBuf = NULL, * pszLabel = NULL, * pszInfo = NULL;
 
-	memset(RDI.szExtraRom, '\0', MAX_PATH * sizeof(char));
-	memset(RDI.szFullName, L'\0', MAX_PATH * sizeof(wchar_t));
+	memset(RDI.szExtraRom, '\0', sizeof(RDI.szExtraRom));
+	memset(RDI.szFullName, '\0', sizeof(RDI.szFullName));
 
 	while (!feof(fp)) {
 		if (_fgetts(szBuf, MAX_PATH, fp) != NULL) {
@@ -363,7 +363,7 @@ void RomDataSetFullName()
 
 	if (-1 != RDI.nDriverId) {
 		wchar_t* szOldName = BurnDrvGetFullNameW(RDI.nDriverId);
-		memset(RDI.szOldName, L'\0', MAX_PATH * sizeof(wchar_t));
+		memset(RDI.szOldName, '\0', sizeof(RDI.szOldName));
 
 		if (0 != wcscmp(szOldName, RDI.szOldName)) {
 			wcscpy(RDI.szOldName, szOldName);

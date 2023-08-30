@@ -1036,7 +1036,7 @@ int ProcessCmdLine()
 			// Command: lua file
 			FBA_LoadLuaCode(TCHARToANSI(szName, NULL, 0));
 			//bVidAutoSwitchFullDisable = true;
-		} else if (_tcscmp(szName,_T("-romdata")) == 0) {	// cmdline for romdata
+		} else if (_tcscmp(szName, _T("-romdata")) == 0) {	// cmdline for romdata
 			TCHAR* szPoint = NULL;
 			if (NULL != (szPoint = _tcsstr(szCmdLine, _T("-romdata")))) {
 				szPoint += _tcslen(_T("-romdata"));
@@ -1055,7 +1055,7 @@ int ProcessCmdLine()
 
 				TCHAR* szDatName = _tcstok(szPoint, _T("\""));
 
-				memset(szRomdataName, _T('\0'), MAX_PATH * sizeof(TCHAR));
+				memset(szRomdataName, '\0', sizeof(szRomdataName));
 				_stprintf(szRomdataName, _T("%s%s%s"), _T(".\\config\\romdata\\"), szDatName, _T(".dat"));
 
 				szDatName = NULL;
@@ -1106,7 +1106,7 @@ int ProcessCmdLine()
 						TCHAR* argv = _tcstok(szIps, _T(","));
 
 						if (argv) {	// Argv may be null
-							memset(szTmp, _T('\0'), 1024 * sizeof(TCHAR));
+							memset(szTmp, '\0', sizeof(szTmp));
 							_tcscpy(szTmp, argv);
 							argv = szTmp;
 						}
@@ -1126,7 +1126,7 @@ int ProcessCmdLine()
 							argv -= nIndex;	// Returns the first digit of a string
 
 							while (argv[0] != _T('\0')) {
-								memset(szDat, _T('\0'), MAX_PATH * sizeof(TCHAR));
+								memset(szDat, '\0', sizeof(szDat));
 								if (_tcsstr(argv, _T(".dat"))) {
 									_stprintf(szDat, _T("%s%s/%s"), szAppIpsPath, BurnDrvGetText(DRV_NAME), argv);
 								} else {
@@ -1136,7 +1136,7 @@ int ProcessCmdLine()
 								fp = _tfopen(szDat, _T("r"));
 								if (fp) {	// ips dat exists
 									fclose(fp);
-									memset(szDatList[nList], _T('\0'), MAX_PATH * sizeof(TCHAR));
+									memset(szDatList[nList], '\0', sizeof(szDatList[nList]));
 									if (_tcsstr(argv, _T(".dat"))) {
 										_stprintf(szDatList[nList++], _T("%s"), argv);
 									} else {

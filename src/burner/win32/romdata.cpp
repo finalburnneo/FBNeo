@@ -14,8 +14,11 @@ static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 	static TCHAR* prev_str = NULL;
 	TCHAR* token = NULL;
 
-	if (!s) s = prev_str;
-	if (!prev_str) return NULL;
+	if (!s) {
+		if (!prev_str) return NULL;
+
+		s = prev_str;
+	}
 
 	s += _tcsspn(s, delims);
 

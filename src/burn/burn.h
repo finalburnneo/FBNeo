@@ -155,6 +155,30 @@ struct BurnHDDInfo {
 	UINT32 nCrc;
 };
 
+// ---------------------------------------------------------------------------
+
+// Rom Data
+
+struct RomDataInfo {
+	char szZipName[MAX_PATH];
+	char szDrvName[MAX_PATH];
+	char szExtraRom[MAX_PATH];
+	wchar_t szOldName[MAX_PATH];
+	wchar_t szFullName[MAX_PATH];
+	INT32 nDriverId;
+	INT32 nDescCount;
+};
+
+extern RomDataInfo* pRDI;
+extern BurnRomInfo* pDataRomDesc;
+
+char* RomdataGetDrvName(TCHAR* szFile);
+void RomDataSetFullName();
+void RomDataInit();
+void RomDataExit();
+
+// ---------------------------------------------------------------------------
+
 // Inputs
 
 #define BIT_DIGITAL			(1)
@@ -383,8 +407,12 @@ void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize);
 
 TCHAR* BurnDrvGetText(UINT32 i);
 char* BurnDrvGetTextA(UINT32 i);
+wchar_t* BurnDrvGetFullNameW(UINT32 i);
 
+INT32 BurnDrvGetIndex(char* szName);
+INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i);
 INT32 BurnDrvGetZipName(char** pszName, UINT32 i);
+INT32 BurnDrvSetZipName(char* szName, INT32 i);
 INT32 BurnDrvGetRomInfo(struct BurnRomInfo *pri, UINT32 i);
 INT32 BurnDrvGetRomName(char** pszName, UINT32 i, INT32 nAka);
 INT32 BurnDrvGetInputInfo(struct BurnInputInfo* pii, UINT32 i);

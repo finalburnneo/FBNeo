@@ -83,6 +83,7 @@ BEGIN
 	IDS_DISK_ALL_CARD			"All Memory Card Files"
 	IDS_DISK_ALL_DAT			"All Dat Files"
 	IDS_DISK_TEXT				"Text Files"
+	IDS_DISK_FILE_ROMDATA		"%s Romdata Files"
 
 	IDS_DISK_SAVEREPORT			"Save system information report"
 

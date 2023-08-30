@@ -49,9 +49,10 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
 
-static UINT8 hold_coin[2];
-
+static HoldCoin<4> hold_coin;
 static INT16 Analog[2];
+
+static INT32 nCyclesExtra;
 
 static INT32 is_cyclemb = 0;
 
@@ -62,6 +63,7 @@ static struct BurnInputInfo CyclembInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	A("P1 Dial", 		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy6 + 6,	"p2 coin"	}, // fake
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"	},
 	A("P2 Dial", 		BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"	),
@@ -84,6 +86,7 @@ static struct BurnInputInfo SkydestInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 fire 2"	},
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy6 + 6,	"p2 coin"	}, // fake
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
 	{"P2 Up",			BIT_DIGITAL,	DrvJoy5 + 0,	"p2 up"		},
 	{"P2 Down",			BIT_DIGITAL,	DrvJoy5 + 4,	"p2 down"	},
@@ -102,9 +105,9 @@ STDINPUTINFO(Skydest)
 
 static struct BurnDIPInfo CyclembDIPList[]=
 {
-	DIP_OFFSET(0x08)
+	DIP_OFFSET(0x09)
 	{0x00, 0xff, 0xff, 0x0a, NULL							},
-	{0x01, 0xff, 0xff, 0x0f, NULL							},
+	{0x01, 0xff, 0xff, 0x1f, NULL							},
 	{0x02, 0xff, 0xff, 0x00, NULL							},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty (Stage 1-3)"		},
@@ -166,7 +169,7 @@ STDDIPINFO(Cyclemb)
 
 static struct BurnDIPInfo SkydestDIPList[]=
 {
-	DIP_OFFSET(0x10)
+	DIP_OFFSET(0x11)
 	{0x00, 0xff, 0xff, 0x17, NULL							},
 	{0x01, 0xff, 0xff, 0x1f, NULL							},
 	{0x02, 0xff, 0xff, 0x08, NULL							},
@@ -532,7 +535,9 @@ static INT32 DrvDoReset()
 
 	display_en = 1;
 
-	memset (hold_coin, 0, sizeof(hold_coin));
+	hold_coin.reset();
+
+	nCyclesExtra = 0;
 
 	HiscoreReset();
 
@@ -972,33 +977,20 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-        INT32 previous_coin = DrvInputs[5] & 0x80;
-
 		memset(DrvInputs, 0, sizeof(DrvInputs));
 
 		for (INT32 i = 0; i < 8; i++) {
-			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i; // real coin (1<<7)
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
-			DrvInputs[5] ^= (DrvJoy6[i] & 1) << i; // coin (1<<7)
+			DrvInputs[5] ^= (DrvJoy6[i] & 1) << i; // fake coins (1<<7), (1<<6)
 		}
 
-		// silly hold coin logic
-        for (INT32 i = 0; i < 1; i++) {
-            if ((previous_coin != (DrvInputs[5]&0x80)) && DrvJoy6[7] && !hold_coin[i]) {
-                hold_coin[i] = 2 + 1; // frames to hold coin + 1
-            }
-
-            if (hold_coin[i]) {
-                hold_coin[i]--;
-                DrvInputs[0] |= 0x80;
-            }
-            if (!hold_coin[i]) {
-                DrvInputs[0] &= ~0x80;
-			}
-		}
+		hold_coin.check(0, DrvInputs[5], 1<<7, 2);
+		hold_coin.check(1, DrvInputs[5], 1<<6, 2);
+		DrvInputs[0] |= (DrvInputs[5] & 0x80) | ((DrvInputs[5] & 0x40) << 1);
 
 		if (is_cyclemb) {
 			BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
@@ -1009,7 +1001,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 6000000 / 60, 3000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1028,10 +1020,10 @@ static INT32 DrvFrame()
 		}
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
-		ZetOpen(1);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
 
 	return 0;
@@ -1057,6 +1049,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 		if (is_cyclemb) BurnTrackballScan();
 
+		hold_coin.scan();
+
 		SCAN_VAR(mcu_rxd);
 		SCAN_VAR(mcu_rst);
 		SCAN_VAR(mcu_txd);
@@ -1075,6 +1069,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(dial_mabou);
 			SCAN_VAR(dial_reverse);
 		}
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE)

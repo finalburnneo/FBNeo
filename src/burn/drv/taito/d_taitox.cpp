@@ -1,3 +1,4 @@
+// FB Neo Taito X driver
 // Based on MAME drivers by Howie Cohen, Yochizo
 
 #include "tiles_generic.h"
@@ -7,6 +8,10 @@
 #include "taito_ic.h"
 #include "burn_ym2151.h"
 #include "burn_ym2610.h"
+
+static INT32 is_twinhawk = 0;
+
+static INT32 nCyclesExtra[3];
 
 static struct BurnInputInfo SupermanInputList[]=
 {
@@ -73,9 +78,9 @@ static void TaitoXMakeInputs()
 	TaitoInput[0] = TaitoInput[1] = TaitoInput[2] = 0xff;
 
 	for (INT32 i = 0; i < 8; i++) {
-		TaitoInput[0] -= (TaitoInputPort0[i] & 1) << i;
-		TaitoInput[1] -= (TaitoInputPort1[i] & 1) << i;
-		TaitoInput[2] -= (TaitoInputPort2[i] & 1) << i;
+		TaitoInput[0] ^= (TaitoInputPort0[i] & 1) << i;
+		TaitoInput[1] ^= (TaitoInputPort1[i] & 1) << i;
+		TaitoInput[2] ^= (TaitoInputPort2[i] & 1) << i;
 	}
 
 	if (cchip_active) {
@@ -807,7 +812,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-UINT8 __fastcall TaitoX68KReadByte(UINT32 a)
+static UINT8 __fastcall TaitoX68KReadByte(UINT32 a)
 {
 	if (cchip_active) {
 		CCHIP_READ(0x900000)
@@ -854,7 +859,7 @@ UINT8 __fastcall TaitoX68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall TaitoX68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall TaitoX68KWriteByte(UINT32 a, UINT8 d)
 {
 	if (cchip_active) {
 		CCHIP_WRITE(0x900000)
@@ -912,7 +917,7 @@ void __fastcall TaitoX68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall TaitoX68KReadWord(UINT32 a)
+static UINT16 __fastcall TaitoX68KReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x500000: {
@@ -939,19 +944,18 @@ UINT16 __fastcall TaitoX68KReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall TaitoXZ80Read(UINT16 a)
+static void bank_switch()
+{
+	ZetMapMemory(TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
+}
+
+static UINT8 __fastcall TaitoXZ80Read(UINT16 a)
 {
 	switch (a) {
-		case 0xe000: {
-			return BurnYM2610Read(0);
-		}
-		
-		case 0xe001: {
-			return BurnYM2610Read(1);
-		}
-		
+		case 0xe000:
+		case 0xe001:
 		case 0xe002: {
-			return BurnYM2610Read(2);
+			return BurnYM2610Read(a & 3);
 		}
 		
 		case 0xe201: {
@@ -966,26 +970,14 @@ UINT8 __fastcall TaitoXZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall TaitoXZ80Write(UINT16 a, UINT8 d)
+static void __fastcall TaitoXZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
-		case 0xe000: {
-			BurnYM2610Write(0, d);
-			return;
-		}
-		
-		case 0xe001: {
-			BurnYM2610Write(1, d);
-			return;
-		}
-		
-		case 0xe002: {
-			BurnYM2610Write(2, d);
-			return;
-		}
-		
+		case 0xe000:
+		case 0xe001:
+		case 0xe002:
 		case 0xe003: {
-			BurnYM2610Write(3, d);
+			BurnYM2610Write(a & 3, d);
 			return;
 		}
 		
@@ -1024,8 +1016,7 @@ void __fastcall TaitoXZ80Write(UINT16 a, UINT8 d)
 		
 		case 0xf200: {
 			TaitoZ80Bank = (d - 1) & 3;
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+			bank_switch();
 			return;
 		}
 		
@@ -1035,7 +1026,7 @@ void __fastcall TaitoXZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall TwinhawkZ80Read(UINT16 a)
+static UINT8 __fastcall TwinhawkZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe001: {
@@ -1054,16 +1045,12 @@ UINT8 __fastcall TwinhawkZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall TwinhawkZ80Write(UINT16 a, UINT8 d)
+static void __fastcall TwinhawkZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
-		case 0xe000: {
-			BurnYM2151SelectRegister(d);
-			return;
-		}
-		
+		case 0xe000:
 		case 0xe001: {
-			BurnYM2151WriteRegister(d);
+			BurnYM2151Write(a & 1, d);
 			return;
 		}
 		
@@ -1079,8 +1066,7 @@ void __fastcall TwinhawkZ80Write(UINT16 a, UINT8 d)
 		
 		case 0xf200: {
 			TaitoZ80Bank = (d - 1) & 3;
-			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+			bank_switch();
 			return;
 		}
 		
@@ -1088,6 +1074,17 @@ void __fastcall TwinhawkZ80Write(UINT16 a, UINT8 d)
 			bprintf(PRINT_NORMAL, _T("Z80 Write => %04X, %02X\n"), a, d);
 		}
 	}
+}
+
+static INT32 TaitoXDoReset()
+{
+	TaitoDoReset();
+
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
+
+	HiscoreReset();
+
+	return 0;
 }
 
 static void TaitoXFMIRQHandler(INT32, INT32 nStatus)
@@ -1166,10 +1163,11 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	ZetClose();
 	
 	if (nSoundType == 1) {
-		BurnYM2151Init(4000000);
+		BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 		BurnYM2151SetIrqHandler(&TaitoXYM2151IRQHandler);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
+		BurnTimerAttachZet(4000000);
 	} else {
 		if (nSoundType == 2) {
 			BurnYM2610Init(8000000, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, NULL, 0);
@@ -1190,10 +1188,8 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	if (nScreenHeight == 224) TaitoYOffset = 16;
 	if (nScreenHeight == 240) TaitoYOffset = 8;
 	TaitoIrqLine = 2;
-	
-	TaitoDoReset();
 
-	HiscoreReset();
+	TaitoXDoReset();
 
 	return 0;
 }
@@ -1241,8 +1237,11 @@ static INT32 SupermanInit()
 	
 	nRet = TaitoXInit(0);
 
-	// slight overclock (+1mhz) to get rid of background breaking up (vertical lines)
-	// in the flying level (second loop of attract).
+	// slight overclock (+1mhz) to get rid of background breaking up (vertical black lines)
+	// in the flying level (second loop of attract, when the red steel girders appear).
+	// note1: game should run at 8mhz / 57.43
+	// note2: maybe video needs updating?  otheremu doesn't have this problem
+	//        at 8mhz/57.43
 	nTaitoCyclesTotal[0] = (9000000) / 60;
 
 	cchip_init();
@@ -1262,13 +1261,17 @@ static INT32 TwinhawkInit()
 	TaitoSpriteAXOffsets = SpriteXOffsets;
 	TaitoSpriteAYOffsets = SpriteYOffsets;
 	TaitoNumSpriteA = 0x4000;
-	
+
+	is_twinhawk = 1;
+
 	return TaitoXInit(1);
 }
 
 static INT32 TaitoXExit()
 {
-	return TaitoExit();	
+	is_twinhawk = 0;
+
+	return TaitoExit();
 }
 
 static inline UINT8 pal5bit(UINT8 bits)
@@ -1356,36 +1359,8 @@ static void TaitoXDrawBgSprites()
 			sy = ((sy + 8) & 0xff) - 8;
 
 			sy -= TaitoYOffset;
-			
-			if (sx > 16 && sx < (nScreenWidth - 16) && sy > 16 && sy < (nScreenHeight - 16)) {
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipXY(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					} else {
-						Render16x16Tile_Mask_FlipX(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipY(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					} else {
-						Render16x16Tile_Mask(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					}
-				}
-			} else {
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					} else {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);
-					}
-				}
-			}
+
+			Draw16x16MaskTile(pTransDraw, Code, sx, sy, xFlip, yFlip, Colour, 4, 0, 0, TaitoSpritesA);
 		}
 	}
 }
@@ -1424,49 +1399,18 @@ static void TaitoXDrawSprites()
 		
 		y -= TaitoYOffset - 2;
 
-		if (x > 16 && x < (nScreenWidth - 16) && y > 16 && y < (nScreenHeight - 16)) {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				} else {
-					Render16x16Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				}
-			}
-		} else {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				} else {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, TaitoSpritesA);
-				}
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, Code, x, y, xFlip, yFlip, Colour, 4, 0, 0, TaitoSpritesA);
 	}
-
 }
 
 static INT32 TaitoXDraw()
 {
 	TaitoXCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0x1f0;
-	}
-	
-	TaitoXDrawBgSprites();
-	TaitoXDrawSprites();
+
+	BurnTransferClear(0x1f0);
+
+	if (nBurnLayer & 1) TaitoXDrawBgSprites();
+	if (nSpriteEnable & 1) TaitoXDrawSprites();
 	BurnTransferCopy(TaitoPalette);
 
 	return 0;
@@ -1475,109 +1419,46 @@ static INT32 TaitoXDraw()
 static INT32 TaitoXFrame()
 {
 	INT32 nInterleave = 10;
-	
-	if (TaitoReset) TaitoDoReset();
+	INT32 nCyclesTotal[3] = { nTaitoCyclesTotal[0], nTaitoCyclesTotal[1], 8000000 / 60 /*c-chip*/};
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, nCyclesExtra[2] };
+
+	if (TaitoReset) TaitoXDoReset();
 
 	TaitoXMakeInputs();
-	
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
 
 	SekNewFrame();
 	ZetNewFrame();
-		
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
 
-		nCurrentCPU = 0;
-		SekOpen(nCurrentCPU);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		SekOpen(0);
+		CPU_RUN(0, Sek);
 		if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		nCurrentCPU = 1;
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		if (cchip_active) { // superman
-			cchip_run(8000000 / 60 / nInterleave);
+			CPU_RUN(2, cchip_);
 			if (i == (nInterleave - 1)) cchip_interrupt();
 		}
 	}
-	
-	ZetOpen(0);
-	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// 1 - timer (BurnTimer keeps track)
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+
 	if (pBurnSoundOut) {
-		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
-	}
-	ZetClose();
-	
-	if (pBurnDraw) TaitoXDraw();
-	
-	return 0;
-}
-
-static INT32 TwinhawkFrame()
-{
-	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
-
-	if (TaitoReset) TaitoDoReset();
-
-	TaitoXMakeInputs();
-	
-	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
-
-	SekNewFrame();
-	ZetNewFrame();
-		
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		// Run 68000
-		nCurrentCPU = 0;
-		SekOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 9) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		SekClose();
-		
-		// Run Z80
-		nCurrentCPU = 1;
-		ZetOpen(0);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
-		nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
-		ZetClose();
-		
-		// Render sound segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
+		if (is_twinhawk) {
+			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		} else {
+			BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
-	
-	// Make sure the buffer is entirely filled.
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
-	}
-	
+
 	if (pBurnDraw) TaitoXDraw();
-	
+
 	return 0;
 }
 
@@ -1606,17 +1487,15 @@ static INT32 TaitoXScan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 		if (TaitoNumYM2151) BurnYM2151Scan(nAction, pnMin);
 		
-		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(TaitoSoundLatch);
-		SCAN_VAR(nTaitoCyclesDone);
-		SCAN_VAR(nTaitoCyclesSegment);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 	
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
-		ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
+		bank_switch();
 		ZetClose();
 	}
 	
@@ -1699,7 +1578,7 @@ struct BurnDriver BurnDrvTwinhawk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOX, GBF_VERSHOOT, 0,
 	NULL, TwinhawkRomInfo, TwinhawkRomName, NULL, NULL, NULL, NULL, TwinhawkInputInfo, TwinhawkDIPInfo,
-	TwinhawkInit, TaitoXExit, TwinhawkFrame, TaitoXDraw, TaitoXScan,
+	TwinhawkInit, TaitoXExit, TaitoXFrame, TaitoXDraw, TaitoXScan,
 	NULL, 0x800, 224, 384, 3, 4
 };
 
@@ -1709,7 +1588,7 @@ struct BurnDriver BurnDrvTwinhawku = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOX, GBF_VERSHOOT, 0,
 	NULL, TwinhawkuRomInfo, TwinhawkuRomName, NULL, NULL, NULL, NULL, TwinhawkInputInfo, TwinhawkuDIPInfo,
-	TwinhawkInit, TaitoXExit, TwinhawkFrame, TaitoXDraw, TaitoXScan,
+	TwinhawkInit, TaitoXExit, TaitoXFrame, TaitoXDraw, TaitoXScan,
 	NULL, 0x800, 224, 384, 3, 4
 };
 
@@ -1719,6 +1598,6 @@ struct BurnDriver BurnDrvDaisenpu = {
 	L"\u5927\u65CB\u98A8 (Japan)\0Daisenpu\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOX, GBF_VERSHOOT, 0,
 	NULL, DaisenpuRomInfo, DaisenpuRomName, NULL, NULL, NULL, NULL, TwinhawkInputInfo, DaisenpuDIPInfo,
-	TwinhawkInit, TaitoXExit, TwinhawkFrame, TaitoXDraw, TaitoXScan,
+	TwinhawkInit, TaitoXExit, TaitoXFrame, TaitoXDraw, TaitoXScan,
 	NULL, 0x800, 224, 384, 3, 4
 };

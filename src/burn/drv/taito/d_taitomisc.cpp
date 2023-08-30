@@ -299,8 +299,7 @@ static void TopspeedMakeInputs()
 	UINT8 *DrvJoy[3] = { TC0220IOCInputPort0, TC0220IOCInputPort1, TC0220IOCInputPort2 };
 	CompileInput(DrvJoy, (void*)TC0220IOCInput, 3, 8, DrvJoyInit);
 
-	BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]);
-	TC0220IOCInput[1] |= ((bBurnShiftStatus) ? 0x00 : 0x10);
+	TC0220IOCInput[1] = (TC0220IOCInput[1] & ~0x10) | (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
 
 	if ((TC0220IOCDip[0] & 3) == 2)
 	{ // digital pedals
@@ -2378,7 +2377,6 @@ static void TaitoMiscCpuAReset(UINT16 d)
 {
 	TaitoCpuACtrl = d;
 
-	bprintf(0, _T("sub reset line %x\n"), d);
 	SekSetRESETLine(1, ~TaitoCpuACtrl & 1);
 }
 

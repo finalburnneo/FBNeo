@@ -85,6 +85,8 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[8];
 static UINT8 kikstart_gears[2];
 
+static INT32 nCyclesExtra[3];
+
 static struct BurnInputInfo TwoButtonInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
@@ -208,11 +210,8 @@ static struct BurnInputInfo TimetunlInputList[] = {
 STDINPUTINFO(Timetunl)
 
 static struct BurnInputInfo DualStickInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy4 + 4,	"p3 coin"	},
+	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-
 	{"P1 Leftstick Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
 	{"P1 Leftstick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
 	{"P1 Leftstick Left",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
@@ -224,6 +223,7 @@ static struct BurnInputInfo DualStickInputList[] = {
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
+	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
 	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
 	{"P2 Leftstick Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
 	{"P2 Leftstick Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
@@ -235,6 +235,8 @@ static struct BurnInputInfo DualStickInputList[] = {
 	{"P2 Rightstick Right",	BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right 2"},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+
+	{"P3 Coin",				BIT_DIGITAL,	DrvJoy4 + 4,	"p3 coin"	},
 
 	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
@@ -1224,6 +1226,8 @@ static void __fastcall taitosj_main_write(UINT16 address, UINT8 data)
 	if ((address & 0xf000) == 0xd000) address &= ~0x00f0;
 	if ((address & 0xf800) == 0x8800 && is_kikstart == 0) address &= ~0x07fe; // kikstart has no mirror
 
+	if (address >= 0xd400 && address <= 0xd40d) return; // nop
+
 	switch (address)
 	{
 		case 0x8800:
@@ -1616,6 +1620,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnWatchdogReset();
 
 	sound_irq_timer = 0;
+
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
 
 	HiscoreReset();
 
@@ -2457,9 +2463,10 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 3000000 / 60, 3000000 / 4 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
 
 	m6805Open(0);
+	m6805Idle(nCyclesExtra[2]); // _SYNCINT & outside-frame syncing used
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2486,14 +2493,14 @@ static INT32 DrvFrame()
 
 	m6805Close();
 
-	ZetOpen(1);
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = m6805TotalCycles() - nCyclesTotal[2];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -2548,6 +2555,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(zaccept);
 		SCAN_VAR(busreq);
 		SCAN_VAR(kikstart_gears);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

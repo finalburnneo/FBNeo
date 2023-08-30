@@ -1198,6 +1198,9 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 		SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_INSERTSTRING, i, (LPARAM)_T("Browse..."));
 		SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, i, 0);
 
+		// hide neocdz warning for now
+		ShowWindow(GetDlgItem(hDlg, IDC_NGCD_WARN), SW_HIDE);
+
 		if (i>=1) {
 			DisplayReplayProperties(hDlg, false);
 			SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, i, 0);

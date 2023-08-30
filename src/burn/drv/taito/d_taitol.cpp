@@ -78,6 +78,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 nCyclesExtra[2];
+
 static struct BurnInputInfo FhawkInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
@@ -2328,6 +2330,8 @@ static INT32 DrvDoReset()
 	adpcm_pos = 0;
 	adpcm_data = -1;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -3202,7 +3206,7 @@ static INT32 Z80x3Frame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6665280 / 60, ((fhawkmode) ? 6665280 : 4000000) / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], 0 };
 
 	if (has_adpcm)
 		MSM5205NewFrame(0, 4000000, nInterleave);
@@ -3226,7 +3230,9 @@ static INT32 Z80x3Frame()
 		ZetClose();
 	}
 
-	ZetOpen(2);
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	// 2 - timer (BurnTimer keeps track)
 
 	if (pBurnSoundOut) {
 		if (has_ym2610) {
@@ -3238,8 +3244,6 @@ static INT32 Z80x3Frame()
 			MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		}
 	}
-
-	ZetClose();
 
 	return 0;
 }
@@ -3264,7 +3268,7 @@ static INT32 Z80x2Frame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6665280 / 60, 0, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3279,15 +3283,16 @@ static INT32 Z80x2Frame()
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
-	
-	ZetOpen(2);
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// 1 - no cpu here
+	// 2 - timer (BurnTimer keeps track)
+
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnSoundDCFilter();
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3328,14 +3333,10 @@ static INT32 Z80x1Frame()
 		scanline_update(i*4);
 		ZetClose();
 	}
-	
-	ZetOpen(0);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	ZetClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3388,6 +3389,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(track_y);
 		SCAN_VAR(track_x_last);
 		SCAN_VAR(track_y_last);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE)

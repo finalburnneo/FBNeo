@@ -15,10 +15,12 @@ static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 	TCHAR* token = NULL;
 
 	if (!s) s = prev_str;
+	if (!prev_str) return NULL;
 
 	s += _tcsspn(s, delims);
+
 	if (s[0] == _T('\0')) {
-		prev_str = s;
+		prev_str = NULL;
 		return NULL;
 	}
 
@@ -26,6 +28,10 @@ static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 		token = ++s;
 		if ((s = _tcspbrk(token, _T("\"")))) {
 			*(s++) = '\0';
+		}
+		if (!s) {
+			prev_str = NULL;
+			return NULL;
 		}
 	} else {
 		token = s;
@@ -58,7 +64,7 @@ static INT32 LoadRomdata()
 	memset(RDI.szFullName, L'\0', MAX_PATH * sizeof(wchar_t));
 
 	while (!feof(fp)) {
-		if (_fgetts(szBuf, sizeof(szBuf), fp) != NULL) {
+		if (_fgetts(szBuf, MAX_PATH, fp) != NULL) {
 			pszBuf = szBuf;
 
 			pszLabel = _strqtoken(pszBuf, DELIM_TOKENS_NAME);
@@ -148,7 +154,7 @@ char* RomdataGetDrvName(TCHAR* szFile)
 	TCHAR* pszBuf = NULL, * pszLabel = NULL, * pszInfo = NULL;
 
 	while (!feof(fp)) {
-		if (_fgetts(szBuf, sizeof(szBuf), fp) != NULL) {
+		if (_fgetts(szBuf, MAX_PATH, fp) != NULL) {
 			pszBuf = szBuf;
 
 			pszLabel = _strqtoken(pszBuf, DELIM_TOKENS_NAME);

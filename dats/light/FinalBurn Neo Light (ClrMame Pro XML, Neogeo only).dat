@@ -8252,7 +8252,7 @@
 		<rom name="201-v1.v1" merge="201-v1.v1" size="4194304" crc="23d22ed1"/>
 		<rom name="201-v2.v2" merge="201-v2.v2" size="4194304" crc="472cf9db"/>
 		<rom name="201-p11v2.p1" size="2097152" crc="45822261"/>
-		<rom name="201-p1qy.p1" size="2097152" crc="1226d6b8"/>
+		<rom name="201-p1qy.p1" size="2097152" crc="9c39a144"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -9061,8 +9061,8 @@
 		<description>Metal Slug 3 (Modified by AKS, Hack)</description>
 		<year>2017-2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="256-p1cq.p1" size="1048576" crc="a1d0a37a"/>
-		<rom name="256-p2cq.sp2" size="4194304" crc="8585d898"/>
+		<rom name="256-p1cq.p1" size="1048576" crc="6449cc07"/>
+		<rom name="256-p2cq.sp2" size="4194304" crc="3fd5a93c"/>
 		<rom name="256-s1d.s1" size="131072" crc="8458fff9"/>
 		<rom name="256-c1d.c1" size="8388608" crc="3540398c"/>
 		<rom name="256-c2d.c2" size="8388608" crc="bdd220f0"/>
@@ -22263,8 +22263,8 @@
 		<rom name="152-p1jh.p1" size="1048576" crc="48fe95b5"/>
 		<rom name="152-p2jh.sp2" size="4194304" crc="2fcd21a1"/>
 		<rom name="251-s1jh.s1" size="131072" crc="599f5fac"/>
-		<rom name="152-p1sk.p1" size="1048576" crc="50aba523"/>
-		<rom name="152-p2sk.sp2" size="4194304" crc="5acf1b01"/>
+		<rom name="152-p1sk.p1" size="1048576" crc="8106680b"/>
+		<rom name="152-p2sk.sp2" size="4194304" crc="6b99bd2f"/>
 		<rom name="152-p1.p1" size="1048576" crc="f2c7ddfa"/>
 		<rom name="152-p2.sp2" size="4194304" crc="274ef47a"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -25542,11 +25542,11 @@
 	<game name="lastbladsp" cloneof="lastblad" romof="lastblad">
 		<comment>Hack</comment>
 		<description>The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)</description>
-		<year>2017</year>
+		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="234-p1sp.p1" size="1048576" crc="f8adc621"/>
-		<rom name="234-p2sp.sp2" size="6291456" crc="8ff3fb6d"/>
-		<rom name="234-p3sp.p3" size="131072" crc="3c1770df"/>
+		<rom name="234-p1sp.p1" size="1048576" crc="264f191b"/>
+		<rom name="234-p2sp.sp2" size="6291456" crc="6e5914ce"/>
+		<rom name="234-p3sp.p3" size="131072" crc="d6a50f04"/>
 		<rom name="234-s1.s1" merge="234-s1.s1" size="131072" crc="95561412"/>
 		<rom name="234-c1.c1" merge="234-c1.c1" size="8388608" crc="9f7e2bd3"/>
 		<rom name="234-c2.c2" merge="234-c2.c2" size="8388608" crc="80623d3c"/>
@@ -25554,11 +25554,11 @@
 		<rom name="234-c4.c4" merge="234-c4.c4" size="8388608" crc="3d60b037"/>
 		<rom name="234-c5sp.c5" size="4194304" crc="4ea22fe0"/>
 		<rom name="234-c6sp.c6" size="4194304" crc="a863c882"/>
-		<rom name="234-m1.m1" merge="234-m1.m1" size="131072" crc="087628ea"/>
+		<rom name="234-m1sp.m1" size="131072" crc="b37b89e0"/>
 		<rom name="234-v1.v1" merge="234-v1.v1" size="4194304" crc="ed66b76f"/>
 		<rom name="234-v2.v2" merge="234-v2.v2" size="4194304" crc="a0e7f6e2"/>
 		<rom name="234-v3.v3" merge="234-v3.v3" size="4194304" crc="a506e1e2"/>
-		<rom name="234-v4.v4" merge="234-v4.v4" size="4194304" crc="0e34157f"/>
+		<rom name="234-v4sp.v4" size="4194304" crc="bb72113a"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>

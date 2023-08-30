@@ -132,11 +132,9 @@ static bool gui_show = false;
 // FBNEO stubs
 unsigned ArcadeJoystick;
 INT32 nInputIntfMouseDivider = 1;
-
 int bDrvOkay;
 int bRunPause;
 bool bAlwaysProcessKeyboardInput;
-
 bool bDoIpsPatch;
 void IpsApplyPatches(UINT8* base, char* rom_name, UINT32 crc, bool readonly) {}
 INT32 GetIpsesMaxLen(char* rom_name) {return -1;}
@@ -147,6 +145,9 @@ UINT32 nIpsDrvDefine		= 0, nIpsMemExpLen[SND2_ROM + 1] = { 0 };
 UINT32 nStartFrame = 0;
 INT32 FreezeInput(UINT8** buf, INT32* size) { return 0; }
 INT32 UnfreezeInput(const UINT8* buf, INT32 size) { return 0; }
+static struct RomDataInfo RDI = { 0 };
+RomDataInfo* pRDI = &RDI;
+struct BurnRomInfo* pDataRomDesc = NULL;
 
 TCHAR szAppEEPROMPath[MAX_PATH];
 TCHAR szAppHiscorePath[MAX_PATH];

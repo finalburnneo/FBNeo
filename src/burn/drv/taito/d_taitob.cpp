@@ -39,6 +39,8 @@ static INT32 spritelag_disable = 0;
 
 static INT32 LastScrollX = 0; // hitice
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 6,	"p1 start"	},
@@ -1780,6 +1782,8 @@ static INT32 DrvDoReset(INT32 reset_ram)
 	TaitoZ80Bank = 0;
 	LastScrollX = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	frame_counter = 0;
@@ -2093,25 +2097,22 @@ static INT32 DrvFrame()
 	SekOpen(0);
 	ZetOpen(0);
 
-	INT32 SekSpeed = (INT32)((INT64)cpu_speed[0] * nBurnCPUSpeedAdjust / 0x100);
-	INT32 ZetSpeed = (INT32)((INT64)cpu_speed[1] * nBurnCPUSpeedAdjust / 0x100);
-
 	INT32 nInterleave = 200;	// high so that ym2203 sounds are good, 200 is perfect for irq #0
-	INT32 nCyclesTotal[2] = { SekSpeed / 60, ZetSpeed / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nNext[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { BurnSpeedAdjust(cpu_speed[0]) / 60, BurnSpeedAdjust(cpu_speed[1]) / 60 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nNext[0] += nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nNext[0] - nCyclesDone[0]);
-		if (i == 4)                     SekSetIRQLine(irq_config[0], CPU_IRQSTATUS_AUTO); // Start of frame + 5000 cycles
-		if (i == (nInterleave / 1) - 1) SekSetIRQLine(irq_config[1], CPU_IRQSTATUS_AUTO); // End of frame
-		nNext[1] += nCyclesTotal[1] / nInterleave;
-		BurnTimerUpdate(nNext[1]);
-		nCyclesDone[1] += nNext[1];
+		CPU_RUN(0, Sek);
+		if (i == 4)               SekSetIRQLine(irq_config[0], CPU_IRQSTATUS_AUTO); // Start of frame + 5000 cycles
+		if (i == nInterleave - 1) SekSetIRQLine(irq_config[1], CPU_IRQSTATUS_AUTO); // End of frame
+
+		CPU_RUN_TIMER(1);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	ZetClose();
+	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		if (sound_config == 0) {
@@ -2122,9 +2123,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetClose();
-	SekClose();
-	
 	if (spritelag_disable) TC0180VCUBufferSprites();
 
 	if (pBurnDraw) {
@@ -2162,9 +2160,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (sound_config == 0) {
 			BurnYM2610Scan(nAction, pnMin);
 		} else {
-			ZetOpen(0); // because of bankswitch() port callback.
 			BurnYM2203Scan(nAction, pnMin);
-			ZetClose();
 			MSM6295Scan(nAction, pnMin);
 		}
 
@@ -2172,6 +2168,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TaitoWatchdog);
 		if (has_trackball) BurnTrackballScan();
 		SCAN_VAR(frame_counter);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

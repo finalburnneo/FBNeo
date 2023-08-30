@@ -80,6 +80,9 @@ bool bSaveCRoms = 0;
 
 UINT32 *pBurnDrvPalette;
 
+static char** pszShortName = NULL;
+static wchar_t** pszFullName = NULL;
+
 bool BurnCheckMMXSupport()
 {
 #if defined BUILD_X86_ASM
@@ -98,6 +101,33 @@ extern "C" INT32 BurnLibInit()
 	BurnLibExit();
 	nBurnDrvCount = sizeof(pDriver) / sizeof(pDriver[0]);	// count available drivers
 
+	// Avoid broken references, rom data requires separate string storage
+	if (nBurnDrvCount > 0) {
+		pszShortName = (char**)malloc(nBurnDrvCount * sizeof(char*));
+		pszFullName = (wchar_t**)malloc(nBurnDrvCount * sizeof(wchar_t*));
+
+		if ((NULL != pszShortName) && (NULL != pszFullName)) {
+			for (UINT32 i = 0; i < nBurnDrvCount; i++) {
+				pszShortName[i] = (char*)malloc(100 * sizeof(char));
+				pszFullName[i] = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
+
+				memset(pszShortName[i], '\0', 100 * sizeof(char));
+				memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+
+				if (NULL != pszShortName[i]) {
+					strcpy(pszShortName[i], pDriver[i]->szShortName);
+					pDriver[i]->szShortName = pszShortName[i];
+				}
+#if defined (_UNICODE)
+				if (NULL != pDriver[i]->szFullNameW) {
+					wcscpy(pszFullName[i], pDriver[i]->szFullNameW);
+				}
+				pDriver[i]->szFullNameW = pszFullName[i];
+#endif
+			}
+		}
+	}
+
 	BurnSoundInit();
 
 	bBurnUseMMX = BurnCheckMMXSupport();
@@ -108,6 +138,24 @@ extern "C" INT32 BurnLibInit()
 extern "C" INT32 BurnLibExit()
 {
 	nBurnDrvCount = 0;
+
+	// Release of storage space
+	if (NULL != pszShortName) {
+		for (UINT32 i = 0; i < nBurnDrvCount; i++) {
+			if (NULL != pszShortName[i]) {
+				free(pszShortName[i]);
+			}
+		}
+		free(pszShortName);
+	}
+	if (NULL != pszFullName) {
+		for (UINT32 i = 0; i < nBurnDrvCount; i++) {
+			if (NULL != pszFullName[i]) {
+				free(pszFullName[i]);
+			}
+		}
+		free(pszFullName);
+	}
 
 	return 0;
 }
@@ -442,7 +490,9 @@ void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 	for (UINT32 i = 0; i < nBurnDrvCount; i++) {
 		nBurnDrvActive = i;
 		if (!strcmp(szName, pDriver[i]->szShortName)) {
-			pDriver[i]->szFullNameW = szLongName;
+//			pDriver[i]->szFullNameW = szLongName;
+			memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+			_tcscpy(pszFullName[i], szLongName);
 		}
 	}
 }
@@ -453,17 +503,33 @@ void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
 {
 	if (-1 == nBurnDrvSubActive) return;
 
-	char szShortNames[33] = { 0 };
+	char szShortNames[100] = { 0 };
 	sprintf(szShortNames, "%s[0x%02x]", pDriver[nBurnDrvActive]->szShortName, nBurnDrvSubActive);
 
 	for (UINT32 i = 0; i < nNumGames; i++) {
-		if (!strcmp(szName, szShortNames)) {
-			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
+		if (0 == strcmp(szName, szShortNames)) {
+//			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
+			memset(pszFullName[nBurnDrvActive], L'\0', MAX_PATH * sizeof(wchar_t));
+			_tcscpy(pszFullName[nBurnDrvActive], szLongName);
 			return;
 		}
 	}
 }
 #endif
+
+extern "C" INT32 BurnDrvGetIndex(char* szName)
+{
+	if (NULL == szName) return -1;
+
+	for (INT32 i = 0; i < nBurnDrvCount; i++) {
+		if (0 == strcmp(szName, pDriver[i]->szShortName)) {
+			nBurnDrvActive = i;
+			return i;
+		}
+	}
+
+	return -1;
+}
 
 static void BurnDrvSetFullNameA()
 {
@@ -471,6 +537,23 @@ static void BurnDrvSetFullNameA()
 	if (NULL == pszCustomNameA) return;
 
 	pDriver[nBurnDrvActive]->szFullNameA = pszCustomNameA;
+}
+
+extern "C" wchar_t* BurnDrvGetFullNameW(UINT32 i)
+{
+	return pDriver[i]->szFullNameW;
+}
+
+extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i)
+{
+	if ((-1 == i) || (NULL == szName)) return -1;
+
+#if defined (_UNICODE)
+	memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+	wcscpy(pszFullName[i], szName);
+#endif
+
+	return 0;
 }
 
 // Get the zip names for the driver
@@ -481,6 +564,15 @@ extern "C" INT32 BurnDrvGetZipName(char** pszName, UINT32 i)
 	}
 
 	return BurnGetZipName(pszName, i);											// Forward to general function
+}
+
+extern "C" INT32 BurnDrvSetZipName(char* szName, INT32 i)
+{
+	if ((NULL == szName) || (-1 == i)) return -1;
+
+	strcpy(pszShortName[i], szName);
+
+	return 0;
 }
 
 extern "C" INT32 BurnDrvGetRomInfo(struct BurnRomInfo* pri, UINT32 i)		// Forward to drivers function

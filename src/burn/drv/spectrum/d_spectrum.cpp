@@ -26620,7 +26620,119 @@ struct BurnDriver BurnSpecXadom = {
 // Homebrew Games (Post-2000)
 // Hereunder put only the HB ZX Spectrum games
 
+// Cosmic Lander (48K)
 
+static struct BurnRomInfo SpecCosmiclanRomDesc[] = {
+	{ "Cosmic Lander 48K (2023)(RetroTeam).tap", 31318, 0x959db9b6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecCosmiclan, SpecCosmiclan, Spectrum)
+STD_ROM_FN(SpecCosmiclan)
+
+struct BurnDriver BurnSpecCosmiclan = {
+	"spec_cosmiclan", NULL, "spec_spectrum", NULL, "2023",
+	"Cosmic Lander (48K)\0", NULL, "RetroTeam", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SIM, 0,
+	SpectrumGetZipName, SpecCosmiclanRomInfo, SpecCosmiclanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Duckstroma PT.2 v1.0.1 (128K) (HB)
+
+static struct BurnRomInfo SpecDuckstromapt2RomDesc[] = {
+	{ "Duckstroma PT.2 v1.0.1 128K (2023)(UltraNarwhal).tap", 30758, 0x7e14b59e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecDuckstromapt2, SpecDuckstromapt2, Spec128)
+STD_ROM_FN(SpecDuckstromapt2)
+
+struct BurnDriver BurnSpecDuckstromapt2 = {
+	"spec_duckstromapt2", NULL, "spec_spec128", NULL, "2023",
+	"Duckstroma PT.2 v1.0.1 (128K) (HB)\0", "Wait 2sec. while unpacking.", "UltraNarwhal", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecDuckstromapt2RomInfo, SpecDuckstromapt2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Lil' Ninja (48K)
+
+static struct BurnRomInfo SpecLilninjaRomDesc[] = {
+	{ "Lil' Ninja 48K (2023)(Joesoft).tap", 40609, 0xde3a35f2, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLilninja, SpecLilninja, Spectrum)
+STD_ROM_FN(SpecLilninja)
+
+struct BurnDriver BurnSpecLilninja = {
+	"spec_lilninja", NULL, "spec_spectrum", NULL, "2023",
+	"Lil' Ninja (48K)\0", NULL, "Joesoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecLilninjaRomInfo, SpecLilninjaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tiny Nightmares (English)(48K)
+
+static struct BurnRomInfo SpecTinynighteRomDesc[] = {
+	{ "Tiny Nightmares 48K ENG (2023)(EJVG).tap", 40151, 0x01269806, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTinynighte, SpecTinynighte, Spectrum)
+STD_ROM_FN(SpecTinynighte)
+
+struct BurnDriver BurnSpecTinynighte = {
+	"spec_tinynighte", NULL, "spec_spectrum", NULL, "2023",
+	"Tiny Nightmares (English)(48K)\0", NULL, "EJVG", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecTinynighteRomInfo, SpecTinynighteRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tiny Nightmares (Spanish)(48K)
+
+static struct BurnRomInfo SpecTinynightsRomDesc[] = {
+	{ "Tiny Nightmares 48K ESP (2023)(EJVG).tap", 40151, 0xc1e3b7ca, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTinynights, SpecTinynights, Spectrum)
+STD_ROM_FN(SpecTinynights)
+
+struct BurnDriver BurnSpecTinynights = {
+	"spec_tinynights", "spec_tinynighte", "spec_spectrum", NULL, "2023",
+	"Tiny Nightmares (Spanish)(48K)\0", NULL, "EJVG", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecTinynightsRomInfo, SpecTinynightsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tumult - Phase 1 (48K)
+
+static struct BurnRomInfo SpecTumultph1RomDesc[] = {
+	{ "Tumult - Phase 1 48K (2018)(Bumfun Games).tap", 35256, 0xd080978e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTumultph1, SpecTumultph1, Spectrum)
+STD_ROM_FN(SpecTumultph1)
+
+struct BurnDriver BurnSpecTumultph1 = {
+	"spec_tumultph1", NULL, "spec_spectrum", NULL, "2018",
+	"Tumult - Phase 1 (48K)\0", NULL, "BumFun Games", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
+	SpectrumGetZipName, SpecTumultph1RomInfo, SpecTumultph1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
 // Black Star (48K) (HB)
 
 static struct BurnRomInfo SpecblackstarRomDesc[] = {
@@ -42582,25 +42694,6 @@ struct BurnDriver BurnSpecDonums = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecDonumsRomInfo, SpecDonumsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Duckstroma pt.2 (128K) (HB)
-
-static struct BurnRomInfo SpecDuckstromapt2RomDesc[] = {
-	{ "Duckstroma pt.2 128K (2023)(UltraNarwhal).z80", 41584, 0xf14f99e0, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecDuckstromapt2, SpecDuckstromapt2, Spec128)
-STD_ROM_FN(SpecDuckstromapt2)
-
-struct BurnDriver BurnSpecDuckstromapt2 = {
-	"spec_duckstromapt2", NULL, "spec_spec128", NULL, "2023",
-	"Duckstroma pt.2 (128K) (HB)\0", NULL, "UltraNarwhal", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecDuckstromapt2RomInfo, SpecDuckstromapt2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

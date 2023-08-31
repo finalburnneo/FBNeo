@@ -22462,6 +22462,100 @@ struct BurnDriver BurnDrvnes_elfland = {
 
 // Homebrew (hand-added)
 
+// Copper Jacket (HB)
+
+static struct BurnRomInfo nes_copjackRomDesc[] = {
+	{ "Copper Jacket - Digital Release (2023)(Monsoon Studios).nes",           65552, 0xf88202b0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_copjack)
+STD_ROM_FN(nes_copjack)
+
+struct BurnDriver BurnDrvnes_copjack = {
+	"nes_copjack", NULL, NULL, NULL, "2023",
+	"Copper Jacket (HB)\0", NULL, "Monsoon Studios", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_copjackRomInfo, nes_copjackRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Golf Grand Slam
+
+static struct BurnRomInfo nes_golfgsRomDesc[] = {
+	{ "Golf Grand Slam (1991)(Atlus).nes",          262160, 0xb4a1d511, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_golfgs)
+STD_ROM_FN(nes_golfgs)
+
+struct BurnDriver BurnDrvnes_golfgs = {
+	"nes_golfgs", NULL, NULL, NULL, "1991",
+	"Golf Grand Slam\0", NULL, "Atlus", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_SPORTSMISC, 0,
+	NESGetZipName, nes_golfgsRomInfo, nes_golfgsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Hollow Knight Grab Grub (HB)
+
+static struct BurnRomInfo nes_hollowkggRomDesc[] = {
+	{ "Hollow Knight Grab Grub (HB)(2022)(Elvies).nes",          40976, 0x7218e26f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hollowkgg)
+STD_ROM_FN(nes_hollowkgg)
+
+struct BurnDriver BurnDrvnes_hollowkgg = {
+	"nes_hollowkgg", NULL, NULL, NULL, "2022",
+	"Hollow Knight Grab Grub (HB)\0", NULL, "Elvies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_hollowkggRomInfo, nes_hollowkggRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Milon's Secret Castle
+
+static struct BurnRomInfo nes_milonsscRomDesc[] = {
+	{ "Milon's Secret Castle (1987)(Hudson Soft).nes",           65552, 0x1741286b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_milonssc)
+STD_ROM_FN(nes_milonssc)
+
+struct BurnDriver BurnDrvnes_milonssc = {
+	"nes_milonssc", NULL, NULL, NULL, "1987",
+	"Milon's Secret Castle\0", NULL, "Hudson Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_milonsscRomInfo, nes_milonsscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// SkateCat (HB)
+
+static struct BurnRomInfo nes_skatecatRomDesc[] = {
+	{ "SkateCat (2023)(SJ Games).nes",          524304, 0x0a53ba24, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_skatecat)
+STD_ROM_FN(nes_skatecat)
+
+struct BurnDriver BurnDrvnes_skatecat = {
+	"nes_skatecat", NULL, NULL, NULL, "2023",
+	"SkateCat (HB)\0", NULL, "SJ Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_skatecatRomInfo, nes_skatecatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // 5-star Restaurant (HB)
 static struct BurnRomInfo nes_5starRomDesc[] = {

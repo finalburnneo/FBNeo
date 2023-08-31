@@ -1036,6 +1036,45 @@ int ProcessCmdLine()
 			// Command: lua file
 			FBA_LoadLuaCode(TCHARToANSI(szName, NULL, 0));
 			//bVidAutoSwitchFullDisable = true;
+		} else if (_tcscmp(szName, _T("-romdata")) == 0) {	// cmdline for romdata
+			TCHAR* szPoint = NULL;
+			if (NULL != (szPoint = _tcsstr(szCmdLine, _T("-romdata")))) {
+				szPoint += _tcslen(_T("-romdata"));
+
+				while (szPoint[0] != _T('\0')) {
+					if (szPoint[0] == _T(' ')) {
+						szPoint++;
+					} else { break; }
+				}
+
+				TCHAR* szExt = _tcsstr(szCmdLine, _T(".dat"));
+				if (NULL != szExt) {
+					szExt[0] = _T('\0');
+				}
+				szExt = NULL;
+
+				TCHAR* szDatName = _tcstok(szPoint, _T("\""));
+
+				memset(szRomdataName, '\0', sizeof(szRomdataName));
+				_stprintf(szRomdataName, _T("%s%s%s"), _T(".\\config\\romdata\\"), szDatName, _T(".dat"));
+
+				szDatName = NULL;
+				szPoint = NULL;
+
+				char* szDrvName = RomdataGetDrvName();
+				INT32 nGame = BurnDrvGetIndex(szDrvName);
+
+				if ((NULL == szDrvName) || (-1 == nGame)) {
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
+					FBAPopupDisplay(PUF_TYPE_WARNING);
+
+					return 1;
+				}
+
+				if (DrvInit(nGame, true)) {	// failed (bad romset, etc.)
+					nVidFullscreen = 0;		// Don't get stuck in fullscreen mode
+				}
+			}
 		} else {
 			bQuietLoading	= true;
 			bDoIpsPatch		= false;
@@ -1060,23 +1099,23 @@ int ProcessCmdLine()
 						szIps += _tcslen(_T("-ips"));	// The parameter does not contain the identifier itself
 
 						FILE* fp = NULL;
-						int nList = 0;	// Sequence of DAT array
+						INT32 nList = 0;	// Sequence of DAT array
 						TCHAR szTmp[1024];
 						TCHAR szDat[MAX_PATH];
 						TCHAR szDatList[1024 / 2][MAX_PATH];	// Comma separated, at least 2 characters
 						TCHAR* argv = _tcstok(szIps, _T(","));
 
 						if (argv) {	// Argv may be null
-							memset(szTmp, '\0', 1024 * sizeof(TCHAR));
+							memset(szTmp, '\0', sizeof(szTmp));
 							_tcscpy(szTmp, argv);
 							argv = szTmp;
 						}
 
 						while (argv != NULL) {
-							int nIndex = 0;
+							INT32 nIndex = 0;
 
-							while (argv[0] != '\0') {
-								if (argv[0] != '\"') {
+							while (argv[0] != _T('\0')) {
+								if (argv[0] != _T('\"')) {
 									argv++, nIndex++;
 								} else {
 									_tcstok(++argv, _T("\""));	// Remove double quotation marks
@@ -1086,8 +1125,8 @@ int ProcessCmdLine()
 							}
 							argv -= nIndex;	// Returns the first digit of a string
 
-							while (argv[0] != '\0') {
-								memset(szDat, _T('\0'), MAX_PATH * sizeof(TCHAR));
+							while (argv[0] != _T('\0')) {
+								memset(szDat, '\0', sizeof(szDat));
 								if (_tcsstr(argv, _T(".dat"))) {
 									_stprintf(szDat, _T("%s%s/%s"), szAppIpsPath, BurnDrvGetText(DRV_NAME), argv);
 								} else {
@@ -1097,7 +1136,7 @@ int ProcessCmdLine()
 								fp = _tfopen(szDat, _T("r"));
 								if (fp) {	// ips dat exists
 									fclose(fp);
-									memset(szDatList[nList], _T('\0'), MAX_PATH * sizeof(TCHAR));
+									memset(szDatList[nList], '\0', sizeof(szDatList[nList]));
 									if (_tcsstr(argv, _T(".dat"))) {
 										_stprintf(szDatList[nList++], _T("%s"), argv);
 									} else {

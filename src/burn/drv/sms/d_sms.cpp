@@ -7261,6 +7261,26 @@ struct BurnDriver BurnDrvsms_outrun = {
 };
 
 
+// Out Run (Color Hack)
+
+static struct BurnRomInfo sms_outrunchRomDesc[] = {
+	{ "OutRun (Color Hack)(2023)(Slogra).sms",	262208, 0x0fc1cf7a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_outrunch)
+STD_ROM_FN(sms_outrunch)
+
+struct BurnDriver BurnDrvsms_outrunch = {
+	"sms_outrunch", "sms_outrun", NULL, NULL, "2023",
+	"Out Run (Color Hack)\0", NULL, "Slogra", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
+	SMSGetZipName, sms_outrunchRomInfo, sms_outrunchRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
 // Out Run 3-D (Euro, Brazil)
 
 static struct BurnRomInfo sms_outrun3dRomDesc[] = {

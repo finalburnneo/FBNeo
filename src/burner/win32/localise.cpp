@@ -1234,7 +1234,7 @@ static int FBALocaliseParseFile(TCHAR* pszFilename)
 			MultiByteToWideChar(nFBACodepage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
 #ifdef _UNICODE
 		} else {
-			if (_fgetts(szLine, sizeof(szLine), h) == NULL) {
+			if (_fgetts(szLine, 5120, h) == NULL) {
 				break;
 			}
 		}

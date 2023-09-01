@@ -45,7 +45,7 @@ int ConfigAppLoad()
 	}
 
 	// Go through each line of the config file
-	while (_fgetts(szLine, sizeof(szLine), h)) {
+	while (_fgetts(szLine, 1024, h)) {
 		int nLen = _tcslen(szLine);
 
 		// Get rid of the linefeed at the end

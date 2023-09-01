@@ -55,7 +55,7 @@ INT32 ConfigGameLoad(bool bOverWrite)
 	}
 
 	// Go through each line of the config file and process inputs
-	while (_fgetts(szLine, sizeof(szLine), h)) {
+	while (_fgetts(szLine, 256, h)) {
 		TCHAR *szValue;
 		INT32 nLen = _tcslen(szLine);
 

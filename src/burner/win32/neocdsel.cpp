@@ -324,7 +324,7 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 		TCHAR* s;
 		TCHAR* t;
 
-		_fgetts(szBuffer, sizeof(szBuffer) - 1, fp);
+		_fgetts(szBuffer, 2048, fp);
 
 		int nLength = 0;
 		nLength = _tcslen(szBuffer);

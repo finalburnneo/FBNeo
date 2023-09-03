@@ -30865,7 +30865,7 @@ struct BurnDriver BurnDrvnes_ballblazer = {
 	"nes_ballblazer", NULL, NULL, NULL, "1988",
 	"Ballblazer (Japan)\0", NULL, "Pony Canyon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES,  GBF_ACTION, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_ballblazerRomInfo, nes_ballblazerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -31478,7 +31478,7 @@ struct BurnDriver BurnDrvnes_beautandbea = {
 	"nes_beautandbea", NULL, NULL, NULL, "1989?",
 	"Beauty and the Beast (Europe)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES,  GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_beautandbeaRomInfo, nes_beautandbeaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
@@ -31529,7 +31529,7 @@ struct BurnDriver BurnDrvnes_bibleadventures = {
 	"nes_bibleadventures", NULL, NULL, NULL, "1991",
 	"Bible Adventures (Unl)\0", NULL, "Wisdom Tree", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES,  GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bibleadventuresRomInfo, nes_bibleadventuresRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -31546,7 +31546,7 @@ struct BurnDriver BurnDrvnes_biblebuffet = {
 	"nes_biblebuffet", NULL, NULL, NULL, "1993",
 	"Bible Buffet (Unl)\0", NULL, "Wisdom Tree", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_NES,  GBF_ACTION | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_biblebuffetRomInfo, nes_biblebuffetRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -55056,7 +55056,7 @@ struct BurnDriver BurnDrvnes_zeldaii = {
 	"nes_zeldaii", NULL, NULL, NULL, "1988",
 	"Zelda II - The Adventure of Link (USA)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES,  GBF_PLATFORM | GBF_ADV, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_zeldaiiRomInfo, nes_zeldaiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT

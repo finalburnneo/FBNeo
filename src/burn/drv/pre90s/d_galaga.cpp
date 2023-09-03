@@ -2460,313 +2460,74 @@ static INT32 galagaScan(INT32 nAction, INT32 *pnMin)
 	return DrvScan(nAction, pnMin);
 }
 
-struct BurnDriver BurnDrvGalaga =
-{
-	/* filename of zip without extension = */    "galaga",
-	/* filename of parent, no extension = */     NULL,
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              "galaga",
-	/* date = */                                 "1981",
-	/* FullName = */                             "Galaga (Namco rev. B)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                          	NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                             	BDF_GAME_WORKING |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                   	NULL,
-	/* GetROMInfo func = */                      GalagaRomInfo,
-	/* GetROMName func = */                      GalagaRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   GalagaSampleInfo,
-	/* GetSampleName func = */                   GalagaSampleName,
-	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagaDIPInfo,
-	/* Init func = */                         	galagaInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        galagaScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                GALAGA_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvGalaga = {
+	"galaga", NULL, NULL, "galaga", "1981",
+	"Galaga (Namco rev. B)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, GalagaRomInfo, GalagaRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
+	galagaInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvGalagao =
-{
-	/* filename of zip without extension = */    "galagao",
-	/* filename of parent, no extension = */     "galaga",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              "galaga",
-	/* date = */                                 "1981",
-	/* FullName = */                             "Galaga (Namco)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING |
-	BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      GalagaoRomInfo,
-	/* GetROMName func = */                      GalagaoRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   GalagaSampleInfo,
-	/* GetSampleName func = */                   GalagaSampleName,
-	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagaDIPInfo,
-	/* Init func = */                            galagaInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        galagaScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                GALAGA_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvGalagao = {
+	"galagao", "galaga", NULL, "galaga", "1981",
+	"Galaga (Namco)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, GalagaoRomInfo, GalagaoRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
+	galagaInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvGalagamw =
-{
-	/* filename of zip without extension = */    "galagamw",
-	/* filename of parent, no extension = */     "galaga",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */           	"galaga",
-	/* date = */                                 "1981",
-	/* FullName = */                             "Galaga (Midway set 1)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco (Midway License)",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                          	NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                             	BDF_GAME_WORKING |
-	BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                   	NULL,
-	/* GetROMInfo func = */                      GalagamwRomInfo,
-	/* GetROMName func = */                      GalagamwRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   GalagaSampleInfo,
-	/* GetSampleName func = */                   GalagaSampleName,
-	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagamwDIPInfo,
-	/* Init func = */                         	galagaInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        galagaScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                GALAGA_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvGalagamw = {
+	"galagamw", "galaga", NULL, "galaga", "1981",
+	"Galaga (Midway set 1)\0", NULL, "Namco (Midway License)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, GalagamwRomInfo, GalagamwRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagamwDIPInfo,
+	galagaInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvGalagamk =
-{
-	/* filename of zip without extension = */ 	"galagamk",
-	/* filename of parent, no extension = */     "galaga",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */           	"galaga",
-	/* date = */                                 "1981",
-	/* FullName = */                             "Galaga (Midway set 2)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco (Midway License)",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING |
-	BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      GalagamkRomInfo,
-	/* GetROMName func = */                      GalagamkRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   GalagaSampleInfo,
-	/* GetSampleName func = */                   GalagaSampleName,
-	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagaDIPInfo,
-	/* Init func = */                            galagaInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        galagaScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                GALAGA_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvGalagamk = {
+	"galagamk", "galaga", NULL, "galaga", "1981",
+	"Galaga (Midway set 2)\0", NULL, "Namco (Midway License)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, GalagamkRomInfo, GalagamkRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
+	galagaInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvGalagamf =
-{
-	/* filename of zip without extension = */    "galagamf",
-	/* filename of parent, no extension = */     "galaga",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              "galaga",
-	/* date = */                                 "1981",
-	/* FullName = */                          	"Galaga (Midway set 1 with fast shoot hack)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco (Midway License)",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                             	BDF_GAME_WORKING |
-	BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                   	NULL,
-	/* GetROMInfo func = */                      GalagamfRomInfo,
-	/* GetROMName func = */                      GalagamfRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   GalagaSampleInfo,
-	/* GetSampleName func = */                   GalagaSampleName,
-	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagamwDIPInfo,
-	/* Init func = */                            galagaInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        galagaScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                GALAGA_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvGalagamf = {
+	"galagamf", "galaga", NULL, "galaga", "1981",
+	"Galaga (Midway set 1 with fast shoot hack)\0", NULL, "Namco (Midway License)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, GalagamfRomInfo, GalagamfRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagamwDIPInfo,
+	galagaInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvGallag =
-{
-	/* filename of zip without extension = */    "gallag",
-	/* filename of parent, no extension = */     "galaga",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              "galaga",
-	/* date = */                                 "1981",
-	/* FullName = */                             "Gallag\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "bootleg",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING |
-	BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_BOOTLEG |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      GallagRomInfo,
-	/* GetROMName func = */                      GallagRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   GalagaSampleInfo,
-	/* GetSampleName func = */                   GalagaSampleName,
-	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagaDIPInfo,
-	/* Init func = */                            gallagInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        galagaScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                GALAGA_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvGallag = {
+	"gallag", "galaga", NULL, "galaga", "1981",
+	"Gallag\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, GallagRomInfo, GallagRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
+	gallagInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvNebulbee =
-{
-	/* filename of zip without extension = */    "nebulbee",
-	/* filename of parent, no extension = */     "galaga",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              "galaga",
-	/* date = */                                 "1981",
-	/* FullName = */                             "Nebulous Bee\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "bootleg",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING |
-	BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_BOOTLEG |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      NebulbeeRomInfo,
-	/* GetROMName func = */                      NebulbeeRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   GalagaSampleInfo,
-	/* GetSampleName func = */                   GalagaSampleName,
-	/* GetInputInfo func = */                    GalagaInputInfo,
-	/* GetDIPInfo func = */                      GalagaDIPInfo,
-	/* Init func = */                            gallagInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        galagaScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                GALAGA_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvNebulbee = {
+	"nebulbee", "galaga", NULL, "galaga", "1981",
+	"Nebulous Bee\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, NebulbeeRomInfo, NebulbeeRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
+	gallagInit, DrvExit, DrvFrame, DrvDraw, galagaScan, NULL,
+	GALAGA_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
 /* === Dig Dug === */
@@ -3457,91 +3218,24 @@ static INT32 digdugScan(INT32 nAction, INT32 *pnMin)
 	return DrvScan(nAction, pnMin);
 }
 
-struct BurnDriver BurnDrvDigdug =
-{
-	/* filename of zip without extension = */    "digdug",
-	/* filename of parent, no extension = */     NULL,
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              NULL,
-	/* date = */                                 "1982",
-	/* FullName = */                             "Dig Dug (rev 2)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED,
-	/* digdug has EA-ROM, it saves highscores! BDF_HISCORE_SUPPORTED not needed. */
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_MAZE | GBF_ACTION,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      digdugRomInfo,
-	/* GetROMName func = */                      digdugRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   NULL,
-	/* GetSampleName func = */                   NULL,
-	/* GetInputInfo func = */                    DigdugInputInfo,
-	/* GetDIPInfo func = */                      DigdugDIPInfo,
-	/* Init func = */                            digdugInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        digdugScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                DIGDUG_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvDigdug = {
+	"digdug", NULL, NULL, NULL, "1982",
+	"Dig Dug (rev 2)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	NULL, digdugRomInfo, digdugRomName, NULL, NULL, NULL, NULL, DigdugInputInfo, DigdugDIPInfo,
+	digdugInit, DrvExit, DrvFrame, DrvDraw, digdugScan, NULL,
+	DIGDUG_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvDigdugat =
-{
-	/* filename of zip without extension = */    "digdugat",
-	/* filename of parent, no extension = */     "digdug",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              NULL,
-	/* date = */                                 "1982",
-	/* FullName = */                             "Dig Dug (Atari, rev 2)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco (Atari license)",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING |
-	BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED,
-	/* digdug has EA-ROM, it saves highscores! BDF_HISCORE_SUPPORTED not needed. */
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_MAZE | GBF_ACTION,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      digdugatRomInfo,
-	/* GetROMName func = */                      digdugatRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   NULL,
-	/* GetSampleName func = */                   NULL,
-	/* GetInputInfo func = */                    DigdugInputInfo,
-	/* GetDIPInfo func = */                      DigdugDIPInfo,
-	/* Init func = */                            digdugInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        digdugScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                DIGDUG_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvDigdugat = {
+	"digdugat", "digdug", NULL, NULL, "1982",
+	"Dig Dug (Atari, rev 2)\0", NULL, "Namco (Atari license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
+	NULL, digdugatRomInfo, digdugatRomName, NULL, NULL, NULL, NULL, DigdugInputInfo, DigdugDIPInfo,
+	digdugInit, DrvExit, DrvFrame, DrvDraw, digdugScan, NULL,
+	DIGDUG_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
 /* === XEVIOUS === */
@@ -4629,88 +4323,22 @@ static UINT32 xeviousGetSpriteParams(struct Namco_Sprite_Params *spriteParams, U
 	return 0;
 }
 
-struct BurnDriver BurnDrvXevious =
-{
-	/* filename of zip without extension = */    "xevious",
-	/* filename of parent, no extension = */     NULL,
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              "xevious",
-	/* date = */                                 "1982",
-	/* FullName = */                             "Xevious (Namco)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      XeviousRomInfo,
-	/* GetROMName func = */                      XeviousRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   XeviousSampleInfo,
-	/* GetSampleName func = */                   XeviousSampleName,
-	/* GetInputInfo func = */                    XeviousInputInfo,
-	/* GetDIPInfo func = */                      XeviousDIPInfo,
-	/* Init func = */                            xeviousInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        DrvScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                XEVIOUS_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvXevious = {
+	"xevious", NULL, NULL, "xevious", "1982",
+	"Xevious (Namco)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, XeviousRomInfo, XeviousRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousDIPInfo,
+	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvSxevious =
-{
-	/* filename of zip without extension = */    "sxevious",
-	/* filename of parent, no extension = */     "xevious",
-	/* filename of board ROMs = */               NULL,
-	/* filename of samples ZIP = */              "xevious",
-	/* date = */                                 "1984",
-	/* FullName = */                             "Super Xevious (Namco)\0",
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         "Namco",
-	/* System = */                               "Miscellaneous",
-	/* FullName = */                             NULL,
-	/* Comment = */                              NULL,
-	/* Manufacturer = */                         NULL,
-	/* System = */                               NULL,
-	/* Flags = */                                BDF_GAME_WORKING | BDF_CLONE |
-	BDF_ORIENTATION_VERTICAL |
-	BDF_ORIENTATION_FLIPPED |
-	BDF_HISCORE_SUPPORTED,
-	/* No of Players = */                        2,
-	/* Hardware Type = */                        HARDWARE_MISC_PRE90S,
-	/* Genre = */                                GBF_VERSHOOT,
-	/* Family = */                               0,
-	/* GetZipName func = */                      NULL,
-	/* GetROMInfo func = */                      SxeviousRomInfo,
-	/* GetROMName func = */                      SxeviousRomName,
-	/* GetHDDInfo func = */                      NULL,
-	/* GetHDDName func = */                      NULL,
-	/* GetSampleInfo func = */                   XeviousSampleInfo,
-	/* GetSampleName func = */                   XeviousSampleName,
-	/* GetInputInfo func = */                    XeviousInputInfo,
-	/* GetDIPInfo func = */                      SxeviousDIPInfo,
-	/* Init func = */                            xeviousInit,
-	/* Exit func = */                            DrvExit,
-	/* Frame func = */                           DrvFrame,
-	/* Redraw func = */                          DrvDraw,
-	/* Areascan func = */                        DrvScan,
-	/* Recalc Palette = */                       NULL,
-	/* Palette Entries count = */                XEVIOUS_PALETTE_SIZE,
-	/* Width, Height = */   	                  NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT,
-	/* xAspect, yAspect = */   	               3, 4
+struct BurnDriver BurnDrvSxevious = {
+	"sxevious", "xevious", NULL, "xevious", "1984",
+	"Super Xevious (Namco)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, SxeviousRomInfo, SxeviousRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousDIPInfo,
+	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };

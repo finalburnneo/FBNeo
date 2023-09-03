@@ -1934,7 +1934,7 @@ struct BurnDriver BurnDrvNeoGeo = {
 	"neogeo", NULL, NULL, NULL, "1990",
 	"Neo Geo\0", "BIOS only", "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_BOARDROM, 0, HARDWARE_SNK_NEOGEO, 0, 0,
+	BDF_BOARDROM, 0, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, neogeoRomInfo, neogeoRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
@@ -5533,7 +5533,7 @@ struct BurnDriver BurnDrvSamSho3h = {
 	"samsho3h", "samsho3", "neogeo", NULL, "1995",
 	"Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)\0", NULL, "SNK", "Neo Geo MVS",
 	L"Samurai Shodown III\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4 - \u65AC\u7D05\u90CE\u7121\u53CC\u5263 (NGH-087)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_SAMSHO,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho3hRomInfo, samsho3hRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -5571,7 +5571,7 @@ struct BurnDriver BurnDrvfswords = {
 	"fswords", "samsho3", "neogeo", NULL, "1995",
 	"Fighters Swords (Korean release of Samurai Shodown III)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_SAMSHO,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, fswordsRomInfo, fswordsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -5865,7 +5865,7 @@ struct BurnDriver BurnDrvKof96 = {
 	"kof96", NULL, "neogeo", NULL, "1996",
 	"The King of Fighters '96 (NGM-214)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof96RomInfo, kof96RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -5904,7 +5904,7 @@ struct BurnDriver BurnDrvKof96h = {
 	"kof96h", "kof96", "neogeo", NULL, "1996",
 	"The King of Fighters '96 (NGH-214)\0", NULL, "SNK", "Neo Geo AES",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof96hRomInfo, kof96hRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -8819,7 +8819,7 @@ struct BurnDriver BurnDrvcthd2003 = {
 	"cthd2003", "kof2001", "neogeo", NULL, "2003",
 	"Crouching Tiger Hidden Dragon 2003 (The King of Fighters 2001 bootleg, set 1)\0", NULL, "Phenixsoft", "Neo Geo MVS",
 	L"\u81e5\u864e\u85cf\u9f8d 2003 (The King of Fighters 2001 bootleg, set 1)", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, cthd2003RomInfo, cthd2003RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	cthd2003Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -15577,7 +15577,7 @@ struct BurnDriver BurnDrvKof96a = {
 	"kof96a", "kof96", "neogeo", NULL, "1996",
 	"The King of Fighters '96 (NGM-214, alt board)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof96aRomInfo, kof96aRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -18444,7 +18444,7 @@ struct BurnDriver BurnDrvKof96rp08sp = {
 	"kof96rp08sp", "kof96", "neogeo", NULL, "2008",
 	"The King of Fighters '96 - Remix Plus 08 SP (hack)\0", NULL, "hack", "Neo Geo AES",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO,  GBF_VSFIGHT, FBF_KOF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof96rp08spRomInfo, kof96rp08spRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3

@@ -562,6 +562,22 @@ static struct BurnDIPInfo neodefaultDIPList[] = {
 	{0x00,	0x01, 0x04,	0x04, "On"},
 };
 
+static struct BurnDIPInfo neoaesdefaultDIPList[] = {
+	// Offset
+	{0x19,	0xF0, 0x00,	0x00, NULL},
+
+	// Defaults
+	{0x00,	0xFF, 0xFF,	0x00, NULL},
+	{0x01,	0xFF, 0x7F,	0x00, NULL},
+	// Fake DIPs
+	{0x02,	0xFF, 0xFF,	0x8f, NULL},  // aes_jpn
+	{0x03,	0xFF, 0xFF,	0x02, NULL},
+
+	{0,		0xFE, 0,	2,	  "Autofire"},
+	{0x00,	0x01, 0x04,	0x00, "Off"},
+	{0x00,	0x01, 0x04,	0x04, "On"},
+};
+
 static struct BurnDIPInfo neousadefaultDIPList[] = {
 	// Offset
 	{0x19,	0xF0, 0x00,	0x00, NULL},
@@ -726,6 +742,7 @@ STDDIPINFOEXT(neopaddle, neopaddle, neogeo)
 STDDIPINFOEXT(neodual, neodual, neogeo)
 STDDIPINFOEXT(neomahjong, neomahjong, neogeo)
 STDDIPINFOEXT(neogeousa, neousadefault, neogeo)
+STDDIPINFOEXT(neoaes, neoaesdefault, neogeo)
 STDDIPINFOEXT(neogeouni, neounidefault, neogeo)
 
 static struct BurnDIPInfo neoKOFDIPList[] = {
@@ -17142,12 +17159,12 @@ struct BurnDriver BurnDrvSamsho2sp = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown II Perfect Hack - 2023-07-29
+// Samurai Shodown II Perfect Hack - 2023-09-05
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",	0x100000, 0x8eb3dd7c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "063-p2pe.sp2",	0x100000, 0x601902cb, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "063-p3pe.p3",	0x020000, 0x4ced821e, 0 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+	{ "063-p1pe.p1",	0x100000, 0x1673aaeb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p2pe.sp2",	0x100000, 0x063eba4b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063-p3pe.p3",	0x020000, 0xf28acc77, 0 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	{ "063-s1.s1",		0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  3 Text layer tiles
 
@@ -17173,8 +17190,8 @@ STD_ROM_FN(samsho2pe)
 
 struct BurnDriver BurnDrvSamsho2pe = {
 	"samsho2pe", "samsho2", "neogeo", NULL, "2023",
-	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.2, hack)\0", NULL, "Bear", "Neo Geo MVS",
-	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 1.2, hack)\0", NULL, NULL, NULL,
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.3, hack)\0", NULL, "Bear", "Neo Geo MVS",
+	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 1.3, hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	Samsho2spInit, Samsho2spExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -17293,21 +17310,21 @@ struct BurnDriver BurnDrvsamsh5pf = {
 // Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack)
 
 static struct BurnRomInfo sengoku3sRomDesc[] = {
-	{ "261-p1s.bin",  0x200000, 0x5a1b5e85, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "261-p1s.p1",		0x200000, 0x5a1b5e85, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 	
-	{ "261-s1.bin",   0x020000, 0xc1e27cc7, 2 | BRF_GRA },           	//  1 Text layer tiles
+	{ "261-s1d.s1",		0x020000, 0xc1e27cc7, 2 | BRF_GRA },            //  1 Text layer tiles
 			
-	{ "261-c1_decrypted.bin",    0x800000, 0x9af7cbca, 3 | BRF_GRA },	//  2 Sprite data
-	{ "261-c2_decrypted.bin",    0x800000, 0x2a1f874d, 3 | BRF_GRA },   //  3 
-	{ "261-c3_decrypted.bin",    0x800000, 0x5403adb5, 3 | BRF_GRA },   //  4 
-	{ "261-c4_decrypted.bin",    0x800000, 0x18926df6, 3 | BRF_GRA },   //  5 
+	{ "261-c1d.c1",		0x800000, 0x9af7cbca, 3 | BRF_GRA },            //  2 Sprite data
+	{ "261-c2d.c2",		0x800000, 0x2a1f874d, 3 | BRF_GRA },            //  3 
+	{ "261-c3d.c3",		0x800000, 0x5403adb5, 3 | BRF_GRA },            //  4 
+	{ "261-c4d.c4",		0x800000, 0x18926df6, 3 | BRF_GRA },            //  5 
 
-	{ "261-m1.m1",    0x080000, 0x7d501c39, 4 | BRF_ESS | BRF_PRG }, 	//  6 Z80 code
+	{ "261-m1.m1",		0x080000, 0x7d501c39, 4 | BRF_ESS | BRF_PRG },  //  6 Z80 code
 
-	{ "261-v1.v1",    0x400000, 0x64c30081, 5 | BRF_SND },           	//  7 Sound data
-	{ "261-v2.v2",    0x400000, 0x392a9c47, 5 | BRF_SND },           	//  8 
-	{ "261-v3.v3",    0x400000, 0xc1a7ebe3, 5 | BRF_SND },           	//  9 
-	{ "261-v4.v4",    0x200000, 0x9000d085, 5 | BRF_SND },           	// 10 
+	{ "261-v1.v1",		0x400000, 0x64c30081, 5 | BRF_SND },            //  7 Sound data
+	{ "261-v2.v2",		0x400000, 0x392a9c47, 5 | BRF_SND },            //  8 
+	{ "261-v3.v3",		0x400000, 0xc1a7ebe3, 5 | BRF_SND },            //  9 
+	{ "261-v4.v4",		0x200000, 0x9000d085, 5 | BRF_SND },            // 10 
 };
 
 STDROMPICKEXT(sengoku3s, sengoku3s, neogeo)

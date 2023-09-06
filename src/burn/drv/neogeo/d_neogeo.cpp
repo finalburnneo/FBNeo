@@ -17340,6 +17340,39 @@ struct BurnDriver BurnDrvSengoku3s = {
 	0x1000, 320, 224, 4, 3
 };
 
+// Sengoku 3 / Sengoku Densho 2001 - Feng Shen - 20200410
+
+static struct BurnRomInfo sengoku3fsRomDesc[] = {
+	{ "261-p1fs.p1",	0x200000, 0x76b2a57a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	
+	{ "261-s1d.s1",		0x020000, 0xc1e27cc7, 2 | BRF_GRA },           //  1 Text layer tiles
+			
+	{ "261-c1d.c1",		0x800000, 0x9af7cbca, 3 | BRF_GRA },           //  2 Sprite data
+	{ "261-c2d.c2",		0x800000, 0x2a1f874d, 3 | BRF_GRA },           //  3 
+	{ "261-c3d.c3",		0x800000, 0x5403adb5, 3 | BRF_GRA },           //  4 
+	{ "261-c4d.c4",		0x800000, 0x18926df6, 3 | BRF_GRA },           //  5 
+
+	{ "261-m1.m1",		0x080000, 0x7d501c39, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "261-v1.v1",		0x400000, 0x64c30081, 5 | BRF_SND },           //  7 Sound data
+	{ "261-v2.v2",		0x400000, 0x392a9c47, 5 | BRF_SND },           //  8 
+	{ "261-v3.v3",		0x400000, 0xc1a7ebe3, 5 | BRF_SND },           //  9 
+	{ "261-v4.v4",		0x200000, 0x9000d085, 5 | BRF_SND },           // 10 
+};
+
+STDROMPICKEXT(sengoku3fs, sengoku3fs, neogeo)
+STD_ROM_FN(sengoku3fs)
+
+struct BurnDriver BurnDrvSengoku3fs = {
+	"sengoku3fs", "sengoku3", "neogeo", NULL, "2020",
+	"Sengoku 3 / Sengoku Densho 2001 (Feng Shen, hack)\0", NULL, "hack", "Neo Geo MVS",
+	L"Sengoku 3\0\u6226\u56FD\u4F1D\u627F\uFF12\uFF10\uFF10\uFF11 (Feng Shen, hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	NULL, sengoku3fsRomInfo, sengoku3fsRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // World Heroes 2 Jet (ADM-007)
 /* MVS VERSION */
 

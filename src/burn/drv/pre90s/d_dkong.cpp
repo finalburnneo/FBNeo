@@ -118,7 +118,12 @@ static UINT8 main_fo = 0;
 #define RC17    (33e-6 * 1e3 * (0*4.7+1.0/(1.0/10.0+1.0/20.0+0.0/0.3)))
 #define RC2     (10e3 * 33e-6)
 #define RC31    (38e3 * 33e-6) // erase grid time
-#define RC32    ((18e3 + 68e3) * 333e-6) // display grid time
+// note about RC32:
+// - https://www.youtube.com/watch?v=IDbozRrjQks was used as reference for voice version (radarscp1)
+// - https://www.youtube.com/watch?v=nSkOayc9YIQ was used as reference for non-voice version (radarscp and radarscpc)
+// - the non-voice version arguably seems more "natural": the grid reaches the borders, then change color at the next frame, then the bottom ui appears at the next frame
+// - it might be that the voice version pcb from that 1st video simply has a bad capacitor
+#define RC32    ((18e3 + 68e3) * (radarscp1 == 1 ? 333e-6 : 111e-6)) // display grid time
 #define RC4     (90e3 * 0.47e-6)
 #define dt      (1./60./(double) (264))
 #define period2 (((INT64)(6144000) * ( 33L * 68L )) / (INT32)10000000L / 3)  /*  period/2 in pixel ... */

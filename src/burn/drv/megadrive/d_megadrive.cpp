@@ -1096,6 +1096,25 @@ struct BurnDriver BurnDrvmd_pstar2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Phantasy Star II Sound Engine Replacement (Hack)
+// https://www.romhacking.net/hacks/8043/
+static struct BurnRomInfo md_pstar2serRomDesc[] = {
+	{ "Phantasy Star II Sound Engine Replacement (2022)(wyatt8740).bin", 786432, 0x53018f1e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pstar2ser)
+STD_ROM_FN(md_pstar2ser)
+
+struct BurnDriver BurnDrvmd_pstar2ser = {
+	"md_pstar2ser", "md_pstar2", NULL, NULL, "2022",
+	"Phantasy Star II Sound Engine Replacement (Hack)\0", NULL, "wyatt8740", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_pstar2serRomInfo, md_pstar2serRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Shining Force II (Euro)
 static struct BurnRomInfo md_shinfrc2RomDesc[] = {
 	{ "mpr-16933.ic1", 0x200000, 0x83cb46d1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -14378,6 +14397,25 @@ struct BurnDriver BurnDrvmd_goldnaxep2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_goldnaxep2RomInfo, md_goldnaxep2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Golden Axe Plus (Hack, v2.0)
+// https://www.romhacking.net/hacks/6949/
+static struct BurnRomInfo md_goldnaxeplusRomDesc[] = {
+	{ "Golden Axe Plus v2.0 (2022)(YoSoyNacho).bin", 2097152, 0x18f13b66, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_goldnaxeplus)
+STD_ROM_FN(md_goldnaxeplus)
+
+struct BurnDriver BurnDrvmd_goldnaxeplus = {
+	"md_goldnaxeplus", "md_goldnaxe", NULL, NULL, "2022",
+	"Golden Axe Plus (Hack, v2.0)\0", NULL, "YoSoyNacho", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_goldnaxeplusRomInfo, md_goldnaxeplusRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -46,6 +46,8 @@ static UINT8 bRecalcPalette = 0;
 static UINT8 Mahjong_keyboard = 0;
 static UINT8 HasNVRam = 0;
 
+static UINT8 VerSwitcher = 0;	// Fake Dip
+
 static INT32 nRomGfxLen;
 
 static INT32 is_samshoot;
@@ -93,6 +95,12 @@ static struct BurnInputInfo grdiansInputList[] = {
 };
 
 STDINPUTINFO(grdians)
+
+static struct BurnInputInfo VerSwitchInputList[] = {
+	{"Dip Ex",		BIT_DIPSWITCH,	&VerSwitcher ,	"dip"	},
+};
+
+STDINPUTINFOEXT(grdiansVerSw, grdians, VerSwitch)
 
 static struct BurnDIPInfo grdiansDIPList[] = {
 
@@ -162,6 +170,24 @@ static struct BurnDIPInfo grdiansDIPList[] = {
 };
 
 STDDIPINFO(grdians)
+
+static struct BurnDIPInfo grdianshsDIPList[] =
+{
+	DIP_OFFSET(0x17)
+
+	// Fake DIPs
+	{0x00, 0xff, 0xff, 0x00, NULL                           },  // Pro
+
+	{0,    0xfe, 0,    6,    "Version change (Must reload)" },
+	{0x00, 0x01, 0x1f, 0x00, "Pro"                          },
+	{0x00, 0x01, 0x1f, 0x01, "Evil"                         },
+	{0x00, 0x01, 0x1f, 0x02, "Plus"                         },
+	{0x00, 0x01, 0x1f, 0x04, "LBS"                          },
+	{0x00, 0x01, 0x1f, 0x08, "LBS Super"                    },
+	{0x00, 0x01, 0x1f, 0x10, "Reverie"                      },
+};
+
+STDDIPINFOEXT(grdianshs, grdians, grdianshs)
 
 static struct BurnInputInfo mj4simaiInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvButton + 0,	"p1 coin"},
@@ -916,110 +942,6 @@ static struct BurnRomInfo grdiansRomDesc[] = {
 
 STD_ROM_PICK(grdians)
 STD_ROM_FN(grdians)
-
-// Denjin Makai II (Shen Yue, Hack)
-// Hack by Gu Shen Gan Yue
-// GOTVG 20220705
-
-static struct BurnRomInfo grdianssyRomDesc[] = {
-	{ "u2_sy.bin",		0x080000, 0xe9898c17, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u3_sy.bin",		0x080000, 0x330337db, BRF_ESS | BRF_PRG },
-	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
-	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
-
-	{ "u16.bin",		0x400000, 0x6a65f265, BRF_GRA },			// GFX
-	{ "u20.bin",		0x400000, 0xa7226ab7, BRF_GRA },
-	{ "u15.bin",		0x400000, 0x01672dcd, BRF_GRA },
-	{ "u19.bin",		0x400000, 0xc0c998a0, BRF_GRA },
-	{ "u18.bin",		0x400000, 0x967babf4, BRF_GRA },
-	{ "u22.bin",		0x400000, 0x6239997a, BRF_GRA },
-	{ "u17.bin",		0x400000, 0x0fad0629, BRF_GRA },
-	{ "u21.bin",		0x400000, 0x6f95e466, BRF_GRA },
-
-	{ "u32.bin",		0x100000, 0xcf0f3017, BRF_SND },			// PCM
-
-};
-
-STD_ROM_PICK(grdianssy)
-STD_ROM_FN(grdianssy)
-
-// Denjin Makai II (LBS Edition, Hack)
-// Hack by Bindi
-// GOTVG 20221014
-
-static struct BurnRomInfo grdianslbsRomDesc[] = {
-	{ "u2_lbs.bin",		0x080000, 0xa2e89715, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u3_lbs.bin",		0x080000, 0xdf5b58bc, BRF_ESS | BRF_PRG },
-	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
-	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
-
-	{ "u16.bin",		0x400000, 0x6a65f265, BRF_GRA },			// GFX
-	{ "u20.bin",		0x400000, 0xa7226ab7, BRF_GRA },
-	{ "u15.bin",		0x400000, 0x01672dcd, BRF_GRA },
-	{ "u19.bin",		0x400000, 0xc0c998a0, BRF_GRA },
-	{ "u18.bin",		0x400000, 0x967babf4, BRF_GRA },
-	{ "u22.bin",		0x400000, 0x6239997a, BRF_GRA },
-	{ "u17.bin",		0x400000, 0x0fad0629, BRF_GRA },
-	{ "u21.bin",		0x400000, 0x6f95e466, BRF_GRA },
-
-	{ "u32.bin",		0x100000, 0xcf0f3017, BRF_SND },			// PCM
-
-};
-
-STD_ROM_PICK(grdianslbs)
-STD_ROM_FN(grdianslbs)
-
-// Denjin Makai II (Field Edition, Hack)
-// Hack by Bindi
-// GOTVG 20210429
-
-static struct BurnRomInfo grdianslbssRomDesc[] = {
-	{ "u2_lbss.bin",	0x080000, 0xe8c9fb0f, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u3_lbss.bin",	0x080000, 0xd4dac047, BRF_ESS | BRF_PRG },
-	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
-	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
-
-	{ "u16.bin",		0x400000, 0x6a65f265, BRF_GRA },			// GFX
-	{ "u20.bin",		0x400000, 0xa7226ab7, BRF_GRA },
-	{ "u15.bin",		0x400000, 0x01672dcd, BRF_GRA },
-	{ "u19.bin",		0x400000, 0xc0c998a0, BRF_GRA },
-	{ "u18.bin",		0x400000, 0x967babf4, BRF_GRA },
-	{ "u22.bin",		0x400000, 0x6239997a, BRF_GRA },
-	{ "u17.bin",		0x400000, 0x0fad0629, BRF_GRA },
-	{ "u21.bin",		0x400000, 0x6f95e466, BRF_GRA },
-
-	{ "u32.bin",		0x100000, 0xcf0f3017, BRF_SND },			// PCM
-
-};
-
-STD_ROM_PICK(grdianslbss)
-STD_ROM_FN(grdianslbss)
-
-// Denjin Makai II (Heart Dream)
-// Hack by Bindi
-// GOTVG 20220606
-
-static struct BurnRomInfo grdianskeRomDesc[] = {
-	{ "u2_ke.bin",		0x080000, 0xba4a9452, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u3_ke.bin",		0x080000, 0xd1713d73, BRF_ESS | BRF_PRG },
-	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
-	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
-
-	{ "u16.bin",		0x400000, 0x6a65f265, BRF_GRA },			// GFX
-	{ "u20.bin",		0x400000, 0xa7226ab7, BRF_GRA },
-	{ "u15.bin",		0x400000, 0x01672dcd, BRF_GRA },
-	{ "u19.bin",		0x400000, 0xc0c998a0, BRF_GRA },
-	{ "u18.bin",		0x400000, 0x967babf4, BRF_GRA },
-	{ "u22.bin",		0x400000, 0x6239997a, BRF_GRA },
-	{ "u17.bin",		0x400000, 0x0fad0629, BRF_GRA },
-	{ "u21.bin",		0x400000, 0x6f95e466, BRF_GRA },
-
-	{ "u32.bin",		0x100000, 0xcf0f3017, BRF_SND },			// PCM
-
-};
-
-STD_ROM_PICK(grdianske)
-STD_ROM_FN(grdianske)
 
 static struct BurnRomInfo mj4simaiRomDesc[] = {
 	{ "ll.u2",		  0x080000, 0x7be9c781, BRF_ESS | BRF_PRG },	// 68000 code
@@ -3836,46 +3758,6 @@ struct BurnDriver BurnDrvGrdians = {
 	304, 232, 4, 3
 };
 
-struct BurnDriver BurnDrvGrdianssy = {
-	"grdianssy", "grdians", NULL, NULL, "2022-01-26",
-	"Guardians (Shen Yue Edition, Hack)\0Denjin Makai II (Shen Yue Edition, Hack)\0", NULL, "Hack", "Newer Seta",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
-	NULL, grdianssyRomInfo, grdianssyRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
-	304, 232, 4, 3
-};
-
-struct BurnDriver BurnDrvGrdianslbs = {
-	"grdianslbs", "grdians", NULL, NULL, "2022",
-	"Guardians (LBS Edition, Hack)\0Denjin Makai II (LBS Edition, Hack)\0", NULL, "Hack", "Newer Seta",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
-	NULL, grdianslbsRomInfo, grdianslbsRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
-	304, 232, 4, 3
-};
-
-struct BurnDriver BurnDrvGrdianslbss = {
-	"grdianslbss", "grdians", NULL, NULL, "2021",
-	"Guardians (Field Edition, Hack)\0Denjin Makai II (Field Edition, Hack)\0", NULL, "Hack", "Newer Seta",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
-	NULL, grdianslbssRomInfo, grdianslbssRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
-	304, 232, 4, 3
-};
-
-struct BurnDriver BurnDrvGrdianske = {
-	"grdianske", "grdians", NULL, NULL, "2022",
-	"Guardians (Heart Dream)\0Denjin Makai II (Heart Dream)\0", NULL, "Hack", "Newer Seta",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
-	NULL, grdianskeRomInfo, grdianskeRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
-	304, 232, 4, 3
-};
-
 struct BurnDriver BurnDrvMj4simai = {
 	"mj4simai", NULL, NULL, NULL, "1996",
 	"Wakakusamonogatari Mahjong Yonshimai (Japan)\0", NULL, "Maboroshi Ware", "Newer Seta",
@@ -4089,4 +3971,108 @@ struct BurnDriverD BurnDrvFuncube4 = {
 	NULL, funcube4RomInfo, funcube4RomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	funcubeInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
+};
+
+
+// -----------------------------------------------------------------------------
+// Guardians / Denjin Makai II Series
+// -----------------------------------------------------------------------------
+
+static struct BurnRomInfo grdianshsRomDesc[] = {
+	/* Pro - 20230823 */
+	{ "u2_ds.bin",		0x080000, 0x05681eec, BRF_ESS | BRF_PRG },	//  0 68000 code
+	{ "u3_ds.bin",		0x080000, 0xd2040590, BRF_ESS | BRF_PRG },
+	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
+
+	{ "u16.bin",		0x400000, 0x6a65f265, BRF_GRA },			//  4 GFX
+	{ "u20.bin",		0x400000, 0xa7226ab7, BRF_GRA },
+	{ "u15.bin",		0x400000, 0x01672dcd, BRF_GRA },
+	{ "u19.bin",		0x400000, 0xc0c998a0, BRF_GRA },
+	{ "u18.bin",		0x400000, 0x967babf4, BRF_GRA },
+	{ "u22.bin",		0x400000, 0x6239997a, BRF_GRA },
+	{ "u17.bin",		0x400000, 0x0fad0629, BRF_GRA },
+	{ "u21.bin",		0x400000, 0x6f95e466, BRF_GRA },
+
+	{ "u32.bin",		0x100000, 0xcf0f3017, BRF_SND },			// 12 PCM
+
+	/* Evil - 20220705 */
+	{ "u2_sy.bin",		0x080000, 0xe9898c17, BRF_ESS | BRF_PRG },	// 13 68000 code
+	{ "u3_sy.bin",		0x080000, 0x330337db, BRF_ESS | BRF_PRG },
+
+	/* Plus - 20210831 */
+	{ "u2_plus.bin",	0x080000, 0xf944faec, BRF_ESS | BRF_PRG },	// 15 68000 code
+	{ "u3_plus.bin",	0x080000, 0xd3135781, BRF_ESS | BRF_PRG },
+
+	/* LBS - 20221014 */
+	{ "u2_lbs.bin",		0x080000, 0xa2e89715, BRF_ESS | BRF_PRG },	// 17 68000 code
+	{ "u3_lbs.bin",		0x080000, 0xdf5b58bc, BRF_ESS | BRF_PRG },
+
+	/* LBS Super - 20221014 */
+	{ "u2_lbss.bin",	0x080000, 0xe8c9fb0f, BRF_ESS | BRF_PRG },	// 19 68000 code
+	{ "u3_lbss.bin",	0x080000, 0xd4dac047, BRF_ESS | BRF_PRG },
+
+	/* Reverie - 20220606 */
+	{ "u2_ke.bin",		0x080000, 0xba4a9452, BRF_ESS | BRF_PRG },	// 21 68000 code
+	{ "u3_ke.bin",		0x080000, 0xd1713d73, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(grdianshs)
+STD_ROM_FN(grdianshs)
+
+static INT32 grdianshsInit()
+{
+	nBurnDrvSubActive = (VerSwitcher & 0x1f);
+
+	switch (nBurnDrvSubActive) {
+		case 0x00:
+			pszCustomNameA = "Denjin Makai II - Pro (Hack)\0";
+			break;
+
+		case 0x01:
+			pszCustomNameA = "Denjin Makai II - Evil (Hack)\0";
+			break;
+
+		case 0x02:
+			pszCustomNameA = "Denjin Makai II - Plus (Hack)\0";
+			break;
+
+		case 0x04:
+			pszCustomNameA = "Denjin Makai II - LBS (Hack)\0";
+			break;
+
+		case 0x08:
+			pszCustomNameA = "Denjin Makai II - LBS Super (Hack)\0";
+			break;
+
+		case 0x10:
+			pszCustomNameA = "Denjin Makai II - Reverie (Hack)\0";
+			break;
+	}
+
+	INT32 nRet = grdiansInit();
+
+	if ((0 == nRet) && nBurnDrvSubActive) {
+		for (INT32 i = 0x01, nIndex = 13; i <= 0x1f; i <<= 1, nIndex += 2) {
+			if (VerSwitcher & i) {
+				memset(Rom68K, 0, 0x100000);
+				// Load and byte-swap 68000 Program roms
+				if (0 != BurnLoadRom(Rom68K + 0x000001, nIndex + 0, 2)) return 1;
+				if (0 != BurnLoadRom(Rom68K + 0x000000, nIndex + 1, 2)) return 1;
+				break;
+			}
+		}
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvGrdianssy = {
+	"grdianshs", "grdians", NULL, NULL, "2021-2023",
+	"Guardians (Hack Series)\0Denjin Makai II (Hack Series)\0", NULL, "hack", "Newer Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
+	NULL, grdianshsRomInfo, grdianshsRomName, NULL, NULL, NULL, NULL, grdiansVerSwInputInfo, grdianshsDIPInfo,
+	grdianshsInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	304, 232, 4, 3
 };

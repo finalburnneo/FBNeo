@@ -182,7 +182,7 @@ They are either directly available from `Quick Menu > Core Options`, or from the
 
 ## Cheats
 
-You can either use the RetroArch cheat feature, or download a pack of FBNeo native cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip) and uncompress them into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder, then they'll become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`).
+You can either use the RetroArch cheat feature with the `.cht` files, or download a pack of FBNeo native cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip) and uncompress them into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder (which is **NOT** the same folder as the RetroArch feature with the `.cht` files), then they'll become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`).
 
 ## Frequently asked questions
 

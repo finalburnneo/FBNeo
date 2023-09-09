@@ -29763,6 +29763,25 @@ struct BurnDriver BurnDrvMSX_genesis = {
 	272, 228, 4, 3
 };
 
+// Ghost (HB)
+
+static struct BurnRomInfo msx_ghost2017RomDesc[] = {
+	{ "Ghost (2017)(Unepic Fran).rom",	32768, 0xb8b294a2, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(msx_ghost2017, msx_ghost2017, msx_msx)
+STD_ROM_FN(msx_ghost2017)
+
+struct BurnDriver BurnDrvmsx_ghost2017 = {
+	"msx_ghost2017", NULL, "msx_msx", NULL, "2017",
+	"Ghost (HB)\0", NULL, "Unepic Fran", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, msx_ghost2017RomInfo, msx_ghost2017RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Ghosts'n Goblins (HB, v1.1)
 
 static struct BurnRomInfo MSX_gngRomDesc[] = {

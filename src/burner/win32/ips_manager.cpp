@@ -339,7 +339,7 @@ void LoadIpsActivePatches()
 	INT32 nActivePatches = 0;
 
     if (fp) {
-		while (_fgetts(szLine, sizeof(szLine), fp)) {
+		while (_fgetts(szLine, MAX_PATH, fp)) {
 			INT32 nLen = _tcslen(szLine);
 
 			// Get rid of the linefeed at the end

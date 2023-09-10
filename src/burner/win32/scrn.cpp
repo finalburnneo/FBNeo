@@ -1046,8 +1046,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		}
 
 		case MENU_LOAD_ROMDATA: {
-			if (bDrvOkay) break;
-
 			if (NULL == pDataRomDesc) {
 				TCHAR szFilter[100] = { 0 };
 				_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_ROMDATA, true), _T(APP_TITLE));
@@ -1057,8 +1055,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				ofn.lStructSize = sizeof(OPENFILENAME);
 				ofn.hwndOwner = hScrnWnd;
 				ofn.lpstrFilter = szFilter;
-				ofn.lpstrFile = szChoice;
-				ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
+				ofn.lpstrFile = szRomdataName;
+				ofn.nMaxFile = sizeof(szRomdataName) / sizeof(TCHAR);
 				ofn.lpstrInitialDir = _T(".\\config\\romdata\\");
 				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 				ofn.lpstrDefExt = _T("dat");
@@ -1067,15 +1065,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 				if (0 == nOpenDlg) break;
 
-				SplashDestroy(1);
-				StopReplay();
-
-				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
-
 				bLoading = 1;
-				AudSoundStop();			// Stop while the dialog is active or we're loading ROMs
 
-				char* szDrvName = RomdataGetDrvName(szChoice);
+				char* szDrvName = RomdataGetDrvName();
 				INT32 nGame = BurnDrvGetIndex(szDrvName);
 
 				if ((NULL == szDrvName) || (-1 == nGame)) {
@@ -1086,11 +1078,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					break;
 				}
 
-//				DrvExit();
 				DrvInit(nGame, true);	// Init the game driver
 				MenuEnableItems();
 				bAltPause = 0;
-				AudSoundPlay();			// Restart sound
 				bLoading = 0;
 				if (bVidAutoSwitchFull) {
 					nVidFullscreen = 1;
@@ -1098,8 +1088,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				}
 
 				POST_INITIALISE_MESSAGE;
-				break;
 			}
+			break;
 		}
 
 		case MENU_PREVIOUSGAMES1:
@@ -1240,8 +1230,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				VidExit();
 			}
 			if (bDrvOkay) {
-				memset(szChoice, _T('\0'), MAX_PATH * sizeof(TCHAR));
-
 				StopReplay();
 #ifdef INCLUDE_AVI_RECORDING
 				AviStop();

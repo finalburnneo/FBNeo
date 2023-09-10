@@ -26,6 +26,7 @@ extern UINT8 MegadriveDIP[2];
 extern INT32 psolarmode;
 
 INT32 MegadriveInit();
+INT32 MegadriveInitNoDebug();
 INT32 MegadriveExit();
 INT32 MegadriveFrame();
 INT32 MegadriveScan(INT32 nAction, INT32 *pnMin);

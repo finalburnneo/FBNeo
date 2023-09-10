@@ -76,7 +76,7 @@ static INT32 ConfigParseFile(TCHAR* pszFilename)
 	}
 
 	while (1) {
-		if (_fgetts(szLine, sizeof(szLine), h) == NULL) {
+		if (_fgetts(szLine, 8192, h) == NULL) {
 			break;
 		}
 

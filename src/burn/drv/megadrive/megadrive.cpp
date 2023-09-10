@@ -3218,6 +3218,16 @@ static INT32 __fastcall MegadriveTAScallback(void)
 	return 0; // disable
 }
 
+
+INT32 MegadriveInitNoDebug()
+{
+	INT32 rc = MegadriveInit();
+
+	bNoDebug = 1;
+
+	return rc;
+}
+
 INT32 MegadriveInit()
 {
 	BurnAllocMemIndex();

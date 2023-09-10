@@ -9,13 +9,18 @@ RomDataInfo* pRDI = &RDI;
 
 struct BurnRomInfo* pDataRomDesc = NULL;
 
+TCHAR szRomdataName[MAX_PATH] = _T("");
+
 static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 {
 	static TCHAR* prev_str = NULL;
 	TCHAR* token = NULL;
 
-	if (!s) s = prev_str;
-	if (!prev_str) return NULL;
+	if (!s) {
+		if (!prev_str) return NULL;
+
+		s = prev_str;
+	}
 
 	s += _tcsspn(s, delims);
 
@@ -42,26 +47,69 @@ static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 		prev_str = s;
 	} else {
 		// we're at the end of the road
-		prev_str = (TCHAR*)memchr((void*)token, '\0', MAX_PATH);
+#if defined (_UNICODE)
+		prev_str = (TCHAR*)wmemchr(token, _T('\0'), MAX_PATH);
+#else
+		prev_str = (char*)memchr((void*)token, '\0', MAX_PATH);
+#endif
+
 	}
 
 	return token;
 }
 
-#define DELIM_TOKENS_NAME	_T(" \t\r\n,%:")
+#define UTF8_SIGNATURE	"\xef\xbb\xbf"
+
+static INT32 IsDatUTF8BOM()
+{
+	FILE* fp = _tfopen(szRomdataName, _T("rb"));
+	if (NULL == fp) return -1;
+
+	// get dat size
+	fseek(fp, 0, SEEK_END);
+	INT32 nDatSize = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+
+	INT32 nRet = 0;
+
+	if (nDatSize > strlen(UTF8_SIGNATURE)) {
+		char* pszTest = (char*)malloc(nDatSize);
+
+		if (NULL != pszTest) {
+			fread(pszTest, nDatSize, 1, fp);
+			if (0 == strncmp(pszTest, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE))) {
+				nRet = 1;
+			}
+			free(pszTest);
+			pszTest = NULL;
+		}
+	}
+	fclose(fp);
+
+	return nRet;
+}
+
+#undef UTF8_SIGNATURE
+
+#define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|")
 
 static INT32 LoadRomdata()
 {
+	INT32 nType = IsDatUTF8BOM();
+	if (-1 == nType) return -1;
+
 	RDI.nDescCount = -1;	// Failed
 
-	FILE* fp = _tfopen(szChoice, _T("rt"));
+	const TCHAR* szReadMode = (0 == nType) ? _T("rt") : _T("rt, ccs=UTF-8");
+
+	FILE* fp = _tfopen(szRomdataName, szReadMode);
 	if (NULL == fp) return RDI.nDescCount;
 
 	TCHAR szBuf[MAX_PATH] = { 0 };
 	TCHAR* pszBuf = NULL, * pszLabel = NULL, * pszInfo = NULL;
 
-	memset(RDI.szExtraRom, '\0', MAX_PATH * sizeof(char));
-	memset(RDI.szFullName, L'\0', MAX_PATH * sizeof(wchar_t));
+	memset(RDI.szExtraRom, '\0', sizeof(RDI.szExtraRom));
+	memset(RDI.szFullName, '\0', sizeof(RDI.szFullName));
 
 	while (!feof(fp)) {
 		if (_fgetts(szBuf, MAX_PATH, fp) != NULL) {
@@ -107,7 +155,7 @@ static INT32 LoadRomdata()
 				struct BurnRomInfo ri = { 0 };
 				ri.nLen  = UINT32_MAX;
 				ri.nCrc  = UINT32_MAX;
-				ri.nType = UINT32_MAX;
+				ri.nType = 0;
 
 				pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME);
 				if (NULL != pszInfo) {
@@ -119,11 +167,119 @@ static INT32 LoadRomdata()
 						_stscanf(pszInfo, _T("%x"), &(ri.nCrc));
 						if (UINT32_MAX == ri.nCrc) continue;
 
-						pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME);
-						if (NULL != pszInfo) {
-							_stscanf(pszInfo, _T("%x"), &(ri.nType));
-							if (UINT32_MAX == ri.nType) continue;
+						while (NULL != (pszInfo = _strqtoken(NULL, DELIM_TOKENS_NAME))) {
+							INT32 nValue = -1;
 
+							if (0 == _tcscmp(pszInfo, _T("BRF_PRG"))) {
+								ri.nType |= BRF_PRG;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("BRF_GRA"))) {
+								ri.nType |= BRF_GRA;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("BRF_SND"))) {
+								ri.nType |= BRF_SND;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("BRF_ESS"))) {
+								ri.nType |= BRF_ESS;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("BRF_BIOS"))) {
+								ri.nType |= BRF_BIOS;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("BRF_SELECT"))) {
+								ri.nType |= BRF_SELECT;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("BRF_OPT"))) {
+								ri.nType |= BRF_OPT;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("BRF_NODUMP"))) {
+								ri.nType |= BRF_NODUMP;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_PRG_68K"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_68K_PROGRAM_BYTESWAP")))) {			//  1
+								ri.nType |= 1;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_PRG_68K_SIMM"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_68K_PROGRAM_NO_BYTESWAP")))) {		//  2
+								ri.nType |= 2;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_PRG_68K_XOR_TABLE"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_Z80_PROGRAM")))) {					//  3
+								ri.nType |= 3;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("CPS1_TILES"))) {							//  4
+								ri.nType |= 4;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_GFX"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_OKIM6295_SAMPLES")))) {				//  5
+								ri.nType |= 5;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_GFX_SIMM"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_QSOUND_SAMPLES")))) {				//  6
+								ri.nType |= 6;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_GFX_SPLIT4"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_PIC")))) {							//  7
+								ri.nType |= 7;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_GFX_SPLIT8"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_EXTRA_TILES_SF2EBBL_400000")))) {	//  8
+								ri.nType |= 8;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_GFX_19XXJ"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_EXTRA_TILES_400000")))) {			//  9
+								ri.nType |= 9;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_PRG_Z80"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_EXTRA_TILES_SF2KORYU_400000")))) {	// 10
+								ri.nType |= 10;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("CPS1_EXTRA_TILES_SF2B_400000"))) {		// 11
+								ri.nType |= 11;
+								continue;
+							}
+							if ((0 == _tcscmp(pszInfo, _T("CPS2_QSND"))) ||
+								(0 == _tcscmp(pszInfo, _T("CPS1_EXTRA_TILES_SF2MKOT_400000")))) {	// 12
+								ri.nType |= 12;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("CPS2_QSND_SIMM"))) {						// 13
+								ri.nType |= 13;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("CPS2_QSND_SIMM_BYTESWAP"))) {				// 14
+								ri.nType |= 14;
+								continue;
+							}
+							if (0 == _tcscmp(pszInfo, _T("CPS2_ENCRYPTION_KEY"))) {					// 15
+								ri.nType |= 15;
+								continue;
+							}
+							_stscanf(pszInfo, _T("%x"), &nValue);
+							if (-1 != nValue) {
+								ri.nType |= (UINT32)nValue;
+								continue;
+							}
+						}
+
+						if (ri.nType > 0) {
 							RDI.nDescCount++;
 
 							if (NULL != pDataRomDesc) {
@@ -145,9 +301,14 @@ static INT32 LoadRomdata()
 	return RDI.nDescCount;
 }
 
-char* RomdataGetDrvName(TCHAR* szFile)
+char* RomdataGetDrvName()
 {
-	FILE* fp = _tfopen(szFile, _T("rt"));
+	INT32 nType = IsDatUTF8BOM();
+	if (-1 == nType) return NULL;
+
+	const TCHAR* szReadMode = (0 == nType) ? _T("rt") : _T("rt, ccs=UTF-8");
+
+	FILE* fp = _tfopen(szRomdataName, szReadMode);
 	if (NULL == fp) return NULL;
 
 	TCHAR szBuf[MAX_PATH] = { 0 };
@@ -202,7 +363,7 @@ void RomDataSetFullName()
 
 	if (-1 != RDI.nDriverId) {
 		wchar_t* szOldName = BurnDrvGetFullNameW(RDI.nDriverId);
-		memset(RDI.szOldName, L'\0', MAX_PATH * sizeof(wchar_t));
+		memset(RDI.szOldName, '\0', sizeof(RDI.szOldName));
 
 		if (0 != wcscmp(szOldName, RDI.szOldName)) {
 			wcscpy(RDI.szOldName, szOldName);

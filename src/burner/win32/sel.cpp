@@ -47,7 +47,7 @@ bool bIconsLoaded				= 0;
 bool bIconsOnlyParents          = 1;
 int nIconsXDiff;
 int nIconsYDiff;
-static HICON hDrvIcon[19999];
+static HICON *hDrvIcon;
 bool bGameInfoOpen				= false;
 
 // Dialog Sizing
@@ -1484,6 +1484,8 @@ void LoadDrvIcons()
 {
 	TCHAR szIcon[MAX_PATH];
 
+	hDrvIcon = (HICON *)malloc((nBurnDrvCount + 256) * sizeof(HICON));
+
 	if(nIconsSize == ICON_16x16) {
 		nIconsSizeXY	= 16;
 		nIconsYDiff		= 4;
@@ -1647,6 +1649,8 @@ void UnloadDrvIcons() {
 		DestroyIcon(hDrvIcon[nDrvIndex]);
 		hDrvIcon[nDrvIndex] = NULL;
 	}
+
+	free(hDrvIcon);
 }
 
 #define UM_CHECKSTATECHANGE (WM_USER + 100)

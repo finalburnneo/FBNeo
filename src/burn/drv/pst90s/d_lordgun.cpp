@@ -1,4 +1,4 @@
-// FB Alpha Lord of Gun driver module
+// FB Neo Lord of Gun driver module
 // Based on MAME driver by Luca Elia, XingXing, and David Haywood
 
 #include "tiles_generic.h"
@@ -648,7 +648,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
 	SekReset();
@@ -781,21 +781,16 @@ static void DrvGfxDecode(UINT8 *gfxsrc, UINT8 *gfxdest, INT32 len, INT32 size)
 		return;
 	}
 
-	memcpy (tmp, gfxsrc, len);
+	memcpy(tmp, gfxsrc, len);
 
 	GfxDecode(((len * 8) / 6) / (size*size), 6, size, size, Planes, (size == 32) ? XOffs2 : XOffs1, YOffs, (size*size*2), tmp, gfxdest);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 }
 
 static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (pInitCallback) {
 		if (pInitCallback()) return 1;
@@ -891,7 +886,7 @@ static INT32 DrvExit()
 
 	EEPROMExit();
 
-	BurnFree (AllMem);
+	BurnFree(AllMem);
 
 	return 0;
 }
@@ -960,10 +955,16 @@ static INT32 alienchaLoadRoms()
 
 static INT32 alienchacLoadRoms()
 {
+/*
 	if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 1)) return 1;
 	BurnByteswap(Drv68KROM, 0x200000);
 	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM  + 0x000000,  2, 2)) return 1;
+*/
+	if (BurnLoadRom(Drv68KROM + 0x000001, 0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x000000, 1, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x100000, 2, 1)) return 1;
+	BurnByteswap(Drv68KROM + 0x100000, 0x200000);
 
 	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  3, 1)) return 1;
 
@@ -1244,7 +1245,7 @@ static INT32 lordgunDraw()
 
 static inline void compile_inputs()
 {
-	memset (DrvInputs, 0xff, 5 * sizeof(INT16));
+	memset(DrvInputs, 0xff, 5 * sizeof(INT16));
 
 	for (INT32 i = 0; i < 16; i++) {
 		DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -1486,11 +1487,11 @@ struct BurnDriver BurnDrvAliencha = {
 // Alien Challenge (China)
 
 static struct BurnRomInfo alienchacRomDesc[] = {
-	{ "igsc0102.u81",	0x200000, 0xe3432be3, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "hfh_p.u80",		0x080000, 0x5175ebdc, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "hfh_p.u79",		0x080000, 0x42ad978c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "hfh_p.u80",		0x080000, 0x5175ebdc, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "hfh_p.u79",		0x080000, 0x42ad978c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "igsc0101.u81",	0x200000, 0x704c48cf, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "hfh_s.u86",		0x010000, 0x5728a9ed, 2 | BRF_PRG | BRF_ESS }, //  3 z80 code
+	{ "alien_u-86.u86",	0x010000, 0x5728a9ed, 2 | BRF_PRG | BRF_ESS }, //  3 z80 code
 
 	{ "igst0101.u9",	0x100000, 0x2ce12d7b, 3 | BRF_GRA },           //  4 8x8 tiles
 	{ "igst0102.u10",	0x100000, 0x542a76a0, 3 | BRF_GRA },           //  5
@@ -1504,9 +1505,9 @@ static struct BurnRomInfo alienchacRomDesc[] = {
 	{ "igsa0102.u2",	0x400000, 0xdbeee7ac, 5 | BRF_GRA },           // 11
 	{ "igsa0103.u1",	0x400000, 0xe5f19041, 5 | BRF_GRA },           // 12
 
-	{ "hfh_g.u65",		0x040000, 0xec469b57, 6 | BRF_SND },           // 11 OKI #0 Samples
+	{ "alien_u65.u65",	0x040000, 0xec469b57, 6 | BRF_SND },           // 11 OKI #0 Samples
 
-	{ "hfh_g.u66",		0x040000, 0x7cfcd98e, 7 | BRF_SND },           // 12 OKI #1 Samples
+	{ "alien_u66.u66",	0x040000, 0x7cfcd98e, 7 | BRF_SND },           // 12 OKI #1 Samples
 
 	{ "yrw801-m",		0x200000, 0x2a9d8d43, 8 | BRF_SND },           // 13 YMF278b Samples
 };

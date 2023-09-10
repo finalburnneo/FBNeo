@@ -2032,7 +2032,7 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 	}
 
 	// Go through each line of the config file and process inputs
-	while (_fgetts(szLine, sizeof(szLine), h)) {
+	while (_fgetts(szLine, 1024, h)) {
 		TCHAR* szValue;
 		INT32 nLen = _tcslen(szLine);
 

@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="19neunzehnj" cloneof="19neunzehn" romof="19neunzehn">
+	<game name="19neunzehnj" cloneof="19neunzehn" romof="19neunzehn" sourcefile="d_nes.cpp">
 		<description>19 - Neunzehn (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Soft Pro</manufacturer>
@@ -21,7 +21,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="19neunzehn" romof="fdsbios">
+	<game name="19neunzehn" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>19 - Neunzehn (T-Eng)</description>
 		<year>2015</year>
@@ -31,7 +31,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="adiannotsue" romof="fdsbios">
+	<game name="adiannotsue" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Adian no Tsue (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -40,7 +40,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="aisenshinicol" romof="fdsbios">
+	<game name="aisenshinicol" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Ai Senshi Nicol (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -49,7 +49,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="akitsunofusnoka" romof="fdsbios">
+	<game name="akitsunofusnoka" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Aki to Tsukasa no Fushigi no Kabe (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Super Pig</manufacturer>
@@ -58,7 +58,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="akumajoudraculaj" cloneof="akumajoudracula" romof="akumajoudracula">
+	<game name="akumajoudraculaj" cloneof="akumajoudracula" romof="akumajoudracula" sourcefile="d_nes.cpp">
 		<description>Akumajou Dracula (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Konami</manufacturer>
@@ -67,7 +67,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="akumajoudracula" romof="fdsbios">
+	<game name="akumajoudracula" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Akumajou Dracula (T-Eng)</description>
 		<year>2020</year>
@@ -77,7 +77,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="akuusenrai" romof="fdsbios">
+	<game name="akuusenrai" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Akuu Senki Raijin (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Square</manufacturer>
@@ -86,7 +86,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="aliensfix" romof="fdsbios">
+	<game name="aliensfix" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Aliens - Alien 2 (Fix Hack)</description>
 		<year>2017</year>
@@ -96,7 +96,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="aliens" cloneof="aliensfix" romof="aliensfix">
+	<game name="aliens" cloneof="aliensfix" romof="aliensfix" sourcefile="d_nes.cpp">
 		<comment>Prototype</comment>
 		<description>Aliens - Alien 2 (Japan) (Prototype)</description>
 		<year>1987</year>
@@ -106,7 +106,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="allnignipsupmabr" romof="fdsbios">
+	<game name="allnignipsupmabr" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>All Night Nippon Super Mario Brothers (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -115,7 +115,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="appletowmon" romof="fdsbios">
+	<game name="appletowmon" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Apple Town Monogatari - Little Computer People (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Square</manufacturer>
@@ -124,7 +124,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="armananokisekij" cloneof="armananokiseki" romof="armananokiseki">
+	<game name="armananokisekij" cloneof="armananokiseki" romof="armananokiseki" sourcefile="d_nes.cpp">
 		<description>Armana no Kiseki (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -133,7 +133,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="armananokiseki" romof="fdsbios">
+	<game name="armananokiseki" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Armana no Kiseki (T-Eng)</description>
 		<year>2012</year>
@@ -143,7 +143,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="aspic" romof="fdsbios">
+	<game name="aspic" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Aspic - Curse of the Snakelord (T-Eng)</description>
 		<year>2023</year>
@@ -153,7 +153,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="aspicj" cloneof="aspic" romof="aspic">
+	<game name="aspicj" cloneof="aspic" romof="aspic" sourcefile="d_nes.cpp">
 		<description>Aspic - Majaou no Noroi (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Bothtec</manufacturer>
@@ -162,7 +162,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bakutpatkun" romof="fdsbios">
+	<game name="bakutpatkun" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Bakutoushi Patton-kun (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Soft Pro</manufacturer>
@@ -171,7 +171,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bigchadogspi" romof="fdsbios">
+	<game name="bigchadogspi" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Big Challenge! Dogfight Spirit (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -180,7 +180,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bigchagogobo" romof="fdsbios">
+	<game name="bigchagogobo" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Big Challenge! Go! Go! Bowling (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -189,7 +189,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bigchagunfig" romof="fdsbios">
+	<game name="bigchagunfig" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Big Challenge! Gun Fighter (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -198,7 +198,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bigchajuusen" romof="fdsbios">
+	<game name="bigchajuusen" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Big Challenge! Juudou Senshuken (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -207,7 +207,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="biomirbokupa" romof="fdsbios">
+	<game name="biomirbokupa" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Bio Miracle Bokutte Upa (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -216,7 +216,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bomberman" romof="fdsbios">
+	<game name="bomberman" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Bomber Man (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -225,7 +225,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="bubblebobble" romof="fdsbios">
+	<game name="bubblebobble" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Bubble Bobble (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
@@ -234,7 +234,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="burgertime" romof="fdsbios">
+	<game name="burgertime" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>BurgerTime (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Data East</manufacturer>
@@ -243,7 +243,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="chitetaiord" romof="fdsbios">
+	<game name="chitetaiord" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Chitei Tairiku Ordola (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -252,7 +252,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="clucluland" romof="fdsbios">
+	<game name="clucluland" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Clu Clu Land (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -261,7 +261,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="coconaworld" romof="fdsbios">
+	<game name="coconaworld" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Cocona World (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Sofel</manufacturer>
@@ -270,7 +270,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dandyj" cloneof="dandy" romof="dandy">
+	<game name="dandyj" cloneof="dandy" romof="dandy" sourcefile="d_nes.cpp">
 		<description>Dandy - Zeuon no Fukkatsu (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Pony Canyon</manufacturer>
@@ -279,7 +279,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dandy" romof="fdsbios">
+	<game name="dandy" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Dandy - Zeuon no Fukkatsu (T-Eng)</description>
 		<year>2021</year>
@@ -289,7 +289,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="deadzonej" cloneof="deadzone" romof="deadzone">
+	<game name="deadzonej" cloneof="deadzone" romof="deadzone" sourcefile="d_nes.cpp">
 		<description>Dead Zone (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -298,7 +298,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="deadzone" romof="fdsbios">
+	<game name="deadzone" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Dead Zone (T-Eng)</description>
 		<year>2019</year>
@@ -308,7 +308,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="digdug" romof="fdsbios">
+	<game name="digdug" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Dig Dug (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namco</manufacturer>
@@ -317,7 +317,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="digdugii" romof="fdsbios">
+	<game name="digdugii" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Dig Dug II (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namco</manufacturer>
@@ -326,7 +326,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dirtypaij" cloneof="dirtypai" romof="dirtypai">
+	<game name="dirtypaij" cloneof="dirtypai" romof="dirtypai" sourcefile="d_nes.cpp">
 		<description>Dirty Pair - Project Eden (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
@@ -335,7 +335,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dirtypai" romof="fdsbios">
+	<game name="dirtypai" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Dirty Pair - Project Eden (T-Eng)</description>
 		<year>2021</year>
@@ -345,7 +345,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dokidokipanic" romof="fdsbios">
+	<game name="dokidokipanic" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Doki Doki Panic (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo - Fuji TV</manufacturer>
@@ -354,7 +354,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="donkeykong" romof="fdsbios">
+	<game name="donkeykong" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Donkey Kong (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -363,7 +363,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="donkeykongjr" romof="fdsbios">
+	<game name="donkeykongjr" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Donkey Kong Jr. (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -372,7 +372,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="doremikko" romof="fdsbios">
+	<game name="doremikko" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Doremikko (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -381,7 +381,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="drcha" romof="fdsbios">
+	<game name="drcha" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Dr. Chaos - Jigoku no Tobira (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Pony Canyon</manufacturer>
@@ -390,7 +390,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dracuii" romof="fdsbios">
+	<game name="dracuii" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Dracula II - Noroi no Fuuin (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -399,7 +399,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="druid" cloneof="druiden" romof="druiden">
+	<game name="druid" cloneof="druiden" romof="druiden" sourcefile="d_nes.cpp">
 		<description>Druid - Kyoufu no Tobira (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -408,7 +408,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="druiden" romof="fdsbios">
+	<game name="druiden" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Druid - The Gate of Fear (T-Eng)</description>
 		<year>2022</year>
@@ -418,7 +418,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="eggerland" romof="fdsbios">
+	<game name="eggerland" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Egger Land (Japan)</description>
 		<year>1987</year>
 		<manufacturer>HAL Laboratory</manufacturer>
@@ -427,7 +427,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="eggerlansouenota" romof="fdsbios">
+	<game name="eggerlansouenota" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Egger Land - Souzouhe no Tabidachi (Japan)</description>
 		<year>1988</year>
 		<manufacturer>HAL Laboratory</manufacturer>
@@ -436,7 +436,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="electrician1" cloneof="electrician" romof="electrician">
+	<game name="electrician1" cloneof="electrician" romof="electrician" sourcefile="d_nes.cpp">
 		<description>Electrician (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Kemco</manufacturer>
@@ -445,7 +445,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="electrician" romof="fdsbios">
+	<game name="electrician" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Electrician (T-eng)</description>
 		<year>2001</year>
@@ -455,7 +455,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="esperdreamj" cloneof="esperdream" romof="esperdream">
+	<game name="esperdreamj" cloneof="esperdream" romof="esperdream" sourcefile="d_nes.cpp">
 		<description>Esper Dream (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -464,7 +464,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="esperdream" romof="fdsbios">
+	<game name="esperdream" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Esper Dream (T-Eng)</description>
 		<year>2003</year>
@@ -474,7 +474,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="excitsoc" romof="fdsbios">
+	<game name="excitsoc" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Exciting Soccer - Konami Cup (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -483,7 +483,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="fairypin" romof="fdsbios">
+	<game name="fairypin" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Fairy Pinball - Yousei Tachi no Pinball (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Hacker International</manufacturer>
@@ -492,7 +492,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="falsion" romof="fdsbios">
+	<game name="falsion" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Falsion (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -501,7 +501,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famicgrapri" romof="fdsbios">
+	<game name="famicgrapri" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famicom Grand Prix - F1 Race (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -510,7 +510,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famicgrapriii" romof="fdsbios">
+	<game name="famicgrapriii" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famicom Grand Prix II - 3D Hot Rally (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -519,7 +519,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famimdisvol1" romof="fdsbios">
+	<game name="famimdisvol1" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famimaga Disk Vol. 1 - Hong Kong (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Tokuma Shoten</manufacturer>
@@ -528,7 +528,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famimdisvol2" romof="fdsbios">
+	<game name="famimdisvol2" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famimaga Disk Vol. 2 - Panic Space (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Tokuma Shoten</manufacturer>
@@ -537,7 +537,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famimdisvol3" romof="fdsbios">
+	<game name="famimdisvol3" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famimaga Disk Vol. 3 - All 1 (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Tokuma Shoten</manufacturer>
@@ -546,7 +546,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famimdisvol4" romof="fdsbios">
+	<game name="famimdisvol4" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famimaga Disk Vol. 4 - Clox (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Tokuma Shoten</manufacturer>
@@ -555,7 +555,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famimdisvol5" romof="fdsbios">
+	<game name="famimdisvol5" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famimaga Disk Vol. 5 - Puyo Puyo (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Tokuma Shoten</manufacturer>
@@ -564,7 +564,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="famimdisvol6" romof="fdsbios">
+	<game name="famimdisvol6" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Famimaga Disk Vol. 6 - Janken Disk Jou (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Tokuma Shoten</manufacturer>
@@ -573,7 +573,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="fdsirqtest" romof="fdsbios">
+	<game name="fdsirqtest" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>FDS IRQ Test (Sour, v7)</description>
 		<year>1989?</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -582,7 +582,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="finalcom" romof="fdsbios">
+	<game name="finalcom" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Final Command - Akai Yousai (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -591,7 +591,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="firebam" romof="fdsbios">
+	<game name="firebam" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Fire Bam (Japan)</description>
 		<year>1988</year>
 		<manufacturer>HAL Laboratory</manufacturer>
@@ -600,7 +600,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="firerock" romof="fdsbios">
+	<game name="firerock" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Fire Rock (Japan)</description>
 		<year>1988</year>
 		<manufacturer>System Sacom</manufacturer>
@@ -609,7 +609,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="fuuunshoken" romof="fdsbios">
+	<game name="fuuunshoken" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Fuuun Shourin Ken (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -618,7 +618,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="fuuunankoku" romof="fdsbios">
+	<game name="fuuunankoku" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Fuuun Shourin Ken - Ankoku no Maou (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -627,7 +627,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaga" romof="fdsbios">
+	<game name="galaga" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Galaga (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namco</manufacturer>
@@ -636,7 +636,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaxian" romof="fdsbios">
+	<game name="galaxian" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Galaxian (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namco</manufacturer>
@@ -645,7 +645,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="gallforj" cloneof="gallfor" romof="gallfor">
+	<game name="gallforj" cloneof="gallfor" romof="gallfor" sourcefile="d_nes.cpp">
 		<description>Gall Force - Eternal Story (Japan)</description>
 		<year>1986</year>
 		<manufacturer>HAL Laboratory</manufacturer>
@@ -654,7 +654,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="gallfor" romof="fdsbios">
+	<game name="gallfor" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Gall Force - Eternal Story (T-Eng)</description>
 		<year>2008</year>
@@ -664,7 +664,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="gingaden" romof="fdsbios">
+	<game name="gingaden" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Ginga Denshou - Galaxy Odyssey (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Imagineer</manufacturer>
@@ -673,7 +673,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="golf" romof="fdsbios">
+	<game name="golf" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Golf (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -682,7 +682,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="golfjapcou" romof="fdsbios">
+	<game name="golfjapcou" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Golf - Japan Course (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -691,7 +691,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="golfuscourse" romof="fdsbios">
+	<game name="golfuscourse" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Golf - US Course (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -700,7 +700,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="goonies" romof="fdsbios">
+	<game name="goonies" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Goonies, The (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -709,7 +709,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="greenberet" romof="fdsbios">
+	<game name="greenberet" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Green Beret (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -718,7 +718,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="gunsmoke" romof="fdsbios">
+	<game name="gunsmoke" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Gun.Smoke (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Capcom</manufacturer>
@@ -727,7 +727,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="gyruss1" cloneof="gyruss" romof="gyruss">
+	<game name="gyruss1" cloneof="gyruss" romof="gyruss" sourcefile="d_nes.cpp">
 		<description>Gyruss (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -736,7 +736,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="gyruss" romof="fdsbios">
+	<game name="gyruss" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Gyruss (T-eng)</description>
 		<year>2021</year>
@@ -746,7 +746,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="halleywars" romof="fdsbios">
+	<game name="halleywars" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Halley Wars (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -755,7 +755,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="haokunnofusnata" romof="fdsbios">
+	<game name="haokunnofusnata" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Hao-kun no Fushigi na Tabi (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Square</manufacturer>
@@ -764,7 +764,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="hikarshi" romof="fdsbios">
+	<game name="hikarshi" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Hikari Shinwa - Palutena no Kagami (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -773,7 +773,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="icehockey" romof="fdsbios">
+	<game name="icehockey" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Ice Hockey (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -782,7 +782,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="idolhlj" cloneof="idolhl" romof="idolhl">
+	<game name="idolhlj" cloneof="idolhl" romof="idolhl" sourcefile="d_nes.cpp">
 		<description>Idol Hotline - Nakayama Miho no Tokimeki High School (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -791,7 +791,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="idolhl" romof="fdsbios">
+	<game name="idolhl" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Idol Hotline - Nakayama Miho no Tokimeki High School (T-Eng)</description>
 		<year>2022</year>
@@ -801,7 +801,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ishidouj" cloneof="ishidou" romof="ishidou">
+	<game name="ishidouj" cloneof="ishidou" romof="ishidou" sourcefile="d_nes.cpp">
 		<description>Ishidou (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -810,7 +810,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ishidou" romof="fdsbios">
+	<game name="ishidou" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Ishidou (T-Eng)</description>
 		<year>2011</year>
@@ -820,7 +820,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="jikaishometmag" romof="fdsbios">
+	<game name="jikaishometmag" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Jikai Shounen Met Mag (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Square - Thinking Rabbit</manufacturer>
@@ -829,7 +829,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kaettmarbro" romof="fdsbios">
+	<game name="kaettmarbro" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Kaettekita Mario Brothers (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -838,7 +838,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kalinnotsurugij" cloneof="kalinnotsurugi" romof="kalinnotsurugi">
+	<game name="kalinnotsurugij" cloneof="kalinnotsurugi" romof="kalinnotsurugi" sourcefile="d_nes.cpp">
 		<description>Kalin no Tsurugi (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Square</manufacturer>
@@ -847,7 +847,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kalinnotsurugi" romof="fdsbios">
+	<game name="kalinnotsurugi" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Kalin no Tsurugi (T-Eng)</description>
 		<year>2005</year>
@@ -857,7 +857,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kamenridbla" cloneof="kamenridblaen" romof="kamenridblaen">
+	<game name="kamenridbla" cloneof="kamenridblaen" romof="kamenridblaen" sourcefile="d_nes.cpp">
 		<description>Kamen Rider Black - Taiketsu Shadow Moon (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Bandai</manufacturer>
@@ -866,7 +866,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kamenridblaen" romof="fdsbios">
+	<game name="kamenridblaen" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Kamen Rider Black - Taiketsu Shadow Moon (T-Eng)</description>
 		<year>2022</year>
@@ -876,7 +876,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kickandrun" romof="fdsbios">
+	<game name="kickandrun" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Kick and Run (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
@@ -885,7 +885,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kickcha" romof="fdsbios">
+	<game name="kickcha" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Kick Challenger - Air Foot (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Vap</manufacturer>
@@ -894,7 +894,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kietaprincess" romof="fdsbios">
+	<game name="kietaprincess" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Kieta Princess (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Imagineer</manufacturer>
@@ -903,7 +903,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kikikai" romof="fdsbios">
+	<game name="kikikai" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Kiki Kaikai - Dotou Hen (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Taito</manufacturer>
@@ -912,7 +912,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kinni" romof="fdsbios">
+	<game name="kinni" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Kinnikuman - Kinnikusei Oui Soudatsusen (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
@@ -921,7 +921,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="knighlor" romof="fdsbios">
+	<game name="knighlor" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Knight Lore - Majou no Ookami Otoko (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -930,7 +930,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="knightmovej" cloneof="knightmove" romof="knightmove">
+	<game name="knightmovej" cloneof="knightmove" romof="knightmove" sourcefile="d_nes.cpp">
 		<description>Knight Move (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -939,7 +939,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="knightmove" romof="fdsbios">
+	<game name="knightmove" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Knight Move (T-Eng)</description>
 		<year>2003</year>
@@ -949,7 +949,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="konamictennis" romof="fdsbios">
+	<game name="konamictennis" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Konamic Tennis (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -958,7 +958,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="konekmon" romof="fdsbios">
+	<game name="konekmon" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Koneko Monogatari - The Adventures of Chatran (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
@@ -967,7 +967,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="linknobouj" cloneof="linknobou" romof="linknobou">
+	<game name="linknobouj" cloneof="linknobou" romof="linknobou" sourcefile="d_nes.cpp">
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -976,7 +976,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="linknobouc" cloneof="linknobou" romof="linknobou">
+	<game name="linknobouc" cloneof="linknobou" romof="linknobou" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Link no Bouken - The Legend of Zelda 2 (Rev 1) (Hack, Spanish v1.0)</description>
 		<year>2019</year>
@@ -986,7 +986,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="linknobou" romof="fdsbios">
+	<game name="linknobou" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Link no Bouken - The Legend of Zelda 2 (T-Eng)</description>
 		<year>2017</year>
@@ -996,7 +996,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="lutter" romof="fdsbios">
+	<game name="lutter" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Lutter (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Athena</manufacturer>
@@ -1005,7 +1005,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="maerchenveil" romof="fdsbios">
+	<game name="maerchenveil" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Maerchen Veil (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -1014,7 +1014,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="magmapro" romof="fdsbios">
+	<game name="magmapro" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Magma Project - Hacker (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Bits Laboratory</manufacturer>
@@ -1023,7 +1023,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="matounohou" romof="fdsbios">
+	<game name="matounohou" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Matou no Houkai - The Hero of Babel (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Pony Canyon</manufacturer>
@@ -1032,7 +1032,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="meikyjiidabj" cloneof="meikyjiidab" romof="meikyjiidab">
+	<game name="meikyjiidabj" cloneof="meikyjiidab" romof="meikyjiidab" sourcefile="d_nes.cpp">
 		<description>Meikyuu Jiin Dababa (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
@@ -1041,7 +1041,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="meikyjiidab" romof="fdsbios">
+	<game name="meikyjiidab" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Meikyuu Jiin Dababa (T-Eng)</description>
 		<year>2017</year>
@@ -1051,7 +1051,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="metroidj" cloneof="metroid" romof="metroid">
+	<game name="metroidj" cloneof="metroid" romof="metroid" sourcefile="d_nes.cpp">
 		<description>Metroid (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1060,7 +1060,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="metroid" romof="fdsbios">
+	<game name="metroid" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Metroid (T-Eng)</description>
 		<year>2016</year>
@@ -1070,7 +1070,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="michaengdai" romof="fdsbios">
+	<game name="michaengdai" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Michael English Daibouken (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Scorpion Soft</manufacturer>
@@ -1079,7 +1079,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="moerotwi" romof="fdsbios">
+	<game name="moerotwi" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Moero TwinBee - Cinnamon Hakase wo Sukue! (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Konami</manufacturer>
@@ -1088,7 +1088,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="montyonrunj" cloneof="montyonrun" romof="montyonrun">
+	<game name="montyonrunj" cloneof="montyonrun" romof="montyonrun" sourcefile="d_nes.cpp">
 		<description>Monty on the Run - Monty no Doki Doki Dai Dassou (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -1097,7 +1097,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="montyonrun" romof="fdsbios">
+	<game name="montyonrun" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Monty on the Run - Monty no Doki Doki Dai Dassou (T-Eng)</description>
 		<year>2021</year>
@@ -1107,7 +1107,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="moonballmagic" romof="fdsbios">
+	<game name="moonballmagic" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Moonball Magic (Japan)</description>
 		<year>1988</year>
 		<manufacturer>System Sacom</manufacturer>
@@ -1116,7 +1116,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="mystemurcas" romof="fdsbios">
+	<game name="mystemurcas" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Mysterious Murasame Castle (T-Eng)</description>
 		<year>2011</year>
@@ -1126,7 +1126,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="namida" romof="fdsbios">
+	<game name="namida" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Namida no Soukoban Special (Japan)</description>
 		<year>1986</year>
 		<manufacturer>ASCII</manufacturer>
@@ -1135,7 +1135,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="nazonokab" romof="fdsbios">
+	<game name="nazonokab" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Nazo no Kabe - Block Kuzushi (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Konami</manufacturer>
@@ -1144,7 +1144,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="nazonomur" cloneof="mystemurcas" romof="mystemurcas">
+	<game name="nazonomur" cloneof="mystemurcas" romof="mystemurcas" sourcefile="d_nes.cpp">
 		<description>Nazo no Murasamejou (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1153,7 +1153,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="otocky" romof="fdsbios">
+	<game name="otocky" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Otocky (Japan)</description>
 		<year>1987</year>
 		<manufacturer>ASCII</manufacturer>
@@ -1162,7 +1162,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="patla" cloneof="patlaen" romof="patlaen">
+	<game name="patla" cloneof="patlaen" romof="patlaen" sourcefile="d_nes.cpp">
 		<description>Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Bandai</manufacturer>
@@ -1171,7 +1171,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="patlaen" romof="fdsbios">
+	<game name="patlaen" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (T-Eng)</description>
 		<year>2003</year>
@@ -1181,7 +1181,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="progolsarkagnoto" romof="fdsbios">
+	<game name="progolsarkagnoto" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Pro Golfer Saru - Kage no Tournament (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
@@ -1190,7 +1190,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="puttputtgolf" romof="fdsbios">
+	<game name="puttputtgolf" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Putt Putt Golf (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1199,7 +1199,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="puzzleboysj" cloneof="puzzleboys" romof="puzzleboys">
+	<game name="puzzleboysj" cloneof="puzzleboys" romof="puzzleboys" sourcefile="d_nes.cpp">
 		<description>Puzzle Boys (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Atlus</manufacturer>
@@ -1208,7 +1208,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="puzzleboys" romof="fdsbios">
+	<game name="puzzleboys" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Puzzle Boys (T-Eng)</description>
 		<year>2011</year>
@@ -1218,7 +1218,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="radicbomjirkun" romof="fdsbios">
+	<game name="radicbomjirkun" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Radical Bomber!! Jirai-kun (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Jaleco</manufacturer>
@@ -1227,7 +1227,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="reflectworld" romof="fdsbios">
+	<game name="reflectworld" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Reflect World (Japan)</description>
 		<year>1987</year>
 		<manufacturer>East Cube</manufacturer>
@@ -1236,7 +1236,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="relics" romof="fdsbios">
+	<game name="relics" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Relics - Ankoku Yousai (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bothtec</manufacturer>
@@ -1245,7 +1245,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="replicart" romof="fdsbios">
+	<game name="replicart" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Replicart (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
@@ -1254,7 +1254,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="rogerrabbit" romof="fdsbios">
+	<game name="rogerrabbit" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Roger Rabbit (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Kemco</manufacturer>
@@ -1263,7 +1263,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="samsword" cloneof="samsworden" romof="samsworden">
+	<game name="samsword" cloneof="samsworden" romof="samsworden" sourcefile="d_nes.cpp">
 		<description>Samurai Sword (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Capcom</manufacturer>
@@ -1272,7 +1272,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="samsworden" romof="fdsbios">
+	<game name="samsworden" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Samurai Sword (T-Eng)</description>
 		<year>2003</year>
@@ -1282,7 +1282,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="sdgunworgacsescwac" cloneof="sdgunworgacsescwa" romof="sdgunworgacsescwa">
+	<game name="sdgunworgacsescwac" cloneof="sdgunworgacsescwa" romof="sdgunworgacsescwa" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Hack, Spanish v1.0)</description>
 		<year>2020</year>
@@ -1292,7 +1292,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="sdgunworgacsescwa" romof="fdsbios">
+	<game name="sdgunworgacsescwa" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
@@ -1301,7 +1301,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="sectionz" romof="fdsbios">
+	<game name="sectionz" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Section-Z (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Capcom</manufacturer>
@@ -1310,7 +1310,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="seikepsyj" cloneof="seikepsy" romof="seikepsy">
+	<game name="seikepsyj" cloneof="seikepsy" romof="seikepsy" sourcefile="d_nes.cpp">
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Imagineer</manufacturer>
@@ -1319,7 +1319,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="seikepsy" romof="fdsbios">
+	<game name="seikepsy" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng)</description>
 		<year>20??</year>
@@ -1329,7 +1329,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="sexyinvaders" romof="fdsbios">
+	<game name="sexyinvaders" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Sexy Invaders (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Super Pig</manufacturer>
@@ -1338,7 +1338,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="silvij" cloneof="silvi" romof="silvi">
+	<game name="silvij" cloneof="silvi" romof="silvi" sourcefile="d_nes.cpp">
 		<description>Silviana - Ai Ippai no Little Angel (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1347,7 +1347,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="silvi" romof="fdsbios">
+	<game name="silvi" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Silviana - Ai Ippai no Little Angel (T-Eng)</description>
 		<year>2002</year>
@@ -1357,7 +1357,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="smashpingpong" romof="fdsbios">
+	<game name="smashpingpong" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Smash Ping Pong (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Nintendo - Konami</manufacturer>
@@ -1366,7 +1366,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="solomonnokagi" romof="fdsbios">
+	<game name="solomonnokagi" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Solomon no Kagi (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Tecmo</manufacturer>
@@ -1375,7 +1375,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="superboyallan" romof="fdsbios">
+	<game name="superboyallan" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Super Boy Allan (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -1384,7 +1384,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="superlodrun" romof="fdsbios">
+	<game name="superlodrun" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Super Lode Runner (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
@@ -1393,7 +1393,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="superlodrunii" romof="fdsbios">
+	<game name="superlodrunii" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Super Lode Runner II (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
@@ -1402,7 +1402,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="supermarbroc" cloneof="supermarbro" romof="supermarbro">
+	<game name="supermarbroc" cloneof="supermarbro" romof="supermarbro" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Super Mario Brothers (Hack, Spanish v1.0)</description>
 		<year>2020</year>
@@ -1412,7 +1412,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="supermarbro" romof="fdsbios">
+	<game name="supermarbro" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Super Mario Brothers (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1421,7 +1421,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="supermarbro2" romof="fdsbios">
+	<game name="supermarbro2" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Super Mario Brothers 2 (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1430,7 +1430,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="tamafri" romof="fdsbios">
+	<game name="tamafri" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Tama &amp; Friends - 3 Choume Daibouken (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Bandai</manufacturer>
@@ -1439,7 +1439,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="tennis" romof="fdsbios">
+	<game name="tennis" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Tennis (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1448,7 +1448,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="tobiddai" romof="fdsbios">
+	<game name="tobiddai" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Tobidase Daisakusen (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Square</manufacturer>
@@ -1457,7 +1457,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="topplezip" romof="fdsbios">
+	<game name="topplezip" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Topple Zip (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bothtec</manufacturer>
@@ -1466,7 +1466,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="trans" romof="fdsbios">
+	<game name="trans" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Transformers - The Headmasters (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Takara</manufacturer>
@@ -1475,7 +1475,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="twinbee" romof="fdsbios">
+	<game name="twinbee" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>TwinBee (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
@@ -1484,7 +1484,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ultra" romof="fdsbios">
+	<game name="ultra" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Ultraman - Kaijuu Teikoku no Gyakushuu (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Bandai</manufacturer>
@@ -1493,7 +1493,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ultra2" romof="fdsbios">
+	<game name="ultra2" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Ultraman 2 - Shutsugeki Katoku Tai (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
@@ -1502,7 +1502,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="ultraclu" romof="fdsbios">
+	<game name="ultraclu" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Ultraman Club - Chikyuu Dakkan Sakusen (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Bandai</manufacturer>
@@ -1511,7 +1511,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="volleyball" romof="fdsbios">
+	<game name="volleyball" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Volleyball (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1520,7 +1520,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="vsexcitebike" romof="fdsbios">
+	<game name="vsexcitebike" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Vs. Excitebike (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1529,7 +1529,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="wakusatogai" romof="fdsbios">
+	<game name="wakusatogai" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Wakusei Aton Gaiden (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Kokuzeichou</manufacturer>
@@ -1538,7 +1538,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="wardnernomori" romof="fdsbios">
+	<game name="wardnernomori" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Wardner no Mori (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
@@ -1547,7 +1547,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="wintergames" romof="fdsbios">
+	<game name="wintergames" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Winter Games (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Pony Canyon</manufacturer>
@@ -1556,7 +1556,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="wreckingcrew" romof="fdsbios">
+	<game name="wreckingcrew" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Wrecking Crew (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1565,7 +1565,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="youkaiyashikij" cloneof="youkaiyashiki" romof="youkaiyashiki">
+	<game name="youkaiyashikij" cloneof="youkaiyashiki" romof="youkaiyashiki" sourcefile="d_nes.cpp">
 		<description>Youkai Yashiki (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
@@ -1574,7 +1574,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="youkaiyashiki" romof="fdsbios">
+	<game name="youkaiyashiki" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Youkai Yashiki (T-Eng)</description>
 		<year>2008</year>
@@ -1584,7 +1584,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="yuumaze" romof="fdsbios">
+	<game name="yuumaze" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Yuu Maze (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
@@ -1593,7 +1593,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="zanac" romof="fdsbios">
+	<game name="zanac" romof="fdsbios" sourcefile="d_nes.cpp">
 		<description>Zanac (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
@@ -1602,7 +1602,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="zeldanodenj" cloneof="zeldanoden" romof="zeldanoden">
+	<game name="zeldanodenj" cloneof="zeldanoden" romof="zeldanoden" sourcefile="d_nes.cpp">
 		<description>Zelda no Densetsu - The Hyrule Fantasy (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
@@ -1611,7 +1611,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="zeldanoden" romof="fdsbios">
+	<game name="zeldanoden" romof="fdsbios" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Eng)</description>
 		<year>2016</year>
@@ -1621,7 +1621,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game isbios="yes" name="fdsbios">
+	<game isbios="yes" name="fdsbios" sourcefile="d_nes.cpp">
 		<comment>BIOS only</comment>
 		<description>FDS System BIOS</description>
 		<year>198x</year>

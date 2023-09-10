@@ -723,6 +723,19 @@ extern "C" INT32 BurnDrvGetFamilyFlags()
 	return pDriver[nBurnDrvActive]->Family;
 }
 
+// Return sourcefile
+extern "C" char* BurnDrvGetSourcefile()
+{
+	char* szShortName = pDriver[nBurnDrvActive]->szShortName;
+	for (INT32 i = 0; sourcefile_table[i].game_name[0] != '\0'; i++) {
+		if (!strcmp(sourcefile_table[i].game_name, szShortName)) {
+			return sourcefile_table[i].sourcefile;
+			break;
+		}
+	}
+	return "";
+}
+
 // Save Aspect & Screensize in BurnDrvInit(), restore in BurnDrvExit()
 // .. as games may need to change modes, etc.
 static INT32 DrvAspectX, DrvAspectY;

@@ -686,6 +686,43 @@ static struct BurnDIPInfo FlickyDIPList[]=
 
 STDDIPINFO(Flicky)
 
+static struct BurnDIPInfo Flickys1DIPList[]=
+{
+	// Default Values
+	{0x0d, 0xff, 0xff, 0xff, NULL                     },
+	{0x0e, 0xff, 0xff, 0x78, NULL                     },
+
+	// Dip 1
+	SYSTEM1_COINAGE(0x0d)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x0e, 0x01, 0x01, 0x00, "Upright"                },
+	{0x0e, 0x01, 0x01, 0x01, "Cocktail"               },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x0e, 0x01, 0x02, 0x02, "Off"                    },
+	{0x0e, 0x01, 0x02, 0x00, "On"                     },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x0e, 0x01, 0x0c, 0x0c, "2"                      },
+	{0x0e, 0x01, 0x0c, 0x08, "3"                      },
+	{0x0e, 0x01, 0x0c, 0x04, "4"                      },
+	{0x0e, 0x01, 0x0c, 0x00, "5 (Infinite)"           },
+
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x0e, 0x01, 0x30, 0x30, "80000"                  },
+	{0x0e, 0x01, 0x30, 0x20, "160000"                 },
+	{0x0e, 0x01, 0x30, 0x10, "240000"                 },
+	{0x0e, 0x01, 0x30, 0x00, "320000"                 },
+
+	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0x0e, 0x01, 0x40, 0x40, "Easy"                   },
+	{0x0e, 0x01, 0x40, 0x00, "Hard"                   },
+};
+
+STDDIPINFO(Flickys1)
+
 static struct BurnDIPInfo GardiaDIPList[]=
 {
 	// Default Values
@@ -2136,6 +2173,34 @@ static struct BurnRomInfo FlickyupRomDesc[] = {
 
 STD_ROM_PICK(Flickyup)
 STD_ROM_FN(Flickyup)
+
+static struct BurnRomInfo FlickyupaRomDesc[] = {
+	{ "1",				0x002000, 0x45391848, BRF_ESS | BRF_PRG },              //  0 Z80 #1 Program Code
+	{ "2",				0x002000, 0xbf15cb82, BRF_ESS | BRF_PRG },              //  1 Z80 #1 Program Code
+	{ "3",				0x002000, 0x6ee40df4, BRF_ESS | BRF_PRG },              //  2 Z80 #1 Program Code
+	{ "4",				0x002000, 0xfdecc2b5, BRF_ESS | BRF_PRG },              //  3 Z80 #1 Program Code
+
+	{ "13.120",			0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG },              //  4 Z80 #2 Program Code
+
+	{ "7.62",			0x002000, 0x7402256b, BRF_GRA },                        //  5 Tiles
+	{ "10.61",			0x002000, 0x2f5ce930, BRF_GRA },                        //  6 Tiles
+	{ "6.64",			0x002000, 0x967f1d9a, BRF_GRA },                        //  7 Tiles
+	{ "9.63",			0x002000, 0x03d9a34c, BRF_GRA },                        //  8 Tiles
+	{ "5.66",			0x002000, 0xe659f358, BRF_GRA },                        //  9 Tiles
+	{ "8.65",			0x002000, 0xa496ca15, BRF_GRA },                        // 10 Tiles
+
+	{ "12.117",			0x004000, 0xb5f894a1, BRF_GRA },                        // 11 Sprites
+	{ "11.110",			0x004000, 0x266af78f, BRF_GRA },                        // 12 Sprites
+
+	{ "pr-5317.76",		0x000100, 0x648350b8, BRF_OPT },                        // 13 Timing PROM
+
+	{ "n82s129n",		0x000200, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP }, // 14 Decryption PROM
+
+	{ "pal20l10cns",	0x0000cc, 0x00000000, BRF_OPT | BRF_NODUMP },           // 15 PLDs
+};
+
+STD_ROM_PICK(Flickyupa)
+STD_ROM_FN(Flickyupa)
 
 static struct BurnRomInfo GardiaRomDesc[] = {
 	{ "epr-10255.1",       0x008000, 0x89282a6b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -7043,7 +7108,7 @@ struct BurnDriver BurnDrvFlickys1 = {
 	"Flicky (64k Version, 315-5051, set 2)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
-	NULL, Flickys1RomInfo, Flickys1RomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
+	NULL, Flickys1RomInfo, Flickys1RomName, NULL, NULL, NULL, NULL, FlickyInputInfo, Flickys1DIPInfo,
 	Flicks1Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
@@ -7080,10 +7145,20 @@ struct BurnDriver BurnDrvFlickyo = {
 
 struct BurnDriver BurnDrvFlickyup = {
 	"flickyup", "flicky", NULL, NULL, "1984",
-	"Flicky (64k Version, on Up'n Down boardset)\0", NULL, "Sega", "System 1",
+	"Flicky (64k Version, on Up'n Down boardset, set 1)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyupRomInfo, FlickyupRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
+	Flicks1Init, System1Exit, System1Frame, System1Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFlickyupa = {
+	"flickyupa", "flicky", NULL, NULL, "1984",
+	"Flicky (64k Version, on Up'n Down boardset, set 2)\0", NULL, "bootleg", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, FlickyupaRomInfo, FlickyupaRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
 	Flicks1Init, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };

@@ -29782,6 +29782,23 @@ struct BurnDriver BurnDrvmsx_ghost2017 = {
 	272, 228, 4, 3
 };
 
+// Prisoner of War (Spanish)(HB)
+static struct BurnRomInfo msx_prisonerowsRomDesc[] = {
+	{ "Prisoner of War ES (2018)(Unepic Fran).rom",	65536, 0x9dc4d10e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(msx_prisonerows, msx_prisonerows, msx_msx)
+STD_ROM_FN(msx_prisonerows)
+
+struct BurnDriver BurnDrvmsx_prisonerows = {
+	"msx_prisonerows", NULL, "msx_msx", NULL, "2018",
+	"Prisoner of War (Spanish)\0", NULL, "Unepic Fran", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
+	MSXGetZipName, msx_prisonerowsRomInfo, msx_prisonerowsRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
 // Ghosts'n Goblins (HB, v1.1)
 
 static struct BurnRomInfo MSX_gngRomDesc[] = {

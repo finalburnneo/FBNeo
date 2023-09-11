@@ -1,4 +1,4 @@
-// FB Alpha Arkanoid driver module
+// FB Neo Arkanoid driver module
 // Based on MAME driver by Brad Oliver and MANY others.
 
 // TODO: hw timer countdown @ bootup runs too slow? (maybe?)
@@ -1461,18 +1461,18 @@ static INT32 HexaScan(INT32 nAction, INT32 *pnMin)
 // Arkanoid (World, oldest rev)
 
 static struct BurnRomInfo arkanoidRomDesc[] = {
-	{ "a75-01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-11.ic16",  0x8000, 0xeafd7191, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__11.ic16",  0x8000, 0xeafd7191, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75__06.ic14", 0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__06.ic14",  0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "a75-05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "a75__03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "a75__05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
-	{ "a75-07.ic24",  0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
-	{ "a75-08.ic23",  0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
-	{ "a75-09.ic22",  0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+	{ "a75-07.ic24",   0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
+	{ "a75-08.ic23",   0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
+	{ "a75-09.ic22",   0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
 	
 	{ "arkanoid1_68705p3.ic14", 0x0800, 0x1b68e2d8, 0 | BRF_PRG | BRF_OPT },  //  9 Decapped roms
 	{ "arkanoid_mcu.ic14",      0x0800, 0x4e44b50a, 0 | BRF_PRG | BRF_OPT },  // 10
@@ -1497,14 +1497,14 @@ struct BurnDriver BurnDrvarkanoid = {
 // Arkanoid (US)
 
 static struct BurnRomInfo arkanoiduRomDesc[] = {
-	{ "a75-19.ic17",  0x8000, 0xd3ad37d7, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-18.ic16",  0x8000, 0xcdc08301, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__19.ic17", 0x8000, 0xd3ad37d7, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__18.ic16", 0x8000, 0xcdc08301, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "a75__20.ic14", 0x0800, 0x3994ee92, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "a75-05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "a75__03.ic64", 0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__04.ic63", 0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "a75__05.ic62", 0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
 	{ "a75-07.ic24",  0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
 	{ "a75-08.ic23",  0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
@@ -1542,7 +1542,7 @@ static struct BurnRomInfo arkanoiduoRomDesc[] = {
 	{ "a75-08.ic23",  	0x0200, 0xabb002fb, 4 | BRF_GRA },	         //  7
 	{ "a75-09.ic22",  	0x0200, 0xa7c6c277, 4 | BRF_GRA },	         //  8
 	
-	{ "a75__03,alternate.ic64", 0x8000, 0x983d4485, 0 | BRF_PRG | BRF_OPT },  //  10
+	{ "a75__03_alternate.ic64", 0x8000, 0x983d4485, 0 | BRF_PRG | BRF_OPT },  //  10
 };
 
 STD_ROM_PICK(arkanoiduo)
@@ -1563,14 +1563,14 @@ struct BurnDriver BurnDrvarkanoiduo = {
 // Tournament version
 
 static struct BurnRomInfo arkatourRomDesc[] = {
-	{ "a75-27.ic17",  0x8000, 0xe3b8faf5, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-28.ic16",  0x8000, 0x326aca4d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__27.ic17", 0x8000, 0xe3b8faf5, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__28.ic16", 0x8000, 0x326aca4d, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "a75__32.ic14", 0x0800, 0x8c20d15c, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75-29.ic64",  0x8000, 0x5ddea3cf, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-30.ic63",  0x8000, 0x5fcf2e85, 3 | BRF_GRA },	       //  4
-	{ "a75-31.ic62",  0x8000, 0x7b76b192, 3 | BRF_GRA },	       //  5
+	{ "a75__29.ic64", 0x8000, 0x5ddea3cf, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__30.ic63", 0x8000, 0x5fcf2e85, 3 | BRF_GRA },	       //  4
+	{ "a75__31.ic62", 0x8000, 0x7b76b192, 3 | BRF_GRA },	       //  5
 
 	{ "a75-33.ic24",  0x0200, 0xb4bf3c81, 4 | BRF_GRA },	       //  6 Color Proms
 	{ "a75-34.ic23",  0x0200, 0xde85a803, 4 | BRF_GRA },	       //  7
@@ -1595,14 +1595,14 @@ struct BurnDriver BurnDrvarkatour = {
 // Tournament version, newer
 
 static struct BurnRomInfo arkatour2RomDesc[] = {
-	{ "a75-36.ic16",  0x8000, 0xf3b1923e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-37.ic17",  0x8000, 0x7c74987b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__36.ic17", 0x8000, 0xf3b1923e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__37.ic16", 0x8000, 0x7c74987b, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75_38.ic14",  0x0800, 0x00000000, 2 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  2 MCU
+	{ "a75__38.ic14", 0x0800, 0x00000000, 2 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  2 MCU
 
-	{ "a75-29.ic64",  0x8000, 0x5ddea3cf, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-30.ic63",  0x8000, 0x5fcf2e85, 3 | BRF_GRA },	       //  4
-	{ "a75-31.ic62",  0x8000, 0x7b76b192, 3 | BRF_GRA },	       //  5
+	{ "a75__29.ic64", 0x8000, 0x5ddea3cf, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__30.ic63", 0x8000, 0x5fcf2e85, 3 | BRF_GRA },	       //  4
+	{ "a75__31.ic62", 0x8000, 0x7b76b192, 3 | BRF_GRA },	       //  5
 
 	{ "a75-33.ic24",  0x0200, 0xb4bf3c81, 4 | BRF_GRA },	       //  6 Color Proms
 	{ "a75-34.ic23",  0x0200, 0xde85a803, 4 | BRF_GRA },	       //  7
@@ -1626,14 +1626,14 @@ struct BurnDriver BurnDrvarkatour2 = {
 // Arkanoid (Japan)
 
 static struct BurnRomInfo arkanoidjRomDesc[] = {
-	{ "a75_24.ic17",  0x8000, 0x3f2b27e9, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75_25.ic16",  0x8000, 0xc13b2038, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__24.ic17", 0x8000, 0x3f2b27e9, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__25.ic16", 0x8000, 0xc13b2038, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "a75__26.ic14", 0x0800, 0x1c4d212b, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "a75-05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "a75__03.ic64", 0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__04.ic63", 0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "a75__05.ic62", 0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
 	{ "a75-07.ic24",  0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
 	{ "a75-08.ic23",  0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
@@ -1656,16 +1656,14 @@ struct BurnDriver BurnDrvarkanoidj = {
 // Arkanoid (Japan, older rev)
 
 static struct BurnRomInfo arkanoidjaRomDesc[] = {
-	{ "a75-21.ic17",  0x8000, 0xbf0455fc, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-22.ic16",  0x8000, 0x3a2688d3, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__21.ic17", 0x8000, 0xbf0455fc, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__22.ic16", 0x8000, 0x3a2688d3, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	// the handcrafted value at 0x351 (0x9ddb) seems incorrect compared to other sets? 
-	//(but it appears the value is never used, and the data it would usually point to does not exist in the program rom?)
-	{ "a75-23.ic14",  0x0800, 0x543fed28, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__23.ic14", 0x0800, 0x35938431, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "a75-05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "a75__03.ic64", 0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__04.ic63", 0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "a75__05.ic62", 0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
 	{ "a75-07.ic24",  0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
 	{ "a75-08.ic23",  0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
@@ -1689,18 +1687,18 @@ struct BurnDriver BurnDrvarkanoidja = {
 // Arkanoid (Japan, oldest rev)
 
 static struct BurnRomInfo arkanoidjbRomDesc[] = {
-	{ "a75-01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-02.ic16",  0x8000, 0xbbc33ceb, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__02.ic16",  0x8000, 0xbbc33ceb, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75__06.ic14", 0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__06.ic14",  0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "a75-05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "a75__03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "a75__05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
-	{ "a75-07.ic24",  0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
-	{ "a75-08.ic23",  0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
-	{ "a75-09.ic22",  0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+	{ "a75-07.ic24",   0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
+	{ "a75-08.ic23",   0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
+	{ "a75-09.ic22",   0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
 };
 
 STD_ROM_PICK(arkanoidjb)
@@ -1712,6 +1710,37 @@ struct BurnDriver BurnDrvarkanoidjb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkanoidjbRomInfo, arkanoidjbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Arkanoid (Phoenix Electronics Co. license)
+
+static struct BurnRomInfo arkanoidpeRomDesc[] = {
+	{ "21.ic17",       0x8000, 0x746de487, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "22.ic16",       0x8000, 0xbf784501, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "a75__15.ic14",  0x0800, 0xd45327a9, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+
+	{ "23.ic64",       0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "24.ic63",       0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "25.ic62",       0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+
+	{ "a75-07.ic24",   0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
+	{ "a75-08.ic23",   0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
+	{ "a75-09.ic22",   0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+};
+
+STD_ROM_PICK(arkanoidpe)
+STD_ROM_FN(arkanoidpe)
+
+struct BurnDriver BurnDrvarkanoidpe = {
+	"arkanoidpe", "arkanoid", NULL, NULL, "1986",
+	"Arkanoid (Phoenix Electronics Co. license)\0", NULL, "Taito Corporation (Phoenix Electronics Co. license)", "Arkanoid",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
+	NULL, arkanoidpeRomInfo, arkanoidpeRomName, NULL, NULL, NULL, NULL, DrvInputInfo, arkanoidjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1758,13 +1787,13 @@ static struct BurnRomInfo arkanoidjbl2RomDesc[] = {
 
 	{ "a75-06__bootleg_68705.ic14", 0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "3.ic33.1c",  				0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "4.ic34.3c",  				0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "5.ic35.5c",  				0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "3.ic33",  					0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "4.ic34",  					0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "5.ic35",  					0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
-	{ "m1-7621-5.ic73.11e",  		0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
-	{ "m1-7621-5.ic74.12e",  		0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
-	{ "m1-7621-5.ic75.13e",  		0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+	{ "a75-07.bpr",  				0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
+	{ "a75-08.bpr",  				0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
+	{ "a75-09.bpr",  				0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
 };
 
 STD_ROM_PICK(arkanoidjbl2)

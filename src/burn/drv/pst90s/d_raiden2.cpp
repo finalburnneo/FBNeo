@@ -5501,9 +5501,48 @@ struct BurnDriver BurnDrvNzeroteam = {
 };
 
 
-// New Zero Team (V33 SYSTEM TYPE_B hardware, China?)
+// New Zero Team (V33 SYSTEM TYPE_B hardware, Zhongguo Shantou Yihuang license)
 
 static struct BurnRomInfo nzeroteamaRomDesc[] = {
+	{ "seibu_1.u0224",			0x080000, 0xcb277b46, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "seibu_2.u0226",			0x080000, 0x6debbf78, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d3.bin",			0x020000, 0xfa2cf3ad, 2 | BRF_GRA },           //  2 Copx data
+
+	{ "seibu_3.u01019",			0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "seibu_5.u0616",			0x010000, 0xce68ba3c, 4 | BRF_GRA },           //  4 Characters
+	{ "seibu_6.u0617",			0x010000, 0xcf44aea7, 4 | BRF_GRA },           //  5
+
+	{ "back-1",					0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  6 Tiles
+	{ "back-2",					0x080000, 0xce61c952, 5 | BRF_GRA },           //  7
+
+	{ "obj-1",					0x200000, 0x45be8029, 6 | BRF_GRA },           //  8 Sprites (Encrypted)
+	{ "obj-2",					0x200000, 0xcb61c19d, 6 | BRF_GRA },           //  9
+
+	{ "seibu_4.u099",			0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 OKI Samples
+	
+	{ "sysv33b-2.u0227.bin",	0x0117, 0xd9f4612f, 0 | BRF_OPT },
+	{ "sysv33b-1.u0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(nzeroteama)
+STD_ROM_FN(nzeroteama)
+
+struct BurnDriver BurnDrvNzeroteama = {
+	"nzeroteama", "zeroteam", NULL, NULL, "1997",
+	"New Zero Team (V33 SYSTEM TYPE_B hardware, Zhongguo Shantou Yihuang license)\0", NULL, "Seibu Kaihatsu (Zhongguo Shantou Yihuang license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, nzeroteamaRomInfo, nzeroteamaRomName, NULL, NULL, NULL, NULL, NzeroteaInputInfo, NzeroteaDIPInfo,
+	NzeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// New Zero Team (V33 SYSTEM TYPE_B hardware, Haoyunlai Trading Company license)
+
+static struct BurnRomInfo nzeroteambRomDesc[] = {
 	{ "prg1",				0x080000, 0x3c7d9410, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
 	{ "prg2",				0x080000, 0x6cba032d, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -5526,15 +5565,15 @@ static struct BurnRomInfo nzeroteamaRomDesc[] = {
 	{ "sysv33b-1.u0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
 };
 
-STD_ROM_PICK(nzeroteama)
-STD_ROM_FN(nzeroteama)
+STD_ROM_PICK(nzeroteamb)
+STD_ROM_FN(nzeroteamb)
 
-struct BurnDriver BurnDrvNzeroteama = {
-	"nzeroteama", "zeroteam", NULL, NULL, "1997",
-	"New Zero Team (V33 SYSTEM TYPE_B hardware, China?)\0", NULL, "Seibu Kaihatsu (Haoyunlai Trading Company license)", "Miscellaneous",
+struct BurnDriver BurnDrvNzeroteamb = {
+	"nzeroteamb", "zeroteam", NULL, NULL, "1997",
+	"New Zero Team (V33 SYSTEM TYPE_B hardware, Haoyunlai Trading Company license)\0", NULL, "Seibu Kaihatsu (Haoyunlai Trading Company license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, nzeroteamaRomInfo, nzeroteamaRomName, NULL, NULL, NULL, NULL, NzeroteaInputInfo, NzeroteaDIPInfo,
+	NULL, nzeroteambRomInfo, nzeroteambRomName, NULL, NULL, NULL, NULL, NzeroteaInputInfo, NzeroteaDIPInfo,
 	NzeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };

@@ -52,7 +52,6 @@ static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 #else
 		prev_str = (char*)memchr((void*)token, '\0', MAX_PATH);
 #endif
-
 	}
 
 	return token;
@@ -91,7 +90,7 @@ static INT32 IsDatUTF8BOM()
 
 #undef UTF8_SIGNATURE
 
-#define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|")
+#define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|{}")
 
 static INT32 LoadRomdata()
 {

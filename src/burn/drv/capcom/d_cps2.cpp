@@ -7183,11 +7183,8 @@ STD_ROM_PICK(Ssf2u)
 STD_ROM_FN(Ssf2u)
 
 static struct BurnRomInfo Ssf2us2RomDesc[] = {
-#if !defined ROM_VERIFY
+	{ "ssfu.03a",      						0x080000, 0x72f29c33, BRF_OPT }, // has the standard ROM
 	{ "super stf 2 super ii rom-08 usa",    0x080000, 0xd48d35c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // the bootleg one seems to be overlayed
-# else
-	{ "ssfu.03a",      						0x080000, 0x72f29c33, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // has the standard ROM
-#endif
 	{ "ssfu.04a",      						0x080000, 0x935cea44, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "ssfu.05",       						0x080000, 0xa0acb28a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "ssfu.06",       						0x080000, 0x47413dcf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },

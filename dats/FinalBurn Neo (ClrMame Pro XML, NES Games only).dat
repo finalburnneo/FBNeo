@@ -9756,6 +9756,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="legendsm" cloneof="legenzel" romof="legenzel" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Legend of Super Mario, The - Save Mushroom Kingdom (GlobalHack)</description>
+		<year>2023</year>
+		<manufacturer>NesDraug</manufacturer>
+		<rom name="Legend of Super Mario, The - Save Mushroom Kingdom (2023)(NesDraug).nes" size="262160" crc="b1d13af1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="legwnsdx" cloneof="legwnssdx" romof="legwnssdx" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
 		<description>Legend of Weed N' Stiff DX, The (HB)</description>
@@ -9897,10 +9906,10 @@
 	</game>
 	<game name="lemmingsimp" cloneof="lemmings" romof="lemmings" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Lemmings Improvement (Hack)</description>
+		<description>Lemmings Improvement (Hack, v1.3)</description>
 		<year>2023</year>
 		<manufacturer>Nintendo Lemmings Improvement Team</manufacturer>
-		<rom name="Lemmings Improvement (2023)(Nintendo Lemmings Improvement Team).nes" size="262160" crc="892d1270"/>
+		<rom name="Lemmings Improvement v1.3 (2023)(Nintendo Lemmings Improvement Team).nes.nes" size="262160" crc="97ccd458"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -9947,7 +9956,7 @@
 	</game>
 	<game name="lionkinleg" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Lion King Legend, The (T-Eng)</description>
+		<description>Lion King Legend, The (T-Eng) (Unl)</description>
 		<year>2015</year>
 		<manufacturer>pacnsacdave</manufacturer>
 		<rom name="Lion King Legend, The (T-Eng).nes" size="524304" crc="0f95fc73"/>
@@ -18190,6 +18199,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="uxo" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>UXO - Unexploded Ordnance (HB)</description>
+		<year>2016</year>
+		<manufacturer>FG Software</manufacturer>
+		<rom name="UXO - Unexploded Ordnance (2016)(FG Software).nes" size="40976" crc="32ab3a14"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="valis" sourcefile="d_nes.cpp">
 		<description>Valis - The Fantastic Soldier (Japan)</description>
 		<year>1987</year>
@@ -19054,6 +19072,15 @@
 		<year>1996</year>
 		<manufacturer>N.T</manufacturer>
 		<rom name="Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan).nes" size="393232" crc="93b37bb3"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="zayuki" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Za! Yukigassen (HB, v1.02)</description>
+		<year>2021</year>
+		<manufacturer>Takenoko Games</manufacturer>
+		<rom name="Za! Yukigassen v1.02 (2021)(Takenoko Games).nes" size="40976" crc="fb8ca245"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

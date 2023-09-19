@@ -86,6 +86,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="testsuite240p" sourcefile="d_megadrive.cpp">
+		<comment>Homebrew</comment>
+		<description>240p Test Suite (HB, v1.23)</description>
+		<year>2022</year>
+		<manufacturer>Artemio</manufacturer>
+		<rom name="240pSuite-1.23.bin" size="262144" crc="439fe2f4"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="3in1fwt" sourcefile="d_megadrive.cpp">
 		<description>3 in 1 Flashback - World Championship Soccer - Tecmo World Cup 92 (Pirate)</description>
 		<year>199?</year>

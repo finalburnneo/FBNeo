@@ -2105,7 +2105,7 @@
 		<description>Blockade Runner (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Toshiba EMI</manufacturer>
-		<rom name="blockade runner (japan).rom" size="16384" crc="8334b431"/>
+		<rom name="Blockade Runner (Japan)(1985)(Toshiba EMI).rom" size="16384" crc="8334b431"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2184,7 +2184,7 @@
 		<description>Boggy '84 (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Nippon Columbia</manufacturer>
-		<rom name="boggy '84 (japan).rom" size="8192" crc="ec089246"/>
+		<rom name="Boggy '84 (Japan)(1984)(Nippon Columbia).rom" size="8192" crc="ec089246"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2195,7 +2195,7 @@
 		<description>Boggy '84 (Japan, Alt 2)</description>
 		<year>1984</year>
 		<manufacturer>Nippon Columbia</manufacturer>
-		<rom name="boggy '84 (japan) (alt 2).rom" size="8192" crc="a4bf1253"/>
+		<rom name="Boggy '84 (Japan)(Alt 2)(1984)(Nippon Columbia).rom" size="8192" crc="a4bf1253"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2206,7 +2206,7 @@
 		<description>Boggy '84 (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Nippon Columbia</manufacturer>
-		<rom name="boggy '84 (japan) (alt 1).rom" size="16384" crc="22e8b312"/>
+		<rom name="Boggy '84 (Japan)(Alt 1)(1984)(Nippon Columbia).rom" size="16384" crc="22e8b312"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2217,7 +2217,7 @@
 		<description>Boing Boing (Euro, Spanish)</description>
 		<year>1985</year>
 		<manufacturer>Idealogic</manufacturer>
-		<rom name="boing boing (spain).rom" size="8192" crc="f44e7fcd"/>
+		<rom name="Boing Boing (Euro, ES)(1985)(Idealogic).rom" size="8192" crc="f44e7fcd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2228,7 +2228,7 @@
 		<description>Bokosuka Wars (Japan)</description>
 		<year>1984</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="bokosuka wars (japan).rom" size="16384" crc="dd6d9aad"/>
+		<rom name="Bokosuka Wars (Japan)(1984)(ASCII).rom" size="16384" crc="dd6d9aad"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2239,7 +2239,7 @@
 		<description>Bokosuka Wars (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="bokosuka wars (japan) (alt 1).rom" size="16384" crc="93b8917a"/>
+		<rom name="Bokosuka Wars (Japan)(Alt)(1984)(ASCII).rom" size="16384" crc="93b8917a"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -2286,7 +2286,7 @@
 		<description>Bomber King (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
-		<rom name="bomber king (japan).rom" size="131072" crc="8cf0e6c0"/>
+		<rom name="Bomber King (Japan)(1988)(Hudson Soft).rom" size="131072" crc="8cf0e6c0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4257,7 +4257,7 @@
 		<description>Crazy Bullet (Japan)</description>
 		<year>1983</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="crazy bullet (japan).rom" size="16384" crc="d0e8f418"/>
+		<rom name="Crazy Bullet (Japan)(1983)(ASCII).rom" size="16384" crc="d0e8f418"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4268,7 +4268,7 @@
 		<description>Crazy Cars (Euro)</description>
 		<year>1988</year>
 		<manufacturer>Titus</manufacturer>
-		<rom name="crazy cars (europe).rom" size="32768" crc="de18372d"/>
+		<rom name="Crazy Cars (Euro)(1988)(Titus).rom" size="32768" crc="de18372d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4291,7 +4291,7 @@
 		<description>Crazy Train (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sony - Konami</manufacturer>
-		<rom name="crazy train (japan).rom" size="8192" crc="39e6ff25"/>
+		<rom name="Crazy Train (Japan)(1983)(Konami).rom" size="8192" crc="39e6ff25"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4302,7 +4302,7 @@
 		<description>Crazy Train (Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sony - Konami</manufacturer>
-		<rom name="crazy train (japan) (alt 1).rom" size="8192" crc="b8764cd3"/>
+		<rom name="Crazy Train (Japan)(Alt)(1983)(Konami).rom" size="8192" crc="b8764cd3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4313,7 +4313,7 @@
 		<description>Cross Blaim (Japan)</description>
 		<year>1986</year>
 		<manufacturer>dB-Soft</manufacturer>
-		<rom name="cross blaim (japan).rom" size="65536" crc="47273220"/>
+		<rom name="Cross Blaim (Japan)(1986)(dB-Soft).rom" size="65536" crc="47273220"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4324,7 +4324,7 @@
 		<description>Crusader (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="crusader (japan).rom" size="32768" crc="0b69dd50"/>
+		<rom name="Crusader (Japan)(1985)(Pony Canyon).rom" size="32768" crc="0b69dd50"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4335,7 +4335,7 @@
 		<description>Crusader (Japan, Alt 2)</description>
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="crusader (japan) (alt 2).rom" size="32768" crc="40afef74"/>
+		<rom name="Crusader (Japan)(Alt 2)(1985)(Pony Canyon).rom" size="32768" crc="40afef74"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4346,7 +4346,7 @@
 		<description>Crusader (Japan, Alt)</description>
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="crusader (japan) (alt 1).rom" size="32768" crc="e167fede"/>
+		<rom name="Crusader (Japan)(Alt 1)(1985)(Pony Canyon).rom" size="32768" crc="e167fede"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -4357,7 +4357,7 @@
 		<description>Crusader (Korea)</description>
 		<year>1987</year>
 		<manufacturer>Clover</manufacturer>
-		<rom name="crusader (korea).rom" size="32768" crc="73f3c7e2"/>
+		<rom name="Crusader (Korea)(1987)(Clover).rom" size="32768" crc="73f3c7e2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13584,6 +13584,18 @@
 		<year>2012</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
 		<rom name="princess_quest_msx.rom" size="65536" crc="aa31ac36"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="prisonofwars" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Prisoner of War (Spanish) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Unepic Fran</manufacturer>
+		<rom name="Prisoner of War ES (2018)(Unepic Fran).rom" size="65536" crc="9dc4d10e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

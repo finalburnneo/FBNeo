@@ -4863,10 +4863,10 @@
 	</game>
 	<game name="subassault" sourcefile="d_sms.cpp">
 		<comment>Homebrew</comment>
-		<description>Sub-Assault (HB, v1.4)</description>
+		<description>Sub-Assault (HB, v1.4.1)</description>
 		<year>2023</year>
 		<manufacturer>Louis The SEGA Nerd</manufacturer>
-		<rom name="Sub-Assault v1.4 (2023)(Louis The SEGA Nerd).sms" size="49152" crc="57234578"/>
+		<rom name="Sub-Assault V1.4.1 (2023)(Louis The SEGA Nerd).sms" size="65536" crc="832ddd09"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

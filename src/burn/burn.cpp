@@ -730,7 +730,6 @@ extern "C" char* BurnDrvGetSourcefile()
 	for (INT32 i = 0; sourcefile_table[i].game_name[0] != '\0'; i++) {
 		if (!strcmp(sourcefile_table[i].game_name, szShortName)) {
 			return sourcefile_table[i].sourcefile;
-			break;
 		}
 	}
 	return "";

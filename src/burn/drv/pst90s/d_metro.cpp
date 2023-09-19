@@ -5296,9 +5296,39 @@ struct BurnDriver BurnDrvDharmak = {
 };
 
 
-// Pururun
+// Pururun (set 1)
 
 static struct BurnRomInfo pururunRomDesc[] = {
+	{ "pu_ja-5.20e",			0x020000, 0xc15ae3db, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pu_ja-6.20c",			0x020000, 0x2e21328a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pu_ja-8.3i",				0x020000, 0xedc3830b, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+
+	{ "pu_ja-2.14i",			0x080000, 0x93a9dbed, 3 | BRF_GRA },           //  3 Graphics
+	{ "pu_ja-4.18i",			0x080000, 0x47d82187, 3 | BRF_GRA },           //  4
+	{ "pu_ja-1.12i",			0x080000, 0x436096c6, 3 | BRF_GRA },           //  5
+	{ "pu_ja-3.16i",			0x080000, 0x80619e1a, 3 | BRF_GRA },           //  6
+
+	{ "pu_ja-7.3g",				0x040000, 0x51ae4926, 4 | BRF_SND },           //  7 MSM6295 Samples
+};
+
+STD_ROM_PICK(pururun)
+STD_ROM_FN(pururun)
+
+struct BurnDriver BurnDrvPururun = {
+	"pururun", NULL, NULL, NULL, "1995",
+	"Pururun (set 1)\0", NULL, "Metro / Banpresto", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, pururunRomInfo, pururunRomName, NULL, NULL, NULL, NULL, PururunInputInfo, PururunDIPInfo,
+	pururunInit, DrvExit, NoZ80Frame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
+	320, 224, 4, 3
+};
+
+
+// Pururun (set 2)
+
+static struct BurnRomInfo pururunaRomDesc[] = {
 	{ "pu9-19-5.20e",			0x020000, 0x5a466a1b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "pu9-19-6.20c",			0x020000, 0xd155a53c, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -5312,15 +5342,15 @@ static struct BurnRomInfo pururunRomDesc[] = {
 	{ "pu9-19-7.3g",			0x040000, 0x51ae4926, 4 | BRF_SND },           //  7 MSM6295 Samples
 };
 
-STD_ROM_PICK(pururun)
-STD_ROM_FN(pururun)
+STD_ROM_PICK(pururuna)
+STD_ROM_FN(pururuna)
 
-struct BurnDriver BurnDrvPururun = {
-	"pururun", NULL, NULL, NULL, "1995",
-	"Pururun\0", NULL, "Metro / Banpresto", "Miscellaneous",
+struct BurnDriver BurnDrvPururuna = {
+	"pururuna", "pururun", NULL, NULL, "1995",
+	"Pururun (set 2)\0", NULL, "Metro / Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, pururunRomInfo, pururunRomName, NULL, NULL, NULL, NULL, PururunInputInfo, PururunDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, pururunaRomInfo, pururunaRomName, NULL, NULL, NULL, NULL, PururunInputInfo, PururunDIPInfo,
 	pururunInit, DrvExit, NoZ80Frame, i4x00_draw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
 };

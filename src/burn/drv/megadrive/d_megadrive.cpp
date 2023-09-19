@@ -55229,3 +55229,21 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// 240p Test Suite v1.23 by Artemio
+// https://artemiourbina.itch.io/240p-test-suite
+static struct BurnRomInfo md_testsuite240pRomDesc[] = {
+	{ "240pSuite-1.23.bin", 262144, 0x439fe2f4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_testsuite240p)
+STD_ROM_FN(md_testsuite240p)
+
+struct BurnDriver BurnDrvmd_testsuite240p = {
+	"md_testsuite240p", NULL, NULL, NULL, "2022",
+	"240p Test Suite (HB, v1.23)\0", NULL, "Artemio", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_testsuite240pRomInfo, md_testsuite240pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

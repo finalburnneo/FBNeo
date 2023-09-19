@@ -5991,17 +5991,17 @@ static struct BurnRomInfo brivaljRomDesc[] = {
 	{ "mpr-15626.ic34",				0x100000, 0x83306d1e, 3 | BRF_PRG | BRF_ESS }, //  5
 	{ "mpr-15625.ic24",				0x100000, 0x3ce82932, 3 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "mpr-14599f.ic14",			0x200000, 0x1de17e83, 1 | BRF_GRA },           //  7 Main Layer Tiles
-	{ "mpr-14598f.ic5",				0x200000, 0xcafb0de9, 1 | BRF_GRA },           //  8
+	{ "mpr-15629.ic14",				0x200000, 0x2c8dd96d, 1 | BRF_GRA },           //  7 Main Layer Tiles
+	{ "mpr-15628.ic5",				0x200000, 0x58d4ca40, 1 | BRF_GRA },           //  8
 
-	{ "brivalj_mp15637.32",			0x200000, 0xf39844c0, 2 | BRF_GRA },           //  9 Main Sprites
-	{ "brivalj_mp15635.30",			0x200000, 0x263cf6d1, 2 | BRF_GRA },           // 10
-	{ "brivalj_mp15633.28",			0x200000, 0x44e9a88b, 2 | BRF_GRA },           // 11
-	{ "brivalj_mp15631.26",			0x200000, 0xe93cf9c9, 2 | BRF_GRA },           // 12
-	{ "brivalj_mp15636.31",			0x200000, 0x079ff77f, 2 | BRF_GRA },           // 13
-	{ "brivalj_mp15634.29",			0x200000, 0x1edc14cd, 2 | BRF_GRA },           // 14
-	{ "brivalj_mp15632.27",			0x200000, 0x796215f2, 2 | BRF_GRA },           // 15
-	{ "brivalj_mp15630.25",			0x200000, 0x8dabb501, 2 | BRF_GRA },           // 16
+	{ "mpr-15637.ic32",				0x200000, 0xb6cf2f05, 2 | BRF_GRA },           //  9 Main Sprites
+	{ "mpr-15635.ic30",				0x200000, 0x70f2eb2b, 2 | BRF_GRA },           // 10
+	{ "mpr-15633.ic28",				0x200000, 0x005dfed5, 2 | BRF_GRA },           // 11
+	{ "mpr-15631.ic26",				0x200000, 0xc35e2f21, 2 | BRF_GRA },           // 12
+	{ "mpr-15636.ic31",				0x200000, 0xd81ca97b, 2 | BRF_GRA },           // 13
+	{ "mpr-15634.ic29",				0x200000, 0xb0c6c52a, 2 | BRF_GRA },           // 14
+	{ "mpr-15632.ic27",				0x200000, 0x8476e52b, 2 | BRF_GRA },           // 15
+	{ "mpr-15630.ic25",				0x200000, 0xbf7dd2f6, 2 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(brivalj)

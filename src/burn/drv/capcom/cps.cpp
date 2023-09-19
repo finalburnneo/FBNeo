@@ -1922,9 +1922,11 @@ static INT32 CpsGetROMs(bool bLoad)
 	}
 
 	INT32 i = 0;
+	INT32 nLoadedRoms = 1;
 	do {
 		ri.nLen = 0;
 		ri.nType = 0;
+		nLoadedRoms = 1;
 		BurnDrvGetRomInfo(&ri, i);
 		
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K) {
@@ -1934,7 +1936,6 @@ static INT32 CpsGetROMs(bool bLoad)
 			} else {
 				nCpsRomLen += ri.nLen;
 			}
-			i++;
 		}
 		
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K_SIMM) {
@@ -1942,10 +1943,9 @@ static INT32 CpsGetROMs(bool bLoad)
 				if (BurnLoadRom(CpsRomLoad + 0x000001, i + 0, 2)) return 1;
 				if (BurnLoadRom(CpsRomLoad + 0x000000, i + 1, 2)) return 1;
 				CpsRomLoad += ri.nLen * 2;
-				i += 2;
+				nLoadedRoms = 2;
 			} else {
 				nCpsRomLen += ri.nLen;
-				i++;
 			}
 		}
 		
@@ -1956,14 +1956,13 @@ static INT32 CpsGetROMs(bool bLoad)
 			} else {
 				nCpsCodeLen += ri.nLen;
 			}
-			i++;
 		}
 		
 		if ((ri.nType & 0x0f) == CPS2_GFX) {
 			if (bLoad) {
 				Cps2LoadTiles(CpsGfxLoad, i);
 				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
-				i += 4;
+				nLoadedRoms = 4;
 			} else {
 				if (ri.nLen > nGfxMaxSize) {
 					nGfxMaxSize = ri.nLen;
@@ -1973,7 +1972,6 @@ static INT32 CpsGetROMs(bool bLoad)
 				}
 				nCpsGfxLen += ri.nLen;
 				nGfxNum++;
-				i++;
 			}
 		}
 		
@@ -1981,10 +1979,9 @@ static INT32 CpsGetROMs(bool bLoad)
 			if (bLoad) {
 				Cps2LoadTilesSIM(CpsGfxLoad, i);
 				CpsGfxLoad += ri.nLen * 8;
-				i += 8;
+				nLoadedRoms = 8;
 			} else {
 				nCpsGfxLen += ri.nLen;
-				i++;
 			}
 		}
 		
@@ -1992,7 +1989,7 @@ static INT32 CpsGetROMs(bool bLoad)
 			if (bLoad) {
 				Cps2LoadTilesSplit4(CpsGfxLoad, i);
 				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 16;
-				i += 16;
+				nLoadedRoms = 16;
 			} else {
 				if (ri.nLen > nGfxMaxSize) {
 					nGfxMaxSize = ri.nLen;
@@ -2002,7 +1999,6 @@ static INT32 CpsGetROMs(bool bLoad)
 				}
 				nCpsGfxLen += ri.nLen;
 				nGfxNum++;
-				i++;
 			}
 		}
 		
@@ -2010,7 +2006,7 @@ static INT32 CpsGetROMs(bool bLoad)
 			if (bLoad) {
 				Cps2LoadTilesSplit8(CpsGfxLoad, i);
 				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 32;
-				i += 32;
+				nLoadedRoms = 32;
 			} else {
 				if (ri.nLen > nGfxMaxSize) {
 					nGfxMaxSize = ri.nLen;
@@ -2020,7 +2016,6 @@ static INT32 CpsGetROMs(bool bLoad)
 				}
 				nCpsGfxLen += ri.nLen;
 				nGfxNum++;
-				i++;
 			}
 		}
 		
@@ -2028,15 +2023,14 @@ static INT32 CpsGetROMs(bool bLoad)
 			if (bLoad) {
 				Cps2LoadTiles19xxj(CpsGfxLoad, i);
 				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 20;
-				i += 20;
+				nLoadedRoms = 20;
 			} else {
 				nGfxMaxSize = 0xcd000;
 				nCpsGfxLen += ri.nLen;
 				nGfxNum++;
-				i++;
 			}
 		}
-				
+		
 		if ((ri.nType & 0x0f) == CPS2_PRG_Z80) {
 			if (bLoad) {
 				BurnLoadRom(CpsZRomLoad, i, 1);
@@ -2044,7 +2038,6 @@ static INT32 CpsGetROMs(bool bLoad)
 			} else {
 				nCpsZRomLen += ri.nLen;
 			}
-			i++;
 		}
 		
 		if ((ri.nType & 0x0f) == CPS2_QSND) {
@@ -2055,7 +2048,6 @@ static INT32 CpsGetROMs(bool bLoad)
 			} else {
 				nCpsQSamLen += ri.nLen;
 			}
-			i++;
 		}
 		
 		if ((ri.nType & 0x0f) == CPS2_QSND_SIMM) {
@@ -2066,17 +2058,15 @@ static INT32 CpsGetROMs(bool bLoad)
 			} else {
 				nCpsQSamLen += ri.nLen;
 			}
-			i++;
 		}
 		
 		if ((ri.nType & 0x0f) == CPS2_QSND_SIMM_BYTESWAP) {
 			if (bLoad) {
 				BurnLoadRom(CpsQSamLoad + 1, i + 0, 2);
 				BurnLoadRom(CpsQSamLoad + 0, i + 1, 2);
-				i += 2;
+				nLoadedRoms = 2;
 			} else {
 				nCpsQSamLen += ri.nLen;
-				i++;
 			}
 		}
 		
@@ -2087,8 +2077,9 @@ static INT32 CpsGetROMs(bool bLoad)
 			} else {
 				nCpsKeyLen += ri.nLen;
 			}
-			i++;
 		}
+		i += nLoadedRoms;
+
 	} while (ri.nLen);
 
 	if (bLoad) {

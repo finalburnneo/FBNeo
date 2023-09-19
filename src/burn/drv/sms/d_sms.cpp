@@ -30606,10 +30606,10 @@ struct BurnDriver BurnDrvsms_speccies2 = {
 	256, 224, 4, 3
 };
 
-// Sub-Assault (HB, v1.4)
+// Sub-Assault (HB, v1.4.1)
 
 static struct BurnRomInfo sms_subassaultRomDesc[] = {
-	{ "Sub-Assault v1.4 (2023)(Louis The SEGA Nerd).sms",	49152, 0x57234578, BRF_PRG | BRF_ESS },
+	{ "Sub-Assault V1.4.1 (2023)(Louis The SEGA Nerd).sms",	65536, 0x832ddd09, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_subassault)
@@ -30617,7 +30617,7 @@ STD_ROM_FN(sms_subassault)
 
 struct BurnDriver BurnDrvsms_subassault = {
 	"sms_subassault", NULL, NULL, NULL, "2023",
-	"Sub-Assault (HB, v1.4)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	"Sub-Assault (HB, v1.4.1)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
 	SMSGetZipName, sms_subassaultRomInfo, sms_subassaultRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

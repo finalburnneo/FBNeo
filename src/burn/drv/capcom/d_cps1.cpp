@@ -5170,7 +5170,7 @@ STDDIPINFOEXT(SlammastQS, Slammast, SlammastQSound)
 STDDIPINFOEXT(Captcommhs, Captcomm, Captcommhs    )
 STDDIPINFOEXT(Dinohs,     Dino,     Dinohs        )
 STDDIPINFOEXT(Ffighths,   Ffight,   Ffighths      )
-STDDIPINFOEXT(Knightshs,  Knights,  Knightshs    )
+STDDIPINFOEXT(Knightshs,  Knights,  Knightshs     )
 STDDIPINFOEXT(Punisherhs, Punisher, Punisherhs    )
 STDDIPINFOEXT(Wofhs,      Wof,      Wofhs         )
 
@@ -26079,8 +26079,8 @@ static struct BurnRomInfo CaptcommhsRomDesc[] = {
 	/* Incubus - 20230224 */
 	{ "cce_my.bin",		0x300000, 0x13c0c791, BRF_ESS | BRF_PRG },  // 23 CPS1_68K_PROGRAM_NO_BYTESWAP
 
-	/* Unlimited Bullet - 20210428 */
-	{ "cce_wx.bin",		0x300000, 0x765ad7bf, BRF_ESS | BRF_PRG },  // 24 CPS1_68K_PROGRAM_NO_BYTESWAP
+	/* Unlimited Bullet - 20230903 */
+	{ "cce_wx.bin",		0x300000, 0xfd52ec4d, BRF_ESS | BRF_PRG },  // 24 CPS1_68K_PROGRAM_NO_BYTESWAP
 
 	/* Journey - 20201211 */
 	{ "cce_zt.bin",		0x300000, 0x84746744, BRF_ESS | BRF_PRG },  // 25 CPS1_68K_PROGRAM_NO_BYTESWAP

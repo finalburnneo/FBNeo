@@ -1,4 +1,4 @@
-// FB Alpha Taito System-L driver module
+// FB Neo Taito System-L driver module
 // Based on MAME driver by Oliver Galibert
 
 #include "tiles_generic.h"
@@ -3430,17 +3430,20 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Raimais (World)
 
 static struct BurnRomInfo raimaisRomDesc[] = {
-	{ "b36-11-1.bin",	0x20000, 0xf19fb0d5, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
-	{ "b36-09.bin",		0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b36_11-1.ic7",	0x20000, 0xf19fb0d5, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b36_09.ic13",	0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b36-07.bin",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
+	{ "b36_07.ic2",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
 
-	{ "b36-06.bin",		0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
+	{ "b36_06.ic24",	0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
 
-	{ "b36-01.bin",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
-	{ "b36-02.bin",		0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
+	{ "b36-01.ic6",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
+	{ "b36-02.ic12",	0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
 
-	{ "b36-03.bin",		0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+	{ "b36-03.ic28",	0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+
+	{ "b36-04.ic3",		0x00117, 0x59847b86, 0 | BRF_OPT },           // 7 plds
+	{ "b36-05.ic11",	0x00117, 0x57342384, 0 | BRF_OPT },           // 8
 };
 
 STD_ROM_PICK(raimais)
@@ -3460,17 +3463,20 @@ struct BurnDriver BurnDrvRaimais = {
 // Raimais (Japan)
 
 static struct BurnRomInfo raimaisjRomDesc[] = {
-	{ "b36-08-1.bin",	0x20000, 0x6cc8f79f, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
-	{ "b36-09.bin",		0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b36_08-1.ic7",	0x20000, 0x6cc8f79f, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b36_09.ic13",	0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b36-07.bin",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
+	{ "b36_07.ic2",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
 
-	{ "b36-06.bin",		0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
+	{ "b36_06.ic24",	0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
 
-	{ "b36-01.bin",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
-	{ "b36-02.bin",		0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
+	{ "b36-01.ic6",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
+	{ "b36-02.ic12",	0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
 
-	{ "b36-03.bin",		0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+	{ "b36-03.ic28",	0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+
+	{ "b36-04.ic3",		0x00117, 0x59847b86, 0 | BRF_OPT },           // 7 plds
+	{ "b36-05.ic11",	0x00117, 0x57342384, 0 | BRF_OPT },           // 8
 };
 
 STD_ROM_PICK(raimaisj)
@@ -3490,17 +3496,20 @@ struct BurnDriver BurnDrvRaimaisj = {
 // Raimais (Japan, first revision)
 
 static struct BurnRomInfo raimaisjoRomDesc[] = {
-	{ "b36-08.bin",		0x20000, 0xf40b9178, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
-	{ "b36-09.bin",		0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b36_08.ic7",		0x20000, 0xf40b9178, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b36_09.ic13",	0x20000, 0x9c466e43, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b36-07.bin",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
+	{ "b36_07.ic2",		0x10000, 0x4f3737e6, 2 | BRF_PRG | BRF_ESS }, //  2 sub z80 code
 
-	{ "b36-06.bin",		0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
+	{ "b36_06.ic24",	0x10000, 0x29bbc4f8, 3 | BRF_PRG | BRF_ESS }, //  3 sound z80 code
 
-	{ "b36-01.bin",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
-	{ "b36-02.bin",		0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
+	{ "b36-01.ic6",		0x80000, 0x89355cb2, 4 | BRF_GRA },           //  4 graphics data
+	{ "b36-02.ic12",	0x80000, 0xe71da5db, 4 | BRF_GRA },           //  5
 
-	{ "b36-03.bin",		0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+	{ "b36-03.ic28",	0x80000, 0x96166516, 5 | BRF_SND },           //  6 samples
+
+	{ "b36-04.ic3",		0x00117, 0x59847b86, 0 | BRF_OPT },           // 7 plds
+	{ "b36-05.ic11",	0x00117, 0x57342384, 0 | BRF_OPT },           // 8
 };
 
 STD_ROM_PICK(raimaisjo)

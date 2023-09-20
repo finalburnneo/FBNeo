@@ -10,6 +10,7 @@ The libretro core provides wide compatibility with platforms and features suppor
 
 FBNeo strives for accuracy, just like MAME. There are some arcade boards where one or the other will be more accurate, but for the most part they should be equally accurate.
 The main difference with MAME is that FBNeo doesn't mind including "quality of life" hacks, while MAME is about absolute preservation. "Quality of life" hacks include things like :
+
 * improving original game's sound (some games like "Burger Time" have noise which was clearly unintended by their developpers, we are removing it)
 * implementing alternative colors for games where the colors don't look right (sometimes there are controversies about which colors are right for an arcade board, like "Tropical Angel", we implement alternative colors as dipswitches)
 * having control alternatives that didn't exist on original cabinet (play rotary stick games like twin-stick shooters, use lightguns in "Rambo 3", use simplified 8-way directional controls for "Battlezone", ...)
@@ -84,10 +85,12 @@ Refer to a [clrmamepro tutorial](https://docs.libretro.com/guides/arcade-getting
 
 We don't have a convenient tool like the MAME OSD, instead we use the retroarch api to customize mappings, you can do that by going into `Quick Menu > Controls`.
 For those who don't want to fully customize their mapping, there are 2 convenient presets you can apply by changing the "device type" for a player in this menu :
+
 * **Classic** : it will apply the original neogeo layout from neogeo cd gamepads for neogeo games, and use L/R as 5th and 6th button for 6 buttons games like Street Fighter II.
 * **Modern** : it will apply the modern neogeo layout from neogeo arcade stick pro and mini pad for neogeo games, and use R1/R2 as 5th and 6th button for 6 buttons games like Street Fighter II (because it's also their modern layout), this is really convenient with most arcade sticks.
 
 The following "device type" also exist, but they won't be compatible with every games :
+
 * **Mouse (ball only)** : it will use mouse/trackball for analog movements, buttons will stay on retropad
 * **Mouse (full)** : same as above, but the buttons will be on the mouse
 * **Pointer** : it will use "pointer" device (can be a mouse/trackball) to determine coordinates on screen, buttons will stay on retropad
@@ -98,6 +101,7 @@ The following "device type" also exist, but they won't be compatible with every 
 It also requires usage of specific romsets, meaning the rom must have the expected crc/size, and be packaged in an archive with a specific name (the instructions to build those romsets don't differ from arcade's).
 
 You can use specific folder's name for detection, it's the easiest and recommended method, especially if you are using RetroArch playlists or if your device is not compatible with subsystems (android and consoles) :
+
 * CBS ColecoVision : `coleco` | `colecovision`
 * Fairchild ChannelF : `chf` | `channelf`
 * MSX 1 : `msx` | `msx1`
@@ -114,6 +118,7 @@ You can use specific folder's name for detection, it's the easiest and recommend
 * ZX Spectrum : `spectrum` | `zxspectrum`
 
 You can also emulate consoles by prefixing the name of the roms with `XXX_` and removing the `zip|7z` extension in the command line, or adding the `--subsystem XXX` argument, here is the list of available prefixes :
+
 * CBS ColecoVision : `cv`
 * Fairchild ChannelF : `chf`
 * MSX 1 : `msx`
@@ -132,11 +137,13 @@ You can also emulate consoles by prefixing the name of the roms with `XXX_` and 
 ## BIOS
 
 Bioses will be searched through 3 folders :
+
 * the folder of the current romset
 * the `SYSTEM_DIRECTORY/fbneo/` folder
 * the `SYSTEM_DIRECTORY/` folder
 
 The following bioses are required for some of the emulated systems :
+
 * neogeo.zip (Neo Geo BIOS)
 * neocdz.zip (Neo Geo CDZ System BIOS)
 * decocass.zip (DECO Cassette System BIOS)
@@ -183,6 +190,7 @@ They are either directly available from `Quick Menu > Core Options`, or from the
 ## Cheats
 
 This core supports the RetroArch cheat feature with the `.cht` files. However it is recommended to use FBNeo's native cheat support instead :
+
 * download the pack of cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip)
 * uncompress **all of them** into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder (which is **NOT** the same folder as the RetroArch feature with the `.cht` files)
 * cheats will become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`) afterward.
@@ -207,6 +215,7 @@ Write a report with details on the issue and your platform.
 
 ### Game XXX runs slowly, why ?
 Your hardware is probably too slow to run the game with your current settings. Try the following :
+
 * Check if there is a speedhack dipswitch in the core options, set it to "yes".
 * Try disabling rewind, runahead, pre-emptive frames, shaders, or any other retroarch setting known for increasing requirements.
 * Try enabling "Threaded Video" in retroarch settings.
@@ -228,11 +237,13 @@ This libretro port also supports various features which are usually buggy or tot
 
 ### Neogeo CD doesn't work, why ?
 There are several things to know :
+
 * You need a copy of neocdz.zip and neogeo.zip in your bios folder
 * You need to add `--subsystem neocd` to the command line, or to place your games in a `neocd` folder
 * Supported format are ccd/sub/img (trurip), and single file MODE1/2352 cue/bin (use utilities like "CDmage" to convert your iso if needed), **they must not be compressed**
 
 You can convert your unsupported isos by following this tutorial :
+
 * Get [CDMage 1.02.1 (beta)](https://www.videohelp.com/software/CDMage) (freeware & no ads). **Don't get CDMage 1.01.5, it doesn't have the "Save As" function**
 * File > Open > select your iso (NB : for multi-track, select the .cue file, not the .iso file)
 * File > Save As > write the name of your new file
@@ -243,18 +254,21 @@ You can convert your unsupported isos by following this tutorial :
 That driver was disabled for now, it doesn't meet our quality criteria.
 
 ~~There are several things to know :~~
+
 * ~~It is only running at playable speed on x86_64 (other arch will basically need a cpu at 4Ghz because they lack a mips3 dynarec), and the core needs to be built like this to enable this dynarec : `make -j5 -C src/burner/libretro USE_X64_DRC=1`~~
 * ~~If your rom is at `ROM_DIRECTORY/kinst.zip`, you'll need the uncompressed disc image at `ROM_DIRECTORY/kinst/kinst.img`~~
 * ~~To get the uncompressed disc image, you'll need to use the chdman tool from MAME on the chd from mame, the command looks like this : `chdman extracthd -i kinst.chd -o kinst.img`~~
 
 ### Vertical games don't work properly, why ?
 2 settings are required when running vertical games in FBNeo :
+
 * `Settings > Core > Allow rotation` must be enabled  (`video_allow_rotate = "true"` in `retroarch.cfg`)
 * `Settings > Video > Scaling > Aspect Ratio` should be set to `Core Provided` (`aspect_ratio_index = "22"` in `retroarch.cfg`)
 
 If you are wondering why this isn't required for the MAME core, you can find more information about it [here](https://github.com/libretro/mame/issues/261)
 
 Additionally :
+
 * If you are playing on a vertical screen, you'll want to use the `Vertical Mode` core option to rotate the display for your needs, while it's also possible to rotate display from `Settings > Video > Output > Video Rotation`, that method is not recommended because it doesn't rotate the aspect ratio.
 * If you are using a bezel pack, it seems you need to enable `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`)
 

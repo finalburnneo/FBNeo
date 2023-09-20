@@ -168,9 +168,9 @@ Samples should be put under `SYSTEM_DIRECTORY/fbneo/samples`
 
 Copy [hiscore.dat](https://github.com/libretro/FBNeo/tree/master/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores, or `hiscore.dat` might have a missing or broken entry for that romset. You can request support in the issue tracker. Runahead now works with hiscores, it'll require fairly recent version of the core AND RetroArch though (support was added after 1.10.3 and is still only available through nightlies as of 2022-09-05).
 
-## Run Ahead input lag reduction
+## Input lag reduction
 
-This core widely supports the RetroArch "Run Ahead" input latency reduction feature, with **single instance** being the recommended method. Support for `Second Instance` won't be guaranteed anymore as of [2022-06-25](https://github.com/libretro/FBNeo/commit/7ea5708565955658eeaf49da2be4a9905409bb35).
+This core widely supports the RetroArch input latency reduction features, with **runahead single instance** and **preemptive frames** being the recommended methods. Support for **runahead second instance** is not guaranteed because it doesn't exist in standalone FBNeo unlike the other methods.
 
 ## RetroAchievements
 
@@ -182,7 +182,10 @@ They are either directly available from `Quick Menu > Core Options`, or from the
 
 ## Cheats
 
-You can either use the RetroArch cheat feature with the `.cht` files, or download a pack of FBNeo native cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip) and uncompress them into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder (which is **NOT** the same folder as the RetroArch feature with the `.cht` files), then they'll become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`).
+This core supports the RetroArch cheat feature with the `.cht` files. However it is recommended to use FBNeo's native cheat support instead :
+* download the pack of cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip)
+* uncompress **all of them** into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder (which is **NOT** the same folder as the RetroArch feature with the `.cht` files)
+* cheats will become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`) afterward.
 
 ## Frequently asked questions
 

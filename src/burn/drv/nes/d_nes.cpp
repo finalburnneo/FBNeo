@@ -6720,8 +6720,8 @@ static void mapper69_write(UINT16 address, UINT8 data)
 				case 0xb: mapper_regs[0x8 + 2] = data; break;
 				case 0xc: mapper69_mirror = data & 3; break;
 				case 0xd: mapper69_irqenable = data; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
-				case 0xe: mapper69_irqcount = (mapper69_irqcount & 0xff00) | data; M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
-				case 0xf: mapper69_irqcount = (mapper69_irqcount & 0x00ff) | (data << 8); M6502SetIRQLine(0, CPU_IRQSTATUS_NONE); break;
+				case 0xe: mapper69_irqcount = (mapper69_irqcount & 0xff00) | data; break;
+				case 0xf: mapper69_irqcount = (mapper69_irqcount & 0x00ff) | (data << 8); break;
 			}
 			if (mapper69_regnum < 0xd)
 				mapper_map();

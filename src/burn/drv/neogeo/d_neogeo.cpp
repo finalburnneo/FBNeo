@@ -17710,12 +17710,12 @@ struct BurnDriver BurnDrvSamsho2sp = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown II Perfect Hack v. 1.3 - 2023-09-13
+// Samurai Shodown II Perfect Hack v. 1.3 - 2023-09-22
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",	0x100000, 0x206f13ed, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "063-p2pe.sp2",	0x100000, 0xabc44174, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "063-p3pe.p3",	0x020000, 0x4ceb9f16, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
+	{ "063-p1pe.p1",	0x100000, 0x5f557468, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p2pe.sp2",	0x100000, 0x94a00f0f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063-p3pe.p3",	0x020000, 0x17fffc2a, 1 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	SAMSHO2_COMPONENT
 };
@@ -20522,7 +20522,7 @@ struct BurnDriver BurnDrvkof2000bc = {
 
 
 // The King of Fighters 2001 - Boss (Hack)
-// GOTVG 20101223
+// The King of Fighters 2001 - Ultimate (Hack)
 
 static struct BurnRomInfo kof2k1bsRomDesc[] = {
 	/* Boss Hack - 20101223 */
@@ -20542,25 +20542,27 @@ static struct BurnRomInfo kof2k1bsRomDesc[] = {
 
 	KOF2001_DECRYPTION_SOUND
 
-	/* Ultimate - 20230606 */
-	{ "262-p1ult.p1",		0x100000, 0xaed528a4, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
-	{ "262-p2ult.sp2",		0x500000, 0x2e1c48b6, 0 | BRF_ESS | BRF_PRG }, // 17
+	/* Ultimate - 20230909 */
+	{ "262-p1ult.p1",		0x100000, 0x91d33616, 0 | BRF_ESS | BRF_PRG }, // 16 68K code
+	{ "262-p2ult.sp2",		0x500000, 0xe9dea4c2, 0 | BRF_ESS | BRF_PRG }, // 17
 
 	{ "262-s1ult.s1",		0x020000, 0xe8cb20be, 0 | BRF_GRA },           // 18 Text layer tiles
 
-	{ "262-c7ult.c7",		0x800000, 0xcd11861e, 0 | BRF_GRA },           // 19
-	{ "262-c8ult.c8",		0x800000, 0xc0e84cc1, 0 | BRF_GRA },           // 20
-	{ "262-c9ult.c9",		0x800000, 0x61d8520b, 0 | BRF_GRA },           // 21
-	{ "262-c10ult.c10",		0x800000, 0x3cf38156, 0 | BRF_GRA },           // 22
-	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 0 | BRF_GRA },           // 23
-	{ "265-c8d.c8",			0x800000, 0xbef667a3, 0 | BRF_GRA },           // 24
-	{ "262-c13dlt.c13",		0x800000, 0x40f7bd65, 0 | BRF_GRA },           // 25
-	{ "262-c14ult.c14",		0x800000, 0x2471c450, 0 | BRF_GRA },           // 26
+	{ "262-c5ult.c5",		0x800000, 0xb47e4f8d, 0 | BRF_GRA },           // 19
+	{ "262-c6ult.c6",		0x800000, 0xac5f2083, 0 | BRF_GRA },           // 20
+	{ "262-c7ult.c7",		0x800000, 0xcd11861e, 0 | BRF_GRA },           // 21
+	{ "262-c8ult.c8",		0x800000, 0xc0e84cc1, 0 | BRF_GRA },           // 22
+	{ "262-c9ult.c9",		0x800000, 0xf031a797, 0 | BRF_GRA },           // 23
+	{ "262-c10ult.c10",		0x800000, 0x457c7faf, 0 | BRF_GRA },           // 24
+	{ "265-c7d.c7",			0x800000, 0x8a5b561c, 0 | BRF_GRA },           // 25
+	{ "265-c8d.c8",			0x800000, 0xbef667a3, 0 | BRF_GRA },           // 26
+	{ "262-c13dlt.c13",		0x800000, 0x40f7bd65, 0 | BRF_GRA },           // 27
+	{ "262-c14ult.c14",		0x800000, 0x2471c450, 0 | BRF_GRA },           // 28
 
-	{ "262-m1ult.m1",		0x040000, 0xbca3e52e, 0 | BRF_ESS | BRF_PRG }, // 27 Z80 code
+	{ "262-m1ult.m1",		0x020000, 0xafc792fd, 0 | BRF_ESS | BRF_PRG }, // 29 Z80 code
 
-	{ "262-v4ult-08-e0.v4",	0x400000, 0x55602d94, 0 | BRF_SND },           // 28 Sound data
-	{ "262-v5ult-08-e0.v5",	0x400000, 0x6ded9758, 0 | BRF_SND },           // 29
+	{ "262-v4ult-08-e0.v4",	0x400000, 0x55602d94, 0 | BRF_SND },           // 30 Sound data
+	{ "262-v5ult-08-e0.v5",	0x400000, 0x6ded9758, 0 | BRF_SND },           // 31
 };
 
 STDROMPICKEXT(kof2k1bs, kof2k1bs, neogeo)
@@ -20573,12 +20575,12 @@ static void kof2k1bsCallback()
 
 	RomDiffPatch(NeoTextROM[nNeoActiveSlot], 18, 0, 1);  // Text layer tiles
 
-	for (INT32 nIndex = 19, nOffset = 0x3000000; nIndex <= 25; nIndex += 2, nOffset += 0x1000000)
+	for (INT32 nIndex = 19, nOffset = 0x2000000; nIndex <= 27; nIndex += 2, nOffset += 0x1000000)
 	{
 		RomDiffPatch(NeoSpriteROM[nNeoActiveSlot] + nOffset, nIndex, 0, 2);  // Sprite Data
 	}
 
-	RomDiffPatch(NeoZ80ROMActive + 0x000000, 27, 0, 1);  // Z80 code
+	RomDiffPatch(NeoZ80ROMActive + 0x000000, 29, 0, 1);  // Z80 code
 }
 
 static INT32 kof2k1bsInit()
@@ -20608,8 +20610,8 @@ static INT32 kof2k1bsInit()
 	INT32 nRet = NeoInit();
 
 	if ((0 == nRet) && nBurnDrvSubActive) {
-		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 3), 28, 0, 1);  // Sound data
-		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 4), 29, 0, 1);
+		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 3), 30, 0, 1);  // Sound data
+		RomDiffPatch(YM2610ADPCMAROM[nNeoActiveSlot] + (0x400000 * 4), 31, 0, 1);
 	}
 
 	return nRet;

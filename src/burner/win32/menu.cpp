@@ -1071,6 +1071,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_DISABLE_SOCD, (nEnableSOCD == 0) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_ENABLE_SOCD, (nEnableSOCD == 1) ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_HITBOX_SOCD, (nEnableSOCD == 2) ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_4WAY_SOCD, (nEnableSOCD == 3) ? MF_CHECKED : MF_UNCHECKED);
 
 	CheckMenuItem(hMenu, MENU_SAVEHISCORES, EnableHiscores ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_USEBLEND, bBurnUseBlend ? MF_CHECKED : MF_UNCHECKED);

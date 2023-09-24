@@ -738,7 +738,7 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// If non-zero, will fix diagonals for missing inputs\n"));
 	VAR(bFixDiagonals);
 
-	_ftprintf(h, _T("\n// SOCD setting (0 = disabled, 1 = regular, 2 = Hitbox Style)\n"));
+	_ftprintf(h, _T("\n// SOCD setting (0 = disabled, 1 = regular, 2 = Hitbox Style, 3 = 4 way forced (no diagonals))\n"));
 	VAR(nEnableSOCD);
 
 	_ftprintf(h, _T("\n// If non-zero, enable high score saving support.\n"));

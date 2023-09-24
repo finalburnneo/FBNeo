@@ -764,11 +764,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="hikarshi" romof="fdsbios" sourcefile="d_nes.cpp">
+	<game name="hikarshij" cloneof="hikarshi" romof="hikarshi" sourcefile="d_nes.cpp">
 		<description>Hikari Shinwa - Palutena no Kagami (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Hikari Shinwa - Palutena no Kagami (Japan).fds" size="131000" crc="32516fcf"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="hikarshi" romof="fdsbios" sourcefile="d_nes.cpp">
+		<comment>Hack, Myth of Light Palutena's Mirror, The</comment>
+		<description>Hikari Shinwa - Palutena no Kagami (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Hikari Shinwa - Palutena no Kagami T-Eng (2023)(BlackPaladin).fds" size="131000" crc="78a03745"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

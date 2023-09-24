@@ -1184,6 +1184,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="astralworld" cloneof="smb" romof="smb" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Astral World (GlobalHack)</description>
+		<year>2023</year>
+		<manufacturer>Xasteria Group</manufacturer>
+		<rom name="Astral World GlobHack (2023)(Xasteria Group).nes" size="196624" crc="b4099d18"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="astroboy" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Astro Boy (T-Eng)</description>
@@ -3615,6 +3624,15 @@
 		<year>2017</year>
 		<manufacturer>Mega Cat Studios</manufacturer>
 		<rom name="Creepy Brawlers (HB).nes" size="524304" crc="c8f05be4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="crillion" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Crillion (HB)</description>
+		<year>2023</year>
+		<manufacturer>kevin81</manufacturer>
+		<rom name="Crillion (2023)(kevin81).nes" size="24592" crc="e8b58e34"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -8753,6 +8771,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="junkoid" cloneof="metroid" romof="metroid" sourcefile="d_nes.cpp">
+		<comment>Hack, Homebrew</comment>
+		<description>Junkoid (GlobalHack, v1.1)</description>
+		<year>2022</year>
+		<manufacturer>P. Yoshi</manufacturer>
+		<rom name="Junkoid GlobalHack v1.1 (2022)(P. Yoshi).nes" size="393232" crc="f7747212"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="jurassicboy" sourcefile="d_nes.cpp">
 		<description>Jurassic Boy (Asia) (Unl)</description>
 		<year>1990</year>
@@ -10460,10 +10487,10 @@
 	</game>
 	<game name="magnilocase" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
-		<description>Magnilo Case, The (HB, v1.1)</description>
-		<year>2021</year>
-		<manufacturer>DalyenRetroGames</manufacturer>
-		<rom name="Magnilo Case, The v1.1 (2021)(DalyenRetroGames).nes" size="524304" crc="3b14782a"/>
+		<description>Magnilo Case, The (HB, v1.11)</description>
+		<year>2021-23</year>
+		<manufacturer>Dalyen RetroGames</manufacturer>
+		<rom name="Magnilo Case, The v1.11 (2023)(Dalyen RetroGames).nes" size="524304" crc="db8e4ea4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -15812,6 +15839,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="startropicsmf" cloneof="startropics" romof="startropics" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>StarTropics - Music Fix (Hack)</description>
+		<year>2023</year>
+		<manufacturer>rainwarrior</manufacturer>
+		<rom name="Startropics - Music Fix (2023)(rainwarrior).nes" size="524304" crc="5aab03a2"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="startii" sourcefile="d_nes.cpp">
 		<description>Startropics II - Zoda's Revenge (USA)</description>
 		<year>1994</year>
@@ -16852,11 +16888,29 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="tashimasnoprigaip" sourcefile="d_nes.cpp">
+	<game name="tashimasnoprigaips" cloneof="tashimasnoprigaip" romof="tashimasnoprigaip" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Tashiro Masashi no Princess ga Ippai (Hack, Spanish)</description>
+		<year>2021</year>
+		<manufacturer>Wave</manufacturer>
+		<rom name="Tashiro Masashi no Princess ga Ippai T-Spa (2021)(Wave).nes" size="262160" crc="2e4c79be"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tashimasnoprigaipj" cloneof="tashimasnoprigaip" romof="tashimasnoprigaip" sourcefile="d_nes.cpp">
 		<description>Tashiro Masashi no Princess ga Ippai (Japan)</description>
 		<year>1989</year>
 		<manufacturer>CBS/Sony Group</manufacturer>
 		<rom name="Tashiro Masashi no Princess ga Ippai (Japan).nes" size="262160" crc="7b5a1e17"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tashimasnoprigaip" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Tashiro Masashi no Princess ga Ippai (T-Eng)</description>
+		<year>2023</year>
+		<manufacturer>Zynk Oxhyde</manufacturer>
+		<rom name="Tashiro Masashi no Princess ga Ippai T-Eng (2023)(Zynk Oxhyde).nes" size="262160" crc="736e3691"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -17015,6 +17069,15 @@
 		<year>1989</year>
 		<manufacturer>Ultra Games</manufacturer>
 		<rom name="Teenage Mutant Ninja Turtles (USA).nes" size="262160" crc="83213ca0"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="tmntte" cloneof="tmnt" romof="tmnt" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Teenage Mutant Ninja Turtles - Texas Edition (Hack)</description>
+		<year>2023</year>
+		<manufacturer>SomeOldGuy</manufacturer>
+		<rom name="Teenage Mutant Ninja Turtles - Texas Edition (2023)(SomeOldGuy).nes" size="262160" crc="d4947ef5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

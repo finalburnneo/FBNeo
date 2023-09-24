@@ -1035,6 +1035,7 @@ DRV		BurnDrvAstdelux1;
 DRV		BurnDrvAstdelux2;
 DRV		BurnDrvAstdelux;
 DRV		BurnSpecAsteroidsrx;
+DRV		BurnDrvnes_astralworld;
 DRV		BurnDrvAstrians;
 DRV		BurnSpecAstroblast;
 DRV		BurnDrvMSX_astrobls;
@@ -3586,6 +3587,7 @@ DRV		BurnDrvnes_creatom;
 DRV		BurnDrvnes_creepybrawlers;
 DRV		BurnDrvMooncrsl;
 DRV		BurnDrvmd_criatura;
+DRV		BurnDrvnes_crillion;
 DRV		BurnSpecCrimbo;
 DRV		BurnDrvnes_crimebusters;
 DRV		BurnSpecCrimebust;
@@ -7432,6 +7434,7 @@ DRV		BurnDrvMSX_highwayen;
 DRV		BurnDrvnes_highwaystar;
 DRV		BurnDrvnes_hikarnosenphoulgaonjlea;
 DRV		BurnDrvnes_hikarnosenphoulgaon;
+DRV		BurnDrvfds_hikarshij;
 DRV		BurnDrvfds_hikarshi;
 DRV		BurnDrvHimesiki;
 DRV		BurnDrvnes_hinothouhenj;
@@ -8270,6 +8273,7 @@ DRV		BurnSpecJwarrior;
 DRV		BurnDrvJungler;
 DRV		BurnDrvJrking;
 DRV		BurnDrvmd_junker;
+DRV		BurnDrvnes_junkoid;
 DRV		BurnDrvcv_junkwall;
 DRV		BurnDrvJunofrstg;
 DRV		BurnDrvMSX_junofrst;
@@ -15698,6 +15702,7 @@ DRV		BurnDrvnes_starshiphector;
 DRV		BurnDrvMSX_starship;
 DRV		BurnDrvMSX_starshipa;
 DRV		BurnDrvnes_startropics;
+DRV		BurnDrvnes_startropicsmf;
 DRV		BurnDrvnes_startii;
 DRV		BurnDrvStealsee;
 DRV		BurnDrvcv_steam;
@@ -16960,6 +16965,8 @@ DRV		BurnDrvgg_tarzan;
 DRV		BurnSpecTarzangoesape;
 DRV		BurnDrvcv_tarzan;
 DRV		BurnDrvnes_tasac;
+DRV		BurnDrvnes_tashimasnoprigaips;
+DRV		BurnDrvnes_tashimasnoprigaipj;
 DRV		BurnDrvnes_tashimasnoprigaip;
 DRV		BurnDrvTharrieru;
 DRV		BurnDrvmd_taskfhexs;
@@ -17091,6 +17098,7 @@ DRV		BurnDrvTmntu;
 DRV		BurnDrvnes_tmnt;
 DRV		BurnDrvTmnt;
 DRV		BurnDrvmd_tmntshj;
+DRV		BurnDrvnes_tmntte;
 DRV		BurnDrvmd_tmnthhec;
 DRV		BurnDrvmd_tmhthhs;
 DRV		BurnDrvmd_tmnthh;
@@ -20907,6 +20915,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvAstdelux2,			// Asteroids Deluxe (rev 2)
 	&BurnDrvAstdelux,			// Asteroids Deluxe (rev 3)
 	&BurnSpecAsteroidsrx,		// Asteroids RX (128K) (HB)
+	&BurnDrvnes_astralworld,	// Astral World (GlobalHack)
 	&BurnDrvAstrians,			// Astrians (clone of Swarm)
 	&BurnSpecAstroblast,		// Astro Blaster (16K)
 	&BurnDrvMSX_astrobls,		// Astro Blaster (Euro)
@@ -23458,6 +23467,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_creepybrawlers,	// Creepy Brawlers (HB)
 	&BurnDrvMooncrsl,			// Cresta Mundo (Laguna S.A. Spanish Moon Cresta bootleg)
 	&BurnDrvmd_criatura,		// Criatura (HB)
+	&BurnDrvnes_crillion,		// Crillion (HB)
 	&BurnSpecCrimbo,			// Crimbo: A Gloop Troops Tale (128K) (HB)
 	&BurnDrvnes_crimebusters,	// Crime Busters (USA)
 	&BurnSpecCrimebust,			// Crime Busters Featuring Bennie the Burglar (48K)
@@ -27304,7 +27314,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_highwaystar,	// Highway Star (Japan)
 	&BurnDrvnes_hikarnosenphoulgaonjlea,// Hikari no Senshi Photon - The Ultimate Game on Planet Earth (Japan)
 	&BurnDrvnes_hikarnosenphoulgaon,// Hikari no Senshi Photon - The Ultimate Game on Planet Earth (T-Eng)
-	&BurnDrvfds_hikarshi,		// Hikari Shinwa - Palutena no Kagami (Japan)
+	&BurnDrvfds_hikarshij,		// Hikari Shinwa - Palutena no Kagami (Japan)
+	&BurnDrvfds_hikarshi,		// Hikari Shinwa - Palutena no Kagami (T-Eng)
 	&BurnDrvHimesiki,			// Himeshikibu (Japan)
 	&BurnDrvnes_hinothouhenj,	// Hinotori Houou Hen - Gaou no Bouken (Japan)
 	&BurnDrvnes_hinothouhen,	// Hinotori Houou Hen - Gaou no Bouken (T-Eng)
@@ -28142,6 +28153,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvJungler,			// Jungler
 	&BurnDrvJrking,				// Junior King (bootleg of Donkey Kong Jr.)
 	&BurnDrvmd_junker,			// Junker's High (Japan, Prototype)
+	&BurnDrvnes_junkoid,		// Junkoid (GlobalHack, v1.1)
 	&BurnDrvcv_junkwall,		// Junkwall (HB)
 	&BurnDrvJunofrstg,			// Juno First (Gottlieb)
 	&BurnDrvMSX_junofrst,		// Juno First (Japan)
@@ -29416,7 +29428,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_magmapro,		// Magma Project - Hacker (Japan)
 	&BurnDrvnes_magmax,			// Magmax (USA)
 	&BurnSpecMagnetron,			// Magnetron (48K)
-	&BurnDrvnes_magnilocase,	// Magnilo Case, The (HB, v1.1)
+	&BurnDrvnes_magnilocase,	// Magnilo Case, The (HB, v1.11)
 	&BurnDrvMSX_empcity,		// Magnum Kiki Ippatsu - Empire City 1931 (Japan)
 	&BurnDrvMSX_empcitya,		// Magnum Kiki Ippatsu - Empire City 1931 (Japan, Alt)
 	&BurnDrvnes_maharajaj,		// Maharaja (Japan)
@@ -35570,6 +35582,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_starship,		// Starship Simulator (Japan)
 	&BurnDrvMSX_starshipa,		// Starship Simulator (Japan, Alt)
 	&BurnDrvnes_startropics,	// StarTropics (USA)
+	&BurnDrvnes_startropicsmf,	// StarTropics - Music Fix (Hack)
 	&BurnDrvnes_startii,		// Startropics II - Zoda's Revenge (USA)
 	&BurnDrvStealsee,			// Steal See
 	&BurnDrvcv_steam,			// Steamroller (Prototype)
@@ -36832,7 +36845,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecTarzangoesape,		// Tarzan Goes Ape (48K)
 	&BurnDrvcv_tarzan,			// Tarzan: From out of the Jungle
 	&BurnDrvnes_tasac,			// Tasac (Taiwan)
-	&BurnDrvnes_tashimasnoprigaip,// Tashiro Masashi no Princess ga Ippai (Japan)
+	&BurnDrvnes_tashimasnoprigaips,// Tashiro Masashi no Princess ga Ippai (Hack, Spanish)
+	&BurnDrvnes_tashimasnoprigaipj,// Tashiro Masashi no Princess ga Ippai (Japan)
+	&BurnDrvnes_tashimasnoprigaip,// Tashiro Masashi no Princess ga Ippai (T-Eng)
 	&BurnDrvTharrieru,			// Task Force Harrier (US)
 	&BurnDrvmd_taskfhexs,		// Task Force Harrier EX (Hack, Spanish)
 	&BurnDrvmd_taskfhexj,		// Task Force Harrier EX (Japan)
@@ -36963,6 +36978,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_tmnt,			// Teenage Mutant Ninja Turtles (USA)
 	&BurnDrvTmnt,				// Teenage Mutant Ninja Turtles (World 4 Players, version X)
 	&BurnDrvmd_tmntshj,			// Teenage Mutant Ninja Turtles - Return of the Shredder (Japan)
+	&BurnDrvnes_tmntte,			// Teenage Mutant Ninja Turtles - Texas Edition (Hack)
 	&BurnDrvmd_tmnthhec,		// Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)
 	&BurnDrvmd_tmhthhs,			// Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Spanish)
 	&BurnDrvmd_tmnthh,			// Teenage Mutant Ninja Turtles - The Hyperstone Heist (USA)
@@ -40775,6 +40791,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "astdelux2", "d_asteroids.cpp"},
 	{ "astdelux", "d_asteroids.cpp"},
 	{ "spec_asteroidsrx", "d_spectrum.cpp"},
+	{ "nes_astralworld", "d_nes.cpp"},
 	{ "astrians", "d_galaxian.cpp"},
 	{ "spec_astroblast", "d_spectrum.cpp"},
 	{ "msx_astrobls", "d_msx.cpp"},
@@ -43298,6 +43315,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_creepybrawlers", "d_nes.cpp"},
 	{ "mooncrsl", "d_galaxian.cpp"},
 	{ "md_criatura", "d_megadrive.cpp"},
+	{ "nes_crillion", "d_nes.cpp"},
 	{ "spec_crimbo", "d_spectrum.cpp"},
 	{ "nes_crimebusters", "d_nes.cpp"},
 	{ "spec_crimebust", "d_spectrum.cpp"},
@@ -47110,6 +47128,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_highwaystar", "d_nes.cpp"},
 	{ "nes_hikarnosenphoulgaonjlea", "d_nes.cpp"},
 	{ "nes_hikarnosenphoulgaon", "d_nes.cpp"},
+	{ "fds_hikarshij", "d_nes.cpp"},
 	{ "fds_hikarshi", "d_nes.cpp"},
 	{ "himesiki", "d_himesiki.cpp"},
 	{ "nes_hinothouhenj", "d_nes.cpp"},
@@ -47936,6 +47955,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "jungler", "d_rallyx.cpp"},
 	{ "jrking", "d_dkong.cpp"},
 	{ "md_junker", "d_megadrive.cpp"},
+	{ "nes_junkoid", "d_nes.cpp"},
 	{ "cv_junkwall", "d_coleco.cpp"},
 	{ "junofrstg", "d_junofrst.cpp"},
 	{ "msx_junofrst", "d_msx.cpp"},
@@ -55292,6 +55312,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "msx_starship", "d_msx.cpp"},
 	{ "msx_starshipa", "d_msx.cpp"},
 	{ "nes_startropics", "d_nes.cpp"},
+	{ "nes_startropicsmf", "d_nes.cpp"},
 	{ "nes_startii", "d_nes.cpp"},
 	{ "stealsee", "d_eolith.cpp"},
 	{ "cv_steam", "d_coleco.cpp"},
@@ -56534,6 +56555,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "spec_tarzangoesape", "d_spectrum.cpp"},
 	{ "cv_tarzan", "d_coleco.cpp"},
 	{ "nes_tasac", "d_nes.cpp"},
+	{ "nes_tashimasnoprigaips", "d_nes.cpp"},
+	{ "nes_tashimasnoprigaipj", "d_nes.cpp"},
 	{ "nes_tashimasnoprigaip", "d_nes.cpp"},
 	{ "tharrieru", "d_nmk16.cpp"},
 	{ "md_taskfhexs", "d_megadrive.cpp"},
@@ -56665,6 +56688,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_tmnt", "d_nes.cpp"},
 	{ "tmnt", "d_tmnt.cpp"},
 	{ "md_tmntshj", "d_megadrive.cpp"},
+	{ "nes_tmntte", "d_nes.cpp"},
 	{ "md_tmnthhec", "d_megadrive.cpp"},
 	{ "md_tmnthhs", "d_megadrive.cpp"},
 	{ "md_tmnthh", "d_megadrive.cpp"},

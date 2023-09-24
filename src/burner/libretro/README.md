@@ -83,7 +83,8 @@ Refer to a [clrmamepro tutorial](https://docs.libretro.com/guides/arcade-getting
 
 ## Mapping
 
-We don't have a convenient tool like the MAME OSD, instead we use the retroarch api to customize mappings, you can do that by going into `Quick Menu > Controls`.
+We don't have a convenient tool like the MAME OSD, instead we use the libretro api to announce buttons and let the frontend customize mapping, this is done through `Quick Menu > Controls`.
+
 For those who don't want to fully customize their mapping, there are 2 convenient presets you can apply by changing the "device type" for a player in this menu :
 
 * **Classic** : it will apply the original neogeo layout from neogeo cd gamepads for neogeo games, and use L/R as 5th and 6th button for 6 buttons games like Street Fighter II.
@@ -169,15 +170,66 @@ The following bioses are required for some of the emulated systems :
 
 ## Samples
 
-Samples should be put under `SYSTEM_DIRECTORY/fbneo/samples`
+Samples should be put under `SYSTEM_DIRECTORY/fbneo/samples`.
+
+Here is a list of samples currently in use :
+
+* blockade.zip
+* buckrog.zip
+* carnival.zip
+* cheekyms.zip
+* congo.zip
+* dkongjr.zip
+* dkong.zip
+* donpachi.zip
+* elim2.zip
+* fantasy.zip
+* galaga.zip
+* gaplus.zip
+* gridlee.zip
+* heiankyo.zip
+* invaders.zip
+* journey.zip
+* mario.zip
+* mmagic.zip
+* natodef.zip
+* nitedrvr.zip
+* nsub.zip
+* qbert.zip
+* radarscp.zip
+* rallyx.zip
+* reactor.zip
+* safarir.zip
+* sasuke.zip
+* sharkatt.zip
+* spacefb.zip
+* spacfury.zip
+* stinger.zip
+* subroc3d.zip
+* thehand.zip
+* thief.zip
+* tr606drumkit.zip
+* turbo.zip
+* twotiger.zip
+* vanguard.zip
+* xevious.zip
+* zaxxon.zip
+* zektor.zip
+* zerohour.zip
 
 ## Hiscores
 
-Copy [hiscore.dat](https://github.com/libretro/FBNeo/tree/master/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and have the hiscore core option enabled. It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for hiscores, or `hiscore.dat` might have a missing or broken entry for that romset. You can request support in the issue tracker. Runahead now works with hiscores, it'll require fairly recent version of the core AND RetroArch though (support was added after 1.10.3 and is still only available through nightlies as of 2022-09-05).
+Copy [hiscore.dat](https://github.com/libretro/FBNeo/tree/master/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and have the hiscore core option enabled. 
+
+It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for this feature, or `hiscore.dat` might have a missing or broken entry for that romset. You can request support in the issue tracker. 
+
+Runahead now works with hiscores, it'll require fairly recent version of the core AND RetroArch though (support was added after 1.10.3).
 
 ## Input lag reduction
 
-This core widely supports the RetroArch input latency reduction features, with **runahead single instance** and **preemptive frames** being the recommended methods. Support for **runahead second instance** is not guaranteed because it doesn't exist in standalone FBNeo unlike the other methods.
+This core widely supports the RetroArch input latency reduction features, with **runahead single instance** and **preemptive frames** being the recommended methods. 
+
+Support for **runahead second instance** is not guaranteed because it doesn't exist in standalone FBNeo unlike the other methods.
 
 ## RetroAchievements
 
@@ -191,29 +243,42 @@ They are either directly available from `Quick Menu > Core Options`, or from the
 
 This core supports the RetroArch cheat feature with the `.cht` files. However it is recommended to use FBNeo's native cheat support instead :
 
-* download the pack of cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip)
-* uncompress **all of them** into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder (which is **NOT** the same folder as the RetroArch feature with the `.cht` files)
-* cheats will become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`) afterward.
+* Download the pack of cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip)
+* Uncompress **all of them** into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder (which is **NOT** the same folder as the RetroArch feature with the `.cht` files)
+* Cheats will become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`) afterward.
 
 ## Frequently asked questions
 
 ### Where can i find the XXX roms ?
+
 As far as we are concerned, you are supposed to dump your own games, so we can't help you with acquiring romsets.
 
-### Game XXX is not launching, why ?
-It is either not supported or you have a bad rom, your logs will give you more details. Build a valid romset with clrmamepro as said above.
-There are also a few games marked as not working, try one of their clones.
+### Why am i getting a white screen ?
 
-### I patched game XXX and can't run it, why ?
-Because it's considered a bad rom since the crcs won't match, however there is a method to use a patched romset, if you put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched` it will work (NB: you can strip it of any file that don't differ from non-patched romset if you want). **The romset you must launch is still the original non-patched romset though (its content will be overrided by the content of the patched one)**, you can disable that override by toggling off the `Allow patched romsets` core option.
+Refer to [getting started with arcade emulation](https://docs.libretro.com/guides/arcade-getting-started/#step-3-use-the-correct-version-romsets-for-that-emulator) to understand how romsets work.
 
-### I bought unibios from http://unibios.free.fr/ and can't run it, why ?
+The white screen tells you if the romset is supported at all and which files are wrong or missing.
+Exceptionally there might be a false positive due to your file being unreadable for some reason.
+
+### How can i run that romhack i found ?
+
+A lot of romhacks are supported natively, so your romhack might already be supported under a specific romset name.
+
+For the unsupported romhacks, you can put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched` (NB: you can strip it of any file that don't differ from non-patched romset if you want), that method will only work if the sizes and names matches with the original romset. 
+**The romset you must launch is still the original non-patched romset (its content will be overrided at runtime by the content of the patched one)**, you can disable that behavior by toggling off the `Allow patched romsets` core option.
+
+### How can i run that unibios i bought from http://unibios.free.fr/ ?
+
 Same answer as above.
 
-### Game XXX has graphical glitches, why ?
-Write a report with details on the issue and your platform.
+### I think i found a glitch, how do i report it ?
 
-### Game XXX runs slowly, why ?
+Write a report [here](https://github.com/finalburnneo/FBNeo/issues) with details on the issue and your platform.
+If the issue is not self-explanatory, it is important to provide a video of the PCB (meaning real hardware), any other material (remakes, other emulators, fpga, game rips, ...) will be ignored.
+If the issue doesn't happen right from the beginning, please try to provide a savestate from right before the issue.
+
+### Why does game XXX run slowly ?
+
 Your hardware is probably too slow to run the game with your current settings. Try the following :
 
 * Check if there is a speedhack dipswitch in the core options, set it to "yes".
@@ -228,19 +293,22 @@ Your hardware is probably too slow to run the game with your current settings. T
 
 We won't accept requests for "making the core faster", as far as we are concerned this core has a good balance between accuracy & speed, and for the most part will already run really well on low-end devices (rpi3, ...).
 
-### Game XXX has choppy sound, why ?
+### Why does game XXX have choppy sound ?
+
 Most likely for the same reason as above.
 
-### Game XXX runs faster in MAME2003/MAME2010, why ?
-Overall, FBNeo is slower than old MAME version, because it's more accurate, meaning graphics, sound and gameplay are more likely to be faithful to the real machine.
-This libretro port also supports various features which are usually buggy or totally absent in MAME cores (runahead, netplay, rewind, retroachievements, ...), those features might use additional resources.
+### Why does game XXX run faster in MAME2003/MAME2010 ?
 
-### Neogeo CD doesn't work, why ?
+Overall, FBNeo is slower than old MAME version, because it's more accurate, meaning graphics, sound and gameplay are more likely to be faithful to the real machine.
+This libretro port also supports various features which are usually buggy or totally absent in MAME cores (runahead, netplay, rewind, retroachievements, ...), those features might require additional resources.
+
+### How do i launch a neogeo CD game ?
+
 There are several things to know :
 
-* You need a copy of neocdz.zip and neogeo.zip in your bios folder
+* You need a copy of the neocdz.zip and neogeo.zip bioses
 * You need to add `--subsystem neocd` to the command line, or to place your games in a `neocd` folder
-* Supported format are ccd/sub/img (trurip), and single file MODE1/2352 cue/bin (use utilities like "CDmage" to convert your iso if needed), **they must not be compressed**
+* The supported format is single file MODE1/2352 cue/bin (use "CDmage" to convert your iso if needed), **they must not be compressed**
 
 You can convert your unsupported isos by following this tutorial :
 
@@ -250,16 +318,12 @@ You can convert your unsupported isos by following this tutorial :
 * Make sure you select MODE1/2352 in the second drop-down
 * Press OK, wait for the process to finish (a few seconds on my computer), and it’s done !
 
-### Killer instinct won't work, why ?
-That driver was disabled for now, it doesn't meet our quality criteria.
+### Why can't i launch Killer instinct ? I heard it's supported.
 
-~~There are several things to know :~~
+That driver was disabled for now, it didn't meet our quality criteria.
 
-* ~~It is only running at playable speed on x86_64 (other arch will basically need a cpu at 4Ghz because they lack a mips3 dynarec), and the core needs to be built like this to enable this dynarec : `make -j5 -C src/burner/libretro USE_X64_DRC=1`~~
-* ~~If your rom is at `ROM_DIRECTORY/kinst.zip`, you'll need the uncompressed disc image at `ROM_DIRECTORY/kinst/kinst.img`~~
-* ~~To get the uncompressed disc image, you'll need to use the chdman tool from MAME on the chd from mame, the command looks like this : `chdman extracthd -i kinst.chd -o kinst.img`~~
+### Why are vertical games not working properly ?
 
-### Vertical games don't work properly, why ?
 2 settings are required when running vertical games in FBNeo :
 
 * `Settings > Core > Allow rotation` must be enabled  (`video_allow_rotate = "true"` in `retroarch.cfg`)
@@ -269,30 +333,40 @@ If you are wondering why this isn't required for the MAME core, you can find mor
 
 Additionally :
 
-* If you are playing on a vertical screen, you'll want to use the `Vertical Mode` core option to rotate the display for your needs, while it's also possible to rotate display from `Settings > Video > Output > Video Rotation`, that method is not recommended because it doesn't rotate the aspect ratio.
-* If you are using a bezel pack, it seems you need to enable `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`)
+* If you are playing on a vertical screen, you'll want to use the `Vertical Mode` core option to rotate the display for your needs, it should also be possible to rotate display from `Settings > Video > Output > Video Rotation` but that method might handle the aspect ratio incorrectly.
+* If you are using a bezel pack, make sure it's compatible with FBNeo (apparently some were written to work specifically with MAME's internal rotation) and to follow its official instructions. In some case it seems enabling `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`) can help
 
-### Music is high-pitched, too fast and/or different from FBNeo standalone, why ?
-For better or worse, it was decided to use different default audio settings from standalone in the libretro port. By default standalone has 44100 samplerate and both interpolations off and that's what you should set in libretro's core options if you want the same audio output.
+### Why is the music high-pitched, too fast and/or different from upstream ?
+
+For better or worse, it was decided to use different default audio settings from standalone in the libretro port. 
+By default standalone has 44100 samplerate and both interpolations off, and that's what you should set in core options if you want the same audio output.
 
 You might also want to make sure you are running the game at the correct speed, most crt games don't run at 60Hz and if you want the proper refresh rate to be emulated you'll need to make sure `Force 60Hz` isn't enabled in core options and `Settings > Video > Synchronization > Sync to Exact Content Framerate` is enabled (`vrr_runloop_enable = "true"` in `retroarch.cfg`). Please note that your screen might not handle well the correct refresh rate, in which case you'll have to make a choice between smoothness and correct refresh rate.
 
-### I have a black screen in neogeo games, why ?
-Most likely because you have an incomplete `neogeo` romset and you changed the bios in core options for some reason. `MVS Asia/Europe ver. 6 (1 slot)` is the default bios and the only one that will cause a "white screen of death" if missing from your `neogeo` romset. If you select another neogeo bios while not having the corresponding file, you won't get the "white screen of death", instead you'll have a black screen with some sound playing. This issue will only happen if you didn't follow the instructions about romsets.
+### Why do i get a black screen in neogeo games ?
 
-### My favorite combo button is not available, why ?
-Retroarch doesn't allow cores to declare buttons and map them later, meaning the number of different "actions" available is limited by the number of buttons available on the retropad model.
+Most likely because you have an incomplete `neogeo` romset and you changed your bios through core options for some reason. `MVS Asia/Europe ver. 6 (1 slot)` is the default bios and the only one that will cause a "white screen of death" if missing from your `neogeo` romset. If you select another neogeo bios while not having the corresponding file, you won't get the "white screen of death", instead you'll have a black screen with some sound playing. This issue will only happen if you didn't follow the instructions about romsets.
 
-Removing that limitation was asked in https://github.com/libretro/RetroArch/issues/6718, then again in https://github.com/libretro/RetroArch/issues/11273, i won't add more macros as long as this limitation hasn't been removed. If you want more macros, go spam those issues, preferably the later.
+### Why do i get some weird transparent effects in game XXX ?
 
-The currently available neogeo combos were decided in https://github.com/libretro/FBNeo/issues/51, i won't replace them, but i'll seriously consider removing all of them if i keep having users complaining about them every month.
+You probably installed some `.bld` files in the `SYSTEM_DIRECTORY/fbneo/blend` folder. Those files are meant to create such effects but some of them are very broken. I'd recommend removing them.
+
+### Why is my favorite combo button not available ?
+
+Libretro doesn't allow cores to declare more buttons and map them later, meaning the number of different "actions" available is limited by the number of buttons available on the retropad model.
+
+Removing that limitation was asked in https://github.com/libretro/RetroArch/issues/6718, then again in https://github.com/libretro/RetroArch/issues/11273, it's not possible to add more macros as long as this limitation exists. If you want more macros, go support those issues, preferably the later.
+
+The currently available neogeo combos were decided in https://github.com/libretro/FBNeo/issues/51, i won't replace them, but i'll seriously consider removing all of them if i keep having users complaining about them.
 
 Note that there was also a request to add a retroarch macro mapper in https://github.com/libretro/RetroArch/issues/8209.
 
-### I can't enable hardcore mode in RetroAchievements, why ?
+### Why can't i enable hardcore mode in RetroAchievements ?
+
 This feature doesn't accept achievements made with a romhack, so you need to disable the `Allow patched romsets` core option.
 
 ### Where is SYSTEM_DIRECTORY ?
+
 Open your `retroarch.cfg` file and look for `system_directory`, or check `Settings > Directory > System/BIOS`.
 
 ## External Links

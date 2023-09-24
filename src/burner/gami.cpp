@@ -2032,6 +2032,38 @@ void GameInpUpdateNext(bool bCopy)
 void GameInpClearOpposites(bool bCopy)
 {
 	if (kNetVersion >= NET_VERSION_SOCD && (bClearOpposites || nEnableSOCD > 0)) {
+		if (nEnableSOCD == 3) {
+			//4 way direction forced, last wins, for tetris
+			if (GetInpFrame(i, DOWN) && GetInpFrame(i, LEFT)) {
+				if (GetInpPrev(i, DOWN)) {
+					SetInpFrame(i, DOWN, 0, bCopy);
+				} else {
+					SetInpFrame(i, LEFT, 0, bCopy);
+				}
+			}
+			if (GetInpFrame(i, UP) && GetInpFrame(i, LEFT)) {
+				if (GetInpPrev(i, UP)) {
+					SetInpFrame(i, UP, 0, bCopy);
+				} else {
+					SetInpFrame(i, LEFT, 0, bCopy);
+				}
+			}
+			if (GetInpFrame(i, DOWN) && GetInpFrame(i, RIGHT)) {
+				if (GetInpPrev(i, DOWN)) {
+					SetInpFrame(i, DOWN, 0, bCopy);
+				} else {
+					SetInpFrame(i, RIGHT, 0, bCopy);
+				}
+			}
+			if (GetInpFrame(i, UP) && GetInpFrame(i, RIGHT)) {
+				if (GetInpPrev(i, UP)) {
+					SetInpFrame(i, UP, 0, bCopy);
+				} else {
+					SetInpFrame(i, RIGHT, 0, bCopy);
+				}
+			}
+		}
+
 		if (nEnableSOCD == 2) {
 			// Hitbox SOCD cleaner
 			for (INT32 i = 0; i < 2; i++) {

@@ -16,8 +16,7 @@ The main difference with MAME is that FBNeo doesn't mind including "quality of l
 * having control alternatives that didn't exist on original cabinet (play rotary stick games like twin-stick shooters, use lightguns in "Rambo 3", use simplified 8-way directional controls for "Battlezone", ...)
 * improving the gaming experience by cutting what we deem as unnecessary aspect of emulation (you won't have to spend 20 minutes "installing" CPS-3 games)
 * reducing hardware requirements by cutting what we deem as unnecessary corners in the emulation code
-* supporting popular romhacks 
-* ...
+* supporting popular romhacks
 
 Note: some of those "quality of life" hacks might be doable with programming skills and lua language on MAME
 
@@ -31,7 +30,7 @@ zip, 7z
 
 ## Building this core manually
 
-From the root of the repository, run 
+From the root of the repository, run
 ```
 make -j5 -C src/burner/libretro generate-files
 make -j5 -C src/burner/libretro
@@ -219,7 +218,7 @@ Here is a list of samples currently in use :
 
 ## Hiscores
 
-Copy [hiscore.dat](https://github.com/libretro/FBNeo/tree/master/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and have the hiscore core option enabled. 
+Copy [hiscore.dat](https://github.com/libretro/FBNeo/raw/master/metadata/hiscore.dat) to `SYSTEM_DIRECTORY/fbneo/` and have the hiscore core option enabled.
 
 It doesn't guarantee hiscores will work for a specific game though, sometimes a driver could just be missing the necessary support code for this feature, or `hiscore.dat` might have a missing or broken entry for that romset. You can request support in the issue tracker. 
 
@@ -229,7 +228,7 @@ Runahead now works with hiscores, it'll require fairly recent version of the cor
 
 This core widely supports the RetroArch input latency reduction features, with **runahead single instance** and **preemptive frames** being the recommended methods. 
 
-Support for **runahead second instance** is not guaranteed because it doesn't exist in standalone FBNeo unlike the other methods.
+Proper support for **runahead second instance** is not guaranteed because it doesn't exist in standalone FBNeo unlike the other methods.
 
 ## RetroAchievements
 
@@ -334,7 +333,7 @@ If you are wondering why this isn't required for the MAME core, you can find mor
 Additionally :
 
 * If you are playing on a vertical screen, you'll want to use the `Vertical Mode` core option to rotate the display for your needs, it should also be possible to rotate display from `Settings > Video > Output > Video Rotation` but that method might handle the aspect ratio incorrectly.
-* If you are using a bezel pack, make sure it's compatible with FBNeo (apparently some were written to work specifically with MAME's internal rotation) and to follow its official instructions. In some case it seems enabling `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`) can help
+* If you are using a bezel pack, make sure it's compatible with FBNeo (apparently, some were written specifically to work with MAME's internal rotation) and to follow its official instructions. In some case it seems enabling `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`) can help
 
 ### Why is the music high-pitched, too fast and/or different from upstream ?
 
@@ -345,7 +344,7 @@ You might also want to make sure you are running the game at the correct speed, 
 
 ### Why do i get a black screen in neogeo games ?
 
-Most likely because you have an incomplete `neogeo` romset and you changed your bios through core options for some reason. `MVS Asia/Europe ver. 6 (1 slot)` is the default bios and the only one that will cause a "white screen of death" if missing from your `neogeo` romset. If you select another neogeo bios while not having the corresponding file, you won't get the "white screen of death", instead you'll have a black screen with some sound playing. This issue will only happen if you didn't follow the instructions about romsets.
+Most likely because you have an incomplete `neogeo` romset and you changed your bios through core options. `MVS Asia/Europe ver. 6 (1 slot)` is the default bios and the only one that will cause a "white screen" if missing from your `neogeo` romset. If you select another neogeo bios while not having the corresponding file, you won't get the "white screen", instead you'll have a black screen with some sound playing. This issue will only happen if you didn't follow the instructions about romsets.
 
 ### Why do i get some weird transparent effects in game XXX ?
 
@@ -357,13 +356,13 @@ Libretro doesn't allow cores to declare more buttons and map them later, meaning
 
 Removing that limitation was asked in https://github.com/libretro/RetroArch/issues/6718, then again in https://github.com/libretro/RetroArch/issues/11273, it's not possible to add more macros as long as this limitation exists. If you want more macros, go support those issues, preferably the later.
 
-The currently available neogeo combos were decided in https://github.com/libretro/FBNeo/issues/51, i won't replace them, but i'll seriously consider removing all of them if i keep having users complaining about them.
+The currently available neogeo combos were decided in https://github.com/libretro/FBNeo/issues/51, they won't be replaced, but they might totally disappear if users keep complaining about them.
 
 Note that there was also a request to add a retroarch macro mapper in https://github.com/libretro/RetroArch/issues/8209.
 
 ### Why can't i enable hardcore mode in RetroAchievements ?
 
-This feature doesn't accept achievements made with a romhack, so you need to disable the `Allow patched romsets` core option.
+This feature doesn't accept achievements made with any kind of cheat, meaning unibios, cheats, and patched romsets must be disabled in core options.
 
 ### Where is SYSTEM_DIRECTORY ?
 

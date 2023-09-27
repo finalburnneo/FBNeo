@@ -41468,7 +41468,7 @@ struct BurnDriver BurnSpecBombpengo = {
 // Bomb Sweeper (48K) (HB)
 
 static struct BurnRomInfo SpecBombsweepRomDesc[] = {
-	{ "Bomb Sweeper 48K (2023)(Menyiques).tap", 47367, 0xa5a5de08, BRF_ESS | BRF_PRG },
+	{ "Bomb Sweeper 48K (2023)(Menyiques).tap", 46421, 0xb51f4118, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBombsweep, SpecBombsweep, Spectrum)

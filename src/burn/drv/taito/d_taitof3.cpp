@@ -5325,10 +5325,10 @@ struct BurnDriver BurnDrvPbobble3j = {
 // Puzzle Bobble 3 Recarbonated
 
 static struct BurnRomInfo pbobble3rcRomDesc[] = {
-	{ "e29-12rc.rom",	0x080000, 0xc22eda63, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "e29-11rc.rom",	0x080000, 0x531e2891, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "e29-10rc.rom",	0x080000, 0xba599730, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "e29-16rc.rom",	0x080000, 0x412e7ca4, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "e29rc-12.rom",	0x080000, 0xc22eda63, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e29rc-11.rom",	0x080000, 0x531e2891, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e29rc-10.rom",	0x080000, 0xba599730, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e29rc-16.rom",	0x080000, 0x412e7ca4, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "e29-02.rom",		0x100000, 0x437391d3, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
 	{ "e29-01.rom",		0x100000, 0x52547c77, TAITO_SPRITESA_BYTESWAP },  //  5

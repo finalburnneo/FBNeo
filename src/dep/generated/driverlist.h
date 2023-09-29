@@ -2028,6 +2028,7 @@ DRV		BurnDrvBombkick;
 DRV		BurnDrvBombkicka;
 DRV		BurnDrvmd_bobc206;
 DRV		BurnDrvmd_bobcse;
+DRV		BurnSpecBombsweep;
 DRV		BurnDrvnes_bombsweeper;
 DRV		BurnDrvcv_bomblast;
 DRV		BurnSpecBomber;
@@ -2979,6 +2980,7 @@ DRV		BurnDrvnes_chikichimacmourac;
 DRV		BurnDrvpce_chikuden1;
 DRV		BurnDrvpce_chikuden;
 DRV		BurnDrvcv_cotn;
+DRV		BurnDrvMSX_cotn;
 DRV		BurnSpecChiller;
 DRV		BurnDrvMSX_chiller;
 DRV		BurnDrvnes_chiller;
@@ -4649,6 +4651,7 @@ DRV		BurnSpecDbubble48k;
 DRV		BurnDrvnes_doughboy;
 DRV		BurnSpecdownpipe128;
 DRV		BurnSpecdownpipe48;
+DRV		BurnSpecDownpiperef;
 DRV		BurnDrvpce_download1;
 DRV		BurnDrvpce_download;
 DRV		BurnSpecDowntown;
@@ -5339,6 +5342,8 @@ DRV		BurnDrvmd_exilej;
 DRV		BurnDrvmd_exosquad;
 DRV		BurnDrvmd_exosquadu;
 DRV		BurnDrvmd_exosquadup;
+DRV		BurnSpecExoticalen;
+DRV		BurnSpecExoticales;
 DRV		BurnDrvExodus;
 DRV		BurnDrvmd_exodus;
 DRV		BurnDrvnes_exodus;
@@ -7538,6 +7543,7 @@ DRV		BurnDrvMSX_hopman;
 DRV		BurnDrvsg1k_hopman;
 DRV		BurnDrvMSX_hopper;
 DRV		BurnDrvhopprobo;
+DRV		BurnDrvMSX_hopperboy;
 DRV		BurnDrvnes_hoppinmad;
 DRV		BurnSpechoppingmad;
 DRV		BurnDrvHopmappy;
@@ -12132,6 +12138,7 @@ DRV		BurnDrvpengoa;
 DRV		BurnDrvpengob;
 DRV		BurnDrvpengoc;
 DRV		BurnDrvpengo;
+DRV		BurnSpecPengomini;
 DRV		BurnDrvnes_pengusea;
 DRV		BurnDrvPengadvb;
 DRV		BurnDrvMSX_pengadv;
@@ -14652,6 +14659,7 @@ DRV		BurnSpecShuriken;
 DRV		BurnSpecShuttlebug;
 DRV		BurnDrvShuuz2;
 DRV		BurnDrvShuuz;
+DRV		BurnDrvMSX_shyre;
 DRV		BurnDrvSichuan2;
 DRV		BurnDrvSichuan2a;
 DRV		BurnSpecSidearms;
@@ -20658,7 +20666,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_antarcta,		// Antarctic Adventure (Euro, Alt)
 	&BurnDrvMSX_antarctj,		// Antarctic Adventure (Japan)
 	&BurnDrvnes_antaradv,		// Antarctic Adventure (Japan)
-	&BurnDrvMSX_antarctk,		// Antarctic Adventure (Korea)
+	&BurnDrvMSX_antarctk,		// Antarctic Adventure (Korea) (Unl)
 	&BurnDrvcv_antarct,			// Antarctic Adventure
 	&BurnSpecAnteater,			// AntEater (48K) (HB)
 	&BurnDrvAnteater,			// Anteater
@@ -21908,6 +21916,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvBombkicka,			// Bomb Kick (set 2)
 	&BurnDrvmd_bobc206,			// Bomb on Basic City (HB, v2.06)
 	&BurnDrvmd_bobcse,			// Bomb on Basic City Special Edition (HB)
+	&BurnSpecBombsweep,			// Bomb Sweeper (48K) (HB)
 	&BurnDrvnes_bombsweeper,	// Bomb Sweeper (HB)
 	&BurnDrvcv_bomblast,		// Bomb'n Blast (HB)
 	&BurnSpecBomber,			// Bomber (16K)
@@ -22859,6 +22868,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_chikuden1,		// Chikudenya Toubei - Kubikiri Yakata Yori (Japan) (Alt)
 	&BurnDrvpce_chikuden,		// Chikudenya Toubei - Kubikiri Yakata Yori (Japan)
 	&BurnDrvcv_cotn,			// Children of the Night (HB)
+	&BurnDrvMSX_cotn,			// Children of the Night (HB)
 	&BurnSpecChiller,			// Chiller (48K)
 	&BurnDrvMSX_chiller,		// Chiller (Euro)
 	&BurnDrvnes_chiller,		// Chiller (USA)
@@ -24529,6 +24539,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_doughboy,		// Dough Boy (Japan)
 	&BurnSpecdownpipe128,		// Down the pipe (128K) (HB)
 	&BurnSpecdownpipe48,		// Down the pipe (48K) (HB)
+	&BurnSpecDownpiperef,		// Down the pipe Reflushed (48K) (HB)
 	&BurnDrvpce_download1,		// Download (Japan) (Alt)
 	&BurnDrvpce_download,		// Download (Japan)
 	&BurnSpecDowntown,			// Downtown (48K)
@@ -25093,7 +25104,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_enormadv,		// Enormous Adventures (HB)
 	&BurnDrvMSX_entombed,		// Entombed (HB, v1.1)
 	&BurnSpecEquinox,			// Equinox (48K)
-	&BurnSpecEricfloaters,		// Eric And The Floaters (48K)
+	&BurnSpecEricfloaters,		// Eric and the Floaters (48K)
 	&BurnDrvnes_erika,			// Erika and Satoru's Dream Adventure (T-Eng)
 	&BurnDrvnes_erikaj,			// Erika to Satoru no Yume Bouken (Japan)
 	&BurnDrvgg_ernieeg,			// Ernie Els Golf (Euro)
@@ -25219,6 +25230,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_exosquad,		// Exo Squad (Euro)
 	&BurnDrvmd_exosquadu,		// Exo Squad (USA)
 	&BurnDrvmd_exosquadup,		// Exo Squad (USA, Prototype)
+	&BurnSpecExoticalen,		// EXO-TICAL (English) (128K) (HB)
+	&BurnSpecExoticales,		// EXO-TICAL (Spanish) (128K) (HB)
 	&BurnDrvExodus,				// Exodus (bootleg?)
 	&BurnDrvmd_exodus,			// Exodus - Journey to the Promised Land (USA) (Unl)
 	&BurnDrvnes_exodus,			// Exodus - Journey to the Promised Land (USA) (Unl)
@@ -27418,6 +27431,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_hopman,		// Hopman (HB)
 	&BurnDrvMSX_hopper,			// Hopper (Euro)
 	&BurnDrvhopprobo,			// Hopper Robo
+	&BurnDrvMSX_hopperboy,		// HopperBoy (HB, v1.2)
 	&BurnDrvnes_hoppinmad,		// Hoppin' Mad (Prototype)
 	&BurnSpechoppingmad,		// Hopping Mad (128K)
 	&BurnDrvHopmappy,			// Hopping Mappy
@@ -28727,7 +28741,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_kungfuma,		// Kung Fu Master (Japan, Alt)
 	&BurnDrvMSX_seikacho,		// Kung Fu Master - Seiken Achou (Japan)
 	&BurnDrvMSX_seikachoa,		// Kung Fu Master - Seiken Achou (Japan, Alt)
-	&BurnDrvMSX_seikachok,		// Kung Fu Master - Seiken Achou (Korea)
+	&BurnDrvMSX_seikachok,		// Kung Fu Master - Seiken Achou (Korea) (Unl)
 	&BurnDrvmd_kfpanda2,		// Kung Fu Panda 2 (Russia) (Unl)
 	&BurnDrvpce_kungfu,			// Kung Fu, The (Japan)
 	&BurnDrvnes_kungfuheroes,	// Kung-Fu Heroes (USA)
@@ -31786,7 +31800,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_pacara,		// Pacar (Japan, Alt)
 	&BurnDrvsg1k_pacart,		// Pacar (Taiwan)
 	&BurnDrvMSX_pachicom,		// Pachi Com (Japan)
-	&BurnDrvMSX_pachicomk,		// Pachi Com (Korea)
+	&BurnDrvMSX_pachicomk,		// Pachi Com (Korea) (Unl)
 	&BurnDrvngpc_pslotazt,		// Pachi-Slot Aruze Oukoku Pocket - Azteca (Jpn)
 	&BurnDrvngpc_pslotdk2,		// Pachi-Slot Aruze Oukoku Pocket - Dekahel 2 (Jpn)
 	&BurnDrvngpc_pslotds2,		// Pachi-Slot Aruze Oukoku Pocket - Delsol 2 (Jpn)
@@ -32012,6 +32026,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpengob,				// Pengo (World, 315-5010 type, set 2)
 	&BurnDrvpengoc,				// Pengo (World, 315-5010 type, set 3)
 	&BurnDrvpengo,				// Pengo (World, not encrypted, rev A)
+	&BurnSpecPengomini,			// Pengo mini (128K) (HB)
 	&BurnDrvnes_pengusea,		// Penguin & Seal, The (Unl)
 	&BurnDrvPengadvb,			// Penguin Adventure (bootleg of MSX version)
 	&BurnDrvMSX_pengadv,		// Penguin Adventure (Euro) ~ Yume Tairiku Adventure (Japan)
@@ -34532,6 +34547,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecShuttlebug,		// Shuttlebug (48K) (HB)
 	&BurnDrvShuuz2,				// Shuuz (version 7.1)
 	&BurnDrvShuuz,				// Shuuz (version 8.0)
+	&BurnDrvMSX_shyre,			// Shyre (HB, v1.1)
 	&BurnDrvSichuan2,			// Sichuan II (hack, set 1)
 	&BurnDrvSichuan2a,			// Sichuan II (hack, set 2)
 	&BurnSpecSidearms,			// Side Arms (48K)
@@ -41776,6 +41792,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "bombkicka", "d_yunsun16.cpp"},
 	{ "md_bobc206", "d_megadrive.cpp"},
 	{ "md_bobcse", "d_megadrive.cpp"},
+	{ "spec_bombsweep", "d_spectrum.cpp"},
 	{ "nes_bombsweeper", "d_nes.cpp"},
 	{ "cv_bomblast", "d_coleco.cpp"},
 	{ "spec_bomber", "d_spectrum.cpp"},
@@ -42713,6 +42730,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "pce_chikuden1", "d_pce.cpp"},
 	{ "pce_chikuden", "d_pce.cpp"},
 	{ "cv_cotn", "d_coleco.cpp"},
+	{ "msx_cotn", "d_msx.cpp"},
 	{ "spec_chiller", "d_spectrum.cpp"},
 	{ "msx_chiller", "d_msx.cpp"},
 	{ "nes_chiller", "d_nes.cpp"},
@@ -44365,6 +44383,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_doughboy", "d_nes.cpp"},
 	{ "spec_downpipe128", "d_spectrum.cpp"},
 	{ "spec_downpipe48", "d_spectrum.cpp"},
+	{ "spec_downpiperef", "d_spectrum.cpp"},
 	{ "pce_download1", "d_pce.cpp"},
 	{ "pce_download", "d_pce.cpp"},
 	{ "spec_downtown", "d_spectrum.cpp"},
@@ -45051,6 +45070,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_exosquad", "d_megadrive.cpp"},
 	{ "md_exosquadu", "d_megadrive.cpp"},
 	{ "md_exosquadup", "d_megadrive.cpp"},
+	{ "spec_exoticalen", "d_spectrum.cpp"},
+	{ "spec_exoticales", "d_spectrum.cpp"},
 	{ "exodus", "d_galaxian.cpp"},
 	{ "md_exodus", "d_megadrive.cpp"},
 	{ "nes_exodus", "d_nes.cpp"},
@@ -47232,6 +47253,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "sg1k_hopman", "d_sg1000.cpp"},
 	{ "msx_hopper", "d_msx.cpp"},
 	{ "hopprobo", "d_marineb.cpp"},
+	{ "msx_hopperboy", "d_msx.cpp"},
 	{ "nes_hoppinmad", "d_nes.cpp"},
 	{ "spec_hoppingmad", "d_spectrum.cpp"},
 	{ "hopmappy", "d_namcos86.cpp"},
@@ -51776,6 +51798,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "pengob", "d_pacman.cpp"},
 	{ "pengoc", "d_pacman.cpp"},
 	{ "pengo", "d_pacman.cpp"},
+	{ "spec_pengomini", "d_spectrum.cpp"},
 	{ "nes_pengusea", "d_nes.cpp"},
 	{ "pengadvb", "d_pengadvb.cpp"},
 	{ "msx_pengadv", "d_msx.cpp"},
@@ -54272,6 +54295,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "spec_shuttlebug", "d_spectrum.cpp"},
 	{ "shuuz2", "d_shuuz.cpp"},
 	{ "shuuz", "d_shuuz.cpp"},
+	{ "msx_shyre", "d_msx.cpp"},
 	{ "sichuan2", "d_shisen.cpp"},
 	{ "sichuan2a", "d_shisen.cpp"},
 	{ "spec_sidearms", "d_spectrum.cpp"},

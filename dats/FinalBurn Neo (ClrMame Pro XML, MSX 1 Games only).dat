@@ -831,7 +831,7 @@
 		<description>Angleball (Euro)</description>
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Angleball (1987)(Mastertronic).rom" size="32768" crc="c0f4fd30"/>
+		<rom name="Angleball (Euro)(1987)(Mastertronic).rom" size="32768" crc="c0f4fd30"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -843,7 +843,7 @@
 		<description>Animal Land Satsujin Jiken (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Enix</manufacturer>
-		<rom name="Animal Land (1987)(Enix).rom" size="131072" crc="aee2363d"/>
+		<rom name="Animal Land (Japan)(1987)(Enix).rom" size="131072" crc="aee2363d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -866,7 +866,7 @@
 		<description>Antarctic Adventure (Euro)</description>
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
-		<rom name="antarctic adventure (europe).rom" size="16384" crc="6b739c93"/>
+		<rom name="Antarctic Adventure (Euro)(1984)(Konami).rom" size="16384" crc="6b739c93"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -877,7 +877,7 @@
 		<description>Antarctic Adventure (Euro, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
-		<rom name="antarctic adventure (europe) (alt 1).rom" size="16384" crc="e8bddedd"/>
+		<rom name="Antarctic Adventure (Euro)(Alt)(1984)(Konami).rom" size="16384" crc="e8bddedd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -888,7 +888,7 @@
 		<description>Antarctic Adventure (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Konami</manufacturer>
-		<rom name="antarctic adventure (japan).rom" size="16384" crc="aae7028b"/>
+		<rom name="Antarctic Adventure (Japan)(1984)(Konami).rom" size="16384" crc="aae7028b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -896,10 +896,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="antarctk" cloneof="antarct" romof="antarct" sourcefile="d_msx.cpp">
-		<description>Antarctic Adventure (Korea)</description>
+		<description>Antarctic Adventure (Korea) (Unl)</description>
 		<year>1984</year>
 		<manufacturer>Prosoft</manufacturer>
-		<rom name="antarctic adventure - japanese version (1984)(konami)[cr prosoft][rc-701].rom" size="16385" crc="8ced0683"/>
+		<rom name="Antarctic Adventure (Korea)(Unl)(1984)(Prosoft).rom" size="16385" crc="8ced0683"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -910,7 +910,7 @@
 		<description>Anty (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Bothtec</manufacturer>
-		<rom name="anty (japan).rom" size="16384" crc="b1ace0a0"/>
+		<rom name="Anty (Japan)(1984)(Bothtec).rom" size="16384" crc="b1ace0a0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -921,7 +921,7 @@
 		<description>Anty (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Bothtec</manufacturer>
-		<rom name="anty (japan) (alt 1).rom" size="16384" crc="5baacb31"/>
+		<rom name="Anty (Japan)(Alt)(1984)(Bothtec).rom" size="16384" crc="5baacb31"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -3556,6 +3556,18 @@
 		<year>1986</year>
 		<manufacturer>Bug-Byte Software</manufacturer>
 		<rom name="Chicken Chase (1986)(Bug-Byte Software)(gb)[run'cas-'].cas" size="37415" crc="027c7e11"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cotn" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Children of the Night (HB)</description>
+		<year>2018</year>
+		<manufacturer>Hikaru Games</manufacturer>
+		<rom name="Children of the Night (2018)(Hikaru Games).rom" size="262144" crc="dfd78802"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7669,7 +7681,7 @@
 		<description>Harry Fox MSX Special (Japan)</description>
 		<year>1986</year>
 		<manufacturer>MicroCabin</manufacturer>
-		<rom name="harryfox msx special (japan).rom" size="131072" crc="96b7faca"/>
+		<rom name="Harry Fox MSX Special (Japan)(1986)(MicroCabin).rom" size="131072" crc="96b7faca"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7915,7 +7927,19 @@
 		<description>Hopper (Euro)</description>
 		<year>1986</year>
 		<manufacturer>Eaglesoft</manufacturer>
-		<rom name="hopper (europe).rom" size="16384" crc="d3032ad7"/>
+		<rom name="Hopper (Euro)(1986)(Eaglesoft).rom" size="16384" crc="d3032ad7"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hopperboy" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>HopperBoy (HB, v1.2)</description>
+		<year>2023</year>
+		<manufacturer>Gamecast Entertainment</manufacturer>
+		<rom name="HopperBoy v1.2 (2023)(Gamecast Entertainment).rom" size="753664" crc="2d0535cd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7993,7 +8017,7 @@
 		<description>Hustle! Chumy (Japan)</description>
 		<year>1984</year>
 		<manufacturer>General</manufacturer>
-		<rom name="hustle! chumy (japan).rom" size="16384" crc="99518a12"/>
+		<rom name="Hustle! Chumy (Japan)(1984)(General).rom" size="16384" crc="99518a12"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -8004,7 +8028,7 @@
 		<description>Hustle! Chumy (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>General</manufacturer>
-		<rom name="hustle! chumy (japan) (alt 1).rom" size="16384" crc="22fd4780"/>
+		<rom name="Hustle! Chumy (Japan)(Alt)(1984)(General).rom" size="16384" crc="22fd4780"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9711,7 +9735,7 @@
 		<description>Kung Fu Master - Seiken Achou (Japan)</description>
 		<year>1985</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="kung fu acho (japan).rom" size="32768" crc="999dd794"/>
+		<rom name="Kung Fu Master - Seiken Achou (Japan)(1985)(ASCII).rom" size="32768" crc="999dd794"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9722,7 +9746,7 @@
 		<description>Kung Fu Master - Seiken Achou (Japan, Alt)</description>
 		<year>1985</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="kung fu acho (japan) (alt 1).rom" size="32768" crc="0da11df8"/>
+		<rom name="Kung Fu Master - Seiken Achou (Japan)(Alt)(1985)(ASCII).rom" size="32768" crc="0da11df8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9730,10 +9754,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="seikachok" cloneof="seikacho" romof="seikacho" sourcefile="d_msx.cpp">
-		<description>Kung Fu Master - Seiken Achou (Korea)</description>
+		<description>Kung Fu Master - Seiken Achou (Korea) (Unl)</description>
 		<year>1987</year>
 		<manufacturer>Clover</manufacturer>
-		<rom name="karateka.rom" size="32768" crc="6adeadf5"/>
+		<rom name="Kung Fu Master - Seiken Achou (Korea)(Unl)(1987)(Clover).rom" size="32768" crc="6adeadf5"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12472,7 +12496,7 @@
 		<description>Oil's Well (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Comptiq</manufacturer>
-		<rom name="oil's well (japan).rom" size="32768" crc="3c7f3767"/>
+		<rom name="Oil's Well (Japan)(1985)(Comptiq).rom" size="32768" crc="3c7f3767"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12483,7 +12507,7 @@
 		<description>Oil's Well (Japan, Alt)</description>
 		<year>1985</year>
 		<manufacturer>Comptiq</manufacturer>
-		<rom name="oil's well (japan) (alt 1).rom" size="32768" crc="aa2154fb"/>
+		<rom name="Oil's Well (Japan)(Alt)(1985)(Comptiq).rom" size="32768" crc="aa2154fb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12540,7 +12564,7 @@
 		<description>Othello (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="othello (japan).rom" size="32768" crc="fd3921cd"/>
+		<rom name="Othello (Japan)(1985)(Pony Canyon).rom" size="32768" crc="fd3921cd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12573,8 +12597,8 @@
 	<game name="oyotango" romof="msx" sourcefile="d_msx.cpp">
 		<description>Oyoide Tango (Japan)</description>
 		<year>1984</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="oyoide tango (japan).rom" size="8192" crc="01a24ca7"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Oyoide Tango (Japan)(1984)(HAL Laboratory).rom" size="8192" crc="01a24ca7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12608,7 +12632,7 @@
 		<description>Pac-Man (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Namcot</manufacturer>
-		<rom name="pac-man (japan).rom" size="16384" crc="d74dffa2"/>
+		<rom name="Pac-Man (Japan)(1984)(Namcot).rom" size="16384" crc="d74dffa2"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12619,7 +12643,7 @@
 		<description>Pac-Man (Japan, Alt 2)</description>
 		<year>1984</year>
 		<manufacturer>Namcot</manufacturer>
-		<rom name="pac-man (japan) (alt 2).rom" size="16384" crc="926bc903"/>
+		<rom name="Pac-Man (Japan)(Alt 2)(1984)(Namcot).rom" size="16384" crc="926bc903"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12630,7 +12654,7 @@
 		<description>Pac-Man (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Namcot</manufacturer>
-		<rom name="pac-man (japan) (alt 1).rom" size="32768" crc="505acae7"/>
+		<rom name="Pac-Man (Japan)(Alt 1)(1984)(Namcot).rom" size="32768" crc="505acae7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12652,7 +12676,7 @@
 		<description>Pachi Com (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Toshiba EMI</manufacturer>
-		<rom name="pachi com (japan).rom" size="32768" crc="ce7f6c91"/>
+		<rom name="Pachi Com (Japan)(1985)(Toshiba EMI).rom" size="32768" crc="ce7f6c91"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12660,10 +12684,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="pachicomk" cloneof="pachicom" romof="pachicom" sourcefile="d_msx.cpp">
-		<description>Pachi Com (Korea)</description>
+		<description>Pachi Com (Korea) (Unl)</description>
 		<year>1986</year>
 		<manufacturer>Boram Soft</manufacturer>
-		<rom name="pachicom (1985)(toshiba-emi)[cr boram soft].rom" size="32768" crc="bc1b4322"/>
+		<rom name="Pachi Com (Korea)(Unl)(1986)(Boram Soft).rom" size="32768" crc="bc1b4322"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12674,7 +12698,7 @@
 		<description>Pachinko-U.F.O. (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Casio</manufacturer>
-		<rom name="casio pachinko-u.f.o. (japan).rom" size="16384" crc="4088efaa"/>
+		<rom name="Pachinko-U.F.O. (Japan)(1984)(Casio).rom" size="16384" crc="4088efaa"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12769,7 +12793,7 @@
 		<description>Pai Panic (Japan)</description>
 		<year>1983</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="pai panic (japan).rom" size="16384" crc="6fd70773"/>
+		<rom name="Pai Panic (Japan)(1983)(ASCII).rom" size="16384" crc="6fd70773"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12792,7 +12816,7 @@
 		<description>Pairs (Japan)</description>
 		<year>1983</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="pairs (japan).rom" size="16384" crc="9c1c10ca"/>
+		<rom name="Pairs (Japan)(1983)(ASCII).rom" size="16384" crc="9c1c10ca"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -12803,7 +12827,7 @@
 		<description>Pairs (Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="pairs (japan) (alt 1).rom" size="16384" crc="3f042540"/>
+		<rom name="Pairs (Japan)(Alt)(1983)(ASCII).rom" size="16384" crc="3f042540"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14658,7 +14682,7 @@
 		<description>Score 3020 (Euro, Spanish)</description>
 		<year>1988</year>
 		<manufacturer>Topo Soft</manufacturer>
-		<rom name="Score 3020 ES (1988)(Topo Soft).rom" size="131072" crc="484e06c1"/>
+		<rom name="Score 3020 (Euro, ES)(1988)(Topo Soft).rom" size="131072" crc="484e06c1"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14669,7 +14693,7 @@
 		<description>Scramble Eggs (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Ample Software</manufacturer>
-		<rom name="scramble eggs (japan).rom" size="8192" crc="02dc77e8"/>
+		<rom name="Scramble Eggs (Japan)(1983)(Ample Software).rom" size="8192" crc="02dc77e8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14703,8 +14727,8 @@
 	<game name="seahuntr" romof="msx" sourcefile="d_msx.cpp">
 		<description>Sea Hunter (Euro)</description>
 		<year>1984</year>
-		<manufacturer>DynaData?</manufacturer>
-		<rom name="sea hunter (europe).rom" size="16384" crc="1fd18174"/>
+		<manufacturer>DynaData</manufacturer>
+		<rom name="Sea Hunter (Euro)(1984)(DynaData).rom" size="16384" crc="1fd18174"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14762,7 +14786,7 @@
 		<description>Senjou no Ookami (Japan)</description>
 		<year>1987</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="lh231073" size="131072" crc="427b3f14"/>
+		<rom name="Senjou no Ookami (Japan)(1987)(ASCII).rom" size="131072" crc="427b3f14"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14773,7 +14797,7 @@
 		<description>Senjyo (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sony</manufacturer>
-		<rom name="senjyo (japan).rom" size="16384" crc="126bc4cd"/>
+		<rom name="Senjyo (Japan)(1984)(Sony).rom" size="16384" crc="126bc4cd"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14784,7 +14808,7 @@
 		<description>Senjyo (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Sony</manufacturer>
-		<rom name="senjyo (japan) (alt 1).rom" size="16384" crc="7d558b04"/>
+		<rom name="Senjyo (Japan)(Alt)(1984)(Sony).rom" size="16384" crc="7d558b04"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14807,7 +14831,7 @@
 		<description>Sewer Sam (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Toshiba EMI</manufacturer>
-		<rom name="sewer sam (japan).rom" size="32768" crc="925c0aee"/>
+		<rom name="Sewer Sam (Japan)(1984)(Toshiba EMI).rom" size="32768" crc="925c0aee"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -14900,6 +14924,18 @@
 		<year>1987</year>
 		<manufacturer>Victor</manufacturer>
 		<rom name="Shout Match (Japan)(1987)(Victor).rom" size="32768" crc="729d2540"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="shyre" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Shyre (HB, v1.1)</description>
+		<year>2013</year>
+		<manufacturer>Platty Soft</manufacturer>
+		<rom name="Shyre v1.1 (2023)(Platty Soft).rom" size="49152" crc="21ce1859"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

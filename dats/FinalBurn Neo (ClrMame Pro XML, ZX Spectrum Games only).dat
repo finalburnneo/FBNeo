@@ -2779,6 +2779,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bombsweep" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Bomb Sweeper (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Menyiques</manufacturer>
+		<rom name="Bomb Sweeper 48K (2023)(Menyiques).tap" size="46421" crc="b51f4118"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bomber" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Bomber (16K)</description>
 		<year>1983</year>
@@ -6667,6 +6677,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="downpiperef" cloneof="downpipe128" romof="downpipe128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Down the pipe Reflushed (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>DF Design</manufacturer>
+		<rom name="Down the pipe Reflushed (2023)(DF Design)(Crash covertape).tap" size="47160" crc="1a679367"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="downtown" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Downtown (48K)</description>
 		<year>1991</year>
@@ -7237,7 +7257,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ericfloaters" romof="spectrum" sourcefile="d_spectrum.cpp">
-		<description>Eric And The Floaters (48K)</description>
+		<description>Eric and the Floaters (48K)</description>
 		<year>1983</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Eric And The Floaters (1983)(Hudson Soft).tap" size="8492" crc="0f7826de"/>
@@ -7330,6 +7350,28 @@
 		<manufacturer>Mikro-Gen</manufacturer>
 		<rom name="Everyone's a Wally (1985)(Mikro-Gen).tap" size="40178" crc="94e1bce9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="exoticalen" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>EXO-TICAL (English) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="EXO-TICAL 128K EN (2023)(Roolandoo).tap" size="50368" crc="4a942675"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="exoticales" cloneof="exoticalen" romof="exoticalen" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>EXO-TICAL (Spanish) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Roolandoo</manufacturer>
+		<rom name="EXO-TICAL 128K ES (2023)(Roolandoo).tap" size="50624" crc="b5a3b89f"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14995,6 +15037,17 @@
 		<manufacturer>Melbourne House</manufacturer>
 		<rom name="Penetrator 48K (1983)(Melbourne House).tap" size="40029" crc="7efe1706"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pengomini" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Pengo mini (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Pengo mini 128K (2023)(Gabriele Amore).tap" size="56867" crc="ba471a9c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

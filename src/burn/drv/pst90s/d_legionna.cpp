@@ -1693,6 +1693,9 @@ static INT32 DrvFrame()
 		CPU_RUN_TIMER(1);
 	}
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
+
 	ZetClose();
 	SekClose();
 
@@ -1703,9 +1706,6 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
 
 	return 0;
 }

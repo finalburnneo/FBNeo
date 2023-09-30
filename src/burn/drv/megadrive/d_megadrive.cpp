@@ -43589,7 +43589,9 @@ struct BurnDriver BurnDrvmd_suploco = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// ------------------------------------------
 // -- Homebrew/Aftermarket additions below --
+// ------------------------------------------
 
 // 16-Bit Rhythm Land (HB)
 static struct BurnRomInfo md_16bitrhythmldRomDesc[] = {
@@ -43605,6 +43607,25 @@ struct BurnDriver BurnDrvmd_16bitrhythmld = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_16bitrhythmldRomInfo, md_16bitrhythmldRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// 240p Test Suite (HB, v1.23)
+// https://artemiourbina.itch.io/240p-test-suite
+static struct BurnRomInfo md_testsuite240pRomDesc[] = {
+	{ "240pSuite-1.23.bin", 262144, 0x439fe2f4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_testsuite240p)
+STD_ROM_FN(md_testsuite240p)
+
+struct BurnDriver BurnDrvmd_testsuite240p = {
+	"md_testsuite240p", NULL, NULL, NULL, "2022",
+	"240p Test Suite (HB, v1.23)\0", NULL, "Artemio", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_testsuite240pRomInfo, md_testsuite240pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43954,6 +43975,24 @@ struct BurnDriver BurnDrvmd_barbarianrk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_barbarianrkRomInfo, md_barbarianrkRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// BCD Verifier by Flamewing (HB, Test)
+static struct BurnRomInfo md_bcdverifierRomDesc[] = {
+	{ "bcd-verifier-u1.bin", 0x101bca, 0x0f9bbe9d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bcdverifier)
+STD_ROM_FN(md_bcdverifier)
+
+struct BurnDriver BurnDrvmd_bcdverifier = {
+	"md_bcdverifier", NULL, NULL, NULL, "2016",
+	"BCD Verifier (HB, Test)\0", NULL, "Flamewing", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_bcdverifierRomInfo, md_bcdverifierRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45055,6 +45094,24 @@ struct BurnDriver BurnDrvmd_littlemedusa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_littlemedusaRomInfo, md_littlemedusaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mad Stalker - Full Metal Forth
+static struct BurnRomInfo md_madstalkerRomDesc[] = {
+	{ "Mad Stalker - Full Metal Forth.bin", 2097152, 0x64e7f1cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_madstalker)
+STD_ROM_FN(md_madstalker)
+
+struct BurnDriver BurnDrvmd_madstalker = {
+	"md_madstalker", NULL, NULL, NULL, "2020",
+	"Mad Stalker - Full Metal Forth\0", NULL, "Columbus Circle", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_madstalkerRomInfo, md_madstalkerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46419,135 +46476,9 @@ struct BurnDriver BurnDrvmd_zoomsecr = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// -- Prototype/Hack/Bootleg additions below --
-
-// Super Street Fighter II - The New Challengers (Hack, Color and Graphic)
-static struct BurnRomInfo md_ssf2cgRomDesc[] = {
-	{ "Super Street Fighter II (hack-2021).md", 5242880, 0xf390add2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_ssf2cg)
-STD_ROM_FN(md_ssf2cg)
-
-struct BurnDriver BurnDrvmd_ssf2cg = {
-	"md_ssf2cg", "md_ssf2", NULL, NULL, "2021",
-	"Super Street Fighter II - The New Challengers (Hack, Color and Graphic)\0", NULL, "Lord Hiryu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2cgRomInfo, md_ssf2cgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Street Fighter II' - Hyper Champion Edition (Hack, v2)
-static struct BurnRomInfo md_sf2hce2RomDesc[] = {
-	{ "Street Fighter II' - Hyper Champion Edition (hack-2021).md", 3145728, 0xe5c620a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sf2hce2)
-STD_ROM_FN(md_sf2hce2)
-
-struct BurnDriver BurnDrvmd_sf2hce2 = {
-	"md_sf2hce2", "md_sf2", NULL, NULL, "2020-21",
-	"Street Fighter II' - Hyper Champion Edition (Hack, v2)\0", NULL, "Lord Hiryu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2hce2RomInfo, md_sf2hce2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Street Fighter II' - The World Warrior Plus (Hack)
-static struct BurnRomInfo md_sf2wwpRomDesc[] = {
-	{ "Street Fighter II' - World Warrior Plus (hack-2021).md", 3145728, 0x8fad3a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sf2wwp)
-STD_ROM_FN(md_sf2wwp)
-
-struct BurnDriver BurnDrvmd_sf2wwp = {
-	"md_sf2wwp", "md_sf2", NULL, NULL, "2021",
-	"Street Fighter II' - The World Warrior Plus (Hack)\0", NULL, "Lord Hiryu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Thunderbolt II (Prototype) (Unl)
-static struct BurnRomInfo md_tbolt2RomDesc[] = {
-	{ "thunderbolt ii.bin", 0x80000, 0xd5fcc49f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tbolt2)
-STD_ROM_FN(md_tbolt2)
-
-struct BurnDriver BurnDrvmd_tbolt2 = {
-	"md_tbolt2", NULL, NULL, NULL, "1995",
-	"Thunderbolt II (Prototype) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_tbolt2RomInfo, md_tbolt2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Thunderbolt II (Prototype, Alt) (Unl)
-static struct BurnRomInfo md_tbolt2aRomDesc[] = {
-	{ "Thunderbolt II (Unl) [f1].bin", 0x80000, 0xa2ef16de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tbolt2a)
-STD_ROM_FN(md_tbolt2a)
-
-struct BurnDriver BurnDrvmd_tbolt2a = {
-	"md_tbolt2a", NULL, NULL, NULL, "1995",
-	"Thunderbolt II (Prototype, Alt) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_tbolt2aRomInfo, md_tbolt2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Ultimate Mortal Kombat Trilogy (Hack, rev.5149)
-static struct BurnRomInfo md_umk3tRomDesc[] = {
-	{ "UMKT_5149.bin", 0xA00000, 0x1d9d2eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_umk3t)
-STD_ROM_FN(md_umk3t)
-
-struct BurnDriver BurnDrvmd_umk3t = {
-	"md_umk3t", NULL, NULL, NULL, "2017",
-	"Ultimate Mortal Kombat Trilogy (Hack, rev.5149)\0", NULL, "KABAL_MK", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3tRomInfo, md_umk3tRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Rock n' Roll Racing (Hack v16 By Ti)
-static struct BurnRomInfo md_rnrracinhRomDesc[] = {
-	{ "Rock n Roll Racing Hack v16.bin", 0x200000, 0x676e3039, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_rnrracinh)
-STD_ROM_FN(md_rnrracinh)
-
-struct BurnDriver BurnDrvmd_rnrracinh = {
-	"md_rnrracinh", "md_rnrracin", NULL, NULL, "2020",
-	"Rock n' Roll Racing (Hack, v16)\0", NULL, "Ti", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
-	MegadriveGetZipName, md_rnrracinhRomInfo, md_rnrracinhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
+// ------------------------------
 // -- Sonic Hacks from Combone --
+// ------------------------------
 
 // Sonic the Hedgehog 3 in 1 (Compilation By vladikcomper)
 static struct BurnRomInfo md_sonic31RomDesc[] = {
@@ -46945,6 +46876,104 @@ struct BurnDriver BurnDrvmd_s3comp = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// --------------------------------------------
+// -- Prototype/Hack/Bootleg additions below --
+// --------------------------------------------
+
+// Art of Fighting Upgrade (Hack)
+// https://www.romhacking.net/hacks/8085/
+static struct BurnRomInfo md_aofupgRomDesc[] = {
+	{ "Art of Fighting Upgrade (2023)(BillyTime! Games).bin", 2097152, 0x912d59ee, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aofupg)
+STD_ROM_FN(md_aofupg)
+
+struct BurnDriver BurnDrvmd_aofupg = {
+	"md_aofupg", "md_aof", NULL, NULL, "2023",
+	"Art of Fighting Upgrade (Hack)\0", NULL, "BillyTime! Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_aofupgRomInfo, md_aofupgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bare Knuckle III (Hack By Twilight Translations)
+// Source: https://www.romhacking.net/translations/1375/
+static struct BurnRomInfo md_bk3eRomDesc[] = {
+	{ "bare knuckle iii (english translation).bin", 0x300000, 0x68917751, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bk3e)
+STD_ROM_FN(md_bk3e)
+
+struct BurnDriver BurnDrvmd_bk3e = {
+	"md_bk3e", "md_sor3", NULL, NULL, "2009",
+	"Bare Knuckle III (Hack, English)\0", NULL, "Twilight Transaltions", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_bk3eRomInfo, md_bk3eRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Golden Axe III - New Character (Ver. 9) (Hack By Ti)
+// Gryphon Hack
+// http://www.romhacking.net/hacks/5202/
+static struct BurnRomInfo md_goldnax3ncRomDesc[] = {
+	{ "GoldenAxeIII_New Character_Hack.bin", 0x200000, 0x29a27509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_goldnax3nc)
+STD_ROM_FN(md_goldnax3nc)
+
+struct BurnDriver BurnDrvmd_goldnax3nc = {
+	"md_goldnax3nc", "md_goldnax3", NULL, NULL, "2020",
+	"Golden Axe III - New Character (Hack, v9)\0", NULL, "Ti", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_goldnax3ncRomInfo, md_goldnax3ncRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// International Superstar Soccer Deluxe - Real Names + Extras (Hack by Sprill)
+static struct BurnRomInfo md_issdxrneRomDesc[] = {
+	{ "issdx_real_hack.bin", 0x200000, 0xAD08D78E, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_issdxrne)
+STD_ROM_FN(md_issdxrne)
+
+struct BurnDriver BurnDrvmd_issdxrne = {
+	"md_issdxrne", "md_issdx", NULL, NULL, "2016",
+	"International Superstar Soccer Deluxe - Real Names + Extras (Hack)\0", NULL, "Sprill", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_issdxrneRomInfo, md_issdxrneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mortal Kombat 3 Mini - Hack by Nemesis_c, r57shell
+static struct BurnRomInfo md_mk3mRomDesc[] = {
+	{ "Mortal Kombat 3 Mini-Hack.bin", 0x400000, 0xD925AA80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mk3m)
+STD_ROM_FN(md_mk3m)
+
+struct BurnDriver BurnDrvmd_mk3m = {
+	"md_mk3m", "md_mk3", NULL, NULL, "2011",
+	"Mortal Kombat 3 Mini (Hack)\0", NULL, "Nemesis_c, r57shell", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_mk3mRomInfo, md_mk3mRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mortal Kombat Revelations v1.0 Hack by Smoke
 static struct BurnRomInfo md_mkrRomDesc[] = {
 	{ "Mortal Kombat Revelations (Hack Ver. 1.0 By Smoke).bin", 0x987A70, 0x318B81F2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -46959,6 +46988,387 @@ struct BurnDriver BurnDrvmd_mkr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkrRomInfo, md_mkrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Rock n' Roll Racing (Hack v16 By Ti)
+static struct BurnRomInfo md_rnrracinhRomDesc[] = {
+	{ "Rock n Roll Racing Hack v16.bin", 0x200000, 0x676e3039, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rnrracinh)
+STD_ROM_FN(md_rnrracinh)
+
+struct BurnDriver BurnDrvmd_rnrracinh = {
+	"md_rnrracinh", "md_rnrracin", NULL, NULL, "2020",
+	"Rock n' Roll Racing (Hack, v16)\0", NULL, "Ti", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_rnrracinhRomInfo, md_rnrracinhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Hyper Champion Edition (Hack, v2)
+static struct BurnRomInfo md_sf2hce2RomDesc[] = {
+	{ "Street Fighter II' - Hyper Champion Edition (hack-2021).md", 3145728, 0xe5c620a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2hce2)
+STD_ROM_FN(md_sf2hce2)
+
+struct BurnDriver BurnDrvmd_sf2hce2 = {
+	"md_sf2hce2", "md_sf2", NULL, NULL, "2020-21",
+	"Street Fighter II' - Hyper Champion Edition (Hack, v2)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2hce2RomInfo, md_sf2hce2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Special Champion Edition (Improvement Hack - Color and Sound)
+static struct BurnRomInfo md_sf2icsRomDesc[] = {
+	{ "Street Fighter II' - SCE Improvement.bin", 0x300000, 0x293D2CB1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2ics)
+STD_ROM_FN(md_sf2ics)
+
+struct BurnDriver BurnDrvmd_sf2ics = {
+	"md_sf2ics", "md_sf2", NULL, NULL, "2014",
+	"Street Fighter II' - Special Champion Edition (Hack, Color and Sound)\0", NULL, "Pyron & Stephane.D", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2icsRomInfo, md_sf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - The World Warrior Plus (Hack)
+static struct BurnRomInfo md_sf2wwpRomDesc[] = {
+	{ "Street Fighter II' - World Warrior Plus (hack-2021).md", 3145728, 0x8fad3a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2wwp)
+STD_ROM_FN(md_sf2wwp)
+
+struct BurnDriver BurnDrvmd_sf2wwp = {
+	"md_sf2wwp", "md_sf2", NULL, NULL, "2021",
+	"Street Fighter II' - The World Warrior Plus (Hack)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (v1.1) (Hack by Kratus)
+static struct BurnRomInfo md_sor2bk3bRomDesc[] = {
+	{ "SoR2_BK3Boss_Hack.bin", 0x356842, 0x5C152787, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2bk3b)
+STD_ROM_FN(md_sor2bk3b)
+
+struct BurnDriver BurnDrvmd_sor2bk3b = {
+	"md_sor2bk3b", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Bare Knuckle 3 Boss Edition (Hack, v1.1)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2bk3bRomInfo, md_sor2bk3bRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 1 By Kratus
+static struct BurnRomInfo md_sor2sfv1RomDesc[] = {
+	{ "SoR2_StreetFighter_v1.bin", 0x33CF86, 0xE03F0C6B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv1)
+STD_ROM_FN(md_sor2sfv1)
+
+struct BurnDriver BurnDrvmd_sor2sfv1 = {
+	"md_sor2sfv1", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 1 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv1RomInfo, md_sor2sfv1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 2 By Kratus
+static struct BurnRomInfo md_sor2sfv2RomDesc[] = {
+	{ "SoR2_StreetFighter_v2.bin", 0x365298, 0x828786E2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv2)
+STD_ROM_FN(md_sor2sfv2)
+
+struct BurnDriver BurnDrvmd_sor2sfv2 = {
+	"md_sor2sfv2", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 2 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv2RomInfo, md_sor2sfv2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 3 By Kratus
+static struct BurnRomInfo md_sor2sfv3RomDesc[] = {
+	{ "SoR2_StreetFighter_v3.bin", 0x35E7FA, 0xD2ECF98F, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv3)
+STD_ROM_FN(md_sor2sfv3)
+
+struct BurnDriver BurnDrvmd_sor2sfv3 = {
+	"md_sor2sfv3", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 3 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv3RomInfo, md_sor2sfv3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 4 By Kratus
+static struct BurnRomInfo md_sor2sfv4RomDesc[] = {
+	{ "SoR2_StreetFighter_v4.bin", 0x395628, 0x59AA116D, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv4)
+STD_ROM_FN(md_sor2sfv4)
+
+struct BurnDriver BurnDrvmd_sor2sfv4 = {
+	"md_sor2sfv4", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 4 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv4RomInfo, md_sor2sfv4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - TMNT Hack By Carzj (M3tro GFX Fix)
+static struct BurnRomInfo md_sor2tmntRomDesc[] = {
+	{ "SoR2_TMNT_Hack.bin", 0x2C4DB0, 0x50E3C7C3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tmnt)
+STD_ROM_FN(md_sor2tmnt)
+
+struct BurnDriver BurnDrvmd_sor2tmnt = {
+	"md_sor2tmnt", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)\0", NULL, "Hack By Carzj, Fix By M3tro", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2tmntRomInfo, md_sor2tmntRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 3 - Extreme Edition (V0.42) (Hack By Gsaurus)
+static struct BurnRomInfo md_sor3exRomDesc[] = {
+	{ "SoR3_Extreme_v042_Hack.bin", 0x300000, 0xD2135A13, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor3ex)
+STD_ROM_FN(md_sor3ex)
+
+struct BurnDriver BurnDrvmd_sor3ex = {
+	"md_sor3ex", "md_sor3", NULL, NULL, "2012",
+	"Streets of Rage 3 - Extreme Edition (Hack, v0.42)\0", NULL, "Gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor3exRomInfo, md_sor3exRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage - Killer Difficulty by gsaurus
+// https://www.romhacking.net/hacks/1341/
+static struct BurnRomInfo md_sorkillerRomDesc[] = {
+	{ "Streets of Rage - Killer Difficulty (2012)(gsaurus).bin", 0x080000, 0x86eed3d6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sorkiller)
+STD_ROM_FN(md_sorkiller)
+
+struct BurnDriver BurnDrvmd_sorkiller = {
+	"md_sorkiller", "md_sor", NULL, NULL, "2012",
+	"Streets of Rage - Killer Difficulty (Hack, v0.9)\0", NULL, "gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sorkillerRomInfo, md_sorkillerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Monaco GP 2019 - HE Returns (30th Anniversary Edition) (Hack By TA_Marcos_Translations)
+static struct BurnRomInfo md_smgp2019RomDesc[] = {
+	{ "Super_Monaco_GP2019.bin", 0x080000, 0x12BCABB6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_smgp2019)
+STD_ROM_FN(md_smgp2019)
+
+struct BurnDriver BurnDrvmd_smgp2019 = {
+	"md_smgp2019", "md_smgp", NULL, NULL, "2019",
+	"Super Monaco GP-2019 - HE Returns (Hack, Improvement)\0", NULL, "TA_Marcos_Translations", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_smgp2019RomInfo, md_smgp2019RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Street Fighter II - The New Challengers (Hack, Color and Graphic)
+static struct BurnRomInfo md_ssf2cgRomDesc[] = {
+	{ "Super Street Fighter II (hack-2021).md", 5242880, 0xf390add2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ssf2cg)
+STD_ROM_FN(md_ssf2cg)
+
+struct BurnDriver BurnDrvmd_ssf2cg = {
+	"md_ssf2cg", "md_ssf2", NULL, NULL, "2021",
+	"Super Street Fighter II - The New Challengers (Hack, Color and Graphic)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_ssf2cgRomInfo, md_ssf2cgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// T2 - Terminator 2 - Judgment Day Music & Sound Hack (Hack)
+// https://www.romhacking.net/hacks/8083/
+static struct BurnRomInfo md_term2mshRomDesc[] = {
+	{ "T2 - Terminator 2 - Judgment Day Music & Sound Hack (2023)(Segaman).bin", 2097152, 0xee70072a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_term2msh)
+STD_ROM_FN(md_term2msh)
+
+struct BurnDriver BurnDrvmd_term2msh = {
+	"md_term2msh", "md_term2", NULL, NULL, "2023",
+	"T2 - Terminator 2 - Judgment Day Music & Sound Hack (Hack)\0", NULL, "Segaman", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_term2mshRomInfo, md_term2mshRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)
+// https://www.romhacking.net/reviews/9774/
+static struct BurnRomInfo md_sor2tmntsrRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles - Shredder's Re-Revenge GlobHack (2022)(savok).bin", 4063356, 0x6720cc8a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tmntsr)
+STD_ROM_FN(md_sor2tmntsr)
+
+struct BurnDriver BurnDrvmd_sor2tmntsr = {
+	"md_sor2tmntsr", "md_sor2", NULL, NULL, "2022",
+	"Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)\0", NULL, "savok", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2tmntsrRomInfo, md_sor2tmntsrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles - Tournament Fighters Hack (Color & Boss)
+static struct BurnRomInfo md_tmnttficbRomDesc[] = {
+	{ "TMNT Tournament Fighters (Hack).bin", 0x207C14, 0x8DC38DC4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmnttficb)
+STD_ROM_FN(md_tmnttficb)
+
+struct BurnDriver BurnDrvmd_tmnttficb = {
+	"md_tmnttficb", "md_tmhttf", NULL, NULL, "2014",
+	"Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)\0", NULL, "Color By fusaru, Boss by Nemesis_c", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_tmnttficbRomInfo, md_tmnttficbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Thunderbolt II (Prototype) (Unl)
+static struct BurnRomInfo md_tbolt2RomDesc[] = {
+	{ "thunderbolt ii.bin", 0x80000, 0xd5fcc49f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tbolt2)
+STD_ROM_FN(md_tbolt2)
+
+struct BurnDriver BurnDrvmd_tbolt2 = {
+	"md_tbolt2", NULL, NULL, NULL, "1995",
+	"Thunderbolt II (Prototype) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_tbolt2RomInfo, md_tbolt2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Thunderbolt II (Prototype, Alt) (Unl)
+static struct BurnRomInfo md_tbolt2aRomDesc[] = {
+	{ "Thunderbolt II (Unl) [f1].bin", 0x80000, 0xa2ef16de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tbolt2a)
+STD_ROM_FN(md_tbolt2a)
+
+struct BurnDriver BurnDrvmd_tbolt2a = {
+	"md_tbolt2a", NULL, NULL, NULL, "1995",
+	"Thunderbolt II (Prototype, Alt) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_tbolt2aRomInfo, md_tbolt2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// UEFA Euro 2004 Portugal (International Super Star Soccer Deluxe Hack by Glorysun)
+static struct BurnRomInfo md_euro2004RomDesc[] = {
+	{ "UEFA_Euro_2004_Portugal.bin", 0x200000, 0xBEA68ADA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_euro2004)
+STD_ROM_FN(md_euro2004)
+
+struct BurnDriver BurnDrvmd_euro2004 = {
+	"md_euro2004", "md_issdx", NULL, NULL, "2004",
+	"UEFA Euro 2004 Portugal (China) (Unl)\0", NULL, "Glorysun", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_euro2004RomInfo, md_euro2004RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat Trilogy (Hack, rev.5149)
+static struct BurnRomInfo md_umk3tRomDesc[] = {
+	{ "UMKT_5149.bin", 0xA00000, 0x1d9d2eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3t)
+STD_ROM_FN(md_umk3t)
+
+struct BurnDriver BurnDrvmd_umk3t = {
+	"md_umk3t", NULL, NULL, NULL, "2017",
+	"Ultimate Mortal Kombat Trilogy (Hack, rev.5149)\0", NULL, "KABAL_MK", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_umk3tRomInfo, md_umk3tRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -47036,331 +47446,21 @@ struct BurnDriver BurnDrvmd_umk3osc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat 3 Mini - Hack by Nemesis_c, r57shell
-static struct BurnRomInfo md_mk3mRomDesc[] = {
-	{ "Mortal Kombat 3 Mini-Hack.bin", 0x400000, 0xD925AA80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// WWF Royal Rumble Enhanced Colors + SFX (Hack, v1.05)
+// https://www.romhacking.net/hacks/8078/
+static struct BurnRomInfo md_wwfroyalimpRomDesc[] = {
+	{ "WWF Royal Rumble Enhanced Colors + SFX v1.05 (2023)(Byros).bin", 2097152, 0xd6f4d1ed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_mk3m)
-STD_ROM_FN(md_mk3m)
+STD_ROM_PICK(md_wwfroyalimp)
+STD_ROM_FN(md_wwfroyalimp)
 
-struct BurnDriver BurnDrvmd_mk3m = {
-	"md_mk3m", "md_mk3", NULL, NULL, "2011",
-	"Mortal Kombat 3 Mini (Hack)\0", NULL, "Nemesis_c, r57shell", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_wwfroyalimp = {
+	"md_wwfroyalimp", "md_wwfroyal", NULL, NULL, "2023",
+	"WWF Royal Rumble Enhanced Colors + SFX (Hack, v1.05)\0", NULL, "Byros", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_mk3mRomInfo, md_mk3mRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Street Fighter II' - Special Champion Edition (Improvement Hack - Color and Sound)
-static struct BurnRomInfo md_sf2icsRomDesc[] = {
-	{ "Street Fighter II' - SCE Improvement.bin", 0x300000, 0x293D2CB1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sf2ics)
-STD_ROM_FN(md_sf2ics)
-
-struct BurnDriver BurnDrvmd_sf2ics = {
-	"md_sf2ics", "md_sf2", NULL, NULL, "2014",
-	"Street Fighter II' - Special Champion Edition (Hack, Color and Sound)\0", NULL, "Pyron & Stephane.D", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2icsRomInfo, md_sf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// BCD Verifier by Flamewing (HB, Test)
-static struct BurnRomInfo md_bcdverifierRomDesc[] = {
-	{ "bcd-verifier-u1.bin", 0x101bca, 0x0f9bbe9d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_bcdverifier)
-STD_ROM_FN(md_bcdverifier)
-
-struct BurnDriver BurnDrvmd_bcdverifier = {
-	"md_bcdverifier", NULL, NULL, NULL, "2016",
-	"BCD Verifier (HB, Test)\0", NULL, "Flamewing", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_bcdverifierRomInfo, md_bcdverifierRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Teenage Mutant Ninja Turtles - Tournament Fighters Hack (Color & Boss)
-static struct BurnRomInfo md_tmnttficbRomDesc[] = {
-	{ "TMNT Tournament Fighters (Hack).bin", 0x207C14, 0x8DC38DC4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tmnttficb)
-STD_ROM_FN(md_tmnttficb)
-
-struct BurnDriver BurnDrvmd_tmnttficb = {
-	"md_tmnttficb", "md_tmhttf", NULL, NULL, "2014",
-	"Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)\0", NULL, "Color By fusaru, Boss by Nemesis_c", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_tmnttficbRomInfo, md_tmnttficbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (v1.1) (Hack by Kratus)
-static struct BurnRomInfo md_sor2bk3bRomDesc[] = {
-	{ "SoR2_BK3Boss_Hack.bin", 0x356842, 0x5C152787, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2bk3b)
-STD_ROM_FN(md_sor2bk3b)
-
-struct BurnDriver BurnDrvmd_sor2bk3b = {
-	"md_sor2bk3b", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Bare Knuckle 3 Boss Edition (Hack, v1.1)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2bk3bRomInfo, md_sor2bk3bRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - TMNT Hack By Carzj (M3tro GFX Fix)
-static struct BurnRomInfo md_sor2tmntRomDesc[] = {
-	{ "SoR2_TMNT_Hack.bin", 0x2C4DB0, 0x50E3C7C3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2tmnt)
-STD_ROM_FN(md_sor2tmnt)
-
-struct BurnDriver BurnDrvmd_sor2tmnt = {
-	"md_sor2tmnt", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)\0", NULL, "Hack By Carzj, Fix By M3tro", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2tmntRomInfo, md_sor2tmntRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)
-// https://www.romhacking.net/reviews/9774/
-static struct BurnRomInfo md_sor2tmntsrRomDesc[] = {
-	{ "Teenage Mutant Ninja Turtles - Shredder's Re-Revenge GlobHack (2022)(savok).bin", 4063356, 0x6720cc8a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2tmntsr)
-STD_ROM_FN(md_sor2tmntsr)
-
-struct BurnDriver BurnDrvmd_sor2tmntsr = {
-	"md_sor2tmntsr", "md_sor2", NULL, NULL, "2022",
-	"Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)\0", NULL, "savok", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2tmntsrRomInfo, md_sor2tmntsrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 3 - Extreme Edition (V0.42) (Hack By Gsaurus)
-static struct BurnRomInfo md_sor3exRomDesc[] = {
-	{ "SoR3_Extreme_v042_Hack.bin", 0x300000, 0xD2135A13, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor3ex)
-STD_ROM_FN(md_sor3ex)
-
-struct BurnDriver BurnDrvmd_sor3ex = {
-	"md_sor3ex", "md_sor3", NULL, NULL, "2012",
-	"Streets of Rage 3 - Extreme Edition (Hack, v0.42)\0", NULL, "Gsaurus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor3exRomInfo, md_sor3exRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage - Killer Difficulty by gsaurus
-// https://www.romhacking.net/hacks/1341/
-static struct BurnRomInfo md_sorkillerRomDesc[] = {
-	{ "Streets of Rage - Killer Difficulty (2012)(gsaurus).bin", 0x080000, 0x86eed3d6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sorkiller)
-STD_ROM_FN(md_sorkiller)
-
-struct BurnDriver BurnDrvmd_sorkiller = {
-	"md_sorkiller", "md_sor", NULL, NULL, "2012",
-	"Streets of Rage - Killer Difficulty (Hack, v0.9)\0", NULL, "gsaurus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sorkillerRomInfo, md_sorkillerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Golden Axe III - New Character (Ver. 9) (Hack By Ti)
-// Gryphon Hack
-// http://www.romhacking.net/hacks/5202/
-static struct BurnRomInfo md_goldnax3ncRomDesc[] = {
-	{ "GoldenAxeIII_New Character_Hack.bin", 0x200000, 0x29a27509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_goldnax3nc)
-STD_ROM_FN(md_goldnax3nc)
-
-struct BurnDriver BurnDrvmd_goldnax3nc = {
-	"md_goldnax3nc", "md_goldnax3", NULL, NULL, "2020",
-	"Golden Axe III - New Character (Hack, v9)\0", NULL, "Ti", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_goldnax3ncRomInfo, md_goldnax3ncRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// International Superstar Soccer Deluxe - Real Names + Extras (Hack by Sprill)
-static struct BurnRomInfo md_issdxrneRomDesc[] = {
-	{ "issdx_real_hack.bin", 0x200000, 0xAD08D78E, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_issdxrne)
-STD_ROM_FN(md_issdxrne)
-
-struct BurnDriver BurnDrvmd_issdxrne = {
-	"md_issdxrne", "md_issdx", NULL, NULL, "2016",
-	"International Superstar Soccer Deluxe - Real Names + Extras (Hack)\0", NULL, "Sprill", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
-	MegadriveGetZipName, md_issdxrneRomInfo, md_issdxrneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// UEFA Euro 2004 Portugal (International Super Star Soccer Deluxe Hack by Glorysun)
-static struct BurnRomInfo md_euro2004RomDesc[] = {
-	{ "UEFA_Euro_2004_Portugal.bin", 0x200000, 0xBEA68ADA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_euro2004)
-STD_ROM_FN(md_euro2004)
-
-struct BurnDriver BurnDrvmd_euro2004 = {
-	"md_euro2004", "md_issdx", NULL, NULL, "2004",
-	"UEFA Euro 2004 Portugal (China) (Unl)\0", NULL, "Glorysun", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
-	MegadriveGetZipName, md_euro2004RomInfo, md_euro2004RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Bare Knuckle III (Hack By Twilight Translations)
-// Source: https://www.romhacking.net/translations/1375/
-static struct BurnRomInfo md_bk3eRomDesc[] = {
-	{ "bare knuckle iii (english translation).bin", 0x300000, 0x68917751, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_bk3e)
-STD_ROM_FN(md_bk3e)
-
-struct BurnDriver BurnDrvmd_bk3e = {
-	"md_bk3e", "md_sor3", NULL, NULL, "2009",
-	"Bare Knuckle III (Hack, English)\0", NULL, "Twilight Transaltions", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_bk3eRomInfo, md_bk3eRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Super Monaco GP 2019 - HE Returns (30th Anniversary Edition) (Hack By TA_Marcos_Translations)
-static struct BurnRomInfo md_smgp2019RomDesc[] = {
-	{ "Super_Monaco_GP2019.bin", 0x080000, 0x12BCABB6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_smgp2019)
-STD_ROM_FN(md_smgp2019)
-
-struct BurnDriver BurnDrvmd_smgp2019 = {
-	"md_smgp2019", "md_smgp", NULL, NULL, "2019",
-	"Super Monaco GP-2019 - HE Returns (Hack, Improvement)\0", NULL, "TA_Marcos_Translations", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
-	MegadriveGetZipName, md_smgp2019RomInfo, md_smgp2019RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 1 By Kratus
-static struct BurnRomInfo md_sor2sfv1RomDesc[] = {
-	{ "SoR2_StreetFighter_v1.bin", 0x33CF86, 0xE03F0C6B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv1)
-STD_ROM_FN(md_sor2sfv1)
-
-struct BurnDriver BurnDrvmd_sor2sfv1 = {
-	"md_sor2sfv1", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 1 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv1RomInfo, md_sor2sfv1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 2 By Kratus
-static struct BurnRomInfo md_sor2sfv2RomDesc[] = {
-	{ "SoR2_StreetFighter_v2.bin", 0x365298, 0x828786E2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv2)
-STD_ROM_FN(md_sor2sfv2)
-
-struct BurnDriver BurnDrvmd_sor2sfv2 = {
-	"md_sor2sfv2", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 2 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv2RomInfo, md_sor2sfv2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 3 By Kratus
-static struct BurnRomInfo md_sor2sfv3RomDesc[] = {
-	{ "SoR2_StreetFighter_v3.bin", 0x35E7FA, 0xD2ECF98F, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv3)
-STD_ROM_FN(md_sor2sfv3)
-
-struct BurnDriver BurnDrvmd_sor2sfv3 = {
-	"md_sor2sfv3", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 3 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv3RomInfo, md_sor2sfv3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 4 By Kratus
-static struct BurnRomInfo md_sor2sfv4RomDesc[] = {
-	{ "SoR2_StreetFighter_v4.bin", 0x395628, 0x59AA116D, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv4)
-STD_ROM_FN(md_sor2sfv4)
-
-struct BurnDriver BurnDrvmd_sor2sfv4 = {
-	"md_sor2sfv4", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 4 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv4RomInfo, md_sor2sfv4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_wwfroyalimpRomInfo, md_wwfroyalimpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -47569,7 +47669,7 @@ struct BurnDriver BurnDrvmd_cvaniaec = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)
+// Chaos Engine, The - Amiga Colors and Sound Fix (Hack, v1.01)
 // http://www.romhacking.net/hacks/2754/
 static struct BurnRomInfo md_chaosengcsRomDesc[] = {
 	{ "chaos engine, the (amiga colors - music speed fix v1.01).md", 1572864, 0x65887f32, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -47580,9 +47680,9 @@ STD_ROM_FN(md_chaosengcs)
 
 struct BurnDriver BurnDrvmd_chaosengcs = {
 	"md_chaosengcs", "md_chaoseng", NULL, NULL, "2016",
-	"The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)\0", NULL, "fusaru", "Sega Megadrive",
+	"Chaos Engine, The - Amiga Colors and Sound Fix (Hack, v1.01)\0", NULL, "fusaru", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_chaosengcsRomInfo, md_chaosengcsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -48418,24 +48518,6 @@ struct BurnDriver BurnDrvmd_landstlkc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_PLATFORM | GBF_RPG, 0,
 	MegadriveGetZipName, md_landstlkcRomInfo, md_landstlkcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Mad Stalker - Full Metal Forth (HB)
-static struct BurnRomInfo md_madstalkerRomDesc[] = {
-	{ "Mad Stalker - Full Metal Forth.bin", 2097152, 0x64e7f1cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_madstalker)
-STD_ROM_FN(md_madstalker)
-
-struct BurnDriver BurnDrvmd_madstalker = {
-	"md_madstalker", NULL, NULL, NULL, "2020",
-	"Mad Stalker - Full Metal Forth (HB)\0", NULL, "OPERAHOUSE", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_madstalkerRomInfo, md_madstalkerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -55229,21 +55311,3 @@ struct BurnDriver BurnDrvmd_tkzs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// 240p Test Suite v1.23 by Artemio
-// https://artemiourbina.itch.io/240p-test-suite
-static struct BurnRomInfo md_testsuite240pRomDesc[] = {
-	{ "240pSuite-1.23.bin", 262144, 0x439fe2f4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_testsuite240p)
-STD_ROM_FN(md_testsuite240p)
-
-struct BurnDriver BurnDrvmd_testsuite240p = {
-	"md_testsuite240p", NULL, NULL, NULL, "2022",
-	"240p Test Suite (HB, v1.23)\0", NULL, "Artemio", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_testsuite240pRomInfo, md_testsuite240pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};

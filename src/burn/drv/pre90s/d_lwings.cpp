@@ -2372,7 +2372,7 @@ static struct BurnRomInfo trojanjRomDesc[] = {
 
 	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "tb_01.6d",		0x4000, 0x83c715b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "tb_01.6d",		0x8000, 0x83c715b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
 	{ "tb_03.8k",		0x4000, 0x581a2b4c, 4 | BRF_GRA },           //  5 Characters
 
@@ -2426,7 +2426,7 @@ static struct BurnRomInfo trojanjoRomDesc[] = {
 
 	{ "tb_02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "tb_01.6d",		0x4000, 0x83c715b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "tb_01.6d",		0x8000, 0x83c715b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
 	{ "tb_03.8k",		0x4000, 0x581a2b4c, 4 | BRF_GRA },           //  5 Characters
 

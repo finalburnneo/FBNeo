@@ -1011,7 +1011,7 @@ static struct BurnRomInfo wwfsstarbRomDesc[] = {
 	{ "wwfs50.bin",		0x10000, 0x7fc79df5, 6 | BRF_GRA },           // 44
 	{ "wwfs49.bin",		0x10000, 0xa14076b0, 6 | BRF_GRA },           // 45
 	{ "wwfs48.bin",		0x10000, 0x251372fd, 6 | BRF_GRA },           // 46
-	{ "wwfs47.bin",		0x10000, 0x6fd7b6ea, 6 | BRF_GRA },           // 47
+	{ "wwfs47.bin",		0x10000, 0xb9edcb64, 6 | BRF_GRA },           // 47
 	{ "wwfs46.bin",		0x10000, 0x985e5180, 6 | BRF_GRA },           // 48
 	{ "wwfs45.bin",		0x10000, 0xb2fad792, 6 | BRF_GRA },           // 49
 	{ "wwfs44.bin",		0x10000, 0x4f965fa9, 6 | BRF_GRA },           // 50

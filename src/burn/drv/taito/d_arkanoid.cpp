@@ -1787,13 +1787,13 @@ static struct BurnRomInfo arkanoidjbl2RomDesc[] = {
 
 	{ "a75-06__bootleg_68705.ic14", 0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "3.ic33",  					0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "4.ic34",  					0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "5.ic35",  					0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "3.ic33.1c",  				0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "4.ic34.3c",  				0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "5.ic35.5c",  				0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
-	{ "a75-07.bpr",  				0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
-	{ "a75-08.bpr",  				0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
-	{ "a75-09.bpr",  				0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+	{ "m1-7621-5.ic73.11e",  		0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
+	{ "m1-7621-5.ic74.12e",  		0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
+	{ "m1-7621-5.ic75.13e",  		0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
 };
 
 STD_ROM_PICK(arkanoidjbl2)

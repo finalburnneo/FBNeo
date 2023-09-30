@@ -66,6 +66,7 @@ struct Memory_Def
 		UINT8 *rom1;
 		UINT8 *rom2;
 		UINT8 *rom3;
+		UINT8 *rom4;
 	} Z80;
 	struct
 	{
@@ -2034,6 +2035,7 @@ static struct ROM_Load_Def gallagROMTable[] =
 	{  &memory.Z80.rom1,             0x03000,    NULL                          },
 	{  &memory.Z80.rom2,             0x00000,    NULL                          },
 	{  &memory.Z80.rom3,             0x00000,    NULL                          },
+	{  &memory.Z80.rom4,             0x00000,    NULL                          },
 	{  &tempRom,                     0x00000,    galagaCharDecode              },
 	{  &tempRom,                     0x00000,    NULL                          },
 	{  &tempRom,                     0x01000,    galagaSpriteDecode            },
@@ -4125,6 +4127,8 @@ static struct ROM_Load_Def xeviousROMTable[] =
 	{  &NamcoSoundProm,              0x00100, namcoMachineInit     }
 };
 
+#define XEVIOUS_ROM_TBL_SIZE      (sizeof(xeviousROMTable) / sizeof(struct ROM_Load_Def))
+
 static struct ROM_Load_Def xeviousaROMTable[] =
 {
 	{  &memory.Z80.rom1,             0x00000, NULL                 },
@@ -4157,7 +4161,6 @@ static struct ROM_Load_Def xeviousaROMTable[] =
 	{  &NamcoSoundProm,              0x00100, namcoMachineInit     }
 };
 
-#define XEVIOUS_ROM_TBL_SIZE      (sizeof(xeviousROMTable) / sizeof(struct ROM_Load_Def))
 #define XEVIOUSA_ROM_TBL_SIZE     (sizeof(xeviousaROMTable) / sizeof(struct ROM_Load_Def))
 
 static DrawFunc_t xeviousDrawFuncs[] =

@@ -641,9 +641,25 @@ static int create_variables_from_cheats()
 	return 0;
 }
 
+static int reset_cheats_from_variables()
+{
+	struct retro_variable var = {0};
+
+	for (int cheat_idx = 0; cheat_idx < cheat_core_options.size(); cheat_idx++)
+	{
+		cheat_core_option *cheat_option = &cheat_core_options[cheat_idx];
+
+		var.key = cheat_option->option_name.c_str();
+		var.value = cheat_option->default_value.c_str();
+		if (environ_cb(RETRO_ENVIRONMENT_SET_VARIABLE, &var) == false)
+			return 1;
+	}
+	return 0;
+}
+
 static int apply_cheats_from_variables()
 {
-	// It is also required to load cheats this after BurnDrvInit is called,
+	// It is also required to load cheats after BurnDrvInit is called,
 	// so there might be no way to avoid having 2 calls to this function...
 	ConfigCheatLoad();
 	bCheatsAllowed = true;
@@ -673,7 +689,7 @@ int InputSetCooperativeLevel(const bool bExclusive, const bool bForeGround) { re
 
 void Reinitialise(void)
 {
-	// Update the geometry, some games (sfiii2) and systems (megadrive) need it.
+	// Some drivers (megadrive, cps3, ...) call this function to update the geometry
 	BurnDrvGetFullSize(&nGameWidth, &nGameHeight);
 	nBurnPitch = nGameWidth * nBurnBpp;
 	struct retro_system_av_info av_info;
@@ -1142,6 +1158,9 @@ void retro_reset()
 	//        it can actually be "harmful" in other games (trackfld)
 	if (bIsNeogeoCartGame && BurnNvramSave(g_autofs_path) == 0 && path_is_valid(g_autofs_path))
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
+
+	// Cheats should be avoided while machine is initializing, reset them to default state before machine reset
+	reset_cheats_from_variables();
 
 	if (pgi_reset)
 	{
@@ -1795,7 +1814,13 @@ static bool retro_load_game_common()
 		// Create cheats core options
 		create_variables_from_cheats();
 
+		// Send core options to frontend
 		set_environment();
+
+		// Cheats should be avoided while machine is initializing, reset them to default state before boot
+		reset_cheats_from_variables();
+
+		// Apply core options
 		check_variables();
 
 		if (nFrameskipType > 1)
@@ -1924,8 +1949,6 @@ static bool retro_load_game_common()
 			HandleMessage(RETRO_LOG_ERROR, "[FBNeo] Failed allocating framebuffer memory\n");
 			goto end;
 		}
-
-		apply_cheats_from_variables();
 
 		// Initialization done
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));

@@ -1121,6 +1121,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aofupg" cloneof="aof" romof="aof" sourcefile="d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>Art of Fighting Upgrade (Hack)</description>
+		<year>2023</year>
+		<manufacturer>BillyTime! Games</manufacturer>
+		<rom name="Art of Fighting Upgrade (2023)(BillyTime! Games).bin" size="2097152" crc="912d59ee"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="arttool" sourcefile="d_megadrive.cpp">
 		<description>Art Tool</description>
 		<year>199?</year>
@@ -3473,6 +3482,15 @@
 		<year>1992</year>
 		<manufacturer>Microprose</manufacturer>
 		<rom name="chaos engine, the (euro).bin" size="1572864" crc="bd9eecf4"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="chaosengcs" cloneof="chaoseng" romof="chaoseng" sourcefile="d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>Chaos Engine, The - Amiga Colors and Sound Fix (Hack, v1.01)</description>
+		<year>2016</year>
+		<manufacturer>fusaru</manufacturer>
+		<rom name="chaos engine, the (amiga colors - music speed fix v1.01).md" size="1572864" crc="65887f32"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10986,10 +11004,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="madstalker" sourcefile="d_megadrive.cpp">
-		<comment>Homebrew</comment>
-		<description>Mad Stalker - Full Metal Forth (HB)</description>
+		<description>Mad Stalker - Full Metal Forth</description>
 		<year>2020</year>
-		<manufacturer>OPERAHOUSE</manufacturer>
+		<manufacturer>Columbus Circle</manufacturer>
 		<rom name="Mad Stalker - Full Metal Forth.bin" size="2097152" crc="64e7f1cd"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21179,6 +21196,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="term2msh" cloneof="term2" romof="term2" sourcefile="d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>T2 - Terminator 2 - Judgment Day Music &amp; Sound Hack (Hack)</description>
+		<year>2023</year>
+		<manufacturer>Segaman</manufacturer>
+		<rom name="T2 - Terminator 2 - Judgment Day Music &amp; Sound Hack (2023)(Segaman).bin" size="2097152" crc="ee70072a"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="t2ag" sourcefile="d_megadrive.cpp">
 		<description>T2 - The Arcade Game (Euro, USA)</description>
 		<year>1992</year>
@@ -21781,14 +21807,6 @@
 		<rom name="tetris.bin" size="524288" crc="eb024ab2"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
-	</game>
-	<game name="chaosengcs" cloneof="chaoseng" romof="chaoseng" sourcefile="d_megadrive.cpp">
-		<description>The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)</description>
-		<year>2016</year>
-		<manufacturer>fusaru</manufacturer>
-		<rom name="chaos engine, the (amiga colors - music speed fix v1.01).md" size="1572864" crc="65887f32"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
 	</game>
 	<game name="killshow" cloneof="fatalrew" romof="fatalrew" sourcefile="d_megadrive.cpp">
 		<description>The Killing Game Show (Japan)</description>
@@ -24818,6 +24836,15 @@
 		<year>1994</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="wwf royal rumble (world).bin" size="2097152" crc="b69dc53e"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wwfroyalimp" cloneof="wwfroyal" romof="wwfroyal" sourcefile="d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>WWF Royal Rumble Enhanced Colors + SFX (Hack, v1.05)</description>
+		<year>2023</year>
+		<manufacturer>Byros</manufacturer>
+		<rom name="WWF Royal Rumble Enhanced Colors + SFX v1.05 (2023)(Byros).bin" size="2097152" crc="d6f4d1ed"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

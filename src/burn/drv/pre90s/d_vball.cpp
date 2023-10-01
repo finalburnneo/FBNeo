@@ -823,7 +823,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // U.S. Championship V'ball (US)
 
 static struct BurnRomInfo vballRomDesc[] = {
-	{ "25a2-4.124",		0x10000, 0x06d0c013, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
+	{ "25a2-4.124",		0x10000, 0xbe04c2b5, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
 
 	{ "25j1-0.47",		0x08000, 0x10ca79ad, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 

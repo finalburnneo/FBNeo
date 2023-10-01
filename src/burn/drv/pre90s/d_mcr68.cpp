@@ -1792,6 +1792,8 @@ static struct BurnRomInfo blastedRomDesc[] = {
 	{ "pal16r4.2k",					0x00001, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 17
 	{ "pal16r4.14k",				0x00001, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 18
 	{ "pal20.u15",					0x00001, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 19
+
+	{ "pal12h6.14e",				0x00034, 0x6b46dd6d, 0 | BRF_OPT },           // 20
 };
 
 STD_ROM_PICK(blasted)

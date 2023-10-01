@@ -2650,14 +2650,14 @@ STD_ROM_PICK(Raflesia)
 STD_ROM_FN(Raflesia)
 
 static struct BurnRomInfo RaflesiauRomDesc[] = {
-	{ "ic129",      	   0x002000, 0x6f4931b0, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "ic130",      	   0x002000, 0xec46e21b, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "ic131",       	   0x002000, 0xe035ff6b, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	{ "ic132",       	   0x002000, 0x6527aae7, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
-	{ "ic133",       	   0x002000, 0xe13dd5e4, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
-	{ "ic134",       	   0x002000, 0xa0aa4729, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
+	{ "epr-7433.129",      0x002000, 0x6f4931b0, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-7434.130",      0x002000, 0xec46e21b, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-7435.131",      0x002000, 0xe035ff6b, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "epr-7436.132",      0x002000, 0x6527aae7, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
+	{ "epr-7437.133",      0x002000, 0xe13dd5e4, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
+	{ "epr-7438.134",      0x002000, 0xa0aa4729, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
 
-	{ "ic3",      		   0x002000, 0x7353cc2e, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
+	{ "epr-7420.120",      0x002000, 0x14387666, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
 
 	{ "epr-7419.82",       0x002000, 0xbfd5f34c, BRF_GRA },		  	  //  4 Tiles
 	{ "epr-7418.65",       0x002000, 0xf8cbc9b6, BRF_GRA },		  	  //  5 Tiles
@@ -2671,7 +2671,7 @@ static struct BurnRomInfo RaflesiauRomDesc[] = {
 	{ "epr-7408.4",        0x004000, 0x3189f33c, BRF_GRA },		  	  // 12 Sprites
 	{ "epr-7410.2",        0x004000, 0xced74789, BRF_GRA },		  	  // 13 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Raflesiau)
@@ -4008,6 +4008,33 @@ static struct BurnRomInfo wbmljodRomDesc[] = {
 
 STD_ROM_PICK(wbmljod)
 STD_ROM_FN(wbmljod)
+
+// Wonder Boy - Monster Land (English, difficulty hack)
+
+static struct BurnRomInfo wbmlhRomDesc[] = {
+	{ "6",			0x10000, 0x1ace78a0, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "5",			0x10000, 0x5aa6a908, BRF_ESS | BRF_PRG }, //  1
+	{ "4",			0x10000, 0xcb3ea856, BRF_ESS | BRF_PRG }, //  2
+
+	{ "11",			0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "3",			0x08000, 0xab75d056, BRF_GRA },           //  4 Tiles
+	{ "2",			0x08000, 0x6bb5e601, BRF_GRA },           //  5
+	{ "1",			0x08000, 0x3c11d151, BRF_GRA },           //  6
+
+	{ "9",			0x08000, 0xaf0b3972, BRF_GRA },           //  7 Sprites
+	{ "10",			0x08000, 0x277d8f1d, BRF_GRA },           //  8
+	{ "7",			0x08000, 0xf05ffc76, BRF_GRA },           //  9
+	{ "8",			0x08000, 0xcedc9c61, BRF_GRA },           // 10
+
+	{ "pr11026.20",	0x00100, 0x27057298, BRF_GRA },           // 11 Red PROM
+	{ "pr11025.14",	0x00100, 0x41e4d86b, BRF_GRA },           // 12 Blue
+	{ "pr11024.8",	0x00100, 0x08d71954, BRF_GRA },           // 13 Green
+	{ "pr5317.37",	0x00100, 0x648350b8, BRF_GRA },           // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmlh)
+STD_ROM_FN(wbmlh)
 
 /*==============================================================================================
 Decode Functions
@@ -7840,6 +7867,16 @@ struct BurnDriver BurnDrvWbmljod = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljodRomInfo, wbmljodRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	TokisensaInit, System1Exit, System1Frame, System2Render, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWbmlh = {
+	"wbmlh", "wbml", NULL, NULL, "1987",
+	"Wonder Boy - Monster Land (English, difficulty hack)\0", NULL, "bootleg", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmlhRomInfo, wbmlhRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	WbmljbInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 

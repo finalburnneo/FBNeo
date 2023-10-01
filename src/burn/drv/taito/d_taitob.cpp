@@ -4155,7 +4155,7 @@ static INT32 PbobbleInit()
 }
 
 struct BurnDriver BurnDrvBublbust = {
-	"bublbust", 'pbobble', NULL, NULL, "1994",
+	"bublbust", "pbobble", NULL, NULL, "1994",
 	"Bubble Buster (USA, B-System)\0", NULL, "Taito America Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,

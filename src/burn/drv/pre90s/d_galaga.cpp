@@ -66,6 +66,7 @@ struct Memory_Def
 		UINT8 *rom1;
 		UINT8 *rom2;
 		UINT8 *rom3;
+		UINT8 *rom4;
 	} Z80;
 	struct
 	{
@@ -1463,8 +1464,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(namcoCustomIC.n51xx.rightCreditPerCoins);
 		SCAN_VAR(namcoCustomIC.n51xx.auxCoinPerCredit);
 		SCAN_VAR(namcoCustomIC.n51xx.auxCreditPerCoins);
+		SCAN_VAR(namcoCustomIC.n51xx.coinCreditDataIndex);
+		SCAN_VAR(namcoCustomIC.n51xx.coinCreditDataCount);
 		SCAN_VAR(namcoCustomIC.n06xx.buffer);
-
 		SCAN_VAR(input.ports);
 
 		SCAN_VAR(namcoCustomIC.n54xx.fetch);
@@ -2033,6 +2035,7 @@ static struct ROM_Load_Def gallagROMTable[] =
 	{  &memory.Z80.rom1,             0x03000,    NULL                          },
 	{  &memory.Z80.rom2,             0x00000,    NULL                          },
 	{  &memory.Z80.rom3,             0x00000,    NULL                          },
+	{  &memory.Z80.rom4,             0x00000,    NULL                          },
 	{  &tempRom,                     0x00000,    galagaCharDecode              },
 	{  &tempRom,                     0x00000,    NULL                          },
 	{  &tempRom,                     0x01000,    galagaSpriteDecode            },
@@ -3362,6 +3365,180 @@ static struct BurnDIPInfo XeviousDIPList[]=
 
 STDDIPINFO(Xevious)
 
+static struct BurnDIPInfo XeviousaDIPList[]=
+{
+	// Default Values
+	// nOffset, nID,     nMask,   nDefault,   NULL
+	{  0x00,    0xff,    0xff,    0xFF,       NULL                     },
+	{  0x01,    0xff,    0xff,    0xFF,       NULL                     },
+
+	// Dip 1
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       0,          "Button 2 (Not a DIP)"   },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x01,    0x01,       "Released"               },
+	{  0x00,    0x01,    0x01,    0x00,       "Held"                   },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Flags Award Bonus Life" },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x02,    0x02,       "Yes"                    },
+	{  0x00,    0x01,    0x02,    0x00,       "No"                     },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Coin B"                 },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x0C,    0x0c,       "1 Coin 1 Play"          },
+	{  0x00,    0x01,    0x0C,    0x08,       "1 Coin 2 Plays"         },
+	{  0x00,    0x01,    0x0C,    0x04,       "1 Coin 3 Plays"         },
+	{  0x00,    0x01,    0x0C,    0x00,       "1 Coin 6 Plays"         },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       0,          "Button 2 (Cocktail) (Not a DIP)" },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x10,    0x10,       "Released"               },
+	{  0x00,    0x01,    0x10,    0x00,       "Held"                   },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Difficulty"             },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x60,    0x40,       "Easy"                   },
+	{  0x00,    0x01,    0x60,    0x60,       "Normal"                 },
+	{  0x00,    0x01,    0x60,    0x20,       "Hard"                   },
+	{  0x00,    0x01,    0x60,    0x00,       "Hardest"                },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Copyright"              },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x80,    0x00,       "Namco"                  },
+	{  0x00,    0x01,    0x80,    0x80,       "Atari/Namco"            },
+
+	// Dip 2
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Coin A"                 },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x03,    0x01,       "2 Coins 1 Play"         },
+	{  0x01,    0x01,    0x03,    0x03,       "1 Coin  1 Play"         },
+	{  0x01,    0x01,    0x03,    0x00,       "2 Coins 3 Plays"        },
+	{  0x01,    0x01,    0x03,    0x02,       "1 Coin  2 Plays"        },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       8,          "Bonus Life"             },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x1C,    0x18,       "10k  40k  40k"          },
+	{  0x01,    0x01,    0x1C,    0x14,       "10k  50k  50k"          },
+	{  0x01,    0x01,    0x1C,    0x10,       "20k  50k  50k"          },
+	{  0x01,    0x01,    0x1C,    0x1C,       "20k  60k  60k"          },
+	{  0x01,    0x01,    0x1C,    0x0C,       "20k  70k  70k"          },
+	{  0x01,    0x01,    0x1C,    0x08,       "20k  80k  80k"          },
+	{  0x01,    0x01,    0x1C,    0x04,       "20k  60k"               },
+	{  0x01,    0x01,    0x1C,    0x00,       "None"                   },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Lives"                  },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x60,    0x40,       "1"                      },
+	{  0x01,    0x01,    0x60,    0x20,       "2"                      },
+	{  0x01,    0x01,    0x60,    0x60,       "3"                      },
+	{  0x01,    0x01,    0x60,    0x00,       "5"                      },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Cabinet"                },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x80,    0x80,       "Upright"                },
+	{  0x01,    0x01,    0x80,    0x00,       "Cocktail"               },
+
+};
+
+STDDIPINFO(Xeviousa)
+
+static struct BurnDIPInfo XeviousbDIPList[]=
+{
+	// Default Values
+	// nOffset, nID,     nMask,   nDefault,   NULL
+	{  0x00,    0xff,    0xff,    0xFF,       NULL                     },
+	{  0x01,    0xff,    0xff,    0xFF,       NULL                     },
+
+	// Dip 1
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       0,          "Button 2 (Not a DIP)"   },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x01,    0x01,       "Released"               },
+	{  0x00,    0x01,    0x01,    0x00,       "Held"                   },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Flags Award Bonus Life" },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x02,    0x02,       "Yes"                    },
+	{  0x00,    0x01,    0x02,    0x00,       "No"                     },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Coin B"                 },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x0C,    0x04,       "2 Coins 1 Play"         },
+	{  0x00,    0x01,    0x0C,    0x0C,       "1 Coin  1 Play"         },
+	{  0x00,    0x01,    0x0C,    0x00,       "2 Coins 3 Plays"        },
+	{  0x00,    0x01,    0x0C,    0x08,       "1 Coin  2 Plays"        },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       0,          "Button 2 (Cocktail) (Not a DIP)" },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x10,    0x10,       "Released"               },
+	{  0x00,    0x01,    0x10,    0x00,       "Held"                   },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Difficulty"             },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x60,    0x40,       "Easy"                   },
+	{  0x00,    0x01,    0x60,    0x60,       "Normal"                 },
+	{  0x00,    0x01,    0x60,    0x20,       "Hard"                   },
+	{  0x00,    0x01,    0x60,    0x00,       "Hardest"                },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Copyright"              },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x00,    0x01,    0x80,    0x00,       "Namco"                  },
+	{  0x00,    0x01,    0x80,    0x80,       "Atari/Namco"            },
+
+	// Dip 2
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Coin A"                 },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x03,    0x01,       "2 Coins 1 Play"         },
+	{  0x01,    0x01,    0x03,    0x03,       "1 Coin  1 Play"         },
+	{  0x01,    0x01,    0x03,    0x00,       "2 Coins 3 Plays"        },
+	{  0x01,    0x01,    0x03,    0x02,       "1 Coin  2 Plays"        },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       8,          "Bonus Life"             },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x1C,    0x18,       "10k  40k  40k"          },
+	{  0x01,    0x01,    0x1C,    0x14,       "10k  50k  50k"          },
+	{  0x01,    0x01,    0x1C,    0x10,       "20k  50k  50k"          },
+	{  0x01,    0x01,    0x1C,    0x1C,       "20k  60k  60k"          },
+	{  0x01,    0x01,    0x1C,    0x0C,       "20k  70k  70k"          },
+	{  0x01,    0x01,    0x1C,    0x08,       "20k  80k  80k"          },
+	{  0x01,    0x01,    0x1C,    0x04,       "20k  60k"               },
+	{  0x01,    0x01,    0x1C,    0x00,       "None"                   },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       4,          "Lives"                  },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x60,    0x40,       "1"                      },
+	{  0x01,    0x01,    0x60,    0x20,       "2"                      },
+	{  0x01,    0x01,    0x60,    0x60,       "3"                      },
+	{  0x01,    0x01,    0x60,    0x00,       "5"                      },
+
+	// x,       DIP_GRP, x,       OptionCnt,  szTitle
+	{  0,       0xfe,    0,       2,          "Cabinet"                },
+	// nInput,  nFlags,  nMask,   nSetting,   szText
+	{  0x01,    0x01,    0x80,    0x80,       "Upright"                },
+	{  0x01,    0x01,    0x80,    0x00,       "Cocktail"               },
+
+};
+
+STDDIPINFO(Xeviousb)
+
 static struct BurnDIPInfo SxeviousDIPList[]=
 {
 	// Default Values
@@ -3450,84 +3627,240 @@ static struct BurnDIPInfo SxeviousDIPList[]=
 STDDIPINFO(Sxevious)
 
 static struct BurnRomInfo XeviousRomDesc[] = {
-	{ "xvi_1.3p",      0x01000, 0x09964dda, BRF_ESS | BRF_PRG   }, //  0	Z80 #1 Program Code
+	{ "xvi_1.3p",      0x01000, 0x09964dda, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
 	{ "xvi_2.3m",      0x01000, 0x60ecce84, BRF_ESS | BRF_PRG   }, //  1
 	{ "xvi_3.2m",      0x01000, 0x79754b7d, BRF_ESS | BRF_PRG   }, //  2
 	{ "xvi_4.2l",      0x01000, 0xc7d4bbf0, BRF_ESS | BRF_PRG   }, //  3
 
-	{ "xvi_5.3f",      0x01000, 0xc85b703f, BRF_ESS | BRF_PRG   }, //  4	Z80 #2 Program Code
+	{ "xvi_5.3f",      0x01000, 0xc85b703f, BRF_ESS | BRF_PRG   }, //  4 Z80 #2 Program Code
 	{ "xvi_6.3j",      0x01000, 0xe18cdaad, BRF_ESS | BRF_PRG   }, //  5
 
-	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6	Z80 #3 Program Code
+	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6 Z80 #3 Program Code
 
-	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, /*  7 background characters */
-	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             },	/*  8 bg pattern B0 */
-	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             },	/*  9 bg pattern B1 */
+	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  7 background characters
+	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  8 bg pattern B0
+	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  9 bg pattern B1
 
-	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, /* 10 sprite set #1, planes 0/1 */
-	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, /* 11 sprite set #1, plane 2, set #2, plane 0 */
-	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, /* 12 sprite set #2, planes 1/2 */
-	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             },	/* 13 sprite set #3, planes 0/1 */
+	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, // 10 sprite set #1, planes 0/1
+	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, // 11 sprite set #1, plane 2, set #2, plane 0
+	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, // 12 sprite set #2, planes 1/2
+	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             }, // 13 sprite set #3, planes 0/1
 
-	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, /* 14 */
-	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, /* 15 */
-	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, /* 16 */
+	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, // 14
+	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 15
+	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 16
 
-	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, /* 17 palette red component */
-	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, /* 18 palette green component */
-	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, /* 19 palette blue component */
-	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, /* 20 bg tiles lookup table low bits */
-	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, /* 21 bg tiles lookup table high bits */
-	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, /* 22 sprite lookup table low bits */
-	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, /* 23 sprite lookup table high bits */
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, // 17 palette red component
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, // 18 palette green component
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, // 19 palette blue component
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, // 20 bg tiles lookup table low bits
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, // 21 bg tiles lookup table high bits
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, // 22 sprite lookup table low bits
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, // 23 sprite lookup table high bits
 
-	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, /* 24 */
-	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, /* 25 timing - not used */
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, // 24
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, // 25 timing - not used
 
-	{ "xvi-3.1f",      0x00117, 0x9192d57a, BRF_OPT             }, /* N82S153N */
+	{ "xvi-3.1f",      0x00117, 0x9192d57a, BRF_OPT             }, // N82S153N
 };
 
 STD_ROM_PICK(Xevious)
 STD_ROM_FN(Xevious)
 
+static struct BurnRomInfo XeviousaRomDesc[] = {
+	{ "xea-1m-a.bin",  0x02000, 0x8c2b50ec, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
+	{ "xea-1l-a.bin",  0x02000, 0x0821642b, BRF_ESS | BRF_PRG   }, //  1
+
+	{ "xea-4c-a.bin",  0x02000, 0x14d8fa03, BRF_ESS | BRF_PRG   }, //  2 Z80 #2 Program Code
+
+	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  3 Z80 #3 Program Code
+
+	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  4 background characters
+	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  5 bg pattern B0
+	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  6 bg pattern B1
+
+	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, //  7 sprite set #1, planes 0/1
+	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, //  8 sprite set #1, plane 2, set #2, plane 0
+	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, //  9 sprite set #2, planes 1/2
+	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             }, // 10 sprite set #3, planes 0/1
+
+	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, // 11
+	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 12
+	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 13
+
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, // 14 palette red component
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, // 15 palette green component
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, // 16 palette blue component
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, // 17 bg tiles lookup table low bits
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, // 18 bg tiles lookup table high bits
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, // 19 sprite lookup table low bits
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, // 20 sprite lookup table high bits
+
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, // 21
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, // 22 timing - not used
+
+	{ "xvi-3.1f",      0x00117, 0x9192d57a, BRF_OPT             }, // N82S153N
+};
+
+STD_ROM_PICK(Xeviousa)
+STD_ROM_FN(Xeviousa)
+
+static struct BurnRomInfo XeviousbRomDesc[] = {
+	{ "1m.bin",        0x02000, 0xe82a22f6, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
+	{ "1l.bin",        0x02000, 0x13831df9, BRF_ESS | BRF_PRG   }, //  1
+
+	{ "4c.bin",        0x02000, 0x827e7747, BRF_ESS | BRF_PRG   }, //  2 Z80 #2 Program Code
+
+	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  3 Z80 #3 Program Code
+
+	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  4 background characters
+	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  5 bg pattern B0
+	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  6 bg pattern B1
+
+	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, //  7 sprite set #1, planes 0/1
+	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, //  8 sprite set #1, plane 2, set #2, plane 0
+	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, //  9 sprite set #2, planes 1/2
+	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             }, // 10 sprite set #3, planes 0/1
+
+	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, // 11
+	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 12
+	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 13
+
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, // 14 palette red component
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, // 15 palette green component
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, // 16 palette blue component
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, // 17 bg tiles lookup table low bits
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, // 18 bg tiles lookup table high bits
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, // 19 sprite lookup table low bits
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, // 20 sprite lookup table high bits
+
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, // 21
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, // 22 timing - not used
+
+	{ "xvi-3.1f",      0x00117, 0x9192d57a, BRF_OPT             }, // N82S153N
+};
+
+STD_ROM_PICK(Xeviousb)
+STD_ROM_FN(Xeviousb)
+
+static struct BurnRomInfo XeviouscRomDesc[] = {
+	{ "xvi_u_.3p",     0x01000, 0x7b203868, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
+	{ "xv_2-2.3m",     0x01000, 0xb6fe738e, BRF_ESS | BRF_PRG   }, //  1
+	{ "xv_2-3.2m",     0x01000, 0xdbd52ff5, BRF_ESS | BRF_PRG   }, //  2
+	{ "xvi_u_.2l",     0x01000, 0xad12af53, BRF_ESS | BRF_PRG   }, //  3
+
+	{ "xv2_5.3f",      0x01000, 0xf8cc2861, BRF_ESS | BRF_PRG   }, //  4 Z80 #2 Program Code
+	{ "xvi_6.3j",      0x01000, 0xe18cdaad, BRF_ESS | BRF_PRG   }, //  5
+
+	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6 Z80 #3 Program Code
+
+	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  7 background characters
+	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  8 bg pattern B0
+	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  9 bg pattern B1
+
+	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, // 10 sprite set #1, planes 0/1
+	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, // 11 sprite set #1, plane 2, set #2, plane 0
+	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, // 12 sprite set #2, planes 1/2
+	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             }, // 13 sprite set #3, planes 0/1
+
+	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, // 14
+	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 15
+	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 16
+
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, // 17 palette red component
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, // 18 palette green component
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, // 19 palette blue component
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, // 20 bg tiles lookup table low bits
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, // 21 bg tiles lookup table high bits
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, // 22 sprite lookup table low bits
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, // 23 sprite lookup table high bits
+
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, // 24
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, // 25 timing - not used
+
+	{ "xvi-3.1f",      0x00117, 0x9192d57a, BRF_OPT             }, // N82S153N
+};
+
+STD_ROM_PICK(Xeviousc)
+STD_ROM_FN(Xeviousc)
+
 static struct BurnRomInfo SxeviousRomDesc[] = {
-	{ "cpu_3p.rom",    0x01000, 0x1c8d27d5, BRF_ESS | BRF_PRG   }, //  0	Z80 #1 Program Code
+	{ "cpu_3p.rom",    0x01000, 0x1c8d27d5, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
 	{ "cpu_3m.rom",    0x01000, 0xfd04e615, BRF_ESS | BRF_PRG   }, //  1
 	{ "xv3_3.2m",      0x01000, 0x294d5404, BRF_ESS | BRF_PRG   }, //  2
 	{ "xv3_4.2l",      0x01000, 0x6a44bf92, BRF_ESS | BRF_PRG   }, //  3
 
-	{ "xv3_5.3f",      0x01000, 0xd4bd3d81, BRF_ESS | BRF_PRG   }, //  4	Z80 #2 Program Code
+	{ "xv3_5.3f",      0x01000, 0xd4bd3d81, BRF_ESS | BRF_PRG   }, //  4 Z80 #2 Program Code
 	{ "xv3_6.3j",      0x01000, 0xaf06be5f, BRF_ESS | BRF_PRG   }, //  5
 
-	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6	Z80 #3 Program Code
+	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6 Z80 #3 Program Code
 
-	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, /*  7 background characters */
-	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             },	/*  8 bg pattern B0 */
-	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             },	/*  9 bg pattern B1 */
+	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  7 background characters
+	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  8 bg pattern B0
+	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  9 bg pattern B1
 
-	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, /* 10 sprite set #1, planes 0/1 */
-	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, /* 11 sprite set #1, plane 2, set #2, plane 0 */
-	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, /* 12 sprite set #2, planes 1/2 */
-	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             },	/* 13 sprite set #3, planes 0/1 */
+	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, // 10 sprite set #1, planes 0/1
+	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, // 11 sprite set #1, plane 2, set #2, plane 0
+	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, // 12 sprite set #2, planes 1/2
+	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             }, // 13 sprite set #3, planes 0/1
 
-	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, /* 14 */
-	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, /* 15 */
-	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, /* 16 */
+	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, // 14
+	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 15
+	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 16
 
-	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, /* 17 palette red component */
-	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, /* 18 palette green component */
-	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, /* 19 palette blue component */
-	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, /* 20 bg tiles lookup table low bits */
-	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, /* 21 bg tiles lookup table high bits */
-	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, /* 22 sprite lookup table low bits */
-	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, /* 23 sprite lookup table high bits */
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, // 17 palette red component
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, // 18 palette green component
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, // 19 palette blue component
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, // 20 bg tiles lookup table low bits
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, // 21 bg tiles lookup table high bits
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, // 22 sprite lookup table low bits
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, // 23 sprite lookup table high bits
 
-	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, /* 24 */
-	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, /* 25 timing - not used */
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, // 24
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, // 25 timing - not used
 };
 
 STD_ROM_PICK(Sxevious)
 STD_ROM_FN(Sxevious)
+
+static struct BurnRomInfo SxeviousjRomDesc[] = {
+	{ "xv3_1.3p",      0x01000, 0xafbc3372, BRF_ESS | BRF_PRG   }, //  0 Z80 #1 Program Code
+	{ "xv3_2.3m",      0x01000, 0x1854a5ee, BRF_ESS | BRF_PRG   }, //  1
+	{ "xv3_3.2m",      0x01000, 0x294d5404, BRF_ESS | BRF_PRG   }, //  2
+	{ "xv3_4.2l",      0x01000, 0x6a44bf92, BRF_ESS | BRF_PRG   }, //  3
+
+	{ "xv3_5.3f",      0x01000, 0xd4bd3d81, BRF_ESS | BRF_PRG   }, //  4 Z80 #2 Program Code
+	{ "xv3_6.3j",      0x01000, 0xaf06be5f, BRF_ESS | BRF_PRG   }, //  5
+
+	{ "xvi_7.2c",      0x01000, 0xdd35cf1c, BRF_ESS | BRF_PRG   }, //  6 Z80 #3 Program Code
+
+	{ "xvi_12.3b",     0x01000, 0x088c8b26, BRF_GRA             }, //  7 background characters
+	{ "xvi_13.3c",     0x01000, 0xde60ba25, BRF_GRA             }, //  8 bg pattern B0
+	{ "xvi_14.3d",     0x01000, 0x535cdbbc, BRF_GRA             }, //  9 bg pattern B1
+
+	{ "xvi_15.4m",     0x02000, 0xdc2c0ecb, BRF_GRA             }, // 10 sprite set #1, planes 0/1
+	{ "xvi_18.4r",     0x02000, 0x02417d19, BRF_GRA             }, // 11 sprite set #1, plane 2, set #2, plane 0
+	{ "xvi_17.4p",     0x02000, 0xdfb587ce, BRF_GRA             }, // 12 sprite set #2, planes 1/2
+	{ "xvi_16.4n",     0x01000, 0x605ca889, BRF_GRA             }, // 13 sprite set #3, planes 0/1
+
+	{ "xvi_9.2a",      0x01000, 0x57ed9879, BRF_GRA             }, // 14
+	{ "xvi_10.2b",     0x02000, 0xae3ba9e5, BRF_GRA             }, // 15
+	{ "xvi_11.2c",     0x01000, 0x31e244dd, BRF_GRA             }, // 16
+
+	{ "xvi-8.6a",      0x00100, 0x5cc2727f, BRF_GRA             }, // 17 palette red component
+	{ "xvi-9.6d",      0x00100, 0x5c8796cc, BRF_GRA             }, // 18 palette green component
+	{ "xvi-10.6e",     0x00100, 0x3cb60975, BRF_GRA             }, // 19 palette blue component
+	{ "xvi-7.4h",      0x00200, 0x22d98032, BRF_GRA             }, // 20 bg tiles lookup table low bits
+	{ "xvi-6.4f",      0x00200, 0x3a7599f0, BRF_GRA             }, // 21 bg tiles lookup table high bits
+	{ "xvi-4.3l",      0x00200, 0xfd8b9d91, BRF_GRA             }, // 22 sprite lookup table low bits
+	{ "xvi-5.3m",      0x00200, 0xbf906d82, BRF_GRA             }, // 23 sprite lookup table high bits
+
+	{ "xvi-2.7n",      0x00100, 0x550f06bc, BRF_GRA             }, // 24
+	{ "xvi-1.5n",      0x00100, 0x77245b66, BRF_GRA             }, // 25 timing - not used
+};
+
+STD_ROM_PICK(Sxeviousj)
+STD_ROM_FN(Sxeviousj)
 
 
 static struct BurnSampleInfo XeviousSampleDesc[] = {
@@ -3796,6 +4129,40 @@ static struct ROM_Load_Def xeviousROMTable[] =
 
 #define XEVIOUS_ROM_TBL_SIZE      (sizeof(xeviousROMTable) / sizeof(struct ROM_Load_Def))
 
+static struct ROM_Load_Def xeviousaROMTable[] =
+{
+	{  &memory.Z80.rom1,             0x00000, NULL                 },
+	{  &memory.Z80.rom1,             0x02000, NULL                 },
+	{  &memory.Z80.rom2,             0x00000, NULL                 },
+	{  &memory.Z80.rom3,             0x00000, NULL                 },
+
+	{  &tempRom,                     0x00000, xeviousCharDecode    },
+
+	{  &tempRom,                     0x00000, NULL                 },
+	{  &tempRom,                     0x01000, xeviousTilesDecode   },
+
+	{  &tempRom,                     0x00000, NULL                 },
+	{  &tempRom,                     0x02000, NULL                 },
+	{  &tempRom,                     0x04000, NULL                 },
+	{  &tempRom,                     0x06000, xeviousSpriteDecode  },
+
+	{  &xeviousROM.rom2a,            0x00000, NULL                 },
+	{  &xeviousROM.rom2b,            0x00000, NULL                 },
+	{  &xeviousROM.rom2c,            0x00000, NULL                 },
+
+	{  &memory.PROM.palette,         0x00000, NULL                 },
+	{  &memory.PROM.palette,         0x00100, NULL                 },
+	{  &memory.PROM.palette,         0x00200, NULL                 },
+	{  &memory.PROM.charLookup,      0x00000, NULL                 },
+	{  &memory.PROM.charLookup,      0x00200, NULL                 },
+	{  &memory.PROM.spriteLookup,    0x00000, NULL                 },
+	{  &memory.PROM.spriteLookup,    0x00200, NULL                 },
+	{  &NamcoSoundProm,              0x00000, NULL                 },
+	{  &NamcoSoundProm,              0x00100, namcoMachineInit     }
+};
+
+#define XEVIOUSA_ROM_TBL_SIZE     (sizeof(xeviousaROMTable) / sizeof(struct ROM_Load_Def))
+
 static DrawFunc_t xeviousDrawFuncs[] =
 {
 	xeviousCalcPalette,
@@ -3845,12 +4212,41 @@ static struct Machine_Config_Def xeviousMachineConfig =
 	/*n54xxSampleList        */ xeviousN54xxSampleList
 };
 
+static struct Machine_Config_Def xeviousaMachineConfig =
+{
+	/*cpus                   */ xeviousCPU,
+	/*wrAddrList             */ xeviousZ80WriteTable,
+	/*rdAddrList             */ xeviousZ80ReadTable,
+	/*memMapTable            */ xeviousMemTable,
+	/*sizeOfMemMapTable      */ XEVIOUS_MEM_TBL_SIZE,
+	/*romLayoutTable         */ xeviousaROMTable,
+	/*sizeOfRomLayoutTable   */ XEVIOUSA_ROM_TBL_SIZE,
+	/*tempRomSize            */ 0x8000,
+	/*tilemapsConfig         */ xeviousTilemapConfig,
+	/*drawLayerTable         */ xeviousDrawFuncs,
+	/*drawTableSize          */ XEVIOUS_DRAW_TBL_SIZE,
+	/*getSpriteParams        */ xeviousGetSpriteParams,
+	/*reset                  */ DrvDoReset,
+	/*customRWTable          */ xeviousCustomRWTable,
+	/*n54xxSampleList        */ xeviousN54xxSampleList
+};
+
 static INT32 xeviousInit(void)
 {
 	machine.game = NAMCO_XEVIOUS;
 	machine.numOfDips = XEVIOUS_NUM_OF_DIPSWITCHES;
 
 	machine.config = &xeviousMachineConfig;
+
+	return namcoInitBoard();
+}
+
+static INT32 xeviousaInit(void)
+{
+	machine.game = NAMCO_XEVIOUS;
+	machine.numOfDips = XEVIOUS_NUM_OF_DIPSWITCHES;
+
+	machine.config = &xeviousaMachineConfig;
 
 	return namcoInitBoard();
 }
@@ -4333,12 +4729,52 @@ struct BurnDriver BurnDrvXevious = {
 	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };
 
-struct BurnDriver BurnDrvSxevious = {
-	"sxevious", "xevious", NULL, "xevious", "1984",
-	"Super Xevious (Namco)\0", NULL, "Namco", "Miscellaneous",
+struct BurnDriver BurnDrvXeviousa = {
+	"xeviousa", "xevious", NULL, "xevious", "1982",
+	"Xevious (Atari, harder)\0", NULL, "Namco (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, XeviousaRomInfo, XeviousaRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousaDIPInfo,
+	xeviousaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+struct BurnDriver BurnDrvXeviousb = {
+	"xeviousb", "xevious", NULL, "xevious", "1982",
+	"Xevious (Atari)\0", NULL, "Namco (Atari license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, XeviousbRomInfo, XeviousbRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousbDIPInfo,
+	xeviousaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+struct BurnDriver BurnDrvXeviousc = {
+	"xeviousc", "xevious", NULL, "xevious", "1982",
+	"Xevious (Atari, Namco PCB)\0", NULL, "Namco (Atari license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, XeviouscRomInfo, XeviouscRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, XeviousaDIPInfo,
+	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+struct BurnDriver BurnDrvSxevious = {
+	"sxevious", NULL, NULL, "xevious", "1984",
+	"Super Xevious\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, SxeviousRomInfo, SxeviousRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, SxeviousDIPInfo,
+	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
+	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+struct BurnDriver BurnDrvSxeviousj = {
+	"sxeviousj", "sxevious", NULL, "xevious", "1984",
+	"Super Xevious (Japan)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, SxeviousjRomInfo, SxeviousjRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, SxeviousDIPInfo,
 	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
 };

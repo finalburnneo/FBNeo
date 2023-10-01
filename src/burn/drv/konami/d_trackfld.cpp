@@ -1986,18 +1986,18 @@ struct BurnDriver BurnDrvHyprolymba = {
 static struct BurnRomInfo hipolyRomDesc[] = {
 	{ "2.1a",	0x2000, 0x82257fb7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "2.2a",	0x2000, 0x15b83099, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "2.4a",	0x2000, 0x93a32a97, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2.4a",	0x2000, 0x2d6fc308, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "2.5a",	0x2000, 0xd099b1e8, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "2.7a",	0x2000, 0x974ff815, 1 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "1.2c",	0x2000, 0x95bf79b6, 2 | BRF_PRG | BRF_ESS }, //  5 audiocpu
 
-	{ "1.11d",	0x2000, 0x102d3a78, 3 | BRF_SND },           //  6 adpcm
+	{ "1.11d",	0x2000, 0xa4cddeb8, 3 | BRF_SND },           //  6 adpcm
 	{ "1.10d",	0x2000, 0xe9919365, 3 | BRF_SND },           //  7
 	{ "1.11c",	0x2000, 0xc3ec42e1, 3 | BRF_SND },           //  8
 	{ "1.10c",	0x2000, 0x76998389, 3 | BRF_SND },           //  9
 
-	{ "2.18a",	0x2000, 0x8d28864f, 4 | BRF_GRA },           // 10 gfx1
+	{ "2.18a",	0x2000, 0x82e2185a, 4 | BRF_GRA },           // 10 gfx1
 	{ "2.19a",	0x2000, 0x800ff1f1, 4 | BRF_GRA },           // 11
 	{ "2.21a",	0x2000, 0xd9faf183, 4 | BRF_GRA },           // 12
 	{ "2.22a",	0x2000, 0x5886c802, 4 | BRF_GRA },           // 13

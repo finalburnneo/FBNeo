@@ -4155,10 +4155,10 @@ static INT32 PbobbleInit()
 }
 
 struct BurnDriver BurnDrvBublbust = {
-	"bublbust", NULL, NULL, NULL, "1994",
+	"bublbust", 'pbobble', NULL, NULL, "1994",
 	"Bubble Buster (USA, B-System)\0", NULL, "Taito America Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
 	NULL, bublbustRomInfo, bublbustRomName, NULL, NULL, NULL, NULL, PbobbleInputInfo, NULL,
 	PbobbleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
@@ -4183,10 +4183,10 @@ STD_ROM_PICK(pbobble)
 STD_ROM_FN(pbobble)
 
 struct BurnDriver BurnDrvPbobble = {
-	"pbobble", "bublbust", NULL, NULL, "1994",
+	"pbobble", NULL, NULL, NULL, "1994",
 	"Puzzle Bobble (Japan, B-System)\0", NULL, "Taito Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_BREAKOUT, 0,
 	NULL, pbobbleRomInfo, pbobbleRomName, NULL, NULL, NULL, NULL, PbobbleInputInfo, NULL,
 	PbobbleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3

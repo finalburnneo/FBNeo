@@ -1491,10 +1491,10 @@ STD_ROM_PICK(nbamht)
 STD_ROM_FN(nbamht)
 
 struct BurnDriver BurnDrvNbamht = {
-	"nbamht", NULL, NULL, NULL, "1996",
+	"nbamht", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver L1.03 06/09/97)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
 	NULL, nbamhtRomInfo, nbamhtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1544,7 +1544,7 @@ STD_ROM_PICK(nbamhtl10)
 STD_ROM_FN(nbamhtl10)
 
 struct BurnDriver BurnDrvNbamhtl10 = {
-	"nbamhtl10", "nbamht", NULL, NULL, "1996",
+	"nbamhtl10", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver L1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
@@ -1597,7 +1597,7 @@ STD_ROM_PICK(nbamhtm10)
 STD_ROM_FN(nbamhtm10)
 
 struct BurnDriver BurnDrvNbamhtm10 = {
-	"nbamhtm10", "nbamht", NULL, NULL, "1996",
+	"nbamhtm10", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver M1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
@@ -1650,7 +1650,7 @@ STD_ROM_PICK(nbamhtp)
 STD_ROM_FN(nbamhtp)
 
 struct BurnDriver BurnDrvNbamhtp = {
-	"nbamhtp", "nbamht", NULL, NULL, "1996",
+	"nbamhtp", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver L0.9 10/30/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,

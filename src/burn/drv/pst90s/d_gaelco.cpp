@@ -1359,10 +1359,10 @@ STD_ROM_PICK(maniacsp)
 STD_ROM_FN(maniacsp)
 
 struct BurnDriver BurnDrvManiacsp = {
-	"maniacsp", "maniacsq", NULL, NULL, "1996",
+	"maniacsp", NULL, NULL, NULL, "1996",
 	"Maniac Square (ver 1.0, checksum b602, prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, maniacspRomInfo, maniacspRomName, NULL, NULL, NULL, NULL, DrvInputInfo, ManiacsqDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

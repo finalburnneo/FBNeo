@@ -837,13 +837,16 @@ INT32 pgmInit()
 		if (BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB)
 		{
 			SekMapMemory(PGM68KROM,				0x000000, (nPGM68KROMLen-1), MAP_ROM);			// 68000 ROM (no bios)
-		}
-		else
-		{
+		} else {
 			// if a cart is mapped at 100000+, the BIOS is mapped from 0-fffff, if no cart inserted, the BIOS is mapped to 7fffff!
 			for (INT32 i = 0; i < 0x100000; i+= 0x20000) { // DDP3 bios is 512k in size, but >= 20000 is 0-filled!
 				if ((!bDoIpsPatch && (0 == strcmp(BurnDrvGetTextA(DRV_NAME), "kov2dzxx"))) || (nIpsDrvDefine & IPS_PGM_MAPHACK)) {
-					SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM); // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail
+					SekMapMemory(PGM68KBIOS, 0x000000, 0x07ffff, MAP_ROM); // kov2dzxx 68K BIOS, Mapped addresses other than 7fffff will fail.
+
+					if (nIpsDrvDefine & IPS_PGM_MAPHACK) {
+						SekMapMemory((PGM68KROM + 0x300000), 0x600000, 0x6fffff, MAP_ROM); // Adds a mapping for the specified ips.
+					}
+
 					break;
 				}
 

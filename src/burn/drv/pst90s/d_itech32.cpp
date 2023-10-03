@@ -4385,10 +4385,10 @@ static INT32 WcbowldxInit()
 }
 
 struct BurnDriver BurnDrvWcbowldx = {
-	"wcbowldx", NULL, NULL, NULL, "1999",
+	"wcbowldx", "wcbowl", NULL, NULL, "1999",
 	"World Class Bowling Deluxe (v2.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, wcbowldxRomInfo, wcbowldxRomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowldxDIPInfo,
 	WcbowldxInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4439,7 +4439,7 @@ static INT32 Wcbowl140Init()
 }
 
 struct BurnDriver BurnDrvWcbowl140 = {
-	"wcbowl140", "wcbowldx", NULL, NULL, "1997",
+	"wcbowl140", "wcbowl", NULL, NULL, "1997",
 	"World Class Bowling Tournament (v1.40)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
@@ -4486,7 +4486,7 @@ STD_ROM_PICK(wcbowl130)
 STD_ROM_FN(wcbowl130)
 
 struct BurnDriver BurnDrvWcbowl130 = {
-	"wcbowl130", "wcbowldx", NULL, NULL, "1997",
+	"wcbowl130", "wcbowl", NULL, NULL, "1997",
 	"World Class Bowling Tournament (v1.30)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,

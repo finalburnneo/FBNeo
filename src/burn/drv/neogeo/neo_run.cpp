@@ -4633,6 +4633,8 @@ INT32 NeoFrame()
 				NeoInput[2] |= (NeoButton1[i] & 1) << i;
 				NeoInput[3] |= (NeoButton2[i] & 1) << i;
 			}
+			// For browsing unibios
+			NeoInput[0] = (((INT16)NeoAxis[1] < -40) << 0) | (((INT16)NeoAxis[1] > 40) << 1) | (((INT16)NeoAxis[0] < -40) << 2) | (((INT16)NeoAxis[0] > 40) << 3) | ((NeoJoy2[4] & 1) << 4) | ((NeoJoy2[5] & 1) << 5) | ((NeoJoy1[6] & 1) << 6) | ((NeoJoy1[7] & 1) << 7);
 			// Handle analog controls
 			nAnalogAxis[0] += NeoAxis[0];
 			nAnalogAxis[1] += NeoAxis[1];

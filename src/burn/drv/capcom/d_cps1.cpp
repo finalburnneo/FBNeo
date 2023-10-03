@@ -24063,7 +24063,7 @@ struct BurnDriver BurnDrvCpsSf2ceuab4 = {
 };
 
 struct BurnDriver BurnDrvCpsSf2re = {
-	"sf2re", "sf2ce", NULL, NULL, "1992",
+	"sf2re", "sf2", NULL, NULL, "1992",
 	"Street Fighter II': Champion Edition (RE, bootleg)\0", "imperfect graphics", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
@@ -24073,7 +24073,7 @@ struct BurnDriver BurnDrvCpsSf2re = {
 };
 
 struct BurnDriver BurnDrvCpsSf2mkot = {
-	"sf2mkot", "sf2ce", NULL, NULL, "1992",
+	"sf2mkot", "sf2", NULL, NULL, "1992",
 	"Street Fighter II': Magic KO Turbo!! - Nightmare Crack\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,

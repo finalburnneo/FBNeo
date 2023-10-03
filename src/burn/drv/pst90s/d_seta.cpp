@@ -11337,21 +11337,23 @@ struct BurnDriver BurnDrvCalibr50 = {
 // Crazy Fight
 
 static struct BurnRomInfo crazyfgtRomDesc[] = {
-	{ "rom.u3",		0x40000, 0xbf333e75, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "rom.u4",		0x40000, 0x505e9d47, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "rom.u3",			0x40000, 0xbf333e75, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "rom.u4",			0x40000, 0x505e9d47, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "rom.u228",	0x80000, 0x7181618e, 0x03 | BRF_GRA },           //  2 Sprites
-	{ "rom.u227",	0x80000, 0x7905b5f2, 0x03 | BRF_GRA },           //  3
-	{ "rom.u226",	0x80000, 0xef210e34, 0x03 | BRF_GRA },           //  4
-	{ "rom.u225",	0x80000, 0x451b4419, 0x03 | BRF_GRA },           //  5
+	{ "rom.u228",		0x80000, 0x7181618e, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "rom.u227",		0x80000, 0x7905b5f2, 0x03 | BRF_GRA },           //  3
+	{ "rom.u226",		0x80000, 0xef210e34, 0x03 | BRF_GRA },           //  4
+	{ "rom.u225",		0x80000, 0x451b4419, 0x03 | BRF_GRA },           //  5
 
-	{ "rom.u67",	0x40000, 0xec8c6831, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
-	{ "rom.u68",	0x80000, 0x2124312e, 0x04 | BRF_GRA },           //  7
+	{ "rom.u67",		0x40000, 0xec8c6831, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
+	{ "rom.u68",		0x80000, 0x2124312e, 0x04 | BRF_GRA },           //  7
 
-	{ "rom.u65",	0x40000, 0x58448231, 0x05 | BRF_GRA },           //  8 Layer 2 tiles
-	{ "rom.u66",	0x80000, 0xc6f7735b, 0x05 | BRF_GRA },           //  9
+	{ "rom.u65",		0x40000, 0x58448231, 0x05 | BRF_GRA },           //  8 Layer 2 tiles
+	{ "rom.u66",		0x80000, 0xc6f7735b, 0x05 | BRF_GRA },           //  9
 
-	{ "rom.u85",	0x40000, 0x7b95d0bb, 0x06 | BRF_SND },           // 10 OKI M6295 Samples
+	{ "rom.u85",		0x40000, 0x7b95d0bb, 0x06 | BRF_SND },           // 10 OKI M6295 Samples
+
+	{ "ds2430a.bin",	0x00028, 0x3b5ea5d2, 0x00 | BRF_OPT },           // 11
 };
 
 STD_ROM_PICK(crazyfgt)

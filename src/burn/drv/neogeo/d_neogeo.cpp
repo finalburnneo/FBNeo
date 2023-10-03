@@ -390,6 +390,8 @@ static struct BurnInputInfo neotrackballInputList[] = {
 
 	{"P1 Button A",	BIT_DIGITAL,	NeoJoy2 + 4,	"mouse button 1"},	//	4
 	{"P1 Button B",	BIT_DIGITAL,	NeoJoy2 + 5,	"mouse button 2"},	//	5
+	{"P1 Button C",	BIT_DIGITAL,	NeoJoy1 + 6,	"p1 fire 3"},		//	6
+	{"P1 Button D",	BIT_DIGITAL,	NeoJoy1 + 7,	"p1 fire 4"},		//	7
 
 	{"P2 Coin",		BIT_DIGITAL,	NeoButton2 + 1,	"p2 coin"},			//	6
 	{"P2 Start",	BIT_DIGITAL,	NeoButton1 + 2,	"p2 start"},		//	7
@@ -917,7 +919,7 @@ static struct BurnDIPInfo neoCDDIPList[] = {
 STDDIPINFO(neoCD)
 
 static struct BurnDIPInfo neotrackballDIPList[] = {
-	DIP_OFFSET(0x0D)
+	DIP_OFFSET(0x0F)
 
 	// Defaults
 	{0x00,	0xFF, 0xFF,	0x00, NULL										},

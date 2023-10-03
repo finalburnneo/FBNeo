@@ -1721,6 +1721,7 @@ DRV		BurnDrvnes_bignosfreout;
 DRV		BurnDrvnes_bignoscav;
 DRV		BurnSpecBignoseamericanadv;
 DRV		BurnDrvBigrun;
+DRV		BurnDrvBigrunu;
 DRV		BurnDrvBigstrkba;
 DRV		BurnDrvBigstrkb;
 DRV		BurnDrvBigstrik;
@@ -21617,7 +21618,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_bignosfreout,	// Big Nose Freaks Out (USA)
 	&BurnDrvnes_bignoscav,		// Big Nose the Caveman (USA)
 	&BurnSpecBignoseamericanadv,// Big Nose's American Adventure (48K)
-	&BurnDrvBigrun,				// Big Run (11th Rallye version)
+	&BurnDrvBigrun,				// Big Run (11th Rallye version, Europe?)
+	&BurnDrvBigrunu,			// Big Run (11th Rallye version, US?)
 	&BurnDrvBigstrkba,			// Big Striker (bootleg w/Italian teams)
 	&BurnDrvBigstrkb,			// Big Striker (bootleg)
 	&BurnDrvBigstrik,			// Big Striker
@@ -41505,6 +41507,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_bignoscav", "d_nes.cpp"},
 	{ "spec_bignoseamericanadv", "d_spectrum.cpp"},
 	{ "bigrun", "d_cischeat.cpp"},
+	{ "bigrunu", "d_cischeat.cpp"},
 	{ "bigstrkba", "d_bigstrkb.cpp"},
 	{ "bigstrkb", "d_bigstrkb.cpp"},
 	{ "bigstrik", "d_megasys1.cpp"},

@@ -262,9 +262,110 @@ void retro_set_video_refresh(retro_video_refresh_t cb) { video_cb = cb; }
 void retro_set_audio_sample(retro_audio_sample_t) {}
 void retro_set_audio_sample_batch(retro_audio_sample_batch_t cb) { audio_batch_cb = cb; }
 
+static bool is_dipswitch_active(dipswitch_core_option *dip_option)
+{
+	bool active = true;
+
+	for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
+	{
+		dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
+
+		if (dip_value->cond_pgi != NULL)
+		{
+			if (dip_value->bdi.nFlags & 0x80)
+			{
+				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) != dip_value->nCondSetting;
+			}
+			else
+			{
+				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) == dip_value->nCondSetting;
+			}
+		}
+		return active;
+	}
+
+	return active;
+}
+
+static void set_dipswitches_visibility(void)
+{
+	struct retro_core_option_display option_display;
+
+	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
+	{
+		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
+
+		option_display.key = dip_option->option_name.c_str();
+		option_display.visible = is_dipswitch_active(dip_option);
+
+		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY, &option_display);
+	}
+}
+
+// Update DIP switches value  depending of the choice the user made in core options
+static bool apply_dipswitches_from_variables()
+{
+	bool dip_changed = false;
+#if 0
+	HandleMessage(RETRO_LOG_INFO, "Apply DIP switches value from core options.\n");
+#endif
+	struct retro_variable var = {0};
+
+	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
+	{
+		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
+		if (!is_dipswitch_active(dip_option))
+			continue;
+
+		var.key = dip_option->option_name.c_str();
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
+			continue;
+
+		for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
+		{
+			dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
+
+			if (dip_value->friendly_name.compare(var.value) != 0)
+				continue;
+
+			int old_nConst = dip_value->pgi->Input.Constant.nConst;
+
+			dip_value->pgi->Input.Constant.nConst = (dip_value->pgi->Input.Constant.nConst & ~dip_value->bdi.nMask) | (dip_value->bdi.nSetting & dip_value->bdi.nMask);
+			dip_value->pgi->Input.nVal = dip_value->pgi->Input.Constant.nConst;
+			if (dip_value->pgi->Input.pVal)
+				*(dip_value->pgi->Input.pVal) = dip_value->pgi->Input.nVal;
+
+			if (dip_value->pgi->Input.Constant.nConst == old_nConst)
+			{
+#if 0
+				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - No change - '%s' '%s' [0x%02x]\n",
+				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
+#endif
+			}
+			else
+			{
+				dip_changed = true;
+#if 0
+				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - Changed   - '%s' '%s' [0x%02x]\n",
+				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
+#endif
+			}
+		}
+	}
+
+	if (dip_changed)
+		set_dipswitches_visibility();
+
+	return dip_changed;
+}
+
 void retro_set_environment(retro_environment_t cb)
 {
 	environ_cb = cb;
+
+	struct retro_core_options_update_display_callback update_display_cb;
+	update_display_cb.callback = apply_dipswitches_from_variables;
+	environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_UPDATE_DISPLAY_CALLBACK, &update_display_cb);
 
 	// Subsystem (needs to be called now, or it won't work on command line)
 	static const struct retro_subsystem_rom_info subsystem_rom[] = {
@@ -484,102 +585,6 @@ static int create_variables_from_dipswitches()
 	evaluate_neogeo_bios_mode(drvname);
 
 	return 0;
-}
-
-static bool is_dipswitch_active(dipswitch_core_option *dip_option)
-{
-	bool active = true;
-
-	for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
-	{
-		dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
-
-		if (dip_value->cond_pgi != NULL)
-		{
-			if (dip_value->bdi.nFlags & 0x80)
-			{
-				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) != dip_value->nCondSetting;
-			}
-			else
-			{
-				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) == dip_value->nCondSetting;
-			}
-		}
-		return active;
-	}
-
-	return active;
-}
-
-static void set_dipswitches_visibility(void)
-{
-	struct retro_core_option_display option_display;
-
-	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
-	{
-		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
-
-		option_display.key = dip_option->option_name.c_str();
-		option_display.visible = is_dipswitch_active(dip_option);
-
-		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY, &option_display);
-	}
-}
-
-// Update DIP switches value  depending of the choice the user made in core options
-static bool apply_dipswitches_from_variables()
-{
-	bool dip_changed = false;
-#if 0
-	HandleMessage(RETRO_LOG_INFO, "Apply DIP switches value from core options.\n");
-#endif
-	struct retro_variable var = {0};
-
-	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
-	{
-		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
-		if (!is_dipswitch_active(dip_option))
-			continue;
-
-		var.key = dip_option->option_name.c_str();
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
-			continue;
-
-		for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
-		{
-			dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
-
-			if (dip_value->friendly_name.compare(var.value) != 0)
-				continue;
-
-			int old_nConst = dip_value->pgi->Input.Constant.nConst;
-
-			dip_value->pgi->Input.Constant.nConst = (dip_value->pgi->Input.Constant.nConst & ~dip_value->bdi.nMask) | (dip_value->bdi.nSetting & dip_value->bdi.nMask);
-			dip_value->pgi->Input.nVal = dip_value->pgi->Input.Constant.nConst;
-			if (dip_value->pgi->Input.pVal)
-				*(dip_value->pgi->Input.pVal) = dip_value->pgi->Input.nVal;
-
-			if (dip_value->pgi->Input.Constant.nConst == old_nConst)
-			{
-#if 0
-				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - No change - '%s' '%s' [0x%02x]\n",
-				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
-#endif
-			}
-			else
-			{
-				dip_changed = true;
-#if 0
-				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - Changed   - '%s' '%s' [0x%02x]\n",
-				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
-#endif
-			}
-		}
-	}
-
-	set_dipswitches_visibility();
-
-	return dip_changed;
 }
 
 static TCHAR* nl_remover(TCHAR* str)

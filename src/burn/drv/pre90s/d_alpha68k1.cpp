@@ -846,7 +846,7 @@ static struct BurnRomInfo paddlemaRomDesc[] = {
 	{ "padlem.17j",		0x00400, 0x86170069, 6 | BRF_GRA },           // 17 Palette Look-up Data
 	{ "padlem.16j",		0x00400, 0x8da58e2c, 6 | BRF_GRA },           // 18
 
-	{ "padlem.18n",		0x08000, 0x06506200, 7 | BRF_GRA },           // 19 Color Look-up Data
+	{ "padlem.18n",		0x08000, 0x488df971, 7 | BRF_GRA },           // 19 Color Look-up Data
 };
 
 STD_ROM_PICK(paddlema)

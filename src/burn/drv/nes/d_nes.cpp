@@ -17518,11 +17518,11 @@ struct BurnDriver BurnDrvnes_castlevaniacom = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Castlevania - The Last Tear (Hack, v2.78.5)
+// Castlevania - The Last Tear (Hack, v4.0)
 // Modified by Sky Flare
-// https://mail.romhacking.net/hacks/7215/ - 20230223
+// https://mail.romhacking.net/hacks/7215/ - 20230915
 static struct BurnRomInfo nes_castlevanialtRomDesc[] = {
-	{ "Castlevania - The Last Tear v2.78.5 (2023)(Sky Flare).nes",          131088, 0x0839e2d4, BRF_ESS | BRF_PRG },
+	{ "Castlevania - The Last Tear v4.0 (2023)(Sky Flare).nes",          131088, 0x8ce018f9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_castlevanialt)
@@ -17530,7 +17530,7 @@ STD_ROM_FN(nes_castlevanialt)
 
 struct BurnDriver BurnDrvnes_castlevanialt = {
 	"nes_castlevanialt", "nes_castlevania", NULL, NULL, "2023",
-	"Castlevania - The Last Tear (Hack, v2.78.5)\0", NULL, "Sky Flare", "Miscellaneous",
+	"Castlevania - The Last Tear (Hack, v4.0)\0", NULL, "Sky Flare", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_castlevanialtRomInfo, nes_castlevanialtRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

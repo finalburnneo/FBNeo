@@ -3979,9 +3979,9 @@ struct BurnDriverD BurnDrvFuncube4 = {
 // -----------------------------------------------------------------------------
 
 static struct BurnRomInfo grdianshsRomDesc[] = {
-	/* Pro - 20230823 */
-	{ "u2_ds.bin",		0x080000, 0x05681eec, BRF_ESS | BRF_PRG },	//  0 68000 code
-	{ "u3_ds.bin",		0x080000, 0xd2040590, BRF_ESS | BRF_PRG },
+	/* Pro - 20230927 */
+	{ "u2_ds.bin",		0x080000, 0x35c04add, BRF_ESS | BRF_PRG },	//  0 68000 code
+	{ "u3_ds.bin",		0x080000, 0x5e4f89ce, BRF_ESS | BRF_PRG },
 	{ "u4.bin",			0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
 	{ "u5.bin",			0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
 
@@ -4000,9 +4000,9 @@ static struct BurnRomInfo grdianshsRomDesc[] = {
 	{ "u2_sy.bin",		0x080000, 0xe9898c17, BRF_ESS | BRF_PRG },	// 13 68000 code
 	{ "u3_sy.bin",		0x080000, 0x330337db, BRF_ESS | BRF_PRG },
 
-	/* Plus - 20210831 */
-	{ "u2_plus.bin",	0x080000, 0xf944faec, BRF_ESS | BRF_PRG },	// 15 68000 code
-	{ "u3_plus.bin",	0x080000, 0xd3135781, BRF_ESS | BRF_PRG },
+	/* Plus - 20230918 */
+	{ "u2_plus.bin",	0x080000, 0xb0c31a34, BRF_ESS | BRF_PRG },	// 15 68000 code
+	{ "u3_plus.bin",	0x080000, 0x3fac6d79, BRF_ESS | BRF_PRG },
 
 	/* LBS - 20221014 */
 	{ "u2_lbs.bin",		0x080000, 0xa2e89715, BRF_ESS | BRF_PRG },	// 17 68000 code

@@ -29858,10 +29858,10 @@ struct BurnDriver BurnDrvMSX_gmonkey = {
 	272, 228, 4, 3
 };
 
-// Goblin, The (HB)
+// Goblin, The (HB, v1.1)
 
 static struct BurnRomInfo MSX_goblinRomDesc[] = {
-	{ "Goblin, The (2023)(Hicks & Mananuk).rom",	49152, 0x75e5c2d2, BRF_PRG | BRF_ESS },
+	{ "Goblin, The v1.1 (2023)(Hicks & Mananuk).rom",	49152, 0x1c55c688, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_goblin, MSX_goblin, msx_msx)
@@ -29869,7 +29869,7 @@ STD_ROM_FN(MSX_goblin)
 
 struct BurnDriver BurnDrvMSX_goblin = {
 	"msx_goblin", NULL, "msx_msx", NULL, "2023",
-	"Goblin, The (HB)\0", NULL, "Hicks & Mananuk", "MSX",
+	"Goblin, The (HB, v1.1)\0", NULL, "Hicks & Mananuk", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_goblinRomInfo, MSX_goblinRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

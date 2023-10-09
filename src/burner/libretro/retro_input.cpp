@@ -1159,7 +1159,9 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 
 	// VS Block Breaker
 	if ((parentrom && strcmp(parentrom, "vblokbrk") == 0) ||
-		(drvname && strcmp(drvname, "vblokbrk") == 0)
+		(drvname && strcmp(drvname, "vblokbrk") == 0) ||
+		(parentrom && strcmp(parentrom, "puzzloop") == 0) ||
+		(drvname && strcmp(drvname, "puzzloop") == 0)
 	) {
 		if (strcmp("Paddle", description) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);

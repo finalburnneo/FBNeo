@@ -1405,7 +1405,7 @@
 		<description>Back Gammon (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sony</manufacturer>
-		<rom name="back gammon (japan).rom" size="16384" crc="b632b6bb"/>
+		<rom name="Back Gammon (Japan)(1984)(Sony).rom" size="16384" crc="b632b6bb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1416,7 +1416,7 @@
 		<description>Back Gammon (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Sony</manufacturer>
-		<rom name="back gammon (japan) (alt 1).rom" size="16384" crc="70c79a87"/>
+		<rom name="Back Gammon (Japan)(Alt)(1984)(Sony).rom" size="16384" crc="70c79a87"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1427,7 +1427,7 @@
 		<description>Back to the Future (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="back to the future (japan).rom" size="32768" crc="dbdb64ac"/>
+		<rom name="Back to the Future (Japan)(1986)(Pony Canyon).rom" size="32768" crc="dbdb64ac"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1438,7 +1438,7 @@
 		<description>Back to the Future (Japan, Alt)</description>
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="back to the future (japan) (alt 1).rom" size="32768" crc="795c7aa1"/>
+		<rom name="Back to the Future (Japan)(Alt)(1986)(Pony Canyon).rom" size="32768" crc="795c7aa1"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1495,8 +1495,8 @@
 	<game name="balance" romof="msx" sourcefile="d_msx.cpp">
 		<description>Balance (Japan)</description>
 		<year>1985</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="balance (japan).rom" size="8192" crc="cdabd75b"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Balance (Japan)(1985)(HAL Laboratory).rom" size="8192" crc="cdabd75b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1506,8 +1506,8 @@
 	<game name="balance2" cloneof="balance" romof="balance" sourcefile="d_msx.cpp">
 		<description>Balance (Japan, Alt 2)</description>
 		<year>1985</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="balance (japan) (alt 2).rom" size="16384" crc="86ea609d"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Balance (Japan)(Alt 2)(1985)(HAL Laboratory).rom" size="16384" crc="86ea609d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1517,8 +1517,8 @@
 	<game name="balance1" cloneof="balance" romof="balance" sourcefile="d_msx.cpp">
 		<description>Balance (Japan, Alt)</description>
 		<year>1985</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="balance (japan) (alt 1).rom" size="8192" crc="336fdcd9"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Balance (Japan)(Alt 1)(1985)(HAL Laboratory).rom" size="8192" crc="336fdcd9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1530,7 +1530,7 @@
 		<description>Ballblazer (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Lucasfilm Games - Pony Canyon</manufacturer>
-		<rom name="Ballblazer (1988)(Pony Canyon)(JP).rom" size="131072" crc="bd307546"/>
+		<rom name="Ballblazer (Japan)(1988)(Pony Canyon).rom" size="131072" crc="bd307546"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1553,7 +1553,7 @@
 		<description>Balloon Punch (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Satico</manufacturer>
-		<rom name="Balloon Punch (1989)(Satico)(JP).rom" size="65536" crc="e018a918"/>
+		<rom name="Balloon Punch (Japan)(1989)(Satico).rom" size="65536" crc="e018a918"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1564,7 +1564,7 @@
 		<description>Banana (Japan)</description>
 		<year>198?</year>
 		<manufacturer>Studio GEN</manufacturer>
-		<rom name="banana (japan).rom" size="16384" crc="6aa7cbe0"/>
+		<rom name="Banana (Japan)(198x)(Studio GEN).rom" size="16384" crc="6aa7cbe0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1575,7 +1575,7 @@
 		<description>Bank Panic (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="bank panic (japan).rom" size="32768" crc="d5e18df0"/>
+		<rom name="Bank Panic (Japan)(1986)(Sega).rom" size="32768" crc="d5e18df0"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1586,7 +1586,7 @@
 		<description>Bank Panic (Japan, Alt)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
-		<rom name="bank panic (japan) (alt 1).rom" size="32768" crc="a0a844ca"/>
+		<rom name="Bank Panic (Japan)(Alt)(1986)(Sega).rom" size="32768" crc="a0a844ca"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1594,10 +1594,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="bankpk" cloneof="bankp" romof="bankp" sourcefile="d_msx.cpp">
-		<description>Bank Panic (Korea)</description>
+		<description>Bank Panic (Korea) (Unl)</description>
 		<year>198?</year>
 		<manufacturer>Prosoft</manufacturer>
-		<rom name="bank panic (1985)(pony canyon)[cr prosoft].rom" size="32768" crc="70160fe9"/>
+		<rom name="Bank Panic (Korea)(Unl)(198x)(Prosoft).rom" size="32768" crc="70160fe9"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1708,7 +1708,7 @@
 		<description>Batten Tanuki no Daibouken (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Tecno Soft</manufacturer>
-		<rom name="batten tanuki no daibouken (japan) (alt 1).rom" size="32768" crc="e403ebea"/>
+		<rom name="Batten Tanuki no Daibouken (Japan)(Alt 1)(1986)(Tecno Soft).rom" size="32768" crc="e403ebea"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1719,7 +1719,7 @@
 		<description>Batten Tanuki no Daibouken (Japan, Alt)</description>
 		<year>1986</year>
 		<manufacturer>Tecno Soft</manufacturer>
-		<rom name="batten tanuki no daibouken (japan) (alt 2).rom" size="32768" crc="42262bd4"/>
+		<rom name="Batten Tanuki no Daibouken (Japan)(Alt 2)(1986)(Tecno Soft).rom" size="32768" crc="42262bd4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1730,7 +1730,7 @@
 		<description>Batten Tanuki no Daibouken (Japan, v1.03)</description>
 		<year>1986</year>
 		<manufacturer>Tecno Soft</manufacturer>
-		<rom name="batten tanuki no daibouken (japan) (v1.03).rom" size="32768" crc="eba0738d"/>
+		<rom name="Batten Tanuki no Daibouken (Japan,v1.03)(1986)(Tecno Soft).rom" size="32768" crc="eba0738d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1752,7 +1752,7 @@
 		<description>Battle Cross (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sony</manufacturer>
-		<rom name="battle cross (japan).rom" size="16384" crc="25e675ea"/>
+		<rom name="Battle Cross (Japan)(1984)(Sony).rom" size="16384" crc="25e675ea"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1763,7 +1763,7 @@
 		<description>Battleship Clapton II (Japan)</description>
 		<year>1984</year>
 		<manufacturer>T&amp;E Soft</manufacturer>
-		<rom name="battleship clapton ii (japan).rom" size="8192" crc="85f4767b"/>
+		<rom name="Battleship Clapton II (Japan)(1984)(T&amp;E Soft).rom" size="8192" crc="85f4767b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -1774,7 +1774,7 @@
 		<description>Battleship Clapton II (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>T&amp;E Soft</manufacturer>
-		<rom name="battleship clapton ii (japan) (alt 1).rom" size="16384" crc="2de725a3"/>
+		<rom name="Battleship Clapton II (Japan)(Alt)(1984)(T&amp;E Soft).rom" size="16384" crc="2de725a3"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7041,6 +7041,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="goblin" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Goblin, The (HB, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>Hicks &amp; Mananuk</manufacturer>
+		<rom name="Goblin, The v1.1 (2023)(Hicks &amp; Mananuk).rom" size="49152" crc="1c55c688"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="godzilla" romof="msx" sourcefile="d_msx.cpp">
 		<description>Godzilla (Japan)</description>
 		<year>1984</year>
@@ -7771,7 +7783,7 @@
 		<description>Helitank (Japan)</description>
 		<year>1984</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="helitank (japan).rom" size="16384" crc="cd63cd50"/>
+		<rom name="Helitank (Japan)(1984)(ASCII).rom" size="16384" crc="cd63cd50"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7805,7 +7817,7 @@
 		<description>High Way Star (Japan)</description>
 		<year>1983</year>
 		<manufacturer>ASCII Corp.</manufacturer>
-		<rom name="high way star (japan).rom" size="16384" crc="24851440"/>
+		<rom name="High Way Star (Japan)(1983)(ASCII).rom" size="16384" crc="24851440"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7816,7 +7828,7 @@
 		<description>High Way Star (Korea)</description>
 		<year>1983</year>
 		<manufacturer>Qnix Corp.</manufacturer>
-		<rom name="high way star (korea).rom" size="16384" crc="ed1625d8"/>
+		<rom name="High Way Star (Korea)(1983)(Qnix Corp.).rom" size="16384" crc="ed1625d8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7835,10 +7847,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="hitsuji" romof="msx" sourcefile="d_msx.cpp">
-		<description>Hitsuji-Ya (Japan)</description>
+		<description>Hitsuji Yai ~ Pretty Sheep (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Hudson Soft</manufacturer>
-		<rom name="hitsuji yai - preety sheep (japan).rom" size="8192" crc="11502a96"/>
+		<rom name="Hitsuji Yai - Pretty Sheep (Japan)(1984)(Hudson Soft).rom" size="8192" crc="11502a96"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7848,8 +7860,8 @@
 	<game name="holein1" romof="msx" sourcefile="d_msx.cpp">
 		<description>Hole in One (Japan)</description>
 		<year>1984</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="hole in one (japan).rom" size="16384" crc="98e7b01b"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Hole in One (Japan)(1984)(HAL Laboratory).rom" size="16384" crc="98e7b01b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7859,8 +7871,8 @@
 	<game name="holein1b" cloneof="holein1" romof="holein1" sourcefile="d_msx.cpp">
 		<description>Hole in One (Japan, Alt 2)</description>
 		<year>1984</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="hole in one (japan) (alt 2).rom" size="16384" crc="ff063cdb"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Hole in One (Japan)(Alt 2)(1984)(HAL Laboratory).rom" size="16384" crc="ff063cdb"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7870,8 +7882,8 @@
 	<game name="holein1c" cloneof="holein1" romof="holein1" sourcefile="d_msx.cpp">
 		<description>Hole in One (Japan, Alt 3)</description>
 		<year>1984</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="hole in one (japan) (alt 3).rom" size="16384" crc="5bd60572"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Hole in One (Japan)(Alt 3)(1984)(HAL Laboratory).rom" size="16384" crc="5bd60572"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7881,8 +7893,8 @@
 	<game name="holein1a" cloneof="holein1" romof="holein1" sourcefile="d_msx.cpp">
 		<description>Hole in One (Japan, Alt)</description>
 		<year>1984</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="hole in one (japan) (alt 1).rom" size="16384" crc="86731751"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Hole in One (Japan)(Alt 1)(1984)(HAL Laboratory).rom" size="16384" crc="86731751"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7892,8 +7904,8 @@
 	<game name="holein1p" romof="msx" sourcefile="d_msx.cpp">
 		<description>Hole in One Professional (Japan)</description>
 		<year>1985</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="hole in one professional (japan).rom" size="32768" crc="350ae107"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Hole in One Professional (Japan)(1985)(HAL Lab.).rom" size="32768" crc="350ae107"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -7903,8 +7915,8 @@
 	<game name="holein1pa" cloneof="holein1p" romof="holein1p" sourcefile="d_msx.cpp">
 		<description>Hole in One Professional (Japan, Alt)</description>
 		<year>1985</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="hole in one professional (japan) (alt 1).rom" size="32768" crc="acfcbba6"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Hole in One Professional (Japan)(Alt)(1985)(HAL Lab.).rom" size="32768" crc="acfcbba6"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -9826,6 +9838,18 @@
 		<year>1986</year>
 		<manufacturer>dB-Soft</manufacturer>
 		<rom name="Laptick 2 (Japan)(1986)(dB-Soft).rom" size="32768" crc="091fe438"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lastescape" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Last Escape (HB)</description>
+		<year>2023</year>
+		<manufacturer>Fred Rique</manufacturer>
+		<rom name="Last Escape (2023)(Fred Rique).rom" size="131072" crc="0465fcc8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -18059,6 +18083,18 @@
 		<year>1991</year>
 		<manufacturer>Zemina</manufacturer>
 		<rom name="Won-Si-In (Korea)(1991)(Zemina).rom" size="131072" crc="a05258f5"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="woodsrat" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Woods Rat (HB, v1.4)</description>
+		<year>2023</year>
+		<manufacturer>Gamecast Entertainment</manufacturer>
+		<rom name="Woods Rat v1.4 (2023)(Gamecast Entertainment).rom" size="753664" crc="c4958458"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

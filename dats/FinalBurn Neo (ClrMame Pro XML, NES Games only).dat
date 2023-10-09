@@ -2749,10 +2749,10 @@
 	</game>
 	<game name="castlevanialt" cloneof="castlevania" romof="castlevania" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Castlevania - The Last Tear (Hack, v2.78.5)</description>
+		<description>Castlevania - The Last Tear (Hack, v4.0)</description>
 		<year>2023</year>
 		<manufacturer>Sky Flare</manufacturer>
-		<rom name="Castlevania - The Last Tear v2.78.5 (2023)(Sky Flare).nes" size="131088" crc="0839e2d4"/>
+		<rom name="Castlevania - The Last Tear v4.0 (2023)(Sky Flare).nes" size="131088" crc="8ce018f9"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

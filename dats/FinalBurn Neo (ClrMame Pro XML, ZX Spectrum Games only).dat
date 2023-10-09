@@ -73,7 +73,7 @@
 	<game name="180" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>180 (128K)</description>
 		<year>1986</year>
-		<manufacturer>MAD (Mastertronic Added Dimension)</manufacturer>
+		<manufacturer>Mastertronic</manufacturer>
 		<rom name="180 (1986)(Mastertronic Added Dimension)[128K].tap" size="47982" crc="ccbd1a31"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -612,6 +612,15 @@
 		<rom name="Advanced Pinball Simulator (1990)(Codemasters).tap" size="51760" crc="fca7d79b"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advsocsim" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<description>Advanced Soccer Simulator (48K)</description>
+		<year>1989</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Advanced Soccer Simulator 48K (1989)(Mastertronic).tap" size="44780" crc="4a1eaa7b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1349,6 +1358,26 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="area51rie" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Area 51 - Roswell Incident (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Area 51 - Roswell Incident EN 48K (2023)(Furillo Productions).tap" size="39669" crc="2f51d9b7"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="area51ris" cloneof="area51rie" romof="area51rie" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Area 51 - Roswell Incident (Spanish) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Area 51 - Roswell Incident ES 48K (2023)(Furillo Productions).tap" size="39708" crc="234c6cae"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="arkanoid" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Arkanoid (48K)</description>
 		<year>1987</year>
@@ -2069,20 +2098,20 @@
 	</game>
 	<game name="batmanoloe" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>BatManolo (English) (48K) (HB)</description>
+		<description>BatManolo (English) (48K) (HB, v1.1)</description>
 		<year>2023</year>
 		<manufacturer>Nahell Tresal</manufacturer>
-		<rom name="BatManolo EN 48K (2023)(Nahell Tresal).tap" size="68148" crc="9fca0545"/>
+		<rom name="BatManolo EN 48K v1.1 (2023)(Nahell Tresal).tap" size="68188" crc="474350a7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="batmanolos" cloneof="batmanoloe" romof="batmanoloe" sourcefile="d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>BatManolo (Spanish) (48K) (HB)</description>
+		<description>BatManolo (Spanish) (48K) (HB, v1.1)</description>
 		<year>2023</year>
 		<manufacturer>Nahell Tresal</manufacturer>
-		<rom name="BatManolo ES 48K (2023)(Nahell Tresal).tap" size="68801" crc="ee8c16ca"/>
+		<rom name="BatManolo ES 48K v1.1 (2023)(Nahell Tresal).tap" size="68854" crc="3f92d604"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3540,7 +3569,7 @@
 	<game name="canywarr" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Canyon Warrior (128K)</description>
 		<year>1989</year>
-		<manufacturer>Mastertronic Plus</manufacturer>
+		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Canyon Warrior (1989)(Mastertronic Plus).tap" size="52451" crc="5574dd40"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -7217,6 +7246,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="enchanted" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<comment>Q: left flipper - P: right flipper - SPACE: shoot ball</comment>
+		<description>Enchanted (Spanish) (48K)</description>
+		<year>1989</year>
+		<manufacturer>Positive</manufacturer>
+		<rom name="Enchanted ES 48K (1989)(Positive).tap" size="48705" crc="841628d9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="efmb" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Endless Forms Most Beautiful (48K) (HB)</description>
@@ -9255,10 +9294,21 @@
 	</game>
 	<game name="mrhair" romof="spec128" sourcefile="d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>Hair Raising Adventures of Mr Hair, the (128K) (HB)</description>
+		<description>Hair Raising Adventures of Mr Hair, The (128K) (HB)</description>
 		<year>2019</year>
 		<manufacturer>Lee Stevenson</manufacturer>
 		<rom name="The Hair Raising Adventures of Mr Hair (2019)(Lee Stevenson).tap" size="46747" crc="240d58bc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hairyfly" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Hairy Fly, The (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Chopz</manufacturer>
+		<rom name="Hairy Fly, The 128K (2023)(Chopz).tap" size="48184" crc="b1ef3fc2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9384,6 +9434,28 @@
 		<manufacturer>Activision</manufacturer>
 		<rom name="Hammerfist (1990)(Activision).tap" size="188831" crc="c6ad835b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="haokene" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Haoken (English) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Hicks</manufacturer>
+		<rom name="Haoken EN 128K (2023)(Hicks).tap" size="50063" crc="ee57e531"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="haokens" cloneof="haokene" romof="haokene" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Haoken (Spanish) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Hicks</manufacturer>
+		<rom name="Haoken ES 128K (2023)(Hicks).tap" size="50024" crc="d30c2af6"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12081,6 +12153,16 @@
 		<rom name="Loxley 128K v1.1 (2022)(World XXI Soft).tap" size="144187" crc="89ef517a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="lprintrun" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Lprint Runaway (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>ignacobo</manufacturer>
+		<rom name="Lprint Runaway 48K (2023)(ignacobo).tap" size="43514" crc="a3785c33"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15753,7 +15835,7 @@
 		<comment>Set '3 Sinclair' to use controller</comment>
 		<description>Psycho Hopper (48K)</description>
 		<year>1989-90</year>
-		<manufacturer>Mastertronic Plus</manufacturer>
+		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Psycho Hopper (1990)(Mastertronic Plus).tap" size="50178" crc="beda1169"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15794,6 +15876,16 @@
 		<year>1989</year>
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Pub Trivia (1989)(Codemasters).z80" size="100743" crc="bafbf528"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="puffysaga" romof="spec128" sourcefile="d_spectrum.cpp">
+		<description>Puffy's Saga (128K)</description>
+		<year>1989</year>
+		<manufacturer>Ubi Soft</manufacturer>
+		<rom name="Puffy's Saga 128K (1989)(Ubi Soft).tap" size="112327" crc="393670c2"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -16096,6 +16188,16 @@
 		<manufacturer>Ocean</manufacturer>
 		<rom name="Rainbow Islands - The Story of Bubble Bobble 2 (1990)(Ocean).z80" size="32160" crc="ad2c841f"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rallycross" romof="spec128" sourcefile="d_spectrum.cpp">
+		<description>Rally Cross (128K)</description>
+		<year>1989</year>
+		<manufacturer>Anco Software</manufacturer>
+		<rom name="Rally Cross 128K (1989)(Anco Software).tap" size="81416" crc="e6e3cfb8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -17845,7 +17947,7 @@
 	<game name="shinobi" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Shinobi (128K)</description>
 		<year>1989</year>
-		<manufacturer>Mastertronic Plus</manufacturer>
+		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Shinobi (1989)(Mastertronic Plus).tap" size="231589" crc="195feaad"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -17923,7 +18025,7 @@
 	<game name="silkworm" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Silkworm (128K)</description>
 		<year>1989</year>
-		<manufacturer>Virgin Games</manufacturer>
+		<manufacturer>Virgin Mastertronic</manufacturer>
 		<rom name="Silkworm 128K (1989)(Mastertronic Plus).tap" size="44612" crc="1980dccc"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -20606,7 +20708,7 @@
 		<description>Tiny Nightmares (English) (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>EJVG</manufacturer>
-		<rom name="Tiny Nightmares 48K ENG (2023)(EJVG).tap" size="40151" crc="01269806"/>
+		<rom name="Tiny Nightmares EN 48K (2023)(ejvg).tap" size="40151" crc="1edd7448"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -20616,7 +20718,7 @@
 		<description>Tiny Nightmares (Spanish) (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>EJVG</manufacturer>
-		<rom name="Tiny Nightmares 48K ESP (2023)(EJVG).tap" size="40151" crc="c1e3b7ca"/>
+		<rom name="Tiny Nightmares ES 48K (2023)(ejvg).tap" size="40151" crc="12d6c318"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21959,7 +22061,7 @@
 	</game>
 	<game name="wwsp1" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>World War Simulator - PART 1, The (48K) (HB)</description>
+		<description>World War Simulator - Part 1, The (48K) (HB)</description>
 		<year>2012</year>
 		<manufacturer>Retrobytes Productions</manufacturer>
 		<rom name="World War Simulator - PART 1, The 48K (2012)(Retrobytes Productions).tap" size="36335" crc="893ed613"/>
@@ -21969,7 +22071,7 @@
 	</game>
 	<game name="wwsp2" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>World War Simulator - PART 2, The (48K) (HB)</description>
+		<description>World War Simulator - Part 2, The (48K) (HB)</description>
 		<year>2018</year>
 		<manufacturer>Retrobytes Productions</manufacturer>
 		<rom name="World War Simulator - PART 2, The ES 48K (2018)(Retrobytes Productions).tap" size="51254" crc="a6e457e1"/>
@@ -22506,7 +22608,7 @@
 	<game name="zub" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Zub (128K)</description>
 		<year>1986</year>
-		<manufacturer>MAD (Mastertronic Added Dimension)</manufacturer>
+		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Zub (1986)(Mastertronic Added Dimension).tap" size="62034" crc="e48404af"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>

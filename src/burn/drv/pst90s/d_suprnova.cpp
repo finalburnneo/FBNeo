@@ -1177,7 +1177,7 @@ static INT32 DrvInit(INT32 bios)
 
 	GenericTilesInit();
 
-	BurnTrackballInit(1); // vblokbrk/sarukani paddle
+	BurnTrackballInit(1); // vblokbrk/sarukani/puzzloop paddle
 
 	{ // filter (for cyvern)
 		LP1 = new LowPass2(10900, nBurnSoundRate, 0.13, 1.0, 2300, 0.01, 1.0);
@@ -2117,7 +2117,7 @@ struct BurnDriver BurnDrvPuzzloop = {
 	"Puzz Loop (Europe, v0.94)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, puzzloopRomInfo, puzzloopRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	NULL, puzzloopRomInfo, puzzloopRomName, NULL, NULL, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2146,7 +2146,7 @@ struct BurnDriver BurnDrvPuzzloope = {
 	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, puzzloopeRomInfo, puzzloopeRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	NULL, puzzloopeRomInfo, puzzloopeRomName, NULL, NULL, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2186,7 +2186,7 @@ struct BurnDriver BurnDrvPuzzloopj = {
 	"Puzz Loop (Japan)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, puzzloopjRomInfo, puzzloopjRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	NULL, puzzloopjRomInfo, puzzloopjRomName, NULL, NULL, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2226,7 +2226,7 @@ struct BurnDriver BurnDrvPuzzloopa = {
 	"Puzz Loop (Asia)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, puzzloopaRomInfo, puzzloopaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	NULL, puzzloopaRomInfo, puzzloopaRomName, NULL, NULL, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };

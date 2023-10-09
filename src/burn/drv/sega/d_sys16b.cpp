@@ -6105,6 +6105,8 @@ static struct BurnRomInfo ToryumonRomDesc[] = {
 	{ "epr-17691.a13",  0x08000, 0x14205388, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
 	{ "epr-17690.a11",  0x40000, 0x4f9ba4e4, SYS16_ROM_UPD7759DATA | BRF_SND },
+
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
 
 

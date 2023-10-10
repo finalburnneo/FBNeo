@@ -1033,29 +1033,52 @@ static struct BurnRomInfo BerlwallkRomDesc[] = {
 STD_ROM_PICK(Berlwallk)
 STD_ROM_FN(Berlwallk)
 
-static struct BurnRomInfo PackbangRomDesc[] = {
+/* Final/retail version */
+static struct BurnRomInfo PackbangRomDesc[] = { 
 	/* same PCB as Berlin Wall - BW-002 */
-	{ "bbp0x3.u23",     	0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */
-	{ "bbp1x3.u39",     	0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
+	{ "bbp0x3_u23.u23",     	0x020000, 0x8f879c9d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* labeled BBP0X3/U23 */
+	{ "bbp1x3_u39.u39",     	0x020000, 0x3a90ad84, BRF_ESS | BRF_PRG }, //  1 					/* labeled BBP1X3/U39 */
 
-   	{ "bb.u84",         		 0x080000, 0x97837aaa, BRF_GRA }, 	   //  2 Sprites
-	{ "pb_spr_ext_9_20_ver.u83", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
+   	{ "bb-u84-007__w22.u84",    0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites            /* mask rom */
+	{ "bbs0x1_u83.u83",         0x040000, 0x3d95b1e5, BRF_GRA },  	       //  3					/* labeled BBS0X1/U83 */
 
-	{ "bbbox1.u77",     	0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
+	{ "bbb0x1_u77.u77",     	0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
 
-	{ "bb.u73",         	0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background
-	{ "bb.u65",         	0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
-	{ "bb.u74",         	0x080000, 0xb01e77b9, BRF_GRA },		   //  7
-	{ "bb.u66",         	0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
-	{ "bb.u75",         	0x080000, 0x5cb4669f, BRF_GRA },		   //  9
-	{ "bb.u67",         	0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
+	{ "bb-u73-004__w19.u73",    0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background /* these are all mask roms */
+	{ "bb-u65-001__w16.u65",    0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
+	{ "bb-u74-005__w20.u74",    0x080000, 0xb01e77b9, BRF_GRA },		   //  7
+	{ "bb-u66-002__w17.u66",    0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
+	{ "bb-u75-006__w21.u75",    0x080000, 0x5cb4669f, BRF_GRA },		   //  9
+	{ "bb-u67-003__w18.u67",    0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
 
-	{ "bw000.u46",      	0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
+	{ "bw_u46.u46",      	    0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
 };
-
 
 STD_ROM_PICK(Packbang)
 STD_ROM_FN(Packbang)
+
+static struct BurnRomInfo PackbangpRomDesc[] = {
+	/* same PCB as Berlin Wall - BW-002 */
+	{ "bbp0x3_527b.u23",     	  0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */
+	{ "bbp1x3_c5c8.u39",     	  0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
+
+   	{ "bb.u84",         		  0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites
+	{ "pb_spr_ext_9_20_ver_ba63", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
+
+	{ "bbb0x1.u77",     	      0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
+
+	{ "bb.u73",         	      0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background
+	{ "bb.u65",         	      0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
+	{ "bb.u74",         	      0x080000, 0xb01e77b9, BRF_GRA },		   //  7
+	{ "bb.u66",         	      0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
+	{ "bb.u75",         	      0x080000, 0x5cb4669f, BRF_GRA },		   //  9
+	{ "bb.u67",         	      0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
+
+	{ "bw000.u46",      	      0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
+};
+
+STD_ROM_PICK(Packbangp)
+STD_ROM_FN(Packbangp)
 
 static struct BurnRomInfo BlazeonRomDesc[] = {
 	{ "bz-prg1.u80",       	0x040000, 0x3d79aa70, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
@@ -7753,10 +7776,20 @@ struct BurnDriver BurnDrvBerlwallk = {
 
 struct BurnDriver BurnDrvPackbang = {
 	"packbang", NULL, NULL, NULL, "1994",
-	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
+	"Pack'n Bang Bang\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
 	NULL, PackbangRomInfo, PackbangRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
+	PackbangInit, BerlwallExit, ExplbrkrFrame, BerlwallFrameRender, ExplbrkrScan,
+	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvPackbangp = {
+	"packbangp", "packbang", NULL, NULL, "1994",
+	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
+	NULL, PackbangpRomInfo, PackbangpRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
 	PackbangInit, BerlwallExit, ExplbrkrFrame, BerlwallFrameRender, ExplbrkrScan,
 	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
 };

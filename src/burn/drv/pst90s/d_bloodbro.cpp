@@ -1196,7 +1196,7 @@ static struct BurnRomInfo skysmashRomDesc[] = {
 
 	{ "rom1",	0x020000, 0xe69986f6, 6 | BRF_SND },           //  9 Samples
 	
-	{ "ss006.u083.4j",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "ss006.u083.4j",	0x00100, 0x8b2ae4a0, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(skysmash)

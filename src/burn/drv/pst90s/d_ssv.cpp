@@ -4869,6 +4869,9 @@ static struct BurnRomInfo ryoriohRomDesc[] = {
 	{ "ryorioh.d1",		0x400000, 0xae6055e8, 3 | BRF_GRA },           // 10
 
 	{ "ryorioh.snd",	0x200000, 0x7bd38b76, 0 | BRF_SND },           // 11 Ensoniq samples 0
+	
+	{ "gal16v8b.u25",	0x000117, 0x9f9066be, 0 | BRF_OPT },
+	{ "gal16v8b.u36",	0x000117, 0x971d6f4d, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(ryorioh)
@@ -5522,18 +5525,20 @@ struct BurnDriver BurnDrvSxyreact = {
 // Pachinko Sexy Reaction 2 (Japan)
 
 static struct BurnRomInfo sxyreac2RomDesc[] = {
-	{ "ac1714e00.u32",	0x200000, 0x78075d70, 1 | BRF_PRG | BRF_ESS }, //  0 V60 Code
+	{ "ac1714e00.u32",			0x200000, 0x78075d70, 1 | BRF_PRG | BRF_ESS }, //  0 V60 Code
 
-	{ "ac1701t00.u6",	0x400000, 0xe14611c2, 3 | BRF_GRA },           //  1 Graphics
-	{ "ac1702t00.u9",	0x400000, 0x2c8b07f8, 3 | BRF_GRA },           //  2
-	{ "ac1703t00.u7",	0x400000, 0xd6c7e861, 3 | BRF_GRA },           //  3
-	{ "ac1704t00.u10",	0x400000, 0x5fa7ccf0, 3 | BRF_GRA },           //  4
-	{ "ac1705t00.u8",	0x400000, 0x2dff0652, 3 | BRF_GRA },           //  5
-	{ "ac1706t00.u11",	0x400000, 0xe7a168e0, 3 | BRF_GRA },           //  6
+	{ "ac1701t00.u6",			0x400000, 0xe14611c2, 3 | BRF_GRA },           //  1 Graphics
+	{ "ac1702t00.u9",			0x400000, 0x2c8b07f8, 3 | BRF_GRA },           //  2
+	{ "ac1703t00.u7",			0x400000, 0xd6c7e861, 3 | BRF_GRA },           //  3
+	{ "ac1704t00.u10",			0x400000, 0x5fa7ccf0, 3 | BRF_GRA },           //  4
+	{ "ac1705t00.u8",			0x400000, 0x2dff0652, 3 | BRF_GRA },           //  5
+	{ "ac1706t00.u11",			0x400000, 0xe7a168e0, 3 | BRF_GRA },           //  6
 
-	{ "ac1707t00.u41",	0x400000, 0x28999bc4, 4 | BRF_SND },           //  7 Ensoniq samples 0
+	{ "ac1707t00.u41",			0x400000, 0x28999bc4, 4 | BRF_SND },           //  7 Ensoniq samples 0
 
-	{ "ac1708t00.u42",	0x400000, 0x7001eec0, 5 | BRF_SND },           //  8 Ensoniq samples 1
+	{ "ac1708t00.u42",			0x400000, 0x7001eec0, 5 | BRF_SND },           //  8 Ensoniq samples 1
+	
+	{ "gal16v8d.ac1709g00.u34",	0x000117, 0x65c4db12, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(sxyreac2)

@@ -5071,7 +5071,7 @@ static struct BurnDIPInfo CaptcommhsDIPList[] =
 	// Fake DIPs
 	{0x26, 0xff, 0xff, 0x00, NULL                           },  // Zhan Shen
 
-	{0,    0xfe, 0,    9,    "Version change (Must reload)" },
+	{0,    0xfe, 0,    10,   "Version change (Must reload)" },
 	{0x26, 0x01, 0xff, 0x00, "God of War"                   },
 	{0x26, 0x01, 0xff, 0x01, "Elite Competition"            },
 	{0x26, 0x01, 0xff, 0x02, "Incubus"                      },
@@ -5081,6 +5081,7 @@ static struct BurnDIPInfo CaptcommhsDIPList[] =
 	{0x26, 0x01, 0xff, 0x20, "Master"                       },
 	{0x26, 0x01, 0xff, 0x40, "Character Switch"             },
 	{0x26, 0x01, 0xff, 0x80, "T-Chi"                        },
+	{0x26, 0x01, 0xff, 0xc0, "CR7 Elite"                    },
 };
 
 static struct BurnDIPInfo DinohsDIPList[] =
@@ -26076,11 +26077,11 @@ static struct BurnRomInfo CaptcommhsRomDesc[] = {
 	/* Elite Competition - 20230226 */
 	{ "cce_jy.bin",		0x300000, 0xb49f563a, BRF_ESS | BRF_PRG },  // 22 CPS1_68K_PROGRAM_NO_BYTESWAP
 
-	/* Incubus - 20230224 */
-	{ "cce_my.bin",		0x300000, 0x13c0c791, BRF_ESS | BRF_PRG },  // 23 CPS1_68K_PROGRAM_NO_BYTESWAP
+	/* Incubus - 20230930 */
+	{ "cce_my.bin",		0x300000, 0x6c8d3b1f, BRF_ESS | BRF_PRG },  // 23 CPS1_68K_PROGRAM_NO_BYTESWAP
 
-	/* Unlimited Bullet - 20230903 */
-	{ "cce_wx.bin",		0x300000, 0xfd52ec4d, BRF_ESS | BRF_PRG },  // 24 CPS1_68K_PROGRAM_NO_BYTESWAP
+	/* Unlimited Bullet - 20230924 */
+	{ "cce_wx.bin",		0x300000, 0xa147a9c6, BRF_ESS | BRF_PRG },  // 24 CPS1_68K_PROGRAM_NO_BYTESWAP
 
 	/* Journey - 20201211 */
 	{ "cce_zt.bin",		0x300000, 0x84746744, BRF_ESS | BRF_PRG },  // 25 CPS1_68K_PROGRAM_NO_BYTESWAP
@@ -26104,6 +26105,9 @@ static struct BurnRomInfo CaptcommhsRomDesc[] = {
 	{ "ccc-8m.9a",		0x080000, 0x8b0ef34c, BRF_GRA },            // 34
 	{ "ccc-2m.8a",		0x080000, 0x2d7bee50, BRF_GRA },            // 35
 	{ "ccc-4m.10a",		0x080000, 0x0106bf6a, BRF_GRA },            // 36
+
+	/* CR7 Elite - 20230924 */
+	{ "cce_cr.bin",		0x300000, 0xa3e0ba2f, BRF_ESS | BRF_PRG },  // 37 CPS1_68K_PROGRAM_NO_BYTESWAP
 };
 
 STD_ROM_PICK(Captcommhs)
@@ -26111,6 +26115,11 @@ STD_ROM_FN(Captcommhs)
 
 static void CaptcommhsCallback()
 {
+	if (0xc0 == (VerSwitcher & 0xff)) {
+		RomDiffPatch(CpsRom, 37, 0, 1);
+		return;
+	}
+
 	for (INT32 i = 0x01, nIndex = 22; i <= 0x80; i <<= 1, nIndex++) {
 		if (VerSwitcher & i) {
 			RomDiffPatch(CpsRom, nIndex, 0, 1);
@@ -26166,6 +26175,10 @@ static INT32 CaptcommhsInit()
 
 		case 0x80:
 			pszCustomNameA = "Captain Commando (T-Chi)\0";
+			break;
+
+		case 0xc0:
+			pszCustomNameA = "Captain Commando: CR7 Elite (Hack)\0";
 			break;
 
 		default:

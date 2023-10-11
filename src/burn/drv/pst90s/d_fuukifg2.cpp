@@ -1022,11 +1022,11 @@ struct BurnDriver BurnDrvGogomileo = {
 };
 
 
-// Gyakuten!! Puzzle Bancho (Japan)
+// Gyakuten!! Puzzle Bancho (Japan, set 1)
 
 static struct BurnRomInfo pbanchoRomDesc[] = {
-	{ "no1.rom2",		0x080000, 0x1b4fd178, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "no2,rom1",		0x080000, 0x9cf510a5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "no1..rom2",		0x080000, 0xe607eca6, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "no2..rom1",		0x080000, 0xee15b423, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "no4.rom23",		0x020000, 0xdfbfdb81, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
 
@@ -1052,10 +1052,44 @@ static INT32 PbanchoInit()
 
 struct BurnDriver BurnDrvPbancho = {
 	"pbancho", NULL, NULL, NULL, "1996",
-	"Gyakuten!! Puzzle Bancho (Japan)\0", NULL, "Fuuki", "Miscellaneous",
+	"Gyakuten!! Puzzle Bancho (Japan, set 1)\0", NULL, "Fuuki", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pbanchoRomInfo, pbanchoRomName, NULL, NULL, NULL, NULL, PbanchoInputInfo, PbanchoDIPInfo,
+	PbanchoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	320, 240, 4, 3
+};
+
+
+// Gyakuten!! Puzzle Bancho (Japan, set 2)
+
+static struct BurnRomInfo pbanchoaRomDesc[] = {
+	{ "no1.rom2",		0x080000, 0x1b4fd178, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "no2.rom1",		0x080000, 0x9cf510a5, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "no4.rom23",		0x020000, 0xdfbfdb81, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+
+	{ "58.rom20",		0x200000, 0x4dad0a2e, 3 | BRF_GRA },           //  3 sprites
+
+	{ "60.rom3",		0x200000, 0xa50a3c1b, 4 | BRF_GRA },           //  4 16 x 16 x 4bpp (layer 0) tiles
+
+	{ "61.rom11",		0x200000, 0x7f1213b9, 5 | BRF_GRA },           //  5 16 x 16 x 8bpp (layer 1) tiles
+	{ "59.rom15",		0x200000, 0xb83dcb70, 5 | BRF_GRA },           //  6
+
+	{ "60.rom3",		0x200000, 0xa50a3c1b, 6 | BRF_GRA },           //  7 8 x 8 x 4bpp (layer 2) tiles
+
+	{ "n03.rom25",		0x040000, 0xa7bfb5ea, 7 | BRF_SND },           //  8 oki samples
+};
+
+STD_ROM_PICK(pbanchoa)
+STD_ROM_FN(pbanchoa)
+
+struct BurnDriver BurnDrvPbanchoa = {
+	"pbanchoa", "pbancho", NULL, NULL, "1996",
+	"Gyakuten!! Puzzle Bancho (Japan, set 2)\0", NULL, "Fuuki", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, pbanchoaRomInfo, pbanchoaRomName, NULL, NULL, NULL, NULL, PbanchoInputInfo, PbanchoDIPInfo,
 	PbanchoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3
 };

@@ -831,21 +831,21 @@ struct BurnDriver BurnDrvRampart2pa = {
 // Rampart (Japan, Joystick)
 
 static struct BurnRomInfo rampartjRomDesc[] = {
-	{ "136082-3451.bin",			0x20000, 0xc6596d32, 1 | BRF_PRG | BRF_ESS }, //  0 M68000 Code
-	{ "136082-3450.bin",			0x20000, 0x563b33cc, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136082-1463.bin",			0x20000, 0x65fe3491, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136082-1462.bin",			0x20000, 0xba731652, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "136082-1465.bin",			0x20000, 0x9cb87d1b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "136082-1464.bin",			0x20000, 0x2ff75c40, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "136082-1467.bin",			0x20000, 0xe0cfcda5, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "136082-1466.bin",			0x20000, 0xa7a5a951, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "136082-3451.13kl",			0x20000, 0xc6596d32, 1 | BRF_PRG | BRF_ESS }, //  0 M68000 Code
+	{ "136082-3450.13h",			0x20000, 0x563b33cc, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136082-1463.13l",			0x20000, 0x65fe3491, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136082-1462.13hj",			0x20000, 0xba731652, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136082-1465.13m",			0x20000, 0x9cb87d1b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "136082-1464.13j",			0x20000, 0x2ff75c40, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "136082-1467.13n",			0x20000, 0xe0cfcda5, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "136082-1466.13k",			0x20000, 0xa7a5a951, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "136082-2419.bin",			0x20000, 0x456a8aae, 2 | BRF_GRA },           //  8 Sprites
+	{ "136082-2419.2m",				0x20000, 0x456a8aae, 2 | BRF_GRA },           //  8 Sprites
 
 	{ "136082-1007.2d",				0x20000, 0xc96a0fc3, 3 | BRF_SND },           //  9 Samples
 	{ "136082-1008.1d",				0x20000, 0x518218d9, 3 | BRF_SND },           // 10
 
-	{ "rampartj-eeprom.bin",		0x00800, 0x096cacdc, 4 | BRF_PRG | BRF_ESS }, // 11 Default EEPROM Data
+	{ "rampartj-eeprom.13f",		0x00800, 0x096cacdc, 4 | BRF_PRG | BRF_ESS }, // 11 Default EEPROM Data
 
 	{ "gal16v8-136082-1000.1j",		0x00117, 0x18f82b38, 5 | BRF_OPT },           // 12 PLDs
 	{ "gal16v8-136082-1001.4l",		0x00117, 0x74d75d68, 5 | BRF_OPT },           // 13

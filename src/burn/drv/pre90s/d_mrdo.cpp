@@ -528,26 +528,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Mr. Do!
 
 static struct BurnRomInfo mrdoRomDesc[] = {
-	{ "a4-01.bin",    0x2000, 0x03dcfba2, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "c4-02.bin",    0x2000, 0x0ecdd39c, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "e4-03.bin",    0x2000, 0x358f5dc2, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "f4-04.bin",    0x2000, 0xf4190cfc, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "a4-01.bin",         0x2000, 0x03dcfba2, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "c4-02.bin",         0x2000, 0x0ecdd39c, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "e4-03.bin",         0x2000, 0x358f5dc2, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "f4-04.bin",         0x2000, 0xf4190cfc, 1 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "s8-09.bin",    0x1000, 0xaa80c5b6, 2 | BRF_GRA },	       //  4 FG Tiles
-	{ "u8-10.bin",    0x1000, 0xd20ec85b, 2 | BRF_GRA },	       //  5
+	{ "s8-09.bin",         0x1000, 0xaa80c5b6, 2 | BRF_GRA },	       //  4 FG Tiles
+	{ "u8-10.bin",         0x1000, 0xd20ec85b, 2 | BRF_GRA },	       //  5
 
-	{ "r8-08.bin",    0x1000, 0xdbdc9ffa, 3 | BRF_GRA },	       //  6 BG Tiles
-	{ "n8-07.bin",    0x1000, 0x4b9973db, 3 | BRF_GRA },	       //  7
+	{ "r8-08.bin",         0x1000, 0xdbdc9ffa, 3 | BRF_GRA },	       //  6 BG Tiles
+	{ "n8-07.bin",         0x1000, 0x4b9973db, 3 | BRF_GRA },	       //  7
 
-	{ "h5-05.bin",    0x1000, 0xe1218cc5, 4 | BRF_GRA },	       //  8 Sprite Tiles
-	{ "k5-06.bin",    0x1000, 0xb1f68b04, 4 | BRF_GRA },	       //  9
+	{ "h5-05.bin",         0x1000, 0xe1218cc5, 4 | BRF_GRA },	       //  8 Sprite Tiles
+	{ "k5-06.bin",         0x1000, 0xb1f68b04, 4 | BRF_GRA },	       //  9
 
-	{ "u02--2.bin",   0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
-	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
-	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
-	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	{ "u02--2.bin",        0x0020, 0x238a65d7, 5 | BRF_GRA },	       // 10 Palette (high bits)
+	{ "t02--3.bin",        0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
+	{ "f10--1.bin",        0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
+	{ "j10--4.bin",        0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
 	
-	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
+	{ "u001_pal16r6cn.j2", 0x0104, 0x84dbe498, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdo)

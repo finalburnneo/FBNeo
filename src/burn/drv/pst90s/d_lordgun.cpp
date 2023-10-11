@@ -29,6 +29,7 @@ static UINT8 *DrvVidRAM3;
 static UINT8 *DrvScrRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM;
+static UINT8 *EEPROM;
 
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
@@ -676,14 +677,8 @@ static INT32 DrvDoReset()
 		*((UINT16*)(Drv68KROM + 0x00a3c)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 2) & 1); // title
 	} else {
 
-		UINT8 lordgun_eepromdata[48] = {
-			0xFF, 0x83, 0x5F, 0xFF, 0xFF, 0xBF, 0x14, 0xB7, 0xA3, 0xA4, 0x80, 0x29, 0x37, 0xA6, 0x32, 0x39, 
-			0x37, 0x90, 0x10, 0x33, 0xBA, 0xA3, 0x00, 0x37, 0x01, 0x00, 0xFF, 0xFF, 0x03, 0x42, 0xFF, 0xFF, 
-			0xFF, 0x83, 0xFF, 0xFF, 0xFF, 0x87, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
-		};
-
 		if (EEPROMAvailable() == 0) {
-			EEPROMFill(lordgun_eepromdata, 0, 48);
+			EEPROMFill(EEPROM, 0, 0x80);
 		}
 	}
 
@@ -711,6 +706,8 @@ static INT32 MemIndex()
 	DrvSndROM[0]	= Next; Next += 0x100000;
 	DrvSndROM[1]	= Next; Next += 0x100000;
 	DrvSndROM[2]	= Next; Next += 0x200000;
+
+	EEPROM			= Next; Next += 0x000080;
 
 	DrvPalette	= (UINT32*)Next; Next += (0x0800 + 1) * sizeof(UINT32);
 
@@ -914,6 +911,8 @@ static INT32 lordgunLoadRoms()
 	if (BurnLoadRom(DrvGfxROM[3] + 0xa00000, 14, 1)) return 1;
 
 	if (BurnLoadRom(DrvSndROM[0] + 0x000000, 15, 1)) return 1;
+
+	if (BurnLoadRom(EEPROM                 , 16, 1)) return 1;
 
 	UINT16 *rom = (UINT16*)Drv68KROM;
 
@@ -1419,6 +1418,8 @@ static struct BurnRomInfo lordgunRomDesc[] = {
 	{ "igsa006.2",		0x200000, 0x39288eb6, 5 | BRF_GRA },           // 14
 
 	{ "lordgun.100",	0x080000, 0xb4e0fa07, 6 | BRF_SND },           // 15 OKI #0 Samples
+
+	{ "eeprom",			0x000080, 0x0dad0e43, 7 | BRF_PRG | BRF_ESS }, // 16 eeprom
 };
 
 STD_ROM_PICK(lordgun)

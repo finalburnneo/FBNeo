@@ -867,7 +867,7 @@ struct BurnDriver BurnDrvPaddlema = {
 
 static struct BurnRomInfo tnextspcRomDesc[] = {
 	{ "ns_4.4",			0x20000, 0x4617cba3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "ns_3.4",			0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ns_3.3",			0x20000, 0xa6c47fef, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ns_1.1",			0x10000, 0xfc26853c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 

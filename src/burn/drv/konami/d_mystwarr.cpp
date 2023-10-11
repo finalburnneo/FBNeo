@@ -2379,7 +2379,7 @@ static INT32 MartchmpInit()
 	K056832SetLayerOffsets(2,  2-4, 0);
 	K056832SetLayerOffsets(3,  3-4, 0);
 
-	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, martchmp_sprite_callback, 3);
+	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, martchmp_sprite_callback, 1);
 	K053247SetSpriteOffset((-23-58-9), (-16-23-14)+0xd);
 	K053247SetBpp(5);
 

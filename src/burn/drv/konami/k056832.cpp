@@ -547,14 +547,14 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 		{ // speed-up
 			// y is calculated in the tile blitter (see "// blitter" below)
 			// but we need to check clipping here in order to not need 8ghz to
-			// do linescrolling. (see: martial masters, 2nd attract game)
+			// do linescrolling. (see: martial champ., 2nd attract game)
 			// in order to clip, we need to pre-calculate y+top and bottom of
 			// the tile here.
 			//
 			// TOCHECK:  (if anything here is changed!)
 			//   Xexex level 4, watch the top and bottom of the screen while
 			// scrolling up and down in the level.
-			//   Martial Masters, 2nd attract-mode game - watch cpu usage.
+			//   Martial Champ., 2nd attract-mode game - watch cpu usage.
 			INT32 syyh;
 			INT32 syyl;
 			if (tilemap_flip & 2) {

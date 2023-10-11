@@ -56,7 +56,7 @@ static struct BurnRomInfo sbubsmRomDesc[] = {
 	{ "u11.bin", 				0x080000, 0x4f9337ea, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000001 },
 	{ "u12.bin", 				0x080000, 0xf5374835, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000000 },
 
-	{ "89c51.bin", 				0x001000, 0x00000000, BRF_PRG | BRF_NODUMP },
+	{ "89c51.bin", 				0x001000, 0x00000000, BRF_PRG | BRF_NODUMP  },
 };
 
 STD_ROM_PICK(sbubsm)
@@ -79,7 +79,7 @@ static struct BurnRomInfo topshootRomDesc[] = {
 	{ "tc574000ad_u11_2.bin", 0x080000, 0xb235c4d9, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000001  },
 	{ "tc574000ad_u12_1.bin", 0x080000, 0xe826f6ad, BRF_PRG | SEGA_MD_ROM_LOAD16_BYTE | SEGA_MD_ROM_OFFS_000000  },
 
-	{ "89c51.bin", 			  0x001000, 0x7e41c8fe, BRF_PRG | BRF_NODUMP  },
+	{ "89c51.bin",            0x001000, 0x595475c8, BRF_PRG | BRF_OPT },
 };
 
 STD_ROM_PICK(topshoot)

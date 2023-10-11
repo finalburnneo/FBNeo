@@ -749,7 +749,7 @@ static struct BurnRomInfo tail2nosRomDesc[] = {
 	{ "v3.ic141",		0x10000, 0xe2e0abad, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "v6.ic142",		0x10000, 0x069817a7, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "a23.ic96",		0x80000, 0xd851cf04, 1 | BRF_PRG | BRF_ESS }, //  4 
-	{ "v5.ic125",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "v5.ic119",		0x10000, 0xa9fe15a1, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "v8.ic120",		0x10000, 0x4fb6a43e, 1 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "v2.ic125",		0x08000, 0x920d8920, 2 | BRF_PRG | BRF_ESS }, //  7 Z80 Code

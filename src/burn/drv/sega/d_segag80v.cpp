@@ -2215,7 +2215,7 @@ static struct BurnRomInfo startrekRomDesc[] = {
 	{ "1869.prom-u22",		0x0800, 0xe5663070, 1 | BRF_PRG | BRF_ESS }, // 22
 	{ "1870.prom-u23",		0x0800, 0x4340616d, 1 | BRF_PRG | BRF_ESS }, // 23
 
-	{ "1670.speech-u7",		0x0800, 0xb779884b, 2 | BRF_PRG | BRF_ESS }, // 24 I8035 Code
+	{ "1607.speech-u7",		0x0800, 0xb779884b, 2 | BRF_PRG | BRF_ESS }, // 24 I8035 Code
 
 	{ "1871.speech-u6",		0x1000, 0x03713920, 3 | BRF_GRA },           // 25 Speech Data
 	{ "1872.speech-u5",		0x1000, 0xebb5c3a9, 3 | BRF_GRA },           // 26

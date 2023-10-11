@@ -334,6 +334,7 @@ static struct BurnInputInfo MartchmpInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
 	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Martchmp)
@@ -426,15 +427,21 @@ STDDIPINFO(Dadandrn)
 
 static struct BurnDIPInfo MartchmpDIPList[]=
 {
-	{0x26, 0xff, 0xff, 0xe0, NULL			},
+	DIP_OFFSET(0x26)
+	{0x00, 0xff, 0xff, 0xe0, NULL				},
+	{0x01, 0xff, 0xff, 0x00, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x26, 0x01, 0x10, 0x10, "Mono"			},
-	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x00, 0x01, 0x10, 0x10, "Mono"				},
+	{0x00, 0x01, 0x10, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x26, 0x01, 0x20, 0x20, "Off"			},
-	{0x26, 0x01, 0x20, 0x00, "On"			},
+	{0x00, 0x01, 0x20, 0x20, "Off"				},
+	{0x00, 0x01, 0x20, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Speed Hacks"		},
+	{0x01, 0x01, 0x80, 0x00, "Off"				},
+	{0x01, 0x01, 0x80, 0x80, "On"				},
 };
 
 STDDIPINFO(Martchmp)
@@ -1225,6 +1232,11 @@ static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xffffc0) == 0x40c000) {
+		if (DrvDips[1] & 0x80) { // Speed Hack (disable linescroll)
+			if ((address & 0x3f) == 0x0b && data == 0x03) {
+				data = 0xf3;
+			}
+		}
 		K056832ByteWrite(address & 0x3f, data);
 		return;
 	}

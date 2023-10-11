@@ -1832,8 +1832,8 @@ static struct BurnRomInfo quizf1RomDesc[] = {
 
 	{ "qf1-v0-.ic30",	0x40000, 0xb8d16e7c, 4 | BRF_SND },           //  7 Samples
 
-	{ "qf1-h1-.78",		0x80000, 0xc6c2eb2b, 5 | BRF_PRG | BRF_ESS }, //  8 V30 banked code
-	{ "qf1-l1-.80",		0x80000, 0x3132c144, 5 | BRF_PRG | BRF_ESS }, //  9
+	{ "qf1-h1-.ic78",	0x80000, 0xc6c2eb2b, 5 | BRF_PRG | BRF_ESS }, //  8 V30 banked code
+	{ "qf1-l1-.ic80",	0x80000, 0x3132c144, 5 | BRF_PRG | BRF_ESS }, //  9
 };
 
 STD_ROM_PICK(quizf1)

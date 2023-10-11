@@ -1065,7 +1065,7 @@ struct BurnDriver BurnDrvPbancho = {
 
 static struct BurnRomInfo pbanchoaRomDesc[] = {
 	{ "no1.rom2",		0x080000, 0x1b4fd178, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "no2,rom1",		0x080000, 0x9cf510a5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "no2.rom1",		0x080000, 0x9cf510a5, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "no4.rom23",		0x020000, 0xdfbfdb81, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
 

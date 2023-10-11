@@ -7139,6 +7139,7 @@ DRV		BurnDrvsg1k_guzzlert;
 DRV		BurnDrvGuzzler;
 DRV		BurnSpecGvolcano;
 DRV		BurnDrvPbancho;
+DRV		BurnDrvPbanchoa;
 DRV		BurnDrvmd_gynoug;
 DRV		BurnDrvmd_gynougj;
 DRV		BurnDrvMSX_gyroadv;
@@ -11945,6 +11946,7 @@ DRV		BurnDrvSxyreac2;
 DRV		BurnDrvMSX_pachiufo;
 DRV		BurnDrvpce_pachikun;
 DRV		BurnDrvMSX_pacific;
+DRV		BurnDrvPackbangp;
 DRV		BurnDrvPackbang;
 DRV		BurnDrvpacketman;
 DRV		BurnDrvclubpacm;
@@ -27049,7 +27051,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsg1k_guzzlert,		// Guzzler (Taiwan)
 	&BurnDrvGuzzler,			// Guzzler
 	&BurnSpecGvolcano,			// GVolcano (128K) (HB)
-	&BurnDrvPbancho,			// Gyakuten!! Puzzle Bancho (Japan)
+	&BurnDrvPbancho,			// Gyakuten!! Puzzle Bancho (Japan, set 1)
+	&BurnDrvPbanchoa,			// Gyakuten!! Puzzle Bancho (Japan, set 2)
 	&BurnDrvmd_gynoug,			// Gynoug (Euro)
 	&BurnDrvmd_gynougj,			// Gynoug (Japan)
 	&BurnDrvMSX_gyroadv,		// Gyro Adventure (Japan)
@@ -31856,7 +31859,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_pachiufo,		// Pachinko-U.F.O. (Japan)
 	&BurnDrvpce_pachikun,		// Pachio Kun - Juuban Shoubu (Japan)
 	&BurnDrvMSX_pacific,		// Pacific (HB, v1.2.4)
-	&BurnDrvPackbang,			// Pack'n Bang Bang (Prototype)
+	&BurnDrvPackbangp,			// Pack'n Bang Bang (Prototype)
+	&BurnDrvPackbang,			// Pack'n Bang Bang
 	&BurnDrvpacketman,			// Packetman (bootleg)
 	&BurnDrvclubpacm,			// Pacman Club / Club Lambada (Argentina)
 	&BurnSpecPmslimers,			// Pacman the Curse of the Slimers (48K) (HB, v1.1)
@@ -46899,6 +46903,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "guzzler", "d_cclimber.cpp"},
 	{ "spec_gvolcano", "d_spectrum.cpp"},
 	{ "pbancho", "d_fuukifg2.cpp"},
+	{ "pbanchoa", "d_fuukifg2.cpp"},
 	{ "md_gynoug", "d_megadrive.cpp"},
 	{ "md_gynougj", "d_megadrive.cpp"},
 	{ "msx_gyroadv", "d_msx.cpp"},
@@ -51657,6 +51662,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "msx_pachiufo", "d_msx.cpp"},
 	{ "pce_pachikun", "d_pce.cpp"},
 	{ "msx_pacific", "d_msx.cpp"},
+	{ "packbangp", "d_kaneko16.cpp"},
 	{ "packbang", "d_kaneko16.cpp"},
 	{ "packetman", "d_pacman.cpp"},
 	{ "clubpacm", "d_pacman.cpp"},

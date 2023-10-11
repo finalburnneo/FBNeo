@@ -73,7 +73,7 @@
 	<game name="180" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>180 (128K)</description>
 		<year>1986</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
 		<rom name="180 (1986)(Mastertronic Added Dimension)[128K].tap" size="47982" crc="ccbd1a31"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -618,8 +618,8 @@
 	<game name="advsocsim" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Advanced Soccer Simulator (48K)</description>
 		<year>1989</year>
-		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Advanced Soccer Simulator 48K (1989)(Mastertronic).tap" size="44780" crc="4a1eaa7b"/>
+		<manufacturer>Mastertronic Plus</manufacturer>
+		<rom name="Advanced Soccer Simulator 48K (1989)(Mastertronic Plus).tap" size="44780" crc="4a1eaa7b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3569,7 +3569,7 @@
 	<game name="canywarr" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Canyon Warrior (128K)</description>
 		<year>1989</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Plus</manufacturer>
 		<rom name="Canyon Warrior (1989)(Mastertronic Plus).tap" size="52451" crc="5574dd40"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -4758,7 +4758,7 @@
 	<game name="conquest" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Con-Quest (48K)</description>
 		<year>1986</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
 		<rom name="Con-Quest 48K (1986)(Mastertronic).tap" size="48762" crc="77e76fe8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -7875,7 +7875,7 @@
 	<game name="flashgordon" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Flash Gordon (48K)</description>
 		<year>1987</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
 		<rom name="Flash Gordon (1987)(Mastertronic Added Dimension).tap" size="76147" crc="6fd40ff2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -9120,8 +9120,8 @@
 	<game name="greglhc" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Gregory Loses His Clock (48K)</description>
 		<year>1989</year>
-		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Gregory Loses His Clock 48K (1989)(Mastertronic).tap" size="40109" crc="02af488a"/>
+		<manufacturer>Mastertronic Plus</manufacturer>
+		<rom name="Gregory Loses His Clock 48K (1989)(Mastertronic Plus).tap" size="40109" crc="02af488a"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9917,8 +9917,8 @@
 	<game name="hundra" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Hundra (48K)</description>
 		<year>1988</year>
-		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Hundra (1988)(Mastertronic).tap" size="48229" crc="eeb32b33"/>
+		<manufacturer>Dinamic Software</manufacturer>
+		<rom name="Hundra (1988)(Dinamic Software).tap" size="48229" crc="eeb32b33"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11362,7 +11362,7 @@
 		<comment>Options menu = A, Z, Space</comment>
 		<description>Knight Tyme (128K)</description>
 		<year>1986</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
 		<rom name="Knight Tyme (1986)(Mastertronic).tap" size="119348" crc="79c80fac"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -13043,8 +13043,8 @@
 	<game name="micromouse" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Micro Mouse Goes De-bugging (128K)</description>
 		<year>1989</year>
-		<manufacturer>Mastertronic</manufacturer>
-		<rom name="Micro Mouse Goes De-bugging 128K (1989)(Mastertronic).tap" size="47636" crc="6a8a8635"/>
+		<manufacturer>Mastertronic Plus</manufacturer>
+		<rom name="Micro Mouse Goes De-bugging 128K (1989)(Mastertronic Plus).tap" size="47636" crc="6a8a8635"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -15835,7 +15835,7 @@
 		<comment>Set '3 Sinclair' to use controller</comment>
 		<description>Psycho Hopper (48K)</description>
 		<year>1989-90</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Plus</manufacturer>
 		<rom name="Psycho Hopper (1990)(Mastertronic Plus).tap" size="50178" crc="beda1169"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -17947,7 +17947,7 @@
 	<game name="shinobi" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Shinobi (128K)</description>
 		<year>1989</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Plus</manufacturer>
 		<rom name="Shinobi (1989)(Mastertronic Plus).tap" size="231589" crc="195feaad"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -18025,7 +18025,7 @@
 	<game name="silkworm" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Silkworm (128K)</description>
 		<year>1989</year>
-		<manufacturer>Virgin Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Plus</manufacturer>
 		<rom name="Silkworm 128K (1989)(Mastertronic Plus).tap" size="44612" crc="1980dccc"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -18837,7 +18837,7 @@
 		<comment>A, Z and SPACE to choose and set main options</comment>
 		<description>Spellbound (128K)</description>
 		<year>1985</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
 		<rom name="Spellbound (1985)(Mastertronic).tap" size="112432" crc="275e1ec1"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
@@ -22608,7 +22608,7 @@
 	<game name="zub" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>Zub (128K)</description>
 		<year>1986</year>
-		<manufacturer>Mastertronic</manufacturer>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
 		<rom name="Zub (1986)(Mastertronic Added Dimension).tap" size="62034" crc="e48404af"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>

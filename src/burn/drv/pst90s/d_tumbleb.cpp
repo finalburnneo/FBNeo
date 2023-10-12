@@ -82,6 +82,7 @@ typedef void (*MapZ80)();
 static MapZ80 DrvMapZ80;
 
 static INT32 nCyclesTotal[2];
+static INT32 nCyclesExtra;
 
 static struct BurnInputInfo TumblebInputList[] =
 {
@@ -3450,7 +3451,7 @@ static INT32 SuprtrioInit()
 	DrvMap68k = SuprtrioMap68k;
 	DrvMapZ80 = SemicomMapZ80;
 
-	nCyclesTotal[0] = 14000000 / 60;
+	nCyclesTotal[0] = 16000000 / 60; // + 2mhz fixes inputs, flicker on level 10
 	nCyclesTotal[1] = 8000000;
 
 	nRet = DrvInit(1, 0x800, 0x7fff, 0, 0, 0x2000, 0x8000, 0x2000, 60.0, 875000);
@@ -4659,7 +4660,7 @@ static INT32 DrvFrame()
 	DrvMakeInputs();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekNewFrame();
 	if (DrvHasZ80) ZetNewFrame();
@@ -4689,6 +4690,8 @@ static INT32 DrvFrame()
 		}
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		if (DrvHasYM2151) {
 			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
@@ -4708,7 +4711,7 @@ static INT32 JumppopFrame()
 	DrvMakeInputs();
 
 	INT32 nInterleave = 1953 / 60;
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -4726,6 +4729,8 @@ static INT32 JumppopFrame()
 		ZetNmi();
 		ZetClose();
 	}
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -4771,6 +4776,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(SuprtrioProt);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -45,6 +45,7 @@ static INT32 DrvSoundLatch;
 static INT32 Tumbleb2MusicCommand;
 static INT32 Tumbleb2MusicBank;
 static INT32 Tumbleb2MusicIsPlaying;
+static UINT8 SuprtrioProt;
 
 static INT32 DrvSpriteXOffset;
 static INT32 DrvSpriteYOffset;
@@ -81,6 +82,7 @@ typedef void (*MapZ80)();
 static MapZ80 DrvMapZ80;
 
 static INT32 nCyclesTotal[2];
+static INT32 nCyclesExtra;
 
 static struct BurnInputInfo TumblebInputList[] =
 {
@@ -1739,6 +1741,7 @@ static INT32 DrvDoReset()
 	Tumbleb2MusicBank = 0;
 	Tumbleb2MusicIsPlaying = 0;
 	memset(DrvControl, 0, 8);
+	SuprtrioProt = 0;
 
 	HiscoreReset();
 
@@ -2108,7 +2111,7 @@ static UINT16 __fastcall Suprtrio68KReadWord(UINT32 a)
 		}
 
 		case 0xe40000: {
-			return 0xffff - DrvInput[2];
+			return ((DrvInput[2] ^ 0xffff) & 0xff0f) | (SuprtrioProt << 4);
 		}
 
 		case 0xe80002: {
@@ -2131,6 +2134,10 @@ static void __fastcall Suprtrio68KWriteWord(UINT32 a, UINT16 d)
 	}
 
 	switch (a) {
+		case 0xee0000: {
+			SuprtrioProt = d & 0x0f;
+			return;
+		}
 		case 0xe00000: {
 			DrvTileBank = d << 14;
 			return;
@@ -3444,7 +3451,7 @@ static INT32 SuprtrioInit()
 	DrvMap68k = SuprtrioMap68k;
 	DrvMapZ80 = SemicomMapZ80;
 
-	nCyclesTotal[0] = 14000000 / 60;
+	nCyclesTotal[0] = 16000000 / 60; // + 2mhz fixes inputs, flicker on level 10
 	nCyclesTotal[1] = 8000000;
 
 	nRet = DrvInit(1, 0x800, 0x7fff, 0, 0, 0x2000, 0x8000, 0x2000, 60.0, 875000);
@@ -4653,7 +4660,7 @@ static INT32 DrvFrame()
 	DrvMakeInputs();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekNewFrame();
 	if (DrvHasZ80) ZetNewFrame();
@@ -4683,6 +4690,8 @@ static INT32 DrvFrame()
 		}
 	}
 
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		if (DrvHasYM2151) {
 			BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
@@ -4702,7 +4711,7 @@ static INT32 JumppopFrame()
 	DrvMakeInputs();
 
 	INT32 nInterleave = 1953 / 60;
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -4720,6 +4729,8 @@ static INT32 JumppopFrame()
 		ZetNmi();
 		ZetClose();
 	}
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -4762,8 +4773,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Tumbleb2MusicCommand);
 		SCAN_VAR(Tumbleb2MusicBank);
 		SCAN_VAR(Tumbleb2MusicIsPlaying);
+		SCAN_VAR(SuprtrioProt);
 
 		BurnRandomScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -1323,8 +1323,8 @@ static struct BurnRomInfo bigkarnkRomDesc[] = {
 
 	{ "d5",			0x10000, 0x3b73b9c5, 4 | BRF_PRG | BRF_ESS }, //  7 M6809 Code
 	
-	{ "bigkarnak_gal16v8.d6", 0x00117, 0x587fe895, 5 | BRF_OPT }, //  8 plds
-	{ "bigkarnak_gal20v8.d6", 0x00157, 0x0dcb286e, 5 | BRF_OPT }, //  9
+	{ "bigkarnak_gal16v8.d6",  0x00117, 0x587fe895, 5 | BRF_OPT }, //  8 plds
+	{ "bigkarnak_gal20v8.d21", 0x00157, 0x0dcb286e, 5 | BRF_OPT }, //  9
 };
 
 STD_ROM_PICK(bigkarnk)
@@ -1557,7 +1557,7 @@ static struct BurnRomInfo squashRomDesc[] = {
 	{ "squashv1_gal16v8.f2",	0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
 	{ "squashv1_gal16v8.j16",	0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
 	{ "squashv1_gal20v8.d21",	0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
-	{ "squashv1_gal16v8.h11",	0x00157, 0x51e34bc2, 4 | BRF_OPT },       // 10
+	{ "squashv1_gal20v8.h11",	0x00157, 0x51e34bc2, 4 | BRF_OPT },       // 10
 };
 
 STD_ROM_PICK(squash)
@@ -1607,7 +1607,7 @@ static struct BurnRomInfo thoopRomDesc[] = {
 	{ "thunderhoop_gal16v8.f2",	 0x00117, 0xd5ed5985, 4 | BRF_OPT },       //  7 plds
 	{ "thunderhoop_gal16v8.j16", 0x00117, 0xfe78b903, 4 | BRF_OPT },       //  8
 	{ "thunderhoop_gal20v8.d21", 0x00157, 0xa715e392, 4 | BRF_OPT },       //  9
-	{ "thunderhoop_gal16v8.h11", 0x00157, 0x51e34bc2, 4 | BRF_OPT },        // 10
+	{ "thunderhoop_gal20v8.h11", 0x00157, 0x51e34bc2, 4 | BRF_OPT },        // 10
 };
 
 STD_ROM_PICK(thoop)

@@ -1990,7 +1990,7 @@ static struct BurnRomInfo defenderjRomDesc[] = {
 	{ "df5-1.b3",			0x0800, 0xa543b167, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "df4-1.c1",			0x0800, 0x65f4efd1, 1 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "df12.i3",			0x0800, 0xf122d9c9, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
+	{ "dr12.i3",			0x0800, 0xf122d9c9, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
 
 	{ "df11.k3",			0x0200, 0x25de5d85, 0 | BRF_OPT },           // 11 Address Decoder
 	{ "df12.f3",			0x0200, 0xc3f45f70, 0 | BRF_OPT },           // 12
@@ -2967,23 +2967,23 @@ struct BurnDriver BurnDrvJoustr = {
 // Bubbles
 
 static struct BurnRomInfo bubblesRomDesc[] = {
-	{ "bubbles.10b",		0x1000, 0x26e7869b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "bubbles.11b",		0x1000, 0x5a5b572f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bubbles.12b",		0x1000, 0xce22d2e2, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bubbles.1b",			0x1000, 0x8234f55c, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "bubbles.2b",			0x1000, 0x4a188d6a, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "bubbles.3b",			0x1000, 0x7728f07f, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "bubbles.4b",			0x1000, 0x040be7f9, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "bubbles.5b",			0x1000, 0x0b5f29e0, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "bubbles.6b",			0x1000, 0x4dd0450d, 1 | BRF_PRG | BRF_ESS }, //  8
-	{ "bubbles.7b",			0x1000, 0xe0a26ec0, 1 | BRF_PRG | BRF_ESS }, //  9
-	{ "bubbles.8b",			0x1000, 0x4fd23d8d, 1 | BRF_PRG | BRF_ESS }, // 10
-	{ "bubbles.9b",			0x1000, 0xb48559fb, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "bubbles_rom_10b_16-3012-49.a7",	0x1000, 0x26e7869b, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "bubbles_rom_11b_16-3012-50.c7",	0x1000, 0x5a5b572f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bubbles_rom_12b_16-3012-51.e7",	0x1000, 0xce22d2e2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bubbles_rom_1b_16-3012-40.4e",	0x1000, 0x8234f55c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bubbles_rom_2b_16-3012-41.4c",	0x1000, 0x4a188d6a, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "bubbles_rom_3b_16-3012-42.4a",	0x1000, 0x7728f07f, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "bubbles_rom_4b_16-3012-43.5e",	0x1000, 0x040be7f9, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "bubbles_rom_5b_16-3012-44.5c",	0x1000, 0x0b5f29e0, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "bubbles_rom_6b_16-3012-45.5a",	0x1000, 0x4dd0450d, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "bubbles_rom_7b_16-3012-46.6e",	0x1000, 0xe0a26ec0, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "bubbles_rom_8b_16-3012-47.6c",	0x1000, 0x4fd23d8d, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "bubbles_rom_9b_16-3012-48.6a",	0x1000, 0xb48559fb, 1 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "bubbles.snd",		0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
+	{ "video_sound_rom_5_std_771.ic12",	0x1000, 0x689ce2aa, 2 | BRF_PRG | BRF_ESS }, // 12 M6800 Code
 
-	{ "decoder_rom_4.3g",	0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
-	{ "decoder_rom_6.3c",	0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
+	{ "decoder_rom_4.3g",				0x0200, 0xe6631c23, 0 | BRF_OPT },           // 13 Address Decoder
+	{ "decoder_rom_6.3c",				0x0200, 0x83faf25e, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(bubbles)

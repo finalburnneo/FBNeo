@@ -1252,7 +1252,7 @@ static struct BurnRomInfo HbarrelRomDesc[] = {
 	{ "ec23.15f",           0x10000, 0xbbdaf771, BRF_GRA },				// 16
 	
 	{ "ec29.8h",           	0x10000, 0x5514b296, BRF_GRA },				// 17	Tiles 2
-	{ "ec30.9j",            0x10000, 0x5855e8ef, BRF_GRA },				// 18
+	{ "ec30.9h",            0x10000, 0x5855e8ef, BRF_GRA },				// 18
 	{ "ec27.8f",           	0x10000, 0x99db7b9c, BRF_GRA },				// 19
 	{ "ec28.9f",            0x10000, 0x33ce2b1a, BRF_GRA },				// 20
 	

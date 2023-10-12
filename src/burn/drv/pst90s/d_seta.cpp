@@ -11287,23 +11287,23 @@ struct BurnDriver BurnDrvUsclssic = {
 // Caliber 50
 
 static struct BurnRomInfo calibr50RomDesc[] = {
-	{ "uh002001.u45",	0x40000, 0xeb92e7ed, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "uh002004.u41",	0x40000, 0x5a0ed31e, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "uh001003.9a",	0x10000, 0x0d30d09f, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "uh001002.7a",	0x10000, 0x7aecc3f9, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "uh-002-001.3b",	0x40000, 0xeb92e7ed, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "uh-002-004.11b",	0x40000, 0x5a0ed31e, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "uh_001_003.9b",	0x10000, 0x0d30d09f, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "uh_001_002.7b",	0x10000, 0x7aecc3f9, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "uh001005.u61",	0x40000, 0x4a54c085, 0x02 | BRF_PRG | BRF_ESS }, //  4 m65c02 Code
+	{ "uh-001-005.17e",	0x40000, 0x4a54c085, 0x02 | BRF_PRG | BRF_ESS }, //  4 m65c02 Code
 
-	{ "uh001006.ux2",	0x80000, 0xfff52f91, 0x0b | BRF_GRA },           //  5 Sprites
-	{ "uh001007.ux1",	0x80000, 0xb6c19f71, 0x0b | BRF_GRA },           //  6
-	{ "uh001008.ux6",	0x80000, 0x7aae07ef, 0x0b | BRF_GRA },           //  7
-	{ "uh001009.ux0",	0x80000, 0xf85da2c5, 0x0b | BRF_GRA },           //  8
+	{ "uh-001-006.2m",	0x80000, 0xfff52f91, 0x0b | BRF_GRA },           //  5 Sprites
+	{ "uh-001-007.4m",	0x80000, 0xb6c19f71, 0x0b | BRF_GRA },           //  6
+	{ "uh-001-008.5m",	0x80000, 0x7aae07ef, 0x0b | BRF_GRA },           //  7
+	{ "uh-001-009.6m",	0x80000, 0xf85da2c5, 0x0b | BRF_GRA },           //  8
 
-	{ "uh001010.u3x",	0x80000, 0xf986577a, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
-	{ "uh001011.u50",	0x80000, 0x08620052, 0x04 | BRF_GRA },           // 10
+	{ "uh-001-010.8m",	0x80000, 0xf986577a, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
+	{ "uh-001-011.9m",	0x80000, 0x08620052, 0x04 | BRF_GRA },           // 10
 
-	{ "uh001013.u60",	0x80000, 0x09ec0df6, 0x06 | BRF_SND },           // 11 x1-010 Samples
-	{ "uh001012.u46",	0x80000, 0xbb996547, 0x06 | BRF_SND },           // 12
+	{ "uh-001-013.12m",	0x80000, 0x09ec0df6, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "uh-001-012.11m",	0x80000, 0xbb996547, 0x06 | BRF_SND },           // 12
 };
 
 STD_ROM_PICK(calibr50)

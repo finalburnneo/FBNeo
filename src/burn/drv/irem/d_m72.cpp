@@ -2581,7 +2581,7 @@ static struct BurnRomInfo xmultiplRomDesc[] = {
 	{ "t50.30.ic14",		0x20000, 0xe322543e, 0x02 | BRF_GRA },           // 11
 	{ "t51.31.ic13",		0x20000, 0x229bf7b1, 0x02 | BRF_GRA },           // 12
 
-	{ "t53.a0.ic50",		0x20000, 0x1a082494, 0x03 | BRF_GRA },           // 13 Foreground Tiles
+	{ "t53.a0,ic50",		0x20000, 0x1a082494, 0x03 | BRF_GRA },           // 13 Foreground Tiles
 	{ "t54.a1.ic49",		0x20000, 0x076c16c5, 0x03 | BRF_GRA },           // 14
 	{ "t55.a2.ic51",		0x20000, 0x25d877a5, 0x03 | BRF_GRA },           // 15
 	{ "t56.a3.ic52",		0x20000, 0x5b1213f5, 0x03 | BRF_GRA },           // 16
@@ -2750,7 +2750,7 @@ static struct BurnRomInfo dbreedm72RomDesc[] = {
 	{ "db_k804m.a0.ic21",	0x20000, 0x4c83e92e, 0x03 | BRF_GRA },              //  8 Foreground Tiles
 	{ "db_k805m.a1.ic22",	0x20000, 0x835ef268, 0x03 | BRF_GRA },              //  9
 	{ "db_k806m.a2.ic20",	0x20000, 0x5117f114, 0x03 | BRF_GRA },              // 10
-	{ "db_k807m.a3.ic23",	0x20000, 0x8eb0c978, 0x03 | BRF_GRA },              // 11
+	{ "db_k807m.b3.ic24",	0x20000, 0x8eb0c978, 0x03 | BRF_GRA },              // 11
 
 	{ "db_k804m.b0.ic26",	0x20000, 0x4c83e92e, 0x04 | BRF_GRA },              // 12 Background Tiles
 	{ "db_k805m.b1.ic27",	0x20000, 0x835ef268, 0x04 | BRF_GRA },              // 13
@@ -2814,7 +2814,7 @@ static struct BurnRomInfo dbreedjm72RomDesc[] = {
 	{ "db_k804m.a0.ic21",	0x20000, 0x4c83e92e, 0x03 | BRF_GRA },           //  8 Foreground Tiles
 	{ "db_k805m.a1.ic22",	0x20000, 0x835ef268, 0x03 | BRF_GRA },           //  9
 	{ "db_k806m.a2.ic20",	0x20000, 0x5117f114, 0x03 | BRF_GRA },           // 10
-	{ "db_k807m.a3.ic21",	0x20000, 0x8eb0c978, 0x03 | BRF_GRA },           // 11
+	{ "db_k807m.a3.ic23",	0x20000, 0x8eb0c978, 0x03 | BRF_GRA },           // 11
 
 	{ "db_k804m.b0.ic26",	0x20000, 0x4c83e92e, 0x04 | BRF_GRA },           // 12 Background Tiles
 	{ "db_k805m.b1.ic27",	0x20000, 0x835ef268, 0x04 | BRF_GRA },           // 13
@@ -3622,7 +3622,7 @@ static struct BurnRomInfo rtype2m82bRomDesc[] = {
 	{ "mt_f2.ic40",		0x20000, 0xa71feb2d, 0x0e | BRF_GRA },           // 15
 	{ "mt_f3.ic41",		0x20000, 0x179f7562, 0x0e | BRF_GRA },           // 16
 
-	{ "mt_vo.ic12",		0x20000, 0x637172d5, 0x05 | BRF_SND },           // 17 DAC Samples
+	{ "rt2_vo.ic12",	0x20000, 0x637172d5, 0x05 | BRF_SND },           // 17 DAC Samples
 };
 
 STD_ROM_PICK(rtype2m82b)
@@ -3791,10 +3791,10 @@ static struct BurnRomInfo dkgensanRomDesc[] = {
 
 	{ "gen_a-sp-.ic17",		0x10000, 0xe83cfc2c, 0x06 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "hh_00.ic33",			0x20000, 0xec5127ef, 0x02 | BRF_GRA },           //  5 Sprites
-	{ "hh_10.ic34",			0x20000, 0xdef65294, 0x02 | BRF_GRA },           //  6
-	{ "hh_20.ic35",			0x20000, 0xbb0d6ad4, 0x02 | BRF_GRA },           //  7
-	{ "hh_30.ic36",			0x20000, 0x4351044e, 0x02 | BRF_GRA },           //  8
+	{ "hh_n0.ic33",			0x20000, 0xec5127ef, 0x02 | BRF_GRA },           //  5 Sprites
+	{ "hh_n1.ic34",			0x20000, 0xdef65294, 0x02 | BRF_GRA },           //  6
+	{ "hh_n2.ic35",			0x20000, 0xbb0d6ad4, 0x02 | BRF_GRA },           //  7
+	{ "hh_n3.ic36",			0x20000, 0x4351044e, 0x02 | BRF_GRA },           //  8
 
 	{ "hh_a0.ic51",			0x20000, 0xc577ba5f, 0x03 | BRF_GRA },           //  9 Foreground & Background Tiles
 	{ "hh_a1.ic57",			0x20000, 0x429d12ab, 0x03 | BRF_GRA },           // 10
@@ -3830,9 +3830,9 @@ struct BurnDriver BurnDrvDkgensan = {
 
 static struct BurnRomInfo dkgensanm72RomDesc[] = {
 	{ "ge72_h0-.ic40",			0x20000, 0xa0ad992c, 0x01 | BRF_PRG | BRF_ESS },    //  0 V30 Code
-	{ "ge72-l0-.ic37",			0x20000, 0x996396f0, 0x01 | BRF_PRG | BRF_ESS },    //  1
-	{ "ge72-h3-.ic43",			0x10000, 0xd8b86005, 0x01 | BRF_PRG | BRF_ESS },    //  2
-	{ "ge72-l3-.ic34",			0x10000, 0x23d303a5, 0x01 | BRF_PRG | BRF_ESS },    //  3
+	{ "ge72_l0-.ic37",			0x20000, 0x996396f0, 0x01 | BRF_PRG | BRF_ESS },    //  1
+	{ "ge72_h3-.ic43",			0x10000, 0xd8b86005, 0x01 | BRF_PRG | BRF_ESS },    //  2
+	{ "ge72_l3-.ic34",			0x10000, 0x23d303a5, 0x01 | BRF_PRG | BRF_ESS },    //  3
 
 	{ "hh_00.ic53",				0x20000, 0xec5127ef, 0x02 | BRF_GRA },              //  4 Sprites
 	{ "hh_10.ic51",				0x20000, 0xdef65294, 0x02 | BRF_GRA },              //  5
@@ -3902,10 +3902,10 @@ static struct BurnRomInfo dkgensanm82RomDesc[] = {
 	{ "gen_=m81=_a-h0-a.ic57",	0x20000, 0xb5b163b0, 0x03 | BRF_GRA },           // 11
 	{ "gen_=m81=_a-h1-a.ic56",	0x20000, 0x8ef566a1, 0x03 | BRF_GRA },           // 12
 
-	{ "mt_f0.bin",				0x20000, 0x2d5e05d5, 0x0e | BRF_GRA },           // 13 Sprites 2
-	{ "mt_f1.bin",				0x20000, 0xc68cd65f, 0x0e | BRF_GRA },           // 14
-	{ "mt_f2.bin",				0x20000, 0xa71feb2d, 0x0e | BRF_GRA },           // 15
-	{ "mt_f3.bin",				0x20000, 0x179f7562, 0x0e | BRF_GRA },           // 16
+	{ "mt_f0.ic38",				0x20000, 0x2d5e05d5, 0x0e | BRF_GRA },           // 13 Sprites 2
+	{ "mt_f1.ic39",				0x20000, 0xc68cd65f, 0x0e | BRF_GRA },           // 14
+	{ "mt_f2.ic40",				0x20000, 0xa71feb2d, 0x0e | BRF_GRA },           // 15
+	{ "mt_f3.ic41",				0x20000, 0x179f7562, 0x0e | BRF_GRA },           // 16
 
 	{ "gen_=m84=_a-vo-d.ic12",	0x20000, 0xd8595c66, 0x05 | BRF_SND },           // 17 DAC Samples
 
@@ -4044,7 +4044,7 @@ static struct BurnRomInfo kengojRomDesc[] = {
 	{ "ken_m22.ic22",		0x20000, 0xa00dac85, 0x02 | BRF_GRA },           //  6
 
 	{ "ken_m51.ic51",		0x20000, 0x1646cf4f, 0x03 | BRF_GRA },           //  7 Foreground & Background Tiles
-	{ "ken_m57.ic55",		0x20000, 0xa9f88d90, 0x03 | BRF_GRA },           //  8
+	{ "ken_m57.ic57",		0x20000, 0xa9f88d90, 0x03 | BRF_GRA },           //  8
 	{ "ken_m66.ic66",		0x20000, 0xe9d17645, 0x03 | BRF_GRA },           //  9
 	{ "ken_m64.ic64",		0x20000, 0xdf46709b, 0x03 | BRF_GRA },           // 10
 

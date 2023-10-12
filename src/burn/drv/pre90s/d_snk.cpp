@@ -7316,7 +7316,7 @@ static struct BurnRomInfo worldwarRomDesc[] = {
 	{ "1.1k",			0x00400, 0xb88e95f0, 14 | BRF_GRA },	      //  3 Color Data
 	{ "2.1l",			0x00400, 0x5e1616b2, 14 | BRF_GRA },	      //  4
 	{ "3.2l",			0x00400, 0xe9770796, 14 | BRF_GRA },	      //  5
-	{ "horinzon.5h",	0x00400, 0xc20b197b, 0 | BRF_OPT },	      	  //  6
+	{ "horizon.5h",		0x00400, 0xc20b197b, 0 | BRF_OPT },	      	  //  6
 	{ "vertical.7h", 	0x00400, 0x5d0c617f, 0 | BRF_OPT },	      	  //  7
 
 	// The two MB7134 LS30 rotary joystick decode PROMs 1.1d and 1.2d on the CPU board are missing in action.
@@ -7936,9 +7936,9 @@ struct BurnDriver BurnDrvSathena = {
 // ASO - Armored Scrum Object
 
 static struct BurnRomInfo asoRomDesc[] = {
-	{ "p1.d8",			0x04000, 0x84981f3c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "p2.d7",			0x04000, 0xcfe912a6, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "p3.d5",			0x04000, 0x39a666d2, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "p1.8d",			0x04000, 0x84981f3c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p2.7d",			0x04000, 0xcfe912a6, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "p3.5d",			0x04000, 0x39a666d2, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	{ "p4.3d",			0x04000, 0xa4122355, 2 | BRF_ESS | BRF_PRG }, //  3 Z80 #1 Code
 	{ "p5.2d",			0x04000, 0x9879e506, 2 | BRF_ESS | BRF_PRG }, //  4
@@ -9027,7 +9027,7 @@ static struct BurnRomInfo tdfeverRomDesc[] = {
 	{ "td13.2t",		0x10000, 0x88e2e819, 8 | BRF_GRA },           // 12 32x32 Sprites
 	{ "td12-1.2s",		0x10000, 0xf6f83d63, 8 | BRF_GRA },           // 13
 	{ "td11.2r",		0x10000, 0xa0d53fbd, 8 | BRF_GRA },           // 14
-	{ "td10-1.20",		0x10000, 0xc8c71c7b, 8 | BRF_GRA },           // 15
+	{ "td10-1.2p",		0x10000, 0xc8c71c7b, 8 | BRF_GRA },           // 15
 	{ "td9.2n",			0x10000, 0xa8979657, 8 | BRF_GRA },           // 16
 	{ "td8-1.2l",		0x10000, 0x28f49182, 8 | BRF_GRA },           // 17
 	{ "td7.2k",			0x10000, 0x72a5590d, 8 | BRF_GRA },           // 18

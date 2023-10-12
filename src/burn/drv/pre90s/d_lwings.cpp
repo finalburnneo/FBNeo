@@ -2563,8 +2563,8 @@ static struct BurnRomInfo avengersRomDesc[] = {
 	{ "av_21.5n",		0x8000, 0x301059aa, 6 | BRF_GRA },           // 20
 	{ "av_19.2n",		0x8000, 0xa00485ec, 6 | BRF_GRA },           // 21
 
-	{ "av_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "av_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
+	{ "avu_25.15n",		0x8000, 0x230d9e30, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "avu_24.13n",		0x8000, 0xa6354024, 7 | BRF_GRA },           // 23
 
 	{ "av_23.9n",		0x8000, 0xc0a93ef6, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 

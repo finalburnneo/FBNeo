@@ -5599,7 +5599,7 @@ static struct BurnRomInfo CaptcommRomDesc[] = {
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
 	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
-	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
 STD_ROM_PICK(Captcomm)
@@ -25243,27 +25243,27 @@ static struct BurnRomInfo SfachRomDesc[] = {
 	{ "sfzch21",       0x080000, 0x5435225d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sfza20",        0x080000, 0x806e8f38, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "sfz_01.3a",     0x080000, 0x0dd53e62, BRF_GRA | CPS1_TILES },
-	{ "sfz_02.4a",     0x080000, 0x94c31e3f, BRF_GRA | CPS1_TILES },
-	{ "sfz_03.5a",     0x080000, 0x9584ac85, BRF_GRA | CPS1_TILES },
-	{ "sfz_04.6a",     0x080000, 0xb983624c, BRF_GRA | CPS1_TILES },
-	{ "sfz_05.7a",     0x080000, 0x2b47b645, BRF_GRA | CPS1_TILES },
-	{ "sfz_06.8a",     0x080000, 0x74fd9fb1, BRF_GRA | CPS1_TILES },
-	{ "sfz_07.9a",     0x080000, 0xbb2c734d, BRF_GRA | CPS1_TILES },
-	{ "sfz_08.10a",    0x080000, 0x454f7868, BRF_GRA | CPS1_TILES },
-	{ "sfz_10.3c",     0x080000, 0x2a7d675e, BRF_GRA | CPS1_TILES },
-	{ "sfz_11.4c",     0x080000, 0xe35546c8, BRF_GRA | CPS1_TILES },
-	{ "sfz_12.5c",     0x080000, 0xf122693a, BRF_GRA | CPS1_TILES },
-	{ "sfz_13.6c",     0x080000, 0x7cf942c8, BRF_GRA | CPS1_TILES },
-	{ "sfz_14.7c",     0x080000, 0x09038c81, BRF_GRA | CPS1_TILES },
-	{ "sfz_15.8c",     0x080000, 0x1aa17391, BRF_GRA | CPS1_TILES },
-	{ "sfz_16.9c",     0x080000, 0x19a5abd6, BRF_GRA | CPS1_TILES },
-	{ "sfz_17.10c",    0x080000, 0x248b3b73, BRF_GRA | CPS1_TILES },
+	{ "sfz01",         0x080000, 0x0dd53e62, BRF_GRA | CPS1_TILES },
+	{ "sfz02",         0x080000, 0x94c31e3f, BRF_GRA | CPS1_TILES },
+	{ "sfz03",         0x080000, 0x9584ac85, BRF_GRA | CPS1_TILES },
+	{ "sfz04",         0x080000, 0xb983624c, BRF_GRA | CPS1_TILES },
+	{ "sfz05",         0x080000, 0x2b47b645, BRF_GRA | CPS1_TILES },
+	{ "sfz06",         0x080000, 0x74fd9fb1, BRF_GRA | CPS1_TILES },
+	{ "sfz07",         0x080000, 0xbb2c734d, BRF_GRA | CPS1_TILES },
+	{ "sfz08",         0x080000, 0x454f7868, BRF_GRA | CPS1_TILES },
+	{ "sfz10",         0x080000, 0x2a7d675e, BRF_GRA | CPS1_TILES },
+	{ "sfz11",         0x080000, 0xe35546c8, BRF_GRA | CPS1_TILES },
+	{ "sfz12",         0x080000, 0xf122693a, BRF_GRA | CPS1_TILES },
+	{ "sfz13",         0x080000, 0x7cf942c8, BRF_GRA | CPS1_TILES },
+	{ "sfz14",         0x080000, 0x09038c81, BRF_GRA | CPS1_TILES },
+	{ "sfz15",         0x080000, 0x1aa17391, BRF_GRA | CPS1_TILES },
+	{ "sfz16",         0x080000, 0x19a5abd6, BRF_GRA | CPS1_TILES },
+	{ "sfz17",         0x080000, 0x248b3b73, BRF_GRA | CPS1_TILES },
 	
 	{ "sfz_09.12a",    0x010000, 0xc772628b, BRF_PRG | CPS1_Z80_PROGRAM },
 	
-	{ "sfz_18.11c",    0x020000, 0x61022b2d, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "sfz_19.12c",    0x020000, 0x3b5886d5, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sfz18",         0x020000, 0x61022b2d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sfz19",         0x020000, 0x3b5886d5, BRF_SND | CPS1_OKIM6295_SAMPLES },
 
 	{ "sfz63b.1a",     0x000104, 0xf5a351da, BRF_OPT },	// b-board PLDs
 };

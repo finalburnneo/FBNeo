@@ -2634,16 +2634,16 @@ static struct BurnRomInfo bonzeadvp2RomDesc[] = {
 	{ "obj 3l a355.ic5",		0x10000, 0x173ddd11, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 23
 	{ "obj 3h 3756.ic10",		0x10000, 0x981e66a9, BRF_GRA | TAITO_SPRITESA_BYTESWAP },           // 24
 
-	{ "sound 0h 3-8.bin",		0x10000, 0x2996e756, BRF_SND | TAITO_YM2610A },                     // 25 YM2610 Samples
-	{ "sound 1h 3-8.bin",		0x10000, 0x780368ac, BRF_SND | TAITO_YM2610A },                     // 26
-	{ "sound 2h 3-8.bin",		0x10000, 0x8f3b9fa5, BRF_SND | TAITO_YM2610A },                     // 27
-	{ "sound 3h 3-8.bin",		0x10000, 0x1a8be621, BRF_SND | TAITO_YM2610A },                     // 28
-	{ "sound 0l 3-8.bin",		0x10000, 0x3711abfa, BRF_SND | TAITO_YM2610A },                     // 29
-	{ "sound 1l 3-8.bin",		0x10000, 0xf24a3d1a, BRF_SND | TAITO_YM2610A },                     // 30
-	{ "sound 2l 3-8.bin",		0x10000, 0x5987900c, BRF_SND | TAITO_YM2610A },                     // 31
-	{ "sound 3l 3-8.bin",		0x10000, 0xe8a6a9e6, BRF_SND | TAITO_YM2610A },                     // 32
+	{ "sound 0h 3-8.ic2",		0x10000, 0x2996e756, BRF_SND | TAITO_YM2610A },                     // 25 YM2610 Samples
+	{ "sound 1h 3-8.ic3",		0x10000, 0x780368ac, BRF_SND | TAITO_YM2610A },                     // 26
+	{ "sound 2h 3-8.ic4",		0x10000, 0x8f3b9fa5, BRF_SND | TAITO_YM2610A },                     // 27
+	{ "sound 3h 3-8.ic5",		0x10000, 0x1a8be621, BRF_SND | TAITO_YM2610A },                     // 28
+	{ "sound 0l 3-8.ic7",		0x10000, 0x3711abfa, BRF_SND | TAITO_YM2610A },                     // 29
+	{ "sound 1l 3-8.ic8",		0x10000, 0xf24a3d1a, BRF_SND | TAITO_YM2610A },                     // 30
+	{ "sound 2l 3-8.ic9",		0x10000, 0x5987900c, BRF_SND | TAITO_YM2610A },                     // 31
+	{ "sound 3l 3-8.ic10",		0x10000, 0xe8a6a9e6, BRF_SND | TAITO_YM2610A },                     // 32
 
-	{ "10-9 f3eb.ic43",			0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },      // 33 C-Chip (BAD DUMP)
+	{ "generic 10-9 f3eb.ic43",			0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },      // 33 C-Chip (BAD DUMP)
 };
 
 STDROMPICKEXT(bonzeadvp2, bonzeadvp2, cchip)

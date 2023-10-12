@@ -527,12 +527,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Capcom Bowling (set 1)
 
 static struct BurnRomInfo capbowlRomDesc[] = {
-	{ "u6",				0x8000, 0x14924c96, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
-	{ "gr0",			0x8000, 0xef53ca7a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gr1",			0x8000, 0x27ede6ce, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "gr2",			0x8000, 0xe49238f4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "program_rev3_u6.u6",	0x8000, 0x14924c96, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "grom0-gr0",			0x8000, 0xef53ca7a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "grom1-gr1",			0x8000, 0x27ede6ce, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "grom2-gr2",			0x8000, 0xe49238f4, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "sound.u30",			0x8000, 0x8c9c3b8a, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
+	{ "sound_v2.1_u30.u30",	0x8000, 0x8c9c3b8a, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 #1 Code
 };
 
 STD_ROM_PICK(capbowl)

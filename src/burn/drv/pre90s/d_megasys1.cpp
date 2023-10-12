@@ -4225,7 +4225,7 @@ static struct BurnRomInfo jitsuproRomDesc[] = {
 
 	{ "jp_8.bin",		0x80000, 0xeca67632, 8 | BRF_SND },           // 10 OKI #1 Samples
 
-	{ "bs.bpr",			0x00200, 0x85b30ac4, 9 | BRF_GRA },           // 11 Priority PROM
+	{ "bs.14m",			0x00200, 0x85b30ac4, 9 | BRF_GRA },           // 11 Priority PROM
 };
 
 STD_ROM_PICK(jitsupro)

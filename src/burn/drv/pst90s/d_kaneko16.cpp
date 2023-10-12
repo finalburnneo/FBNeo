@@ -7394,7 +7394,10 @@ static INT32 ExplbrkrFrame()
 		CPU_RUN(0, Sek);
 		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 64) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (i == 224) {
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			if (pBurnDraw) BurnDrvRedraw();
+		}
 		SekClose();
 	}
 
@@ -7404,8 +7407,6 @@ static INT32 ExplbrkrFrame()
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) BurnDrvRedraw();
 
 	return 0;
 }
@@ -7788,7 +7789,7 @@ struct BurnDriver BurnDrvPackbangp = {
 	"packbangp", "packbang", NULL, NULL, "1994",
 	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
 	NULL, PackbangpRomInfo, PackbangpRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
 	PackbangInit, BerlwallExit, ExplbrkrFrame, BerlwallFrameRender, ExplbrkrScan,
 	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4

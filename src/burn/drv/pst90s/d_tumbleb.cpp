@@ -45,6 +45,7 @@ static INT32 DrvSoundLatch;
 static INT32 Tumbleb2MusicCommand;
 static INT32 Tumbleb2MusicBank;
 static INT32 Tumbleb2MusicIsPlaying;
+static UINT8 SuprtrioProt;
 
 static INT32 DrvSpriteXOffset;
 static INT32 DrvSpriteYOffset;
@@ -1739,6 +1740,7 @@ static INT32 DrvDoReset()
 	Tumbleb2MusicBank = 0;
 	Tumbleb2MusicIsPlaying = 0;
 	memset(DrvControl, 0, 8);
+	SuprtrioProt = 0;
 
 	HiscoreReset();
 
@@ -2108,7 +2110,7 @@ static UINT16 __fastcall Suprtrio68KReadWord(UINT32 a)
 		}
 
 		case 0xe40000: {
-			return 0xffff - DrvInput[2];
+			return ((DrvInput[2] ^ 0xffff) & 0xff0f) | (SuprtrioProt << 4);
 		}
 
 		case 0xe80002: {
@@ -2131,6 +2133,10 @@ static void __fastcall Suprtrio68KWriteWord(UINT32 a, UINT16 d)
 	}
 
 	switch (a) {
+		case 0xee0000: {
+			SuprtrioProt = d & 0x0f;
+			return;
+		}
 		case 0xe00000: {
 			DrvTileBank = d << 14;
 			return;
@@ -4762,6 +4768,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Tumbleb2MusicCommand);
 		SCAN_VAR(Tumbleb2MusicBank);
 		SCAN_VAR(Tumbleb2MusicIsPlaying);
+		SCAN_VAR(SuprtrioProt);
 
 		BurnRandomScan(nAction);
 	}

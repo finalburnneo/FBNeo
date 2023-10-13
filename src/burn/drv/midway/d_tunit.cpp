@@ -1122,8 +1122,8 @@ static struct BurnRomInfo nbajamRomDesc[] = {
 	
 	{ "l2_nba_jam_u3_sound_rom.u3",				0x020000, 0x3a3ea480, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "nbau12.u12",								0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "nbau13.u13",								0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_nba_jam_u12_sound_rom.u12",			0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "l1_nba_jam_u13_sound_rom.u13",			0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
 	{ "l1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
@@ -1172,8 +1172,8 @@ static struct BurnRomInfo nbajamr2RomDesc[] = {
 	
 	{ "l2_nba_jam_u3_sound_rom.u3",				0x020000, 0x3a3ea480, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "nbau12.u12",								0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "nbau13.u13",								0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_nba_jam_u12_sound_rom.u12",			0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "l1_nba_jam_u13_sound_rom.u13",			0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
 	{ "l1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
@@ -1215,8 +1215,8 @@ static struct BurnRomInfo nbajamr1RomDesc[] = {
 	
 	{ "l2_nba_jam_u3_sound_rom.u3",				0x020000, 0x3a3ea480, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "nbau12.u12",								0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "nbau13.u13",								0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_nba_jam_u12_sound_rom.u12",			0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "l1_nba_jam_u13_sound_rom.u13",			0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
 	{ "l1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6

@@ -791,19 +791,19 @@ struct BurnDriver BurnDrvOneshot = {
 // Mad Donna (set 1)
 
 static struct BurnRomInfo maddonnaRomDesc[] = {
-	{ "maddonna.b16",	0x20000, 0x643f9054, 1 | BRF_PRG | BRF_ESS }, //  0 68K code
-	{ "maddonna.b15",	0x20000, 0xe36c0e26, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "maddonna_tmad_b16_160595.ua24",	0x20000, 0x643f9054, 1 | BRF_PRG | BRF_ESS }, //  0 68K code
+	{ "maddonna_tmad_b15_160595.ua22",	0x20000, 0xe36c0e26, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "x13.ua2",		0x10000, 0xf2080071, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "maddonna_tmad_b13_160595.ua2",	0x10000, 0xf2080071, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "maddonna.b5",	0x80000, 0x838d3244, 3 | BRF_GRA },           //  3 Graphics
-	{ "maddonna.b7",	0x80000, 0x4920d2ec, 3 | BRF_GRA },           //  4
-	{ "maddonna.b9",	0x80000, 0x3a8a3feb, 3 | BRF_GRA },           //  5
-	{ "maddonna.b11",	0x80000, 0x6f9b7fdf, 3 | BRF_GRA },           //  6
-	{ "maddonna.b6",	0x80000, 0xb02e9e0e, 3 | BRF_GRA },           //  7
-	{ "maddonna.b8",	0x80000, 0x03f1de40, 3 | BRF_GRA },           //  8
-	{ "maddonna.b10",	0x80000, 0x87936423, 3 | BRF_GRA },           //  9
-	{ "maddonna.b12",	0x80000, 0x879ab23c, 3 | BRF_GRA },           // 10
+	{ "maddonna_tmad_b5_160595.ui16a",	0x80000, 0x838d3244, 3 | BRF_GRA },           //  3 Graphics
+	{ "maddonna_tmad_b7_160595.ui13a",	0x80000, 0x4920d2ec, 3 | BRF_GRA },           //  4
+	{ "maddonna_tmad_b9_160595.ui11a",	0x80000, 0x3a8a3feb, 3 | BRF_GRA },           //  5
+	{ "maddonna_tmad_b11_160595.ui8a",	0x80000, 0x6f9b7fdf, 3 | BRF_GRA },           //  6
+	{ "maddonna_tmad_b6_160595.ui16",	0x80000, 0xb02e9e0e, 3 | BRF_GRA },           //  7
+	{ "maddonna_tmad_b8_160595.ui13",	0x80000, 0x03f1de40, 3 | BRF_GRA },           //  8
+	{ "maddonna_tmad_b10_160595.ui11",	0x80000, 0x87936423, 3 | BRF_GRA },           //  9
+	{ "maddonna_tmad_b12_160595.ui8",	0x80000, 0x879ab23c, 3 | BRF_GRA },           // 10
 
 	{ "x1",				0x10000, 0x6b213183, 0 | BRF_OPT },           // 11 Unknown
 };

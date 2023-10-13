@@ -2009,9 +2009,9 @@ struct BurnDriver BurnDrvNeoGeoMV4F = {
 // Neo Geo CDZ system
 
 static struct BurnRomInfo neocdzRomDesc[] = {
-	{ "neocdz.bin",           0x080000, 0xDF9DE490, BRF_ESS | BRF_PRG | BRF_BIOS           },
-	{ "neocd-unibios33.bin",  0x080000, 0xff3abc59, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_OPT }, // by razoola!
-	{ "neocd-unibios32.bin",  0x080000, 0x0ffb3127, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_OPT }, // also by razoola!
+	{ "neocd.bin",            0x080000, 0xdf9de490, BRF_ESS | BRF_PRG | BRF_BIOS           },
+	{ "uni-bioscd33.rom",     0x080000, 0xff3abc59, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_OPT }, // by razoola!
+	{ "uni-bioscd32.rom",     0x080000, 0x0ffb3127, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_OPT }, // also by razoola!
 	{ "",                     0x000000, 0x00000000, 0                                      }, // spacer woman, she just wants to love you
 	{ "000-lo.lo",            0x020000, 0x5a86cff2, BRF_ESS | BRF_PRG | BRF_BIOS           },
 };

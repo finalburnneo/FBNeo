@@ -1091,7 +1091,7 @@ STD_ROM_FN(jojonr2)
 // ----------------------------------------------------------------------------------
 static struct BurnRomInfo jojobaRomDesc[] = {
 
-	{ "jojoba_euro_.29f400.u2",				0x080000, 0x63cc8800, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "jojoba_euro.29f400.u2",				0x080000, 0x63cc8800, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
 #if !defined ROM_VERIFY
 	JOJOBA_990927_FLASH

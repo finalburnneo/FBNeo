@@ -690,7 +690,7 @@ static struct BurnRomInfo exprraidRomDesc[] = {
 	{ "cz05.8f",		0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
 	{ "cz06.8h",		0x8000, 0xb9bb448b, 5 | BRF_GRA },           // 12
 
-	{ "cz03.12d",		0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
+	{ "cz03.12f",		0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
 
 	{ "cy-17.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
 	{ "cy-16.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
@@ -737,7 +737,7 @@ static struct BurnRomInfo exprraiduRomDesc[] = {
 	{ "cz05.8f",		0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
 	{ "cz06.8h",		0x8000, 0xb9bb448b, 5 | BRF_GRA },           // 12
 
-	{ "cz03.12d",		0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
+	{ "cz03.12f",		0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
 
 	{ "cy-17.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
 	{ "cy-16.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
@@ -784,7 +784,7 @@ static struct BurnRomInfo exprraidiRomDesc[] = {
 	{ "cz05.8f",		0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
 	{ "cz06.8h",		0x8000, 0xb9bb448b, 5 | BRF_GRA },           // 12
 
-	{ "cz03.12d",		0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
+	{ "cz03.12f",		0x8000, 0x6ce11971, 6 | BRF_GRA },           // 13 Background Tile Map
 
 	{ "cy-17.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
 	{ "cy-16.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
@@ -831,7 +831,7 @@ static struct BurnRomInfo wexpressRomDesc[] = {
 	{ "cy05.8f",		0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
 	{ "cy06.8h",		0x8000, 0xc3a56de5, 5 | BRF_GRA },           // 12
 
-	{ "cy03.12d",		0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
+	{ "cy03.12f",		0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
 
 	{ "cy-17.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
 	{ "cy-16.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
@@ -878,7 +878,7 @@ static struct BurnRomInfo wexpressb1RomDesc[] = {
 	{ "cy05.8f",		0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
 	{ "cy06.8h",		0x8000, 0xc3a56de5, 5 | BRF_GRA },           // 12
 
-	{ "cy03.12d",		0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
+	{ "cy03.12f",		0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
 
 	{ "cy-17.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
 	{ "cy-16.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
@@ -931,7 +931,7 @@ static struct BurnRomInfo wexpressb2RomDesc[] = {
 	{ "cy05.8f",		0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
 	{ "cy06.8h",		0x8000, 0xc3a56de5, 5 | BRF_GRA },           // 12
 
-	{ "cy03.12d",		0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
+	{ "cy03.12f",		0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
 
 	{ "cy-17.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
 	{ "cy-16.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15
@@ -981,7 +981,7 @@ static struct BurnRomInfo wexpressb3RomDesc[] = {
 	{ "cy05.8f",		0x8000, 0xc44570bf, 5 | BRF_GRA },           // 11
 	{ "cy06.8h",		0x8000, 0xc3a56de5, 5 | BRF_GRA },           // 12
 
-	{ "3.12d",			0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
+	{ "3.12f",			0x8000, 0x242e3e64, 6 | BRF_GRA },           // 13 Background Tile Map
 
 	{ "cy-17.5b",		0x0100, 0xda31dfbc, 7 | BRF_GRA },           // 14 Color Data
 	{ "cy-16.6b",		0x0100, 0x51f25b4c, 7 | BRF_GRA },           // 15

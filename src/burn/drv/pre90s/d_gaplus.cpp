@@ -1127,7 +1127,7 @@ static struct BurnRomInfo gapluseRomDesc[] = {
 	{ "gp7_2.8b",		0x2000, 0x12e47097, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "gp7_8.11d",		0x2000, 0xf5e056d1, 2 | BRF_PRG | BRF_ESS }, //  3 M6809 #1 Code
-	{ "gp2-7.11c",		0x2000, 0x0621f7df, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "gp2_7.11c",		0x2000, 0x0621f7df, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "gp7_6.11b",		0x2000, 0xc0b80680, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "gp2-1.4b",		0x2000, 0xed8aa206, 3 | BRF_GRA },           //  6 M6809 #2 Code

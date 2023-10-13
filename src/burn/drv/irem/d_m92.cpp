@@ -3038,7 +3038,7 @@ static struct BurnRomInfo gunforceRomDesc[] = {
 	{ "gf-da.ic8",			0x020000, 0x933ba935, 5 | BRF_SND },           // 14 Irem GA20 Samples
 
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 15 PLDs
-	{ "m92_-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
+	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 17
 	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 18
 	{ "m92_b-7h-.ic43",		0x000117, 0x5de0795b, 0 | BRF_OPT },           // 19
@@ -3164,8 +3164,8 @@ static struct BurnRomInfo uccopsRomDesc[] = {
 	{ "ucc_h1.ic27",		0x020000, 0x8d29bcd6, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ucc_l1.ic38",		0x020000, 0xa8a402d8, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ucc_e-sh0.ic30",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ucc_e-sl0.ic31",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ucc_e-sh0-.ic30",	0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ucc_e-sl0-.ic31",	0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "uc_w38m.ic26",		0x080000, 0x130a40e5, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "uc_w39m.ic25",		0x080000, 0xe42ca144, 3 | BRF_GRA },           //  7
@@ -3218,8 +3218,8 @@ static struct BurnRomInfo uccopsuRomDesc[] = {
 	{ "ucc_h1-g.ic27",		0x020000, 0x6b8ca2de, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ucc_l1-g.ic38",		0x020000, 0x2bdec7dd, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ucc_e-sh0.ic30",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ucc_e-sl0.ic31",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ucc_e-sh0-.ic30",	0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ucc_e-sl0-.ic31",	0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "uc_w38m.ic26",		0x080000, 0x130a40e5, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "uc_w39m.ic25",		0x080000, 0xe42ca144, 3 | BRF_GRA },           //  7
@@ -3994,7 +3994,7 @@ static struct BurnRomInfo majtitl2RomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4052,7 +4052,7 @@ static struct BurnRomInfo majtitl2bRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4151,7 +4151,7 @@ static struct BurnRomInfo majtitl2jRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4197,7 +4197,7 @@ static struct BurnRomInfo skingameRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4243,7 +4243,7 @@ static struct BurnRomInfo skingame2RomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 

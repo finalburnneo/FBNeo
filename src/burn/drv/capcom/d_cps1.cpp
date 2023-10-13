@@ -25260,7 +25260,7 @@ static struct BurnRomInfo SfachRomDesc[] = {
 	{ "sfz16",         0x080000, 0x19a5abd6, BRF_GRA | CPS1_TILES },
 	{ "sfz17",         0x080000, 0x248b3b73, BRF_GRA | CPS1_TILES },
 	
-	{ "sfz_09.12a",    0x010000, 0xc772628b, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "sfz09",         0x010000, 0xc772628b, BRF_PRG | CPS1_Z80_PROGRAM },
 	
 	{ "sfz18",         0x020000, 0x61022b2d, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "sfz19",         0x020000, 0x3b5886d5, BRF_SND | CPS1_OKIM6295_SAMPLES },

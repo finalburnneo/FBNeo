@@ -3244,7 +3244,7 @@ static struct BurnRomInfo frontlinRomDesc[] = {
 	
 	{ "eb16.ic22",			0x0100, 0xb833b5ea, 4 | BRF_GRA },           // 21 Layer Priority
 
-	{ "aa1.13.ic24",		0x0800, 0x7e78bdd3, 5 | BRF_PRG | BRF_ESS }, // 22 M68705 MCU Code
+	{ "aa1_13.ic24",		0x0800, 0x7e78bdd3, 5 | BRF_PRG | BRF_ESS }, // 22 M68705 MCU Code
 };
 
 STD_ROM_PICK(frontlin)

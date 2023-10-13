@@ -643,20 +643,20 @@ struct BurnDriver BurnDrvscregg = {
 // Eggs
 
 static struct BurnRomInfo eggsRomDesc[] = {
-	{ "e14.bin",      0x1000, 0x4e216f9d, 1 | BRF_ESS | BRF_PRG }, //  0 M6502 Code
-	{ "d14.bin",      0x1000, 0x4edb267f, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "c14.bin",      0x1000, 0x15a5c48c, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "b14.bin",      0x1000, 0x5c11c00e, 1 | BRF_ESS | BRF_PRG }, //  3
-	{ "a14.bin",      0x1000, 0x953faf07, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "d0a.e14",      0x1000, 0x4e216f9d, 1 | BRF_ESS | BRF_PRG }, //  0 M6502 Code
+	{ "d1b.d14",      0x1000, 0x4edb267f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "d2b.c14",      0x1000, 0x15a5c48c, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "d3a.b14",      0x1000, 0x5c11c00e, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "d4b.a14",      0x1000, 0x953faf07, 1 | BRF_ESS | BRF_PRG }, //  4
 
-	{ "j12.bin",      0x1000, 0xce4a2e46, 2 | BRF_GRA },	       //  5 Graphics
-	{ "j10.bin",      0x1000, 0xa1bcaffc, 2 | BRF_GRA },	       //  6
-	{ "h12.bin",      0x1000, 0x9562836d, 2 | BRF_GRA },	       //  7
-	{ "h10.bin",      0x1000, 0x3cfb3a8e, 2 | BRF_GRA },	       //  8
-	{ "g12.bin",      0x1000, 0x679f8af7, 2 | BRF_GRA },	       //  9
-	{ "g10.bin",      0x1000, 0x5b58d3b5, 2 | BRF_GRA },	       // 10
+	{ "d5a.j12",      0x1000, 0xce4a2e46, 2 | BRF_GRA },	       //  5 Graphics
+	{ "d6a.j10",      0x1000, 0xa1bcaffc, 2 | BRF_GRA },	       //  6
+	{ "d7a.h12",      0x1000, 0x9562836d, 2 | BRF_GRA },	       //  7
+	{ "d8a.h10",      0x1000, 0x3cfb3a8e, 2 | BRF_GRA },	       //  8
+	{ "d9a.g12",      0x1000, 0x679f8af7, 2 | BRF_GRA },	       //  9
+	{ "daa.g10",      0x1000, 0x5b58d3b5, 2 | BRF_GRA },	       // 10
 
-	{ "eggs.c6",      0x0020, 0xe8408c81, 3 | BRF_GRA },	       // 11 Palette
+	{ "dca.c6",      0x0020, 0xe8408c81, 3 | BRF_GRA },	           // 11 Palette
 
 	{ "db1.b4",       0x0020, 0x7cc4824b, 0 | BRF_OPT },	       // 12
 };

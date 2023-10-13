@@ -2126,10 +2126,10 @@ STD_ROM_PICK(Flickys2g)
 STD_ROM_FN(Flickys2g)
 
 static struct BurnRomInfo FlickyoRomDesc[] = {
-	{ "epr-5857.bin",      0x002000, 0xa65ac88e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "epr-5858a.bin",      0x002000, 0x18b412f4, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "epr-5859.bin",      0x002000, 0xa5558d7e, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	{ "epr-5860.bin",      0x002000, 0x1b35fef1, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
+	{ "epr-5857.ic129",    0x002000, 0xa65ac88e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-5858a.ic30",    0x002000, 0x18b412f4, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-5859.ic31",     0x002000, 0xa5558d7e, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "epr-5860.ic32",     0x002000, 0x1b35fef1, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  4	Z80 #2 Program Code
 
@@ -2562,14 +2562,14 @@ static struct BurnRomInfo Pitfall2RomDesc[] = {
 
 	{ "epr-6462.120",      0x002000, 0x86bb9185, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 
-	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
-	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
-	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
-	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
-	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
-	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
+	{ "epr-6474a.62",      0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-6473a.61",      0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-6472a.64",      0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-6471a.63",      0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-6470a.66",      0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-6469a.65",      0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
 
-	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6454a.117",     0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
 	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  	  // 11 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 12 Timing PROM

@@ -2750,7 +2750,7 @@ static struct BurnRomInfo dbreedm72RomDesc[] = {
 	{ "db_k804m.a0.ic21",	0x20000, 0x4c83e92e, 0x03 | BRF_GRA },              //  8 Foreground Tiles
 	{ "db_k805m.a1.ic22",	0x20000, 0x835ef268, 0x03 | BRF_GRA },              //  9
 	{ "db_k806m.a2.ic20",	0x20000, 0x5117f114, 0x03 | BRF_GRA },              // 10
-	{ "db_k807m.b3.ic24",	0x20000, 0x8eb0c978, 0x03 | BRF_GRA },              // 11
+	{ "db_k807m.a3.ic23",	0x20000, 0x8eb0c978, 0x03 | BRF_GRA },              // 11
 
 	{ "db_k804m.b0.ic26",	0x20000, 0x4c83e92e, 0x04 | BRF_GRA },              // 12 Background Tiles
 	{ "db_k805m.b1.ic27",	0x20000, 0x835ef268, 0x04 | BRF_GRA },              // 13

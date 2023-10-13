@@ -2857,8 +2857,8 @@ struct BurnDriver BurnDrvphotoy2k102j = {
    CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo puzlstarRomDesc[] = {
-	{ "PuzzleStar_u2_v100mg.u2",	0x0080000, 0x42aa03ce, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "PuzzleStar_u1_v100mg.u1",	0x0080000, 0xc6ee43d7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "puzzlestar_u2_v100mg.u2",	0x0080000, 0x42aa03ce, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "puzzlestar_u1_v100mg.u1",	0x0080000, 0xc6ee43d7, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "pgm_t0800.u5",	   			0x0200000, 0xf9d84e59, 2 | BRF_GRA }, 	        //  2 Tile data
 
@@ -4979,7 +4979,7 @@ struct BurnDriver BurnDrvPgm3in1c100 = {
    CREDITS TO: "GC8TECH.COM" */
 
 static struct BurnRomInfo happy6RomDesc[] = {
-	{ "S101xx_u5.u5",				0x0080000, 0xaa4646e3, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "s101xx_u5.u5",				0x0080000, 0xaa4646e3, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	
 	{ "t01w64m_u29.u29",   			0x0800000, 0x2d3feb8b, 2 | BRF_GRA },			//  1 Tile data
 

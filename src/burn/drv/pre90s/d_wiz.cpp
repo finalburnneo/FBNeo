@@ -45,6 +45,8 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
+static UINT8 (*colorram1_read)(UINT16) = NULL;
+
 static UINT8 Wizmode = 0;
 static UINT8 Scionmodeoffset = 0;
 
@@ -450,6 +452,44 @@ static struct BurnDIPInfo WizDIPList[]=
 
 STDDIPINFO(Wiz)
 
+static UINT8 wiz_colorram1_read(UINT16 offset)
+{
+	offset &= 0x3ff;
+
+	if (offset == 0)
+	{
+		switch (DrvColRAM1[0])
+		{
+			case 0x35: return 0x25;
+			case 0x8f: return 0x1f;
+			case 0xa0: return 0x00;
+		}
+	}
+
+	return DrvColRAM1[offset];
+}
+
+static UINT8 kungfuta_colorram1_read(UINT16 offset)
+{
+	offset &= 0x3ff;
+
+	if (offset == 0)
+	{
+		switch (DrvColRAM1[0])
+		{
+			case 0x3a: return 0x0a;
+			case 0x5a: return 0xda; // after bonus round, prevents infinite loop
+			case 0x7a: return 0xfa; // maybe not, condition is inverted
+			case 0xaa: return 0x0a; // all the time during gameplay, unknown purpose
+			case 0xba: return 0x0a; 
+			case 0xca: return 0xca; // game over, unknown purpose
+			case 0xff: return 0xff; // done before other checks, although code at 0xacc8 will skip 2nd check like this
+		}
+	}
+
+	return DrvColRAM1[offset];
+}
+
 static void __fastcall wiz_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -550,19 +590,8 @@ static UINT8 __fastcall wiz_main_read(UINT16 address)
 	// Wiz protection
 	if ((address & 0xfc00) == 0xd400)
 	{
-		if ((address & 0xff) == 0)
-		{
-			switch (DrvColRAM1[0])
-			{
-				case 0x35:
-					return 0x25;
-
-				case 0x8f:
-					return 0x1f;
-
-				case 0xa0:
-					return 0x00;
-			}
+		if (colorram1_read) {
+			return colorram1_read(address);
 		}
 
 		return DrvColRAM1[address & 0x3ff];
@@ -894,6 +923,7 @@ static INT32 DrvExit()
 
 	Wizmode = 0;
 	Scionmodeoffset = 0;
+	colorram1_read = NULL;
 
 	return 0;
 }
@@ -1172,6 +1202,7 @@ STD_ROM_FN(wiz)
 static INT32 WizInit()
 {
 	Wizmode = 1;
+	colorram1_read = wiz_colorram1_read;
 
 	return DrvInit(WizLoadRoms);
 }
@@ -1285,6 +1316,7 @@ STD_ROM_FN(kungfut)
 static INT32 KungfutInit()
 {
 	Wizmode = 1;
+
 	return DrvInit(KungfutLoadRoms);
 }
 
@@ -1323,15 +1355,25 @@ static struct BurnRomInfo kungfutaRomDesc[] = {
 STD_ROM_PICK(kungfuta)
 STD_ROM_FN(kungfuta)
 
+static INT32 KungfutaInit()
+{
+	Wizmode = 1;
+	colorram1_read = kungfuta_colorram1_read;
+
+	return DrvInit(KungfutLoadRoms);
+}
+
+
 struct BurnDriver BurnDrvKungfuta = {
 	"kungfuta", "kungfut", NULL, NULL, "1984",
 	"Kung-Fu Taikun (alt)\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kungfutaRomInfo, kungfutaRomName, NULL, NULL, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
-	KungfutInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
+	KungfutaInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
 	&DrvRecalc, 0x100, 256, 224, 4, 3
 };
+
 
 // Stinger
 

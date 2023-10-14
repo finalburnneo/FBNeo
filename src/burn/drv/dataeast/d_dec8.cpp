@@ -2388,7 +2388,7 @@ struct BurnDriver BurnDrvMeikyuhbl = {
 	"meikyuhbl", "ghostb", NULL, NULL, "1987",
 	"Meikyuu Hunter G (Japan, bootleg)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, meikyuhblRomInfo, meikyuhblRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -3052,7 +3052,7 @@ struct BurnDriver BurnDrvCobracomib = {
 	"cobracomib", "cobracom", NULL, NULL, "1988",
 	"Cobra-Command (Italian bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, cobracomibRomInfo, cobracomibRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -3103,7 +3103,7 @@ struct BurnDriver BurnDrvCobracomjb = {
 	"cobracomjb", "cobracom", NULL, NULL, "1988",
 	"Cobra-Command (Japan, bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, cobracomjbRomInfo, cobracomjbRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3

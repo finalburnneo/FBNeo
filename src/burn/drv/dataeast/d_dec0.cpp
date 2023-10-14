@@ -5898,7 +5898,7 @@ static INT32 SlyspyScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvBaddudes = {
 	"baddudes", NULL, NULL, NULL, "1988",
-	"Bad Dudes vs. Dragonninja (US)\0", NULL, "Data East USA", "DEC0",
+	"Bad Dudes vs. Dragonninja (US revision 1)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, BaddudesRomInfo, BaddudesRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
@@ -5938,7 +5938,7 @@ struct BurnDriver BurnDrvBirdtryb = {
 
 struct BurnDriver BurnDrvDrgninja = {
 	"drgninja", "baddudes", NULL, NULL, "1988",
-	"Dragonninja (Japan)\0", NULL, "Data East Corporation", "DEC0",
+	"Dragonninja (Japan revision 1)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,

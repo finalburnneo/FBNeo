@@ -1187,7 +1187,7 @@ struct BurnDriver BurnDrvBradley = {
 };
 
 
-// Red Baron (Revised Hardware)
+// Red Baron (revised hardware)
 
 static struct BurnRomInfo redbaronRomDesc[] = {
 	{ "037587-01.fh1",	0x1000, 0x60f23983, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1219,7 +1219,7 @@ STD_ROM_FN(redbaron)
 
 struct BurnDriver BurnDrvRedbaron = {
 	"redbaron", NULL, NULL, NULL, "1980",
-	"Red Baron (Revised Hardware)\0", NULL, "Atari", "Miscellaneous",
+	"Red Baron (revised hardware)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, redbaronRomInfo, redbaronRomName, NULL, NULL, NULL, NULL, RedbaronInputInfo, RedbaronDIPInfo,

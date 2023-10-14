@@ -13854,8 +13854,14 @@ static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
 	{ "ms6.u29",           0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
 	
 	{ "ms6.u133",          0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
-	
-	{ "ms6_gal20v8a.u104", 0x0000157, 0x67b56d29, BRF_OPT }, // pld devices
+
+	{ "ms6_gal16v8.u173",  0x0000117, 0x32dec205, BRF_OPT }, // pld devices
+	{ "ms6_gal16v8.u176",  0x0000117, 0xdeb37f27, BRF_OPT },
+	{ "ms6_gal16v8.u198",  0x0000117, 0xcd1246fe, BRF_OPT },
+	{ "ms6_gal20v8.u104",  0x0000157, 0x67b56d29, BRF_OPT },
+	{ "ms6_gal20v8.u234",  0x0000157, 0x2c16b7c6, BRF_OPT },
+	{ "ms6_gal22v10.u50",  0x00002e5, 0xdc665408, BRF_OPT },
+	{ "ms6_gal22v10.u134", 0x00002e5, 0xb66848bb, BRF_OPT },
 };
 
 STD_ROM_PICK(Sf2ceuab4)

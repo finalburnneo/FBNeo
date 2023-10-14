@@ -1559,7 +1559,7 @@ static INT32 SfuaInit()
 
 struct BurnDriver BurnDrvsfua = {
 	"sfua", "sf", NULL, NULL, "1987",
-	"Street Fighter (US set 2) (protected)\0", NULL, "Capcom", "Miscellaneous",
+	"Street Fighter (US, set 2) (protected)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
 	NULL, sfuaRomInfo, sfuaRomName, NULL, NULL, NULL, NULL, SfjInputInfo, SfusDIPInfo,
@@ -1722,7 +1722,7 @@ struct BurnDriver BurnDrvsfjan = {
 };
 
 
-// Street Fighter (Prototype)
+// Street Fighter (prototype)
 
 static struct BurnRomInfo sfpRomDesc[] = {
 	{ "prg8.2a",     	0x20000, 0xd48d06a3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1782,7 +1782,7 @@ static INT32 SfpInit()
 
 struct BurnDriver BurnDrvsfp = {
 	"sfp", "sf", NULL, NULL, "1987",
-	"Street Fighter (Prototype)\0", NULL, "Capcom", "Miscellaneous",
+	"Street Fighter (prototype)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
 	NULL, sfpRomInfo, sfpRomName, NULL, NULL, NULL, NULL, SfInputInfo, SfDIPInfo,

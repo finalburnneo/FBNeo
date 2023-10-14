@@ -766,7 +766,7 @@ struct BurnDriver BurnDrvDarksea1 = {
 };
 
 
-// Dark Seal (Japan)
+// Dark Seal (Japan revision 4)
 
 static struct BurnRomInfo darkseajRomDesc[] = {
 	{ "fz_04-4.j12",	0x20000, 0x817faa2c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -796,7 +796,7 @@ STD_ROM_FN(darkseaj)
 
 struct BurnDriver BurnDrvDarkseaj = {
 	"darksealj", "darkseal", NULL, NULL, "1990",
-	"Dark Seal (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Dark Seal (Japan revision 4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, darkseajRomInfo, darkseajRomName, NULL, NULL, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,

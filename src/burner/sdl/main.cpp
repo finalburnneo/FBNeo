@@ -257,7 +257,7 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 
 	va_list args;
 	va_start(args, pszFormat);
-	printf(pszFormat, args);
+	vfprintf(stderr, pszFormat, args);
 	va_end(args);
 
 	return 0;

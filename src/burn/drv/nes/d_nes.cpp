@@ -23739,9 +23739,9 @@ struct BurnDriver BurnDrvnes_mkmadnessmmc1 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Miroh (HB, v2.0)
+// Miroh (HB, v2.0.1)
 static struct BurnRomInfo nes_mirohv2RomDesc[] = {
-	{ "Miroh v2.0.0 (2023)(Wendel Scardua).nes",          65552, 0x2708ead1, BRF_ESS | BRF_PRG },
+	{ "Miroh v2.0.1 (2023)(Wendel Scardua).nes",          65552, 0xa3b6f766, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_mirohv2)
@@ -23749,7 +23749,7 @@ STD_ROM_FN(nes_mirohv2)
 
 struct BurnDriver BurnDrvnes_mirohv2 = {
 	"nes_mirohv2", NULL, NULL, NULL, "2023",
-	"Miroh (HB, v2.0)\0", NULL, "Wendel Scardua", "Miscellaneous",
+	"Miroh (HB, v2.0.1)\0", NULL, "Wendel Scardua", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PUZZLE, 0,
 	NESGetZipName, nes_mirohv2RomInfo, nes_mirohv2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -1024,7 +1024,7 @@ struct BurnDriver BurnDrvZerohoura = {
 };
 
 
-// Zero Hour (Inder)
+// Zero Hour (bootleg)
 
 static struct BurnRomInfo zerohouriRomDesc[] = {
 	{ "zhi.c8",			0x0800, 0x0dff4b48, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1049,7 +1049,7 @@ STD_ROM_FN(zerohouri)
 
 struct BurnDriver BurnDrvZerohouri = {
 	"zerohouri", "zerohour", NULL, "zerohour", "1980",
-	"Zero Hour (Inder)\0", NULL, "bootleg (Inder SA)", "Miscellaneous",
+	"Zero Hour (bootleg)\0", NULL, "bootleg (Inder SA)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zerohouriRomInfo, zerohouriRomName, NULL, NULL, zerohourSampleInfo, zerohourSampleName, RedclashInputInfo, ZerohourDIPInfo,

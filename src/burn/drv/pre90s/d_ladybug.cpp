@@ -1430,7 +1430,7 @@ struct BurnDriver BurnDrvLadybug = {
 };
 
 
-// Lady Bug (bootleg set 1)
+// Lady Bug (bootleg)
 
 static struct BurnRomInfo ladybugbRomDesc[] = {
 	{ "lb1a.cpu",		0x1000, 0xec135e54, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1456,16 +1456,16 @@ STD_ROM_FN(ladybugb)
 
 struct BurnDriver BurnDrvLadybugb = {
 	"ladybugb", "ladybug", NULL, NULL, "1981",
-	"Lady Bug (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Lady Bug (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ladybugbRomInfo, ladybugbRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
 };
 
 
-// Coccinelle (bootleg of Lady Bug, set 2)
+// Coccinelle (bootleg of Lady Bug)
 
 static struct BurnRomInfo ladybugb2RomDesc[] = {
 	{ "lb1b.cpu",		0x1000, 0x35d61e65, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1491,9 +1491,9 @@ STD_ROM_FN(ladybugb2)
 
 struct BurnDriver BurnDrvLadybugb2 = {
 	"ladybugb2", "ladybug", NULL, NULL, "1981",
-	"Coccinelle (bootleg of Lady Bug, set 2)\0", NULL, "bootleg (Model Racing)", "Miscellaneous",
+	"Coccinelle (bootleg of Lady Bug)\0", NULL, "bootleg (Model Racing)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, ladybugb2RomInfo, ladybugb2RomName, NULL, NULL, NULL, NULL, LadybugInputInfo, LadybugDIPInfo,
 	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	196, 240, 3, 4
@@ -1532,7 +1532,7 @@ STD_ROM_PICK(snapjack)
 STD_ROM_FN(snapjack)
 
 struct BurnDriver BurnDrvSnapjack = {
-	"snapjack", NULL, NULL, NULL, "1982",
+	"snapjack", NULL, NULL, NULL, "1981",
 	"Snap Jack\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
@@ -1615,7 +1615,7 @@ static INT32 DorodonInit()
 
 struct BurnDriver BurnDrvDorodon = {
 	"dorodon", NULL, NULL, NULL, "1982",
-	"Dorodon (set 1)\0", NULL, "Falcon", "Miscellaneous",
+	"Dorodon (set 1)\0", NULL, "UPL (Falcon license?)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dorodonRomInfo, dorodonRomName, NULL, NULL, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,
@@ -1650,7 +1650,7 @@ STD_ROM_FN(dorodon2)
 
 struct BurnDriver BurnDrvDorodon2 = {
 	"dorodon2", "dorodon", NULL, NULL, "1982",
-	"Dorodon (set 2)\0", NULL, "Falcon", "Miscellaneous",
+	"Dorodon (set 2)\0", NULL, "UPL (Falcon license?)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dorodon2RomInfo, dorodon2RomName, NULL, NULL, NULL, NULL, LadybugInputInfo, DorodonDIPInfo,

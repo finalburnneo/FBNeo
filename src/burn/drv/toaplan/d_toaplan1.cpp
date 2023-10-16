@@ -3884,7 +3884,7 @@ STD_ROM_PICK(samesamecn)
 STD_ROM_FN(samesamecn)
 
 struct BurnDriver BurnDrvSamesamecn = {
-	"samesamecn", "fireshrk", NULL, NULL, "1989",
+	"samesamecn", "fireshrk", NULL, NULL, "1990",
 	"Jiao! Jiao! Jiao! (China, 2P set)\0", NULL, "Toaplan (Hong Kong Honest Trading license)", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Jiao! Jiao! Jiao! (China, 2P set)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,

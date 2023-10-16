@@ -644,7 +644,7 @@ static INT32 fixeightktInit() { return DrvInit(0x00); }
 
 struct BurnDriver BurnDrvFixeightkt = {
 	"fixeightkt", "fixeight", NULL, NULL, "1992",
-	"FixEight (Korea, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight (Korea, Taito license)\0", NULL, "Toaplan (Taito license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeightktRomInfo, fixeightktRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,
@@ -704,7 +704,7 @@ static INT32 fixeighthtInit() { return DrvInit(0x02); }
 
 struct BurnDriver BurnDrvFixeightht = {
 	"fixeightht", "fixeight", NULL, NULL, "1992",
-	"FixEight (Hong Kong, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight (Hong Kong, Taito license)\0", NULL, "Toaplan (Taito license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeighthtRomInfo, fixeighthtRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,
@@ -764,7 +764,7 @@ static INT32 fixeighttwtInit() { return DrvInit(0x04); }
 
 struct BurnDriver BurnDrvFixeighttwt = {
 	"fixeighttwt", "fixeight", NULL, NULL, "1992",
-	"FixEight (Taiwan, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight (Taiwan, Taito license)\0", NULL, "Toaplan (Taito license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeighttwtRomInfo, fixeighttwtRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,
@@ -825,7 +825,7 @@ static INT32 fixeightatInit() { return DrvInit(0x06); }
 
 struct BurnDriver BurnDrvFixeightat = {
 	"fixeightat", "fixeight", NULL, NULL, "1992",
-	"FixEight (Southeast Asia, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight (Southeast Asia, Taito license)\0", NULL, "Toaplan (Taito license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeightatRomInfo, fixeightatRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,
@@ -885,7 +885,7 @@ static INT32 fixeighttInit() { return DrvInit(0x08); }
 
 struct BurnDriver BurnDrvFixeightt = {
 	"fixeightt", "fixeight", NULL, NULL, "1992",
-	"FixEight (Europe, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight (Europe, Taito license)\0", NULL, "Toaplan (Taito license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeighttRomInfo, fixeighttRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,
@@ -915,7 +915,7 @@ static INT32 fixeightutInit() { return DrvInit(0x0a); }
 
 struct BurnDriver BurnDrvFixeightut = {
 	"fixeightut", "fixeight", NULL, NULL, "1992",
-	"FixEight (USA, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight (USA, Taito license)\0", NULL, "Toaplan (Taito license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeightutRomInfo, fixeightutRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,
@@ -975,7 +975,7 @@ static INT32 fixeightjtInit() { return DrvInit(0x0e); }
 
 struct BurnDriver BurnDrvFixeightjt = {
 	"fixeightjt", "fixeight", NULL, NULL, "1992",
-	"FixEight - Jigoku no Eiyuu Densetsu (Japan, Taito license)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"FixEight - Jigoku no Eiyuu Densetsu (Japan, Taito license)\0", NULL, "Toaplan (Taito license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 3, HARDWARE_TOAPLAN_68K_Zx80, GBF_RUNGUN, 0,
 	NULL, fixeightjtRomInfo, fixeightjtRomName, NULL, NULL, NULL, NULL, FixeightInputInfo, NULL,

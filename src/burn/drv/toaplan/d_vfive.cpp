@@ -666,7 +666,7 @@ struct BurnDriver BurnDrvGrindStormer = {
 
 struct BurnDriver BurnDrvGrindStormerA = {
 	"grindstma", "grindstm", NULL, NULL, "1992",
-	"Grind Stormer (older set)\0", NULL, "Toaplan GP9001 based", "Toaplan",
+	"Grind Stormer (older set)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, grindstaRomInfo, grindstaRomName, NULL, NULL, NULL, NULL, vfiveInputInfo, grindstmDIPInfo,

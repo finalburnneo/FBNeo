@@ -1338,7 +1338,7 @@ struct BurnDriver BurnDrvPerfrmanu = {
 };
 
 
-// Tiger Heli (US)
+// Tiger-Heli (US)
 
 static struct BurnRomInfo tigerhRomDesc[] = {
 	{ "a47_00-1.8p",		0x4000, 0x4be73246, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1383,7 +1383,7 @@ static INT32 TigerhInit()
 
 struct BurnDriver BurnDrvTigerh = {
 	"tigerh", NULL, NULL, NULL, "1985",
-	"Tiger Heli (US)\0", NULL, "Toaplan / Taito America Corp.", "Miscellaneous",
+	"Tiger-Heli (US)\0", NULL, "Toaplan / Taito America Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhRomInfo, tigerhRomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
@@ -1392,7 +1392,7 @@ struct BurnDriver BurnDrvTigerh = {
 };
 
 
-// Tiger Heli (Japan)
+// Tiger-Heli (Japan)
 
 static struct BurnRomInfo tigerhjRomDesc[] = {
 	{ "a47_00.8p",			0x4000, 0xcbdbe3cc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1426,7 +1426,7 @@ STD_ROM_FN(tigerhj)
 
 struct BurnDriver BurnDrvTigerhj = {
 	"tigerhj", "tigerh", NULL, NULL, "1985",
-	"Tiger Heli (Japan)\0", NULL, "Toaplan / Taito", "Miscellaneous",
+	"Tiger-Heli (Japan)\0", NULL, "Toaplan / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhjRomInfo, tigerhjRomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
@@ -1435,7 +1435,7 @@ struct BurnDriver BurnDrvTigerhj = {
 };
 
 
-// Tiger Heli (bootleg set 1)
+// Tiger-Heli (bootleg set 1)
 
 static struct BurnRomInfo tigerhb1RomDesc[] = {
 	{ "b0.5",				0x4000, 0x6ae7e13c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1490,7 +1490,7 @@ static INT32 Tigerhb1Init()
 
 struct BurnDriver BurnDrvTigerhb1 = {
 	"tigerhb1", "tigerh", NULL, NULL, "1985",
-	"Tiger Heli (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Tiger-Heli (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhb1RomInfo, tigerhb1RomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
@@ -1499,7 +1499,7 @@ struct BurnDriver BurnDrvTigerhb1 = {
 };
 
 
-// Tiger Heli (bootleg set 2)
+// Tiger-Heli (bootleg set 2)
 
 static struct BurnRomInfo tigerhb2RomDesc[] = {
 	{ "rom00_09",			0x4000, 0xef738c68, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1531,7 +1531,7 @@ STD_ROM_FN(tigerhb2)
 
 struct BurnDriver BurnDrvTigerhb2 = {
 	"tigerhb2", "tigerh", NULL, NULL, "1985",
-	"Tiger Heli (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Tiger-Heli (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhb2RomInfo, tigerhb2RomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,
@@ -1540,7 +1540,7 @@ struct BurnDriver BurnDrvTigerhb2 = {
 };
 
 
-// Tiger Heli (bootleg set 3)
+// Tiger-Heli (bootleg set 3)
 
 static struct BurnRomInfo tigerhb3RomDesc[] = {
 	{ "14",					0x4000, 0xca59dd73, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1572,7 +1572,7 @@ STD_ROM_FN(tigerhb3)
 
 struct BurnDriver BurnDrvTigerhb3 = {
 	"tigerhb3", "tigerh", NULL, NULL, "1985",
-	"Tiger Heli (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
+	"Tiger-Heli (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, tigerhb3RomInfo, tigerhb3RomName, NULL, NULL, NULL, NULL, TigerhInputInfo, TigerhDIPInfo,

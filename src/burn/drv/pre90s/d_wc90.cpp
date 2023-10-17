@@ -1264,7 +1264,7 @@ struct BurnDriver BurnDrvYm2608 = {
 
 struct BurnDriver BurnDrvWc90 = {
 	"twcup90", NULL, "ym2608", NULL, "1989",
-	"World Cup '90 (World, set 1)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (World set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90RomInfo, Wc90RomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
@@ -1274,7 +1274,7 @@ struct BurnDriver BurnDrvWc90 = {
 
 struct BurnDriver BurnDrvWc90a = {
 	"twcup90a", "twcup90", "ym2608", NULL, "1989",
-	"World Cup '90 (Euro set 1)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (Euro set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90aRomInfo, Wc90aRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
@@ -1284,7 +1284,7 @@ struct BurnDriver BurnDrvWc90a = {
 
 struct BurnDriver BurnDrvWc90b = {
 	"twcup90b", "twcup90", "ym2608", NULL, "1989",
-	"World Cup '90 (Euro set 2)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (Euro set 2)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90bRomInfo, Wc90bRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
@@ -1294,7 +1294,7 @@ struct BurnDriver BurnDrvWc90b = {
 
 struct BurnDriver BurnDrvWc90c = {
 	"twcup90c", "twcup90", "ym2608", NULL, "1989",
-	"World Cup '90 (Euro set 3)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (Euro set 3)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90cRomInfo, Wc90cRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
@@ -1304,7 +1304,7 @@ struct BurnDriver BurnDrvWc90c = {
 
 struct BurnDriver BurnDrvWc90t = {
 	"twcup90t", "twcup90", "ym2608", NULL, "1989",
-	"World Cup '90 (trackball)\0", NULL, "Tecmo", "Miscellaneous",
+	"Tecmo World Cup '90 (trackball set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90tRomInfo, Wc90tRomName, NULL, NULL, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,

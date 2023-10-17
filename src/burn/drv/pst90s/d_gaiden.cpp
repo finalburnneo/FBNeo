@@ -2004,7 +2004,7 @@ struct BurnDriver BurnDrvRaiga = {
 };
 
 
-// Dragon Bowl
+// Dragon Bowl (set 1, encrypted program)
 
 static struct BurnRomInfo drgnbowlRomDesc[] = {
 	{ "4.3h",		  	0x20000, 0x90730008, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2052,7 +2052,7 @@ static INT32 drgnbowlInit()
 
 struct BurnDriver BurnDrvDrgnbowl = {
 	"drgnbowl", NULL, NULL, NULL, "1992",
-	"Dragon Bowl\0", NULL, "Nics", "Miscellaneous",
+	"Dragon Bowl (set 1, encrypted program)\0", NULL, "Nics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, drgnbowlRomInfo, drgnbowlRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrgnbowlDIPInfo,

@@ -1145,7 +1145,7 @@ STD_ROM_FN(Gngc)
 
 struct BurnDriver BurnDrvGngc = {
 	"gngc", "gng", NULL, NULL, "1985",
-	"Ghosts'n Goblins (World Revision C)\0", NULL, "Capcom", "Miscellaneous",
+	"Ghosts'n Goblins (World? set 3)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, GngcRomInfo, GngcRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
@@ -1186,7 +1186,7 @@ STD_ROM_FN(Makaimur)
 
 struct BurnDriver BurnDrvMakaimur = {
 	"makaimur", "gng", NULL, NULL, "1985",
-	"Makai-Mura (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	"Makaimura (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimurRomInfo, MakaimurRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
@@ -1227,7 +1227,7 @@ STD_ROM_FN(Makaimuc)
 
 struct BurnDriver BurnDrvMakaimuc = {
 	"makaimurc", "gng", NULL, NULL, "1985",
-	"Makai-Mura (Japan revision C)\0", NULL, "Capcom", "Miscellaneous",
+	"Makaimura (Japan Revision C)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimucRomInfo, MakaimucRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
@@ -1268,7 +1268,7 @@ STD_ROM_FN(Makaimug)
 
 struct BurnDriver BurnDrvMakaimug = {
 	"makaimurg", "gng", NULL, NULL, "1985",
-	"Makai-Mura (Japan revision G)\0", NULL, "Capcom", "Miscellaneous",
+	"Makaimura (Japan Revision G)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
 	NULL, MakaimugRomInfo, MakaimugRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,

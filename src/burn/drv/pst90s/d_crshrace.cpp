@@ -713,7 +713,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Lethal Crash Race (set 1)
+// Lethal Crash Race / Bakuretsu Crash Race (set 1)
 
 static struct BurnRomInfo crshraceRomDesc[] = {
 	{ "1.ic10",			0x080000, 0x21e34fb7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -740,7 +740,7 @@ STD_ROM_FN(crshrace)
 
 struct BurnDriver BurnDrvCrshrace = {
 	"crshrace", NULL, NULL, NULL, "1993",
-	"Lethal Crash Race (set 1)\0", NULL, "Video System Co.", "Miscellaneous",
+	"Lethal Crash Race / Bakuretsu Crash Race (set 1)\0", NULL, "Video System Co.", "Miscellaneous",
 	L"Lethal Crash Race\0\u7206\u70C8 \u30AF\u30E9\u30C3\u30B7\u30E5 \u30EC\u30FC\u30B9 (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, crshraceRomInfo, crshraceRomName, NULL, NULL, NULL, NULL, CrshraceInputInfo, CrshraceDIPInfo,
@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvCrshrace = {
 };
 
 
-// Lethal Crash Race (set 2)
+// Lethal Crash Race / Bakuretsu Crash Race (set 2)
 
 static struct BurnRomInfo crshrace2RomDesc[] = {
 	{ "01.ic10",		0x080000, 0xb284aacd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -776,7 +776,7 @@ STD_ROM_FN(crshrace2)
 
 struct BurnDriver BurnDrvCrshrace2 = {
 	"crshrace2", "crshrace", NULL, NULL, "1993",
-	"Lethal Crash Race (set 2)\0", NULL, "Video System Co.", "Miscellaneous",
+	"Lethal Crash Race / Bakuretsu Crash Race (set 2)\0", NULL, "Video System Co.", "Miscellaneous",
 	L"Lethal Crash Race\0\u7206\u70C8 \u30AF\u30E9\u30C3\u30B7\u30E5 \u30EC\u30FC\u30B9 (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, crshrace2RomInfo, crshrace2RomName, NULL, NULL, NULL, NULL,  CrshraceInputInfo,  CrshraceDIPInfo,
@@ -785,7 +785,7 @@ struct BurnDriver BurnDrvCrshrace2 = {
 };
 
 
-// Lethal Crash Race (set 2, alternate sound ROM)
+// Lethal Crash Race / Bakuretsu Crash Race (set 2, alternate sound ROM)
 
 static struct BurnRomInfo crshrace2aRomDesc[] = {
 	{ "01.ic10",		0x080000, 0xb284aacd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -812,7 +812,7 @@ STD_ROM_FN(crshrace2a)
 
 struct BurnDriver BurnDrvCrshrace2a = {
 	"crshrace2a", "crshrace", NULL, NULL, "1993",
-	"Lethal Crash Race (set 2, alternate sound ROM)\0", NULL, "Video System Co.", "Miscellaneous",
+	"Lethal Crash Race / Bakuretsu Crash Race (set 2, alternate sound ROM)\0", NULL, "Video System Co.", "Miscellaneous",
 	L"Lethal Crash Race\0\u7206\u70C8 \u30AF\u30E9\u30C3\u30B7\u30E5 \u30EC\u30FC\u30B9 (set 2, alternate sound ROM)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, crshrace2aRomInfo, crshrace2aRomName, NULL, NULL, NULL, NULL,  CrshraceInputInfo,  CrshraceDIPInfo,

@@ -44177,6 +44177,24 @@ struct BurnDriver BurnDrvmd_capoeira = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Cascade (HB) (Unl)
+static struct BurnRomInfo md_cascadeRomDesc[] = {
+	{ "cascade (world) (unl).md", 524288, 0xe7b287fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cascade)
+STD_ROM_FN(md_cascade)
+
+struct BurnDriver BurnDrvmd_cascade = {
+	"md_cascade", NULL, NULL, NULL, "2015",
+	"Cascade (HB) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_cascadeRomInfo, md_cascadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Cave Story Doukutsu (HB, en, v0.8.0)
 // https://github.com/andwn/cave-story-md/releases/tag/v0.8.0
 static struct BurnRomInfo md_cavestoryRomDesc[] = {
@@ -46956,6 +46974,44 @@ struct BurnDriver BurnDrvmd_issdxrne = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Madou Monogatari I (Hack, English v1.1)
+// http://www.romhacking.net/translations/5388/
+static struct BurnRomInfo md_madoumoneRomDesc[] = {
+	{ "Madou Monogatari I T-Eng v1.1 (2021)(LIPEMCO! Translations).bin", 4194304, 0xfac8d75d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_madoumone)
+STD_ROM_FN(md_madoumone)
+
+struct BurnDriver BurnDrvmd_madoumone = {
+	"md_madoumone", "md_madoumon", NULL, NULL, "2021",
+	"Madou Monogatari I (Hack, English v1.1)\0", NULL, "LIPEMCO! Translations", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_madoumoneRomInfo, md_madoumoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Magical Kid Taruruto (Hack, English)
+// https://www.romhacking.net/translations/7071/
+static struct BurnRomInfo md_mtaruruenRomDesc[] = {
+	{ "Magical Kid Taruruto T-Eng (2023)(tryphon).bin", 591064, 0xcb4d575f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mtaruruen)
+STD_ROM_FN(md_mtaruruen)
+
+struct BurnDriver BurnDrvmd_mtaruruen = {
+	"md_mtaruruen", "md_mtaruru", NULL, NULL, "2023",
+	"Magical Kid Taruruto (Hack, English)\0", NULL, "tryphon", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_mtaruruenRomInfo, md_mtaruruenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mortal Kombat 3 Mini - Hack by Nemesis_c, r57shell
 static struct BurnRomInfo md_mk3mRomDesc[] = {
 	{ "Mortal Kombat 3 Mini-Hack.bin", 0x400000, 0xD925AA80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -47006,6 +47062,24 @@ struct BurnDriver BurnDrvmd_rnrracinh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
 	MegadriveGetZipName, md_rnrracinhRomInfo, md_rnrracinhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sega Sonic Bros. C2 Port, revision 2
+static struct BurnRomInfo md_ssonicbror2RomDesc[] = {
+	{ "SegaSonicBrosMDRev2.bin", 0xc0000, 0x91537567, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ssonicbror2)
+STD_ROM_FN(md_ssonicbror2)
+
+struct BurnDriver BurnDrvmd_ssonicbror2 = {
+	"md_ssonicbror2", NULL, NULL, NULL, "1992-2018",
+	"Sega Sonic Bros. (C2 Port, Rev.2)\0", NULL, "Dustin O'Dell", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_ssonicbror2RomInfo, md_ssonicbror2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -47465,44 +47539,7 @@ struct BurnDriver BurnDrvmd_wwfroyalimp = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Sega Sonic Bros. C2 Port, revision 2
-static struct BurnRomInfo md_ssonicbror2RomDesc[] = {
-	{ "SegaSonicBrosMDRev2.bin", 0xc0000, 0x91537567, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_ssonicbror2)
-STD_ROM_FN(md_ssonicbror2)
-
-struct BurnDriver BurnDrvmd_ssonicbror2 = {
-	"md_ssonicbror2", NULL, NULL, NULL, "1992-2018",
-	"Sega Sonic Bros. (C2 Port, Rev.2)\0", NULL, "Dustin O'Dell", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_ssonicbror2RomInfo, md_ssonicbror2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Madou Monogatari I (Hack, English v1.1)
-// http://www.romhacking.net/translations/5388/
-static struct BurnRomInfo md_madoumoneRomDesc[] = {
-	{ "Madou Monogatari I T-Eng v1.1 (2021)(LIPEMCO! Translations).bin", 4194304, 0xfac8d75d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_madoumone)
-STD_ROM_FN(md_madoumone)
-
-struct BurnDriver BurnDrvmd_madoumone = {
-	"md_madoumone", "md_madoumon", NULL, NULL, "2021",
-	"Madou Monogatari I (Hack, English v1.1)\0", NULL, "LIPEMCO! Translations", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_madoumoneRomInfo, md_madoumoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Beggar Prince - English Version (HB, rev1) (Unl)
+// Beggar Prince - English Version (World, rev1) (Unl)
 static struct BurnRomInfo md_begprinceRomDesc[] = {
 	{ "beggar prince (world) (rev 1) (unl).md", 4194304, 0x6332edcc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -47516,24 +47553,6 @@ struct BurnDriver BurnDrvmd_begprince = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_begprinceRomInfo, md_begprinceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Cascade (HB) (Unl)
-static struct BurnRomInfo md_cascadeRomDesc[] = {
-	{ "cascade (world) (unl).md", 524288, 0xe7b287fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_cascade)
-STD_ROM_FN(md_cascade)
-
-struct BurnDriver BurnDrvmd_cascade = {
-	"md_cascade", NULL, NULL, NULL, "2015",
-	"Cascade (HB) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_cascadeRomInfo, md_cascadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

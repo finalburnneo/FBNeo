@@ -645,8 +645,8 @@ struct BurnDriver BurnDrvDoDonpachi = {
 
 struct BurnDriver BurnDrvDoDonpachiJ = {
 	"ddonpachj", "ddonpach", NULL, NULL, "1997",
-	"DoDonPachi (DoDonPachi (Japan, 1997 2/ 5 Master Ver.)\0", NULL, "Cave (Atlus license)", "Cave",
-	L"\u6012\u9996\u9818\u8702 DoDonPachi (DoDonPachi (Japan, 1997 2/ 5 Master Ver.)\0", NULL, NULL, NULL,
+	"DoDonPachi (Japan, 1997 2/ 5 Master Ver.)\0", NULL, "Cave (Atlus license)", "Cave",
+	L"\u6012\u9996\u9818\u8702 DoDonPachi (Japan, 1997 2/ 5 Master Ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddonpachjRomInfo, ddonpachjRomName, NULL, NULL, NULL, NULL, ddonpachInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,

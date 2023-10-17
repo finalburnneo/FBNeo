@@ -1147,7 +1147,7 @@ struct BurnDriver BurnDrvKyros = {
 
 struct BurnDriver BurnDrvKyrosj = {
 	"kyrosj", "kyros", NULL, NULL, "1986",
-	"Kyros No Yakata (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
+	"Kyros no Yakata (Japan)\0", NULL, "Alpha Denshi Co.", "Alpha 68k",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, KyrosjRomInfo, KyrosjRomName, NULL, NULL, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,

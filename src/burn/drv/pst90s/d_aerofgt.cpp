@@ -2795,7 +2795,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Aero Fighters
+// Aero Fighters (World / USA + Canada / Korea / Hong Kong / Taiwan) (newer hardware)
 
 static struct BurnRomInfo aerofgtRomDesc[] = {
 	{ "1.u4",    	  0x080000, 0x6fdff0a2, BRF_ESS | BRF_PRG }, // 68000 code swapped
@@ -2818,7 +2818,7 @@ STD_ROM_FN(aerofgt)
 
 struct BurnDriver BurnDrvAerofgt = {
 	"aerofgt", NULL, NULL, NULL, "1992",
-	"Aero Fighters\0", NULL, "Video System Co.", "Video System",
+	"Aero Fighters (World / USA + Canada / Korea / Hong Kong / Taiwan) (newer hardware)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
 	NULL, aerofgtRomInfo, aerofgtRomName, NULL, NULL, NULL, NULL, aerofgtInputInfo, aerofgtDIPInfo,
@@ -2995,7 +2995,7 @@ struct BurnDriver BurnDrvTurbofrcua = {
 };
 
 
-// Aero Fighters (Turbo Force hardware set 1)
+// Aero Fighters (Taiwan / Japan, set 1)
 
 static struct BurnRomInfo aerofgtbRomDesc[] = {
 	{ "v2",    	      0x040000, 0x5c9de9f0, BRF_ESS | BRF_PRG }, // 68000 code swapped
@@ -3021,7 +3021,7 @@ STD_ROM_FN(aerofgtb)
 
 struct BurnDriver BurnDrvAerofgtb = {
 	"aerofgtb", "aerofgt", NULL, NULL, "1992",
-	"Aero Fighters (Turbo Force hardware set 1)\0", NULL, "Video System Co.", "Video System",
+	"Aero Fighters (Taiwan / Japan, set 1)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
 	NULL, aerofgtbRomInfo, aerofgtbRomName, NULL, NULL, NULL, NULL, aerofgtInputInfo, aerofgtbDIPInfo,
@@ -3030,7 +3030,7 @@ struct BurnDriver BurnDrvAerofgtb = {
 };
 
 
-// Aero Fighters (Turbo Force hardware set 2)
+// Aero Fighters (Taiwan / Japan, set 2)
 
 static struct BurnRomInfo aerofgtcRomDesc[] = {
 	{ "v2.149",       0x040000, 0xf187aec6, BRF_ESS | BRF_PRG }, // 68000 code swapped
@@ -3056,7 +3056,7 @@ STD_ROM_FN(aerofgtc)
 
 struct BurnDriver BurnDrvAerofgtc = {
 	"aerofgtc", "aerofgt", NULL, NULL, "1992",
-	"Aero Fighters (Turbo Force hardware set 2)\0", NULL, "Video System Co.", "Video System",
+	"Aero Fighters (Taiwan / Japan, set 2)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
 	NULL, aerofgtcRomInfo, aerofgtcRomName, NULL, NULL, NULL, NULL, aerofgtInputInfo, aerofgtDIPInfo,

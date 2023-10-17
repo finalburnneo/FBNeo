@@ -664,7 +664,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Relief Pitcher (set 1, 07 Jun 1992 / 28 May 1992)
+// Relief Pitcher (Rev D, 07 Jun 1992 / 28 May 1992)
 
 static struct BurnRomInfo reliefRomDesc[] = {
 	{ "136093-0011d_cs_acff.19e",	0x20000, 0xcb3f73ad, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -698,7 +698,7 @@ STD_ROM_FN(relief)
 
 struct BurnDriver BurnDrvRelief = {
 	"relief", NULL, NULL, NULL, "1992",
-	"Relief Pitcher (set 1, 07 Jun 1992 / 28 May 1992)\0", NULL, "Atari Games", "Miscellaneous",
+	"Relief Pitcher (Rev D, 07 Jun 1992 / 28 May 1992)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, reliefRomInfo, reliefRomName, NULL, NULL, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
@@ -707,7 +707,7 @@ struct BurnDriver BurnDrvRelief = {
 };
 
 
-// Relief Pitcher (set 2, 26 Apr 1992 / 08 Apr 1992)
+// Relief Pitcher (Rev C, 26 Apr 1992 / 08 Apr 1992)
 
 static struct BurnRomInfo relief2RomDesc[] = {
 	{ "136093-0011c_cs_baff.19e",	0x20000, 0x41373e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -741,7 +741,7 @@ STD_ROM_FN(relief2)
 
 struct BurnDriver BurnDrvRelief2 = {
 	"relief2", "relief", NULL, NULL, "1992",
-	"Relief Pitcher (set 2, 26 Apr 1992 / 08 Apr 1992)\0", NULL, "Atari Games", "Miscellaneous",
+	"Relief Pitcher (Rev C, 26 Apr 1992 / 08 Apr 1992)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, relief2RomInfo, relief2RomName, NULL, NULL, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,
@@ -750,7 +750,7 @@ struct BurnDriver BurnDrvRelief2 = {
 };
 
 
-// Relief Pitcher (set 3, 10 Apr 1992 / 08 Apr 1992)
+// Relief Pitcher (Rev B, 10 Apr 1992 / 08 Apr 1992)
 
 static struct BurnRomInfo relief3RomDesc[] = {
 	{ "136093-0011b_cs_23ff.19e",	0x20000, 0x794cea33, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -784,7 +784,7 @@ STD_ROM_FN(relief3)
 
 struct BurnDriver BurnDrvRelief3 = {
 	"relief3", "relief", NULL, NULL, "1992",
-	"Relief Pitcher (set 3, 10 Apr 1992 / 08 Apr 1992)\0", NULL, "Atari Games", "Miscellaneous",
+	"Relief Pitcher (Rev B, 10 Apr 1992 / 08 Apr 1992)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, relief3RomInfo, relief3RomName, NULL, NULL, NULL, NULL, ReliefInputInfo, ReliefDIPInfo,

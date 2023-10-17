@@ -1484,10 +1484,10 @@ INT32 NavaroneInit()
 // Navarone
 
 static struct BurnRomInfo navaroneRomDesc[] = {
-	{ "navalone.p1",	0x0800, 0x5a32016b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "navalone.p2",	0x0800, 0xb1c86fe3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "navarone.p1",	0x0800, 0x5a32016b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "navarone.p2",	0x0800, 0xb1c86fe3, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "navalone.chr",	0x0800, 0xb26c6170, 2 | BRF_GRA }, //  2 gfx1
+	{ "navarone.chr",	0x0800, 0xb26c6170, 2 | BRF_GRA }, //  2 gfx1
 };
 
 STD_ROM_PICK(navarone)

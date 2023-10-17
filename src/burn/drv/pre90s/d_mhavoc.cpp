@@ -927,7 +927,7 @@ static struct BurnRomInfo mhavocRomDesc[] = {
 
 	{ "136025.108",		0x4000, 0x93faf210, 2 | BRF_PRG | BRF_ESS }, //  7 M6502 #1 Code
 
-	{ "036408-01.b1",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
+	{ "136002-125.6c",	0x0100, 0x5903af03, 3 | BRF_GRA },           //  8 AVG PROM
 };
 
 STD_ROM_PICK(mhavoc)

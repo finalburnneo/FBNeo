@@ -846,7 +846,7 @@ struct BurnDriver BurnDrvPbaction4 = {
 };
 
 
-// Pinball Action (Tecfi License)
+// Pinball Action (Tecfri license)
 
 static struct BurnRomInfo pbactiontRomDesc[] = {
 	{ "pba16.bin",			0x4000, 0x4a239ebd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -876,7 +876,7 @@ STD_ROM_FN(pbactiont)
 
 struct BurnDriver BurnDrvPbactiont = {
 	"pbactiont", "pbaction", NULL, NULL, "1985",
-	"Pinball Action (Tecfri License)\0", NULL, "Tehkan", "Miscellaneous",
+	"Pinball Action (Tecfri license)\0", NULL, "Tehkan (Tecfri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, pbactiontRomInfo, pbactiontRomName, NULL, NULL, NULL, NULL, PbactionInputInfo, PbactionDIPInfo,

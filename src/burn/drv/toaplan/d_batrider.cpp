@@ -1154,7 +1154,7 @@ STD_ROM_FN(batridta)
 
 struct BurnDriver BurnDrvBatrid = {
 	"batrider", NULL, NULL, NULL, "1998",
-	"Armed Police Batrider (Europe) (Fri Feb 13 1998)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (Europe) (Fri Feb 13 1998)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batridRomInfo, batridRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batridDIPInfo,
@@ -1164,7 +1164,7 @@ struct BurnDriver BurnDrvBatrid = {
 
 struct BurnDriver BurnDrvBatridu = {
 	"batrideru", "batrider", NULL, NULL, "1998",
-	"Armed Police Batrider (U.S.A.) (Fri Feb 13 1998)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (USA) (Fri Feb 13 1998)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batriduRomInfo, batriduRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batriduDIPInfo,
@@ -1174,7 +1174,7 @@ struct BurnDriver BurnDrvBatridu = {
 
 struct BurnDriver BurnDrvBatridc = {
 	"batriderc", "batrider", NULL, NULL, "1998",
-	"Armed Police Batrider (China) (Fri Feb 13 1998)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (China) (Fri Feb 13 1998)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batridcRomInfo, batridcRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batridcDIPInfo,
@@ -1184,7 +1184,7 @@ struct BurnDriver BurnDrvBatridc = {
 
 struct BurnDriver BurnDrvBatridhk = {
 	"batriderhk", "batrider", NULL, NULL, "1998",
-	"Armed Police Batrider - A Version (Hong Kong) (Mon Dec 22 1997)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (Hong Kong) (Mon Dec 22 1997)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batridhkRomInfo, batridhkRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batridhkDIPInfo,
@@ -1194,7 +1194,7 @@ struct BurnDriver BurnDrvBatridhk = {
 
 struct BurnDriver BurnDrvBatridj = {
 	"batriderj", "batrider", NULL, NULL, "1998",
-	"Armed Police Batrider - B Version (Japan) (Fri Feb 13 1998)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (Japan, B version) (Fri Feb 13 1998)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batridjRomInfo, batridjRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batriderDIPInfo,
@@ -1204,7 +1204,7 @@ struct BurnDriver BurnDrvBatridj = {
 
 struct BurnDriver BurnDrvBatridk = {
 	"batriderk", "batrider", NULL, NULL, "1998",
-	"Armed Police Batrider (Korea) (Fri Feb 13 1998)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (Korea) (Fri Feb 13 1998)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batridkRomInfo, batridkRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batridkDIPInfo,
@@ -1214,7 +1214,7 @@ struct BurnDriver BurnDrvBatridk = {
 
 struct BurnDriver BurnDrvBatridja = {
 	"batriderja", "batrider", NULL, NULL, "1998",
-	"Armed Police Batrider - A Version (Japan) (Mon Dec 22 1997)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (Japan, older version) (Mon Dec 22 1997)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batridjaRomInfo, batridjaRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batriderDIPInfo,
@@ -1224,7 +1224,7 @@ struct BurnDriver BurnDrvBatridja = {
 
 struct BurnDriver BurnDrvBatridta = {
 	"batridert", "batrider", NULL, NULL, "1998",
-	"Armed Police Batrider - A Version (Taiwan) (Mon Dec 22 1997)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	"Armed Police Batrider (Taiwan) (Mon Dec 22 1997)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, batridtaRomInfo, batridtaRomName, NULL, NULL, NULL, NULL, batriderInputInfo, batridtaDIPInfo,

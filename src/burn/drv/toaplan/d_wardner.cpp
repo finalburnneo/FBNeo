@@ -62,6 +62,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT8 DrvInputs[3];
 
+static INT32 wardnerjb;
+
 static struct BurnInputInfo WardnerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 start"	},
@@ -199,6 +201,60 @@ static struct BurnDIPInfo WardnerjDIPList[]=
 };
 
 STDDIPINFO(Wardnerj)
+
+static struct BurnDIPInfo WardnerjbDIPList[]=
+{
+	{0x15, 0xff, 0xff, 0x01, NULL			},
+	{0x16, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x15, 0x01, 0x01, 0x01, "Upright"		},
+	{0x15, 0x01, 0x01, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x15, 0x01, 0x02, 0x00, "Off"			},
+	{0x15, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x15, 0x01, 0x04, 0x00, "Off"			},
+	{0x15, 0x01, 0x04, 0x04, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x15, 0x01, 0x08, 0x08, "Off"			},
+	{0x15, 0x01, 0x08, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x15, 0x01, 0x30, 0x30, "4 Coins 1 Credits"	},
+	{0x15, 0x01, 0x30, 0x20, "3 Coins 1 Credits"	},
+	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x15, 0x01, 0x30, 0x00, "1 Coin  1 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x15, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"	},
+	{0x15, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"	},
+	{0x15, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"	},
+	{0x15, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x16, 0x01, 0x03, 0x01, "Easy"			},
+	{0x16, 0x01, 0x03, 0x00, "Normal"		},
+	{0x16, 0x01, 0x03, 0x02, "Hard"			},
+	{0x16, 0x01, 0x03, 0x03, "Very Hard"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x16, 0x01, 0x0c, 0x00, "30k 80k 50k+"		},
+	{0x16, 0x01, 0x0c, 0x04, "50k 100k 50k+"	},
+	{0x16, 0x01, 0x0c, 0x08, "30k Only"		},
+	{0x16, 0x01, 0x0c, 0x0c, "50k Only"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x16, 0x01, 0x30, 0x30, "1"			},
+	{0x16, 0x01, 0x30, 0x00, "2"			},
+	{0x16, 0x01, 0x30, 0x20, "3"			},
+	{0x16, 0x01, 0x30, 0x10, "4"			},
+};
+
+STDDIPINFO(Wardnerjb)
 
 static struct BurnDIPInfo PyrosDIPList[]=
 {
@@ -784,16 +840,40 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x10000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x20000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x38000,  3, 1)) return 1;
+		if (wardnerjb)
+		{
+			UINT8 *temp = BurnMalloc(0x10000);
+			if (BurnLoadRom(temp, 3, 1)) { BurnFree(temp); return 1; }
+			memmove(DrvZ80ROM0 + 0x38000, temp + 0x08000, 0x08000);
+			BurnFree(temp);
+		}
+		else
+		{
+			if (BurnLoadRom(DrvZ80ROM0 + 0x38000,  3, 1)) return 1;
+		}
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  4, 1)) return 1;
 
 		if (LoadNibbles(DrvMCUROM +  0x00000,  5, 0x0400)) return 1;
 		if (LoadNibbles(DrvMCUROM +  0x00800,  9, 0x0400)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x04000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x08000, 15, 1)) return 1;
+		if (wardnerjb)
+		{
+			UINT8 *temp = BurnMalloc(0x8000);
+			if (BurnLoadRom(temp, 13, 1)) { BurnFree(temp); return 1; }
+			memmove(DrvGfxROM0 + 0x00000, temp + 0x04000, 0x04000);
+			if (BurnLoadRom(temp, 14, 1)) { BurnFree(temp); return 1; }
+			memmove(DrvGfxROM0 + 0x04000, temp + 0x04000, 0x04000);
+			if (BurnLoadRom(temp, 15, 1)) { BurnFree(temp); return 1; }
+			memmove(DrvGfxROM0 + 0x08000, temp + 0x04000, 0x04000);
+			BurnFree(temp);
+		}
+		else
+		{
+			if (BurnLoadRom(DrvGfxROM0 + 0x00000, 13, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x04000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x08000, 15, 1)) return 1;
+		}
 
 		if (BurnLoadRom(DrvGfxROM1 + 0x00000, 16, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x08000, 17, 1)) return 1;
@@ -859,6 +939,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	tms32010_exit();
+
+	wardnerjb = 0;
 
 	BurnFree (AllMem);
 
@@ -1353,5 +1435,71 @@ struct BurnDriver BurnDrvWardnerj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
 	NULL, wardnerjRomInfo, wardnerjRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, WardnerjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
+	320, 240, 4, 3
+};
+
+
+// Wardner no Mori (Japan, bootleg)
+// This bootleg has World main CPU ROMs mixed with Japanese char ROMs. The only unique ROM is 17.bin, where they changed the lives table, disabled the video RAM check and did some other minor changes
+
+static struct BurnRomInfo wardnerjbRomDesc[] = {
+	{ "17.bin",		0x08000, 0xc06804ec, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 code
+	{ "18.bin",		0x10000, 0x9aab8ee2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "19.bin",		0x10000, 0x95b68813, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "20.bin",		0x10000, 0x45185301, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "16.bin",		0x08000, 0xe5202ff8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 code
+
+	{ "82s137.1d",	0x00400, 0xcc5b3f53, 3 | BRF_PRG | BRF_ESS }, //  5 tms32010 code
+	{ "82s137.1e",	0x00400, 0x47351d55, 3 | BRF_PRG | BRF_ESS }, //  6
+	{ "82s137.3d",	0x00400, 0x70b537b9, 3 | BRF_PRG | BRF_ESS }, //  7
+	{ "82s137.3e",	0x00400, 0x6edb2de8, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "82s131.3b",	0x00200, 0x9dfffaff, 3 | BRF_PRG | BRF_ESS }, //  9
+	{ "82s131.3a",	0x00200, 0x712bad47, 3 | BRF_PRG | BRF_ESS }, // 10
+	{ "82s131.2a",	0x00200, 0xac843ca6, 3 | BRF_PRG | BRF_ESS }, // 11
+	{ "82s131.1a",	0x00200, 0x50452ff8, 3 | BRF_PRG | BRF_ESS }, // 12
+
+	{ "7.bin",		0x08000, 0x22abf48e, 4 | BRF_GRA },           // 13 Text characters
+	{ "6.bin",		0x08000, 0x49b66bc0, 4 | BRF_GRA },           // 14
+	{ "5.bin",		0x08000, 0xcc7e7850, 4 | BRF_GRA },           // 15
+
+	{ "12.bin",		0x08000, 0x15d08848, 5 | BRF_GRA },           // 16 Foreground tiles
+	{ "15.bin",		0x08000, 0xcdd2d408, 5 | BRF_GRA },           // 17
+	{ "14.bin",		0x08000, 0x5a2aef4f, 5 | BRF_GRA },           // 18
+	{ "13.bin",		0x08000, 0xbe21db2b, 5 | BRF_GRA },           // 19
+
+	{ "8.bin",		0x08000, 0x883ccaa3, 6 | BRF_GRA },           // 20 Background tiles
+	{ "11.bin",		0x08000, 0xd6ebd510, 6 | BRF_GRA },           // 21
+	{ "10.bin",		0x08000, 0xb9a61e81, 6 | BRF_GRA },           // 22
+	{ "9.bin",		0x08000, 0x585411b7, 6 | BRF_GRA },           // 23
+
+	{ "1.bin",		0x10000, 0x42ec01fb, 7 | BRF_GRA },           // 24 Sprites
+	{ "2.bin",		0x10000, 0x6c0130b7, 7 | BRF_GRA },           // 25
+	{ "3.bin",		0x10000, 0xb923db99, 7 | BRF_GRA },           // 26
+	{ "4.bin",		0x10000, 0x8059573c, 7 | BRF_GRA },           // 27
+
+	{ "82s129.b19",	0x00100, 0x24e7d62f, 8 | BRF_GRA },           // 28 Proms (not used)
+	{ "82s129.b18",	0x00100, 0xa50cef09, 8 | BRF_GRA },           // 29
+	{ "82s123.b21",	0x00020, 0xf72482db, 8 | BRF_GRA },           // 30
+	{ "82s123.c6",	0x00020, 0xbc88cced, 8 | BRF_GRA },           // 31
+	{ "82s123.f1",	0x00020, 0x4fb5df2a, 8 | BRF_GRA },           // 32
+};
+
+STD_ROM_PICK(wardnerjb)
+STD_ROM_FN(wardnerjb)
+
+static INT32 wardnerjbInit()
+{
+	wardnerjb = 1;
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvWardnerjb = {
+	"wardnerjb", "wardner", NULL, NULL, "1987",
+	"Wardner no Mori (Japan, bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_PLATFORM, 0,
+	NULL, wardnerjbRomInfo, wardnerjbRomName, NULL, NULL, NULL, NULL, WardnerInputInfo, WardnerjbDIPInfo,
+	wardnerjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	320, 240, 4, 3
 };

@@ -752,7 +752,7 @@ STD_ROM_PICK(rocktris)
 STD_ROM_FN(rocktris)
 
 struct BurnDriver BurnDrvRocktris = {
-	"rocktris", NULL, NULL, NULL, "1994",
+	"rocktris", NULL, NULL, NULL, "1994?",
 	"Rock Tris\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,

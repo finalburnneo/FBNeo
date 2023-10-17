@@ -10,6 +10,7 @@
 #include "burn_ym3812.h"
 #include "burn_ym3526.h"
 #include "msm5205.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -1656,6 +1657,42 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvMCURom    + 0x00000, 21, 1)) return 1;
 
 			is_ghostb = 1; // ghostb* uses deco222 cpu for audio
+		} else if (!strncmp(BurnDrvGetTextA(DRV_NAME), "meikyuhbl", 9)) {
+			// meikyuhbl - Meikyuu Hunter G bootleg
+			if (BurnLoadRom(DrvMainROM   + 0x08000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM   + 0x10000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM   + 0x20000,  2, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM   + 0x30000,  3, 1)) return 1;
+
+			if (BurnLoadRom(DrvM6502ROM  + 0x08000,  4, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0   + 0x00000,  5, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM1   + 0x00000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x10000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x20000,  8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x30000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x40000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x50000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x60000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1   + 0x70000, 13, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM2   + 0x00000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2   + 0x10000, 15, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2   + 0x20000, 16, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2   + 0x30000, 17, 1)) return 1;
+
+			if (BurnLoadRom(DrvColPROM   + 0x00000, 18, 1)) return 1;
+			if (BurnLoadRom(DrvColPROM   + 0x00400, 19, 1)) return 1;
+			for (UINT32 i = 0; i < 0x400; i++) {
+				DrvColPROM[i] = (DrvColPROM[i] & 0xf) + (DrvColPROM[i + 0x400] << 4);
+				DrvColPROM[i] = BITSWAP08(DrvColPROM[i],4,5,6,7,3,2,1,0);
+			}
+			if (BurnLoadRom(DrvColPROM   + 0x00400, 20, 1)) return 1;
+
+			if (BurnLoadRom(DrvMCURom    + 0x00000, 21, 1)) return 1;
+
+			// meikyuhbl uses M6502 for audio
 		} else { // meikyuh - Meikyuu Hunter G
 			if (BurnLoadRom(DrvMainROM   + 0x08000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvMainROM   + 0x10000,  1, 1)) return 1;
@@ -2265,7 +2302,7 @@ struct BurnDriverD BurnDrvGhostb3a = {
 };
 
 
-// Meikyuu Hunter G (Japan, set 1)
+// Meikyuu Hunter G (Japan)
 
 static struct BurnRomInfo meikyuhRomDesc[] = {
 	{ "dw01-5.1d",	0x08000, 0x87610c39, 1 }, //  0 maincpu
@@ -2302,7 +2339,7 @@ STD_ROM_FN(meikyuh)
 
 struct BurnDriver BurnDrvMeikyuh = {
 	"meikyuh", "ghostb", NULL, NULL, "1987",
-	"Meikyuu Hunter G (Japan, set 1)\0", NULL, "Data East Corporation", "DEC8",
+	"Meikyuu Hunter G (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, meikyuhRomInfo, meikyuhRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
@@ -2311,9 +2348,9 @@ struct BurnDriver BurnDrvMeikyuh = {
 };
 
 
-// Meikyuu Hunter G (Japan, set 2)
+// Meikyuu Hunter G (Japan, bootleg)
 
-static struct BurnRomInfo meikyuhaRomDesc[] = {
+static struct BurnRomInfo meikyuhblRomDesc[] = {
 	{ "27256.1d",	0x08000, 0xd5b5e8a2, 1 }, //  0 maincpu
 	{ "24512.3d",	0x10000, 0x40c9b0b8, 1 }, //  1
 	{ "24512.4d",	0x10000, 0x5606a8f4, 1 }, //  2
@@ -2334,24 +2371,25 @@ static struct BurnRomInfo meikyuhaRomDesc[] = {
 
 	{ "27512.12f",	0x10000, 0xb65e029d, 5 }, // 14 gfx3
 	{ "27512.14f",	0x10000, 0x668d995d, 5 }, // 15
-	{ "27512.15f",	0x10000, 0x547fe4e2, 5 }, // 16
+	{ "27512.15f",	0x10000, 0xbb2cf4a0, 5 }, // 16
 	{ "27512.17f",	0x10000, 0x6a528d13, 5 }, // 17
 
-	{ "dw18.9d",	0x00400, 0x75f1945f, 6 }, // 18 proms
-	{ "dw19.10d",	0x00400, 0xcc16f3fa, 6 }, // 19
+	{ "82s137.12d",	0x00400, 0xbf922733, 6 }, // 18 proms
+	{ "82s137.13d",	0x00400, 0x4ccc328e, 6 }, // 19
+	{ "82s137.10d",	0x00400, 0xcc16f3fa, 6 }, // 20
 
-	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 20 i8751 microcontroller
+	{ "dw.1b",		0x01000, 0x28e9ced9, 7 }, // 21 i8751 microcontroller
 };
 
-STD_ROM_PICK(meikyuha)
-STD_ROM_FN(meikyuha)
+STD_ROM_PICK(meikyuhbl)
+STD_ROM_FN(meikyuhbl)
 
-struct BurnDriver BurnDrvMeikyuha = {
-	"meikyuha", "ghostb", NULL, NULL, "1987",
-	"Meikyuu Hunter G (Japan, set 2)\0", NULL, "Data East Corporation", "DEC8",
+struct BurnDriver BurnDrvMeikyuhbl = {
+	"meikyuhbl", "ghostb", NULL, NULL, "1987",
+	"Meikyuu Hunter G (Japan, bootleg)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, meikyuhaRomInfo, meikyuhaRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, meikyuhblRomInfo, meikyuhblRomName, NULL, NULL, NULL, NULL, GhostbInputInfo, MeikyuuDIPInfo,
 	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
@@ -3014,7 +3052,7 @@ struct BurnDriver BurnDrvCobracomib = {
 	"cobracomib", "cobracom", NULL, NULL, "1988",
 	"Cobra-Command (Italian bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, cobracomibRomInfo, cobracomibRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
@@ -3065,7 +3103,7 @@ struct BurnDriver BurnDrvCobracomjb = {
 	"cobracomjb", "cobracom", NULL, NULL, "1988",
 	"Cobra-Command (Japan, bootleg)\0", NULL, "bootleg", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, cobracomjbRomInfo, cobracomjbRomName, NULL, NULL, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3

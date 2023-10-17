@@ -1452,16 +1452,16 @@ STD_ROM_PICK(Fncywld)
 STD_ROM_FN(Fncywld)
 
 static struct BurnRomInfo magipurRomDesc[] = {
-	{ "2-27c040.bin",	0x80000, 0x135c5de7, 1 | BRF_PRG | BRF_ESS }, //  0	68000 Program Code
-	{ "3-27c040.bin",	0x80000, 0xee4b16da, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "unico_2-27c040.bin", 0x80000, 0x135c5de7, 1 | BRF_PRG | BRF_ESS }, //  0	68000 Program Code
+	{ "unico_3-27c040.bin", 0x80000, 0xee4b16da, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "4-27c040.bin",	0x80000, 0xe460a77d, 2 | BRF_GRA },           //  2	Tiles
-	{ "5-27c040.bin",	0x80000, 0x79c53627, 2 | BRF_GRA },           //  3
+	{ "unico_4-27c040.bin", 0x80000, 0xe460a77d, 2 | BRF_GRA },           //  2	Tiles
+	{ "unico_5-27c040.bin", 0x80000, 0x79c53627, 2 | BRF_GRA },           //  3
 
-	{ "6-27c040.bin",	0x80000, 0xb25b5872, 3 | BRF_GRA },           //  4	Sprites
-	{ "7-27c040.bin",	0x80000, 0xd3c3a672, 3 | BRF_GRA },           //  5
+	{ "unico_6-27c040.bin", 0x80000, 0xb25b5872, 3 | BRF_GRA },           //  4	Sprites
+	{ "unico_7-27c040.bin", 0x80000, 0xd3c3a672, 3 | BRF_GRA },           //  5
 
-	{ "1-27c020.bin",	0x40000, 0x84dcf771, 4 | BRF_SND },           //  6 Samples
+	{ "unico_1-27c020.bin", 0x40000, 0x84dcf771, 4 | BRF_SND },           //  6 Samples
 };
 
 STD_ROM_PICK(magipur)

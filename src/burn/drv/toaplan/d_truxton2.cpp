@@ -589,7 +589,7 @@ STD_ROM_FN(truxton2)
 
 struct BurnDriver BurnDrvTruxton2 = {
 	"truxton2", NULL, NULL, NULL, "1992",
-	"Truxton II\0Tatsujin Oh\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	"Truxton II / Tatsujin Oh\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	L"Truxton II\0\u9054\u4EBA\u738B\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_ONLY, GBF_VERSHOOT, 0,
 	NULL, truxton2RomInfo, truxton2RomName, NULL, NULL, NULL, NULL, truxton2InputInfo, truxton2DIPInfo,

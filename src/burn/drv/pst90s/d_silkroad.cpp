@@ -603,7 +603,7 @@ static INT32 SilkroadaInit()
 
 struct BurnDriver BurnDrvSilkroada = {
 	"silkroada", "silkroad", NULL, NULL, "1999",
-	"The Legend of Silkroad (larger roms)\0", NULL, "Unico", "Miscellaneous",
+	"The Legend of Silkroad (larger ROMs)\0", NULL, "Unico", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, silkroadaRomInfo, silkroadaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

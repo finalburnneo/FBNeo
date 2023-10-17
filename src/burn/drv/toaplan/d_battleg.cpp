@@ -1187,7 +1187,7 @@ struct BurnDriver BurnDrvBgaregtw = {
 
 struct BurnDriver BurnDrvBgareggabl = {
 	"bgareggabl", "bgaregga", NULL, NULL, "1996",
-	"1945 Part 2 (Chinese hack of Battle Garegga)\0", NULL, "bootleg", "Toaplan GP9001 based",
+	"1945 Part-2 (Chinese hack of Battle Garegga)\0", NULL, "bootleg", "Toaplan GP9001 based",
 	L"1945 Part 2\0\uFF11\uFF19\uFF14\uFF15\u4E8C\u4EE3 (Chinese hack of Battle Garegga)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggablRomInfo, bgareggablRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,

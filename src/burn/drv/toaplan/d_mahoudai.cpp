@@ -671,7 +671,7 @@ static INT32 DrvFrame()
 
 struct BurnDriver BurnDrvMahouDai = {
 	"mahoudai", "sstriker", NULL, NULL, "1993",
-	"Mahou Daisakusen (Japan)\0", NULL, "Raizing", "Toaplan GP9001 based",
+	"Mahou Daisakusen (Japan)\0", NULL, "Raizing (Able license)", "Toaplan GP9001 based",
 	L"\u9B54\u6CD5\u5927\u4F5C\u6226 (Mahou Daisakusen Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, FBF_MAHOU,
 	NULL, mahoudaiRomInfo, mahoudaiRomName, NULL, NULL, NULL, NULL, mahoudaiInputInfo, mahoudaiDIPInfo,

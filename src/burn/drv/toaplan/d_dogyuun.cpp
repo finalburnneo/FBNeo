@@ -787,7 +787,7 @@ struct BurnDriver BurnDrvDogyuun = {
 
 struct BurnDriver BurnDrvDogyuunk = {
 	"dogyuuna", "dogyuun", NULL, NULL, "1992",
-	"Dogyuun (Licensed to Unite Trading For Korea)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
+	"Dogyuun (older set)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	L"Dogyuun (Licensed to Unite Trading For Korea)\0Dogyuun \u30C9\u30AD\u30E5\u30FC\u30F3\uFF01\uFF01\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, dogyuunkRomInfo, dogyuunkRomName, NULL, NULL, NULL, NULL, dogyuunInputInfo, dogyuunkDIPInfo,
@@ -797,7 +797,7 @@ struct BurnDriver BurnDrvDogyuunk = {
 
 struct BurnDriver BurnDrvDogyuunt = {
 	"dogyuunt", "dogyuun", NULL, NULL, "1992",
-	"Dogyuun (test location version)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
+	"Dogyuun (10/9/1992 location test)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	L"Dogyuun (test location version)\0Dogyuun \u30C9\u30AD\u30E5\u30FC\u30F3\uFF01\uFF01\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, dogyuuntRomInfo, dogyuuntRomName, NULL, NULL, NULL, NULL, dogyuunInputInfo, dogyuuntDIPInfo,

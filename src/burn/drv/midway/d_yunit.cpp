@@ -1991,79 +1991,79 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Narc (rev 7.00)
 
 static struct BurnRomInfo narcRomDesc[] = {
-	{ "narcrev2.u4",									0x10000, 0x450a591a, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code (Sound)
-	{ "narcrev2.u5",									0x10000, 0xe551e5e3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rev2_narc_sound_rom_u4.u4",						0x10000, 0x450a591a, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code (Sound)
+	{ "rev2_narc_sound_rom_u5.u5",						0x10000, 0xe551e5e3, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "narcrev2.u35",									0x10000, 0x81295892, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 #1 Code (Sound)
-	{ "narcrev2.u36",									0x10000, 0x16cdbb13, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "narcrev2.u37",									0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "narcrev2.u38",									0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "rev2_narc_sound_rom_u35.u35",					0x10000, 0x81295892, 2 | BRF_PRG | BRF_ESS }, //  2 M6809 #1 Code (Sound)
+	{ "rev2_narc_sound_rom_u36.u36",					0x10000, 0x16cdbb13, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "rev2_narc_sound_rom_u37.u37",					0x10000, 0x29dbeffd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "rev2_narc_sound_rom_u38.u38",					0x10000, 0x09b03b80, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "narcrev7.u42",									0x20000, 0xd1111b76, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
-	{ "narcrev7.u24",									0x20000, 0xaa0d3082, 3 | BRF_PRG | BRF_ESS }, //  7
-	{ "narcrev7.u41",									0x20000, 0x3903191f, 3 | BRF_PRG | BRF_ESS }, //  8
-	{ "narcrev7.u23",									0x20000, 0x7a316582, 3 | BRF_PRG | BRF_ESS }, //  9
+	{ "rev7_narc_game_rom_u42.u42",						0x20000, 0xd1111b76, 3 | BRF_PRG | BRF_ESS }, //  6 TMS34010 Code
+	{ "rev7_narc_game_rom_u24.u24",						0x20000, 0xaa0d3082, 3 | BRF_PRG | BRF_ESS }, //  7
+	{ "rev7_narc_game_rom_u41.u41",						0x20000, 0x3903191f, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "rev7_narc_game_rom_u23.u23",						0x20000, 0x7a316582, 3 | BRF_PRG | BRF_ESS }, //  9
 
-	{ "u94",											0x10000, 0xca3194e4, 4 | BRF_GRA },           // 10 Graphics (Blitter data)
-	{ "u93",											0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 11
-	{ "u92",											0x10000, 0x40d2fc66, 4 | BRF_GRA },           // 12
-	{ "u91",											0x10000, 0xf39325e0, 4 | BRF_GRA },           // 13
-	{ "u90",											0x10000, 0x0132aefa, 4 | BRF_GRA },           // 14
-	{ "u89",											0x10000, 0xf7260c9e, 4 | BRF_GRA },           // 15
-	{ "u88",											0x10000, 0xedc19f42, 4 | BRF_GRA },           // 16
-	{ "u87",											0x10000, 0xd9b42ff9, 4 | BRF_GRA },           // 17
-	{ "u86",											0x10000, 0xaf7daad3, 4 | BRF_GRA },           // 18
-	{ "u85",											0x10000, 0x095fae6b, 4 | BRF_GRA },           // 19
-	{ "u84",											0x10000, 0x3fdf2057, 4 | BRF_GRA },           // 20
-	{ "u83",											0x10000, 0xf2d27c9f, 4 | BRF_GRA },           // 21
-	{ "u82",											0x10000, 0x962ce47c, 4 | BRF_GRA },           // 22
-	{ "u81",											0x10000, 0x00fe59ec, 4 | BRF_GRA },           // 23
-	{ "u80",											0x10000, 0x147ba8e9, 4 | BRF_GRA },           // 24
-	{ "u76",											0x10000, 0x1cd897f4, 4 | BRF_GRA },           // 25
-	{ "u75",											0x10000, 0x78abfa01, 4 | BRF_GRA },           // 26
-	{ "u74",											0x10000, 0x66d2a234, 4 | BRF_GRA },           // 27
-	{ "u73",											0x10000, 0xefa5cd4e, 4 | BRF_GRA },           // 28
-	{ "u72",											0x10000, 0x70638eb5, 4 | BRF_GRA },           // 29
-	{ "u71",											0x10000, 0x61226883, 4 | BRF_GRA },           // 30
-	{ "u70",											0x10000, 0xc808849f, 4 | BRF_GRA },           // 31
-	{ "u69",											0x10000, 0xe7f9c34f, 4 | BRF_GRA },           // 32
-	{ "u68",											0x10000, 0x88a634d5, 4 | BRF_GRA },           // 33
-	{ "u67",											0x10000, 0x4ab8b69e, 4 | BRF_GRA },           // 34
-	{ "u66",											0x10000, 0xe1da4b25, 4 | BRF_GRA },           // 35
-	{ "u65",											0x10000, 0x6df0d125, 4 | BRF_GRA },           // 36
-	{ "u64",											0x10000, 0xabab1b16, 4 | BRF_GRA },           // 37
-	{ "u63",											0x10000, 0x80602f31, 4 | BRF_GRA },           // 38
-	{ "u62",											0x10000, 0xc2a476d1, 4 | BRF_GRA },           // 39
-	{ "u58",											0x10000, 0x8a7501e3, 4 | BRF_GRA },           // 40
-	{ "u57",											0x10000, 0xa504735f, 4 | BRF_GRA },           // 41
-	{ "u56",											0x10000, 0x55f8cca7, 4 | BRF_GRA },           // 42
-	{ "u55",											0x10000, 0xd3c932c1, 4 | BRF_GRA },           // 43
-	{ "u54",											0x10000, 0xc7f4134b, 4 | BRF_GRA },           // 44
-	{ "u53",											0x10000, 0x6be4da56, 4 | BRF_GRA },           // 45
-	{ "u52",											0x10000, 0x1ea36a4a, 4 | BRF_GRA },           // 46
-	{ "u51",											0x10000, 0x9d4b0324, 4 | BRF_GRA },           // 47
-	{ "u50",											0x10000, 0x6f9f0c26, 4 | BRF_GRA },           // 48
-	{ "u49",											0x10000, 0x80386fce, 4 | BRF_GRA },           // 49
-	{ "u48",											0x10000, 0x05c16185, 4 | BRF_GRA },           // 50
-	{ "u47",											0x10000, 0x4c0151f1, 4 | BRF_GRA },           // 51
-	{ "u46",											0x10000, 0x5670bfcb, 4 | BRF_GRA },           // 52
-	{ "u45",											0x10000, 0x27f10d98, 4 | BRF_GRA },           // 53
-	{ "u44",											0x10000, 0x93b8eaa4, 4 | BRF_GRA },           // 54
-	{ "u40",											0x10000, 0x7fcaebc7, 4 | BRF_GRA },           // 55
-	{ "u39",											0x10000, 0x7db5cf52, 4 | BRF_GRA },           // 56
-	{ "u38",											0x10000, 0x3f9f3ef7, 4 | BRF_GRA },           // 57
-	{ "u37",											0x10000, 0xed81826c, 4 | BRF_GRA },           // 58
-	{ "u36",											0x10000, 0xe5d855c0, 4 | BRF_GRA },           // 59
-	{ "u35",											0x10000, 0x3a7b1329, 4 | BRF_GRA },           // 60
-	{ "u34",											0x10000, 0xfe982b0e, 4 | BRF_GRA },           // 61
-	{ "u33",											0x10000, 0x6bc7eb0f, 4 | BRF_GRA },           // 62
-	{ "u32",											0x10000, 0x5875a6d3, 4 | BRF_GRA },           // 63
-	{ "u31",											0x10000, 0x2fa4b8e5, 4 | BRF_GRA },           // 64
-	{ "u30",											0x10000, 0x7e4bb8ee, 4 | BRF_GRA },           // 65
-	{ "u29",											0x10000, 0x45136fd9, 4 | BRF_GRA },           // 66
-	{ "u28",											0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 67
-	{ "u27",											0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 68
-	{ "u26",											0x10000, 0xcb19f784, 4 | BRF_GRA },           // 69
+	{ "rev2_narc_image_rom_u94.u94",					0x10000, 0xca3194e4, 4 | BRF_GRA },           // 10 Graphics (Blitter data)
+	{ "rev2_narc_image_rom_u93.u93",					0x10000, 0x0ed7f7f5, 4 | BRF_GRA },           // 11
+	{ "rev2_narc_image_rom_u92.u92",					0x10000, 0x40d2fc66, 4 | BRF_GRA },           // 12
+	{ "rev2_narc_image_rom_u91.u91",					0x10000, 0xf39325e0, 4 | BRF_GRA },           // 13
+	{ "rev2_narc_image_rom_u90.u90",					0x10000, 0x0132aefa, 4 | BRF_GRA },           // 14
+	{ "rev2_narc_image_rom_u89.u89",					0x10000, 0xf7260c9e, 4 | BRF_GRA },           // 15
+	{ "rev2_narc_image_rom_u88.u88",					0x10000, 0xedc19f42, 4 | BRF_GRA },           // 16
+	{ "rev2_narc_image_rom_u87.u87",					0x10000, 0xd9b42ff9, 4 | BRF_GRA },           // 17
+	{ "rev2_narc_image_rom_u86.u86",					0x10000, 0xaf7daad3, 4 | BRF_GRA },           // 18
+	{ "rev2_narc_image_rom_u85.u85",					0x10000, 0x095fae6b, 4 | BRF_GRA },           // 19
+	{ "rev2_narc_image_rom_u84.u84",					0x10000, 0x3fdf2057, 4 | BRF_GRA },           // 20
+	{ "rev2_narc_image_rom_u83.u83",					0x10000, 0xf2d27c9f, 4 | BRF_GRA },           // 21
+	{ "rev2_narc_image_rom_u82.u82",					0x10000, 0x962ce47c, 4 | BRF_GRA },           // 22
+	{ "rev2_narc_image_rom_u81.u81",					0x10000, 0x00fe59ec, 4 | BRF_GRA },           // 23
+	{ "rev2_narc_image_rom_u80.u80",					0x10000, 0x147ba8e9, 4 | BRF_GRA },           // 24
+	{ "rev2_narc_image_rom_u76.u76",					0x10000, 0x1cd897f4, 4 | BRF_GRA },           // 25
+	{ "rev2_narc_image_rom_u75.u75",					0x10000, 0x78abfa01, 4 | BRF_GRA },           // 26
+	{ "rev2_narc_image_rom_u74.u74",					0x10000, 0x66d2a234, 4 | BRF_GRA },           // 27
+	{ "rev2_narc_image_rom_u73.u73",					0x10000, 0xefa5cd4e, 4 | BRF_GRA },           // 28
+	{ "rev2_narc_image_rom_u72.u72",					0x10000, 0x70638eb5, 4 | BRF_GRA },           // 29
+	{ "rev2_narc_image_rom_u71.u71",					0x10000, 0x61226883, 4 | BRF_GRA },           // 30
+	{ "rev2_narc_image_rom_u70.u70",					0x10000, 0xc808849f, 4 | BRF_GRA },           // 31
+	{ "rev2_narc_image_rom_u69.u69",					0x10000, 0xe7f9c34f, 4 | BRF_GRA },           // 32
+	{ "rev2_narc_image_rom_u68.u68",					0x10000, 0x88a634d5, 4 | BRF_GRA },           // 33
+	{ "rev2_narc_image_rom_u67.u67",					0x10000, 0x4ab8b69e, 4 | BRF_GRA },           // 34
+	{ "rev2_narc_image_rom_u66.u66",					0x10000, 0xe1da4b25, 4 | BRF_GRA },           // 35
+	{ "rev2_narc_image_rom_u65.u65",					0x10000, 0x6df0d125, 4 | BRF_GRA },           // 36
+	{ "rev2_narc_image_rom_u64.u64",					0x10000, 0xabab1b16, 4 | BRF_GRA },           // 37
+	{ "rev2_narc_image_rom_u63.u63",					0x10000, 0x80602f31, 4 | BRF_GRA },           // 38
+	{ "rev2_narc_image_rom_u62.u62",					0x10000, 0xc2a476d1, 4 | BRF_GRA },           // 39
+	{ "rev2_narc_image_rom_u58.u58",					0x10000, 0x8a7501e3, 4 | BRF_GRA },           // 40
+	{ "rev2_narc_image_rom_u57.u57",					0x10000, 0xa504735f, 4 | BRF_GRA },           // 41
+	{ "rev2_narc_image_rom_u56.u56",					0x10000, 0x55f8cca7, 4 | BRF_GRA },           // 42
+	{ "rev2_narc_image_rom_u55.u55",					0x10000, 0xd3c932c1, 4 | BRF_GRA },           // 43
+	{ "rev2_narc_image_rom_u54.u54",					0x10000, 0xc7f4134b, 4 | BRF_GRA },           // 44
+	{ "rev2_narc_image_rom_u53.u53",					0x10000, 0x6be4da56, 4 | BRF_GRA },           // 45
+	{ "rev2_narc_image_rom_u52.u52",					0x10000, 0x1ea36a4a, 4 | BRF_GRA },           // 46
+	{ "rev2_narc_image_rom_u51.u51",					0x10000, 0x9d4b0324, 4 | BRF_GRA },           // 47
+	{ "rev2_narc_image_rom_u50.u50",					0x10000, 0x6f9f0c26, 4 | BRF_GRA },           // 48
+	{ "rev2_narc_image_rom_u49.u49",					0x10000, 0x80386fce, 4 | BRF_GRA },           // 49
+	{ "rev2_narc_image_rom_u48.u48",					0x10000, 0x05c16185, 4 | BRF_GRA },           // 50
+	{ "rev2_narc_image_rom_u47.u47",					0x10000, 0x4c0151f1, 4 | BRF_GRA },           // 51
+	{ "rev2_narc_image_rom_u46.u46",					0x10000, 0x5670bfcb, 4 | BRF_GRA },           // 52
+	{ "rev2_narc_image_rom_u45.u45",					0x10000, 0x27f10d98, 4 | BRF_GRA },           // 53
+	{ "rev2_narc_image_rom_u44.u44",					0x10000, 0x93b8eaa4, 4 | BRF_GRA },           // 54
+	{ "rev2_narc_image_rom_u40.u40",					0x10000, 0x7fcaebc7, 4 | BRF_GRA },           // 55
+	{ "rev2_narc_image_rom_u39.u39",					0x10000, 0x7db5cf52, 4 | BRF_GRA },           // 56
+	{ "rev2_narc_image_rom_u38.u38",					0x10000, 0x3f9f3ef7, 4 | BRF_GRA },           // 57
+	{ "rev2_narc_image_rom_u37.u37",					0x10000, 0xed81826c, 4 | BRF_GRA },           // 58
+	{ "rev2_narc_image_rom_u36.u36",					0x10000, 0xe5d855c0, 4 | BRF_GRA },           // 59
+	{ "rev2_narc_image_rom_u35.u35",					0x10000, 0x3a7b1329, 4 | BRF_GRA },           // 60
+	{ "rev2_narc_image_rom_u34.u34",					0x10000, 0xfe982b0e, 4 | BRF_GRA },           // 61
+	{ "rev2_narc_image_rom_u33.u33",					0x10000, 0x6bc7eb0f, 4 | BRF_GRA },           // 62
+	{ "rev2_narc_image_rom_u32.u32",					0x10000, 0x5875a6d3, 4 | BRF_GRA },           // 63
+	{ "rev2_narc_image_rom_u31.u31",					0x10000, 0x2fa4b8e5, 4 | BRF_GRA },           // 64
+	{ "rev2_narc_image_rom_u30.u30",					0x10000, 0x7e4bb8ee, 4 | BRF_GRA },           // 65
+	{ "rev2_narc_image_rom_u29.u29",					0x10000, 0x45136fd9, 4 | BRF_GRA },           // 66
+	{ "rev2_narc_image_rom_u28.u28",					0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 67
+	{ "rev2_narc_image_rom_u27.u27",					0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 68
+	{ "rev2_narc_image_rom_u26.u26",					0x10000, 0xcb19f784, 4 | BRF_GRA },           // 69
 };
 
 STD_ROM_PICK(narc)

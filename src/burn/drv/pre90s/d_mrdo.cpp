@@ -564,7 +564,7 @@ struct BurnDriver BurnDrvmrdo = {
 };
 
 
-// Mr. Do! (Taito license)
+// Mr. Do! (Taito)
 
 static struct BurnRomInfo mrdotRomDesc[] = {
 	{ "d1",           0x2000, 0x3dcd9359, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
@@ -594,7 +594,7 @@ STD_ROM_FN(mrdot)
 
 struct BurnDriver BurnDrvmrdot = {
 	"mrdot", "mrdo", NULL, NULL, "1982",
-	"Mr. Do! (Taito license)\0", NULL, "Universal (Taito license)", "Miscellaneous",
+	"Mr. Do! (Taito)\0", NULL, "Universal (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mrdotRomInfo, mrdotRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -669,7 +669,7 @@ STD_ROM_FN(mrlo)
 
 struct BurnDriver BurnDrvmrlo = {
 	"mrlo", "mrdo", NULL, NULL, "1982",
-	"Mr. Lo!\0", NULL, "Bootleg", "Miscellaneous",
+	"Mr. Lo!\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mrloRomInfo, mrloRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -708,7 +708,7 @@ STD_ROM_FN(mrdu)
 
 struct BurnDriver BurnDrvmrdu = {
 	"mrdu", "mrdo", NULL, NULL, "1982",
-	"Mr. Du!\0", NULL, "Bootleg", "Miscellaneous",
+	"Mr. Du!\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mrduRomInfo, mrduRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -789,7 +789,7 @@ STD_ROM_FN(mrdofabr)
 
 struct BurnDriver BurnDrvmrdofabr = {
 	"mrdofabr", "mrdo", NULL, NULL, "1982",
-	"Mr. Do! (Fabremar bootleg)\0", NULL, "Bootleg (Fabremar)", "Miscellaneous",
+	"Mr. Do! (Fabremar bootleg)\0", NULL, "bootleg (Fabremar)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mrdofabrRomInfo, mrdofabrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -828,7 +828,7 @@ STD_ROM_FN(mrdobl)
 
 struct BurnDriver BurnDrvmrdobl = {
 	"mrdobl", "mrdo", NULL, NULL, "1982",
-	"Mr. Do! (bootleg)\0", NULL, "Bootleg", "Miscellaneous",
+	"Mr. Do! (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mrdoblRomInfo, mrdoblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

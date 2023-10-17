@@ -1136,7 +1136,7 @@ struct BurnDriver BurnDrvToramich = {
 };
 
 
-// Tiger Road (US bootleg)
+// Tiger Road (US bootleg, set 1)
 
 static struct BurnRomInfo tigeroadbRomDesc[] = {
 	{ "cpu.ic18",		0x10000, 0x14c87e07, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code

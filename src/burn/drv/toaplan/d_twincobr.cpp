@@ -1622,7 +1622,7 @@ static INT32 ktigerInit()
 }
 
 struct BurnDriver BurnDrvKtiger = {
-	"ktiger", "twincobr", NULL, NULL, "2021",
+	"ktiger", "twincobr", NULL, NULL, "1989",
 	"Kyukyoku Tiger (Japan, 2 player cooperative)\0", NULL, "Toaplan / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
@@ -1717,7 +1717,7 @@ static struct BurnRomInfo fsharkRomDesc[] = {
 	{ "b02-21.b5",		0x00100, 0xa50cef09, 0 | BRF_OPT },           // 20
 	{ "b02-19.b2",		0x00020, 0xf72482db, 0 | BRF_OPT },           // 21
 	{ "b02-22.c21",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 22
-	{ "b02-23.f28",		0x00020, 0x4fb5df2a, 0 | BRF_OPT },           // 33
+	{ "b02-23.f28",		0x00020, 0x4fb5df2a, 0 | BRF_OPT },           // 23
 };
 
 STD_ROM_PICK(fshark)
@@ -1890,6 +1890,122 @@ struct BurnDriver BurnDrvHishouza = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
 	NULL, hishouzaRomInfo, hishouzaRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
 	fsharkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
+	240, 320, 3, 4
+};
+
+
+// Flying Shark (World, bootleg)
+// the ROM contents of the bootleg are the same of the original, the difference is the TMS320C10 code which is in external PROMs instead of internal
+
+static struct BurnRomInfo fsharkbRomDesc[] = {
+	{ "b02_18-1.m8",	0x10000, 0x04739e02, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17-1.p8",	0x10000, 0xfd6ef7a8, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "82s137-1.mcu",	0x00400, 0xcc5b3f53, 3 | BRF_PRG | BRF_ESS }, //  5 tms32010 code
+	{ "82s137-2.mcu",	0x00400, 0x47351d55, 3 | BRF_PRG | BRF_ESS }, //  6
+	{ "82s137-3.mcu",	0x00400, 0x70b537b9, 3 | BRF_PRG | BRF_ESS }, //  7
+	{ "82s137-4.mcu",	0x00400, 0x6edb2de8, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "82s137-5.mcu",	0x00400, 0xf35b978a, 3 | BRF_PRG | BRF_ESS }, //  9
+	{ "82s137-6.mcu",	0x00400, 0x0459e51b, 3 | BRF_PRG | BRF_ESS }, // 10
+	{ "82s137-7.mcu",	0x00400, 0xcbf3184b, 3 | BRF_PRG | BRF_ESS }, // 11
+	{ "82s137-8.mcu",	0x00400, 0x8246a05c, 3 | BRF_PRG | BRF_ESS }, // 12
+
+	{ "b02_07-1.h11",	0x04000, 0xe669f80e, 4 | BRF_GRA },           // 13 Text characters
+	{ "b02_06-1.h10",	0x04000, 0x5e53ae47, 4 | BRF_GRA },           // 14
+	{ "b02_05-1.h8",	0x04000, 0xa8b05bd0, 4 | BRF_GRA },           // 15
+
+	{ "b02_12.h20",		0x08000, 0x733b9997, 5 | BRF_GRA },           // 16 Background tiles
+	{ "b02_15.h24",		0x08000, 0x8b70ef32, 5 | BRF_GRA },           // 17
+	{ "b02_14.h23",		0x08000, 0xf711ba7d, 5 | BRF_GRA },           // 18
+	{ "b02_13.h21",		0x08000, 0x62532cd3, 5 | BRF_GRA },           // 19
+
+	{ "b02_08.h13",		0x08000, 0xef0cf49c, 6 | BRF_GRA },           // 20 Foreground tiles
+	{ "b02_11.h18",		0x08000, 0xf5799422, 6 | BRF_GRA },           // 21
+	{ "b02_10.h16",		0x08000, 0x4bd099ff, 6 | BRF_GRA },           // 22
+	{ "b02_09.h15",		0x08000, 0x230f1582, 6 | BRF_GRA },           // 23
+
+	{ "b02_01.d15",		0x10000, 0x2234b424, 7 | BRF_GRA },           // 24 Sprites
+	{ "b02_02.d16",		0x10000, 0x30d4c9a8, 7 | BRF_GRA },           // 25
+	{ "b02_03.d17",		0x10000, 0x64f3d88f, 7 | BRF_GRA },           // 26
+	{ "b02_04.d20",		0x10000, 0x3b23a9fc, 7 | BRF_GRA },           // 27
+
+	{ "b02-20.b4",		0x00100, 0x24e7d62f, 0 | BRF_OPT },           // 28 Proms (not used)
+	{ "b02-21.b5",		0x00100, 0xa50cef09, 0 | BRF_OPT },           // 29
+	{ "b02-19.b2",		0x00020, 0xf72482db, 0 | BRF_OPT },           // 30
+	{ "b02-22.c21",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 31
+	{ "b02-23.f28",		0x00020, 0x4fb5df2a, 0 | BRF_OPT },           // 32
+};
+
+STD_ROM_PICK(fsharkb)
+STD_ROM_FN(fsharkb)
+
+struct BurnDriver BurnDrvFsharkb = {
+	"fsharkb", "fshark", NULL, NULL, "1987",
+	"Flying Shark (World, bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	NULL, fsharkbRomInfo, fsharkbRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, FsharkDIPInfo,
+	fsharknibInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
+	240, 320, 3, 4
+};
+
+
+// Hishou Zame (Japan, bootleg)
+// The ROM contents of the bootleg are the same of the original, the difference is the TMS320C10 code which is in external PROMs instead of internal
+
+static struct BurnRomInfo hishouzabRomDesc[] = {
+	{ "b02_18.m8",		0x10000, 0x4444bb94, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "b02_17.p8",		0x10000, 0xcdac7228, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "b02_16.l5",		0x08000, 0xcdd1a153, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "dsp-a1.bpr",		0x00400, 0x45d4d1b1, 3 | BRF_PRG | BRF_ESS }, //  3 TMS32010 code
+	{ "dsp-a2.bpr",		0x00400, 0xedd227fa, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "dsp-a3.bpr",		0x00400, 0xdf88e79b, 3 | BRF_PRG | BRF_ESS }, //  5
+	{ "dsp-a4.bpr",		0x00400, 0xa2094a7f, 3 | BRF_PRG | BRF_ESS }, //  6
+	{ "dsp-b5.bpr",		0x00400, 0x85ca5d47, 3 | BRF_PRG | BRF_ESS }, //  7
+	{ "dsp-b6.bpr",		0x00400, 0x81816b2c, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "dsp-b7.bpr",		0x00400, 0xe87540cd, 3 | BRF_PRG | BRF_ESS }, //  9
+	{ "dsp-b8.bpr",		0x00400, 0xd3c16c5c, 3 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "b02-07.h11",		0x04000, 0xc13a775e, 4 | BRF_GRA },           //  4 Text characters
+	{ "b02-06.h10",		0x04000, 0xad5f1371, 4 | BRF_GRA },           //  5
+	{ "b02-05.h8",		0x04000, 0x85a7bff6, 4 | BRF_GRA },           //  6
+
+	{ "b02_12.h20",		0x08000, 0x733b9997, 5 | BRF_GRA },           //  7 Background tiles
+	{ "b02_15.h24",		0x08000, 0x8b70ef32, 5 | BRF_GRA },           //  8
+	{ "b02_14.h23",		0x08000, 0xf711ba7d, 5 | BRF_GRA },           //  9
+	{ "b02_13.h21",		0x08000, 0x62532cd3, 5 | BRF_GRA },           // 10
+
+	{ "b02_08.h13",		0x08000, 0xef0cf49c, 6 | BRF_GRA },           // 11 Foreground tiles
+	{ "b02_11.h18",		0x08000, 0xf5799422, 6 | BRF_GRA },           // 12
+	{ "b02_10.h16",		0x08000, 0x4bd099ff, 6 | BRF_GRA },           // 13
+	{ "b02_09.h15",		0x08000, 0x230f1582, 6 | BRF_GRA },           // 14
+
+	{ "b02_01.d15",		0x10000, 0x2234b424, 7 | BRF_GRA },           // 15 Sprites
+	{ "b02_02.d16",		0x10000, 0x30d4c9a8, 7 | BRF_GRA },           // 16
+	{ "b02_03.d17",		0x10000, 0x64f3d88f, 7 | BRF_GRA },           // 17
+	{ "b02_04.d20",		0x10000, 0x3b23a9fc, 7 | BRF_GRA },           // 18
+
+	{ "b02-20.b4",		0x00100, 0x24e7d62f, 0 | BRF_OPT },           // 19 Proms (not used)
+	{ "b02-21.b5",		0x00100, 0xa50cef09, 0 | BRF_OPT },           // 20
+	{ "b02-19.b2",		0x00020, 0xf72482db, 0 | BRF_OPT },           // 21
+	{ "b02-22.c21",		0x00020, 0xbc88cced, 0 | BRF_OPT },           // 22
+	{ "b02-23.f28",		0x00020, 0x4fb5df2a, 0 | BRF_OPT },           // 23
+};
+
+STD_ROM_PICK(hishouzab)
+STD_ROM_FN(hishouzab)
+
+struct BurnDriver BurnDrvHishouzab = {
+	"hishouzab", "fshark", NULL, NULL, "1987",
+	"Hishou Zame (Japan, bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
+	NULL, hishouzabRomInfo, hishouzabRomName, NULL, NULL, NULL, NULL, FsharkInputInfo, HishouzaDIPInfo,
+	fsharknibInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
 

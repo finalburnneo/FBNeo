@@ -1834,7 +1834,7 @@ struct BurnDriver BurnDrvGauntlet2pr3 = {
 };
 
 
-// Gauntlet (2 Players, Japanese rev 2)
+// Gauntlet (2 Players, Japanese, rev 2)
 
 static struct BurnRomInfo Gauntlet2pj2RomDesc[] = {
 	{ "136041-207.9a",        0x08000, 0x0e1af1b4, 1 | BRF_PRG | BRF_ESS }, //  0	68000 Program Code
@@ -1868,7 +1868,7 @@ STD_ROM_FN(Gauntlet2pj2)
 
 struct BurnDriver BurnDrvGauntlet2pj2 = {
 	"gauntlet2pj2", "gauntlet", NULL, NULL, "1985",
-	"Gauntlet (2 Players, Japanese rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
+	"Gauntlet (2 Players, Japanese, rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pj2RomInfo, Gauntlet2pj2RomName, NULL, NULL, NULL, NULL , GauntletInputInfo, DrvDIPInfo,

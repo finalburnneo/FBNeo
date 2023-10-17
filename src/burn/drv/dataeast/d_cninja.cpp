@@ -3108,9 +3108,9 @@ static struct BurnRomInfo mutantf1RomDesc[] = {
 	{ "maf-08.21d",		0x080000, 0xe41cf1e7, 6 | BRF_GRA }, 	       // 15
 
 	{ "hd-08-s.15a",	0x010000, 0x93b7279f, 7 | BRF_GRA }, 	       // 16 Sprite Bank B
-	{ "hf-09-s.17a",	0x010000, 0x05e2c074, 7 | BRF_GRA }, 	       // 17
-	{ "hf-10-s.15c",	0x010000, 0x9b06f418, 7 | BRF_GRA }, 	       // 18
-	{ "hf-11-s.17c",	0x010000, 0x3859a531, 7 | BRF_GRA }, 	       // 19
+	{ "hd-09-s.17a",	0x010000, 0x05e2c074, 7 | BRF_GRA }, 	       // 17
+	{ "hd-10-s.15c",	0x010000, 0x9b06f418, 7 | BRF_GRA }, 	       // 18
+	{ "hd-11-s.17c",	0x010000, 0x3859a531, 7 | BRF_GRA }, 	       // 19
 
 	{ "maf-10.20l",		0x040000, 0x7c57f48b, 8 | BRF_SND }, 	       // 20 OKI M6295 Samples 0
 

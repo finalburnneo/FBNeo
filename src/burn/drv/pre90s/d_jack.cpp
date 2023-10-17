@@ -1764,7 +1764,7 @@ struct BurnDriver BurnDrvSucasino = {
 };
 
 
-// Tri-Pool (Casino Tech)
+// Tri-Pool: 3-In-One (Casino Tech)
 
 static struct BurnRomInfo tripoolRomDesc[] = {
 	{ "tri73a.bin",		0x1000, 0x96893aa7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1786,7 +1786,7 @@ STD_ROM_FN(tripool)
 
 struct BurnDriver BurnDrvTripool = {
 	"tripool", NULL, NULL, NULL, "1981",
-	"Tri-Pool (Casino Tech)\0", NULL, "Noma (Casino Tech license)", "Jack the Giantkiller",
+	"Tri-Pool: 3-In-One (Casino Tech)\0", NULL, "Noma (Casino Tech license)", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tripoolRomInfo, tripoolRomName, NULL, NULL, NULL, NULL, TripoolInputInfo, TripoolDIPInfo,
@@ -1795,7 +1795,7 @@ struct BurnDriver BurnDrvTripool = {
 };
 
 
-// Tri-Pool (Costal Games)
+// Tri-Pool: 3-In-One (Coastal Games)
 
 static struct BurnRomInfo tripoolaRomDesc[] = {
 	{ "tri73a.bin",		0x1000, 0x96893aa7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1817,7 +1817,7 @@ STD_ROM_FN(tripoola)
 
 struct BurnDriver BurnDrvTripoola = {
 	"tripoola", "tripool", NULL, NULL, "1981",
-	"Tri-Pool (Costal Games)\0", NULL, "Noma (Costal Games license)", "Jack the Giantkiller",
+	"Tri-Pool: 3-In-One (Coastal Games)\0", NULL, "Noma (Costal Games license)", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tripoolaRomInfo, tripoolaRomName, NULL, NULL, NULL, NULL, TripoolInputInfo, TripoolDIPInfo,

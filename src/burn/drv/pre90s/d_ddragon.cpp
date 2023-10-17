@@ -1663,7 +1663,7 @@ static INT32 DdragonInit()
 
 struct BurnDriver BurnDrvDdragon = {
 	"ddragon", NULL, NULL, NULL, "1987",
-	"Double Dragon (Japan)\0", NULL, "Technos", "Miscellaneous",
+	"Double Dragon (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragonRomInfo, ddragonRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdragonDIPInfo,
@@ -1709,7 +1709,7 @@ STD_ROM_FN(ddragonw)
 
 struct BurnDriver BurnDrvDdragonw = {
 	"ddragonw", "ddragon", NULL, NULL, "1987",
-	"Double Dragon (World set 1)\0", NULL, "[Technos] (Taito license)", "Miscellaneous",
+	"Double Dragon (World set 1)\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragonwRomInfo, ddragonwRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdragonDIPInfo,
@@ -1755,7 +1755,7 @@ STD_ROM_FN(ddragonw1)
 
 struct BurnDriver BurnDrvDdragnw1 = {
 	"ddragonw1", "ddragon", NULL, NULL, "1987",
-	"Double Dragon (World set 2)\0", NULL, "[Technos] (Taito license)", "Miscellaneous",
+	"Double Dragon (World set 2)\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragonw1RomInfo, ddragonw1RomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdragonDIPInfo,
@@ -1801,7 +1801,7 @@ STD_ROM_FN(ddragonu)
 
 struct BurnDriver BurnDrvDdragonu = {
 	"ddragonu", "ddragon", NULL, NULL, "1987",
-	"Double Dragon (US set 1)\0", NULL, "[Technos] (Taito America license)", "Miscellaneous",
+	"Double Dragon (US set 1)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragonuRomInfo, ddragonuRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdragonDIPInfo,
@@ -1847,7 +1847,7 @@ STD_ROM_FN(ddragonua)
 
 struct BurnDriver BurnDrvDdragoua = {
 	"ddragonua", "ddragon", NULL, NULL, "1987",
-	"Double Dragon (US set 2)\0", NULL, "[Technos] (Taito America license)", "Miscellaneous",
+	"Double Dragon (US set 2)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragonuaRomInfo, ddragonuaRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdragonDIPInfo,
@@ -1891,9 +1891,9 @@ static struct BurnRomInfo ddragonubRomDesc[] = {
 STD_ROM_PICK(ddragonub)
 STD_ROM_FN(ddragonub)
 
-struct BurnDriver BurnDrvDdragoub = {
+struct BurnDriver BurnDrvDdragonub = {
 	"ddragonub", "ddragon", NULL, NULL, "1987",
-	"Double Dragon (US set 3)\0", NULL, "[Technos] (Taito America license)", "Miscellaneous",
+	"Double Dragon (US set 3)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragonubRomInfo, ddragonubRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdragonDIPInfo,
@@ -2055,7 +2055,7 @@ static INT32 DdragonbaInit()
 
 struct BurnDriver BurnDrvDdragnba = {
 	"ddragonba", "ddragon", NULL, NULL, "1987",
-	"Double Dragon (bootleg with M6803)\0", NULL, "bootleg", "Miscellaneous",
+	"Double Dragon (bootleg with MC6803)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragonbaRomInfo, ddragonbaRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdragonDIPInfo,
@@ -2097,7 +2097,7 @@ STD_ROM_FN(ddragon2)
 
 struct BurnDriver BurnDrvDdragon2 = {
 	"ddragon2", NULL, NULL, NULL, "1988",
-	"Double Dragon II - The Revenge (World)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Double Dragon II: The Revenge (World)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragon2RomInfo, ddragon2RomName, NULL, NULL, NULL, NULL, DdragonInputInfo, Ddragon2DIPInfo,
@@ -2139,7 +2139,7 @@ STD_ROM_FN(ddragon2j)
 
 struct BurnDriver BurnDrvDdragon2j = {
 	"ddragon2j", "ddragon2", NULL, NULL, "1988",
-	"Double Dragon II - The Revenge (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Double Dragon II: The Revenge (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragon2jRomInfo, ddragon2jRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, Ddragon2DIPInfo,
@@ -2181,7 +2181,7 @@ STD_ROM_FN(ddragon2u)
 
 struct BurnDriver BurnDrvDdragon2u = {
 	"ddragon2u", "ddragon2", NULL, NULL, "1988",
-	"Double Dragon II - The Revenge (US)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Double Dragon II: The Revenge (US)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragon2uRomInfo, ddragon2uRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, Ddragon2DIPInfo,
@@ -2233,7 +2233,7 @@ STD_ROM_FN(ddragon2b)
 
 struct BurnDriver BurnDrvDdragon2b = {
 	"ddragon2b", "ddragon2", NULL, NULL, "1988",
-	"Double Dragon II - The Revenge (US bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Double Dragon II: The Revenge (US, bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragon2bRomInfo, ddragon2bRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, Ddragon2DIPInfo,
@@ -2284,7 +2284,7 @@ STD_ROM_FN(ddragon2b2)
 
 struct BurnDriver BurnDrvDdragon2b2 = {
 	"ddragon2b2", "ddragon2", NULL, NULL, "1988",
-	"Double Dragon II - The Revenge (US bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Double Dragon II: The Revenge (US, bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, ddragon2b2RomInfo, ddragon2b2RomName, NULL, NULL, NULL, NULL, DdragonInputInfo, Ddragon2DIPInfo,
@@ -2334,7 +2334,7 @@ static INT32 DdungeonInit()
 
 struct BurnDriver BurnDrvDdungeon = {
 	"ddungeon", NULL, NULL, NULL, "1992",
-	"Dangerous Dungeons (set 1)\0", NULL, "Game Room", "Miscellaneous",
+	"Dangerous Dungeons (set 1)\0", NULL, "The Game Room", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE | GBF_PUZZLE, 0,
 	NULL, ddungeonRomInfo, ddungeonRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DdungeonDIPInfo,
@@ -2419,7 +2419,7 @@ STD_ROM_FN(darktowr)
 
 struct BurnDriver BurnDrvDarktowr = {
 	"darktowr", NULL, NULL, NULL, "1992",
-	"Dark Tower\0", NULL, "Game Room", "Miscellaneous",
+	"Dark Tower\0", NULL, "The Game Room", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_PLATFORM, 0,
 	NULL, darktowrRomInfo, darktowrRomName, NULL, NULL, NULL, NULL, DdragonInputInfo, DarktowrDIPInfo,

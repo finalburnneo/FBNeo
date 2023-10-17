@@ -11182,6 +11182,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mtaruruen" cloneof="mtaruru" romof="mtaruru" sourcefile="d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>Magical Kid Taruruto (Hack, English)</description>
+		<year>2023</year>
+		<manufacturer>tryphon</manufacturer>
+		<rom name="Magical Kid Taruruto T-Eng (2023)(tryphon).bin" size="591064" crc="cb4d575f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mtaruru" sourcefile="d_megadrive.cpp">
 		<description>Magical Taruruuto-kun (Japan)</description>
 		<year>1992</year>

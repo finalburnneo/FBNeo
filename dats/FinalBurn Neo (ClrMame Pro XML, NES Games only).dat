@@ -4128,21 +4128,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dethcomplex" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Deth Complex (HB)</description>
+		<year>2022</year>
+		<manufacturer>T-Bone Studios</manufacturer>
+		<rom name="Deth Complex (2022)(T-bone).nes" size="524304" crc="7b213380"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dethcomplex2" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
 		<description>Deth Complex 2 (HB)</description>
 		<year>2022</year>
 		<manufacturer>T-Bone Studios</manufacturer>
 		<rom name="Deth Complex 2 (2022)(T-bone).nes" size="524304" crc="af32771c"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="dethcomplex" sourcefile="d_nes.cpp">
-		<comment>Homebrew</comment>
-		<description>Deth Complex! (HB)</description>
-		<year>2022</year>
-		<manufacturer>T-Bone Studios</manufacturer>
-		<rom name="Deth Complex (2022)(T-bone).nes" size="524304" crc="7b213380"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5212,30 +5212,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="earthboundc" cloneof="earthbound" romof="earthbound" sourcefile="d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Earth Bound (Hack, Spanish v2.2)</description>
-		<year>2016</year>
-		<manufacturer>OAD</manufacturer>
-		<rom name="earth bound (usa) (proto) - castellano v2.2.nes" size="524304" crc="d80e3217"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="earthboundzeroc" cloneof="earthbound" romof="earthbound" sourcefile="d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Earth Bound Zero (Hack, Spanish v0.99)</description>
-		<year>201?</year>
-		<manufacturer>jackic</manufacturer>
-		<rom name="earth bound zero (usa) - castellano v0.99.nes" size="524304" crc="2e24c315"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="earthboundzero" cloneof="earthbound" romof="earthbound" sourcefile="d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Earth Bound Zero (USA)</description>
 		<year>2014</year>
 		<manufacturer>Giygas999</manufacturer>
-		<rom name="earth bound zero (usa).nes" size="524304" crc="6a5e39e2"/>
+		<rom name="earthbound zero (usa)(2014)(giygas999).nes" size="524304" crc="6a5e39e2"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="earthboundbi" cloneof="earthbound" romof="earthbound" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>EarthBound (Hack, Italian v1.1)</description>
+		<year>2023</year>
+		<manufacturer>GiAnMMV</manufacturer>
+		<rom name="EarthBound Beginnings T-Ita v1.1 (2023)(GiAnMMV).nes" size="524304" crc="e4df7410"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -5245,6 +5236,33 @@
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Earthbound (USA) (Prototype).nes" size="524304" crc="f5ef5002"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="earthboundb" cloneof="earthbound" romof="earthbound" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>EarthBound Beginnings (Hack)</description>
+		<year>2021</year>
+		<manufacturer>ABOhiccups</manufacturer>
+		<rom name="EarthBound Beginnings (2021)(ABOhiccups).nes" size="524304" crc="e806cd5e"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="earthboundzeroc" cloneof="earthbound" romof="earthbound" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>EarthBound Zero (Hack, Spanish v0.99)</description>
+		<year>201?</year>
+		<manufacturer>jackic</manufacturer>
+		<rom name="earthbound zero (usa) - castellano v0.99.nes" size="524304" crc="2e24c315"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="earthboundc" cloneof="earthbound" romof="earthbound" sourcefile="d_nes.cpp">
+		<comment>Hack</comment>
+		<description>EarthBound Zero (Hack, Spanish v2.2)</description>
+		<year>2016</year>
+		<manufacturer>OAD</manufacturer>
+		<rom name="earthbound (usa) (proto) - castellano v2.2.nes" size="524304" crc="d80e3217"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6112,12 +6130,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="firerescue" sourcefile="d_nes.cpp">
+	<game name="firerescue" cloneof="firerescuev2" romof="firerescuev2" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
 		<description>Fire and Rescue (HB, v1.1)</description>
 		<year>2021</year>
 		<manufacturer>Skyboy Games</manufacturer>
 		<rom name="Fire and Rescue v1.1 (2021)(Skyboy Games).nes" size="40976" crc="3a233cd9"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="firerescuev2" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Fire and Rescue (HB, v2.0)</description>
+		<year>2021</year>
+		<manufacturer>Skyboy Games</manufacturer>
+		<rom name="Fire and Rescue v2.0 (2021)(Skyboy Games).nes" size="40976" crc="156ff8ee"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -7624,34 +7651,34 @@
 	</game>
 	<game name="halloween85" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
-		<description>Haunted Halloween'85 (HB)</description>
+		<description>Haunted Halloween '85 (HB)</description>
 		<year>2015</year>
 		<manufacturer>Retrotainment Games</manufacturer>
-		<rom name="Halloween'85 (HB).nes" size="524304" crc="4bcf7ae5"/>
+		<rom name="Haunted Halloween'85 (2015)(Retrotainment Games).nes" size="524304" crc="4bcf7ae5"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="halloween86" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
-		<description>Haunted Halloween'86 (HB)</description>
+		<description>Haunted Halloween '86 (HB)</description>
 		<year>2016</year>
 		<manufacturer>Retrotainment Games</manufacturer>
-		<rom name="Halloween'86 (HB).nes" size="524304" crc="454252a4"/>
+		<rom name="Haunted Halloween '86 (2016)(Retrotainment Games).nes" size="524304" crc="454252a4"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="halloween86a" cloneof="halloween86" romof="halloween86" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
-		<description>Haunted Halloween'86 (HB, alt)</description>
+		<description>Haunted Halloween '86 (HB, Alt)</description>
 		<year>2016</year>
 		<manufacturer>Retrotainment Games</manufacturer>
-		<rom name="Halloween'86 (HB, alt).nes" size="524304" crc="d008091a"/>
+		<rom name="Haunted Halloween '86 (2016)(Alt)(Retrotainment Games).nes" size="524304" crc="d008091a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
 	<game name="halloween86roe" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
-		<description>Haunted Halloween'86 - Remastered Onslaught Edition (HB)</description>
+		<description>Haunted Halloween '86 - Remastered Onslaught Edition (HB)</description>
 		<year>2018</year>
 		<manufacturer>Retrotainment Games</manufacturer>
 		<rom name="Haunted Halloween '86 - Remastered Onslaught Edition (2018)(Retrotainment Games).nes" size="524304" crc="94f92f7c"/>
@@ -10100,6 +10127,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="lsisyphus" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Little Sisyphus (HB)</description>
+		<year>2023</year>
+		<manufacturer>Pubby Games</manufacturer>
+		<rom name="Little Sisyphus (2023)(Pubby Games).nes" size="65552" crc="29d4aa43"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="lizard" sourcefile="d_nes.cpp">
 		<comment>Homebrew</comment>
 		<description>Lizard (HB)</description>
@@ -11430,6 +11466,24 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="mirohv1" cloneof="mirohv2" romof="mirohv2" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Miroh (HB, v1.0.1)</description>
+		<year>2023</year>
+		<manufacturer>Wendel Scardua</manufacturer>
+		<rom name="Miroh v1.0.1 (2023)(Wendel Scardua).nes" size="65552" crc="ec4ef53c"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="mirohv2" sourcefile="d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Miroh (HB, v2.0.1)</description>
+		<year>2023</year>
+		<manufacturer>Wendel Scardua</manufacturer>
+		<rom name="Miroh v2.0.1 (2023)(Wendel Scardua).nes" size="65552" crc="a3b6f766"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="milonsscj" cloneof="milonssc" romof="milonssc" sourcefile="d_nes.cpp">
 		<description>Miron no Daibouken (Japan)</description>
 		<year>1986</year>
@@ -11871,7 +11925,7 @@
 		<description>Mystic Origins (HB)</description>
 		<year>2019</year>
 		<manufacturer>New 8-bit Heroes</manufacturer>
-		<rom name="Mystic Origins (HB).nes" size="524304" crc="249c666e"/>
+		<rom name="Mystic Origins (2019)(New 8-bit Heroes).nes" size="524304" crc="249c666e"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

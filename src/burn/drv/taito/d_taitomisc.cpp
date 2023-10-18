@@ -2237,6 +2237,66 @@ static struct BurnRomInfo VolfieduRomDesc[] = {
 STDROMPICKEXT(Volfiedu, Volfiedu, cchip)
 STD_ROM_FN(Volfiedu)
 
+static struct BurnRomInfo VolfiedoRomDesc[] = {
+	{ "c04-12.30",     0x10000, 0xe319c7ec, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-08.10",     0x10000, 0x81c6f755, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-11.29",     0x10000, 0xf05696a6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-25.9",      0x10000, 0xa0e3c0a8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-20.7",      0x20000, 0x0aea651f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-22.9",      0x20000, 0xf405d465, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-19.6",      0x20000, 0x231493ae, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-21.8",      0x20000, 0x8598d38e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "c04-06.71",     0x08000, 0xb70106b2, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "c04-16.2",      0x20000, 0x8c2476ef, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-18.4",      0x20000, 0x7665212c, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-15.1",      0x20000, 0x7c50b978, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-17.3",      0x20000, 0xc62fdeb8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+
+	{ "cchip_c04-23",  0x02000, 0x46b0b479, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
+
+	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
+	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
+};
+
+STDROMPICKEXT(Volfiedo, Volfiedo, cchip)
+STD_ROM_FN(Volfiedo)
+
+static struct BurnRomInfo VolfieduoRomDesc[] = {
+	{ "c04-12.30",     0x10000, 0xe319c7ec, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-08.10",     0x10000, 0x81c6f755, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-11.29",     0x10000, 0xf05696a6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-24.9",      0x10000, 0xd7e4f03e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-20.7",      0x20000, 0x0aea651f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-22.9",      0x20000, 0xf405d465, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-19.6",      0x20000, 0x231493ae, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c04-21.8",      0x20000, 0x8598d38e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "c04-06.71",     0x08000, 0xb70106b2, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "c04-16.2",      0x20000, 0x8c2476ef, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-18.4",      0x20000, 0x7665212c, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-15.1",      0x20000, 0x7c50b978, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-17.3",      0x20000, 0xc62fdeb8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+
+	{ "cchip_c04-23",  0x02000, 0x46b0b479, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
+
+	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
+	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
+};
+
+STDROMPICKEXT(Volfieduo, Volfieduo, cchip)
+STD_ROM_FN(Volfieduo)
+
 static int MemIndex()
 {
 	UINT8 *Next; Next = TaitoMem;
@@ -6294,6 +6354,26 @@ struct BurnDriver BurnDrvVolfiedu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, VolfieduRomInfo, VolfieduRomName, NULL, NULL, NULL, NULL, VolfiedInputInfo, VolfieduDIPInfo,
+	VolfiedInit, TaitoMiscExit, JumpingFrame, VolfiedDraw, TaitoMiscScan,
+	NULL, 0x2000, 240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvVolfiedo = {
+	"volfiedo", "volfied", "cchip", NULL, "1989",
+	"Volfied (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, VolfiedoRomInfo, VolfiedoRomName, NULL, NULL, NULL, NULL, VolfiedInputInfo, VolfieduDIPInfo,
+	VolfiedInit, TaitoMiscExit, JumpingFrame, VolfiedDraw, TaitoMiscScan,
+	NULL, 0x2000, 240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvVolfieduo = {
+	"volfieduo", "volfied", "cchip", NULL, "1989",
+	"Volfied (US)\0", NULL, "Taito America Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, VolfieduoRomInfo, VolfieduoRomName, NULL, NULL, NULL, NULL, VolfiedInputInfo, VolfieduDIPInfo,
 	VolfiedInit, TaitoMiscExit, JumpingFrame, VolfiedDraw, TaitoMiscScan,
 	NULL, 0x2000, 240, 320, 3, 4
 };

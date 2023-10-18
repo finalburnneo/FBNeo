@@ -1943,7 +1943,7 @@ struct BurnDriver BurnDrvExtrmatn = {
 };
 
 
-// Extermination (US, set 1)
+// Extermination (US, World Games)
 
 static struct BurnRomInfo extrmatuRomDesc[] = {
 	{ "b06-20.11c",		0x10000, 0x04e3fc1f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1973,7 +1973,7 @@ STD_ROM_FN(extrmatu)
 
 struct BurnDriver BurnDrvExtrmatu = {
 	"extrmatnu", "extrmatn", NULL, NULL, "1987",
-	"Extermination (US, set 1)\0", NULL, "Taito (World Games license)", "Miscellaneous",
+	"Extermination (US, World Games)\0", NULL, "Taito (World Games license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_RUNGUN, 0,
 	NULL, extrmatuRomInfo, extrmatuRomName, NULL, NULL, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
@@ -2258,7 +2258,7 @@ static INT32 DrtoppelInit()
 
 struct BurnDriver BurnDrvDrtoppel = {
 	"drtoppel", NULL, NULL, NULL, "1987",
-	"Dr. Toppel's Adventure (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"Dr. Toppel's Adventure (World)\0", NULL, "Kaneko / Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, drtoppelRomInfo, drtoppelRomName, NULL, NULL, NULL, NULL, CommonInputInfo, DrtoppelDIPInfo,
@@ -2340,7 +2340,7 @@ STD_ROM_FN(drtopplu)
 
 struct BurnDriver BurnDrvDrtopplu = {
 	"drtoppelu", "drtoppel", NULL, NULL, "1987",
-	"Dr. Toppel's Adventure (US)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	"Dr. Toppel's Adventure (US)\0", NULL, "Kaneko / Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, drtoppluRomInfo, drtoppluRomName, NULL, NULL, NULL, NULL, CommonInputInfo, DrtoppluDIPInfo,
@@ -2383,7 +2383,7 @@ STD_ROM_FN(drtopplj)
 
 struct BurnDriver BurnDrvDrtopplj = {
 	"drtoppelj", "drtoppel", NULL, NULL, "1987",
-	"Dr. Toppel's Tankentai (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Dr. Toppel's Tankentai (Japan)\0", NULL, "Kaneko / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, drtoppljRomInfo, drtoppljRomName, NULL, NULL, NULL, NULL, CommonInputInfo, DrtoppluDIPInfo,
@@ -2428,7 +2428,7 @@ static INT32 KagekiInit()
 
 struct BurnDriver BurnDrvKageki = {
 	"kageki", NULL, NULL, NULL, "1988",
-	"Kageki (World)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Kageki (World)\0", NULL, "Kaneko / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekiRomInfo, kagekiRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
@@ -2468,7 +2468,7 @@ STD_ROM_FN(kagekiu)
 
 struct BurnDriver BurnDrvKagekiu = {
 	"kagekiu", "kageki", NULL, NULL, "1988",
-	"Kageki (US)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
+	"Kageki (US)\0", NULL, "Kaneko / Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekiuRomInfo, kagekiuRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
@@ -2508,7 +2508,7 @@ STD_ROM_FN(kagekij)
 
 struct BurnDriver BurnDrvKagekij = {
 	"kagekij", "kageki", NULL, NULL, "1988",
-	"Kageki (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Kageki (Japan)\0", NULL, "Kaneko / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekijRomInfo, kagekijRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
@@ -2548,7 +2548,7 @@ STD_ROM_FN(kagekih)
 
 struct BurnDriver BurnDrvKagekih = {
 	"kagekih", "kageki", NULL, NULL, "1992",
-	"Kageki (hack)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Kageki (hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekihRomInfo, kagekihRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
@@ -2735,7 +2735,7 @@ struct BurnDriver BurnDrvChukataja = {
 };
 
 
-// The NewZealand Story (World, newer)
+// The NewZealand Story (World, new version) (P0-043A PCB)
 
 static struct BurnRomInfo tnzsRomDesc[] = {
 	{ "b53-24.u1",   	0x20000, 0xd66824c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2764,7 +2764,7 @@ STD_ROM_FN(tnzs)
 
 struct BurnDriver BurnDrvtnzs = {
 	"tnzs", NULL, NULL, NULL, "1988",
-	"The NewZealand Story (World, newer)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"The NewZealand Story (World, new version) (P0-043A PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsRomInfo, tnzsRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TnzsDIPInfo,
@@ -2773,7 +2773,7 @@ struct BurnDriver BurnDrvtnzs = {
 };
 
 
-// The NewZealand Story (Japan, newer)
+// The NewZealand Story (Japan, new version) (P0-043A PCB)
 
 static struct BurnRomInfo tnzsjRomDesc[] = {
 	{ "b53-24.u1",  	0x20000, 0xd66824c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2802,7 +2802,7 @@ STD_ROM_FN(tnzsj)
 
 struct BurnDriver BurnDrvtnzsj = {
 	"tnzsj", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (Japan, new version, newer PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"The NewZealand Story (Japan, new version) (P0-043A PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsjRomInfo, tnzsjRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TnzsjDIPInfo,
@@ -2811,7 +2811,7 @@ struct BurnDriver BurnDrvtnzsj = {
 };
 
 
-// The NewZealand Story (Japan, old version) (older PCB)
+// The NewZealand Story (Japan, old version) (P0-041A PCB)
 
 static struct BurnRomInfo tnzsjoRomDesc[] = {
 	{ "b53-10.27c1001d.u32",		0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2846,7 +2846,7 @@ static INT32 TnzsoInit()
 
 struct BurnDriver BurnDrvTnzsjo = {
 	"tnzsjo", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (Japan, old version) (older PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"The NewZealand Story (Japan, old version) (P0-041A PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsjoRomInfo, tnzsjoRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TnzsjoDIPInfo,
@@ -2855,7 +2855,7 @@ struct BurnDriver BurnDrvTnzsjo = {
 };
 
 
-// The NewZealand Story (US, old version) (older PCB)
+// The NewZealand Story (US, old version) (P0-041A PCB)
 
 static struct BurnRomInfo tnzsuoRomDesc[] = {
 	{ "b53-10.27c1001d.u32",		0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2885,7 +2885,7 @@ STD_ROM_FN(tnzsuo)
 
 struct BurnDriver BurnDrvTnzsuo = {
 	"tnzsuo", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (US, old version) (older PCB)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	"The NewZealand Story (US, old version) (P0-041A PCB)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsuoRomInfo, tnzsuoRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TnzsjoDIPInfo,
@@ -2894,7 +2894,7 @@ struct BurnDriver BurnDrvTnzsuo = {
 };
 
 
-// The NewZealand Story (World, old version) (older PCB)
+// The NewZealand Story (World, old version) (P0-041A PCB)
 
 static struct BurnRomInfo tnzsoRomDesc[] = {
 	{ "b53-10.27c1001d.u32",		0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2924,7 +2924,7 @@ STD_ROM_FN(tnzso)
 
 struct BurnDriver BurnDrvTnzso = {
 	"tnzso", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (World, old version) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"The NewZealand Story (World, old version) (P0-041A PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsoRomInfo, tnzsoRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
@@ -2932,7 +2932,7 @@ struct BurnDriver BurnDrvTnzso = {
 	256, 224, 4, 3
 };
 
-// The NewZealand Story (World, unknown version) (older PCB)
+// The NewZealand Story (World, unknown version) (P0-041A PCB)
 // is this a legit set, or a hack, or a near-final (later than tnzsop below) prototype?
 
 static struct BurnRomInfo tnzsoaRomDesc[] = {
@@ -2964,7 +2964,7 @@ STD_ROM_FN(tnzsoa)
 
 struct BurnDriver BurnDrvTnzsoa = {
 	"tnzsoa", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (World, unknown version) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"The NewZealand Story (World, unknown version) (P0-041A PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsoaRomInfo, tnzsoaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
@@ -2978,7 +2978,7 @@ No other obviously evident routing/wiring changes are present.
 This type of pcb might have been used for in-house testing of all the games on this hardware.
 */
 
-// The NewZealand Story (World, prototype) (older PCB)
+// The NewZealand Story (World, prototype) (P0-041-1 PCB)
 // prototype (location test?) version; has different rom labels, and the Seta X1-001 chip has prototype markings revealing it was fabbed by Yamaha, as 'YM3906'
 
 static struct BurnRomInfo tnzsopRomDesc[] = {
@@ -3009,7 +3009,7 @@ STD_ROM_FN(tnzsop)
 
 struct BurnDriver BurnDrvTnzsop = {
 	"tnzsop", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (World, prototype) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"The NewZealand Story (World, prototype) (P0-041-1 PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsopRomInfo, tnzsopRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
@@ -3045,7 +3045,7 @@ STD_ROM_FN(kabukiz)
 
 struct BurnDriver BurnDrvKabukiz = {
 	"kabukiz", NULL, NULL, NULL, "1988",
-	"Kabuki-Z (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"Kabuki-Z (World)\0", NULL, "Kaneko / Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kabukizRomInfo, kabukizRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KabukizDIPInfo,
@@ -3074,7 +3074,7 @@ STD_ROM_FN(kabukizj)
 
 struct BurnDriver BurnDrvKabukizj = {
 	"kabukizj", "kabukiz", NULL, NULL, "1988",
-	"Kabuki-Z (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Kabuki-Z (Japan)\0", NULL, "Kaneko / Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kabukizjRomInfo, kabukizjRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KabukizjDIPInfo,
@@ -3140,7 +3140,7 @@ struct BurnDriver BurnDrvInsectxj = {
 };
 
 
-// Jumping Pop (Nics, Korean bootleg of Plump Pop)
+// Jumping Pop (Nics, Korean hack of Plump Pop)
 
 static struct BurnRomInfo jpopnicsRomDesc[] = {
 	{ "u96cpu2",		0x20000, 0x649e951c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -3163,7 +3163,7 @@ static INT32 JpopnicsInit()
 
 struct BurnDriver BurnDrvJpopnics = {
 	"jpopnics", NULL, NULL, NULL, "1992",
-	"Jumping Pop (Nics, Korean bootleg of Plump Pop)\0", NULL, "Nics", "Miscellaneous",
+	"Jumping Pop (Nics, Korean hack of Plump Pop)\0", NULL, "Nics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, jpopnicsRomInfo, jpopnicsRomName, NULL, NULL, NULL, NULL, JpopnicsInputInfo, JpopnicsDIPInfo,

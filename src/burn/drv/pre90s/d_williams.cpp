@@ -88,7 +88,8 @@ static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvAnalogPort1 = 0;
 static INT16 DrvAnalogPort2 = 0;
 static INT16 DrvAnalogPort3 = 0;
-
+static UINT8 lotto_ticket;
+static UINT8 lotto_motor;
 static INT32 TrackX[2] = { 0, 0 };
 static INT32 TrackY[2] = { 0, 0 };
 
@@ -1020,6 +1021,13 @@ static void sync_sound(INT32 num)
 	M6800Run(todo + 10);
 }
 
+static void pia0_out_b(UINT16 , UINT8 data)
+{
+	if (lottofun) {
+		lotto_motor = ~data & 0x80;
+	}
+}
+
 static void pia1_out_b(UINT16 , UINT8 data)
 {
 	if (!blaster) { // defender, williams HW
@@ -1085,7 +1093,7 @@ static void pia4_sound_irq(INT32 state)
 static pia6821_interface pia_0 = {
 	pia0_in_a, pia0_in_b,
 	NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, NULL,
+	NULL, pia0_out_b, NULL, NULL,
 	NULL, NULL
 };
 
@@ -1184,6 +1192,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	rom_bank = 0;
 	blaster_video_control = 0;
 	blaster_color0 = 0;
+
+	lotto_motor = 0;
+	lotto_ticket = 20;
 
 	TrackX[0] = TrackX[1] = 0;
 	TrackY[0] = TrackY[1] = 0;
@@ -1659,6 +1670,14 @@ static INT32 DrvFrame()
 			}
 			M6809Close();
 		}
+		if (lottofun && lotto_motor) {
+			if (lotto_ticket) lotto_ticket--;
+			if (!lotto_ticket) {
+				lotto_ticket = 20;
+				bprintf(0, _T("ticket!\n"));
+				DrvInputs[0] |= 0x80;
+			}
+		}
 
 		if (spdball) {
 			UINT8 xy = 0;
@@ -1774,6 +1793,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(rom_bank);
 		SCAN_VAR(blaster_video_control);
 		SCAN_VAR(blaster_color0);
+
+		if (lottofun) {
+			SCAN_VAR(lotto_motor);
+			SCAN_VAR(lotto_ticket);
+		}
 
 		SCAN_VAR(nExtraCycles);
 

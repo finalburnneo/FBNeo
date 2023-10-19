@@ -672,7 +672,7 @@ STD_ROM_FN(arabiana)
 
 struct BurnDriver BurnDrvarabiana = {
 	"arabiana", "arabian", NULL, NULL, "1983",
-	"Arabian (Atari)\0", NULL, "[Sun Electronics] (Atari license)", "Miscellaneous",
+	"Arabian (Atari)\0", NULL, "Sun Electronics (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, arabianaRomInfo, arabianaRomName, NULL, NULL, NULL, NULL, ArabianInputInfo, ArabianaDIPInfo,

@@ -44,6 +44,7 @@ static INT32  kageki_sample_size[0x30];
 static double kageki_sample_gain;
 static INT32 kageki_sample_output_dir;
 static INT32 game_kabukiz = 0;
+static INT32 game_insectxbl = 0;
 
 static INT32 cpu1_reset;
 static INT32 tnzs_banks[3];
@@ -1177,8 +1178,22 @@ static INT32 Type1Init(INT32 mcutype)
 
 			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  1, 1)) return 1;
 
-			if (BurnLoadRom(DrvGfxROM + 0x000000,  2, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM + 0x080000,  3, 1)) return 1;
+			if (game_insectxbl)
+			{
+				if (BurnLoadRom(DrvGfxROM + 0x00000,  2, 2)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x00001,  3, 2)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x40000,  4, 2)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x40001,  5, 2)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x80000,  6, 2)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x80001,  7, 2)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0xc0000,  8, 2)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0xc0001,  9, 2)) return 1;
+			}
+			else
+			{
+				if (BurnLoadRom(DrvGfxROM + 0x000000,  2, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x080000,  3, 1)) return 1;
+			}
 
 			insectx_gfx_decode();
 		}
@@ -1489,6 +1504,7 @@ static INT32 DrvExit()
 	tnzs_mcu_init(0);
 
 	game_kabukiz = 0;
+	game_insectxbl = 0;
 
 	return 0;
 }
@@ -3136,6 +3152,43 @@ struct BurnDriver BurnDrvInsectxj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, insectxjRomInfo, insectxjRomName, NULL, NULL, NULL, NULL, InsectxInputInfo, InsectxjDIPInfo,
 	InsectxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// Insector X (bootleg)
+
+static struct BurnRomInfo insectxblRomDesc[] = {
+	{ "ic71",	0x20000, 0x86ae1c66, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "ic3",	0x10000, 0x324b28c9, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "ic174",		0x20000, 0xf5a5c8bf, 4 | BRF_GRA },	      	  //  2 Graphics
+	{ "ic176",		0x20000, 0xef3436f4, 4 | BRF_GRA },	      	  //  3
+	{ "ic175",		0x20000, 0xe926ec1b, 4 | BRF_GRA },	      	  //  4
+	{ "ic177",		0x20000, 0x88ead1fb, 4 | BRF_GRA },	      	  //  5
+	{ "ic212",		0x20000, 0x54547590, 4 | BRF_GRA },	      	  //  6
+	{ "ic214",		0x20000, 0xda312ccd, 4 | BRF_GRA },	      	  //  7
+	{ "ic213",		0x20000, 0x5b6faea0, 4 | BRF_GRA },	      	  //  8
+	{ "ic215",		0x20000, 0xff1dee9e, 4 | BRF_GRA },	      	  //  9
+};
+
+STD_ROM_PICK(insectxbl)
+STD_ROM_FN(insectxbl)
+
+static INT32 InsectxblInit()
+{
+	game_insectxbl = 1;
+	return Type1Init(MCU_NONE_INSECTX);
+}
+
+struct BurnDriver BurnDrvInsectxbl = {
+	"insectxbl", "insectx", NULL, NULL, "1990",
+	"Insector X (bootleg)\0", NULL, "bootleg (Nagoya Kaihatsu)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, insectxblRomInfo, insectxblRomName, NULL, NULL, NULL, NULL, InsectxInputInfo, InsectxjDIPInfo,
+	InsectxblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

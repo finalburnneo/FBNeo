@@ -875,6 +875,49 @@ struct BurnDriver BurnDrvPitnruna = {
 };
 
 
+// Pit & Run - F-1 Race (set 3)
+
+static struct BurnRomInfo pitnrunbRomDesc[] = {
+	{ "test.a1",		0x2000, 0x395b5514, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "test.a2",		0x2000, 0x09ffb063, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "test.a3",		0x2000, 0x4f96e346, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "test.a4",		0x2000, 0x3d04ef80, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "sound",		0x1000, 0xfbd63042, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+
+	{ "a11_17.3a",		0x0800, 0xe7d5d6e1, 3 | BRF_PRG | BRF_ESS }, //  5 M68705 Code
+
+	{ "obj3",			0x2000, 0xc3b3131e, 4 | BRF_GRA },           //  6 Sprites
+	{ "obj2",			0x2000, 0x2fa1682a, 4 | BRF_GRA },           //  7
+	{ "obj1",			0x2000, 0xe678fe39, 4 | BRF_GRA },           //  8
+
+	{ "chr1",			0x2000, 0xfbae3504, 5 | BRF_GRA },           //  9 Background Tiles
+	{ "chr2",			0x2000, 0xc9177180, 5 | BRF_GRA },           // 10
+
+	{ "bsc1",			0x1000, 0xc53cb897, 6 | BRF_GRA },           // 11 Foreground Tiles
+	{ "bsc2",			0x1000, 0x7cdf9a55, 6 | BRF_GRA },           // 12
+
+	{ "lightdata",		0x2000, 0x8e346d10, 7 | BRF_GRA },           // 13 Spot graphics
+
+	{ "bp1",		0x0020, 0x643012f4, 8 | BRF_GRA },           // 14 Color data
+	{ "bp2",		0x0020, 0x50705f02, 8 | BRF_GRA },           // 15
+	{ "bp3",		0x0020, 0x25e70e5e, 8 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(pitnrunb)
+STD_ROM_FN(pitnrunb)
+
+struct BurnDriver BurnDrvPitnrunb = {
+	"pitnrunb", "pitnrun", NULL, NULL, "1984",
+	"Pit & Run - F-1 Race (set 3)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_RACING, 0,
+	NULL, pitnrunbRomInfo, pitnrunbRomName, NULL, NULL, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
+	PitnrunInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
+	224, 256, 3, 4
+};
+
+
 // Jump Kun (prototype)
 
 static struct BurnRomInfo jumpkunRomDesc[] = {
@@ -913,7 +956,7 @@ struct BurnDriver BurnDrvJumpkun = {
 	"jumpkun", NULL, NULL, NULL, "1984",
 	"Jump Kun (prototype)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_TAITO, GBF_PLATFORM, 0,
 	NULL, jumpkunRomInfo, jumpkunRomName, NULL, NULL, NULL, NULL, JumpkunInputInfo, JumpkunDIPInfo,
 	JumpkunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4

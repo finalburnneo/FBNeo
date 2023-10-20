@@ -1403,6 +1403,18 @@ static INT32 DrvLoadRoms()
 		}
 	}
 
+	if (Bssoccera) {
+		UINT8* Temp = (UINT8*)BurnMalloc(0x300000);
+		for (INT32 i = 0; i < 0x180000; i++) {
+			Temp[i] = DrvGfxROM0[i*2];
+		}
+		for (INT32 i = 0x180000; i < 0x300000; i++) {
+			Temp[i] = DrvGfxROM0[((i-0x180000)*2)+1];
+		}
+		memcpy (DrvGfxROM0, Temp, 0x300000);
+		BurnFree(Temp);
+	}
+
 	nGfxROM0Len = gfx0_len >> 5;
 
 	if (gfx0_len) DrvGfxDecode(DrvGfxROM0, gfx0_len);
@@ -2265,11 +2277,11 @@ static INT32 BssocceraInit()
 	return BssoccerInit();
 }
 
-struct BurnDriverD BurnDrvBssoccera = {
+struct BurnDriver BurnDrvBssoccera = {
 	"bssoccera", "bssoccer", NULL, NULL, "1996",
 	"Back Street Soccer (KRB-0032A PCB)\0", NULL, "SunA (Unico license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bssocceraRomInfo, bssocceraRomName, NULL, NULL, NULL, NULL, BssoccerInputInfo, bssoccerDIPInfo,
 	BssocceraInit, DrvExit, BssoccerFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3

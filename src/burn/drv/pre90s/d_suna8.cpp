@@ -2921,6 +2921,45 @@ struct BurnDriver BurnDrvSparkman = {
 };
 
 
+// Spark Man (v2.0, set 2)
+
+static struct BurnRomInfo sparkmanaRomDesc[] = {
+	{ "p9.7f",		0x08000, 0xb114cb2b, 1 }, //  0 maincpu
+	{ "10.g7",		0x10000, 0x48b4a31e, 1 }, //  1
+	{ "12.g8",		0x10000, 0xb8a4a557, 1 }, //  2
+	{ "11.i7",		0x10000, 0xf5f38e1f, 1 }, //  3
+	{ "13.i8",		0x10000, 0xe54eea25, 1 }, //  4
+
+	{ "14.h11",		0x08000, 0x06822f3d, 2 }, //  5 audiocpu
+
+	{ "p3.u1",		0x10000, 0x39dbd414, 3 }, //  6 gfx1
+	{ "p2.t1",		0x10000, 0x2e474203, 3 }, //  7
+	{ "p1.r1",		0x08000, 0x7115cfe7, 3 }, //  8
+	{ "p6.u2",		0x10000, 0xe6551db9, 3 }, //  9
+	{ "p5.t2",		0x10000, 0x0df5da2a, 3 }, // 10
+	{ "p4.r2",		0x08000, 0x6904bde2, 3 }, // 11
+
+	{ "p7.u4",		0x10000, 0x17c16ce4, 4 }, // 12 gfx2
+	{ "p8.u6",		0x10000, 0x414222ea, 4 }, // 13
+
+	{ "15.b10",		0x08000, 0x46c7d4d8, 5 }, // 14 samples
+	{ "16.b11",		0x08000, 0xd6823a62, 5 }, // 15
+};
+
+STD_ROM_PICK(sparkmana)
+STD_ROM_FN(sparkmana)
+
+struct BurnDriver BurnDrvSparkmana = {
+	"sparkmana", "sparkman", NULL, NULL, "1989",
+	"Spark Man (v2.0, set 2)\0", NULL, "SunA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	NULL, sparkmanaRomInfo, sparkmanaRomName, NULL, NULL, NULL, NULL, SparkmanInputInfo, SparkmanDIPInfo,
+	SparkmanInit, HardheadExit, SparkmanFrame, SparkmanDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+
 // Star Fighter (v1)
 
 static struct BurnRomInfo starfighRomDesc[] = {

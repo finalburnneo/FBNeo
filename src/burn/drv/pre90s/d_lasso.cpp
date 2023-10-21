@@ -265,6 +265,47 @@ static struct BurnDIPInfo PinboDIPList[]=
 
 STDDIPINFO(Pinbo)
 
+static struct BurnDIPInfo PinboaDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0x01, NULL			},
+	{0x12, 0xff, 0xff, 0x0a, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x11, 0x01, 0x01, 0x01, "Upright"		},
+	{0x11, 0x01, 0x01, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    5, "Coin A"		},
+	{0x11, 0x01, 0x0e, 0x02, "2 Coin  1 Credit"	},
+	{0x11, 0x01, 0x0e, 0x00, "1 Coin  1 Credit"	},
+	{0x11, 0x01, 0x0e, 0x08, "1 Coin  2 Credits"	},
+	{0x11, 0x01, 0x0e, 0x04, "1 Coin  3 Credits"	},
+	{0x11, 0x01, 0x0e, 0x0c, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x11, 0x01, 0x30, 0x00, "1"			},
+	{0x11, 0x01, 0x30, 0x10, "2"			},
+	{0x11, 0x01, 0x30, 0x20, "3"			},
+	{0x11, 0x01, 0x30, 0x30, "70 (Cheat)"		},
+
+	{0   , 0xfe, 0   ,    2, "Coin B"		},
+	{0x11, 0x01, 0x40, 0x40, "2 Coins 1 Credit"	},
+	{0x11, 0x01, 0x40, 0x00, "1 Coin  1 Credit"	},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
+	{0x12, 0x01, 0x01, 0x01, "None"			},
+	{0x12, 0x01, 0x01, 0x00, "500000 / 1000000"	},
+
+	{0   , 0xfe, 0   ,    2, "Controls"		},
+	{0x12, 0x01, 0x02, 0x00, "Reversed"		},
+	{0x12, 0x01, 0x02, 0x02, "Normal"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x12, 0x01, 0x08, 0x00, "Off"			},
+	{0x12, 0x01, 0x08, 0x08, "On"			},
+};
+
+STDDIPINFO(Pinboa)
+
 static struct BurnDIPInfo ChameleoDIPList[]=
 {
 	{0x0f, 0xff, 0xff, 0x01, NULL			},
@@ -1490,6 +1531,72 @@ struct BurnDriver BurnDrvPinbo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
 	NULL, pinboRomInfo, pinboRomName, NULL, NULL, NULL, NULL, PinboInputInfo, PinboDIPInfo,
+	PinboInit, LassoExit, PinboFrame, PinboDraw, LassoScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Pinbo (set 2)
+
+static struct BurnRomInfo pinboaRomDesc[] = {
+	{ "rom2.b7",	0x2000, 0x9a185338, 0 | BRF_PRG | BRF_ESS }, //  0 - M6502 Code
+	{ "6.bin",		0x2000, 0xf80b204c, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.bin",		0x2000, 0xc57fe503, 0 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",		0x2000, 0xd632b598, 0 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "8.bin",		0x2000, 0x32d1df14, 0 | BRF_PRG | BRF_ESS }, //  4 - Z80 Code
+
+	{ "rom6.a1",	0x4000, 0x74fe8e98, 3 | BRF_GRA },           //  5 - Graphics Tiles
+	{ "rom8.c1",	0x4000, 0x5a800fe7, 3 | BRF_GRA },           //  6
+	{ "2.bin",		0x4000, 0x33cac92e, 3 | BRF_GRA },           //  7
+
+	{ "red.l10",	0x0100, 0xe6c9ba52, 6 | BRF_GRA },           //  8 - Color PROM
+	{ "green.k10",	0x0100, 0x1bf2d335, 6 | BRF_GRA },           //  9
+	{ "blue.n10",	0x0100, 0xe41250ad, 6 | BRF_GRA },           // 10
+};
+
+STD_ROM_PICK(pinboa)
+STD_ROM_FN(pinboa)
+
+struct BurnDriver BurnDrvPinboa = {
+	"pinboa", "pinbo", NULL, NULL, "1984",
+	"Pinbo (set 2)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	NULL, pinboaRomInfo, pinboaRomName, NULL, NULL, NULL, NULL, PinboInputInfo, PinboaDIPInfo,
+	PinboInit, LassoExit, PinboFrame, PinboDraw, LassoScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Pinbo (bootleg)
+
+static struct BurnRomInfo pinbosRomDesc[] = {
+	{ "b4.bin",	0x2000, 0xd9452d4f, 0 | BRF_PRG | BRF_ESS }, //  0 - M6502 Code
+	{ "b5.bin",		0x2000, 0xf80b204c, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "b6.bin",		0x2000, 0xae967d83, 0 | BRF_PRG | BRF_ESS }, //  2
+	{ "b7.bin",		0x2000, 0x7a584b4e, 0 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "b8.bin",		0x2000, 0x32d1df14, 0 | BRF_PRG | BRF_ESS }, //  4 - Z80 Code
+
+	{ "rom6.a1",	0x4000, 0x74fe8e98, 3 | BRF_GRA },           //  5 - Graphics Tiles
+	{ "rom8.c1",	0x4000, 0x5a800fe7, 3 | BRF_GRA },           //  6
+	{ "rom7.d1",	0x4000, 0x327a3c21, 3 | BRF_GRA },           //  7
+
+	{ "red.l10",	0x0100, 0xe6c9ba52, 6 | BRF_GRA },           //  8 - Color PROM
+	{ "green.k10",	0x0100, 0x1bf2d335, 6 | BRF_GRA },           //  9
+	{ "blue.n10",	0x0100, 0xe41250ad, 6 | BRF_GRA },           // 10
+};
+
+STD_ROM_PICK(pinbos)
+STD_ROM_FN(pinbos)
+
+struct BurnDriver BurnDrvPinbos = {
+	"pinbos", "pinbo", NULL, NULL, "1985",
+	"Pinbo (bootleg)\0", NULL, "bootleg (Strike)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,
+	NULL, pinbosRomInfo, pinbosRomName, NULL, NULL, NULL, NULL, PinboInputInfo, PinboaDIPInfo,
 	PinboInit, LassoExit, PinboFrame, PinboDraw, LassoScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

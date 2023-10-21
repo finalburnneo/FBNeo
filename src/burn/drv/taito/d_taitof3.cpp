@@ -295,7 +295,7 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 
 		case 0x1c:
 		{
-			if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+			if (DebugSnd_MSM6295Initted) {
 				if ((offset & 3) == 3) { MSM6295Write(0, d); return; }
 			//	bprintf (0, _T("Sound Command: %x, %x %d\n"), offset & 0x1f, d, b); 
 				if ((offset & 3) == 0) { } // banking
@@ -740,7 +740,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	SekReset();
 	SekClose();
 
-	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+	if (DebugSnd_MSM6295Initted) {
 		MSM6295Reset(0);
 	} else {
 		TaitoF3SoundReset();
@@ -1385,7 +1385,7 @@ static INT32 DrvExit()
 	SekExit();
 	TaitoF3SoundExit();
 
-	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+	if (DebugSnd_MSM6295Initted) {
 		MSM6295Exit(0);
 	}
 
@@ -1566,14 +1566,14 @@ static INT32 DrvFrame()
 		if (i == 7) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		if ((BurnDrvGetFlags() & BDF_BOOTLEG) == 0) {
+		if (DebugSnd_MSM6295Initted == 0) {
 			TaitoF3CpuUpdate(nInterleave, i);
 		}
 	}
 
 	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
-	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+	if (DebugSnd_MSM6295Initted) {
 		if (pBurnSoundOut) {
 			MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 		}
@@ -5458,7 +5458,7 @@ struct BurnDriver BurnDrvCleopatro = {
 	"cleopatro", "cleopatr", NULL, NULL, "1996",
 	"Cleopatra Fortune (Ver 2.1O 1996/09/05, bootleg)\0", NULL, "bootleg", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, cleopatroRomInfo, cleopatroRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	cleopatrInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3

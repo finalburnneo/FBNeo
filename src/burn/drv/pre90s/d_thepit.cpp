@@ -1382,7 +1382,7 @@ struct BurnDriver BurnDrvFitterbl = {
 	"fitterbl", "roundup", NULL, NULL, "1981",
 	"Fitter (bootleg of Round-Up)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, fitterblRomInfo, fitterblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, FitterDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1516,7 +1516,7 @@ struct BurnDriver BurnDrvIntrepidb = {
 	"intrepidb", "intrepid", NULL, NULL, "1984",
 	"Intrepid (Elsys bootleg, set 1)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, intrepidbRomInfo, intrepidbRomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1548,7 +1548,7 @@ struct BurnDriver BurnDrvIntrepidb2 = {
 	"intrepidb2", "intrepid", NULL, NULL, "1984",
 	"Intrepid (Loris bootleg)\0", NULL, "bootleg (Loris)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, intrepidb2RomInfo, intrepidb2RomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1580,7 +1580,7 @@ struct BurnDriver BurnDrvIntrepidb3 = {
 	"intrepidb3", "intrepid", NULL, NULL, "1984",
 	"Intrepid (Elsys bootleg, set 2)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, intrepidb3RomInfo, intrepidb3RomName, NULL, NULL, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4

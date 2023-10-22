@@ -2062,7 +2062,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvDdragon3 = {
 	"ddragon3", NULL, NULL, NULL, "1990",
-	"Double Dragon 3 - The Rosetta Stone (US)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Double Dragon 3: The Rosetta Stone (US)\0", NULL, "East Technology / Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2072,7 +2072,7 @@ struct BurnDriver BurnDrvDdragon3 = {
 
 struct BurnDriver BurnDrvDdrago3j = {
 	"ddragon3j", "ddragon3", NULL, NULL, "1990",
-	"Double Dragon 3 - The Rosetta Stone (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Double Dragon 3: The Rosetta Stone (Japan)\0", NULL, "East Technology / Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2082,7 +2082,7 @@ struct BurnDriver BurnDrvDdrago3j = {
 
 struct BurnDriver BurnDrvDdrago3p = {
 	"ddragon3p", "ddragon3", NULL, NULL, "1990",
-	"Double Dragon 3 - The Rosetta Stone (prototype)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Double Dragon 3: The Rosetta Stone (prototype)\0", NULL, "East Technology / Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvpRomInfo, DrvpRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2092,7 +2092,7 @@ struct BurnDriver BurnDrvDdrago3p = {
 
 struct BurnDriver BurnDrvDdrago3b = {
 	"ddragon3b", "ddragon3", NULL, NULL, "1990",
-	"Double Dragon 3 - The Rosetta Stone (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Double Dragon 3: The Rosetta Stone (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvbDIPInfo,
@@ -2122,7 +2122,7 @@ struct BurnDriver BurnDrvCtribeua = {
 
 struct BurnDriver BurnDrvCtribeu1 = {
 	"ctribeu1", "ctribe", NULL, NULL, "1990",
-	"The Combatribes (US , rev 1)\0", NULL, "Technos Japan", "Miscellaneous",
+	"The Combatribes (US, rev 1)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Ctribeu1RomInfo, Ctribeu1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
@@ -2132,7 +2132,7 @@ struct BurnDriver BurnDrvCtribeu1 = {
 
 struct BurnDriver BurnDrvCtribej = {
 	"ctribej", "ctribe", NULL, NULL, "1990",
-	"The Combatribes (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
+	"The Combatribes (Japan, rev 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, CtribejRomInfo, CtribejRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CtribeDIPInfo,

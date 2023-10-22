@@ -943,6 +943,28 @@ static struct BurnRomInfo grdiansRomDesc[] = {
 STD_ROM_PICK(grdians)
 STD_ROM_FN(grdians)
 
+static struct BurnRomInfo grdiansaRomDesc[] = {
+	{ "ka2_001_001.u2",		  0x080000, 0x36adc6f2, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "ka2_001_004.u3",		  0x080000, 0x2704f416, BRF_ESS | BRF_PRG },
+	{ "ka2_001_002.u4",		  0x080000, 0xbb52447b, BRF_ESS | BRF_PRG },
+	{ "ka2_001_003.u5",		  0x080000, 0x9c164a3b, BRF_ESS | BRF_PRG },
+
+	{ "ka2-001-010.u18",	  0x200000, 0xb3e6e95f,	BRF_GRA },				// GFX
+	{ "ka2-001-011.u20",	  0x200000, 0x676edca6,	BRF_GRA },
+	{ "ka2-001-013.u17",	  0x200000, 0x9f7feb13,	BRF_GRA },
+	{ "ka2-001-014.u19",	  0x200000, 0x5465ef1b,	BRF_GRA },
+	{ "ka2-001-007.u22",	  0x200000, 0xd1035051,	BRF_GRA },
+	{ "ka2-001-008.u23",	  0x200000, 0xb2c94f31,	BRF_GRA },
+	{ "ka2-001-016.u1",		  0x200000, 0x99fc8efa,	BRF_GRA },
+	{ "ka2-001-017.u2",		  0x200000, 0x60ad7a2b,	BRF_GRA },
+
+	{ "ka2-001-015.u28",      0x200000, 0xfa97cc54, BRF_SND },				// PCM
+
+};
+
+STD_ROM_PICK(grdiansa)
+STD_ROM_FN(grdiansa)
+
 static struct BurnRomInfo mj4simaiRomDesc[] = {
 	{ "ll.u2",		  0x080000, 0x7be9c781, BRF_ESS | BRF_PRG },	// 68000 code
 	{ "lh1.u3",		  0x080000, 0x82aa3f72, BRF_ESS | BRF_PRG },
@@ -1776,6 +1798,95 @@ static INT32 grdiansInit()
 
 	// Leave 1MB empty (addressable by the chip)
 	BurnLoadRom(X1010SNDROM + 0x100000, 12, 1);
+
+	{
+		SekInit(0, 0x68000);										// Allocate 68000
+	    SekOpen(0);
+
+		// Map 68000 memory:
+		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
+		SekMapMemory(RamUnknown,	0x304000, 0x30FFFF, MAP_RAM);	// ? seems tile data
+
+		SekMapMemory((UINT8 *)RamSpr,
+									0xC00000, 0xC3FFFF, MAP_RAM);	// sprites
+		SekMapMemory((UINT8 *)RamPal,
+									0xC40000, 0xC4FFFF, MAP_ROM);	// Palette
+		SekMapMemory((UINT8 *)RamVReg,
+									0xC60000, 0xC6003F, MAP_READ | MAP_FETCH);	// Video Registers
+		SekMapMemory((UINT8 *)RamTMP68301,
+									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
+
+		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0xC40000, 0xC4FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0xC50000, 0xC5FFFF, MAP_WRITE);
+		SekMapHandler(4,			0xC60000, 0xC6003F, MAP_WRITE);
+		SekMapHandler(5,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
+
+		SekSetReadWordHandler(0, grdiansReadWord);
+		SekSetReadByteHandler(0, grdiansReadByte);
+		SekSetWriteWordHandler(0, grdiansWriteWord);
+		SekSetWriteByteHandler(0, grdiansWriteByte);
+
+		SekSetReadWordHandler (1, setaSoundRegReadWord);
+		SekSetReadByteHandler (1, setaSoundRegReadByte);
+		SekSetWriteWordHandler(1, setaSoundRegWriteWord);
+		SekSetWriteByteHandler(1, setaSoundRegWriteByte);
+
+		SekSetWriteWordHandler(2, grdiansPaletteWriteWord);
+		SekSetWriteByteHandler(2, grdiansPaletteWriteByte);
+
+		SekSetWriteWordHandler(3, grdiansClearWriteWord);
+		SekSetWriteByteHandler(3, grdiansClearWriteByte);
+
+		SekSetWriteWordHandler(4, setaVideoRegWriteWord);
+
+		SekSetWriteWordHandler(5, Tmp68301WriteWord);
+		SekSetWriteByteHandler(5, Tmp68301WriteByte);
+
+		SekSetIrqCallback( grdiansSekIrqCallback );
+
+		SekClose();
+	}
+	
+	GenericTilesInit();
+
+	x1010_sound_init(M68K_CYCS, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 grdiansaInit()
+{
+	INT32 nRet;
+
+	Mem = NULL;
+	MemIndex(0x0200000, 0x2000000, 0x0200000, 0x00C000);
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);										// blank all memory
+	MemIndex(0x0200000, 0x2000000, 0x0200000, 0x00C000);
+
+	// Load and byte-swap 68000 Program roms
+	nRet = BurnLoadRom(Rom68K + 0x000001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Rom68K + 0x000000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Rom68K + 0x100001, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Rom68K + 0x100000, 3, 2); if (nRet != 0) return 1;
+
+	// Load Gfx
+	UINT8 * tmpGfx = (UINT8 *)BurnMalloc(0x0600000);
+	for (INT32 i=0; i<8; i+=2) {
+		BurnLoadRom(tmpGfx + 0x0200000, i+4, 1);
+		BurnLoadRom(tmpGfx + 0x0400000, i+5, 1);
+		loadDecodeGfx( tmpGfx, 0x0600000 / 2, i );
+	}
+	BurnFree(tmpGfx);
+
+	BurnLoadRom(X1010SNDROM + 0x000000, 12, 1);
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
@@ -3750,11 +3861,21 @@ static INT32 grdiansScan(INT32 nAction,INT32 *pnMin)
 
 struct BurnDriver BurnDrvGrdians = {
 	"grdians", NULL, NULL, NULL, "1995",
-	"Guardians\0Denjin Makai II\0", NULL, "Banpresto", "Newer Seta",
+	"Guardians / Denjin Makai II (P-FG01-1 PCB)\0", NULL, "Winkysoft (Banpresto license)", "Newer Seta",
 	L"Guardians\0\u96FB\u795E\u9B54\u584A \uFF29\uFF29\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiansRomInfo, grdiansRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
+	304, 232, 4, 3
+};
+
+struct BurnDriver BurnDrvGrdiansa = {
+	"grdiansa", "grdians", NULL, NULL, "1995",
+	"Guardians / Denjin Makai II (P0-113A PCB)\0", NULL, "Winkysoft (Banpresto license)", "Newer Seta",
+	L"Guardians\0\u96FB\u795E\u9B54\u584A \uFF29\uFF29\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
+	NULL, grdiansaRomInfo, grdiansaRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
+	grdiansaInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	304, 232, 4, 3
 };
 
@@ -3770,7 +3891,7 @@ struct BurnDriver BurnDrvMj4simai = {
 
 struct BurnDriver BurnDrvMyangel = {
 	"myangel", NULL, NULL, NULL, "1996",
-	"Kosodate Quiz My Angel (Japan)\0", NULL, "Namco", "Newer Seta",
+	"Kosodate Quiz My Angel (Japan)\0", NULL, "MOSS / Namco", "Newer Seta",
 	L"\u5B50\u80B2\u3066\u30AF\u30A4\u30BA \u30DE\u30A4 \u30A8\u30F3\u30B8\u30A7\u30EB (Japan)\0Kosodate Quiz My Angel\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_QUIZ, 0,
 	NULL, myangelRomInfo, myangelRomName, NULL, NULL, NULL, NULL, myangelInputInfo, myangelDIPInfo,
@@ -3779,8 +3900,8 @@ struct BurnDriver BurnDrvMyangel = {
 };
 
 struct BurnDriver BurnDrvMyangel2 = {
-	"myangel2", NULL, NULL, NULL, "1996",
-	"Kosodate Quiz My Angel 2 (Japan)\0", NULL, "Namco", "Newer Seta",
+	"myangel2", NULL, NULL, NULL, "1997",
+	"Kosodate Quiz My Angel 2 (Japan)\0", NULL, "MOSS / Namco", "Newer Seta",
 	L"\u5B50\u80B2\u3066\u30AF\u30A4\u30BA \u30DE\u30A4 \u30A8\u30F3\u30B8\u30A7\u30EB \uFF12 (Japan)\0Kosodate Quiz My Angel 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_QUIZ, 0,
 	NULL, myangel2RomInfo, myangel2RomName, NULL, NULL, NULL, NULL, myangelInputInfo, myangel2DIPInfo,
@@ -3790,7 +3911,7 @@ struct BurnDriver BurnDrvMyangel2 = {
 
 struct BurnDriver BurnDrvPzlbowl = {
 	"pzlbowl", NULL, NULL, NULL, "1999",
-	"Puzzle De Bowling (Japan)\0", NULL, "Nihon System / Moss", "Newer Seta",
+	"Puzzle De Bowling (Japan)\0", NULL, "MOSS / Nihon System", "Newer Seta",
 	L"Puzzle De Bowling\0\u30D1\u30BA\u30EB \uFF24\uFF25 \u30DC\u30FC\u30EA\u30F3\u30B0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_PUZZLE, 0,
 	NULL, pzlbowlRomInfo, pzlbowlRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, pzlbowlDIPInfo,
@@ -3810,7 +3931,7 @@ struct BurnDriver BurnDrvPenbros = {
 
 struct BurnDriver BurnDrvAblast = {
 	"ablast", "penbros", NULL, NULL, "2000",
-	"A-Blast (Japan)\0", NULL, "Subsino", "Newer Seta",
+	"Hong Tian Lei (A-Blast) (Japan)\0", NULL, "Subsino", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_PLATFORM, 0,
 	NULL, ablastRomInfo, ablastRomName, NULL, NULL, NULL, NULL, penbrosInputInfo, penbrosDIPInfo,
@@ -3860,7 +3981,7 @@ struct BurnDriver BurnDrvDeerhunb = {
 
 struct BurnDriver BurnDrvDeerhunc = {
 	"deerhuntc", "deerhunt", NULL, NULL, "2000",
-	"Deer Hunting USA V3.0\0", NULL, "Sammy USA Corporation", "Newer Seta",
+	"Deer Hunting USA V3\0", NULL, "Sammy USA Corporation", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuncRomInfo, deerhuncRomName, NULL, NULL, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,

@@ -1831,7 +1831,7 @@ STD_ROM_FN(halleyscjp)
 
 struct BurnDriver BurnDrvHalleyscjp = {
 	"halleyscjp", "halleysc", NULL, NULL, "1985",
-	"Halley's Comet (Japan, Prototype)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Halley's Comet (Japan, prototype)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, halleyscjpRomInfo, halleyscjpRomName, NULL, NULL, NULL, NULL, HalleysInputInfo, HalleysDIPInfo,

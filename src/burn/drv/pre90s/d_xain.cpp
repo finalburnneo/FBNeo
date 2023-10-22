@@ -959,7 +959,7 @@ struct BurnDriver BurnDrvSolrwarr = {
 };
 
 
-// Xain'd Sleena (bootleg)
+// Xain'd Sleena (bootleg, set 1)
 
 static struct BurnRomInfo xsleenabRomDesc[] = {
 	{ "1.rom",			0x8000, 0x79f515a7, 1 | BRF_PRG | BRF_ESS }, //  0 Master M6809 Code
@@ -1005,7 +1005,7 @@ STD_ROM_FN(xsleenab)
 
 struct BurnDriver BurnDrvXsleenab = {
 	"xsleenab", "xsleena", NULL, NULL, "1986",
-	"Xain'd Sleena (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Xain'd Sleena (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
 	NULL, xsleenabRomInfo, xsleenabRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1066,6 +1066,61 @@ struct BurnDriver BurnDrvXsleenaba = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
 	NULL, xsleenabaRomInfo, xsleenabaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
+	256, 240, 4, 3
+};
+
+
+// Xain'd Sleena (bootleg, set 2)
+
+static struct BurnRomInfo xsleenabbRomDesc[] = {
+	{ "ic66",		0x8000, 0xf91cae92, 1 | BRF_PRG | BRF_ESS }, //  0 Master M6809 Code
+	{ "ic65",		0x8000, 0xd22bf859, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic29",		0x8000, 0xa1a860e2, 2 | BRF_PRG | BRF_ESS }, //  2 Slave M6809 code
+	{ "ic15",		0x8000, 0x948b9757, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "ic49",		0x8000, 0xa5318cb8, 3 | BRF_PRG | BRF_ESS }, //  4 Sound M6809 Code
+
+	{ "ic24",		0x8000, 0x83c00dd8, 4 | BRF_GRA },           //  5 Character
+
+	{ "ic136",		0x8000, 0x11eb4247, 5 | BRF_GRA },           //  6 Background Layer 1 tiles
+	{ "ic135",		0x8000, 0x422b536e, 5 | BRF_GRA },           //  7
+	{ "ic134",		0x8000, 0x828c1b0c, 5 | BRF_GRA },           //  8
+	{ "ic133",		0x8000, 0xd37939e0, 5 | BRF_GRA },           //  9
+	{ "ic114",		0x8000, 0x8f0aa1a7, 5 | BRF_GRA },           // 10
+	{ "ic113",		0x8000, 0x45681910, 5 | BRF_GRA },           // 11
+	{ "ic112",		0x8000, 0xa8eeabc8, 5 | BRF_GRA },           // 12
+	{ "ic111",		0x8000, 0xe59a2f27, 5 | BRF_GRA },           // 13
+
+	{ "ic44",		0x8000, 0x5c6c453c, 6 | BRF_GRA },           // 14 Background Layer 0 tiles
+	{ "ic45",		0x8000, 0x59d87a9a, 6 | BRF_GRA },           // 15
+	{ "ic46",		0x8000, 0x84884a2e, 6 | BRF_GRA },           // 16
+	{ "ic43",		0x8000, 0x8d637639, 6 | BRF_GRA },           // 17
+	{ "ic42",		0x8000, 0x71eec4e6, 6 | BRF_GRA },           // 18
+	{ "ic41",		0x8000, 0x7fc9704f, 6 | BRF_GRA },           // 19
+
+	{ "ic131",		0x8000, 0x252976ae, 7 | BRF_GRA },           // 20 Sprite tiles
+	{ "ic130",		0x8000, 0xe6f1e8d5, 7 | BRF_GRA },           // 21
+	{ "ic129",		0x8000, 0x785381ed, 7 | BRF_GRA },           // 22
+	{ "ic128",		0x8000, 0x59754e3d, 7 | BRF_GRA },           // 23
+	{ "ic109",		0x8000, 0x4d977f33, 7 | BRF_GRA },           // 24
+	{ "ic108",		0x8000, 0x3f3b62a0, 7 | BRF_GRA },           // 25
+	{ "ic107",		0x8000, 0x76641ee3, 7 | BRF_GRA },           // 26
+	{ "ic106",		0x8000, 0x37671f36, 7 | BRF_GRA },           // 27
+
+	{ "pt-0.ic59",	0x0100, 0xfed32888, 8 | BRF_GRA | BRF_OPT }, // 28 Priority Prom
+};
+
+STD_ROM_PICK(xsleenabb)
+STD_ROM_FN(xsleenabb)
+
+struct BurnDriver BurnDrvXsleenabb = {
+	"xsleenabb", "xsleena", NULL, NULL, "1987",
+	"Xain'd Sleena (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_RUNGUN, 0,
+	NULL, xsleenabbRomInfo, xsleenabbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 240, 4, 3
 };

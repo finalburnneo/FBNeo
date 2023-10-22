@@ -1323,7 +1323,7 @@ struct BurnDriver BurnDrvStarforcb = {
 	"starforcb", "starforc", NULL, NULL, "1984",
 	"Star Force (encrypted, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, starforcbRomInfo, starforcbRomName, NULL, NULL, NULL, NULL, SenjyoInputInfo, StarforcDIPInfo,
 	StarforcbInit, DrvExit, DrvFrame, StarforceDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

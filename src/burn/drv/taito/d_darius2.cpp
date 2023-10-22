@@ -1980,7 +1980,7 @@ struct BurnDriver BurnDrvDarius2 = {
 
 struct BurnDriver BurnDrvDarius2d = {
 	"darius2d", "darius2", NULL, NULL, "1989",
-	"Darius II (dual screen) (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Darius II (dual screen) (Japan, Rev 2)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, Darius2dRomInfo, Darius2dRomName, NULL, NULL, NULL, NULL, Darius2dInputInfo, Darius2dDIPInfo,
@@ -1990,7 +1990,7 @@ struct BurnDriver BurnDrvDarius2d = {
 
 struct BurnDriver BurnDrvDarius2do = {
 	"darius2do", "darius2", NULL, NULL, "1989",
-	"Darius II (dual screen) (Japan old version)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Darius II (dual screen) (Japan, Rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, Darius2doRomInfo, Darius2doRomName, NULL, NULL, NULL, NULL, Darius2dInputInfo, Darius2dDIPInfo,
@@ -2000,7 +2000,7 @@ struct BurnDriver BurnDrvDarius2do = {
 
 struct BurnDriver BurnDrvSagaia = {
 	"sagaia", "darius2", NULL, NULL, "1989",
-	"Darius II (dual screen) (World)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Sagaia (dual screen) (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, SagaiaRomInfo, SagaiaRomName, NULL, NULL, NULL, NULL, Darius2dInputInfo, Darius2dDIPInfo,

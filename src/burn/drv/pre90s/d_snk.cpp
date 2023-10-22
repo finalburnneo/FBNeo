@@ -7021,7 +7021,7 @@ STD_ROM_PICK(hal21)
 STD_ROM_FN(hal21)
 
 struct BurnDriver BurnDrvHal21 = {
-	"hal21", NULL, NULL, NULL, "1984",
+	"hal21", NULL, NULL, NULL, "1985",
 	"HAL21\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
@@ -7575,7 +7575,7 @@ STD_ROM_FN(gwara)
 
 struct BurnDriver BurnDrvGwara = {
 	"gwara", "gwar", NULL, NULL, "1987",
-	"Guerrilla War (Version 1)\0", NULL, "SNK", "Miscellaneous",
+	"Guerrilla War (Version 1, set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwaraRomInfo, gwaraRomName, NULL, NULL, NULL, NULL, GwarInputInfo, GwarDIPInfo,
@@ -7684,7 +7684,7 @@ struct BurnDriver BurnDrvGwarb = {
 	"gwarb", "gwar", NULL, NULL, "1987",
 	"Guerrilla War (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwarbRomInfo, gwarbRomName, NULL, NULL, NULL, NULL, GwarbInputInfo, GwarbDIPInfo,
 	GwarbInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
@@ -7774,7 +7774,7 @@ struct BurnDriver BurnDrvTnk3j = {
 	224, 288, 3, 4
 };
 
-// T.A.N.K (Bootleg, 8-way Joystick)
+// T.A.N.K (bootleg, 8-way joystick)
 
 static struct BurnRomInfo tnk3bRomDesc[] = {
 	{ "p1a.4e",     0x04000, 0x26c45b82, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
@@ -7807,9 +7807,9 @@ STD_ROM_FN(tnk3b)
 
 struct BurnDriver BurnDrvTnk3b = {
 	"tnk3b", "tnk3", NULL, NULL, "1985",
-	"T.A.N.K (Bootleg, 8-way Joystick)\0", NULL, "bootleg", "Miscellaneous",
+	"T.A.N.K (bootleg, 8-way joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tnk3bRomInfo, tnk3bRomName, NULL, NULL, NULL, NULL, Tnk3InputInfo, Tnk3DIPInfo,
 	Tnk3bInit, DrvExit, Tnk3Frame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	224, 288, 3, 4
@@ -7887,7 +7887,7 @@ struct BurnDriver BurnDrvAthenab = {
 	"athenab", "athena", NULL, NULL, "1986",
 	"Athena (bootleg)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, athenabRomInfo, athenabRomName, NULL, NULL, NULL, NULL, AthenaInputInfo, AthenaDIPInfo,
 	AthenaInit, DrvExit, AthenaFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -7926,7 +7926,7 @@ struct BurnDriver BurnDrvSathena = {
 	"sathena", "athena", NULL, NULL, "1987",
 	"Super Athena (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, sathenaRomInfo, sathenaRomName, NULL, NULL, NULL, NULL, AthenaInputInfo, AthenaDIPInfo,
 	AthenaInit, DrvExit, AthenaFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -8775,7 +8775,7 @@ struct BurnDriver BurnDrvDogosokb = {
 };
 
 
-// Chopper I (US ver 2)
+// Chopper I (US Ver 2)
 
 static struct BurnRomInfo chopperRomDesc[] = {
 	{ "kk_a_ver2_1.8g",	0x10000, 0xdc325860, 1 | BRF_ESS | BRF_PRG }, 	 //  0 Z80 #0 code
@@ -8823,7 +8823,7 @@ STD_ROM_FN(chopper)
 
 struct BurnDriver BurnDrvChopper = {
 	"chopper", NULL,  NULL, NULL, "1988",
-	"Chopper I (US ver 2)\0", NULL, "SNK", "Miscellaneous",
+	"Chopper I (US Ver 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, chopperRomInfo, chopperRomName, NULL, NULL, NULL, NULL, ChopperaInputInfo, ChopperaDIPInfo,
@@ -8832,7 +8832,7 @@ struct BurnDriver BurnDrvChopper = {
 };
 
 
-// Chopper I (US ver 1?)
+// Chopper I (US Ver 1?)
 
 static struct BurnRomInfo chopperaRomDesc[] = {
 	{ "chpri-1.8g",		0x10000, 0xa4e6e978, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 code
@@ -8880,7 +8880,7 @@ STD_ROM_FN(choppera)
 
 struct BurnDriver BurnDrvChoppera = {
 	"choppera", "chopper", NULL, NULL, "1988",
-	"Chopper I (US ver 1?)\0", NULL, "SNK", "Miscellaneous",
+	"Chopper I (US Ver 1?)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, chopperaRomInfo, chopperaRomName, NULL, NULL, NULL, NULL, ChopperInputInfo, ChopperDIPInfo,
@@ -9198,9 +9198,9 @@ STD_ROM_FN(tdfever2b)
 
 struct BurnDriver BurnDrvTdfever2b = {
 	"tdfever2b", "tdfever", NULL, NULL, "1988",
-	"TouchDown Fever 2 (bootleg)\0", NULL, "SNK", "Miscellaneous",
+	"TouchDown Fever 2 (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	/*BDF_GAME_WORKING |*/0 | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tdfever2bRomInfo, tdfever2bRomName, NULL, NULL, NULL, NULL, ChopperInputInfo, ChopperDIPInfo, //TdfeverInputInfo, TdfeverDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, TdfeverDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -9332,7 +9332,7 @@ struct BurnDriver BurnDrvFsoccerb = {
 	"fsoccerb", "fsoccer", NULL, NULL, "1988",
 	"Fighting Soccer (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerbRomInfo, fsoccerbRomName, NULL, NULL, NULL, NULL, FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -9376,7 +9376,7 @@ struct BurnDriver BurnDrvFsoccerba = {
 	"fsoccerba", "fsoccer", NULL, NULL, "1988",
 	"Fighting Soccer (Joystick hack bootleg, alt)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerbaRomInfo, fsoccerbaRomName, NULL, NULL, NULL, NULL, FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3

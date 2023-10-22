@@ -1647,7 +1647,7 @@ STD_ROM_FN(elecyoyo)
 
 struct BurnDriver BurnDrvElecyoyo = {
 	"elecyoyo", NULL, NULL, NULL, "1982",
-	"Electric Yo-Yo, The (set 1)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	"The Electric Yo-Yo (set 1)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
 	NULL, elecyoyoRomInfo, elecyoyoRomName, NULL, NULL, NULL, NULL, ElecyoyoInputInfo, NULL,
@@ -1683,7 +1683,7 @@ STD_ROM_FN(elecyoyo2)
 
 struct BurnDriver BurnDrvElecyoyo2 = {
 	"elecyoyo2", "elecyoyo", NULL, NULL, "1982",
-	"Electric Yo-Yo, The (set 2)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	"The Electric Yo-Yo (set 2)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
 	NULL, elecyoyo2RomInfo, elecyoyo2RomName, NULL, NULL, NULL, NULL, ElecyoyoInputInfo, NULL,
@@ -1862,7 +1862,7 @@ static INT32 SlitherInit()
 
 struct BurnDriver BurnDrvSlither = {
 	"slither", NULL, NULL, NULL, "1982",
-	"Slither (set 1)\0", "Press 'P2 Start' to exit settings screen", "Century II", "Miscellaneous",
+	"Slither (set 1)\0", "Press 'P2 Start' to exit settings screen", "Century II (GDI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, slitherRomInfo, slitherRomName, NULL, NULL, NULL, NULL, SlitherInputInfo, NULL,
@@ -1893,7 +1893,7 @@ STD_ROM_FN(slithera)
 
 struct BurnDriver BurnDrvSlithera = {
 	"slithera", "slither", NULL, NULL, "1982",
-	"Slither (set 2)\0", "Press 'P2 Start' to exit settings screen", "Century II", "Miscellaneous",
+	"Slither (set 2)\0", "Press 'P2 Start' to exit settings screen", "Century II (GDI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, slitheraRomInfo, slitheraRomName, NULL, NULL, NULL, NULL, SlitherInputInfo, NULL,

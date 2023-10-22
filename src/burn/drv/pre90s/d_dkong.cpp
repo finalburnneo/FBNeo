@@ -3981,6 +3981,43 @@ struct BurnDriver BurnDrvdkhrthnt = {
 	224, 256, 3, 4
 };
 
+// Donkey Kong Accelerate
+
+static struct BurnRomInfo dkaccelRomDesc[] = {
+	{ "dkaccel.5et",	0x1000, 0xcfb3a3be, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkaccel.5ct",	0x1000, 0x9a527b63, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkaccel.5bt",	0x1000, 0x107b677c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkaccel.5at",	0x1000, 0x622b283f, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "dka_v_5h_b.bin",	0x0800, 0xb3a5f655, 3 | BRF_GRA },           //  6 gfx1
+	{ "dka_v_3pt.bin",	0x0800, 0x0bebf954, 3 | BRF_GRA },           //  7
+
+	{ "dka_l_4m_b.bin",	0x0800, 0x3c7c711e, 4 | BRF_GRA }, 			 //  8 gfx2
+	{ "dka_l_4n_b.bin",	0x0800, 0x7f0e788f, 4 | BRF_GRA }, 			 //  9
+	{ "dka_l_4r_b.bin",	0x0800, 0x89129b53, 4 | BRF_GRA }, 			 // 10
+	{ "dka_l_4s_b.bin",	0x0800, 0xdf2aa287, 4 | BRF_GRA }, 			 // 11
+
+	{ "dka_c-2k.bpr",	0x0100, 0xd46f27e1, 5 | BRF_GRA },           // 12 proms
+	{ "dka_c-2j.bpr",	0x0100, 0x9e4af035, 5 | BRF_GRA },           // 13
+	{ "dka_v-5e.bpr",	0x0100, 0xece3b0f2, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkaccel)
+STD_ROM_FN(dkaccel)
+
+struct BurnDriver BurnDrvdkaccel = {
+	"dkaccel", "dkong", NULL, "dkong", "2023",
+	"Donkey Kong Accelerate\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkaccelRomInfo, dkaccelRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
 // Donkey Kong Anniversary Edition
 
 static struct BurnRomInfo dkong40yRomDesc[] = {

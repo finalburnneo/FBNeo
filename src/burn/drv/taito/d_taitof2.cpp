@@ -4095,6 +4095,39 @@ static struct BurnRomInfo RunarkRomDesc[] = {
 STD_ROM_PICK(Runark)
 STD_ROM_FN(Runark)
 
+static struct BurnRomInfo GrowlpRomDesc[] = {
+	{ "growl_ic15_japan_0h_fb09.bin",    0x40000, 0x3a9141dc, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "growl_ic13_japan_0l_a80a.bin",    0x40000, 0xa8547fd6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "growl_ic16_japan_1h_41bb.bin",    0x40000, 0x64aa6f4b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "growl_ic14_europe_1l_726b.bin",   0x40000, 0xc38bbb05, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "growl_ic3_snd.bin",               0x10000, 0xf75929e0, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "growl_ic11_scro-0-l_a971.bin",    0x40000, 0x769ddaab, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "growl_ic13_scro-0-0-h_2e7a.bin",  0x40000, 0x4e220e34, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "growl_ic12_scro-1-l_026e.bin",    0x40000, 0x486925b4, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "growl_ic14_scro-0-1-h_f0fa.bin",  0x40000, 0x42c2a2d0, BRF_GRA | TAITO_CHARS_BYTESWAP },
+
+	{ "growl_ic17_obj0-0-l_90b9.bin",    0x40000, 0xcd94025a, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "growl_ic19_obj0-0-h_b652.bin",    0x40000, 0x6838c1b0, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "growl_ic18_obj0-1-l_a299.bin",    0x40000, 0x0ddf592e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "growl_ic20_obj0-1-h_9f1a.bin",    0x40000, 0x0f0407f1, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "growl_ic4_obj1-l_7d96.bin",       0x40000, 0xbed51bd6, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "growl_ic6_obj1-0-h_3a22.bin",     0x40000, 0x5b696d20, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "growl_ic5_obj1-1-l_d34f.bin",     0x40000, 0xf34d83ec, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "growl_ic7_obj1-1-h_b5af.bin",     0x40000, 0xe9fda1fa, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+
+	{ "growl_ic23_ch-a-0_b5d9.bin",      0x40000, 0xcc9ffbf8, BRF_SND | TAITO_YM2610A },
+	{ "growl_ic24_ch-a-1_3c70.bin",      0x40000, 0x7177b4ad, BRF_SND | TAITO_YM2610A },
+	{ "growl_ic25_ch-a-2_9614.bin",      0x40000, 0x7c9b1423, BRF_SND | TAITO_YM2610A },
+	{ "growl_ic26_ch-a-3_fca6.bin",      0x40000, 0xdb1ecefe, BRF_SND | TAITO_YM2610A },
+	{ "growl_ic21_ch-b-0_d743.bin",      0x40000, 0x7a7eab62, BRF_SND | TAITO_YM2610B },
+	{ "growl_ic22_ch-b-1_a5f1.bin",      0x40000, 0x567df833, BRF_SND | TAITO_YM2610B },
+};
+
+STD_ROM_PICK(Growlp)
+STD_ROM_FN(Growlp)
+
 static struct BurnRomInfo GunfrontRomDesc[] = {
 	{ "c71-09.ic42",        0x020000, 0x10a544a2, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c71-08.ic41",        0x020000, 0xc17dc0a0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -10987,7 +11020,7 @@ struct BurnDriver BurnDrvCameltry = {
 
 struct BurnDriver BurnDrvCameltryau = {
 	"cameltryau", "cameltry", NULL, NULL, "1989",
-	"Cameltry (World, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito F2",
+	"Cameltry (US, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOF2, GBF_MAZE, 0,
 	NULL, CameltryauRomInfo, CameltryauRomName, NULL, NULL, NULL, NULL, CameltryInputInfo, CameltryDIPInfo,
@@ -10997,7 +11030,7 @@ struct BurnDriver BurnDrvCameltryau = {
 
 struct BurnDriver BurnDrvCameltrya = {
 	"cameltrya", "cameltry", NULL, NULL, "1989",
-	"Cameltry (US, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito F2",
+	"Cameltry (World, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOF2, GBF_MAZE, 0,
 	NULL, CameltryaRomInfo, CameltryaRomName, NULL, NULL, NULL, NULL, CameltryInputInfo, CameltryDIPInfo,
@@ -11087,7 +11120,7 @@ struct BurnDriver BurnDrvDondokodj = {
 
 struct BurnDriver BurnDrvDondokodu = {
 	"dondokodu", "dondokod", NULL, NULL, "1989",
-	"Don Doko Don (US)\0", NULL, "Taito Corporation", "Taito F2",
+	"Don Doko Don (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOF2, GBF_PLATFORM, 0,
 	NULL, DondokoduRomInfo, DondokoduRomName, NULL, NULL, NULL, NULL, DondokodInputInfo, DondokoduDIPInfo,
@@ -11097,7 +11130,7 @@ struct BurnDriver BurnDrvDondokodu = {
 
 struct BurnDriver BurnDrvDriftout = {
 	"driftout", NULL, NULL, NULL, "1991",
-	"Drift Out (Europe)\0", NULL, "Visco (Europe)", "Taito F2",
+	"Drift Out (Europe)\0", NULL, "Visco", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriftoutRomInfo, DriftoutRomName, NULL, NULL, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
@@ -11107,7 +11140,7 @@ struct BurnDriver BurnDrvDriftout = {
 
 struct BurnDriver BurnDrvDriftoutj = {
 	"driftoutj", "driftout", NULL, NULL, "1991",
-	"Drift Out (Japan)\0", NULL, "Visco (Japan)", "Taito F2",
+	"Drift Out (Japan)\0", NULL, "Visco", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriftoutjRomInfo, DriftoutjRomName, NULL, NULL, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
@@ -11117,7 +11150,7 @@ struct BurnDriver BurnDrvDriftoutj = {
 
 struct BurnDriver BurnDrvDriveout = {
 	"driveout", "driftout", NULL, NULL, "1991",
-	"Drive Out\0", NULL, "bootleg", "Taito F2",
+	"Drive Out (bootleg)\0", NULL, "bootleg", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriveoutRomInfo, DriveoutRomName, NULL, NULL, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
@@ -11157,7 +11190,7 @@ struct BurnDriver BurnDrvFinalbu = {
 
 struct BurnDriver BurnDrvFootchmp = {
 	"footchmp", NULL, NULL, NULL, "1990",
-	"Football Champ (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	"Football Champ / Euro Football Champ (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
 	NULL, FootchmpRomInfo, FootchmpRomName, NULL, NULL, NULL, NULL, FootchmpInputInfo, FootchmpDIPInfo,
@@ -11197,7 +11230,7 @@ struct BurnDriver BurnDrvGrowl = {
 
 struct BurnDriver BurnDrvGrowla = {
 	"growla", "growl", NULL, NULL, "1990",
-	"Growl (World)\0", NULL, "Taito America Japan", "Taito F2",
+	"Growl (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowlaRomInfo, GrowlaRomName, NULL, NULL, NULL, NULL, GrowlInputInfo, GrowluDIPInfo,
@@ -11221,6 +11254,16 @@ struct BurnDriver BurnDrvRunark = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, RunarkRomInfo, RunarkRomName, NULL, NULL, NULL, NULL, GrowlInputInfo, RunarkDIPInfo,
+	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvGrowlp = {
+	"growlp", "growl", NULL, NULL, "1990",
+	"Growl (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
+	NULL, GrowlpRomInfo, GrowlpRomName, NULL, NULL, NULL, NULL, GrowlInputInfo, GrowluDIPInfo,
 	GrowlInit, TaitoF2Exit, TaitoF2Frame, TaitoF2PriDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

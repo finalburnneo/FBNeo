@@ -1127,6 +1127,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="amaurote128" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Q/P/A/L: move - Space: fire - Shift: radio menu</comment>
+		<description>Amaurote (128K)</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
+		<rom name="Amaurote 128K (1987)(Mastertronic Added Dimension).tap" size="90861" crc="636c9988"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="amaurote48" cloneof="amaurote128" romof="amaurote128" sourcefile="d_spectrum.cpp">
+		<comment>Q/P/A/L: move - Space: fire - Shift: radio menu</comment>
+		<description>Amaurote (48K)</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
+		<rom name="Amaurote 48K (1987)(Mastertronic Added Dimension).tap" size="46026" crc="0fe33d95"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="am3dpool" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>American 3D Pool (48K)</description>
 		<year>1992</year>
@@ -2849,6 +2870,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bombfusion" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<description>Bombfusion (48K)</description>
+		<year>1989</year>
+		<manufacturer>Virgin Mastertronic</manufacturer>
+		<rom name="Bombfusion 48K (1989)(Virgin Mastertronic).tap" size="49726" crc="b7fcbc3b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="bombscare" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Bombscare (48K)</description>
 		<year>1986</year>
@@ -3862,6 +3892,16 @@
 		<year>1990</year>
 		<manufacturer>Atlantis Software</manufacturer>
 		<rom name="Cavemania 48K (1990)(Atlantis Software).tap" size="48245" crc="156c837d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="caveted" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Caveted Against the Darkness (48K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Stonechat Productions</manufacturer>
+		<rom name="Caveted Against the Darkness 48K (2022)(Stonechat Productions).tap" size="47774" crc="1fde01af"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7035,6 +7075,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="dynamission" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<description>Dynatron Mission (48K)</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Dynatron Mission 48K (1987)(Mastertronic).tap" size="48128" crc="a54ffa29"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="emotion" romof="spec128" sourcefile="d_spectrum.cpp">
 		<description>E-motion (128K)</description>
 		<year>1990</year>
@@ -8684,6 +8733,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ghostlycapers" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Ghostly Capers (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Chopz</manufacturer>
+		<rom name="Ghostly Capers 128K (2023)(Chopz).tap" size="47437" crc="60003b1e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gng_48" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Ghosts 'n' Goblins (48K)</description>
 		<year>1986</year>
@@ -8847,6 +8907,15 @@
 		<year>1984</year>
 		<manufacturer>CRL Ltd.</manufacturer>
 		<rom name="Glug Glug (1984)(CRL Ltd.).TAP" size="18843" crc="0a096413"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="gnasher" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<description>Gnasher (16K)</description>
+		<year>1984</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Gnasher 16K (1984)(Mastertronic).tap" size="17027" crc="7c38b4ea"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9587,6 +9656,15 @@
 		<rom name="Herbert the Turbot (2010)(Bob Smith).z80" size="81123" crc="0a9c0799"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hercules" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<description>Hercules (48K)</description>
+		<year>1986</year>
+		<manufacturer>Alpha-Omega</manufacturer>
+		<rom name="Hercules 48K (1986)(Alpha-Omega).tap" size="28621" crc="3b89d565"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10785,6 +10863,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="jeffnotes" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Jeff &amp; The Blue Notes (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Deanysoft</manufacturer>
+		<rom name="Jeff &amp; The Blue Notes 128K (2023)(Deanysoft).z80" size="43830" crc="9836d545"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jetbikesim5" cloneof="jetbikesim2" romof="jetbikesim2" sourcefile="d_spectrum.cpp">
 		<description>Jet Bike Simulator - Coasts Expert (48K)</description>
 		<year>1988</year>
@@ -11400,11 +11489,29 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="knmgolf" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<description>Konami's Golf (48K)</description>
+		<year>1986</year>
+		<manufacturer>Imagine</manufacturer>
+		<rom name="Konami's Golf 48K (1986)(Imagine).tap" size="43314" crc="b9a1109b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="pingpong" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Konami's Ping Pong (48K)</description>
 		<year>1986</year>
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Konami's Ping Pong 48K (1986)(Imagine).tap" size="39121" crc="d484a79a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="knmtennis" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<description>Konami's Tennis (48K)</description>
+		<year>1986</year>
+		<manufacturer>Imagine</manufacturer>
+		<rom name="Konami's Tennis 48K (1986)(Imagine).tap" size="45644" crc="c78dd656"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -16270,28 +16377,6 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ramiro4en" romof="spec128" sourcefile="d_spectrum.cpp">
-		<comment>Homebrew</comment>
-		<description>Ramiro el Vampiro and the Mystery of the Papyrus (128K) (HB)</description>
-		<year>2023</year>
-		<manufacturer>The Mojon Twins</manufacturer>
-		<rom name="Ramiro el vampiro IV EN (2023)(The Mojon Twins).tap" size="49265" crc="643cf039"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="ramiro4es" cloneof="ramiro4en" romof="ramiro4en" sourcefile="d_spectrum.cpp">
-		<comment>Homebrew</comment>
-		<description>Ramiro el Vampiro en el Misterio del Papiro (128K) (HB)</description>
-		<year>2023</year>
-		<manufacturer>The Mojon Twins</manufacturer>
-		<rom name="Ramiro el vampiro IV ES (2023)(The Mojon Twins).tap" size="49233" crc="54c870f3"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="ramiro3en" romof="spec128" sourcefile="d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Ramiro el Vampiro III (English) (128K) (HB)</description>
@@ -16309,6 +16394,28 @@
 		<year>2022</year>
 		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Ramiro El Vampiro III ES (2022)(The Mojon Twins).tap" size="42874" crc="ba4b626e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ramiro4en" romof="spec128" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Ramiro el Vampiro IV and the Mystery of the Papyrus (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Ramiro el vampiro IV EN (2023)(The Mojon Twins).tap" size="49265" crc="643cf039"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ramiro4es" cloneof="ramiro4en" romof="ramiro4en" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Ramiro el Vampiro IV en el Misterio del Papiro (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Ramiro el vampiro IV ES (2023)(The Mojon Twins).tap" size="49233" crc="54c870f3"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -18813,6 +18920,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="spectipede" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<comment>Press 'P' to start a game session</comment>
+		<description>Spectipede (16K)</description>
+		<year>1983</year>
+		<manufacturer>Mastertronic</manufacturer>
+		<rom name="Spectipede 16K (1983)(Mastertronic).tap" size="16219" crc="da23e9dd"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="specross" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<comment>1: up - 9: left - 0: right</comment>
 		<description>Spectrum Cross (16K)</description>
@@ -20253,6 +20370,16 @@
 		<year>2022</year>
 		<manufacturer>Haplo</manufacturer>
 		<rom name="Tenebra 48K (2022)(Haplo).tap" size="13084" crc="2f49b790"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tenebra2" romof="spectrum" sourcefile="d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Tenebra 2 (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Haplo</manufacturer>
+		<rom name="Tenebra 2 48K (2023)(Haplo).tap" size="21310" crc="150edd15"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

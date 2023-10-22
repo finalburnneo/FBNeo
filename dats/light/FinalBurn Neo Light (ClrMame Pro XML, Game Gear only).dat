@@ -28,6 +28,22 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="addfam" sourcefile="d_sms.cpp">
+		<description>Addams Family, The (World)</description>
+		<year>1993</year>
+		<manufacturer>Flying Edge</manufacturer>
+		<rom name="mpr-16234-f.ic1" size="262144" crc="1d01f999"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="advbatmr" sourcefile="d_sms.cpp">
+		<description>Adventures of Batman and Robin, The (Euro, USA)</description>
+		<year>1995</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="adventures of batman and robin, the (usa, europe).bin" size="524288" crc="bb4f23ff"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aerialasj" cloneof="aerialas" romof="aerialas" sourcefile="d_sms.cpp">
 		<description>Aerial Assault (Japan, v1.1)</description>
 		<year>1992</year>
@@ -1483,7 +1499,16 @@
 	</game>
 	<game name="dcastle" sourcefile="d_sms.cpp">
 		<comment>Homebrew</comment>
-		<description>Dracula's Castle (HB)</description>
+		<description>Dracula's Castle (English) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="Dracula's Castle EN (2021)(Habit Soft).gg" size="262144" crc="565ed602"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="dcastlej" cloneof="dcastle" romof="dcastle" sourcefile="d_sms.cpp">
+		<comment>Homebrew</comment>
+		<description>Dracula's Castle (Japanese) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Habit Soft</manufacturer>
 		<rom name="Dracula's Castle (2021)(Habit Soft).gg" size="262144" crc="0ba12ac9"/>
@@ -6100,22 +6125,6 @@
 		<year>2022</year>
 		<manufacturer>Armix</manufacturer>
 		<rom name="Tetris4GG v0.9 (2022)(Armix).gg" size="65536" crc="e0654d27"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="addfam" sourcefile="d_sms.cpp">
-		<description>The Addams Family (World)</description>
-		<year>1993</year>
-		<manufacturer>Flying Edge</manufacturer>
-		<rom name="mpr-16234-f.ic1" size="262144" crc="1d01f999"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="advbatmr" sourcefile="d_sms.cpp">
-		<description>The Adventures of Batman and Robin (Euro, USA)</description>
-		<year>1995</year>
-		<manufacturer>Sega</manufacturer>
-		<rom name="adventures of batman and robin, the (usa, europe).bin" size="524288" crc="bb4f23ff"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

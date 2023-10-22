@@ -2835,10 +2835,22 @@
 	</game>
 	<game name="burnusv2" romof="msx" sourcefile="d_msx.cpp">
 		<comment>Homebrew</comment>
-		<description>Burn Us (HB, v2.0)</description>
+		<description>Burn Us (Spanish) (HB, v2.0)</description>
 		<year>2018</year>
-		<manufacturer>CARAMBALAN Studios</manufacturer>
-		<rom name="Burn Us v2.0 (2018)(CARAMBALAN Studios).rom" size="32768" crc="b3d06d43"/>
+		<manufacturer>Carambalan Studios</manufacturer>
+		<rom name="Burn Us v2.0 (2018)(Carambalan Studios).rom" size="32768" crc="b3d06d43"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="burnusexp" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Burn Us Exp (Spanish) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Carambalan Studios</manufacturer>
+		<rom name="Burn Us Exp (2018)(Carambalan Studios).rom" size="49152" crc="c60f8acf"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6603,7 +6615,7 @@
 		<description>Front Line (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Taito</manufacturer>
-		<rom name="front line (japan).rom" size="16384" crc="b9d03f7b"/>
+		<rom name="Front Line (Japan)(1984)(Taito).rom" size="16384" crc="b9d03f7b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6614,7 +6626,7 @@
 		<description>Front Line (Japan, Alt 2)</description>
 		<year>1984</year>
 		<manufacturer>Taito</manufacturer>
-		<rom name="front line (japan) (alt 2).rom" size="16384" crc="5958f98c"/>
+		<rom name="Front Line (Japan)(Alt 2)(1984)(Taito).rom" size="16384" crc="5958f98c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6625,7 +6637,7 @@
 		<description>Front Line (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Taito</manufacturer>
-		<rom name="front line (japan) (alt 1).rom" size="16384" crc="8d632577"/>
+		<rom name="Front Line (Japan)(Alt 1)(1984)(Taito).rom" size="16384" crc="8d632577"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6636,7 +6648,7 @@
 		<description>Fruit Panic (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="Fruit Panic (1984)(Pony Canyon)(JP).rom" size="65536" crc="7429eb0e"/>
+		<rom name="Fruit Panic (Japan)(1984)(Pony Canyon).rom" size="65536" crc="7429eb0e"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6646,8 +6658,8 @@
 	<game name="fruitsrc" romof="msx" sourcefile="d_msx.cpp">
 		<description>Fruit Search (Japan)</description>
 		<year>1983</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="fruit search (japan).rom" size="8192" crc="eba95a38"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Fruit Search (Japan)(1983)(HAL Laboratory).rom" size="8192" crc="eba95a38"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6657,8 +6669,8 @@
 	<game name="fruitsrca" cloneof="fruitsrc" romof="fruitsrc" sourcefile="d_msx.cpp">
 		<description>Fruit Search (Japan, Alt)</description>
 		<year>1983</year>
-		<manufacturer>HAL Kenkyuujo</manufacturer>
-		<rom name="fruit search (japan) (alt 1).rom" size="16384" crc="b1160421"/>
+		<manufacturer>HAL Laboratory</manufacturer>
+		<rom name="Fruit Search (Japan)(Alt)(1983)(HAL Laboratory).rom" size="16384" crc="b1160421"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6669,7 +6681,7 @@
 		<description>Funky Mouse (Japan)</description>
 		<year>1984</year>
 		<manufacturer>ZAP Corp.</manufacturer>
-		<rom name="funky mouse (japan).rom" size="16384" crc="b5c0dace"/>
+		<rom name="Funky Mouse (Japan)(1984)(ZAP Corp.).rom" size="16384" crc="b5c0dace"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -6703,7 +6715,7 @@
 		<description>Galaga (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Namcot</manufacturer>
-		<rom name="galaga (japan).rom" size="32768" crc="8856961d"/>
+		<rom name="Galaga (Japan)(1984)(Namcot).rom" size="32768" crc="8856961d"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -11266,6 +11278,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="monsterhuntaq" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Monster Hunter Arthur's Quest, The (HB)</description>
+		<year>2009</year>
+		<manufacturer>Nerlaska Studio</manufacturer>
+		<rom name="Monster Hunter Arthur's Quest (2009)(Nerlaska Studio).rom" size="524288" crc="516a9280"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="monsteronrun" romof="msx" sourcefile="d_msx.cpp">
 		<comment>Homebrew</comment>
 		<description>Monster On The Run (HB)</description>
@@ -13431,7 +13455,7 @@
 		<description>Pit Stop (USA)</description>
 		<year>1983</year>
 		<manufacturer>Epyx</manufacturer>
-		<rom name="Pit Stop (1983)(Epyx).rom" size="65536" crc="ceff8acf"/>
+		<rom name="Pit Stop (USA)(1983)(Epyx).rom" size="65536" crc="ceff8acf"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13442,7 +13466,7 @@
 		<description>Pitfall II - Lost Caverns (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="pitfall ii - lost caverns (japan).rom" size="16384" crc="d307a7b8"/>
+		<rom name="Pitfall II - Lost Caverns (Japan)(1984)(Pony Canyon).rom" size="16384" crc="d307a7b8"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13453,7 +13477,7 @@
 		<description>Pitfall II - Lost Caverns (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="pitfall ii - lost caverns (japan) (alt 1).rom" size="16384" crc="71c59868"/>
+		<rom name="Pitfall II - Lost Caverns (Japan)(Alt)(1984)(Pony Canyon).rom" size="16384" crc="71c59868"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13464,7 +13488,7 @@
 		<description>Pitfall! (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="pitfall! (japan).rom" size="16384" crc="5a009c55"/>
+		<rom name="Pitfall! (Japan)(1984)(Pony Canyon).rom" size="16384" crc="5a009c55"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13475,7 +13499,7 @@
 		<description>Pitfall! (Japan, Alt 2)</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="pitfall! (japan) (alt 2).rom" size="16384" crc="2cb24473"/>
+		<rom name="Pitfall! (Japan)(Alt 2)(1984)(Pony Canyon).rom" size="16384" crc="2cb24473"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13486,7 +13510,7 @@
 		<description>Pitfall! (Japan, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Pony Canyon</manufacturer>
-		<rom name="pitfall! (japan) (alt 1).rom" size="16384" crc="930aeb2c"/>
+		<rom name="Pitfall! (Japan)(Alt 1)(1984)(Pony Canyon).rom" size="16384" crc="930aeb2c"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -13509,7 +13533,7 @@
 		<description>Play Ball (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sony</manufacturer>
-		<rom name="play ball (japan).rom" size="32768" crc="d178833b"/>
+		<rom name="Play Ball (Japan)(1986)(Sony).rom" size="32768" crc="d178833b"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15175,7 +15199,7 @@
 		<description>SkyFox - Paina (Euro)</description>
 		<year>1989</year>
 		<manufacturer>Pasi Kettunen</manufacturer>
-		<rom name="SkyFox - Paina (Pasi Kettunen) (1989).rom" size="8192" crc="efb971a4"/>
+		<rom name="SkyFox - Paina (Euro)(1989)(Pasi Kettunen).rom" size="8192" crc="efb971a4"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15186,7 +15210,7 @@
 		<description>Skygaldo (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Magical Zoo</manufacturer>
-		<rom name="sky galdo (japan).rom" size="32768" crc="54f84047"/>
+		<rom name="Skygaldo (Japan)(1986)(Magical Zoo).rom" size="32768" crc="54f84047"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -15244,6 +15268,18 @@
 		<year>2021</year>
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Snake (2021)(Under4Mhz).rom" size="14287" crc="cea10bd9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="snakerhino" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Snake and Rhino in the Sketchbook (HB)</description>
+		<year>2023</year>
+		<manufacturer>ARC8</manufacturer>
+		<rom name="Snake and Rhino in the Sketchbook (2023)(ARC8).rom" size="49152" crc="f396a696"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -16791,6 +16827,18 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tetpuz" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Tetpuz (HB)</description>
+		<year>2023</year>
+		<manufacturer>Totta</manufacturer>
+		<rom name="Tetpuz (2023)(Totta).rom" size="49152" crc="15283559"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tetrahor" romof="msx" sourcefile="d_msx.cpp">
 		<description>Tetra Horror (Japan)</description>
 		<year>1983</year>
@@ -18212,6 +18260,18 @@
 		<year>1987</year>
 		<manufacturer>Nihon Falcom</manufacturer>
 		<rom name="Xanadu - Dragon Slayer II (Japan)(1987)(Nihon Falcom).rom" size="262144" crc="d640deaf"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="xeldringdev" romof="msx" sourcefile="d_msx.cpp">
+		<comment>Homebrew, W/A/S/D: rotate camera - C/X: use main/alt weapon - Z: inventory on/off</comment>
+		<description>Xelden Ring (HB, MSXdev version)</description>
+		<year>2023</year>
+		<manufacturer>Brain Games</manufacturer>
+		<rom name="Xelden Ring - MSXdev (2023)(Brain Games).rom" size="49152" crc="562dc7d7"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

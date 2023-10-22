@@ -3760,6 +3760,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cityconnection" sourcefile="d_megadrive.cpp">
+		<comment>Homebrew</comment>
+		<description>City Connection (HB)</description>
+		<year>2023</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="City Connection (J)(2023)(Habit Soft).bin" size="524288" crc="5d21d023"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="clanofheroes" sourcefile="d_megadrive.cpp">
 		<comment>Homebrew</comment>
 		<description>Clan of Heroes - Generals of the Yang Family (HB)</description>
@@ -18984,17 +18993,17 @@
 		<driver status="good"/>
 	</game>
 	<game name="souledge" sourcefile="d_megadrive.cpp">
-		<description>Soul Edge vs Samurai Spirits (Pirate)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Soul Edge vs Samurai Spirits (Unl)</description>
+		<year>1998</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="soul edge vs samurai spirits (unl).bin" size="2097152" crc="b11bd611"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="preliminary"/>
 	</game>
 	<game name="souledgea" cloneof="souledge" romof="souledge" sourcefile="d_megadrive.cpp">
-		<description>Soul Edge vs Samurai Spirits (Pirate, Cracked)</description>
-		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<description>Soul Edge vs Samurai Spirits (Unl, Cracked)</description>
+		<year>1998</year>
+		<manufacturer>X Boy</manufacturer>
 		<rom name="soul edge vs samurai spirits (unl)[f1].bin" size="2097152" crc="74a6d7a7"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21810,7 +21819,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="tetris1" sourcefile="d_megadrive.cpp">
-		<description>Tetris (Pirate?)</description>
+		<description>Tetris (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="tetris.bin" size="524288" crc="eb024ab2"/>
@@ -23411,7 +23420,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="virak" sourcefile="d_megadrive.cpp">
-		<description>Voina Irak (Pirate)</description>
+		<description>Voina Irak (Unl)</description>
 		<year>199?</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="voina_irak.bin" size="2097152" crc="c7177e93"/>

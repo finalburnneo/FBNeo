@@ -704,7 +704,7 @@
 	</game>
 	<game name="benosqr" sourcefile="d_sms.cpp">
 		<comment>Demo, Homebrew</comment>
-		<description>Be No Sqr (HB, Tech-Demo)</description>
+		<description>Be No Sqr (HB, Tech-Demo v1.01)</description>
 		<year>2016</year>
 		<manufacturer>psidum, sim, slimeball</manufacturer>
 		<rom name="Be No Sqr 1.01.sms" size="524288" crc="ee701be6"/>
@@ -1578,6 +1578,15 @@
 		<year>1996</year>
 		<manufacturer>Tec Toy</manufacturer>
 		<rom name="ecco - the tides of time (brazil).bin" size="524288" crc="7c28703a"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eledreams" sourcefile="d_sms.cpp">
+		<comment>Homebrew</comment>
+		<description>Electronic Dreams (HB, v.77)</description>
+		<year>2023</year>
+		<manufacturer>MikGames</manufacturer>
+		<rom name="Electronic Dreams v.77 (2023)(MikGames).sms" size="458752" crc="7d49f141"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5695,7 +5704,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="whereisit" sourcefile="d_sms.cpp">
+	<game name="whereisite" sourcefile="d_sms.cpp">
+		<comment>Homebrew</comment>
+		<description>Where Is It ? The Quest for the 10th Island (HB, Enhanced ed.)</description>
+		<year>2023</year>
+		<manufacturer>Ricco59, Kagesan</manufacturer>
+		<rom name="Where Is It - The Quest For The 10th Island (Enhanced)(2023)(Ricco59).sms" size="81920" crc="d5edf621"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="whereisit" cloneof="whereisite" romof="whereisite" sourcefile="d_sms.cpp">
 		<comment>Homebrew</comment>
 		<description>Where Is It ? The Quest for the 10th Island (HB, Ultimate ed.)</description>
 		<year>2023</year>

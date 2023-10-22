@@ -3365,7 +3365,7 @@ STD_ROM_FN(rambo3u)
 
 struct BurnDriver BurnDrvRambo3u = {
 	"rambo3u", "rambo3", NULL, NULL, "1989",
-	"Rambo III (US)\0", NULL, "Taito Europe Corporation", "Taito B System",
+	"Rambo III (US)\0", NULL, "Taito America Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SHOOT, 0,
 	NULL, rambo3uRomInfo, rambo3uRomName, NULL, NULL, NULL, NULL, Rambo3InputInfo, Rambo3DIPInfo,
@@ -3555,8 +3555,8 @@ static INT32 TetristInit()
 }
 
 struct BurnDriver BurnDrvTetrist = {
-	"tetrist", "tetris", NULL, NULL, "1989",
-	"Tetris (Japan, B-System, YM2610)\0", "buggy - use parent!", "Sega", "Taito B System",
+	"tetrist", "tetris", NULL, NULL, "1988",
+	"Tetris (Japan, Taito B-System, Nastar Conversion Kit)\0", "buggy - use parent!", "Sega", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_PUZZLE, 0,
 	NULL, tetristRomInfo, tetristRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TetristDIPInfo,
@@ -3588,8 +3588,8 @@ static INT32 TetristaInit()
 }
 
 struct BurnDriver BurnDrvTetrista = {
-	"tetrista", "tetris", NULL, NULL, "1989",
-	"Tetris (Japan, B-System, YM2203)\0", NULL, "Sega", "Taito B System",
+	"tetrista", "tetris", NULL, NULL, "1988",
+	"Tetris (Japan, Taito B-System, Master of Weapon Conversion Kit)\0", NULL, "Sega", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_PUZZLE, 0,
 	NULL, tetristaRomInfo, tetristaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, TetristDIPInfo,
@@ -3829,10 +3829,51 @@ static INT32 HiticeInit()
 
 struct BurnDriver BurnDrvHitice = {
 	"hitice", NULL, NULL, NULL, "1990",
-	"Hit the Ice (US)\0", NULL, "Taito Corporation (Williams licence)", "Taito B System",
+	"Hit the Ice (US)\0", NULL, "Taito Corporation (Williams license)", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
 	NULL, hiticeRomInfo, hiticeRomName, NULL, NULL, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,
+	HiticeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 224, 4, 3
+};
+
+
+// Hit the Ice (US, with riser board)
+
+static struct BurnRomInfo hiticerbRomDesc[] = {
+	{ "c59-10.42",				0x20000, 0xe4ffad15, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c59-12.64",				0x20000, 0xa080d7af, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c59-09.41",				0x10000, 0xe243e3b0, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c59-11.63",				0x10000, 0x4d4dfa52, TAITO_68KROM1_BYTESWAP }, //  3
+
+	{ "c59-08.50",				0x10000, 0xd3cbc10b, TAITO_Z80ROM1 },		//  4 Z80 Code
+
+	{ "ic5.bin",				0x20000, 0x55698bbc, TAITO_CHARS_BYTESWAP },		//  5 Graphics Tiles
+	{ "ic6.bin",				0x20000, 0xa7cb863f, TAITO_CHARS_BYTESWAP },		//  6
+	{ "ic1.bin",				0x20000, 0xfca01c22, TAITO_CHARS_BYTESWAP },		//  7
+	{ "ic2.bin",				0x20000, 0xf1c09244, TAITO_CHARS_BYTESWAP },		//  8
+	{ "ic8.bin",				0x20000, 0x7cd3aa29, TAITO_CHARS_BYTESWAP },		//  9
+	{ "ic7.bin",				0x20000, 0x6b2979c7, TAITO_CHARS_BYTESWAP },		// 10
+	{ "ic4.bin",				0x20000, 0xd0f2fd35, TAITO_CHARS_BYTESWAP },		// 11
+	{ "ic3.bin",				0x20000, 0x51621004, TAITO_CHARS_BYTESWAP },		// 12
+
+	{ "ic30.bin",				0x20000, 0x46ae291d, TAITO_MSM6295 },		// 13 MSM6295 Samples
+
+	{ "pal20l8b-c59-04.25",		0x000144, 0x2ebcf07c, BRF_OPT }, 		// 14 PLDs
+	{ "pal16l8b-c59-05.26",		0x000104, 0x37b67c5c, BRF_OPT }, 		// 15
+	{ "pal20l8b-c59-06.53",		0x000144, 0xbf176875, BRF_OPT }, 		// 16
+	{ "pal16r4b-c59-07.61",		0x000104, 0xcf64bd95, BRF_OPT }, 		// 17
+};
+
+STD_ROM_PICK(hiticerb)
+STD_ROM_FN(hiticerb)
+
+struct BurnDriver BurnDrvHiticerb = {
+	"hiticerb", "hitice", NULL, NULL, "1990",
+	"Hit the Ice (US, with riser board)\0", NULL, "Taito Corporation (Williams license)", "Taito B System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
+	NULL, hiticerbRomInfo, hiticerbRomName, NULL, NULL, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,
 	HiticeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };

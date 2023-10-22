@@ -722,7 +722,7 @@ struct BurnDriver BurnDrvBlckoutj = {
 };
 
 
-// Agress
+// Agress - Missile Daisenryaku (Japan)
 
 static struct BurnRomInfo agressRomDesc[] = {
 	{ "palco1.81",		0x20000, 0x3acc917a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -740,7 +740,7 @@ STD_ROM_FN(agress)
 
 struct BurnDriver BurnDrvAgress = {
 	"agress", NULL, NULL, NULL, "1991",
-	"Agress\0", NULL, "Palco", "Miscellaneous",
+	"Agress - Missile Daisenryaku (Japan)\0", NULL, "Palco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, agressRomInfo, agressRomName, NULL, NULL, NULL, NULL, BlockoutInputInfo, AgressDIPInfo,
@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvAgress = {
 };
 
 
-// Agress (English bootleg)
+// Agress - Missile Daisenryaku (English bootleg)
 
 static struct BurnRomInfo agressbRomDesc[] = {
 	{ "palco1.ic81",		0x20000, 0xa1875175, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -767,9 +767,9 @@ STD_ROM_FN(agressb)
 
 struct BurnDriver BurnDrvAgressb = {
 	"agressb", "agress", NULL, NULL, "2003",
-	"Agress (English bootleg)\0", NULL, "Palco", "Miscellaneous",
+	"Agress - Missile Daisenryaku (English bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, agressbRomInfo, agressbRomName, NULL, NULL, NULL, NULL, BlockoutInputInfo, AgressDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	320, 240, 4, 3

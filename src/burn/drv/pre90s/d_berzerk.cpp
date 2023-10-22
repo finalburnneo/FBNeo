@@ -1517,7 +1517,7 @@ static INT32 FrenzyInit()
 }
 
 struct BurnDriver BurnDrvFrenzy = {
-	"frenzy", NULL, NULL, NULL, "1981",
+	"frenzy", NULL, NULL, NULL, "1982",
 	"Frenzy (revision RA1)\0", NULL, "Stern Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,

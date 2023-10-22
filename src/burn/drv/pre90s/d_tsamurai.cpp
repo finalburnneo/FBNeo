@@ -46,6 +46,7 @@ static UINT8 textbank0;
 static UINT8 textbank1;
 
 static INT32 game_select = 0;
+static INT32 the26thz = 0;
 static UINT16 vsgongf_protval = 0;
 
 static UINT8 DrvJoy1[8];
@@ -1027,7 +1028,7 @@ static INT32 m660CommonInit(INT32 game)
 	ZetMapMemory(DrvBgVidRAM,	0xe800, 0xefff, MAP_RAM);
 	ZetMapMemory(DrvSprRAM,		0xf000, 0xf3ff, MAP_RAM);
 	ZetSetWriteHandler(m660_main_write);
-	ZetSetReadHandler(m660_main_read);
+	ZetSetReadHandler(the26thz ? tsamurai_main_read : m660_main_read);
 	ZetSetOutHandler(m660_main_out_port);
 	ZetClose();
 
@@ -1169,6 +1170,8 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 
 	ZetExit();
+
+	the26thz = 0;
 
 	BurnFree(AllMem);
 
@@ -1666,7 +1669,7 @@ struct BurnDriver BurnDrvNunchaku = {
 	"nunchaku", "ladymstr", NULL, NULL, "1985",
 	"Nunchackun\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, nunchakuRomInfo, nunchakuRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, NunchakuDIPInfo,
 	nunchakuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1760,7 +1763,7 @@ static INT32 m660Init()
 
 struct BurnDriver BurnDrvM660 = {
 	"m660", NULL, NULL, NULL, "1986",
-	"Mission 660 (US)\0", NULL, "Wood Place Inc. (Taito America Corporation license)", "Miscellaneous",
+	"Mission 660 (US)\0", NULL, "Wood Place Co. Ltd. (Taito America Corporation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, m660RomInfo, m660RomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
@@ -1810,7 +1813,7 @@ static INT32 m660jInit()
 
 struct BurnDriver BurnDrvM660j = {
 	"m660j", "m660", NULL, NULL, "1986",
-	"Mission 660 (Japan)\0", NULL, "Wood Place Inc. (Taito Corporation license)", "Miscellaneous",
+	"Mission 660 (Japan)\0", NULL, "Wood Place Co. Ltd. (Taito Corporation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, m660jRomInfo, m660jRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
@@ -1903,6 +1906,57 @@ struct BurnDriver BurnDrvAlphaxz = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, alphaxzRomInfo, alphaxzRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
 	m660Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Mission 660 (Japan)
+
+static struct BurnRomInfo the26thzRomDesc[] = {
+	{ "a72_01.3r",		0x4000, 0x2be77520, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a72_02.3t",		0x4000, 0xef2646f2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a72_03.3v",		0x4000, 0xd83b7758, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "a72_16.4n",		0x4000, 0x5734db5a, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "a72_15.4j",		0x4000, 0xfba51cf7, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "a72_14.4e",		0x4000, 0xd078373e, 4 | BRF_PRG | BRF_ESS }, //  5 Z80 #3 Code
+	{ "a72_13.4d",		0x4000, 0x11980449, 4 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "a72_04.10a",		0x4000, 0x23da4e3d, 5 | BRF_GRA },           //  7 Background Tiles
+	{ "a72_05.10b",		0x4000, 0x8746ff69, 5 | BRF_GRA },           //  8
+	{ "a72_06.10d",		0x4000, 0x6e494964, 5 | BRF_GRA },           //  9
+
+	{ "a72_10.11n",		0x1000, 0xa23e4829, 6 | BRF_GRA },           // 10 Foreground Tiles
+	{ "a72_11.11q",		0x1000, 0x9717229f, 6 | BRF_GRA },           // 11
+	{ "a72_12.11r",		0x1000, 0x7a602979, 6 | BRF_GRA },           // 12
+
+	{ "a72_07.12h",		0x4000, 0x5f9cc65e, 7 | BRF_GRA },           // 13 Sprites
+	{ "a72_08.12j",		0x4000, 0x23e3a6ba, 7 | BRF_GRA },           // 14
+	{ "a72_09.12k",		0x4000, 0x7096fa71, 7 | BRF_GRA },           // 15
+
+	{ "a72_17.2k",		0x100, 0xcd16d0f1, 8 | BRF_GRA },           // 16 Color Proms
+	{ "a72_18.2l",		0x100, 0x22e8b22c, 8 | BRF_GRA },           // 17
+	{ "a72_19.2m",		0x100, 0xb7d6fdb5, 8 | BRF_GRA },           // 18
+};
+
+STD_ROM_PICK(the26thz)
+STD_ROM_FN(the26thz)
+
+static INT32 the26thzInit()
+{
+	the26thz = 1;
+	return m660CommonInit(1);
+}
+
+struct BurnDriver BurnDrvThe26thz = {
+	"the26thz", "m660", NULL, NULL, "1986",
+	"The 26th Z (Japan, location test)\0", NULL, "Ed Co., Ltd. (Taito license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, the26thzRomInfo, the26thzRomName, NULL, NULL, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
+	the26thzInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 

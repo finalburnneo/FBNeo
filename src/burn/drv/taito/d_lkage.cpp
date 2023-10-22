@@ -1159,9 +1159,9 @@ static INT32 BygoneInit()
 
 struct BurnDriver BurnDrvBygone = {
 	"bygone", NULL, NULL, NULL, "1985",
-	"Bygone\0", "Imperfect sound", "Taito Corporation", "Miscellaneous",
+	"Bygone (prototype)\0", "Imperfect sound", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bygoneRomInfo, bygoneRomName, NULL, NULL, NULL, NULL, LkageInputInfo, BygoneDIPInfo,
 	BygoneInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3

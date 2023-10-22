@@ -6865,7 +6865,7 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvAquajack = {
 	"aquajack", NULL, NULL, NULL, "1990",
-	"Aquajack (World)\0", NULL, "Taito Corporation Japan", "Taito Z",
+	"Aqua Jack (World)\0", NULL, "Taito Corporation Japan", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackRomInfo, AquajackRomName, NULL, NULL, NULL, NULL, AquajackInputInfo, AquajackDIPInfo,
@@ -6875,7 +6875,7 @@ struct BurnDriver BurnDrvAquajack = {
 
 struct BurnDriver BurnDrvAquajackj = {
 	"aquajackj", "aquajack", NULL, NULL, "1990",
-	"Aquajack (Japan)\0", NULL, "Taito Corporation", "Taito Z",
+	"Aqua Jack (Japan)\0", NULL, "Taito Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackjRomInfo, AquajackjRomName, NULL, NULL, NULL, NULL, AquajackInputInfo, AquajackjDIPInfo,
@@ -6885,7 +6885,7 @@ struct BurnDriver BurnDrvAquajackj = {
 
 struct BurnDriver BurnDrvAquajacku = {
 	"aquajacku", "aquajack", NULL, NULL, "1990",
-	"Aquajack (US)\0", NULL, "Taito Corporation", "Taito Z",
+	"Aqua Jack (US)\0", NULL, "Taito America Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackuRomInfo, AquajackuRomName, NULL, NULL, NULL, NULL, AquajackInputInfo, AquajackjDIPInfo,
@@ -6955,7 +6955,7 @@ struct BurnDriver BurnDrvChasehqj = {
 
 struct BurnDriver BurnDrvChasehqju = {
 	"chasehqju", "chasehq", NULL, NULL, "1988",
-	"Chase H.Q. (Japan UP)\0", NULL, "Taito Corporation", "Taito Z",
+	"Chase H.Q. (Japan, upright?)\0", NULL, "Taito Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ChasehqjuRomInfo, ChasehqjuRomName, NULL, NULL, NULL, NULL, ChasehqInputInfo, ChasehqjDIPInfo,
@@ -7045,7 +7045,7 @@ struct BurnDriver BurnDrvDblaxleul = {
 
 struct BurnDriver BurnDrvPwheelsj = {
 	"pwheelsj", "dblaxle", NULL, NULL, "1991",
-	"Power Wheels (Japan)\0", NULL, "Taito Corporation", "Taito Z",
+	"Power Wheels (Japan, Rev 2, Linkable)\0", NULL, "Taito Corporation", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, PwheelsjRomInfo, PwheelsjRomName, NULL, NULL, NULL, NULL, DblaxleInputInfo, PwheelsjDIPInfo,
@@ -7174,7 +7174,7 @@ struct BurnDriver BurnDrvSciu = {
 };
 
 struct BurnDriver BurnDrvScin = {
-	"scin", "sci", NULL, NULL, "1989",
+	"scin", "sci", NULL, NULL, "1991",
 	"Super Special Criminal Investigation (Negro Torino hack)\0", NULL, "hack (Negro Torino)", "Taito Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,

@@ -1708,7 +1708,7 @@ static INT32 PerestroInit()
 
 struct BurnDriver BurnDrvPerestro = {
 	"perestro", NULL, NULL, NULL, "1994",
-	"Perestroika Girls\0", NULL, "Promat Co.", "Miscellaneous",
+	"Perestroika Girls\0", NULL, "Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, perestroRomInfo, perestroRomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,
@@ -1733,7 +1733,7 @@ STD_ROM_FN(perestrof)
 
 struct BurnDriver BurnDrvPerestrof = {
 	"perestrof", "perestro", NULL, NULL, "1993",
-	"Perestroika Girls (Fuuki license)\0", NULL, "Promat/Fuuki Co.", "Miscellaneous",
+	"Perestroika Girls (Fuuki license)\0", NULL, "Promat (Fuuki license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, perestrofRomInfo, perestrofRomName, NULL, NULL, NULL, NULL, SuperqixInputInfo, SuperqixDIPInfo,

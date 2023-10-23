@@ -25242,7 +25242,7 @@ STD_ROM_FN(SpecKnmgolf)
 
 struct BurnDriver BurnSpecKnmgolf = {
 	"spec_knmgolf", NULL, "spec_spectrum", NULL, "1986",
-	"Konami's Golf (48K)\0", NULL, "Imagine", "ZX Spectrum",
+	"Konami's Golf (48K)\0", NULL, "Imagine Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
 	SpectrumGetZipName, SpecKnmgolfRomInfo, SpecKnmgolfRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -25280,7 +25280,7 @@ STD_ROM_FN(SpecKnmtennis)
 
 struct BurnDriver BurnSpecKnmtennis = {
 	"spec_knmtennis", NULL, "spec_spectrum", NULL, "1986",
-	"Konami's Tennis (48K)\0", NULL, "Imagine", "ZX Spectrum",
+	"Konami's Tennis (48K)\0", NULL, "Imagine Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
 	SpectrumGetZipName, SpecKnmtennisRomInfo, SpecKnmtennisRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -42477,7 +42477,7 @@ struct BurnDriver BurnSpecJankyjoe = {
 // Jeff & The Blue Notes (128K) (HB)
 
 static struct BurnRomInfo SpecJeffnotesRomDesc[] = {
-	{ "Jeff & The Blue Notes 128K (2023)(Deanysoft).z80", 43830, 0x9836d545, BRF_ESS | BRF_PRG },
+	{ "Jeff & The Blue Notes 128K (2023)(Deanysoft).tap", 44152, 0x2484175f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJeffnotes, SpecJeffnotes, Spec128)

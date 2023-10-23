@@ -1209,7 +1209,7 @@ static INT32 WizInit()
 
 struct BurnDriver BurnDrvWiz = {
 	"wiz", NULL, NULL, NULL, "1985",
-	"Wiz\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
+	"Wiz\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wizRomInfo, wizRomName, NULL, NULL, NULL, NULL, WizInputInfo, WizDIPInfo,
@@ -1244,7 +1244,7 @@ STD_ROM_FN(wizt)
 
 struct BurnDriver BurnDrvWizt = {
 	"wizt", "wiz", NULL, NULL, "1985",
-	"Wiz (Taito, set 1)\0", NULL, "[Seibu] (Taito license)", "Miscellaneous",
+	"Wiz (Taito, set 1)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wiztRomInfo, wiztRomName, NULL, NULL, NULL, NULL, WizInputInfo, WizDIPInfo,
@@ -1280,7 +1280,7 @@ STD_ROM_FN(wizta)
 
 struct BurnDriver BurnDrvWizta = {
 	"wizta", "wiz", NULL, NULL, "1985",
-	"Wiz (Taito, set 2)\0", NULL, "[Seibu] (Taito license)", "Miscellaneous",
+	"Wiz (Taito, set 2)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wiztaRomInfo, wiztaRomName, NULL, NULL, NULL, NULL, WizInputInfo, WizDIPInfo,
@@ -1288,7 +1288,7 @@ struct BurnDriver BurnDrvWizta = {
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 
-// Kung-Fu Taikun
+// Kung-Fu Taikun (set 1)
 
 static struct BurnRomInfo kungfutRomDesc[] = {
 	{ "p1.bin",	0x4000, 0xb1e56960, 1 }, //  0 maincpu
@@ -1322,7 +1322,7 @@ static INT32 KungfutInit()
 
 struct BurnDriver BurnDrvKungfut = {
 	"kungfut", NULL, NULL, NULL, "1984",
-	"Kung-Fu Taikun\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
+	"Kung-Fu Taikun (set 1)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kungfutRomInfo, kungfutRomName, NULL, NULL, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
@@ -1330,7 +1330,7 @@ struct BurnDriver BurnDrvKungfut = {
 	&DrvRecalc, 0x100, 256, 224, 4, 3
 };
 
-// Kung-Fu Taikun (alt)
+// Kung-Fu Taikun (set 2)
 
 static struct BurnRomInfo kungfutaRomDesc[] = {
 	{ "kungfu.01",	0x4000, 0x48dada70, 1 }, //  0 maincpu
@@ -1366,7 +1366,7 @@ static INT32 KungfutaInit()
 
 struct BurnDriver BurnDrvKungfuta = {
 	"kungfuta", "kungfut", NULL, NULL, "1984",
-	"Kung-Fu Taikun (alt)\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
+	"Kung-Fu Taikun (set 2)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kungfutaRomInfo, kungfutaRomName, NULL, NULL, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
@@ -1522,7 +1522,7 @@ struct BurnDriver BurnDrvFinger = {
 	"finger", "stinger", NULL, "stinger", "1983",
 	"Finger (bootleg of Stinger)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, fingerRomInfo, fingerRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4

@@ -2677,7 +2677,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_crbaloon.cpp">
       <Filter>burn\drv\taito</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\taito\d_darkmist.cpp">
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_darkmist.cpp">
       <Filter>burn\drv\taito</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\d_exzisus.cpp">

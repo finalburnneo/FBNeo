@@ -4081,7 +4081,7 @@ struct BurnDriver BurnDrvShdancerj = {
 
 struct BurnDriverD BurnDrvShdancbl = {
 	"shdancbl", "shdancer", NULL, NULL, "1989",
-	"Shadow Dancer (bootleg)\0", NULL, "bootleg", "System 18",
+	"Shadow Dancer (bootleg, set 1)\0", NULL, "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM, 0,
 	NULL, ShdancblRomInfo, ShdancblRomName, NULL, NULL, NULL, NULL, System18InputInfo, ShdancerDIPInfo,

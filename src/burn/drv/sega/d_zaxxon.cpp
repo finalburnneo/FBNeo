@@ -1771,14 +1771,14 @@ struct BurnDriver BurnDrvZaxxonb = {
 	"zaxxonb", "zaxxon", NULL, "zaxxon", "1982",
 	"Jackson\0", NULL, "bootleg", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxonbRomInfo, zaxxonbRomName, NULL, NULL, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
 	ZaxxonjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
 
-// Super Zaxxon
+// Super Zaxxon (315-5013)
 
 static struct BurnRomInfo szaxxonRomDesc[] = {
 	{ "1804e.u27",		0x2000, 0xaf7221da, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1890,7 +1890,7 @@ static INT32 sZaxxonInit()
 
 struct BurnDriver BurnDrvSzaxxon = {
 	"szaxxon", NULL, NULL, "zaxxon", "1982",
-	"Super Zaxxon\0", NULL, "Sega", "Zaxxon",
+	"Super Zaxxon (315-5013)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, szaxxonRomInfo, szaxxonRomName, NULL, NULL, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, SzaxxonDIPInfo,
@@ -1899,7 +1899,7 @@ struct BurnDriver BurnDrvSzaxxon = {
 };
 
 
-// Future Spy
+// Future Spy (315-5061)
 
 static struct BurnRomInfo futspyRomDesc[] = {
 	{ "fs_snd.u27",		0x2000, 0x7578fe7f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1972,7 +1972,7 @@ static INT32 futspyInit()
 
 struct BurnDriver BurnDrvFutspy = {
 	"futspy", NULL, NULL, "zaxxon", "1984",
-	"Future Spy\0", NULL, "Sega", "Zaxxon",
+	"Future Spy (315-5061)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, futspyRomInfo, futspyRomName, NULL, NULL, zaxxonSampleInfo, zaxxonSampleName, FutspyInputInfo, FutspyDIPInfo,
@@ -2117,14 +2117,14 @@ struct BurnDriver BurnDrvIxion = {
 	"ixion", NULL, NULL, NULL, "1983",
 	"Ixion (prototype)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, ixionRomInfo, ixionRomName, NULL, NULL, NULL, NULL, ZaxxonInputInfo, ZaxxonDIPInfo, //RazmatazInputInfo, RazmatazDIPInfo,
 	ixionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
 
-// Congo Bongo
+// Congo Bongo (Rev C, 2 board stack)
 
 static struct BurnRomInfo congoRomDesc[] = {
 	{ "congo_rev_c_rom1.u21",	0x2000, 0x09355b5b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -2158,7 +2158,7 @@ STD_ROM_FN(congo)
 
 struct BurnDriver BurnDrvCongo = {
 	"congo", NULL, NULL, "congo", "1983",
-	"Congo Bongo\0", NULL, "Sega", "Zaxxon",
+	"Congo Bongo (Rev C, 2 board stack)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PLATFORM, 0,
 	NULL, congoRomInfo, congoRomName, NULL, NULL, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,
@@ -2210,7 +2210,7 @@ struct BurnDriver BurnDrvCongoa = {
 };
 
 
-// Tip Top
+// Tip Top (3 board stack)
 
 static struct BurnRomInfo tiptopRomDesc[] = {
 	{ "tiptop1.u35",	0x2000, 0xe19dc77b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -2244,7 +2244,7 @@ STD_ROM_FN(tiptop)
 
 struct BurnDriver BurnDrvTiptop = {
 	"tiptop", "congo", NULL, "congo", "1983",
-	"Tip Top\0", NULL, "Sega", "Zaxxon",
+	"Tip Top (3 board stack)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_PLATFORM, 0,
 	NULL, tiptopRomInfo, tiptopRomName, NULL, NULL, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,

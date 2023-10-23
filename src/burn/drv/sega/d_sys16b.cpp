@@ -9775,7 +9775,7 @@ struct BurnDriver BurnDrvDdux1 = {
 
 struct BurnDriver BurnDrvDduxbl = {
 	"dduxbl", "ddux", NULL, NULL, "1989",
-	"Dynamite Dux (bootleg)\0", NULL, "bootleg", "System 16B",
+	"Dynamite Dux (Datsu bootleg)\0", NULL, "bootleg (Datsu)", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES | HARDWARE_SEGA_5358, GBF_SCRFIGHT, 0,
 	NULL, DduxblRomInfo, DduxblRomName, NULL, NULL, NULL, NULL, System16bInputInfo, DduxDIPInfo,
@@ -9895,7 +9895,7 @@ struct BurnDriver BurnDrvEswatud = {
 
 struct BurnDriver BurnDrvEswatbl = {
 	"eswatbl", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (bootleg)\0", NULL, "bootleg", "System 16B",
+	"E-Swat - Cyber Police (bootleg, set 1)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_RUNGUN, 0,
 	NULL, EswatblRomInfo, EswatblRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -10285,7 +10285,7 @@ struct BurnDriver BurnDrvPassshtjd = {
 
 struct BurnDriverD BurnDrvPassshtb = {
 	"passshtb", "passsht", NULL, NULL, "1988",
-	"Passing Shot (bootleg, 2 Players)\0", NULL, "Sega", "System 16B",
+	"Passing Shot (2 Players) (bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtbRomInfo, PassshtbRomName, NULL, NULL, NULL, NULL, PassshtInputInfo, PassshtDIPInfo,

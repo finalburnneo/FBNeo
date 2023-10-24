@@ -3377,7 +3377,7 @@ Driver Defs
 
 struct BurnDriver BurnDrvAbcop = {
 	"abcop", NULL, NULL, NULL, "1990",
-	"A.B. Cop (World, FD1094 317-0169b)\0", NULL, "Sega", "X-Board",
+	"A.B. Cop (World) (FD1094 317-0169b)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, AbcopRomInfo, AbcopRomName, NULL, NULL, NULL, NULL, AbcopInputInfo, AbcopDIPInfo,
@@ -3387,7 +3387,7 @@ struct BurnDriver BurnDrvAbcop = {
 
 struct BurnDriver BurnDrvAbcopd = {
 	"abcopd", "abcop", NULL, NULL, "1990",
-	"A.B. Cop (World, FD1094 317-0169b decrypted)\0", NULL, "Sega", "X-Board",
+	"A.B. Cop (World) (bootleg of FD1094 317-0169b set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, AbcopdRomInfo, AbcopdRomName, NULL, NULL, NULL, NULL, AbcopInputInfo, AbcopDIPInfo,
@@ -3397,7 +3397,7 @@ struct BurnDriver BurnDrvAbcopd = {
 
 struct BurnDriver BurnDrvAbcopj = {
 	"abcopj", "abcop", NULL, NULL, "1990",
-	"A.B. Cop (Japan, FD1094 317-0169b)\0", NULL, "Sega", "X-Board",
+	"A.B. Cop (Japan) (FD1094 317-0169b)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, AbcopjRomInfo, AbcopjRomName, NULL, NULL, NULL, NULL, AbcopInputInfo, AbcopDIPInfo,
@@ -3407,7 +3407,7 @@ struct BurnDriver BurnDrvAbcopj = {
 
 struct BurnDriver BurnDrvAbcopjd = {
 	"abcopjd", "abcop", NULL, NULL, "1990",
-	"A.B. Cop (Japan, FD1094 317-0169b decrypted)\0", NULL, "Sega", "X-Board",
+	"A.B. Cop (Japan) (bootleg of FD1094 317-0169b set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, AbcopjdRomInfo, AbcopjdRomName, NULL, NULL, NULL, NULL, AbcopInputInfo, AbcopDIPInfo,
@@ -3506,8 +3506,8 @@ struct BurnDriver BurnDrvGpriderus = {
 };
 
 struct BurnDriver BurnDrvLastsurv = {
-	"lastsurv", NULL, NULL, NULL, "1987",
-	"Last Survivor (FD1094 317-0083)\0", NULL, "Sega", "X-Board",
+	"lastsurv", NULL, NULL, NULL, "1989",
+	"Last Survivor (Japan) (FD1094 317-0083)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
 	NULL, LastsurvRomInfo, LastsurvRomName, NULL, NULL, NULL, NULL, LastsurvInputInfo, LastsurvDIPInfo,
@@ -3516,8 +3516,8 @@ struct BurnDriver BurnDrvLastsurv = {
 };
 
 struct BurnDriver BurnDrvLastsurvd = {
-	"lastsurvd", "lastsurv", NULL, NULL, "1987",
-	"Last Survivor (FD1094 317-0083 decrypted)\0", NULL, "Sega", "X-Board",
+	"lastsurvd", "lastsurv", NULL, NULL, "1989",
+	"Last Survivor (Japan) (bootleg of FD1094 317-0083 set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, LastsurvdRomInfo, LastsurvdRomName, NULL, NULL, NULL, NULL, LastsurvInputInfo, LastsurvDIPInfo,
@@ -3527,7 +3527,7 @@ struct BurnDriver BurnDrvLastsurvd = {
 
 struct BurnDriver BurnDrvLoffire = {
 	"loffire", NULL, NULL, NULL, "1989",
-	"Line of Fire / Bakudan Yarou (World, FD1094 317-0136)\0", NULL, "Sega", "X-Board",
+	"Line of Fire / Bakudan Yarou (World) (FD1094 317-0136)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
 	NULL, LoffireRomInfo, LoffireRomName, NULL, NULL, NULL, NULL, LoffireInputInfo, LoffireDIPInfo,
@@ -3537,7 +3537,7 @@ struct BurnDriver BurnDrvLoffire = {
 
 struct BurnDriver BurnDrvLoffired = {
 	"loffired", "loffire", NULL, NULL, "1989",
-	"Line of Fire / Bakudan Yarou (World, FD1094 317-0136 decrypted)\0", NULL, "Sega", "X-Board",
+	"Line of Fire / Bakudan Yarou (World) (bootleg of FD1094 317-0136 set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, LoffiredRomInfo, LoffiredRomName, NULL, NULL, NULL, NULL, LoffireInputInfo, LoffireDIPInfo,
@@ -3547,7 +3547,7 @@ struct BurnDriver BurnDrvLoffired = {
 
 struct BurnDriver BurnDrvLoffirej = {
 	"loffirej", "loffire", NULL, NULL, "1989",
-	"Line of Fire / Bakudan Yarou (Japan, FD1094 317-0134)\0", NULL, "Sega", "X-Board",
+	"Line of Fire / Bakudan Yarou (Japan) (FD1094 317-0134)\0", NULL, "Sega", "X-Board",
 	L"Line of Fire / Bakudan Yarou (Japan, FD1094 317-0134)\0\u7206\u5F3E\u91CE\u90CE\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
 	NULL, LoffirejRomInfo, LoffirejRomName, NULL, NULL, NULL, NULL, LoffireInputInfo, LoffireDIPInfo,
@@ -3557,7 +3557,7 @@ struct BurnDriver BurnDrvLoffirej = {
 
 struct BurnDriver BurnDrvLoffirejd = {
 	"loffirejd", "loffire", NULL, NULL, "1989",
-	"Line of Fire / Bakudan Yarou (Japan, FD1094 317-0134 decrypted)\0", NULL, "Sega", "X-Board",
+	"Line of Fire / Bakudan Yarou (Japan) (bootleg of FD1094 317-0134 set)\0", NULL, "bootleg", "X-Board",
 	L"Line of Fire / Bakudan Yarou (Japan, FD1094 317-0134 decrypted)\0\u7206\u5F3E\u91CE\u90CE\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, LoffirejdRomInfo, LoffirejdRomName, NULL, NULL, NULL, NULL, LoffireInputInfo, LoffireDIPInfo,
@@ -3567,7 +3567,7 @@ struct BurnDriver BurnDrvLoffirejd = {
 
 struct BurnDriver BurnDrvLoffireu = {
 	"loffireu", "loffire", NULL, NULL, "1989",
-	"Line of Fire / Bakudan Yarou (US, FD1094 317-0135)\0", NULL, "Sega", "X-Board",
+	"Line of Fire / Bakudan Yarou (US) (FD1094 317-0135)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
 	NULL, LoffireuRomInfo, LoffireuRomName, NULL, NULL, NULL, NULL, LoffireInputInfo, LoffireDIPInfo,
@@ -3577,7 +3577,7 @@ struct BurnDriver BurnDrvLoffireu = {
 
 struct BurnDriver BurnDrvLoffireud = {
 	"loffireud", "loffire", NULL, NULL, "1989",
-	"Line of Fire / Bakudan Yarou (US, FD1094 317-0135 decrypted)\0", NULL, "Sega", "X-Board",
+	"Line of Fire / Bakudan Yarou (US) (bootleg of FD1094 317-0135 set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, LoffireudRomInfo, LoffireudRomName, NULL, NULL, NULL, NULL, LoffireInputInfo, LoffireDIPInfo,
@@ -3597,7 +3597,7 @@ struct BurnDriver BurnDrvRachero = {
 
 struct BurnDriver BurnDrvRacherod = {
 	"racherod", "rachero", NULL, NULL, "1989",
-	"Racing Hero (FD1094 317-0144 decrypted)\0", NULL, "Sega", "X-Board",
+	"Racing Hero (bootleg of FD1094 317-0144 set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, RacherodRomInfo, RacherodRomName, NULL, NULL, NULL, NULL, RacheroInputInfo, RacheroDIPInfo,
@@ -3606,8 +3606,8 @@ struct BurnDriver BurnDrvRacherod = {
 };
 
 struct BurnDriverD BurnDrvRascot = {
-	"rascot", NULL, NULL, NULL, "19??",
-	"Royal Ascot\0", NULL, "????", "X-Board",
+	"rascot", NULL, NULL, NULL, "1991",
+	"Royal Ascot (Japan, terminal?)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_MISC, 0,
 	NULL, RascotRomInfo, RascotRomName, NULL, NULL, NULL, NULL, Aburner2InputInfo, Aburner2DIPInfo,
@@ -3617,7 +3617,7 @@ struct BurnDriverD BurnDrvRascot = {
 
 struct BurnDriver BurnDrvSmgp = {
 	"smgp", NULL, NULL, NULL, "1989",
-	"Super Monaco GP (World, Rev B, FD1094 317-0126a)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (World, Rev B) (FD1094 317-0126a)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, SmgpRomInfo, SmgpRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3627,7 +3627,7 @@ struct BurnDriver BurnDrvSmgp = {
 
 struct BurnDriver BurnDrvSmgpd = {
 	"smgpd", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (World, Rev B, FD1094 317-0126a decrypted)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (World, Rev B) (bootleg of FD1094 317-0126a set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, SmgpdRomInfo, SmgpdRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3637,7 +3637,7 @@ struct BurnDriver BurnDrvSmgpd = {
 
 struct BurnDriver BurnDrvSmgp6 = {
 	"smgp6", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (World, Rev A, FD1094 317-0126a)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (World, Rev A) (FD1094 317-0126a)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, Smgp6RomInfo, Smgp6RomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3647,7 +3647,7 @@ struct BurnDriver BurnDrvSmgp6 = {
 
 struct BurnDriver BurnDrvSmgp6d = {
 	"smgp6d", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (World, Rev A, FD1094 317-0126a decrypted)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (World, Rev A) (bootleg of FD1094 317-0126a set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, Smgp6dRomInfo, Smgp6dRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3657,7 +3657,7 @@ struct BurnDriver BurnDrvSmgp6d = {
 
 struct BurnDriver BurnDrvSmgp5 = {
 	"smgp5", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (World, FD1094 317-0126)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (World) (FD1094 317-0126)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, Smgp5RomInfo, Smgp5RomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3667,7 +3667,7 @@ struct BurnDriver BurnDrvSmgp5 = {
 
 struct BurnDriver BurnDrvSmgp5d = {
 	"smgp5d", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (World, FD1094 317-0126 decrypted)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (World) (bootleg of FD1094 317-0126 set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, Smgp5dRomInfo, Smgp5dRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3677,7 +3677,7 @@ struct BurnDriver BurnDrvSmgp5d = {
 
 struct BurnDriver BurnDrvSmgpu = {
 	"smgpu", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (US, Rev C, FD1094 317-0125a)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (US, Rev C) (FD1094 317-0125a)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, SmgpuRomInfo, SmgpuRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3687,7 +3687,7 @@ struct BurnDriver BurnDrvSmgpu = {
 
 struct BurnDriver BurnDrvSmgpud = {
 	"smgpud", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (US, Rev C, FD1094 317-0125a decrypted)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (US, Rev C) (bootleg of FD1094 317-0125a set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, SmgpudRomInfo, SmgpudRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3697,7 +3697,7 @@ struct BurnDriver BurnDrvSmgpud = {
 
 struct BurnDriver BurnDrvSmgpu1 = {
 	"smgpu1", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (US, Rev B, FD1094 317-0125a)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (US, Rev B) (FD1094 317-0125a)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, Smgpu1RomInfo, Smgpu1RomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3707,7 +3707,7 @@ struct BurnDriver BurnDrvSmgpu1 = {
 
 struct BurnDriver BurnDrvSmgpu1d = {
 	"smgpu1d", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (US, Rev B, FD1094 317-0125a decrypted)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (US, Rev B) (bootleg of FD1094 317-0125a set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, Smgpu1dRomInfo, Smgpu1dRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3717,7 +3717,7 @@ struct BurnDriver BurnDrvSmgpu1d = {
 
 struct BurnDriver BurnDrvSmgpu2 = {
 	"smgpu2", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (US, Rev A, FD1094 317-0125a)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (US, Rev A) (FD1094 317-0125a)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, Smgpu2RomInfo, Smgpu2RomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3727,7 +3727,7 @@ struct BurnDriver BurnDrvSmgpu2 = {
 
 struct BurnDriver BurnDrvSmgpu2d = {
 	"smgpu2d", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (US, Rev A, FD1094 317-0125a decrypted)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (US, Rev A) (bootleg of FD1094 317-0125a set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, Smgpu2dRomInfo, Smgpu2dRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3737,7 +3737,7 @@ struct BurnDriver BurnDrvSmgpu2d = {
 
 struct BurnDriver BurnDrvSmgpj = {
 	"smgpj", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (Japan, Rev B, FD1094 317-0124a)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (Japan, Rev B) (FD1094 317-0124a)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, SmgpjRomInfo, SmgpjRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3747,7 +3747,7 @@ struct BurnDriver BurnDrvSmgpj = {
 
 struct BurnDriver BurnDrvSmgpjd = {
 	"smgpjd", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (Japan, Rev B, FD1094 317-0124a decrypted)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (Japan, Rev B) (bootleg of FD1094 317-0124a set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, SmgpjdRomInfo, SmgpjdRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3757,7 +3757,7 @@ struct BurnDriver BurnDrvSmgpjd = {
 
 struct BurnDriver BurnDrvSmgpja = {
 	"smgpja", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (Japan, Rev A, FD1094 317-0124a)\0", NULL, "Sega", "X-Board",
+	"Super Monaco GP (Japan, Rev A) (FD1094 317-0124a)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, SmgpjaRomInfo, SmgpjaRomName, NULL, NULL, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
@@ -3767,7 +3767,7 @@ struct BurnDriver BurnDrvSmgpja = {
 
 struct BurnDriver BurnDrvThndrbld = {
 	"thndrbld", NULL, NULL, NULL, "1987",
-	"Thunder Blade (upright, FD1094 317-0056)\0", NULL, "Sega", "X-Board",
+	"Thunder Blade (upright) (FD1094 317-0056)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
 	NULL, ThndrbldRomInfo, ThndrbldRomName, NULL, NULL, NULL, NULL, ThndrbldInputInfo, ThndrbldDIPInfo,
@@ -3777,7 +3777,7 @@ struct BurnDriver BurnDrvThndrbld = {
 
 struct BurnDriver BurnDrvThndrbldd = {
 	"thndrbldd", "thndrbld", NULL, NULL, "1987",
-	"Thunder Blade (upright, FD1094 317-0056 decrypted)\0", NULL, "Sega", "X-Board",
+	"Thunder Blade (upright) (bootleg of FD1094 317-0056 set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, ThndrblddRomInfo, ThndrblddRomName, NULL, NULL, NULL, NULL, ThndrbldInputInfo, ThndrbldDIPInfo,
@@ -3787,7 +3787,7 @@ struct BurnDriver BurnDrvThndrbldd = {
 
 struct BurnDriver BurnDrvThndrbld1 = {
 	"thndrbld1", "thndrbld", NULL, NULL, "1987",
-	"Thunder Blade (deluxe/standing, unprotected)\0", NULL, "Sega", "X-Board",
+	"Thunder Blade (deluxe/standing) (unprotected)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, Thndrbld1RomInfo, Thndrbld1RomName, NULL, NULL, NULL, NULL, ThndrbldInputInfo, Thndrbld1DIPInfo,

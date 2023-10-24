@@ -59,8 +59,8 @@ static UINT16 mcu_ram[0x10];
 static INT32  mcu_hs = 0;
 static UINT16 *mcu_config;
 static UINT32 mcu_write_address;
-static UINT16 mcu_config_type1[3] = { 0xff, 0, 0x889e };
-static UINT16 mcu_config_type2[3] = { 0, 0xff, 0x835d };
+static UINT16 mcu_config_type1[3] = { 0xff, 0, 0x889e }; // gs88000
+static UINT16 mcu_config_type2[3] = { 0, 0xff, 0x835d }; // d65006
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -1487,6 +1487,19 @@ static void __fastcall mcu_prot_write_word(UINT32 address, UINT16 data)
 	}
 }
 
+static void __fastcall mcu_prot_write_byte(UINT32 address, UINT16 data)
+{
+	if (address >= mcu_write_address && address <= (mcu_write_address + 9)) {
+		mcu_ram[(address & 0xe)/2] = data;
+
+		if (mcu_ram[0] == mcu_config[0] && mcu_ram[1] == 0x55 && mcu_ram[2] == 0xaa && mcu_ram[3] == mcu_config[1] && (address & ~1) == (mcu_write_address+8)) {
+			mcu_hs = 1;
+		} else {
+			mcu_hs = 0;
+		}
+	}
+}
+
 static void install_mcu_protection(UINT16 *config, UINT32 address)
 {
 	mcu_write_address = address;
@@ -1497,6 +1510,7 @@ static void install_mcu_protection(UINT16 *config, UINT32 address)
 	SekSetReadWordHandler(2,	mcu_prot_read_word);
 	SekSetReadByteHandler(2,	mcu_prot_read_byte);
 	SekSetWriteWordHandler(2,	mcu_prot_write_word);
+	SekSetWriteWordHandler(2,	mcu_prot_write_byte);
 	SekClose();
 }
 
@@ -3813,14 +3827,20 @@ static INT32 tshingenInit()
 {
 	tshingen = 1;
 
-	return SystemInit(0xA, phantasm_rom_decode);
+	INT32 rc = SystemInit(0xA, phantasm_rom_decode);
+
+	if (!rc) {
+		install_mcu_protection(mcu_config_type2, 0x20c00);
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvTshingen = {
 	"tshingen", NULL, NULL, NULL, "1988",
-	"Shingen Samurai-Fighter (Japan, English)\0", "Game crashes in level 2, play tshingena instead!", "Jaleco", "Mega System 1",
+	"Shingen Samurai-Fighter (Japan, English)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenRomInfo, tshingenRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,
 	tshingenInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

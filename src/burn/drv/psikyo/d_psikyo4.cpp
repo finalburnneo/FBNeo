@@ -1479,7 +1479,7 @@ static INT32 HotdebutInit()
 
 struct BurnDriver BurnDrvHotdebut = {
 	"hotdebut", NULL, NULL, NULL, "2000",
-	"Quiz de Idol! Hot Debut (Japan)\0", NULL, "Psikyo / Moss", "PS4",
+	"Quiz de Idol! Hot Debut (Japan)\0", NULL, "MOSS / Psikyo", "PS4",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_QUIZ, 0,
 	NULL, hotdebutRomInfo, hotdebutRomName, NULL, NULL, NULL, NULL, HotdebutInputInfo, HotdebutDIPInfo,

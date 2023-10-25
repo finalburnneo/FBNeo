@@ -5425,7 +5425,7 @@ static INT32 DbzvrvsInit()
 
 struct BurnDriver BurnDrvDbzvrvs = {
 	"dbzvrvs", NULL, NULL, NULL, "1994",
-	"Dragon Ball Z V.R.V.S. (Japan, Rev A)\0", NULL, "Sega / Banpresto", "System 32",
+	"Dragon Ball Z: V.R. V.S. (Japan, Rev A)\0", NULL, "Sega / Banpresto", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM32, GBF_VSFIGHT, 0,
 	NULL, dbzvrvsRomInfo, dbzvrvsRomName, NULL, NULL, NULL, NULL, DbzvrvsInputInfo, DbzvrvsDIPInfo,

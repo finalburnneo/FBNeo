@@ -1633,7 +1633,7 @@ struct BurnDriver BurnDrvMjgtaste = {
 };
 
 
-// Tetris the Absolute The Grand Master 2
+// Tetris: The Absolute - The Grand Master 2
 
 static struct BurnRomInfo tgm2RomDesc[] = {
 	{ "1.u22",				0x080000, 0xc521bf24, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -1707,7 +1707,7 @@ static INT32 Tgm2Init()
 
 struct BurnDriver BurnDrvTgm2 = {
 	"tgm2", NULL, NULL, NULL, "2000",
-	"Tetris the Absolute The Grand Master 2\0", NULL, "Arika", "PS5V2",
+	"Tetris: The Absolute - The Grand Master 2\0", NULL, "Arika", "PS5V2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_PUZZLE, 0,
 	NULL, tgm2RomInfo, tgm2RomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, Tgm2DIPInfo,
@@ -1716,7 +1716,7 @@ struct BurnDriver BurnDrvTgm2 = {
 };
 
 
-// Tetris the Absolute The Grand Master 2 Plus
+// Tetris: The Absolute - The Grand Master 2 Plus
 
 static struct BurnRomInfo tgm2pRomDesc[] = {
 	{ "1b.u22",				0x080000, 0x7599fb19, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -1760,7 +1760,7 @@ static INT32 Tgm2pInit()
 
 struct BurnDriver BurnDrvTgm2p = {
 	"tgm2p", "tgm2", NULL, NULL, "2000",
-	"Tetris the Absolute The Grand Master 2 Plus\0", NULL, "Arika", "PS5V2",
+	"Tetris: The Absolute - The Grand Master 2 Plus\0", NULL, "Arika", "PS5V2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_PUZZLE, 0,
 	NULL, tgm2pRomInfo, tgm2pRomName, NULL, NULL, NULL, NULL, Common3ButtonInputInfo, Tgm2DIPInfo,

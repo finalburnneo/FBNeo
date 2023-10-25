@@ -2358,7 +2358,7 @@ struct BurnDriverD BurnDrvSubhunt = {
 };
 
 
-// Invinco / Head On 2
+// Invinco / Head On 2 (set 1)
 
 static struct BurnRomInfo invho2RomDesc[] = {
 	{ "271b.u33",			0x0400, 0x44356a73, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -2408,7 +2408,7 @@ static INT32 Invho2Init()
 
 struct BurnDriverD BurnDrvInvho2 = {
 	"invho2", NULL, NULL, "invinco", "1979",
-	"Invinco / Head On 2\0", "No sound", "Sega", "Vic Dual",
+	"Invinco / Head On 2 (set 1)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, invho2RomInfo, invho2RomName, NULL, NULL, invdsSampleInfo, invdsSampleName, Invho2InputInfo, Invho2DIPInfo,
@@ -2554,7 +2554,7 @@ static struct BurnRomInfo alphahoRomDesc[] = {
 	{ "ce.bin",				0x0400, 0x3c409d57, 1 | BRF_PRG | BRF_ESS }, // 14
 	{ "cf.bin",				0x0400, 0xd03c5a09, 1 | BRF_PRG | BRF_ESS }, // 15
 
-	{ "alphaho.col",		0x0020, 0x00000000, 0 | BRF_NODUMP },        // 16 Color data (undumped)
+	{ "alphaho.col",		0x0020, 0x67104ea9, 0 | BRF_OPT },        // 16 Color data (undumped)
 };
 
 STD_ROM_PICK(alphaho)
@@ -3474,7 +3474,7 @@ static struct BurnRomInfo brdrlinetRomDesc[] = {
 	{ "1171a.u33",			0x0400, 0x38dd9880, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "1172a.u32",			0x0400, 0x1a3adff0, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "1173a.u31",			0x0400, 0xe668734d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "1174a.u30.bad",		0x0400, 0x22c83ae4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1174a.u30",			0x0400, 0xd1ca5d52, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "1175a.u29",			0x0400, 0x116517b8, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "1176a.u28",			0x0400, 0x2b2c4ba8, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "1177a.u27",			0x0400, 0xd8cbcc1e, 1 | BRF_PRG | BRF_ESS }, //  6
@@ -3592,7 +3592,7 @@ struct BurnDriverD BurnDrvSpacetrkc = {
 };
 
 
-// Carnival (upright)
+// Carnival (upright, AY8912 music)
 
 static struct BurnRomInfo carnivalRomDesc[] = {
 	{ "epr-651.u33",		0x0400, 0x9f2736e6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -3651,7 +3651,7 @@ static INT32 CarnivalInit()
 
 struct BurnDriver BurnDrvCarnival = {
 	"carnival", NULL, NULL, "carnival", "1980",
-	"Carnival (upright)\0", NULL, "Sega", "Vic Dual",
+	"Carnival (upright, AY8912 music)\0", NULL, "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalRomInfo, carnivalRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalInputInfo, CarnivalDIPInfo,
@@ -3806,9 +3806,9 @@ STD_ROM_FN(verbena)
 
 struct BurnDriver BurnDrvVerbena = {
 	"verbena", "carnival", NULL, "carnival", "1980",
-	"Verbena (bootleg of Carnival)\0", NULL, "bootleg (Cocomatic)", "Vic Dual",
+	"Verbena (bootleg of Carnival)\0", NULL, "bootleg (Cocamatic)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, verbenaRomInfo, verbenaRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalcInputInfo, CarnivalcDIPInfo,
 	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4

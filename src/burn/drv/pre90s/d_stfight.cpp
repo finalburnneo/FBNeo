@@ -1107,6 +1107,68 @@ struct BurnDriver BurnDrvEmpcityi = {
 	256, 224, 4, 3
 };
 
+// Empire City: 1931 (France)
+
+static struct BurnRomInfo empcityfrRomDesc[] = {
+	{ "pr.4t",		        0x8000, 0xaa1f84ac, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "pr.2t",		        0x8000, 0xaf381247, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "092-5c",		        0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "empcityfr_68705.3j",	0x0800, 0xd66ac61f, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+
+	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+
+	{ "115.4c",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "116.5c",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "113.2c",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "114.3c",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+
+	{ "109.4j",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "110.5j",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "097.2j",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "108.3j",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+
+	{ "095.8w",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "096.9w",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "093.6w",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "094.7w",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+
+	{ "117.7c",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "118.8c",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+
+	{ "111.7j",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "112.8j",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+
+	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
+
+	{ "82s129.002",		    0x0100, 0xc883d49b, 11 | BRF_GRA },           // 22 stfight_vid:fg_clut
+	{ "82s129.003",		    0x0100, 0xaf81882a, 11 | BRF_GRA },           // 23
+
+	{ "82s129.004",		    0x0100, 0x1831ce7c, 12 | BRF_GRA },           // 24 stfight_vid:bg_clut
+	{ "82s129.005",		    0x0100, 0x96cb6293, 12 | BRF_GRA },           // 25
+
+	{ "82s129.052",		    0x0100, 0x3d915ffc, 13 | BRF_GRA },           // 26 stfight_vid:spr_clut
+	{ "82s129.066",		    0x0100, 0x51e8832f, 13 | BRF_GRA },           // 27
+
+	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
+
+	{ "091.5j",			    0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+};
+
+STD_ROM_PICK(empcityfr)
+STD_ROM_FN(empcityfr)
+
+struct BurnDriver BurnDrvEmpcityfr = {
+	"empcityfr", "empcity", NULL, NULL, "1986",
+	"Empire City: 1931 (France)\0", NULL, "Seibu Kaihatsu (Norad license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, empcityfrRomInfo, empcityfrRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
 // Street Fight (Germany)
 
 static struct BurnRomInfo stfightRomDesc[] = {

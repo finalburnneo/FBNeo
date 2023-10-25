@@ -986,8 +986,8 @@ static INT32 CabalaInit()
 }
 
 struct BurnDriver BurnDrvCabala = {
-	"cabala", "cabal", NULL, NULL, "1988",
-	"Cabal (korea?, Joystick)\0", NULL, "TAD Corporation (Alpha Trading license)", "Miscellaneous",
+	"cabala", "cabal", NULL, NULL, "1989",
+	"Cabal (Korea?, Joystick)\0", NULL, "TAD Corporation (Alpha Trading license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalaRomInfo, cabalaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1030,7 +1030,7 @@ static INT32 CabalukInit()
 }
 
 struct BurnDriver BurnDrvCabaluk = {
-	"cabaluk", "cabal", NULL, NULL, "1988",
+	"cabaluk", "cabal", NULL, NULL, "1989",
 	"Cabal (UK, Trackball)\0", NULL, "TAD Corporation (Electrocoin license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
@@ -1090,7 +1090,7 @@ static INT32 CabalukjInit()
 }
 
 struct BurnDriver BurnDrvCabalukj = {
-	"cabalukj", "cabal", NULL, NULL, "1988",
+	"cabalukj", "cabal", NULL, NULL, "1989",
 	"Cabal (UK, Joystick)\0", NULL, "TAD Corporation (Electrocoin license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,

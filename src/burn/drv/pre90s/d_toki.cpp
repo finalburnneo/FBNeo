@@ -1730,10 +1730,10 @@ STD_ROM_PICK(jujub)
 STD_ROM_FN(jujub)
 
 struct BurnDriver BurnDrvJujub = {
-	"jujub", "toki", NULL, NULL, "1989",
+	"jujub", "toki", NULL, NULL, "1990",
 	"JuJu Densetsu (Playmark bootleg)\0", NULL, "bootleg (Playmark)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, jujubRomInfo, jujubRomName, NULL, NULL, NULL, NULL, TokibInputInfo, TokibDIPInfo,
 	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1794,7 +1794,7 @@ struct BurnDriverD BurnDrvJujuba = {
 	"jujuba", "toki", NULL, NULL, "1989",
 	"JuJu Densetsu (Japan, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, jujubaRomInfo, jujubaRomName, NULL, NULL, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	JujubaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1847,10 +1847,10 @@ STD_ROM_PICK(tokib)
 STD_ROM_FN(tokib)
 
 struct BurnDriver BurnDrvTokib = {
-	"tokib", "toki", NULL, NULL, "1989",
-	"Toki (bootleg)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
+	"tokib", "toki", NULL, NULL, "1990",
+	"Toki (Datsu bootleg)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tokibRomInfo, tokibRomName, NULL, NULL, NULL, NULL, TokibInputInfo, TokibDIPInfo,
 	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

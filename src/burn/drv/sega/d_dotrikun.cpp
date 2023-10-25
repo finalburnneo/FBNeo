@@ -262,7 +262,7 @@ struct BurnDriver BurnDrvdotriman = {
 	"dotriman", "dotrikun", NULL, NULL, "2016",
 	"Dottori-Man Jr.\0", NULL, "hack (Chris Covell)", "Test Hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
 	NULL, dotrimanRomInfo, dotrimanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
 	256, 192, 4, 3

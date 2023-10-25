@@ -759,7 +759,7 @@ struct BurnDriver BurnDrvBlockade = {
 };
 
 
-// CoMOTION
+// CoMotion
 
 static struct BurnRomInfo comotionRomDesc[] = {
 	{ "316-0007.u2",	0x0400, 0x5b9bd054, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
@@ -781,10 +781,36 @@ static INT32 ComotionInit()
 
 struct BurnDriver BurnDrvComotion = {
 	"comotion", NULL, NULL, "blockade", "1976",
-	"CoMOTION\0", NULL, "Gremlin", "Miscellaneous",
+	"CoMotion\0", NULL, "Gremlin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, comotionRomInfo, comotionRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, ComotionInputInfo, ComotionDIPInfo,
+	ComotionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
+	256, 224, 4, 3
+};
+
+
+// CoMotion (patent)
+
+static struct BurnRomInfo comotionpRomDesc[] = {
+	{ "comotionp-1h.u2",	0x0400, 0x3e88b7dd, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
+	{ "comotionp-1l.u3",	0x0400, 0x1f5bbfd9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "comotionp-2h.u4",	0x0400, 0xeec29372, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "comotionp-2l.u5",	0x0400, 0xc68b63de, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "316-0006.u43",	0x0100, 0x8f071297, 2 | BRF_GRA },           //  4 Tiles
+	{ "316-0005.u29",	0x0100, 0x53fb8821, 2 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(comotionp)
+STD_ROM_FN(comotionp)
+
+struct BurnDriver BurnDrvComotionp = {
+	"comotionp", "comotion", NULL, "blockade", "1976",
+	"CoMotion (patent)\0", NULL, "Gremlin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, comotionpRomInfo, comotionpRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, ComotionInputInfo, ComotionDIPInfo,
 	ComotionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };

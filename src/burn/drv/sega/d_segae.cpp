@@ -1511,7 +1511,7 @@ STD_ROM_FN(Transfrm)
 
 struct BurnDriver BurnDrvHangonjr = {
 	"hangonjr", NULL, NULL, NULL, "1985",
-	"Hang-On Jr. Rev.B\0", NULL, "Sega", "System E",
+	"Hang-On Jr. (Rev. B)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_RACING, 0,
 	NULL, hangonjrRomInfo, hangonjrRomName, NULL, NULL, NULL, NULL, HangonjrInputInfo, HangonjrDIPInfo,

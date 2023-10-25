@@ -3964,7 +3964,7 @@ struct BurnDriver BurnDrvSamesamenh = {
 	"samesamenh", "fireshrk", NULL, NULL, "2015",
 	"Same! Same! Same! (1P set, NEW VER! hack)\0", NULL, "hack (trap15)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samesamenhRomInfo, samesamenhRomName, NULL, NULL, NULL, NULL, FiresharkInputInfo, SamesameDIPInfo,
 	SamesameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4

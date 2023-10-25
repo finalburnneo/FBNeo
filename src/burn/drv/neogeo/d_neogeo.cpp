@@ -20570,6 +20570,38 @@ struct BurnDriver BurnDrvmslug1v2 = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Metal Slug (Origins, Hack)
+// Modified by 合金弹头爱克斯
+
+static struct BurnRomInfo mslugdqyRomDesc[] = {
+	{ "201-p1dqy.p1",	0x200000, 0x9c39a144, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "201-c1.c1",		0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data
+	{ "201-c2.c2",		0x400000, 0x96f62574, 3 | BRF_GRA },           //  3
+	{ "201-c3.c3",		0x400000, 0x5121456a, 3 | BRF_GRA },           //  4
+	{ "201-c4.c4",		0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5
+
+	{ "201-m1.m1",		0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "201-v1.v1",		0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data
+	{ "201-v2.v2",		0x400000, 0x472cf9db, 5 | BRF_SND },           //  8
+};
+
+STDROMPICKEXT(mslugdqy, mslugdqy, neogeo)
+STD_ROM_FN(mslugdqy)
+
+struct BurnDriver BurnDrvmslugdqy = {
+	"mslugdqy", "mslug", "neogeo", NULL, "2023",
+	"Metal Slug (Origins, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
+	NULL, mslugdqyRomInfo, mslugdqyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 
 // Metal Slug 2 (Weapon Storage, Hack)
 // Modified by 合金弹头爱克斯

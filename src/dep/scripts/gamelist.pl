@@ -1,7 +1,6 @@
 #!/usr/bin/perl -w
 
 use strict;
-use File::Basename;
 
 my $Outfile;
 my $Listfile;
@@ -147,7 +146,10 @@ foreach my $filename ( @Filelist ) {
 			} else {
 				$Drivers{$name}[8] = "";
 			}
-			$Drivers{$name}[9] = basename($filename);		# Filename
+
+			my $sourcefile = $filename;
+			$sourcefile =~ s/..\/..\/burn\/drv\///;
+			$Drivers{$name}[9] = $sourcefile;		# Filename
 
 			# Convert NULL/null/0 to empty string or remove quotes
 			foreach $line ( @{$Drivers{$name}} ) {

@@ -3780,6 +3780,45 @@ struct BurnDriver BurnDrvDemonwld4 = {
 };
 
 
+// Demon's World / Horror Story (set 6)
+
+static struct BurnRomInfo demonwld5RomDesc[] = {
+	{ "o16-10.bin",			0x20000, 0x4bcd85f6, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "o16-09.bin",			0x20000, 0x8e5445ba, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "rom11",			0x08000, 0x397eca1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "dsp_21.bin",			0x00800, 0x2d135376, 7 | BRF_PRG | BRF_ESS }, //  3 DSP Code
+	{ "dsp_22.bin",			0x00800, 0x79389a71, 7 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "rom05",			0x20000, 0x6506c982, 3 | BRF_GRA },           //  5 Layer Tiles
+	{ "rom07",			0x20000, 0xa3a0d993, 3 | BRF_GRA },           //  6
+	{ "rom06",			0x20000, 0x4fc5e5f3, 3 | BRF_GRA },           //  7
+	{ "rom08",			0x20000, 0xeb53ab09, 3 | BRF_GRA },           //  8
+
+	{ "rom01",			0x20000, 0x1b3724e9, 5 | BRF_GRA },           //  9 Sprites
+	{ "rom02",			0x20000, 0x7b20a44d, 5 | BRF_GRA },           // 10
+	{ "rom03",			0x20000, 0x2cacdcd0, 5 | BRF_GRA },           // 11
+	{ "rom04",			0x20000, 0x76fd3201, 5 | BRF_GRA },           // 12
+
+	{ "prom12.bpr",			0x00020, 0xbc88cced, 0 | BRF_OPT },           // 13 PROMs
+	{ "prom13.bpr",			0x00020, 0xa1e17492, 0 | BRF_OPT },           // 14
+};
+
+STD_ROM_PICK(demonwld5)
+STD_ROM_FN(demonwld5)
+
+struct BurnDriver BurnDrvDemonwld5 = {
+	"demonwld5", "demonwld", NULL, NULL, "1989",
+	"Demon's World / Horror Story (set 6)\0", NULL, "Toaplan (APM Electronics license)", "Toaplan BCU-2 / FCU-2 based",
+	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 6)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RUNGUN, 0,
+	NULL, demonwld5RomInfo, demonwld5RomName, NULL, NULL, NULL, NULL, Drv3bInputInfo, Demonwld1DIPInfo,
+	DemonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
 // Same! Same! Same! (1P set)
 
 static struct BurnRomInfo samesameRomDesc[] = {

@@ -9051,10 +9051,11 @@ struct BurnDriver BurnDrvDaiohc = {
 
 
 // Rezon
+// note the ONLY byte that changes is the year, 1992 instead of 1991.
 
 static struct BurnRomInfo rezonRomDesc[] = {
 	{ "us001001.u3",	0x020000, 0xab923052, 0x01 | BRF_PRG | BRF_ESS }, 		//  0 68k Code
-	{ "us001002.u4",	0x020000, 0x3dafa0d5, 0x01 | BRF_PRG | BRF_ESS }, 		//  1
+	{ "rezon_1_p.u4",	0x020000, 0x9ed32f8c, 0x01 | BRF_PRG | BRF_ESS }, 		//  1
 	{ "us001004.103",	0x020000, 0x54871c7c, 0x01 | BRF_PRG | BRF_ESS }, 		//  2
 	{ "us001003.102",	0x020000, 0x1ac3d272, 0x01 | BRF_PRG | BRF_ESS }, 		//  3
 
@@ -9093,7 +9094,7 @@ static INT32 rezonInit()
 }
 
 struct BurnDriver BurnDrvRezon = {
-	"rezon", NULL, NULL, NULL, "1991",
+	"rezon", NULL, NULL, NULL, "1992",
 	"Rezon\0", NULL, "Allumer", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_HORSHOOT, 0,
@@ -9101,15 +9102,12 @@ struct BurnDriver BurnDrvRezon = {
 	rezonInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
 	384, 240, 4, 3
 };
-
-/* note the ONLY byte that changes is the year, 1992 instead of 1991.  The actual license is controlled by a jumper but
-   since Taito released the game in 1992 this is the Taito version and we hardcode the jumper in the input ports */
    
-// Rezon (Taito)
+// Rezon (earlier)
 
-static struct BurnRomInfo rezontRomDesc[] = {
+static struct BurnRomInfo rezonoRomDesc[] = {
 	{ "us001001.u3",	0x020000, 0xab923052, 0x01 | BRF_PRG | BRF_ESS }, 		//  0 68k Code
-	{ "rezon_1_p.u4",	0x020000, 0x9ed32f8c, 0x01 | BRF_PRG | BRF_ESS }, 		//  1
+	{ "us001002.u4",	0x020000, 0x3dafa0d5, 0x01 | BRF_PRG | BRF_ESS }, 		//  1
 	{ "us001004.103",	0x020000, 0x54871c7c, 0x01 | BRF_PRG | BRF_ESS }, 		//  2
 	{ "us001003.102",	0x020000, 0x1ac3d272, 0x01 | BRF_PRG | BRF_ESS }, 		//  3
 
@@ -9128,15 +9126,15 @@ static struct BurnRomInfo rezontRomDesc[] = {
 	{ "us-013.u76",		0x000104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP },	// 12
 };
 
-STD_ROM_PICK(rezont)
-STD_ROM_FN(rezont)
+STD_ROM_PICK(rezono)
+STD_ROM_FN(rezono)
 
-struct BurnDriver BurnDrvRezont = {
-	"rezont", "rezon", NULL, NULL, "1992",
-	"Rezon (Taito)\0", NULL, "Allumer (Taito license)", "Seta",
+struct BurnDriver BurnDrvRezono = {
+	"rezono", "rezon", NULL, NULL, "1991",
+	"Rezon (earlier)\0", NULL, "Allumer", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_HORSHOOT, 0,
-	NULL, rezontRomInfo, rezontRomName, NULL, NULL, NULL, NULL, RezonInputInfo, RezonDIPInfo,
+	NULL, rezonoRomInfo, rezonoRomName, NULL, NULL, NULL, NULL, RezonInputInfo, RezonDIPInfo,
 	rezonInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
 	384, 240, 4, 3
 };
@@ -9237,7 +9235,7 @@ struct BurnDriver BurnDrvWrofaero = {
 };
 
 
-// Zing Zing Zip
+// Zing Zing Zip (World) / Zhen Zhen Ji Pao (China?)
 
 static struct BurnRomInfo zingzipRomDesc[] = {
 	{ "uy001001.3",		0x040000, 0x1a1687ec, 0x01 | BRF_PRG | BRF_ESS }, 		//  0 68k Code
@@ -9279,7 +9277,7 @@ static INT32 zingzipInit()
 
 struct BurnDriver BurnDrvZingzip = {
 	"zingzip", NULL, NULL, NULL, "1992",
-	"Zing Zing Zip\0", NULL, "Allumer / Tecmo", "Seta",
+	"Zing Zing Zip (World) / Zhen Zhen Ji Pao (China?)\0", NULL, "Allumer / Tecmo", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, zingzipRomInfo, zingzipRomName, NULL, NULL, NULL, NULL, ZingzipInputInfo, ZingzipDIPInfo,
@@ -10345,6 +10343,40 @@ struct BurnDriver BurnDrvTriplfun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_MINIGAMES, 0,
 	NULL, triplfunRomInfo, triplfunRomName, NULL, NULL, NULL, NULL, OisipuzlInputInfo, OisipuzlDIPInfo,
+	triplfunInit, DrvExit, DrvM6295Frame, seta2layerFlippedDraw, DrvScan, &DrvRecalc, 0x600,
+	320, 224, 4, 3
+};
+
+
+// Sum-eoitneun Deongdalireul Chat-ara!
+
+static struct BurnRomInfo triplfunkRomDesc[] = {
+	{ "05.bin",		0x80000, 0x06eb3821, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "04.bin",		0x80000, 0x37a5c46e, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "09k.bin",		0x80000, 0x06730143, 0x0b | BRF_GRA },           //  2 Sprites
+	{ "08k.bin",		0x80000, 0xe9a4b535, 0x0b | BRF_GRA },           //  3
+	{ "11k.bin",		0x80000, 0x8166e961, 0x0b | BRF_GRA },           //  4
+	{ "10k.bin",		0x80000, 0x2cea4898, 0x0b | BRF_GRA },           //  5
+
+	{ "02k.bin",		0x80000, 0x3188b102, 0x0c | BRF_GRA },           //  6 Layer 1 tiles
+	{ "03k.bin",		0x80000, 0x4a9520a4, 0x0c | BRF_GRA },           //  7
+
+	{ "06k.bin",		0x40000, 0xf65f72d5, 0x0d | BRF_GRA },           //  8 Layer 2 tiles
+	{ "07k.bin",		0x40000, 0x4522829e, 0x0d | BRF_GRA },           //  9
+
+	{ "01.bin",		0x40000, 0xc186a930, 0x06 | BRF_SND },           // 10 OKI M6295 Samples
+};
+
+STD_ROM_PICK(triplfunk)
+STD_ROM_FN(triplfunk)
+
+struct BurnDriver BurnDrvTriplfunk = {
+	"triplfunk", "oisipuzl", NULL, NULL, "1993",
+	"Sum-eoitneun Deongdalireul Chat-ara!\0", NULL, "bootleg (Jin Young)", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_MINIGAMES, 0,
+	NULL, triplfunkRomInfo, triplfunkRomName, NULL, NULL, NULL, NULL, OisipuzlInputInfo, OisipuzlDIPInfo,
 	triplfunInit, DrvExit, DrvM6295Frame, seta2layerFlippedDraw, DrvScan, &DrvRecalc, 0x600,
 	320, 224, 4, 3
 };

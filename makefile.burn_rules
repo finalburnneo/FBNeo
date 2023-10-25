@@ -47,7 +47,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			d_angelkds.o d_appoooh.o d_bankp.o d_dotrikun.o d_hangon.o d_outrun.o d_segac2.o d_segae.o d_segag80v.o d_segas32.o d_suprloco.o d_sys1.o d_sys16a.o d_sys16b.o d_sys18.o \
 			d_sys24.o d_turbo.o d_xbrd.o d_ybrd.o d_zaxxon.o \
 			\
-			d_arkanoid.o d_ashnojoe.o d_asuka.o d_bublbobl.o d_buggychl.o d_chaknpop.o d_crbaloon.o d_cyclemb.o d_darius2.o d_darkmist.o d_exzisus.o d_flstory.o d_galastrm.o d_gladiatr.o \
+			d_arkanoid.o d_ashnojoe.o d_asuka.o d_bublbobl.o d_buggychl.o d_chaknpop.o d_crbaloon.o d_cyclemb.o d_darius2.o d_exzisus.o d_flstory.o d_galastrm.o d_gladiatr.o \
 			d_groundfx.o d_gunbuster.o d_halleys.o d_jollyjgr.o d_ksayakyu.o d_lkage.o d_lsasquad.o d_mexico86.o d_minivdr.o d_msisaac.o d_nycaptor.o d_othunder.o d_qix.o d_retofinv.o d_rollrace.o d_slapshot.o \
 			d_ssrj.o d_superchs.o d_superqix.o d_supridr.o d_taitob.o d_taitoh.o d_taitof2.o d_taitof3.o d_taitol.o d_taitomisc.o d_taitosj.o d_taitox.o d_taitoz.o d_tnzs.o d_undrfire.o d_wyvernf0.o \
 			\
@@ -58,7 +58,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_badlands.o d_batman.o d_blstro
 			d_asteroids.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_berzerk.o d_bionicc.o d_blktiger.o \
 			d_blockade.o d_blockout.o d_blueprnt.o d_bogeyman.o d_bombjack.o d_btime.o d_bwidow.o d_bzone.o d_cabal.o d_calorie.o d_canyon.o d_capbowl.o \
 			d_carjmbre.o d_ccastles.o d_cclimber.o d_cheekyms.o d_chinagat.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \
-			d_cybertnk.o d_dacholer.o d_dday.o d_ddayjlc.o d_ddragon.o d_deadang.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_dorachan.o d_dribling.o d_drmicro.o \
+			d_cybertnk.o d_dacholer.o d_darkmist.o d_dday.o d_ddayjlc.o d_ddragon.o d_deadang.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_dorachan.o d_dribling.o d_drmicro.o \
 			d_dynduke.o d_efdt.o d_epos.o d_espial.o d_ettrivia.o d_exedexes.o d_exerion.o d_exidy440.o d_exprraid.o d_exterm.o d_fantland.o d_fastfred.o d_fcombat.o d_firetrap.o d_flipjack.o d_flower.o d_foodf.o \
 			d_freekick.o d_funkybee.o d_galaga.o d_galivan.o d_gaplus.o d_ginganin.o d_gng.o d_goindol.o d_gotya.o d_gridlee.o d_gunsmoke.o d_headonb.o d_higemaru.o \
 			d_himesiki.o d_holeland.o d_hvyunit.o d_invaders.o d_iqblock.o d_jack.o d_jedi.o d_jrpacman.o d_kangaroo.o d_kingofbox.o d_kncljoe.o d_kyugo.o d_ladybug.o d_lasso.o \

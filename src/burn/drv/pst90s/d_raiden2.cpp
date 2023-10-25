@@ -5074,7 +5074,7 @@ struct BurnDriver BurnDrvZeroteam = {
 };
 
 
-// Zero Team (Japan?, earlier?)
+// Zero Team (Japan?, earlier?, set 1)
 // No licensee, original japan?
 
 static struct BurnRomInfo zeroteamaRomDesc[] = {
@@ -5109,7 +5109,7 @@ STD_ROM_FN(zeroteama)
 
 struct BurnDriver BurnDrvZeroteama = {
 	"zeroteama", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (Japan?, earlier?)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (Japan?, earlier?, set 1)\0", "Unemulated protection", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -5386,7 +5386,7 @@ STD_ROM_PICK(xsedae)
 STD_ROM_FN(xsedae)
 
 struct BurnDriver BurnDrvXsedae = {
-	"xsedae", NULL, NULL, NULL, "1993",
+	"xsedae", NULL, NULL, NULL, "1995",
 	"X Se Dae Quiz (Korea)\0", NULL, "Dream Island", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,

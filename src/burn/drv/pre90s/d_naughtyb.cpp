@@ -663,7 +663,7 @@ struct BurnDriver BurnDrvNaughtyba = {
 	"naughtyba", "naughtyb", NULL, NULL, "1982",
 	"Naughty Boy (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, naughtybaRomInfo, naughtybaRomName, NULL, NULL, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -703,7 +703,7 @@ struct BurnDriver BurnDrvNaughtybb = {
 	"naughtybb", "naughtyb", NULL, NULL, "1982",
 	"Naughty Boy (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, naughtybbRomInfo, naughtybbRomName, NULL, NULL, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -1125,7 +1125,7 @@ struct BurnDriver BurnDrvTrvgns = {
 	"trvgns", "trvmstr", NULL, NULL, "1985",
 	"Trivia Genius\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, trvgnsRomInfo, trvgnsRomName, NULL, NULL, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
 	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4

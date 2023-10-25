@@ -3663,7 +3663,7 @@ Driver defs
 ====================================================*/
 
 struct BurnDriver BurnDrvAceattaca = {
-	"aceattaca", "aceattac", NULL, NULL, "1986",
+	"aceattaca", "aceattac", NULL, NULL, "1988",
 	"Ace Attacker (Japan, System 16A, FD1094 317-0060)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
@@ -3674,7 +3674,7 @@ struct BurnDriver BurnDrvAceattaca = {
 
 struct BurnDriver BurnDrvAFighter = {
 	"afighter", NULL, NULL, NULL, "1986",
-	"Action Fighter, FD1089A 317-0018\0", NULL, "Sega", "System 16A",
+	"Action Fighter (FD1089A 317-0018)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_RACING, 0,
 	NULL, AfighterRomInfo, AfighterRomName, NULL, NULL, NULL, NULL, System16aInputInfo, AfighterDIPInfo,
@@ -3734,7 +3734,7 @@ struct BurnDriver BurnDrvAlexkidd = {
 
 struct BurnDriver BurnDrvAlexkidd1 = {
 	"alexkidd1", "alexkidd", NULL, NULL, "1986",
-	"Alex Kidd: The Lost Stars (set 1, FD1089A 317-unknown)\0", NULL, "Sega", "System 16A",
+	"Alex Kidd: The Lost Stars (set 1, FD1089A 317-0021)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_PLATFORM, 0,
 	NULL, Alexkidd1RomInfo, Alexkidd1RomName, NULL, NULL, NULL, NULL, System16aInputInfo, AlexkiddDIPInfo,
@@ -3784,7 +3784,7 @@ struct BurnDriver BurnDrvBodyslam = {
 
 struct BurnDriver BurnDrvDumpmtmt = {
 	"dumpmtmt", "bodyslam", NULL, NULL, "1986",
-	"Dump Matsumoto (Japan, 8751 317-unknown)\0", NULL, "Sega", "System 16A",
+	"Dump Matsumoto (Japan, 8751 317-0011a)\0", NULL, "Sega", "System 16A",
 	 L"Dump Matsumoto (Japan, 8751 317-unknown)\0\u30C0\u30F3\u30D7\u677E\u672C\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_VSFIGHT, 0,
 	NULL, DumpmtmtRomInfo, DumpmtmtRomName, NULL, NULL, NULL, NULL, System16aInputInfo, BodyslamDIPInfo,
@@ -3861,7 +3861,7 @@ struct BurnDriver BurnDrvMjleague = {
 
 struct BurnDriver BurnDrvPasssht16a = {
 	"passsht16a", "passsht", NULL, NULL, "1988",
-	"Passing Shot (Japan, 4 Players, System 16A, FD1094 317-0071)\0", NULL, "Sega", "System 16A",
+	"Passing Shot (Japan, 4 Players, System 16A) (FD1094 317-0071)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
 	NULL, Passsht16aRomInfo, Passsht16aRomName, NULL, NULL, NULL, NULL, Passsht16aInputInfo, Passsht16aDIPInfo,
@@ -3871,7 +3871,7 @@ struct BurnDriver BurnDrvPasssht16a = {
 
 struct BurnDriver BurnDrvQuartet = {
 	"quartet", NULL, NULL, NULL, "1986",
-	"Quartet (Rev A, 8751 317-unknown)\0", NULL, "Sega", "System 16A",
+	"Quartet (Rev A, 8751 315-5194)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, QuartetRomInfo, QuartetRomName, NULL, NULL, NULL, NULL, QuartetInputInfo, QuartetDIPInfo,
@@ -3931,7 +3931,7 @@ struct BurnDriver BurnDrvSdia = {
 
 struct BurnDriver BurnDrvShinobi = {
 	"shinobi", NULL, NULL, NULL, "1987",
-	"Shinobi (set 6, System 16A, unprotected)\0", NULL, "Sega", "System 16A",
+	"Shinobi (set 6, System 16A) (unprotected)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, ShinobiRomInfo, ShinobiRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
@@ -3941,7 +3941,7 @@ struct BurnDriver BurnDrvShinobi = {
 
 struct BurnDriver BurnDrvShinobi1 = {
 	"shinobi1", "shinobi", NULL, NULL, "1987",
-	"Shinobi (set 1, System 16A, FD1094 317-0050)\0", NULL, "Sega", "System 16A",
+	"Shinobi (set 1, System 16A) (FD1094 317-0050)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Shinobi1RomInfo, Shinobi1RomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
@@ -3951,7 +3951,7 @@ struct BurnDriver BurnDrvShinobi1 = {
 
 struct BurnDriver BurnDrvShinobi1d = {
 	"shinobi1d", "shinobi", NULL, NULL, "1987",
-	"Shinobi (set 1, System 16A, FD1094 317-0050 decrypted)\0", NULL, "Sega", "System 16A",
+	"Shinobi (set 1, System 16A) (bootleg of FD1094 317-0050 set)\0", NULL, "bootleg", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, Shinobi1dRomInfo, Shinobi1dRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
@@ -3961,7 +3961,7 @@ struct BurnDriver BurnDrvShinobi1d = {
 
 struct BurnDriver BurnDrvShinobls = {
 	"shinobls", "shinobi", NULL, NULL, "1987",
-	"Shinobi (Star bootleg, System 16A)\0", NULL, "bootleg", "System 16A",
+	"Shinobi (Star bootleg, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, ShinoblsRomInfo, ShinoblsRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
@@ -3971,7 +3971,7 @@ struct BurnDriver BurnDrvShinobls = {
 
 struct BurnDriver BurnDrvShinoblb = {
 	"shinoblb", "shinobi", NULL, NULL, "1987",
-	"Shinobi (beta bootleg, System 16A)\0", NULL, "bootleg", "System 16A",
+	"Shinobi (Beta bootleg)\0", NULL, "bootleg (Beta)", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, ShinoblbRomInfo, ShinoblbRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
@@ -3991,7 +3991,7 @@ struct BurnDriver BurnDrvSjryuko1 = {
 
 struct BurnDriver BurnDrvTetris = {
 	"tetris", NULL, NULL, NULL, "1988",
-	"Tetris (set 4, Japan, System 16A, FD1094 317-0093)\0", NULL, "Sega", "System 16A",
+	"Tetris (set 4, Japan, System 16A) (FD1094 317-0093)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, TetrisRomInfo, TetrisRomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, TetrisDIPInfo,
@@ -4001,7 +4001,7 @@ struct BurnDriver BurnDrvTetris = {
 
 struct BurnDriver BurnDrvTetrisd = {
 	"tetrisd", "tetris", NULL, NULL, "1988",
-	"Tetris (set 4, Japan, System 16A, FD1094 317-0093 decrypted)\0", NULL, "Sega", "System 16A",
+	"Tetris (set 4, Japan, System 16A) (bootleg of FD1094 317-0093 set)\0", NULL, "bootleg", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PUZZLE, 0,
 	NULL, TetrisdRomInfo, TetrisdRomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, TetrisDIPInfo,
@@ -4011,7 +4011,7 @@ struct BurnDriver BurnDrvTetrisd = {
 
 struct BurnDriver BurnDrvTetris3 = {
 	"tetris3", "tetris", NULL, NULL, "1988",
-	"Tetris (set 3, Japan, System 16A, FD1094 317-0093a)\0", NULL, "Sega", "System 16A",
+	"Tetris (set 3, Japan, System 16A) (FD1094 317-0093a)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Tetris3RomInfo, Tetris3RomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, TetrisDIPInfo,
@@ -4021,7 +4021,7 @@ struct BurnDriver BurnDrvTetris3 = {
 
 struct BurnDriver BurnDrvTetris3d = {
 	"tetris3d", "tetris", NULL, NULL, "1988",
-	"Tetris (set 3, Japan, System 16A, FD1094 317-0093a decrypted)\0", NULL, "Sega", "System 16A",
+	"Tetris (set 3, Japan, System 16A) (bootleg of FD1094 317-0093a set)\0", NULL, "bootleg", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PUZZLE, 0,
 	NULL, Tetris3dRomInfo, Tetris3dRomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, TetrisDIPInfo,
@@ -4041,7 +4041,7 @@ struct BurnDriver BurnDrvTimescan1 = {
 
 struct BurnDriver BurnDrvWb31 = {
 	"wb31", "wb3", NULL, NULL, "1988",
-	"Wonder Boy III - Monster Lair (set 1, Japan, System 16A, FD1094 317-0084)\0", NULL, "Sega / Westone", "System 16A",
+	"Wonder Boy III - Monster Lair (set 1, Japan, System 16A) (FD1094 317-0084)\0", NULL, "Sega / Westone", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb31RomInfo, Wb31RomName, NULL, NULL, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
@@ -4051,7 +4051,7 @@ struct BurnDriver BurnDrvWb31 = {
 
 struct BurnDriver BurnDrvWb31d = {
 	"wb31d", "wb3", NULL, NULL, "1988",
-	"Wonder Boy III - Monster Lair (set 1, Japan, System 16A, FD1094 317-0084 decrypted)\0", NULL, "Sega / Westone", "System 16A",
+	"Wonder Boy III - Monster Lair (set 1, Japan, System 16A) (bootleg of FD1094 317-0084 set)\0", NULL, "bootleg", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, Wb31dRomInfo, Wb31dRomName, NULL, NULL, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
@@ -4061,7 +4061,7 @@ struct BurnDriver BurnDrvWb31d = {
 
 struct BurnDriver BurnDrvWb35 = {
 	"wb35", "wb3", NULL, NULL, "1988",
-	"Wonder Boy III - Monster Lair (set 5, Japan, System 16A, FD1089A 317-0086)\0", NULL, "Sega / Westone", "System 16A",
+	"Wonder Boy III - Monster Lair (set 5, Japan, System 16A) (FD1089A 317-0086)\0", NULL, "Sega / Westone", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_PLATFORM, 0,
 	NULL, Wb35RomInfo, Wb35RomName, NULL, NULL, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
@@ -4071,7 +4071,7 @@ struct BurnDriver BurnDrvWb35 = {
 
 struct BurnDriver BurnDrvWb35d = {
 	"wb35d", "wb3", NULL, NULL, "1988",
-	"Wonder Boy III - Monster Lair (set 5, Japan, System 16A, FD1089A 317-0086 decrypted)\0", NULL, "Sega / Westone", "System 16A",
+	"Wonder Boy III - Monster Lair (set 5, Japan, System 16A) (bootleg of FD1089A 317-0086 set)\0", NULL, "bootleg", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, Wb35dRomInfo, Wb35dRomName, NULL, NULL, NULL, NULL, System16aInputInfo, Wb31DIPInfo,

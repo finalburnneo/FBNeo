@@ -2544,7 +2544,7 @@ struct BurnDriver BurnDrvTengai = {
 };
 
 
-// Sengoku Blade - sengoku Ace episode II (Japan)\0Tengai (World)
+// Sengoku Blade: Sengoku Ace Episode II (Japan) / Tengai (World)
 
 static struct BurnRomInfo tengaijRomDesc[] = {
 	{ "2-u40.bin",    0x080000, 0xab6fe58a, 1 | BRF_ESS | BRF_PRG }, //  0 CPU #0 code
@@ -2571,7 +2571,7 @@ STD_ROM_FN(tengaij)
 
 struct BurnDriver BurnDrvTengaij = {
 	"tengaij", "tengai", NULL, NULL, "1996",
-	"Sengoku Blade - sengoku Ace episode II (Japan)\0Tengai (World)\0", NULL, "Psikyo", "Psikyo 68EC020",
+	"Sengoku Blade: Sengoku Ace Episode II (Japan) / Tengai (World)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	L"\u6226\u56FD\u30D6\u30EC\u30FC\u30C9 - sengoku Ace episode II (Japan)\0Tengai (World)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, tengaijRomInfo, tengaijRomName, NULL, NULL, NULL, NULL, gunbirdInputInfo, tengaijDIPInfo,

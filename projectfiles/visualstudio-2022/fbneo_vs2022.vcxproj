@@ -969,7 +969,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\taito\d_chaknpop.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_crbaloon.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_darius2.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\taito\d_darkmist.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_darkmist.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_exzisus.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_flstory.cpp" />
     <ClCompile Include="..\..\src\burn\drv\taito\d_jollyjgr.cpp" />

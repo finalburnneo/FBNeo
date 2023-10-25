@@ -5115,7 +5115,7 @@ struct BurnDriver BurnDrvIchirbl = {
 	"ichirbl", "ichir", NULL, NULL, "1994",
 	"Puzzle & Action: Ichidant-R (World) (bootleg)\0", NULL, "bootleg", "C2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_MINIGAMES | GBF_PUZZLE, 0,
 	NULL, ichirblRomInfo, ichirblRomName, NULL, NULL, NULL, NULL, SegaC2_1ButtonInputInfo, IchirDIPInfo,
 	NoProtectionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1800,
 	320, 224, 4, 3

@@ -7112,7 +7112,7 @@ struct BurnDriver BurnDrvFlicky = {
 
 struct BurnDriver BurnDrvFlickya = {
 	"flickya", "flicky", NULL, NULL, "1984",
-	"Flicky (128k Version, 315-5051, larger roms))\0", NULL, "Sega", "System 1",
+	"Flicky (128k Version, 315-5051, larger roms)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyaRomInfo, FlickyaRomName, NULL, NULL, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
@@ -7202,9 +7202,9 @@ struct BurnDriver BurnDrvGardia = {
 
 struct BurnDriver BurnDrvGardiab = {
 	"gardiab", "gardia", NULL, NULL, "1986",
-	"Gardia (317-0007?, bootleg)\0", NULL, "Sega / Coreland", "System 1",
+	"Gardia (317-0007?, bootleg)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, GardiabRomInfo, GardiabRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
 	GardiabInit, System1Exit, System1Frame, System2Render, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
@@ -7212,7 +7212,7 @@ struct BurnDriver BurnDrvGardiab = {
 
 struct BurnDriver BurnDrvGardiaj = {
 	"gardiaj", "gardia", NULL, NULL, "1986",
-	"Gardia (Japan, 317-0006)\0", NULL, "Sega / Coreland", "System 2",
+	"Gardia (Japan, 317-0006)\0", NULL, "Coreland / Sega", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, GardiajRomInfo, GardiajRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
@@ -7272,7 +7272,7 @@ struct BurnDriver BurnDrvMrvikingj = {
 
 struct BurnDriver BurnDrvMyhero = {
 	"myhero", NULL, NULL, NULL, "1985",
-	"My Hero (US, not encrypted)\0", NULL, "Sega", "System 1",
+	"My Hero (US, not encrypted)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, MyheroRomInfo, MyheroRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MyheroDIPInfo,
@@ -7302,7 +7302,7 @@ struct BurnDriver BurnDrvMyherobl = {
 
 struct BurnDriver BurnDrvMyherok = {
 	"myherok", "myhero", NULL, NULL, "1985",
-	"My Hero (Korea)\0", NULL, "Coreland / Sega", "System 1",
+	"Cheongchun Ilbeonji (Korea)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, MyherokRomInfo, MyherokRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, MyheroDIPInfo,
@@ -7312,7 +7312,7 @@ struct BurnDriver BurnDrvMyherok = {
 
 struct BurnDriver BurnDrvNob = {
 	"nob", NULL, NULL, NULL, "1986",
-	"Noboranka (Japan)\0", NULL, "Data East Corporation", "System 1",
+	"Noboranka (Japan)\0", NULL, "Coreland / Data East Corporation", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NobRomInfo, NobRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, NobbDIPInfo,
@@ -7322,7 +7322,7 @@ struct BurnDriver BurnDrvNob = {
 
 struct BurnDriver BurnDrvNobb = {
 	"nobb", "nob", NULL, NULL, "1986",
-	"Noboranka (Japan, bootleg)\0", NULL, "bootleg", "System 1",
+	"Noboranka (Japan, bootleg)\0", NULL, "bootleg (Game Electronics)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, NobbRomInfo, NobbRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, NobbDIPInfo,
@@ -7382,7 +7382,7 @@ struct BurnDriver BurnDrvRaflesiau = {
 
 struct BurnDriver BurnDrvRegulus = {
 	"regulus", NULL, NULL, NULL, "1983",
-	"Regulus (315-5033, rev. A)\0", NULL, "Sega", "System 1",
+	"Regulus (315-5033, Rev A.)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, RegulusRomInfo, RegulusRomName, NULL, NULL, NULL, NULL, RegulusInputInfo, RegulusDIPInfo,
@@ -7492,7 +7492,7 @@ struct BurnDriver BurnDrvNprincesb = {
 
 struct BurnDriver BurnDrvSpatter = {
 	"spatter", NULL, NULL, NULL, "1984",
-	"Spatter (315-5xxx)\0", NULL, "Sega", "System 1",
+	"Spatter (315-5096)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, SpatterRomInfo, SpatterRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SpatterDIPInfo,
@@ -7502,7 +7502,7 @@ struct BurnDriver BurnDrvSpatter = {
 
 struct BurnDriver BurnDrvSsanchan = {
 	"ssanchan", "spatter", NULL, NULL, "1984",
-	"Sanrin San Chan (Japan)\0", NULL, "Sega", "System 1",
+	"Sanrin San Chan (Japan, 315-5096)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_MAZE, 0,
 	NULL, SsanchanRomInfo, SsanchanRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, SpatterDIPInfo,
@@ -7522,7 +7522,7 @@ struct BurnDriver BurnDrvStarjack = {
 
 struct BurnDriver BurnDrvStarjacks = {
 	"starjacks", "starjack", NULL, NULL, "1983",
-	"Star Jacker (Stern)\0", NULL, "Sega", "System 1",
+	"Star Jacker (Stern Electronics)\0", NULL, "Sega (Stern Electronics license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, StarjacksRomInfo, StarjacksRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, StarjacsDIPInfo,
@@ -7562,9 +7562,9 @@ struct BurnDriver BurnDrvTeddybbo = {
 
 struct BurnDriver BurnDrvTeddybbobl = {
 	"teddybbobl", "teddybb", NULL, NULL, "1985",
-	"TeddyBoy Blues (bootleg)\0", NULL, "bootleg", "System 1",
+	"TeddyBoy Blues (Old Ver. bootleg)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, TeddybboblRomInfo, TeddybboblRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
 	TeddybboblInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7582,7 +7582,7 @@ struct BurnDriver BurnDrvTokisens = {
 
 struct BurnDriver BurnDrvTokisensa = {
 	"tokisensa", "tokisens", NULL, NULL, "1987",
-	"Toki no Senshi - Chrono Soldier (prototype)\0", NULL, "Sega", "Miscellaneous",
+	"Toki no Senshi - Chrono Soldier (prototype?)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, tokisensaRomInfo, tokisensaRomName, NULL, NULL, NULL, NULL, MyheroInputInfo, TokisensaDIPInfo,
@@ -7612,7 +7612,7 @@ struct BurnDriver BurnDrvUpndownu = {
 
 struct BurnDriver BurnDrvWboy = {
 	"wboy", NULL, NULL, NULL, "1986",
-	"Wonder Boy (set 1, 315-5177)\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy (set 1, 315-5177)\0", NULL, "Escape (Sega license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyRomInfo, WboyRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
@@ -7622,7 +7622,7 @@ struct BurnDriver BurnDrvWboy = {
 
 struct BurnDriver BurnDrvWboyo = {
 	"wboyo", "wboy", NULL, NULL, "1986",
-	"Wonder Boy (set 1, 315-5135)\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy (set 2, 315-5135)\0", NULL, "Escape (Sega license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyoRomInfo, WboyoRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
@@ -7632,7 +7632,7 @@ struct BurnDriver BurnDrvWboyo = {
 
 struct BurnDriver BurnDrvWboy2 = {
 	"wboy2", "wboy", NULL, NULL, "1986",
-	"Wonder Boy (set 2, 315-5178)\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy (set 2, 315-5178)\0", NULL, "Escape (Sega license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2RomInfo, Wboy2RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
@@ -7642,7 +7642,7 @@ struct BurnDriver BurnDrvWboy2 = {
 
 struct BurnDriver BurnDrvWboy2u = {
 	"wboy2u", "wboy", NULL, NULL, "1986",
-	"Wonder Boy (set 2, not encrypted)\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy (set 2, not encrypted)\0", NULL, "Escape (Sega license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy2uRomInfo, Wboy2uRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
@@ -7652,7 +7652,7 @@ struct BurnDriver BurnDrvWboy2u = {
 
 struct BurnDriver BurnDrvWboy3 = {
 	"wboy3", "wboy", NULL, NULL, "1986",
-	"Wonder Boy (set 3, 315-5135)\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy (set 3, 315-5135)\0", NULL, "Escape (Sega license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy3RomInfo, Wboy3RomName, NULL, NULL, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
@@ -7662,7 +7662,7 @@ struct BurnDriver BurnDrvWboy3 = {
 
 struct BurnDriver BurnDrvWboy4 = {
 	"wboy4", "wboy", NULL, NULL, "1986",
-	"Wonder Boy (set 4, 315-5162)\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy (315-5162, 4-D Warriors Conversion)\0", NULL, "Escape (Sega license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy4RomInfo, Wboy4RomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyDIPInfo,
@@ -7692,7 +7692,7 @@ struct BurnDriver BurnDrvWboyblt = {
 
 struct BurnDriver BurnDrvWboyu = {
 	"wboyu", "wboy", NULL, NULL, "1986",
-	"Wonder Boy (not encrypted)\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy (prototype?)\0", NULL, "Escape (Sega license)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WboyuRomInfo, WboyuRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WboyuDIPInfo,
@@ -7702,9 +7702,9 @@ struct BurnDriver BurnDrvWboyu = {
 
 struct BurnDriver BurnDrvWbdeluxe = {
 	"wbdeluxe", "wboy", NULL, NULL, "1986",
-	"Wonder Boy Deluxe\0", NULL, "Sega (Escape License)", "System 1",
+	"Wonder Boy Deluxe\0", NULL, "hack (Vision Electronics)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, WbdeluxeRomInfo, WbdeluxeRomName, NULL, NULL, NULL, NULL, WboyInputInfo, WbdeluxeDIPInfo,
 	Wboy2uInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 512, 224, 4, 3
@@ -7732,7 +7732,7 @@ struct BurnDriver BurnDrvShtngmst = {
 
 struct BurnDriver BurnDrvChoplift = {
 	"choplift", NULL, NULL,  NULL, "1985",
-	"Choplifter (8751 315-5151)\0", NULL, "Sega", "System 1",
+	"Choplifter (8751 315-5151)\0", NULL, "Sega (licensed from Dan Gorlin)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, ChopliftRomInfo, ChopliftRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
@@ -7742,7 +7742,7 @@ struct BurnDriver BurnDrvChoplift = {
 
 struct BurnDriver BurnDrvChopliftu = {
 	"chopliftu", "choplift", NULL,  NULL, "1985",
-	"Choplifter (unprotected)\0", NULL, "Sega", "System 1",
+	"Choplifter (unprotected)\0", NULL, "Sega (licensed from Dan Gorlin)", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, ChopliftuRomInfo, ChopliftuRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
@@ -7752,7 +7752,7 @@ struct BurnDriver BurnDrvChopliftu = {
 
 struct BurnDriver BurnDrvChopliftbl = {
 	"chopliftbl", "choplift", NULL,  NULL, "1985",
-	"Choplifter (bootleg)\0", NULL, "Sega", "System 1",
+	"Choplifter (bootleg)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, ChopliftblRomInfo, ChopliftblRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,

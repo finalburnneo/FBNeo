@@ -7177,7 +7177,7 @@ struct BurnDriver BurnDrvScin = {
 	"scin", "sci", NULL, NULL, "1991",
 	"Super Special Criminal Investigation (Negro Torino hack)\0", NULL, "hack (Negro Torino)", "Taito Z",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ScinRomInfo, ScinRomName, NULL, NULL, NULL, NULL, SciInputInfo, SciDIPInfo,
 	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3

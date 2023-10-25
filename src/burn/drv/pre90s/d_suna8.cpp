@@ -2500,7 +2500,7 @@ struct BurnDriver BurnDrvHardheadb3 = {
 };
 
 
-// Popper (Hard Head bootleg)
+// Popper (bootleg of Hard Head)
 
 static struct BurnRomInfo pop_hhRomDesc[] = {
 	{ "1_27512.l6",		0x10000, 0xbb4aa9ac, 1 }, //  0 maincpu
@@ -2527,7 +2527,7 @@ STD_ROM_FN(pop_hh)
 
 struct BurnDriver BurnDrvPop_hh = {
 	"pop_hh", "hardhead", NULL, NULL, "1989",
-	"Popper (Hard Head bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Popper (bootleg of Hard Head)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, pop_hhRomInfo, pop_hhRomName, NULL, NULL, NULL, NULL, DrvInputInfo, HardheadDIPInfo,

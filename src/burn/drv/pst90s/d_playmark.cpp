@@ -2322,7 +2322,7 @@ STD_ROM_PICK(Hotmind)
 STD_ROM_FN(Hotmind)
 
 struct BurnDriver BurnDrvHotmind = {
-	"hotmind", NULL, NULL, NULL, "1996",
+	"hotmind", NULL, NULL, NULL, "1995",
 	"Hot Mind (Hard Times hardware)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,

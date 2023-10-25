@@ -844,7 +844,7 @@ STD_ROM_FN(darkmist)
 
 struct BurnDriver BurnDrvDarkmist = {
 	"darkmist", NULL, NULL, NULL, "1986",
-	"The Lost Castle In Darkmist\0", NULL, "Taito Corporation", "Miscellaneous",
+	"The Lost Castle In Darkmist\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, darkmistRomInfo, darkmistRomName, NULL, NULL, NULL, NULL, DarkmistInputInfo, DarkmistDIPInfo,

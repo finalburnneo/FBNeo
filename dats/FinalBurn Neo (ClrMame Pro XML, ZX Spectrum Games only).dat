@@ -10868,7 +10868,7 @@
 		<description>Jeff &amp; The Blue Notes (128K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Deanysoft</manufacturer>
-		<rom name="Jeff &amp; The Blue Notes 128K (2023)(Deanysoft).z80" size="43830" crc="9836d545"/>
+		<rom name="Jeff &amp; The Blue Notes 128K (2023)(Deanysoft).tap" size="44152" crc="2484175f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11492,7 +11492,7 @@
 	<game name="knmgolf" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Konami's Golf (48K)</description>
 		<year>1986</year>
-		<manufacturer>Imagine</manufacturer>
+		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Konami's Golf 48K (1986)(Imagine).tap" size="43314" crc="b9a1109b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -11510,7 +11510,7 @@
 	<game name="knmtennis" romof="spectrum" sourcefile="d_spectrum.cpp">
 		<description>Konami's Tennis (48K)</description>
 		<year>1986</year>
-		<manufacturer>Imagine</manufacturer>
+		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Konami's Tennis 48K (1986)(Imagine).tap" size="45644" crc="c78dd656"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

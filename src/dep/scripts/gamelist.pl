@@ -148,7 +148,8 @@ foreach my $filename ( @Filelist ) {
 			}
 
 			my $sourcefile = $filename;
-			$sourcefile =~ s/..\/..\/burn\/drv\///;
+			$sourcefile =~ s/..\/..\/burn\/drv\///;	# libretro only ?
+			$sourcefile =~ s/src\/burn\/drv\///;	# all other builds ?
 			$Drivers{$name}[9] = $sourcefile;		# Filename
 
 			# Convert NULL/null/0 to empty string or remove quotes

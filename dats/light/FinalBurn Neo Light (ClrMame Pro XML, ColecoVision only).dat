@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="2010p1" cloneof="2010" romof="2010" sourcefile="d_coleco.cpp">
+	<game name="2010p1" cloneof="2010" romof="2010" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>2010: The Graphic Action Game (Prototype v44)</description>
 		<year>1984</year>
@@ -28,7 +28,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="2010p" cloneof="2010" romof="2010" sourcefile="d_coleco.cpp">
+	<game name="2010p" cloneof="2010" romof="2010" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>2010: The Graphic Action Game (Prototype v54)</description>
 		<year>1984</year>
@@ -44,7 +44,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="2010" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="2010" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>2010: The Graphic Action Game</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -59,7 +59,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="421" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="421" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>421 (HB)</description>
 		<year>2002</year>
@@ -72,7 +72,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ae" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ae" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>A.E.:Anti-Environment Encounter (HB)</description>
 		<year>1984-2012</year>
@@ -85,7 +85,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aerial" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="aerial" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Aerial (HB)</description>
 		<year>2022</year>
@@ -98,7 +98,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alcazar" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="alcazar" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Alcazar: The Forgotten Fortress</description>
 		<year>1985</year>
 		<manufacturer>Telegames</manufacturer>
@@ -113,7 +113,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alphazoo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="alphazoo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Alphabet Zoo</description>
 		<year>1984</year>
 		<manufacturer>Spinnaker Software</manufacturer>
@@ -126,7 +126,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="amazing" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="amazing" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Amazing Bumpman</description>
 		<year>1986</year>
 		<manufacturer>Telegames</manufacturer>
@@ -139,7 +139,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="antarct" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="antarct" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Antarctic Adventure</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -152,7 +152,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aquatacka" cloneof="aquatack" romof="aquatack" sourcefile="d_coleco.cpp">
+	<game name="aquatacka" cloneof="aquatack" romof="aquatack" sourcefile="coleco/d_coleco.cpp">
 		<description>Aquattack (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Interphase</manufacturer>
@@ -165,7 +165,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aquatack" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="aquatack" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Aquattack</description>
 		<year>1984</year>
 		<manufacturer>Interphase</manufacturer>
@@ -178,7 +178,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="arkanoid" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="arkanoid" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Arkanoid (SGM) (HB)</description>
 		<year>1986-2020</year>
@@ -191,7 +191,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="armagedn" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="armagedn" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Armageddon (HB)</description>
 		<year>2011</year>
@@ -204,7 +204,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="arnodash" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="arnodash" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Arno Dash (HB)</description>
 		<year>2021</year>
@@ -217,7 +217,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="artduel" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="artduel" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Artillery Duel</description>
 		<year>1983</year>
 		<manufacturer>Xonox</manufacturer>
@@ -230,7 +230,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="asteroids" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="asteroids" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Asteroids (SGM) (HB)</description>
 		<year>2021</year>
@@ -243,7 +243,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="astrododge" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="astrododge" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Astro Dodge (HB)</description>
 		<year>2012</year>
@@ -256,7 +256,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="astroinv" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="astroinv" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Astro Invader (HB)</description>
 		<year>1980-2005</year>
@@ -269,7 +269,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="astorm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="astorm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Astrostorm (HB)</description>
 		<year>2021</year>
@@ -282,7 +282,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bagman" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bagman" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Remake by Alekmaul</comment>
 		<description>Bagman (HB)</description>
 		<year>1982-2015</year>
@@ -295,7 +295,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bankpanic" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bankpanic" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Bank Panic (HB)</description>
 		<year>2011</year>
@@ -308,7 +308,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bankbuild" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bankbuild" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Bankruptcy Builder (HB)</description>
 		<year>2013</year>
@@ -321,7 +321,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bofhoth" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bofhoth" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Battle of Hoth (HB)</description>
 		<year>2013</year>
@@ -334,7 +334,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bcquest2ca" cloneof="bcquest2" romof="bcquest2" sourcefile="d_coleco.cpp">
+	<game name="bcquest2ca" cloneof="bcquest2" romof="bcquest2" sourcefile="coleco/d_coleco.cpp">
 		<description>BC's Quest for Tires II: Grog's Revenge (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Coleco Canada</manufacturer>
@@ -348,7 +348,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bcquest2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bcquest2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>BC's Quest for Tires II: Grog's Revenge</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -362,7 +362,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bcquest" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bcquest" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>BC's Quest for Tires</description>
 		<year>1983</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -375,7 +375,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="beamridr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="beamridr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Beamrider</description>
 		<year>1983</year>
 		<manufacturer>Activision</manufacturer>
@@ -388,7 +388,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bejeweled" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bejeweled" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Bejeweled (HB)</description>
 		<year>2002</year>
@@ -401,7 +401,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bbears" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bbears" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Berenstain Bears, The (Prototype)</description>
 		<year>1984</year>
@@ -414,7 +414,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blackonyx" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="blackonyx" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Black Onyx, The (HB)</description>
 		<year>1987-2013</year>
@@ -427,7 +427,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blockrun" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="blockrun" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Blockade Runner</description>
 		<year>1984</year>
 		<manufacturer>Interphase</manufacturer>
@@ -440,7 +440,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombjack" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bombjack" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Bomb Jack (HB)</description>
 		<year>2015</year>
@@ -453,7 +453,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bomblast" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bomblast" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Bomb'n Blast (HB)</description>
 		<year>2011</year>
@@ -466,7 +466,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="boomingboy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="boomingboy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Booming Boy (SGM) (HB)</description>
 		<year>2019</year>
@@ -479,7 +479,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="boothill" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="boothill" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Boot Hill (HB)</description>
 		<year>2018</year>
@@ -492,7 +492,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bdash" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bdash" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Boulder Dash</description>
 		<year>1984</year>
 		<manufacturer>Telegames</manufacturer>
@@ -505,7 +505,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="boxxle" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="boxxle" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Boxxle (HB)</description>
 		<year>2015</year>
@@ -518,7 +518,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="brainstr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="brainstr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Brain Strainers</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -531,7 +531,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="breakout" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="breakout" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Breakout (HB)</description>
 		<year>1999</year>
@@ -544,7 +544,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="buckrogsgm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="buckrogsgm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Buck Rogers Super Game (SGM) (HB)</description>
 		<year>1983-2013</year>
@@ -557,7 +557,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="buckrog" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="buckrog" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Buck Rogers: Planet of Zoom</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -571,7 +571,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bugsbots" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bugsbots" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Bugs'n Bots (HB)</description>
 		<year>2012</year>
@@ -584,7 +584,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bnj" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="bnj" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Bump 'n' Jump</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -598,7 +598,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="btimem" cloneof="btime" romof="btime" sourcefile="d_coleco.cpp">
+	<game name="btimem" cloneof="btime" romof="btime" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Burgertime (Prototype)</description>
 		<year>1983</year>
@@ -612,7 +612,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="btime" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="btime" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Burgertime</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -625,7 +625,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="brubber" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="brubber" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Burn Rubber (HB)</description>
 		<year>2010</year>
@@ -638,7 +638,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cso" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cso" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>C_So! (HB)</description>
 		<year>1985-2018</year>
@@ -651,7 +651,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cabbshow" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cabbshow" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Cabbage Patch Kids Picture Show</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -666,7 +666,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cabbagep1" cloneof="cabbage" romof="cabbage" sourcefile="d_coleco.cpp">
+	<game name="cabbagep1" cloneof="cabbage" romof="cabbage" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Cabbage Patch Kids: Adventure in the Park (Prototype)</description>
 		<year>1984</year>
@@ -680,7 +680,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cabbagep2" cloneof="cabbage" romof="cabbage" sourcefile="d_coleco.cpp">
+	<game name="cabbagep2" cloneof="cabbage" romof="cabbage" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Cabbage Patch Kids: Adventure in the Park (Prototype, Alt)</description>
 		<year>1984</year>
@@ -694,7 +694,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cabbage" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cabbage" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Cabbage Patch Kids: Adventure in the Park</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -707,7 +707,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cacorm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cacorm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Cacorm (HB)</description>
 		<year>2022</year>
@@ -720,7 +720,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="campaign" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="campaign" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Campaign '84</description>
 		<year>1983</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -733,7 +733,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="canamini" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="canamini" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Canadian Minigames (HB)</description>
 		<year>2008</year>
@@ -746,7 +746,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="caosbgns" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="caosbgns" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Caos Begins (SGM) (HB)</description>
 		<year>2015</year>
@@ -759,7 +759,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="carfight" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="carfight" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Car Fighter (SGM) (HB)</description>
 		<year>1985-2018</year>
@@ -772,7 +772,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="carnival" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="carnival" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Carnival</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -785,7 +785,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="castelo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="castelo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Castelo</description>
 		<year>1985</year>
 		<manufacturer>Splice Vision</manufacturer>
@@ -797,7 +797,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="castleex" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="castleex" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Castle Excellent (SGM) (HB)</description>
 		<year>1986-2018</year>
@@ -810,7 +810,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="castle" cloneof="castleex" romof="castleex" sourcefile="d_coleco.cpp">
+	<game name="castle" cloneof="castleex" romof="castleex" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Castle, The (SGM) (HB)</description>
 		<year>1986-2018</year>
@@ -823,7 +823,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="catsos" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="catsos" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Caterpillar S.O.S. (HB)</description>
 		<year>1983-2011</year>
@@ -836,7 +836,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="caverns" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="caverns" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Caverns of Titan (SGM) (HB)</description>
 		<year>2005-2017</year>
@@ -849,7 +849,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cbsmon" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cbsmon" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>CBS Colecovision Monitor Test</description>
 		<year>1982</year>
 		<manufacturer>CBS</manufacturer>
@@ -862,7 +862,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="centiped" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="centiped" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Centipede</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
@@ -875,7 +875,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chackpop" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="chackpop" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Chack'n Pop (HB)</description>
 		<year>1985-2011</year>
@@ -888,7 +888,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chprowres" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="chprowres" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Champion Pro Wrestling (HB)</description>
 		<year>1985-2020</year>
@@ -901,7 +901,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chesschal" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="chesschal" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Chess Challenge (HB)</description>
 		<year>2011</year>
@@ -914,7 +914,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cotn" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cotn" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Children of the Night (HB)</description>
 		<year>2017</year>
@@ -927,7 +927,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="choplift" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="choplift" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Choplifter!</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -940,7 +940,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chucknor" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="chucknor" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Chuck Norris Superkicks</description>
 		<year>1983</year>
 		<manufacturer>Xonox</manufacturer>
@@ -953,7 +953,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ccharlie" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ccharlie" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Circus Charlie (HB)</description>
 		<year>1984-2011</year>
@@ -966,7 +966,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="clock" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="clock" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Clock (HB)</description>
 		<year>2021</year>
@@ -979,7 +979,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="coco" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="coco" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>CoCo and the Evil Robots (HB, v1.01)</description>
 		<year>2020</year>
@@ -992,7 +992,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="coldblood" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="coldblood" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Cold Blood (SGM) (HB)</description>
 		<year>2017</year>
@@ -1005,7 +1005,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cvjoytest" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cvjoytest" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>ColecoVision Joystick Test</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1017,7 +1017,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sgmtest" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sgmtest" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>ColecoVision SuperGame Module (SGM) Test</description>
 		<year>200x</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1029,7 +1029,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="comicbakery" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="comicbakery" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Comic Bakery (HB)</description>
 		<year>1984-2014</year>
@@ -1042,7 +1042,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="congo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="congo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Congo Bongo</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1056,7 +1056,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cavengera" cloneof="cavenger" romof="cavenger" sourcefile="d_coleco.cpp">
+	<game name="cavengera" cloneof="cavenger" romof="cavenger" sourcefile="coleco/d_coleco.cpp">
 		<description>Cosmic Avenger (Alt)</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1069,7 +1069,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cavenger" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cavenger" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Cosmic Avenger</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1082,7 +1082,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ccrisis" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ccrisis" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Cosmic Crisis</description>
 		<year>1983</year>
 		<manufacturer>Telegames</manufacturer>
@@ -1095,7 +1095,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cracky" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="cracky" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Cracky (HB)</description>
 		<year>2023</year>
@@ -1108,7 +1108,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ccredux" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ccredux" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Crazy Climber Redux (HB)</description>
 		<year>2021</year>
@@ -1121,7 +1121,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dambust" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dambust" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Dam Busters, The</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1136,7 +1136,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dncfntsy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dncfntsy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Dance Fantasy</description>
 		<year>1984</year>
 		<manufacturer>Fisher-Price</manufacturer>
@@ -1149,7 +1149,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dangrtower" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dangrtower" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Danger Tower (SGM) (HB)</description>
 		<year>2009-2017</year>
@@ -1162,7 +1162,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="decathln" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="decathln" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Decathlon</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
@@ -1175,7 +1175,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deepdngadv" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="deepdngadv" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Deep Dungeon Adventure (SGM) (HB)</description>
 		<year>2017</year>
@@ -1188,7 +1188,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="defender" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="defender" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Defender</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
@@ -1202,7 +1202,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deflektor" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="deflektor" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Atariage</comment>
 		<description>Deflektor Kollection (HB)</description>
 		<year>2005</year>
@@ -1215,7 +1215,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="destruct" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="destruct" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Select w/ Controller #2</comment>
 		<description>Destructor</description>
 		<year>1984</year>
@@ -1231,7 +1231,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="destructsce" cloneof="destruct" romof="destruct" sourcefile="d_coleco.cpp">
+	<game name="destructsce" cloneof="destruct" romof="destruct" sourcefile="coleco/d_coleco.cpp">
 		<comment>Hack, Homebrew, Published by Team Pixelboy</comment>
 		<description>Destructor S.C.E. (Hack, Standard Controller Edition)</description>
 		<year>2010</year>
@@ -1244,7 +1244,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ddash" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ddash" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Diamond Dash (HB)</description>
 		<year>2011</year>
@@ -1257,7 +1257,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ddash2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ddash2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Diamond Dash 2 (HB)</description>
 		<year>2021</year>
@@ -1270,7 +1270,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="digdug" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="digdug" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Dig Dug (Prototype)</description>
 		<year>1984</year>
@@ -1285,7 +1285,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="digger" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="digger" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Digger (HB)</description>
 		<year>2015</year>
@@ -1298,7 +1298,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dkonga" cloneof="dkong" romof="dkong" sourcefile="d_coleco.cpp">
+	<game name="dkonga" cloneof="dkong" romof="dkong" sourcefile="coleco/d_coleco.cpp">
 		<description>Donkey Kong (Earlier Version)</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1312,7 +1312,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dkongsgm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dkongsgm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Donkey Kong (SGM) (HB)</description>
 		<year>1984-2020</year>
@@ -1325,7 +1325,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dkongjrsgm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dkongjrsgm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Donkey Kong Jr. (SGM) (HB)</description>
 		<year>1983-2020</year>
@@ -1338,7 +1338,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dkongjr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dkongjr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Donkey Kong Junior</description>
 		<year>1983</year>
 		<manufacturer>Nintendo / Coleco</manufacturer>
@@ -1351,7 +1351,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dkong" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dkong" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Donkey Kong</description>
 		<year>1982</year>
 		<manufacturer>Nintendo / Coleco</manufacturer>
@@ -1364,7 +1364,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="drseuss" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="drseuss" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Dr. Seuss's Fix-Up the Mix-Up Puzzler</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1377,7 +1377,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dlairsgm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="dlairsgm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>SGM - Published by Team Pixelboy</comment>
 		<description>Dragon's Lair (SGM) (HB)</description>
 		<year>1984-2012</year>
@@ -1390,7 +1390,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="drgnfire" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="drgnfire" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>DragonFire</description>
 		<year>1984</year>
 		<manufacturer>Imagic</manufacturer>
@@ -1403,7 +1403,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hazzard" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="hazzard" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Dukes of Hazzard, The</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1418,7 +1418,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="datrolls" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="datrolls" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Dungeons and Trolls (HB)</description>
 		<year>2014</year>
@@ -1431,7 +1431,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ed2083" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ed2083" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Earth Defend 2083 (HB)</description>
 		<year>2013</year>
@@ -1444,7 +1444,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="easterbunny" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="easterbunny" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Easter Bunny (HB)</description>
 		<year>2007</year>
@@ -1457,7 +1457,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="eggerland" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="eggerland" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Eggerland Mystery (SGM) (HB)</description>
 		<year>1985-2018</year>
@@ -1470,7 +1470,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="elevaction" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="elevaction" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Elevator Action (HB)</description>
 		<year>1985-2012</year>
@@ -1483,7 +1483,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mindmstr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mindmstr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Escape from the Mindmaster (Prototype)</description>
 		<year>1983</year>
@@ -1497,7 +1497,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="evolutio" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="evolutio" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Evolution</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1510,7 +1510,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="facemakr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="facemakr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Facemaker</description>
 		<year>1983</year>
 		<manufacturer>Spinnaker Software</manufacturer>
@@ -1523,7 +1523,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fallguy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="fallguy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Fall Guy (Prototype)</description>
 		<year>1983</year>
@@ -1537,7 +1537,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fathom" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="fathom" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Fathom</description>
 		<year>1983</year>
 		<manufacturer>Imagic</manufacturer>
@@ -1550,7 +1550,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finaltst" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="finaltst" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Final Test Cartridge (Prototype)</description>
 		<year>1982</year>
@@ -1563,7 +1563,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fireman" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="fireman" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Fireman (HB)</description>
 		<year>1984-2009</year>
@@ -1576,7 +1576,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="flapbrd" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="flapbrd" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Flapee Byrd (HB)</description>
 		<year>2014</year>
@@ -1589,7 +1589,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="flicky" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="flicky" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Flicky (HB)</description>
 		<year>1984-2018</year>
@@ -1602,7 +1602,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="flipslip" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="flipslip" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Flipper Slipper</description>
 		<year>1983</year>
 		<manufacturer>Spectravideo</manufacturer>
@@ -1615,7 +1615,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="flora" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="flora" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Flora and the Ghost Mirror (SGM) (HB)</description>
 		<year>2013</year>
@@ -1628,7 +1628,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fortune" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="fortune" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Fortune Builder</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1643,7 +1643,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fracfevr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="fracfevr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Fraction Fever</description>
 		<year>1983</year>
 		<manufacturer>Spinnaker Software</manufacturer>
@@ -1656,7 +1656,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frantic" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="frantic" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Frantic (HB)</description>
 		<year>2008</year>
@@ -1669,7 +1669,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ffreddy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ffreddy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Frantic Freddy</description>
 		<year>1983</year>
 		<manufacturer>Spectravideo</manufacturer>
@@ -1682,7 +1682,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frenzya" cloneof="frenzy" romof="frenzy" sourcefile="d_coleco.cpp">
+	<game name="frenzya" cloneof="frenzy" romof="frenzy" sourcefile="coleco/d_coleco.cpp">
 		<description>Frenzy (Alt 1)</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1696,7 +1696,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frenzya2" cloneof="frenzy" romof="frenzy" sourcefile="d_coleco.cpp">
+	<game name="frenzya2" cloneof="frenzy" romof="frenzy" sourcefile="coleco/d_coleco.cpp">
 		<description>Frenzy (Alt 2)</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1710,7 +1710,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frenzy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="frenzy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Frenzy</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1724,7 +1724,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frogfeast" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="frogfeast" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Frog Feast (HB)</description>
 		<year>2007</year>
@@ -1737,7 +1737,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frogger2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="frogger2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Frogger II: Threedeep!</description>
 		<year>1984</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -1750,7 +1750,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frogger" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="frogger" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Frogger</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -1763,7 +1763,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frontlina" cloneof="frontlin" romof="frontlin" sourcefile="d_coleco.cpp">
+	<game name="frontlina" cloneof="frontlin" romof="frontlin" sourcefile="coleco/d_coleco.cpp">
 		<description>Front Line (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1777,7 +1777,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frntlnsce" cloneof="frontlin" romof="frontlin" sourcefile="d_coleco.cpp">
+	<game name="frntlnsce" cloneof="frontlin" romof="frontlin" sourcefile="coleco/d_coleco.cpp">
 		<comment>Hack, Homebrew, Published by Team Pixelboy</comment>
 		<description>Front Line S.C.E. (Hack, Standard Controller Edition)</description>
 		<year>2015</year>
@@ -1790,7 +1790,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frontlin" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="frontlin" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Front Line</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -1804,7 +1804,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="frostbite" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="frostbite" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Frost Bite (HB)</description>
 		<year>1983-2016</year>
@@ -1817,7 +1817,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaga" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="galaga" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Galaga (SGM) (HB)</description>
 		<year>1984-2014</year>
@@ -1830,7 +1830,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaxiana" cloneof="galaxian" romof="galaxian" sourcefile="d_coleco.cpp">
+	<game name="galaxiana" cloneof="galaxian" romof="galaxian" sourcefile="coleco/d_coleco.cpp">
 		<description>Galaxian (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
@@ -1845,7 +1845,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaxian" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="galaxian" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Galaxian</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
@@ -1860,7 +1860,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gpvic20" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gpvic20" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>GamePack Vic-20 (HB)</description>
 		<year>2003</year>
@@ -1873,7 +1873,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gamester81" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gamester81" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Gamester 81 - The Video Game (HB)</description>
 		<year>2013</year>
@@ -1886,7 +1886,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="apshai" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="apshai" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Gateway to Apshai</description>
 		<year>1984</year>
 		<manufacturer>Epyx</manufacturer>
@@ -1899,7 +1899,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gauntlet" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gauntlet" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Gauntlet (SGM) (HB)</description>
 		<year>1985-2019</year>
@@ -1912,7 +1912,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gblaster" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gblaster" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Ghost Blaster (HB)</description>
 		<year>2006</year>
@@ -1925,7 +1925,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ghostrap" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ghostrap" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Ghost Trap (HB)</description>
 		<year>2009</year>
@@ -1938,7 +1938,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ghostbst" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ghostbst" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Ghostbusters (SGM) (HB)</description>
 		<year>1984-2018</year>
@@ -1951,7 +1951,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gnz" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gnz" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Ghosts'n Zombies (HB)</description>
 		<year>2009</year>
@@ -1964,7 +1964,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ggarden" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ggarden" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Girl's Garden (HB)</description>
 		<year>1984-2010</year>
@@ -1977,7 +1977,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="golgo13" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="golgo13" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Golgo 13 (HB)</description>
 		<year>1984-2011</year>
@@ -1990,7 +1990,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="goonies" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="goonies" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Goonies (SGM) (HB)</description>
 		<year>1986-2012</year>
@@ -2003,7 +2003,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gorf" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gorf" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Gorf</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -2016,7 +2016,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gulkave" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gulkave" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Gulkave (HB)</description>
 		<year>1986-2012</year>
@@ -2029,7 +2029,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gustbust" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gustbust" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Gust Buster</description>
 		<year>1983</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -2042,7 +2042,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gyruss" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="gyruss" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Gyruss</description>
 		<year>1984</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -2055,7 +2055,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hero" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="hero" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>H.E.R.O.</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
@@ -2068,7 +2068,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hamsterww" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="hamsterww" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Hamster with Wire (HB)</description>
 		<year>2022</year>
@@ -2081,7 +2081,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="heist" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="heist" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Heist, The</description>
 		<year>1983</year>
 		<manufacturer>Micro Fun</manufacturer>
@@ -2093,7 +2093,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="helifire" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="helifire" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>HeliFire (HB)</description>
 		<year>1980-2013</year>
@@ -2106,7 +2106,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="heroesar" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="heroesar" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Heroes Arena (SGM) (HB)</description>
 		<year>2010-2017</year>
@@ -2119,7 +2119,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="holeone" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="holeone" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Hole in One (SGM) (HB)</description>
 		<year>1984-2017</year>
@@ -2132,7 +2132,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hopman" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="hopman" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Hopman (HB)</description>
 		<year>2023</year>
@@ -2145,7 +2145,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hchumy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="hchumy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Hustle Chumy (HB)</description>
 		<year>1984-2019</year>
@@ -2158,7 +2158,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hrally" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="hrally" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Prototype, SGM - Published by Team Pixelboy</comment>
 		<description>Hyper Rally (SGM) (HB, Prototype)</description>
 		<year>1985-2011</year>
@@ -2171,7 +2171,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="illusion" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="illusion" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Illusions</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -2184,7 +2184,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="impetus" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="impetus" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Impetus (HB)</description>
 		<year>2022</year>
@@ -2197,7 +2197,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="insanepick" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="insanepick" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Insane Pickin' Sticks (HB)</description>
 		<year>2010</year>
@@ -2210,7 +2210,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="onlyrock" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="onlyrock" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>It's Only Rock 'n' Roll</description>
 		<year>1984</year>
 		<manufacturer>K-Tel</manufacturer>
@@ -2223,7 +2223,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jetpac" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jetpac" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>J.E.T.P.A.C. (SGM) (HB)</description>
 		<year>2009-2017</year>
@@ -2236,7 +2236,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jbond" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jbond" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>James Bond 007</description>
 		<year>1984</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -2249,7 +2249,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jawbreaker" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jawbreaker" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>SGM - Published by CollectorVision Games</comment>
 		<description>Jawbreaker I &amp; II (SGM) (HB)</description>
 		<year>1983-2017</year>
@@ -2262,7 +2262,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jeepcrep" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jeepcrep" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Jeepers Creepers (HB)</description>
 		<year>2007</year>
@@ -2275,7 +2275,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="joust" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="joust" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Joust (Prototype)</description>
 		<year>1983</year>
@@ -2290,7 +2290,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="joustsgm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="joustsgm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Joust (SGM) (HB)</description>
 		<year>2014</year>
@@ -2303,7 +2303,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jukebox" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jukebox" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Juke Box</description>
 		<year>1984</year>
 		<manufacturer>Spinnaker Software Corp</manufacturer>
@@ -2316,7 +2316,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jumpland" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jumpland" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Jump Land (SGM) (HB)</description>
 		<year>1985-2015</year>
@@ -2329,7 +2329,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jmpmanjra" cloneof="jmpmanjr" romof="jmpmanjr" sourcefile="d_coleco.cpp">
+	<game name="jmpmanjra" cloneof="jmpmanjr" romof="jmpmanjr" sourcefile="coleco/d_coleco.cpp">
 		<description>Jumpman Junior (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Epyx</manufacturer>
@@ -2342,7 +2342,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jmpmanjr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jmpmanjr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Jumpman Junior</description>
 		<year>1984</year>
 		<manufacturer>Epyx</manufacturer>
@@ -2355,7 +2355,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jungleh" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="jungleh" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Jungle Hunt</description>
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
@@ -2369,7 +2369,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="junkwall" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="junkwall" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Junkwall (HB)</description>
 		<year>2016</year>
@@ -2382,7 +2382,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="junofirst" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="junofirst" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Juno First (SGM) (HB)</description>
 		<year>1983-2017</year>
@@ -2395,7 +2395,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kaboom" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kaboom" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Kaboom! (HB)</description>
 		<year>1981-2017</year>
@@ -2408,7 +2408,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="karateka2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="karateka2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Karateka 2 (HB)</description>
 		<year>2021</year>
@@ -2421,7 +2421,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kubjpok" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kubjpok" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Ken Uston Blackjack-Poker</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -2434,7 +2434,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kevtris" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kevtris" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Kevtris (HB)</description>
 		<year>1996</year>
@@ -2447,7 +2447,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="keykaper" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="keykaper" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Keystone Kapers</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
@@ -2460,7 +2460,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kingball" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kingball" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>King &amp; Balloon (SGM) (HB)</description>
 		<year>1984-2018</year>
@@ -2473,7 +2473,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kingvalley" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kingvalley" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>King's Valley (SGM) (HB)</description>
 		<year>1985-2012</year>
@@ -2486,7 +2486,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ksolitaire" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ksolitaire" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Klondike Solitaire (HB)</description>
 		<year>2021</year>
@@ -2499,7 +2499,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kngtlore" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kngtlore" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Knight Lore (SGM) (HB)</description>
 		<year>1984-2018</year>
@@ -2512,7 +2512,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="knightmore" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="knightmore" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Knight'n More (HB)</description>
 		<year>2016</year>
@@ -2525,7 +2525,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kngtmare" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kngtmare" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Knightmare (SGM) (HB)</description>
 		<year>1986-2015</year>
@@ -2538,7 +2538,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kobashi" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kobashi" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Kobashi (HB)</description>
 		<year>2010</year>
@@ -2551,7 +2551,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pingpong" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pingpong" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Konami's Ping-Pong (HB)</description>
 		<year>2011</year>
@@ -2564,7 +2564,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="krtetris" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="krtetris" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Kralizec Tetris (HB)</description>
 		<year>2016-17</year>
@@ -2577,7 +2577,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kungfumstr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="kungfumstr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Kung-Fu Master (SGM) (HB)</description>
 		<year>1985-2016</year>
@@ -2590,7 +2590,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="labbaye" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="labbaye" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>L'Abbaye des Morts (HB)</description>
 		<year>2019</year>
@@ -2603,7 +2603,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ladybug" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ladybug" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Lady Bug</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -2616,7 +2616,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="leeper" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="leeper" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Learning with Leeper</description>
 		<year>1983</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -2629,7 +2629,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lift" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="lift" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Lift (HB)</description>
 		<year>2022</year>
@@ -2642,7 +2642,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lgracing" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="lgracing" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Light Grid Racing (HB)</description>
 		<year>2015</year>
@@ -2655,7 +2655,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="linklogc" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="linklogc" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Linking Logic</description>
 		<year>1984</year>
 		<manufacturer>Fisher-Price</manufacturer>
@@ -2668,7 +2668,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="locknchase" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="locknchase" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Lock'n Chase (HB)</description>
 		<year>2011</year>
@@ -2681,7 +2681,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="locomotion" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="locomotion" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Loco-Motion (SGM) (HB)</description>
 		<year>1983-2017</year>
@@ -2694,7 +2694,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="loderunner" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="loderunner" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Lode Runner (HB)</description>
 		<year>2009</year>
@@ -2707,7 +2707,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="logiclvl" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="logiclvl" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Logic Levels</description>
 		<year>1984</year>
 		<manufacturer>Fisher-Price</manufacturer>
@@ -2720,7 +2720,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="looping" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="looping" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Looping</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -2733,7 +2733,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mash" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mash" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>M*A*S*H (Prototype)</description>
 		<year>1983</year>
@@ -2747,7 +2747,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="magtree" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="magtree" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Opcode Games</comment>
 		<description>Magical Tree (HB)</description>
 		<year>2006</year>
@@ -2760,7 +2760,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="msolitaire" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="msolitaire" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Mahjong Solitaire (HB)</description>
 		<year>2021</year>
@@ -2773,7 +2773,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="majikazo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="majikazo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Majikazo (SGM) (HB)</description>
 		<year>2015-16</year>
@@ -2786,7 +2786,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mappy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mappy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Mappy (SGM) (HB)</description>
 		<year>1984-2015</year>
@@ -2799,7 +2799,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mariob" cloneof="mario" romof="mario" sourcefile="d_coleco.cpp">
+	<game name="mariob" cloneof="mario" romof="mario" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Mario Brothers (HB)</description>
 		<year>1983-2009</year>
@@ -2812,7 +2812,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mario" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mario" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Mario Brothers Final Edition (HB, Rev D)</description>
 		<year>1983-2009</year>
@@ -2825,7 +2825,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mazemaniac" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mazemaniac" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Maze Maniac (HB)</description>
 		<year>2006</year>
@@ -2838,7 +2838,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mazezam" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mazezam" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>MazezaM (HB)</description>
 		<year>2004</year>
@@ -2851,7 +2851,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mazezamch" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mazezamch" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>MazezaM Challenge (HB)</description>
 		<year>2016</year>
@@ -2864,7 +2864,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mecha8" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mecha8" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Mecha-8 (SGM) (HB)</description>
 		<year>2013</year>
@@ -2877,7 +2877,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mecha9" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mecha9" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Mecha-9 (SGM) (HB)</description>
 		<year>2015</year>
@@ -2890,7 +2890,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="memmanor" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="memmanor" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Memory Manor</description>
 		<year>1984</year>
 		<manufacturer>Fisher-Price</manufacturer>
@@ -2903,7 +2903,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mmtxvol1" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mmtxvol1" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Memotech MTX Series Vol 1 (HB)</description>
 		<year>2013</year>
@@ -2916,7 +2916,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mmtxvol2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mmtxvol2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Memotech MTX Series Vol 2 (HB)</description>
 		<year>2013</year>
@@ -2929,7 +2929,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="meteosho" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="meteosho" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Meteoric Shower</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -2942,7 +2942,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mikie" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mikie" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Mikie (HB)</description>
 		<year>1984-2021</year>
@@ -2955,7 +2955,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mine2049a" cloneof="mine2049" romof="mine2049" sourcefile="d_coleco.cpp">
+	<game name="mine2049a" cloneof="mine2049" romof="mine2049" sourcefile="coleco/d_coleco.cpp">
 		<description>Miner 2049er (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Micro Fun</manufacturer>
@@ -2969,7 +2969,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mine2049" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mine2049" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Miner 2049er</description>
 		<year>1983</year>
 		<manufacturer>Micro Fun</manufacturer>
@@ -2983,7 +2983,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="misstrike" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="misstrike" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Missile Strike (HB)</description>
 		<year>2021</year>
@@ -2996,7 +2996,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moduleman" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="moduleman" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Module Man (HB)</description>
 		<year>2013</year>
@@ -3009,7 +3009,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="monacogp" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="monacogp" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Monaco GP (HB)</description>
 		<year>1983-2021</year>
@@ -3022,7 +3022,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="monkey" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="monkey" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Monkey Academy</description>
 		<year>1984</year>
 		<manufacturer>Coleco - Konami</manufacturer>
@@ -3037,7 +3037,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="monsthouse" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="monsthouse" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Monster House (SGM) (HB)</description>
 		<year>1986-2017</year>
@@ -3050,7 +3050,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="montezum" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="montezum" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Montezuma's Revenge</description>
 		<year>1984</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -3063,7 +3063,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mpatrolp" cloneof="mpatrol" romof="mpatrol" sourcefile="d_coleco.cpp">
+	<game name="mpatrolp" cloneof="mpatrol" romof="mpatrol" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Moon Patrol (Prototype)</description>
 		<year>1984</year>
@@ -3076,7 +3076,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mpatrol" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mpatrol" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Moon Patrol</description>
 		<year>1984</year>
 		<manufacturer>Atarisoft</manufacturer>
@@ -3088,7 +3088,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moonswpra" cloneof="moonswpr" romof="moonswpr" sourcefile="d_coleco.cpp">
+	<game name="moonswpra" cloneof="moonswpr" romof="moonswpr" sourcefile="coleco/d_coleco.cpp">
 		<description>Moonsweeper (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Imagic</manufacturer>
@@ -3101,7 +3101,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moonswpr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="moonswpr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Moonsweeper</description>
 		<year>1983</year>
 		<manufacturer>Imagic</manufacturer>
@@ -3114,7 +3114,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mopirang" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mopirang" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Mopiranger (HB)</description>
 		<year>1985-2012</year>
@@ -3127,7 +3127,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mtcracera" cloneof="mtcracer" romof="mtcracer" sourcefile="d_coleco.cpp">
+	<game name="mtcracera" cloneof="mtcracer" romof="mtcracer" sourcefile="coleco/d_coleco.cpp">
 		<description>Motocross Racer (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Xonox</manufacturer>
@@ -3140,7 +3140,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mtcracer" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mtcracer" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Motocross Racer</description>
 		<year>1984</year>
 		<manufacturer>Xonox</manufacturer>
@@ -3153,7 +3153,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mkinga" cloneof="mking" romof="mking" sourcefile="d_coleco.cpp">
+	<game name="mkinga" cloneof="mking" romof="mking" sourcefile="coleco/d_coleco.cpp">
 		<description>Mountain King (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -3166,7 +3166,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mking" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mking" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Mountain King</description>
 		<year>1984</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -3179,7 +3179,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mtrapa" cloneof="mtrap" romof="mtrap" sourcefile="d_coleco.cpp">
+	<game name="mtrapa" cloneof="mtrap" romof="mtrap" sourcefile="coleco/d_coleco.cpp">
 		<description>Mousetrap (Alt)</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -3192,7 +3192,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mtrap" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mtrap" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Mousetrap</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -3205,7 +3205,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mrchin" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mrchin" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Mr. Chin (HB)</description>
 		<year>2008</year>
@@ -3218,7 +3218,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mrdoa" cloneof="mrdo" romof="mrdo" sourcefile="d_coleco.cpp">
+	<game name="mrdoa" cloneof="mrdo" romof="mrdo" sourcefile="coleco/d_coleco.cpp">
 		<description>Mr. Do! (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -3232,7 +3232,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="docastle" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="docastle" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Mr. Do!'s Castle</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -3245,7 +3245,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mrdo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="mrdo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Mr. Do!</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -3259,7 +3259,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="msspacefury" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="msspacefury" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Ms. Space Fury (HB)</description>
 		<year>2001</year>
@@ -3272,7 +3272,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="multiverse" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="multiverse" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Multiverse (HB)</description>
 		<year>2019</year>
@@ -3285,7 +3285,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="musicbox" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="musicbox" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Demo</comment>
 		<description>Music Box (Demo)</description>
 		<year>1987</year>
@@ -3300,7 +3300,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neuras" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="neuras" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Neuras (HB)</description>
 		<year>2022</year>
@@ -3313,7 +3313,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nibbli" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="nibbli" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Nibbli: Son of Nibbler (HB)</description>
 		<year>2014</year>
@@ -3326,7 +3326,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nim" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="nim" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Nim (HB)</description>
 		<year>2000</year>
@@ -3339,7 +3339,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ninjaprincess" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ninjaprincess" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Ninja Princess (SGM) (HB)</description>
 		<year>1986-2011</year>
@@ -3352,7 +3352,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="novablst" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="novablst" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Nova Blast</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -3365,7 +3365,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="numbump" cloneof="amazing" romof="amazing" sourcefile="d_coleco.cpp">
+	<game name="numbump" cloneof="amazing" romof="amazing" sourcefile="coleco/d_coleco.cpp">
 		<description>Number Bumper</description>
 		<year>1984</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -3378,7 +3378,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="oilswella" cloneof="oilswell" romof="oilswell" sourcefile="d_coleco.cpp">
+	<game name="oilswella" cloneof="oilswell" romof="oilswell" sourcefile="coleco/d_coleco.cpp">
 		<description>Oil's Well (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -3391,7 +3391,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="oilswell" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="oilswell" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Oil's Well</description>
 		<year>1984</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -3404,7 +3404,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="omegrace" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="omegrace" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Omega Race</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -3417,7 +3417,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="1on1" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="1on1" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>One on One</description>
 		<year>1984</year>
 		<manufacturer>Micro Lab</manufacturer>
@@ -3431,7 +3431,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="opwolf" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="opwolf" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Operation Wolf (SGM) (HB)</description>
 		<year>2016</year>
@@ -3444,7 +3444,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="orbit" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="orbit" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Orbit (Prototype)</description>
 		<year>1983</year>
@@ -3457,7 +3457,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ozmawar" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ozmawar" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Ozma Wars (HB)</description>
 		<year>2011</year>
@@ -3470,7 +3470,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacmancol" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pacmancol" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Pac Man Collection (HB)</description>
 		<year>2008</year>
@@ -3483,7 +3483,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacman" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pacman" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Pac-Man (Prototype)</description>
 		<year>1983</year>
@@ -3497,7 +3497,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacar" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pacar" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Pacar (HB)</description>
 		<year>1983-2017</year>
@@ -3510,7 +3510,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pang" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pang" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Pang (HB)</description>
 		<year>2012</year>
@@ -3523,7 +3523,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="peekaboo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="peekaboo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Peek-A-Boo (HB)</description>
 		<year>2008</year>
@@ -3536,7 +3536,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pegged" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pegged" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Pegged (HB)</description>
 		<year>2021</year>
@@ -3549,7 +3549,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="penguinland" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="penguinland" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Penguin Land (HB)</description>
 		<year>2003-2010</year>
@@ -3562,7 +3562,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pepper2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pepper2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Pepper II</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -3575,7 +3575,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pillars" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pillars" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Pillars (HB)</description>
 		<year>2021</year>
@@ -3588,7 +3588,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pippols" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pippols" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Pippols (HB)</description>
 		<year>1985-2014</year>
@@ -3601,7 +3601,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitfall2a" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pitfall2a" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Pitfall II Arcade (HB)</description>
 		<year>1985-2010</year>
@@ -3614,7 +3614,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitfall2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pitfall2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Pitfall II: Lost Caverns</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
@@ -3627,7 +3627,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitfall" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pitfall" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Pitfall!</description>
 		<year>1983</year>
 		<manufacturer>Activision</manufacturer>
@@ -3640,7 +3640,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitman" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pitman" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Pitman (HB)</description>
 		<year>2021</year>
@@ -3653,7 +3653,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitstopa" cloneof="pitstop" romof="pitstop" sourcefile="d_coleco.cpp">
+	<game name="pitstopa" cloneof="pitstop" romof="pitstop" sourcefile="coleco/d_coleco.cpp">
 		<description>Pitstop (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Epyx</manufacturer>
@@ -3666,7 +3666,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitstop" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pitstop" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Pitstop</description>
 		<year>1983</year>
 		<manufacturer>Epyx</manufacturer>
@@ -3679,7 +3679,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pooyan" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pooyan" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Pooyan (HB)</description>
 		<year>2010</year>
@@ -3692,7 +3692,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="popeyea" cloneof="popeye" romof="popeye" sourcefile="d_coleco.cpp">
+	<game name="popeyea" cloneof="popeye" romof="popeye" sourcefile="coleco/d_coleco.cpp">
 		<description>Popeye (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -3705,7 +3705,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="popeye" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="popeye" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Popeye</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -3718,7 +3718,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="porkys" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="porkys" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Porky's (Prototype)</description>
 		<year>1983</year>
@@ -3732,7 +3732,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="power" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="power" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Power Lords: Quest for Volcan (Prototype)</description>
 		<year>1984</year>
@@ -3748,7 +3748,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pquest" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pquest" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Princess Quest (SGM) (HB)</description>
 		<year>2012</year>
@@ -3761,7 +3761,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="prisonofwar" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="prisonofwar" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Prisoner of War (SGM) (HB)</description>
 		<year>2018-19</year>
@@ -3774,7 +3774,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="purpdino" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="purpdino" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Purple Dinosaur Massacre (HB)</description>
 		<year>1996</year>
@@ -3787,7 +3787,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="puzzli" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="puzzli" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Puzzli (HB)</description>
 		<year>2011</year>
@@ -3800,7 +3800,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pyrawbc2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="pyrawbc2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Pyramid Warp &amp; Battleship Clapton 2 (HB)</description>
 		<year>2008</year>
@@ -3813,7 +3813,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="qberta" cloneof="qbert" romof="qbert" sourcefile="d_coleco.cpp">
+	<game name="qberta" cloneof="qbert" romof="qbert" sourcefile="coleco/d_coleco.cpp">
 		<description>Q*bert (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -3825,7 +3825,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="qbertqub" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="qbertqub" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Q*bert Qubes</description>
 		<year>1984</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -3838,7 +3838,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="qbert" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="qbert" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Q*bert</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -3850,7 +3850,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="qbiqs" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="qbiqs" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>qbIqS (SGM) (HB)</description>
 		<year>2010</year>
@@ -3863,7 +3863,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="quintanaa" cloneof="quintana" romof="quintana" sourcefile="d_coleco.cpp">
+	<game name="quintanaa" cloneof="quintana" romof="quintana" sourcefile="coleco/d_coleco.cpp">
 		<description>Quest for Quintana Roo (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -3876,7 +3876,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="quintana" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="quintana" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Quest for Quintana Roo</description>
 		<year>1983</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -3889,7 +3889,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="questgc" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="questgc" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Quest for the Golden Chalice (HB)</description>
 		<year>2012</year>
@@ -3902,7 +3902,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rallyx" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="rallyx" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Rally-X (SGM) (HB)</description>
 		<year>1984-2016</year>
@@ -3915,7 +3915,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="recrescue" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="recrescue" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Recon Rescue (HB)</description>
 		<year>2021</year>
@@ -3928,7 +3928,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rtheflag" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="rtheflag" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Remember the Flag (HB)</description>
 		<year>2016-17</year>
@@ -3941,7 +3941,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="reversdd" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="reversdd" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Reversi and Diamond Dash (HB)</description>
 		<year>2004</year>
@@ -3954,7 +3954,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ripcord" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ripcord" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Rip Cord (HB)</description>
 		<year>1979-2017</year>
@@ -3967,7 +3967,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="riskyrick" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="riskyrick" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Risky Rick (HB)</description>
 		<year>2018</year>
@@ -3980,7 +3980,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="riveraid" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="riveraid" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>River Raid</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
@@ -3993,7 +3993,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="roadfght" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="roadfght" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Road Fighter (HB)</description>
 		<year>2007</year>
@@ -4006,7 +4006,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="robeeblr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="robeeblr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Robee Blaster (HB)</description>
 		<year>2017</year>
@@ -4019,7 +4019,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="robinha" cloneof="robinh" romof="robinh" sourcefile="d_coleco.cpp">
+	<game name="robinha" cloneof="robinh" romof="robinh" sourcefile="coleco/d_coleco.cpp">
 		<description>Robin Hood (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Xonox</manufacturer>
@@ -4032,7 +4032,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="robinh" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="robinh" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Robin Hood</description>
 		<year>1984</year>
 		<manufacturer>Xonox</manufacturer>
@@ -4045,7 +4045,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rocnrope" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="rocnrope" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Roc 'n Rope</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4059,7 +4059,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rockbolta" cloneof="rockbolt" romof="rockbolt" sourcefile="d_coleco.cpp">
+	<game name="rockbolta" cloneof="rockbolt" romof="rockbolt" sourcefile="coleco/d_coleco.cpp">
 		<description>Rock 'n Bolt (Alt)</description>
 		<year>1984</year>
 		<manufacturer>Telegames</manufacturer>
@@ -4072,7 +4072,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rockbolt" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="rockbolt" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Rock 'n Bolt</description>
 		<year>1984</year>
 		<manufacturer>Telegames</manufacturer>
@@ -4085,7 +4085,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rocky" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="rocky" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Rocky: Super Action Boxing</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4099,7 +4099,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rollerball" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="rollerball" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Rollerball (SGM) (HB)</description>
 		<year>1984-2013</year>
@@ -4112,7 +4112,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rollover" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="rollover" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Rolloverture</description>
 		<year>1983</year>
 		<manufacturer>Sunrise Software</manufacturer>
@@ -4125,7 +4125,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="saguaro" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="saguaro" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Saguaro City (HB)</description>
 		<year>1981-2019</year>
@@ -4138,7 +4138,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sammylfa" cloneof="sammylf" romof="sammylf" sourcefile="d_coleco.cpp">
+	<game name="sammylfa" cloneof="sammylf" romof="sammylf" sourcefile="coleco/d_coleco.cpp">
 		<description>Sammy Lightfoot (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -4151,7 +4151,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sammylf" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sammylf" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Sammy Lightfoot</description>
 		<year>1983</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -4164,7 +4164,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sasa" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sasa" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Sasa (SGM) (HB)</description>
 		<year>1983-2015</year>
@@ -4177,7 +4177,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sftscj" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sftscj" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Search For The Stolen Crown Jewels (HB)</description>
 		<year>2006</year>
@@ -4190,7 +4190,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sftscj2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sftscj2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Search For The Stolen Crown Jewels 2 (HB)</description>
 		<year>2007</year>
@@ -4203,7 +4203,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sftscj3" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sftscj3" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Search For The Stolen Crown Jewels 3 (HB)</description>
 		<year>2013</year>
@@ -4216,7 +4216,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moai" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="moai" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Secret of Moai (SGM) (HB)</description>
 		<year>1986-2017</year>
@@ -4229,7 +4229,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="secalpha" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="secalpha" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Sector Alpha</description>
 		<year>1983</year>
 		<manufacturer>Spectravideo</manufacturer>
@@ -4243,7 +4243,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sewersam" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sewersam" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Sewer Sam</description>
 		<year>1984</year>
 		<manufacturer>Interphase</manufacturer>
@@ -4257,7 +4257,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shmup" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="shmup" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Shmup! (SGM) (HB)</description>
 		<year>2017</year>
@@ -4270,7 +4270,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shouganai" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="shouganai" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Shouganai (SGM) (HB)</description>
 		<year>2017</year>
@@ -4283,7 +4283,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sidetrak" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sidetrak" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Side Trak (HB)</description>
 		<year>1979-2011</year>
@@ -4296,7 +4296,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sindmyst" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sindmyst" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Sindbad Mystery (HB)</description>
 		<year>1983-2021</year>
@@ -4309,7 +4309,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sirababol" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sirababol" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Sir Ababol (HB, v1.1)</description>
 		<year>2020</year>
@@ -4322,7 +4322,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lancelot" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="lancelot" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Sir Lancelot</description>
 		<year>1983</year>
 		<manufacturer>Xonox</manufacturer>
@@ -4335,7 +4335,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="skiing" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="skiing" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Skiing</description>
 		<year>1986</year>
 		<manufacturer>Telegames</manufacturer>
@@ -4348,7 +4348,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="skyjag" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="skyjag" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Opcode Games</comment>
 		<description>Sky Jaguar (HB)</description>
 		<year>2004</year>
@@ -4361,7 +4361,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="danslither" cloneof="slither" romof="slither" sourcefile="d_coleco.cpp">
+	<game name="danslither" cloneof="slither" romof="slither" sourcefile="coleco/d_coleco.cpp">
 		<comment>Hack, Homebrew</comment>
 		<description>Slither (Hack, Joystick Version)</description>
 		<year>2010</year>
@@ -4374,7 +4374,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="slither" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="slither" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Slither</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4387,7 +4387,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="slurpy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="slurpy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Slurpy</description>
 		<year>1984</year>
 		<manufacturer>Xonox</manufacturer>
@@ -4399,7 +4399,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurfchal" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="smurfchal" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Smurf Challenge (HB)</description>
 		<year>2010</year>
@@ -4412,7 +4412,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurfpnt" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="smurfpnt" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Smurf Paint 'n' Play Workshop</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4427,7 +4427,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurfply" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="smurfply" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Smurf Play and Learn (Prototype)</description>
 		<year>1982</year>
@@ -4441,7 +4441,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurfa" cloneof="smurf" romof="smurf" sourcefile="d_coleco.cpp">
+	<game name="smurfa" cloneof="smurf" romof="smurf" sourcefile="coleco/d_coleco.cpp">
 		<description>Smurf Rescue in Gargamel's Castle (Alt)</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4454,7 +4454,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurf" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="smurf" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Smurf Rescue in Gargamel's Castle</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4467,7 +4467,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smurfsav" cloneof="smurfply" romof="smurfply" sourcefile="d_coleco.cpp">
+	<game name="smurfsav" cloneof="smurfply" romof="smurfply" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Smurfs Save the Day (Prototype)</description>
 		<year>1983</year>
@@ -4480,7 +4480,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="snake" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="snake" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Snake (HB)</description>
 		<year>2021</year>
@@ -4493,7 +4493,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="soknight" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="soknight" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>So You Want To Be A Knight (HB)</description>
 		<year>2015</year>
@@ -4506,7 +4506,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacfury" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spacfury" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Space Fury</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4519,7 +4519,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacehunter" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spacehunter" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Space Hunter (HB)</description>
 		<year>2005</year>
@@ -4532,7 +4532,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spaceinvcol" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spaceinvcol" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Space Invaders Collection (HB)</description>
 		<year>2003</year>
@@ -4545,7 +4545,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spaceinvasion" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spaceinvasion" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Space Invasion (HB)</description>
 		<year>1998</year>
@@ -4558,7 +4558,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="panic" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="panic" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Space Panic</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4571,7 +4571,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sparkie" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sparkie" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Sparkie (SGM) (HB)</description>
 		<year>1983-2013</year>
@@ -4584,7 +4584,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spectar" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spectar" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Spectar (HB)</description>
 		<year>2005</year>
@@ -4597,7 +4597,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spectron" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spectron" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Spectron</description>
 		<year>1983</year>
 		<manufacturer>Spectravideo</manufacturer>
@@ -4610,7 +4610,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spelunker" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spelunker" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Spelunker (SGM) (HB)</description>
 		<year>1986-2015</year>
@@ -4623,7 +4623,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spinball" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spinball" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>SpinBall (HB)</description>
 		<year>2020</year>
@@ -4636,7 +4636,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spunkysc" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spunkysc" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Spunky's Super Car! (HB)</description>
 		<year>2014</year>
@@ -4649,7 +4649,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spyhuntp1" cloneof="spyhunt" romof="spyhunt" sourcefile="d_coleco.cpp">
+	<game name="spyhuntp1" cloneof="spyhunt" romof="spyhunt" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Spy Hunter (Prototype, v13)</description>
 		<year>1984</year>
@@ -4665,7 +4665,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spyhuntp" cloneof="spyhunt" romof="spyhunt" sourcefile="d_coleco.cpp">
+	<game name="spyhuntp" cloneof="spyhunt" romof="spyhunt" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Spy Hunter (Prototype, v22)</description>
 		<year>1984</year>
@@ -4681,7 +4681,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spyhunt" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="spyhunt" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Spy Hunter</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4696,7 +4696,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="squares" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="squares" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Squares! (HB)</description>
 		<year>2007</year>
@@ -4709,7 +4709,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="squishem" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="squishem" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Squish 'em Sam!</description>
 		<year>1984</year>
 		<manufacturer>Interphase</manufacturer>
@@ -4722,7 +4722,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starcastle" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starcastle" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Star Castle (HB)</description>
 		<year>2021</year>
@@ -4735,7 +4735,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starfire" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starfire" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Star Fire (HB)</description>
 		<year>2021</year>
@@ -4748,7 +4748,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starforce" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starforce" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Star Force (HB)</description>
 		<year>2011</year>
@@ -4761,7 +4761,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starfortress" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starfortress" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Star Fortress (HB)</description>
 		<year>1997</year>
@@ -4774,7 +4774,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starsoldier" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starsoldier" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Star Soldier (SGM) (HB)</description>
 		<year>2015</year>
@@ -4787,7 +4787,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="startrek" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="startrek" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Star Trek: Strategic Operations Simulator </description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4801,7 +4801,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starwars" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starwars" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Star Wars: The Arcade Game</description>
 		<year>1984</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -4814,7 +4814,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starcom" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starcom" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Starcom (HB)</description>
 		<year>1986-2012</year>
@@ -4827,7 +4827,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starshipdf" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="starshipdf" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Starship Defence Force (HB)</description>
 		<year>2014</year>
@@ -4840,7 +4840,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="steam" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="steam" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Steamroller (Prototype)</description>
 		<year>1984</year>
@@ -4854,7 +4854,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stonew" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="stonew" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Stone of Wisdom, The (SGM) (HB)</description>
 		<year>1986-2015</year>
@@ -4867,7 +4867,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="straycat" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="straycat" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Stray Cat (SGM) (HB)</description>
 		<year>2017</year>
@@ -4880,7 +4880,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="strikeit" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="strikeit" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Strike It!</description>
 		<year>1983</year>
 		<manufacturer>Telegames</manufacturer>
@@ -4893,7 +4893,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="strippoker" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="strippoker" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Strip Poker (HB)</description>
 		<year>2014</year>
@@ -4906,7 +4906,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="subrocsgm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="subrocsgm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Subroc (SGM) (HB)</description>
 		<year>1984-2014</year>
@@ -4919,7 +4919,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="subroc" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="subroc" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Subroc</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4933,7 +4933,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sudoku" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sudoku" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Sudoku (HB)</description>
 		<year>2016-17</year>
@@ -4946,7 +4946,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sabaseb" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sabaseb" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Action Baseball</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4961,7 +4961,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="saftsocc" cloneof="sasoccer" romof="sasoccer" sourcefile="d_coleco.cpp">
+	<game name="saftsocc" cloneof="sasoccer" romof="sasoccer" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Action Football (Super Action Soccer clone)</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4976,7 +4976,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="safootb" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="safootb" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Action Football</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -4991,7 +4991,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sasoccer" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sasoccer" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Action Soccer</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5006,7 +5006,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="scobraa" cloneof="scobra" romof="scobra" sourcefile="d_coleco.cpp">
+	<game name="scobraa" cloneof="scobra" romof="scobra" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Cobra (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -5018,7 +5018,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="scobra" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="scobra" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Cobra</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -5030,7 +5030,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="suprtest" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="suprtest" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Controller Test Cartridge</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5042,7 +5042,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sprcrossa" cloneof="sprcross" romof="sprcross" sourcefile="d_coleco.cpp">
+	<game name="sprcrossa" cloneof="sprcross" romof="sprcross" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Cross Force (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Spectravideo</manufacturer>
@@ -5055,7 +5055,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sprcross" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sprcross" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Cross Force</description>
 		<year>1983</year>
 		<manufacturer>Spectravideo</manufacturer>
@@ -5068,7 +5068,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="superdk" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="superdk" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Super DK! (Prototype)</description>
 		<year>1982</year>
@@ -5084,7 +5084,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="suprdkjr" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="suprdkjr" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Super DK! Junior (Prototype)</description>
 		<year>1983</year>
@@ -5100,7 +5100,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="superpac" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="superpac" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Super Pac-Man (SGM) (HB)</description>
 		<year>1982-2015</year>
@@ -5113,7 +5113,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ssketch" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ssketch" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Super Sketch</description>
 		<year>1984</year>
 		<manufacturer>Personal Peripherals</manufacturer>
@@ -5125,7 +5125,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="suprspac" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="suprspac" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Super Space Acer (HB)</description>
 		<year>2011</year>
@@ -5138,7 +5138,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="suprtank" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="suprtank" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Super Tank (HB)</description>
 		<year>1986-2011</year>
@@ -5151,7 +5151,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="swtacorn" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="swtacorn" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Sweet Acorn (SGM) (HB)</description>
 		<year>1984-2019</year>
@@ -5164,7 +5164,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sword" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sword" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Sword and Sorcerer (Prototype)</description>
 		<year>1983</year>
@@ -5178,7 +5178,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sydneyhunt2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sydneyhunt2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Sydney Hunter and the Caverns of Death (HB)</description>
 		<year>2019</year>
@@ -5191,7 +5191,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sydneyhunt" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="sydneyhunt" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Sydney Hunter and the Sacred Tribe (HB)</description>
 		<year>2017</year>
@@ -5204,7 +5204,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tankbtln" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tankbtln" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Tank Battalion (SGM) (HB)</description>
 		<year>1984-2019</year>
@@ -5217,7 +5217,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tankchal" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tankchal" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Two players mode only</comment>
 		<description>Tank Challenge (HB)</description>
 		<year>2016</year>
@@ -5230,7 +5230,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tankmission" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tankmission" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Use option 1 - Normal</comment>
 		<description>Tank Mission (HB)</description>
 		<year>2016-17</year>
@@ -5243,7 +5243,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tankwars" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tankwars" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Tank Wars</description>
 		<year>1983</year>
 		<manufacturer>Telegames</manufacturer>
@@ -5256,7 +5256,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tapper" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tapper" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Tapper</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5271,7 +5271,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tarzan" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tarzan" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Tarzan: From out of the Jungle</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5285,7 +5285,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="telebunny" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="telebunny" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Telebunny (HB)</description>
 		<year>2014</year>
@@ -5298,7 +5298,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="telly" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="telly" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Telly Turtle</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5311,7 +5311,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="terrattak" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="terrattak" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Terra Attack (HB)</description>
 		<year>2007</year>
@@ -5324,7 +5324,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="thexder" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="thexder" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Thexder (SGM) (HB)</description>
 		<year>1986-2012</year>
@@ -5337,7 +5337,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="threshld" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="threshld" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Threshold</description>
 		<year>1983</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -5350,7 +5350,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="timeplt" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="timeplt" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Time Pilot</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5363,7 +5363,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tomarc" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tomarc" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Tomarc the Barbarian</description>
 		<year>1984</year>
 		<manufacturer>Xonox</manufacturer>
@@ -5376,7 +5376,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ttennis" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="ttennis" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Tournament Tennis</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5391,7 +5391,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="trackfld" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="trackfld" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Track &amp; Field (HB)</description>
 		<year>1984-2010</year>
@@ -5404,7 +5404,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="trafcjam" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="trafcjam" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Traffic Jam (SGM) (HB)</description>
 		<year>2016</year>
@@ -5417,7 +5417,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tunnels" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tunnels" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Demo</comment>
 		<description>Tunnels and Trolls (Demo)</description>
 		<year>1983</year>
@@ -5433,7 +5433,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="turbo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="turbo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Select w/ Controller #2</comment>
 		<description>Turbo</description>
 		<year>1982</year>
@@ -5447,7 +5447,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="turmoil2022" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="turmoil2022" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Turmoil 2022 (HB)</description>
 		<year>2021</year>
@@ -5460,7 +5460,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tutankhma" cloneof="tutankhm" romof="tutankhm" sourcefile="d_coleco.cpp">
+	<game name="tutankhma" cloneof="tutankhm" romof="tutankhm" sourcefile="coleco/d_coleco.cpp">
 		<description>Tutankham (Alt)</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -5473,7 +5473,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tutankhm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="tutankhm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Tutankham</description>
 		<year>1983</year>
 		<manufacturer>Parker Brothers</manufacturer>
@@ -5486,7 +5486,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="twinbee" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="twinbee" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Twin Bee (SGM) (HB)</description>
 		<year>1986-2014</year>
@@ -5499,7 +5499,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="txupinazo" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="txupinazo" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Txupinazo! (SGM) (HB)</description>
 		<year>2007-2017</year>
@@ -5512,7 +5512,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="upndown" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="upndown" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Up'n Down</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -5525,7 +5525,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="uridium" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="uridium" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Uridium (SGM) (HB)</description>
 		<year>2019</year>
@@ -5538,7 +5538,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vanguard" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="vanguard" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Vanguard (HB)</description>
 		<year>2019</year>
@@ -5551,7 +5551,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="venture" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="venture" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Venture</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5564,7 +5564,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vexed" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="vexed" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Vexed (HB, v1.08)</description>
 		<year>2021-23</year>
@@ -5577,7 +5577,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="victory" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="victory" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Victory</description>
 		<year>1983</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5591,7 +5591,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hustler" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="hustler" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Video Hustler (Prototype)</description>
 		<year>1984</year>
@@ -5604,7 +5604,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hustler1" cloneof="hustler" romof="hustler" sourcefile="d_coleco.cpp">
+	<game name="hustler1" cloneof="hustler" romof="hustler" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Video Hustler (Prototype, 19840727)</description>
 		<year>1984</year>
@@ -5617,7 +5617,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="void" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="void" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Void, The (HB)</description>
 		<year>2010</year>
@@ -5630,7 +5630,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="war" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="war" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>War (HB)</description>
 		<year>2014</year>
@@ -5643,7 +5643,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wargamesp" cloneof="wargames" romof="wargames" sourcefile="d_coleco.cpp">
+	<game name="wargamesp" cloneof="wargames" romof="wargames" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>War Games (Prototype, 0417)</description>
 		<year>1984</year>
@@ -5658,7 +5658,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wargames" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="wargames" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>War Games</description>
 		<year>1984</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5672,7 +5672,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="warroom" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="warroom" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>War Room</description>
 		<year>1983</year>
 		<manufacturer>Probe 2000</manufacturer>
@@ -5687,7 +5687,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="warpwarp" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="warpwarp" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Warp &amp; Warp (SGM) (HB)</description>
 		<year>1984-2016</year>
@@ -5700,7 +5700,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="watervil" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="watervil" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Waterville Rescue (HB)</description>
 		<year>2009</year>
@@ -5713,7 +5713,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="explodingfoot" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="explodingfoot" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Way of the Exploding Foot, The (HB)</description>
 		<year>2011</year>
@@ -5726,7 +5726,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wingwar" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="wingwar" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Wing War</description>
 		<year>1983</year>
 		<manufacturer>Imagic</manufacturer>
@@ -5739,7 +5739,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="winktrap" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="winktrap" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Winky Trap (HB)</description>
 		<year>1997-2007</year>
@@ -5752,7 +5752,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wizmath" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="wizmath" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Wizard of Id's Wizmath</description>
 		<year>1984</year>
 		<manufacturer>Sierra On-Line</manufacturer>
@@ -5765,7 +5765,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wow" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="wow" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Wizard of Wor (SGM) (HB)</description>
 		<year>1980-2017</year>
@@ -5778,7 +5778,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wonderboy" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="wonderboy" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Wonder Boy (SGM) (HB)</description>
 		<year>1986-2012</year>
@@ -5791,7 +5791,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wordfeud" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="wordfeud" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Word Feud</description>
 		<year>1984</year>
 		<manufacturer>K-Tel</manufacturer>
@@ -5804,7 +5804,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="xyzolog" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="xyzolog" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Super Game Module</comment>
 		<description>Xyzolog (SGM) (HB)</description>
 		<year>1984-2019</year>
@@ -5817,7 +5817,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yiear" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="yiear" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew</comment>
 		<description>Yie-Ar Kung Fu (HB)</description>
 		<year>1985-2005</year>
@@ -5830,7 +5830,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yolk" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="yolk" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Prototype</comment>
 		<description>Yolks on You, The (Prototype)</description>
 		<year>1983</year>
@@ -5844,7 +5844,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zanac" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zanac" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Zanac (SGM) (HB)</description>
 		<year>1986-2015</year>
@@ -5857,7 +5857,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zaxxon2" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zaxxon2" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Zaxxon II (HB)</description>
 		<year>1985-2021</year>
@@ -5870,7 +5870,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zaxxonsgm" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zaxxonsgm" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Zaxxon Super Game (SGM) (HB)</description>
 		<year>1984-2012</year>
@@ -5883,7 +5883,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zaxxon" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zaxxon" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Zaxxon</description>
 		<year>1982</year>
 		<manufacturer>Coleco</manufacturer>
@@ -5897,7 +5897,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zenji" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zenji" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Zenji</description>
 		<year>1984</year>
 		<manufacturer>Activision</manufacturer>
@@ -5910,7 +5910,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zippyrac" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zippyrac" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Zippy Race (HB)</description>
 		<year>1983-2009</year>
@@ -5923,7 +5923,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zcalavera" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zcalavera" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Original game by 'The Mojon Twins'</comment>
 		<description>Zombie Calavera Prologue (HB)</description>
 		<year>2021</year>
@@ -5936,7 +5936,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zombieinc" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zombieinc" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, SGM - Published by Team Pixelboy</comment>
 		<description>Zombie Incident (SGM) (HB)</description>
 		<year>2012-2018</year>
@@ -5949,7 +5949,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zombnearb" cloneof="zombnear" romof="zombnear" sourcefile="d_coleco.cpp">
+	<game name="zombnearb" cloneof="zombnear" romof="zombnear" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Zombie Near (Alt) (HB)</description>
 		<year>2011</year>
@@ -5962,7 +5962,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zombnear" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zombnear" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by CollectorVision Games</comment>
 		<description>Zombie Near (HB)</description>
 		<year>2012</year>
@@ -5975,7 +5975,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zoom909" romof="coleco" sourcefile="d_coleco.cpp">
+	<game name="zoom909" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>Homebrew, Published by Team Pixelboy</comment>
 		<description>Zoom 909 (HB)</description>
 		<year>1985-2021</year>
@@ -5988,7 +5988,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game isbios="yes" name="coleco" sourcefile="d_coleco.cpp">
+	<game isbios="yes" name="coleco" sourcefile="coleco/d_coleco.cpp">
 		<comment>BIOS only</comment>
 		<description>ColecoVision System BIOS</description>
 		<year>1982</year>

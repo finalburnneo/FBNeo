@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="alieninv" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="alieninv" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Alien Invasion</description>
 		<year>1981</year>
 		<manufacturer>Zircon</manufacturer>
@@ -23,7 +23,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="backgamm" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="backgamm" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Backgammon / Acey-Deucey</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -34,7 +34,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="baseball" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="baseball" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Baseball</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -45,7 +45,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bowling" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="bowling" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Bowling</description>
 		<year>1978</year>
 		<manufacturer>Fairchil</manufacturer>
@@ -56,7 +56,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="casinop" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="casinop" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Casino Poker</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -67,7 +67,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="multicrt" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="multicrt" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Homebrew</comment>
 		<description>Channel F Multi-Cart (Final)</description>
 		<year>2004</year>
@@ -79,7 +79,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="multicrto" cloneof="multicrt" romof="multicrt" sourcefile="d_channelf.cpp">
+	<game name="multicrto" cloneof="multicrt" romof="multicrt" sourcefile="channelf/d_channelf.cpp">
 		<comment>Homebrew</comment>
 		<description>Channel F Multi-Cart (Older)</description>
 		<year>2004</year>
@@ -91,7 +91,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="checkers" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="checkers" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Checkers</description>
 		<year>1978</year>
 		<manufacturer>Zircon</manufacturer>
@@ -102,7 +102,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="clrorgan" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="clrorgan" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Demo, Prototype</comment>
 		<description>Color Organ (Prototype)</description>
 		<year>19??</year>
@@ -114,7 +114,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="democrt1" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="democrt1" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Demo</comment>
 		<description>Democart 1</description>
 		<year>1977</year>
@@ -126,7 +126,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="democrt2" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="democrt2" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Demo</comment>
 		<description>Democart 2</description>
 		<year>197?</year>
@@ -138,7 +138,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dsrtfox" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="dsrtfox" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Desert Fox / Shooting Gallery</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -149,7 +149,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dodgeit" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="dodgeit" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Dodge It</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -160,7 +160,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragrace" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="dragrace" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Drag Race</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -171,7 +171,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="drawpkr" cloneof="casinop" romof="casinop" sourcefile="d_channelf.cpp">
+	<game name="drawpkr" cloneof="casinop" romof="casinop" sourcefile="channelf/d_channelf.cpp">
 		<comment>Prototype</comment>
 		<description>Draw Poker (Prototype)</description>
 		<year>1980</year>
@@ -183,7 +183,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="football" cloneof="pfootbll" romof="pfootbll" sourcefile="d_channelf.cpp">
+	<game name="football" cloneof="pfootbll" romof="pfootbll" sourcefile="channelf/d_channelf.cpp">
 		<comment>Prototype</comment>
 		<description>Football (Prototype)</description>
 		<year>1981</year>
@@ -195,7 +195,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galacticp" cloneof="galactic" romof="galactic" sourcefile="d_channelf.cpp">
+	<game name="galacticp" cloneof="galactic" romof="galactic" sourcefile="channelf/d_channelf.cpp">
 		<comment>Prototype</comment>
 		<description>Galactic Space Wars (Prototype)</description>
 		<year>1980</year>
@@ -207,7 +207,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galactic" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="galactic" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Galactic Space Wars / Lunar Lander</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -218,7 +218,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hangman" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="hangman" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Hangman</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -229,7 +229,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="builtin" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="builtin" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Channel F built-in games</comment>
 		<description>Hockey + Tennis</description>
 		<year>1976</year>
@@ -241,7 +241,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lightsout" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="lightsout" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Homebrew</comment>
 		<description>Lights Out (HB)</description>
 		<year>2004</year>
@@ -253,7 +253,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="magicnum" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="magicnum" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Magic Numbers / Mind Reader / Nim</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -264,7 +264,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mthquiz1" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="mthquiz1" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Math Quiz 1</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -275,7 +275,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mthquiz2" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="mthquiz2" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Math Quiz 2</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -286,7 +286,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mazea" cloneof="maze" romof="maze" sourcefile="d_channelf.cpp">
+	<game name="mazea" cloneof="maze" romof="maze" sourcefile="channelf/d_channelf.cpp">
 		<description>Maze / Jailbreak / Blind-man's-bluff / Trailblazer (Alt)</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -297,7 +297,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="maze" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="maze" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Maze / Jailbreak / Blind-man's-bluff / Trailblazer</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -308,7 +308,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="memory" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="memory" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Memory Match 1 &amp; 2</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -319,7 +319,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="muehle" cloneof="tctactoe" romof="tctactoe" sourcefile="d_channelf.cpp">
+	<game name="muehle" cloneof="tctactoe" romof="tctactoe" sourcefile="channelf/d_channelf.cpp">
 		<description>Muehle / Tontauben-Schiessen / Kreatives Malspiel / Videoscope (Ger)</description>
 		<year>1978</year>
 		<manufacturer>SABA</manufacturer>
@@ -330,7 +330,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ordtvlng" cloneof="hangman" romof="hangman" sourcefile="d_channelf.cpp">
+	<game name="ordtvlng" cloneof="hangman" romof="hangman" sourcefile="channelf/d_channelf.cpp">
 		<description>Ordtavling (Swe)</description>
 		<year>1978</year>
 		<manufacturer>Luxor</manufacturer>
@@ -341,7 +341,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacman" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="pacman" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Homebrew</comment>
 		<description>Pac-Man (HB)</description>
 		<year>2004</year>
@@ -353,7 +353,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacmanv2" cloneof="pacman" romof="pacman" sourcefile="d_channelf.cpp">
+	<game name="pacmanv2" cloneof="pacman" romof="pacman" sourcefile="channelf/d_channelf.cpp">
 		<comment>Homebrew</comment>
 		<description>Pac-Man (HB, v2)</description>
 		<year>2004</year>
@@ -365,7 +365,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pinballa" cloneof="pinball" romof="pinball" sourcefile="d_channelf.cpp">
+	<game name="pinballa" cloneof="pinball" romof="pinball" sourcefile="channelf/d_channelf.cpp">
 		<description>Pinball Challenge (Alt)</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -376,7 +376,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pinball" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="pinball" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Pinball Challenge</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -387,7 +387,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pfootbll" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="pfootbll" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Pro Football</description>
 		<year>1981</year>
 		<manufacturer>Zircon</manufacturer>
@@ -398,7 +398,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ratmal" cloneof="hangman" romof="hangman" sourcefile="d_channelf.cpp">
+	<game name="ratmal" cloneof="hangman" romof="hangman" sourcefile="channelf/d_channelf.cpp">
 		<description>Rat' Mal (Ger)</description>
 		<year>197?</year>
 		<manufacturer>SABA</manufacturer>
@@ -409,7 +409,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="robotwarp" cloneof="robotwar" romof="robotwar" sourcefile="d_channelf.cpp">
+	<game name="robotwarp" cloneof="robotwar" romof="robotwar" sourcefile="channelf/d_channelf.cpp">
 		<comment>Prototype</comment>
 		<description>Robot War (Prototype)</description>
 		<year>1977</year>
@@ -421,7 +421,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="robotwar" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="robotwar" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Robot War / Torpedo Alley</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -432,7 +432,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="schach" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="schach" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Schach (Ger)</description>
 		<year>197?</year>
 		<manufacturer>SABA</manufacturer>
@@ -443,7 +443,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="slotmchn" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="slotmchn" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Slot Machine</description>
 		<year>1980</year>
 		<manufacturer>Zircon</manufacturer>
@@ -454,7 +454,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sonrsrch" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="sonrsrch" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Sonar Search</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -465,7 +465,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacewar" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="spacewar" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Space War</description>
 		<year>1977</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -476,7 +476,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spitfirep" cloneof="spitfire" romof="spitfire" sourcefile="d_channelf.cpp">
+	<game name="spitfirep" cloneof="spitfire" romof="spitfire" sourcefile="channelf/d_channelf.cpp">
 		<comment>Prototype</comment>
 		<description>Spitfire (Prototype)</description>
 		<year>1976</year>
@@ -488,7 +488,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spitfire" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="spitfire" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Spitfire</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -499,7 +499,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tetris" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="tetris" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Homebrew</comment>
 		<description>Tetris (HB)</description>
 		<year>2004</year>
@@ -511,7 +511,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tctactoe" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="tctactoe" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Tic-Tac-Toe / Shooting Gallery / Doodle / Quadra-Doodle</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -522,7 +522,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vblckjck" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="vblckjck" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Video Blackjack</description>
 		<year>1976</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -533,7 +533,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="whizball" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="whizball" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Video Whizball</description>
 		<year>1978</year>
 		<manufacturer>Fairchild</manufacturer>
@@ -544,7 +544,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="werbetxt" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="werbetxt" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<description>Werbetextcassette</description>
 		<year>198?</year>
 		<manufacturer>Electronic-Partner</manufacturer>
@@ -555,7 +555,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wrdlf" romof="channelf" sourcefile="d_channelf.cpp">
+	<game name="wrdlf" romof="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>Homebrew</comment>
 		<description>Wrdl-F (HB)</description>
 		<year>2022</year>
@@ -567,7 +567,7 @@
 		<video type="raster" orientation="horizontal" width="306" height="174" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game isbios="yes" name="channelf" sourcefile="d_channelf.cpp">
+	<game isbios="yes" name="channelf" sourcefile="channelf/d_channelf.cpp">
 		<comment>BIOS only</comment>
 		<description>Fairchild Channel F (Bios)</description>
 		<year>1976</year>

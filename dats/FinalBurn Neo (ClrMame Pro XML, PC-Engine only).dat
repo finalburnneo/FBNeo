@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="1943kai" sourcefile="d_pce.cpp">
+	<game name="1943kai" sourcefile="pce/d_pce.cpp">
 		<description>1943 Kai (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -20,7 +20,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="21emon" sourcefile="d_pce.cpp">
+	<game name="21emon" sourcefile="pce/d_pce.cpp">
 		<description>21 Emon - Mezase Hotel ou!! (Japan)</description>
 		<year>1994</year>
 		<manufacturer>NEC Home Electronics</manufacturer>
@@ -28,7 +28,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="advislnd" sourcefile="d_pce.cpp">
+	<game name="advislnd" sourcefile="pce/d_pce.cpp">
 		<description>Adventure Island (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -36,7 +36,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aeroblst" sourcefile="d_pce.cpp">
+	<game name="aeroblst" sourcefile="pce/d_pce.cpp">
 		<description>Aero Blasters (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -44,7 +44,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aburner2" sourcefile="d_pce.cpp">
+	<game name="aburner2" sourcefile="pce/d_pce.cpp">
 		<description>After Burner II (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -52,7 +52,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="232" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="acrush" sourcefile="d_pce.cpp">
+	<game name="acrush" sourcefile="pce/d_pce.cpp">
 		<description>Alien Crush (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -60,7 +60,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ankoku" sourcefile="d_pce.cpp">
+	<game name="ankoku" sourcefile="pce/d_pce.cpp">
 		<description>Ankoku Densetsu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -68,7 +68,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aoiblink" sourcefile="d_pce.cpp">
+	<game name="aoiblink" sourcefile="pce/d_pce.cpp">
 		<description>Aoi Blink (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -76,7 +76,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="appgateb" sourcefile="d_pce.cpp">
+	<game name="appgateb" sourcefile="pce/d_pce.cpp">
 		<description>Appare! Gateball (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -84,7 +84,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="armedf" sourcefile="d_pce.cpp">
+	<game name="armedf" sourcefile="pce/d_pce.cpp">
 		<description>Armed Formation F (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -92,7 +92,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="arttool" sourcefile="d_pce.cpp">
+	<game name="arttool" sourcefile="pce/d_pce.cpp">
 		<description>Artist Tool (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Home Electronics</manufacturer>
@@ -100,7 +100,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="atlantean" sourcefile="d_pce.cpp">
+	<game name="atlantean" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>Atlantean (HB)</description>
 		<year>2014</year>
@@ -109,7 +109,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="atomrobo" sourcefile="d_pce.cpp">
+	<game name="atomrobo" sourcefile="pce/d_pce.cpp">
 		<description>Atomic Robo-kid Special (Japan)</description>
 		<year>1990</year>
 		<manufacturer>UPL</manufacturer>
@@ -117,7 +117,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="avpoker" sourcefile="d_pce.cpp">
+	<game name="avpoker" sourcefile="pce/d_pce.cpp">
 		<description>AV Poker (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Games Express</manufacturer>
@@ -125,7 +125,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ballistx" sourcefile="d_pce.cpp">
+	<game name="ballistx" sourcefile="pce/d_pce.cpp">
 		<description>Ballistix (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Coconuts Japan - Psygnosis</manufacturer>
@@ -133,7 +133,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="barbarian" sourcefile="d_pce.cpp">
+	<game name="barbarian" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>Barbarian (HB)</description>
 		<year>2017</year>
@@ -142,7 +142,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="baribari" sourcefile="d_pce.cpp">
+	<game name="baribari" sourcefile="pce/d_pce.cpp">
 		<description>Bari Bari Densetsu (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -150,7 +150,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="barunba" sourcefile="d_pce.cpp">
+	<game name="barunba" sourcefile="pce/d_pce.cpp">
 		<description>Barunba (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -158,7 +158,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="batman" sourcefile="d_pce.cpp">
+	<game name="batman" sourcefile="pce/d_pce.cpp">
 		<description>Batman (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -166,7 +166,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="batloder" sourcefile="d_pce.cpp">
+	<game name="batloder" sourcefile="pce/d_pce.cpp">
 		<description>Battle Lode Runner (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -174,7 +174,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="beball" sourcefile="d_pce.cpp">
+	<game name="beball" sourcefile="pce/d_pce.cpp">
 		<description>Be Ball (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -182,7 +182,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="benkei1" cloneof="benkei" romof="benkei" sourcefile="d_pce.cpp">
+	<game name="benkei1" cloneof="benkei" romof="benkei" sourcefile="pce/d_pce.cpp">
 		<description>Benkei Gaiden (Japan) (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -190,7 +190,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="benkei" sourcefile="d_pce.cpp">
+	<game name="benkei" sourcefile="pce/d_pce.cpp">
 		<description>Benkei Gaiden (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -198,7 +198,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bikkuri1" cloneof="bikkuri" romof="bikkuri" sourcefile="d_pce.cpp">
+	<game name="bikkuri1" cloneof="bikkuri" romof="bikkuri" sourcefile="pce/d_pce.cpp">
 		<description>Bikkuriman World (Japan) (Alt)</description>
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -206,7 +206,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bikkuri" sourcefile="d_pce.cpp">
+	<game name="bikkuri" sourcefile="pce/d_pce.cpp">
 		<description>Bikkuriman World (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -214,7 +214,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blodia" sourcefile="d_pce.cpp">
+	<game name="blodia" sourcefile="pce/d_pce.cpp">
 		<description>Blodia (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -222,7 +222,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aoiblinke" cloneof="aoiblink" romof="aoiblink" sourcefile="d_pce.cpp">
+	<game name="aoiblinke" cloneof="aoiblink" romof="aoiblink" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Blue Blink (Hack, English, v0.99b)</description>
 		<year>2022</year>
@@ -231,7 +231,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bodycon2" sourcefile="d_pce.cpp">
+	<game name="bodycon2" sourcefile="pce/d_pce.cpp">
 		<description>Body Conquest II (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Games Express</manufacturer>
@@ -239,7 +239,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombmn93" sourcefile="d_pce.cpp">
+	<game name="bombmn93" sourcefile="pce/d_pce.cpp">
 		<description>Bomberman '93 (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -247,7 +247,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombmn93s" cloneof="bombmn93" romof="bombmn93" sourcefile="d_pce.cpp">
+	<game name="bombmn93s" cloneof="bombmn93" romof="bombmn93" sourcefile="pce/d_pce.cpp">
 		<description>Bomberman '93 - Special Version (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -255,7 +255,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombmn94" sourcefile="d_pce.cpp">
+	<game name="bombmn94" sourcefile="pce/d_pce.cpp">
 		<description>Bomberman '94 (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -263,7 +263,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombman" sourcefile="d_pce.cpp">
+	<game name="bombman" sourcefile="pce/d_pce.cpp">
 		<description>Bomberman (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -271,7 +271,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombmnub" sourcefile="d_pce.cpp">
+	<game name="bombmnub" sourcefile="pce/d_pce.cpp">
 		<description>Bomberman - Users Battle (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -279,7 +279,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="lostsunh" sourcefile="d_pce.cpp">
+	<game name="lostsunh" sourcefile="pce/d_pce.cpp">
 		<description>Bouken Danshaku Don - The Lost Sunheart (Japan)</description>
 		<year>1992</year>
 		<manufacturer>IMax</manufacturer>
@@ -287,7 +287,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="breakin" sourcefile="d_pce.cpp">
+	<game name="breakin" sourcefile="pce/d_pce.cpp">
 		<description>Break In (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -295,7 +295,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bubblegme" cloneof="bubblegm" romof="bubblegm" sourcefile="d_pce.cpp">
+	<game name="bubblegme" cloneof="bubblegm" romof="bubblegm" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Bubblegum Crash! - Knight Sabers 2034 (Hack, English)</description>
 		<year>2022</year>
@@ -304,7 +304,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bubblegm" sourcefile="d_pce.cpp">
+	<game name="bubblegm" sourcefile="pce/d_pce.cpp">
 		<description>Bubblegum Crash! - Knight Sabers 2034 (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -312,7 +312,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bughunt" sourcefile="d_pce.cpp">
+	<game name="bughunt" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>Bug Hunt (HB)</description>
 		<year>2013</year>
@@ -321,7 +321,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bullfght" sourcefile="d_pce.cpp">
+	<game name="bullfght" sourcefile="pce/d_pce.cpp">
 		<description>Bull Fight - Ring no Haja (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Cream</manufacturer>
@@ -329,7 +329,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="burnangl" sourcefile="d_pce.cpp">
+	<game name="burnangl" sourcefile="pce/d_pce.cpp">
 		<description>Burning Angels (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -337,7 +337,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cyberx" sourcefile="d_pce.cpp">
+	<game name="cyberx" sourcefile="pce/d_pce.cpp">
 		<description>Busou Keiji - Cyber Cross (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Face</manufacturer>
@@ -345,7 +345,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cadash" sourcefile="d_pce.cpp">
+	<game name="cadash" sourcefile="pce/d_pce.cpp">
 		<comment>Bad graphics</comment>
 		<description>Cadash (Japan)</description>
 		<year>1991</year>
@@ -354,7 +354,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champwrs" sourcefile="d_pce.cpp">
+	<game name="champwrs" sourcefile="pce/d_pce.cpp">
 		<description>Champion Wrestler (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -362,7 +362,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chibim" sourcefile="d_pce.cpp">
+	<game name="chibim" sourcefile="pce/d_pce.cpp">
 		<description>Chibi Maruko Chan - Quiz de Piihyara (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
@@ -370,7 +370,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chikuden1" cloneof="chikuden" romof="chikuden" sourcefile="d_pce.cpp">
+	<game name="chikuden1" cloneof="chikuden" romof="chikuden" sourcefile="pce/d_pce.cpp">
 		<description>Chikudenya Toubei - Kubikiri Yakata Yori (Japan) (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -378,7 +378,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chikuden" sourcefile="d_pce.cpp">
+	<game name="chikuden" sourcefile="pce/d_pce.cpp">
 		<description>Chikudenya Toubei - Kubikiri Yakata Yori (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -386,7 +386,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bravoman" sourcefile="d_pce.cpp">
+	<game name="bravoman" sourcefile="pce/d_pce.cpp">
 		<description>Chouzetsu Rinjin - Bravoman (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -394,7 +394,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="circusld" sourcefile="d_pce.cpp">
+	<game name="circusld" sourcefile="pce/d_pce.cpp">
 		<description>Circus Lido (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Yuni Post</manufacturer>
@@ -402,7 +402,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cityhunte" cloneof="cityhunt" romof="cityhunt" sourcefile="d_pce.cpp">
+	<game name="cityhunte" cloneof="cityhunt" romof="cityhunt" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>City Hunter (Hack, English, v1.1)</description>
 		<year>2022</year>
@@ -411,7 +411,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cityhunt" sourcefile="d_pce.cpp">
+	<game name="cityhunt" sourcefile="pce/d_pce.cpp">
 		<description>City Hunter (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -419,7 +419,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="columns" sourcefile="d_pce.cpp">
+	<game name="columns" sourcefile="pce/d_pce.cpp">
 		<description>Columns (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Nihon Telenet</manufacturer>
@@ -427,7 +427,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="coryoon1" cloneof="coryoon" romof="coryoon" sourcefile="d_pce.cpp">
+	<game name="coryoon1" cloneof="coryoon" romof="coryoon" sourcefile="pce/d_pce.cpp">
 		<description>Coryoon - Child of Dragon (Japan) (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -435,7 +435,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="coryoon" sourcefile="d_pce.cpp">
+	<game name="coryoon" sourcefile="pce/d_pce.cpp">
 		<description>Coryoon - Child of Dragon (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -443,7 +443,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="xwiber" sourcefile="d_pce.cpp">
+	<game name="xwiber" sourcefile="pce/d_pce.cpp">
 		<description>Cross Wiber - Cyber Combat Police (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -451,7 +451,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cybrcore" sourcefile="d_pce.cpp">
+	<game name="cybrcore" sourcefile="pce/d_pce.cpp">
 		<description>Cyber Core (Japan)</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -459,7 +459,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cyberdod" sourcefile="d_pce.cpp">
+	<game name="cyberdod" sourcefile="pce/d_pce.cpp">
 		<description>Cyber Dodge (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -467,7 +467,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cyknight" sourcefile="d_pce.cpp">
+	<game name="cyknight" sourcefile="pce/d_pce.cpp">
 		<description>Cyber Knight (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -475,7 +475,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="daisenpu" sourcefile="d_pce.cpp">
+	<game name="daisenpu" sourcefile="pce/d_pce.cpp">
 		<description>Dai Senpu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -483,7 +483,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="donaturl" sourcefile="d_pce.cpp">
+	<game name="donaturl" sourcefile="pce/d_pce.cpp">
 		<description>Daichi Kun Crisis - Do Natural (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Salio</manufacturer>
@@ -491,7 +491,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dariusa" sourcefile="d_pce.cpp">
+	<game name="dariusa" sourcefile="pce/d_pce.cpp">
 		<description>Darius Alpha (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -499,7 +499,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dariusp" sourcefile="d_pce.cpp">
+	<game name="dariusp" sourcefile="pce/d_pce.cpp">
 		<description>Darius Plus (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -507,7 +507,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deadmoon" sourcefile="d_pce.cpp">
+	<game name="deadmoon" sourcefile="pce/d_pce.cpp">
 		<description>Dead Moon - Tsuki Sekai no Akumu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>B.S.S.</manufacturer>
@@ -515,7 +515,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deepblue" sourcefile="d_pce.cpp">
+	<game name="deepblue" sourcefile="pce/d_pce.cpp">
 		<description>Deep Blue - Kaitei Shinwa (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -523,7 +523,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="twinbee" sourcefile="d_pce.cpp">
+	<game name="twinbee" sourcefile="pce/d_pce.cpp">
 		<description>Detana!! Twinbee (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
@@ -531,7 +531,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="devlcrsh" sourcefile="d_pce.cpp">
+	<game name="devlcrsh" sourcefile="pce/d_pce.cpp">
 		<description>Devil Crash - Naxat Pinball (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -539,7 +539,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="diehard" sourcefile="d_pce.cpp">
+	<game name="diehard" sourcefile="pce/d_pce.cpp">
 		<description>Die Hard (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -547,7 +547,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="digichmp" sourcefile="d_pce.cpp">
+	<game name="digichmp" sourcefile="pce/d_pce.cpp">
 		<description>Digital Champ (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -555,7 +555,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dinoforce" sourcefile="d_pce.cpp">
+	<game name="dinoforce" sourcefile="pce/d_pce.cpp">
 		<description>Dinoforce</description>
 		<year>2022</year>
 		<manufacturer>Tokuhisa Tajima</manufacturer>
@@ -563,7 +563,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dondoko" sourcefile="d_pce.cpp">
+	<game name="dondoko" sourcefile="pce/d_pce.cpp">
 		<description>Don Doko Don! (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -571,7 +571,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dorams" sourcefile="d_pce.cpp">
+	<game name="dorams" sourcefile="pce/d_pce.cpp">
 		<description>Doraemon - Meikyuu Dai Sakusen (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -579,7 +579,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dorandn" sourcefile="d_pce.cpp">
+	<game name="dorandn" sourcefile="pce/d_pce.cpp">
 		<description>Doraemon - Nobita no Dorabian Night (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -587,7 +587,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ddungw" sourcefile="d_pce.cpp">
+	<game name="ddungw" sourcefile="pce/d_pce.cpp">
 		<description>Double Dungeons - W (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -595,7 +595,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="download1" cloneof="download" romof="download" sourcefile="d_pce.cpp">
+	<game name="download1" cloneof="download" romof="download" sourcefile="pce/d_pce.cpp">
 		<description>Download (Japan) (Alt)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -603,7 +603,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="download" sourcefile="d_pce.cpp">
+	<game name="download" sourcefile="pce/d_pce.cpp">
 		<description>Download (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -611,7 +611,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragnegge" cloneof="dragnegg" romof="dragnegg" sourcefile="d_pce.cpp">
+	<game name="dragnegge" cloneof="dragnegg" romof="dragnegg" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Dragon Egg! (Hack, English)</description>
 		<year>2022</year>
@@ -620,7 +620,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragnegg" sourcefile="d_pce.cpp">
+	<game name="dragnegg" sourcefile="pce/d_pce.cpp">
 		<description>Dragon Egg! (Japan)</description>
 		<year>1991</year>
 		<manufacturer>NCS, Masaya</manufacturer>
@@ -628,7 +628,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dsaber1" cloneof="dsaber" romof="dsaber" sourcefile="d_pce.cpp">
+	<game name="dsaber1" cloneof="dsaber" romof="dsaber" sourcefile="pce/d_pce.cpp">
 		<description>Dragon Saber - After Story of Dragon Spirit (Japan) (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -636,7 +636,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dsaber" sourcefile="d_pce.cpp">
+	<game name="dsaber" sourcefile="pce/d_pce.cpp">
 		<description>Dragon Saber - After Story of Dragon Spirit (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -644,7 +644,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dspirit" sourcefile="d_pce.cpp">
+	<game name="dspirit" sourcefile="pce/d_pce.cpp">
 		<description>Dragon Spirit (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -652,7 +652,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="droprock1" cloneof="droprock" romof="droprock" sourcefile="d_pce.cpp">
+	<game name="droprock1" cloneof="droprock" romof="droprock" sourcefile="pce/d_pce.cpp">
 		<description>Drop Rock Hora Hora (Japan) (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Data East</manufacturer>
@@ -660,7 +660,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="droprock" sourcefile="d_pce.cpp">
+	<game name="droprock" sourcefile="pce/d_pce.cpp">
 		<description>Drop Rock Hora Hora (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Data East</manufacturer>
@@ -668,7 +668,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dungexpl" sourcefile="d_pce.cpp">
+	<game name="dungexpl" sourcefile="pce/d_pce.cpp">
 		<description>Dungeon Explorer (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -676,7 +676,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="energy" sourcefile="d_pce.cpp">
+	<game name="energy" sourcefile="pce/d_pce.cpp">
 		<description>Energy (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -684,7 +684,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1dream" sourcefile="d_pce.cpp">
+	<game name="f1dream" sourcefile="pce/d_pce.cpp">
 		<description>F-1 Dream (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -692,7 +692,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1pilot" sourcefile="d_pce.cpp">
+	<game name="f1pilot" sourcefile="pce/d_pce.cpp">
 		<description>F-1 Pilot - You're King of Kings (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -700,7 +700,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1circ91" sourcefile="d_pce.cpp">
+	<game name="f1circ91" sourcefile="pce/d_pce.cpp">
 		<description>F1 Circus '91 - World Championship (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -708,7 +708,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1circ92" sourcefile="d_pce.cpp">
+	<game name="f1circ92" sourcefile="pce/d_pce.cpp">
 		<description>F1 Circus '92 - The Speed of Sound (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -716,7 +716,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1circus1" cloneof="f1circus" romof="f1circus" sourcefile="d_pce.cpp">
+	<game name="f1circus1" cloneof="f1circus" romof="f1circus" sourcefile="pce/d_pce.cpp">
 		<description>F1 Circus (Japan) (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -724,7 +724,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1circus" sourcefile="d_pce.cpp">
+	<game name="f1circus" sourcefile="pce/d_pce.cpp">
 		<description>F1 Circus (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -732,7 +732,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="f1tb" sourcefile="d_pce.cpp">
+	<game name="f1tb" sourcefile="pce/d_pce.cpp">
 		<description>F1 Triple Battle (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Human</manufacturer>
@@ -740,7 +740,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fantzone" sourcefile="d_pce.cpp">
+	<game name="fantzone" sourcefile="pce/d_pce.cpp">
 		<description>Fantasy Zone (Japan)</description>
 		<year>1988</year>
 		<manufacturer>NEC</manufacturer>
@@ -748,7 +748,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fantzonemini" cloneof="fantzone" romof="fantzone" sourcefile="d_pce.cpp">
+	<game name="fantzonemini" cloneof="fantzone" romof="fantzone" sourcefile="pce/d_pce.cpp">
 		<description>Fantasy Zone (PC-Engine Mini Ed.)</description>
 		<year>2020</year>
 		<manufacturer>NEC</manufacturer>
@@ -756,7 +756,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fightrun" sourcefile="d_pce.cpp">
+	<game name="fightrun" sourcefile="pce/d_pce.cpp">
 		<description>Fighting Run (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -764,7 +764,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finlblst" sourcefile="d_pce.cpp">
+	<game name="finlblst" sourcefile="pce/d_pce.cpp">
 		<description>Final Blaster (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -772,7 +772,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finallap" sourcefile="d_pce.cpp">
+	<game name="finallap" sourcefile="pce/d_pce.cpp">
 		<description>Final Lap Twin (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -780,7 +780,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finalmt" sourcefile="d_pce.cpp">
+	<game name="finalmt" sourcefile="pce/d_pce.cpp">
 		<description>Final Match Tennis (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Human</manufacturer>
@@ -788,7 +788,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finalmtladies" sourcefile="d_pce.cpp">
+	<game name="finalmtladies" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Final Match Tennis - Ladies (Super CD-Rom Hack)</description>
 		<year>2002-2016</year>
@@ -797,7 +797,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finalsol" sourcefile="d_pce.cpp">
+	<game name="finalsol" sourcefile="pce/d_pce.cpp">
 		<description>Final Soldier (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -805,7 +805,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finalsols" cloneof="finalsol" romof="finalsol" sourcefile="d_pce.cpp">
+	<game name="finalsols" cloneof="finalsol" romof="finalsol" sourcefile="pce/d_pce.cpp">
 		<description>Final Soldier - Special Version (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -813,7 +813,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fireprow" sourcefile="d_pce.cpp">
+	<game name="fireprow" sourcefile="pce/d_pce.cpp">
 		<description>Fire Pro Wrestling - Combination Tag (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Human</manufacturer>
@@ -821,7 +821,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fireprw2" sourcefile="d_pce.cpp">
+	<game name="fireprw2" sourcefile="pce/d_pce.cpp">
 		<description>Fire Pro Wrestling 2 - 2nd Bout (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Human</manufacturer>
@@ -829,7 +829,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fireprw3" sourcefile="d_pce.cpp">
+	<game name="fireprw3" sourcefile="pce/d_pce.cpp">
 		<description>Fire Pro Wrestling 3 - Legend Bout (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Human</manufacturer>
@@ -837,7 +837,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fsoccr90" sourcefile="d_pce.cpp">
+	<game name="fsoccr90" sourcefile="pce/d_pce.cpp">
 		<description>Formation Soccer - Human Cup '90 (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Human</manufacturer>
@@ -845,7 +845,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fsoccer" sourcefile="d_pce.cpp">
+	<game name="fsoccer" sourcefile="pce/d_pce.cpp">
 		<description>Formation Soccer - On J. League (Japan)</description>
 		<year>1994</year>
 		<manufacturer>Human</manufacturer>
@@ -853,7 +853,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="alice" sourcefile="d_pce.cpp">
+	<game name="alice" sourcefile="pce/d_pce.cpp">
 		<description>Fushigi no Yume no Alice (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -861,7 +861,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gaiflamee" cloneof="gaiflame" romof="gaiflame" sourcefile="d_pce.cpp">
+	<game name="gaiflamee" cloneof="gaiflame" romof="gaiflame" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Gai Flame (Hack, English, v0.98)</description>
 		<year>2022</year>
@@ -870,7 +870,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gaiflame" sourcefile="d_pce.cpp">
+	<game name="gaiflame" sourcefile="pce/d_pce.cpp">
 		<description>Gai Flame (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NCS</manufacturer>
@@ -878,7 +878,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gaiamons" sourcefile="d_pce.cpp">
+	<game name="gaiamons" sourcefile="pce/d_pce.cpp">
 		<description>Gaia no Monshou (Japan)</description>
 		<year>1988</year>
 		<manufacturer>NCS</manufacturer>
@@ -886,7 +886,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaga88" sourcefile="d_pce.cpp">
+	<game name="galaga88" sourcefile="pce/d_pce.cpp">
 		<description>Galaga '88 (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -894,7 +894,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ganbgolf" sourcefile="d_pce.cpp">
+	<game name="ganbgolf" sourcefile="pce/d_pce.cpp">
 		<description>Ganbare! Golf Boys (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -902,7 +902,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gekisboy" sourcefile="d_pce.cpp">
+	<game name="gekisboy" sourcefile="pce/d_pce.cpp">
 		<description>Gekisha Boy (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Irem</manufacturer>
@@ -910,7 +910,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="genjitsu" sourcefile="d_pce.cpp">
+	<game name="genjitsu" sourcefile="pce/d_pce.cpp">
 		<description>Genji Tsuushin Agedama (Japan)</description>
 		<year>1991</year>
 		<manufacturer>NEC Home Electronics</manufacturer>
@@ -918,7 +918,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="genpei" sourcefile="d_pce.cpp">
+	<game name="genpei" sourcefile="pce/d_pce.cpp">
 		<description>Genpei Toumaden (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -926,7 +926,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="genpemak" sourcefile="d_pce.cpp">
+	<game name="genpemak" sourcefile="pce/d_pce.cpp">
 		<description>Genpei Toumaden ni no Maki (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
@@ -934,7 +934,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chukatai" sourcefile="d_pce.cpp">
+	<game name="chukatai" sourcefile="pce/d_pce.cpp">
 		<description>Gokuraku! Chuka Taisen (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
@@ -942,7 +942,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gomola" sourcefile="d_pce.cpp">
+	<game name="gomola" sourcefile="pce/d_pce.cpp">
 		<description>Gomola Speed (Japan)</description>
 		<year>1990</year>
 		<manufacturer>UPL</manufacturer>
@@ -950,7 +950,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gradius" sourcefile="d_pce.cpp">
+	<game name="gradius" sourcefile="pce/d_pce.cpp">
 		<description>Gradius (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Konami</manufacturer>
@@ -958,7 +958,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gradiusmini" cloneof="gradius" romof="gradius" sourcefile="d_pce.cpp">
+	<game name="gradiusmini" cloneof="gradius" romof="gradius" sourcefile="pce/d_pce.cpp">
 		<description>Gradius (PC-Engine Mini Ed.)</description>
 		<year>2020</year>
 		<manufacturer>Konami</manufacturer>
@@ -966,7 +966,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gunhed" sourcefile="d_pce.cpp">
+	<game name="gunhed" sourcefile="pce/d_pce.cpp">
 		<description>GunHed (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -974,7 +974,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gunhedht" sourcefile="d_pce.cpp">
+	<game name="gunhedht" sourcefile="pce/d_pce.cpp">
 		<description>GunHed - Hudson GunHed Taikai (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -982,7 +982,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gunhedfx" cloneof="gunhed" romof="gunhed" sourcefile="d_pce.cpp">
+	<game name="gunhedfx" cloneof="gunhed" romof="gunhed" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>GunHed FX1 (Hack)</description>
 		<year>2016</year>
@@ -991,7 +991,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hanataka" sourcefile="d_pce.cpp">
+	<game name="hanataka" sourcefile="pce/d_pce.cpp">
 		<description>Hana Taaka Daka!? (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -999,7 +999,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="haniisky" sourcefile="d_pce.cpp">
+	<game name="haniisky" sourcefile="pce/d_pce.cpp">
 		<description>Hanii in the Sky (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Face</manufacturer>
@@ -1007,7 +1007,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="haniirod" sourcefile="d_pce.cpp">
+	<game name="haniirod" sourcefile="pce/d_pce.cpp">
 		<description>Hanii on the Road (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1015,7 +1015,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hatris" sourcefile="d_pce.cpp">
+	<game name="hatris" sourcefile="pce/d_pce.cpp">
 		<description>Hatris (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Tengen</manufacturer>
@@ -1023,7 +1023,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hvyunit" sourcefile="d_pce.cpp">
+	<game name="hvyunit" sourcefile="pce/d_pce.cpp">
 		<description>Heavy Unit (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -1031,7 +1031,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="xserd" sourcefile="d_pce.cpp">
+	<game name="xserd" sourcefile="pce/d_pce.cpp">
 		<description>Hisou Kihei - Xserd (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1039,7 +1039,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hitice" sourcefile="d_pce.cpp">
+	<game name="hitice" sourcefile="pce/d_pce.cpp">
 		<description>Hit the Ice - VHL - The Official Video Hockey League (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -1047,7 +1047,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="haniiskye" cloneof="haniisky" romof="haniisky" sourcefile="d_pce.cpp">
+	<game name="haniiskye" cloneof="haniisky" romof="haniisky" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Honey in the Sky (Hack, English + 3-button controller)</description>
 		<year>2022</year>
@@ -1056,7 +1056,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ddanpei" sourcefile="d_pce.cpp">
+	<game name="ddanpei" sourcefile="pce/d_pce.cpp">
 		<description>Honoo no Toukyuuji - Dodge Danpei (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1064,7 +1064,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="huzero" sourcefile="d_pce.cpp">
+	<game name="huzero" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>HuZERO - Caravan Edition (HB)</description>
 		<year>2014</year>
@@ -1073,7 +1073,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="idolhana" sourcefile="d_pce.cpp">
+	<game name="idolhana" sourcefile="pce/d_pce.cpp">
 		<description>Idol Hanafuda Fan Club (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1081,7 +1081,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="imagefgt" sourcefile="d_pce.cpp">
+	<game name="imagefgt" sourcefile="pce/d_pce.cpp">
 		<description>Image Fight (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Irem</manufacturer>
@@ -1089,7 +1089,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jleag11" sourcefile="d_pce.cpp">
+	<game name="jleag11" sourcefile="pce/d_pce.cpp">
 		<description>J. League Greatest Eleven (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -1097,7 +1097,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nicklaus" sourcefile="d_pce.cpp">
+	<game name="nicklaus" sourcefile="pce/d_pce.cpp">
 		<description>Jack Nicklaus' Greatest 18 Holes of Major Championship Golf (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -1105,7 +1105,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jchan" sourcefile="d_pce.cpp">
+	<game name="jchan" sourcefile="pce/d_pce.cpp">
 		<description>Jackie Chan (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1113,7 +1113,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jigomegu" sourcefile="d_pce.cpp">
+	<game name="jigomegu" sourcefile="pce/d_pce.cpp">
 		<description>Jigoku Meguri (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -1121,7 +1121,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jinmu1" cloneof="jinmu" romof="jinmu" sourcefile="d_pce.cpp">
+	<game name="jinmu1" cloneof="jinmu" romof="jinmu" sourcefile="pce/d_pce.cpp">
 		<description>Jinmu Denshou (Japan) (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Big Club</manufacturer>
@@ -1129,7 +1129,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jinmu" sourcefile="d_pce.cpp">
+	<game name="jinmu" sourcefile="pce/d_pce.cpp">
 		<description>Jinmu Denshou (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Big Club</manufacturer>
@@ -1137,7 +1137,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="juuouki1" cloneof="juuouki" romof="juuouki" sourcefile="d_pce.cpp">
+	<game name="juuouki1" cloneof="juuouki" romof="juuouki" sourcefile="pce/d_pce.cpp">
 		<description>Juuouki (Japan) (Alt)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -1145,7 +1145,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="juuouki" sourcefile="d_pce.cpp">
+	<game name="juuouki" sourcefile="pce/d_pce.cpp">
 		<description>Juuouki (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -1153,7 +1153,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shubibi" sourcefile="d_pce.cpp">
+	<game name="shubibi" sourcefile="pce/d_pce.cpp">
 		<description>Kaizou Choujin Shubibinman (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -1161,7 +1161,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shubibi2" sourcefile="d_pce.cpp">
+	<game name="shubibi2" sourcefile="pce/d_pce.cpp">
 		<description>Kaizou Choujin Shubibinman 2 - Aratanaru Teki (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1169,7 +1169,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="katochan" sourcefile="d_pce.cpp">
+	<game name="katochan" sourcefile="pce/d_pce.cpp">
 		<description>Kato Chan &amp; Ken Chan (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1177,7 +1177,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kattobi" sourcefile="d_pce.cpp">
+	<game name="kattobi" sourcefile="pce/d_pce.cpp">
 		<description>Kattobi! Takuhai Kun (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -1185,7 +1185,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kickball" sourcefile="d_pce.cpp">
+	<game name="kickball" sourcefile="pce/d_pce.cpp">
 		<description>Kickball (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1193,7 +1193,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kikikai" sourcefile="d_pce.cpp">
+	<game name="kikikai" sourcefile="pce/d_pce.cpp">
 		<description>Kiki KaiKai (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -1201,7 +1201,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kingcasn" sourcefile="d_pce.cpp">
+	<game name="kingcasn" sourcefile="pce/d_pce.cpp">
 		<description>King of Casino (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -1209,7 +1209,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="klax" sourcefile="d_pce.cpp">
+	<game name="klax" sourcefile="pce/d_pce.cpp">
 		<description>Klax (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
@@ -1217,7 +1217,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="knightrse" cloneof="knightrs" romof="knightrs" sourcefile="d_pce.cpp">
+	<game name="knightrse" cloneof="knightrs" romof="knightrs" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Knight Rider Special (Hack, English v2.0)</description>
 		<year>2017</year>
@@ -1226,7 +1226,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="knightrs" sourcefile="d_pce.cpp">
+	<game name="knightrs" sourcefile="pce/d_pce.cpp">
 		<description>Knight Rider Special (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1234,7 +1234,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="proyak89" sourcefile="d_pce.cpp">
+	<game name="proyak89" sourcefile="pce/d_pce.cpp">
 		<description>Kore Ga Pro Yakyuu '89 (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Intec</manufacturer>
@@ -1242,7 +1242,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="proyak90" sourcefile="d_pce.cpp">
+	<game name="proyak90" sourcefile="pce/d_pce.cpp">
 		<description>Kore Ga Pro Yakyuu '90 (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Intec</manufacturer>
@@ -1250,7 +1250,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kungfu" sourcefile="d_pce.cpp">
+	<game name="kungfu" sourcefile="pce/d_pce.cpp">
 		<description>Kung Fu, The (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1258,7 +1258,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kyukyomj" sourcefile="d_pce.cpp">
+	<game name="kyukyomj" sourcefile="pce/d_pce.cpp">
 		<description>Kyuukyoku Mahjong - Idol Graphics (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1266,7 +1266,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kyukyom2" sourcefile="d_pce.cpp">
+	<game name="kyukyom2" sourcefile="pce/d_pce.cpp">
 		<description>Kyuukyoku Mahjong II (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1274,7 +1274,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ktiger" sourcefile="d_pce.cpp">
+	<game name="ktiger" sourcefile="pce/d_pce.cpp">
 		<description>Kyuukyoku Tiger (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -1282,7 +1282,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ladyswrdeng" cloneof="ladyswrd" romof="ladyswrd" sourcefile="d_pce.cpp">
+	<game name="ladyswrdeng" cloneof="ladyswrd" romof="ladyswrd" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Lady Sword (Hack, English)</description>
 		<year>2010</year>
@@ -1291,7 +1291,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ladyswrd1" cloneof="ladyswrd" romof="ladyswrd" sourcefile="d_pce.cpp">
+	<game name="ladyswrd1" cloneof="ladyswrd" romof="ladyswrd" sourcefile="pce/d_pce.cpp">
 		<description>Lady Sword (Japan) (Alt)</description>
 		<year>1992</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1299,7 +1299,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ladyswrd" sourcefile="d_pce.cpp">
+	<game name="ladyswrd" sourcefile="pce/d_pce.cpp">
 		<description>Lady Sword (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1307,7 +1307,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="loht" sourcefile="d_pce.cpp">
+	<game name="loht" sourcefile="pce/d_pce.cpp">
 		<description>Legend of Hero Tonma (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Irem</manufacturer>
@@ -1315,7 +1315,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ldrun" sourcefile="d_pce.cpp">
+	<game name="ldrun" sourcefile="pce/d_pce.cpp">
 		<description>Lode Runner - Lost Labyrinth (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1323,7 +1323,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="magchase" sourcefile="d_pce.cpp">
+	<game name="magchase" sourcefile="pce/d_pce.cpp">
 		<description>Magical Chase (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Palsoft</manufacturer>
@@ -1331,7 +1331,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mjgakuen" sourcefile="d_pce.cpp">
+	<game name="mjgakuen" sourcefile="pce/d_pce.cpp">
 		<description>Mahjong Gakuen - Touma Soushirou Toujou (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1339,7 +1339,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mjgakmld1" cloneof="mjgakmld" romof="mjgakmld" sourcefile="d_pce.cpp">
+	<game name="mjgakmld1" cloneof="mjgakmld" romof="mjgakmld" sourcefile="pce/d_pce.cpp">
 		<description>Mahjong Gakuen Mild - Touma Soushirou Toujou (Japan) (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1347,7 +1347,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mjgakmld" sourcefile="d_pce.cpp">
+	<game name="mjgakmld" sourcefile="pce/d_pce.cpp">
 		<description>Mahjong Gakuen Mild - Touma Soushirou Toujou (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -1355,7 +1355,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mjgokusp" sourcefile="d_pce.cpp">
+	<game name="mjgokusp" sourcefile="pce/d_pce.cpp">
 		<description>Mahjong Gokuu Special (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -1363,7 +1363,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mjkaiser" sourcefile="d_pce.cpp">
+	<game name="mjkaiser" sourcefile="pce/d_pce.cpp">
 		<description>Mahjong Haou Den - Kaiser's Quest (Japan)</description>
 		<year>1992</year>
 		<manufacturer>UPL</manufacturer>
@@ -1371,7 +1371,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mjwars" sourcefile="d_pce.cpp">
+	<game name="mjwars" sourcefile="pce/d_pce.cpp">
 		<description>Mahjong Shikyaku Retsuden - Mahjong Wars (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -1379,7 +1379,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mikkokue" cloneof="mikkoku" romof="mikkoku" sourcefile="d_pce.cpp">
+	<game name="mikkokue" cloneof="mikkoku" romof="mikkoku" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Maison Ikkoku (Hack, English)</description>
 		<year>2008</year>
@@ -1388,7 +1388,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mikkoku" sourcefile="d_pce.cpp">
+	<game name="mikkoku" sourcefile="pce/d_pce.cpp">
 		<description>Maison Ikkoku (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Micro Cabin</manufacturer>
@@ -1396,7 +1396,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wataru" sourcefile="d_pce.cpp">
+	<game name="wataru" sourcefile="pce/d_pce.cpp">
 		<description>Majin Eiyuu Den Wataru (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1404,7 +1404,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="makaihake" cloneof="makaihak" romof="makaihak" sourcefile="d_pce.cpp">
+	<game name="makaihake" cloneof="makaihak" romof="makaihak" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Makai Hakken Den Shada (Hack, English)</description>
 		<year>2015</year>
@@ -1413,7 +1413,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="makaihak" sourcefile="d_pce.cpp">
+	<game name="makaihak" sourcefile="pce/d_pce.cpp">
 		<description>Makai Hakken Den Shada (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Data East</manufacturer>
@@ -1421,7 +1421,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="makaipri" sourcefile="d_pce.cpp">
+	<game name="makaipri" sourcefile="pce/d_pce.cpp">
 		<description>Makai Prince Dorabocchan (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -1429,7 +1429,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="makyoden" sourcefile="d_pce.cpp">
+	<game name="makyoden" sourcefile="pce/d_pce.cpp">
 		<description>Makyou Densetsu (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -1437,7 +1437,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="maniacpw" sourcefile="d_pce.cpp">
+	<game name="maniacpw" sourcefile="pce/d_pce.cpp">
 		<description>Maniac Pro Wres - Asu e no Tatakai (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1445,7 +1445,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="marchen" sourcefile="d_pce.cpp">
+	<game name="marchen" sourcefile="pce/d_pce.cpp">
 		<description>Marchen Maze (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1453,7 +1453,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mashwatarue" cloneof="mashwataru" romof="mashwataru" sourcefile="d_pce.cpp">
+	<game name="mashwatarue" cloneof="mashwataru" romof="mashwataru" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Mashin Eiyuuden Wataru (Hack, English)</description>
 		<year>2022</year>
@@ -1462,7 +1462,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mashwataru" sourcefile="d_pce.cpp">
+	<game name="mashwataru" sourcefile="pce/d_pce.cpp">
 		<description>Mashin Eiyuuden Wataru (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1470,7 +1470,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mesopot" sourcefile="d_pce.cpp">
+	<game name="mesopot" sourcefile="pce/d_pce.cpp">
 		<description>Mesopotamia (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Atlus</manufacturer>
@@ -1478,7 +1478,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="metlstok" sourcefile="d_pce.cpp">
+	<game name="metlstok" sourcefile="pce/d_pce.cpp">
 		<description>Metal Stoker (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Face</manufacturer>
@@ -1486,7 +1486,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mizubaku" sourcefile="d_pce.cpp">
+	<game name="mizubaku" sourcefile="pce/d_pce.cpp">
 		<description>Mizubaku Dai Bouken - Liquid Kids (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
@@ -1494,7 +1494,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="momogdn" sourcefile="d_pce.cpp">
+	<game name="momogdn" sourcefile="pce/d_pce.cpp">
 		<description>Momotarou Densetsu Gaiden Dai 1 Shuu (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1502,7 +1502,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="momo2" sourcefile="d_pce.cpp">
+	<game name="momo2" sourcefile="pce/d_pce.cpp">
 		<description>Momotarou Densetsu II (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1510,7 +1510,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="momotrbo" sourcefile="d_pce.cpp">
+	<game name="momotrbo" sourcefile="pce/d_pce.cpp">
 		<description>Momotarou Densetsu Turbo (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1518,7 +1518,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="momoktsg" sourcefile="d_pce.cpp">
+	<game name="momoktsg" sourcefile="pce/d_pce.cpp">
 		<description>Momotarou Katsugeki (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1526,7 +1526,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mnstprow" sourcefile="d_pce.cpp">
+	<game name="mnstprow" sourcefile="pce/d_pce.cpp">
 		<description>Monster Pro Wres (Japan)</description>
 		<year>1991</year>
 		<manufacturer>ASK</manufacturer>
@@ -1534,7 +1534,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moritash" sourcefile="d_pce.cpp">
+	<game name="moritash" sourcefile="pce/d_pce.cpp">
 		<description>Morita Shougi PC (Japan)</description>
 		<year>1991</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -1542,7 +1542,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="motoroad" sourcefile="d_pce.cpp">
+	<game name="motoroad" sourcefile="pce/d_pce.cpp">
 		<description>Moto Roader (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NCS</manufacturer>
@@ -1550,7 +1550,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="motorod2a" cloneof="motorod2" romof="motorod2" sourcefile="d_pce.cpp">
+	<game name="motorod2a" cloneof="motorod2" romof="motorod2" sourcefile="pce/d_pce.cpp">
 		<description>Moto Roader II (Japan) (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1558,7 +1558,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="motorod2" sourcefile="d_pce.cpp">
+	<game name="motorod2" sourcefile="pce/d_pce.cpp">
 		<description>Moto Roader II (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1566,7 +1566,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mrheli1" cloneof="mrheli" romof="mrheli" sourcefile="d_pce.cpp">
+	<game name="mrheli1" cloneof="mrheli" romof="mrheli" sourcefile="pce/d_pce.cpp">
 		<description>Mr. Heli no Daibouken (Japan) (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Irem</manufacturer>
@@ -1574,7 +1574,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mrheli" sourcefile="d_pce.cpp">
+	<game name="mrheli" sourcefile="pce/d_pce.cpp">
 		<description>Mr. Heli no Daibouken (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Irem</manufacturer>
@@ -1582,7 +1582,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nantet" sourcefile="d_pce.cpp">
+	<game name="nantet" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>Nantettatte Engine (HB)</description>
 		<year>2017</year>
@@ -1591,7 +1591,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blodwolf" sourcefile="d_pce.cpp">
+	<game name="blodwolf" sourcefile="pce/d_pce.cpp">
 		<description>Narazumono Sentai Butai - Bloody Wolf (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Data East</manufacturer>
@@ -1599,7 +1599,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="naxopen" sourcefile="d_pce.cpp">
+	<game name="naxopen" sourcefile="pce/d_pce.cpp">
 		<description>Naxat Open (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -1607,7 +1607,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="naxstad" sourcefile="d_pce.cpp">
+	<game name="naxstad" sourcefile="pce/d_pce.cpp">
 		<description>Naxat Stadium (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -1615,7 +1615,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nazomasq" sourcefile="d_pce.cpp">
+	<game name="nazomasq" sourcefile="pce/d_pce.cpp">
 		<description>Nazo no Masquerade (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -1623,7 +1623,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="necromcr" sourcefile="d_pce.cpp">
+	<game name="necromcr" sourcefile="pce/d_pce.cpp">
 		<description>Necromancer (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1631,7 +1631,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="necros" sourcefile="d_pce.cpp">
+	<game name="necros" sourcefile="pce/d_pce.cpp">
 		<description>Necros no Yousai (Japan)</description>
 		<year>1990</year>
 		<manufacturer>ASK</manufacturer>
@@ -1639,7 +1639,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nectaris" sourcefile="d_pce.cpp">
+	<game name="nectaris" sourcefile="pce/d_pce.cpp">
 		<description>Nectaris (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1647,7 +1647,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nekdodge" sourcefile="d_pce.cpp">
+	<game name="nekdodge" sourcefile="pce/d_pce.cpp">
 		<description>Nekketsu Koukou Dodgeball Bu - PC Bangai Hen (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -1655,7 +1655,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neksoccr" sourcefile="d_pce.cpp">
+	<game name="neksoccr" sourcefile="pce/d_pce.cpp">
 		<description>Nekketsu Koukou Dodgeball Bu - Soccer PC Hen (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -1663,7 +1663,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neutopia" sourcefile="d_pce.cpp">
+	<game name="neutopia" sourcefile="pce/d_pce.cpp">
 		<description>Neutopia (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1671,7 +1671,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neutopi2" sourcefile="d_pce.cpp">
+	<game name="neutopi2" sourcefile="pce/d_pce.cpp">
 		<description>Neutopia II (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1679,7 +1679,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tnzs" sourcefile="d_pce.cpp">
+	<game name="tnzs" sourcefile="pce/d_pce.cpp">
 		<description>New Zealand Story, The (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -1687,7 +1687,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nhktaidr" sourcefile="d_pce.cpp">
+	<game name="nhktaidr" sourcefile="pce/d_pce.cpp">
 		<description>NHK Taiga Drama - Taiheiki (Japan)</description>
 		<year>1992</year>
 		<manufacturer>NHK Enterprise</manufacturer>
@@ -1695,7 +1695,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nikopun" sourcefile="d_pce.cpp">
+	<game name="nikopun" sourcefile="pce/d_pce.cpp">
 		<description>Niko Niko, Pun (Japan)</description>
 		<year>1991</year>
 		<manufacturer>NHK Enterprise</manufacturer>
@@ -1703,7 +1703,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nryukend" sourcefile="d_pce.cpp">
+	<game name="nryukend" sourcefile="pce/d_pce.cpp">
 		<description>Ninja Ryukenden (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1711,7 +1711,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ninjawar" sourcefile="d_pce.cpp">
+	<game name="ninjawar" sourcefile="pce/d_pce.cpp">
 		<description>Ninja Warriors, The (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -1719,7 +1719,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="oboccha" sourcefile="d_pce.cpp">
+	<game name="oboccha" sourcefile="pce/d_pce.cpp">
 		<description>Obocchama-kun (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1727,7 +1727,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="offthewall" sourcefile="d_pce.cpp">
+	<game name="offthewall" sourcefile="pce/d_pce.cpp">
 		<comment>Prototype</comment>
 		<description>Off the Wall (Prototype)</description>
 		<year>1992</year>
@@ -1736,7 +1736,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="opwolf" sourcefile="d_pce.cpp">
+	<game name="opwolf" sourcefile="pce/d_pce.cpp">
 		<description>Operation Wolf (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -1744,7 +1744,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ordyne" sourcefile="d_pce.cpp">
+	<game name="ordyne" sourcefile="pce/d_pce.cpp">
 		<description>Ordyne (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1752,7 +1752,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="outlivee" cloneof="outlive" romof="outlive" sourcefile="d_pce.cpp">
+	<game name="outlivee" cloneof="outlive" romof="outlive" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Out Live (Hack, English, v1.1)</description>
 		<year>2016</year>
@@ -1761,7 +1761,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="outlive" sourcefile="d_pce.cpp">
+	<game name="outlive" sourcefile="pce/d_pce.cpp">
 		<description>Out Live (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Sunsoft</manufacturer>
@@ -1769,7 +1769,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="outrun" sourcefile="d_pce.cpp">
+	<game name="outrun" sourcefile="pce/d_pce.cpp">
 		<description>Out Run (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -1777,7 +1777,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="override" sourcefile="d_pce.cpp">
+	<game name="override" sourcefile="pce/d_pce.cpp">
 		<description>Override (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Data East</manufacturer>
@@ -1785,7 +1785,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="p47" sourcefile="d_pce.cpp">
+	<game name="p47" sourcefile="pce/d_pce.cpp">
 		<description>P-47 - The Freedom Fighter (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -1793,7 +1793,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacland" sourcefile="d_pce.cpp">
+	<game name="pacland" sourcefile="pce/d_pce.cpp">
 		<description>Pac-Land (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -1801,7 +1801,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pachikun" sourcefile="d_pce.cpp">
+	<game name="pachikun" sourcefile="pce/d_pce.cpp">
 		<description>Pachio Kun - Juuban Shoubu (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Coconuts Japan</manufacturer>
@@ -1809,7 +1809,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="paranoia" sourcefile="d_pce.cpp">
+	<game name="paranoia" sourcefile="pce/d_pce.cpp">
 		<description>Paranoia (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -1817,7 +1817,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="parasol" sourcefile="d_pce.cpp">
+	<game name="parasol" sourcefile="pce/d_pce.cpp">
 		<description>Parasol Stars - The Story of Bubble Bobble III (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -1825,7 +1825,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="parodius" sourcefile="d_pce.cpp">
+	<game name="parodius" sourcefile="pce/d_pce.cpp">
 		<description>Parodius da! - Shinwa Kara Owarai He (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Konami</manufacturer>
@@ -1833,7 +1833,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcdenja" cloneof="pcdenj" romof="pcdenj" sourcefile="d_pce.cpp">
+	<game name="pcdenja" cloneof="pcdenj" romof="pcdenj" sourcefile="pce/d_pce.cpp">
 		<description>PC Denjin - Punkic Cyborgs (Japan) (Alt)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1841,7 +1841,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcdenj" sourcefile="d_pce.cpp">
+	<game name="pcdenj" sourcefile="pce/d_pce.cpp">
 		<description>PC Denjin - Punkic Cyborgs (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1849,7 +1849,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcgenja" cloneof="pcgenj" romof="pcgenj" sourcefile="d_pce.cpp">
+	<game name="pcgenja" cloneof="pcgenj" romof="pcgenj" sourcefile="pce/d_pce.cpp">
 		<description>PC Genjin - Pithecanthropus Computerurus (Japan) (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1857,7 +1857,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcgenj" sourcefile="d_pce.cpp">
+	<game name="pcgenj" sourcefile="pce/d_pce.cpp">
 		<description>PC Genjin - Pithecanthropus Computerurus (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1865,7 +1865,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcgenj2" sourcefile="d_pce.cpp">
+	<game name="pcgenj2" sourcefile="pce/d_pce.cpp">
 		<description>PC Genjin 2 - Pithecanthropus Computerurus (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1873,7 +1873,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcgenj3" sourcefile="d_pce.cpp">
+	<game name="pcgenj3" sourcefile="pce/d_pce.cpp">
 		<description>PC Genjin 3 - Pithecanthropus Computerurus (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1881,7 +1881,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcgenj3t" sourcefile="d_pce.cpp">
+	<game name="pcgenj3t" sourcefile="pce/d_pce.cpp">
 		<description>PC Genjin 3 - Pithecanthropus Computerurus (Taikenban) (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1889,7 +1889,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pcpachi" sourcefile="d_pce.cpp">
+	<game name="pcpachi" sourcefile="pce/d_pce.cpp">
 		<description>PC Pachi-slot (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Game Express</manufacturer>
@@ -1897,7 +1897,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="photoboy" cloneof="gekisboy" romof="gekisboy" sourcefile="d_pce.cpp">
+	<game name="photoboy" cloneof="gekisboy" romof="gekisboy" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Photograph Boy (Hack, English)</description>
 		<year>2023</year>
@@ -1906,7 +1906,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="populous1" cloneof="populous" romof="populous" sourcefile="d_pce.cpp">
+	<game name="populous1" cloneof="populous" romof="populous" sourcefile="pce/d_pce.cpp">
 		<description>Populous (Japan) (Alt)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1914,7 +1914,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="populous" sourcefile="d_pce.cpp">
+	<game name="populous" sourcefile="pce/d_pce.cpp">
 		<description>Populous (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1922,7 +1922,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pdrift1" cloneof="pdrift" romof="pdrift" sourcefile="d_pce.cpp">
+	<game name="pdrift1" cloneof="pdrift" romof="pdrift" sourcefile="pce/d_pce.cpp">
 		<description>Power Drift (Japan) (Alt)</description>
 		<year>1990</year>
 		<manufacturer>Asmik</manufacturer>
@@ -1930,7 +1930,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pdrift" sourcefile="d_pce.cpp">
+	<game name="pdrift" sourcefile="pce/d_pce.cpp">
 		<description>Power Drift (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Asmik</manufacturer>
@@ -1938,7 +1938,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="power11" sourcefile="d_pce.cpp">
+	<game name="power11" sourcefile="pce/d_pce.cpp">
 		<description>Power Eleven (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1946,7 +1946,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="powergat" sourcefile="d_pce.cpp">
+	<game name="powergat" sourcefile="pce/d_pce.cpp">
 		<description>Power Gate (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -1954,7 +1954,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pgolf" sourcefile="d_pce.cpp">
+	<game name="pgolf" sourcefile="pce/d_pce.cpp">
 		<description>Power Golf (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1962,7 +1962,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pleag93" sourcefile="d_pce.cpp">
+	<game name="pleag93" sourcefile="pce/d_pce.cpp">
 		<description>Power League '93 (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1970,7 +1970,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pleague" sourcefile="d_pce.cpp">
+	<game name="pleague" sourcefile="pce/d_pce.cpp">
 		<description>Power League (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1978,7 +1978,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pleagas" sourcefile="d_pce.cpp">
+	<game name="pleagas" sourcefile="pce/d_pce.cpp">
 		<description>Power League - All Star Version (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1986,7 +1986,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pleag2" sourcefile="d_pce.cpp">
+	<game name="pleag2" sourcefile="pce/d_pce.cpp">
 		<description>Power League II (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -1994,7 +1994,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pleag3" sourcefile="d_pce.cpp">
+	<game name="pleag3" sourcefile="pce/d_pce.cpp">
 		<description>Power League III (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2002,7 +2002,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pleag4" sourcefile="d_pce.cpp">
+	<game name="pleag4" sourcefile="pce/d_pce.cpp">
 		<description>Power League IV (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2010,7 +2010,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pleag5" sourcefile="d_pce.cpp">
+	<game name="pleag5" sourcefile="pce/d_pce.cpp">
 		<description>Power League V (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2018,7 +2018,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="psports" sourcefile="d_pce.cpp">
+	<game name="psports" sourcefile="pce/d_pce.cpp">
 		<description>Power Sports (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2026,7 +2026,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ptennis" sourcefile="d_pce.cpp">
+	<game name="ptennis" sourcefile="pce/d_pce.cpp">
 		<description>Power Tennis (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2034,7 +2034,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ptennwc" sourcefile="d_pce.cpp">
+	<game name="ptennwc" sourcefile="pce/d_pce.cpp">
 		<description>Pro Tennis World Court (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2042,7 +2042,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="proyak91" sourcefile="d_pce.cpp">
+	<game name="proyak91" sourcefile="pce/d_pce.cpp">
 		<description>Pro Yakyuu World Stadium '91 (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2050,7 +2050,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="proyak" sourcefile="d_pce.cpp">
+	<game name="proyak" sourcefile="pce/d_pce.cpp">
 		<description>Pro Yakyuu World Stadium (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2058,7 +2058,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="psychas" sourcefile="d_pce.cpp">
+	<game name="psychas" sourcefile="pce/d_pce.cpp">
 		<description>Psycho Chaser (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -2066,7 +2066,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="puzzlboy" sourcefile="d_pce.cpp">
+	<game name="puzzlboy" sourcefile="pce/d_pce.cpp">
 		<description>Puzzle Boy (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Nihon Telenet</manufacturer>
@@ -2074,7 +2074,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="puzznic" sourcefile="d_pce.cpp">
+	<game name="puzznic" sourcefile="pce/d_pce.cpp">
 		<description>Puzznic (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2082,7 +2082,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="quizts" sourcefile="d_pce.cpp">
+	<game name="quizts" sourcefile="pce/d_pce.cpp">
 		<description>Quiz Toukou Shashin (Japan)</description>
 		<year>19??</year>
 		<manufacturer>Game Express</manufacturer>
@@ -2090,7 +2090,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rtypep1" sourcefile="d_pce.cpp">
+	<game name="rtypep1" sourcefile="pce/d_pce.cpp">
 		<description>R-Type Part-1 (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2098,7 +2098,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rtypep2" sourcefile="d_pce.cpp">
+	<game name="rtypep2" sourcefile="pce/d_pce.cpp">
 		<description>R-Type Part-2 (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2106,7 +2106,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rtypep2v11" cloneof="rtypep2" romof="rtypep2" sourcefile="d_pce.cpp">
+	<game name="rtypep2v11" cloneof="rtypep2" romof="rtypep2" sourcefile="pce/d_pce.cpp">
 		<description>R-Type Part-2 (v1.1) (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2114,7 +2114,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rabiolep" sourcefile="d_pce.cpp">
+	<game name="rabiolep" sourcefile="pce/d_pce.cpp">
 		<description>Rabio Lepus Special (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Video System</manufacturer>
@@ -2122,7 +2122,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="racindam" sourcefile="d_pce.cpp">
+	<game name="racindam" sourcefile="pce/d_pce.cpp">
 		<description>Racing Damashii (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Irem</manufacturer>
@@ -2130,7 +2130,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="raiden" sourcefile="d_pce.cpp">
+	<game name="raiden" sourcefile="pce/d_pce.cpp">
 		<description>Raiden</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2138,7 +2138,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rastan2" sourcefile="d_pce.cpp">
+	<game name="rastan2" sourcefile="pce/d_pce.cpp">
 		<description>Rastan Saga II (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2146,7 +2146,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="reflectron" sourcefile="d_pce.cpp">
+	<game name="reflectron" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>Reflectron (HB)</description>
 		<year>2013</year>
@@ -2155,7 +2155,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rockon" sourcefile="d_pce.cpp">
+	<game name="rockon" sourcefile="pce/d_pce.cpp">
 		<description>Rock-on (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Big Club</manufacturer>
@@ -2163,7 +2163,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ryukyu" sourcefile="d_pce.cpp">
+	<game name="ryukyu" sourcefile="pce/d_pce.cpp">
 		<description>Ryuukyuu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Face</manufacturer>
@@ -2171,7 +2171,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sadaki7" sourcefile="d_pce.cpp">
+	<game name="sadaki7" sourcefile="pce/d_pce.cpp">
 		<description>Sadakichi 7 Series - Hideyoshi no Ougon (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2179,7 +2179,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="saigonin" sourcefile="d_pce.cpp">
+	<game name="saigonin" sourcefile="pce/d_pce.cpp">
 		<description>Saigo no Nindou - Ninja Spirit (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Irem</manufacturer>
@@ -2187,7 +2187,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="salamand" sourcefile="d_pce.cpp">
+	<game name="salamand" sourcefile="pce/d_pce.cpp">
 		<description>Salamander (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Konami</manufacturer>
@@ -2195,7 +2195,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="salamandmini" cloneof="salamand" romof="salamand" sourcefile="d_pce.cpp">
+	<game name="salamandmini" cloneof="salamand" romof="salamand" sourcefile="pce/d_pce.cpp">
 		<description>Salamander (PC-Engine Mini Ed.)</description>
 		<year>2020</year>
 		<manufacturer>Konami</manufacturer>
@@ -2203,7 +2203,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="santatlantean" sourcefile="d_pce.cpp">
+	<game name="santatlantean" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>Santatlantean (HB)</description>
 		<year>2014</year>
@@ -2212,7 +2212,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sekigaha" sourcefile="d_pce.cpp">
+	<game name="sekigaha" sourcefile="pce/d_pce.cpp">
 		<description>Sekigahara (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -2220,7 +2220,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sengokmj" sourcefile="d_pce.cpp">
+	<game name="sengokmj" sourcefile="pce/d_pce.cpp">
 		<description>Sengoku Mahjong (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2228,7 +2228,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shanghai" sourcefile="d_pce.cpp">
+	<game name="shanghai" sourcefile="pce/d_pce.cpp">
 		<description>Shanghai (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2236,7 +2236,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shinobi" sourcefile="d_pce.cpp">
+	<game name="shinobi" sourcefile="pce/d_pce.cpp">
 		<description>Shinobi (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Asmik</manufacturer>
@@ -2244,7 +2244,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shiryo" sourcefile="d_pce.cpp">
+	<game name="shiryo" sourcefile="pce/d_pce.cpp">
 		<description>Shiryou Sensen (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2252,7 +2252,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shogisi" sourcefile="d_pce.cpp">
+	<game name="shogisi" sourcefile="pce/d_pce.cpp">
 		<description>Shougi Shodan Icchokusen (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Home Data</manufacturer>
@@ -2260,7 +2260,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shogism" sourcefile="d_pce.cpp">
+	<game name="shogism" sourcefile="pce/d_pce.cpp">
 		<description>Shougi Shoshinsha Muyou (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Home Data</manufacturer>
@@ -2268,7 +2268,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sidearms" sourcefile="d_pce.cpp">
+	<game name="sidearms" sourcefile="pce/d_pce.cpp">
 		<description>Sidearms - Hyper Dyne (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -2276,7 +2276,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="242" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="silentd" sourcefile="d_pce.cpp">
+	<game name="silentd" sourcefile="pce/d_pce.cpp">
 		<description>Silent Debuggers (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Data East</manufacturer>
@@ -2284,7 +2284,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sindibad" sourcefile="d_pce.cpp">
+	<game name="sindibad" sourcefile="pce/d_pce.cpp">
 		<description>Sindibad Chitei no Dai Makyuu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -2292,7 +2292,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="skweek" sourcefile="d_pce.cpp">
+	<game name="skweek" sourcefile="pce/d_pce.cpp">
 		<description>Skweek (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2300,7 +2300,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sokoban" sourcefile="d_pce.cpp">
+	<game name="sokoban" sourcefile="pce/d_pce.cpp">
 		<description>Sokoban World (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2308,7 +2308,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="soldblad" sourcefile="d_pce.cpp">
+	<game name="soldblad" sourcefile="pce/d_pce.cpp">
 		<description>Soldier Blade (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2316,7 +2316,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="soldblas" sourcefile="d_pce.cpp">
+	<game name="soldblas" sourcefile="pce/d_pce.cpp">
 		<description>Soldier Blade Special - Caravan Stage (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2324,7 +2324,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sonson2" sourcefile="d_pce.cpp">
+	<game name="sonson2" sourcefile="pce/d_pce.cpp">
 		<description>Son Son II (Japan)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -2332,7 +2332,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sharrier" sourcefile="d_pce.cpp">
+	<game name="sharrier" sourcefile="pce/d_pce.cpp">
 		<description>Space Harrier (Japan)</description>
 		<year>1988</year>
 		<manufacturer>NEC</manufacturer>
@@ -2340,7 +2340,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spaceinv" sourcefile="d_pce.cpp">
+	<game name="spaceinv" sourcefile="pce/d_pce.cpp">
 		<description>Space Invaders - Fukkatsu no Hi (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2348,7 +2348,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sci" sourcefile="d_pce.cpp">
+	<game name="sci" sourcefile="pce/d_pce.cpp">
 		<description>Special Criminal Investigation (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Taito</manufacturer>
@@ -2356,7 +2356,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spinpair" sourcefile="d_pce.cpp">
+	<game name="spinpair" sourcefile="pce/d_pce.cpp">
 		<description>Spin Pair (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2364,7 +2364,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spirwave" sourcefile="d_pce.cpp">
+	<game name="spirwave" sourcefile="pce/d_pce.cpp">
 		<description>Spiral Wave (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2372,7 +2372,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="splatth" sourcefile="d_pce.cpp">
+	<game name="splatth" sourcefile="pce/d_pce.cpp">
 		<description>Splatterhouse (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namco</manufacturer>
@@ -2380,7 +2380,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="splatthc" cloneof="splatth" romof="splatth" sourcefile="d_pce.cpp">
+	<game name="splatthc" cloneof="splatth" romof="splatth" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Splatterhouse Chrome (Hack)</description>
 		<year>2009</year>
@@ -2389,7 +2389,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stratego" sourcefile="d_pce.cpp">
+	<game name="stratego" sourcefile="pce/d_pce.cpp">
 		<description>Stratego (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2397,7 +2397,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sf2ce" sourcefile="d_pce.cpp">
+	<game name="sf2ce" sourcefile="pce/d_pce.cpp">
 		<description>Street Fighter II' - Champion Edition (Japan)</description>
 		<year>1993</year>
 		<manufacturer>NEC - Capcom</manufacturer>
@@ -2405,7 +2405,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="stripf2" sourcefile="d_pce.cpp">
+	<game name="stripf2" sourcefile="pce/d_pce.cpp">
 		<description>Strip Fighter II (Japan)</description>
 		<year>19??</year>
 		<manufacturer>Game Express</manufacturer>
@@ -2413,7 +2413,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smcrush" sourcefile="d_pce.cpp">
+	<game name="smcrush" sourcefile="pce/d_pce.cpp">
 		<description>Super Metal Crusher (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Pack-In-Video</manufacturer>
@@ -2421,7 +2421,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smomo" sourcefile="d_pce.cpp">
+	<game name="smomo" sourcefile="pce/d_pce.cpp">
 		<description>Super Momotarou Dentetsu (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2429,7 +2429,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="smomo2" sourcefile="d_pce.cpp">
+	<game name="smomo2" sourcefile="pce/d_pce.cpp">
 		<description>Super Momotarou Dentetsu II (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2437,7 +2437,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sssoldr" sourcefile="d_pce.cpp">
+	<game name="sssoldr" sourcefile="pce/d_pce.cpp">
 		<description>Super Star Soldier (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2445,7 +2445,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="svolley" sourcefile="d_pce.cpp">
+	<game name="svolley" sourcefile="pce/d_pce.cpp">
 		<description>Super Volleyball (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Video System</manufacturer>
@@ -2453,7 +2453,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="susano" sourcefile="d_pce.cpp">
+	<game name="susano" sourcefile="pce/d_pce.cpp">
 		<description>Susanoo Densetsu (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2461,7 +2461,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chasehq" sourcefile="d_pce.cpp">
+	<game name="chasehq" sourcefile="pce/d_pce.cpp">
 		<description>Taito Chase H.Q. (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Taito</manufacturer>
@@ -2469,7 +2469,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="takameib" sourcefile="d_pce.cpp">
+	<game name="takameib" sourcefile="pce/d_pce.cpp">
 		<description>Takahashi Meijin no Shin Boukenjima (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2477,7 +2477,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shingen1" cloneof="shingen" romof="shingen" sourcefile="d_pce.cpp">
+	<game name="shingen1" cloneof="shingen" romof="shingen" sourcefile="pce/d_pce.cpp">
 		<description>Takeda Shingen (Japan) (Alt)</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -2485,7 +2485,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shingen" sourcefile="d_pce.cpp">
+	<game name="shingen" sourcefile="pce/d_pce.cpp">
 		<description>Takeda Shingen (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -2493,7 +2493,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tatsunok" sourcefile="d_pce.cpp">
+	<game name="tatsunok" sourcefile="pce/d_pce.cpp">
 		<description>Tatsu No Ko Fighter (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Tonkin House</manufacturer>
@@ -2501,7 +2501,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tatsujinp" cloneof="tatsujin" romof="tatsujin" sourcefile="d_pce.cpp">
+	<game name="tatsujinp" cloneof="tatsujin" romof="tatsujin" sourcefile="pce/d_pce.cpp">
 		<comment>Prototype</comment>
 		<description>Tatsujin (Japan) (Prototype)</description>
 		<year>1992</year>
@@ -2510,7 +2510,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tatsujin" sourcefile="d_pce.cpp">
+	<game name="tatsujin" sourcefile="pce/d_pce.cpp">
 		<description>Tatsujin (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Taito</manufacturer>
@@ -2518,7 +2518,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sdragon" sourcefile="d_pce.cpp">
+	<game name="sdragon" sourcefile="pce/d_pce.cpp">
 		<description>Tenseiryuu - Saint Dragon (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Irem</manufacturer>
@@ -2526,7 +2526,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="terracr2" sourcefile="d_pce.cpp">
+	<game name="terracr2" sourcefile="pce/d_pce.cpp">
 		<description>Terra Cresta II - Mandoraa no Gyakushuu (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Nihon Bussan</manufacturer>
@@ -2534,7 +2534,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tblade" sourcefile="d_pce.cpp">
+	<game name="tblade" sourcefile="pce/d_pce.cpp">
 		<description>Thunder Blade (Japan)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -2542,7 +2542,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="timcrus2" sourcefile="d_pce.cpp">
+	<game name="timcrus2" sourcefile="pce/d_pce.cpp">
 		<description>Time Cruise II (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Face</manufacturer>
@@ -2550,7 +2550,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="titan" sourcefile="d_pce.cpp">
+	<game name="titan" sourcefile="pce/d_pce.cpp">
 		<description>Titan (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -2558,7 +2558,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="toiletk" sourcefile="d_pce.cpp">
+	<game name="toiletk" sourcefile="pce/d_pce.cpp">
 		<description>Toilet Kids (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2566,7 +2566,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tongueman" sourcefile="d_pce.cpp">
+	<game name="tongueman" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>Tongueman's Logic (HB)</description>
 		<year>2007</year>
@@ -2575,7 +2575,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="toramich" sourcefile="d_pce.cpp">
+	<game name="toramich" sourcefile="pce/d_pce.cpp">
 		<description>Tora e no Michi (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Victor Entertainment</manufacturer>
@@ -2583,7 +2583,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="etercity" sourcefile="d_pce.cpp">
+	<game name="etercity" sourcefile="pce/d_pce.cpp">
 		<description>Toshi Tensou Keikaku - Eternal City (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -2591,7 +2591,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="druaga" sourcefile="d_pce.cpp">
+	<game name="druaga" sourcefile="pce/d_pce.cpp">
 		<description>Tower of Druaga, The (Japan)</description>
 		<year>1992</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2599,7 +2599,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="toyshopb" sourcefile="d_pce.cpp">
+	<game name="toyshopb" sourcefile="pce/d_pce.cpp">
 		<description>Toy Shop Boys (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Victor</manufacturer>
@@ -2607,7 +2607,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tricky" sourcefile="d_pce.cpp">
+	<game name="tricky" sourcefile="pce/d_pce.cpp">
 		<description>Tricky (Japan)</description>
 		<year>1991</year>
 		<manufacturer>IGS</manufacturer>
@@ -2615,7 +2615,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tsuppari" sourcefile="d_pce.cpp">
+	<game name="tsuppari" sourcefile="pce/d_pce.cpp">
 		<description>Tsuppari Oozumou - Heisei Ban (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -2623,7 +2623,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="baibai" sourcefile="d_pce.cpp">
+	<game name="baibai" sourcefile="pce/d_pce.cpp">
 		<description>Tsuru Teruhito no Jissen Kabushiki Bai Bai Game (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Intec</manufacturer>
@@ -2631,7 +2631,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tvbasket" sourcefile="d_pce.cpp">
+	<game name="tvbasket" sourcefile="pce/d_pce.cpp">
 		<description>TV Sports Basketball (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2639,7 +2639,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tvfootbl" sourcefile="d_pce.cpp">
+	<game name="tvfootbl" sourcefile="pce/d_pce.cpp">
 		<description>TV Sports Football (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2647,7 +2647,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tvhockey" sourcefile="d_pce.cpp">
+	<game name="tvhockey" sourcefile="pce/d_pce.cpp">
 		<description>TV Sports Hockey (Japan)</description>
 		<year>1993</year>
 		<manufacturer>Victor Interactive Software</manufacturer>
@@ -2655,7 +2655,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="usaprobs" sourcefile="d_pce.cpp">
+	<game name="usaprobs" sourcefile="pce/d_pce.cpp">
 		<description>USA Pro Basketball (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Aicom</manufacturer>
@@ -2663,7 +2663,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="valkyriee" cloneof="valkyrie" romof="valkyrie" sourcefile="d_pce.cpp">
+	<game name="valkyriee" cloneof="valkyrie" romof="valkyrie" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Valkyrie no Densetsu (Hack, English)</description>
 		<year>2015</year>
@@ -2672,7 +2672,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="valkyrie" sourcefile="d_pce.cpp">
+	<game name="valkyrie" sourcefile="pce/d_pce.cpp">
 		<description>Valkyrie no Densetsu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2680,7 +2680,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="veigues" sourcefile="d_pce.cpp">
+	<game name="veigues" sourcefile="pce/d_pce.cpp">
 		<description>Veigues - Tactical Gladiator (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Victor Entertainment</manufacturer>
@@ -2688,7 +2688,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="victoryr" sourcefile="d_pce.cpp">
+	<game name="victoryr" sourcefile="pce/d_pce.cpp">
 		<description>Victory Run (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2696,7 +2696,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vigilant" sourcefile="d_pce.cpp">
+	<game name="vigilant" sourcefile="pce/d_pce.cpp">
 		<description>Vigilante (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Irem</manufacturer>
@@ -2704,7 +2704,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="violents" sourcefile="d_pce.cpp">
+	<game name="violents" sourcefile="pce/d_pce.cpp">
 		<description>Violent Soldier (Japan)</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -2712,7 +2712,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="volfied" sourcefile="d_pce.cpp">
+	<game name="volfied" sourcefile="pce/d_pce.cpp">
 		<description>Volfied (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Taito</manufacturer>
@@ -2720,7 +2720,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wring" sourcefile="d_pce.cpp">
+	<game name="wring" sourcefile="pce/d_pce.cpp">
 		<description>W-ring - The Double Rings (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Naxat Soft</manufacturer>
@@ -2728,7 +2728,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="waiwaimj" sourcefile="d_pce.cpp">
+	<game name="waiwaimj" sourcefile="pce/d_pce.cpp">
 		<description>Wai Wai Mahjong - Yukaina Janyuu Tachi (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Video System</manufacturer>
@@ -2736,7 +2736,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wallaby" sourcefile="d_pce.cpp">
+	<game name="wallaby" sourcefile="pce/d_pce.cpp">
 		<description>Wallaby!! - Usagi no Kuni no Kangaroo Race (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Masiya</manufacturer>
@@ -2744,7 +2744,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="winshot" sourcefile="d_pce.cpp">
+	<game name="winshot" sourcefile="pce/d_pce.cpp">
 		<description>Winning Shot (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Data East</manufacturer>
@@ -2752,7 +2752,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wonderm" sourcefile="d_pce.cpp">
+	<game name="wonderm" sourcefile="pce/d_pce.cpp">
 		<description>Wonder Momo (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2760,7 +2760,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wbeach" sourcefile="d_pce.cpp">
+	<game name="wbeach" sourcefile="pce/d_pce.cpp">
 		<description>World Beach Volley (Japan)</description>
 		<year>1990</year>
 		<manufacturer>IGS</manufacturer>
@@ -2768,7 +2768,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wcircuit" sourcefile="d_pce.cpp">
+	<game name="wcircuit" sourcefile="pce/d_pce.cpp">
 		<description>World Circuit (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2776,7 +2776,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wjockey" sourcefile="d_pce.cpp">
+	<game name="wjockey" sourcefile="pce/d_pce.cpp">
 		<description>World Jockey (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2784,7 +2784,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="xevious" sourcefile="d_pce.cpp">
+	<game name="xevious" sourcefile="pce/d_pce.cpp">
 		<description>Xevious - Fardraut Densetsu (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2792,7 +2792,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="youkaid" sourcefile="d_pce.cpp">
+	<game name="youkaid" sourcefile="pce/d_pce.cpp">
 		<description>Youkai Douchuuki (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Namcot</manufacturer>
@@ -2800,7 +2800,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yuyu" sourcefile="d_pce.cpp">
+	<game name="yuyu" sourcefile="pce/d_pce.cpp">
 		<description>Yuu Yuu Jinsei - Victory Life (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -2808,7 +2808,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zero4ca" cloneof="zero4c" romof="zero4c" sourcefile="d_pce.cpp">
+	<game name="zero4ca" cloneof="zero4c" romof="zero4c" sourcefile="pce/d_pce.cpp">
 		<description>Zero 4 Champ (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2816,7 +2816,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zero4c" sourcefile="d_pce.cpp">
+	<game name="zero4c" sourcefile="pce/d_pce.cpp">
 		<description>Zero 4 Champ (v1.5) (Japan)</description>
 		<year>1991</year>
 		<manufacturer>Media Rings Corporation</manufacturer>
@@ -2824,7 +2824,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zipang" sourcefile="d_pce.cpp">
+	<game name="zipang" sourcefile="pce/d_pce.cpp">
 		<description>Zipang (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Pack-In-Video</manufacturer>

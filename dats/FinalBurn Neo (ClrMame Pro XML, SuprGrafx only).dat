@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="1941" sourcefile="d_pce.cpp">
+	<game name="1941" sourcefile="pce/d_pce.cpp">
 		<description>1941 - Counter Attack (Japan, SGX)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -20,7 +20,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="aldynes" sourcefile="d_pce.cpp">
+	<game name="aldynes" sourcefile="pce/d_pce.cpp">
 		<description>Aldynes (Japan, SGX)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -28,7 +28,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="battlace" sourcefile="d_pce.cpp">
+	<game name="battlace" sourcefile="pce/d_pce.cpp">
 		<description>Battle Ace (Japan, SGX)</description>
 		<year>1989</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -36,7 +36,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="daimakaid" cloneof="daimakai" romof="daimakai" sourcefile="d_pce.cpp">
+	<game name="daimakaid" cloneof="daimakai" romof="daimakai" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>Dai Makaimura (Debug Menu Hack)</description>
 		<year>2007</year>
@@ -45,7 +45,7 @@
 		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="daimakai1" cloneof="daimakai" romof="daimakai" sourcefile="d_pce.cpp">
+	<game name="daimakai1" cloneof="daimakai" romof="daimakai" sourcefile="pce/d_pce.cpp">
 		<description>Dai Makaimura (Japan, SGX) (Alt)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -53,7 +53,7 @@
 		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="daimakai" sourcefile="d_pce.cpp">
+	<game name="daimakai" sourcefile="pce/d_pce.cpp">
 		<description>Dai Makaimura (Japan, SGX)</description>
 		<year>1990</year>
 		<manufacturer>NEC Avenue</manufacturer>
@@ -61,7 +61,7 @@
 		<video type="raster" orientation="horizontal" width="320" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="granzort" sourcefile="d_pce.cpp">
+	<game name="granzort" sourcefile="pce/d_pce.cpp">
 		<description>Madou Ou Granzort (Japan, SGX)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -69,7 +69,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rtypeuh" sourcefile="d_pce.cpp">
+	<game name="rtypeuh" sourcefile="pce/d_pce.cpp">
 		<comment>Hack</comment>
 		<description>R-Type (Unfinished SGX Hack)</description>
 		<year>2019</year>
@@ -78,7 +78,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rta2" sourcefile="d_pce.cpp">
+	<game name="rta2" sourcefile="pce/d_pce.cpp">
 		<comment>Homebrew</comment>
 		<description>RTA2 - Homebrew conversion of RTA2 (HB)</description>
 		<year>2016</year>

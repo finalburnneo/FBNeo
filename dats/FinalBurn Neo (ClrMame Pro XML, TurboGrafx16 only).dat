@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="aeroblst" sourcefile="d_pce.cpp">
+	<game name="aeroblst" sourcefile="pce/d_pce.cpp">
 		<description>Aero Blasters (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
@@ -20,7 +20,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="airzonk" sourcefile="d_pce.cpp">
+	<game name="airzonk" sourcefile="pce/d_pce.cpp">
 		<description>Air Zonk (USA)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -28,7 +28,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="acrush" sourcefile="d_pce.cpp">
+	<game name="acrush" sourcefile="pce/d_pce.cpp">
 		<description>Alien Crush (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
@@ -36,7 +36,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ballistx" sourcefile="d_pce.cpp">
+	<game name="ballistx" sourcefile="pce/d_pce.cpp">
 		<description>Ballistix (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Psygnosis</manufacturer>
@@ -44,7 +44,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="batlroyl" sourcefile="d_pce.cpp">
+	<game name="batlroyl" sourcefile="pce/d_pce.cpp">
 		<description>Battle Royale (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -52,7 +52,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blazlazr" sourcefile="d_pce.cpp">
+	<game name="blazlazr" sourcefile="pce/d_pce.cpp">
 		<description>Blazing Lazers (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
@@ -60,7 +60,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blodwolf" sourcefile="d_pce.cpp">
+	<game name="blodwolf" sourcefile="pce/d_pce.cpp">
 		<description>Bloody Wolf (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Data East</manufacturer>
@@ -68,7 +68,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombmn93" sourcefile="d_pce.cpp">
+	<game name="bombmn93" sourcefile="pce/d_pce.cpp">
 		<description>Bomberman '93 (USA)</description>
 		<year>1990</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -76,7 +76,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombman" sourcefile="d_pce.cpp">
+	<game name="bombman" sourcefile="pce/d_pce.cpp">
 		<description>Bomberman (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
@@ -84,7 +84,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bonk3" sourcefile="d_pce.cpp">
+	<game name="bonk3" sourcefile="pce/d_pce.cpp">
 		<description>Bonk III - Bonk's Big Adventure (USA)</description>
 		<year>1993</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -92,7 +92,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bonk" sourcefile="d_pce.cpp">
+	<game name="bonk" sourcefile="pce/d_pce.cpp">
 		<description>Bonk's Adventure (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
@@ -100,7 +100,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bonk2" sourcefile="d_pce.cpp">
+	<game name="bonk2" sourcefile="pce/d_pce.cpp">
 		<description>Bonk's Revenge (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
@@ -108,7 +108,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="boxyboy" sourcefile="d_pce.cpp">
+	<game name="boxyboy" sourcefile="pce/d_pce.cpp">
 		<description>Boxyboy (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -116,7 +116,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bravoman" sourcefile="d_pce.cpp">
+	<game name="bravoman" sourcefile="pce/d_pce.cpp">
 		<description>Bravoman (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -124,7 +124,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cadash" sourcefile="d_pce.cpp">
+	<game name="cadash" sourcefile="pce/d_pce.cpp">
 		<comment>Bad graphics</comment>
 		<description>Cadash (USA)</description>
 		<year>1991</year>
@@ -133,7 +133,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="forevbox" sourcefile="d_pce.cpp">
+	<game name="forevbox" sourcefile="pce/d_pce.cpp">
 		<comment>Bad sound</comment>
 		<description>Champions Forever Boxing (USA)</description>
 		<year>1991</year>
@@ -142,7 +142,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chewman" sourcefile="d_pce.cpp">
+	<game name="chewman" sourcefile="pce/d_pce.cpp">
 		<description>Chew Man Fu (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -150,7 +150,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chinawar" sourcefile="d_pce.cpp">
+	<game name="chinawar" sourcefile="pce/d_pce.cpp">
 		<description>China Warrior (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -158,7 +158,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cratermz" sourcefile="d_pce.cpp">
+	<game name="cratermz" sourcefile="pce/d_pce.cpp">
 		<description>Cratermaze (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -166,7 +166,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cybrcore" sourcefile="d_pce.cpp">
+	<game name="cybrcore" sourcefile="pce/d_pce.cpp">
 		<description>Cyber Core (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -174,7 +174,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="darkwing" sourcefile="d_pce.cpp">
+	<game name="darkwing" sourcefile="pce/d_pce.cpp">
 		<description>Darkwing Duck (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -182,7 +182,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="daviscup" sourcefile="d_pce.cpp">
+	<game name="daviscup" sourcefile="pce/d_pce.cpp">
 		<description>Davis Cup Tennis (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -190,7 +190,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deadmoon" sourcefile="d_pce.cpp">
+	<game name="deadmoon" sourcefile="pce/d_pce.cpp">
 		<description>Dead Moon (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -198,7 +198,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="deepblue" sourcefile="d_pce.cpp">
+	<game name="deepblue" sourcefile="pce/d_pce.cpp">
 		<description>Deep Blue (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -206,7 +206,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="devlcrsh" sourcefile="d_pce.cpp">
+	<game name="devlcrsh" sourcefile="pce/d_pce.cpp">
 		<description>Devil's Crush - Naxat Pinball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -214,7 +214,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ddungw" sourcefile="d_pce.cpp">
+	<game name="ddungw" sourcefile="pce/d_pce.cpp">
 		<description>Double Dungeons - W (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -222,7 +222,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dspirit" sourcefile="d_pce.cpp">
+	<game name="dspirit" sourcefile="pce/d_pce.cpp">
 		<description>Dragon Spirit (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -230,7 +230,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragcrse" sourcefile="d_pce.cpp">
+	<game name="dragcrse" sourcefile="pce/d_pce.cpp">
 		<description>Dragon's Curse (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -238,7 +238,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dropoff" sourcefile="d_pce.cpp">
+	<game name="dropoff" sourcefile="pce/d_pce.cpp">
 		<description>Drop.Off (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -246,7 +246,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dungexpl" sourcefile="d_pce.cpp">
+	<game name="dungexpl" sourcefile="pce/d_pce.cpp">
 		<description>Dungeon Explorer (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -254,7 +254,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="falcon" sourcefile="d_pce.cpp">
+	<game name="falcon" sourcefile="pce/d_pce.cpp">
 		<description>Falcon (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -262,7 +262,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="fantzone" sourcefile="d_pce.cpp">
+	<game name="fantzone" sourcefile="pce/d_pce.cpp">
 		<description>Fantasy Zone (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -270,7 +270,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="finallap" sourcefile="d_pce.cpp">
+	<game name="finallap" sourcefile="pce/d_pce.cpp">
 		<description>Final Lap Twin (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -278,7 +278,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaga90" sourcefile="d_pce.cpp">
+	<game name="galaga90" sourcefile="pce/d_pce.cpp">
 		<description>Galaga '90 (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -286,7 +286,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ghostman" sourcefile="d_pce.cpp">
+	<game name="ghostman" sourcefile="pce/d_pce.cpp">
 		<description>Ghost Manor (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -294,7 +294,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gunboat" sourcefile="d_pce.cpp">
+	<game name="gunboat" sourcefile="pce/d_pce.cpp">
 		<description>Gunboat (USA)</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -302,7 +302,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hitice" sourcefile="d_pce.cpp">
+	<game name="hitice" sourcefile="pce/d_pce.cpp">
 		<description>Hit the Ice - VHL - The Official Video Hockey League (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -310,7 +310,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="impossam" sourcefile="d_pce.cpp">
+	<game name="impossam" sourcefile="pce/d_pce.cpp">
 		<description>Impossamole (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC - Gremlin Graphics</manufacturer>
@@ -318,7 +318,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jjnjeff" sourcefile="d_pce.cpp">
+	<game name="jjnjeff" sourcefile="pce/d_pce.cpp">
 		<description>J.J. &amp; Jeff (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Hudson Soft</manufacturer>
@@ -326,7 +326,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nicklaus" sourcefile="d_pce.cpp">
+	<game name="nicklaus" sourcefile="pce/d_pce.cpp">
 		<description>Jack Nicklaus' Turbo Golf (USA)</description>
 		<year>1990</year>
 		<manufacturer>Accolade</manufacturer>
@@ -334,7 +334,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jchan" sourcefile="d_pce.cpp">
+	<game name="jchan" sourcefile="pce/d_pce.cpp">
 		<description>Jackie Chan's Action Kung Fu (USA)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -342,7 +342,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="keithcor" sourcefile="d_pce.cpp">
+	<game name="keithcor" sourcefile="pce/d_pce.cpp">
 		<description>Keith Courage in Alpha Zones (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -350,7 +350,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="kingcasn" sourcefile="d_pce.cpp">
+	<game name="kingcasn" sourcefile="pce/d_pce.cpp">
 		<description>King of Casino (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -358,7 +358,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="klax" sourcefile="d_pce.cpp">
+	<game name="klax" sourcefile="pce/d_pce.cpp">
 		<description>Klax (USA)</description>
 		<year>1990</year>
 		<manufacturer>Tengen</manufacturer>
@@ -366,7 +366,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="loht" sourcefile="d_pce.cpp">
+	<game name="loht" sourcefile="pce/d_pce.cpp">
 		<description>Legend of Hero Tonma (USA)</description>
 		<year>1991</year>
 		<manufacturer>TTI</manufacturer>
@@ -374,7 +374,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="legaxe2" sourcefile="d_pce.cpp">
+	<game name="legaxe2" sourcefile="pce/d_pce.cpp">
 		<description>Legendary Axe II, The (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -382,7 +382,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="legaxe" sourcefile="d_pce.cpp">
+	<game name="legaxe" sourcefile="pce/d_pce.cpp">
 		<description>Legendary Axe, The (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -390,7 +390,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="magchase" sourcefile="d_pce.cpp">
+	<game name="magchase" sourcefile="pce/d_pce.cpp">
 		<description>Magical Chase (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -398,7 +398,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="miltrymd" sourcefile="d_pce.cpp">
+	<game name="miltrymd" sourcefile="pce/d_pce.cpp">
 		<description>Military Madness (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -406,7 +406,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="motoroad" sourcefile="d_pce.cpp">
+	<game name="motoroad" sourcefile="pce/d_pce.cpp">
 		<description>Moto Roader (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -414,7 +414,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neutopia" sourcefile="d_pce.cpp">
+	<game name="neutopia" sourcefile="pce/d_pce.cpp">
 		<description>Neutopia (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -422,7 +422,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="neutopi2" sourcefile="d_pce.cpp">
+	<game name="neutopi2" sourcefile="pce/d_pce.cpp">
 		<description>Neutopia II (USA)</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -430,7 +430,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="advislnd" sourcefile="d_pce.cpp">
+	<game name="advislnd" sourcefile="pce/d_pce.cpp">
 		<description>New Adventure Island (USA)</description>
 		<year>1992</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -438,7 +438,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nightcr" sourcefile="d_pce.cpp">
+	<game name="nightcr" sourcefile="pce/d_pce.cpp">
 		<description>Night Creatures (USA)</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -446,7 +446,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nspirit" sourcefile="d_pce.cpp">
+	<game name="nspirit" sourcefile="pce/d_pce.cpp">
 		<description>Ninja Spirit (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Irem</manufacturer>
@@ -454,7 +454,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="griffon" sourcefile="d_pce.cpp">
+	<game name="griffon" sourcefile="pce/d_pce.cpp">
 		<description>Order of the Griffon (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -462,7 +462,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ordyne" sourcefile="d_pce.cpp">
+	<game name="ordyne" sourcefile="pce/d_pce.cpp">
 		<description>Ordyne (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -470,7 +470,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacland" sourcefile="d_pce.cpp">
+	<game name="pacland" sourcefile="pce/d_pce.cpp">
 		<description>Pac-Land (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -478,7 +478,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="panzakb" sourcefile="d_pce.cpp">
+	<game name="panzakb" sourcefile="pce/d_pce.cpp">
 		<description>Panza Kick Boxing (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -486,7 +486,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="parasol" sourcefile="d_pce.cpp">
+	<game name="parasol" sourcefile="pce/d_pce.cpp">
 		<description>Parasol Stars - The Story of Bubble Bobble III (USA)</description>
 		<year>1991</year>
 		<manufacturer>Working Designs</manufacturer>
@@ -494,7 +494,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pgolf" sourcefile="d_pce.cpp">
+	<game name="pgolf" sourcefile="pce/d_pce.cpp">
 		<description>Power Golf (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -502,7 +502,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="psychos" sourcefile="d_pce.cpp">
+	<game name="psychos" sourcefile="pce/d_pce.cpp">
 		<description>Psychosis (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -510,7 +510,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rtype" sourcefile="d_pce.cpp">
+	<game name="rtype" sourcefile="pce/d_pce.cpp">
 		<description>R-Type (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -518,7 +518,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="raiden" sourcefile="d_pce.cpp">
+	<game name="raiden" sourcefile="pce/d_pce.cpp">
 		<description>Raiden (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -526,7 +526,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="samuraig" sourcefile="d_pce.cpp">
+	<game name="samuraig" sourcefile="pce/d_pce.cpp">
 		<description>Samurai-Ghost (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -534,7 +534,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shockman" sourcefile="d_pce.cpp">
+	<game name="shockman" sourcefile="pce/d_pce.cpp">
 		<description>Shockman (USA)</description>
 		<year>1992</year>
 		<manufacturer>NEC</manufacturer>
@@ -542,7 +542,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sidearms" sourcefile="d_pce.cpp">
+	<game name="sidearms" sourcefile="pce/d_pce.cpp">
 		<description>Sidearms - Hyper Dyne (USA)</description>
 		<year>1989</year>
 		<manufacturer>Radiance Software</manufacturer>
@@ -550,7 +550,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="242" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="silentd" sourcefile="d_pce.cpp">
+	<game name="silentd" sourcefile="pce/d_pce.cpp">
 		<description>Silent Debuggers (USA)</description>
 		<year>1991</year>
 		<manufacturer>Hudson Soft</manufacturer>
@@ -558,7 +558,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sinistrn" sourcefile="d_pce.cpp">
+	<game name="sinistrn" sourcefile="pce/d_pce.cpp">
 		<description>Sinistron (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -566,7 +566,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="soldblad" sourcefile="d_pce.cpp">
+	<game name="soldblad" sourcefile="pce/d_pce.cpp">
 		<description>Soldier Blade (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -574,7 +574,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="somerass" sourcefile="d_pce.cpp">
+	<game name="somerass" sourcefile="pce/d_pce.cpp">
 		<description>Somer Assault (USA)</description>
 		<year>1992</year>
 		<manufacturer>Atlus</manufacturer>
@@ -582,7 +582,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wbeach" sourcefile="d_pce.cpp">
+	<game name="wbeach" sourcefile="pce/d_pce.cpp">
 		<description>Sonic Spike - World Championship Beach Volleyball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -590,7 +590,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sharrier" sourcefile="d_pce.cpp">
+	<game name="sharrier" sourcefile="pce/d_pce.cpp">
 		<description>Space Harrier (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -598,7 +598,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="splatth" sourcefile="d_pce.cpp">
+	<game name="splatth" sourcefile="pce/d_pce.cpp">
 		<description>Splatterhouse (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC - Namco</manufacturer>
@@ -606,7 +606,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sssoldr" sourcefile="d_pce.cpp">
+	<game name="sssoldr" sourcefile="pce/d_pce.cpp">
 		<description>Super Star Soldier (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -614,7 +614,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="svolley" sourcefile="d_pce.cpp">
+	<game name="svolley" sourcefile="pce/d_pce.cpp">
 		<description>Super Volleyball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -622,7 +622,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chasehq" sourcefile="d_pce.cpp">
+	<game name="chasehq" sourcefile="pce/d_pce.cpp">
 		<description>Taito Chase H.Q. (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -630,7 +630,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="taknhoop" sourcefile="d_pce.cpp">
+	<game name="taknhoop" sourcefile="pce/d_pce.cpp">
 		<description>Takin' It to the Hoop (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -638,7 +638,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="talespin" sourcefile="d_pce.cpp">
+	<game name="talespin" sourcefile="pce/d_pce.cpp">
 		<description>TaleSpin (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -646,7 +646,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tigerrod" sourcefile="d_pce.cpp">
+	<game name="tigerrod" sourcefile="pce/d_pce.cpp">
 		<description>Tiger Road (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -654,7 +654,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="timcrus" sourcefile="d_pce.cpp">
+	<game name="timcrus" sourcefile="pce/d_pce.cpp">
 		<description>Time Cruise (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -662,7 +662,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="timeball" sourcefile="d_pce.cpp">
+	<game name="timeball" sourcefile="pce/d_pce.cpp">
 		<description>Timeball (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -670,7 +670,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tricky" sourcefile="d_pce.cpp">
+	<game name="tricky" sourcefile="pce/d_pce.cpp">
 		<description>Tricky Kick (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -678,7 +678,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="turrican" sourcefile="d_pce.cpp">
+	<game name="turrican" sourcefile="pce/d_pce.cpp">
 		<description>Turrican (USA)</description>
 		<year>1991</year>
 		<manufacturer>Ballistic</manufacturer>
@@ -686,7 +686,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tvbasket" sourcefile="d_pce.cpp">
+	<game name="tvbasket" sourcefile="pce/d_pce.cpp">
 		<description>TV Sports Basketball (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -694,7 +694,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tvfootbl" sourcefile="d_pce.cpp">
+	<game name="tvfootbl" sourcefile="pce/d_pce.cpp">
 		<description>TV Sports Football (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -702,7 +702,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="tvhockey" sourcefile="d_pce.cpp">
+	<game name="tvhockey" sourcefile="pce/d_pce.cpp">
 		<description>TV Sports Hockey (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>
@@ -710,7 +710,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="veigues" sourcefile="d_pce.cpp">
+	<game name="veigues" sourcefile="pce/d_pce.cpp">
 		<description>Veigues - Tactical Gladiator (USA)</description>
 		<year>1990</year>
 		<manufacturer>NEC</manufacturer>
@@ -718,7 +718,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="victoryr" sourcefile="d_pce.cpp">
+	<game name="victoryr" sourcefile="pce/d_pce.cpp">
 		<description>Victory Run (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -726,7 +726,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vigilant" sourcefile="d_pce.cpp">
+	<game name="vigilant" sourcefile="pce/d_pce.cpp">
 		<description>Vigilante (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -734,7 +734,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wcbasebl" sourcefile="d_pce.cpp">
+	<game name="wcbasebl" sourcefile="pce/d_pce.cpp">
 		<description>World Class Baseball (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -742,7 +742,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wctennis" sourcefile="d_pce.cpp">
+	<game name="wctennis" sourcefile="pce/d_pce.cpp">
 		<description>World Court Tennis (USA)</description>
 		<year>1989</year>
 		<manufacturer>NEC</manufacturer>
@@ -750,7 +750,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wscomp" sourcefile="d_pce.cpp">
+	<game name="wscomp" sourcefile="pce/d_pce.cpp">
 		<description>World Sports Competition (USA)</description>
 		<year>1992</year>
 		<manufacturer>TTI</manufacturer>
@@ -758,7 +758,7 @@
 		<video type="raster" orientation="horizontal" width="512" height="240" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yobro" sourcefile="d_pce.cpp">
+	<game name="yobro" sourcefile="pce/d_pce.cpp">
 		<description>Yo, Bro (USA)</description>
 		<year>1991</year>
 		<manufacturer>NEC</manufacturer>

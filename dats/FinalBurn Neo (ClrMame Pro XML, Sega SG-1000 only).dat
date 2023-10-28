@@ -12,7 +12,7 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
-	<game name="jb007a" cloneof="jb007" romof="jb007" sourcefile="d_sg1000.cpp">
+	<game name="jb007a" cloneof="jb007" romof="jb007" sourcefile="sg1000/d_sg1000.cpp">
 		<description>007 James Bond (Japan, v2.6, OMV)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -20,7 +20,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jb007" sourcefile="d_sg1000.cpp">
+	<game name="jb007" sourcefile="sg1000/d_sg1000.cpp">
 		<description>007 James Bond (Japan, v2.7, OMV)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -28,7 +28,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jb007t" cloneof="jb007" romof="jb007" sourcefile="d_sg1000.cpp">
+	<game name="jb007t" cloneof="jb007" romof="jb007" sourcefile="sg1000/d_sg1000.cpp">
 		<description>007 James Bond (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -36,7 +36,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="arnodash" sourcefile="d_sg1000.cpp">
+	<game name="arnodash" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Arno Dash (HB)</description>
 		<year>2020</year>
@@ -45,7 +45,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="arnodash2" sourcefile="d_sg1000.cpp">
+	<game name="arnodash2" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Arno Dash 2 (HB, v1.03)</description>
 		<year>2020</year>
@@ -54,7 +54,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bankp" sourcefile="d_sg1000.cpp">
+	<game name="bankp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Bank Panic (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -62,7 +62,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombjackk2" cloneof="bombjack" romof="bombjack" sourcefile="d_sg1000.cpp">
+	<game name="bombjackk2" cloneof="bombjack" romof="bombjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Beom Jjaek (Korea)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -70,7 +70,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bilidada" cloneof="bankp" romof="bankp" sourcefile="d_sg1000.cpp">
+	<game name="bilidada" cloneof="bankp" romof="bankp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Bi Li Da Dao (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -78,7 +78,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blckonyxee" cloneof="blckonyx" romof="blckonyx" sourcefile="d_sg1000.cpp">
+	<game name="blckonyxee" cloneof="blckonyx" romof="blckonyx" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Hack</comment>
 		<description>Black Onyx Enhanced, The (Hack, T-Eng)</description>
 		<year>2010</year>
@@ -87,7 +87,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blckonyxe" cloneof="blckonyx" romof="blckonyx" sourcefile="d_sg1000.cpp">
+	<game name="blckonyxe" cloneof="blckonyx" romof="blckonyx" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Hack</comment>
 		<description>Black Onyx, The (Hack, T-Eng)</description>
 		<year>2010</year>
@@ -96,7 +96,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="blckonyx" sourcefile="d_sg1000.cpp">
+	<game name="blckonyx" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Black Onyx, The (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
@@ -104,7 +104,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bloktris" sourcefile="d_sg1000.cpp">
+	<game name="bloktris" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Bloktris (HB)</description>
 		<year>2023</year>
@@ -113,7 +113,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombjack" sourcefile="d_sg1000.cpp">
+	<game name="bombjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Bomb Jack (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -121,7 +121,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombjackk1" cloneof="bombjack" romof="bombjack" sourcefile="d_sg1000.cpp">
+	<game name="bombjackk1" cloneof="bombjack" romof="bombjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Bomb Jack (Korea)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -129,7 +129,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombjackt1" cloneof="bombjack" romof="bombjack" sourcefile="d_sg1000.cpp">
+	<game name="bombjackt1" cloneof="bombjack" romof="bombjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Bomb Jack (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -137,7 +137,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombmnsp" sourcefile="d_sg1000.cpp">
+	<game name="bombmnsp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Bomber Man Special (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>DahJee</manufacturer>
@@ -145,7 +145,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bordrlin" sourcefile="d_sg1000.cpp">
+	<game name="bordrlin" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Borderline (Euro, Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -153,7 +153,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cso" sourcefile="d_sg1000.cpp">
+	<game name="cso" sourcefile="sg1000/d_sg1000.cpp">
 		<description>C_So! (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -161,7 +161,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cabkids" sourcefile="d_sg1000.cpp">
+	<game name="cabkids" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Cabbage Patch Kids (Taiwan)</description>
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -169,7 +169,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cacorm" sourcefile="d_sg1000.cpp">
+	<game name="cacorm" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Cacorm (HB)</description>
 		<year>2022</year>
@@ -178,7 +178,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chackne" cloneof="chackn" romof="chackn" sourcefile="d_sg1000.cpp">
+	<game name="chackne" cloneof="chackn" romof="chackn" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Hack</comment>
 		<description>Chack'n Pop (Hack, T-Eng)</description>
 		<year>2010</year>
@@ -187,7 +187,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chackn" sourcefile="d_sg1000.cpp">
+	<game name="chackn" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Chack'n Pop (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -195,7 +195,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chaldrby" sourcefile="d_sg1000.cpp">
+	<game name="chaldrby" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Challenge Derby (Japan, OMV)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -203,7 +203,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chaldrbya" cloneof="chaldrby" romof="chaldrby" sourcefile="d_sg1000.cpp">
+	<game name="chaldrbya" cloneof="chaldrby" romof="chaldrby" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Challenge Derby (Japan, OMV, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -211,7 +211,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chaldrbyb" cloneof="chaldrby" romof="chaldrby" sourcefile="d_sg1000.cpp">
+	<game name="chaldrbyb" cloneof="chaldrby" romof="chaldrby" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Challenge Derby (Japan, OMV, Hacked)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -219,7 +219,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champbas" sourcefile="d_sg1000.cpp">
+	<game name="champbas" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Baseball (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -227,7 +227,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champbasa" cloneof="champbas" romof="champbas" sourcefile="d_sg1000.cpp">
+	<game name="champbasa" cloneof="champbas" romof="champbas" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Baseball (Japan, Older)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -235,7 +235,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champbast" cloneof="champbas" romof="champbas" sourcefile="d_sg1000.cpp">
+	<game name="champbast" cloneof="champbas" romof="champbas" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Baseball (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -243,7 +243,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champbil" sourcefile="d_sg1000.cpp">
+	<game name="champbil" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Billiards (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -251,7 +251,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champbox" sourcefile="d_sg1000.cpp">
+	<game name="champbox" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Boxing (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -259,7 +259,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champbox1" cloneof="champbox" romof="champbox" sourcefile="d_sg1000.cpp">
+	<game name="champbox1" cloneof="champbox" romof="champbox" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Boxing (Japan, MyCard)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -267,7 +267,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champboxt" cloneof="champbox" romof="champbox" sourcefile="d_sg1000.cpp">
+	<game name="champboxt" cloneof="champbox" romof="champbox" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Boxing (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -275,7 +275,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champglf" sourcefile="d_sg1000.cpp">
+	<game name="champglf" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Golf (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -283,7 +283,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champglf1" cloneof="champglf" romof="champglf" sourcefile="d_sg1000.cpp">
+	<game name="champglf1" cloneof="champglf" romof="champglf" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Golf (Japan, MyCard)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -291,7 +291,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champglfk" cloneof="champglf" romof="champglf" sourcefile="d_sg1000.cpp">
+	<game name="champglfk" cloneof="champglf" romof="champglf" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Golf (Korea)</description>
 		<year>198?</year>
 		<manufacturer>Samsung</manufacturer>
@@ -299,7 +299,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champice" sourcefile="d_sg1000.cpp">
+	<game name="champice" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Ice Hockey (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -307,7 +307,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champicek" cloneof="champice" romof="champice" sourcefile="d_sg1000.cpp">
+	<game name="champicek" cloneof="champice" romof="champice" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Ice Hockey (Korea)</description>
 		<year>198?</year>
 		<manufacturer>Samsung</manufacturer>
@@ -315,7 +315,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champken" sourcefile="d_sg1000.cpp">
+	<game name="champken" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Kendou (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -323,7 +323,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champpwr" sourcefile="d_sg1000.cpp">
+	<game name="champpwr" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Pro Wrestling (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -331,7 +331,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champscr" sourcefile="d_sg1000.cpp">
+	<game name="champscr" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Soccer (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -339,7 +339,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champscrt" cloneof="champscr" romof="champscr" sourcefile="d_sg1000.cpp">
+	<game name="champscrt" cloneof="champscr" romof="champscr" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Soccer (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -347,7 +347,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champtns" sourcefile="d_sg1000.cpp">
+	<game name="champtns" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Champion Tennis (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -355,7 +355,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cloderun" sourcefile="d_sg1000.cpp">
+	<game name="cloderun" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Championship Lode Runner (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -363,7 +363,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="supertnkt" cloneof="supertnk" romof="supertnk" sourcefile="d_sg1000.cpp">
+	<game name="supertnkt" cloneof="supertnk" romof="supertnk" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Chaoji Tanke (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -371,7 +371,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="bombjackt2" cloneof="bombjack" romof="bombjack" sourcefile="d_sg1000.cpp">
+	<game name="bombjackt2" cloneof="bombjack" romof="bombjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Chaoren (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -379,7 +379,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cheman" sourcefile="d_sg1000.cpp">
+	<game name="cheman" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Che-Man (HB)</description>
 		<year>2018</year>
@@ -388,7 +388,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cherilp" sourcefile="d_sg1000.cpp">
+	<game name="cherilp" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Cheril Perils Classic (HB)</description>
 		<year>2018</year>
@@ -397,7 +397,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="choplift" sourcefile="d_sg1000.cpp">
+	<game name="choplift" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Choplifter (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -405,7 +405,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chopliftp" cloneof="choplift" romof="choplift" sourcefile="d_sg1000.cpp">
+	<game name="chopliftp" cloneof="choplift" romof="choplift" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Choplifter (Japan, Prototype)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -413,7 +413,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chopliftk" cloneof="choplift" romof="choplift" sourcefile="d_sg1000.cpp">
+	<game name="chopliftk" cloneof="choplift" romof="choplift" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Choplifter (Korea)</description>
 		<year>1985?</year>
 		<manufacturer>Sega?</manufacturer>
@@ -421,7 +421,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="chopliftt" cloneof="choplift" romof="choplift" sourcefile="d_sg1000.cpp">
+	<game name="chopliftt" cloneof="choplift" romof="choplift" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Choplifter (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -429,7 +429,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="circusck" cloneof="circusc" romof="circusc" sourcefile="d_sg1000.cpp">
+	<game name="circusck" cloneof="circusc" romof="circusc" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Circus Charlie (Korea)</description>
 		<year>198?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -437,7 +437,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="circusc" sourcefile="d_sg1000.cpp">
+	<game name="circusc" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Circus Charlie (Taiwan)</description>
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -445,7 +445,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="congoa" cloneof="congo" romof="congo" sourcefile="d_sg1000.cpp">
+	<game name="congoa" cloneof="congo" romof="congo" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Congo Bongo (Euro, Japan, v1 Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -453,7 +453,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="congo" sourcefile="d_sg1000.cpp">
+	<game name="congo" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Congo Bongo (Euro, Japan, v1)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -461,7 +461,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="congob" cloneof="congo" romof="congo" sourcefile="d_sg1000.cpp">
+	<game name="congob" cloneof="congo" romof="congo" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Congo Bongo (Japan, v0)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -469,7 +469,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="congot" cloneof="congo" romof="congo" sourcefile="d_sg1000.cpp">
+	<game name="congot" cloneof="congo" romof="congo" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Congo Bongo (Taiwan)</description>
 		<year>19??</year>
 		<manufacturer>Unknown</manufacturer>
@@ -477,7 +477,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cracky" sourcefile="d_sg1000.cpp">
+	<game name="cracky" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Cracky (HB)</description>
 		<year>2023</year>
@@ -486,7 +486,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dayu" cloneof="chackn" romof="chackn" sourcefile="d_sg1000.cpp">
+	<game name="dayu" cloneof="chackn" romof="chackn" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Da Yu (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -494,7 +494,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="elevatort" cloneof="elevator" romof="elevator" sourcefile="d_sg1000.cpp">
+	<game name="elevatort" cloneof="elevator" romof="elevator" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Die Dui Die (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -502,7 +502,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dokidoki" sourcefile="d_sg1000.cpp">
+	<game name="dokidoki" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Dokidoki Penguin Land (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -510,7 +510,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragwang1" cloneof="dragwang" romof="dragwang" sourcefile="d_sg1000.cpp">
+	<game name="dragwang1" cloneof="dragwang" romof="dragwang" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Dragon Wang (Japan, v0)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -518,7 +518,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dragwang" sourcefile="d_sg1000.cpp">
+	<game name="dragwang" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Dragon Wang (Japan, v1)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -526,7 +526,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="drol" sourcefile="d_sg1000.cpp">
+	<game name="drol" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Drol (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -534,7 +534,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="drolk" cloneof="drol" romof="drol" sourcefile="d_sg1000.cpp">
+	<game name="drolk" cloneof="drol" romof="drol" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Drol (Korea)</description>
 		<year>198?</year>
 		<manufacturer>Samsung</manufacturer>
@@ -542,7 +542,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="drolt" cloneof="drol" romof="drol" sourcefile="d_sg1000.cpp">
+	<game name="drolt" cloneof="drol" romof="drol" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Drol (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -550,7 +550,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="elevator" sourcefile="d_sg1000.cpp">
+	<game name="elevator" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Elevator Action (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -558,7 +558,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="exerion" sourcefile="d_sg1000.cpp">
+	<game name="exerion" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Exerion (Euro, Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -566,7 +566,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="exerionk" cloneof="exerion" romof="exerion" sourcefile="d_sg1000.cpp">
+	<game name="exerionk" cloneof="exerion" romof="exerion" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Exerion (Korea)</description>
 		<year>198?</year>
 		<manufacturer>Samsung</manufacturer>
@@ -574,7 +574,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="exeriont" cloneof="exerion" romof="exerion" sourcefile="d_sg1000.cpp">
+	<game name="exeriont" cloneof="exerion" romof="exerion" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Exerion (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -582,7 +582,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="faguiqib" cloneof="pitfall2" romof="pitfall2" sourcefile="d_sg1000.cpp">
+	<game name="faguiqib" cloneof="pitfall2" romof="pitfall2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Fa Gui Qibing (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -590,7 +590,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="faguiqiba" cloneof="pitfall2" romof="pitfall2" sourcefile="d_sg1000.cpp">
+	<game name="faguiqiba" cloneof="pitfall2" romof="pitfall2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Fa Gui Qibing (Taiwan, Alt)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -598,7 +598,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="feilang" cloneof="choplift" romof="choplift" sourcefile="d_sg1000.cpp">
+	<game name="feilang" cloneof="choplift" romof="choplift" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Fei Lang (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -606,7 +606,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="feilanga" cloneof="choplift" romof="choplift" sourcefile="d_sg1000.cpp">
+	<game name="feilanga" cloneof="choplift" romof="choplift" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Fei Lang ~ Choplifter (Taiwan, Alt)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -614,7 +614,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="flickya" cloneof="flicky" romof="flicky" sourcefile="d_sg1000.cpp">
+	<game name="flickya" cloneof="flicky" romof="flicky" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Flicky (Japan, v0)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -622,7 +622,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="flicky" sourcefile="d_sg1000.cpp">
+	<game name="flicky" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Flicky (Japan, v1)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -630,7 +630,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="flickyt" cloneof="flicky" romof="flicky" sourcefile="d_sg1000.cpp">
+	<game name="flickyt" cloneof="flicky" romof="flicky" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Flicky (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -638,7 +638,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="segaflipt" cloneof="segaflip" romof="segaflip" sourcefile="d_sg1000.cpp">
+	<game name="segaflipt" cloneof="segaflip" romof="segaflip" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Flipper (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -646,7 +646,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="foryster" sourcefile="d_sg1000.cpp">
+	<game name="foryster" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Foryster (HB, v00.9)</description>
 		<year>2022</year>
@@ -655,7 +655,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="galaga" cloneof="segagala" romof="segagala" sourcefile="d_sg1000.cpp">
+	<game name="galaga" cloneof="segagala" romof="segagala" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Galaga (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -663,7 +663,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="girlgard" sourcefile="d_sg1000.cpp">
+	<game name="girlgard" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Girl's Garden (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -671,7 +671,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="girlgardt" cloneof="girlgard" romof="girlgard" sourcefile="d_sg1000.cpp">
+	<game name="girlgardt" cloneof="girlgard" romof="girlgard" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Girl's Garden (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -679,7 +679,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="golgo13" sourcefile="d_sg1000.cpp">
+	<game name="golgo13" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Golgo 13 (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -687,7 +687,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gpworlda" cloneof="gpworld" romof="gpworld" sourcefile="d_sg1000.cpp">
+	<game name="gpworlda" cloneof="gpworld" romof="gpworld" sourcefile="sg1000/d_sg1000.cpp">
 		<description>GP World (Japan, v0)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -695,7 +695,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gpworld" sourcefile="d_sg1000.cpp">
+	<game name="gpworld" sourcefile="sg1000/d_sg1000.cpp">
 		<description>GP World (Japan, v1)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -703,7 +703,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gpworldt" cloneof="gpworld" romof="gpworld" sourcefile="d_sg1000.cpp">
+	<game name="gpworldt" cloneof="gpworld" romof="gpworld" sourcefile="sg1000/d_sg1000.cpp">
 		<description>GP World (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -711,7 +711,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gulkave" sourcefile="d_sg1000.cpp">
+	<game name="gulkave" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Gulkave (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -719,7 +719,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="gulkavek" cloneof="gulkave" romof="gulkave" sourcefile="d_sg1000.cpp">
+	<game name="gulkavek" cloneof="gulkave" romof="gulkave" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Gulkave (Korea)</description>
 		<year>198?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -727,7 +727,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="guntus" sourcefile="d_sg1000.cpp">
+	<game name="guntus" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Guntus (HB)</description>
 		<year>2022</year>
@@ -736,7 +736,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="guzzler" sourcefile="d_sg1000.cpp">
+	<game name="guzzler" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Guzzler (Japan, OMV)</description>
 		<year>1983</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -744,7 +744,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="guzzlert" cloneof="guzzler" romof="guzzler" sourcefile="d_sg1000.cpp">
+	<game name="guzzlert" cloneof="guzzler" romof="guzzler" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Guzzler (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -752,7 +752,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hero" sourcefile="d_sg1000.cpp">
+	<game name="hero" sourcefile="sg1000/d_sg1000.cpp">
 		<description>H.E.R.O. (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -760,7 +760,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hangon2" sourcefile="d_sg1000.cpp">
+	<game name="hangon2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hang-On II (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -768,7 +768,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hangon2t1" cloneof="hangon2" romof="hangon2" sourcefile="d_sg1000.cpp">
+	<game name="hangon2t1" cloneof="hangon2" romof="hangon2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hang-On II (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -776,7 +776,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="heibaiqi" cloneof="othello" romof="othello" sourcefile="d_sg1000.cpp">
+	<game name="heibaiqi" cloneof="othello" romof="othello" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hei Bai Qi (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -784,7 +784,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="homemj1" cloneof="homemj" romof="homemj" sourcefile="d_sg1000.cpp">
+	<game name="homemj1" cloneof="homemj" romof="homemj" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Home Mahjong (Japan, v0)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -792,7 +792,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="homemj" sourcefile="d_sg1000.cpp">
+	<game name="homemj" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Home Mahjong (Japan, v1)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -800,7 +800,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hopman" sourcefile="d_sg1000.cpp">
+	<game name="hopman" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Hopman (HB)</description>
 		<year>2023</year>
@@ -809,7 +809,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="huohuli" cloneof="zoom909" romof="zoom909" sourcefile="d_sg1000.cpp">
+	<game name="huohuli" cloneof="zoom909" romof="zoom909" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Huo Hu Li (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -817,7 +817,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="huojiche" cloneof="roadfght" romof="roadfght" sourcefile="d_sg1000.cpp">
+	<game name="huojiche" cloneof="roadfght" romof="roadfght" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Huojian Che (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Jumbo</manufacturer>
@@ -825,7 +825,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hustle" sourcefile="d_sg1000.cpp">
+	<game name="hustle" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hustle Chumy (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Compile</manufacturer>
@@ -833,7 +833,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hyperspt" sourcefile="d_sg1000.cpp">
+	<game name="hyperspt" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hyper Sports (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -841,7 +841,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hypersptk" cloneof="hyperspt" romof="hyperspt" sourcefile="d_sg1000.cpp">
+	<game name="hypersptk" cloneof="hyperspt" romof="hyperspt" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hyper Sports (Korea)</description>
 		<year>198?</year>
 		<manufacturer>Samsung</manufacturer>
@@ -849,7 +849,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hypersptt" cloneof="hyperspt" romof="hyperspt" sourcefile="d_sg1000.cpp">
+	<game name="hypersptt" cloneof="hyperspt" romof="hyperspt" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hyper Sports (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -857,7 +857,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hypersp2" sourcefile="d_sg1000.cpp">
+	<game name="hypersp2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Hyper Sports 2 (Taiwan)</description>
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -865,7 +865,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="iq" cloneof="sokoban" romof="sokoban" sourcefile="d_sg1000.cpp">
+	<game name="iq" cloneof="sokoban" romof="sokoban" sourcefile="sg1000/d_sg1000.cpp">
 		<description>I.Q. (Korea)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -873,7 +873,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jetpaco" sourcefile="d_sg1000.cpp">
+	<game name="jetpaco" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Jet Paco and Jet Puri (HB)</description>
 		<year>2018</year>
@@ -882,7 +882,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champkent" cloneof="champken" romof="champken" sourcefile="d_sg1000.cpp">
+	<game name="champkent" cloneof="champken" romof="champken" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Jiandao (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -890,7 +890,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jingwumn" cloneof="dragwang" romof="dragwang" sourcefile="d_sg1000.cpp">
+	<game name="jingwumn" cloneof="dragwang" romof="dragwang" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Jing Wu Men (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -898,7 +898,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jingwumna" cloneof="dragwang" romof="dragwang" sourcefile="d_sg1000.cpp">
+	<game name="jingwumna" cloneof="dragwang" romof="dragwang" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Jing Wu Men (Taiwan, Alt)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -906,7 +906,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="jinzita" sourcefile="d_sg1000.cpp">
+	<game name="jinzita" sourcefile="sg1000/d_sg1000.cpp">
 		<description>King's Valley, Jinzita (Taiwan)</description>
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -914,7 +914,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ksolitaire" sourcefile="d_sg1000.cpp">
+	<game name="ksolitaire" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Klondike Solitaire (HB, v1.04)</description>
 		<year>2020</year>
@@ -923,7 +923,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="moyuchua" sourcefile="d_sg1000.cpp">
+	<game name="moyuchua" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Knightmare, Moyu Chuanqi (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Jumbo</manufacturer>
@@ -931,7 +931,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ldrun" sourcefile="d_sg1000.cpp">
+	<game name="ldrun" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Lode Runner (Euro, Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -939,7 +939,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ldrunk" cloneof="ldrun" romof="ldrun" sourcefile="d_sg1000.cpp">
+	<game name="ldrunk" cloneof="ldrun" romof="ldrun" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Lode Runner (Korea)</description>
 		<year>1984?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -947,7 +947,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ldrunt" cloneof="ldrun" romof="ldrun" sourcefile="d_sg1000.cpp">
+	<game name="ldrunt" cloneof="ldrun" romof="ldrun" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Lode Runner (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -955,7 +955,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mkidwiz" sourcefile="d_sg1000.cpp">
+	<game name="mkidwiz" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Stuck at boot logo?</comment>
 		<description>Magical Kid Wiz (Taiwan)</description>
 		<year>198?</year>
@@ -964,7 +964,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="magtree" sourcefile="d_sg1000.cpp">
+	<game name="magtree" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Magical Tree (Taiwan)</description>
 		<year>198?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -972,7 +972,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mahjong" sourcefile="d_sg1000.cpp">
+	<game name="mahjong" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Mahjong (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -980,7 +980,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mahjonga" cloneof="mahjong" romof="mahjong" sourcefile="d_sg1000.cpp">
+	<game name="mahjonga" cloneof="mahjong" romof="mahjong" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Mahjong (Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -988,7 +988,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mahjongt" cloneof="mahjong" romof="mahjong" sourcefile="d_sg1000.cpp">
+	<game name="mahjongt" cloneof="mahjong" romof="mahjong" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Mahjong (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -996,7 +996,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="msolitaire" sourcefile="d_sg1000.cpp">
+	<game name="msolitaire" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Mahjong Solitaire (HB, v1.07)</description>
 		<year>2020</year>
@@ -1005,7 +1005,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="motianda" cloneof="rocknbol" romof="rocknbol" sourcefile="d_sg1000.cpp">
+	<game name="motianda" cloneof="rocknbol" romof="rocknbol" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Mo Tian Da Lou (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1013,7 +1013,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="monacogpb" cloneof="monacogp" romof="monacogp" sourcefile="d_sg1000.cpp">
+	<game name="monacogpb" cloneof="monacogp" romof="monacogp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Monaco GP (Japan, v0)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1021,7 +1021,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="monacogpa" cloneof="monacogp" romof="monacogp" sourcefile="d_sg1000.cpp">
+	<game name="monacogpa" cloneof="monacogp" romof="monacogp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Monaco GP (Japan, v1)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1029,7 +1029,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="monacogp" sourcefile="d_sg1000.cpp">
+	<game name="monacogp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Monaco GP (Japan, v2)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1037,7 +1037,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="monacogpt" cloneof="monacogp" romof="monacogp" sourcefile="d_sg1000.cpp">
+	<game name="monacogpt" cloneof="monacogp" romof="monacogp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Monaco GP (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1045,7 +1045,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="hangon2t2" cloneof="hangon2" romof="hangon2" sourcefile="d_sg1000.cpp">
+	<game name="hangon2t2" cloneof="hangon2" romof="hangon2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Motuo Feiche (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1053,7 +1053,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="castlet" cloneof="castle" romof="castle" sourcefile="d_sg1000.cpp">
+	<game name="castlet" cloneof="castle" romof="castle" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Mowang migong ~ The Castle (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>DahJee</manufacturer>
@@ -1061,7 +1061,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="musicj" cloneof="music" romof="music" sourcefile="d_sg1000.cpp">
+	<game name="musicj" cloneof="music" romof="music" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Music (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1069,7 +1069,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nsub" sourcefile="d_sg1000.cpp">
+	<game name="nsub" sourcefile="sg1000/d_sg1000.cpp">
 		<description>N-Sub (Euro?)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
@@ -1077,7 +1077,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nsuba" cloneof="nsub" romof="nsub" sourcefile="d_sg1000.cpp">
+	<game name="nsuba" cloneof="nsub" romof="nsub" sourcefile="sg1000/d_sg1000.cpp">
 		<description>N-Sub (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1085,7 +1085,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nsubb" cloneof="nsub" romof="nsub" sourcefile="d_sg1000.cpp">
+	<game name="nsubb" cloneof="nsub" romof="nsub" sourcefile="sg1000/d_sg1000.cpp">
 		<description>N-Sub (Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1093,7 +1093,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="nsubt" cloneof="nsub" romof="nsub" sourcefile="d_sg1000.cpp">
+	<game name="nsubt" cloneof="nsub" romof="nsub" sourcefile="sg1000/d_sg1000.cpp">
 		<description>N-Sub (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1101,7 +1101,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ninjaprie" cloneof="ninjapri" romof="ninjapri" sourcefile="d_sg1000.cpp">
+	<game name="ninjaprie" cloneof="ninjapri" romof="ninjapri" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Hack</comment>
 		<description>Ninja Princess (Hack, T-Eng)</description>
 		<year>2010</year>
@@ -1110,7 +1110,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ninjapri" sourcefile="d_sg1000.cpp">
+	<game name="ninjapri" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Ninja Princess (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -1118,7 +1118,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="matchpg" sourcefile="d_sg1000.cpp">
+	<game name="matchpg" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Okamoto Ayako no Match Play Golf (Japan, OMV)</description>
 		<year>1984?</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1126,7 +1126,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="matchpga" cloneof="matchpg" romof="matchpg" sourcefile="d_sg1000.cpp">
+	<game name="matchpga" cloneof="matchpg" romof="matchpg" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Okamoto Ayako no Match Play Golf (Japan, OMV, Alt)</description>
 		<year>1984?</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1134,7 +1134,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="matchpgt" cloneof="matchpg" romof="matchpg" sourcefile="d_sg1000.cpp">
+	<game name="matchpgt" cloneof="matchpg" romof="matchpg" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Okamoto Ayako no Match Play Golf (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1142,7 +1142,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="orguss" sourcefile="d_sg1000.cpp">
+	<game name="orguss" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Orguss (Euro, Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -1150,7 +1150,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="othello" sourcefile="d_sg1000.cpp">
+	<game name="othello" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Othello (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1158,7 +1158,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacar" sourcefile="d_sg1000.cpp">
+	<game name="pacar" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pacar (Euro, Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1166,7 +1166,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacara" cloneof="pacar" romof="pacar" sourcefile="d_sg1000.cpp">
+	<game name="pacara" cloneof="pacar" romof="pacar" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pacar (Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1174,7 +1174,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pacart" cloneof="pacar" romof="pacar" sourcefile="d_sg1000.cpp">
+	<game name="pacart" cloneof="pacar" romof="pacar" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pacar (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1182,7 +1182,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pachinko" sourcefile="d_sg1000.cpp">
+	<game name="pachinko" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pachinko (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1190,7 +1190,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pachink2" sourcefile="d_sg1000.cpp">
+	<game name="pachink2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pachinko II (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -1198,7 +1198,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pachink2t" cloneof="pachink2" romof="pachink2" sourcefile="d_sg1000.cpp">
+	<game name="pachink2t" cloneof="pachink2" romof="pachink2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pachinko II (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1206,7 +1206,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="palikat" sourcefile="d_sg1000.cpp">
+	<game name="palikat" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Palikat (HB)</description>
 		<year>2020</year>
@@ -1215,7 +1215,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pegged" sourcefile="d_sg1000.cpp">
+	<game name="pegged" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Pegged (HB, v1.02)</description>
 		<year>2021</year>
@@ -1224,7 +1224,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pingpong" sourcefile="d_sg1000.cpp">
+	<game name="pingpong" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Ping Pong (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1232,7 +1232,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitfall2a" cloneof="pitfall2" romof="pitfall2" sourcefile="d_sg1000.cpp">
+	<game name="pitfall2a" cloneof="pitfall2" romof="pitfall2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pitfall II - The Lost Caverns (Japan, v0)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1240,7 +1240,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitfall2" sourcefile="d_sg1000.cpp">
+	<game name="pitfall2" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pitfall II - The Lost Caverns (Japan, v1)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1248,7 +1248,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="pitman" sourcefile="d_sg1000.cpp">
+	<game name="pitman" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Pitman (HB, v1.03)</description>
 		<year>2021</year>
@@ -1257,7 +1257,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="popflame" sourcefile="d_sg1000.cpp">
+	<game name="popflame" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pop Flamer (Euro, Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1265,7 +1265,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="popflamet" cloneof="popflame" romof="popflame" sourcefile="d_sg1000.cpp">
+	<game name="popflamet" cloneof="popflame" romof="popflame" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Pop Flamer (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1273,7 +1273,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="qbert" sourcefile="d_sg1000.cpp">
+	<game name="qbert" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Q*bert (Japan, OMV)</description>
 		<year>1983</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1281,7 +1281,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="qie" cloneof="dokidoki" romof="dokidoki" sourcefile="d_sg1000.cpp">
+	<game name="qie" cloneof="dokidoki" romof="dokidoki" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Qi E (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1289,7 +1289,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="herot" cloneof="hero" romof="hero" sourcefile="d_sg1000.cpp">
+	<game name="herot" cloneof="hero" romof="hero" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Qing Feng Xia (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1297,7 +1297,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="champicet" cloneof="champice" romof="champice" sourcefile="d_sg1000.cpp">
+	<game name="champicet" cloneof="champice" romof="champice" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Qugunqiu (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1305,7 +1305,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rallyx" sourcefile="d_sg1000.cpp">
+	<game name="rallyx" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Rally-X (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>DahJee</manufacturer>
@@ -1313,7 +1313,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ninjaprit" cloneof="ninjapri" romof="ninjapri" sourcefile="d_sg1000.cpp">
+	<game name="ninjaprit" cloneof="ninjapri" romof="ninjapri" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Renzhe Gongzhu (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1321,7 +1321,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="roadfght" sourcefile="d_sg1000.cpp">
+	<game name="roadfght" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Road Fighter (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Jumbo?</manufacturer>
@@ -1329,7 +1329,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="rocknbol" sourcefile="d_sg1000.cpp">
+	<game name="rocknbol" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Rock n' Bolt (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1337,7 +1337,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="safarihu" sourcefile="d_sg1000.cpp">
+	<game name="safarihu" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Safari Hunting (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1345,7 +1345,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="safarihut" cloneof="safarihu" romof="safarihu" sourcefile="d_sg1000.cpp">
+	<game name="safarihut" cloneof="safarihu" romof="safarihu" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Safari Hunting (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1353,7 +1353,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="safarirc" sourcefile="d_sg1000.cpp">
+	<game name="safarirc" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Safari Race (Euro?)</description>
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
@@ -1361,7 +1361,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="safarircj" cloneof="safarirc" romof="safarirc" sourcefile="d_sg1000.cpp">
+	<game name="safarircj" cloneof="safarirc" romof="safarirc" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Safari Race (Japan)</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -1369,7 +1369,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="safarirct" cloneof="safarirc" romof="safarirc" sourcefile="d_sg1000.cpp">
+	<game name="safarirct" cloneof="safarirc" romof="safarirc" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Safari Race (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1377,7 +1377,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="3ninmj" sourcefile="d_sg1000.cpp">
+	<game name="3ninmj" sourcefile="sg1000/d_sg1000.cpp">
 		<description>San-nin Mahjong (Japan, OMV)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1385,7 +1385,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="3ninmjt" cloneof="3ninmj" romof="3ninmj" sourcefile="d_sg1000.cpp">
+	<game name="3ninmjt" cloneof="3ninmj" romof="3ninmj" sourcefile="sg1000/d_sg1000.cpp">
 		<description>San-nin Mahjong (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1393,7 +1393,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="segaflip" sourcefile="d_sg1000.cpp">
+	<game name="segaflip" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Sega Flipper (Euro, Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1401,7 +1401,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="segaflipa" cloneof="segaflip" romof="segaflip" sourcefile="d_sg1000.cpp">
+	<game name="segaflipa" cloneof="segaflip" romof="segaflip" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Sega Flipper (Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1409,7 +1409,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="music" sourcefile="d_sg1000.cpp">
+	<game name="music" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Sega Music Editor (Euro?)</description>
 		<year>198?</year>
 		<manufacturer>Sega</manufacturer>
@@ -1417,7 +1417,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="segagala" sourcefile="d_sg1000.cpp">
+	<game name="segagala" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Sega-Galaga (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1425,7 +1425,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="segagala1" cloneof="segagala" romof="segagala" sourcefile="d_sg1000.cpp">
+	<game name="segagala1" cloneof="segagala" romof="segagala" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Sega-Galaga (Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1433,7 +1433,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="serizawa" sourcefile="d_sg1000.cpp">
+	<game name="serizawa" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Serizawa Hachidan no Tsumeshogi (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1441,7 +1441,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="m2cp" sourcefile="d_sg1000.cpp">
+	<game name="m2cp" sourcefile="sg1000/d_sg1000.cpp">
 		<description>SG-1000 M2 Check Program</description>
 		<year>1984</year>
 		<manufacturer>Sega</manufacturer>
@@ -1449,7 +1449,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sgthelmet" sourcefile="d_sg1000.cpp">
+	<game name="sgthelmet" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Sgt. Helmet - Training Day (HB)</description>
 		<year>2018</year>
@@ -1458,7 +1458,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shinnyus" sourcefile="d_sg1000.cpp">
+	<game name="shinnyus" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Shinnyushain Tooru Kun (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1466,7 +1466,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="shinnyust" cloneof="shinnyus" romof="shinnyus" sourcefile="d_sg1000.cpp">
+	<game name="shinnyust" cloneof="shinnyus" romof="shinnyus" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Shinnyushain Tooru Kun (Taiwan)</description>
 		<year>19??</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1474,7 +1474,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sindbadm" sourcefile="d_sg1000.cpp">
+	<game name="sindbadm" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Sindbad Mystery (Euro, Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1482,7 +1482,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sindbadmt" cloneof="sindbadm" romof="sindbadm" sourcefile="d_sg1000.cpp">
+	<game name="sindbadmt" cloneof="sindbadm" romof="sindbadm" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Sindbad Mystery (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1490,7 +1490,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="snake" sourcefile="d_sg1000.cpp">
+	<game name="snake" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Snake (HB, v1.04)</description>
 		<year>2021</year>
@@ -1499,7 +1499,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sokoban" sourcefile="d_sg1000.cpp">
+	<game name="sokoban" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Soukoban (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1507,7 +1507,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sokobank" cloneof="sokoban" romof="sokoban" sourcefile="d_sg1000.cpp">
+	<game name="sokobank" cloneof="sokoban" romof="sokoban" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Soukoban (Korea)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1515,7 +1515,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sokobant" cloneof="sokoban" romof="sokoban" sourcefile="d_sg1000.cpp">
+	<game name="sokobant" cloneof="sokoban" romof="sokoban" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Soukoban (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1523,7 +1523,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacearmb" cloneof="spacearm" romof="spacearm" sourcefile="d_sg1000.cpp">
+	<game name="spacearmb" cloneof="spacearm" romof="spacearm" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Space Armor (Japan, v10, OMV)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1531,7 +1531,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacearm" sourcefile="d_sg1000.cpp">
+	<game name="spacearm" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Space Armor (Japan, v20, OMV)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1539,7 +1539,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacearma" cloneof="spacearm" romof="spacearm" sourcefile="d_sg1000.cpp">
+	<game name="spacearma" cloneof="spacearm" romof="spacearm" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Space Armor (Japan, v20, OMV, Alt)</description>
 		<year>1984</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1547,7 +1547,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spaceinv" sourcefile="d_sg1000.cpp">
+	<game name="spaceinv" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Space Invaders (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1555,7 +1555,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spaceinvt" cloneof="spaceinv" romof="spaceinv" sourcefile="d_sg1000.cpp">
+	<game name="spaceinvt" cloneof="spaceinv" romof="spaceinv" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Space Invaders (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1563,7 +1563,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacemnt" sourcefile="d_sg1000.cpp">
+	<game name="spacemnt" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Space Mountain (Japan, OMV)</description>
 		<year>1983</year>
 		<manufacturer>Tsukuda Original</manufacturer>
@@ -1571,7 +1571,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="spacesla" sourcefile="d_sg1000.cpp">
+	<game name="spacesla" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Space Slalom (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1579,7 +1579,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starfrce" sourcefile="d_sg1000.cpp">
+	<game name="starfrce" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Star Force (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1587,7 +1587,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starfrcet" cloneof="starfrce" romof="starfrce" sourcefile="d_sg1000.cpp">
+	<game name="starfrcet" cloneof="starfrce" romof="starfrce" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Star Force (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1595,7 +1595,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starfrceta" cloneof="starfrce" romof="starfrce" sourcefile="d_sg1000.cpp">
+	<game name="starfrceta" cloneof="starfrce" romof="starfrce" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Star Force (Taiwan, Alt)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1603,7 +1603,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starjack1" cloneof="starjack" romof="starjack" sourcefile="d_sg1000.cpp">
+	<game name="starjack1" cloneof="starjack" romof="starjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Star Jacker (Euro, Japan, v1.1)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1611,7 +1611,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starjack" sourcefile="d_sg1000.cpp">
+	<game name="starjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Star Jacker (Euro, Japan, v1.2)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1619,7 +1619,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starjack2" cloneof="starjack" romof="starjack" sourcefile="d_sg1000.cpp">
+	<game name="starjack2" cloneof="starjack" romof="starjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Star Jacker (Japan, v1.0)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1627,7 +1627,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="starjackt" cloneof="starjack" romof="starjack" sourcefile="d_sg1000.cpp">
+	<game name="starjackt" cloneof="starjack" romof="starjack" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Star Jacker (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1635,7 +1635,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="supertnk" sourcefile="d_sg1000.cpp">
+	<game name="supertnk" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Super Tank (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -1643,7 +1643,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="supertnkk" cloneof="supertnk" romof="supertnk" sourcefile="d_sg1000.cpp">
+	<game name="supertnkk" cloneof="supertnk" romof="supertnk" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Super Tank (Korea)</description>
 		<year>1986?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1651,7 +1651,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="superuwol" sourcefile="d_sg1000.cpp">
+	<game name="superuwol" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Super UWOL! (HB)</description>
 		<year>2016</year>
@@ -1660,7 +1660,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wboyt" cloneof="wboy" romof="wboy" sourcefile="d_sg1000.cpp">
+	<game name="wboyt" cloneof="wboy" romof="wboy" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Taotailang (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1668,7 +1668,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="terebioe" sourcefile="d_sg1000.cpp">
+	<game name="terebioe" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Terebi Oekaki (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1676,7 +1676,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="castle" sourcefile="d_sg1000.cpp">
+	<game name="castle" sourcefile="sg1000/d_sg1000.cpp">
 		<description>The Castle (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -1684,7 +1684,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sxpao" sourcefile="d_sg1000.cpp">
+	<game name="sxpao" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Twinbee (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>Jumbo</manufacturer>
@@ -1692,7 +1692,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="vexed" sourcefile="d_sg1000.cpp">
+	<game name="vexed" sourcefile="sg1000/d_sg1000.cpp">
 		<comment>Homebrew</comment>
 		<description>Vexed (HB, v1.08)</description>
 		<year>2020-23</year>
@@ -1701,7 +1701,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="csot" cloneof="cso" romof="cso" sourcefile="d_sg1000.cpp">
+	<game name="csot" cloneof="cso" romof="cso" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Wanpi Gui (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1709,7 +1709,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wboya" cloneof="wboy" romof="wboy" sourcefile="d_sg1000.cpp">
+	<game name="wboya" cloneof="wboy" romof="wboy" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Wonder Boy (Japan, v0)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -1717,7 +1717,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="wboy" sourcefile="d_sg1000.cpp">
+	<game name="wboy" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Wonder Boy (Japan, v1)</description>
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
@@ -1725,7 +1725,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="cloderunt" cloneof="cloderun" romof="cloderun" sourcefile="d_sg1000.cpp">
+	<game name="cloderunt" cloneof="cloderun" romof="cloderun" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Xun Bao Er Dai (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Unknown</manufacturer>
@@ -1733,7 +1733,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yamato" sourcefile="d_sg1000.cpp">
+	<game name="yamato" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Yamato (Euro, Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1741,7 +1741,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yamatoa" cloneof="yamato" romof="yamato" sourcefile="d_sg1000.cpp">
+	<game name="yamatoa" cloneof="yamato" romof="yamato" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Yamato (Euro, Japan, Alt)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1749,7 +1749,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yamatot" cloneof="yamato" romof="yamato" sourcefile="d_sg1000.cpp">
+	<game name="yamatot" cloneof="yamato" romof="yamato" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Yamato (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1757,7 +1757,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="yiear" sourcefile="d_sg1000.cpp">
+	<game name="yiear" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Yie Ar Kung-Fu (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1765,7 +1765,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="dacike" sourcefile="d_sg1000.cpp">
+	<game name="dacike" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Yie Ar Kung-Fu II, Da Cike (Taiwan)</description>
 		<year>1986?</year>
 		<manufacturer>DahJee</manufacturer>
@@ -1773,7 +1773,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="homemjt" cloneof="homemj" romof="homemj" sourcefile="d_sg1000.cpp">
+	<game name="homemjt" cloneof="homemj" romof="homemj" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Yon-nin Mahjong (Taiwan)</description>
 		<year>1984?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1781,7 +1781,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zaxxon" sourcefile="d_sg1000.cpp">
+	<game name="zaxxon" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Zaxxon (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>
@@ -1789,7 +1789,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zaxxont" cloneof="zaxxon" romof="zaxxon" sourcefile="d_sg1000.cpp">
+	<game name="zaxxont" cloneof="zaxxon" romof="zaxxon" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Zaxxon (Taiwan)</description>
 		<year>1985?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1797,7 +1797,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zippyrac" sourcefile="d_sg1000.cpp">
+	<game name="zippyrac" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Zippy Race (Japan)</description>
 		<year>1983</year>
 		<manufacturer>Sega</manufacturer>
@@ -1805,7 +1805,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zippyract" cloneof="zippyrac" romof="zippyrac" sourcefile="d_sg1000.cpp">
+	<game name="zippyract" cloneof="zippyrac" romof="zippyrac" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Zippy Race (Taiwan)</description>
 		<year>1983?</year>
 		<manufacturer>Aaronix</manufacturer>
@@ -1813,7 +1813,7 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="zoom909" sourcefile="d_sg1000.cpp">
+	<game name="zoom909" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Zoom 909 (Japan)</description>
 		<year>1985</year>
 		<manufacturer>Sega</manufacturer>

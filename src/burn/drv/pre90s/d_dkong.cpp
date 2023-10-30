@@ -2991,7 +2991,7 @@ struct BurnDriver BurnDrvDkong = {
 };
 
 
-// Donkey Kong (US set 1) with Hard Kit
+// Donkey Kong (hard kit)
 
 static struct BurnRomInfo dkonghrdRomDesc[] = {
 	{ "dk5ehard.bin",	0x1000, 0xa9445215, 1 }, //  0 maincpu
@@ -3020,7 +3020,7 @@ STD_ROM_FN(dkonghrd)
 
 struct BurnDriver BurnDrvDkonghrd = {
 	"dkonghrd", "dkong", NULL, "dkong", "1981",
-	"Donkey Kong (US set 1) with Hard kit\0", NULL, "Nintendo", "Miscellaneous",
+	"Donkey Kong (hard kit)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkonghrdRomInfo, dkonghrdRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
@@ -3713,7 +3713,7 @@ struct BurnDriver BurnDrvDkongbp1 = {
 };
 
 
-// Donkey Kong - Pauline Edition (hack, rev 5)
+// Donkey Kong: Pauline Edition Rev 5 (2013-04-22)
 // "Pauline Edition" hack (rev 5, 4-22-2013), by Clay Cowgill based on Mike Mika's NES version
 
 static struct BurnRomInfo dkongpeRomDesc[] = {
@@ -3743,7 +3743,7 @@ STD_ROM_FN(dkongpe)
 
 struct BurnDriver BurnDrvDkongpe = {
 	"dkongpe", "dkong", NULL, "dkong", "2013",
-	"Donkey Kong - Pauline Edition (hack, rev 5)\0", NULL, "hack (Clay Cowgill)", "Miscellaneous",
+	"Donkey Kong: Pauline Edition Rev 5 (2013-04-22)\0", NULL, "hack (Clay Cowgill and Mike Mika)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongpeRomInfo, dkongpeRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4094,7 +4094,7 @@ struct BurnDriver BurnDrvdkduel = {
 };
 
 
-// Donkey Kong II - Jumpman Returns (hack, V1.2)
+// Donkey Kong II: Jumpman Returns (hack, V1.2)
 
 static struct BurnRomInfo dkongxRomDesc[] = {
 	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
@@ -4168,7 +4168,7 @@ static INT32 dkongxInit()
 
 struct BurnDriver BurnDrvDkongx = {
 	"dkongx", "dkong", NULL, "dkong", "2006",
-	"Donkey Kong II - Jumpman Returns (hack, V1.2)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
+	"Donkey Kong II: Jumpman Returns (hack, V1.2)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongxRomInfo, dkongxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
@@ -4177,7 +4177,7 @@ struct BurnDriver BurnDrvDkongx = {
 };
 
 
-// Donkey Kong II - Jumpman Returns (hack, V1.1)
+// Donkey Kong II: Jumpman Returns (hack, V1.1)
 
 static struct BurnRomInfo dkongx11RomDesc[] = {
 	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
@@ -4208,7 +4208,7 @@ STD_ROM_FN(dkongx11)
 
 struct BurnDriver BurnDrvDkongx11 = {
 	"dkongx11", "dkong", NULL, "dkong", "2006",
-	"Donkey Kong II - Jumpman Returns (hack, V1.1)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
+	"Donkey Kong II: Jumpman Returns (hack, V1.1)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongx11RomInfo, dkongx11RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
@@ -4687,7 +4687,7 @@ static INT32 dkongjr2Init()
 
 struct BurnDriver BurnDrvDkongjr2 = {
 	"dkongjr2", "dkongjr", NULL, "dkongjr", "1982",
-	"Donkey Kong Junior (US, bootleg?)\0", NULL, "Nintendo", "Miscellaneous",
+	"Donkey Kong Junior (US, bootleg?)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongjr2RomInfo, dkongjr2RomName, NULL, NULL, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,
@@ -4732,7 +4732,7 @@ struct BurnDriver BurnDrvDkongjrj = {
 };
 
 
-// Donkey Kong Junior (Japan?)
+// Donkey Kong Junior (Japan set F-1)
 
 static struct BurnRomInfo dkongjnrjRomDesc[] = {
 	{ "dkjp.5b",	0x2000, 0x7b48870b, 1 }, //  0 maincpu
@@ -4759,7 +4759,7 @@ STD_ROM_FN(dkongjnrj)
 
 struct BurnDriver BurnDrvDkongjnrj = {
 	"dkongjnrj", "dkongjr", NULL, "dkongjr", "1982",
-	"Donkey Kong Junior (Japan?)\0", NULL, "Nintendo", "Miscellaneous",
+	"Donkey Kong Junior (Japan set F-1)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongjnrjRomInfo, dkongjnrjRomName, NULL, NULL, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,
@@ -4894,7 +4894,7 @@ struct BurnDriver BurnDrvDkingjr = {
 };
 
 
-// Donkey Kong Junior (E Kit)
+// Donkey Kong Junior (E kit)
 
 static struct BurnRomInfo dkongjreRomDesc[] = {
 	{ "djr1-c.5b",	0x2000, 0xffe9e1a5, 1 }, //  0 maincpu
@@ -4937,7 +4937,7 @@ static INT32 dkongjreInit()
 
 struct BurnDriverD BurnDrvDkongjre = {
 	"dkongjre", "dkongjr", NULL, "dkongjr", "1982",
-	"Donkey Kong Junior (E Kit)\0", NULL, "Nintendo of America", "Miscellaneous",
+	"Donkey Kong Junior (E kit)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongjreRomInfo, dkongjreRomName, NULL, NULL, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,
@@ -5247,7 +5247,7 @@ static INT32 herbiedkInit()
 
 struct BurnDriver BurnDrvHerbiedk = {
 	"herbiedk", "huncholy", NULL, NULL, "1984",
-	"Herbie at the Olympics (DK conversion)\0", "No sound", "Century Electronics / Seatongrove Ltd", "Miscellaneous",
+	"Herbie at the Olympics (DK conversion)\0", "No sound", "Seatongrove UK, Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, herbiedkRomInfo, herbiedkRomName, NULL, NULL, NULL, NULL, DkongInputInfo, HerbiedkDIPInfo,
@@ -5440,7 +5440,7 @@ static INT32 herodkInit()
 
 struct BurnDriver BurnDrvHerodk = {
 	"herodk", "hero", NULL, NULL, "1984",
-	"Hero in the Castle of Doom (DK conversion)\0", "No sound", "Seatongrove Ltd (Crown license)", "Miscellaneous",
+	"Hero in the Castle of Doom (DK conversion)\0", "No sound", "Seatongrove UK, Ltd. (Crown license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, herodkRomInfo, herodkRomName, NULL, NULL, NULL, NULL, HerodkInputInfo, HerodkDIPInfo,
@@ -5449,7 +5449,7 @@ struct BurnDriver BurnDrvHerodk = {
 };
 
 
-// Hero in the Castle of Doom (DK conversion not encrypted)
+// Hero in the Castle of Doom (DK conversion, not encrypted)
 
 static struct BurnRomInfo herodkuRomDesc[] = {
 	{ "2764.8h",		0x2000, 0x989ce053, 1 }, //  0 maincpu
@@ -5507,7 +5507,7 @@ static INT32 herodkuInit()
 
 struct BurnDriver BurnDrvHerodku = {
 	"herodku", "hero", NULL, NULL, "1984",
-	"Hero in the Castle of Doom (DK conversion not encrypted)\0", NULL, "Seatongrove Ltd (Crown license)", "Miscellaneous",
+	"Hero in the Castle of Doom (DK conversion, not encrypted)\0", NULL, "Seatongrove UK, Ltd. (Crown license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, herodkuRomInfo, herodkuRomName, NULL, NULL, NULL, NULL, HerodkInputInfo, HerodkDIPInfo,

@@ -50,7 +50,7 @@ STD_ROM_FN(Eightballact)
 
 struct BurnDriver BurnDrvEightballact = {
 	"8ballact", NULL, NULL, NULL, "1984",
-	"Eight Ball Action (DK conversion)\0", "Parent set for working drivers", "Seatongrove Ltd (Magic Eletronics USA licence)", "Miscellaneous",
+	"Eight Ball Action (DK conversion)\0", "Parent set for working drivers", "Seatongrove UK, Ltd. (Magic Electronics USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, EightballactRomInfo, EightballactRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,

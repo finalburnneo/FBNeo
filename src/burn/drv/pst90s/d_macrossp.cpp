@@ -1191,7 +1191,7 @@ struct BurnDriver BurnDrvMacrossp = {
 };
 
 
-// Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un
+// Quiz Bishoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un
 
 static struct BurnRomInfo quizmoonRomDesc[] = {
 	{ "u1.bin",		0x020000, 0xea404553, 1 | BRF_PRG | BRF_ESS }, //  0 68ec20 code
@@ -1236,7 +1236,7 @@ static INT32 quizmoonInit()
 
 struct BurnDriver BurnDrvQuizmoon = {
 	"quizmoon", NULL, NULL, NULL, "1997",
-	"Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un\0", NULL, "Banpresto", "Miscellaneous",
+	"Quiz Bishoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, quizmoonRomInfo, quizmoonRomName, NULL, NULL, NULL, NULL, MacrosspInputInfo, MacrosspDIPInfo, //QuizmoonInputInfo, QuizmoonDIPInfo,

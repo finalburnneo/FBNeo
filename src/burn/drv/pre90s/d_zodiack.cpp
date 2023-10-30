@@ -956,7 +956,7 @@ struct BurnDriver BurnDrvPercuss = {
 };
 
 
-// The Bounty
+// The Bounty (set 1)
 
 static struct BurnRomInfo bountyRomDesc[] = {
 	{ "1.4f",			0x1000, 0xf495b19d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -980,7 +980,7 @@ STD_ROM_FN(bounty)
 
 struct BurnDriver BurnDrvBounty = {
 	"bounty", NULL, NULL, NULL, "1982",
-	"The Bounty\0", NULL, "Orca", "Miscellaneous",
+	"The Bounty (set 1)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bountyRomInfo, bountyRomName, NULL, NULL, NULL, NULL, BountyInputInfo, BountyDIPInfo,

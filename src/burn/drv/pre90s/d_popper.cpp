@@ -621,7 +621,7 @@ STD_ROM_FN(popper)
 
 struct BurnDriver BurnDrvPopper = {
 	"popper", NULL, NULL, NULL, "1983",
-	"Popper\0", NULL, "Omori", "Miscellaneous",
+	"Popper\0", NULL, "Omori Electric Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popperRomInfo, popperRomName, NULL, NULL, NULL, NULL, PopperInputInfo, PopperDIPInfo,

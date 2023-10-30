@@ -34,6 +34,8 @@ static UINT8 *DrvScrRAM[3];
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRegs;
 
+static UINT16 *DrvSpriteBMP;
+
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -2393,6 +2395,8 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
+	DrvSpriteBMP = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+
 	AllRam		= Next;
 
 	Drv68KRAM0	= Next; Next += 0x020000;
@@ -2993,6 +2997,47 @@ static INT32 DrvExit()
 	return 0;
 }
 
+// sweet memories
+// sprite trails (p47 Jaleco bootup logo) effect by Haze
+// Mosaic effect by iq_132 & dink
+
+static void sprite_mixer()
+{
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		UINT16 *sprite = DrvSpriteBMP + y * 256;
+		UINT16 *dest = pTransDraw + y * nScreenWidth;
+		UINT8 *prio = pPrioDraw + y * nScreenWidth;
+
+		for (INT32 x = 0; x < nScreenWidth; x++)
+		{
+			UINT16 pxl = sprite[x];
+			if ((pxl & 0xf) != 0xf) {
+				UINT8 priority = (pxl & 0x4000) ? 0x0c : 0x0a;
+				if ((priority & (1 << (prio[x] & 0x1f))) == 0) {
+					dest[x] = pxl & 0x3fff;
+				}
+			}
+		}
+	}
+}
+
+static void sprite_clear_trails(UINT8 modifier)
+{
+	for (INT32 y = 0; y < 256; y++)
+	{
+		UINT16 *dest = DrvSpriteBMP + y * 256;
+
+		for (INT32 x = 0; x < 256; x++)
+		{
+			UINT16 pxl = (dest[x] &= 0x7fff);
+			if (((pxl & 0xf0) >> 4) < modifier) {
+				dest[x] = 0x0f0f;
+			}
+		}
+	}
+}
+
 static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT8 mosaic, UINT8 mosaicsol, INT32 priority)
 {
 	if (sy >= nScreenHeight || sy < -15 || sx >= nScreenWidth || sx < -15) return;
@@ -3004,16 +3049,13 @@ static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx,
 
 	color = (color * 16) + layer_color_config[3];
 
-	priority |= 1 << 31; // drawn
-
-	UINT16 *dest = pTransDraw + sy * nScreenWidth + sx;
-	UINT8 *prio = pPrioDraw + sy * nScreenWidth + sx;
+	UINT16 *dest = DrvSpriteBMP + sy * 256 + sx;
 
 	for (INT32 y = 0; y < 16; y++, sy++, sx-=16)
 	{
 		for (INT32 x = 0; x < 16; x++, sx++)
 		{
-			if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;	
+			if (sx < 0 || sy < 0 || sx >= 256 || sy >= 256) continue;
 
 			INT32 pxl;
 
@@ -3023,20 +3065,23 @@ static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx,
 				pxl = gfx[(((y ^ flipy) & ~mosaic) * 16) + ((x ^ flipx) & ~mosaic)];
 			}
 
-			if (pxl != 0x0f) {
-				if ((priority & (1 << (prio[x] & 0x1f))) == 0) {
-					dest[x] = pxl + color;
-					prio[x] |= 0x1f;
-				}
+			if (pxl != 0x0f && (~dest[x] & 0x8000)) {
+				dest[x] = (pxl+color) | (priority << 14);
+				dest[x] |= 0x8000;
 			}
 		}
-		dest += nScreenWidth;
-		prio += nScreenWidth;
+		dest += 256;
 	}
 }
 
 static void System1A_draw_sprites()
 {
+	if (sprite_flag & 0x10) {
+		sprite_clear_trails(sprite_flag & 0x0f);
+	} else {
+		memset(DrvSpriteBMP, 0x0f, 256*256*sizeof(UINT16));
+	}
+
 	INT32 color_mask = (sprite_flag & 0x100) ? 0x07 : 0x0f;
 
 	UINT16 *objectram = (UINT16*)DrvObjBuf1;
@@ -3063,7 +3108,7 @@ static void System1A_draw_sprites()
 
 			INT32 flipx = attr & 0x40;
 			INT32 flipy = attr & 0x80;
-			INT32 pri  = (attr & 0x08) ? 0x0c : 0x0a;
+			INT32 pri  = (attr & 0x08) >> 3;
 			INT32 mosaic = (attr & 0x0f00)>>8;
 			INT32 mossol = (attr & 0x1000)>>8;
 
@@ -3278,6 +3323,7 @@ static INT32 DrvDraw()
 			System1Z_draw_sprites();
 		} else {
 			System1A_draw_sprites();
+			sprite_mixer();
 		}
 	}
 

@@ -20575,7 +20575,7 @@ struct BurnDriver BurnDrvmslug1v2 = {
 // Modified by 合金弹头爱克斯 / CardCaptorSakura
 
 static struct BurnRomInfo mslugdqyRomDesc[] = {
-	{ "201-p1dqy.p1",	0x200000, 0x9c39a144, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1dqy.p1",	0x200000, 0x0019bc96, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -20886,12 +20886,12 @@ struct BurnDriver BurnDrvMSlugX2r1v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X (Survival, Hack)
+// Metal Slug X (Legendary, Hack)
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",    0x100000, 0xda458e67, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",   0x400000, 0x7a27bd7f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",    0x100000, 0xd97f01fa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",   0x400000, 0xab428a0f, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",    0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -20899,8 +20899,8 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
 	{ "250-c3.c3",      0x800000, 0xfd602019, 3 | BRF_GRA },           //  5
 	{ "250-c4.c4",      0x800000, 0x31354513, 3 | BRF_GRA },           //  6
-	{ "250-c5sc.c5",    0x800000, 0xce4ccd03, 3 | BRF_GRA },           //  7
-	{ "250-c6sc.c6",    0x800000, 0xb19552b7, 3 | BRF_GRA },           //  8
+	{ "250-c5sc.c5",    0x800000, 0x55ce92eb, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",    0x800000, 0x503a98eb, 3 | BRF_GRA },           //  8
 
 	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
@@ -20914,7 +20914,7 @@ STD_ROM_FN(mslugxsc)
 
 struct BurnDriver BurnDrvmslugxsc = {
 	"mslugxsc", "mslugx", "neogeo", NULL, "2023",
-	"Metal Slug X (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	"Metal Slug X (Legendary, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxscRomInfo, mslugxscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -21159,8 +21159,8 @@ struct BurnDriver BurnDrvmslug31v2 = {
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug3cqRomDesc[] = {
-	{ "256-ph1cq.p1",    0x100000, 0x6449cc07, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2cq.sp2",   0x400000, 0x3fd5a93c, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1cq.p1",    0x100000, 0x406dca6c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2cq.sp2",   0x400000, 0xeea7a7b0, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "256-s1d.s1",      0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -21170,8 +21170,8 @@ static struct BurnRomInfo mslug3cqRomDesc[] = {
 	{ "256-c4d.c4",      0x800000, 0x1463add6, 3 | BRF_GRA },           //  6
 	{ "256-c5d.c5",      0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  7
 	{ "256-c6d.c6",      0x800000, 0x806eb36f, 3 | BRF_GRA },           //  8
-	{ "256-c7cq.c7",     0x800000, 0xb7bd7296, 3 | BRF_GRA },           //  9
-	{ "256-c8cq.c8",     0x800000, 0x638e5920, 3 | BRF_GRA },           // 10
+	{ "256-c7cq.c7",     0x800000, 0xa778f9d0, 3 | BRF_GRA },           //  9
+	{ "256-c8cq.c8",     0x800000, 0x7d75fb37, 3 | BRF_GRA },           // 10
 
 	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 

@@ -15,6 +15,7 @@ static unsigned nAxisNum = 0;
 static unsigned nMahjongKeyboards = 0;
 static unsigned nMaxControllers = 0;
 static unsigned nDeviceType[MAX_PLAYERS];
+static unsigned nPerPlayerAxises[MAX_PLAYERS] = {0, };
 static int nLibretroInputBitmask[MAX_PLAYERS];
 static std::vector<retro_input_descriptor> normal_input_descriptors;
 static struct KeyBind sKeyBinds[MAX_KEYBINDS];
@@ -91,6 +92,7 @@ static void AnalyzeGameLayout()
 	nFireButtons = 0;
 	nMacroCount = 0;
 	memset(&nNeogeoButtons, 0, sizeof(nNeogeoButtons));
+	memset(&nPerPlayerAxises, 0, sizeof(nPerPlayerAxises));
 
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		bii.szName = NULL;
@@ -116,6 +118,10 @@ static void AnalyzeGameLayout()
 				}
 			}
 
+			// count the number of axis per player
+			if (_stricmp("-axis", bii.szInfo + 4) == 0 || _stricmp("-axis", bii.szInfo + 7) == 0) {
+				nPerPlayerAxises[nPlayer]++;
+			}
 			// look for mahjong controls, if found set a number of mahjong keyboards equal to the number of players
 			if ((strncmp("mah ", bii.szInfo, 4) == 0)) {
 				nMahjongKeyboards = nMaxPlayers;
@@ -702,6 +708,10 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		if (strcmp("y-axis", szb) == 0) {
 			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_MOUSE_Y, 0, description, GIT_MOUSEAXIS);
 		}
+		// Some games have only 1 axis, but it's marked as z, their default should be to use mouse's x-axis
+		if (strcmp("z-axis", szb) == 0 && nPerPlayerAxises[nPlayer] == 1) {
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_MOUSE_X, 0, description, GIT_MOUSEAXIS);
+		}
 		if (nDeviceType[nPlayer] == RETROMOUSE_FULL) {
 			// Handle mouse button mapping (i will keep it simple...)
 			if (strcmp("fire 1", szb) == 0 || strcmp("button 1", szb) == 0 || strcmp("button", szb) == 0) {
@@ -1154,26 +1164,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		}
 		if (strcmp("Fire 1", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_B, description);
-		}
-	}
-
-	// VS Block Breaker
-	if ((parentrom && strcmp(parentrom, "vblokbrk") == 0) ||
-		(drvname && strcmp(drvname, "vblokbrk") == 0) ||
-		(parentrom && strcmp(parentrom, "puzzloop") == 0) ||
-		(drvname && strcmp(drvname, "puzzloop") == 0)
-	) {
-		if (strcmp("Paddle", description) == 0) {
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
-		}
-	}
-
-	// Puzz Loop 2
-	if ((parentrom && strcmp(parentrom, "pzloop2") == 0) ||
-		(drvname && strcmp(drvname, "pzloop2") == 0)
-	) {
-		if (strcmp("Paddle", description) == 0) {
-			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 		}
 	}
 
@@ -2099,7 +2089,13 @@ static INT32 GameInpStandardOne(struct GameInp* pgi, INT32 nPlayer, char* szb, c
 	if (strncmp("y-axis", szb, 6) == 0)
 		GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
 	if (strncmp("z-axis", szb, 6) == 0)
-		GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
+	{
+		// Some games have only 1 axis, but it's marked as z, their default should be to use left analog's x-axis
+		if (nPerPlayerAxises[nPlayer] == 1)
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_X, RETRO_DEVICE_INDEX_ANALOG_LEFT, description);
+		else
+			GameInpAnalog2RetroInpAnalog(pgi, nPlayer, RETRO_DEVICE_ID_ANALOG_Y, RETRO_DEVICE_INDEX_ANALOG_RIGHT, description);
+	}
 
 	if (strncmp("fire ", szb, 5) == 0) {
 		char *szf = szb + 5;

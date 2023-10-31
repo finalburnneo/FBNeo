@@ -1169,7 +1169,7 @@ struct BurnDriver BurnDrvGalivan3 = {
 };
 
 
-// Ufo Robo Dangar (4/07/1987)
+// Ufo Robo Dangar (4/09/1987)
 
 static struct BurnRomInfo dangarRomDesc[] = {
 	{ "8.1b",			0x8000, 0xfe4a3fd6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1205,7 +1205,7 @@ STD_ROM_FN(dangar)
 
 struct BurnDriver BurnDrvDangar = {
 	"dangar", NULL, NULL, NULL, "1986",
-	"Ufo Robo Dangar (4/07/1987)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Ufo Robo Dangar (4/09/1987)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dangarRomInfo, dangarRomName, NULL, NULL, NULL, NULL, DangarInputInfo, DangarDIPInfo,
@@ -1259,7 +1259,7 @@ struct BurnDriver BurnDrvDangara = {
 };
 
 
-// Ufo Robo Dangar (9/26/1986)
+// Ufo Robo Dangar (9/26/1986, bootleg set 1)
 
 static struct BurnRomInfo dangarbRomDesc[] = {
 	{ "16.1b",			0x8000, 0x743fa2d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1295,9 +1295,9 @@ STD_ROM_FN(dangarb)
 
 struct BurnDriver BurnDrvDangarb = {
 	"dangarb", "dangar", NULL, NULL, "1986",
-	"Ufo Robo Dangar (9/26/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Ufo Robo Dangar (9/26/1986, bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dangarbRomInfo, dangarbRomName, NULL, NULL, NULL, NULL, DangarInputInfo, DangarbDIPInfo, // Dangar2
 	galivanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
@@ -1352,7 +1352,7 @@ struct BurnDriver BurnDrvDangarj = {
 };
 
 
-// Ufo Robo Dangar (bootleg)
+// Ufo Robo Dangar (9/26/1986, bootleg set 2)
 
 static struct BurnRomInfo dangarbtRomDesc[] = {
 	{ "8",				0x8000, 0x8136fd10, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1388,7 +1388,7 @@ STD_ROM_FN(dangarbt)
 
 struct BurnDriver BurnDrvDangarbt = {
 	"dangarbt", "dangar", NULL, NULL, "1986",
-	"Ufo Robo Dangar (bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Ufo Robo Dangar (9/26/1986, bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dangarbtRomInfo, dangarbtRomName, NULL, NULL, NULL, NULL, DangarInputInfo, DangarbDIPInfo, // Dangar2

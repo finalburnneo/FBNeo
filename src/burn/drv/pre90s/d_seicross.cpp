@@ -841,7 +841,7 @@ struct BurnDriver BurnDrvFriskyta = {
 };
 
 
-// Frisky Tom (set 3, encrypted)
+// Frisky Tom (set 3)
 
 static struct BurnRomInfo friskytbRomDesc[] = {
 	{ "1.3a",	0x1000, 0x554bdb0f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code (Encrypted)
@@ -872,7 +872,7 @@ static INT32 friskytbInit()
 
 struct BurnDriver BurnDrvFriskytb = {
 	"friskytb", "friskyt", NULL, NULL, "1981",
-	"Frisky Tom (set 3, encrypted)\0", "Broken, please use parent romset!", "Nichibutsu", "Miscellaneous",
+	"Frisky Tom (set 3)\0", "Broken, please use parent romset!", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, friskytbRomInfo, friskytbRomName, NULL, NULL, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
@@ -951,7 +951,7 @@ STD_ROM_PICK(radradj)
 STD_ROM_FN(radradj)
 
 struct BurnDriver BurnDrvRadradj = {
-	"radradj", "radrad", NULL, NULL, "1982",
+	"radradj", "radrad", NULL, NULL, "1983",
 	"Radical Radial (Japan)\0", NULL, "Logitec Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,

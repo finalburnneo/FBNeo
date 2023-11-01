@@ -10,6 +10,7 @@
 #include <math.h>
 
 #define ZLIB_CONST
+#define SPNG_DISABLE_OPT
 
 #ifdef __FRAMAC__
     #define SPNG_DISABLE_OPT

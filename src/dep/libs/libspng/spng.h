@@ -119,7 +119,7 @@ enum spng_errno
     SPNG_ENOSRC,
     SPNG_ENODST,
     SPNG_EOPSTATE,
-    SPNG_ENOTFINAL,
+    SPNG_ENOTFINAL
 };
 
 enum spng_text_type
@@ -215,7 +215,7 @@ enum spng_crc_action
 enum spng_encode_flags
 {
     SPNG_ENCODE_PROGRESSIVE = 1, /* Initialize for progressive writes */
-    SPNG_ENCODE_FINALIZE = 2, /* Finalize PNG after encoding image */
+    SPNG_ENCODE_FINALIZE = 2 /* Finalize PNG after encoding image */
 };
 
 struct spng_ihdr
@@ -381,7 +381,7 @@ enum spng_location
 {
     SPNG_AFTER_IHDR = 1,
     SPNG_AFTER_PLTE = 2,
-    SPNG_AFTER_IDAT = 8,
+    SPNG_AFTER_IDAT = 8
 };
 
 struct spng_unknown_chunk
@@ -408,7 +408,7 @@ enum spng_option
 
     SPNG_FILTER_CHOICE,
     SPNG_CHUNK_COUNT_LIMIT,
-    SPNG_ENCODE_TO_BUFFER,
+    SPNG_ENCODE_TO_BUFFER
 };
 
 typedef void* SPNG_CDECL spng_malloc_fn(size_t size);

@@ -1,4 +1,5 @@
 #include "burner.h"
+#include "spng.h"
 
 #define SSHOT_NOERROR 0
 #define SSHOT_ERROR_BPP_NOTSUPPORTED 1
@@ -12,55 +13,32 @@
 #endif
 
 static UINT8* pSShot = NULL;
-static UINT8* pConvertedImage = NULL;
-static png_bytep* pSShotImageRows = NULL;
+static UINT8* pFreeMe[3] = { NULL, NULL, NULL };
 static FILE* ff = NULL;
+
+static void free_temp_imagen()
+{
+	// free temp memory from the conversion processeses
+	for (int i = 0; i < 3; i++) {
+		if (pFreeMe[i]) {
+			free(pFreeMe[i]);
+			pFreeMe[i] = NULL;
+		}
+	}
+}
+
 
 INT32 MakeScreenShot()
 {
-	char szAuthor[256]; char szDescription[256]; char szCopyright[256];	char szSoftware[256]; char szSource[256];
-	png_text text_ptr[8] = { { 0, 0, 0, 0, 0, 0, 0 }, };
+	char szAuthor[256]; char szDescription[256]; char szCopyright[256];	char szTime[256]; char szSoftware[256]; char szSource[256];
+	spng_text text_ptr[8];
 	INT32 num_text = 8;
 
     time_t currentTime;
     tm* tmTime;
-    png_time_struct png_time_now;
 
 	char szSShotName[MAX_PATH] = { 0, };
     INT32 w, h;
-
-    // do our PNG construct things
-    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (!png_ptr) {
-		return SSHOT_LIBPNG_ERROR;
-	}
-
-    png_infop info_ptr = png_create_info_struct(png_ptr);
-    if (!info_ptr) {
-        png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-
-		return SSHOT_LIBPNG_ERROR;
-    }
-
-    if (setjmp(png_jmpbuf(png_ptr))) {
-        png_destroy_write_struct(&png_ptr, &info_ptr);
-		if (pConvertedImage) {
-			free(pConvertedImage);
-			pConvertedImage = NULL;
-		}
-
-		if (pSShotImageRows) {
-			free(pSShotImageRows);
-			pSShotImageRows = NULL;
-		}
-
-		if (ff) {
-			fclose(ff);
-			remove(szSShotName);
-		}
-
-		return SSHOT_LIBPNG_ERROR;
-    }
 
 	if (pVidImage == NULL) {
 		return SSHOT_OTHER_ERROR;
@@ -77,6 +55,8 @@ INT32 MakeScreenShot()
 	// Convert the image to 32-bit
 	if (nVidImageBPP < 4) {
 		UINT8* pTemp = (UINT8*)malloc(w * h * sizeof(INT32));
+
+		pFreeMe[0] = pTemp;
 
 		if (nVidImageBPP == 2) {
 			for (INT32 i = 0; i < h * w; i++) {
@@ -113,14 +93,14 @@ INT32 MakeScreenShot()
 			}
         }
 
-		pConvertedImage = pTemp;
-
-        pSShot = pConvertedImage;
+        pSShot = pTemp;
 	}
 
 	// Rotate and flip the image
 	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		UINT8* pTemp = (UINT8*)malloc(w * h * sizeof(INT32));
+
+		pFreeMe[1] = pTemp;
 
 		for (INT32 x = 0; x < h; x++) {
 			if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
@@ -139,6 +119,8 @@ INT32 MakeScreenShot()
 	else if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) { // fixed rotation by regret
 		UINT8* pTemp = (UINT8*)malloc(w * h * sizeof(INT32));
 
+		pFreeMe[1] = pTemp;
+
 		for (INT32 y = h - 1; y >= 0; y--) {
 			for (INT32 x = w - 1; x >= 0; x--) {
 				((UINT32*)pTemp)[(w - x - 1) + (h - y - 1) * w] = ((UINT32*)pSShot)[x + y * w];
@@ -148,28 +130,45 @@ INT32 MakeScreenShot()
         pSShot = pTemp;
 	}
 
+	{
+		UINT8* pTemp = (UINT8*)malloc(w * h * 3); // bgrbgrbgr...
+
+		pFreeMe[2] = pTemp;
+
+		// convert (int*)argb to bgr as needed by libspng
+		for (int i = 0; i < w * h; i++) {
+			int r = pSShot[i * 4 + 0]; // (int)ARGB (little endian)
+			int g = pSShot[i * 4 + 1];
+			int b = pSShot[i * 4 + 2];
+
+			pTemp[i * 3 + 0] = b;      // BGR (byte order)
+			pTemp[i * 3 + 1] = g;
+			pTemp[i * 3 + 2] = r;
+		}
+
+		pSShot = pTemp;
+	}
+
+
 	// Get the time
 	time(&currentTime);
     tmTime = localtime(&currentTime);
-	png_convert_from_time_t(&png_time_now, currentTime);
+	//png_convert_from_time_t(&png_time_now, currentTime);
 
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	SSHOT_DIRECTORY = SDL_GetPrefPath("fbneo", "screenshots");
 #endif
 	// construct our filename -> "romname-mm-dd-hms.png"
     sprintf(szSShotName,"%s%s-%.2d-%.2d-%.2d%.2d%.2d.png", SSHOT_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+	//sprintf(szTime,"%.2d-%.2d-%.2d %.2d:%.2d:%.2d", tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_year, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+	sprintf(szTime, "%s", asctime(tmTime));
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	SDL_free(SSHOT_DIRECTORY);
 #endif
 
 	ff = fopen(szSShotName, "wb");
 	if (ff == NULL) {
-		png_destroy_write_struct(&png_ptr, &info_ptr);
-
-		if (pConvertedImage) {
-			free(pConvertedImage);
-			pConvertedImage = NULL;
-		}
+		free_temp_imagen();
 
 		return SSHOT_OTHER_ERROR;
 	}
@@ -183,58 +182,57 @@ INT32 MakeScreenShot()
 	sprintf(szDescription, "Screenshot of %s", DecorateGameName(nBurnDrvActive));
 	sprintf(szCopyright, "%s %s", BurnDrvGetTextA(DRV_DATE), BurnDrvGetTextA(DRV_MANUFACTURER));
 #ifdef _UNICODE
-	sprintf(szSoftware, APP_TITLE " v%.20ls using LibPNG " PNG_LIBPNG_VER_STRING, szAppBurnVer);
+	sprintf(szSoftware, APP_TITLE " v%.20ls using LibSPNG v%d.%d.%d", szAppBurnVer, SPNG_VERSION_MAJOR, SPNG_VERSION_MINOR, SPNG_VERSION_PATCH);
 #else
-	sprintf(szSoftware, APP_TITLE " v%.20s using LibPNG " PNG_LIBPNG_VER_STRING, szAppBurnVer);
+	sprintf(szSoftware, APP_TITLE " v%.20s using LibSPNG v%d.%d.%d", szAppBurnVer, SPNG_VERSION_MAJOR, SPNG_VERSION_MINOR, SPNG_VERSION_PATCH);
 #endif
 	sprintf(szSource, "%s video game hardware", BurnDrvGetTextA(DRV_SYSTEM));
 
-	text_ptr[0].key = "Title";			text_ptr[0].text = BurnDrvGetTextA(DRV_FULLNAME);
-	text_ptr[1].key = "Author";			text_ptr[1].text = szAuthor;
-	text_ptr[2].key = "Description";	text_ptr[2].text = szDescription;
-	text_ptr[3].key = "Copyright";		text_ptr[3].text = szCopyright;
-//	text_ptr[4].key = "Creation Time";	text_ptr[4].text = (char*)png_convert_to_rfc1123(png_ptr, &png_time_now); // deprecated in libpng
-	text_ptr[4].key = "Creation Time";	png_convert_to_rfc1123_buffer(text_ptr[4].text, &png_time_now);
-	text_ptr[5].key = "Software";		text_ptr[5].text = szSoftware;
-	text_ptr[6].key = "Source";			text_ptr[6].text = szSource;
-	text_ptr[7].key = "Comment";		text_ptr[7].text = "This screenshot was created by running the game in an emulator; it might not accurately reflect the actual hardware the game was designed to run on.";
+	memset(text_ptr, 0, sizeof(text_ptr));
 
-	for (INT32 i = 0; i < num_text; i++) {
-		text_ptr[i].compression = PNG_TEXT_COMPRESSION_NONE;
+	strcpy(text_ptr[0].keyword, "Title");			text_ptr[0].text = BurnDrvGetTextA(DRV_FULLNAME);
+	strcpy(text_ptr[1].keyword, "Author");			text_ptr[1].text = szAuthor;
+	strcpy(text_ptr[2].keyword, "Description");		text_ptr[2].text = szDescription;
+	strcpy(text_ptr[3].keyword, "Copyright");		text_ptr[3].text = szCopyright;
+	strcpy(text_ptr[4].keyword, "Creation Time");	text_ptr[4].text = szTime;
+	strcpy(text_ptr[5].keyword, "Software");		text_ptr[5].text = szSoftware;
+	strcpy(text_ptr[6].keyword, "Source");			text_ptr[6].text = szSource;
+	strcpy(text_ptr[7].keyword, "Comment");			text_ptr[7].text = "This screenshot was created by running the game in an emulator; it might not accurately reflect the actual hardware the game was designed to run on.";
+
+	for (int i = 0; i < num_text; i++) {
+		text_ptr[i].type = SPNG_TEXT;
+		text_ptr[i].length = strlen(text_ptr[i].text);
 	}
 
-	png_set_text(png_ptr, info_ptr, text_ptr, num_text);
+	// png it on! (dink was here)
+	spng_ctx *ctx = NULL;
+    struct spng_ihdr ihdr = { 0 };
 
-	png_init_io(png_ptr, ff);
+    ctx = spng_ctx_new(SPNG_CTX_ENCODER);
+	spng_set_png_file(ctx, ff);
 
-    png_set_IHDR(png_ptr, info_ptr, w, h, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-    png_write_info(png_ptr, info_ptr);
-
-	png_set_filler(png_ptr, 0, PNG_FILLER_AFTER);
-
-    png_set_bgr(png_ptr);
-
-	pSShotImageRows = (png_bytep*)malloc(h * sizeof(png_bytep));
-    for (INT32 y = 0; y < h; y++) {
-        pSShotImageRows[y] = pSShot + (y * w * sizeof(INT32));
-    }
-
-	png_write_image(png_ptr, pSShotImageRows);
-	png_write_end(png_ptr, info_ptr);
-
-	if (pSShotImageRows) {
-		free(pSShotImageRows);
-		pSShotImageRows = NULL;
+	int rv = spng_set_text(ctx, &text_ptr[0], num_text);
+	if (rv) {
+		bprintf(0, _T("spng_set_text() error: %d / %S\n"), rv, spng_strerror(rv));
 	}
+
+	ihdr.width = w;
+    ihdr.height = h;
+    ihdr.color_type = SPNG_COLOR_TYPE_TRUECOLOR;
+	ihdr.bit_depth = 8;
+	spng_set_ihdr(ctx, &ihdr);
+
+	rv = spng_encode_image(ctx, pSShot, w * h * 3, SPNG_FMT_PNG, SPNG_ENCODE_FINALIZE);
+
+	if (rv) {
+		bprintf(0, _T("spng_encode_image() error: %d / %S\n"), rv, spng_strerror(rv));
+	}
+
+	spng_ctx_free(ctx);
 
 	fclose(ff);
 
-	png_destroy_write_struct(&png_ptr, &info_ptr);
-
-	if (pConvertedImage) {
-		free(pConvertedImage);
-		pConvertedImage = NULL;
-	}
+	free_temp_imagen();
 
 	return SSHOT_NOERROR;
 }

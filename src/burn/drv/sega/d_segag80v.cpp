@@ -1715,7 +1715,7 @@ struct BurnDriver BurnDrvElim4p = {
 	"elim4p", "elim2", NULL, "elim2", "1981",
 	"Eliminator (4 Players, prototype)\0", NULL, "Gremlin", "G80 Vector",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, elim4pRomInfo, elim4pRomName, NULL, NULL, elim2SampleInfo, elim2SampleName, Elim4InputInfo, Elim4DIPInfo,
 	Elim4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	800, 600, 4, 3

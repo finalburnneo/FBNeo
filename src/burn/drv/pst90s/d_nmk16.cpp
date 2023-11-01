@@ -8834,7 +8834,7 @@ struct BurnDriver BurnDrvNouryokup = {
 	"nouryokup", "nouryoku", NULL, NULL, "1995",
 	"Nouryoku Koujou Iinkai (prototype)\0", NULL, "Tecmo", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, nouryokupRomInfo, nouryokupRomName, NULL, NULL, NULL, NULL, CommonInputInfo, NouryokuDIPInfo,
 	NouryokupInit, BjtwinExit, BjtwinFrame, BjtwinDraw, DrvScan, NULL, 0x400,
 	384, 224, 4, 3

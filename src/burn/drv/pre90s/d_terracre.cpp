@@ -1271,7 +1271,7 @@ struct BurnDriver BurnDrvHorekid = {
 };
 
 
-// Kid no Hore Hore Daisakusen (bootleg)
+// Kid no Hore Hore Daisakusen (bootleg set 1)
 
 static struct BurnRomInfo HorekidbRomDesc[] = {
 	{ "knhhd5",        0x08000, 0x786619c7, 1 | BRF_ESS | BRF_PRG },	//  0 68000 Program Code
@@ -1310,7 +1310,7 @@ STD_ROM_FN(Horekidb)
 
 struct BurnDriver BurnDrvHorekidb = {
 	"horekidb", "horekid", NULL, NULL, "1987",
-	"Kid no Hore Hore Daisakusen (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Kid no Hore Hore Daisakusen (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, HorekidbRomInfo, HorekidbRomName, NULL, NULL, NULL, NULL, TerracreInputInfo, HorekidDIPInfo,

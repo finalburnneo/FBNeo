@@ -2019,7 +2019,7 @@ struct BurnDriver BurnDrvCkongpt2jeu = {
 	"ckongpt2jeu", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (Jeutel bootleg)\0", NULL, "bootleg (Jeutel)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2jeuRomInfo, ckongpt2jeuRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongDIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
@@ -2059,7 +2059,7 @@ struct BurnDriver BurnDrvCkongpt2b = {
 	"ckongpt2b", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (alternative levels)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2bRomInfo, ckongpt2bRomName, NULL, NULL, NULL, NULL, CkongInputInfo, CkongbDIPInfo,
 	ckongbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
@@ -2099,7 +2099,7 @@ struct BurnDriver BurnDrvCkongpt2b2 = {
 	"ckongpt2b2", "ckongpt2", NULL, NULL, "1981",
 	"Crazy Kong Part II (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2b2RomInfo, ckongpt2b2RomName, NULL, NULL, NULL, NULL, CkongInputInfo, Ckongb2DIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
@@ -2543,14 +2543,14 @@ struct BurnDriver BurnDrvRpatrolb = {
 	"rpatrolb", "rpatrol", NULL, NULL, "1981",
 	"River Patrol (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rpatrolbRomInfo, rpatrolbRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
 
-// Silver Land
+// Silver Land (hack of River Patrol)
 
 static struct BurnRomInfo silvlandRomDesc[] = {
 	{ "7.2r",	0x1000, 0x57e6be62, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -2578,7 +2578,7 @@ STD_ROM_FN(silvland)
 
 struct BurnDriver BurnDrvSilvland = {
 	"silvland", "rpatrol", NULL, NULL, "1981",
-	"Silver Land\0", NULL, "Falcon", "Miscellaneous",
+	"Silver Land (hack of River Patrol)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, silvlandRomInfo, silvlandRomName, NULL, NULL, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,

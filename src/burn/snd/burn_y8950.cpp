@@ -267,6 +267,11 @@ void BurnY8950Exit()
 	DebugSnd_Y8950Initted = 0;
 }
 
+INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT32 nY8950ADPCM0Size, UINT8* Y8950ADPCM1ROM, INT32 nY8950ADPCM1Size, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal)
+{
+	return BurnY8950Init(num, nClockFrequency, Y8950ADPCM0ROM, nY8950ADPCM0Size, Y8950ADPCM1ROM, nY8950ADPCM1Size, IRQCallback, BurnSynchroniseStream, bAddSignal);
+}
+
 INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT32 nY8950ADPCM0Size, UINT8* Y8950ADPCM1ROM, INT32 nY8950ADPCM1Size, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
 {
 	INT32 timer_chipbase = BurnTimerInit(&Y8950TimerOver, NULL, num);

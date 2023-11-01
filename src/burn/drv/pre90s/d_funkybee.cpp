@@ -647,7 +647,7 @@ struct BurnDriver BurnDrvfunkbeeb = {
 	"funkybeeb", "funkybee", NULL, NULL, "1982",
 	"Funky Bee (bootleg, harder)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, funkbeebRomInfo, funkbeebRomName, NULL, NULL, NULL, NULL, DrvInputInfo, funkbeebDIPInfo,
 	funkybeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 236, 3, 4

@@ -1536,7 +1536,7 @@ struct BurnDriver BurnDrvPunchita = {
 	"punchita", "punchout", NULL, NULL, "1984",
 	"Punch-Out!! (Italian bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, punchitaRomInfo, punchitaRomName, NULL, NULL, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	SpnchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6

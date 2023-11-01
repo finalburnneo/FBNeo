@@ -1052,7 +1052,7 @@ struct BurnDriver BurnDrvStarwarr = {
 	"starwarr", "spacefb", NULL, "spacefb", "1980",
 	"Star Warrior\0", NULL, "bootleg (Potomac Mortgage)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, starwarrRomInfo, starwarrRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4

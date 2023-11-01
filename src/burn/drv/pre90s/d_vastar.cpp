@@ -891,7 +891,7 @@ static INT32 vastarInit()
 
 struct BurnDriver BurnDrvVastar = {
 	"vastar", NULL, NULL, NULL, "1983",
-	"Vastar (set 1)\0", NULL, "Sesame Japan", "Miscellaneous",
+	"Vastar (set 1)\0", NULL, "Orca (Sesame Japan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastarRomInfo, vastarRomName, NULL, NULL, NULL, NULL, VastarInputInfo, VastarDIPInfo,
@@ -936,7 +936,7 @@ STD_ROM_FN(vastar2)
 
 struct BurnDriver BurnDrvVastar2 = {
 	"vastar2", "vastar", NULL, NULL, "1983",
-	"Vastar (set 2)\0", NULL, "Sesame Japan", "Miscellaneous",
+	"Vastar (set 2)\0", NULL, "Orca (Sesame Japan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastar2RomInfo, vastar2RomName, NULL, NULL, NULL, NULL, VastarInputInfo, VastarDIPInfo,
@@ -982,7 +982,7 @@ static INT32 vastar3Init()
 
 struct BurnDriver BurnDrvVastar3 = {
 	"vastar3", "vastar", NULL, NULL, "1983",
-	"Vastar (set 3)\0", NULL, "Sesame Japan", "Miscellaneous",
+	"Vastar (set 3)\0", NULL, "Orca (Sesame Japan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastar3RomInfo, vastar3RomName, NULL, NULL, NULL, NULL, VastarInputInfo, VastarDIPInfo,
@@ -1027,7 +1027,7 @@ STD_ROM_FN(vastar4)
 
 struct BurnDriver BurnDrvVastar4 = {
 	"vastar4", "vastar", NULL, NULL, "1983",
-	"Vastar (set 4)\0", NULL, "Sesame Japan", "Miscellaneous",
+	"Vastar (set 4)\0", NULL, "Orca (Sesame Japan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastar4RomInfo, vastar4RomName, NULL, NULL, NULL, NULL, VastarInputInfo, Vastar4DIPInfo,

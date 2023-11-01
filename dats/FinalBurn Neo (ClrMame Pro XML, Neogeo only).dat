@@ -2801,7 +2801,7 @@
 	</game>
 	<game name="ironclad" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Prototype</comment>
-		<description>Choutetsu Brikin'ger - Iron clad (Prototype)</description>
+		<description>Choutetsu Brikin'ger / Iron Clad (prototype)</description>
 		<year>1996</year>
 		<manufacturer>Saurus</manufacturer>
 		<rom name="proto_220-p1.p1" size="2097152" crc="62a942c6"/>
@@ -2854,10 +2854,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="ironclado" cloneof="ironclad" romof="ironclad" sourcefile="neogeo/d_neogeo.cpp">
-		<comment>Prototype</comment>
-		<description>Choutetsu Brikin'ger - Iron clad (Prototype, older)</description>
+		<comment>Prototype, Bootleg</comment>
+		<description>Choutetsu Brikin'ger / Iron Clad (prototype, bootleg)</description>
 		<year>1996</year>
-		<manufacturer>Saurus</manufacturer>
+		<manufacturer>bootleg</manufacturer>
 		<rom name="proto_220-p1o.p1" size="2097152" crc="ce37e3a0"/>
 		<rom name="proto_220-s1.s1" merge="proto_220-s1.s1" size="131072" crc="372fe217"/>
 		<rom name="proto_220-c1.c1" merge="proto_220-c1.c1" size="4194304" crc="9aa2b7dc"/>
@@ -3117,8 +3117,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="crswd2bl" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Bootleg</comment>
 		<description>Crossed Swords 2 (bootleg of CD version)</description>
-		<year>1991</year>
+		<year>1996</year>
 		<manufacturer>bootleg (Razoola)</manufacturer>
 		<rom name="054-p1.p1" size="2097152" crc="64836147"/>
 		<rom name="054-s1.s1" size="131072" crc="22e02ddd"/>
@@ -3225,9 +3226,9 @@
 	</game>
 	<game name="cthd2003" cloneof="kof2001" romof="kof2001" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>Crouching Tiger Hidden Dragon 2003 (The King of Fighters 2001 bootleg, set 1)</description>
+		<description>Crouching Tiger Hidden Dragon 2003 (hack of The King of Fighters 2001)</description>
 		<year>2003</year>
-		<manufacturer>Phenixsoft</manufacturer>
+		<manufacturer>bootleg (Phenixsoft)</manufacturer>
 		<rom name="5003-p1.bin" size="1048576" crc="bb7602c1"/>
 		<rom name="5003-p2.bin" size="4194304" crc="adc1c22b"/>
 		<rom name="5003-s1.bin" size="131072" crc="5ba29aab"/>
@@ -3349,9 +3350,9 @@
 	</game>
 	<game name="ct2k3sp" cloneof="kof2001" romof="kof2001" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>Crouching Tiger Hidden Dragon 2003 Super Plus (The King of Fighters 2001 bootleg)</description>
+		<description>Crouching Tiger Hidden Dragon 2003 Super Plus (hack of The King of Fighters 2001)</description>
 		<year>2003</year>
-		<manufacturer>bootleg</manufacturer>
+		<manufacturer>bootleg (Phenixsoft)</manufacturer>
 		<rom name="5003-p1sp.bin" size="1048576" crc="ab5c4de0"/>
 		<rom name="5003-p2.bin" size="4194304" crc="adc1c22b"/>
 		<rom name="5003-s1sp.bin" size="262144" crc="6c355ab4"/>
@@ -3411,9 +3412,9 @@
 	</game>
 	<game name="ct2k3sa" cloneof="kof2001" romof="kof2001" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>Crouching Tiger Hidden Dragon 2003 Super Plus alternate (The King of Fighters 2001 bootleg)</description>
+		<description>Crouching Tiger Hidden Dragon 2003 Super Plus (hack of The King of Fighters 2001, alternate)</description>
 		<year>2003</year>
-		<manufacturer>bootleg</manufacturer>
+		<manufacturer>bootleg (Phenixsoft)</manufacturer>
 		<rom name="5003-p1sa.bin" size="1048576" crc="013a509d"/>
 		<rom name="5003-p2.bin" size="4194304" crc="adc1c22b"/>
 		<rom name="5003-s1sa.bin" size="131072" crc="4e1f7eae"/>
@@ -3647,8 +3648,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="diggerma" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<comment>Homebrew</comment>
-		<description>Digger Man</description>
+		<comment>Homebrew, Prototype</comment>
+		<description>Digger Man (prototype)</description>
 		<year>2000</year>
 		<manufacturer>Kyle Hodgetts</manufacturer>
 		<rom name="dig-p1.bin" size="524288" crc="eda433d7"/>
@@ -3760,7 +3761,7 @@
 	<game name="doubledr" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Double Dragon (Neo-Geo)</description>
 		<year>1995</year>
-		<manufacturer>Technos</manufacturer>
+		<manufacturer>Technos Japan</manufacturer>
 		<rom name="082-p1.p1" size="2097152" crc="34ab832a"/>
 		<rom name="082-s1.s1" size="131072" crc="bef995c5"/>
 		<rom name="082-c1.c1" size="2097152" crc="b478c725"/>
@@ -3883,7 +3884,7 @@
 	</game>
 	<game name="dragonsh" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Dragon's Heaven (development board)</description>
-		<year>1996</year>
+		<year>1997</year>
 		<manufacturer>Face</manufacturer>
 		<rom name="ep1.bin" size="524288" crc="f353448c"/>
 		<rom name="ep2.bin" size="524288" crc="f25c71ad"/>
@@ -4216,7 +4217,7 @@
 	</game>
 	<game name="fatfury1" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Fatal Fury - King of Fighters / Garou Densetsu - Shukumei no Tatakai (NGM-033 ~ NGH-033)</description>
-		<year>1992</year>
+		<year>1991</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="033-p1.p1" size="524288" crc="47ebdc2f"/>
 		<rom name="033-p2.p2" size="131072" crc="c473af1c"/>
@@ -4270,7 +4271,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury2" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047 ~ NGH-047)</description>
+		<description>Fatal Fury 2 / Garou Densetsu 2 - Arata-naru Tatakai (NGM-047 ~ NGH-047)</description>
 		<year>1992</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="047-p1.p1" size="1048576" crc="ecfdbb69"/>
@@ -4496,7 +4497,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fatfury3" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069 ~ NGH-069)</description>
+		<description>Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - Haruka-naru Tatakai (NGM-069 ~ NGH-069)</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="069-p1.p1" size="1048576" crc="a8bcfbbc"/>
@@ -4730,7 +4731,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fightfev" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Fight Fever (set 1)</description>
+		<description>Fight Fever / Wang Jung Wang (set 1)</description>
 		<year>1994</year>
 		<manufacturer>Viccom</manufacturer>
 		<rom name="060-p1.p1" size="1048576" crc="2a104b50"/>
@@ -4784,7 +4785,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fightfeva" cloneof="fightfev" romof="fightfev" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Fight Fever (set 2)</description>
+		<description>Fight Fever / Wang Jung Wang (set 2)</description>
 		<year>1994</year>
 		<manufacturer>Viccom</manufacturer>
 		<rom name="060-p1.p1" merge="060-p1.p1" size="1048576" crc="2a104b50"/>
@@ -6033,10 +6034,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="froman2b" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<comment>Hack</comment>
+		<comment>Bootleg</comment>
 		<description>Idol Mahjong Final Romance 2 (Neo-Geo, bootleg of CD version)</description>
 		<year>1995</year>
-		<manufacturer>hack</manufacturer>
+		<manufacturer>bootleg</manufacturer>
 		<rom name="098.p1" size="524288" crc="09675541"/>
 		<rom name="098.s1" size="131072" crc="0e6a7c73"/>
 		<rom name="098.c1" size="4194304" crc="29148bf7"/>
@@ -6082,6 +6083,57 @@
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="janshin" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
+		<description>Janshin Densetsu - Quest of Jongmaster</description>
+		<year>1994</year>
+		<manufacturer>Aicom</manufacturer>
+		<rom name="048-p1.p1" size="1048576" crc="fa818cbb"/>
+		<rom name="048-s1.s1" size="131072" crc="8285b25a"/>
+		<rom name="048-c1.c1" size="2097152" crc="3fa890e9"/>
+		<rom name="048-c2.c2" size="2097152" crc="59c48ad8"/>
+		<rom name="048-m1.m1" size="131072" crc="310467c7"/>
+		<rom name="048-v1.v1" size="2097152" crc="f1947d2b"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="jockeygp" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
@@ -6234,57 +6286,6 @@
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="janshin" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Jyanshin Densetsu - Quest of Jongmaster</description>
-		<year>1994</year>
-		<manufacturer>Aicom</manufacturer>
-		<rom name="048-p1.p1" size="1048576" crc="fa818cbb"/>
-		<rom name="048-s1.s1" size="131072" crc="8285b25a"/>
-		<rom name="048-c1.c1" size="2097152" crc="3fa890e9"/>
-		<rom name="048-c2.c2" size="2097152" crc="59c48ad8"/>
-		<rom name="048-m1.m1" size="131072" crc="310467c7"/>
-		<rom name="048-v1.v1" size="2097152" crc="f1947d2b"/>
-		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
-		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
-		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
-		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
-		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
-		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
-		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
-		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
-		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
-		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
-		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
-		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
-		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
-		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
-		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
-		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
-		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
-		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
-		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
-		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
-		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
-		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
-		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
-		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
-		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
-		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
-		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
-		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
-		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
-		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
-		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
-		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
-		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
-		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
-		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
-		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
-		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
-		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
-		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="karnovre" cloneof="karnovr" romof="karnovr" sourcefile="neogeo/d_neogeo.cpp">
@@ -6766,7 +6767,7 @@
 	</game>
 	<game name="kog" cloneof="kof97" romof="kof97" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>King of Gladiator (The King of Fighters '97 bootleg)</description>
+		<description>King of Gladiator (bootleg of The King of Fighters '97)</description>
 		<year>1997</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5232-p1.bin" size="2097152" crc="d2413ec6"/>
@@ -7228,7 +7229,7 @@
 	</game>
 	<game name="lans2004" cloneof="shocktr2" romof="shocktr2" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>Lansquenet 2004 (Shock Troopers - 2nd Squad bootleg)</description>
+		<description>Lansquenet 2004 (bootleg of Shock Troopers - 2nd Squad)</description>
 		<year>1998</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="lnsq-p1.bin" size="2097152" crc="b40a879a"/>
@@ -7290,7 +7291,7 @@
 		<comment>Bootleg</comment>
 		<description>Last Hope (bootleg AES to MVS conversion, no coin support)</description>
 		<year>2005</year>
-		<manufacturer>bootleg</manufacturer>
+		<manufacturer>NG:DEV.TEAM</manufacturer>
 		<rom name="ngdt-300-p1.bin" size="1048576" crc="3776a88f"/>
 		<rom name="ngdt-300-s1.bin" size="65536" crc="0c0ff9e6"/>
 		<rom name="ngdt-300-c1.bin" size="4194304" crc="53ef41b5"/>
@@ -7569,9 +7570,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="legendos" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Legend of Success Joe / Ashitano Joe Densetsu</description>
+		<description>Legend of Success Joe / Ashita no Joe Densetsu</description>
 		<year>1991</year>
-		<manufacturer>SNK / WAVE</manufacturer>
+		<manufacturer>SNK / Wave</manufacturer>
 		<rom name="029-p1.p1" size="524288" crc="9d563f19"/>
 		<rom name="029-s1.s1" size="131072" crc="bcd502f0"/>
 		<rom name="029-c1.c1" size="1048576" crc="2f5ab875"/>
@@ -8062,7 +8063,7 @@
 	<game name="matrimbl" cloneof="matrim" romof="matrim" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
 		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (bootleg)</description>
-		<year>2002</year>
+		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="266-p1.p1" merge="266-p1.p1" size="1048576" crc="5d4c2dc7"/>
 		<rom name="266-p2.sp2" merge="266-p2.sp2" size="4194304" crc="a14b1906"/>
@@ -8181,7 +8182,7 @@
 	</game>
 	<game name="matrim" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660 ~ NGH-2660)</description>
-		<year>2002</year>
+		<year>2003</year>
 		<manufacturer>Noise Factory / Atlus</manufacturer>
 		<rom name="266-p1.p1" size="1048576" crc="5d4c2dc7"/>
 		<rom name="266-p2.sp2" size="4194304" crc="a14b1906"/>
@@ -10996,7 +10997,7 @@
 	</game>
 	<game name="mslug3b6" cloneof="mslug3" romof="mslug3" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>Metal Slug 6 (Metal Slug 3 bootleg)</description>
+		<description>Metal Slug 6 (bootleg of Metal Slug 3)</description>
 		<year>2000</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="299-p1.bin" size="2097152" crc="5f2fe228"/>
@@ -13108,7 +13109,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ninjamas" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Ninja Master's - haoh-ninpo-cho</description>
+		<description>Ninja Master's - Haoh-ninpo-cho</description>
 		<year>1996</year>
 		<manufacturer>ADK / SNK</manufacturer>
 		<rom name="217-p1.p1" size="1048576" crc="3e97ed69"/>
@@ -13649,7 +13650,7 @@
 	<game name="preisle2" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Prehistoric Isle 2</description>
 		<year>1999</year>
-		<manufacturer>Yumekobo</manufacturer>
+		<manufacturer>Yumekobo / Saurus</manufacturer>
 		<rom name="255-p1.p1" size="1048576" crc="dfa3c0f3"/>
 		<rom name="255-p2.sp2" size="4194304" crc="42050b80"/>
 		<rom name="255-c1.c1" size="8388608" crc="ea06000b"/>
@@ -13867,9 +13868,9 @@
 	</game>
 	<game name="pbobblenb" cloneof="pbobblen" romof="pbobblen" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (bootleg)</description>
+		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo, bootleg)</description>
 		<year>1994</year>
-		<manufacturer>Taito</manufacturer>
+		<manufacturer>bootleg</manufacturer>
 		<rom name="u7" size="524288" crc="ac1e9ef3"/>
 		<rom name="us1" merge="d96-04.s1" size="131072" crc="9caae538"/>
 		<rom name="uc5" merge="d96-02.c5" size="524288" crc="e89ad494"/>
@@ -13919,7 +13920,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="pbobblen" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo) (NGM-083)</description>
+		<description>Puzzle Bobble / Bust-A-Move (Neo-Geo, NGM-083)</description>
 		<year>1994</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="d96-07.ep1" size="524288" crc="6102ca14"/>
@@ -14236,9 +14237,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="quizkofk" cloneof="quizkof" romof="quizkof" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Quiz King of Fighters (Korean release)</description>
-		<year>1995</year>
-		<manufacturer>Saurus</manufacturer>
+		<description>Quiz King of Fighters (Korea)</description>
+		<year>1996</year>
+		<manufacturer>Saurus / Viccom (SNK license)</manufacturer>
 		<rom name="vic-080-p1.p1" size="1048576" crc="2589488e"/>
 		<rom name="vic-080-s1.s1" size="131072" crc="af72c30f"/>
 		<rom name="vic-080-c1.c1" size="2097152" crc="94d90170"/>
@@ -14293,7 +14294,7 @@
 	<game name="quizkof" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Quiz King of Fighters (SAM-080 ~ SAH-080)</description>
 		<year>1995</year>
-		<manufacturer>Saurus</manufacturer>
+		<manufacturer>Saurus (SNK license)</manufacturer>
 		<rom name="080-p1.p1" size="1048576" crc="4440315e"/>
 		<rom name="080-s1.s1" size="131072" crc="d7b86102"/>
 		<rom name="080-c1.c1" size="2097152" crc="ea1d764a"/>
@@ -14401,7 +14402,7 @@
 	</game>
 	<game name="quizdaisk" cloneof="quizdais" romof="quizdais" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Quiz Salibtamjeong - The Last Count Down (Korean localized Quiz Daisousa Sen)</description>
-		<year>1991</year>
+		<year>1995</year>
 		<manufacturer>SNK / Viccom</manufacturer>
 		<rom name="123-p1.p1" size="1048576" crc="a6f35eae"/>
 		<rom name="123-s1.s1" size="131072" crc="53de938a"/>
@@ -14451,7 +14452,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rotdh" cloneof="rotd" romof="rotd" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Rage of the Dragons (NGH-2640)</description>
+		<description>Rage of the Dragons (NGH-2640?)</description>
 		<year>2002</year>
 		<manufacturer>Evoga / Playmore</manufacturer>
 		<rom name="264-pk1.p1" size="1048576" crc="ff2fa719"/>
@@ -14509,7 +14510,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rotd" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Rage of the Dragons (NGM-264?)</description>
+		<description>Rage of the Dragons (NGM-2640?)</description>
 		<year>2002</year>
 		<manufacturer>Evoga / Playmore</manufacturer>
 		<rom name="264-p1.p1" size="8388608" crc="b8cc969d"/>
@@ -14982,7 +14983,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff2h" cloneof="rbff2" romof="rbff2" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGH-2400)</description>
+		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - The Newcomers (NGH-2400)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="240-pg1.p1" size="1048576" crc="b6969780"/>
@@ -15041,7 +15042,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="rbff2" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGM-2400)</description>
+		<description>Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - The Newcomers (NGM-2400)</description>
 		<year>1998</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="240-p1.p1" size="1048576" crc="80e41205"/>
@@ -15797,7 +15798,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsho2" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063 ~ NGH-063)</description>
+		<description>Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (NGM-063 ~ NGH-063)</description>
 		<year>1994</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="063-p1.p1" size="2097152" crc="22368892"/>
@@ -16583,7 +16584,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5spho" cloneof="samsh5sp" romof="samsh5sp" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (1st release, censored)</description>
+		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720, 1st release, censored)</description>
 		<year>2004</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
 		<rom name="272-p1c.p1" size="4194304" crc="9291794d"/>
@@ -16641,7 +16642,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="samsh5sph" cloneof="samsh5sp" romof="samsh5sp" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (2nd release, less censored)</description>
+		<description>Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720, 2nd release, less censored)</description>
 		<year>2004</year>
 		<manufacturer>Yuki Enterprise / SNK Playmore</manufacturer>
 		<rom name="272-p1ca.p1" size="4194304" crc="c30a08dd"/>
@@ -17396,7 +17397,7 @@
 	<game name="sengoku3" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Sengoku 3 / Sengoku Densho 2001 (set 1)</description>
 		<year>2001</year>
-		<manufacturer>SNK / Noise Factory</manufacturer>
+		<manufacturer>Noise Factory / SNK</manufacturer>
 		<rom name="261-ph1.p1" size="2097152" crc="e0d4bc0a"/>
 		<rom name="261-c1.c1" size="8388608" crc="ded84d9c"/>
 		<rom name="261-c2.c2" size="8388608" crc="b8eb4348"/>
@@ -17449,9 +17450,9 @@
 		<driver status="good"/>
 	</game>
 	<game name="sengoku3a" cloneof="sengoku3" romof="sengoku3" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Sengoku 3 / Sengoku Densho 2001 (Set 2)</description>
+		<description>Sengoku 3 / Sengoku Densho 2001 (set 2)</description>
 		<year>2001</year>
-		<manufacturer>SNK / Noise Factory</manufacturer>
+		<manufacturer>Noise Factory / SNK</manufacturer>
 		<rom name="261-pg1.p1" size="2097152" crc="5b557201"/>
 		<rom name="261-c1.c1" merge="261-c1.c1" size="8388608" crc="ded84d9c"/>
 		<rom name="261-c2.c2" merge="261-c2.c2" size="8388608" crc="b8eb4348"/>
@@ -17731,6 +17732,57 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="moshougi" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
+		<description>Shougi no Tatsujin - Master of Shougi</description>
+		<year>1995</year>
+		<manufacturer>ADK / SNK</manufacturer>
+		<rom name="203-p1.p1" size="1048576" crc="7ba70e2d"/>
+		<rom name="203-s1.s1" size="131072" crc="bfdc8309"/>
+		<rom name="203-c1.c1" size="2097152" crc="bba9e8c0"/>
+		<rom name="203-c2.c2" size="2097152" crc="2574be03"/>
+		<rom name="203-m1.m1" size="131072" crc="a602c2c2"/>
+		<rom name="203-v1.v1" size="2097152" crc="baa2b9a5"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="svcboot" cloneof="svc" romof="svc" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
 		<description>SNK vs. Capcom - SVC Chaos (bootleg)</description>
@@ -17795,7 +17847,7 @@
 	<game name="svc" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>SNK vs. Capcom - SVC Chaos (NGM-2690 ~ NGH-2690)</description>
 		<year>2003</year>
-		<manufacturer>SNK Playmore</manufacturer>
+		<manufacturer>Playmore / Capcom</manufacturer>
 		<rom name="269-p1.p1" size="4194304" crc="38e2005e"/>
 		<rom name="269-p2.p2" size="4194304" crc="6d13797c"/>
 		<rom name="269-c1r.c1" size="8388608" crc="887b4068"/>
@@ -18261,7 +18313,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="stakwin" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Stakes Winner / Stakes Winner - GI kinzen seiha e no michi</description>
+		<description>Stakes Winner / Stakes Winner - GI Kinzen Seiha e no Michi</description>
 		<year>1995</year>
 		<manufacturer>Saurus</manufacturer>
 		<rom name="088-p1.p1" size="2097152" crc="bd5814f6"/>
@@ -18538,7 +18590,7 @@
 	<game name="sdodgeb" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu</description>
 		<year>1996</year>
-		<manufacturer>Technos</manufacturer>
+		<manufacturer>Technos Japan</manufacturer>
 		<rom name="208-p1.p1" size="2097152" crc="127f3d32"/>
 		<rom name="208-s1.s1" size="131072" crc="64abd6b3"/>
 		<rom name="208-c1.c1" size="4194304" crc="93d8619b"/>
@@ -18694,7 +18746,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ssideki3" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - Eikou e no Michi</description>
+		<description>Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - Eikou e no Chousen</description>
 		<year>1995</year>
 		<manufacturer>SNK</manufacturer>
 		<rom name="081-p1.p1" size="2097152" crc="6bc27a3d"/>
@@ -18748,57 +18800,6 @@
 		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
 		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="moshougi" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>Syougi No Tatsujin - Master of Shougi</description>
-		<year>1995</year>
-		<manufacturer>ADK / SNK</manufacturer>
-		<rom name="203-p1.p1" size="1048576" crc="7ba70e2d"/>
-		<rom name="203-s1.s1" size="131072" crc="bfdc8309"/>
-		<rom name="203-c1.c1" size="2097152" crc="bba9e8c0"/>
-		<rom name="203-c2.c2" size="2097152" crc="2574be03"/>
-		<rom name="203-m1.m1" size="131072" crc="a602c2c2"/>
-		<rom name="203-v1.v1" size="2097152" crc="baa2b9a5"/>
-		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
-		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
-		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
-		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
-		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
-		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
-		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
-		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
-		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
-		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
-		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
-		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
-		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
-		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
-		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
-		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
-		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
-		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
-		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
-		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
-		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
-		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
-		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
-		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
-		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
-		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
-		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
-		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
-		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
-		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
-		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
-		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
-		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
-		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
-		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
-		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
-		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
-		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
-		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
 	<game name="twsoc96" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
@@ -22434,7 +22435,7 @@
 	</game>
 	<game name="kof10th" cloneof="kof2002" romof="kof2002" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>The King of Fighters 10th Anniversary (bootleg)</description>
+		<description>The King of Fighters 10th Anniversary (bootleg of The King of Fighters 2002)</description>
 		<year>2002</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="kf10-p1.bin" size="8388608" crc="b1fd0c43"/>
@@ -22626,7 +22627,7 @@
 	</game>
 	<game name="kf2k5uni" cloneof="kof2002" romof="kof2002" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>The King of Fighters 10th Anniversary 2005 Unique (bootleg)</description>
+		<description>The King of Fighters 10th Anniversary 2005 Unique (bootleg of The King of Fighters 2002)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5006-p2a.bin" size="4194304" crc="ced883a2"/>
@@ -22694,7 +22695,7 @@
 	</game>
 	<game name="kf10thep" cloneof="kof2002" romof="kof2002" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>The King of Fighters 10th Anniversary Extra Plus (bootleg)</description>
+		<description>The King of Fighters 10th Anniversary Extra Plus (bootleg of The King of Fighters 2002)</description>
 		<year>2005</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="5008-p1.bin" size="2097152" crc="bf5469ba"/>
@@ -23261,7 +23262,7 @@
 	<game name="kof2001h" cloneof="kof2001" romof="kof2001" sourcefile="neogeo/d_neogeo.cpp">
 		<description>The King of Fighters 2001 (NGH-2621)</description>
 		<year>2001</year>
-		<manufacturer>SNK / Eolith</manufacturer>
+		<manufacturer>Eolith / SNK</manufacturer>
 		<rom name="262-pg1.p1" size="1048576" crc="2af7e741"/>
 		<rom name="262-pg2.sp2" size="4194304" crc="91eea062"/>
 		<rom name="262-c1-08-e0.c1" merge="262-c1-08-e0.c1" size="8388608" crc="99cc785a"/>
@@ -23321,7 +23322,7 @@
 	<game name="kof2001" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>The King of Fighters 2001 (NGM-262?)</description>
 		<year>2001</year>
-		<manufacturer>SNK / Eolith</manufacturer>
+		<manufacturer>Eolith / SNK</manufacturer>
 		<rom name="262-p1-08-e0.p1" size="1048576" crc="9381750d"/>
 		<rom name="262-p2-08-e0.sp2" size="4194304" crc="8e0d8329"/>
 		<rom name="262-c1-08-e0.c1" size="8388608" crc="99cc785a"/>
@@ -24884,7 +24885,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kof2003" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<description>The King of Fighters 2003 (NGM-2710)</description>
+		<description>The King of Fighters 2003 (NGM-2710, Export)</description>
 		<year>2003</year>
 		<manufacturer>SNK Playmore</manufacturer>
 		<rom name="271-p1c.p1" size="4194304" crc="530ecc14"/>
@@ -25123,7 +25124,7 @@
 	</game>
 	<game name="kf2k3pl" cloneof="kof2003" romof="kof2003" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>The King of Fighters 2004 Plus / Hero (bootleg)</description>
+		<description>The King of Fighters 2004 Plus / Hero (bootleg of The King of Fighters 2003)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k3-p1pl.bin" size="1048576" crc="07b84112"/>
@@ -25184,7 +25185,7 @@
 	</game>
 	<game name="kf2k3upl" cloneof="kof2003" romof="kof2003" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>The King of Fighters 2004 Ultra Plus (bootleg)</description>
+		<description>The King of Fighters 2004 Ultra Plus (bootleg of The King of Fighters 2003)</description>
 		<year>2003</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="2k3-p1up.bin" size="8388608" crc="87294c01"/>
@@ -25243,7 +25244,7 @@
 	</game>
 	<game name="kof2k4se" cloneof="kof2002" romof="kof2002" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>The King of Fighters Special Edition 2004 (bootleg)</description>
+		<description>The King of Fighters Special Edition 2004 (bootleg of The King of Fighters 2002)</description>
 		<year>2004</year>
 		<manufacturer>bootleg</manufacturer>
 		<rom name="k2k4s-p1.bin" size="4194304" crc="e6c50566"/>
@@ -26415,7 +26416,7 @@
 	<game name="twinspri" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Twinkle Star Sprites</description>
 		<year>1996</year>
-		<manufacturer>ADK</manufacturer>
+		<manufacturer>ADK / SNK</manufacturer>
 		<rom name="224-p1.p1" size="2097152" crc="7697e445"/>
 		<rom name="224-s1.s1" size="131072" crc="eeed5758"/>
 		<rom name="224-c1.c1" size="4194304" crc="f7da64ab"/>
@@ -26469,7 +26470,7 @@
 	<game name="vliner53" cloneof="vliner" romof="vliner" sourcefile="neogeo/d_neogeo.cpp">
 		<description>V-Liner (v0.53)</description>
 		<year>2001</year>
-		<manufacturer>Dyna / BreezaSoft</manufacturer>
+		<manufacturer>Dyna / BrezzaSoft</manufacturer>
 		<rom name="epr_53.p1" size="524288" crc="e263dce8"/>
 		<rom name="s-1.s1" merge="s-1.s1" size="131072" crc="972d8c31"/>
 		<rom name="c-1.c1" merge="c-1.c1" size="524288" crc="5118f7c0"/>
@@ -26519,7 +26520,7 @@
 	<game name="vliner54" cloneof="vliner" romof="vliner" sourcefile="neogeo/d_neogeo.cpp">
 		<description>V-Liner (v0.54)</description>
 		<year>2001</year>
-		<manufacturer>Dyna / BreezaSoft</manufacturer>
+		<manufacturer>Dyna / BrezzaSoft</manufacturer>
 		<rom name="epr_54.p1" size="524288" crc="172efc18"/>
 		<rom name="s-1.s1" merge="s-1.s1" size="131072" crc="972d8c31"/>
 		<rom name="c-1.c1" merge="c-1.c1" size="524288" crc="5118f7c0"/>
@@ -26569,7 +26570,7 @@
 	<game name="vliner6e" cloneof="vliner" romof="vliner" sourcefile="neogeo/d_neogeo.cpp">
 		<description>V-Liner (v0.6e)</description>
 		<year>2001</year>
-		<manufacturer>Dyna / BreezaSoft</manufacturer>
+		<manufacturer>Dyna / BrezzaSoft</manufacturer>
 		<rom name="epr_6e.p1" size="524288" crc="72a2c043"/>
 		<rom name="s-1.s1" merge="s-1.s1" size="131072" crc="972d8c31"/>
 		<rom name="c-1.c1" merge="c-1.c1" size="524288" crc="5118f7c0"/>
@@ -26619,7 +26620,7 @@
 	<game name="vliner" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>V-Liner (v0.7a)</description>
 		<year>2001</year>
-		<manufacturer>Dyna / BreezaSoft</manufacturer>
+		<manufacturer>Dyna / BrezzaSoft</manufacturer>
 		<rom name="epr_7a.p1" size="524288" crc="052f93ed"/>
 		<rom name="s-1.s1" size="131072" crc="972d8c31"/>
 		<rom name="c-1.c1" size="524288" crc="5118f7c0"/>
@@ -26669,7 +26670,7 @@
 	<game name="vliner7e" cloneof="vliner" romof="vliner" sourcefile="neogeo/d_neogeo.cpp">
 		<description>V-Liner (v0.7e)</description>
 		<year>2001</year>
-		<manufacturer>Dyna / BreezaSoft</manufacturer>
+		<manufacturer>Dyna / BrezzaSoft</manufacturer>
 		<rom name="epr_7e.p1" size="524288" crc="49a94db5"/>
 		<rom name="s-1.s1" merge="s-1.s1" size="131072" crc="972d8c31"/>
 		<rom name="c-1.c1" merge="c-1.c1" size="524288" crc="5118f7c0"/>
@@ -26720,7 +26721,7 @@
 		<comment>Prototype</comment>
 		<description>Viewpoint (prototype)</description>
 		<year>1992</year>
-		<manufacturer>SNK</manufacturer>
+		<manufacturer>Sammy / Aicom</manufacturer>
 		<rom name="p1" size="524288" crc="0adb5eee"/>
 		<rom name="p2" size="524288" crc="31129194"/>
 		<rom name="s1" merge="051-s1.s1" size="131072" crc="9fea5758"/>
@@ -26833,7 +26834,7 @@
 	<game name="gowcaizr" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer</description>
 		<year>1995</year>
-		<manufacturer>Technos</manufacturer>
+		<manufacturer>Technos Japan</manufacturer>
 		<rom name="094-p1.p1" size="2097152" crc="33019545"/>
 		<rom name="094-s1.s1" size="131072" crc="2f8748a2"/>
 		<rom name="094-c1.c1" size="2097152" crc="042f6af5"/>
@@ -27722,9 +27723,9 @@
 	</game>
 	<game name="zintrckb" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Bootleg</comment>
-		<description>Zintrick / Oshidashi Zentrix (hack / bootleg)</description>
+		<description>Zintrick / Oshidashi Zentrix (bootleg of CD version)</description>
 		<year>1996</year>
-		<manufacturer>hack / bootleg</manufacturer>
+		<manufacturer>bootleg</manufacturer>
 		<rom name="zin-p1.bin" size="1048576" crc="06c8fca7"/>
 		<rom name="zin-s1.bin" size="131072" crc="a7ab0e81"/>
 		<rom name="zin-c1.bin" size="2097152" crc="76aee189"/>

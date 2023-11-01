@@ -690,6 +690,61 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="aeon1" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, Game Part 1</comment>
+		<description>Aeon 1 - Arrival at the Planet (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Sunteam</manufacturer>
+		<rom name="Aeon 1 - Arrival at the Planet 128K (2018)(Sunteam).tap" size="49959" crc="9ff27533"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aeon2" cloneof="aeon1" romof="aeon1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, Game Part 2</comment>
+		<description>Aeon 2 - Surveying for Crystals (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Sunteam</manufacturer>
+		<rom name="Aeon 2 - Surveying for Crystals 128K (2018)(Sunteam).tap" size="49584" crc="561d00ad"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aeon3" cloneof="aeon1" romof="aeon1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, Game Part 3</comment>
+		<description>Aeon 3 - Communications (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Sunteam</manufacturer>
+		<rom name="Aeon 3 - Communications 128K (2018)(Sunteam).tap" size="49661" crc="883022fd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aeon4" cloneof="aeon1" romof="aeon1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, Game Part 4</comment>
+		<description>Aeon 4 - Escape from a Dead World (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>Sunteam</manufacturer>
+		<rom name="Aeon 4 - Escape from a Dead World 128K (2018)(Sunteam).tap" size="51698" crc="305dd007"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="aeon5" cloneof="aeon1" romof="aeon1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, Ending screen</comment>
+		<description>Aeon 5 - The End (HB)</description>
+		<year>2018</year>
+		<manufacturer>Sunteam</manufacturer>
+		<rom name="Aeon 5 - The End (2018)(Sunteam).tap" size="22913" crc="fd834c20"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="aerial" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew, AY Sound support</comment>
 		<description>Aerial (48K) (HB)</description>
@@ -2251,6 +2306,16 @@
 		<year>1985</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Beach-Head II - The Dictator Strikes Back! 48K (1985)(U.S. Gold).tap" size="48857" crc="e977cfce"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="beamslight" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, AY Sound support</comment>
+		<description>Beams of Light (48K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Shiny</manufacturer>
+		<rom name="Beams of Light 48K (2017)(Shiny).tap" size="19916" crc="866477f9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7325,6 +7390,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="enigmaforce" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Enigma Force (48K)</description>
+		<year>1985</year>
+		<manufacturer>Beyond Software</manufacturer>
+		<rom name="Enigma Force 48K (1985)(Beyond Software).tap" size="48362" crc="edf3d51b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="enignimatik" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Enigmatik (48K) (HB)</description>
@@ -7349,6 +7423,25 @@
 		<year>1983</year>
 		<manufacturer>Hudson Soft</manufacturer>
 		<rom name="Eric And The Floaters (1983)(Hudson Soft).tap" size="8492" crc="0f7826de"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="escalderon" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Escape From Alderon (48K)</description>
+		<year>1986</year>
+		<manufacturer>Troggerz Inc.</manufacturer>
+		<rom name="Escape From Alderon 48K (1986)(Troggerz Inc.).tap" size="22008" crc="0cc57bee"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="esccolony" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Escape From Colony 8 (48K) (HB)</description>
+		<year>2014</year>
+		<manufacturer>usebox.net</manufacturer>
+		<rom name="Escape From Colony 8 48K (2014)(usebox.net).tap" size="33045" crc="b55aad43"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -17561,6 +17654,28 @@
 		<manufacturer>Imagine Software</manufacturer>
 		<rom name="Salamander (1987)(Imagine Software).z80" size="42624" crc="5ae35d91"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="sambooncm" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Sam Boon - A Case of Murder (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Taskmaster Software</manufacturer>
+		<rom name="Sam Boon - A Case of Murder 128K (2023)(Taskmaster Software).tap" size="84818" crc="74af3999"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="samboondc" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Sam Boon - The Dragnet Case (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Taskmaster Software</manufacturer>
+		<rom name="Sam Boon - The Dragnet Case 128K (2023)(Taskmaster Software).tap" size="80368" crc="5198feda"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

@@ -5142,7 +5142,7 @@
 		<description>Dude - The Deck Swabber (HB)</description>
 		<year>2023</year>
 		<manufacturer>Richard Oz</manufacturer>
-		<rom name="Dude - The Deck Swabber (2023)(Richard Oz).nes" size="131088" crc="402921d7"/>
+		<rom name="Dude - The Deck Swabber (2023)(Richard Oz).nes" size="131088" crc="521570ed"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6031,7 +6031,7 @@
 	</game>
 	<game name="finalfan12" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Final Fantasy 1 &amp; 2 (T-eng)</description>
+		<description>Final Fantasy 1 &amp; 2 (T-Eng)</description>
 		<year>2016</year>
 		<manufacturer>Demiforce</manufacturer>
 		<rom name="Final Fantasy 1 &amp; 2 (T-eng).nes" size="524304" crc="6f5f3bd2"/>

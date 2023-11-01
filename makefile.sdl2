@@ -71,7 +71,7 @@ depobj	+= 	neocdlist.o \
 ifndef FORCE_SYSTEM_LIBPNG
 alldir	+= 	dep/libs/libspng
 
-depobj	+= 	spng.o \
+depobj	+= 	spng.o
 endif
 
 ifdef FORCE_PULSE_AUDIO

@@ -1532,7 +1532,7 @@ struct BurnDriver BurnDrvPowerinspj = {
 
 struct BurnDriver BurnDrvPowerina = {
 	"powerinsa", "powerins", NULL, NULL, "1993",
-	"Power Instinct (USA, bootleg set 1)\0", NULL, "Atlus", "Miscellaneous",
+	"Power Instinct (USA, bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinaRomInfo, powerinaRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,
@@ -1542,7 +1542,7 @@ struct BurnDriver BurnDrvPowerina = {
 
 struct BurnDriver BurnDrvPowerinb = {
 	"powerinsb", "powerins", NULL, NULL, "1993",
-	"Power Instinct (USA, bootleg set 2)\0", NULL, "Atlus", "Miscellaneous",
+	"Power Instinct (USA, bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, powerinbRomInfo, powerinbRomName, NULL, NULL, NULL, NULL, powerinsInputInfo, powerinsDIPInfo,

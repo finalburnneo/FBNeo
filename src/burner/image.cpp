@@ -166,7 +166,7 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 /*preset
 		// Enlarge the image using bi-cubic filtering
 
 		for (INT32 i = 0; i < 4; i++) {
-			row[i] = (double*)malloc(width * 3 * sizeof(double));
+			row[i] = (double*)malloc(width * (3+1) * sizeof(double)); // added +1 to prevent crash with corrupt png
 		}
 
 		interpolateRowH(img, 0, row[0], width);

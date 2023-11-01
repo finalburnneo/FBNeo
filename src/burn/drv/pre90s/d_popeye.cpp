@@ -1133,7 +1133,7 @@ static INT32 DrvInitPopeyebl()
 	return DrvInit(PopeyeblLoad);
 }
 
-// Popeye (bootleg)
+// Popeye (bootleg set 1)
 
 static struct BurnRomInfo popeyeblRomDesc[] = {
 	{ "app_exe.3j.2764",0x2000, 0x6e267c48, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1163,11 +1163,46 @@ STD_ROM_FN(popeyebl)
 
 struct BurnDriver BurnDrvPopeyebl = {
 	"popeyebl", "popeye", NULL, NULL, "1982",
-	"Popeye (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Popeye (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyeblRomInfo, popeyeblRomName, NULL, NULL, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInitPopeyebl, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	512, 448, 4, 3
+};
+
+// Popeye (bootleg set 3)
+
+static struct BurnRomInfo popeyeb3RomDesc[] = {
+	{ "bdf-5",		0x2000, 0xc02b5e95, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "bdf-6",		0x2000, 0xefdf02c3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bdf-7",		0x2000, 0x8eee859e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bdf-8",		0x2000, 0xbac64fdd, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bdf-9",		0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
+
+	{ "bdf-4",		0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
+	{ "bdf-3",		0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
+	{ "bdf-2",		0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
+	{ "bdf-1",		0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
+
+	{ "tpp2-c.4a",	0x0020, 0x375e1602, 4 | BRF_GRA }, //  9 proms
+	{ "tpp2-c.3a",	0x0020, 0xe950bea1, 4 | BRF_GRA }, // 10
+	{ "tpp2-c.5b",	0x0100, 0xc5826883, 4 | BRF_GRA }, // 11
+	{ "tpp2-c.5a",	0x0100, 0xc576afba, 4 | BRF_GRA }, // 12
+	{ "tpp2-v.7j",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, // 13
+};
+
+STD_ROM_PICK(popeyeb3)
+STD_ROM_FN(popeyeb3)
+
+struct BurnDriver BurnDrvPopeyeb3 = {
+	"popeyeb3", "popeye", NULL, NULL, "1982",
+	"Popeye (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
+	NULL, popeyeb3RomInfo, popeyeb3RomName, NULL, NULL, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
+	DrvInitPopeye, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
 };
 
@@ -1178,7 +1213,7 @@ static INT32 DrvInitPopeyej()
 	return DrvInit(PopeyejLoad);
 }
 
-// Popeye (Japan, Sky Skipper hardware)
+// Popeye (Japan)
 
 static struct BurnRomInfo popeyejRomDesc[] = {
 	{ "tpp1-c.2a,2732",		0x1000, 0x4176761e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1208,8 +1243,8 @@ STD_ROM_PICK(popeyej)
 STD_ROM_FN(popeyej)
 
 struct BurnDriver BurnDrvPopeyej = {
-	"popeyej", "popeye", NULL, NULL, "1981",
-	"Popeye (Japan, Sky Skipper hardware)\0", NULL, "Nintendo", "Miscellaneous",
+	"popeyej", "popeye", NULL, NULL, "1982",
+	"Popeye (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyejRomInfo, popeyejRomName, NULL, NULL, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
@@ -1218,7 +1253,7 @@ struct BurnDriver BurnDrvPopeyej = {
 };
 
 
-// Popeye (Japan, Sky Skipper hardware, Older)
+// Popeye (Japan, Older)
 
 static struct BurnRomInfo popeyejoRomDesc[] = {
 	{ "tpp1-c.2a.bin",		0x1000, 0x4176761e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1250,8 +1285,8 @@ STD_ROM_PICK(popeyejo)
 STD_ROM_FN(popeyejo)
 
 struct BurnDriver BurnDrvPopeyejo = {
-	"popeyejo", "popeye", NULL, NULL, "1981",
-	"Popeye (Japan, Sky Skipper hardware, Older)\0", NULL, "Nintendo", "Miscellaneous",
+	"popeyejo", "popeye", NULL, NULL, "1982",
+	"Popeye (Japan, Older)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyejoRomInfo, popeyejoRomName, NULL, NULL, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,

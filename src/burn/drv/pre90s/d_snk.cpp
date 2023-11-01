@@ -80,15 +80,15 @@ static UINT8  DrvDips[4];
 static UINT8  DrvInputs[6];
 static UINT8  DrvReset;
 
-static UINT8  DrvFakeInput[14]      = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
-static INT32  nRotate[2]      = {0, 0};
-static INT32  nRotateTarget[2]      = {0, 0};
-static INT32  nRotateTry[2]      = {0, 0};
-static UINT32 nRotateTime[2]  = {0, 0};
+static UINT8  DrvFakeInput[14]		= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0-5 legacy; 6-9 P1, 10-13 P2
+static INT32  nRotate[2]			= {0, 0};
+static INT32  nRotateTarget[2]		= {0, 0};
+static INT32  nRotateTry[2]			= {0, 0};
+static UINT32 nRotateTime[2]		= {0, 0};
 static UINT8  game_rotates = 0;
-static UINT8  gwar_rot_last[2] = {0, 0};
-static UINT8  gwar_rot_cnt[2] = {0, 0};
-static UINT8  nAutoFireCounter[2] 	= {0, 0};
+static UINT8  gwar_rot_last[2]		= {0, 0};
+static UINT8  gwar_rot_cnt[2]		= {0, 0};
+static UINT8  nAutoFireCounter[2]	= {0, 0};
 
 static INT32 nExtraCycles[3];
 
@@ -4019,11 +4019,6 @@ static void DrvFMIRQHandler_CB2(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles(2) * nSoundRate / 4000000;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -4309,11 +4304,11 @@ static INT32 PsychosInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 3.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 3.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4363,11 +4358,11 @@ static INT32 BermudatInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4429,11 +4424,11 @@ static INT32 GwarInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4494,11 +4489,11 @@ static INT32 GwaraInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4549,7 +4544,7 @@ static INT32 Tnk3Init()
 	ZetSetReadHandler(ym3526_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
@@ -4620,7 +4615,7 @@ static INT32 AsoInit()
 	ZetSetReadHandler(aso_ym3526_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
@@ -4678,11 +4673,11 @@ static INT32 AthenaInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttach(&ZetConfig, 3350000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5073,7 +5068,7 @@ static INT32 FitegolfInit()
 	ZetSetReadHandler(ym3812_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
@@ -5123,11 +5118,11 @@ static INT32 IkariCommonInit(INT32 game)
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttach(&ZetConfig, 3350000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5195,11 +5190,11 @@ static INT32 VictroadInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttach(&ZetConfig, 3350000);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5251,11 +5246,11 @@ static INT32 Chopper1Init()
 	ZetSetReadHandler(ym3812_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5304,11 +5299,11 @@ static INT32 ChopperaInit()
 	ZetSetReadHandler(ym3812_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5357,11 +5352,11 @@ static INT32 TdfeverInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, 1);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -6304,7 +6299,7 @@ static INT32 GwarFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { nExtraCycles[0], 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6324,6 +6319,7 @@ static INT32 GwarFrame()
 	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
@@ -6384,7 +6380,7 @@ static INT32 AthenaFrame()
 
 	INT32 nInterleave = 800;
 	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { nExtraCycles[0], 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6407,6 +6403,7 @@ static INT32 AthenaFrame()
 	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
@@ -6576,7 +6573,7 @@ static INT32 ChopperFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { nExtraCycles[0], 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -6596,6 +6593,7 @@ static INT32 ChopperFrame()
 	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

@@ -33,7 +33,8 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvScrRAM[3];
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRegs;
-static UINT8 *DrvPrioBitmap;
+
+static UINT16 *DrvSpriteBMP;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -43,7 +44,7 @@ static INT32 nExtraCycles[2];
 static UINT16 scrollx[3];
 static UINT16 scrolly[3];
 static UINT16 scroll_flag[3];
-static UINT16 m_active_layers;
+static UINT16 active_layers;
 static UINT16 sprite_flag;
 static UINT16 sprite_bank;
 static UINT16 screen_flag;
@@ -73,8 +74,14 @@ static INT32 system_select = 0;
 static UINT8 input_select_values[5];
 static INT32 ignore_oki_status_hack = 1;
 static INT32 layer_color_config[4] = { 0, 0x100, 0x200, 0x300 };
-static UINT32 m_layers_order[0x10];
+static UINT32 glayers_order[0x10];
 static INT32 scroll_factor_8x8[3] = { 1, 1, 1 };
+
+static INT32 sprite_active;
+
+static INT32 scanline = 0;
+static INT32 lastline = 0;
+
 static INT32 tshingen = 0;
 static INT32 monkelf = 0;
 static INT32 stdragon = 0;
@@ -1458,27 +1465,27 @@ static struct BurnDIPInfo InyourfaDIPList[]=
 
 STDDIPINFO(Inyourfa)
 
-
-static UINT8 __fastcall mcu_prot_read_byte(UINT32 address)
-{
-	return Drv68KROM0[(address & 0x3ffff) ^ 1];
-}
-
 static UINT16 __fastcall mcu_prot_read_word(UINT32 address)
 {
 	if ((UINT32)mcu_hs && (((UINT32)mcu_ram[4] << 6) & 0x3ffc0) == (address & 0x3ffc0))
 	{
+		//bprintf(0, _T("interrogating prot! %x\n"), mcu_config[2]);
 		return mcu_config[2];
 	}
 
 	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KROM0 + (address & 0x3fffe))));
 }
 
+static UINT8 __fastcall mcu_prot_read_byte(UINT32 address)
+{
+	return mcu_prot_read_word(address & ~1) >> ((~address & 1) * 8);
+}
+
 static void __fastcall mcu_prot_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= mcu_write_address && address <= (mcu_write_address + 9)) {
 		mcu_ram[(address & 0xe)/2] = data;
-
+		//bprintf(0, _T("mcu_ram.w[%x] = %x\n"), (address & 0xe)/2, data);
 		if (mcu_ram[0] == mcu_config[0] && mcu_ram[1] == 0x55 && mcu_ram[2] == 0xaa && mcu_ram[3] == mcu_config[1] && (address & ~1) == (mcu_write_address+8)) {
 			mcu_hs = 1;
 		} else {
@@ -1487,10 +1494,11 @@ static void __fastcall mcu_prot_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static void __fastcall mcu_prot_write_byte(UINT32 address, UINT16 data)
+static void __fastcall mcu_prot_write_byte(UINT32 address, UINT8 data)
 {
 	if (address >= mcu_write_address && address <= (mcu_write_address + 9)) {
-		mcu_ram[(address & 0xe)/2] = data;
+		mcu_ram[(address & 0xe)/2] = data;    // this probably won't work, but, is it needed on byte?
+		//bprintf(0, _T("mcu_ram.b[%x] = %x\n"), (address & 0xe)/2, data);
 
 		if (mcu_ram[0] == mcu_config[0] && mcu_ram[1] == 0x55 && mcu_ram[2] == 0xaa && mcu_ram[3] == mcu_config[1] && (address & ~1) == (mcu_write_address+8)) {
 			mcu_hs = 1;
@@ -1510,7 +1518,7 @@ static void install_mcu_protection(UINT16 *config, UINT32 address)
 	SekSetReadWordHandler(2,	mcu_prot_read_word);
 	SekSetReadByteHandler(2,	mcu_prot_read_byte);
 	SekSetWriteWordHandler(2,	mcu_prot_write_word);
-	SekSetWriteWordHandler(2,	mcu_prot_write_byte);
+	SekSetWriteByteHandler(2,	mcu_prot_write_byte);
 	SekClose();
 }
 
@@ -1525,7 +1533,7 @@ static inline void megasys_palette_write(INT32 offset)
 		r = ((p >> 11) & 0x1f);
 		g = ((p >>  6) & 0x1f);
 		b = ((p >>  1) & 0x1f);
-	
+
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
 		b = (b << 3) | (b >> 2);
@@ -1535,7 +1543,7 @@ static inline void megasys_palette_write(INT32 offset)
 		r = ((p >> 11) & 0x1e) | ((p >> 3) & 0x01);
 		g = ((p >>  7) & 0x1e) | ((p >> 2) & 0x01);
 		b = ((p >>  3) & 0x1e) | ((p >> 1) & 0x01);
-	
+
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
 		b = (b << 3) | (b >> 2);
@@ -1569,6 +1577,8 @@ static void __fastcall megasys_palette_write_byte(UINT32 address, UINT8 data)
 	megasys_palette_write(address);
 }
 
+static void screen_update(); // forward
+
 static void update_video_regs(INT32 offset)
 {
 	offset &= 0x3fe;
@@ -1578,14 +1588,16 @@ static void update_video_regs(INT32 offset)
 	switch (offset)
 	{
 		case 0x000:
-			m_active_layers = data;
+			active_layers = data;
 		return;
 
 		case 0x008:
+			screen_update();
 			scrollx[2] = data;
 		return;
 
 		case 0x00a:
+			screen_update();
 			scrolly[2] = data;
 		return;
 
@@ -1599,10 +1611,12 @@ static void update_video_regs(INT32 offset)
 
 		case 0x200:
 			if ((data & 0x0f) > 0x0d && monkelf) data -= 0x10;
+			screen_update();
 			scrollx[0] = data;
 		return;
 
 		case 0x202:
+			screen_update();
 			scrolly[0] = data;
 		return;
 
@@ -1612,10 +1626,12 @@ static void update_video_regs(INT32 offset)
 
 		case 0x208:
 			if ((data & 0x0f) > 0x0b && monkelf) data -= 0x10;
+			screen_update();
 			scrollx[1] = data;
 		return;
 
 		case 0x20a:
+			screen_update();
 			scrolly[1] = data;
 		return;
 
@@ -1643,13 +1659,13 @@ static void update_video_regs(INT32 offset)
 			screen_flag = data;
 		}
 		return;
-			
+
 		case 0x308:
 		{
 			soundlatch = data;
 
 			if (system_select == 0) {	// system Z
-				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				// no irq @ latch!
 			} else {
 				SekSetIRQLine(1, 4, CPU_IRQSTATUS_AUTO);
 			}
@@ -1707,7 +1723,7 @@ static void update_video_regs2(INT32 offset)
 		return;
 
 		case 0x2208:
-			m_active_layers = data;
+			active_layers = data;
 		return;
 
 		case 0x2200:
@@ -2301,7 +2317,7 @@ static void DrvYM2151IrqHandler(INT32 nStatus)
 	if (nStatus) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 }
 
-static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
+static void DrvYM2203IRQHandler(INT32 chip, INT32 nStatus)
 {
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
@@ -2332,7 +2348,7 @@ static INT32 DrvDoReset()
 	memset (mcu_ram, 0, sizeof(mcu_ram));
 	mcu_hs = 0;
 
-	m_active_layers = 0;
+	active_layers = 0;
 	sprite_flag = 0;
 	sprite_bank = 0;
 	screen_flag = 0;
@@ -2346,6 +2362,8 @@ static INT32 DrvDoReset()
 	oki_bank = 0xff;
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
+
+	scanline = lastline = 0;
 
 	HiscoreReset();
 
@@ -2375,9 +2393,9 @@ static INT32 MemIndex()
 
 	DrvPrioPROM	= Next; Next += 0x000200;
 
-	DrvPrioBitmap	= Next; Next += 256 * 256;
-
 	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
+
+	DrvSpriteBMP = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
 
 	AllRam		= Next;
 
@@ -2552,7 +2570,7 @@ static void DrvPriorityDecode()
 			layers_order[1] >>= 4;
 		}
 
-		m_layers_order[pri_code] = order & 0xfffff;
+		glayers_order[pri_code] = order & 0xfffff;
 	}
 }
 
@@ -2784,7 +2802,8 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			SekMapMemory(Drv68KROM0,		0x000000, 0x05ffff, MAP_ROM);
 			SekMapMemory(DrvVidRegs,		0x084000, 0x0843ff, MAP_ROM /*MAP_WRITE*/);
 			SekMapMemory(DrvPalRAM,			0x088000, 0x0887ff, MAP_ROM /*MAP_WRITE*/);
-			SekMapMemory(DrvObjRAM,			0x08e000, 0x08ffff, MAP_RAM);
+			SekMapMemory(DrvObjRAM,			0x08c000, 0x08dfff, MAP_RAM); // mirror
+			SekMapMemory(DrvObjRAM,			0x08e000, 0x08ffff, MAP_RAM); // mirror
 			SekMapMemory(DrvScrRAM[0],		0x090000, 0x093fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[1],		0x094000, 0x097fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[2],		0x098000, 0x09bfff, MAP_RAM);
@@ -2812,8 +2831,10 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			SekMapMemory(DrvScrRAM[0],		0x050000, 0x053fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[1],		0x054000, 0x057fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[2],		0x058000, 0x05bfff, MAP_RAM);
-			SekMapMemory(Drv68KRAM0,		0x060000, 0x07ffff, MAP_RAM); // mirrored bytes breaks EDF, use regular writes for system B
+			SekMapMemory(Drv68KRAM0,		0x060000, 0x06ffff, MAP_RAM); // mirror
+			SekMapMemory(Drv68KRAM0,		0x070000, 0x07ffff, MAP_RAM); // mirror
 			SekMapMemory(Drv68KROM0 + 0x40000,	0x080000, 0x0bffff, MAP_ROM);
+
 			SekSetReadWordHandler(0,		megasys1B_main_read_word);
 			SekSetReadByteHandler(0,		megasys1B_main_read_byte);
 			SekSetWriteWordHandler(0,		megasys1B_main_write_word);
@@ -2897,10 +2918,9 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 		ZetSetInHandler(megasys1z_sound_read_port);
 		ZetClose();
 
-		BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, 0);
+		BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, 0);
 		BurnTimerAttachZet(3000000);
 		BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-		BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
 		layer_color_config[0] = 0;
 		layer_color_config[1] = 0x200;
@@ -2977,6 +2997,47 @@ static INT32 DrvExit()
 	return 0;
 }
 
+// sweet memories
+// sprite trails (p47 Jaleco bootup logo) effect by Haze
+// Mosaic effect by iq_132 & dink
+
+static void sprite_mixer()
+{
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		UINT16 *sprite = DrvSpriteBMP + y * 256;
+		UINT16 *dest = pTransDraw + y * nScreenWidth;
+		UINT8 *prio = pPrioDraw + y * nScreenWidth;
+
+		for (INT32 x = 0; x < nScreenWidth; x++)
+		{
+			UINT16 pxl = sprite[x];
+			if ((pxl & 0xf) != 0xf) {
+				UINT8 priority = (pxl & 0x4000) ? 0x0c : 0x0a;
+				if ((priority & (1 << (prio[x] & 0x1f))) == 0) {
+					dest[x] = pxl & 0x3fff;
+				}
+			}
+		}
+	}
+}
+
+static void sprite_clear_trails(UINT8 modifier)
+{
+	for (INT32 y = 0; y < 256; y++)
+	{
+		UINT16 *dest = DrvSpriteBMP + y * 256;
+
+		for (INT32 x = 0; x < 256; x++)
+		{
+			UINT16 pxl = (dest[x] &= 0x7fff);
+			if (((pxl & 0xf0) >> 4) < modifier) {
+				dest[x] = 0x0f0f;
+			}
+		}
+	}
+}
+
 static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT8 mosaic, UINT8 mosaicsol, INT32 priority)
 {
 	if (sy >= nScreenHeight || sy < -15 || sx >= nScreenWidth || sx < -15) return;
@@ -2988,14 +3049,13 @@ static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx,
 
 	color = (color * 16) + layer_color_config[3];
 
-	UINT16 *dest = pTransDraw + sy * nScreenWidth + sx;
-	UINT8 *prio = DrvPrioBitmap + sy * nScreenWidth + sx;
+	UINT16 *dest = DrvSpriteBMP + sy * 256 + sx;
 
 	for (INT32 y = 0; y < 16; y++, sy++, sx-=16)
 	{
 		for (INT32 x = 0; x < 16; x++, sx++)
 		{
-			if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;	
+			if (sx < 0 || sy < 0 || sx >= 256 || sy >= 256) continue;
 
 			INT32 pxl;
 
@@ -3005,20 +3065,23 @@ static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx,
 				pxl = gfx[(((y ^ flipy) & ~mosaic) * 16) + ((x ^ flipx) & ~mosaic)];
 			}
 
-			if (pxl != 0x0f) {
-				if ((priority & (1 << (prio[x] & 0x1f))) == 0 && prio[x] < 0x80) {
-					dest[x] = pxl + color;
-					prio[x] |= 0x80;
-				}
+			if (pxl != 0x0f && (~dest[x] & 0x8000)) {
+				dest[x] = (pxl+color) | (priority << 14);
+				dest[x] |= 0x8000;
 			}
 		}
-		dest += nScreenWidth;
-		prio += nScreenWidth;
+		dest += 256;
 	}
 }
 
 static void System1A_draw_sprites()
 {
+	if (sprite_flag & 0x10) {
+		sprite_clear_trails(sprite_flag & 0x0f);
+	} else {
+		memset(DrvSpriteBMP, 0x0f, 256*256*sizeof(UINT16));
+	}
+
 	INT32 color_mask = (sprite_flag & 0x100) ? 0x07 : 0x0f;
 
 	UINT16 *objectram = (UINT16*)DrvObjBuf1;
@@ -3045,9 +3108,9 @@ static void System1A_draw_sprites()
 
 			INT32 flipx = attr & 0x40;
 			INT32 flipy = attr & 0x80;
-			INT32 pri  = (attr & 0x08) ? 0x0c : 0x0a;
+			INT32 pri  = (attr & 0x08) >> 3;
 			INT32 mosaic = (attr & 0x0f00)>>8;
-			INT32 mossol = (attr & 0x1000)>>8; //not yet
+			INT32 mossol = (attr & 0x1000)>>8;
 
 			code = (code & 0xfff) + ((sprite_bank & 1) << 12);
 			if (DrvTransTab[3][code]) continue;
@@ -3149,24 +3212,24 @@ static void draw_layer(INT32 tmap, INT32 flags, INT32 priority)
 
 			{
 				UINT8 *gfx = gfxbase + code * 0x40;
-				UINT16 *dest = pTransDraw + sy * nScreenWidth + sx;
-				UINT8 *prio = DrvPrioBitmap + sy * nScreenWidth + sx;
 
-				for (INT32 y = 0; y < 8; y++, sy++, sx-=8) {
+				for (INT32 y = 0; y < 8; y++, sy++) {
 					if (sy >= nScreenHeight) break;
 
-					for (INT32 x = 0; x < 8; x++, sx++, gfx++) {
-						if (sx < 0 || sy < 0 || sx >= nScreenWidth) continue;
+					UINT16 *dest = pTransDraw + (sy) * nScreenWidth + sx;
+					UINT8 *prio = pPrioDraw + (sy) * nScreenWidth + sx;
 
-						INT32 pxl = *gfx;
-						if (pxl != trans_mask) {
-							dest[x] = pxl + color;
-							prio[x] = priority;
+					if (sy >= lastline && sy < scanline) {
+						for (INT32 x = 0; x < 8; x++) {
+							if ((sx+x) < 0 || sy < 0 || (sx+x) >= nScreenWidth) continue;
+
+							const INT32 pxl = gfx[(y * 8) + x];
+							if (pxl != trans_mask) {
+								dest[x] = pxl + color;
+								prio[x] = priority;
+							}
 						}
 					}
-
-					dest += nScreenWidth;
-					prio += nScreenWidth;
 				}
 			}
 		}
@@ -3175,9 +3238,15 @@ static void draw_layer(INT32 tmap, INT32 flags, INT32 priority)
 
 static void screen_update()
 {
+	if (scanline > nScreenHeight) scanline = nScreenHeight;
+
+	if (scanline < 0 || scanline > nScreenHeight || scanline == lastline || lastline > scanline) return;
+
+	//bprintf(0, _T("partial update @ lastline / scanline %d  %d\n"), lastline, scanline);
+
 	INT32 reallyactive = 0;
 
-	UINT32 pri = m_layers_order[(m_active_layers & 0x0f0f) >> 8];
+	UINT32 pri = glayers_order[(active_layers & 0x0f0f) >> 8];
 
 	if (pri == 0xfffff || pri == 0xffff) pri = 0x04132;
 
@@ -3185,10 +3254,10 @@ static void screen_update()
 		reallyactive |= 1 << ((pri >> (4 * i)) & 0x0f);
 	}
 
-	INT32 active_layers = (m_active_layers & reallyactive) | (1 << ((pri & 0xf0000) >> 16));
+	INT32 layers = (active_layers & reallyactive) | (1 << ((pri & 0xf0000) >> 16));
 
 	if (system_select == 0) {
-		active_layers = 0x000b;
+		layers = 0x000b;
 		pri = 0x0314f;
 	}
 
@@ -3205,7 +3274,7 @@ static void screen_update()
 			case 0:
 			case 1:
 			case 2:
-				if (active_layers & (1 << layer))
+				if (layers & (1 << layer))
 				{
 					if (nSpriteEnable & (1<<layer)) draw_layer(layer, flag, primask);
 					flag = 0;
@@ -3213,9 +3282,10 @@ static void screen_update()
 				break;
 			case 3:
 			case 4:
-				if (flag != 0)
+				if (flag != 0 && lastline == 0)
 				{
 					flag = 0;
+					//bprintf(0, _T("clear  @ lastline / scanline %d  %d\n"), lastline, scanline);
 					BurnTransferClear();
 				}
 
@@ -3230,13 +3300,9 @@ static void screen_update()
 		}
 	}
 
-	if (active_layers & 0x08) {
-		if (system_select == 0) {
-			System1Z_draw_sprites();
-		} else {
-			System1A_draw_sprites();
-		}
-	}
+	sprite_active = layers & 0x08;
+
+	lastline = scanline;
 }
 
 static INT32 DrvDraw()
@@ -3248,7 +3314,18 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	scanline = nScreenHeight; // draw to end! (screen_update())
+
 	screen_update();
+
+	if (sprite_active) {
+		if (system_select == 0) {
+			System1Z_draw_sprites();
+		} else {
+			System1A_draw_sprites();
+			sprite_mixer();
+		}
+	}
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3282,31 +3359,32 @@ static INT32 System1ZFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 6000000 / 56, 3000000 / 56 };
+	INT32 nCyclesTotal[2] = { (INT32)(6000000 / 56.18), (INT32)(3000000 / 56.18) };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
 
+	lastline = 0;
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i - 16;
+
 		CPU_RUN(0, Sek);
-		if (i ==   0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 16) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 96) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // fix music in Legend of Makai (lomakai).  why is this needed? are irq's getting lost? -dink
-	}
-
-	BurnTimerEndFrame(nCyclesTotal[1]);
-
-	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		CPU_RUN_TIMER(1);
 	}
 
 	ZetClose();
 	SekClose();
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
@@ -3336,22 +3414,20 @@ static INT32 System1AFrame()
 		}
 	}
 
-	INT32 nInterleave = 263 * 8;
-	INT32 nCyclesTotal[2] = { (INT32)(((tshingen) ? 8000000 : 6000000) / 56.19), (INT32)(7000000 / 56.19) };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
+	INT32 nInterleave = 263;
+	INT32 nCyclesTotal[2] = { (INT32)(6000000 / 56.19), (INT32)(7000000 / 56.19) };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
+
+	lastline = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i - 16;
+
 		SekOpen(0);
-		if (stdragon) {
-			if (i ==  16*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-			if (i == 128*8) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-			if (i == 240*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		} else {
-			if (i ==   0*8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-			if (i == 128*8) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-			if (i == 240*8) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		}
+		if (i == 16) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 96) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		CPU_RUN(0, Sek);
 		SekClose();
 
@@ -3367,18 +3443,12 @@ static INT32 System1AFrame()
 		SekClose();
 	}
 
-	SekOpen(1);
-
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-	nCyclesDone[1] = SekTotalCycles();
-
-	SekClose();
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	return 0;
 }
@@ -3402,10 +3472,14 @@ static INT32 System1B_1CFrame(INT32 maincpu)
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { maincpu, 7000000 / 60 };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
+
+	lastline = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
+
 		SekOpen(0);
 		CPU_RUN(0, Sek);
 		if (i ==   0) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
@@ -3424,18 +3498,12 @@ static INT32 System1B_1CFrame(INT32 maincpu)
 		SekClose();
 	}
 
-	SekOpen(1);
-
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-	nCyclesDone[1] = SekTotalCycles();
-
-	SekClose();
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	DrvBufferSprites();
 
@@ -3466,6 +3534,8 @@ static INT32 System1DFrame() // peekaboo
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 	}
+
+	lastline = 0;
 
 	SekOpen(0);
 	SekRun(8000000 / 60);
@@ -3518,10 +3588,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(soundlatch2);
 		SCAN_VAR(scroll_flag);
-		SCAN_VAR(m_active_layers);
+		SCAN_VAR(active_layers);
 		SCAN_VAR(sprite_flag);
 		SCAN_VAR(sprite_bank);
 		SCAN_VAR(screen_flag);
+		SCAN_VAR(sprite_active);
 
 		SCAN_VAR(input_select);
 		SCAN_VAR(protection_val);
@@ -4968,12 +5039,6 @@ static INT32 soldamInit()
 
 	scroll_factor_8x8[1] = 4;
 
-	if (nRet == 0) {
-		SekOpen(0);
-		SekMapMemory(DrvSprRAM,		0x8c000, 0x8c7ff, MAP_RAM); // mirror
-		SekClose();
-	}
-
 	return nRet;
 }
 
@@ -5022,12 +5087,6 @@ static INT32 soldamjInit()
 	INT32 nRet = SystemInit(0xA, astyanax_rom_decode);
 
 	scroll_factor_8x8[1] = 4;
-
-	if (nRet == 0) {
-		SekOpen(0);
-		SekMapMemory(DrvSprRAM,		0x8c000, 0x8c7ff, MAP_RAM); // mirror
-		SekClose();
-	}
 
 	return nRet;
 }
@@ -5081,12 +5140,6 @@ static INT32 avspiritInit()
 	input_select_values[4] = 0x34;
 
 	INT32 nRet = SystemInit(0xB, NULL);
-
-	if (nRet == 0) {
-		SekOpen(0);
-		SekMapMemory(Drv68KRAM0,	0x70000, 0x7ffff, MAP_RAM); // only 64k
-		SekClose();
-	}
 
 	return nRet;
 }
@@ -5254,8 +5307,6 @@ static INT32 monkelfInit()
 
 	if (nRet == 0) {
 		SekOpen(0);
-		SekMapMemory(Drv68KRAM0,	0x70000, 0x7ffff, MAP_RAM); // only 64k
-
 		SekMapHandler(2,		0x0e0000, 0x0e000f, MAP_READ);
 		SekSetReadWordHandler(2,	monkelf_read_word);
 		SekSetReadByteHandler(2,	monkelf_read_byte);
@@ -5801,7 +5852,7 @@ static INT32 chimerabInit()
 		0xfffff,0xfffff,0x01324,0xfffff,0xfffff,0xfffff,0xfffff,0xfffff
 	};
 
-	memcpy (m_layers_order, priority_data, 16 * sizeof(INT32));
+	memcpy (glayers_order, priority_data, 16 * sizeof(INT32));
 
 	input_select_values[0] = 0x56;
 	input_select_values[1] = 0x52;

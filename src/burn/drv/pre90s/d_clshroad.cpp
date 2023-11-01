@@ -698,7 +698,7 @@ static INT32 FirebatlInit()
 
 struct BurnDriver BurnDrvFirebatl = {
 	"firebatl", NULL, NULL, NULL, "1984",
-	"Fire Battle\0", NULL, "Wood Place Inc. (Taito license)", "Miscellaneous",
+	"Fire Battle\0", NULL, "Woodplace Inc. (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, firebatlRomInfo, firebatlRomName, NULL, NULL, NULL, NULL, FirebatlInputInfo, FirebatlDIPInfo,
@@ -748,7 +748,7 @@ static INT32 ClshroadInit()
 
 struct BurnDriver BurnDrvClshroad = {
 	"clshroad", NULL, NULL, NULL, "1986",
-	"Clash-Road\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"Clash-Road\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, clshroadRomInfo, clshroadRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
@@ -793,7 +793,7 @@ STD_ROM_FN(clshroadd)
 
 struct BurnDriver BurnDrvClshroadd = {
 	"clshroadd", "clshroad", NULL, NULL, "1986",
-	"Clash-Road (Data East license)\0", NULL, "Wood Place Inc. (Data East license)", "Miscellaneous",
+	"Clash-Road (Data East license)\0", NULL, "Woodplace Inc. (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, clshroaddRomInfo, clshroaddRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,
@@ -847,7 +847,7 @@ static INT32 ClshroadsInit()
 
 struct BurnDriver BurnDrvClshroads = {
 	"clshroads", "clshroad", NULL, NULL, "1986",
-	"Clash-Road (Status license)\0", NULL, "Wood Place Inc. (Status Game Corp. license)", "Miscellaneous",
+	"Clash-Road (Status license)\0", NULL, "Woodplace Inc. (Status Game Corp. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, clshroadsRomInfo, clshroadsRomName, NULL, NULL, NULL, NULL, ClshroadInputInfo, ClshroadDIPInfo,

@@ -1921,7 +1921,7 @@ struct BurnDriver BurnDrvLooper = {
 	&DrvRecalcPalette, 0x100, 256, 224, 4, 3
 };
 
-// Hoccer (set 1)
+// Hoccer (newer)
 
 static struct BurnRomInfo hoccerRomDesc[] = {
 	{ "hr1.cpu",	0x2000, 0x12e96635, 1 | BRF_ESS | BRF_PRG }, //  0 maincpu
@@ -1942,7 +1942,7 @@ STD_ROM_FN(hoccer)
 
 struct BurnDriver BurnDrvHoccer = {
 	"hoccer", NULL, NULL, NULL, "1983",
-	"Hoccer (set 1)\0", NULL, "Eastern Micro Electronics, Inc.", "Miscellaneous",
+	"Hoccer (newer)\0", NULL, "Eastern Micro Electronics, Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, hoccerRomInfo, hoccerRomName, NULL, NULL, NULL, NULL, HoccerInputInfo, HoccerDIPInfo,
@@ -1951,7 +1951,7 @@ struct BurnDriver BurnDrvHoccer = {
 };
 
 
-// Hoccer (set 2)
+// Hoccer (earlier)
 
 static struct BurnRomInfo hoccer2RomDesc[] = {
 	{ "hr.1",	0x2000, 0x122d159f, 1 | BRF_ESS | BRF_PRG }, //  0 maincpu
@@ -1972,7 +1972,7 @@ STD_ROM_FN(hoccer2)
 
 struct BurnDriver BurnDrvHoccer2 = {
 	"hoccer2", "hoccer", NULL, NULL, "1983",
-	"Hoccer (set 2)\0", NULL, "Eastern Micro Electronics, Inc.", "Miscellaneous",
+	"Hoccer (earlier)\0", NULL, "Eastern Micro Electronics, Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, hoccer2RomInfo, hoccer2RomName, NULL, NULL, NULL, NULL, HoccerInputInfo, HoccerDIPInfo,

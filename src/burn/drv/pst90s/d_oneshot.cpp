@@ -788,7 +788,7 @@ struct BurnDriver BurnDrvOneshot = {
 };
 
 
-// Mad Donna (set 1)
+// Mad Donna (Tuning, set 1)
 
 static struct BurnRomInfo maddonnaRomDesc[] = {
 	{ "maddonna_tmad_b16_160595.ua24",	0x20000, 0x643f9054, 1 | BRF_PRG | BRF_ESS }, //  0 68K code
@@ -818,7 +818,7 @@ static INT32 MaddonnaInit()
 
 struct BurnDriver BurnDrvMaddonna = {
 	"maddonna", NULL, NULL, NULL, "1995",
-	"Mad Donna (set 1)\0", NULL, "Tuning", "Miscellaneous",
+	"Mad Donna (Tuning, set 1)\0", NULL, "Promat (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, maddonnaRomInfo, maddonnaRomName, NULL, NULL, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
@@ -827,9 +827,9 @@ struct BurnDriver BurnDrvMaddonna = {
 };
 
 
-// Mad Donna (set 2)
+// Mad Donna (Tuning, set 2)
 
-static struct BurnRomInfo maddonnbRomDesc[] = {
+static struct BurnRomInfo maddonnabRomDesc[] = {
 	{ "maddonnb.b16",	0x20000, 0x00000000, 1 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  0 68K code
 	{ "maddonnb.b15",	0x20000, 0x00000000, 1 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  1
 
@@ -847,15 +847,15 @@ static struct BurnRomInfo maddonnbRomDesc[] = {
 	{ "x1",				0x10000, 0x6b213183, 0 | BRF_OPT },           // 11 Unknown
 };
 
-STD_ROM_PICK(maddonnb)
-STD_ROM_FN(maddonnb)
+STD_ROM_PICK(maddonnab)
+STD_ROM_FN(maddonnab)
 
-struct BurnDriverD BurnDrvMaddonnb = {
-	"maddonnb", "maddonna", NULL, NULL, "1995",
-	"Mad Donna (set 2)\0", NULL, "Tuning", "Miscellaneous",
+struct BurnDriverD BurnDrvMaddonnab = {
+	"maddonnab", "maddonna", NULL, NULL, "1995",
+	"Mad Donna (Tuning, set 2)\0", NULL, "Promat (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, maddonnbRomInfo, maddonnbRomName, NULL, NULL, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
+	NULL, maddonnabRomInfo, maddonnabRomName, NULL, NULL, NULL, NULL, MaddonnaInputInfo, MaddonnaDIPInfo,
 	MaddonnaInit, DrvExit, DrvFrame, MaddonnaDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

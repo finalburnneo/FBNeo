@@ -637,7 +637,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Ginga NinkyouDen (set 1)
+// Ginga Ninkyouden (set 1)
 
 static struct BurnRomInfo ginganinRomDesc[] = {
 	{ "gn_02.bin",	0x10000, 0x4a4e012f, 1 | BRF_PRG | BRF_ESS }, //  0 M68000 Code
@@ -669,7 +669,7 @@ STD_ROM_FN(ginganin)
 
 struct BurnDriver BurnDrvGinganin = {
 	"ginganin", NULL, NULL, NULL, "1987",
-	"Ginga NinkyouDen (set 1)\0", NULL, "Jaleco", "Miscellaneous",
+	"Ginga Ninkyouden (set 1)\0", NULL, "Jaleco", "Miscellaneous",
 	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D\0Ginga NinkyouDen (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ginganinRomInfo, ginganinRomName, NULL, NULL, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,
@@ -678,7 +678,7 @@ struct BurnDriver BurnDrvGinganin = {
 };
 
 
-// Ginga NinkyouDen (set 2)
+// Ginga Ninkyouden (set 2)
 
 static struct BurnRomInfo ginganinaRomDesc[] = {
 	{ "2.bin",	0x10000, 0x6da1d8a3, 1 | BRF_PRG | BRF_ESS }, //  0 M68000 Code
@@ -710,7 +710,7 @@ STD_ROM_FN(ginganina)
 
 struct BurnDriver BurnDrvGinganina = {
 	"ginganina", "ginganin", NULL, NULL, "1987",
-	"Ginga NinkyouDen (set 2)\0", NULL, "Jaleco", "Miscellaneous",
+	"Ginga Ninkyouden (set 2)\0", NULL, "Jaleco", "Miscellaneous",
 	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D\0Ginga NinkyouDen (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ginganinaRomInfo, ginganinaRomName, NULL, NULL, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,

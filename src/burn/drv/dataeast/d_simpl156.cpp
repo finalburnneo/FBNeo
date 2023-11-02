@@ -648,7 +648,7 @@ static INT32 joemacrInit()
 
 struct BurnDriver BurnDrvJoemacr = {
 	"joemacr", NULL, NULL, NULL, "1994",
-	"Joe & Mac Returns (World, Version 1.1, 1994.05.27)\0", NULL, "Data East", "Simple 156",
+	"Joe & Mac Returns (World, Version 1.1, 1994.05.27)\0", NULL, "Data East Corporation", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, joemacrRomInfo, joemacrRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
@@ -701,7 +701,7 @@ static INT32 joemacraInit()
 
 struct BurnDriver BurnDrvJoemacra = {
 	"joemacra", "joemacr", NULL, NULL, "1994",
-	"Joe & Mac Returns (World, Version 1.0, 1994.05.19)\0", NULL, "Data East", "Simple 156",
+	"Joe & Mac Returns (World, Version 1.0, 1994.05.19)\0", NULL, "Data East Corporation", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, joemacraRomInfo, joemacraRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
@@ -758,7 +758,7 @@ static INT32 joemacrjInit()
 
 struct BurnDriver BurnDrvJoemacrj = {
 	"joemacrj", "joemacr", NULL, NULL, "1994",
-	"Joe & Mac Returns (Japan, Version 1.2, 1994.06.06)\0", NULL, "Data East", "Simple 156",
+	"Joe & Mac Returns (Japan, Version 1.2, 1994.06.06)\0", NULL, "Data East Corporation", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, joemacrjRomInfo, joemacrjRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
@@ -819,7 +819,7 @@ static INT32 chainrecInit()
 
 struct BurnDriver BurnDrvChainrec = {
 	"chainrec", NULL, NULL, NULL, "1995",
-	"Chain Reaction (World, Version 2.2, 1995.09.25)\0", NULL, "Data East", "Simple 156",
+	"Chain Reaction (World, Version 2.2, 1995.09.25)\0", NULL, "Data East Corporation", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, chainrecRomInfo, chainrecRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
@@ -876,7 +876,7 @@ static INT32 magdropInit()
 
 struct BurnDriver BurnDrvMagdrop = {
 	"magdrop", "chainrec", NULL, NULL, "1995",
-	"Magical Drop (Japan, Version 1.1, 1995.06.21)\0", NULL, "Data East", "Simple 156",
+	"Magical Drop (Japan, Version 1.1, 1995.06.21)\0", NULL, "Data East Corporation", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, magdropRomInfo, magdropRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,
@@ -912,7 +912,7 @@ static INT32 magdroppInit()
 
 struct BurnDriver BurnDrvMagdropp = {
 	"magdropp", "chainrec", NULL, NULL, "1995",
-	"Magical Drop Plus 1 (Japan, Version 2.1, 1995.09.12)\0", NULL, "Data East", "Simple 156",
+	"Magical Drop Plus 1 (Japan, Version 2.1, 1995.09.12)\0", NULL, "Data East Corporation", "Simple 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, magdroppRomInfo, magdroppRomName, NULL, NULL, NULL, NULL, Simpl156InputInfo, Simpl156DIPInfo,

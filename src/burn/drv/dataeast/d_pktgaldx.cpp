@@ -611,7 +611,7 @@ STD_ROM_PICK(pktgaldxa)
 STD_ROM_FN(pktgaldxa)
 
 struct BurnDriver BurnDrvPktgaldxa = {
-	"pktgaldxa", "pktgaldx", NULL, NULL, "1993",
+	"pktgaldxa", "pktgaldx", NULL, NULL, "1992",
 	"Pocket Gal Deluxe (Asia v3.00)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,

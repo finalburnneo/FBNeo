@@ -590,8 +590,8 @@ static INT32 dommyInit()
 }
 
 struct BurnDriver BurnDrvdommy = {
-	"dommy", NULL, NULL, NULL, "198?",
-	"Dommy\0", NULL, "Technos", "Miscellaneous",
+	"dommy", NULL, NULL, NULL, "1983",
+	"Dommy\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, dommyRomInfo, dommyRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -631,7 +631,7 @@ static INT32 screggInit()
 
 struct BurnDriver BurnDrvscregg = {
 	"scregg", NULL, NULL, NULL, "1983",
-	"Scrambled Egg\0", NULL, "Technos", "Miscellaneous",
+	"Scrambled Egg\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, screggRomInfo, screggRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -640,7 +640,7 @@ struct BurnDriver BurnDrvscregg = {
 };
 
 
-// Eggs
+// Eggs (USA)
 
 static struct BurnRomInfo eggsRomDesc[] = {
 	{ "d0a.e14",      0x1000, 0x4e216f9d, 1 | BRF_ESS | BRF_PRG }, //  0 M6502 Code
@@ -666,7 +666,7 @@ STD_ROM_FN(eggs)
 
 struct BurnDriver BurnDrveggs = {
 	"eggs", "scregg", NULL, NULL, "1983",
-	"Eggs\0", NULL, "[Technos] Universal USA", "Miscellaneous",
+	"Eggs (USA)\0", NULL, "Technos Japan (Universal USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, eggsRomInfo, eggsRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

@@ -405,8 +405,6 @@ static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 	nResolution.nWidth = img.width;
 	nResolution.nHeight = img.height;
 
-	bprintf(0, _T("Png res [%s]  %d, %d\n"), szFile, img.width, img.height);
-
 	fclose(fp);
 
 	return nResolution;

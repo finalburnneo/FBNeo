@@ -4563,7 +4563,7 @@ struct BurnDriver BurnDrvPheliosj = {
 
 
 
-// Marvel Land (US, prototype?)
+// Marvel Land (US, prototype)
 
 static struct BurnRomInfo marvlandupRomDesc[] = {
 	{ "mv2_mpr0",		0x20000, 0xd8b14fee, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -4636,9 +4636,9 @@ static INT32 MarvlandInit()
 
 struct BurnDriver BurnDrvMarvlandup = {
 	"marvlandup", "marvland", NULL, NULL, "1989",
-	"Marvel Land (US, prototype?)\0", "Bad music - use the Japan version", "Namco", "System 2",
+	"Marvel Land (US, prototype)\0", "Bad music - use the Japan version", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, marvlandupRomInfo, marvlandupRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	MarvlandInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -7092,7 +7092,7 @@ struct BurnDriver BurnDrvFinalap2j = {
 };
 
 
-// Final Lap 3 (World, set 1)
+// Final Lap 3 (World, Rev C)
 
 static struct BurnRomInfo finalap3RomDesc[] = {
 	{ "flt2_mpr0c.11d",	0x20000, 0x9ff361ff, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -7146,7 +7146,7 @@ STD_ROM_FN(finalap3)
 
 struct BurnDriver BurnDrvFinalap3 = {
 	"finalap3", NULL, NULL, NULL, "1992",
-	"Final Lap 3 (World, set 1)\0", "Imperfect graphics", "Namco", "System 2",
+	"Final Lap 3 (World, Rev C)\0", "Imperfect graphics", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3RomInfo, finalap3RomName, NULL, NULL, NULL, NULL, FourtraxInputInfo, FourtraxDIPInfo,
@@ -7283,7 +7283,7 @@ struct BurnDriver BurnDrvFinalap3j = {
 };
 
 
-// Final Lap 3 (Japan - Rev C)
+// Final Lap 3 (Japan, Rev C)
 
 static struct BurnRomInfo finalap3jcRomDesc[] = {
 	{ "flt1_mp0c.11d",	0x20000, 0xebe1bff8, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -7337,7 +7337,7 @@ STD_ROM_FN(finalap3jc)
 
 struct BurnDriver BurnDrvFinalap3jc = {
 	"finalap3jc", "finalap3", NULL, NULL, "1992",
-	"Final Lap 3 (Japan - Rev C)\0", "Imperfect graphics", "Namco", "System 2",
+	"Final Lap 3 (Japan, Rev C)\0", "Imperfect graphics", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3jcRomInfo, finalap3jcRomName, NULL, NULL, NULL, NULL, FourtraxInputInfo, FourtraxDIPInfo,

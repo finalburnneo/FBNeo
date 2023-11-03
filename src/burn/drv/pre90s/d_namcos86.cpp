@@ -2075,7 +2075,7 @@ struct BurnDriver BurnDrvRthundera = {
 	"rthundera", "rthunder", NULL, NULL, "1986",
 	"Rolling Thunder (rev 3, hack)\0", NULL, "bootleg", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, rthunderaRomInfo, rthunderaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Rthunder1DIPInfo,
 	RthunderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3

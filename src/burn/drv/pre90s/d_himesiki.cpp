@@ -795,7 +795,7 @@ struct BurnDriver BurnDrvHimesiki = {
 };
 
 
-// Android (early build?)
+// Android (prototype, early build)
 
 static struct BurnRomInfo androidpoRomDesc[] = {
 	{ "mitsubishi__ad1__m5l27256k.toppcb.k1",		0x08000, 0x25ab85eb, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
@@ -822,7 +822,7 @@ static INT32 androidpoInit()
 }
 
 struct BurnDriver BurnDrvAndroidpo = {
-	"androidpo", "androidp", NULL, NULL, "1987",
+	"androidpo", "androidp", NULL, NULL, "198?",
 	"Android (prototype, early build)\0", NULL, "Nasco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
@@ -831,7 +831,7 @@ struct BurnDriver BurnDrvAndroidpo = {
 	192, 256, 3, 4
 };
 
-// Android (later build?)
+// Android (prototype, later build)
 
 static struct BurnRomInfo androidpRomDesc[] = {
 	{ "andr1.bin", 0x08000, 0xfff04130, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
@@ -854,7 +854,7 @@ static INT32 androidpInit()
 }
 
 struct BurnDriver BurnDrvAndroidp = {
-	"androidp", NULL, NULL, NULL, "198?",
+	"androidp", NULL, NULL, NULL, "1987",
 	"Android (prototype, later build)\0", NULL, "Nasco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,

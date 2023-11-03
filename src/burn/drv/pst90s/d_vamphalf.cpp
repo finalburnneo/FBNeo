@@ -2671,7 +2671,7 @@ static INT32 YorijoriInit()
 }
 
 struct BurnDriverD BurnDrvYorijori = {
-	"yorijori", NULL, NULL, NULL, "199?",
+	"yorijori", NULL, NULL, NULL, "2002",
 	"Yori Jori Kuk Kuk\0", NULL, "Golden Bell Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,

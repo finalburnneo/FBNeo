@@ -1218,7 +1218,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 //----------------------------------------------------------------------------------------------------------
 
-// Multi Champ (World)
+// Multi Champ (World, ver. 2.5)
 
 static struct BurnRomInfo multchmpRomDesc[] = {
 	{ "esd2.cu02",		0x040000, 0x2d1b098a, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
@@ -1296,7 +1296,7 @@ static INT32 MultchmpInit()
 
 struct BurnDriver BurnDrvMultchmp = {
 	"multchmp", NULL, NULL, NULL, "1999",
-	"Multi Champ (World)\0", NULL, "ESD", "Miscellaneous",
+	"Multi Champ (World, ver. 2.5)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, multchmpRomInfo, multchmpRomName, NULL, NULL, NULL, NULL, MultchmpInputInfo, MultchmpDIPInfo,
@@ -1335,7 +1335,7 @@ STD_ROM_PICK(multchmk)
 STD_ROM_FN(multchmk)
 
 struct BurnDriver BurnDrvMultchmk = {
-	"multchmpk", "multchmp", NULL, NULL, "1999",
+	"multchmpk", "multchmp", NULL, NULL, "1998",
 	"Multi Champ (Korea, older)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
@@ -1375,7 +1375,7 @@ STD_ROM_PICK(multchma)
 STD_ROM_FN(multchma)
 
 struct BurnDriver BurnDrvMultchma = {
-	"multchmpa", "multchmp", NULL, NULL, "1999",
+	"multchmpa", "multchmp", NULL, NULL, "1998",
 	"Multi Champ (World, older)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
@@ -1493,7 +1493,7 @@ STD_ROM_FN(hedpanica)
 
 struct BurnDriver BurnDrvHedpanica = {
 	"hedpanica", "hedpanic", NULL, NULL, "1999",
-	"Head Panic (ver. 0702, 02/07/1999)\0", "Story line & game instructions in English", "ESD / Fuuki", "Miscellaneous",
+	"Head Panic (ver. 0702, 02/07/1999)\0", "Story line & game instructions in English", "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, hedpanicaRomInfo, hedpanicaRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
@@ -1645,6 +1645,40 @@ struct BurnDriver BurnDrvMchampda = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, mchampdaRomInfo, mchampdaRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
+	MchampdxInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Multi Champ Deluxe (ver. 1114, 14/11/1999)
+
+static struct BurnRomInfo mchampdbRomDesc[] = {
+	{ "ver1114_esd2.cu02",	0x040000, 0xd17b2616, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "ver1114_esd1.cu03",	0x040000, 0x11ff2e94, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "ver1114_esd3.su06",	0x040000, 0xb87a1e85, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "ver1114_ju01",		0x200000, 0x0048e687, 3 | BRF_GRA },		//  3 - Sprites
+	{ "ver1114_ju02",		0x200000, 0x2f9ccff8, 3 | BRF_GRA },		//  4
+	{ "ver1114_esd5.ju07",	0x040000, 0x8175939f, 3 | BRF_GRA },		//  5
+
+	{ "ver1114_fu35",		0x200000, 0xc515c704, 4 | BRF_GRA },		//  6 - Tiles
+	{ "ver1114_fu34",		0x200000, 0x39d448bb, 4 | BRF_GRA },		//  7
+
+	{ "esd4.su10",			0x040000, 0x2fbe94ab, 5 | BRF_SND },		//  8 - OKI Samples
+	
+	{ "eeprom1114",			0x000080, 0x427d90d2, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(mchampdb)
+STD_ROM_FN(mchampdb)
+
+struct BurnDriver BurnDrvMchampdb = {
+	"mchampdxb", "mchampdx", NULL, NULL, "1999",
+	"Multi Champ Deluxe (ver. 1114, 14/11/1999)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, mchampdbRomInfo, mchampdbRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
 	MchampdxInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3
 };

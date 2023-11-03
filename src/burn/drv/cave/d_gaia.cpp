@@ -853,7 +853,7 @@ STD_ROM_FN(theroes)
 
 struct BurnDriver BurnDrvTheroes = {
 	"theroes", NULL, NULL, NULL, "2001",
-	"Thunder Heroes\0", NULL, "Primetec Investments", "Cave",
+	"Thunder Heroes\0", NULL, "Primetek Investments", "Cave",
 	L"\u9739\u96F3\u82F1\u96C4 Thunder Heroes\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_SCRFIGHT, 0,
 	NULL, theroesRomInfo, theroesRomName, NULL, NULL, NULL, NULL, gaiaInputInfo, theroesDIPInfo,

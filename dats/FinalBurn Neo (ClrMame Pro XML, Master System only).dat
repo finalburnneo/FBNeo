@@ -188,7 +188,7 @@
 	</game>
 	<game name="alexkidd3" cloneof="alexkidd3f" romof="alexkidd3f" sourcefile="sms/d_sms.cpp">
 		<comment>Hack, Homebrew</comment>
-		<description>Alex Kidd 3 - Curse in Miracle World (GlobalHack, Demo-4)</description>
+		<description>Alex Kidd 3 - Curse in Miracle World (GlobalHack, Demo v.4)</description>
 		<year>2016</year>
 		<manufacturer>Yeti</manufacturer>
 		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
@@ -294,6 +294,15 @@
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-10379.ic1" size="131072" crc="08c9ec91"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="alexlostse" cloneof="alexlost" romof="alexlost" sourcefile="sms/d_sms.cpp">
+		<comment>Hack</comment>
+		<description>Alex Kidd, The Lost Stars - Stella Edition (Hack)</description>
+		<year>2023</year>
+		<manufacturer>poody</manufacturer>
+		<rom name="Alex Kidd, The Lost Stars - Stella Edition (2023)(poody).sms" size="262144" crc="85939bf5"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2026,6 +2035,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="bakabonen" cloneof="bakabon" romof="bakabon" sourcefile="sms/d_sms.cpp">
+		<comment>Hack</comment>
+		<description>Genius Bakabon, The (Hack, English v1.2)</description>
+		<year>2023</year>
+		<manufacturer>FCandChill</manufacturer>
+		<rom name="Genius Bakabon, The T-Eng v1.2 (2023)( (FCandChill).sms" size="262144" crc="7d0d2d4d"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="georgeko" sourcefile="sms/d_sms.cpp">
 		<description>George Foreman's KO Boxing (Euro, Brazil)</description>
 		<year>1992</year>
@@ -2866,8 +2884,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="lambo" sourcefile="sms/d_sms.cpp">
-		<comment>Homebrew</comment>
-		<description>Lambo (HB, Demo)</description>
+		<comment>Demo, Homebrew</comment>
+		<description>Lambo (HB, Tech-Demo)</description>
 		<year>2015</year>
 		<manufacturer>Genesis Project</manufacturer>
 		<rom name="GenesisProject-Lambo.sms" size="262144" crc="92fe2775"/>
@@ -3381,6 +3399,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mk2pi" cloneof="mk2" romof="mk2" sourcefile="sms/d_sms.cpp">
+		<comment>Hack</comment>
+		<description>Mortal Kombat II - Palette improvement (Hack, v1.2)</description>
+		<year>2023</year>
+		<manufacturer>cireza</manufacturer>
+		<rom name="Mortal Kombat II - Palette improvement v1.2 (2023)(cireza).sms" size="524288" crc="7e85784b"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mspacman" sourcefile="sms/d_sms.cpp">
 		<description>Ms. Pac-Man (Euro, Brazil)</description>
 		<year>1991</year>
@@ -3457,7 +3484,7 @@
 	</game>
 	<game name="novdmvdp" sourcefile="sms/d_sms.cpp">
 		<comment>Demo, Homebrew</comment>
-		<description>New Order vs Depeche Mode vs Daft Punk - (HB, Demo)</description>
+		<description>New Order vs Depeche Mode vs Daft Punk (HB, Tech-Demo)</description>
 		<year>2019</year>
 		<manufacturer>Maxim</manufacturer>
 		<rom name="novdmvdp.sms" size="4176507" crc="d0eabe60"/>
@@ -4499,6 +4526,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="solomonen" cloneof="solomon" romof="solomon" sourcefile="sms/d_sms.cpp">
+		<comment>Hack</comment>
+		<description>Solomon's Key - Tears of Princess Lihita (Hack, English)</description>
+		<year>2023</year>
+		<manufacturer>FlashPV</manufacturer>
+		<rom name="Solomon's Key - Tears of Princess Lihita T-Eng (2023)(FlashPV).sms" size="131072" crc="66de9f40"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sonicbls" sourcefile="sms/d_sms.cpp">
 		<description>Sonic Blast (Brazil)</description>
 		<year>1997</year>
@@ -5396,15 +5432,6 @@
 		<year>1986</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="circuit, the (japan).bin" size="131072" crc="8fb75994"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="bakabonen" cloneof="bakabon" romof="bakabon" sourcefile="sms/d_sms.cpp">
-		<comment>Hack</comment>
-		<description>The Genius Bakabon (Hack, English)</description>
-		<year>2022</year>
-		<manufacturer>FCandChill</manufacturer>
-		<rom name="Tensai Bakabon (2022)(FCandChill).sms" size="262144" crc="96ce2f05"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

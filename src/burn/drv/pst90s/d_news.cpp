@@ -453,7 +453,7 @@ struct BurnDriver BurnDrvNews = {
 
 struct BurnDriver BurnDrvNewsa = {
 	"newsa", "news", NULL, NULL, "1993",
-	"News (set 2)\0", NULL, "Poby / Jeansole", "Miscellaneous",
+	"News (set 2)\0", NULL, "Poby", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewsaRomInfo, NewsaRomName, NULL, NULL, NULL, NULL, NewsInputInfo, NewsaDIPInfo,

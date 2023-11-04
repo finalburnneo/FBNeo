@@ -4803,7 +4803,7 @@ struct BurnDriver BurnDrvNslasheru = {
 };
 
 
-// Tattoo Assassins (US prototype)
+// Tattoo Assassins (US prototype, Mar 14 1995)
 
 static struct BurnRomInfo tattassRomDesc[] = {
 	{ "pp44.cpu",		0x80000, 0xc3ca5b49, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -4881,16 +4881,16 @@ static INT32 TattassInit()
 
 struct BurnDriver BurnDrvTattass = {
 	"tattass", NULL, NULL, NULL, "1994",
-	"Tattoo Assassins (US prototype)\0", NULL, "Data East Pinball", "DECO 32",
+	"Tattoo Assassins (US prototype, Mar 14 1995)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, tattassRomInfo, tattassRomName, NULL, NULL, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
 
-// Tattoo Assassins (Asia prototype)
+// Tattoo Assassins (Asia prototype, Mar 14 1995)
 
 static struct BurnRomInfo tattassaRomDesc[] = {
 	{ "rev232a.000",	0x80000, 0x1a357112, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -4963,9 +4963,9 @@ STD_ROM_FN(tattassa)
 
 struct BurnDriver BurnDrvTattassa = {
 	"tattassa", "tattass", NULL, NULL, "1994",
-	"Tattoo Assassins (Asia prototype)\0", NULL, "Data East Pinball", "DECO 32",
+	"Tattoo Assassins (Asia prototype, Mar 14 1995)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

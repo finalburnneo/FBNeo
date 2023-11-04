@@ -593,7 +593,7 @@ struct BurnDriver BurnDrvDiscoboy = {
 };
 
 
-// Disco Boy (Promat license?)
+// Disco Boy (Promat license)
 
 static struct BurnRomInfo discoboypRomDesc[] = {
 	{ "discob.u2",		0x10000, 0x7f07afd1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -623,10 +623,49 @@ STD_ROM_FN(discoboyp)
 
 struct BurnDriver BurnDrvDiscoboyp = {
 	"discoboyp", "discoboy", NULL, NULL, "1993",
-	"Disco Boy (Promat license?)\0", NULL, "Soft Art Co.", "Miscellaneous",
+	"Disco Boy (Promat license)\0", NULL, "Soft Art Co. / Promat", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, discoboypRomInfo, discoboypRomName, NULL, NULL, NULL, NULL, DiscoboyInputInfo, DiscoboyDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
+	240, 384, 3, 4
+};
+
+
+// DJ Girl (Promat license)
+
+static struct BurnRomInfo djgirlRomDesc[] = {
+	{ "djgirl.u2",		0x10000, 0x95912ee3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "djgirl.u18",		0x20000, 0x05f0daaf, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "djgirl.u28",		0x10000, 0x7c2ed174, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "djgirl.u45",		0x10000, 0xc266c6df, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "djgirl.u94",		0x10000, 0xc436f1e5, 3 | BRF_GRA },           //  4 Sprites
+	{ "djgirl.u124",	0x40000, 0x0b0bf653, 3 | BRF_GRA },           //  5
+	{ "djgirl.u95",		0x10000, 0xddea540e, 3 | BRF_GRA },           //  6
+	{ "djgirl.u125",	0x40000, 0xfcac2cb8, 3 | BRF_GRA },           //  7
+
+	{ "djgirl.u80",		0x10000, 0x74f18c8b, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "djgirl.u81",		0x10000, 0x077ccd1c, 4 | BRF_GRA },           //  9
+	{ "djgirl.u78",		0x10000, 0x746bcf74, 4 | BRF_GRA },           // 10
+	{ "djgirl.u79",		0x10000, 0xa17e04f8, 4 | BRF_GRA },           // 11
+
+	{ "djgirl.u50",		0x40000, 0x02a52a90, 5 | BRF_GRA },           // 12 Banked Background Tiles
+	{ "djgirl.u5",		0x40000, 0x39abacac, 5 | BRF_GRA },           // 13
+	{ "djgirl.u46",		0x40000, 0x3853d794, 5 | BRF_GRA },           // 14
+	{ "djgirl.u49",		0x40000, 0xb3f580c5, 5 | BRF_GRA },           // 15
+};
+
+STD_ROM_PICK(djgirl)
+STD_ROM_FN(djgirl)
+
+struct BurnDriver BurnDrvDjgirl = {
+	"djgirl", "discoboy", NULL, NULL, "1993",
+	"DJ Girl (Promat license)\0", NULL, "Soft Art Co. / Promat", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT | GBF_ACTION, 0,
+	NULL, djgirlRomInfo, djgirlRomName, NULL, NULL, NULL, NULL, DiscoboyInputInfo, DiscoboyDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x800,
 	240, 384, 3, 4
 };

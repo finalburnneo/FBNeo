@@ -1045,7 +1045,7 @@ STD_ROM_FN(skykids)
 
 struct BurnDriver BurnDrvSkykids = {
 	"skykids", "skykid", NULL, NULL, "1985",
-	"Sky Kid (Sipem)\0", NULL, "Namco [Sipem license]", "Miscellaneous",
+	"Sky Kid (Sipem)\0", NULL, "Namco (Sipem license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skykidsRomInfo, skykidsRomName, NULL, NULL, NULL, NULL, SkykidInputInfo, SkykidsDIPInfo,

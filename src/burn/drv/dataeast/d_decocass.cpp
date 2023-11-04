@@ -4006,7 +4006,7 @@ struct BurnDriver BurnDrvClocknchj = {
 };
 
 
-// Flash Boy (vertical) [DECO Cassette MD] (No.12/Ver.0/Set.1,Japan)
+// Flash Boy (vertical) (DECO Cassette MD) (No.12/Ver.0/Set.1,Japan)
 
 static struct BurnRomInfo cfboy0a1RomDesc[] = {
 	{ "dp-1120-a.rom",	0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
@@ -4030,7 +4030,7 @@ static INT32 Cfboy0a1Init()
 
 struct BurnDriver BurnDrvCfboy0a1 = {
 	"cfboy0a1", NULL, "decocass", NULL, "1981",
-	"Flash Boy (vertical) [DECO Cassette MD] (No.12/Ver.0/Set.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
+	"Flash Boy (vertical) (DECO Cassette MD) (No.12/Ver.0/Set.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, cfboy0a1RomInfo, cfboy0a1RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cfboy0a1DIPInfo,
@@ -4291,6 +4291,8 @@ struct BurnDriver BurnDrvCtisland3 = {
 	240, 256, 3, 4
 };
 
+// The Tower (DECO Cassette) (Europe)
+
 static struct BurnRomInfo ctowerRomDesc[] = {
 	{ "ctower.pro",	0x0020, 0x32e9dcd7, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
 
@@ -4302,7 +4304,7 @@ STD_ROM_FN(ctower)
 
 struct BurnDriver BurnDrvCtower = {
 	"ctower", NULL, "decocass", NULL, "1981",
-	"The Tower (DECO Cassette) (Europe?)\0", NULL, "Data East Corporation", "Cassette System",
+	"The Tower (DECO Cassette) (Europe)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, ctowerRomInfo, ctowerRomName, NULL, NULL, NULL, NULL, CtowerInputInfo, CtowerDIPInfo,
@@ -4715,7 +4717,7 @@ struct BurnDriver BurnDrvCgraplop = {
 };
 
 
-// Graplop (no title screen) (DECO Cassette) (US)
+// Graplop (DECO Cassette) (US) (Prototype?)
 
 static struct BurnRomInfo cgraplop2RomDesc[] = {
 	{ "cgraplop.pro",	0x1000, 0xee93787d, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
@@ -4735,7 +4737,7 @@ static INT32 Cgraplop2Init()
 
 struct BurnDriver BurnDrvCgraplop2 = {
 	"cgraplop2", "cgraplop", "decocass", NULL, "1983",
-	"Graplop (no title screen) (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
+	"Graplop (DECO Cassette) (US) (Prototype?)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
 	NULL, cgraplop2RomInfo, cgraplop2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
@@ -5296,7 +5298,7 @@ static void decocass_widel_write(UINT16 offset, UINT8 data)
 }
 
 
-// Deco Cassette System Multigame (ROM based)
+// DECO Cassette System ROM Multigame (David Widel)
 
 static struct BurnRomInfo decomultRomDesc[] = {
 	{ "widldeco.low",	0x80000, 0xfd4dc36c,  1 | BRF_PRG | BRF_ESS },  //  0 Dongle data
@@ -5323,7 +5325,7 @@ static INT32 DecomultInit()
 
 struct BurnDriver BurnDrvDecomult = {
 	"decomult", NULL, "decocass", NULL, "2008",
-	"Deco Cassette System Multigame (ROM based)\0", NULL, "bootleg (David Widel)", "Cassette System",
+	"DECO Cassette System ROM Multigame (David Widel)\0", NULL, "bootleg (David Widel)", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, decomultRomInfo, decomultRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, DecomultDIPInfo,

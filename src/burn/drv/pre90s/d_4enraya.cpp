@@ -645,7 +645,7 @@ static INT32 unkpacgInit()
 
 struct BurnDriver BurnDrvUnkpacg = {
 	"unkpacg", NULL, NULL, NULL, "199?",
-	"unknown 'Pac-Man' gambling game (set 1)\0", NULL, "unknown", "Miscellaneous",
+	"unknown 'Pac-Man' gambling game (set 1)\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unkpacgRomInfo, unkpacgRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
@@ -708,7 +708,7 @@ static INT32 unkpacgbInit()
 
 struct BurnDriver BurnDrvUnkpacgb = {
 	"unkpacgb", "unkpacg", NULL, NULL, "199?",
-	"unknown 'Pac-Man' gambling game (set 2)\0", NULL, "unknown", "Miscellaneous",
+	"unknown 'Pac-Man' gambling game (set 2)\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unkpacgbRomInfo, unkpacgbRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
@@ -738,7 +738,7 @@ static INT32 unkpacgcInit()
 
 struct BurnDriver BurnDrvUnkpacgc = {
 	"unkpacgc", "unkpacg", NULL, NULL, "1988",
-	"Coco Louco\0", NULL, "unknown", "Miscellaneous",
+	"Coco Louco\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unkpacgcRomInfo, unkpacgcRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
@@ -770,7 +770,7 @@ static INT32 unkpacgdInit()
 
 struct BurnDriver BurnDrvUnkpacgd = {
 	"unkpacgd", "unkpacg", NULL, NULL, "1988",
-	"unknown 'Pac Man with cars' gambling game\0", NULL, "unknown", "Miscellaneous",
+	"unknown 'Pac Man with cars' gambling game\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unkpacgdRomInfo, unkpacgdRomName, NULL, NULL, NULL, NULL, UnkpacgInputInfo, UnkpacgDIPInfo,
@@ -801,7 +801,7 @@ static INT32 unksigInit()
 
 struct BurnDriver BurnDrvUnksig = {
 	"unksig", NULL, NULL, NULL, "199?",
-	"unknown 'Space Invaders' gambling game (encrypted, set 1)\0", NULL, "unknown", "Miscellaneous",
+	"unknown 'Space Invaders' gambling game (encrypted, set 1)\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unksigRomInfo, unksigRomName, NULL, NULL, NULL, NULL, UnksigInputInfo, UnksigDIPInfo,
@@ -847,7 +847,7 @@ static INT32 unksigaInit()
 
 struct BurnDriver BurnDrvUnksiga = {
 	"unksiga", "unksig", NULL, NULL, "199?",
-	"unknown 'Space Invaders' gambling game (encrypted, set 2)\0", NULL, "unknown", "Miscellaneous",
+	"unknown 'Space Invaders' gambling game (encrypted, set 2)\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unksigaRomInfo, unksigaRomName, NULL, NULL, NULL, NULL, UnksigInputInfo, UnksigDIPInfo,
@@ -879,7 +879,7 @@ static INT32 unksigbInit()
 
 struct BurnDriver BurnDrvUnksigb = {
 	"unksigb", "unksig", NULL, NULL, "199?",
-	"unknown 'Space Invaders' gambling game (unencrypted)\0", NULL, "unknown", "Miscellaneous",
+	"unknown 'Space Invaders' gambling game (unencrypted)\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, unksigbRomInfo, unksigbRomName, NULL, NULL, NULL, NULL, UnksigInputInfo, UnksigDIPInfo,

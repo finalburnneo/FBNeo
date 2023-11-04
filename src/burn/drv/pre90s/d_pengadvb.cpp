@@ -450,7 +450,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Penguin Adventure (bootleg of MSX version)
+// Penguin Adventure (bootleg of MSX version, encrypted)
 
 static struct BurnRomInfo pengadvbRomDesc[] = {
 	{ "rom.u5",		0x8000, 0xd21950d2, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -466,9 +466,9 @@ STD_ROM_FN(pengadvb)
 
 struct BurnDriver BurnDrvPengadvb = {
 	"pengadvb", NULL, NULL, NULL, "1988",
-	"Penguin Adventure (bootleg of MSX version)\0", NULL, "bootleg (Screen) / Konami", "Miscellaneous",
+	"Penguin Adventure (bootleg of MSX version, encrypted)\0", NULL, "bootleg (Screen)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, pengadvbRomInfo, pengadvbRomName, NULL, NULL, NULL, NULL, PengadvbInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 216, 4, 3

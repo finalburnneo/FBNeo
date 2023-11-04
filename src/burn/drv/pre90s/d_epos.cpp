@@ -841,7 +841,7 @@ STD_ROM_FN(megadon)
 
 struct BurnDriver BurnDrvMegadon = {
 	"megadon", NULL, NULL, NULL, "1982",
-	"Megadon\0", NULL, "Epos Corporation (Photar Industries License)", "EPOS Tristar",
+	"Megadon\0", NULL, "Epos Corporation (Photar Industries license)", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, megadonRomInfo, megadonRomName, NULL, NULL, NULL, NULL, MegadonInputInfo, MegadonDIPInfo,
@@ -1069,7 +1069,7 @@ STD_ROM_PICK(dealer)
 STD_ROM_FN(dealer)
 
 struct BurnDriver BurnDrvDealer = {
-	"dealer", NULL, NULL, NULL, "198?",
+	"dealer", NULL, NULL, NULL, "1984",
 	"The Dealer\0", "Incorrect Colors", "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
@@ -1079,7 +1079,7 @@ struct BurnDriver BurnDrvDealer = {
 };
 
 
-// Revenger '84 (set 1)
+// Revenger '84 (newer)
 
 static struct BurnRomInfo revngr84RomDesc[] = {
 	{ "u_1__revenger__r06254__=c=_epos_corp.m5l2764k.u1",	0x2000, 0x308f231f, BRF_ESS | BRF_PRG },	//  0 Z80 code
@@ -1096,7 +1096,7 @@ STD_ROM_FN(revngr84)
 
 struct BurnDriver BurnDrvRevngr84 = {
 	"revngr84", NULL, NULL, NULL, "1984",
-	"Revenger '84 (set 1)\0", NULL, "Epos Corporation", "EPOS Tristar",
+	"Revenger '84 (newer)\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, revngr84RomInfo, revngr84RomName, NULL, NULL, NULL, NULL, Revngr84InputInfo, Revngr84DIPInfo,
@@ -1104,7 +1104,7 @@ struct BurnDriver BurnDrvRevngr84 = {
 	236, 272, 3, 4
 };
 
-// Revenger '84 (set 2)
+// Revenger '84 (older)
 
 static struct BurnRomInfo revengerRomDesc[] = {
 	{ "r06124.u1",	0x2000, 0xfad1a2a5, BRF_ESS | BRF_PRG },	//  0 Z80 code
@@ -1121,7 +1121,7 @@ STD_ROM_FN(revenger)
 
 struct BurnDriver BurnDrvRevenger = {
 	"revenger", "revngr84", NULL, NULL, "1984",
-	"Revenger '84 (set 2)\0", "Bad dump", "Epos Corporation", "EPOS Tristar",
+	"Revenger '84 (older)\0", "Bad dump", "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, revengerRomInfo, revengerRomName, NULL, NULL, NULL, NULL, Revngr84InputInfo, Revngr84DIPInfo,

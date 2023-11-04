@@ -862,7 +862,7 @@ STD_ROM_PICK(sotsugyok)
 STD_ROM_FN(sotsugyok)
 
 struct BurnDriver BurnDrvSotsugyok = {
-	"sotsugyok", "sotsugyo", NULL, NULL, "1995",
+	"sotsugyok", "sotsugyo", NULL, NULL, "1996",
 	"Jor-eop Jeungmyeongseo (Korea)\0", NULL, "Mitchell", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,

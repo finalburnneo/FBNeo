@@ -4410,7 +4410,7 @@ STD_ROM_FN(gondo)
 
 struct BurnDriver BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
-	"Gondomania (World)\0", NULL, "Data East USA", "DEC8",
+	"Gondomania (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, NULL, NULL, GondoInputInfo, GondoDIPInfo,
@@ -4923,7 +4923,7 @@ STD_ROM_PICK(oscar)
 STD_ROM_FN(oscar)
 
 struct BurnDriver BurnDrvOscar = {
-	"oscar", NULL, NULL, NULL, "1988",
+	"oscar", NULL, NULL, NULL, "1987",
 	"Psycho-Nics Oscar (World revision 0)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,
@@ -4962,7 +4962,7 @@ STD_ROM_PICK(oscaru)
 STD_ROM_FN(oscaru)
 
 struct BurnDriver BurnDrvOscaru = {
-	"oscaru", "oscar", NULL, NULL, "1987",
+	"oscaru", "oscar", NULL, NULL, "1988",
 	"Psycho-Nics Oscar (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RUNGUN, 0,

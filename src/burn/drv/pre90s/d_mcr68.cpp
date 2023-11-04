@@ -2003,7 +2003,7 @@ struct BurnDriver BurnDrvArchrivla = {
 };
 
 
-// Arch Rivals (rev 2.0 5/03/89, 8-way Joystick bootleg)
+// Arch Rivals (rev 2.0 5/03/89, 8-way joystick bootleg)
 
 static struct BurnRomInfo archrivlbRomDesc[] = {
 	{ "4.bin",						0x10000, 0x1d99cce6, 1 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
@@ -2050,10 +2050,58 @@ static INT32 ArchrivlbInit()
 
 struct BurnDriver BurnDrvArchrivlb = {
 	"archrivlb", "archrivl", NULL, NULL, "1989",
-	"Arch Rivals (rev 2.0 5/03/89, 8-way Joystick bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Arch Rivals (rev 2.0 5/03/89, 8-way joystick bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, archrivlbRomInfo, archrivlbRomName, NULL, NULL, NULL, NULL, ArchrivlbInputInfo, ArchrivlbDIPInfo,
+	ArchrivlbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	512, 480, 4, 3
+};
+
+
+// Basket Ball (8-way joystick bootleg of Arch Rivals)
+
+static struct BurnRomInfo basketbalRomDesc[] = {
+	{ "4.bin",						0x10000, 0x0db57977, 1 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "2.bin",						0x10000, 0x181fb328, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",						0x10000, 0xf6b5cb89, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.bin",						0x10000, 0x283d7995, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "13.bin",						0x08000, 0x96b3c652, 4 | BRF_PRG | BRF_ESS }, //  4 CVSD M6809 Code
+	{ "12.bin",						0x08000, 0xc4b3dc23, 4 | BRF_PRG | BRF_ESS }, //  5
+	{ "11.bin",						0x08000, 0xf7907a02, 4 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "5.bin",						0x10000, 0x7eb3d7c6, 3 | BRF_GRA },           //  7 Background Tiles
+	{ "6.bin",						0x10000, 0x31e68050, 3 | BRF_GRA },           //  8
+
+	{ "7.bin",						0x20000, 0x148ce28c, 4 | BRF_GRA },           //  9 Sprites
+	{ "8.bin",						0x20000, 0x58187ac2, 4 | BRF_GRA },           // 10
+	{ "9.bin",						0x20000, 0x0dd1204e, 4 | BRF_GRA },           // 11
+	{ "10.bin",						0x20000, 0xeb3d0344, 4 | BRF_GRA },           // 12
+
+	{ "pls153.11j",					0x000eb, 0x761c3b56, 0 | BRF_OPT },           // 13 PLDs
+	{ "pls153.12j",					0x000eb, 0x48eed036, 0 | BRF_OPT },           // 14
+	{ "pls153.14h",					0x000eb, 0xd4203273, 0 | BRF_OPT },           // 15
+	{ "pal12h6.14e",				0x00034, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 16
+	{ "pal16r4a.14k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 17
+	{ "pal16r4a.2k",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 18
+	{ "pal16r6a.15e",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 19
+	{ "pal16l8a.1j",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 20
+	{ "pal16l8a.2j",				0x00104, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 21
+	{ "pal20l8a.9b",				0x00144, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 22
+	{ "pl20x10a.14f",				0x000cc, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 23
+	{ "pl20x10a.15f",				0x000cc, 0x00000000, 0 | BRF_NODUMP | BRF_OPT },           // 24
+};
+
+STD_ROM_PICK(basketbal)
+STD_ROM_FN(basketbal)
+
+struct BurnDriver BurnDrvBasketbal = {
+	"basketbal", "archrivl", NULL, NULL, "1989",
+	"Basket Ball (8-way joystick bootleg of Arch Rivals)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	NULL, basketbalRomInfo, basketbalRomName, NULL, NULL, NULL, NULL, ArchrivlbInputInfo, ArchrivlbDIPInfo,
 	ArchrivlbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
 };

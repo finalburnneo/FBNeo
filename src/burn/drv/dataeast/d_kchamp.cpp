@@ -1012,7 +1012,7 @@ struct BurnDriver BurnDrvKarateda = {
 	"karateda", "kchamp", NULL, NULL, "1984",
 	"Karate Dou (Arfyc bootleg)\0", NULL, "bootleg (Arfyc)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, karatedaRomInfo, karatedaRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1065,7 +1065,7 @@ struct BurnDriver BurnDrvKchamptec = {
 	"kchamptec", "kchamp", NULL, NULL, "1984",
 	"Karate Champ (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, kchamptecRomInfo, kchamptecRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

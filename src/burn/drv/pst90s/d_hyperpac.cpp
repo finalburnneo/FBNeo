@@ -4182,7 +4182,7 @@ struct BurnDriver BurnDrvHyperpac = {
 
 struct BurnDriver BurnDrvHyperpacb = {
 	"hyperpacb", "hyperpac", NULL, NULL, "1995",
-	"Hyper Pacman (bootleg)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Hyper Pacman (bootleg)\0", NULL, "bootleg", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, HyperpacbRomInfo, HyperpacbRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, HyperpacDIPInfo,
@@ -4261,7 +4261,7 @@ struct BurnDriver BurnDrvMoremorp = {
 };
 
 struct BurnDriver BurnDrvThreein1semi = {
-	"3in1semi", NULL, NULL, NULL, "1997",
+	"3in1semi", NULL, NULL, NULL, "1998",
 	"New HyperMan (3-in-1 with Cookie & Bibi & HyperMan) (set 1)\0", NULL, "SemiCom / XESS", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
@@ -4271,7 +4271,7 @@ struct BurnDriver BurnDrvThreein1semi = {
 };
 
 struct BurnDriver BurnDrvThreein1semia = {
-	"3in1semia", "3in1semi", NULL, NULL, "1997",
+	"3in1semia", "3in1semi", NULL, NULL, "1998",
 	"New HyperMan (3-in-1 with Cookie & Bibi & HyperMan) (set 2)\0", NULL, "SemiCom / XESS", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
@@ -4292,7 +4292,7 @@ struct BurnDriver BurnDrvToppyrap = {
 
 struct BurnDriver BurnDrvTwinkle = {
 	"twinkle", NULL, NULL, NULL, "1997",
-	"Twinkle (set 1)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Twinkle (set 1)\0", NULL, "SemiCom / Tirano", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, TwinkleRomInfo, TwinkleRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
@@ -4302,7 +4302,7 @@ struct BurnDriver BurnDrvTwinkle = {
 
 struct BurnDriver BurnDrvTwinklea = {
 	"twinklea", "twinkle", NULL, NULL, "1997",
-	"Twinkle (set 2)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Twinkle (set 2)\0", NULL, "SemiCom / Tirano", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, TwinkleaRomInfo, TwinkleaRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
@@ -4332,7 +4332,7 @@ struct BurnDriver BurnDrvPzlbreaka = {
 
 struct BurnDriver BurnDrvFourin1boot = {
 	"4in1boot", NULL, NULL, NULL, "2002",
-	"Puzzle King\0", NULL, "K1 Soft", "Kaneko Pandora based",
+	"Puzzle King (PacMan 2, Tetris, HyperMan 2, Snow Bros.)\0", NULL, "K1 Soft", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, Fourin1bootRomInfo, Fourin1bootRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Fourin1bootDIPInfo,
@@ -4352,7 +4352,7 @@ struct BurnDriver BurnDrvFinalttr = {
 
 struct BurnDriver BurnDrvTwinadv = {
 	"twinadv", NULL, NULL, NULL, "1995",
-	"Twin Adventure (World)\0", NULL, "Barko Corp", "Kaneko Pandora based",
+	"Twin Adventure (World)\0", NULL, "Barko Corp.", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, TwinadvRomInfo, TwinadvRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, TwinadvDIPInfo,
@@ -4362,7 +4362,7 @@ struct BurnDriver BurnDrvTwinadv = {
 
 struct BurnDriver BurnDrvTwinadvk = {
 	"twinadvk", "twinadv", NULL, NULL, "1995",
-	"Twin Adventure (Korea)\0", NULL, "Barko Corp", "Kaneko Pandora based",
+	"Twin Adventure (Korea)\0", NULL, "Barko Corp.", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, TwinadvkRomInfo, TwinadvkRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, TwinadvDIPInfo,
@@ -4372,7 +4372,7 @@ struct BurnDriver BurnDrvTwinadvk = {
 
 struct BurnDriver BurnDrvMulti96 = {
 	"multi96", "twinadv", NULL, NULL, "1996",
-	"Multi Game '96 (Italy)\0", NULL, "Barko Corp", "Kaneko Pandora based",
+	"Multi Game '96 (Italy)\0", NULL, "Barko Corp.", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, Multi96RomInfo, Multi96RomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, TwinadvDIPInfo,
@@ -4382,7 +4382,7 @@ struct BurnDriver BurnDrvMulti96 = {
 
 struct BurnDriver BurnDrvHoneydol = {
 	"honeydol", NULL, NULL, NULL, "1995",
-	"Honey Doll\0", NULL, "Barko Corp", "Kaneko Pandora based",
+	"Honey Doll\0", NULL, "Barko Corp.", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, HoneydolRomInfo, HoneydolRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, HoneydolDIPInfo,
@@ -4452,7 +4452,7 @@ struct BurnDriver BurnDrvSnowbrod = {
 
 struct BurnDriver BurnDrvWintbob = {
 	"wintbob", "snowbros", NULL, NULL, "1990",
-	"The Winter Bobble (bootleg)\0", NULL, "bootleg", "Kaneko Pandora based",
+	"The Winter Bobble (bootleg of Snow Bros.)\0", NULL, "bootleg (Sakowa Project Korea)", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, WintbobRomInfo, WintbobRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
@@ -4472,9 +4472,9 @@ struct BurnDriver BurnDrvSnowbroswb = {
 
 struct BurnDriver BurnDrvSnowbro3 = {
 	"snowbro3", NULL, NULL, NULL, "2002",
-	"Snow Brothers 3 - Magical Adventure\0", NULL, "bootleg", "Kaneko Pandora based",
+	"Snow Brothers 3 - Magical Adventure\0", NULL, "Syrmex", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, Snowbro3RomInfo, Snowbro3RomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrojDIPInfo,
 	Snowbro3Init, SnowbrosExit, Snowbro3Frame, Snowbro3Render, Snowbro3Scan,
 	NULL, 0x400, 256, 224, 4, 3
@@ -4482,7 +4482,7 @@ struct BurnDriver BurnDrvSnowbro3 = {
 
 struct BurnDriver BurnDrvBallboy = {
 	"ballboy", "snowbro3", NULL, NULL, "2003",
-	"Ball Boy\0", NULL, "bootleg", "Kaneko Pandora based",
+	"Ball Boy (2 players)\0", NULL, "bootleg", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, BallboyRomInfo, BallboyRomName, NULL, NULL, NULL, NULL, SnowbrosInputInfo, SnowbrojDIPInfo,

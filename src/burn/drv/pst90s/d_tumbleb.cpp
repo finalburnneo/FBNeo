@@ -4803,7 +4803,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvTumbleb = {
 	"tumbleb", "tumblep", NULL, NULL, "1991",
-	"Tumble Pop (bootleg set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, TumblebRomInfo, TumblebRomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
@@ -4813,7 +4813,7 @@ struct BurnDriver BurnDrvTumbleb = {
 
 struct BurnDriver BurnDrvTumbleb2 = {
 	"tumbleb2", "tumblep", NULL, NULL, "1991",
-	"Tumble Pop (bootleg set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (bootleg with PIC)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, Tumbleb2RomInfo, Tumbleb2RomName, NULL, NULL, NULL, NULL, TumblebInputInfo, TumblebDIPInfo,
@@ -4932,7 +4932,7 @@ struct BurnDriver BurnDrvWlstar = {
 };
 
 struct BurnDriver BurnDrvWondl96 = {
-	"wondl96", NULL, NULL, NULL, "1995",
+	"wondl96", NULL, NULL, NULL, "1996",
 	"Wonder League '96 (Korea)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
@@ -4963,7 +4963,7 @@ struct BurnDriver BurnDrvMagipur = {
 
 struct BurnDriver BurnDrvSdfight = {
 	"sdfight", NULL, NULL, NULL, "1996",
-	"SD Fighters (Korea)\0", NULL, "SemiCom", "Miscellaneous",
+	"SD Fighters (Korea)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	L"\uFF33\uFF24 \uD30C\uC774\uD130\uC988 (Korea)\0SD Fighters\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, SdfightRomInfo, SdfightRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, SdfightDIPInfo,
@@ -4973,7 +4973,7 @@ struct BurnDriver BurnDrvSdfight = {
 
 struct BurnDriver BurnDrvBcstry = {
 	"bcstry", NULL, NULL, NULL, "1997",
-	"B.C. Story (set 1)\0", NULL, "SemiCom", "Miscellaneous",
+	"B.C. Story (set 1)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, BcstryRomInfo, BcstryRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
@@ -4983,7 +4983,7 @@ struct BurnDriver BurnDrvBcstry = {
 
 struct BurnDriver BurnDrvBcstrya = {
 	"bcstrya", "bcstry", NULL, NULL, "1997",
-	"B.C. Story (set 2)\0", NULL, "SemiCom", "Miscellaneous",
+	"B.C. Story (set 2)\0", NULL, "SemiCom / Tirano", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, BcstryaRomInfo, BcstryaRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, BcstryDIPInfo,
@@ -4993,7 +4993,7 @@ struct BurnDriver BurnDrvBcstrya = {
 
 struct BurnDriver BurnDrvSemibase = {
 	"semibase", NULL, NULL, NULL, "1997",
-	"MuHanSeungBu (SemiCom Baseball) (Korea)\0", NULL, "SemiCom", "Miscellaneous",
+	"MuHanSeungBu (SemiCom Baseball) (Korea)\0", NULL, "SemiCom / DMD", "Miscellaneous",
 	L"\u7121\u9650\u52DD\u8CA0\0\uC804\uC6D0 \uAD6D\uC81C\uB9AC\uADF8 \uC804 (SemiCom Baseball) (Korea)\0MuHanSeungBu\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, SemibaseRomInfo, SemibaseRomName, NULL, NULL, NULL, NULL, SemibaseInputInfo, SemibaseDIPInfo,
@@ -5003,7 +5003,7 @@ struct BurnDriver BurnDrvSemibase = {
 
 struct BurnDriver BurnDrvDquizgo = {
 	"dquizgo", NULL, NULL, NULL, "1998",
-	"Date Quiz Go Go (Korea)\0", NULL, "SemiCom", "Miscellaneous",
+	"Date Quiz Go Go (Korea)\0", NULL, "SemiCom / AceVer", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, DquizgoRomInfo, DquizgoRomName, NULL, NULL, NULL, NULL, MetlsavrInputInfo, DquizgoDIPInfo,

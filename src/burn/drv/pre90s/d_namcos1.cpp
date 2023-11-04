@@ -2211,7 +2211,7 @@ struct BurnDriver BurnDrvShadowld = {
 };
 
 
-// Yokai Douchuuki (Japan, new version (YD2, Rev B))
+// Youkai Douchuuki (Japan, new version (YD2, Rev B))
 
 static struct BurnRomInfo youkaidk2RomDesc[] = {
 	{ "yd1_s0.bin",		0x10000, 0xa9cb51fb, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -2254,7 +2254,7 @@ STD_ROM_FN(youkaidk2)
 
 struct BurnDriver BurnDrvYoukaidk2 = {
 	"youkaidk2", "shadowld", NULL, NULL, "1987",
-	"Yokai Douchuuki (Japan, new version (YD2, Rev B))\0", NULL, "Namco", "System 1",
+	"Youkai Douchuuki (Japan, new version (YD2, Rev B))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, youkaidk2RomInfo, youkaidk2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
@@ -2263,7 +2263,7 @@ struct BurnDriver BurnDrvYoukaidk2 = {
 };
 
 
-// Yokai Douchuuki (Japan, old version (YD1))
+// Youkai Douchuuki (Japan, old version (YD1))
 
 static struct BurnRomInfo youkaidk1RomDesc[] = {
 	{ "yd1.sd0",		0x10000, 0xa9cb51fb, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
@@ -2306,7 +2306,7 @@ STD_ROM_FN(youkaidk1)
 
 struct BurnDriver BurnDrvYoukaidk1 = {
 	"youkaidk1", "shadowld", NULL, NULL, "1987",
-	"Yokai Douchuuki (Japan, old version (YD1))\0", NULL, "Namco", "System 1",
+	"Youkai Douchuuki (Japan, old version (YD1))\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, youkaidk1RomInfo, youkaidk1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
@@ -4011,7 +4011,7 @@ struct BurnDriver BurnDrvPuzlclub = {
 	"puzlclub", NULL, NULL, NULL, "1990",
 	"Puzzle Club (Japan prototype)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, puzlclubRomInfo, puzlclubRomName, NULL, NULL, NULL, NULL, DrvInputInfo, PuzlclubDIPInfo,
 	PuzlclubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4

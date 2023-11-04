@@ -566,7 +566,7 @@ STD_ROM_PICK(flipjack)
 STD_ROM_FN(flipjack)
 
 struct BurnDriver BurnDrvFlipjack = {
-	"flipjack", NULL, NULL, NULL, "1983",
+	"flipjack", NULL, NULL, NULL, "1983?",
 	"Flipper Jack\0", NULL, "Jackson Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PINBALL, 0,

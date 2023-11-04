@@ -1578,7 +1578,7 @@ INT32 SOSInit()
 }
 
 
-// SOS
+// SOS Game
 
 static struct BurnRomInfo sosRomDesc[] = {
 	{ "sos.p1",	0x0800, 0xf70bdafb, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1591,8 +1591,8 @@ STD_ROM_PICK(sos)
 STD_ROM_FN(sos)
 
 struct BurnDriver BurnDrvSos = {
-	"sos", NULL, NULL, NULL, "1980",
-	"SOS\0", NULL, "Namco", "Miscellaneous",
+	"sos", NULL, NULL, NULL, "1979",
+	"SOS Game\0", NULL, "K.K. Tokki (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, sosRomInfo, sosRomName, NULL, NULL, NULL, NULL, SosInputInfo, SosDIPInfo,

@@ -406,7 +406,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Dribbling
+// Dribbling (set 1)
 
 static struct BurnRomInfo driblingRomDesc[] = {
 	{ "5p.bin",			0x1000, 0x0e791947, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -430,7 +430,7 @@ STD_ROM_FN(dribling)
 
 struct BurnDriver BurnDrvDribling = {
 	"dribling", NULL, NULL, NULL, "1983",
-	"Dribbling\0", "No sound", "Model Racing", "Miscellaneous",
+	"Dribbling (set 1)\0", "No sound", "Model Racing", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, driblingRomInfo, driblingRomName, NULL, NULL, NULL, NULL, DriblingInputInfo, NULL,

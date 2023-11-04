@@ -1,9 +1,7 @@
 // ----------------------------------------------------------------------------------------------------------
 // NEOCDSEL.CPP
 #include "burner.h"
-#include "png.h"
 #include "neocdlist.h"
-
 #include <process.h>
 
 int				NeoCDList_Init();
@@ -393,12 +391,8 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 
 static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 {
-	int width = 0;
-	int height = 0;
 	PNGRESOLUTION nResolution = { 0, 0 };
-	png_structp png_ptr;
-	png_infop info_ptr;
-	char header[8];
+	IMAGE img = { 0, 0, 0, 0, NULL, NULL, 0 };
 
 	FILE *fp = _tfopen(szFile, _T("rb"));
 
@@ -406,36 +400,10 @@ static PNGRESOLUTION GetPNGResolution(TCHAR* szFile)
 		return nResolution;
 	}
 
-	fread(header, 1, 8, fp);
+	PNGGetInfo(&img, fp);
 
-	if (png_sig_cmp((png_const_bytep)header, 0, 8)) {
-		return nResolution;
-	}
-
-	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-
-	if (!png_ptr) {
-		return nResolution;
-	}
-
-	info_ptr = png_create_info_struct(png_ptr);
-	if (!info_ptr) {
-		return nResolution;
-	}
-
-	if (setjmp(png_jmpbuf(png_ptr))) {
-		return nResolution;
-	}
-
-	png_init_io(png_ptr, fp);
-	png_set_sig_bytes(png_ptr, 8);
-	png_read_info(png_ptr, info_ptr);
-
-	width	= png_get_image_width(png_ptr, info_ptr);
-	height	= png_get_image_height(png_ptr, info_ptr);
-
-	nResolution.nWidth = width;
-	nResolution.nHeight = height;
+	nResolution.nWidth = img.width;
+	nResolution.nHeight = img.height;
 
 	fclose(fp);
 

@@ -664,7 +664,7 @@ struct BurnDriver BurnDrvVaportra = {
 };
 
 
-// Vapor Trail - Hyper Offence Formation (World revision 3)
+// Vapor Trail - Hyper Offence Formation (World revision 3?)
 
 static struct BurnRomInfo vaportraw3RomDesc[] = {
 	{ "fl02-3.bin",		0x20000, 0x6c59be54, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -708,7 +708,7 @@ static INT32 Vaportraw3Init()
 
 struct BurnDriver BurnDrvVaportraw3 = {
 	"vaportra3", "vaportra", NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (World revision 3)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Vapor Trail - Hyper Offence Formation (World revision 3?)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportraw3RomInfo, vaportraw3RomName, NULL, NULL, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,

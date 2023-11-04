@@ -1022,7 +1022,7 @@ STD_ROM_FN(firetrap)
 
 struct BurnDriver BurnDrvFiretrap = {
 	"firetrap", NULL, NULL, NULL, "1986",
-	"Fire Trap (US, rev A)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Fire Trap (US, rev A)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapRomInfo, firetrapRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
@@ -1071,7 +1071,7 @@ STD_ROM_FN(firetrapa)
 
 struct BurnDriver BurnDrvFiretrapa = {
 	"firetrapa", "firetrap", NULL, NULL, "1986",
-	"Fire Trap (US)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Fire Trap (US)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapaRomInfo, firetrapaRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapDIPInfo,
@@ -1120,7 +1120,7 @@ STD_ROM_FN(firetrapj)
 
 struct BurnDriver BurnDrvFiretrapj = {
 	"firetrapj", "firetrap", NULL, NULL, "1986",
-	"Fire Trap (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"Fire Trap (Japan)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, firetrapjRomInfo, firetrapjRomName, NULL, NULL, NULL, NULL, FiretrapInputInfo, FiretrapjDIPInfo,

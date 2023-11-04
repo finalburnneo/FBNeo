@@ -69,12 +69,9 @@ depobj	+= 	neocdlist.o \
 			inpdipsw.o vid_sdl2opengl.o vid_sdl2.o inputbuf.o replay.o sdl2_gui.o sdl2_inprint.o input_sdl2.o stated.o
 
 ifndef FORCE_SYSTEM_LIBPNG
-alldir	+= 	dep/libs/libpng
+alldir	+= 	dep/libs/libspng
 
-depobj	+= 	png.o \
-			\
-			pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
-			pngwrite.o pngwtran.o pngwutil.o
+depobj	+= 	spng.o
 endif
 
 ifdef FORCE_PULSE_AUDIO

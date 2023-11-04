@@ -1878,7 +1878,7 @@ struct BurnDriver BurnDrvSkns = {
 };
 
 
-// Cyvern (US)
+// Cyvern - The Dragon Weapons (US)
 
 static struct BurnRomInfo cyvernRomDesc[] = {
 	{ "cv-usa.u10",	        0x100000, 0x1023ddca, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -1910,7 +1910,7 @@ static INT32 CyvernInit()
 
 struct BurnDriver BurnDrvCyvern = {
 	"cyvern", NULL, "skns", NULL, "1998",
-	"Cyvern (US)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Cyvern - The Dragon Weapons (US)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, cyvernRomInfo, cyvernRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
@@ -1919,7 +1919,7 @@ struct BurnDriver BurnDrvCyvern = {
 };
 
 
-// Cyvern (Japan)
+// Cyvern - The Dragon Weapons (Japan)
 
 static struct BurnRomInfo cyvernjRomDesc[] = {
 	{ "cvj-even.u10",	0x100000, 0x802fadb4, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -1951,7 +1951,7 @@ static INT32 CyvernJInit()
 
 struct BurnDriver BurnDrvCyvernJ = {
 	"cyvernj", "cyvern", "skns", NULL, "1998",
-	"Cyvern (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Cyvern - The Dragon Weapons (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, cyvernjRomInfo, cyvernjRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,

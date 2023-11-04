@@ -479,7 +479,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Diet Go Go (Euro v1.1 1992.09.26 V3)
+// Diet Go Go (Euro v1.1 1992.09.26 v3)
 
 static struct BurnRomInfo dietgoRomDesc[] = {
 	{ "jy_00-3.4h",			0x040000, 0xa863ad0c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -504,7 +504,7 @@ STD_ROM_FN(dietgo)
 
 struct BurnDriver BurnDrvDietgo = {
 	"dietgo", NULL, NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.09.26 V3)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Diet Go Go (Euro v1.1 1992.09.26 v3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
@@ -513,7 +513,7 @@ struct BurnDriver BurnDrvDietgo = {
 };
 
 
-// Diet Go Go (Euro v1.1 1992.09.26 V2)
+// Diet Go Go (Euro v1.1 1992.09.26 v2)
 
 static struct BurnRomInfo dietgoeRomDesc[] = {
 	{ "jy_00-2.4h",			0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -538,7 +538,7 @@ STD_ROM_FN(dietgoe)
 
 struct BurnDriver BurnDrvDietgoe = {
 	"dietgoe", "dietgo", NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.09.26 V2)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Diet Go Go (Euro v1.1 1992.09.26 v2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,

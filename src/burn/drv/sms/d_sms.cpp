@@ -6701,7 +6701,7 @@ struct BurnDriver BurnDrvsms_mk2 = {
 };
 
 
-// Mortal Kombat 3 (Brazil
+// Mortal Kombat 3 (Brazil)
 
 static struct BurnRomInfo sms_mk3RomDesc[] = {
 	{ "mortal kombat 3 (brazil).bin",	0x80000, 0x395ae757, BRF_PRG | BRF_ESS },
@@ -10476,25 +10476,6 @@ struct BurnDriver BurnDrvsms_bakabon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
 	SMSGetZipName, sms_bakabonRomInfo, sms_bakabonRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
-// The Genius Bakabon (Hack, English)
-
-static struct BurnRomInfo sms_bakabonenRomDesc[] = {
-	{ "Tensai Bakabon (2022)(FCandChill).sms",	262144, 0x96ce2f05, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_bakabonen)
-STD_ROM_FN(sms_bakabonen)
-
-struct BurnDriver BurnDrvsms_bakabonen = {
-	"sms_bakabonen", "sms_bakabon", NULL, NULL, "2022",
-	"The Genius Bakabon (Hack, English)\0", NULL, "FCandChill", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
-	SMSGetZipName, sms_bakabonenRomInfo, sms_bakabonenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -27747,7 +27728,7 @@ struct BurnDriver BurnDrvsms_acreflux = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd 3 - Curse in Miracle World (Global Hack, final version)
+// Alex Kidd 3 - Curse in Miracle World (Global Hack, v3.0)
 
 static struct BurnRomInfo sms_alexkidd3fRomDesc[] = {
 	{ "alex kidd 3 - curse in miracle world v3.0 (2021)(yeti).sms",	524288, 0x2096b9f1, BRF_PRG | BRF_ESS },
@@ -27766,7 +27747,7 @@ struct BurnDriver BurnDrvsms_alexkidd3f = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd 3 - Curse in Miracle World (Global Hack, demo version)
+// Alex Kidd 3 - Curse in Miracle World (Global Hack, demo v.4)
 
 static struct BurnRomInfo sms_alexkidd3RomDesc[] = {
 	{ "alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms",	1048576, 0x35b498a4, BRF_PRG | BRF_ESS },
@@ -27777,7 +27758,7 @@ STD_ROM_FN(sms_alexkidd3)
 
 struct BurnDriver BurnDrvsms_alexkidd3 = {
 	"sms_alexkidd3", "sms_alexkidd3f", NULL, NULL, "2016",
-	"Alex Kidd 3 - Curse in Miracle World (GlobalHack, Demo-4)\0", NULL, "Yeti", "Sega Master System",
+	"Alex Kidd 3 - Curse in Miracle World (GlobalHack, Demo v.4)\0", NULL, "Yeti", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd3RomInfo, sms_alexkidd3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -27800,6 +27781,25 @@ struct BurnDriver BurnDrvsms_alexkidd2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_alexkidd2RomInfo, sms_alexkidd2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Alex Kidd, The Lost Stars - Stella Edition (Hack)
+// https://www.romhacking.net/hacks/7797/
+static struct BurnRomInfo sms_alexlostseRomDesc[] = {
+	{ "Alex Kidd, The Lost Stars - Stella Edition (2023)(poody).sms",          262144, 0x85939bf5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(sms_alexlostse)
+STD_ROM_FN(sms_alexlostse)
+
+struct BurnDriver BurnDrvsms_alexlostse = {
+	"sms_alexlostse", "sms_alexlost", NULL, NULL, "2023",
+	"Alex Kidd, The Lost Stars - Stella Edition (Hack)\0", NULL, "poody", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
+	SMSGetZipName, sms_alexlostseRomInfo, sms_alexlostseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -27900,7 +27900,7 @@ struct BurnDriver BurnDrvsms_balbalok = {
 	256, 192, 4, 3
 };
 
-// Bara Buruu (HB, Version 1.0)
+// Bara Buruu (HB, v1.0)
 
 static struct BurnRomInfo sms_baraburuRomDesc[] = {
 	{ "BaraBuruu-SMS-1.00.sms",	0x20000, 0x43e39aa4, BRF_PRG | BRF_ESS },
@@ -27995,7 +27995,7 @@ struct BurnDriver BurnDrvsms_bloktris = {
 	256, 192, 4, 3
 };
 
-// Bruce Lee (HB, Version 1.0)
+// Bruce Lee (HB, v1.0)
 
 static struct BurnRomInfo sms_bruceleeRomDesc[] = {
 	{ "BruceLee-SMS-1.00.sms",	0x20000, 0x37E27A38, BRF_PRG | BRF_ESS },
@@ -28052,7 +28052,7 @@ struct BurnDriver BurnDrvsms_castlescape = {
 	256, 192, 4, 3
 };
 
-// DARC (HB, Version 1.0)
+// DARC (HB, v1.0)
 
 static struct BurnRomInfo sms_darcRomDesc[] = {
 	{ "DARC.sms",	0x80000, 0x61B3C657, BRF_PRG | BRF_ESS },
@@ -28071,7 +28071,7 @@ struct BurnDriver BurnDrvsms_darc = {
 	256, 192, 4, 3
 };
 
-// Data Storm (HB, Version 1.0)
+// Data Storm (HB, v1.0)
 
 static struct BurnRomInfo sms_datastormRomDesc[] = {
 	{ "datastorm.sms",	0x8000, 0x37b775d6, BRF_PRG | BRF_ESS },
@@ -28204,7 +28204,7 @@ struct BurnDriver BurnDrvsms_evil = {
 	256, 192, 4, 3
 };
 
-// Flight of Pigarus (HB, Version 1.11)
+// Flight of Pigarus (HB, v1.11)
 
 static struct BurnRomInfo sms_fpigarusRomDesc[] = {
 	{ "Flight of Pigarus v1.11 (2018)(Kagesan).sms",	262144, 0x60b86f18, BRF_PRG | BRF_ESS },
@@ -28280,7 +28280,7 @@ struct BurnDriver BurnDrvsms_gaudream = {
 	256, 192, 4, 3
 };
 
-// Geki Oko PunPun Maru (HB, Version 20151031b)
+// Geki Oko PunPun Maru (HB, v2015.10.31b)
 
 static struct BurnRomInfo sms_punpunRomDesc[] = {
 	{ "punpun_20151031b.sms",	0x40000, 0xb35ebcdf, BRF_PRG | BRF_ESS },
@@ -28565,7 +28565,7 @@ struct BurnDriver BurnDrvsms_kunkun2 = {
 	256, 192, 4, 3
 };
 
-// Lambo (HB, Demo) by Genesis Project
+// Lambo (HB, Tech-Demo)
 
 static struct BurnRomInfo sms_lamboRomDesc[] = {
 	{ "GenesisProject-Lambo.sms",	0x40000, 0x92FE2775, BRF_PRG | BRF_ESS },
@@ -28576,9 +28576,9 @@ STD_ROM_FN(sms_lambo)
 
 struct BurnDriver BurnDrvsms_lambo = {
 	"sms_lambo", NULL, NULL, NULL, "2015",
-	"Lambo (HB, Demo)\0", NULL, "Genesis Project", "Sega Master System",
+	"Lambo (HB, Tech-Demo)\0", NULL, "Genesis Project", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	SMSGetZipName, sms_lamboRomInfo, sms_lamboRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -28622,7 +28622,7 @@ struct BurnDriver BurnDrvsms_linerunner = {
 	256, 192, 4, 3
 };
 
-// Lost Raider (HB, Version 1.01)
+// Lost Raider (HB, v1.01)
 
 static struct BurnRomInfo sms_lostraider101RomDesc[] = {
 	{ "LostRaider-SMS-1.01.sms",	0x20000, 0x2553b745, BRF_PRG | BRF_ESS },
@@ -28698,7 +28698,7 @@ struct BurnDriver BurnDrvsms_minimsx = {
 	256, 192, 4, 3
 };
 
-// Moggy Master (HB, Version 1.00)
+// Moggy Master (HB, v1.00)
 
 static struct BurnRomInfo sms_moggym100RomDesc[] = {
 	{ "mojon-twins--moggy-master.sms",	0x10000, 0x039539df, BRF_PRG | BRF_ESS },
@@ -28755,6 +28755,25 @@ struct BurnDriver BurnDrvsms_moncrunch = {
 	256, 192, 4, 3
 };
 
+// Mortal Kombat II - Palette improvement (Hack, v1.2)
+// https://www.romhacking.net/hacks/8154/
+static struct BurnRomInfo sms_mk2piRomDesc[] = {
+	{ "Mortal Kombat II - Palette improvement v1.2 (2023)(cireza).sms",	524288, 0x7e85784b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mk2pi)
+STD_ROM_FN(sms_mk2pi)
+
+struct BurnDriver BurnDrvsms_mk2pi = {
+	"sms_mk2pi", "sms_mk2", NULL, NULL, "2023",
+	"Mortal Kombat II - Palette improvement (Hack, v1.2)\0", NULL, "cireza", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VSFIGHT, 0,
+	SMSGetZipName, sms_mk2piRomInfo, sms_mk2piRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // NanoWars 8k (HB, v0.7)
 
 static struct BurnRomInfo sms_nanowarsRomDesc[] = {
@@ -28793,8 +28812,8 @@ struct BurnDriver BurnDrvsms_papicom = {
 	256, 192, 4, 3
 };
 
-// pcmenc demo 1 - https://github.com/maxim-zhao/pcmenc
-
+// New Order vs Depeche Mode vs Daft Punk (HB, Tech-Demo)
+// https://github.com/maxim-zhao/pcmenc
 static struct BurnRomInfo sms_novdmvdpRomDesc[] = {
 	{ "novdmvdp.sms", 0x3FBA7B, 0xD0EABE60, BRF_PRG | BRF_ESS },
 };
@@ -28804,7 +28823,7 @@ STD_ROM_FN(sms_novdmvdp)
 
 struct BurnDriver BurnDrvsms_novdmvdp = {
 	"sms_novdmvdp", NULL, NULL, NULL, "2019",
-	"New Order vs Depeche Mode vs Daft Punk - (HB, Demo)\0", NULL, "Maxim", "Sega Master System",
+	"New Order vs Depeche Mode vs Daft Punk (HB, Tech-Demo)\0", NULL, "Maxim", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_NO_CART_HEADER, GBF_MISC, 0,
 	SMSGetZipName, sms_novdmvdpRomInfo, sms_novdmvdpRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -29230,7 +29249,7 @@ struct BurnDriver BurnDrvsms_sydhunt = {
 	256, 192, 4, 3
 };
 
-// Tails Adventure GG2SMS
+// Tails Adventure (Hack, GG2SMS Conversion)
 
 static struct BurnRomInfo sms_tailsadvgg2smsRomDesc[] = {
 	{ "Tails Adventure GG2SMS v1.5 (2016)(Tevo, Vingangole).sms",	1048576, 0x8635c737, BRF_PRG | BRF_ESS },
@@ -29249,7 +29268,7 @@ struct BurnDriver BurnDrvsms_tailsadvgg2sms = {
 	256, 192, 4, 3
 };
 
-// Tempo Jr. GG2SMS
+// Tempo Jr. (Hack, GG2SMS Conversion)
 
 static struct BurnRomInfo sms_tempojrgg2smsRomDesc[] = {
 	{ "Tempo Jr. GG2SMS v1.0 (2014)(Vinganzole).sms",	524288, 0x4a707dfb, BRF_PRG | BRF_ESS },
@@ -29439,7 +29458,7 @@ struct BurnDriver BurnDrvsms_waimanu = {
 	256, 192, 4, 3
 };
 
-// Weka Invaders (HB, Version 1.0)
+// Weka Invaders (HB, v1.0)
 
 static struct BurnRomInfo sms_wekainvadersRomDesc[] = {
 	{ "WekaInvaders.sms",	0x48000, 0x54b2fcf8, BRF_PRG | BRF_ESS },
@@ -30306,6 +30325,25 @@ struct BurnDriver BurnDrvgg_eternlege = {
 	256, 192, 4, 3
 };
 
+// Genius Bakabon, The (Hack, English v1.2)
+// https://www.romhacking.net/translations/6544/
+static struct BurnRomInfo sms_bakabonenRomDesc[] = {
+	{ "Genius Bakabon, The T-Eng v1.2 (2023)( (FCandChill).sms",	262144, 0x7d0d2d4d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_bakabonen)
+STD_ROM_FN(sms_bakabonen)
+
+struct BurnDriver BurnDrvsms_bakabonen = {
+	"sms_bakabonen", "sms_bakabon", NULL, NULL, "2023",
+	"Genius Bakabon, The (Hack, English v1.2)\0", NULL, "FCandChill", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_ADV, 0,
+	SMSGetZipName, sms_bakabonenRomInfo, sms_bakabonenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Godzilla - Kaijuu Daishingeki (Hack, English v1.1)
 // https://www.romhacking.net/translations/4140/
 static struct BurnRomInfo gg_godzillaeRomDesc[] = {
@@ -30701,6 +30739,25 @@ struct BurnDriver BurnDrvsms_bartvswc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_bartvswcRomInfo, sms_bartvswcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Solomon's Key - Tears of Princess Lihita (Hack, English)
+// https://www.romhacking.net/translations/7046/
+static struct BurnRomInfo sms_solomonenRomDesc[] = {
+	{ "Solomon's Key - Tears of Princess Lihita T-Eng (2023)(FlashPV).sms",	131072, 0x66de9f40, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_solomonen)
+STD_ROM_FN(sms_solomonen)
+
+struct BurnDriver BurnDrvsms_solomonen = {
+	"sms_solomonen", "sms_solomon", NULL, NULL, "2023",
+	"Solomon's Key - Tears of Princess Lihita (Hack, English)\0", NULL, "FlashPV", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SMSGetZipName, sms_solomonenRomInfo, sms_solomonenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

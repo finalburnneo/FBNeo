@@ -940,7 +940,7 @@ STD_ROM_FN(kingofb)
 
 struct BurnDriver BurnDrvKingofb = {
 	"kingofb", NULL, NULL, NULL, "1985",
-	"King of Boxer (World)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"King of Boxer (World)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbRomInfo, kingofbRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -991,7 +991,7 @@ STD_ROM_FN(kingofbj)
 
 struct BurnDriver BurnDrvKingofbj = {
 	"kingofbj", "kingofb", NULL, NULL, "1985",
-	"King of Boxer (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"King of Boxer (Japan)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbjRomInfo, kingofbjRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1000,7 +1000,7 @@ struct BurnDriver BurnDrvKingofbj = {
 };
 
 
-// Ring King (US, Wood Place Inc.)
+// Ring King (US, Woodplace Inc.)
 
 static struct BurnRomInfo ringkingwRomDesc[] = {
 	{ "15.d9",				0x4000, 0x8263f517, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 (Master) Code
@@ -1073,7 +1073,7 @@ static INT32 RingkingwInit()
 
 struct BurnDriver BurnDrvRingkingw = {
 	"ringkingw", "kingofb", NULL, NULL, "1985",
-	"Ring King (US, Wood Place Inc.)\0", NULL, "Wood Place Inc.", "Miscellaneous",
+	"Ring King (US, Woodplace Inc.)\0", NULL, "Woodplace Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingwRomInfo, ringkingwRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1133,7 +1133,7 @@ static INT32 Ringking3Init()
 
 struct BurnDriver BurnDrvRingking3 = {
 	"ringking3", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 3)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US set 3)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking3RomInfo, ringking3RomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1176,7 +1176,7 @@ STD_ROM_FN(ringking)
 
 struct BurnDriver BurnDrvRingking = {
 	"ringking", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 1)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US set 1)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingRomInfo, ringkingRomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,
@@ -1219,7 +1219,7 @@ STD_ROM_FN(ringking2)
 
 struct BurnDriver BurnDrvRingking2 = {
 	"ringking2", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 2)\0", NULL, "Wood Place Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US set 2)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking2RomInfo, ringking2RomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,

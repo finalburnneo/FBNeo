@@ -2292,7 +2292,7 @@ struct BurnDriver BurnDrvTodruagas = {
 	"todruagas", "todruaga", NULL, NULL, "1984",
 	"The Tower of Druaga (Sidam)\0", NULL, "bootleg? (Sidam)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, todruagasRomInfo, todruagasRomName, NULL, NULL, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4

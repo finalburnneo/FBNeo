@@ -506,7 +506,7 @@ void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
 	char szShortNames[100] = { 0 };
 	sprintf(szShortNames, "%s[0x%02x]", pDriver[nBurnDrvActive]->szShortName, nBurnDrvSubActive);
 
-	for (UINT32 i = 0; i < nNumGames; i++) {
+	for (INT32 i = 0; i < nNumGames; i++) {
 		if (0 == strcmp(szName, szShortNames)) {
 //			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
 			memset(pszFullName[nBurnDrvActive], '\0', MAX_PATH * sizeof(wchar_t));
@@ -521,7 +521,7 @@ extern "C" INT32 BurnDrvGetIndex(char* szName)
 {
 	if (NULL == szName) return -1;
 
-	for (INT32 i = 0; i < nBurnDrvCount; i++) {
+	for (UINT32 i = 0; i < nBurnDrvCount; i++) {
 		if (0 == strcmp(szName, pDriver[i]->szShortName)) {
 //			nBurnDrvActive = i;
 			return i;

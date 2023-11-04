@@ -875,7 +875,7 @@ struct BurnDriver BurnDrvSandscrpa = {
 };
 
 
-// Sand Scorpion (Chinese Title Screen, Revised Hardware)
+// Kuai Da Shizi Huangdi (China?, Revised Hardware)
 
 static struct BurnRomInfo sandscrpbRomDesc[] = {
 	{ "11.ic4",	0x040000, 0x80020cab, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -900,7 +900,7 @@ static INT32 sandscrpbInit()
 
 struct BurnDriver BurnDrvSandscrpb = {
 	"sandscrpb", "sandscrp", NULL, NULL, "1992",
-	"Sand Scorpion (Chinese Title Screen, Revised Hardware)\0", NULL, "Face", "Miscellaneous",
+	"Kuai Da Shizi Huangdi (China?, Revised Hardware)\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, sandscrpbRomInfo, sandscrpbRomName, NULL, NULL, NULL, NULL, SandscrpInputInfo, SandscrpDIPInfo,

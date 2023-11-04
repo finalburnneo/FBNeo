@@ -1918,7 +1918,7 @@ struct BurnDriver BurnDrvRohga = {
 };
 
 
-// Rohga Armor Force (Asia/Europe v3.0 Set 1)
+// Rohga Armor Force (Asia/Europe v3.0 set 1)
 
 static struct BurnRomInfo rohga1RomDesc[] = {
 	{ "jd00.bin",		0x040000, 0xe046c77a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1956,7 +1956,7 @@ STD_ROM_FN(rohga1)
 
 struct BurnDriver BurnDrvRohga1 = {
 	"rohga1", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 Set 1)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga Armor Force (Asia/Europe v3.0 set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga1RomInfo, rohga1RomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1965,7 +1965,7 @@ struct BurnDriver BurnDrvRohga1 = {
 };
 
 
-// Rohga Armor Force (Asia/Europe v3.0 Set 2)
+// Rohga Armor Force (Asia/Europe v3.0 set 2)
 
 static struct BurnRomInfo rohga2RomDesc[] = {
 	{ "hts-00-3.2a",	0x040000, 0x154f02ec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2003,7 +2003,7 @@ STD_ROM_FN(rohga2)
 
 struct BurnDriver BurnDrvRohga2 = {
 	"rohga2", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 Set 2)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Rohga Armor Force (Asia/Europe v3.0 set 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga2RomInfo, rohga2RomName, NULL, NULL, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,

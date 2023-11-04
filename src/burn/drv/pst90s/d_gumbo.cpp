@@ -709,9 +709,9 @@ STD_ROM_FN(dblpoind)
 
 struct BurnDriver BurnDrvDblpoind = {
 	"dblpointd", "dblpoint", NULL, NULL, "1995",
-	"Double Point (Dong Bang Electron, bootleg?)\0", NULL, "Dong Bang Electron", "Miscellaneous",
+	"Double Point (Dong Bang Electron, bootleg?)\0", NULL, "bootleg? (Dong Bang Electron)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, dblpoindRomInfo, dblpoindRomName, NULL, NULL, NULL, NULL, DblpointInputInfo, DblpointDIPInfo,
 	DblpointInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3

@@ -2485,7 +2485,7 @@ struct BurnDriver BurnDrvGalagao = {
 
 struct BurnDriver BurnDrvGalagamw = {
 	"galagamw", "galaga", NULL, "galaga", "1981",
-	"Galaga (Midway set 1)\0", NULL, "Namco (Midway License)", "Miscellaneous",
+	"Galaga (Midway set 1)\0", NULL, "Namco (Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamwRomInfo, GalagamwRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagamwDIPInfo,
@@ -2495,7 +2495,7 @@ struct BurnDriver BurnDrvGalagamw = {
 
 struct BurnDriver BurnDrvGalagamk = {
 	"galagamk", "galaga", NULL, "galaga", "1981",
-	"Galaga (Midway set 2)\0", NULL, "Namco (Midway License)", "Miscellaneous",
+	"Galaga (Midway set 2)\0", NULL, "Namco (Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamkRomInfo, GalagamkRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagaDIPInfo,
@@ -2505,7 +2505,7 @@ struct BurnDriver BurnDrvGalagamk = {
 
 struct BurnDriver BurnDrvGalagamf = {
 	"galagamf", "galaga", NULL, "galaga", "1981",
-	"Galaga (Midway set 1 with fast shoot hack)\0", NULL, "Namco (Midway License)", "Miscellaneous",
+	"Galaga (Midway set 1 with fast shoot hack)\0", NULL, "Namco (Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamfRomInfo, GalagamfRomName, NULL, NULL, GalagaSampleInfo, GalagaSampleName, GalagaInputInfo, GalagamwDIPInfo,
@@ -2514,7 +2514,7 @@ struct BurnDriver BurnDrvGalagamf = {
 };
 
 struct BurnDriver BurnDrvGallag = {
-	"gallag", "galaga", NULL, "galaga", "1981",
+	"gallag", "galaga", NULL, "galaga", "1982",
 	"Gallag\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,

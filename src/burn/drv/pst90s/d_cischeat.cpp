@@ -3572,7 +3572,7 @@ struct BurnDriver BurnDrvScudhamma = {
 };
 
 
-// Arm Champs II v2.7
+// Arm Champs II (ver 2.7)
 
 static struct BurnRomInfo armchmp2RomDesc[] = {
 	{ "4_ver_2.7.ic63",			0x20000, 0xe0cec032, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -3609,7 +3609,7 @@ STD_ROM_FN(armchmp2)
 
 struct BurnDriver BurnDrvArmchmp2 = {
 	"armchmp2", NULL, NULL, NULL, "1992",
-	"Arm Champs II v2.7\0", NULL, "Jaleco", "Miscellaneous",
+	"Arm Champs II (ver 2.7)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2RomInfo, armchmp2RomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,
@@ -3618,7 +3618,7 @@ struct BurnDriver BurnDrvArmchmp2 = {
 };
 
 
-// Arm Champs II v2.6
+// Arm Champs II (ver 2.6)
 
 static struct BurnRomInfo armchmp2o2RomDesc[] = {
 	{ "ac-91106v2.6_4.ic63",	0x20000, 0xe0cec032, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -3655,7 +3655,7 @@ STD_ROM_FN(armchmp2o2)
 
 struct BurnDriver BurnDrvArmchmp2o2 = {
 	"armchmp2o2", "armchmp2", NULL, NULL, "1992",
-	"Arm Champs II v2.6\0", NULL, "Jaleco", "Miscellaneous",
+	"Arm Champs II (ver 2.6)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2o2RomInfo, armchmp2o2RomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,
@@ -3664,7 +3664,7 @@ struct BurnDriver BurnDrvArmchmp2o2 = {
 };
 
 
-// Arm Champs II v1.7
+// Arm Champs II (ver 1.7)
 
 static struct BurnRomInfo armchmp2oRomDesc[] = {
 	{ "ac91106_ver1.7_4.ic63",	0x20000, 0xaaa11bc7, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -3701,7 +3701,7 @@ STD_ROM_FN(armchmp2o)
 
 struct BurnDriver BurnDrvArmchmp2o = {
 	"armchmp2o", "armchmp2", NULL, NULL, "1992",
-	"Arm Champs II v1.7\0", NULL, "Jaleco", "Miscellaneous",
+	"Arm Champs II (ver 1.7)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, armchmp2oRomInfo, armchmp2oRomName, NULL, NULL, NULL, NULL, Armchmp2InputInfo, Armchmp2DIPInfo,

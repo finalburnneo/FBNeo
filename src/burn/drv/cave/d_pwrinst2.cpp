@@ -1192,7 +1192,7 @@ struct BurnDriver BurnDrvPwrinst2a = {
 
 struct BurnDriver BurnDrvPwrinst2j = {
 	"pwrinst2j", "pwrinst2", NULL, NULL, "1994",
-	"Gouketsuji Ichizoku 2 (Japan, ver. 94/04/08)\0", NULL, "Atlus", "Cave",
+	"Gouketsuji Ichizoku 2 (Japan, Ver. 94.04.08)\0", NULL, "Atlus", "Cave",
 	L"\u8C6A\u8840\u5BFA\u4E00\u65CF \uFF12 (Japan, ver. 94/04/08)\0Gouketsuji Ichizoku 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, pwrinst2jRomInfo, pwrinst2jRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
@@ -1212,7 +1212,7 @@ struct BurnDriver BurnDrvPwrinst2k = {
 
 struct BurnDriver BurnDrvPlegends = {
 	"plegends", NULL, NULL, NULL, "1995",
-	"Gouketsuji Gaiden Legends (USA, ver. 95/06/20)\0", NULL, "Atlus / KM International", "Cave",
+	"Gogetsuji Legends (US, Ver. 95.06.20)\0", NULL, "Atlus", "Cave",
 	L"\u8C6A\u8840\u5BFA\u5916\u4F1D Gogetsuji Legends (USA, ver. 95/06/20)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, plegendsRomInfo, plegendsRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,

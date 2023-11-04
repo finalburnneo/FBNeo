@@ -897,7 +897,7 @@ struct BurnDriver BurnDrvExeriont = {
 };
 
 
-// Exerion (bootleg)
+// Exerion (bootleg, set 1)
 
 static struct BurnRomInfo exerionbRomDesc[] = {
 	{ "eb5.bin",		0x4000, 0xda175855, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -940,9 +940,9 @@ static INT32 ExerionbInit()
 
 struct BurnDriver BurnDrvExerionb = {
 	"exerionb", "exerion", NULL, NULL, "1983",
-	"Exerion (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Exerion (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, exerionbRomInfo, exerionbRomName, NULL, NULL, NULL, NULL, ExerionInputInfo, ExerionDIPInfo,
 	ExerionbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 320, 3, 4
@@ -975,7 +975,7 @@ struct BurnDriver BurnDrvIrion = {
 	"irion", "exerion", NULL, NULL, "1983",
 	"Irion\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, irionRomInfo, irionRomName, NULL, NULL, NULL, NULL, ExerionInputInfo, ExerionDIPInfo,
 	ExerionbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 320, 3, 4

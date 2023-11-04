@@ -3804,7 +3804,7 @@ struct BurnDriver BurnDrvP47je = {
 };
 
 
-// Kick Off (Japan)
+// Kick Off - Jaleco Cup (Japan)
 
 static struct BurnRomInfo kickoffRomDesc[] = {
 	{ "kioff03.rom",	0x10000, 0x3b01be65, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
@@ -3848,7 +3848,7 @@ static INT32 kickoffInit()
 
 struct BurnDriver BurnDrvKickoff = {
 	"kickoff", NULL, NULL, NULL, "1988",
-	"Kick Off (Japan)\0", NULL, "Jaleco", "Mega System 1",
+	"Kick Off - Jaleco Cup (Japan)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, kickoffRomInfo, kickoffRomName, NULL, NULL, NULL, NULL, CommonInputInfo, KickoffDIPInfo,
@@ -4645,9 +4645,9 @@ static INT32 stdragonbInit()
 
 struct BurnDriver BurnDrvStdragonb = {
 	"stdragonb", "stdragon", NULL, NULL, "1989",
-	"Saint Dragon (bootleg)\0", NULL, "Jaleco", "Mega System 1",
+	"Saint Dragon (bootleg)\0", NULL, "bootleg", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stdragonbRomInfo, stdragonbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, StdragonDIPInfo,
 	stdragonbInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -4944,7 +4944,7 @@ struct BurnDriver BurnDrvRodlandjb2 = {
 };
 
 
-// R&T (Rod-Land prototype?)
+// R&T (Rod-Land prototype)
 /* probably a prototype, original JP key and unscrambled ROMs, incorrect audio matches PCB */
 
 static struct BurnRomInfo rittamRomDesc[] = {
@@ -4995,9 +4995,9 @@ static INT32 rittamInit()
 
 struct BurnDriver BurnDrvRittam = {
 	"rittam", "rodland", NULL, NULL, "1990",
-	"R&T (Rod-Land prototype?)\0", NULL, "Jaleco", "Mega System 1",
+	"R&T (Rod-Land prototype)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, rittamRomInfo, rittamRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
 	rittamInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -5755,7 +5755,7 @@ STD_ROM_FN(Street64ja)
 
 struct BurnDriver BurnDrvStreet64ja = {
 	"64streetja", "64street", NULL, NULL, "1991",
-	"64th. Street - A Detective Story (Japan, alt)\0", NULL, "Jaleco", "Mega System 1",
+	"64th. Street - A Detective Story (Japan, set 2)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, Street64jaRomInfo, Street64jaRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Street64DIPInfo,
@@ -5815,7 +5815,7 @@ struct BurnDriver BurnDrvBigstrik = {
 };
 
 
-// Chimera Beast (prototype)
+// Chimera Beast (Japan, prototype)
 
 static struct BurnRomInfo chimerabRomDesc[] = {
 	{ "prg3.bin",		0x40000, 0x70f1448f, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
@@ -5865,9 +5865,9 @@ static INT32 chimerabInit()
 
 struct BurnDriver BurnDrvChimerab = {
 	"chimerab", NULL, NULL, NULL, "1993",
-	"Chimera Beast (prototype)\0", NULL, "Jaleco", "Mega System 1",
+	"Chimera Beast (Japan, prototype)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, chimerabRomInfo, chimerabRomName, NULL, NULL, NULL, NULL, CommonInputInfo, ChimerabDIPInfo,
 	chimerabInit, DrvExit, System1CFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

@@ -1059,22 +1059,22 @@ STD_ROM_FN(Packbang)
 
 static struct BurnRomInfo PackbangpRomDesc[] = {
 	/* same PCB as Berlin Wall - BW-002 */
-	{ "bbp0x3_527b.u23",     	  0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */
-	{ "bbp1x3_c5c8.u39",     	  0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
+	{ "bbp0x3_527b.u23",              0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */
+	{ "bbp1x3_c5c8.u39",              0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
 
-   	{ "bb.u84",         		  0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites
-	{ "pb_spr_ext_9_20_ver_ba63", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
+   	{ "bb.u84",                       0x080000, 0x97837aaa, BRF_GRA }, 	       //  2 Sprites
+	{ "pb_spr_ext_9_20_ver_ba63.u83", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
 
-	{ "bbb0x1.u77",     	      0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
+	{ "bbb0x1.u77",                   0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
 
-	{ "bb.u73",         	      0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background
-	{ "bb.u65",         	      0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
-	{ "bb.u74",         	      0x080000, 0xb01e77b9, BRF_GRA },		   //  7
-	{ "bb.u66",         	      0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
-	{ "bb.u75",         	      0x080000, 0x5cb4669f, BRF_GRA },		   //  9
-	{ "bb.u67",         	      0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
+	{ "bb.u73",                       0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background
+	{ "bb.u65",                       0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
+	{ "bb.u74",                       0x080000, 0xb01e77b9, BRF_GRA },		   //  7
+	{ "bb.u66",                       0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
+	{ "bb.u75",                       0x080000, 0x5cb4669f, BRF_GRA },		   //  9
+	{ "bb.u67",                       0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
 
-	{ "bw000.u46",      	      0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
+	{ "bw000.u46",                    0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
 };
 
 STD_ROM_PICK(Packbangp)
@@ -7757,7 +7757,7 @@ struct BurnDriver BurnDrvBerlwall = {
 
 struct BurnDriver BurnDrvBerlwallt = {
 	"berlwallt", "berlwall", NULL, NULL, "1991",
-	"The Berlin Wall (bootleg ?)\0", NULL, "Kaneko", "Kaneko16",
+	"The Berlin Wall (bootleg?)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, BerlwalltRomInfo, BerlwalltRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, BerlwalltDIPInfo,
@@ -7787,9 +7787,9 @@ struct BurnDriver BurnDrvPackbang = {
 
 struct BurnDriver BurnDrvPackbangp = {
 	"packbangp", "packbang", NULL, NULL, "1994",
-	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
+	"Pack'n Bang Bang (prototype)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_PUZZLE, 0,
 	NULL, PackbangpRomInfo, PackbangpRomName, NULL, NULL, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
 	PackbangInit, BerlwallExit, ExplbrkrFrame, BerlwallFrameRender, ExplbrkrScan,
 	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
@@ -7819,7 +7819,7 @@ struct BurnDriver BurnDrvWingforc = {
 	"wingforc", NULL, NULL, NULL, "1993",
 	"Wing Force (Japan, prototype)\0", NULL, "A.I (Atlus license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, WingforcRomInfo, WingforcRomName, NULL, NULL, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
 	WingforcInit, WingforcExit, WingforcFrame, BlazeonFrameRender, WingforcScan,
 	NULL, 0x1000, 224, 320, 3, 4

@@ -1460,7 +1460,7 @@ STD_ROM_FN(pbillrd)
 
 struct BurnDriver BurnDrvPbillrd = {
 	"pbillrd", NULL, NULL, NULL, "1987",
-	"Perfect Billiard\0", NULL, "Nihon System", "Miscellaneous",
+	"Perfect Billiard\0", NULL, "Nihon System (United Artists license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, pbillrdRomInfo, pbillrdRomName, NULL, NULL, NULL, NULL, PbillrdInputInfo, PbillrdDIPInfo,
@@ -1498,7 +1498,7 @@ STD_ROM_FN(pbillrdsa)
 
 struct BurnDriver BurnDrvPbillrds = {
 	"pbillrdsa", "pbillrd", NULL, NULL, "1987",
-	"Perfect Billiard (MC-8123, 317-5008)\0", NULL, "Nihon System", "Miscellaneous",
+	"Perfect Billiard (MC-8123, 317-5008)\0", NULL, "Nihon System (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, pbillrdsaRomInfo, pbillrdsaRomName, NULL, NULL, NULL, NULL, PbillrdInputInfo, PbillrdDIPInfo,
@@ -1613,7 +1613,7 @@ struct BurnDriver BurnDrvFreekickb1 = {
 	"freekickb1", "freekick", NULL, NULL, "1987",
 	"Free Kick (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, freekickb1RomInfo, freekickb1RomName, NULL, NULL, NULL, NULL, FreekckInputInfo, FreekckDIPInfo,
 	DrvFreeKickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1651,7 +1651,7 @@ struct BurnDriver BurnDrvFreekickb3 = {
 	"freekickb3", "freekick", NULL, NULL, "1987",
 	"Free Kick (bootleg set 3)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, freekickb3RomInfo, freekickb3RomName, NULL, NULL, NULL, NULL, FreekckInputInfo, FreekckDIPInfo,
 	DrvFreeKickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1724,7 +1724,7 @@ struct BurnDriver BurnDrvCountrunb = {
 	"countrunb", "countrun", NULL, NULL, "1988",
 	"Counter Run (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, countrunbRomInfo, countrunbRomName, NULL, NULL, NULL, NULL, CountrunInputInfo, CountrunDIPInfo,
 	DrvFreeKickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1759,7 +1759,7 @@ struct BurnDriver BurnDrvGigasb = {
 	"gigasb", "gigas", NULL, NULL, "1986",
 	"Gigas (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, gigasbRomInfo, gigasbRomName, NULL, NULL, NULL, NULL, GigasInputInfo, GigasDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1794,9 +1794,9 @@ STD_ROM_FN(gigasm2b)
 
 struct BurnDriver BurnDrvGigasm2b = {
 	"gigasm2b", "gigasm2", NULL, NULL, "1986",
-	"Gigas Mark II\0", NULL, "bootleg", "Miscellaneous",
+	"Gigas Mark II (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, gigasm2bRomInfo, gigasm2bRomName, NULL, NULL, NULL, NULL, GigasInputInfo, Gigasm2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1830,7 +1830,7 @@ STD_ROM_FN(gigas)
 
 struct BurnDriver BurnDrvGigas = {
 	"gigas", NULL, NULL, NULL, "1986",
-	"Gigas (MC-8123, 317-5002)\0", NULL, "SEGA", "Miscellaneous",
+	"Gigas (MC-8123, 317-5002)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, gigasRomInfo, gigasRomName, NULL, NULL, NULL, NULL, GigasInputInfo, GigasDIPInfo,
@@ -1867,7 +1867,7 @@ STD_ROM_FN(gigasm2)
 
 struct BurnDriver BurnDrvGigasm2 = {
 	"gigasm2", NULL, NULL, NULL, "1986",
-	"Gigas Mark II (MC-8123, 317-5002)\0", NULL, "SEGA", "Miscellaneous",
+	"Gigas Mark II (MC-8123, 317-5002)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, gigasm2RomInfo, gigasm2RomName, NULL, NULL, NULL, NULL, GigasInputInfo, Gigasm2DIPInfo,

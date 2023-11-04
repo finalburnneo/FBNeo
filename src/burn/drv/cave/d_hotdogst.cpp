@@ -714,7 +714,7 @@ STD_ROM_FN(hotdogst)
 
 struct BurnDriver BurnDrvhotdogst = {
 	"hotdogst", NULL, NULL, NULL, "1996",
-	"Hotdog Storm - The First Supersonics (korea)\0", NULL, "Ace International Licence", "Cave",
+	"Hotdog Storm - The First Supersonics (korea)\0", NULL, "Marble (Ace International license)", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, hotdogstRomInfo, hotdogstRomName, NULL, NULL, NULL, NULL, hotdogstInputInfo, NULL,

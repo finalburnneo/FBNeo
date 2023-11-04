@@ -589,7 +589,7 @@ static struct BurnRomInfo progolfaRomDesc[] = {
 	{ "g1-m.a8",	0x1000, 0x749032eb, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "g0-m.a9",	0x1000, 0xa03c533f, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "g5-m.b1",	0x1000, 0x0c6fadf5, 2 | BRF_PRG | BRF_ESS }, //  5 M6502 Code
+	{ "g6-m.b1",	0x1000, 0x0c6fadf5, 2 | BRF_PRG | BRF_ESS }, //  5 M6502 Code
 
 	{ "g7-m.a8",	0x1000, 0x16b42975, 3 | BRF_GRA },           //  6 Graphics
 	{ "g8-m.a9",	0x1000, 0xcf3f35da, 3 | BRF_GRA },           //  7

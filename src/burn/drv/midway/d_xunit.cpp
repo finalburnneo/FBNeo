@@ -1016,7 +1016,7 @@ struct BurnDriver BurnDrvRevxp5 = {
 	"revxp5", "revx", NULL, NULL, "1994",
 	"Revolution X (prototype, rev 5.0 5/23/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revxp5RomInfo, revxp5RomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	400, 256, 4, 3

@@ -1624,51 +1624,6 @@
     <ClCompile Include="..\..\src\dep\libs\zlib\zutil.c">
       <Filter>libs\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\png.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngerror.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngget.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngmem.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngpread.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngread.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngrio.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngrtran.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngrutil.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngset.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngtrans.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwio.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwrite.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwtran.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwutil.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\cpu\m68k\m68kdasm.c">
       <Filter>cpus\m68k</Filter>
     </ClCompile>
@@ -2677,7 +2632,7 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_crbaloon.cpp">
       <Filter>Burn\drv\taito</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\taito\d_darkmist.cpp">
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_darkmist.cpp">
       <Filter>Burn\drv\taito</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\d_exzisus.cpp">
@@ -3570,6 +3525,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\taito\d_superqix.cpp">
       <Filter>burn\drv\taito</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libspng\spng.c">
+      <Filter>libs\libspng</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

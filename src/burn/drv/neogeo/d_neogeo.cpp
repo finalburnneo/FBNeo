@@ -16392,6 +16392,42 @@ struct BurnDriver BurnDrvkof97ae = {
 	0x1000, 304, 224, 4, 3
 };
 
+// The King of Fighters '97 - Evolution Edition (Hack)
+// shared by AliceMSU
+
+static struct BurnRomInfo kof97jhbRomDesc[] = {
+	{ "232-p1jhb.p1",	0x100000, 0xe937a935, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "232-p2jhb.sp2",	0x400000, 0x0d2cb10a, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "232-s1.s1",		0x020000, 0x8514ecf5, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "232-c1.c1",		0x800000, 0x5f8bf0a1, 3 | BRF_GRA },           //  3 Sprite data
+	{ "232-c2.c2",		0x800000, 0xe4d45c81, 3 | BRF_GRA },           //  4
+	{ "232-c3.c3",		0x800000, 0x581d6618, 3 | BRF_GRA },           //  5
+	{ "232-c4.c4",		0x800000, 0x49bb1e68, 3 | BRF_GRA },           //  6
+	{ "232-c5.c5",		0x400000, 0x34fc4e51, 3 | BRF_GRA },           //  7
+	{ "232-c6.c6",		0x400000, 0x4ff4d47b, 3 | BRF_GRA },           //  8
+
+	{ "232-m1.m1",		0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "232-v1.v1",		0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",		0x400000, 0x2304e744, 5 | BRF_SND },           // 11
+	{ "232-v3.v3",		0x400000, 0x759eb954, 5 | BRF_SND },           // 12
+};
+
+STDROMPICKEXT(kof97jhb, kof97jhb, neogeo)
+STD_ROM_FN(kof97jhb)
+
+struct BurnDriver BurnDrvKof97jhb = {
+	"kof97jhb", "kof97", "neogeo", NULL, "2011",
+	"The King of Fighters '97 (Evolution Edition, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof97jhbRomInfo, kof97jhbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters '98 (Anniversary Edition, EGHT hack)
 
 static struct BurnRomInfo kof98aeRomDesc[] = {
@@ -16528,6 +16564,50 @@ struct BurnDriver BurnDrvkof98cb = {
 	NULL, kof98cbRomInfo, kof98cbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// The King of Fighters '98 (Ultimate Match, Hack)
+// Modified by Elrayzeur
+
+static struct BurnRomInfo kof98ultRomDesc[] = {
+	{ "242-p1ult.p1",	0x100000, 0x9c450313, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-p2ult.sp2",	0x600000, 0x6d109dc7, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "242-s1ult.s1",	0x040000, 0x8fd2c84d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "242-c1ult.c1",	0x800000, 0x8e297a35, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242-c2ult.c2",	0x800000, 0xd8a4b216, 3 | BRF_GRA },           //  4
+	{ "242-c3.c3",		0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",		0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5ae.c5",	0x800000, 0x71641718, 3 | BRF_GRA },           //  7
+	{ "242-c6ae.c6",	0x800000, 0x982ba2b3, 3 | BRF_GRA },           //  8
+	{ "242-c7ae.c7",	0x800000, 0x8d495552, 3 | BRF_GRA },           //  9
+	{ "242-c8ae.c8",	0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10
+	{ "242-c9ult.c9",	0x800000, 0xde7e8582, 3 | BRF_GRA },           // 11
+	{ "242-c10ult.c10",	0x800000, 0x76c7b038, 3 | BRF_GRA },           // 12
+	{ "242-c11ae.c11",	0x800000, 0x56d361cb, 3 | BRF_GRA },           // 13
+	{ "242-c12ae.c12",	0x800000, 0xf8cb115b, 3 | BRF_GRA },           // 14
+
+	{ "242-m1ae.m1",	0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
+
+	{ "242-v1.v1",		0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",		0x400000, 0xcc11106e, 5 | BRF_SND },           // 17
+	{ "242-v3.v3",		0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18
+	{ "242-v4.v4",		0x400000, 0x7985ea30, 5 | BRF_SND },           // 19
+	{ "242-v5ae.v4",	0x400000, 0xafdd9660, 5 | BRF_SND },           // 20
+};
+
+STDROMPICKEXT(kof98ult, kof98ult, neogeo)
+STD_ROM_FN(kof98ult)
+
+struct BurnDriver BurnDrvKof98ult = {
+	"kof98ult", "kof98", "neogeo", NULL, "2020",
+	"The King of Fighters '98 - (Ultimate Match, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98ultRomInfo, kof98ultRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };
 
 // The King of Fighters '99 Anniversary Edition

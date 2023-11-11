@@ -147,10 +147,12 @@ foreach my $filename ( @Filelist ) {
 				$Drivers{$name}[8] = "";
 			}
 
-			my $sourcefile = $filename;
-			$sourcefile =~ s/..\/..\/burn\/drv\///;	# libretro only ?
-			$sourcefile =~ s/src\/burn\/drv\///;	# all other builds ?
-			$Drivers{$name}[9] = $sourcefile;		# Filename
+			my @parts = split /\//, $filename;
+			my $size_of_parts = @parts;
+			my $sourcefile = "$parts[$size_of_parts-2]/$parts[$size_of_parts-1]";
+			# we still want to remove burn/ from burn/d_parent.cpp
+			$sourcefile =~ s/drv\///;
+			$Drivers{$name}[9] = $sourcefile;				# Filename
 
 			# Convert NULL/null/0 to empty string or remove quotes
 			foreach $line ( @{$Drivers{$name}} ) {

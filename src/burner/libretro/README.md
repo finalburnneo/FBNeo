@@ -3,7 +3,7 @@
 ## Background
 
 FinalBurn Neo (also referred to as FBNeo or FBN) is a multi-system emulator (Arcade, consoles and computers) under active development. Unlike MAME it's more focused on playability and advanced features than preservation.
-It is the follow-up of FinalBurn and FinalBurn Alpha emulators.
+It is the follow-up of the FinalBurn and FinalBurn Alpha emulators.
 The libretro core provides wide compatibility with platforms and features supported by libretro.
 
 ## Difference from MAME
@@ -299,17 +299,17 @@ Most likely for the same reason as above.
 ### Why does game XXX run faster in MAME2003/MAME2010 ?
 
 Overall, FBNeo is slower than old MAME version, because it's more accurate, meaning graphics, sound and gameplay are more likely to be faithful to the real machine.
-This libretro port also supports various features which are usually buggy or totally absent in MAME cores (runahead, netplay, rewind, retroachievements, ...), those features might require additional resources.
+This libretro port also supports various features which are usually buggy or totally missing in MAME cores (runahead, netplay, rewind, retroachievements, ...), those features might require additional resources.
 
 ### How do i launch a neogeo CD game ?
 
 There are several things to know :
 
-* You need a copy of the neocdz.zip and neogeo.zip bioses
+* You need a copy of the `neocdz.zip` and `neogeo.zip` bioses
 * You need to add `--subsystem neocd` to the command line, or to place your games in a `neocd` folder
 * The supported format is single file MODE1/2352 cue/bin (use "CDmage" to convert your iso if needed), **they must not be compressed**
 
-You can convert your unsupported isos by following this tutorial :
+You can convert your unsupported cd images by following this tutorial :
 
 * Get [CDMage 1.02.1 (beta)](https://www.videohelp.com/software/CDMage) (freeware & no ads). **Don't get CDMage 1.01.5, it doesn't have the "Save As" function**
 * File > Open > select your iso (NB : for multi-track, select the .cue file, not the .iso file)

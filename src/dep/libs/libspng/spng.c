@@ -11,11 +11,16 @@
 
 #define ZLIB_CONST
 
+// opt causes too many problems right now
+#define SPNG_DISABLE_OPT
+
+/*
 #ifdef __GNUC__
   #if __GNUC__ < 6
     #define SPNG_DISABLE_OPT
   #endif
 #endif
+*/
 
 #ifdef __FRAMAC__
     #define SPNG_DISABLE_OPT

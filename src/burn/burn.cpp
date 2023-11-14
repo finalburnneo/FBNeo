@@ -120,7 +120,7 @@ extern "C" INT32 BurnLibInit()
 				}
 #if defined (_UNICODE)
 				if (NULL != pDriver[i]->szFullNameW) {
-					wcscpy(pszFullName[i], pDriver[i]->szFullNameW);
+					wmemcpy(pszFullName[i], pDriver[i]->szFullNameW, MAX_PATH);	// Include '\0'
 				}
 				pDriver[i]->szFullNameW = pszFullName[i];
 #endif

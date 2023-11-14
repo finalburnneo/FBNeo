@@ -1624,51 +1624,6 @@
     <ClCompile Include="..\..\src\dep\libs\zlib\zutil.c">
       <Filter>libs\zlib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\png.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngerror.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngget.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngmem.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngpread.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngread.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngrio.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngrtran.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngrutil.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngset.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngtrans.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwio.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwrite.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwtran.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dep\libs\libpng\pngwutil.c">
-      <Filter>libs\libpng</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\cpu\m68k\m68kdasm.c">
       <Filter>cpus\m68k</Filter>
     </ClCompile>
@@ -3571,6 +3526,9 @@
     <ClCompile Include="..\..\src\burn\drv\taito\d_superqix.cpp">
       <Filter>burn\drv\taito</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\dep\libs\libspng\spng.c">
+      <Filter>libs\libspng</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="cpus">
@@ -3638,9 +3596,6 @@
     </Filter>
     <Filter Include="libs\zlib">
       <UniqueIdentifier>{8d48ac20-3c2b-4c0a-b151-8e9f55f8a55a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="libs\libpng">
-      <UniqueIdentifier>{688e8e7c-7d25-4fb2-8b08-99830cf36885}</UniqueIdentifier>
     </Filter>
     <Filter Include="libs\7z">
       <UniqueIdentifier>{ac6b8038-053a-4b04-a976-516b7cf1c6a7}</UniqueIdentifier>
@@ -3831,13 +3786,13 @@
     <Filter Include="burn\snd">
       <UniqueIdentifier>{c16fd15f-a44a-4691-94ad-0f7bc7199f3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="libs\libspng">
+      <UniqueIdentifier>{688e8e7c-7d25-4fb2-8b08-99830cf36885}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\intf\video\win32\resource\bicubic.fx">
       <Filter>interfaces\video\win32\resource</Filter>
-    </None>
-    <None Include="..\..\src\dep\libs\libpng\_fba_libpng_v1512.txt">
-      <Filter>libs\libpng</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -12,21 +12,21 @@
 		<url>https://neo-source.com/</url>
 		<clrmamepro forcenodump="ignore"/>
 	</header>
+	<game name="19neunzehn" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>19 - Neunzehn (Hack, English)</description>
+		<year>2015</year>
+		<manufacturer>MrRichard999</manufacturer>
+		<rom name="19 - Neunzehn (T-Eng).fds" size="131000" crc="da11432a"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="19neunzehnj" cloneof="19neunzehn" romof="19neunzehn" sourcefile="nes/d_nes.cpp">
 		<description>19 - Neunzehn (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Soft Pro</manufacturer>
 		<rom name="19 - Neunzehn (Japan).fds" size="131016" crc="e6e06610"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="19neunzehn" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>19 - Neunzehn (T-Eng)</description>
-		<year>2015</year>
-		<manufacturer>MrRichard999</manufacturer>
-		<rom name="19 - Neunzehn (T-Eng).fds" size="131000" crc="da11432a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -58,21 +58,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="akumajoudracula" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Akumajou Dracula (Hack, English)</description>
+		<year>2020</year>
+		<manufacturer>DvD Translations</manufacturer>
+		<rom name="Akumajou Dracula (T-Eng).fds" size="131016" crc="f72f22af"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="akumajoudraculaj" cloneof="akumajoudracula" romof="akumajoudracula" sourcefile="nes/d_nes.cpp">
 		<description>Akumajou Dracula (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Akumajou Dracula (Japan).fds" size="131016" crc="ffed3158"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="akumajoudracula" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Akumajou Dracula (T-Eng)</description>
-		<year>2020</year>
-		<manufacturer>DvD Translations</manufacturer>
-		<rom name="Akumajou Dracula (T-Eng).fds" size="131016" crc="f72f22af"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -124,6 +124,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="armananokiseki" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Armana no Kiseki (Hack, English)</description>
+		<year>2012</year>
+		<manufacturer>DvD Translations</manufacturer>
+		<rom name="Armana no Kiseki (T-Eng).fds" size="131000" crc="8b61e398"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="armananokisekij" cloneof="armananokiseki" romof="armananokiseki" sourcefile="nes/d_nes.cpp">
 		<description>Armana no Kiseki (Japan)</description>
 		<year>1987</year>
@@ -133,19 +143,9 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="armananokiseki" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Armana no Kiseki (T-Eng)</description>
-		<year>2012</year>
-		<manufacturer>DvD Translations</manufacturer>
-		<rom name="Armana no Kiseki (T-Eng).fds" size="131000" crc="8b61e398"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="aspic" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Aspic - Curse of the Snakelord (T-Eng)</description>
+		<description>Aspic - Curse of the Snakelord (Hack, English)</description>
 		<year>2023</year>
 		<manufacturer>BlackPaladin</manufacturer>
 		<rom name="Aspic - Curse of the Snakelord T-Eng (2023)(BlackPaladin).fds" size="131000" crc="9f1976dd"/>
@@ -270,6 +270,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dandy" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Dandy - Zeuon no Fukkatsu (Hack, English)</description>
+		<year>2021</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Dandy - Zeuon no Fukkatsu (T-Eng).fds" size="131383" crc="29a1613f"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dandyj" cloneof="dandy" romof="dandy" sourcefile="nes/d_nes.cpp">
 		<description>Dandy - Zeuon no Fukkatsu (Japan)</description>
 		<year>1988</year>
@@ -279,12 +289,12 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="dandy" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+	<game name="deadzone" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Dandy - Zeuon no Fukkatsu (T-Eng)</description>
-		<year>2021</year>
+		<description>Dead Zone (Hack, English)</description>
+		<year>2019</year>
 		<manufacturer>Stardust Crusaders</manufacturer>
-		<rom name="Dandy - Zeuon no Fukkatsu (T-Eng).fds" size="131383" crc="29a1613f"/>
+		<rom name="Dead Zone (T-Eng).fds" size="131000" crc="1bf2409a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -294,16 +304,6 @@
 		<year>1986</year>
 		<manufacturer>Sunsoft</manufacturer>
 		<rom name="Dead Zone (Japan).fds" size="131000" crc="de673254"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="deadzone" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Dead Zone (T-Eng)</description>
-		<year>2019</year>
-		<manufacturer>Stardust Crusaders</manufacturer>
-		<rom name="Dead Zone (T-Eng).fds" size="131000" crc="1bf2409a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -326,21 +326,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="dirtypai" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Dirty Pair - Project Eden (Hack, English)</description>
+		<year>2021</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Dirty Pair - Project Eden (T-Eng).fds" size="131000" crc="5707b40a"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="dirtypaij" cloneof="dirtypai" romof="dirtypai" sourcefile="nes/d_nes.cpp">
 		<description>Dirty Pair - Project Eden (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Dirty Pair - Project Eden (Japan).fds" size="131016" crc="0bba3177"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="dirtypai" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Dirty Pair - Project Eden (T-Eng)</description>
-		<year>2021</year>
-		<manufacturer>Stardust Crusaders</manufacturer>
-		<rom name="Dirty Pair - Project Eden (T-Eng).fds" size="131000" crc="5707b40a"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -410,7 +410,7 @@
 	</game>
 	<game name="druiden" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Druid - The Gate of Fear (T-Eng)</description>
+		<description>Druid - The Gate of Fear (Hack, English)</description>
 		<year>2022</year>
 		<manufacturer>BlackPaladin</manufacturer>
 		<rom name="Druid - Kyoufu no Tobira (T-Eng)(2022)(BlackPaladin).fds" size="131000" crc="1e9dc522"/>
@@ -436,6 +436,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="electrician" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Electrician (Hack, English)</description>
+		<year>2001</year>
+		<manufacturer>King Mike</manufacturer>
+		<rom name="Electrician (T-eng).fds" size="131016" crc="4aa51f48"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="electrician1" cloneof="electrician" romof="electrician" sourcefile="nes/d_nes.cpp">
 		<description>Electrician (Japan)</description>
 		<year>1986</year>
@@ -445,12 +455,12 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="electrician" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+	<game name="esperdream" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Electrician (T-eng)</description>
-		<year>2001</year>
-		<manufacturer>King Mike</manufacturer>
-		<rom name="Electrician (T-eng).fds" size="131016" crc="4aa51f48"/>
+		<description>Esper Dream (Hack, English)</description>
+		<year>2003</year>
+		<manufacturer>Mute</manufacturer>
+		<rom name="Esper Dream (T-Eng).fds" size="131000" crc="51d8c9f1"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -460,16 +470,6 @@
 		<year>1987</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Esper Dream (Japan).fds" size="131000" crc="1d40f83f"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="esperdream" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Esper Dream (T-Eng)</description>
-		<year>2003</year>
-		<manufacturer>Mute</manufacturer>
-		<rom name="Esper Dream (T-Eng).fds" size="131000" crc="51d8c9f1"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -645,21 +645,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gallfor" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Gall Force - Eternal Story (Hack, English)</description>
+		<year>2008</year>
+		<manufacturer>Gil Galad</manufacturer>
+		<rom name="Gall Force - Eternal Story (T-Eng).fds" size="131000" crc="d66e007f"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="gallforj" cloneof="gallfor" romof="gallfor" sourcefile="nes/d_nes.cpp">
 		<description>Gall Force - Eternal Story (Japan)</description>
 		<year>1986</year>
 		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Gall Force - Eternal Story (Japan).fds" size="131016" crc="51ef74fb"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="gallfor" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Gall Force - Eternal Story (T-Eng)</description>
-		<year>2008</year>
-		<manufacturer>Gil Galad</manufacturer>
-		<rom name="Gall Force - Eternal Story (T-Eng).fds" size="131000" crc="d66e007f"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -727,21 +727,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="gyruss" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Gyruss (Hack, English)</description>
+		<year>2021</year>
+		<manufacturer>Stardust Crusader</manufacturer>
+		<rom name="Gyruss (T-eng).fds" size="131000" crc="f17f2728"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="gyruss1" cloneof="gyruss" romof="gyruss" sourcefile="nes/d_nes.cpp">
 		<description>Gyruss (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Konami</manufacturer>
 		<rom name="Gyruss (Japan).fds" size="131016" crc="4552202c"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="gyruss" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Gyruss (T-eng)</description>
-		<year>2021</year>
-		<manufacturer>Stardust Crusader</manufacturer>
-		<rom name="Gyruss (T-eng).fds" size="131000" crc="f17f2728"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -764,21 +764,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="hikarshi" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack, Myth of Light Palutena's Mirror, The</comment>
+		<description>Hikari Shinwa - Palutena no Kagami (Hack, English)</description>
+		<year>2023</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Hikari Shinwa - Palutena no Kagami T-Eng (2023)(BlackPaladin).fds" size="131000" crc="78a03745"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="hikarshij" cloneof="hikarshi" romof="hikarshi" sourcefile="nes/d_nes.cpp">
 		<description>Hikari Shinwa - Palutena no Kagami (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Hikari Shinwa - Palutena no Kagami (Japan).fds" size="131000" crc="32516fcf"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="hikarshi" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack, Myth of Light Palutena's Mirror, The</comment>
-		<description>Hikari Shinwa - Palutena no Kagami (T-Eng)</description>
-		<year>2023</year>
-		<manufacturer>BlackPaladin</manufacturer>
-		<rom name="Hikari Shinwa - Palutena no Kagami T-Eng (2023)(BlackPaladin).fds" size="131000" crc="78a03745"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -792,6 +792,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="idolhl" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Idol Hotline - Nakayama Miho no Tokimeki High School (Hack, English)</description>
+		<year>2022</year>
+		<manufacturer>FCandChill</manufacturer>
+		<rom name="Idol Hotline - Nakayama Miho no Tokimeki High School (T-Eng)(2022)(FCandChill).fds" size="131000" crc="772a6bcc"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="idolhlj" cloneof="idolhl" romof="idolhl" sourcefile="nes/d_nes.cpp">
 		<description>Idol Hotline - Nakayama Miho no Tokimeki High School (Japan)</description>
 		<year>1987</year>
@@ -801,12 +811,12 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="idolhl" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+	<game name="ishidou" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Idol Hotline - Nakayama Miho no Tokimeki High School (T-Eng)</description>
-		<year>2022</year>
-		<manufacturer>FCandChill</manufacturer>
-		<rom name="Idol Hotline - Nakayama Miho no Tokimeki High School (T-Eng)(2022)(FCandChill).fds" size="131000" crc="772a6bcc"/>
+		<description>Ishidou (Hack, English)</description>
+		<year>2011</year>
+		<manufacturer>Django</manufacturer>
+		<rom name="Ishidou (T-Eng).fds" size="131000" crc="ebfcf648"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -816,16 +826,6 @@
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Ishidou (Japan).fds" size="131000" crc="0c54a19e"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="ishidou" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Ishidou (T-Eng)</description>
-		<year>2011</year>
-		<manufacturer>Django</manufacturer>
-		<rom name="Ishidou (T-Eng).fds" size="131000" crc="ebfcf648"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -848,6 +848,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="kalinnotsurugi" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Kalin no Tsurugi (Hack, English)</description>
+		<year>2005</year>
+		<manufacturer>filler, KingMike, satsu</manufacturer>
+		<rom name="Kalin no Tsurugi (T-Eng).fds" size="131000" crc="7825c974"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="kalinnotsurugij" cloneof="kalinnotsurugi" romof="kalinnotsurugi" sourcefile="nes/d_nes.cpp">
 		<description>Kalin no Tsurugi (Japan)</description>
 		<year>1987</year>
@@ -857,12 +867,12 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kalinnotsurugi" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+	<game name="kamenridblaen" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Kalin no Tsurugi (T-Eng)</description>
-		<year>2005</year>
-		<manufacturer>filler, KingMike, satsu</manufacturer>
-		<rom name="Kalin no Tsurugi (T-Eng).fds" size="131000" crc="7825c974"/>
+		<description>Kamen Rider Black - Taiketsu Shadow Moon (Hack, English)</description>
+		<year>2022</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Kamen Rider Black - Taiketsu Shadow Moon T-Eng (2022)(BlackPaladin).fds" size="131016" crc="0ca67b03"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -872,16 +882,6 @@
 		<year>1988</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Kamen Rider Black - Taiketsu Shadow Moon (Japan).fds" size="131016" crc="0db848ea"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="kamenridblaen" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Kamen Rider Black - Taiketsu Shadow Moon (T-Eng)</description>
-		<year>2022</year>
-		<manufacturer>BlackPaladin</manufacturer>
-		<rom name="Kamen Rider Black - Taiketsu Shadow Moon T-Eng (2022)(BlackPaladin).fds" size="131016" crc="0ca67b03"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -940,21 +940,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="knightmove" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Knight Move (Hack, English)</description>
+		<year>2003</year>
+		<manufacturer>PentarouZero</manufacturer>
+		<rom name="Knight Move (T-Eng).fds" size="65500" crc="474b83c4"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="knightmovej" cloneof="knightmove" romof="knightmove" sourcefile="nes/d_nes.cpp">
 		<description>Knight Move (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Knight Move (Japan).fds" size="65500" crc="6d365e2f"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="knightmove" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Knight Move (T-Eng)</description>
-		<year>2003</year>
-		<manufacturer>PentarouZero</manufacturer>
-		<rom name="Knight Move (T-Eng).fds" size="65500" crc="474b83c4"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -977,6 +977,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="linknobou" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Link no Bouken - The Legend of Zelda 2 (Hack, English)</description>
+		<year>2017</year>
+		<manufacturer>columbo</manufacturer>
+		<rom name="Link no Bouken - The Legend of Zelda 2 (T-Eng).fds" size="131000" crc="359d3f2b"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="linknobouj" cloneof="linknobou" romof="linknobou" sourcefile="nes/d_nes.cpp">
 		<description>Link no Bouken - The Legend of Zelda 2 (Japan)</description>
 		<year>1987</year>
@@ -988,20 +998,10 @@
 	</game>
 	<game name="linknobouc" cloneof="linknobou" romof="linknobou" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Link no Bouken - The Legend of Zelda 2 (Rev 1) (Hack, Spanish v1.0)</description>
+		<description>Link no Bouken - The Legend of Zelda 2 (Rev 1) (Hack, Spanish)</description>
 		<year>2019</year>
 		<manufacturer>jackic</manufacturer>
 		<rom name="link no bouken - the legend of zelda 2 (japan) (rev 1) - castellano v1.0.fds" size="131000" crc="60a26198"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="linknobou" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Link no Bouken - The Legend of Zelda 2 (T-Eng)</description>
-		<year>2017</year>
-		<manufacturer>columbo</manufacturer>
-		<rom name="Link no Bouken - The Legend of Zelda 2 (T-Eng).fds" size="131000" crc="359d3f2b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1042,6 +1042,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="meikyjiidab" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Meikyuu Jiin Dababa (Hack, English)</description>
+		<year>2017</year>
+		<manufacturer>FlashPV</manufacturer>
+		<rom name="Meikyuu Jiin Dababa (T-Eng).fds" size="131000" crc="4d13e6b7"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="meikyjiidabj" cloneof="meikyjiidab" romof="meikyjiidab" sourcefile="nes/d_nes.cpp">
 		<description>Meikyuu Jiin Dababa (Japan)</description>
 		<year>1987</year>
@@ -1051,12 +1061,12 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="meikyjiidab" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+	<game name="metroid" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Meikyuu Jiin Dababa (T-Eng)</description>
-		<year>2017</year>
-		<manufacturer>FlashPV</manufacturer>
-		<rom name="Meikyuu Jiin Dababa (T-Eng).fds" size="131000" crc="4d13e6b7"/>
+		<description>Metroid (Hack, English)</description>
+		<year>2016</year>
+		<manufacturer>Jordiway73</manufacturer>
+		<rom name="Metroid (T-Eng).fds" size="131000" crc="2711adba"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1066,16 +1076,6 @@
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Metroid (Japan).fds" size="131000" crc="5e4f013d"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="metroid" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Metroid (T-Eng)</description>
-		<year>2016</year>
-		<manufacturer>Jordiway73</manufacturer>
-		<rom name="Metroid (T-Eng).fds" size="131000" crc="2711adba"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1098,21 +1098,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="montyonrun" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Monty on the Run - Monty no Doki Doki Dai Dassou (Hack, English)</description>
+		<year>2021</year>
+		<manufacturer>Stardust Crusaders</manufacturer>
+		<rom name="Monty on the Run - Monty no Doki Doki Dai Dassou (T-Eng).fds" size="131001" crc="d7242483"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="montyonrunj" cloneof="montyonrun" romof="montyonrun" sourcefile="nes/d_nes.cpp">
 		<description>Monty on the Run - Monty no Doki Doki Dai Dassou (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Jaleco</manufacturer>
 		<rom name="Monty on the Run - Monty no Doki Doki Dai Dassou (Japan).fds" size="131016" crc="bb7ab325"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="montyonrun" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Monty on the Run - Monty no Doki Doki Dai Dassou (T-Eng)</description>
-		<year>2021</year>
-		<manufacturer>Stardust Crusaders</manufacturer>
-		<rom name="Monty on the Run - Monty no Doki Doki Dai Dassou (T-Eng).fds" size="131001" crc="d7242483"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1128,7 +1128,7 @@
 	</game>
 	<game name="mystemurcas" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Mysterious Murasame Castle (T-Eng)</description>
+		<description>Mysterious Murasame Castle (Hack, English)</description>
 		<year>2011</year>
 		<manufacturer>Spinner 8 and friends</manufacturer>
 		<rom name="Mysterious Murasame Castle (T-Eng).fds" size="131000" crc="5da99951"/>
@@ -1172,21 +1172,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="patlaen" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (Hack, English)</description>
+		<year>2003</year>
+		<manufacturer>Vice Translations</manufacturer>
+		<rom name="Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! T-Eng (2003)(Vice Translations).fds" size="131016" crc="9d8236f8"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="patla" cloneof="patlaen" romof="patlaen" sourcefile="nes/d_nes.cpp">
 		<description>Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (Japan)</description>
 		<year>1989</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (Japan).fds" size="131016" crc="b5639859"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="patlaen" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! (T-Eng)</description>
-		<year>2003</year>
-		<manufacturer>Vice Translations</manufacturer>
-		<rom name="Patlabor - The Mobile Police - Dai 2 Shoutai Shutsudou Seyo! T-Eng (2003)(Vice Translations).fds" size="131016" crc="9d8236f8"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1209,21 +1209,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="puzzleboys" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Puzzle Boys (Hack, English)</description>
+		<year>2011</year>
+		<manufacturer>DvD Translations</manufacturer>
+		<rom name="Puzzle Boys (T-Eng).fds" size="131000" crc="fa03eba9"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="puzzleboysj" cloneof="puzzleboys" romof="puzzleboys" sourcefile="nes/d_nes.cpp">
 		<description>Puzzle Boys (Japan)</description>
 		<year>1990</year>
 		<manufacturer>Atlus</manufacturer>
 		<rom name="Puzzle Boys (Japan).fds" size="131000" crc="b9f22094"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="puzzleboys" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Puzzle Boys (T-Eng)</description>
-		<year>2011</year>
-		<manufacturer>DvD Translations</manufacturer>
-		<rom name="Puzzle Boys (T-Eng).fds" size="131000" crc="fa03eba9"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1273,6 +1273,16 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="samsworden" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Samurai Sword (Hack, English)</description>
+		<year>2003</year>
+		<manufacturer>Mute</manufacturer>
+		<rom name="Samurai Sword (T-Eng)(2003)(Mute).fds" size="131016" crc="45ddd0f4"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="samsword" cloneof="samsworden" romof="samsworden" sourcefile="nes/d_nes.cpp">
 		<description>Samurai Sword (Japan)</description>
 		<year>1988</year>
@@ -1282,19 +1292,9 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="samsworden" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Samurai Sword (T-Eng)</description>
-		<year>2003</year>
-		<manufacturer>Mute</manufacturer>
-		<rom name="Samurai Sword (T-Eng)(2003)(Mute).fds" size="131016" crc="45ddd0f4"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="sdgunworgacsescwac" cloneof="sdgunworgacsescwa" romof="sdgunworgacsescwa" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Hack, Spanish v1.0)</description>
+		<description>SD Gundam World - Gachapon Senshi - Scramble Wars (Hack, Spanish)</description>
 		<year>2020</year>
 		<manufacturer>Max1323</manufacturer>
 		<rom name="sd gundam world - gachapon senshi - scramble wars (japan) [b] - castellano v1.0.fds" size="131016" crc="53f73319"/>
@@ -1320,21 +1320,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="seikepsy" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (Hack, English)</description>
+		<year>20??</year>
+		<manufacturer>The Spoony Bard</manufacturer>
+		<rom name="Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng).fds" size="131000" crc="1ec1552b"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="seikepsyj" cloneof="seikepsy" romof="seikepsy" sourcefile="nes/d_nes.cpp">
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Imagineer</manufacturer>
 		<rom name="Seiken Psychocalibur - Majuu no Mori Densetsu (Japan).fds" size="131000" crc="aea5691a"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="seikepsy" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng)</description>
-		<year>20??</year>
-		<manufacturer>The Spoony Bard</manufacturer>
-		<rom name="Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng).fds" size="131000" crc="1ec1552b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1348,21 +1348,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="silvi" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Silviana - Ai Ippai no Little Angel (Hack, English)</description>
+		<year>2002</year>
+		<manufacturer>Mute</manufacturer>
+		<rom name="Silviana - Ai Ippai no Little Angel (T-Eng).fds" size="131000" crc="c5b1bff7"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="silvij" cloneof="silvi" romof="silvi" sourcefile="nes/d_nes.cpp">
 		<description>Silviana - Ai Ippai no Little Angel (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Pack-In-Video</manufacturer>
 		<rom name="Silviana - Ai Ippai no Little Angel (Japan).fds" size="131016" crc="4d721d90"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="silvi" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Silviana - Ai Ippai no Little Angel (T-Eng)</description>
-		<year>2002</year>
-		<manufacturer>Mute</manufacturer>
-		<rom name="Silviana - Ai Ippai no Little Angel (T-Eng).fds" size="131000" crc="c5b1bff7"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1414,7 +1414,7 @@
 	</game>
 	<game name="supermarbroc" cloneof="supermarbro" romof="supermarbro" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Super Mario Brothers (Hack, Spanish v1.0)</description>
+		<description>Super Mario Brothers (Hack, Spanish)</description>
 		<year>2020</year>
 		<manufacturer>Noishe</manufacturer>
 		<rom name="super mario brothers (japan) - castellano v1.0.fds" size="65516" crc="42d4a7c5"/>
@@ -1575,21 +1575,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="youkaiyashiki" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Youkai Yashiki (Hack, English)</description>
+		<year>2008</year>
+		<manufacturer>KingMike's Translations</manufacturer>
+		<rom name="Youkai Yashiki (T-Eng).fds" size="131000" crc="546589ab"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="youkaiyashikij" cloneof="youkaiyashiki" romof="youkaiyashiki" sourcefile="nes/d_nes.cpp">
 		<description>Youkai Yashiki (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Youkai Yashiki (Japan).fds" size="131016" crc="a888c6df"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="youkaiyashiki" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Youkai Yashiki (T-Eng)</description>
-		<year>2008</year>
-		<manufacturer>KingMike's Translations</manufacturer>
-		<rom name="Youkai Yashiki (T-Eng).fds" size="131000" crc="546589ab"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1612,21 +1612,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="zeldanoden" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Zelda no Densetsu - The Hyrule Fantasy (Hack, English)</description>
+		<year>2016</year>
+		<manufacturer>Jordiway73</manufacturer>
+		<rom name="Zelda no Densetsu - The Hyrule Fantasy (T-Eng).fds" size="131016" crc="ee11aa63"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="zeldanodenj" cloneof="zeldanoden" romof="zeldanoden" sourcefile="nes/d_nes.cpp">
 		<description>Zelda no Densetsu - The Hyrule Fantasy (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Zelda no Densetsu - The Hyrule Fantasy (Japan).fds" size="131016" crc="3fbdddcd"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
-	<game name="zeldanoden" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Zelda no Densetsu - The Hyrule Fantasy (T-Eng)</description>
-		<year>2016</year>
-		<manufacturer>Jordiway73</manufacturer>
-		<rom name="Zelda no Densetsu - The Hyrule Fantasy (T-Eng).fds" size="131016" crc="ee11aa63"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

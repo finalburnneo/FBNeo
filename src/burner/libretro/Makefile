@@ -16,7 +16,6 @@ HAVE_NEON = 0
 USE_EXPERIMENTAL_FLAGS = 0
 USE_CYCLONE = 0
 HAVE_UWP = 0
-HAVE_UNISTD_H = 0
 # make the core smaller by removing some demanding drivers
 LIGHT = 0
 SPLIT_UP_LINK ?= 0
@@ -128,17 +127,16 @@ else ifeq ($(platform), osx)
 	endif
 	OSXVER = `sw_vers -productVersion | cut -d. -f 2`
 	OSX_LT_MAVERICKS = `(( $(OSXVER) <= 9)) && echo "YES"`
-	HAVE_UNISTD_H = 1
 	ifeq ($(OSX_LT_MAVERICKS),"YES")
 		fpic += -mmacosx-version-min=10.5
 	endif
-	ifeq ($(CROSS_COMPILE),1)
+   ifeq ($(CROSS_COMPILE),1)
 		TARGET_RULE   = -target $(LIBRETRO_APPLE_PLATFORM) -isysroot $(LIBRETRO_APPLE_ISYSROOT)
 		CFLAGS   += $(TARGET_RULE)
 		CPPFLAGS += $(TARGET_RULE)
 		CXXFLAGS += $(TARGET_RULE)
 		LDFLAGS  += $(TARGET_RULE)
-	endif
+   endif
 	ifeq ($(UNIVERSAL),1)
 		CFLAGS += $(ARCHFLAGS)
 		CXXFLAGS += $(ARCHFLAGS)
@@ -158,7 +156,6 @@ else ifneq (,$(findstring ios,$(platform)))
 	ifeq ($(platform),ios-arm64)
 		CC = cc -arch arm64 -isysroot $(IOSSDK)
 		CXX = c++ -arch arm64 -isysroot $(IOSSDK)
-		HAVE_UNISTD_H = 1
 	else
 		CC = cc -arch armv7 -isysroot $(IOSSDK)
 		CXX = c++ -arch armv7 -isysroot $(IOSSDK)
@@ -187,7 +184,6 @@ else ifeq ($(platform), tvos-arm64)
 	ENDIANNESS_DEFINES := -DLSB_FIRST
 	CFLAGS += -DIOS9
 	CXXFLAGS += -DIOS9
-	HAVE_UNISTD_H = 1
 	CC = cc -arch arm64 -isysroot $(IOSSDK)
 	CXX = c++ -arch arm64 -isysroot $(IOSSDK)
 
@@ -538,10 +534,6 @@ endif
 
 ifeq ($(FASTCALL), 1)
 	FBNEO_DEFINES += -DFASTCALL
-endif
-
-ifeq ($(HAVE_UNISTD_H), 1)
-	FBNEO_DEFINES += -DHAVE_UNISTD_H
 endif
 
 ifeq ($(FASTMATH), 1)

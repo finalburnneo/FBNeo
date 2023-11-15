@@ -532,6 +532,10 @@ ifeq ($(EXTERNAL_ZLIB), 1)
 	LDFLAGS += -lz
 else
 	FBNEO_SRC_DIRS += $(FBNEO_LIB_DIR)/zlib
+	# only msvc doesn't have unistd.h ?
+	ifeq (,$(findstring msvc,$(platform)))
+		FBNEO_DEFINES += -DHAVE_UNISTD_H
+	endif
 endif
 
 ifeq ($(INCLUDE_7Z_SUPPORT), 1)

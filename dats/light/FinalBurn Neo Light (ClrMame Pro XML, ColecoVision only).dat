@@ -126,6 +126,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="alpharoid" romof="coleco" sourcefile="coleco/d_coleco.cpp">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Alpharoid (SGM) (HB)</description>
+		<year>1986-2018</year>
+		<manufacturer>Opcode Games - Pony Canyon</manufacturer>
+		<rom name="Alpharoid SGM (2018)(Opcode Games).col" size="131072" crc="6068db13"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="amazing" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Amazing Bumpman</description>
 		<year>1986</year>
@@ -498,6 +511,19 @@
 		<year>2018</year>
 		<manufacturer>Leo Brophy</manufacturer>
 		<rom name="Boot Hill (2018)(Leo Brophy).bin" size="32768" crc="59e22170"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bosconian" romof="coleco" sourcefile="coleco/d_coleco.cpp">
+		<comment>Homebrew, SGM - Super Game Module</comment>
+		<description>Bosconian (SGM) (HB)</description>
+		<year>1984-2016</year>
+		<manufacturer>Opcode Games - Namcot</manufacturer>
+		<rom name="Bosconian SGM (2016)(Opcode Games).col" size="32768" crc="91326103"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -1442,6 +1468,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="drol" romof="coleco" sourcefile="coleco/d_coleco.cpp">
+		<comment>Homebrew, Published by CollectorVision Games</comment>
+		<description>Drol (HB)</description>
+		<year>1985-2016</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Drol (2016)(CollectorVision Games).col" size="32768" crc="8331d147"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="hazzard" romof="coleco" sourcefile="coleco/d_coleco.cpp">
 		<description>Dukes of Hazzard, The</description>
 		<year>1984</year>
@@ -1500,7 +1539,7 @@
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Eggerland Mystery (SGM) (HB)</description>
 		<year>1985-2018</year>
-		<manufacturer>HAL Lab.</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Eggerland Mystery SGM (2018)(CollectorVision).rom" size="131072" crc="2488ca1a"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -2175,7 +2214,7 @@
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Hole in One (SGM) (HB)</description>
 		<year>1984-2017</year>
-		<manufacturer>HAL Lab.</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Hole in One SGM (2017)(CollectorVision).rom" size="24520" crc="7270ae16"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -4194,7 +4233,7 @@
 		<comment>Homebrew, SGM - Published by CollectorVision Games</comment>
 		<description>Rollerball (SGM) (HB)</description>
 		<year>1984-2013</year>
-		<manufacturer>HAL Lab.</manufacturer>
+		<manufacturer>HAL Laboratory</manufacturer>
 		<rom name="Rollerball SGM (2013)(CollectorVision).rom" size="32768" crc="aefdba29"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
@@ -4327,6 +4366,19 @@
 		<rom name="secalpha.1" size="8192" crc="9299539b"/>
 		<rom name="secalpha.2" size="8192" crc="c8d6e83d"/>
 		<rom name="secalpha.3" size="4096" crc="354a3b2f"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="segaflipper" romof="coleco" sourcefile="coleco/d_coleco.cpp">
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Sega Flipper (HB)</description>
+		<year>1983-2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Sega Flipper (2021)(Team Pixelboy).col" size="16384" crc="e7739f82"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
@@ -4858,6 +4910,19 @@
 		<year>1997</year>
 		<manufacturer>John Dondzila</manufacturer>
 		<rom name="star-fortress.rom" size="16384" crc="f7f18e6f"/>
+		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
+		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
+		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>
+		<rom name="czz50.rom" merge="czz50.rom" size="16384" crc="4999abc6"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="starjacker" romof="coleco" sourcefile="coleco/d_coleco.cpp">
+		<comment>Homebrew, Published by Team Pixelboy</comment>
+		<description>Star Jacker (HB)</description>
+		<year>1983-2021</year>
+		<manufacturer>Sega</manufacturer>
+		<rom name="Star Jacker (2021)(Team Pixelboy).col" size="32768" crc="929c6ded"/>
 		<rom name="coleco.rom" merge="coleco.rom" size="8192" crc="3aa93ef3"/>
 		<rom name="colecoa.rom" merge="colecoa.rom" size="8192" crc="39bb16fc"/>
 		<rom name="svi603.rom" merge="svi603.rom" size="8192" crc="19e91b82"/>

@@ -689,6 +689,7 @@ DRV		BurnDrvMSX_aroid;
 DRV		BurnDrvMSX_aroida;
 DRV		BurnDrvMSX_asquadron;
 DRV		BurnDrvcv_alphazoo;
+DRV		BurnDrvcv_alpharoid;
 DRV		BurnDrvMSX_alpineski;
 DRV		BurnDrvAlpine;
 DRV		BurnDrvAlpinea;
@@ -2172,6 +2173,7 @@ DRV		BurnDrvMSX_borfese;
 DRV		BurnDrvMSX_borfes;
 DRV		BurnSpecBorielrun;
 DRV		BurnSpecBosconian;
+DRV		BurnDrvcv_bosconian;
 DRV		BurnDrvMSX_bosco;
 DRV		BurnDrvMSX_boscob;
 DRV		BurnDrvMSX_boscoa;
@@ -4649,7 +4651,9 @@ DRV		BurnDrvDdragon;
 DRV		BurnDrvMSX_ddragon;
 DRV		BurnDrvsms_ddragonk;
 DRV		BurnDrvdoubledr;
-DRV		BurnDrvdoubledrsp;
+DRV		BurnDrvdoubledt;
+DRV		BurnDrvdoubledp;
+DRV		BurnDrvdoubldrsp;
 DRV		BurnDrvDdragonu;
 DRV		BurnDrvDdragoua;
 DRV		BurnDrvDdragonub;
@@ -4922,6 +4926,7 @@ DRV		BurnDrvDrivfrcb;
 DRV		BurnDrvDrivfrcg;
 DRV		BurnDrvDrivfrcp;
 DRV		BurnSpecDroidbuster;
+DRV		BurnDrvcv_drol;
 DRV		BurnDrvsg1k_drol;
 DRV		BurnDrvsg1k_drolk;
 DRV		BurnDrvsg1k_drolt;
@@ -5657,20 +5662,20 @@ DRV		BurnDrvSqbert;
 DRV		BurnDrvmd_fastest1;
 DRV		BurnDrvmd_fatfury;
 DRV		BurnDrvmd_fatfuryu;
-DRV		BurnDrvFatfury1bh;
+DRV		BurnDrvffury1bs;
 DRV		BurnDrvFatFury1;
 DRV		BurnDrvmd_fatfury2ec;
 DRV		BurnDrvmd_fatfury2;
 DRV		BurnDrvFatfury2;
 DRV		BurnDrvFatfury2a;
-DRV		BurnDrvFatfury3bh;
+DRV		BurnDrvffury3bs;
 DRV		BurnDrvFatfury3a;
 DRV		BurnDrvFatfury3;
 DRV		BurnDrvgg_fatfursp;
 DRV		BurnDrvgg_fatfurspu;
 DRV		BurnDrvFatfursp;
 DRV		BurnDrvFatfurspa;
-DRV		BurnDrvFatfurspbs;
+DRV		BurnDrvffurspbs;
 DRV		BurnDrvmd_fatallab;
 DRV		BurnDrvmd_fatallabs;
 DRV		BurnDrvmd_fatalrew;
@@ -6483,7 +6488,8 @@ DRV		BurnDrvmd_gargoyles;
 DRV		BurnDrvmd_gargoyle;
 DRV		BurnDrvGarogun;
 DRV		BurnDrvgaroubl;
-DRV		BurnDrvGaroub;
+DRV		BurnDrvgaroubs;
+DRV		BurnDrvgaroujq;
 DRV		BurnDrvgarouha;
 DRV		BurnDrvgarouh;
 DRV		BurnDrvGarou;
@@ -7089,9 +7095,14 @@ DRV		BurnDrvGrdnstrmau;
 DRV		BurnDrvGrdnstrm;
 DRV		BurnDrvGrdnstrmv;
 DRV		BurnSpecGuardian;
-DRV		BurnDrvGrdianssy;
 DRV		BurnDrvGrdians;
 DRV		BurnDrvGrdiansa;
+DRV		BurnDrvGrdiansy;
+DRV		BurnDrvGrdiansl;
+DRV		BurnDrvGrdianls;
+DRV		BurnDrvGrdiansp;
+DRV		BurnDrvGrdiands;
+DRV		BurnDrvGrdianke;
 DRV		BurnDrvMSX_guardic;
 DRV		BurnDrvMSX_guardica;
 DRV		BurnDrvnes_guardicgaidenc;
@@ -8633,11 +8644,8 @@ DRV		BurnDrvKingofbj;
 DRV		BurnDrvKingofb;
 DRV		BurnDrvpce_kingcasn;
 DRV		BurnDrvtg_kingcasn;
-DRV		BurnDrvkof98ae;
-DRV		BurnDrvkof98cb;
-DRV		BurnDrvkof98eckg;
-DRV		BurnDrvkof98pfe;
-DRV		BurnDrvKof98mix;
+DRV		BurnDrvkof98bsc;
+DRV		BurnDrvkof98plc;
 DRV		BurnDrvmd_kof98;
 DRV		BurnDrvmd_kof99;
 DRV		BurnDrvmd_kof99a;
@@ -10175,61 +10183,107 @@ DRV		BurnDrvnes_metalmec;
 DRV		BurnDrvMetlsavr;
 DRV		BurnDrvnes_metalslaglo;
 DRV		BurnDrvnes_metalslagloj;
-DRV		BurnDrvmslugaks;
 DRV		BurnDrvngpc_mslug1st;
 DRV		BurnDrvngpc_mslug2ndd;
 DRV		BurnDrvngpc_mslug2nd;
+DRV		BurnDrvmslug1v2;
+DRV		BurnDrvmslugdg;
+DRV		BurnDrvmslugyq;
 DRV		BurnDrvmslug;
-DRV		BurnDrvmslug2dd;
+DRV		BurnDrvms21v2;
+DRV		BurnDrvmslug2r;
 DRV		BurnDrvmslug2eg;
 DRV		BurnDrvmslug2fm;
-DRV		BurnDrvmslug2aks;
+DRV		BurnDrvmslug2dg;
 DRV		BurnDrvMSlug2;
+DRV		BurnDrvmslug2dd;
+DRV		BurnDrvmslug2ct;
+DRV		BurnDrvmslug2p;
 DRV		BurnDrvmslug2unity;
 DRV		BurnDrvMSlug2t;
-DRV		BurnDrvmslug31v2;
+DRV		BurnDrvms31v2;
 DRV		BurnDrvmslug3eb;
 DRV		BurnDrvmslug3c;
 DRV		BurnDrvmslug3v;
 DRV		BurnDrvmslug3i;
-DRV		BurnDrvmslug3aks;
-DRV		BurnDrvmslug3cb;
-DRV		BurnDrvmslug3dd;
+DRV		BurnDrvmslug3fd;
+DRV		BurnDrvmslug3ki;
+DRV		BurnDrvmslug3lw;
+DRV		BurnDrvmslug3cq;
+DRV		BurnDrvmslug3g;
 DRV		BurnDrvmslug3h;
 DRV		BurnDrvmslug3;
 DRV		BurnDrvmslug3a;
+DRV		BurnDrvmslug3gw;
+DRV		BurnDrvmslug3ps;
+DRV		BurnDrvmslug3sd;
 DRV		BurnDrvmslug3se;
+DRV		BurnDrvmslug3dd;
+DRV		BurnDrvmslug3sc;
+DRV		BurnDrvmslug3zh;
 DRV		BurnDrvmslug3unity;
 DRV		BurnDrvmslug3x;
-DRV		BurnDrvmslug4c;
-DRV		BurnDrvmslug4aks;
-DRV		BurnDrvmslug4cb;
+DRV		BurnDrvms41v2;
 DRV		BurnDrvmslug4a;
-DRV		BurnDrvmslug4dd;
+DRV		BurnDrvmslug4c;
+DRV		BurnDrvmslug4fd;
+DRV		BurnDrvmslug4ki;
+DRV		BurnDrvmslug4lq;
+DRV		BurnDrvmslug4lw;
+DRV		BurnDrvmslug4dg;
 DRV		BurnDrvmslug4h;
 DRV		BurnDrvmslug4;
+DRV		BurnDrvmslug4ar;
+DRV		BurnDrvmslug4dd;
+DRV		BurnDrvmslug4q;
 DRV		BurnDrvms4plus;
 DRV		BurnDrvmslug4unity;
+DRV		BurnDrvms51v2;
 DRV		BurnDrvmslug5b;
 DRV		BurnDrvmslug5b2;
-DRV		BurnDrvmslug5ex;
-DRV		BurnDrvms5pcb;
-DRV		BurnDrvmslug5aks;
-DRV		BurnDrvmslug5cb;
-DRV		BurnDrvmslug5dd;
+DRV		BurnDrvmslug5bs;
+DRV		BurnDrvmslug5mg;
+DRV		BurnDrvmslug5db;
 DRV		BurnDrvmslug5c;
-DRV		BurnDrvmslug5x;
+DRV		BurnDrvmslug5ex;
+DRV		BurnDrvmslug5f;
+DRV		BurnDrvmslug5fd;
+DRV		BurnDrvms5pcb;
+DRV		BurnDrvmslug5ki;
+DRV		BurnDrvmslug5dg;
+DRV		BurnDrvmslug5w;
 DRV		BurnDrvmslug5h;
 DRV		BurnDrvmslug5;
+DRV		BurnDrvmslug5nd;
+DRV		BurnDrvms5plush;
+DRV		BurnDrvms5sgf;
+DRV		BurnDrvmslug5dd;
+DRV		BurnDrvmslug5sg;
+DRV		BurnDrvmslug5sc;
 DRV		BurnDrvmslug5es;
+DRV		BurnDrvmslug5zh;
+DRV		BurnDrvmslug5x;
 DRV		BurnDrvms5plus;
 DRV		BurnDrvmslug5unity;
 DRV		BurnDrvmslug3b6;
 DRV		BurnDrvmslugunity;
-DRV		BurnDrvmslugxaks;
-DRV		BurnDrvmslugxcb;
+DRV		BurnDrvmsx1v2;
+DRV		BurnDrvmsx2r1v2;
+DRV		BurnDrvmsx2reb;
 DRV		BurnDrvmslugx2r;
+DRV		BurnDrvmsxsrf;
+DRV		BurnDrvmslugxeb;
+DRV		BurnDrvmslugxc2;
+DRV		BurnDrvmslugxlb;
+DRV		BurnDrvmslugxif;
+DRV		BurnDrvmslugxcq;
+DRV		BurnDrvmslugxc1;
+DRV		BurnDrvmslugxdg;
 DRV		BurnDrvMSlugx;
+DRV		BurnDrvmslugxdd;
+DRV		BurnDrvmslugxsc;
+DRV		BurnDrvmslugxsv;
+DRV		BurnDrvmslugxxr;
 DRV		BurnDrvmslugxunity;
 DRV		BurnDrvMsisaac;
 DRV		BurnDrvmd_msonichd;
@@ -13580,8 +13634,8 @@ DRV		BurnDrvrbff1;
 DRV		BurnDrvrbff2k;
 DRV		BurnDrvrbff2h;
 DRV		BurnDrvrbff2;
-DRV		BurnDrvrbff2bh;
-DRV		BurnDrvrbffspbh;
+DRV		BurnDrvrbff2bs;
+DRV		BurnDrvrbffspbs;
 DRV		BurnDrvrbffspeck;
 DRV		BurnDrvrbffspec;
 DRV		BurnDrvMSX_realtenn;
@@ -14219,25 +14273,33 @@ DRV		BurnDrvmd_samshoec;
 DRV		BurnDrvmd_samshos;
 DRV		BurnDrvgg_samsho;
 DRV		BurnDrvmd_samshou;
+DRV		BurnDrvsamshobs;
 DRV		BurnDrvSamShoh;
 DRV		BurnDrvSamsho;
 DRV		BurnDrvSamShoa;
+DRV		BurnDrvsamsh2jq;
 DRV		BurnDrvSamsho2;
+DRV		BurnDrvsamsho2t;
 DRV		BurnDrvSamsho2pe;
-DRV		BurnDrvSamsho2sp;
+DRV		BurnDrvsamsho2s;
+DRV		BurnDrvsamsh3bs;
 DRV		BurnDrvSamSho3h;
 DRV		BurnDrvSamSho3;
+DRV		BurnDrvsamsh4bs;
 DRV		BurnDrvSamSho4;
-DRV		BurnDrvSamSho4sp;
+DRV		BurnDrvsamsh4sp;
 DRV		BurnDrvsamsho5b;
+DRV		BurnDrvsamsh5bs;
+DRV		BurnDrvsamsh5fd;
 DRV		BurnDrvsamsho5x;
 DRV		BurnDrvsamsho5h;
 DRV		BurnDrvsamsho5;
 DRV		BurnDrvsamsho5a;
 DRV		BurnDrvsamsh5pf;
+DRV		BurnDrvsams5spf;
+DRV		BurnDrvss5spfd;
 DRV		BurnDrvsamsh5spho;
 DRV		BurnDrvsamsh5sph;
-DRV		BurnDrvsamsh5fe;
 DRV		BurnDrvsamsh5sp;
 DRV		BurnDrvgg_samspir;
 DRV		BurnDrvmd_samspir;
@@ -14480,6 +14542,7 @@ DRV		BurnDrvmd_segachnl;
 DRV		BurnDrvmd_segachd;
 DRV		BurnDrvsms_segachss;
 DRV		BurnDrvsg1k_segaflip;
+DRV		BurnDrvcv_segaflipper;
 DRV		BurnDrvsg1k_segaflipa;
 DRV		BurnDrvgg_sega4in1;
 DRV		BurnDrvgg_sega4in1p;
@@ -14525,8 +14588,11 @@ DRV		BurnDrvSengekisj;
 DRV		BurnDrvSengokuh;
 DRV		BurnDrvSengoku;
 DRV		BurnDrvSengoku2;
+DRV		BurnDrvsengk3fs;
 DRV		BurnDrvSengoku3s;
-DRV		BurnDrvsengoku3hs;
+DRV		BurnDrvsengk3fd;
+DRV		BurnDrvsengk3eb;
+DRV		BurnDrvsengok3i;
 DRV		BurnDrvSengoku3;
 DRV		BurnDrvSengoku3a;
 DRV		BurnDrvSngkAce;
@@ -15074,6 +15140,7 @@ DRV		BurnDrvsvc;
 DRV		BurnDrvsvcplus;
 DRV		BurnDrvsvcplusa;
 DRV		BurnDrvsvcsplus;
+DRV		BurnDrvsvcsplse;
 DRV		BurnDrvngpc_svc;
 DRV		BurnSpecsnoopy;
 DRV		BurnDrvnes_snoopssilsposp;
@@ -15766,6 +15833,7 @@ DRV		BurnDrvnes_stargate;
 DRV		BurnDrvStargrds;
 DRV		BurnDrvsg1k_starjack1;
 DRV		BurnDrvsg1k_starjack;
+DRV		BurnDrvcv_starjacker;
 DRV		BurnDrvsg1k_starjack2;
 DRV		BurnDrvStarjack;
 DRV		BurnDrvStarjacks;
@@ -17574,119 +17642,158 @@ DRV		BurnDrvCpsKodu;
 DRV		BurnDrvCpsKodr1;
 DRV		BurnDrvCpsKodr2;
 DRV		BurnDrvCpsKod;
-DRV		BurnDrvKof94rz;
+DRV		BurnDrvkof94bs;
+DRV		BurnDrvkof94rz;
 DRV		BurnDrvKof94;
-DRV		BurnDrvKof94br;
-DRV		BurnDrvKof95b;
+DRV		BurnDrvkof94br;
+DRV		BurnDrvkof95bs;
+DRV		BurnDrvkof95b;
 DRV		BurnDrvKof95h;
 DRV		BurnDrvKof95;
 DRV		BurnDrvKof95a;
-DRV		BurnDrvKof95sp;
+DRV		BurnDrvkof95sp;
+DRV		BurnDrvkof96ae;
 DRV		BurnDrvkof96ep;
+DRV		BurnDrvkof96cn;
 DRV		BurnDrvKof96h;
 DRV		BurnDrvKof96;
 DRV		BurnDrvKof96a;
-DRV		BurnDrvkof96ae;
-DRV		BurnDrvkof96cn;
-DRV		BurnDrvKof96rp08sp;
+DRV		BurnDrvkof96pls;
+DRV		BurnDrvKof96rp;
 DRV		BurnDrvkof96rss;
+DRV		BurnDrvkof96r;
+DRV		BurnDrvkof97cn;
+DRV		BurnDrvkof97ae;
+DRV		BurnDrvkof97ts;
+DRV		BurnDrvkof97cbt;
+DRV		BurnDrvkof97m;
+DRV		BurnDrvkof97eb;
+DRV		BurnDrvkof97evf;
+DRV		BurnDrvkof97evn;
+DRV		BurnDrvkof97xt;
 DRV		BurnDrvKof97ps;
+DRV		BurnDrvkof97inv;
 DRV		BurnDrvKof97k;
 DRV		BurnDrvKof97h;
 DRV		BurnDrvKof97;
-DRV		BurnDrvkof97cn;
-DRV		BurnDrvkof97ae;
-DRV		BurnDrvkof97cbt;
-DRV		BurnDrvkof97xt;
-DRV		BurnDrvkof97inv;
 DRV		BurnDrvkof97t;
 DRV		BurnDrvKof97pm;
 DRV		BurnDrvkof97rc;
 DRV		BurnDrvkof97sp;
+DRV		BurnDrvkof97st;
 DRV		BurnDrvKof97oro;
 DRV		BurnDrvkof97pla;
-DRV		BurnDrvkof97evn;
 DRV		BurnDrvKof97pls;
+DRV		BurnDrvkof97plh;
+DRV		BurnDrvkof98ae;
+DRV		BurnDrvkof98bc2nd;
+DRV		BurnDrvkof98bc2k2;
+DRV		BurnDrvkof98cp;
+DRV		BurnDrvkof98cb;
+DRV		BurnDrvkof98eckg;
 DRV		BurnDrvkof98evo;
-DRV		BurnDrvKof98ratio;
 DRV		BurnDrvKof98k;
 DRV		BurnDrvKof98ka;
 DRV		BurnDrvKof98h;
 DRV		BurnDrvKof98;
 DRV		BurnDrvKof98a;
+DRV		BurnDrvkof98pfe;
+DRV		BurnDrvkof98rat;
 DRV		BurnDrvkof98ult;
-DRV		BurnDrvkof98bc2nd;
-DRV		BurnDrvkof98bc2k2;
+DRV		BurnDrvKof98mix;
 DRV		BurnDrvkof99ae;
-DRV		BurnDrvkof99eur;
-DRV		BurnDrvkof99eur2;
+DRV		BurnDrvkof99cb;
 DRV		BurnDrvkof99e;
+DRV		BurnDrvkof99eur;
+DRV		BurnDrvkof99jh;
+DRV		BurnDrvkof99fd;
+DRV		BurnDrvkof99jq;
 DRV		BurnDrvkof99k;
 DRV		BurnDrvkof99ka;
+DRV		BurnDrvkof99sk;
 DRV		BurnDrvkof99h;
 DRV		BurnDrvkof99;
-DRV		BurnDrvkof99p;
 DRV		BurnDrvkof99t;
+DRV		BurnDrvkof99p;
 DRV		BurnDrvkof99rp;
 DRV		BurnDrvkof99sr;
 DRV		BurnDrvngpc_kofpara;
 DRV		BurnDrvkof10th;
+DRV		BurnDrvkf10thuo;
 DRV		BurnDrvkof10thd;
-DRV		BurnDrvkof10thuo;
 DRV		BurnDrvkf2k5uni;
 DRV		BurnDrvkf10thep;
+DRV		BurnDrvkof2kfd;
+DRV		BurnDrvkof2000bc;
 DRV		BurnDrvkof2000;
 DRV		BurnDrvkof2000n;
-DRV		BurnDrvkof2000bc;
+DRV		BurnDrvkof2000t;
 DRV		BurnDrvkof2kotc;
 DRV		BurnDrvkof2kps2;
-DRV		BurnDrvkof2ksp;
 DRV		BurnDrvkof2kpls;
+DRV		BurnDrvkof2ksp;
 DRV		BurnDrvkof2kxxx;
+DRV		BurnDrvkof2k1bs;
+DRV		BurnDrvkof2k1fd;
 DRV		BurnDrvkof2001h;
 DRV		BurnDrvkof2001;
-DRV		BurnDrvkof2k1bs;
 DRV		BurnDrvkf2k1pkz;
-DRV		BurnDrvkf2k1rs;
+DRV		BurnDrvkof2k1rp;
+DRV		BurnDrvkof2k1ru;
+DRV		BurnDrvkf2k1ult;
 DRV		BurnDrvkf2k1pls;
 DRV		BurnDrvkf2k1pla;
+DRV		BurnDrvkf2k23rd;
+DRV		BurnDrvkof2k2ts;
 DRV		BurnDrvkof2002b;
+DRV		BurnDrvkf2k2mix;
+DRV		BurnDrvkof2k2fd;
+DRV		BurnDrvkof2k2jq;
+DRV		BurnDrvkof2002m;
 DRV		BurnDrvkof2002;
 DRV		BurnDrvkof2k2omg;
 DRV		BurnDrvkof2k2omg8;
 DRV		BurnDrvkof2k2omg9b;
 DRV		BurnDrvkof2k2omg9;
-DRV		BurnDrvkf2k23rd;
 DRV		BurnDrvkf2k2ps2;
-DRV		BurnDrvkf2k2pl17;
-DRV		BurnDrvkf2k2ru35;
+DRV		BurnDrvkf2k2p17;
+DRV		BurnDrvkof2k2ru;
+DRV		BurnDrvkof2k2ly;
 DRV		BurnDrvkf2k2mp;
 DRV		BurnDrvkf2k2mp2;
+DRV		BurnDrvkf2k2mp3;
 DRV		BurnDrvkf2k2pls;
 DRV		BurnDrvkf2k2pla;
 DRV		BurnDrvkf2k2plb;
+DRV		BurnDrvkf2k2plh;
+DRV		BurnDrvkof2002t;
 DRV		BurnDrvkf2k2plc;
 DRV		BurnDrvkf2k3bl;
 DRV		BurnDrvkf2k3bla;
+DRV		BurnDrvkof2k3fd;
 DRV		BurnDrvkf2k3pcb;
 DRV		BurnDrvkof2003h;
 DRV		BurnDrvkof2003;
 DRV		BurnDrvkf2k3ps2;
 DRV		BurnDrvkof2003t;
-DRV		BurnDrvkf2k3ps2sp;
+DRV		BurnDrvkf2k3p2s;
 DRV		BurnDrvkf2k3pl;
 DRV		BurnDrvkf2k3upl;
 DRV		BurnDrvkof2k4se;
 DRV		BurnDrvkf2k4pls;
 DRV		BurnDrvngpc_lastblad;
+DRV		BurnDrvlastbldi;
 DRV		BurnDrvlastbladh;
 DRV		BurnDrvlastblad;
 DRV		BurnDrvlastblada;
-DRV		BurnDrvlastbladsp;
-DRV		BurnDrvLb2b;
-DRV		BurnDrvDlastbld2eh;
+DRV		BurnDrvlastbldp;
+DRV		BurnDrvlastblsp;
+DRV		BurnDrvlastbd2b;
+DRV		BurnDrvDlastbd2e;
+DRV		BurnDrvDlastbd2i;
 DRV		BurnDrvlastbld2;
-DRV		BurnDrvDlastbld2te;
+DRV		BurnDrvDlastbd2p;
+DRV		BurnDrvlastbd2t;
 DRV		BurnDrvLastday;
 DRV		BurnDrvLastdaya;
 DRV		BurnDrvlastsold;
@@ -19450,6 +19557,7 @@ DRV		BurnDrvwh2h;
 DRV		BurnDrvwh2;
 DRV		BurnDrvwh2j;
 DRV		BurnDrvwh2ja;
+DRV		BurnDrvwhpjq;
 DRV		BurnDrvwhp;
 DRV		BurnDrvpce_wjockey;
 DRV		BurnDrvmd_worldillj;
@@ -20753,6 +20861,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_aroida,			// Alpha Roid (Japan, Alt)
 	&BurnDrvMSX_asquadron,		// Alpha Squadron (Japan)
 	&BurnDrvcv_alphazoo,		// Alphabet Zoo
+	&BurnDrvcv_alpharoid,		// Alpharoid (SGM) (HB)
 	&BurnDrvMSX_alpineski,		// Alpine Ski (Euro)
 	&BurnDrvAlpine,				// Alpine Ski (set 1)
 	&BurnDrvAlpinea,			// Alpine Ski (set 2)
@@ -22236,6 +22345,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_borfes,			// Borfes to 5-nin no Akuma - An Adventure Story (Japan)
 	&BurnSpecBorielrun,			// Boriel Runner (48K) (HB, v1.2)
 	&BurnSpecBosconian,			// Bosconian '87 (128K)
+	&BurnDrvcv_bosconian,		// Bosconian (SGM) (HB)
 	&BurnDrvMSX_bosco,			// Bosconian, Star Destroyer (Japan)
 	&BurnDrvMSX_boscob,			// Bosconian, Star Destroyer (Japan, Alt 2)
 	&BurnDrvMSX_boscoa,			// Bosconian, Star Destroyer (Japan, Alt)
@@ -24713,7 +24823,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_ddragon,		// Double Dragon (Korea) (Unl)
 	&BurnDrvsms_ddragonk,		// Double Dragon (Korea)
 	&BurnDrvdoubledr,			// Double Dragon (Neo-Geo)
-	&BurnDrvdoubledrsp,			// Double Dragon (Series Hack)
+	&BurnDrvdoubledt,			// Double Dragon (Optimized, Hack)
+	&BurnDrvdoubledp,			// Double Dragon (Plus, Hack)
+	&BurnDrvdoubldrsp,			// Double Dragon (Special 2017, Hack)
 	&BurnDrvDdragonu,			// Double Dragon (US set 1)
 	&BurnDrvDdragoua,			// Double Dragon (US set 2)
 	&BurnDrvDdragonub,			// Double Dragon (US set 3)
@@ -24986,6 +25098,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDrivfrcg,			// Driving Force (Galaxian conversion)
 	&BurnDrvDrivfrcp,			// Driving Force (Pac-Man conversion)
 	&BurnSpecDroidbuster,		// Droid Buster (128K) (HB)
+	&BurnDrvcv_drol,			// Drol (HB)
 	&BurnDrvsg1k_drol,			// Drol (Japan)
 	&BurnDrvsg1k_drolk,			// Drol (Korea)
 	&BurnDrvsg1k_drolt,			// Drol (Taiwan)
@@ -25721,20 +25834,20 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_fastest1,		// Fastest 1 (Japan)
 	&BurnDrvmd_fatfury,			// Fatal Fury (Euro, Korea)
 	&BurnDrvmd_fatfuryu,		// Fatal Fury (USA)
-	&BurnDrvFatfury1bh,			// Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai (Boss Hack by Yumeji)
+	&BurnDrvffury1bs,			// Fatal Fury - King of Fighters / Garou Densetsu - Shukumei no Tatakai (Boss, Hack)
 	&BurnDrvFatFury1,			// Fatal Fury - King of Fighters / Garou Densetsu - Shukumei no Tatakai (NGM-033 ~ NGH-033)
 	&BurnDrvmd_fatfury2ec,		// Fatal Fury 2 (Hack, Enhanced Colors v4.0)
 	&BurnDrvmd_fatfury2,		// Fatal Fury 2 (USA, Korea)
 	&BurnDrvFatfury2,			// Fatal Fury 2 / Garou Densetsu 2 - Arata-naru Tatakai (NGM-047 ~ NGH-047)
 	&BurnDrvFatfury2a,			// Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)
-	&BurnDrvFatfury3bh,			// Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (Ancient Battles Resurgence 2015-03-13)
+	&BurnDrvffury3bs,			// Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - Haruka-naru Tatakai (Ancient Battles Resurgence, Hack)
 	&BurnDrvFatfury3a,			// Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069 ~ NGH-069) (alternate set)
 	&BurnDrvFatfury3,			// Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - Haruka-naru Tatakai (NGM-069 ~ NGH-069)
 	&BurnDrvgg_fatfursp,		// Fatal Fury Special (Euro)
 	&BurnDrvgg_fatfurspu,		// Fatal Fury Special (USA)
 	&BurnDrvFatfursp,			// Fatal Fury Special / Garou Densetsu Special (NGM-058 ~ NGH-058, set 1)
 	&BurnDrvFatfurspa,			// Fatal Fury Special / Garou Densetsu Special (NGM-058 ~ NGH-058, set 2)
-	&BurnDrvFatfurspbs,			// Fatal Fury Special / Garou Densetsu Special (Optional Hidden Character Third Edition)
+	&BurnDrvffurspbs,			// Fatal Fury Special / Garou Densetsu Special (Optional Hidden Character Third Edition, Hack)
 	&BurnDrvmd_fatallab,		// Fatal Labyrinth (Euro, USA)
 	&BurnDrvmd_fatallabs,		// Fatal Labyrinth (Hack, Spanish)
 	&BurnDrvmd_fatalrew,		// Fatal Rewind (Euro, USA)
@@ -26547,7 +26660,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_gargoyle,		// Gargoyles (USA)
 	&BurnDrvGarogun,			// Garogun Seroyang (Korea)
 	&BurnDrvgaroubl,			// Garou - Mark of the Wolves (bootleg)
-	&BurnDrvGaroub,				// Garou - Mark of the Wolves (Enable hidden characters)
+	&BurnDrvgaroubs,			// Garou - Mark of the Wolves (Enable hidden characters, Hack)
+	&BurnDrvgaroujq,			// Garou - Mark of the Wolves (Enhanced, Hack)
 	&BurnDrvgarouha,			// Garou - Mark of the Wolves (NGH-2530)
 	&BurnDrvgarouh,				// Garou - Mark of the Wolves (NGM-2530 ~ NGH-2530)
 	&BurnDrvGarou,				// Garou - Mark of the Wolves (NGM-2530)
@@ -27153,9 +27267,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGrdnstrm,			// Guardian Storm (horizontal, not encrypted)
 	&BurnDrvGrdnstrmv,			// Guardian Storm (vertical)
 	&BurnSpecGuardian,			// Guardian, The (48K)
-	&BurnDrvGrdianssy,			// Guardians (Hack Series)\0Denjin Makai II (Hack Series)
 	&BurnDrvGrdians,			// Guardians / Denjin Makai II (P-FG01-1 PCB)
 	&BurnDrvGrdiansa,			// Guardians / Denjin Makai II (P0-113A PCB)
+	&BurnDrvGrdiansy,			// Guardians / Denjin Makai II Evil (Hack)
+	&BurnDrvGrdiansl,			// Guardians / Denjin Makai II LBS (Hack)
+	&BurnDrvGrdianls,			// Guardians / Denjin Makai II LBS Super (Hack)
+	&BurnDrvGrdiansp,			// Guardians / Denjin Makai II Plus (Hack)
+	&BurnDrvGrdiands,			// Guardians / Denjin Makai II Pro (Hack)
+	&BurnDrvGrdianke,			// Guardians / Denjin Makai II Reverie (Hack)
 	&BurnDrvMSX_guardic,		// Guardic (Japan)
 	&BurnDrvMSX_guardica,		// Guardic (Japan, Alt)
 	&BurnDrvnes_guardicgaidenc,	// Guardic Gaiden (Hack, Chinese v1.1)
@@ -28697,11 +28816,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvKingofb,			// King of Boxer (World)
 	&BurnDrvpce_kingcasn,		// King of Casino (Japan)
 	&BurnDrvtg_kingcasn,		// King of Casino (USA)
-	&BurnDrvkof98ae,			// King of Fighters '98 - Anniversary Edition (Hack)
-	&BurnDrvkof98cb,			// King of Fighters '98 - Combo Series (Hack)
-	&BurnDrvkof98eckg,			// King of Fighters '98 - Easy Combo King (Hack)
-	&BurnDrvkof98pfe,			// King of Fighters '98 - Plus Final Edition (Hack)
-	&BurnDrvKof98mix,			// King of Fighters '98 - Unlimited (Hack)
+	&BurnDrvkof98bsc,			// King of Fighters '98 - Dream Match Never Ends (Boss Chinese Edition, Hack)
+	&BurnDrvkof98plc,			// King of Fighters '98 - Dream Match Never Ends (Plus Chinese Edition, Hack)
 	&BurnDrvmd_kof98,			// King of Fighters '98, The (Taiwan) (Unl) [no comment, NOT WORKING]
 	&BurnDrvmd_kof99,			// King of Fighters '99, The (Taiwan) (Unl)
 	&BurnDrvmd_kof99a,			// King of Fighters '99, The (Taiwan, Alt) (Unl)
@@ -30239,61 +30355,107 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMetlsavr,			// Metal Saver
 	&BurnDrvnes_metalslaglo,	// Metal Slader Glory (Hack, English)
 	&BurnDrvnes_metalslagloj,	// Metal Slader Glory (Japan)
-	&BurnDrvmslugaks,			// Metal Slug (Modified by AKS, Hack)
 	&BurnDrvngpc_mslug1st,		// Metal Slug - 1st Mission (World)
 	&BurnDrvngpc_mslug2ndd,		// Metal Slug - 2nd Mission (Demo)
 	&BurnDrvngpc_mslug2nd,		// Metal Slug - 2nd Mission (World)
+	&BurnDrvmslug1v2,			// Metal Slug - Super Vehicle-001 (1v2 Mode, Hack)
+	&BurnDrvmslugdg,			// Metal Slug - Super Vehicle-001 (Multifunction, Hack)
+	&BurnDrvmslugyq,			// Metal Slug - Super Vehicle-001 (Origins, Hack)
 	&BurnDrvmslug,				// Metal Slug - Super Vehicle-001
-	&BurnDrvmslug2dd,			// Metal Slug 2 - Early Summer Starry Night (Hack)
-	&BurnDrvmslug2eg,			// Metal Slug 2 - Extraction Green Turbo (Hack)
-	&BurnDrvmslug2fm,			// Metal Slug 2 - Friendly Fire FC2 (Hack)
-	&BurnDrvmslug2aks,			// Metal Slug 2 - Super Vehicle-001/II (Modified by AKS, Hack)
+	&BurnDrvms21v2,				// Metal Slug 2 - Super Vehicle-001/II (1v2 Mode, Hack)
+	&BurnDrvmslug2r,			// Metal Slug 2 - Super Vehicle-001/II (Enemy Remix, Hack)
+	&BurnDrvmslug2eg,			// Metal Slug 2 - Super Vehicle-001/II (Extraction Green Turbo, Hack)
+	&BurnDrvmslug2fm,			// Metal Slug 2 - Super Vehicle-001/II (Friendly Fire FC2, Hack)
+	&BurnDrvmslug2dg,			// Metal Slug 2 - Super Vehicle-001/II (Multifunction, Hack)
 	&BurnDrvMSlug2,				// Metal Slug 2 - Super Vehicle-001/II (NGM-2410 ~ NGH-2410)
+	&BurnDrvmslug2dd,			// Metal Slug 2 - Super Vehicle-001/II (Starlight, Hack)
+	&BurnDrvmslug2ct,			// Metal Slug 2 - Super Vehicle-001/II (Survival, Hack)
+	&BurnDrvmslug2p,			// Metal Slug 2 - Super Vehicle-001/II (Weapon Storage, Hack)
 	&BurnDrvmslug2unity,		// Metal Slug 2 - Super Vehicle-001/II Unity (Added Timer Ver. 2021-01-22)
 	&BurnDrvMSlug2t,			// Metal Slug 2 Turbo (NGM-9410) (hack)
-	&BurnDrvmslug31v2,			// Metal Slug 3 (1v2 Mode, Hack)
+	&BurnDrvms31v2,				// Metal Slug 3 (1v2 Mode, Hack)
 	&BurnDrvmslug3eb,			// Metal Slug 3 (Blue, Hack)
 	&BurnDrvmslug3c,			// Metal Slug 3 (Enemy Remix, Hack)
-	&BurnDrvmslug3v,			// Metal Slug 3 (Enhanced Violence Version, hack by EEZEZY)
+	&BurnDrvmslug3v,			// Metal Slug 3 (Enhanced Violence, Hack)
 	&BurnDrvmslug3i,			// Metal Slug 3 (Firepower Enhance, Hack)
-	&BurnDrvmslug3aks,			// Metal Slug 3 (Modified by AKS, Hack)
-	&BurnDrvmslug3cb,			// Metal Slug 3 (Modified by CB, Hack)
-	&BurnDrvmslug3dd,			// Metal Slug 3 (Modified by QianXi, Hack)
+	&BurnDrvmslug3fd,			// Metal Slug 3 (Fully Decrypted)
+	&BurnDrvmslug3ki,			// Metal Slug 3 (Komorebi, Hack)
+	&BurnDrvmslug3lw,			// Metal Slug 3 (Last Bullet Remix, Hack)
+	&BurnDrvmslug3cq,			// Metal Slug 3 (Legend, Hack)
+	&BurnDrvmslug3g,			// Metal Slug 3 (Multifunction, Hack)
 	&BurnDrvmslug3h,			// Metal Slug 3 (NGH-2560)
 	&BurnDrvmslug3,				// Metal Slug 3 (NGM-2560)
 	&BurnDrvmslug3a,			// Metal Slug 3 (NGM-2560, earlier)
-	&BurnDrvmslug3se,			// Metal Slug 3 (Special Edition, Hack)
+	&BurnDrvmslug3gw,			// Metal Slug 3 (Onimusha Samanosuke, Hack)
+	&BurnDrvmslug3ps,			// Metal Slug 3 (Pigeon Slug, Hack)
+	&BurnDrvmslug3sd,			// Metal Slug 3 (Shop, Hack)
+	&BurnDrvmslug3se,			// Metal Slug 3 (Special, Hack)
+	&BurnDrvmslug3dd,			// Metal Slug 3 (Starlight, Hack)
+	&BurnDrvmslug3sc,			// Metal Slug 3 (Survival, Hack)
+	&BurnDrvmslug3zh,			// Metal Slug 3 (Vehicle Summon, Hack)
 	&BurnDrvmslug3unity,		// Metal Slug 3 Unity (Added Timer Ver. 2021-02-13)
 	&BurnDrvmslug3x,			// Metal Slug 3X (Complete Collection)
+	&BurnDrvms41v2,				// Metal Slug 4 (1v2 Mode, Hack)
+	&BurnDrvmslug4a,			// Metal Slug 4 (20th Anniversary, Hack)
 	&BurnDrvmslug4c,			// Metal Slug 4 (Enemy Remix, Hack)
-	&BurnDrvmslug4aks,			// Metal Slug 4 (Modified by AKS, Hack)
-	&BurnDrvmslug4cb,			// Metal Slug 4 (Modified by CB, Hack)
-	&BurnDrvmslug4a,			// Metal Slug 4 (Modified by MingTianZaiNuLiBa, Hack)
-	&BurnDrvmslug4dd,			// Metal Slug 4 (Modified by QianXi, Hack)
+	&BurnDrvmslug4fd,			// Metal Slug 4 (Fully Decrypted)
+	&BurnDrvmslug4ki,			// Metal Slug 4 (Komorebi, Hack)
+	&BurnDrvmslug4lq,			// Metal Slug 4 (Last Bullet Remix - Without body armor, Hack)
+	&BurnDrvmslug4lw,			// Metal Slug 4 (Last Bullet Remix, Hack)
+	&BurnDrvmslug4dg,			// Metal Slug 4 (Multifunction, Hack)
 	&BurnDrvmslug4h,			// Metal Slug 4 (NGH-2630)
 	&BurnDrvmslug4,				// Metal Slug 4 (NGM-2630)
+	&BurnDrvmslug4ar,			// Metal Slug 4 (Random Ammunition, Hack)
+	&BurnDrvmslug4dd,			// Metal Slug 4 (Starlight, Hack)
+	&BurnDrvmslug4q,			// Metal Slug 4 (The Longest Battle, Hack)
 	&BurnDrvms4plus,			// Metal Slug 4 Plus (bootleg)
 	&BurnDrvmslug4unity,		// Metal Slug 4 Unity (Added Timer Ver. 2021-01-30)
+	&BurnDrvms51v2,				// Metal Slug 5 (1v2 Mode, Hack)
 	&BurnDrvmslug5b,			// Metal Slug 5 (bootleg, set 1)
 	&BurnDrvmslug5b2,			// Metal Slug 5 (bootleg, set 2)
-	&BurnDrvmslug5ex,			// Metal Slug 5 (Extend Ver. 2022, Hack)
+	&BurnDrvmslug5bs,			// Metal Slug 5 (Boss Battles, Hack)
+	&BurnDrvmslug5mg,			// Metal Slug 5 (Devil Enemy Remix, Hack)
+	&BurnDrvmslug5db,			// Metal Slug 5 (Enemy Enhance, Hack)
+	&BurnDrvmslug5c,			// Metal Slug 5 (Enemy Remix, Hack)
+	&BurnDrvmslug5ex,			// Metal Slug 5 (Extend v1.2, Hack)
+	&BurnDrvmslug5f,			// Metal Slug 5 (Fierce Battle, Hack)
+	&BurnDrvmslug5fd,			// Metal Slug 5 (Fully Decrypted)
 	&BurnDrvms5pcb,				// Metal Slug 5 (JAMMA PCB)
-	&BurnDrvmslug5aks,			// Metal Slug 5 (Modified by AKS, Hack)
-	&BurnDrvmslug5cb,			// Metal Slug 5 (Modified by CB, Hack)
-	&BurnDrvmslug5dd,			// Metal Slug 5 (Modified by QianXi, Hack)
-	&BurnDrvmslug5c,			// Metal Slug 5 (Modified by Tuhr123, Hack)
-	&BurnDrvmslug5x,			// Metal Slug 5 (Modified by YouGuDuoLa, Hack)
+	&BurnDrvmslug5ki,			// Metal Slug 5 (Komorebi, Hack)
+	&BurnDrvmslug5dg,			// Metal Slug 5 (Multifunction, Hack)
+	&BurnDrvmslug5w,			// Metal Slug 5 (New Battle, Hack)
 	&BurnDrvmslug5h,			// Metal Slug 5 (NGH-2680)
 	&BurnDrvmslug5,				// Metal Slug 5 (NGM-2680)
+	&BurnDrvmslug5nd,			// Metal Slug 5 (Not Encrypted)
+	&BurnDrvms5plush,			// Metal Slug 5 (Plus, Hack)
+	&BurnDrvms5sgf,				// Metal Slug 5 (Remake FC2, Hack)
+	&BurnDrvmslug5dd,			// Metal Slug 5 (Starlight, Hack)
+	&BurnDrvmslug5sg,			// Metal Slug 5 (Stone Turtle, Hack)
+	&BurnDrvmslug5sc,			// Metal Slug 5 (Survival, Hack)
 	&BurnDrvmslug5es,			// Metal Slug 5 (The Longest Battle, Hack)
+	&BurnDrvmslug5zh,			// Metal Slug 5 (Vehicle Summon, Hack)
+	&BurnDrvmslug5x,			// Metal Slug 5 (X, Hack)
 	&BurnDrvms5plus,			// Metal Slug 5 Plus (bootleg)
 	&BurnDrvmslug5unity,		// Metal Slug 5 Unity (Added Timer Ver. 2021-04-23)
 	&BurnDrvmslug3b6,			// Metal Slug 6 (bootleg of Metal Slug 3)
 	&BurnDrvmslugunity,			// Metal Slug Unity (Added Timer Ver. 2021-02-05)
-	&BurnDrvmslugxaks,			// Metal Slug X - Super Vehicle-001 (Modified by AKS, Hack)
-	&BurnDrvmslugxcb,			// Metal Slug X - Super Vehicle-001 (Modified by CB, Hack)
-	&BurnDrvmslugx2r,			// Metal Slug X - Super Vehicle-001 (Modified by Soda & PlayerX, Hack)
+	&BurnDrvmsx1v2,				// Metal Slug X - Super Vehicle-001 (1v2 Mode, Hack)
+	&BurnDrvmsx2r1v2,			// Metal Slug X - Super Vehicle-001 (2R 1v2 Mode, Hack)
+	&BurnDrvmsx2reb,			// Metal Slug X - Super Vehicle-001 (2R Blue, Hack)
+	&BurnDrvmslugx2r,			// Metal Slug X - Super Vehicle-001 (2R, Hack)
+	&BurnDrvmsxsrf,				// Metal Slug X - Super Vehicle-001 (AzStar Soda Remix FC2, Hack)
+	&BurnDrvmslugxeb,			// Metal Slug X - Super Vehicle-001 (Blue, Hack)
+	&BurnDrvmslugxc2,			// Metal Slug X - Super Vehicle-001 (Enemy Remix, Hack)
+	&BurnDrvmslugxlb,			// Metal Slug X - Super Vehicle-001 (Extreme Space, Hack)
+	&BurnDrvmslugxif,			// Metal Slug X - Super Vehicle-001 (Infinite Firepower, Hack)
+	&BurnDrvmslugxcq,			// Metal Slug X - Super Vehicle-001 (Legend, Hack)
+	&BurnDrvmslugxc1,			// Metal Slug X - Super Vehicle-001 (Multi Vehicle, Hack)
+	&BurnDrvmslugxdg,			// Metal Slug X - Super Vehicle-001 (Multifunction, Hack)
 	&BurnDrvMSlugx,				// Metal Slug X - Super Vehicle-001 (NGM-2500 ~ NGH-2500)
+	&BurnDrvmslugxdd,			// Metal Slug X - Super Vehicle-001 (Starlight, Hack)
+	&BurnDrvmslugxsc,			// Metal Slug X - Super Vehicle-001 (Survival, Hack)
+	&BurnDrvmslugxsv,			// Metal Slug X - Super Vehicle-001 (Unbounded, Hack)
+	&BurnDrvmslugxxr,			// Metal Slug X - Super Vehicle-001 (Warriors, Hack)
 	&BurnDrvmslugxunity,		// Metal Slug X - Super Vehicle-001 Unity (Added Timer Ver. 2021-01-23)
 	&BurnDrvMsisaac,			// Metal Soldier Isaac II
 	&BurnDrvmd_msonichd,		// Metal Sonic Hyperdrive (Hack, v4.2)
@@ -33644,8 +33806,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvrbff2k,				// Real Bout Fatal Fury 2 - The Newcomers (Korean release)
 	&BurnDrvrbff2h,				// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - The Newcomers (NGH-2400)
 	&BurnDrvrbff2,				// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - The Newcomers (NGM-2400)
-	&BurnDrvrbff2bh,			// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (Secret Character Hack)
-	&BurnDrvrbffspbh,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Boss Hack)
+	&BurnDrvrbff2bs,			// Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - The Newcomers (Secret Character, Hack)
+	&BurnDrvrbffspbs,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Boss, Hack)
 	&BurnDrvrbffspeck,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Korean release)
 	&BurnDrvrbffspec,			// Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special
 	&BurnDrvMSX_realtenn,		// Real Tennis (Japan)
@@ -34283,25 +34445,33 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_samshos,			// Samurai Shodown (Hack, Spanish)
 	&BurnDrvgg_samsho,			// Samurai Shodown (USA)
 	&BurnDrvmd_samshou,			// Samurai Shodown (USA)
+	&BurnDrvsamshobs,			// Samurai Shodown / Samurai Spirits (Boss, Hack)
 	&BurnDrvSamShoh,			// Samurai Shodown / Samurai Spirits (NGH-045)
 	&BurnDrvSamsho,				// Samurai Shodown / Samurai Spirits (NGM-045)
 	&BurnDrvSamShoa,			// Samurai Shodown / Samurai Spirits (NGM-045, alt board)
+	&BurnDrvsamsh2jq,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (Infinite Power, Hack)
 	&BurnDrvSamsho2,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (NGM-063 ~ NGH-063)
-	&BurnDrvSamsho2pe,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.6, Hack)
-	&BurnDrvSamsho2sp,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen Special 2017 (Hack)
+	&BurnDrvsamsho2t,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (Optimized, Hack)
+	&BurnDrvSamsho2pe,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (Perfect V. 1.6, Hack)
+	&BurnDrvsamsho2s,			// Samurai Shodown II / Shin Samurai Spirits - Haohmaru Jigokuhen (Special 2017, Hack)
+	&BurnDrvsamsh3bs,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (Boss, Hack)
 	&BurnDrvSamSho3h,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)
 	&BurnDrvSamSho3,			// Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)
+	&BurnDrvsamsh4bs,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Boss, Hack)
 	&BurnDrvSamSho4,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222 ~ NGH-222)
-	&BurnDrvSamSho4sp,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack)
+	&BurnDrvsamsh4sp,			// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, Hack)
 	&BurnDrvsamsho5b,			// Samurai Shodown V / Samurai Spirits Zero (bootleg)
+	&BurnDrvsamsh5bs,			// Samurai Shodown V / Samurai Spirits Zero (Boss, Hack)
+	&BurnDrvsamsh5fd,			// Samurai Shodown V / Samurai Spirits Zero (Fully Decrypted)
 	&BurnDrvsamsho5x,			// Samurai Shodown V / Samurai Spirits Zero (hack of XBOX version)
 	&BurnDrvsamsho5h,			// Samurai Shodown V / Samurai Spirits Zero (NGH-2700)
 	&BurnDrvsamsho5,			// Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 1)
 	&BurnDrvsamsho5a,			// Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 2)
-	&BurnDrvsamsh5pf,			// Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)
+	&BurnDrvsamsh5pf,			// Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (Hack)
+	&BurnDrvsams5spf,			// Samurai Shodown V Special / Samurai Spirits Zero Special (Final, location test)
+	&BurnDrvss5spfd,			// Samurai Shodown V Special / Samurai Spirits Zero Special (Fully Decrypted)
 	&BurnDrvsamsh5spho,			// Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720, 1st release, censored)
 	&BurnDrvsamsh5sph,			// Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720, 2nd release, less censored)
-	&BurnDrvsamsh5fe,			// Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version)
 	&BurnDrvsamsh5sp,			// Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-2720)
 	&BurnDrvgg_samspir,			// Samurai Spirits (Japan)
 	&BurnDrvmd_samspir,			// Samurai Spirits (Japan)
@@ -34544,6 +34714,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_segachd,			// Sega Channel Demo (USA)
 	&BurnDrvsms_segachss,		// Sega Chess (Euro, Brazil)
 	&BurnDrvsg1k_segaflip,		// Sega Flipper (Euro, Japan)
+	&BurnDrvcv_segaflipper,		// Sega Flipper (HB)
 	&BurnDrvsg1k_segaflipa,		// Sega Flipper (Japan, Alt)
 	&BurnDrvgg_sega4in1,		// Sega Game Pack 4 in 1 (Euro)
 	&BurnDrvgg_sega4in1p,		// Sega Game Pack 4 in 1 (Euro, Prototype)
@@ -34589,8 +34760,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSengokuh,			// Sengoku / Sengoku Denshou (NGH-017, US)
 	&BurnDrvSengoku,			// Sengoku / Sengoku Denshou (NGM-017 ~ NGH-017)
 	&BurnDrvSengoku2,			// Sengoku 2 / Sengoku Denshou 2
+	&BurnDrvsengk3fs,			// Sengoku 3 / Sengoku Densho 2001 (Demeanor, Hack)
 	&BurnDrvSengoku3s,			// Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack)
-	&BurnDrvsengoku3hs,			// Sengoku 3 / Sengoku Densho 2001 (Hack Series)
+	&BurnDrvsengk3fd,			// Sengoku 3 / Sengoku Densho 2001 (Fully Decrypted)
+	&BurnDrvsengk3eb,			// Sengoku 3 / Sengoku Densho 2001 (Green Blue, Hack)
+	&BurnDrvsengok3i,			// Sengoku 3 / Sengoku Densho 2001 (Infinite Power, Hack)
 	&BurnDrvSengoku3,			// Sengoku 3 / Sengoku Densho 2001 (set 1)
 	&BurnDrvSengoku3a,			// Sengoku 3 / Sengoku Densho 2001 (set 2)
 	&BurnDrvSngkAce,			// Sengoku Ace (Japan, set 1)
@@ -35138,6 +35312,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsvcplus,			// SNK vs. Capcom - SVC Chaos Plus (bootleg set 1)
 	&BurnDrvsvcplusa,			// SNK vs. Capcom - SVC Chaos Plus (bootleg set 2)
 	&BurnDrvsvcsplus,			// SNK vs. Capcom - SVC Chaos Super Plus (bootleg)
+	&BurnDrvsvcsplse,			// SNK vs. Capcom - SVC Chaos Super Plus (Enhanced, Hack)
 	&BurnDrvngpc_svc,			// SNK vs. Capcom - The Match of the Millennium (World) ~ Choujou Kessen Saikyou Fighters - SNK vs Capcom (Jpn)
 	&BurnSpecsnoopy,			// Snoopy (48K)
 	&BurnDrvnes_snoopssilsposp,	// Snoopy's Silly Sports Spectacular (USA)
@@ -35830,6 +36005,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvStargrds,			// Star Guards
 	&BurnDrvsg1k_starjack1,		// Star Jacker (Euro, Japan, v1.1)
 	&BurnDrvsg1k_starjack,		// Star Jacker (Euro, Japan, v1.2)
+	&BurnDrvcv_starjacker,		// Star Jacker (HB)
 	&BurnDrvsg1k_starjack2,		// Star Jacker (Japan, v1.0)
 	&BurnDrvStarjack,			// Star Jacker (Sega)
 	&BurnDrvStarjacks,			// Star Jacker (Stern Electronics)
@@ -37638,119 +37814,158 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsKodr1,			// The King of Dragons (World 910711)
 	&BurnDrvCpsKodr2,			// The King of Dragons (World 910731)
 	&BurnDrvCpsKod,				// The King of Dragons (World 910805)
-	&BurnDrvKof94rz,			// The King of Fighters '94 (Hack Boss Remixed)
+	&BurnDrvkof94bs,			// The King of Fighters '94 (Boss, Hack)
+	&BurnDrvkof94rz,			// The King of Fighters '94 (Hack Boss Remixed)
 	&BurnDrvKof94,				// The King of Fighters '94 (NGM-055 ~ NGH-055)
-	&BurnDrvKof94br,			// The King of Fighters '94 (Portuguese edition Hack)
-	&BurnDrvKof95b,				// The King of Fighters '95 (Enable Hidden Characters V.[?])
+	&BurnDrvkof94br,			// The King of Fighters '94 (Portuguese edition, Hack)
+	&BurnDrvkof95bs,			// The King of Fighters '95 (Boss, Hack)
+	&BurnDrvkof95b,				// The King of Fighters '95 (Enable Hidden Characters V.[?])
 	&BurnDrvKof95h,				// The King of Fighters '95 (NGH-084)
 	&BurnDrvKof95,				// The King of Fighters '95 (NGM-084)
 	&BurnDrvKof95a,				// The King of Fighters '95 (NGM-084, alt board)
-	&BurnDrvKof95sp,			// The King of Fighters '95 - Special 2017 (Hack)
+	&BurnDrvkof95sp,			// The King of Fighters '95 (Special 2017, Hack)
+	&BurnDrvkof96ae,			// The King of Fighters '96 (Anniversary, Hack)
 	&BurnDrvkof96ep,			// The King of Fighters '96 (bootleg / hack)
+	&BurnDrvkof96cn,			// The King of Fighters '96 (Chinese Edition, ver 1.0, Hack)
 	&BurnDrvKof96h,				// The King of Fighters '96 (NGH-214)
 	&BurnDrvKof96,				// The King of Fighters '96 (NGM-214)
 	&BurnDrvKof96a,				// The King of Fighters '96 (NGM-214, alt board)
-	&BurnDrvkof96ae,			// The King of Fighters '96 - Anniversary Edition (Hack)
-	&BurnDrvkof96cn,			// The King of Fighters '96 - Chinese Edition (ver 1.0, Hack)
-	&BurnDrvKof96rp08sp,		// The King of Fighters '96 - Remix Plus 08 SP (hack)
-	&BurnDrvkof96rss,			// The King of Fighters '96 - Remix Spring Special (Version 1.5, Hack)
+	&BurnDrvkof96pls,			// The King of Fighters '96 (Plus, Hack)
+	&BurnDrvKof96rp,			// The King of Fighters '96 (Remix Plus 08 SP, Hack)
+	&BurnDrvkof96rss,			// The King of Fighters '96 (Remix Spring Special, Version 1.5, Hack)
+	&BurnDrvkof96r,				// The King of Fighters '96 (Revised, Hack)
+	&BurnDrvkof97cn,			// The King of Fighters '97 (10th Anniversary Chinese Edition, Hack)
+	&BurnDrvkof97ae,			// The King of Fighters '97 (Anniversary, Hack)
+	&BurnDrvkof97ts,			// The King of Fighters '97 (Battle with Orochi, v1.2, Hack)
+	&BurnDrvkof97cbt,			// The King of Fighters '97 (Combo Training, Hack, Ver. 2018)
+	&BurnDrvkof97m,				// The King of Fighters '97 (Dream Back, Hack)
+	&BurnDrvkof97eb,			// The King of Fighters '97 (Evolution & Balance, Hack)
+	&BurnDrvkof97evf,			// The King of Fighters '97 (Evolution FC2, Hack)
+	&BurnDrvkof97evn,			// The King of Fighters '97 (Evolution New, Hack)
+	&BurnDrvkof97xt,			// The King of Fighters '97 (Final Battle, Hack)
 	&BurnDrvKof97ps,			// The King of Fighters '97 (Imitation Playstation final improved version 2016-10-29)
+	&BurnDrvkof97inv,			// The King of Fighters '97 (Invincible Plus!, B2.1.2107, Hack)
 	&BurnDrvKof97k,				// The King of Fighters '97 (Korean release)
 	&BurnDrvKof97h,				// The King of Fighters '97 (NGH-2320)
 	&BurnDrvKof97,				// The King of Fighters '97 (NGM-2320)
-	&BurnDrvkof97cn,			// The King of Fighters '97 - 10th Anniversary Chinese Edition (Hack)
-	&BurnDrvkof97ae,			// The King of Fighters '97 - Anniversary Edition (Hack)
-	&BurnDrvkof97cbt,			// The King of Fighters '97 - Combo Training (Hack, Ver. 2018)
-	&BurnDrvkof97xt,			// The King of Fighters '97 - Final Battle (Hack)
-	&BurnDrvkof97inv,			// The King of Fighters '97 - Invincible Plus! (B2.1.2107, Hack)
-	&BurnDrvkof97t,				// The King of Fighters '97 - Optimized Series (Hack)
-	&BurnDrvKof97pm,			// The King of Fighters '97 - Practice Mode (Hack)
-	&BurnDrvkof97rc,			// The King of Fighters '97 - Random Combo (Hack, Ver. 2010)
-	&BurnDrvkof97sp,			// The King of Fighters '97 - Special Edition (Hack)
+	&BurnDrvkof97t,				// The King of Fighters '97 (Optimized, Hack)
+	&BurnDrvKof97pm,			// The King of Fighters '97 (Practice Mode, Hack)
+	&BurnDrvkof97rc,			// The King of Fighters '97 (Random Combo, Hack, Ver. 2010)
+	&BurnDrvkof97sp,			// The King of Fighters '97 (Special, Hack)
+	&BurnDrvkof97st,			// The King of Fighters '97 (Strengthen Innovation, Hack)
 	&BurnDrvKof97oro,			// The King of Fighters '97 Chongchu Jianghu Plus 2003 (bootleg, set 1)
 	&BurnDrvkof97pla,			// The King of Fighters '97 Chongchu Jianghu Plus 2003 (bootleg, set 2)
-	&BurnDrvkof97evn,			// The King of Fighters '97 Evolution New (Hack)
 	&BurnDrvKof97pls,			// The King of Fighters '97 Plus (bootleg)
-	&BurnDrvkof98evo,			// The King of Fighters '98 - Evolution (Hack)
-	&BurnDrvKof98ratio,			// The King of Fighters '98 - Ratio (Hack)
+	&BurnDrvkof97plh,			// The King of Fighters '97 Plus (Hack)
+	&BurnDrvkof98ae,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Anniversary, Hack)
+	&BurnDrvkof98bc2nd,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (BC 2nd Impact Edition, Hack, Ver.2020-07-29)
+	&BurnDrvkof98bc2k2,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (BC Style 2002, Hack) (Unknown Author)
+	&BurnDrvkof98cp,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Combo Plus, Hack)
+	&BurnDrvkof98cb,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Combo, Hack)
+	&BurnDrvkof98eckg,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Easy Combo King, Hack)
+	&BurnDrvkof98evo,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Evolution, Hack)
 	&BurnDrvKof98k,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Korean board, set 1)
 	&BurnDrvKof98ka,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Korean board, set 2)
 	&BurnDrvKof98h,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (NGH-2420)
 	&BurnDrvKof98,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (NGM-2420)
 	&BurnDrvKof98a,				// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (NGM-2420, alt board)
-	&BurnDrvkof98ult,			// The King of Fighters '98 - Ultimate Match (Hack)
-	&BurnDrvkof98bc2nd,			// The King of Fighters '98 BC 2nd Impact Edition (Hack, Ver.2020-07-29)
-	&BurnDrvkof98bc2k2,			// The King of Fighters '98 BC Style 2002 (Hack)
-	&BurnDrvkof99ae,			// The King of Fighters '99 - Anniversary Edition (Hack)
-	&BurnDrvkof99eur,			// The King of Fighters '99 - Evolution Ultra Remix (Hack)
-	&BurnDrvkof99eur2,			// The King of Fighters '99 - Evolution Ultra Remix 2015 (Hack)
+	&BurnDrvkof98pfe,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Plus Final Edition, Hack)
+	&BurnDrvkof98rat,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Ratio, Hack)
+	&BurnDrvkof98ult,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Ultimate Match, Hack)
+	&BurnDrvKof98mix,			// The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (Unlimited, Hack)
+	&BurnDrvkof99ae,			// The King of Fighters '99 - Millennium Battle (Anniversary, Hack)
+	&BurnDrvkof99cb,			// The King of Fighters '99 - Millennium Battle (Combo, Hack)
 	&BurnDrvkof99e,				// The King of Fighters '99 - Millennium Battle (earlier)
+	&BurnDrvkof99eur,			// The King of Fighters '99 - Millennium Battle (Evolution Ultra Remix, Hack)
+	&BurnDrvkof99jh,			// The King of Fighters '99 - Millennium Battle (Evolution, Hack)
+	&BurnDrvkof99fd,			// The King of Fighters '99 - Millennium Battle (Fully Decrypted)
+	&BurnDrvkof99jq,			// The King of Fighters '99 - Millennium Battle (Infinite Energy, Hack)
 	&BurnDrvkof99k,				// The King of Fighters '99 - Millennium Battle (Korean release)
 	&BurnDrvkof99ka,			// The King of Fighters '99 - Millennium Battle (Korean release, non-encrypted program)
+	&BurnDrvkof99sk,			// The King of Fighters '99 - Millennium Battle (LC+SK, Hack)
 	&BurnDrvkof99h,				// The King of Fighters '99 - Millennium Battle (NGH-2510)
 	&BurnDrvkof99,				// The King of Fighters '99 - Millennium Battle (NGM-2510)
+	&BurnDrvkof99t,				// The King of Fighters '99 - Millennium Battle (Plus, Hack)
 	&BurnDrvkof99p,				// The King of Fighters '99 - Millennium Battle (prototype)
-	&BurnDrvkof99t,				// The King of Fighters '99 - Millennium Battle (Series Hack)
-	&BurnDrvkof99rp,			// The King of Fighters '99 - Remix Pro (v2.01 Final, Hack)
-	&BurnDrvkof99sr,			// The King of Fighters '99 Summer Revolution (Hack)
+	&BurnDrvkof99rp,			// The King of Fighters '99 - Millennium Battle (Remix Pro v2.01 Final, Hack)
+	&BurnDrvkof99sr,			// The King of Fighters '99 - Millennium Battle (Summer Revolution, Hack)
 	&BurnDrvngpc_kofpara,		// The King of Fighters - Battle de Paradise (Jpn)
 	&BurnDrvkof10th,			// The King of Fighters 10th Anniversary (bootleg of The King of Fighters 2002)
+	&BurnDrvkf10thuo,			// The King of Fighters 10th Anniversary (Optimized 2020, Hack)
 	&BurnDrvkof10thd,			// The King of Fighters 10th Anniversary (The King of Fighters 2002 bootleg / Fully Decrypted)
-	&BurnDrvkof10thuo,			// The King of Fighters 10th Anniversary - Optimized version 2020 (Hack)
 	&BurnDrvkf2k5uni,			// The King of Fighters 10th Anniversary 2005 Unique (bootleg of The King of Fighters 2002)
 	&BurnDrvkf10thep,			// The King of Fighters 10th Anniversary Extra Plus (bootleg of The King of Fighters 2002)
+	&BurnDrvkof2kfd,			// The King of Fighters 2000 (Fully Decrypted)
+	&BurnDrvkof2000bc,			// The King of Fighters 2000 (Imitate BC 14 System, Hack By Aillis)
 	&BurnDrvkof2000,			// The King of Fighters 2000 (NGM-2570 ~ NGH-2570)
 	&BurnDrvkof2000n,			// The King of Fighters 2000 (not encrypted)
-	&BurnDrvkof2000bc,			// The King of Fighters 2000 - Imitate BC 14 System (Hack By Aillis)
-	&BurnDrvkof2kotc,			// The King of Fighters 2000 - OTC (Hack)
-	&BurnDrvkof2kps2,			// The King of Fighters 2000 - Playstation 2 (Hack)
-	&BurnDrvkof2ksp,			// The King of Fighters 2000 - Special Edition (Hack)
-	&BurnDrvkof2kpls,			// The King of Fighters 2000 Plus Blue (Hack)
+	&BurnDrvkof2000t,			// The King of Fighters 2000 (Optimized, Hack)
+	&BurnDrvkof2kotc,			// The King of Fighters 2000 (OTC, Hack)
+	&BurnDrvkof2kps2,			// The King of Fighters 2000 (Playstation 2, Hack)
+	&BurnDrvkof2kpls,			// The King of Fighters 2000 (Plus Blue, Hack)
+	&BurnDrvkof2ksp,			// The King of Fighters 2000 (Special, Hack)
 	&BurnDrvkof2kxxx,			// The King of Fighters 2000 SP XXX (Hack, Ver. 2016-01-04)
+	&BurnDrvkof2k1bs,			// The King of Fighters 2001 (Boss, Hack)
+	&BurnDrvkof2k1fd,			// The King of Fighters 2001 (Fully Decrypted)
 	&BurnDrvkof2001h,			// The King of Fighters 2001 (NGH-2621)
 	&BurnDrvkof2001,			// The King of Fighters 2001 (NGM-262?)
-	&BurnDrvkof2k1bs,			// The King of Fighters 2001 - Boss (Hack)
-	&BurnDrvkf2k1pkz,			// The King of Fighters 2001 - PS2 Krizalid Edition (Hack)
-	&BurnDrvkf2k1rs,			// The King of Fighters 2001 - Remix Series (Hack)
+	&BurnDrvkf2k1pkz,			// The King of Fighters 2001 (PS2 Krizalid, Hack)
+	&BurnDrvkof2k1rp,			// The King of Fighters 2001 (Remix Pro v1.02 Final, Hack)
+	&BurnDrvkof2k1ru,			// The King of Fighters 2001 (Remix Ultra 2.3, Hack)
+	&BurnDrvkf2k1ult,			// The King of Fighters 2001 (Ultimate, Hack)
 	&BurnDrvkf2k1pls,			// The King of Fighters 2001 Plus (set 1, bootleg / hack)
 	&BurnDrvkf2k1pla,			// The King of Fighters 2001 Plus (set 2, bootleg / hack)
+	&BurnDrvkf2k23rd,			// The King of Fighters 2002 (3rd Strike of Orochi, Hack)
+	&BurnDrvkof2k2ts,			// The King of Fighters 2002 (Battle with Orochi, Hack)
 	&BurnDrvkof2002b,			// The King of Fighters 2002 (bootleg)
+	&BurnDrvkf2k2mix,			// The King of Fighters 2002 (Climax, Hack)
+	&BurnDrvkof2k2fd,			// The King of Fighters 2002 (Fully Decrypted)
+	&BurnDrvkof2k2jq,			// The King of Fighters 2002 (Infinite Energy, Hack)
+	&BurnDrvkof2002m,			// The King of Fighters 2002 (Mugen, Hack)
 	&BurnDrvkof2002,			// The King of Fighters 2002 (NGM-2650 ~ NGH-2650)
 	&BurnDrvkof2k2omg,			// The King of Fighters 2002 (Omega v.0?)
 	&BurnDrvkof2k2omg8,			// The King of Fighters 2002 (Omega v0.8)
 	&BurnDrvkof2k2omg9b,		// The King of Fighters 2002 (Omega v0.9 beta)
 	&BurnDrvkof2k2omg9,			// The King of Fighters 2002 (Omega v0.9)
-	&BurnDrvkf2k23rd,			// The King of Fighters 2002 - 3rd Strike of Orochi (Hack)
-	&BurnDrvkf2k2ps2,			// The King of Fighters 2002 - PlayStation 2 (Hack)
-	&BurnDrvkf2k2pl17,			// The King of Fighters 2002 - Plus 2017 (Hack)
-	&BurnDrvkf2k2ru35,			// The King of Fighters 2002 - Remix Ultra 3.5 (Hack)
+	&BurnDrvkf2k2ps2,			// The King of Fighters 2002 (PlayStation 2, Hack)
+	&BurnDrvkf2k2p17,			// The King of Fighters 2002 (Plus 2017, Hack)
+	&BurnDrvkof2k2ru,			// The King of Fighters 2002 (Remix Ultra 3.5, Hack)
+	&BurnDrvkof2k2ly,			// The King of Fighters 2002 (Remix, Hack)
 	&BurnDrvkf2k2mp,			// The King of Fighters 2002 Magic Plus (bootleg)
 	&BurnDrvkf2k2mp2,			// The King of Fighters 2002 Magic Plus II (bootleg)
+	&BurnDrvkf2k2mp3,			// The King of Fighters 2002 Magic Plus III (Hack)
 	&BurnDrvkf2k2pls,			// The King of Fighters 2002 Plus (bootleg set 1)
 	&BurnDrvkf2k2pla,			// The King of Fighters 2002 Plus (bootleg set 2)
 	&BurnDrvkf2k2plb,			// The King of Fighters 2002 Plus (bootleg set 3)
+	&BurnDrvkf2k2plh,			// The King of Fighters 2002 Plus (Hack)
+	&BurnDrvkof2002t,			// The King of Fighters 2002 Plus (Optimised, Hack)
 	&BurnDrvkf2k2plc,			// The King of Fighters 2002 Super (bootleg)
 	&BurnDrvkf2k3bl,			// The King of Fighters 2003 (bootleg set 1)
 	&BurnDrvkf2k3bla,			// The King of Fighters 2003 (bootleg set 2)
+	&BurnDrvkof2k3fd,			// The King of Fighters 2003 (Fully Decrypted)
 	&BurnDrvkf2k3pcb,			// The King of Fighters 2003 (Japan, JAMMA PCB)
 	&BurnDrvkof2003h,			// The King of Fighters 2003 (NGH-2710)
 	&BurnDrvkof2003,			// The King of Fighters 2003 (NGM-2710, Export)
-	&BurnDrvkf2k3ps2,			// The King of Fighters 2003 - PlayStation 2 (Hack)
-	&BurnDrvkof2003t,			// The King of Fighters 2003 - Plus (Hack)
-	&BurnDrvkf2k3ps2sp,			// The King of Fighters 2003 - PS2 Style Portraits (Hack)
+	&BurnDrvkf2k3ps2,			// The King of Fighters 2003 (PlayStation 2, Hack)
+	&BurnDrvkof2003t,			// The King of Fighters 2003 (Plus, Hack)
+	&BurnDrvkf2k3p2s,			// The King of Fighters 2003 (PS2 Style Portraits, Hack)
 	&BurnDrvkf2k3pl,			// The King of Fighters 2004 Plus / Hero (bootleg of The King of Fighters 2003)
 	&BurnDrvkf2k3upl,			// The King of Fighters 2004 Ultra Plus (bootleg of The King of Fighters 2003)
 	&BurnDrvkof2k4se,			// The King of Fighters Special Edition 2004 (bootleg of The King of Fighters 2002)
 	&BurnDrvkf2k4pls,			// The King of Fighters Special Edition 2004 Plus (bootleg)
 	&BurnDrvngpc_lastblad,		// The Last Blade - Beyond the Destiny (Euro)
+	&BurnDrvlastbldi,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Infinite Energy, Hack)
 	&BurnDrvlastbladh,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGH-2340)
 	&BurnDrvlastblad,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340)
 	&BurnDrvlastblada,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340, alt board)
-	&BurnDrvlastbladsp,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
-	&BurnDrvLb2b,				// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enable Hidden Characters V4)
-	&BurnDrvDlastbld2eh,		// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced Hack)
+	&BurnDrvlastbldp,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Plus, Hack)
+	&BurnDrvlastblsp,			// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, Hack)
+	&BurnDrvlastbd2b,			// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enable Hidden Characters V4)
+	&BurnDrvDlastbd2e,			// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced, Hack)
+	&BurnDrvDlastbd2i,			// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Infinite Energy, Hack)
 	&BurnDrvlastbld2,			// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (NGM-2430 ~ NGH-2430)
-	&BurnDrvDlastbld2te,		// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Team Edition Hack)
+	&BurnDrvDlastbd2p,			// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Plus, Hack)
+	&BurnDrvlastbd2t,			// The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Team, Hack)
 	&BurnDrvLastday,			// The Last Day (set 1)
 	&BurnDrvLastdaya,			// The Last Day (set 2)
 	&BurnDrvlastsold,			// The Last Soldier (Korean release of The Last Blade)
@@ -39514,6 +39729,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvwh2,				// World Heroes 2 (ALM-006 ~ ALH-006)
 	&BurnDrvwh2j,				// World Heroes 2 Jet (ADM-007 ~ ADH-007)
 	&BurnDrvwh2ja,				// World Heroes 2 Jet (ADM-007)
+	&BurnDrvwhpjq,				// World Heroes Perfect (Enhanced, Hack)
 	&BurnDrvwhp,				// World Heroes Perfect
 	&BurnDrvpce_wjockey,		// World Jockey (Japan)
 	&BurnDrvmd_worldillj,		// World of Illusion - Fushigi na Magic Box (Japan)
@@ -40815,6 +41031,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "msx_aroida", "msx/d_msx.cpp"},
 	{ "msx_asquadron", "msx/d_msx.cpp"},
 	{ "cv_alphazoo", "coleco/d_coleco.cpp"},
+	{ "cv_alpharoid", "coleco/d_coleco.cpp"},
 	{ "msx_alpineski", "msx/d_msx.cpp"},
 	{ "alpine", "taito/d_taitosj.cpp"},
 	{ "alpinea", "taito/d_taitosj.cpp"},
@@ -42286,6 +42503,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "msx_borfes", "msx/d_msx.cpp"},
 	{ "spec_borielrun", "spectrum/d_spectrum.cpp"},
 	{ "spec_bosconian", "spectrum/d_spectrum.cpp"},
+	{ "cv_bosconian", "coleco/d_coleco.cpp"},
 	{ "msx_bosco", "msx/d_msx.cpp"},
 	{ "msx_boscob", "msx/d_msx.cpp"},
 	{ "msx_boscoa", "msx/d_msx.cpp"},
@@ -44733,7 +44951,9 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "msx_ddragon", "msx/d_msx.cpp"},
 	{ "sms_ddragonk", "sms/d_sms.cpp"},
 	{ "doubledr", "neogeo/d_neogeo.cpp"},
-	{ "doubledrsp", "neogeo/d_neogeo.cpp"},
+	{ "doubledt", "neogeo/d_neogeo.cpp"},
+	{ "doubledp", "neogeo/d_neogeo.cpp"},
+	{ "doubldsp", "neogeo/d_neogeo.cpp"},
 	{ "ddragonu", "pre90s/d_ddragon.cpp"},
 	{ "ddragonua", "pre90s/d_ddragon.cpp"},
 	{ "ddragonub", "pre90s/d_ddragon.cpp"},
@@ -45004,6 +45224,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "drivfrcg", "galaxian/d_galaxian.cpp"},
 	{ "drivfrcp", "pre90s/d_pac2650.cpp"},
 	{ "spec_droidbuster", "spectrum/d_spectrum.cpp"},
+	{ "cv_drol", "coleco/d_coleco.cpp"},
 	{ "sg1k_drol", "sg1000/d_sg1000.cpp"},
 	{ "sg1k_drolk", "sg1000/d_sg1000.cpp"},
 	{ "sg1k_drolt", "sg1000/d_sg1000.cpp"},
@@ -45733,20 +45954,20 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_fastest1", "megadrive/d_megadrive.cpp"},
 	{ "md_fatfury", "megadrive/d_megadrive.cpp"},
 	{ "md_fatfuryu", "megadrive/d_megadrive.cpp"},
-	{ "fatfury1bh", "neogeo/d_neogeo.cpp"},
+	{ "ffury1bs", "neogeo/d_neogeo.cpp"},
 	{ "fatfury1", "neogeo/d_neogeo.cpp"},
 	{ "md_fatfury2ec", "megadrive/d_megadrive.cpp"},
 	{ "md_fatfury2", "megadrive/d_megadrive.cpp"},
 	{ "fatfury2", "neogeo/d_neogeo.cpp"},
 	{ "fatfury2a", "neogeo/d_neogeo.cpp"},
-	{ "fatfury3bh", "neogeo/d_neogeo.cpp"},
+	{ "ffury3bs", "neogeo/d_neogeo.cpp"},
 	{ "fatfury3a", "neogeo/d_neogeo.cpp"},
 	{ "fatfury3", "neogeo/d_neogeo.cpp"},
 	{ "gg_fatfursp", "sms/d_sms.cpp"},
 	{ "gg_fatfurspu", "sms/d_sms.cpp"},
 	{ "fatfursp", "neogeo/d_neogeo.cpp"},
 	{ "fatfurspa", "neogeo/d_neogeo.cpp"},
-	{ "fatfurspbs", "neogeo/d_neogeo.cpp"},
+	{ "ffurspbs", "neogeo/d_neogeo.cpp"},
 	{ "md_fatallab", "megadrive/d_megadrive.cpp"},
 	{ "md_fatallabs", "megadrive/d_megadrive.cpp"},
 	{ "md_fatalrew", "megadrive/d_megadrive.cpp"},
@@ -46551,7 +46772,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_gargoyle", "megadrive/d_megadrive.cpp"},
 	{ "garogun", "pst90s/d_nmg5.cpp"},
 	{ "garoubl", "neogeo/d_neogeo.cpp"},
-	{ "garoub", "neogeo/d_neogeo.cpp"},
+	{ "garoubs", "neogeo/d_neogeo.cpp"},
+	{ "garoujq", "neogeo/d_neogeo.cpp"},
 	{ "garouha", "neogeo/d_neogeo.cpp"},
 	{ "garouh", "neogeo/d_neogeo.cpp"},
 	{ "garou", "neogeo/d_neogeo.cpp"},
@@ -47155,9 +47377,14 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "grdnstrm", "pst90s/d_nmk16.cpp"},
 	{ "grdnstrmv", "pst90s/d_nmk16.cpp"},
 	{ "spec_guardian", "spectrum/d_spectrum.cpp"},
-	{ "grdianshs", "pst90s/d_seta2.cpp"},
 	{ "grdians", "pst90s/d_seta2.cpp"},
 	{ "grdiansa", "pst90s/d_seta2.cpp"},
+	{ "grdiansy", "pst90s/d_seta2.cpp"},
+	{ "grdiansl", "pst90s/d_seta2.cpp"},
+	{ "grdianls", "pst90s/d_seta2.cpp"},
+	{ "grdiansp", "pst90s/d_seta2.cpp"},
+	{ "grdiands", "pst90s/d_seta2.cpp"},
+	{ "grdianke", "pst90s/d_seta2.cpp"},
 	{ "msx_guardic", "msx/d_msx.cpp"},
 	{ "msx_guardica", "msx/d_msx.cpp"},
 	{ "nes_guardicgaidenc", "nes/d_nes.cpp"},
@@ -48679,11 +48906,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "kingofb", "pre90s/d_kingofbox.cpp"},
 	{ "pce_kingcasn", "pce/d_pce.cpp"},
 	{ "tg_kingcasn", "pce/d_pce.cpp"},
-	{ "kof98ae", "neogeo/d_neogeo.cpp"},
-	{ "kof98cb", "neogeo/d_neogeo.cpp"},
-	{ "kof98eck", "neogeo/d_neogeo.cpp"},
-	{ "kof98pfe", "neogeo/d_neogeo.cpp"},
-	{ "kof98mix", "neogeo/d_neogeo.cpp"},
+	{ "kof98bsc", "neogeo/d_neogeo.cpp"},
+	{ "kof98plc", "neogeo/d_neogeo.cpp"},
 	{ "md_kof98", "megadrive/d_megadrive.cpp"},
 	{ "md_kof99", "megadrive/d_megadrive.cpp"},
 	{ "md_kof99a", "megadrive/d_megadrive.cpp"},
@@ -50209,61 +50433,107 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "metlsavr", "pst90s/d_tumbleb.cpp"},
 	{ "nes_metalslaglo", "nes/d_nes.cpp"},
 	{ "nes_metalslagloj", "nes/d_nes.cpp"},
-	{ "mslugaks", "neogeo/d_neogeo.cpp"},
 	{ "ngp_mslug1st", "pst90s/d_ngp.cpp"},
 	{ "ngp_mslug2ndd", "pst90s/d_ngp.cpp"},
 	{ "ngp_mslug2nd", "pst90s/d_ngp.cpp"},
+	{ "mslug1v2", "neogeo/d_neogeo.cpp"},
+	{ "mslugdg", "neogeo/d_neogeo.cpp"},
+	{ "mslugyq", "neogeo/d_neogeo.cpp"},
 	{ "mslug", "neogeo/d_neogeo.cpp"},
-	{ "mslug2dd", "neogeo/d_neogeo.cpp"},
+	{ "ms21v2", "neogeo/d_neogeo.cpp"},
+	{ "mslug2r", "neogeo/d_neogeo.cpp"},
 	{ "mslug2eg", "neogeo/d_neogeo.cpp"},
 	{ "mslug2fm", "neogeo/d_neogeo.cpp"},
-	{ "mslug2aks", "neogeo/d_neogeo.cpp"},
+	{ "mslug2dg", "neogeo/d_neogeo.cpp"},
 	{ "mslug2", "neogeo/d_neogeo.cpp"},
+	{ "mslug2dd", "neogeo/d_neogeo.cpp"},
+	{ "mslug2ct", "neogeo/d_neogeo.cpp"},
+	{ "mslug2p", "neogeo/d_neogeo.cpp"},
 	{ "mslug2unity", "neogeo/d_neogeo.cpp"},
 	{ "mslug2t", "neogeo/d_neogeo.cpp"},
-	{ "mslug31v2", "neogeo/d_neogeo.cpp"},
+	{ "ms31v2", "neogeo/d_neogeo.cpp"},
 	{ "mslug3eb", "neogeo/d_neogeo.cpp"},
 	{ "mslug3c", "neogeo/d_neogeo.cpp"},
 	{ "mslug3v", "neogeo/d_neogeo.cpp"},
 	{ "mslug3i", "neogeo/d_neogeo.cpp"},
-	{ "mslug3aks", "neogeo/d_neogeo.cpp"},
-	{ "mslug3cb", "neogeo/d_neogeo.cpp"},
-	{ "mslug3dd", "neogeo/d_neogeo.cpp"},
+	{ "mslug3fd", "neogeo/d_neogeo.cpp"},
+	{ "mslug3ki", "neogeo/d_neogeo.cpp"},
+	{ "mslug3lw", "neogeo/d_neogeo.cpp"},
+	{ "mslug3cq", "neogeo/d_neogeo.cpp"},
+	{ "mslug3g", "neogeo/d_neogeo.cpp"},
 	{ "mslug3h", "neogeo/d_neogeo.cpp"},
 	{ "mslug3", "neogeo/d_neogeo.cpp"},
 	{ "mslug3a", "neogeo/d_neogeo.cpp"},
+	{ "mslug3gw", "neogeo/d_neogeo.cpp"},
+	{ "mslug3ps", "neogeo/d_neogeo.cpp"},
+	{ "mslug3sd", "neogeo/d_neogeo.cpp"},
 	{ "mslug3se", "neogeo/d_neogeo.cpp"},
+	{ "mslug3dd", "neogeo/d_neogeo.cpp"},
+	{ "mslug3sc", "neogeo/d_neogeo.cpp"},
+	{ "mslug3zh", "neogeo/d_neogeo.cpp"},
 	{ "mslug3unity", "neogeo/d_neogeo.cpp"},
 	{ "mslug3x", "neogeo/d_neogeo.cpp"},
-	{ "mslug4c", "neogeo/d_neogeo.cpp"},
-	{ "mslug4aks", "neogeo/d_neogeo.cpp"},
-	{ "mslug4cb", "neogeo/d_neogeo.cpp"},
+	{ "ms41v2", "neogeo/d_neogeo.cpp"},
 	{ "mslug4a", "neogeo/d_neogeo.cpp"},
-	{ "mslug4dd", "neogeo/d_neogeo.cpp"},
+	{ "mslug4c", "neogeo/d_neogeo.cpp"},
+	{ "mslug4fd ", "neogeo/d_neogeo.cpp"},
+	{ "mslug4ki", "neogeo/d_neogeo.cpp"},
+	{ "mslug4lq", "neogeo/d_neogeo.cpp"},
+	{ "mslug4lw", "neogeo/d_neogeo.cpp"},
+	{ "mslug4dg", "neogeo/d_neogeo.cpp"},
 	{ "mslug4h", "neogeo/d_neogeo.cpp"},
 	{ "mslug4", "neogeo/d_neogeo.cpp"},
+	{ "mslug4ar", "neogeo/d_neogeo.cpp"},
+	{ "mslug4dd", "neogeo/d_neogeo.cpp"},
+	{ "mslug4q", "neogeo/d_neogeo.cpp"},
 	{ "ms4plus", "neogeo/d_neogeo.cpp"},
 	{ "mslug4unity", "neogeo/d_neogeo.cpp"},
+	{ "ms51v2", "neogeo/d_neogeo.cpp"},
 	{ "mslug5b", "neogeo/d_neogeo.cpp"},
 	{ "mslug5b2", "neogeo/d_neogeo.cpp"},
-	{ "mslug5ex", "neogeo/d_neogeo.cpp"},
-	{ "ms5pcb", "neogeo/d_neogeo.cpp"},
-	{ "mslug5aks", "neogeo/d_neogeo.cpp"},
-	{ "mslug5cb", "neogeo/d_neogeo.cpp"},
-	{ "mslug5dd", "neogeo/d_neogeo.cpp"},
+	{ "mslug5bs", "neogeo/d_neogeo.cpp"},
+	{ "mslug5mg", "neogeo/d_neogeo.cpp"},
+	{ "mslug5db", "neogeo/d_neogeo.cpp"},
 	{ "mslug5c", "neogeo/d_neogeo.cpp"},
-	{ "mslug5x", "neogeo/d_neogeo.cpp"},
+	{ "mslug5ex", "neogeo/d_neogeo.cpp"},
+	{ "mslug5f", "neogeo/d_neogeo.cpp"},
+	{ "mslug5fd", "neogeo/d_neogeo.cpp"},
+	{ "ms5pcb", "neogeo/d_neogeo.cpp"},
+	{ "mslug5ki", "neogeo/d_neogeo.cpp"},
+	{ "mslug5dg", "neogeo/d_neogeo.cpp"},
+	{ "mslug5w", "neogeo/d_neogeo.cpp"},
 	{ "mslug5h", "neogeo/d_neogeo.cpp"},
 	{ "mslug5", "neogeo/d_neogeo.cpp"},
+	{ "mslug5nd", "neogeo/d_neogeo.cpp"},
+	{ "ms5plush", "neogeo/d_neogeo.cpp"},
+	{ "ms5sgf", "neogeo/d_neogeo.cpp"},
+	{ "mslug5dd", "neogeo/d_neogeo.cpp"},
+	{ "mslug5sg", "neogeo/d_neogeo.cpp"},
+	{ "mslug5sc", "neogeo/d_neogeo.cpp"},
 	{ "mslug5es", "neogeo/d_neogeo.cpp"},
+	{ "mslug5zh", "neogeo/d_neogeo.cpp"},
+	{ "mslug5x", "neogeo/d_neogeo.cpp"},
 	{ "ms5plus", "neogeo/d_neogeo.cpp"},
 	{ "mslug5unity", "neogeo/d_neogeo.cpp"},
 	{ "mslug3b6", "neogeo/d_neogeo.cpp"},
 	{ "mslugunity", "neogeo/d_neogeo.cpp"},
-	{ "mslugxaks", "neogeo/d_neogeo.cpp"},
-	{ "mslugxcb", "neogeo/d_neogeo.cpp"},
+	{ "msx1v2", "neogeo/d_neogeo.cpp"},
+	{ "msx2r1v2", "neogeo/d_neogeo.cpp"},
+	{ "msx2reb", "neogeo/d_neogeo.cpp"},
 	{ "mslugx2r", "neogeo/d_neogeo.cpp"},
+	{ "msxsrf", "neogeo/d_neogeo.cpp"},
+	{ "mslugxeb", "neogeo/d_neogeo.cpp"},
+	{ "mslugxc2", "neogeo/d_neogeo.cpp"},
+	{ "mslugxlb", "neogeo/d_neogeo.cpp"},
+	{ "mslugxif", "neogeo/d_neogeo.cpp"},
+	{ "mslugxcq", "neogeo/d_neogeo.cpp"},
+	{ "mslugxc1", "neogeo/d_neogeo.cpp"},
+	{ "mslugxdg", "neogeo/d_neogeo.cpp"},
 	{ "mslugx", "neogeo/d_neogeo.cpp"},
+	{ "mslugxdd", "neogeo/d_neogeo.cpp"},
+	{ "mslugxsc", "neogeo/d_neogeo.cpp"},
+	{ "mslugxsv", "neogeo/d_neogeo.cpp"},
+	{ "mslugxxr", "neogeo/d_neogeo.cpp"},
 	{ "mslugxunity", "neogeo/d_neogeo.cpp"},
 	{ "msisaac", "taito/d_msisaac.cpp"},
 	{ "md_msonichd", "megadrive/d_megadrive.cpp"},
@@ -53584,8 +53854,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "rbff2k", "neogeo/d_neogeo.cpp"},
 	{ "rbff2h", "neogeo/d_neogeo.cpp"},
 	{ "rbff2", "neogeo/d_neogeo.cpp"},
-	{ "rbff2bh", "neogeo/d_neogeo.cpp"},
-	{ "rbffspbh", "neogeo/d_neogeo.cpp"},
+	{ "rbff2bs", "neogeo/d_neogeo.cpp"},
+	{ "rbffspbs", "neogeo/d_neogeo.cpp"},
 	{ "rbffspeck", "neogeo/d_neogeo.cpp"},
 	{ "rbffspec", "neogeo/d_neogeo.cpp"},
 	{ "msx_realtenn", "msx/d_msx.cpp"},
@@ -54215,25 +54485,33 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_samshos", "megadrive/d_megadrive.cpp"},
 	{ "gg_samsho", "sms/d_sms.cpp"},
 	{ "md_samshou", "megadrive/d_megadrive.cpp"},
+	{ "samshobs", "neogeo/d_neogeo.cpp"},
 	{ "samshoh", "neogeo/d_neogeo.cpp"},
 	{ "samsho", "neogeo/d_neogeo.cpp"},
 	{ "samshoa", "neogeo/d_neogeo.cpp"},
+	{ "samsh2jq", "neogeo/d_neogeo.cpp"},
 	{ "samsho2", "neogeo/d_neogeo.cpp"},
+	{ "samsho2t", "neogeo/d_neogeo.cpp"},
 	{ "samsho2pe", "neogeo/d_neogeo.cpp"},
-	{ "samsho2sp", "neogeo/d_neogeo.cpp"},
+	{ "samsho2s", "neogeo/d_neogeo.cpp"},
+	{ "samsh3bs", "neogeo/d_neogeo.cpp"},
 	{ "samsho3h", "neogeo/d_neogeo.cpp"},
 	{ "samsho3", "neogeo/d_neogeo.cpp"},
+	{ "samsh4bs", "neogeo/d_neogeo.cpp"},
 	{ "samsho4", "neogeo/d_neogeo.cpp"},
-	{ "samsho4sp", "neogeo/d_neogeo.cpp"},
+	{ "samsh4sp", "neogeo/d_neogeo.cpp"},
 	{ "samsho5b", "neogeo/d_neogeo.cpp"},
+	{ "samsh5bs", "neogeo/d_neogeo.cpp"},
+	{ "samsh5fd", "neogeo/d_neogeo.cpp"},
 	{ "samsho5x", "neogeo/d_neogeo.cpp"},
 	{ "samsho5h", "neogeo/d_neogeo.cpp"},
 	{ "samsho5", "neogeo/d_neogeo.cpp"},
 	{ "samsho5a", "neogeo/d_neogeo.cpp"},
 	{ "samsh5pf", "neogeo/d_neogeo.cpp"},
+	{ "sams5spf", "neogeo/d_neogeo.cpp"},
+	{ "ss5spfd", "neogeo/d_neogeo.cpp"},
 	{ "samsh5spho", "neogeo/d_neogeo.cpp"},
 	{ "samsh5sph", "neogeo/d_neogeo.cpp"},
-	{ "samsh5fe", "neogeo/d_neogeo.cpp"},
 	{ "samsh5sp", "neogeo/d_neogeo.cpp"},
 	{ "gg_samspir", "sms/d_sms.cpp"},
 	{ "md_samspir", "megadrive/d_megadrive.cpp"},
@@ -54474,6 +54752,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_segachd", "megadrive/d_megadrive.cpp"},
 	{ "sms_segachss", "sms/d_sms.cpp"},
 	{ "sg1k_segaflip", "sg1000/d_sg1000.cpp"},
+	{ "cv_segaflipper", "coleco/d_coleco.cpp"},
 	{ "sg1k_segaflipa", "sg1000/d_sg1000.cpp"},
 	{ "gg_sega4in1", "sms/d_sms.cpp"},
 	{ "gg_sega4in1p", "sms/d_sms.cpp"},
@@ -54519,8 +54798,11 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "sengokuh", "neogeo/d_neogeo.cpp"},
 	{ "sengoku", "neogeo/d_neogeo.cpp"},
 	{ "sengoku2", "neogeo/d_neogeo.cpp"},
+	{ "sengk3fs", "neogeo/d_neogeo.cpp"},
 	{ "sengoku3s", "neogeo/d_neogeo.cpp"},
-	{ "sengoku3hs", "neogeo/d_neogeo.cpp"},
+	{ "sengk3fd", "neogeo/d_neogeo.cpp"},
+	{ "sengk3eb", "neogeo/d_neogeo.cpp"},
+	{ "sengok3i", "neogeo/d_neogeo.cpp"},
 	{ "sengoku3", "neogeo/d_neogeo.cpp"},
 	{ "sengoku3a", "neogeo/d_neogeo.cpp"},
 	{ "sngkace", "psikyo/d_psikyo.cpp"},
@@ -55058,6 +55340,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "svcplus", "neogeo/d_neogeo.cpp"},
 	{ "svcplusa", "neogeo/d_neogeo.cpp"},
 	{ "svcsplus", "neogeo/d_neogeo.cpp"},
+	{ "svcsplse", "neogeo/d_neogeo.cpp"},
 	{ "ngp_svc", "pst90s/d_ngp.cpp"},
 	{ "spec_snoopy", "spectrum/d_spectrum.cpp"},
 	{ "nes_snoopssilsposp", "nes/d_nes.cpp"},
@@ -55746,6 +56029,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "stargrds", "pre90s/d_mcr3.cpp"},
 	{ "sg1k_starjack1", "sg1000/d_sg1000.cpp"},
 	{ "sg1k_starjack", "sg1000/d_sg1000.cpp"},
+	{ "cv_starjacker", "coleco/d_coleco.cpp"},
 	{ "sg1k_starjack2", "sg1000/d_sg1000.cpp"},
 	{ "starjack", "sega/d_sys1.cpp"},
 	{ "starjacks", "sega/d_sys1.cpp"},
@@ -57532,119 +57816,158 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "kodr1", "capcom/d_cps1.cpp"},
 	{ "kodr2", "capcom/d_cps1.cpp"},
 	{ "kod", "capcom/d_cps1.cpp"},
+	{ "kof94bs", "neogeo/d_neogeo.cpp"},
 	{ "kof94rz", "neogeo/d_neogeo.cpp"},
 	{ "kof94", "neogeo/d_neogeo.cpp"},
 	{ "kof94br", "neogeo/d_neogeo.cpp"},
+	{ "kof95bs", "neogeo/d_neogeo.cpp"},
 	{ "kof95b", "neogeo/d_neogeo.cpp"},
 	{ "kof95h", "neogeo/d_neogeo.cpp"},
 	{ "kof95", "neogeo/d_neogeo.cpp"},
 	{ "kof95a", "neogeo/d_neogeo.cpp"},
 	{ "kof95sp", "neogeo/d_neogeo.cpp"},
+	{ "kof96ae", "neogeo/d_neogeo.cpp"},
 	{ "kof96ep", "neogeo/d_neogeo.cpp"},
+	{ "kof96cn", "neogeo/d_neogeo.cpp"},
 	{ "kof96h", "neogeo/d_neogeo.cpp"},
 	{ "kof96", "neogeo/d_neogeo.cpp"},
 	{ "kof96a", "neogeo/d_neogeo.cpp"},
-	{ "kof96ae", "neogeo/d_neogeo.cpp"},
-	{ "kof96cn", "neogeo/d_neogeo.cpp"},
-	{ "kof96rp08sp", "neogeo/d_neogeo.cpp"},
+	{ "kof96pls", "neogeo/d_neogeo.cpp"},
+	{ "kof96rp", "neogeo/d_neogeo.cpp"},
 	{ "kof96rss", "neogeo/d_neogeo.cpp"},
+	{ "kof96r", "neogeo/d_neogeo.cpp"},
+	{ "kof97cn", "neogeo/d_neogeo.cpp"},
+	{ "kof97ae", "neogeo/d_neogeo.cpp"},
+	{ "kof97ts", "neogeo/d_neogeo.cpp"},
+	{ "kof97cbt", "neogeo/d_neogeo.cpp"},
+	{ "kof97m", "neogeo/d_neogeo.cpp"},
+	{ "kof97eb", "neogeo/d_neogeo.cpp"},
+	{ "kof97evf", "neogeo/d_neogeo.cpp"},
+	{ "kof97evn", "neogeo/d_neogeo.cpp"},
+	{ "kof97xt", "neogeo/d_neogeo.cpp"},
 	{ "kof97ps", "neogeo/d_neogeo.cpp"},
+	{ "kof97inv", "neogeo/d_neogeo.cpp"},
 	{ "kof97k", "neogeo/d_neogeo.cpp"},
 	{ "kof97h", "neogeo/d_neogeo.cpp"},
 	{ "kof97", "neogeo/d_neogeo.cpp"},
-	{ "kof97cn", "neogeo/d_neogeo.cpp"},
-	{ "kof97ae", "neogeo/d_neogeo.cpp"},
-	{ "kof97cbt", "neogeo/d_neogeo.cpp"},
-	{ "kof97xt", "neogeo/d_neogeo.cpp"},
-	{ "kof97inv", "neogeo/d_neogeo.cpp"},
 	{ "kof97t", "neogeo/d_neogeo.cpp"},
 	{ "kof97pm", "neogeo/d_neogeo.cpp"},
 	{ "kof97rc", "neogeo/d_neogeo.cpp"},
 	{ "kof97sp", "neogeo/d_neogeo.cpp"},
+	{ "kof97st", "neogeo/d_neogeo.cpp"},
 	{ "kof97oro", "neogeo/d_neogeo.cpp"},
 	{ "kof97pla", "neogeo/d_neogeo.cpp"},
-	{ "kof97evn", "neogeo/d_neogeo.cpp"},
 	{ "kof97pls", "neogeo/d_neogeo.cpp"},
+	{ "kof97plh", "neogeo/d_neogeo.cpp"},
+	{ "kof98ae", "neogeo/d_neogeo.cpp"},
+	{ "kof98bc2nd", "neogeo/d_neogeo.cpp"},
+	{ "kof98bc2k2", "neogeo/d_neogeo.cpp"},
+	{ "kof98cp", "neogeo/d_neogeo.cpp"},
+	{ "kof98cb", "neogeo/d_neogeo.cpp"},
+	{ "kof98eck", "neogeo/d_neogeo.cpp"},
 	{ "kof98evo", "neogeo/d_neogeo.cpp"},
-	{ "kof98ratio", "neogeo/d_neogeo.cpp"},
 	{ "kof98k", "neogeo/d_neogeo.cpp"},
 	{ "kof98ka", "neogeo/d_neogeo.cpp"},
 	{ "kof98h", "neogeo/d_neogeo.cpp"},
 	{ "kof98", "neogeo/d_neogeo.cpp"},
 	{ "kof98a", "neogeo/d_neogeo.cpp"},
+	{ "kof98pfe", "neogeo/d_neogeo.cpp"},
+	{ "kof98rat", "neogeo/d_neogeo.cpp"},
 	{ "kof98ult", "neogeo/d_neogeo.cpp"},
-	{ "kof98bc2nd", "neogeo/d_neogeo.cpp"},
-	{ "kof98bc2k2", "neogeo/d_neogeo.cpp"},
+	{ "kof98mix", "neogeo/d_neogeo.cpp"},
 	{ "kof99ae", "neogeo/d_neogeo.cpp"},
-	{ "kof99eur", "neogeo/d_neogeo.cpp"},
-	{ "kof99eur2", "neogeo/d_neogeo.cpp"},
+	{ "kof99cb", "neogeo/d_neogeo.cpp"},
 	{ "kof99e", "neogeo/d_neogeo.cpp"},
+	{ "kof99eur", "neogeo/d_neogeo.cpp"},
+	{ "kof99jh", "neogeo/d_neogeo.cpp"},
+	{ "kof99fd", "neogeo/d_neogeo.cpp"},
+	{ "kof99jq", "neogeo/d_neogeo.cpp"},
 	{ "kof99k", "neogeo/d_neogeo.cpp"},
 	{ "kof99ka", "neogeo/d_neogeo.cpp"},
+	{ "kof99sk", "neogeo/d_neogeo.cpp"},
 	{ "kof99h", "neogeo/d_neogeo.cpp"},
 	{ "kof99", "neogeo/d_neogeo.cpp"},
-	{ "kof99p", "neogeo/d_neogeo.cpp"},
 	{ "kof99t", "neogeo/d_neogeo.cpp"},
+	{ "kof99p", "neogeo/d_neogeo.cpp"},
 	{ "kof99rp", "neogeo/d_neogeo.cpp"},
 	{ "kof99sr", "neogeo/d_neogeo.cpp"},
 	{ "ngp_kofpara", "pst90s/d_ngp.cpp"},
 	{ "kof10th", "neogeo/d_neogeo.cpp"},
+	{ "kf10thuo", "neogeo/d_neogeo.cpp"},
 	{ "kof10thd", "neogeo/d_neogeo.cpp"},
-	{ "kof10thuo", "neogeo/d_neogeo.cpp"},
 	{ "kf2k5uni", "neogeo/d_neogeo.cpp"},
 	{ "kf10thep", "neogeo/d_neogeo.cpp"},
+	{ "kof2kfd", "neogeo/d_neogeo.cpp"},
+	{ "kof2000bc", "neogeo/d_neogeo.cpp"},
 	{ "kof2000", "neogeo/d_neogeo.cpp"},
 	{ "kof2000n", "neogeo/d_neogeo.cpp"},
-	{ "kof2000bc", "neogeo/d_neogeo.cpp"},
+	{ "kof2000t", "neogeo/d_neogeo.cpp"},
 	{ "kof2kotc", "neogeo/d_neogeo.cpp"},
 	{ "kof2kps2", "neogeo/d_neogeo.cpp"},
-	{ "kof2ksp", "neogeo/d_neogeo.cpp"},
 	{ "kof2kpls", "neogeo/d_neogeo.cpp"},
+	{ "kof2ksp", "neogeo/d_neogeo.cpp"},
 	{ "kof2kxxx", "neogeo/d_neogeo.cpp"},
+	{ "kof2k1bs", "neogeo/d_neogeo.cpp"},
+	{ "kof2k1fd", "neogeo/d_neogeo.cpp"},
 	{ "kof2001h", "neogeo/d_neogeo.cpp"},
 	{ "kof2001", "neogeo/d_neogeo.cpp"},
-	{ "kof2k1bs", "neogeo/d_neogeo.cpp"},
 	{ "kf2k1pkz", "neogeo/d_neogeo.cpp"},
-	{ "kf2k1rs", "neogeo/d_neogeo.cpp"},
+	{ "kof2k1rp", "neogeo/d_neogeo.cpp"},
+	{ "kof2k1ru", "neogeo/d_neogeo.cpp"},
+	{ "kf2k1ult", "neogeo/d_neogeo.cpp"},
 	{ "kf2k1pls", "neogeo/d_neogeo.cpp"},
 	{ "kf2k1pla", "neogeo/d_neogeo.cpp"},
+	{ "kf2k23rd", "neogeo/d_neogeo.cpp"},
+	{ "kof2k2ts", "neogeo/d_neogeo.cpp"},
 	{ "kof2002b", "neogeo/d_neogeo.cpp"},
+	{ "kf2k2mix", "neogeo/d_neogeo.cpp"},
+	{ "kof2k2fd", "neogeo/d_neogeo.cpp"},
+	{ "kof2k2jq", "neogeo/d_neogeo.cpp"},
+	{ "kof2002m", "neogeo/d_neogeo.cpp"},
 	{ "kof2002", "neogeo/d_neogeo.cpp"},
 	{ "kof2k2omg", "neogeo/d_neogeo.cpp"},
 	{ "kof2k2omg8", "neogeo/d_neogeo.cpp"},
 	{ "kof2k2omg9b", "neogeo/d_neogeo.cpp"},
 	{ "kof2k2omg9", "neogeo/d_neogeo.cpp"},
-	{ "kf2k23rd", "neogeo/d_neogeo.cpp"},
 	{ "kf2k2ps2", "neogeo/d_neogeo.cpp"},
-	{ "kf2k2pl17", "neogeo/d_neogeo.cpp"},
-	{ "kf2k2ru35", "neogeo/d_neogeo.cpp"},
+	{ "kf2k2p17", "neogeo/d_neogeo.cpp"},
+	{ "kof2k2ru", "neogeo/d_neogeo.cpp"},
+	{ "kof2k2ly", "neogeo/d_neogeo.cpp"},
 	{ "kf2k2mp", "neogeo/d_neogeo.cpp"},
 	{ "kf2k2mp2", "neogeo/d_neogeo.cpp"},
+	{ "kf2k2mp3", "neogeo/d_neogeo.cpp"},
 	{ "kf2k2pls", "neogeo/d_neogeo.cpp"},
 	{ "kf2k2pla", "neogeo/d_neogeo.cpp"},
 	{ "kf2k2plb", "neogeo/d_neogeo.cpp"},
+	{ "kf2k2plh", "neogeo/d_neogeo.cpp"},
+	{ "kof2002t", "neogeo/d_neogeo.cpp"},
 	{ "kf2k2plc", "neogeo/d_neogeo.cpp"},
 	{ "kf2k3bl", "neogeo/d_neogeo.cpp"},
 	{ "kf2k3bla", "neogeo/d_neogeo.cpp"},
+	{ "kof2k3fd", "neogeo/d_neogeo.cpp"},
 	{ "kf2k3pcb", "neogeo/d_neogeo.cpp"},
 	{ "kof2003h", "neogeo/d_neogeo.cpp"},
 	{ "kof2003", "neogeo/d_neogeo.cpp"},
 	{ "kf2k3ps2", "neogeo/d_neogeo.cpp"},
 	{ "kof2003t", "neogeo/d_neogeo.cpp"},
-	{ "kf2k3ps2sp", "neogeo/d_neogeo.cpp"},
+	{ "kf2k3p2s", "neogeo/d_neogeo.cpp"},
 	{ "kf2k3pl", "neogeo/d_neogeo.cpp"},
 	{ "kf2k3upl", "neogeo/d_neogeo.cpp"},
 	{ "kof2k4se", "neogeo/d_neogeo.cpp"},
 	{ "kf2k4pls", "neogeo/d_neogeo.cpp"},
 	{ "ngp_lastblad", "pst90s/d_ngp.cpp"},
+	{ "lastbldi", "neogeo/d_neogeo.cpp"},
 	{ "lastbladh", "neogeo/d_neogeo.cpp"},
 	{ "lastblad", "neogeo/d_neogeo.cpp"},
 	{ "lastblada", "neogeo/d_neogeo.cpp"},
-	{ "lastbladsp", "neogeo/d_neogeo.cpp"},
-	{ "lb2b", "neogeo/d_neogeo.cpp"},
-	{ "lastbld2eh", "neogeo/d_neogeo.cpp"},
+	{ "lastbldp", "neogeo/d_neogeo.cpp"},
+	{ "lastblsp", "neogeo/d_neogeo.cpp"},
+	{ "lastbd2b", "neogeo/d_neogeo.cpp"},
+	{ "lastbd2e", "neogeo/d_neogeo.cpp"},
+	{ "lastbd2i", "neogeo/d_neogeo.cpp"},
 	{ "lastbld2", "neogeo/d_neogeo.cpp"},
-	{ "lastbld2te", "neogeo/d_neogeo.cpp"},
+	{ "lastbd2p", "neogeo/d_neogeo.cpp"},
+	{ "lastbd2t", "neogeo/d_neogeo.cpp"},
 	{ "lastday", "pst90s/d_dooyong.cpp"},
 	{ "lastdaya", "pst90s/d_dooyong.cpp"},
 	{ "lastsold", "neogeo/d_neogeo.cpp"},
@@ -59376,6 +59699,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "wh2", "neogeo/d_neogeo.cpp"},
 	{ "wh2j", "neogeo/d_neogeo.cpp"},
 	{ "wh2ja", "neogeo/d_neogeo.cpp"},
+	{ "whpjq", "neogeo/d_neogeo.cpp"},
 	{ "whp", "neogeo/d_neogeo.cpp"},
 	{ "pce_wjockey", "pce/d_pce.cpp"},
 	{ "md_worldillj", "megadrive/d_megadrive.cpp"},

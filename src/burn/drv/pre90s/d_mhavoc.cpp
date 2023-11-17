@@ -7,6 +7,7 @@
 #include "avgdvg.h"
 #include "pokey.h"
 #include "tms5220.h"
+#include "burn_gun.h"
 #include "watchdog.h"
 
 static UINT8 *AllMem;
@@ -46,7 +47,8 @@ static INT32 player_1;
 static INT32 avgletsgo;
 static INT32 nExtraCycles[2];
 
-static UINT8 DrvDial;
+static INT32 scanline;
+static INT16 Analog[2]; // x-axis p1, p2
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -56,16 +58,19 @@ static UINT8 DrvDips[4];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo MhavocInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
+	A("P1 Spinner", 	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 2"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 right"	},
+	A("P2 Spinner", 	BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 2"	},
 
@@ -83,6 +88,7 @@ static struct BurnInputInfo AlphaoneInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
 	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
+	A("P1 Spinner", 	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"	},
@@ -96,98 +102,101 @@ static struct BurnInputInfo AlphaoneInputList[] = {
 };
 
 STDINPUTINFO(Alphaone)
+#undef A
 
 static struct BurnDIPInfo MhavocDIPList[]=
 {
-	{0x0c, 0xff, 0xff, 0x00, NULL					},
-	{0x0d, 0xff, 0xff, 0xff, NULL					},
-	{0x0e, 0xff, 0xff, 0x03, NULL					},
+	DIP_OFFSET(0x0e)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
+	{0x02, 0xff, 0xff, 0x03, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Adaptive Difficulty"	},
-	{0x0c, 0x01, 0x01, 0x01, "Off"					},
-	{0x0c, 0x01, 0x01, 0x00, "On"					},
+	{0x00, 0x01, 0x01, 0x01, "Off"					},
+	{0x00, 0x01, 0x01, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x0c, 0x01, 0x02, 0x02, "Off"					},
-	{0x0c, 0x01, 0x02, 0x00, "On"					},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x0c, 0x01, 0x0c, 0x0c, "50000"				},
-	{0x0c, 0x01, 0x0c, 0x00, "100000"				},
-	{0x0c, 0x01, 0x0c, 0x04, "200000"				},
-	{0x0c, 0x01, 0x0c, 0x08, "None"					},
+	{0x00, 0x01, 0x0c, 0x0c, "50000"				},
+	{0x00, 0x01, 0x0c, 0x00, "100000"				},
+	{0x00, 0x01, 0x0c, 0x04, "200000"				},
+	{0x00, 0x01, 0x0c, 0x08, "None"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x0c, 0x01, 0x30, 0x10, "Easy"					},
-	{0x0c, 0x01, 0x30, 0x00, "Medium"				},
-	{0x0c, 0x01, 0x30, 0x30, "Hard"					},
-	{0x0c, 0x01, 0x30, 0x20, "Demo"					},
+	{0x00, 0x01, 0x30, 0x10, "Easy"					},
+	{0x00, 0x01, 0x30, 0x00, "Medium"				},
+	{0x00, 0x01, 0x30, 0x30, "Hard"					},
+	{0x00, 0x01, 0x30, 0x20, "Demo"					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x0c, 0x01, 0xc0, 0x00, "3 (2 in Free Play)"	},
-	{0x0c, 0x01, 0xc0, 0xc0, "4 (3 in Free Play)"	},
-	{0x0c, 0x01, 0xc0, 0x80, "5 (4 in Free Play)"	},
-	{0x0c, 0x01, 0xc0, 0x40, "6 (5 in Free Play)"	},
+	{0x00, 0x01, 0xc0, 0x00, "3 (2 in Free Play)"	},
+	{0x00, 0x01, 0xc0, 0xc0, "4 (3 in Free Play)"	},
+	{0x00, 0x01, 0xc0, 0x80, "5 (4 in Free Play)"	},
+	{0x00, 0x01, 0xc0, 0x40, "6 (5 in Free Play)"	},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x0d, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
-	{0x0d, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x0d, 0x01, 0x03, 0x00, "1 Coin  2 Credits"	},
-	{0x0d, 0x01, 0x03, 0x01, "Free Play"			},
+	{0x01, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x03, 0x00, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x03, 0x01, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    4, "Right Coin Mechanism"	},
-	{0x0d, 0x01, 0x0c, 0x0c, "x1"					},
-	{0x0d, 0x01, 0x0c, 0x08, "x4"					},
-	{0x0d, 0x01, 0x0c, 0x04, "x5"					},
-	{0x0d, 0x01, 0x0c, 0x00, "x6"					},
+	{0x01, 0x01, 0x0c, 0x0c, "x1"					},
+	{0x01, 0x01, 0x0c, 0x08, "x4"					},
+	{0x01, 0x01, 0x0c, 0x04, "x5"					},
+	{0x01, 0x01, 0x0c, 0x00, "x6"					},
 
 	{0   , 0xfe, 0   ,    2, "Left Coin Mechanism"	},
-	{0x0d, 0x01, 0x10, 0x10, "x1"					},
-	{0x0d, 0x01, 0x10, 0x00, "x2"					},
+	{0x01, 0x01, 0x10, 0x10, "x1"					},
+	{0x01, 0x01, 0x10, 0x00, "x2"					},
 
 	{0   , 0xfe, 0   ,    5, "Bonus Credits"		},
-	{0x0d, 0x01, 0xe0, 0x80, "2 each 4"				},
-	{0x0d, 0x01, 0xe0, 0x40, "1 each 3"				},
-	{0x0d, 0x01, 0xe0, 0xa0, "1 each 4"				},
-	{0x0d, 0x01, 0xe0, 0x60, "1 each 5"				},
-	{0x0d, 0x01, 0xe0, 0xe0, "None"					},
+	{0x01, 0x01, 0xe0, 0x80, "2 each 4"				},
+	{0x01, 0x01, 0xe0, 0x40, "1 each 3"				},
+	{0x01, 0x01, 0xe0, 0xa0, "1 each 4"				},
+	{0x01, 0x01, 0xe0, 0x60, "1 each 5"				},
+	{0x01, 0x01, 0xe0, 0xe0, "None"					},
 
 	{0   , 0xfe, 0   ,    2, "Credit to start"		},
-	{0x0e, 0x01, 0x01, 0x01, "1"					},
-	{0x0e, 0x01, 0x01, 0x00, "2"					},
+	{0x02, 0x01, 0x01, 0x01, "1"					},
+	{0x02, 0x01, 0x01, 0x00, "2"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x0e, 0x01, 0x02, 0x02, "Off"					},
-	{0x0e, 0x01, 0x02, 0x00, "On"					},
+	{0x02, 0x01, 0x02, 0x02, "Off"					},
+	{0x02, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{0x0f, 0x01, 0x01, 0x00, "No"					},
-	{0x0f, 0x01, 0x01, 0x01, "Yes"					},
+	{0x03, 0x01, 0x01, 0x00, "No"					},
+	{0x03, 0x01, 0x01, 0x01, "Yes"					},
 };
 
 STDDIPINFO(Mhavoc)
 
 static struct BurnDIPInfo MhavocpDIPList[] = {
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x0c, 0x01, 0x0c, 0x00, "1"					},
-	{0x0c, 0x01, 0x0c, 0x01, "2"					},
-	{0x0c, 0x01, 0x0c, 0x02, "3"					},
-	{0x0c, 0x01, 0x0c, 0x03, "4"					},
+	{0x00, 0x01, 0x0c, 0x00, "1"					},
+	{0x00, 0x01, 0x0c, 0x01, "2"					},
+	{0x00, 0x01, 0x0c, 0x02, "3"					},
+	{0x00, 0x01, 0x0c, 0x03, "4"					},
 };
 
 STDDIPINFOEXT(Mhavocp, Mhavoc, Mhavocp)
 
 static struct BurnDIPInfo AlphaoneDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0x10, NULL					},
+	DIP_OFFSET(0x08)
+	{0x00, 0xff, 0xff, 0x10, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x07, 0x01, 0x10, 0x10, "Off"					},
-	{0x07, 0x01, 0x10, 0x00, "On"					},
+	{0x00, 0x01, 0x10, 0x10, "Off"					},
+	{0x00, 0x01, 0x10, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Hires Mode"			},
-	{0x0a, 0x01, 0x01, 0x00, "No"					},
-	{0x0a, 0x01, 0x01, 0x01, "Yes"					},
+	{0x03, 0x01, 0x01, 0x00, "No"					},
+	{0x03, 0x01, 0x01, 0x01, "Yes"					},
 };
 
 STDDIPINFO(Alphaone)
@@ -394,7 +403,7 @@ static UINT8 mhavoc_sub_read(UINT16 address)
 
 		case 0x3800:
 		{
-			return DrvDial;
+			return BurnTrackballReadInterpolated(0, 0, scanline) + BurnTrackballReadInterpolated(1, 0, scanline);
 		}
 
 		case 0x4000:
@@ -481,7 +490,7 @@ static UINT8 alphaone_main_read(UINT16 address)
 
 		case 0x1080:
 		{
-			return DrvDial;
+			return BurnTrackballReadInterpolated(0, 0, scanline) + BurnTrackballReadInterpolated(1, 0, scanline);
 		}
 	}
 
@@ -596,12 +605,7 @@ static INT32 MemIndex()
 
 static INT32 MhavocInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvVectorROM + 0x00000,  0, 1)) return 1;
@@ -655,6 +659,8 @@ static INT32 MhavocInit()
 
 	memset(DrvNVRAM, 0xff, 0x200);
 
+	BurnTrackballInit(2);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -662,12 +668,7 @@ static INT32 MhavocInit()
 
 static INT32 AlphaoneInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvVectorROM + 0x00000,  0, 1)) return 1;
@@ -705,6 +706,8 @@ static INT32 AlphaoneInit()
 
 	memset(DrvNVRAM, 0xff, 0x200);
 
+	BurnTrackballInit(2);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -718,7 +721,9 @@ static INT32 DrvExit()
 	PokeyExit();
 	M6502Exit();
 
-	BurnFree(AllMem);
+	BurnTrackballExit();
+
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -778,11 +783,15 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		if (DrvJoy4[0]) DrvDial += 40; // p1
-		if (DrvJoy4[1]) DrvDial -= 40;
+		BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+		BurnTrackballFrame(0, Analog[0]*4, 0, 0x01, 0x3f, (nM6502Count > 1) ? 300 : 100);
+		BurnTrackballUDLR(0, 0, 0, DrvJoy4[0], DrvJoy4[1], 40);
+		BurnTrackballUpdate(0);
 
-		if (DrvJoy4[2]) DrvDial += 40; // p2
-		if (DrvJoy4[3]) DrvDial -= 40;
+		BurnTrackballConfig(1, AXIS_REVERSED, AXIS_REVERSED);
+		BurnTrackballFrame(1, Analog[1]*4, 0, 0x01, 0x3f, (nM6502Count > 1) ? 300 : 100);
+		BurnTrackballUDLR(1, 0, 0, DrvJoy4[2], DrvJoy4[3], 40);
+		BurnTrackballUpdate(1);
 	}
 
 	INT32 nInterleave = (nM6502Count > 1) ? 300 : 100; // irq ~100x per frame
@@ -792,6 +801,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		scanline = i;
 		M6502Open(0);
 		CPU_RUN(0, M6502);
 
@@ -877,6 +887,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		pokey_scan(nAction, pnMin);
 		tms5220_scan(nAction, pnMin);
+
+		BurnTrackballScan();
 
 		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(alpha_irq_clock);

@@ -11951,7 +11951,7 @@ STD_ROM_FN(ninjamas)
 struct BurnDriver BurnDrvninjamas = {
 	"ninjamas", NULL, "neogeo", NULL, "1996",
 	"Ninja Master's - Haoh-ninpo-cho\0", NULL, "ADK / SNK", "Neo Geo MVS",
-	L"Ninja master's \u8987\u738B\u5FCD\u6CD5\u5E16\0Ninja Master's haoh ninpo cho\0", NULL, NULL, NULL,
+	L"Ninja master's \u8987\u738B\u5FCD\u6CD5\u5E16\0Ninja Master's - Haoh-ninpo-cho\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, ninjamasRomInfo, ninjamasRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -16713,7 +16713,7 @@ struct BurnDriver BurnDrvmslug5b2 = {
 };
 
 
-// Ninja Master's - haoh-ninpo-cho (Plus)
+// Ninja Master's - Haoh-ninpo-cho (Plus)
 
 static struct BurnRomInfo ninjamashaRomDesc[] = {
 	{ "217-p1ha.p1",  0x100000, 0x45332f39, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
@@ -16741,8 +16741,8 @@ STD_ROM_FN(ninjamasha)
 
 struct BurnDriver BurnDrvNinjamasha = {
 	"ninjamasha", "ninjamas", "neogeo", NULL, "1996",
-	"Ninja Master's - haoh-ninpo-cho (Plus)\0", NULL, "007325", "Neo Geo MVS",
-	L"Ninja master's \u8987\u738B\u5FCD\u6CD5\u5E16\0Ninja Master's haoh ninpo cho (Plus)\0", NULL, NULL, NULL,
+	"Ninja Master's - Haoh-ninpo-cho (Plus)\0", NULL, "007325", "Neo Geo MVS",
+	L"Ninja master's \u8987\u738B\u5FCD\u6CD5\u5E16\0Ninja Master's - Haoh-ninpo-cho (Plus)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, ninjamashaRomInfo, ninjamashaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -16915,6 +16915,85 @@ struct BurnDriver BurnDrvzintrkcd = {
 };
 
 
+// World Heroes Perfect (Enhanced, Hack)
+// GOTVG 20230602
+
+static struct BurnRomInfo whpjqRomDesc[] = {
+	{ "090-p1jq.p1",	0x100000, 0x0a1da243, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "090-p2d.sp2",	0x100000, 0xb1348758, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+
+	{ "090-s1jq.s1",	0x020000, 0xf2de6500, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "090-c1.c1",		0x400000, 0xcd30ed9b, 3 | BRF_GRA },           //  3 Sprite data
+	{ "090-c2.c2",		0x400000, 0x10eed5ee, 3 | BRF_GRA },           //  4
+	{ "064-c3.c3",		0x200000, 0x436d1b31, 3 | BRF_GRA },           //  5
+	{ "064-c4.c4",		0x200000, 0xf9c8dd26, 3 | BRF_GRA },           //  6
+	{ "064-c5.c5",		0x200000, 0x8e34a9f4, 3 | BRF_GRA },           //  7
+	{ "064-c6.c6",		0x200000, 0xa43e4766, 3 | BRF_GRA },           //  8
+	{ "064-c7.c7",		0x200000, 0x59d97215, 3 | BRF_GRA },           //  9
+	{ "064-c8.c8",		0x200000, 0xfc092367, 3 | BRF_GRA },           // 10
+
+	{ "090-m1.m1",		0x020000, 0x28065668, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "090-v1.v1",		0x200000, 0x30cf2709, 5 | BRF_SND },           // 12 Sound data
+	{ "064-v2.v2",		0x200000, 0xb6527edd, 5 | BRF_SND },           // 13
+	{ "090-v3.v3",		0x200000, 0x1908a7ce, 5 | BRF_SND },           // 14
+};
+
+STDROMPICKEXT(whpjq, whpjq, neogeo)
+STD_ROM_FN(whpjq)
+
+struct BurnDriver BurnDrvwhpjq = {
+	"whpjq", "whp", "neogeo", NULL, "2023",
+	"World Heroes Perfect (Enhanced, Hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, whpjqRomInfo, whpjqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
+// -----------------------------------------------------------------------------
+// Garou Series
+// -----------------------------------------------------------------------------
+
+// SNK vs. Capcom - SVC Chaos (Fully Decrypted)
+
+static struct BurnRomInfo svcfdRomDesc[] = {
+	{ "269-p1d.p1",		0x600000, 0x93855c0b, 1 | BRF_ESS | BRF_PRG },
+
+	{ "269-s1d.s1",		0x080000, 0xad184232, 2 | BRF_GRA },
+
+	{ "269-c1d.c1",		0x800000, 0x465d473b, 3 | BRF_GRA },
+	{ "269-c2d.c2",		0x800000, 0x3eb28f78, 3 | BRF_GRA },
+	{ "269-c3d.c3",		0x800000, 0xf4d4ab2b, 3 | BRF_GRA },
+	{ "269-c4d.c4",		0x800000, 0xa69d523a, 3 | BRF_GRA },
+	{ "269-c5d.c5",		0x800000, 0xba2a7892, 3 | BRF_GRA },
+	{ "269-c6d.c6",		0x800000, 0x37371ca1, 3 | BRF_GRA },
+	{ "269-c7d.c7",		0x800000, 0x5595b6cc, 3 | BRF_GRA },
+	{ "269-c8d.c8",		0x800000, 0xb17dfcf9, 3 | BRF_GRA },
+
+	{ "269-m1d.m1",		0x020000, 0x447b3123, 4 | BRF_ESS | BRF_PRG },
+
+	{ "269-v1d.v1",		0x800000, 0xff64cd56, 5 | BRF_SND },
+	{ "269-v2d.v2",		0x800000, 0xa8dd6446, 5 | BRF_SND },
+};
+
+STDROMPICKEXT(svcfd, svcfd, neogeo)
+STD_ROM_FN(svcfd)
+
+struct BurnDriver BurnDrvsvcfd = {
+	"svcfd", "svc", "neogeo", NULL, "2003",
+	"SNK vs. Capcom - SVC Chaos (Fully Decrypted)\0", NULL, "Playmore / Capcom", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_ALTERNATE_TEXT, GBF_VSFIGHT, FBF_KOF | FBF_SF,
+	NULL, svcfdRomInfo, svcfdRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // SNK vs. Capcom - SVC Chaos Super Plus (Enhanced, Hack)
 // GOTVG 20230621
 
@@ -16952,45 +17031,6 @@ struct BurnDriver BurnDrvsvcsplse = {
 	NULL, svcsplseRomInfo, svcsplseRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	svcsplusInit, NeoPVCExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
-};
-
-
-// World Heroes Perfect (Enhanced, Hack)
-// GOTVG 20230602
-
-static struct BurnRomInfo whpjqRomDesc[] = {
-	{ "090-p1jq.p1",	0x100000, 0x0a1da243, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "090-p2d.sp2",	0x100000, 0xb1348758, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
-
-	{ "090-s1jq.s1",	0x020000, 0xf2de6500, 2 | BRF_GRA },           //  2 Text layer tiles
-
-	{ "090-c1.c1",		0x400000, 0xcd30ed9b, 3 | BRF_GRA },           //  3 Sprite data
-	{ "090-c2.c2",		0x400000, 0x10eed5ee, 3 | BRF_GRA },           //  4
-	{ "064-c3.c3",		0x200000, 0x436d1b31, 3 | BRF_GRA },           //  5
-	{ "064-c4.c4",		0x200000, 0xf9c8dd26, 3 | BRF_GRA },           //  6
-	{ "064-c5.c5",		0x200000, 0x8e34a9f4, 3 | BRF_GRA },           //  7
-	{ "064-c6.c6",		0x200000, 0xa43e4766, 3 | BRF_GRA },           //  8
-	{ "064-c7.c7",		0x200000, 0x59d97215, 3 | BRF_GRA },           //  9
-	{ "064-c8.c8",		0x200000, 0xfc092367, 3 | BRF_GRA },           // 10
-
-	{ "090-m1.m1",		0x020000, 0x28065668, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
-
-	{ "090-v1.v1",		0x200000, 0x30cf2709, 5 | BRF_SND },           // 12 Sound data
-	{ "064-v2.v2",		0x200000, 0xb6527edd, 5 | BRF_SND },           // 13
-	{ "090-v3.v3",		0x200000, 0x1908a7ce, 5 | BRF_SND },           // 14
-};
-
-STDROMPICKEXT(whpjq, whpjq, neogeo)
-STD_ROM_FN(whpjq)
-
-struct BurnDriver BurnDrvwhpjq = {
-	"whpjq", "whp", "neogeo", NULL, "2023",
-	"World Heroes Perfect (Enhanced, Hack)\0", NULL, "hack", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
-	NULL, whpjqRomInfo, whpjqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	320, 224, 4, 3
 };
 
 
@@ -18042,21 +18082,13 @@ struct BurnDriver BurnDrvsamsho5x = {
 };
 
 
-#define SAMSH5SP_TEXT										\
-	{ "272-s1d.s1",	0x020000, 0xc297f973, 2 | BRF_GRA },
-#define SAMSH5SP_Z80										\
-	{ "272-m1d.m1",	0x020000, 0x654e9236, 4 | BRF_ESS | BRF_PRG },
-#define SAMSH5SP_SND										\
-	{ "272-v1d.v1",	0x800000, 0x28d57d10, 5 | BRF_SND },	\
-	{ "272-v2d.v2",	0x800000, 0x95fe7646, 5 | BRF_SND },
-
 // Samurai Shodown V Special / Samurai Spirits Zero Special (Fully Decrypted)
 
 static struct BurnRomInfo ss5spfdRomDesc[] = {
 	{ "272-p1d.p1",		0x400000, 0xd5d492a9, 1 | BRF_ESS | BRF_PRG },
 	{ "272-p2d.sp2",	0x400000, 0xb85f2c0f, 1 | BRF_ESS | BRF_PRG },
 
-	SAMSH5SP_TEXT
+	{ "272-s1d.s1",		0x020000, 0xc297f973, 2 | BRF_GRA },
 
 	{ "272-c1d.c1",		0x800000, 0x8548097e, 3 | BRF_GRA },
 	{ "272-c2d.c2",		0x800000, 0x8c1b48d0, 3 | BRF_GRA },
@@ -18067,9 +18099,10 @@ static struct BurnRomInfo ss5spfdRomDesc[] = {
 	{ "272-c7d.c7",		0x800000, 0x9ac56a0e, 3 | BRF_GRA },
 	{ "272-c8d.c8",		0x800000, 0xcfde7aff, 3 | BRF_GRA },
 
-	SAMSH5SP_Z80
+	{ "272-m1d.m1",		0x020000, 0x654e9236, 4 | BRF_ESS | BRF_PRG },
 
-	SAMSH5SP_SND
+	{ "272-v1d.v1",		0x800000, 0x28d57d10, 5 | BRF_SND },
+	{ "272-v2d.v2",		0x800000, 0x95fe7646, 5 | BRF_SND },
 };
 
 STDROMPICKEXT(ss5spfd, ss5spfd, neogeo)
@@ -18086,65 +18119,26 @@ struct BurnDriver BurnDrvss5spfd = {
 };
 
 
-#define SAMSH5SPF_SPR1										\
-	{ "273-c1.c1",	0x800000, 0xec9fda8d, 3 | BRF_GRA },	\
-	{ "273-c2.c2",	0x800000, 0xd2fc888d, 3 | BRF_GRA },
-#define SAMSH5SPF_SPR2										\
-	{ "273-c3.c3",	0x800000, 0xb0ea781b, 3 | BRF_GRA },	\
-	{ "273-c4.c4",	0x800000, 0xd34ac591, 3 | BRF_GRA },
-#define SAMSH5SPF_SPR3										\
-	{ "273-c5.c5",	0x800000, 0x1b5c1ea2, 3 | BRF_GRA },	\
-	{ "273-c6.c6",	0x800000, 0xdeeaad58, 3 | BRF_GRA },
-#define SAMSH5SPF_SPR4										\
-	{ "273-c7.c7",	0x800000, 0xdce0119f, 3 | BRF_GRA },	\
-	{ "273-c8.c8",	0x800000, 0x3bf256c5, 3 | BRF_GRA },
-#define SAMSH5SPF_COMPONENT									\
-	SAMSH5SP_TEXT											\
-	SAMSH5SPF_SPR1	SAMSH5SPF_SPR2							\
-	SAMSH5SPF_SPR3	SAMSH5SPF_SPR4							\
-	SAMSH5SP_Z80											\
-	SAMSH5SP_SND
-
-// Samurai Shodown V Special / Samurai Spirits Zero Special (Final, location test)
-
-static struct BurnRomInfo sams5spfRomDesc[] = {
-	{ "273-p1.p1",		0x400000, 0x9e72cc83, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "273-p2.sp2",		0x400000, 0x1f5469bc, 1 | BRF_ESS | BRF_PRG }, //  1
-
-	SAMSH5SPF_COMPONENT
-};
-
-STDROMPICKEXT(sams5spf, sams5spf, neogeo)
-STD_ROM_FN(sams5spf)
-
-struct BurnDriver BurnDrvsams5spf = {
-	"sams5spf", "samsh5sp", "neogeo", NULL, "2004",
-	"Samurai Shodown V Special / Samurai Spirits Zero Special (Final, location test)\0", NULL, "Yuki Enterprise / SNK Playmore", "Neo Geo MVS",
-	L"Samurai Shodown V Special\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 Special (Final, location test)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
-	NULL, sams5spfRomInfo, sams5spfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
-};
-
-
-// Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (Hack)
+// Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)
 
 static struct BurnRomInfo samsh5pfRomDesc[] = {
-	{ "273-p1pf.p1",	0x400000, 0x3ac81e69, 1 | BRF_ESS | BRF_PRG },
-	{ "273-p2.sp2",		0x400000, 0x1f5469bc, 1 | BRF_ESS | BRF_PRG },
+	{ "273-p1.bin",  0x800000, 0xe3d18d3a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "272-s1pf.s1",	0x020000, 0xabb3baf9, 2 | BRF_GRA },
+	{ "273-s1.bin",  0x020000, 0xabb3baf9, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	SAMSH5SPF_SPR1
-	SAMSH5SPF_SPR2
-	SAMSH5SPF_SPR3
-	{ "273-c7pf.c7",	0x800000, 0xaf90afc8, 3 | BRF_GRA },
-	{ "273-c8pf.c8",	0x800000, 0xb14872da, 3 | BRF_GRA },
+	{ "273-c1d.bin", 0x800000, 0xec9fda8d, 3 | BRF_GRA },           //  2 Sprite data
+	{ "273-c2d.bin", 0x800000, 0xd2fc888d, 3 | BRF_GRA },           //  3
+	{ "273-c3d.bin", 0x800000, 0xb0ea781b, 3 | BRF_GRA },           //  4
+	{ "273-c4d.bin", 0x800000, 0xd34ac591, 3 | BRF_GRA },           //  5
+	{ "273-c5d.bin", 0x800000, 0x1b5c1ea2, 3 | BRF_GRA },           //  6
+	{ "273-c6d.bin", 0x800000, 0xdeeaad58, 3 | BRF_GRA },           //  7
+	{ "273-c7d.bin", 0x800000, 0xaf90afc8, 3 | BRF_GRA },           //  8
+	{ "273-c8d.bin", 0x800000, 0xb14872da, 3 | BRF_GRA },           //  9
 
-	SAMSH5SP_Z80
+	{ "273-m1.bin",  0x020000, 0x654e9236, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	SAMSH5SP_SND
+	{ "273-v1d.bin", 0x800000, 0x28d57d10, 5 | BRF_SND },           // 11 Sound data
+	{ "273-v2d.bin", 0x800000, 0x95fe7646, 5 | BRF_SND },           // 12
 };
 
 STDROMPICKEXT(samsh5pf, samsh5pf, neogeo)
@@ -18152,22 +18146,49 @@ STD_ROM_FN(samsh5pf)
 
 struct BurnDriver BurnDrvsamsh5pf = {
 	"samsh5pf", "samsh5sp", "neogeo", NULL, "2020",
-	"Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (Hack)\0", NULL, "hack", "Neo Geo MVS",
-	L"Samurai Shodown V Perfect\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 Perfect (Hack)\0", NULL, NULL, NULL,
+	"Samurai Shodown V Perfect / Samurai Spirits Zero Perfect (bootleg, hack)\0", NULL, "bootleg", "Neo Geo MVS",
+	L"Samurai Shodown V Perfect\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 Perfect (bootleg, hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsh5pfRomInfo, samsh5pfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
-#undef SAMSH5SPF_COMPONENT
-#undef SAMSH5SPF_SPR1
-#undef SAMSH5SPF_SPR2
-#undef SAMSH5SPF_SPR3
-#undef SAMSH5SPF_SPR4
-#undef SAMSH5SP_TEXT
-#undef SAMSH5SP_Z80
-#undef SAMSH5SP_SND
+// Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version)
+
+static struct BurnRomInfo samsh5feRomDesc[] = {
+	{ "272-p1.bin",  0x400000, 0x9e72cc83, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "272-p2.bin",  0x400000, 0x1f5469bc, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "272-s1.bin",  0x020000, 0xc297f973, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "272-c1d.bin", 0x800000, 0xec9fda8d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "272-c2d.bin", 0x800000, 0xd2fc888d, 3 | BRF_GRA },           //  4
+	{ "272-c3d.bin", 0x800000, 0xb0ea781b, 3 | BRF_GRA },           //  5
+	{ "272-c4d.bin", 0x800000, 0xd34ac591, 3 | BRF_GRA },           //  6
+	{ "272-c5d.bin", 0x800000, 0x1b5c1ea2, 3 | BRF_GRA },           //  7
+	{ "272-c6d.bin", 0x800000, 0xdeeaad58, 3 | BRF_GRA },           //  8
+	{ "272-c7d.bin", 0x800000, 0xdce0119f, 3 | BRF_GRA },           //  9
+	{ "272-c8d.bin", 0x800000, 0x3bf256c5, 3 | BRF_GRA },           // 10
+
+	{ "272-m1d.bin", 0x080000, 0x203d744e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "272-v1d.bin", 0x800000, 0x28d57d10, 5 | BRF_SND },           // 12 Sound data
+	{ "272-v2d.bin", 0x800000, 0x95fe7646, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(samsh5fe, samsh5fe, neogeo)
+STD_ROM_FN(samsh5fe)
+
+struct BurnDriver BurnDrvsamsh5fe = {
+	"samsh5fe", "samsh5sp", "neogeo", NULL, "2004",
+	"Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-272) (NGH-272) (Final Edition, location test version)\0", NULL, "Yuki Enterprise / SNK Playmore", "Neo Geo MVS",
+	L"Samurai Shodown V Special\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 Special (NGM-272) (NGH-272) (Final Edition, location test version)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsh5feRomInfo, samsh5feRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
 
 
 // -----------------------------------------------------------------------------
@@ -21867,7 +21888,7 @@ static struct BurnRomInfo kf2k2ps2RomDesc[] = {
 	{ "262-v1d.v1",			0x800000, 0xac2913bf, 0 | BRF_SND },
 	{ "262-v2d.v2",			0x800000, 0x15042f30, 0 | BRF_SND },
 
-	{ "269-m1d.m1",			0x080000, 0x7b7bf462, 0 | BRF_ESS | BRF_PRG },
+	{ "269-m1d.m1",			0x020000, 0x447b3123, 0 | BRF_ESS | BRF_PRG },
 
 	{ "269-v1d.v1",			0x800000, 0xff64cd56, 0 | BRF_SND },
 	{ "269-v2d.v2",			0x800000, 0xa8dd6446, 0 | BRF_SND },

@@ -16960,7 +16960,7 @@ struct BurnDriver BurnDrvsvcsplse = {
 
 static struct BurnRomInfo whpjqRomDesc[] = {
 	{ "090-p1jq.p1",	0x100000, 0x0a1da243, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "090-p2d.sp2",	0x100000, 0xafaa4702, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
+	{ "090-p2d.sp2",	0x100000, 0xb1348758, 1 | BRF_ESS | BRF_PRG }, //  1 68K code
 
 	{ "090-s1jq.s1",	0x020000, 0xf2de6500, 2 | BRF_GRA },           //  2 Text layer tiles
 

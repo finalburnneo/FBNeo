@@ -489,7 +489,7 @@ void GetIpsDrvDefine();
 
 #define HARDWARE_PUBLIC_MASK							(0x7FFF0000)
 
-#define HARDWARE_PREFIX_CARTRIDGE						((INT32)0x80000000)
+#define HARDWARE_PREFIX_CARTRIDGE				 ((INT32)0x80000000)
 
 #define HARDWARE_PREFIX_MISC_PRE90S						(0x00000000)
 #define HARDWARE_PREFIX_CAPCOM							(0x01000000)
@@ -795,6 +795,8 @@ void GetIpsDrvDefine();
 #define GBF_RPG                                         (1 << 24)
 #define GBF_SIM                                         (1 << 25)
 #define GBF_ADV                                         (1 << 26)
+#define GBF_CARD                                        (1 << 27)
+#define GBF_BOARD                                       (1 << 28)
 
 // flags for the family member
 #define FBF_MSLUG										(1 << 0)

@@ -11760,7 +11760,7 @@ struct BurnDriver BurnDrvsms_zillion = {
 };
 
 
-// Zillion (Euro, v0) ~ Akai Koudan Zillion (Japan, v0)
+// Zillion (Euro, v1.0) ~ Akai Koudan Zillion (Japan, v1.0)
 
 static struct BurnRomInfo sms_zillionbRomDesc[] = {
 	{ "zillion (japan, europe) (en,ja).bin",	0x20000, 0x60c19645, BRF_PRG | BRF_ESS },
@@ -11771,7 +11771,7 @@ STD_ROM_FN(sms_zillionb)
 
 struct BurnDriver BurnDrvsms_zillionb = {
 	"sms_zillionb", "sms_zillion", NULL, NULL, "1987",
-	"Zillion (Euro, v0) ~ Akai Koudan Zillion (Japan, v0)\0", NULL, "Sega", "Sega Master System",
+	"Zillion (Euro, v1.0) ~ Akai Koudan Zillion (Japan, v0)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RUNGUN | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_zillionbRomInfo, sms_zillionbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -11839,46 +11839,9 @@ struct BurnDriver BurnDrvsms_zool = {
 	256, 192, 4, 3
 };
 
-
-// The A-Team (Music prototype)
-
-static struct BurnRomInfo sms_sn_ateamRomDesc[] = {
-	{ "a-team music [proto].bin",	0x08000, 0x0eb430ff, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_sn_ateam)
-STD_ROM_FN(sms_sn_ateam)
-
-struct BurnDriver BurnDrvsms_sn_ateam = {
-	"sms_sn_ateam", NULL, NULL, NULL, "1992",
-	"The A-Team (Music prototype)\0", NULL, "Probe", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
-	SMSGetZipName, sms_sn_ateamRomInfo, sms_sn_ateamRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
-
-// Lethal Weapon 3 (Music prototype)
-
-static struct BurnRomInfo sms_sn_lwep3RomDesc[] = {
-	{ "lethal weapon 3 music [proto].bin",	0x08000, 0xeb71247b, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_sn_lwep3)
-STD_ROM_FN(sms_sn_lwep3)
-
-struct BurnDriver BurnDrvsms_sn_lwep3 = {
-	"sms_sn_lwep3", NULL, NULL, NULL, "1992",
-	"Lethal Weapon 3 (Music prototype)\0", NULL, "Probe", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
-	SMSGetZipName, sms_sn_lwep3RomInfo, sms_sn_lwep3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
+// ----------------
+// Sega Card/MyCard
+// ----------------
 
 // Astro Flash (Japan, MyCard)
 
@@ -12195,6 +12158,26 @@ struct BurnDriver BurnDrvsms_hangonj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
 	SMSGetZipName, sms_hangonjRomInfo, sms_hangonjRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+
+// Lethal Weapon 3 (Music Prototype)
+
+static struct BurnRomInfo sms_sn_lwep3RomDesc[] = {
+	{ "lethal weapon 3 music [proto].bin",	0x08000, 0xeb71247b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sn_lwep3)
+STD_ROM_FN(sms_sn_lwep3)
+
+struct BurnDriver BurnDrvsms_sn_lwep3 = {
+	"sms_sn_lwep3", NULL, NULL, NULL, "1992",
+	"Lethal Weapon 3 (Music Prototype)\0", NULL, "Probe", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_sn_lwep3RomInfo, sms_sn_lwep3RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -29730,6 +29713,25 @@ struct BurnDriver BurnDrvgg_ggtrcn = {
 	256, 192, 4, 3
 };
 
+// Gun Stream Challenge Version (HB)
+
+static struct BurnRomInfo gg_gunstreamcvRomDesc[] = {
+	{ "Gun Stream Challenge Version (2023)(Habit Soft).gg",	262144, 0x9891292e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_gunstreamcv)
+STD_ROM_FN(gg_gunstreamcv)
+
+struct BurnDriver BurnDrvgg_gunstreamcv = {
+	"gg_gunstreamcv", NULL, NULL, NULL, "2023",
+	"Gun Stream Challenge Version (HB)\0", NULL, "Habit Soft", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_gunstreamcvRomInfo, gg_gunstreamcvRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Monaco Master (HB, v1.1)
 
 static struct BurnRomInfo gg_mcmasterggRomDesc[] = {
@@ -30913,4 +30915,27 @@ struct BurnDriver BurnDrvsms_wboymwldc = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
+
+/*
+
+// A-Team, The (Music Prototype)
+
+static struct BurnRomInfo sms_sn_ateamRomDesc[] = {
+	{ "a-team music [proto].bin",	0x08000, 0x0eb430ff, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sn_ateam)
+STD_ROM_FN(sms_sn_ateam)
+
+struct BurnDriver BurnDrvsms_sn_ateam = {
+	"sms_sn_ateam", NULL, NULL, NULL, "1992",
+	"A-Team, The (Music Prototype)\0", NULL, "Probe", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_sn_ateamRomInfo, sms_sn_ateamRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+*/
 

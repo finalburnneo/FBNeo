@@ -20970,8 +20970,8 @@ struct BurnDriver BurnDrvMSlugX2r1v2 = {
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",    0x100000, 0x787cc478, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",   0x400000, 0x57807c9a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",    0x100000, 0x504fedda, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",   0x400000, 0xaea38555, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",    0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -21239,8 +21239,8 @@ struct BurnDriver BurnDrvmslug31v2 = {
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug3cqRomDesc[] = {
-	{ "256-ph1cq.p1",    0x100000, 0x64990111, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2cq.sp2",   0x400000, 0xde3f5d00, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1cq.p1",    0x100000, 0xaa7ab5eb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2cq.sp2",   0x400000, 0x3f4bcc3a, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "256-s1d.s1",      0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 

@@ -19063,10 +19063,10 @@ struct BurnDriver BurnDrvmslug3c = {
 
 static struct BurnRomInfo mslug3ebRomDesc[] = {
 	/* Encrypted */
-	{ "ms3eb.neo-sma",	0x040000, 0x2a9935c2, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "ms3eb.neo-sma",	0x040000, 0xc2dc0b28, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
 	
 	{ "256-pg1eb.p1",	0x400000, 0x6ec2e58d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "256-pg2eb.p2",	0x400000, 0xca4eb0d3, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "256-pg2eb.p2",	0x400000, 0xfaaf8cd8, 1 | BRF_ESS | BRF_PRG }, //  2
 	
 	{ "256-c1d.c1",		0x800000, 0x3540398c, 3 | BRF_GRA },           //  3 Sprite data
 	{ "256-c2d.c2",		0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  4

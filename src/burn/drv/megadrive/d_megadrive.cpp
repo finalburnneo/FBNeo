@@ -1316,7 +1316,7 @@ struct BurnDriver BurnDrvmd_sonic3pir = {
 // Sonic 3 Complete - Emerald Safari (Hack)
 // https://www.romhacking.net/hacks/8242/
 static struct BurnRomInfo md_sonic3cesRomDesc[] = {
-	{ "Sonic 3 Complete - Emerald Safari (2023)(BillyTime! Games).bin", 3803704, 0xd24115da, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Sonic 3 Complete - Emerald Safari (2023)(BillyTime! Games).bin", 3932160, 0xaf6088b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sonic3ces)

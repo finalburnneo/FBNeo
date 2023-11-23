@@ -17240,11 +17240,11 @@ struct BurnDriver BurnDrvSamsho2sp = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown II Perfect Hack v. 1.6 - 2023-11-10
+// Samurai Shodown II Perfect Hack v. 1.7 - 2023-11-19
 
 static struct BurnRomInfo samsho2peRomDesc[] = {
-	{ "063-p1pe.p1",	0x100000, 0x6d8f35d1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "063-p2pe.sp2",	0x100000, 0x566dd5d5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063-p1pe.p1",	0x100000, 0xffc5daeb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "063-p2pe.sp2",	0x100000, 0x4c4b5521, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "063-p3pe.p3",	0x020000, 0xedffbd8a, 0 | BRF_ESS | BRF_PRG }, //  2 Extra ROM
 
 	{ "063-s1.s1",		0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  3 Text layer tiles
@@ -17271,8 +17271,8 @@ STD_ROM_FN(samsho2pe)
 
 struct BurnDriver BurnDrvSamsho2pe = {
 	"samsho2pe", "samsho2", "neogeo", NULL, "2023",
-	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.6, hack)\0", NULL, "Bear", "Neo Geo MVS",
-	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 1.6, hack)\0", NULL, NULL, NULL,
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Perfect V. 1.7, hack)\0", NULL, "Bear", "Neo Geo MVS",
+	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Perfect V. 1.7, hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2peRomInfo, samsho2peRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	Samsho2spInit, Samsho2spExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
@@ -21703,7 +21703,7 @@ struct BurnDriver BurnDrvmslug5f = {
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5bossRomDesc[] = {
-	{ "268-p1boss.p1",    0x600000, 0x15a8de68, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1boss.p1",    0x600000, 0x3ec95964, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",       0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 
@@ -21740,8 +21740,8 @@ struct BurnDriver BurnDrvmslug5boss = {
 // Metal Slug 5 (Survival, Hack)
 // Modified by 合金弹头爱克斯
 
-static struct BurnRomInfo mslug5svRomDesc[] = {
-	{ "268-p1sv.p1",   0x600000, 0x71a0953f, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+static struct BurnRomInfo mslug5ctRomDesc[] = {
+	{ "268-p1ct.p1",   0x600000, 0x71a0953f, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",    0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 
@@ -21751,8 +21751,8 @@ static struct BurnRomInfo mslug5svRomDesc[] = {
 	{ "268-c4do.c4",   0x800000, 0xe1b1131b, 3 | BRF_GRA },            //  5
 	{ "268-c5do.c5",   0x800000, 0x2fa1a5ad, 3 | BRF_GRA },            //  6
 	{ "268-c6do.c6",   0x800000, 0x6de89589, 3 | BRF_GRA },            //  7
-	{ "268-c7sv.c7",   0x800000, 0x080b585a, 3 | BRF_GRA },            //  8
-	{ "268-c8sv.c8",   0x800000, 0xa6450c3a, 3 | BRF_GRA },            //  9
+	{ "268-c7ct.c7",   0x800000, 0x080b585a, 3 | BRF_GRA },            //  8
+	{ "268-c8ct.c8",   0x800000, 0xa6450c3a, 3 | BRF_GRA },            //  9
 
 	{ "268-m1do.m1",   0x020000, 0x6fa01c9a, 4 | BRF_ESS | BRF_PRG },  // 10 Z80 code
 
@@ -21762,15 +21762,15 @@ static struct BurnRomInfo mslug5svRomDesc[] = {
 	{ "268-v4do.v4",   0x400000, 0x969ff3b2, 5 | BRF_SND },            // 14
 };
 
-STDROMPICKEXT(mslug5sv, mslug5sv, neogeo)
-STD_ROM_FN(mslug5sv)
+STDROMPICKEXT(mslug5ct, mslug5ct, neogeo)
+STD_ROM_FN(mslug5ct)
 
-struct BurnDriver BurnDrvmslug5sv = {
-	"mslug5sv", "mslug5", "neogeo", NULL, "2023",
+struct BurnDriver BurnDrvmslug5ct = {
+	"mslug5ct", "mslug5", "neogeo", NULL, "2023",
 	"Metal Slug 5 (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslug5svRomInfo, mslug5svRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, mslug5ctRomInfo, mslug5ctRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

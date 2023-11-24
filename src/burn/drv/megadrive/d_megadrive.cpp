@@ -1313,25 +1313,6 @@ struct BurnDriver BurnDrvmd_sonic3pir = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Sonic 3 Complete - Emerald Safari (Hack)
-// https://www.romhacking.net/hacks/8242/
-static struct BurnRomInfo md_sonic3cesRomDesc[] = {
-	{ "Sonic 3 Complete - Emerald Safari (2023)(BillyTime! Games).bin", 3932160, 0xaf6088b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sonic3ces)
-STD_ROM_FN(md_sonic3ces)
-
-struct BurnDriver BurnDrvmd_sonic3ces = {
-	"md_sonic3ces", "md_sonic3", NULL, NULL, "2023",
-	"Sonic 3 Complete - Emerald Safari (Hack)\0", NULL, "BillyTime! Games", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
-	MegadriveGetZipName, md_sonic3cesRomInfo, md_sonic3cesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // Sonic Compilation (Euro, Earlier)
 static struct BurnRomInfo md_soniccmp1RomDesc[] = {
 	{ "mpr-18203.ic1", 0x200000, 0xfe61c79e, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
@@ -46931,7 +46912,8 @@ struct BurnDriver BurnDrvmd_s3ktc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Sonic the Hedgehog 3 Complete (Hack by Tiddles)
+// Sonic the Hedgehog 3 Complete (Hack)
+// https://www.romhacking.net/hacks/1056/
 static struct BurnRomInfo md_s3compRomDesc[] = {
 	{ "S3Complete.bin", 0x3C0000, 0x2BD564B1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -46949,9 +46931,30 @@ struct BurnDriver BurnDrvmd_s3comp = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Sonic the Hedgehog 3 Complete - Emerald Safari (Hack)
+// https://www.romhacking.net/hacks/8242/
+static struct BurnRomInfo md_s3compesRomDesc[] = {
+	{ "Sonic 3 Complete - Emerald Safari (2023)(BillyTime! Games).bin", 3932160, 0xaf6088b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_s3compes)
+STD_ROM_FN(md_s3compes)
+
+struct BurnDriver BurnDrvmd_s3compes = {
+	"md_s3compes", "md_sks3", NULL, NULL, "2023",
+	"Sonic the Hedgehog 3 Complete - Emerald Safari (Hack)\0", NULL, "BillyTime! Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_s3compesRomInfo, md_s3compesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+
 // --------------------------------------------
 // -- Prototype/Hack/Bootleg additions below --
 // --------------------------------------------
+
 
 // Art of Fighting (Hack, Enhanced Colors)
 // http://www.romhacking.net/hacks/2394/

@@ -119,7 +119,7 @@ static void AnalyzeGameLayout()
 			}
 
 			// count the number of axis per player
-			if (_stricmp("-axis", bii.szInfo + 4) == 0 || _stricmp("-axis", bii.szInfo + 7) == 0) {
+			if ((strlen(bii.szInfo) == 9 && _stricmp("-axis", bii.szInfo + 4) == 0) || (strlen(bii.szInfo) == 12 && _stricmp("-axis", bii.szInfo + 7) == 0)) {
 				nPerPlayerAxises[nPlayer]++;
 			}
 			// look for mahjong controls, if found set a number of mahjong keyboards equal to the number of players

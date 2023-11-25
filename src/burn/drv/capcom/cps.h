@@ -6,6 +6,7 @@
 #include "msm6295.h"
 #include "eeprom.h"
 #include "timer.h"
+#include "samples.h"
 
 // Maximum number of beam-synchronized interrupts to check
 #define MAX_RASTER 10

@@ -20628,7 +20628,7 @@ struct BurnDriver BurnDrvkof98evo = {
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug1v2RomDesc[] = {
-	{ "201-p11v2.p1",   0x200000, 0xc6a2f0e9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p11v2.p1",   0x200000, 0x45822261, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",      0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 

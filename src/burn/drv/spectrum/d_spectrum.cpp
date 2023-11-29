@@ -44624,7 +44624,7 @@ struct BurnDriver BurnSpecSbotp2 = {
 // Seraphima Final Version (English) (128K) (HB)
 
 static struct BurnRomInfo SpecSeraphimafomDesc[] = {
-	{ "Seraphima Final Version EN 128K (2023)(Zosya Ent.).tap", 120379, 0xe03b415f, BRF_ESS | BRF_PRG },
+	{ "Seraphima Final Version EN 128K (2023)(Zosya Ent.).tap", 120381, 0xe03b415f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSeraphima, SpecSeraphima, Spec128)

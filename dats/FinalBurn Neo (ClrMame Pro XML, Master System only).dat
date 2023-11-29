@@ -1723,6 +1723,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="fantdizz" sourcefile="sms/d_sms.cpp">
+		<comment>Fully playable, but the upper-screen HUD is glitched</comment>
 		<description>Fantastic Dizzy (Euro)</description>
 		<year>1993</year>
 		<manufacturer>Codemasters</manufacturer>
@@ -2953,7 +2954,8 @@
 		<driver status="good"/>
 	</game>
 	<game name="sn_lwep3" sourcefile="sms/d_sms.cpp">
-		<description>Lethal Weapon 3 (Music prototype)</description>
+		<comment>Prototype</comment>
+		<description>Lethal Weapon 3 (Music Prototype)</description>
 		<year>1992</year>
 		<manufacturer>Probe</manufacturer>
 		<rom name="lethal weapon 3 music [proto].bin" size="32768" crc="eb71247b"/>
@@ -5347,14 +5349,6 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="sn_ateam" sourcefile="sms/d_sms.cpp">
-		<description>The A-Team (Music prototype)</description>
-		<year>1992</year>
-		<manufacturer>Probe</manufacturer>
-		<rom name="a-team music [proto].bin" size="32768" crc="0eb430ff"/>
-		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="hicom8a" cloneof="hicom3a" romof="hicom3a" sourcefile="sms/d_sms.cpp">
 		<description>The Best Game Collection (Korea, 8 in 1 Ver. A)</description>
 		<year>1990</year>
@@ -6098,7 +6092,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="zillionb" cloneof="zillion" romof="zillion" sourcefile="sms/d_sms.cpp">
-		<description>Zillion (Euro, v0) ~ Akai Koudan Zillion (Japan, v0)</description>
+		<description>Zillion (Euro, v1.0) ~ Akai Koudan Zillion (Japan, v0)</description>
 		<year>1987</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="zillion (japan, europe) (en,ja).bin" size="131072" crc="60c19645"/>

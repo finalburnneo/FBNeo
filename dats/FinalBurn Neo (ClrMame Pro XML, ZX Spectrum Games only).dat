@@ -147,7 +147,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="2112ad" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Q, A, N, M and 0 to play</comment>
+		<comment>Q: up - A: down - N: left - M: right - 0: action</comment>
 		<description>2112 AD (48K)</description>
 		<year>1985</year>
 		<manufacturer>Design Design</manufacturer>
@@ -464,7 +464,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="acolyte" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Acolyte (48K) (HB)</description>
 		<year>2009</year>
 		<manufacturer>Video Images</manufacturer>
@@ -757,7 +757,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="aerial" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Aerial (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -1315,6 +1315,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="angleball" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Angle Ball (48K)</description>
+		<year>1987</year>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
+		<rom name="Angle Ball 48K (1987)(Mastertronic Added Dimension).tap" size="25307" crc="bd31af2d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="angrybirdsvs" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Angry Birds - Opposition (48K) (HB)</description>
@@ -1535,7 +1544,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ascend" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Ascend (48K) (HB)</description>
 		<year>2022</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -2322,7 +2331,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="beamslight" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Beams of Light (48K) (HB)</description>
 		<year>2017</year>
 		<manufacturer>Shiny</manufacturer>
@@ -2644,6 +2653,16 @@
 		<manufacturer>Codemasters</manufacturer>
 		<rom name="Blade Warrior (1988)(Codemasters).tap" size="41844" crc="d8bff571"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="blam" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<description>BLAM (128K)</description>
+		<year>1992-2023</year>
+		<manufacturer>Scattergood Studios</manufacturer>
+		<rom name="BLAM (1992-2023)(Scattergood Studios).tap" size="41609" crc="1c0219f8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3626,7 +3645,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cacorm" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Cacorm (48K) (HB)</description>
 		<year>2022</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -3923,6 +3942,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="catch23" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Catch 23 (48K)</description>
+		<year>1987</year>
+		<manufacturer>Martech Games</manufacturer>
+		<rom name="Catch 23 48K (1987)(Martech Games).tap" size="54581" crc="bef82e6f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cattivik" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Cattivik (128K) (HB)</description>
@@ -4003,7 +4031,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="cavit" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Cavit (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -5274,7 +5302,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="crimebust" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>'Q', 'W' and Space to set options</comment>
+		<comment>'Q', 'W' and 'Space' to set options</comment>
 		<description>Crime Busters Featuring Bennie the Burglar (48K)</description>
 		<year>1988</year>
 		<manufacturer>Players Software</manufacturer>
@@ -5496,6 +5524,16 @@
 		<year>2023</year>
 		<manufacturer>Furillo Productions</manufacturer>
 		<rom name="Cursed Demons Of Wallachia ES 48K (2023)(Furillo Productions).tap" size="45019" crc="a17dfc94"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cybermania" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Cybermania (48K) (HB)</description>
+		<year>2016</year>
+		<manufacturer>Payndz</manufacturer>
+		<rom name="Cybermania 48K (2016)(Payndz).tap" size="29277" crc="cae44982"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7282,7 +7320,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="egghead" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>AY8912 PSG supported</comment>
+		<comment>AY Sound supported</comment>
 		<description>Egghead (48K)</description>
 		<year>1989</year>
 		<manufacturer>Crash</manufacturer>
@@ -7324,7 +7362,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="egghead2" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>AY8912 PSG supported</comment>
+		<comment>AY Sound supported</comment>
 		<description>Egghead II - Egghead to the Rescue (48K)</description>
 		<year>1990</year>
 		<manufacturer>Crash</manufacturer>
@@ -7566,6 +7604,15 @@
 		<rom name="Escape from the Planet of the Robot Monsters (1990)(Domark).tap" size="111578" crc="9f95584c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eskicapers" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Eskimo Capers (16K)</description>
+		<year>1984</year>
+		<manufacturer>PowerSoftware</manufacturer>
+		<rom name="Eskimo Capers 16K (1984)(PowerSoftware).tap" size="15335" crc="c875d845"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9714,6 +9761,81 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="harb2p1" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Harbinger 2: The Void - Part-1 (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>APSIS</manufacturer>
+		<rom name="Harbinger 2 The Void, Part-1 128K (2018)(APSIS).tap" size="65335" crc="ae30b46e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="harb2p2" cloneof="harb2p1" romof="harb2p1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Harbinger 2: The Void - Part-2 (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>APSIS</manufacturer>
+		<rom name="Harbinger 2 The Void, Part-2 128K (2018)(APSIS).tap" size="66496" crc="ffc5c242"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="harb2p3" cloneof="harb2p1" romof="harb2p1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Harbinger 2: The Void - Part-3 (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>APSIS</manufacturer>
+		<rom name="Harbinger 2 The Void, Part-3 128K (2018)(APSIS).tap" size="65665" crc="4e9caca3"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="harb2intro" cloneof="harb2p1" romof="harb2p1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Harbinger 2: The Void - Tale Intro (128K) (HB)</description>
+		<year>2018</year>
+		<manufacturer>APSIS</manufacturer>
+		<rom name="Harbinger 2 The Void, Intro 128K (2018)(APSIS).tap" size="42380" crc="07570650"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="harbp1" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Harbinger: Convergence - Part-1 (128K) (HB)</description>
+		<year>2016</year>
+		<manufacturer>APSIS</manufacturer>
+		<rom name="Harbinger Convergence Part-1 128K (2016)(APSIS).tap" size="52742" crc="3f7e8009"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="harbp2" cloneof="harbp1" romof="harbp1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Harbinger: Convergence - Part-2 (128K) (HB)</description>
+		<year>2016</year>
+		<manufacturer>APSIS</manufacturer>
+		<rom name="Harbinger Convergence Part-2 128K (2016)(APSIS).tap" size="55208" crc="c0920a99"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hardcheese" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Hard Cheese! (16K)</description>
+		<year>1983</year>
+		<manufacturer>DK'Tronics</manufacturer>
+		<rom name="Hard Cheese! 16K (1983)(DK'Tronics).tap" size="14704" crc="eee475b0"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="harddriv" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Hard Drivin' (128K)</description>
 		<year>1989</year>
@@ -9752,6 +9874,16 @@
 		<rom name="Head over Heels (1987)(Ocean)[128K].z80" size="50597" crc="9f148037"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hbheaven" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>N: move left, M: move right</comment>
+		<description>Headbangers Heaven v2 (48K)</description>
+		<year>1983</year>
+		<manufacturer>Llamasoft</manufacturer>
+		<rom name="Headbangers Heaven v2 48K (1983)(Llamasoft).tap" size="19701" crc="c8697518"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -10052,7 +10184,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="hopman" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Hopman (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -10385,7 +10517,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="impetus" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Impetus (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -11595,17 +11727,6 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ksolitaire" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew</comment>
-		<description>Klondike Solitaire (128K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Klondike Solitaire (2021)(Under4Mhz).tap" size="20200" crc="5f351c11"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="klondike128" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Klondike Solitaire (128K) (HB, v1.04)</description>
@@ -11624,6 +11745,17 @@
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Klondike Solitaire v1.04 48K (2023)(Under4Mhz).tap" size="27278" crc="848b4208"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ksolitaire" cloneof="klondike128" romof="klondike128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Klondike Solitaire - first release (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Klondike Solitaire (2021)(Under4Mhz).tap" size="20200" crc="5f351c11"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11765,7 +11897,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="kraal" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Use Keyboard</comment>
+		<comment>Select '1 Keyboard' to use controller</comment>
 		<description>Kraal (48K)</description>
 		<year>1990</year>
 		<manufacturer>Hewson Consultants</manufacturer>
@@ -12714,17 +12846,6 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="msolitaire" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew</comment>
-		<description>Mahjong Solitaire (128K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>Under4Mhz</manufacturer>
-		<rom name="Mahjong Solitaire 128K (2021)(Under4Mhz).tap" size="20934" crc="c3a7afed"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="mahjong128" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Mahjong Solitaire (128K) (HB, v1.16)</description>
@@ -12743,6 +12864,17 @@
 		<manufacturer>Under4Mhz</manufacturer>
 		<rom name="Mahjong Solitaire v1.16 48K (2023)(Under4Mhz).tap" size="22574" crc="0657a886"/>
 		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="msolitaire" cloneof="mahjong128" romof="mahjong128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Mahjong Solitaire - first release (128K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Under4Mhz</manufacturer>
+		<rom name="Mahjong Solitaire 128K (2021)(Under4Mhz).tap" size="20934" crc="c3a7afed"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -13070,7 +13202,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mazy" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Mazy (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -13584,6 +13716,36 @@
 		<rom name="Mister Kung Fu v1.3 (2018-19)(Uprising Games).tap" size="44141" crc="484a3e01"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="misterien" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Misterio (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>FitoSoft</manufacturer>
+		<rom name="Misterio EN 48K (2023)(FitoSoft).tap" size="46476" crc="0b2bc46c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="misteript" cloneof="misterien" romof="misterien" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Misterio (Portuguese) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>FitoSoft</manufacturer>
+		<rom name="Misterio PT 48K (2023)(FitoSoft).tap" size="46577" crc="f2b13a75"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="misteries" cloneof="misterien" romof="misterien" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Misterio (Spanish) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>FitoSoft</manufacturer>
+		<rom name="Misterio ES 48K (2023)(FitoSoft).tap" size="46639" crc="d6709e91"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -14435,7 +14597,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="neuras" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Neuras (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -17588,7 +17750,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="ruptus" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew, AY Sound support</comment>
+		<comment>Homebrew, AY Sound supported</comment>
 		<description>Ruptus (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Inufuto</manufacturer>
@@ -18362,6 +18524,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="shootout" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Shoot-Out (128K)</description>
+		<year>1989</year>
+		<manufacturer>Martech Games</manufacturer>
+		<rom name="Shoot-Out 128K (1989)(Martech Games).tap" size="41276" crc="731942be"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="shoveladv" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Shovel Adventure ZX (128K) (HB, v1.2)</description>
@@ -18681,6 +18853,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="slaine" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Slaine (48K)</description>
+		<year>1987</year>
+		<manufacturer>Martech Games</manufacturer>
+		<rom name="Slaine 48K (1987)(Martech Games).tap" size="54524" crc="581c3541"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="slapfigh" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Slap Fight (48K)</description>
 		<year>1987</year>
@@ -18836,7 +19017,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="solnegro1" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>AY8912 PSG supported</comment>
+		<comment>AY Sound supported</comment>
 		<description>Sol Negro - Special Edition - Part 1 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
@@ -18846,7 +19027,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="solnegro2" cloneof="solnegro1" romof="solnegro1" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>AY8912 PSG supported</comment>
+		<comment>AY Sound supported</comment>
 		<description>Sol Negro - Special Edition - Part 2 (Spanish) (48K)</description>
 		<year>1989</year>
 		<manufacturer>Opera Soft</manufacturer>
@@ -19569,6 +19750,16 @@
 		<manufacturer>Domark</manufacturer>
 		<rom name="Star Wars.tap" size="41763" crc="14f2595f"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="swdroids" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Star Wars Droids (128K)</description>
+		<year>1988</year>
+		<manufacturer>Mastertronic Added Dimension</manufacturer>
+		<rom name="Star Wars Droids 128K (1988)(Mastertronic Added Dimension).tap" size="40659" crc="6e6acfe4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -20567,6 +20758,15 @@
 		<year>2021</year>
 		<manufacturer>Dave Hughes</manufacturer>
 		<rom name="Tardigrade (2021)(Dave Hughes).tap" size="15763" crc="579ce6ba"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="target" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Target 48K</description>
+		<year>1989</year>
+		<manufacturer>Martech Games</manufacturer>
+		<rom name="Target 48K (1989)(Martech Games).tap" size="26777" crc="5e01d8e8"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

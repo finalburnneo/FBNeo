@@ -55,7 +55,7 @@
 	<game name="16zhangmah" sourcefile="megadrive/d_megadrive.cpp">
 		<description>16 Zhang Mahjong II (Taiwan) (Unl)</description>
 		<year>199?</year>
-		<manufacturer>&lt;unlicensed&gt;</manufacturer>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="16 Zhang Mahjong II (Taiwan) (Unl).md" size="1048576" crc="b4f4249f"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7812,7 +7812,7 @@
 	</game>
 	<game name="gadgets" cloneof="gadget" romof="gadget" sourcefile="megadrive/d_megadrive.cpp">
 		<comment>Hack</comment>
-		<description>Gadget twins (Hack, Spanish)</description>
+		<description>Gadget Twins (Hack, Spanish)</description>
 		<year>2019</year>
 		<manufacturer>Wave</manufacturer>
 		<rom name="gadget twins (hack, spanish).bin" size="1048576" crc="b5e21dcb"/>
@@ -9706,7 +9706,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="jimpowerpiko" sourcefile="megadrive/d_megadrive.cpp">
-		<comment>Homebrew, Original title by Loricel</comment>
+		<comment>Homebrew, Originally developed by Loricel</comment>
 		<description>Jim Power - The Lost Dimension in 3D (HB)</description>
 		<year>2014</year>
 		<manufacturer>Piko Interactive</manufacturer>
@@ -11716,7 +11716,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="queenjour" sourcefile="megadrive/d_megadrive.cpp">
-		<comment>Homebrew</comment>
+		<comment>Demo, Homebrew</comment>
 		<description>Mega Queen Journey, The (HB)</description>
 		<year>2019</year>
 		<manufacturer>DnWn</manufacturer>
@@ -17965,6 +17965,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="shylax" sourcefile="megadrive/d_megadrive.cpp">
+		<comment>Homebrew</comment>
+		<description>Shylax (HB, v0.1)</description>
+		<year>2023</year>
+		<manufacturer>manu2097</manufacturer>
+		<rom name="Shylax v0.1 (2023)(manu2097).bin" size="1310720" crc="b29cf25d"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sidepock" sourcefile="megadrive/d_megadrive.cpp">
 		<description>Side Pocket (Euro)</description>
 		<year>1992</year>
@@ -18923,6 +18932,15 @@
 		<year>2013</year>
 		<manufacturer>Tiddles</manufacturer>
 		<rom name="S3Complete.bin" size="3932160" crc="2bd564b1"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="s3compes" cloneof="sks3" romof="sks3" sourcefile="megadrive/d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>Sonic the Hedgehog 3 Complete - Emerald Safari (Hack)</description>
+		<year>2023</year>
+		<manufacturer>BillyTime! Games</manufacturer>
+		<rom name="Sonic 3 Complete - Emerald Safari (2023)(BillyTime! Games).bin" size="3932160" crc="af6088b1"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

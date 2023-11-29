@@ -1139,7 +1139,7 @@
 	<game name="namida" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<description>Namida no Soukoban Special (Japan)</description>
 		<year>1986</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="Namida no Soukoban Special (Japan).fds" size="131000" crc="0c5b12d6"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1166,7 +1166,7 @@
 	<game name="otocky" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<description>Otocky (Japan)</description>
 		<year>1987</year>
-		<manufacturer>ASCII</manufacturer>
+		<manufacturer>ASCII Corp.</manufacturer>
 		<rom name="Otocky (Japan).fds" size="131016" crc="d7a49861"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
@@ -1246,11 +1246,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="relics" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+	<game name="relics" cloneof="relicsen" romof="relicsen" sourcefile="nes/d_nes.cpp">
 		<description>Relics - Ankoku Yousai (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Bothtec</manufacturer>
 		<rom name="Relics - Ankoku Yousai (Japan).fds" size="131016" crc="fb0ae491"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="relicsen" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Relics - The Dark Fortress (Hack, English)</description>
+		<year>2023</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Relics - Ankoku Yousai T-Eng (2023)(BlackPaladin).fds" size="131000" crc="389a10ad"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

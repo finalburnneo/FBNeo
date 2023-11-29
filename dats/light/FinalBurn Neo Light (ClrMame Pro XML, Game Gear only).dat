@@ -2100,6 +2100,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gunstreamcv" sourcefile="sms/d_sms.cpp">
+		<comment>Homebrew</comment>
+		<description>Gun Stream Challenge Version (HB)</description>
+		<year>2023</year>
+		<manufacturer>Habit Soft</manufacturer>
+		<rom name="Gun Stream Challenge Version (2023)(Habit Soft).gg" size="262144" crc="9891292e"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gunstar" sourcefile="sms/d_sms.cpp">
 		<description>Gunstar Heroes (Japan)</description>
 		<year>1995</year>
@@ -2820,7 +2829,7 @@
 		<manufacturer>Sega</manufacturer>
 		<rom name="majors pro baseball, the (usa).bin" size="262144" crc="36ebcd6d"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
+		<driver status="preliminary"/>
 	</game>
 	<game name="mappy" sourcefile="sms/d_sms.cpp">
 		<description>Mappy (Japan)</description>
@@ -4139,7 +4148,7 @@
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-15564.ic1" size="262144" crc="2da8e943"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
+		<driver status="preliminary"/>
 	</game>
 	<game name="psychicw" sourcefile="sms/d_sms.cpp">
 		<description>Psychic World (Euro, USA, Brazil)</description>

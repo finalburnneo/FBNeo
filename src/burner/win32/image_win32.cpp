@@ -4,8 +4,9 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img)
 {
 	BITMAPINFO bi;
 
-	if (hwnd == NULL || img == NULL) {
-		return NULL;
+	if (hwnd == nullptr || img == nullptr)
+	{
+		return nullptr;
 	}
 
 	bi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -21,9 +22,10 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img)
 	bi.bmiHeader.biClrImportant = 0;
 
 	HDC hDC = GetDC(hwnd);
-	BYTE* pbits = NULL;
-	HBITMAP hBitmap = CreateDIBSection(hDC, &bi, DIB_RGB_COLORS, (void**)&pbits, NULL, 0);
-	if (pbits) {
+	BYTE* pbits = nullptr;
+	HBITMAP hBitmap = CreateDIBSection(hDC, &bi, DIB_RGB_COLORS, (void**)&pbits, nullptr, 0);
+	if (pbits)
+	{
 		memcpy(pbits, img->bmpbits, img->imgbytes);
 	}
 	ReleaseDC(hwnd, hDC);
@@ -34,10 +36,11 @@ HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img)
 
 HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 {
-	IMAGE img = { nWidth, nHeight, 0, 0, NULL, NULL, 0};
+	IMAGE img = {nWidth, nHeight, 0, 0, nullptr, nullptr, 0};
 
-	if (PNGLoad(&img, fp, nPreset)) {
-		return NULL;
+	if (PNGLoad(&img, fp, nPreset))
+	{
+		return nullptr;
 	}
 
 	return ImageToBitmap(hWnd, &img);
@@ -45,11 +48,12 @@ HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 
 HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 {
-	if (hWnd == NULL || fp == NULL) {
-		return NULL;
+	if (hWnd == nullptr || fp == nullptr)
+	{
+		return nullptr;
 	}
 
 	if (PNGIsImage(fp)) return PNGLoadBitmap(hWnd, fp, nWidth, nHeight, nPreset);
 
-	return NULL;
+	return nullptr;
 }

@@ -23,7 +23,8 @@ void earom_ctrl_write(UINT16 /*offset*/, UINT8 data)
 {
 	if (data & 0x01)
 		earom_data = earom[earom_offset];
-	if ((data & 0x0c) == 0x0c) {
+	if ((data & 0x0c) == 0x0c)
+	{
 		earom[earom_offset] = earom_data;
 	}
 }
@@ -45,20 +46,22 @@ void earom_exit()
 	// N/A
 }
 
-void earom_scan(INT32 nAction, INT32 *pnMin)
+void earom_scan(INT32 nAction, INT32* pnMin)
 {
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		SCAN_VAR(earom_offset);
 		SCAN_VAR(earom_data);
 	}
 
-	if (nAction & ACB_NVRAM) {
+	if (nAction & ACB_NVRAM)
+	{
 		struct BurnArea ba;
 
 		memset(&ba, 0, sizeof(ba));
-		ba.Data		= earom;
-		ba.nLen		= sizeof(earom);
-		ba.szName	= "NV RAM";
+		ba.Data = earom;
+		ba.nLen = sizeof(earom);
+		ba.szName = "NV RAM";
 		BurnAcb(&ba);
 	}
 }

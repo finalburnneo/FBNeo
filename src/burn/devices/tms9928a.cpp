@@ -17,7 +17,8 @@ static INT32 TMS9928A_palette[16] = {
 	0xfc5554, 0xff7978, 0xd4c154, 0xe6ce80, 0x21b03b, 0xc95bba, 0xcccccc, 0xffffff
 };
 
-typedef struct {
+using TMS9928A = struct
+{
 	UINT8 mode;
 	UINT8 ReadAhead;
 	UINT8 Regs[8];
@@ -35,8 +36,8 @@ typedef struct {
 	INT32 colourmask;
 	INT32 patternmask;
 
-	UINT8 *vMem;
-	UINT16 *tmpbmp;
+	UINT8* vMem;
+	UINT16* tmpbmp;
 	INT32 tmpbmpsize;
 	INT32 vramsize;
 	INT32 model;
@@ -48,7 +49,7 @@ typedef struct {
 	INT32 vertical_size;
 
 	void (*INTCallback)(INT32);
-} TMS9928A;
+};
 
 static TMS9928A tms;
 
@@ -58,92 +59,103 @@ static UINT32 Palette[16]; // high color support
 
 static void TMS89928aPaletteRecalc()
 {
-	for (INT32 i = 0; i < 16; i++) {
-		Palette[i] = BurnHighCol(TMS9928A_palette[i] >> 16, TMS9928A_palette[i] >> 8, TMS9928A_palette[i] >> 0 , 0);
+	for (INT32 i = 0; i < 16; i++)
+	{
+		Palette[i] = BurnHighCol(TMS9928A_palette[i] >> 16, TMS9928A_palette[i] >> 8, TMS9928A_palette[i] >> 0, 0);
 	}
 }
 
 static void check_interrupt()
 {
 	INT32 b = (tms.StatusReg & 0x80 && tms.Regs[1] & 0x20) ? 1 : 0;
-	if (b != tms.INT) {
+	if (b != tms.INT)
+	{
 		tms.INT = b;
-		if (tms.INTCallback) tms.INTCallback (tms.INT);
+		if (tms.INTCallback) tms.INTCallback(tms.INT);
 	}
 }
 
 static void update_table_masks()
 {
 	tms.colourmask = (tms.Regs[3] & 0x7f) * 8 | 7;
-	tms.patternmask = (tms.Regs[4] & 3) * 256 |	(tms.colourmask & 0xff);
+	tms.patternmask = (tms.Regs[4] & 3) * 256 | (tms.colourmask & 0xff);
 }
 
 static void change_register(INT32 reg, UINT8 val)
 {
-	static const UINT8 Mask[8] = { 0x03, 0xfb, 0x0f, 0xff, 0x07, 0x7f, 0x07, 0xff };
+	static const UINT8 Mask[8] = {0x03, 0xfb, 0x0f, 0xff, 0x07, 0x7f, 0x07, 0xff};
 
 	val &= Mask[reg];
 	tms.Regs[reg] = val;
 
 	switch (reg)
 	{
-		case 0:
+	case 0:
 		{
-			if (val & 2) {
+			if (val & 2)
+			{
 				tms.colour = ((tms.Regs[3] & 0x80) * 64) & (tms.vramsize - 1);
 				tms.pattern = ((tms.Regs[4] & 4) * 2048) & (tms.vramsize - 1);
 				update_table_masks();
-			} else {
+			}
+			else
+			{
 				tms.colour = (tms.Regs[3] * 64) & (tms.vramsize - 1);
 				tms.pattern = (tms.Regs[4] * 2048) & (tms.vramsize - 1);
 			}
-			tms.mode = ( (tms.revA ? (tms.Regs[0] & 2) : 0) | ((tms.Regs[1] & 0x10)>>4) | ((tms.Regs[1] & 8)>>1));
+			tms.mode = ((tms.revA ? (tms.Regs[0] & 2) : 0) | ((tms.Regs[1] & 0x10) >> 4) | ((tms.Regs[1] & 8) >> 1));
 		}
 		break;
 
-		case 1:
+	case 1:
 		{
-			tms.mode = ( (tms.revA ? (tms.Regs[0] & 2) : 0) | ((tms.Regs[1] & 0x10)>>4) | ((tms.Regs[1] & 8)>>1));
+			tms.mode = ((tms.revA ? (tms.Regs[0] & 2) : 0) | ((tms.Regs[1] & 0x10) >> 4) | ((tms.Regs[1] & 8) >> 1));
 			check_interrupt();
 		}
 		break;
 
-		case 2:
-			tms.nametbl = (val * 1024) & (tms.vramsize - 1);
+	case 2:
+		tms.nametbl = (val * 1024) & (tms.vramsize - 1);
 		break;
 
-		case 3:
+	case 3:
 		{
-			if (tms.Regs[0] & 2) {
+			if (tms.Regs[0] & 2)
+			{
 				tms.colour = ((val & 0x80) * 64) & (tms.vramsize - 1);
 				update_table_masks();
-			} else {
+			}
+			else
+			{
 				tms.colour = (val * 64) & (tms.vramsize - 1);
 			}
 		}
 		break;
 
-		case 4:
+	case 4:
 		{
-			if (tms.Regs[0] & 2) {
+			if (tms.Regs[0] & 2)
+			{
 				tms.pattern = ((val & 4) * 2048) & (tms.vramsize - 1);
 				update_table_masks();
-			} else {
+			}
+			else
+			{
 				tms.pattern = (val * 2048) & (tms.vramsize - 1);
 			}
 		}
 		break;
 
-		case 5:
-			tms.spriteattribute = (val * 128) & (tms.vramsize - 1);
+	case 5:
+		tms.spriteattribute = (val * 128) & (tms.vramsize - 1);
 		break;
 
-		case 6:
-			tms.spritepattern = (val * 2048) & (tms.vramsize - 1);
+	case 6:
+		tms.spritepattern = (val * 2048) & (tms.vramsize - 1);
 		break;
 
-		case 7:
-			/* The backdrop is updated at TMS9928A_refresh() */
+	case 7:
+		/* The backdrop is updated at TMS9928A_refresh() */
 		break;
 	}
 }
@@ -181,17 +193,17 @@ void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*
 
 	INT32 is50hz = ((tms.model == TMS9929) || (tms.model == TMS9929A));
 
-	tms.top_border		= (is50hz) ? TMS9928A_VERT_DISPLAY_START_PAL : TMS9928A_VERT_DISPLAY_START_NTSC;
+	tms.top_border = (is50hz) ? TMS9928A_VERT_DISPLAY_START_PAL : TMS9928A_VERT_DISPLAY_START_NTSC;
 	//tms.bottom_border	= (is50hz) ? 51 : 24;
-	tms.vertical_size   = (is50hz) ? TMS9928A_TOTAL_VERT_PAL : TMS9928A_TOTAL_VERT_NTSC;
+	tms.vertical_size = (is50hz) ? TMS9928A_TOTAL_VERT_PAL : TMS9928A_TOTAL_VERT_NTSC;
 
 	tms.vramsize = vram;
-	tms.vMem = (UINT8*)BurnMalloc(tms.vramsize);
+	tms.vMem = BurnMalloc(tms.vramsize);
 
 	tms.tmpbmpsize = TMS9928A_TOTAL_HORZ * TMS9928A_TOTAL_VERT_PAL * sizeof(short) * 2;
 	tms.tmpbmp = (UINT16*)BurnMalloc(tms.tmpbmpsize);
 
-	TMS9928AReset ();
+	TMS9928AReset();
 	tms.LimitSprites = 1;
 }
 
@@ -204,8 +216,8 @@ void TMS9928AExit()
 
 	GenericTilesExit();
 
-	BurnFree (tms.tmpbmp);
-	BurnFree (tms.vMem);
+	BurnFree(tms.tmpbmp);
+	BurnFree(tms.vMem);
 }
 
 void TMS9928APostLoad()
@@ -244,19 +256,26 @@ UINT8 TMS9928AReadRegs()
 
 void TMS9928AWriteRegs(INT32 data)
 {
-	if (tms.latch) {
+	if (tms.latch)
+	{
 		/* set high part of read/write address */
-		tms.Addr = ((UINT16)data << 8 | (tms.Addr & 0xff)) & (tms.vramsize - 1);
-		if (data & 0x80) {
+		tms.Addr = (static_cast<UINT16>(data) << 8 | (tms.Addr & 0xff)) & (tms.vramsize - 1);
+		if (data & 0x80)
+		{
 			change_register(data & 0x07, tms.FirstByte);
-		} else {
-			if (!(data & 0x40)) {
+		}
+		else
+		{
+			if (!(data & 0x40))
+			{
 				TMS9928AReadVRAM();
 			}
 		}
 
 		tms.latch = 0;
-	} else {
+	}
+	else
+	{
 		/* set low part of read/write address */
 		tms.Addr = ((tms.Addr & 0xff00) | data) & (tms.vramsize - 1);
 		tms.FirstByte = data;
@@ -277,18 +296,18 @@ static inline UINT8 readvmem(INT32 vaddr)
 static void TMS9928AScanline_INT(INT32 vpos)
 {
 	UINT16 BackColour = tms.Regs[7] & 0xf;
-	UINT16 *p = tms.tmpbmp + (vpos * TMS9928A_TOTAL_HORZ);
+	UINT16* p = tms.tmpbmp + (vpos * TMS9928A_TOTAL_HORZ);
 
 	INT32 y = vpos - tms.top_border;
 
-	if ( y < 0 || y >= 192 || !(tms.Regs[1] & 0x40) )
+	if (y < 0 || y >= 192 || !(tms.Regs[1] & 0x40))
 	{
 		/* Draw backdrop colour */
-		for ( INT32 i = 0; i < TMS9928A_TOTAL_HORZ; i++ )
+		for (INT32 i = 0; i < TMS9928A_TOTAL_HORZ; i++)
 			p[i] = BackColour;
 
 		/* vblank is set at the last cycle of the first inactive line */
-		if ( y == 193 )
+		if (y == 193)
 		{
 			tms.StatusReg |= 0x80;
 			check_interrupt();
@@ -299,241 +318,243 @@ static void TMS9928AScanline_INT(INT32 vpos)
 		/* Draw regular line */
 
 		/* Left border */
-		for ( INT32 i = 0; i < TMS9928A_HORZ_DISPLAY_START; i++ )
+		for (INT32 i = 0; i < TMS9928A_HORZ_DISPLAY_START; i++)
 			p[i] = BackColour;
 
 		/* Active display */
 
-		switch( tms.mode )
+		switch (tms.mode)
 		{
-		case 0:             /* MODE 0 */
+		case 0: /* MODE 0 */
 			{
-				UINT16 addr = tms.nametbl + ( ( y & 0xF8 ) << 2 );
+				UINT16 addr = tms.nametbl + ((y & 0xF8) << 2);
 
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x+= 8, addr++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x += 8, addr++)
 				{
-					UINT8 charcode = readvmem( addr );
-					UINT8 pattern =  readvmem( tms.pattern + ( charcode << 3 ) + ( y & 7 ) );
-					UINT8 colour =  readvmem( tms.colour + ( charcode >> 3 ) );
+					UINT8 charcode = readvmem(addr);
+					UINT8 pattern = readvmem(tms.pattern + (charcode << 3) + (y & 7));
+					UINT8 colour = readvmem(tms.colour + (charcode >> 3));
 					UINT16 fg = (colour >> 4) ? (colour >> 4) : BackColour;
 					UINT16 bg = (colour & 15) ? (colour & 15) : BackColour;
 
-					for ( INT32 i = 0; i < 8; pattern <<= 1, i++ )
-						p[x+i] = ( pattern & 0x80 ) ? fg : bg;
+					for (INT32 i = 0; i < 8; pattern <<= 1, i++)
+						p[x + i] = (pattern & 0x80) ? fg : bg;
 				}
 			}
 			break;
 
-		case 1:             /* MODE 1 */
+		case 1: /* MODE 1 */
 			{
-				UINT16 addr = tms.nametbl + ( ( y >> 3 ) * 40 );
+				UINT16 addr = tms.nametbl + ((y >> 3) * 40);
 				UINT16 fg = (tms.Regs[7] >> 4) ? (tms.Regs[7] >> 4) : BackColour;
 				UINT16 bg = BackColour;
 
 				/* Extra 6 pixels left border */
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 6; x++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 6; x++)
 					p[x] = bg;
 
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START + 6; x < TMS9928A_HORZ_DISPLAY_START + 246; x+= 6, addr++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START + 6; x < TMS9928A_HORZ_DISPLAY_START + 246; x += 6, addr++)
 				{
-					UINT16 charcode =  readvmem( addr );
-					UINT8 pattern =  readvmem( tms.pattern + ( charcode << 3 ) + ( y & 7 ) );
+					UINT16 charcode = readvmem(addr);
+					UINT8 pattern = readvmem(tms.pattern + (charcode << 3) + (y & 7));
 
-					for ( INT32 i = 0; i < 6; pattern <<= 1, i++ )
-						p[x+i] = ( pattern & 0x80 ) ? fg : bg;
+					for (INT32 i = 0; i < 6; pattern <<= 1, i++)
+						p[x + i] = (pattern & 0x80) ? fg : bg;
 				}
 
 				/* Extra 10 pixels right border */
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START + 246; x < TMS9928A_HORZ_DISPLAY_START + 256; x++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START + 246; x < TMS9928A_HORZ_DISPLAY_START + 256; x++)
 					p[x] = bg;
 			}
 			break;
 
-		case 2:             /* MODE 2 */
+		case 2: /* MODE 2 */
 			{
-				UINT16 addr = tms.nametbl + ( ( y >> 3 ) * 32 );
+				UINT16 addr = tms.nametbl + ((y >> 3) * 32);
 
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x+= 8, addr++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x += 8, addr++)
 				{
-					UINT16 charcode =  readvmem( addr ) + ( ( y >> 6 ) << 8 );
-					UINT8 pattern =  readvmem( tms.pattern + ( ( charcode & tms.patternmask ) << 3 ) + ( y & 7 ) );
-					UINT8 colour =  readvmem( tms.colour + ( ( charcode & tms.colourmask ) << 3 ) + ( y & 7 ) );
+					UINT16 charcode = readvmem(addr) + ((y >> 6) << 8);
+					UINT8 pattern = readvmem(tms.pattern + ((charcode & tms.patternmask) << 3) + (y & 7));
+					UINT8 colour = readvmem(tms.colour + ((charcode & tms.colourmask) << 3) + (y & 7));
 					UINT16 fg = (colour >> 4) ? (colour >> 4) : BackColour;
 					UINT16 bg = (colour & 15) ? (colour & 15) : BackColour;
 
-					for ( INT32 i = 0; i < 8; pattern <<= 1, i++ )
-						p[x+i] = ( pattern & 0x80 ) ? fg : bg;
+					for (INT32 i = 0; i < 8; pattern <<= 1, i++)
+						p[x + i] = (pattern & 0x80) ? fg : bg;
 				}
 			}
 			break;
 
-		case 3:             /* MODE 1+2 */
+		case 3: /* MODE 1+2 */
 			{
-				UINT16 addr = tms.nametbl + ( ( y >> 3 ) * 40 );
+				UINT16 addr = tms.nametbl + ((y >> 3) * 40);
 				UINT16 fg = (tms.Regs[7] >> 4) ? (tms.Regs[7] >> 4) : BackColour;
 				UINT16 bg = BackColour;
 
 				/* Extra 6 pixels left border */
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 6; x++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 6; x++)
 					p[x] = bg;
 
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START + 6; x < TMS9928A_HORZ_DISPLAY_START + 246; x+= 6, addr++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START + 6; x < TMS9928A_HORZ_DISPLAY_START + 246; x += 6, addr++)
 				{
-					UINT16 charcode = (  readvmem( addr ) + ( ( y >> 6 ) << 8 ) ) & tms.patternmask;
-					UINT8 pattern = readvmem( tms.pattern + ( charcode << 3 ) + ( y & 7 ) );
+					UINT16 charcode = (readvmem(addr) + ((y >> 6) << 8)) & tms.patternmask;
+					UINT8 pattern = readvmem(tms.pattern + (charcode << 3) + (y & 7));
 
-					for ( INT32 i = 0; i < 6; pattern <<= 1, i++ )
-						p[x+i] = ( pattern & 0x80 ) ? fg : bg;
+					for (INT32 i = 0; i < 6; pattern <<= 1, i++)
+						p[x + i] = (pattern & 0x80) ? fg : bg;
 				}
 
 				/* Extra 10 pixels right border */
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START + 246; x < TMS9928A_HORZ_DISPLAY_START + 256; x++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START + 246; x < TMS9928A_HORZ_DISPLAY_START + 256; x++)
 					p[x] = bg;
 			}
 			break;
 
-		case 4:             /* MODE 3 */
+		case 4: /* MODE 3 */
 			{
-				UINT16 addr = tms.nametbl + ( ( y >> 3 ) * 32 );
+				UINT16 addr = tms.nametbl + ((y >> 3) * 32);
 
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x+= 8, addr++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x += 8, addr++)
 				{
-					UINT8 charcode =  readvmem( addr );
-					UINT8 colour =  readvmem( tms.pattern + ( charcode << 3 ) + ( ( y >> 2 ) & 7 ) );
+					UINT8 charcode = readvmem(addr);
+					UINT8 colour = readvmem(tms.pattern + (charcode << 3) + ((y >> 2) & 7));
 					UINT16 fg = (colour >> 4) ? (colour >> 4) : BackColour;
 					UINT16 bg = (colour & 15) ? (colour & 15) : BackColour;
 
-					p[x+0] = p[x+1] = p[x+2] = p[x+3] = fg;
-					p[x+4] = p[x+5] = p[x+6] = p[x+7] = bg;
+					p[x + 0] = p[x + 1] = p[x + 2] = p[x + 3] = fg;
+					p[x + 4] = p[x + 5] = p[x + 6] = p[x + 7] = bg;
 				}
 			}
 			break;
 
-		case 5: case 7:     /* MODE bogus */
+		case 5:
+		case 7: /* MODE bogus */
 			{
 				UINT16 fg = (tms.Regs[7] >> 4) ? (tms.Regs[7] >> 4) : BackColour;
 				UINT16 bg = BackColour;
 
 				/* Extra 6 pixels left border */
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 6; x++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 6; x++)
 					p[x] = bg;
 
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START + 6; x < TMS9928A_HORZ_DISPLAY_START + 246; x+= 6 )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START + 6; x < TMS9928A_HORZ_DISPLAY_START + 246; x += 6)
 				{
-					p[x+0] = p[x+1] = p[x+2] = p[x+3] = fg;
-					p[x+4] = p[x+5] = bg;
+					p[x + 0] = p[x + 1] = p[x + 2] = p[x + 3] = fg;
+					p[x + 4] = p[x + 5] = bg;
 				}
 
 				/* Extra 10 pixels right border */
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START + 246; x < TMS9928A_HORZ_DISPLAY_START + 256; x++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START + 246; x < TMS9928A_HORZ_DISPLAY_START + 256; x++)
 					p[x] = bg;
 			}
 			break;
 
-		case 6:             /* MODE 2+3 */
+		case 6: /* MODE 2+3 */
 			{
-				UINT16 addr = tms.nametbl + ( ( y >> 3 ) * 32 );
+				UINT16 addr = tms.nametbl + ((y >> 3) * 32);
 
-				for ( INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x+= 8, addr++ )
+				for (INT32 x = TMS9928A_HORZ_DISPLAY_START; x < TMS9928A_HORZ_DISPLAY_START + 256; x += 8, addr++)
 				{
-					UINT8 charcode =  readvmem( addr );
-					UINT8 colour =  readvmem( tms.pattern + ( ( ( charcode + ( ( y >> 2 ) & 7 ) + ( ( y >> 6 ) << 8 ) ) & tms.patternmask ) << 3 ) );
+					UINT8 charcode = readvmem(addr);
+					UINT8 colour = readvmem(
+						tms.pattern + (((charcode + ((y >> 2) & 7) + ((y >> 6) << 8)) & tms.patternmask) << 3));
 					UINT16 fg = (colour >> 4) ? (colour >> 4) : BackColour;
 					UINT16 bg = (colour & 15) ? (colour & 15) : BackColour;
 
-					p[x+0] = p[x+1] = p[x+2] = p[x+3] = fg;
-					p[x+4] = p[x+5] = p[x+6] = p[x+7] = bg;
+					p[x + 0] = p[x + 1] = p[x + 2] = p[x + 3] = fg;
+					p[x + 4] = p[x + 5] = p[x + 6] = p[x + 7] = bg;
 				}
 			}
 			break;
 		}
 
 		/* Draw sprites */
-		if ( ( tms.Regs[1] & 0x50 ) != 0x40 )
+		if ((tms.Regs[1] & 0x50) != 0x40)
 		{
 			/* sprites are disabled */
 			tms.FifthSprite = 31;
 		}
 		else
 		{
-			UINT8 sprite_size = ( tms.Regs[1] & 0x02 ) ? 16 : 8;
+			UINT8 sprite_size = (tms.Regs[1] & 0x02) ? 16 : 8;
 			UINT8 sprite_mag = tms.Regs[1] & 0x01;
-			UINT8 sprite_height = sprite_size * ( sprite_mag + 1 );
-			UINT8 spr_drawn[32+256+32] = { 0 };
+			UINT8 sprite_height = sprite_size * (sprite_mag + 1);
+			UINT8 spr_drawn[32 + 256 + 32] = {0};
 			UINT8 num_sprites = 0;
 			bool fifth_encountered = false;
 
-			for ( UINT16 sprattr = 0; sprattr < 128; sprattr += 4 )
+			for (UINT16 sprattr = 0; sprattr < 128; sprattr += 4)
 			{
-				INT32 spr_y =  readvmem( tms.spriteattribute + sprattr + 0 );
+				INT32 spr_y = readvmem(tms.spriteattribute + sprattr + 0);
 
 				tms.FifthSprite = sprattr / 4;
 
 				/* Stop processing sprites */
-				if ( spr_y == 208 )
+				if (spr_y == 208)
 					break;
 
-				if ( spr_y > 0xE0 )
+				if (spr_y > 0xE0)
 					spr_y -= 256;
 
 				/* vert pos 255 is displayed on the first line of the screen */
 				spr_y++;
 
 				/* is sprite enabled on this line? */
-				if ( spr_y <= y && y < spr_y + sprite_height )
+				if (spr_y <= y && y < spr_y + sprite_height)
 				{
-					INT32 spr_x =  readvmem( tms.spriteattribute + sprattr + 1 );
-					UINT8 sprcode =  readvmem( tms.spriteattribute + sprattr + 2 );
-					UINT8 sprcol =  readvmem( tms.spriteattribute + sprattr + 3 );
-					UINT16 pataddr = tms.spritepattern + ( ( sprite_size == 16 ) ? sprcode & ~0x03 : sprcode ) * 8;
+					INT32 spr_x = readvmem(tms.spriteattribute + sprattr + 1);
+					UINT8 sprcode = readvmem(tms.spriteattribute + sprattr + 2);
+					UINT8 sprcol = readvmem(tms.spriteattribute + sprattr + 3);
+					UINT16 pataddr = tms.spritepattern + ((sprite_size == 16) ? sprcode & ~0x03 : sprcode) * 8;
 
 					num_sprites++;
 
 					/* Fifth sprite encountered? */
-					if ( num_sprites == 5 )
+					if (num_sprites == 5)
 					{
 						fifth_encountered = true;
 						if (tms.LimitSprites)
 							break;
 					}
 
-					if ( sprite_mag )
-						pataddr += ( ( ( y - spr_y ) & 0x1F ) >> 1 );
+					if (sprite_mag)
+						pataddr += (((y - spr_y) & 0x1F) >> 1);
 					else
-						pataddr += ( ( y - spr_y ) & 0x0F );
+						pataddr += ((y - spr_y) & 0x0F);
 
-					UINT8 pattern =  readvmem( pataddr );
+					UINT8 pattern = readvmem(pataddr);
 
-					if ( sprcol & 0x80 )
+					if (sprcol & 0x80)
 						spr_x -= 32;
 
 					sprcol &= 0x0f;
 
-					for ( INT32 s = 0; s < sprite_size; s += 8 )
+					for (INT32 s = 0; s < sprite_size; s += 8)
 					{
-						for ( INT32 i = 0; i < 8; pattern <<= 1, i++ )
+						for (INT32 i = 0; i < 8; pattern <<= 1, i++)
 						{
-							INT32 colission_index = spr_x + ( sprite_mag ? i * 2 : i ) + 32;
+							INT32 colission_index = spr_x + (sprite_mag ? i * 2 : i) + 32;
 
-							for ( INT32 z = 0; z <= sprite_mag; colission_index++, z++ )
+							for (INT32 z = 0; z <= sprite_mag; colission_index++, z++)
 							{
 								/* Check if pixel should be drawn */
-								if ( pattern & 0x80 )
+								if (pattern & 0x80)
 								{
-									if ( colission_index >= 32 && colission_index < 32 + 256 )
+									if (colission_index >= 32 && colission_index < 32 + 256)
 									{
 										/* Check for colission */
-										if ( spr_drawn[ colission_index ] )
+										if (spr_drawn[colission_index])
 											tms.StatusReg |= 0x20;
-										spr_drawn[ colission_index ] |= 0x01;
+										spr_drawn[colission_index] |= 0x01;
 
-										if ( sprcol )
+										if (sprcol)
 										{
 											/* Has another sprite already drawn here? */
-											if ( ! ( spr_drawn[ colission_index ] & 0x02 ) )
+											if (!(spr_drawn[colission_index] & 0x02))
 											{
-												spr_drawn[ colission_index ] |= 0x02;
-												p[ TMS9928A_HORZ_DISPLAY_START + colission_index - 32 ] = sprcol;
+												spr_drawn[colission_index] |= 0x02;
+												p[TMS9928A_HORZ_DISPLAY_START + colission_index - 32] = sprcol;
 											}
 										}
 									}
@@ -541,7 +562,7 @@ static void TMS9928AScanline_INT(INT32 vpos)
 							}
 						}
 
-						pattern =  readvmem( pataddr + 16 );
+						pattern = readvmem(pataddr + 16);
 						spr_x += sprite_mag ? 16 : 8;
 					}
 				}
@@ -557,7 +578,7 @@ static void TMS9928AScanline_INT(INT32 vpos)
 		}
 
 		/* Right border */
-		for ( INT32 i = TMS9928A_HORZ_DISPLAY_START + 256; i < TMS9928A_TOTAL_HORZ; i++ )
+		for (INT32 i = TMS9928A_HORZ_DISPLAY_START + 256; i < TMS9928A_TOTAL_HORZ; i++)
 			p[i] = BackColour;
 	}
 }
@@ -576,7 +597,8 @@ INT32 TMS9928ADraw()
 		{
 			for (INT32 x = 0; x < nScreenWidth; x++)
 			{
-				pTransDraw[y * nScreenWidth + x] = tms.tmpbmp[(y + tms.top_border - 16) * TMS9928A_TOTAL_HORZ + ((TMS9928A_HORZ_DISPLAY_START/2)+10)+x];
+				pTransDraw[y * nScreenWidth + x] = tms.tmpbmp[(y + tms.top_border - 16) * TMS9928A_TOTAL_HORZ + ((
+					TMS9928A_HORZ_DISPLAY_START / 2) + 10) + x];
 			}
 		}
 	}
@@ -586,24 +608,26 @@ INT32 TMS9928ADraw()
 	return 0;
 }
 
-INT32 TMS9928AScan(INT32 nAction, INT32 *pnMin)
+INT32 TMS9928AScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029708;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data   = tms.vMem;
-		ba.nLen   = tms.vramsize;
+		ba.Data = tms.vMem;
+		ba.nLen = tms.vramsize;
 		ba.szName = "video ram";
 		BurnAcb(&ba);
 
-		ba.Data	  = tms.Regs;
-		ba.nLen	  = 8;
+		ba.Data = tms.Regs;
+		ba.nLen = 8;
 		ba.szName = "tms registers";
 		BurnAcb(&ba);
 

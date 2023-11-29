@@ -13,8 +13,8 @@ static INT32 incxy;
 static INT32 incyx;
 static INT32 incyy;
 
-static INT32 startx=0;
-static INT32 starty=0;
+static INT32 startx = 0;
+static INT32 starty = 0;
 
 static INT32 clip_min_y;
 static INT32 clip_max_y;
@@ -23,20 +23,20 @@ static INT32 clip_max_x;
 
 static INT32 global_priority = 0;
 
-static UINT8 *roz_ram;
-static UINT8 *roz_ctrl;
-static UINT16 *roz_bitmap;
+static UINT8* roz_ram;
+static UINT8* roz_ctrl;
+static UINT16* roz_bitmap;
 
-void c169_roz_init(UINT8 *ram, UINT8 *control, UINT16 *bitmap)
+void c169_roz_init(UINT8* ram, UINT8* control, UINT16* bitmap)
 {
 	roz_ram = ram;
 	roz_ctrl = control;
 	roz_bitmap = bitmap;
-}	
+}
 
-static void c169_roz_unpack_params(const UINT16 *source)
+static void c169_roz_unpack_params(const UINT16* source)
 {
-	const INT32 xoffset = 36, yoffset = 3;
+	constexpr constexpr INT32 xoffset = 36, yoffset = 3;
 
 	UINT16 temp = BURN_ENDIAN_SWAP_INT16(source[1]);
 	size = 512 << ((temp & 0x0300) >> 8);
@@ -45,24 +45,28 @@ static void c169_roz_unpack_params(const UINT16 *source)
 
 	temp = BURN_ENDIAN_SWAP_INT16(source[2]);
 	left = (temp & 0x7000) >> 3;
-	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
-	incxx = (INT16)temp;
+	if (temp & 0x8000) temp |= 0xf000;
+	else temp &= 0x0fff; // sign extend
+	incxx = static_cast<INT16>(temp);
 
 	temp = BURN_ENDIAN_SWAP_INT16(source[3]);
-	top = (temp&0x7000)>>3;
-	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
-	incxy = (INT16)temp;
+	top = (temp & 0x7000) >> 3;
+	if (temp & 0x8000) temp |= 0xf000;
+	else temp &= 0x0fff; // sign extend
+	incxy = static_cast<INT16>(temp);
 
 	temp = BURN_ENDIAN_SWAP_INT16(source[4]);
-	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
-	incyx = (INT16)temp;
+	if (temp & 0x8000) temp |= 0xf000;
+	else temp &= 0x0fff; // sign extend
+	incyx = static_cast<INT16>(temp);
 
 	temp = BURN_ENDIAN_SWAP_INT16(source[5]);
-	if (temp & 0x8000) temp |= 0xf000; else temp &= 0x0fff; // sign extend
-	incyy = (INT16)temp;
+	if (temp & 0x8000) temp |= 0xf000;
+	else temp &= 0x0fff; // sign extend
+	incyy = static_cast<INT16>(temp);
 
-	startx = (INT16)BURN_ENDIAN_SWAP_INT16(source[6]);
-	starty = (INT16)BURN_ENDIAN_SWAP_INT16(source[7]);
+	startx = static_cast<INT16>(source[6]);
+	starty = static_cast<INT16>(source[7]);
 	startx <<= 4;
 	starty <<= 4;
 
@@ -80,7 +84,7 @@ static void c169_roz_unpack_params(const UINT16 *source)
 static void c169_roz_draw_helper()
 {
 	UINT32 size_mask = size - 1;
-	UINT16 *srcbitmap = roz_bitmap;
+	UINT16* srcbitmap = roz_bitmap;
 	UINT32 hstartx = startx + clip_min_x * incxx + clip_min_y * incyx;
 	UINT32 hstarty = starty + clip_min_x * incxy + clip_min_y * incyy;
 	INT32 sx = clip_min_x;
@@ -90,14 +94,15 @@ static void c169_roz_draw_helper()
 		INT32 x = sx;
 		UINT32 cx = hstartx;
 		UINT32 cy = hstarty;
-		UINT16 *dest = pTransDraw + (sy * nScreenWidth) + sx;
-		UINT8 *prio = pPrioDraw + (sy * nScreenWidth) + sx;
+		UINT16* dest = pTransDraw + (sy * nScreenWidth) + sx;
+		UINT8* prio = pPrioDraw + (sy * nScreenWidth) + sx;
 		while (x <= clip_max_x)
 		{
 			UINT32 xpos = (((cx >> 16) & size_mask) + left) & 0xfff;
 			UINT32 ypos = (((cy >> 16) & size_mask) + top) & 0xfff;
 			INT32 pxl = BURN_ENDIAN_SWAP_INT16(srcbitmap[(ypos * 0x1000) + xpos]);
-			if ((pxl & 0x8000) == 0) {
+			if ((pxl & 0x8000) == 0)
+			{
 				*dest = pxl + color;
 				*prio = global_priority;
 			}
@@ -119,7 +124,7 @@ static void c169_roz_draw_scanline(INT32 line, INT32 pri)
 	{
 		INT32 row = line / 8;
 		INT32 offs = row * 0x100 + (line & 7) * 0x10 + 0xe080;
-		UINT16 *source = (UINT16*)(roz_ram + offs);
+		auto source = (UINT16*)(roz_ram + offs);
 
 		if ((BURN_ENDIAN_SWAP_INT16(source[1]) & 0x8000) == 0)
 		{
@@ -137,19 +142,23 @@ void c169_roz_draw(INT32 pri, INT32 line)
 {
 	GenericTilesGetClip(&clip_min_x, &clip_max_x, &clip_min_y, &clip_max_y);
 
-	if (line != -1) {
-		if (line >= clip_min_y && line <= clip_max_y) {
+	if (line != -1)
+	{
+		if (line >= clip_min_y && line <= clip_max_y)
+		{
 			clip_min_y = line;
 			clip_max_y = line;
-		} else {
+		}
+		else
+		{
 			return; // nothing to draw due to clipping
 		}
 	}
 
-	const UINT16 *source = (UINT16*)roz_ctrl;
+	const UINT16* source = (UINT16*)roz_ctrl;
 
 	INT32 mode = BURN_ENDIAN_SWAP_INT16(source[0]); // 0x8000 or 0x1000
-	
+
 	global_priority = pri;
 
 	for (INT32 which = 1; which >= 0; which--)
@@ -164,11 +173,10 @@ void c169_roz_draw(INT32 pri, INT32 line)
 			}
 			else
 			{
-				c169_roz_unpack_params(source + (which*8));
+				c169_roz_unpack_params(source + (which * 8));
 				if (priority == pri)
 					c169_roz_draw_helper();
 			}
 		}
 	}
 }
-

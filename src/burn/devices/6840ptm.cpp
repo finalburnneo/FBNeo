@@ -56,7 +56,7 @@
     LOCAL VARIABLES
 ***************************************************************************/
 
-static const char *const opmode[] =
+static constexpr char* const opmode[] =
 {
 	"000 continuous mode",
 	"001 freq comparison mode",
@@ -74,34 +74,34 @@ static const char *const opmode[] =
 
 enum
 {
-	PTM_6840_CTRL1   = 0,
-	PTM_6840_CTRL2   = 1,
-	PTM_6840_STATUS  = 1,
+	PTM_6840_CTRL1 = 0,
+	PTM_6840_CTRL2 = 1,
+	PTM_6840_STATUS = 1,
 	PTM_6840_MSBBUF1 = 2,
-	PTM_6840_LSB1    = 3,
+	PTM_6840_LSB1 = 3,
 	PTM_6840_MSBBUF2 = 4,
-	PTM_6840_LSB2    = 5,
+	PTM_6840_LSB2 = 5,
 	PTM_6840_MSBBUF3 = 6,
-	PTM_6840_LSB3    = 7
+	PTM_6840_LSB3 = 7
 };
 
 enum
 {
-	RESET_TIMERS    = 0x01,
-	CR1_SELECT      = 0x01,
-	T3_PRESCALE_EN  = 0x01,
+	RESET_TIMERS = 0x01,
+	CR1_SELECT = 0x01,
+	T3_PRESCALE_EN = 0x01,
 	INTERNAL_CLK_EN = 0x02,
 	COUNT_MODE_8BIT = 0x04,
-	INTERRUPT_EN    = 0x40,
-	COUNT_OUT_EN    = 0x80
+	INTERRUPT_EN = 0x40,
+	COUNT_OUT_EN = 0x80
 };
 
 enum
 {
-	TIMER1_IRQ  = 0x01,
-	TIMER2_IRQ  = 0x02,
-	TIMER3_IRQ  = 0x04,
-	ANY_IRQ     = 0x80
+	TIMER1_IRQ = 0x01,
+	TIMER2_IRQ = 0x02,
+	TIMER3_IRQ = 0x04,
+	ANY_IRQ = 0x80
 };
 
 static double m_external_clock[3];
@@ -111,8 +111,8 @@ static void (*m_irq_cb)(INT32);
 
 static UINT8 m_control_reg[3];
 static UINT8 m_output[3]; // Output states
-static UINT8 m_gate[3];   // Input gate states
-static UINT8 m_clk[3];  // Clock states
+static UINT8 m_gate[3]; // Input gate states
+static UINT8 m_clk[3]; // Clock states
 static UINT8 m_enabled[3];
 static UINT8 m_mode[3];
 static UINT8 m_fired[3];
@@ -126,13 +126,13 @@ static UINT8 m_msb_buffer;
 
 // Each PTM has 3 timers
 static dtimer m_timer[3];
-static INT32  m_clock;
+static INT32 m_clock;
 
 static UINT16 m_latch[3];
 static UINT16 m_counter[3];
 
 // set in dual 8 bit mode to indicate Output high time cycle
-static bool   m_hightime[3];
+static bool m_hightime[3];
 
 void ptm6840_scan(INT32 nAction)
 {
@@ -166,7 +166,7 @@ void ptm6840_scan(INT32 nAction)
 static void subtract_from_counter(int counter, int count);
 static void tick(int counter, int count);
 static void update_interrupts();
-static UINT16 compute_counter( int counter );
+static UINT16 compute_counter(int counter);
 static void reload_count(int idx);
 static void timeout(int idx);
 static void set_gate(int idx, int state);
@@ -181,7 +181,12 @@ void ptm6840_set_c1(INT32 state) { set_clock(0, state); }
 void ptm6840_set_c2(INT32 state) { set_clock(1, state); }
 void ptm6840_set_c3(INT32 state) { set_clock(2, state); }
 
-void ptm6840_set_external_clocks(double clock0, double clock1, double clock2) { m_external_clock[0] = clock0; m_external_clock[1] = clock1; m_external_clock[2] = clock2; }
+void ptm6840_set_external_clocks(double clock0, double clock1, double clock2)
+{
+	m_external_clock[0] = clock0;
+	m_external_clock[1] = clock1;
+	m_external_clock[2] = clock2;
+}
 
 
 static void dummy_cb(INT32)
@@ -256,30 +261,30 @@ void ptm6840_exit()
 
 void ptm6840_reset()
 {
-	m_control_reg[2]         = 0;
-	m_control_reg[1]         = 0;
-	m_control_reg[0]         = 1;
-	m_status_reg             = 0;
-	m_t3_divisor             = 1;
+	m_control_reg[2] = 0;
+	m_control_reg[1] = 0;
+	m_control_reg[0] = 1;
+	m_status_reg = 0;
+	m_t3_divisor = 1;
 	m_status_read_since_int = 0;
-	m_irq                   = 0;
-	m_t3_scaler             = 0;
-	m_hightime[0]           = false;
-	m_hightime[1]           = false;
-	m_hightime[2]           = false;
+	m_irq = 0;
+	m_t3_scaler = 0;
+	m_hightime[0] = false;
+	m_hightime[1] = false;
+	m_hightime[2] = false;
 
 	for (int i = 0; i < 3; i++)
 	{
 		m_counter[i] = 0xffff;
-		m_latch[i]   = 0xffff;
-		m_output[i]  = 0;
-		m_fired[i]   = 0;
+		m_latch[i] = 0xffff;
+		m_output[i] = 0;
+		m_fired[i] = 0;
 		m_enabled[i] = 0;
 		m_mode[i] = 0;
 	}
 
 	for (int i = 0; i < 3; i++) //  device_resolve_objects() ?
-		m_gate[i]  = 0;
+		m_gate[i] = 0;
 }
 
 
@@ -364,7 +369,6 @@ static void subtract_from_counter(int counter, int count)
 }
 
 
-
 //-------------------------------------------------
 //  tick
 //-------------------------------------------------
@@ -375,7 +379,7 @@ static void tick(int counter, int count)
 	{
 		m_t3_scaler += count;
 
-		if ( m_t3_scaler > m_t3_divisor - 1)
+		if (m_t3_scaler > m_t3_divisor - 1)
 		{
 			subtract_from_counter(counter, 1);
 			m_t3_scaler = 0;
@@ -388,7 +392,6 @@ static void tick(int counter, int count)
 }
 
 
-
 //-------------------------------------------------
 //  update_interrupts - Update Internal Interrupts
 //-------------------------------------------------
@@ -396,8 +399,8 @@ static void tick(int counter, int count)
 static void update_interrupts()
 {
 	int new_state = ((m_status_reg & TIMER1_IRQ) && (m_control_reg[0] & INTERRUPT_EN)) ||
-					((m_status_reg & TIMER2_IRQ) && (m_control_reg[1] & INTERRUPT_EN)) ||
-					((m_status_reg & TIMER3_IRQ) && (m_control_reg[2] & INTERRUPT_EN));
+		((m_status_reg & TIMER2_IRQ) && (m_control_reg[1] & INTERRUPT_EN)) ||
+		((m_status_reg & TIMER3_IRQ) && (m_control_reg[2] & INTERRUPT_EN));
 
 	LOGMASKED(LOG_IRQS, "ptm: IRQ state update: %d, T1:%d, T1E:%d, T2:%d, T2E:%d, T3:%d, T3E:%d\n", new_state,
 		(m_status_reg & TIMER1_IRQ) ? 1 : 0, (m_control_reg[0] & INTERRUPT_EN) ? 1 : 0,
@@ -422,12 +425,11 @@ static void update_interrupts()
 }
 
 
-
 //-------------------------------------------------
 //  compute_counter - Compute Counter
 //-------------------------------------------------
 
-static UINT16 compute_counter( int counter )
+static UINT16 compute_counter(int counter)
 {
 	double clk;
 
@@ -452,7 +454,9 @@ static UINT16 compute_counter( int counter )
 	{
 		clk /= m_t3_divisor;
 	}
-	LOGMASKED(LOG_COUNTERS, "Timer #%d %S clock freq %f \n", counter + 1, (m_control_reg[counter] & INTERNAL_CLK_EN) ? "internal" : "external", clk);
+	LOGMASKED(LOG_COUNTERS, "Timer #%d %S clock freq %f \n", counter + 1, (m_control_reg[counter] & INTERNAL_CLK_EN)
+		                                                                      ? "internal"
+		                                                                      : "external", clk);
 
 	// See how many are left
 	//int remaining = (m_timer[counter]->remaining() * clk).as_double();
@@ -470,7 +474,6 @@ static UINT16 compute_counter( int counter )
 	LOGMASKED(LOG_COUNTERS, "Timer #%d read counter: %d\n", counter + 1, remaining);
 	return remaining;
 }
-
 
 
 //-------------------------------------------------
@@ -508,7 +511,6 @@ static void reload_count(int idx)
 			count = 0xff;
 		else
 			count = ((count >> 8) + 1) * ((count & 0xff) + 1);
-
 	}
 	else
 	{
@@ -549,7 +551,6 @@ static void reload_count(int idx)
 }
 
 
-
 //-------------------------------------------------
 //  read - Read Timer
 //-------------------------------------------------
@@ -558,15 +559,15 @@ UINT8 ptm6840_read(INT32 offset)
 {
 	int val;
 
-	switch ( offset )
+	switch (offset)
 	{
-		case PTM_6840_CTRL1:
+	case PTM_6840_CTRL1:
 		{
 			val = 0;
 			break;
 		}
 
-		case PTM_6840_STATUS:
+	case PTM_6840_STATUS:
 		{
 			LOGMASKED(LOG_STATUS, "ptm: Status read = %04X\n", m_status_reg);
 			m_status_read_since_int |= m_status_reg & 0x07;
@@ -574,9 +575,9 @@ UINT8 ptm6840_read(INT32 offset)
 			break;
 		}
 
-		case PTM_6840_MSBBUF1:
-		case PTM_6840_MSBBUF2:
-		case PTM_6840_MSBBUF3:
+	case PTM_6840_MSBBUF1:
+	case PTM_6840_MSBBUF2:
+	case PTM_6840_MSBBUF3:
 		{
 			int idx = (offset - 2) / 2;
 			int result = compute_counter(idx);
@@ -595,20 +596,19 @@ UINT8 ptm6840_read(INT32 offset)
 			break;
 		}
 
-		case PTM_6840_LSB1:
-		case PTM_6840_LSB2:
-		case PTM_6840_LSB3:
+	case PTM_6840_LSB1:
+	case PTM_6840_LSB2:
+	case PTM_6840_LSB3:
 		{
 			val = m_lsb_buffer;
 			break;
 		}
 
-		default:
+	default:
 		{
 			val = 0;
 			break;
 		}
-
 	}
 	return val;
 }
@@ -620,10 +620,10 @@ UINT8 ptm6840_read(INT32 offset)
 
 void ptm6840_write(INT32 offset, UINT8 data)
 {
-	switch ( offset )
+	switch (offset)
 	{
-		case PTM_6840_CTRL1:
-		case PTM_6840_CTRL2:
+	case PTM_6840_CTRL1:
+	case PTM_6840_CTRL2:
 		{
 			int idx = (offset == 1) ? 1 : (m_control_reg[1] & CR1_SELECT) ? 0 : 2;
 			UINT8 diffs = data ^ m_control_reg[idx];
@@ -682,18 +682,18 @@ void ptm6840_write(INT32 offset, UINT8 data)
 			break;
 		}
 
-		case PTM_6840_MSBBUF1:
-		case PTM_6840_MSBBUF2:
-		case PTM_6840_MSBBUF3:
+	case PTM_6840_MSBBUF1:
+	case PTM_6840_MSBBUF2:
+	case PTM_6840_MSBBUF3:
 		{
 			LOGMASKED(LOG_COUNTERS, "msbbuf%d = %02X\n", offset / 2, data);
 			m_msb_buffer = data;
 			break;
 		}
 
-		case PTM_6840_LSB1:
-		case PTM_6840_LSB2:
-		case PTM_6840_LSB3:
+	case PTM_6840_LSB1:
+	case PTM_6840_LSB2:
+	case PTM_6840_LSB3:
 		{
 			int idx = (offset - 3) / 2;
 			m_latch[idx] = (m_msb_buffer << 8) | (data & 0xff);
@@ -733,43 +733,43 @@ static void timeout(int idx)
 	{
 		switch (m_mode[idx])
 		{
-			case 0:
-			case 2:
+		case 0:
+		case 2:
 
-				if (m_control_reg[idx] & COUNT_MODE_8BIT)
-				{
-					m_hightime[idx] = !m_hightime[idx];
-					m_output[idx] = m_hightime[idx];
-					m_out_cb[idx](m_output[idx]);
-				}
-				else
-				{
-					m_output[idx] = m_output[idx] ^ 1;
-					m_out_cb[idx](m_output[idx]);
-				}
-				LOGMASKED(LOG_TIMEOUTS, "??: **ptm6840 t%d output %d **\n", idx + 1, m_output[idx]);
-				break;
+			if (m_control_reg[idx] & COUNT_MODE_8BIT)
+			{
+				m_hightime[idx] = !m_hightime[idx];
+				m_output[idx] = m_hightime[idx];
+				m_out_cb[idx](m_output[idx]);
+			}
+			else
+			{
+				m_output[idx] = m_output[idx] ^ 1;
+				m_out_cb[idx](m_output[idx]);
+			}
+			LOGMASKED(LOG_TIMEOUTS, "??: **ptm6840 t%d output %d **\n", idx + 1, m_output[idx]);
+			break;
 
-			case 4:
-			case 6:
-				if (!m_fired[idx])
-				{
-					m_output[idx] = 1;
-					LOGMASKED(LOG_TIMEOUTS, "**ptm6840 t%d output %d **\n", idx + 1, m_output[idx]);
+		case 4:
+		case 6:
+			if (!m_fired[idx])
+			{
+				m_output[idx] = 1;
+				LOGMASKED(LOG_TIMEOUTS, "**ptm6840 t%d output %d **\n", idx + 1, m_output[idx]);
 
-					m_out_cb[idx](m_output[idx]);
+				m_out_cb[idx](m_output[idx]);
 
-					// No changes in output until reinit
-					m_fired[idx] = 1;
+				// No changes in output until reinit
+				m_fired[idx] = 1;
 
-					m_status_reg |= (1 << idx);
-					m_status_read_since_int &= ~(1 << idx);
-					update_interrupts();
-				}
-				break;
+				m_status_reg |= (1 << idx);
+				m_status_read_since_int &= ~(1 << idx);
+				update_interrupts();
+			}
+			break;
 		}
 	}
-	m_enabled[idx]= 0;
+	m_enabled[idx] = 0;
 	reload_count(idx);
 }
 

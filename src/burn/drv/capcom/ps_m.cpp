@@ -3,22 +3,25 @@
 
 // CPS1 sound Mixing
 
-INT32 bPsmOkay = 0;										// 1 if the module is okay
+INT32 bPsmOkay = 0; // 1 if the module is okay
 
 static INT32 nPos;
 
 INT32 PsmInit()
 {
 	INT32 nRate, nRet;
-	bPsmOkay = 0;										// not OK yet
+	bPsmOkay = 0; // not OK yet
 
-	if (nBurnSoundRate > 0) {
+	if (nBurnSoundRate > 0)
+	{
 		nRate = nBurnSoundRate;
-	} else {
+	}
+	else
+	{
 		nRate = 11025;
 	}
 
-	BurnYM2151InitBuffered(3579540, 1, NULL, 1);		// Init FM sound chip
+	BurnYM2151InitBuffered(3579540, 1, nullptr, 1); // Init FM sound chip
 
 	//BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.35, BURN_SND_ROUTE_LEFT);
@@ -26,18 +29,23 @@ INT32 PsmInit()
 
 	// Init ADPCM
 	MSM6295ROM = CpsAd;
-	if (Forgottn) {
-		nRet = MSM6295Init(0, 6061, 0);
-	} else {
-		nRet = MSM6295Init(0, 7576, 0);
+	if (Forgottn)
+	{
+		nRet = MSM6295Init(0, 6061, false);
+	}
+	else
+	{
+		nRet = MSM6295Init(0, 7576, false);
 	}
 	MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 
-	if (nRet!=0) {
-		PsmExit(); return 1;
+	if (nRet != 0)
+	{
+		PsmExit();
+		return 1;
 	}
 
-	bPsmOkay = 1;										// OK
+	bPsmOkay = 1; // OK
 
 	return 0;
 }
@@ -48,7 +56,7 @@ INT32 PsmExit()
 
 	MSM6295Exit(0);
 
-	BurnYM2151Exit();									// Exit FM sound chip
+	BurnYM2151Exit(); // Exit FM sound chip
 	return 0;
 }
 
@@ -59,14 +67,17 @@ void PsmNewFrame()
 
 INT32 PsmUpdate(INT32 nEnd)
 {
-	if (bPsmOkay == 0 || pBurnSoundOut == NULL) {
+	if (bPsmOkay == 0 || pBurnSoundOut == nullptr)
+	{
 		return 1;
 	}
 
-	if (nEnd <= nPos) {
+	if (nEnd <= nPos)
+	{
 		return 0;
 	}
-	if (nEnd > nBurnSoundLen) {
+	if (nEnd > nBurnSoundLen)
+	{
 		nEnd = nBurnSoundLen;
 	}
 
@@ -83,7 +94,8 @@ INT32 PsmUpdate(INT32 nEnd)
 
 INT32 PsmUpdateEnd()
 {
-	if (bPsmOkay == 0 || pBurnSoundOut == NULL) {
+	if (bPsmOkay == 0 || pBurnSoundOut == nullptr)
+	{
 		return 1;
 	}
 

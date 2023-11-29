@@ -6,7 +6,7 @@
 #define SERIAL_BUFFER_LENGTH 40
 #define MEMORY_SIZE 1024
 
-static const eeprom_interface *intf;
+static const eeprom_interface* intf;
 
 static INT32 serial_count;
 static UINT8 serial_buffer[SERIAL_BUFFER_LENGTH];
@@ -22,45 +22,49 @@ static INT32 neeprom_available = 0;
 
 static INT32 overrun_errmsg_ignore = 0;
 
-static INT32 eeprom_command_match(const char *buf, const char *cmd, INT32 len)
+static INT32 eeprom_command_match(const char* buf, const char* cmd, INT32 len)
 {
-	if ( cmd == 0 )	return 0;
-	if ( len == 0 )	return 0;
+	if (cmd == nullptr) return 0;
+	if (len == 0) return 0;
 
-	for (;len>0;)
+	for (; len > 0;)
 	{
 		char b = *buf;
 		char c = *cmd;
 
-		if ((b==0) || (c==0))
-			return (b==c);
+		if ((b == 0) || (c == 0))
+			return (b == c);
 
-		switch ( c )
+		switch (c)
 		{
+		case '0':
+		case '1':
+			if (b != c) return 0;
+		case 'X':
+		case 'x':
+			buf++;
+			len--;
+			cmd++;
+			break;
+
+		case '*':
+			c = cmd[1];
+			switch (c)
+			{
 			case '0':
 			case '1':
-				if (b != c)	return 0;
-			case 'X':
-			case 'x':
-				buf++;
-				len--;
-				cmd++;
-				break;
-
-			case '*':
-				c = cmd[1];
-				switch( c )
+				if (b == c) { cmd++; }
+				else
 				{
-					case '0':
-					case '1':
-					  	if (b == c)	{	cmd++;			}
-						else		{	buf++;	len--;	}
-						break;
-					default:	return 0;
+					buf++;
+					len--;
 				}
+				break;
+			default: return 0;
+			}
 		}
 	}
-	return (*cmd==0);
+	return (*cmd == 0);
 }
 
 INT32 EEPROMAvailable()
@@ -72,10 +76,10 @@ INT32 EEPROMAvailable()
 	return neeprom_available;
 }
 
-void EEPROMInit(const eeprom_interface *interface)
+void EEPROMInit(const eeprom_interface* interface)
 {
 	DebugDev_EEPROMInitted = 1;
-	
+
 	intf = interface;
 
 	if ((1 << intf->address_bits) * intf->data_bits / 8 > MEMORY_SIZE)
@@ -83,7 +87,7 @@ void EEPROMInit(const eeprom_interface *interface)
 		bprintf(0, _T("EEPROM larger than eeprom allows"));
 	}
 
-	memset(eeprom_data,0xff,(1 << intf->address_bits) * intf->data_bits / 8);
+	memset(eeprom_data, 0xff, (1 << intf->address_bits) * intf->data_bits / 8);
 	serial_count = 0;
 	latch = 0;
 	reset_line = EEPROM_ASSERT_LINE;
@@ -94,17 +98,18 @@ void EEPROMInit(const eeprom_interface *interface)
 	else locked = 0;
 
 	TCHAR output[MAX_PATH];
-	_stprintf (output, _T("%s%s.nv"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
+	_stprintf(output, _T("%s%s.nv"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 
 	neeprom_available = 0;
 
-	INT32 len = ((1 << intf->address_bits) * (intf->data_bits >> 3)) & (MEMORY_SIZE-1);
+	INT32 len = ((1 << intf->address_bits) * (intf->data_bits >> 3)) & (MEMORY_SIZE - 1);
 
-	FILE *fz = _tfopen(output, _T("rb"));
-	if (fz != NULL) {
+	FILE* fz = _tfopen(output, _T("rb"));
+	if (fz != nullptr)
+	{
 		neeprom_available = 1;
-		fread (eeprom_data, len, 1, fz);
-		fclose (fz);
+		fread(eeprom_data, len, 1, fz);
+		fclose(fz);
 	}
 }
 
@@ -117,16 +122,17 @@ void EEPROMExit()
 	if (!DebugDev_EEPROMInitted) return;
 
 	TCHAR output[MAX_PATH];
-	_stprintf (output, _T("%s%s.nv"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
+	_stprintf(output, _T("%s%s.nv"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
 
 	neeprom_available = 0;
 
-	INT32 len = ((1 << intf->address_bits) * (intf->data_bits >> 3)) & (MEMORY_SIZE-1);
+	INT32 len = ((1 << intf->address_bits) * (intf->data_bits >> 3)) & (MEMORY_SIZE - 1);
 
-	FILE *fz = _tfopen(output, _T("wb"));
-	if (fz) {
-		fwrite (eeprom_data, len, 1, fz);
-		fclose (fz);
+	FILE* fz = _tfopen(output, _T("wb"));
+	if (fz)
+	{
+		fwrite(eeprom_data, len, 1, fz);
+		fclose(fz);
 	}
 
 	overrun_errmsg_ignore = 0;
@@ -141,9 +147,10 @@ void EEPROMIgnoreErrMessage(INT32 onoff)
 
 static void eeprom_write(INT32 bit)
 {
-	if (serial_count >= SERIAL_BUFFER_LENGTH-1)
+	if (serial_count >= SERIAL_BUFFER_LENGTH - 1)
 	{
-		if (!overrun_errmsg_ignore) {
+		if (!overrun_errmsg_ignore)
+		{
 			bprintf(0, _T("error: EEPROM serial buffer overflow\n"));
 		}
 		return;
@@ -152,19 +159,19 @@ static void eeprom_write(INT32 bit)
 	serial_buffer[serial_count++] = (bit ? '1' : '0');
 	serial_buffer[serial_count] = 0;
 
-	if ( (serial_count > intf->address_bits) &&
-	      eeprom_command_match((char*)serial_buffer,intf->cmd_read,strlen((char*)serial_buffer)-intf->address_bits) )
+	if ((serial_count > intf->address_bits) &&
+		eeprom_command_match((char*)serial_buffer, intf->cmd_read, strlen((char*)serial_buffer) - intf->address_bits))
 	{
-		INT32 i,address;
+		INT32 i, address;
 
 		address = 0;
-		for (i = serial_count-intf->address_bits;i < serial_count;i++)
+		for (i = serial_count - intf->address_bits; i < serial_count; i++)
 		{
 			address <<= 1;
 			if (serial_buffer[i] == '1') address |= 1;
 		}
 		if (intf->data_bits == 16)
-			eeprom_data_bits = (eeprom_data[2*address+0] << 8) + eeprom_data[2*address+1];
+			eeprom_data_bits = (eeprom_data[2 * address + 0] << 8) + eeprom_data[2 * address + 1];
 		else
 			eeprom_data_bits = eeprom_data[address];
 		eeprom_read_address = address;
@@ -172,13 +179,13 @@ static void eeprom_write(INT32 bit)
 		sending = 1;
 		serial_count = 0;
 	}
-	else if ( (serial_count > intf->address_bits) &&
-	           eeprom_command_match((char*)serial_buffer,intf->cmd_erase,strlen((char*)serial_buffer)-intf->address_bits) )
+	else if ((serial_count > intf->address_bits) &&
+		eeprom_command_match((char*)serial_buffer, intf->cmd_erase, strlen((char*)serial_buffer) - intf->address_bits))
 	{
-		INT32 i,address;
+		INT32 i, address;
 
 		address = 0;
-		for (i = serial_count-intf->address_bits;i < serial_count;i++)
+		for (i = serial_count - intf->address_bits; i < serial_count; i++)
 		{
 			address <<= 1;
 			if (serial_buffer[i] == '1') address |= 1;
@@ -188,27 +195,28 @@ static void eeprom_write(INT32 bit)
 		{
 			if (intf->data_bits == 16)
 			{
-				eeprom_data[2*address+0] = 0xff;
-				eeprom_data[2*address+1] = 0xff;
+				eeprom_data[2 * address + 0] = 0xff;
+				eeprom_data[2 * address + 1] = 0xff;
 			}
 			else
 				eeprom_data[address] = 0xff;
 		}
 		serial_count = 0;
 	}
-	else if ( (serial_count > (intf->address_bits + intf->data_bits)) &&
-	           eeprom_command_match((char*)serial_buffer,intf->cmd_write,strlen((char*)serial_buffer)-(intf->address_bits + intf->data_bits)) )
+	else if ((serial_count > (intf->address_bits + intf->data_bits)) &&
+		eeprom_command_match((char*)serial_buffer, intf->cmd_write,
+		                     strlen((char*)serial_buffer) - (intf->address_bits + intf->data_bits)))
 	{
-		INT32 i,address,data;
+		INT32 i, address, data;
 
 		address = 0;
-		for (i = serial_count-intf->data_bits-intf->address_bits;i < (serial_count-intf->data_bits);i++)
+		for (i = serial_count - intf->data_bits - intf->address_bits; i < (serial_count - intf->data_bits); i++)
 		{
 			address <<= 1;
 			if (serial_buffer[i] == '1') address |= 1;
 		}
 		data = 0;
-		for (i = serial_count-intf->data_bits;i < serial_count;i++)
+		for (i = serial_count - intf->data_bits; i < serial_count; i++)
 		{
 			data <<= 1;
 			if (serial_buffer[i] == '1') data |= 1;
@@ -218,20 +226,20 @@ static void eeprom_write(INT32 bit)
 		{
 			if (intf->data_bits == 16)
 			{
-				eeprom_data[2*address+0] = data >> 8;
-				eeprom_data[2*address+1] = data & 0xff;
+				eeprom_data[2 * address + 0] = data >> 8;
+				eeprom_data[2 * address + 1] = data & 0xff;
 			}
 			else
 				eeprom_data[address] = data;
 		}
 		serial_count = 0;
 	}
-	else if ( eeprom_command_match((char*)serial_buffer,intf->cmd_lock,strlen((char*)serial_buffer)) )
+	else if (eeprom_command_match((char*)serial_buffer, intf->cmd_lock, strlen((char*)serial_buffer)))
 	{
 		locked = 1;
 		serial_count = 0;
 	}
-	else if ( eeprom_command_match((char*)serial_buffer,intf->cmd_unlock,strlen((char*)serial_buffer)) )
+	else if (eeprom_command_match((char*)serial_buffer, intf->cmd_unlock, strlen((char*)serial_buffer)))
 	{
 		locked = 0;
 		serial_count = 0;
@@ -311,7 +319,8 @@ void EEPROMSetClockLine(INT32 state)
 				{
 					eeprom_read_address = (eeprom_read_address + 1) & ((1 << intf->address_bits) - 1);
 					if (intf->data_bits == 16)
-						eeprom_data_bits = (eeprom_data[2*eeprom_read_address+0] << 8) + eeprom_data[2*eeprom_read_address+1];
+						eeprom_data_bits = (eeprom_data[2 * eeprom_read_address + 0] << 8) + eeprom_data[2 *
+							eeprom_read_address + 1];
 					else
 						eeprom_data_bits = eeprom_data[eeprom_read_address];
 					eeprom_clock_count = 0;
@@ -327,7 +336,7 @@ void EEPROMSetClockLine(INT32 state)
 	clock_line = state;
 }
 
-void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length)
+void EEPROMFill(const UINT8* data, INT32 offset, INT32 length)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMFill called without init\n"));
@@ -353,19 +362,21 @@ void EEPROMScan(INT32 nAction, INT32* pnMin)
 
 	struct BurnArea ba;
 
-	if (nAction & ACB_DRIVER_DATA) {
-
-		if (pnMin && *pnMin < 0x020902) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
+		if (pnMin && *pnMin < 0x020902)
+		{
 			*pnMin = 0x029705;
 		}
 
 		memset(&ba, 0, sizeof(ba));
-		ba.Data		= serial_buffer;
-		ba.nLen		= SERIAL_BUFFER_LENGTH;
-		ba.szName	= "Serial Buffer";
+		ba.Data = serial_buffer;
+		ba.nLen = SERIAL_BUFFER_LENGTH;
+		ba.szName = "Serial Buffer";
 		BurnAcb(&ba);
 
-		if (nAction & ACB_RUNAHEAD) {
+		if (nAction & ACB_RUNAHEAD)
+		{
 			// we _must_ scan eeprom data when in RunAhead mode or corruption is a possibility
 			ScanVar(eeprom_data, MEMORY_SIZE, "eeprom_data");
 		}
@@ -382,16 +393,16 @@ void EEPROMScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(reset_delay);
 	}
 
-//	if (nAction & ACB_NVRAM) {
-//
-//		if (pnMin && (nAction & ACB_TYPEMASK) == ACB_NVRAM) {
-//			*pnMin = 0x02705;
-//		}
-//
-//		memset(&ba, 0, sizeof(ba));
-//  		ba.Data		= eeprom_data;
-//		ba.nLen		= MEMORY_SIZE;
-//		ba.szName	= "EEPROM memory";
-//		BurnAcb(&ba);
-//	}
+	//	if (nAction & ACB_NVRAM) {
+	//
+	//		if (pnMin && (nAction & ACB_TYPEMASK) == ACB_NVRAM) {
+	//			*pnMin = 0x02705;
+	//		}
+	//
+	//		memset(&ba, 0, sizeof(ba));
+	//  		ba.Data		= eeprom_data;
+	//		ba.nLen		= MEMORY_SIZE;
+	//		ba.szName	= "EEPROM memory";
+	//		BurnAcb(&ba);
+	//	}
 }

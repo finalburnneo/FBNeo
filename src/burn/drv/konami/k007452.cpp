@@ -28,7 +28,8 @@ void K007452Exit()
 
 void K007452Scan(INT32 nAction)
 {
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		SCAN_VAR(math_reg);
 		SCAN_VAR(multiply_result);
 		SCAN_VAR(divide_quotient);
@@ -40,12 +41,12 @@ UINT8 K007452Read(UINT16 address)
 {
 	switch (address & 7)
 	{
-		case 0:	return multiply_result & 0xff;
-		case 1:	return (multiply_result >> 8) & 0xff;
-		case 2:	return divide_remainder & 0xff;
-		case 3:	return (divide_remainder >> 8) & 0xff;
-		case 4:	return divide_quotient & 0xff;
-		case 5:	return (divide_quotient >> 8) & 0xff;
+	case 0: return multiply_result & 0xff;
+	case 1: return (multiply_result >> 8) & 0xff;
+	case 2: return divide_remainder & 0xff;
+	case 3: return (divide_remainder >> 8) & 0xff;
+	case 4: return divide_quotient & 0xff;
+	case 5: return (divide_quotient >> 8) & 0xff;
 	}
 
 	return 0;
@@ -65,12 +66,15 @@ void K007452Write(UINT16 address, UINT8 data)
 	else if (address == 5)
 	{
 		// Starts division process
-		UINT16 dividend = (math_reg[4]<<8) + math_reg[5];
-		UINT16 divisor = (math_reg[2]<<8) + math_reg[3];
-		if (!divisor) {
+		UINT16 dividend = (math_reg[4] << 8) + math_reg[5];
+		UINT16 divisor = (math_reg[2] << 8) + math_reg[3];
+		if (!divisor)
+		{
 			divide_quotient = 0xffff;
 			divide_remainder = 0x0000;
-		} else {
+		}
+		else
+		{
 			divide_quotient = dividend / divisor;
 			divide_remainder = dividend % divisor;
 		}

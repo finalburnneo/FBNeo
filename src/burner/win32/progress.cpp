@@ -1,25 +1,26 @@
 #include "burner.h"
 #include <process.h>
 
-static HWND hProgressDlg = NULL;
-static HANDLE hProgressThread = NULL;
+static HWND hProgressDlg = nullptr;
+static HANDLE hProgressThread = nullptr;
 static unsigned ProgressThreadID = 0;
 
 int nProgressPosBurn, nProgressPosBurner;
 int nProgressMin, nProgressMax;
 
-static HANDLE hEvent = NULL;
+static HANDLE hEvent = nullptr;
 
 // ----------------------------------------------------------------------------
 // Callbacks for burn library
 
 static int __cdecl ProgressSetRangeBurn(double dProgressRange)
 {
-	if (hProgressThread == NULL || hProgressDlg == NULL) {
+	if (hProgressThread == nullptr || hProgressDlg == nullptr)
+	{
 		return 1;
 	}
 
-	nProgressMin = -(int)((double)nProgressMax * dProgressRange);
+	nProgressMin = -static_cast<int>(static_cast<double>(nProgressMax) * dProgressRange);
 	SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETRANGE32, nProgressMin, nProgressMax);
 
 	return 0;
@@ -27,28 +28,38 @@ static int __cdecl ProgressSetRangeBurn(double dProgressRange)
 
 static int __cdecl ProgressUpdateBurn(double dProgress, const TCHAR* pszText, bool bAbs)
 {
-	if (hProgressThread == NULL || hProgressDlg == NULL) {
+	if (hProgressThread == nullptr || hProgressDlg == nullptr)
+	{
 		return 1;
 	}
 
-	if (pszText) {
+	if (pszText)
+	{
 		SendDlgItemMessage(hProgressDlg, IDC_WAIT_LABEL_B2, WM_SETTEXT, 0, (LPARAM)pszText);
 		SetWindowText(hScrnWnd, pszText);
 	}
 
-	if (bAbs) {
-		nProgressPosBurn = (int)((double)(-nProgressMin) * dProgress);
-		if (nProgressPosBurn > -nProgressMin) {
+	if (bAbs)
+	{
+		nProgressPosBurn = static_cast<int>(static_cast<double>(-nProgressMin) * dProgress);
+		if (nProgressPosBurn > -nProgressMin)
+		{
 			nProgressPosBurn = -nProgressMin;
 		}
-		SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS, (WPARAM)(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
-	} else {
-		if (dProgress) {
-			nProgressPosBurn += (int)((double)(-nProgressMin) * dProgress);
-			if (nProgressPosBurn > -nProgressMin) {
+		SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS,
+		                   static_cast<WPARAM>(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
+	}
+	else
+	{
+		if (dProgress)
+		{
+			nProgressPosBurn += static_cast<int>(static_cast<double>(-nProgressMin) * dProgress);
+			if (nProgressPosBurn > -nProgressMin)
+			{
 				nProgressPosBurn = -nProgressMin;
 			}
-			SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS, (WPARAM)(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
+			SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS,
+			                   static_cast<WPARAM>(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
 		}
 	}
 
@@ -60,28 +71,38 @@ static int __cdecl ProgressUpdateBurn(double dProgress, const TCHAR* pszText, bo
 
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs)
 {
-	if (hProgressThread == NULL || hProgressDlg == NULL) {
+	if (hProgressThread == nullptr || hProgressDlg == nullptr)
+	{
 		return 1;
 	}
 
-	if (pszText) {
+	if (pszText)
+	{
 		SendDlgItemMessage(hProgressDlg, IDC_WAIT_LABEL_B2, WM_SETTEXT, 0, (LPARAM)pszText);
 		SetWindowText(hScrnWnd, pszText);
 	}
 
-	if (bAbs) {
-		nProgressPosBurner = (int)((double)nProgressMax * dProgress);
-		if (nProgressPosBurner > nProgressMax) {
+	if (bAbs)
+	{
+		nProgressPosBurner = static_cast<int>(static_cast<double>(nProgressMax) * dProgress);
+		if (nProgressPosBurner > nProgressMax)
+		{
 			nProgressPosBurner = nProgressMax;
 		}
-		SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS, (WPARAM)(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
-	} else {
-		if (dProgress) {
-			if (nProgressPosBurner > nProgressMax) {
+		SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS,
+		                   static_cast<WPARAM>(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
+	}
+	else
+	{
+		if (dProgress)
+		{
+			if (nProgressPosBurner > nProgressMax)
+			{
 				nProgressPosBurner = nProgressMax;
 			}
-			nProgressPosBurner += (int)((double)nProgressMax * dProgress);
-			SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS, (WPARAM)(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
+			nProgressPosBurner += static_cast<int>(static_cast<double>(nProgressMax) * dProgress);
+			SendDlgItemMessage(hProgressDlg, IDC_WAIT_PROG, PBM_SETPOS,
+			                   static_cast<WPARAM>(nProgressMin + nProgressPosBurn + nProgressPosBurner), 0);
 		}
 	}
 
@@ -93,7 +114,8 @@ int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs)
 
 static INT_PTR CALLBACK ProgressProc(HWND hDlg, UINT Msg, WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
-	if (Msg == WM_INITDIALOG) {
+	if (Msg == WM_INITDIALOG)
+	{
 		TCHAR szText[128] = _T("");
 
 		hProgressDlg = hDlg;
@@ -132,16 +154,18 @@ static unsigned __stdcall DoProgress(void*)
 	BurnExtProgressRangeCallback = ProgressSetRangeBurn;
 	BurnExtProgressUpdateCallback = ProgressUpdateBurn;
 
-	FBACreateDialog(hAppInst, MAKEINTRESOURCE(IDD_WAIT), NULL, (DLGPROC)ProgressProc);
+	FBACreateDialog(hAppInst, MAKEINTRESOURCE(IDD_WAIT), nullptr, ProgressProc);
 
-	if (hEvent) {
+	if (hEvent)
+	{
 		SetEvent(hEvent);
 	}
 
-	while (GetMessage(&msg, NULL, 0, 0)) {
-
+	while (GetMessage(&msg, nullptr, 0, 0))
+	{
 		// See if we need to end the thread
-		if (msg.message == (WM_APP + 0)) {
+		if (msg.message == (WM_APP + 0))
+		{
 			break;
 		}
 
@@ -158,43 +182,45 @@ static unsigned __stdcall DoProgress(void*)
 
 int ProgressCreate()
 {
-	if (hProgressDlg || hProgressThread) {
+	if (hProgressDlg || hProgressThread)
+	{
 		return 1;
 	}
 
-	hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+	hEvent = CreateEvent(nullptr, TRUE, FALSE, nullptr);
 
-	hProgressThread = (HANDLE)_beginthreadex(NULL, 0, DoProgress, NULL, 0, &ProgressThreadID);
+	hProgressThread = (HANDLE)_beginthreadex(nullptr, 0, DoProgress, nullptr, 0, &ProgressThreadID);
 
 	WaitForSingleObject(hEvent, 15000);
 
 	CloseHandle(hEvent);
-	hEvent = NULL;
+	hEvent = nullptr;
 
 	return 0;
 }
 
 int ProgressDestroy()
 {
-	if (hProgressThread) {
-
+	if (hProgressThread)
+	{
 		// Signal the prgress thread to end
 		PostThreadMessage(ProgressThreadID, WM_APP + 0, 0, 0);
 
 		// Wait for the thread to finish
-		if (WaitForSingleObject(hProgressThread, 15000) != WAIT_OBJECT_0) {
+		if (WaitForSingleObject(hProgressThread, 15000) != WAIT_OBJECT_0)
+		{
 			// If the thread doesn't finish within 15 seconds, forcibly kill it
 			TerminateThread(hProgressThread, 1);
 		}
 
-		BurnExtProgressRangeCallback = NULL;
-		BurnExtProgressUpdateCallback = NULL;
+		BurnExtProgressRangeCallback = nullptr;
+		BurnExtProgressUpdateCallback = nullptr;
 
-		hProgressDlg = NULL;
+		hProgressDlg = nullptr;
 
 		CloseHandle(hProgressThread);
 
-		hProgressThread = NULL;
+		hProgressThread = nullptr;
 		ProgressThreadID = 0;
 	}
 

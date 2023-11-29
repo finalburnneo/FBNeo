@@ -25,7 +25,6 @@
 #define LOG_WAIT_THRESHOLD              1000
 
 
-
 /***************************************************************************
     CONSTANTS
 ***************************************************************************/
@@ -34,7 +33,6 @@
 #define CACHE_LINE_SIZE                 64          /* this is a general guess */
 #define TOTAL_BUCKETS                   (512 / SCANLINES_PER_BUCKET)
 #define UNITS_PER_POLY                  (100 / SCANLINES_PER_BUCKET)
-
 
 
 /***************************************************************************
@@ -47,50 +45,50 @@ struct polygon_info;
 /* tri_extent describes start/end points for a scanline */
 struct tri_extent
 {
-	INT16       startx;                     /* starting X coordinate (inclusive) */
-	INT16       stopx;                      /* ending X coordinate (exclusive) */
+	INT16 startx; /* starting X coordinate (inclusive) */
+	INT16 stopx; /* ending X coordinate (exclusive) */
 };
 
 
 /* single set of polygon per-parameter data */
 struct poly_param
 {
-	float       start;                      /* parameter value at starting X,Y */
-	float       dpdx;                       /* dp/dx relative to starting X */
-	float       dpdy;                       /* dp/dy relative to starting Y */
+	float start; /* parameter value at starting X,Y */
+	float dpdx; /* dp/dx relative to starting X */
+	float dpdy; /* dp/dy relative to starting Y */
 };
 
 
 /* poly edge is used internally for quad rendering */
 struct poly_edge
 {
-	poly_edge *         next;                   /* next edge in sequence */
-	int                 index;                  /* index of this edge */
-	const poly_vertex * v1;                     /* pointer to first vertex */
-	const poly_vertex * v2;                     /* pointer to second vertex */
-	float               dxdy;                   /* dx/dy along the edge */
-	float               dpdy[MAX_VERTEX_PARAMS];/* per-parameter dp/dy values */
+	poly_edge* next; /* next edge in sequence */
+	int index; /* index of this edge */
+	const poly_vertex* v1; /* pointer to first vertex */
+	const poly_vertex* v2; /* pointer to second vertex */
+	float dxdy; /* dx/dy along the edge */
+	float dpdy[MAX_VERTEX_PARAMS]; /* per-parameter dp/dy values */
 };
 
 
 /* poly section is used internally for quad rendering */
 struct poly_section
 {
-	const poly_edge *   ledge;                  /* pointer to left edge */
-	const poly_edge *   redge;                  /* pointer to right edge */
-	float               ybottom;                /* bottom of this section */
+	const poly_edge* ledge; /* pointer to left edge */
+	const poly_edge* redge; /* pointer to right edge */
+	float ybottom; /* bottom of this section */
 };
 
 
 /* work_unit_shared is a common set of data shared between tris and quads */
 struct work_unit_shared
 {
-	polygon_info *      polygon;                /* pointer to polygon */
-	volatile UINT32     count_next;             /* number of scanlines and index of next item to process */
-	INT16               scanline;               /* starting scanline and count */
-	UINT16              previtem;               /* index of previous item in the same bucket */
+	polygon_info* polygon; /* pointer to polygon */
+	volatile UINT32 count_next; /* number of scanlines and index of next item to process */
+	INT16 scanline; /* starting scanline and count */
+	UINT16 previtem; /* index of previous item in the same bucket */
 #ifndef PTR64
-	UINT32              dummy;                  /* pad to 16 bytes */
+	UINT32 dummy; /* pad to 16 bytes */
 #endif
 };
 
@@ -98,40 +96,40 @@ struct work_unit_shared
 /* tri_work_unit is a triangle-specific work-unit */
 struct tri_work_unit
 {
-	work_unit_shared    shared;                 /* shared data */
-	tri_extent          extent[SCANLINES_PER_BUCKET]; /* array of scanline extents */
+	work_unit_shared shared; /* shared data */
+	tri_extent extent[SCANLINES_PER_BUCKET]; /* array of scanline extents */
 };
 
 
 /* quad_work_unit is a quad-specific work-unit */
 struct quad_work_unit
 {
-	work_unit_shared    shared;                 /* shared data */
-	poly_extent         extent[SCANLINES_PER_BUCKET]; /* array of scanline extents */
+	work_unit_shared shared; /* shared data */
+	poly_extent extent[SCANLINES_PER_BUCKET]; /* array of scanline extents */
 };
 
 
 /* work_unit is a union of the two types */
 union work_unit
 {
-	work_unit_shared    shared;                 /* shared data */
-	tri_work_unit       tri;                    /* triangle work unit */
-	quad_work_unit      quad;                   /* quad work unit */
+	work_unit_shared shared; /* shared data */
+	tri_work_unit tri; /* triangle work unit */
+	quad_work_unit quad; /* quad work unit */
 };
 
 
 /* polygon_info describes a single polygon, which includes the poly_params */
 struct polygon_info
 {
-	poly_manager *      poly;                   /* pointer back to the poly manager */
-	void *              dest;                   /* pointer to the destination we are rendering to */
-	void *              extra;                  /* extra data pointer */
-	UINT8               numparams;              /* number of parameters for this polygon  */
-	UINT8               numverts;               /* number of vertices in this polygon */
-	poly_draw_scanline_func     callback;               /* callback to handle a scanline's worth of work */
-	INT32               xorigin;                /* X origin for all parameters */
-	INT32               yorigin;                /* Y origin for all parameters */
-	poly_param          param[MAX_VERTEX_PARAMS];/* array of parameter data */
+	poly_manager* poly; /* pointer back to the poly manager */
+	void* dest; /* pointer to the destination we are rendering to */
+	void* extra; /* extra data pointer */
+	UINT8 numparams; /* number of parameters for this polygon  */
+	UINT8 numverts; /* number of vertices in this polygon */
+	poly_draw_scanline_func callback; /* callback to handle a scanline's worth of work */
+	INT32 xorigin; /* X origin for all parameters */
+	INT32 yorigin; /* Y origin for all parameters */
+	poly_param param[MAX_VERTEX_PARAMS]; /* array of parameter data */
 };
 
 
@@ -139,41 +137,41 @@ struct polygon_info
 struct poly_manager
 {
 	/* queue management */
-//	osd_work_queue *    queue;                  /* work queue */
+	//	osd_work_queue *    queue;                  /* work queue */
 
 	/* triangle work units */
-	work_unit **        unit;                   /* array of work unit pointers */
-	UINT32              unit_next;              /* index of next unit to allocate */
-	UINT32              unit_count;             /* number of work units available */
-	size_t              unit_size;              /* size of each work unit, in bytes */
+	work_unit** unit; /* array of work unit pointers */
+	UINT32 unit_next; /* index of next unit to allocate */
+	UINT32 unit_count; /* number of work units available */
+	size_t unit_size; /* size of each work unit, in bytes */
 
 	/* quad work units */
-	UINT32              quadunit_next;          /* index of next unit to allocate */
-	UINT32              quadunit_count;         /* number of work units available */
-	size_t              quadunit_size;          /* size of each work unit, in bytes */
+	UINT32 quadunit_next; /* index of next unit to allocate */
+	UINT32 quadunit_count; /* number of work units available */
+	size_t quadunit_size; /* size of each work unit, in bytes */
 
 	/* poly data */
-	polygon_info **     polygon;                /* array of polygon pointers */
-	UINT32              polygon_next;           /* index of next polygon to allocate */
-	UINT32              polygon_count;          /* number of polygon items available */
-	size_t              polygon_size;           /* size of each polygon, in bytes */
+	polygon_info** polygon; /* array of polygon pointers */
+	UINT32 polygon_next; /* index of next polygon to allocate */
+	UINT32 polygon_count; /* number of polygon items available */
+	size_t polygon_size; /* size of each polygon, in bytes */
 
 	/* extra data */
-	void **             extra;                  /* array of extra data pointers */
-	UINT32              extra_next;             /* index of next extra data to allocate */
-	UINT32              extra_count;            /* number of extra data items available */
-	size_t              extra_size;             /* size of each extra data, in bytes */
+	void** extra; /* array of extra data pointers */
+	UINT32 extra_next; /* index of next extra data to allocate */
+	UINT32 extra_count; /* number of extra data items available */
+	size_t extra_size; /* size of each extra data, in bytes */
 
 	/* misc data */
-	UINT8               flags;                  /* flags */
+	UINT8 flags; /* flags */
 
 	/* buckets */
-	UINT16              unit_bucket[TOTAL_BUCKETS]; /* buckets for tracking unit usage */
+	UINT16 unit_bucket[TOTAL_BUCKETS]; /* buckets for tracking unit usage */
 
 	/* statistics */
-	UINT32              triangles;              /* number of triangles queued */
-	UINT32              quads;                  /* number of quads queued */
-	UINT64              pixels;                 /* number of pixels rendered */
+	UINT32 triangles; /* number of triangles queued */
+	UINT32 quads; /* number of quads queued */
+	UINT64 pixels; /* number of pixels rendered */
 #if KEEP_STATISTICS
 	UINT32              unit_waits;             /* number of times we waited for a unit */
 	UINT32              unit_max;               /* maximum units used */
@@ -187,17 +185,16 @@ struct poly_manager
 };
 
 
-
 /***************************************************************************
     FUNCTION PROTOTYPES
 ***************************************************************************/
 
-static void **allocate_array(size_t *itemsize, UINT32 itemcount);
-static void free_array(void **array);
-static void *poly_item_callback(void *param, int threadid);
+static void** allocate_array(size_t* itemsize, UINT32 itemcount);
+static void free_array(void** array);
+static void* poly_item_callback(void* param, int threadid);
 //static void poly_state_presave(poly_manager *poly);
 
-static INT32 compare_exchange32(volatile INT32 *ptr, INT32 compare, INT32 exchange)
+static INT32 compare_exchange32(volatile INT32* ptr, INT32 compare, INT32 exchange)
 {
 	INT32 prev = *ptr;
 	if (*ptr == compare)
@@ -220,7 +217,7 @@ static INT32 compare_exchange32(volatile INT32 *ptr, INT32 compare, INT32 exchan
 INLINE INT32 round_coordinate(float value)
 {
 	INT32 result = floor(value);
-	return result + (value - (float)result > 0.5f);
+	return result + (value - static_cast<float>(result) > 0.5f);
 }
 
 
@@ -229,7 +226,8 @@ INLINE INT32 round_coordinate(float value)
     a simple tri_extent to a full poly_extent
 -------------------------------------------------*/
 
-INLINE void convert_tri_extent_to_poly_extent(poly_extent *dstextent, const tri_extent *srcextent, const polygon_info *polygon, INT32 y)
+INLINE void convert_tri_extent_to_poly_extent(poly_extent* dstextent, const tri_extent* srcextent,
+                                              const polygon_info* polygon, INT32 y)
 {
 	/* copy start/stop always */
 	dstextent->startx = srcextent->startx;
@@ -238,7 +236,8 @@ INLINE void convert_tri_extent_to_poly_extent(poly_extent *dstextent, const tri_
 	/* if we have parameters, process them as well */
 	for (int paramnum = 0; paramnum < polygon->numparams; paramnum++)
 	{
-		dstextent->param[paramnum].start = polygon->param[paramnum].start + srcextent->startx * polygon->param[paramnum].dpdx + y * polygon->param[paramnum].dpdy;
+		dstextent->param[paramnum].start = polygon->param[paramnum].start + srcextent->startx * polygon->param[paramnum]
+			.dpdx + y * polygon->param[paramnum].dpdy;
 		dstextent->param[paramnum].dpdx = polygon->param[paramnum].dpdx;
 	}
 }
@@ -249,7 +248,8 @@ INLINE void convert_tri_extent_to_poly_extent(poly_extent *dstextent, const tri_
     a vertex based on p[0] crossing the clipval
 -------------------------------------------------*/
 
-INLINE void interpolate_vertex(poly_vertex *outv, const poly_vertex *v1, const poly_vertex *v2, int paramcount, float clipval)
+INLINE void interpolate_vertex(poly_vertex* outv, const poly_vertex* v1, const poly_vertex* v2, int paramcount,
+                               float clipval)
 {
 	float frac = (clipval - v1->p[0]) / (v2->p[0] - v1->p[0]);
 	int paramnum;
@@ -267,7 +267,7 @@ INLINE void interpolate_vertex(poly_vertex *outv, const poly_vertex *v1, const p
     another
 -------------------------------------------------*/
 
-INLINE void copy_vertex(poly_vertex *outv, const poly_vertex *v, int paramcount)
+INLINE void copy_vertex(poly_vertex* outv, const poly_vertex* v, int paramcount)
 {
 	int paramnum;
 
@@ -283,7 +283,7 @@ INLINE void copy_vertex(poly_vertex *outv, const poly_vertex *v, int paramcount)
     object, blocking if we run out
 -------------------------------------------------*/
 
-INLINE polygon_info *allocate_polygon(poly_manager *poly, int miny, int maxy)
+INLINE polygon_info* allocate_polygon(poly_manager* poly, int miny, int maxy)
 {
 	/* wait for a work item if we have to */
 	if (poly->polygon_next + 1 > poly->polygon_count)
@@ -307,7 +307,6 @@ INLINE polygon_info *allocate_polygon(poly_manager *poly, int miny, int maxy)
 }
 
 
-
 /***************************************************************************
     INITIALIZATION/TEARDOWN
 ***************************************************************************/
@@ -317,9 +316,9 @@ INLINE polygon_info *allocate_polygon(poly_manager *poly, int miny, int maxy)
     manager
 -------------------------------------------------*/
 
-poly_manager *poly_alloc(int max_polys, size_t extra_data_size, UINT8 flags)
+poly_manager* poly_alloc(int max_polys, size_t extra_data_size, UINT8 flags)
 {
-	poly_manager *poly;
+	poly_manager* poly;
 
 	/* allocate the manager itself */
 	poly = (poly_manager*)BurnMalloc(sizeof(*poly));
@@ -331,7 +330,7 @@ poly_manager *poly_alloc(int max_polys, size_t extra_data_size, UINT8 flags)
 	poly->polygon_size = sizeof(polygon_info);
 	poly->polygon_count = MAX(max_polys, 1);
 	poly->polygon_next = 0;
-	poly->polygon = (polygon_info **)allocate_array(&poly->polygon_size, poly->polygon_count);
+	poly->polygon = (polygon_info**)allocate_array(&poly->polygon_size, poly->polygon_count);
 
 	/* allocate extra data */
 	poly->extra_size = extra_data_size;
@@ -343,11 +342,11 @@ poly_manager *poly_alloc(int max_polys, size_t extra_data_size, UINT8 flags)
 	poly->unit_size = (flags & POLYFLAG_ALLOW_QUADS) ? sizeof(quad_work_unit) : sizeof(tri_work_unit);
 	poly->unit_count = MIN(poly->polygon_count * UNITS_PER_POLY, 65535);
 	poly->unit_next = 0;
-	poly->unit = (work_unit **)allocate_array(&poly->unit_size, poly->unit_count);
+	poly->unit = (work_unit**)allocate_array(&poly->unit_size, poly->unit_count);
 
 	/* create the work queue */
-//	if (!(flags & POLYFLAG_NO_WORK_QUEUE))
-//		poly->queue = osd_work_queue_alloc(WORK_QUEUE_FLAG_MULTI | WORK_QUEUE_FLAG_HIGH_FREQ);
+	//	if (!(flags & POLYFLAG_NO_WORK_QUEUE))
+	//		poly->queue = osd_work_queue_alloc(WORK_QUEUE_FLAG_MULTI | WORK_QUEUE_FLAG_HIGH_FREQ);
 
 	/* request a pre-save callback for synchronization */
 	//machine.save().register_presave(save_prepost_delegate(FUNC(poly_state_presave), poly));
@@ -359,9 +358,9 @@ poly_manager *poly_alloc(int max_polys, size_t extra_data_size, UINT8 flags)
     poly_free - free a polygon manager
 -------------------------------------------------*/
 
-void poly_free(poly_manager *poly)
+void poly_free(poly_manager* poly)
 {
-	if (poly == NULL) return;
+	if (poly == nullptr) return;
 
 #if KEEP_STATISTICS
 {
@@ -386,13 +385,12 @@ void poly_free(poly_manager *poly)
 
 	/* free the arrays */
 	free_array(poly->extra);
-	free_array((void **)poly->polygon);
-	free_array((void **)poly->unit);
+	free_array((void**)poly->polygon);
+	free_array((void**)poly->unit);
 
 	/* free the manager itself */
 	BurnFree(poly);
 }
-
 
 
 /***************************************************************************
@@ -404,7 +402,7 @@ void poly_free(poly_manager *poly)
     to complete
 -------------------------------------------------*/
 
-void poly_wait(poly_manager *poly, const char *debug_reason)
+void poly_wait(poly_manager* poly, const char* debug_reason)
 {
 	//bprintf(0, _T("poly_wait [%S]\n"), debug_reason);
 	//osd_ticks_t time;
@@ -449,7 +447,7 @@ void poly_wait(poly_manager *poly, const char *debug_reason)
     extra data for the next polygon
 -------------------------------------------------*/
 
-void *poly_get_extra_data(poly_manager *poly)
+void* poly_get_extra_data(poly_manager* poly)
 {
 	/* wait for a work item if we have to */
 	if (poly->extra_next + 1 > poly->extra_count)
@@ -468,7 +466,6 @@ void *poly_get_extra_data(poly_manager *poly)
 }
 
 
-
 /***************************************************************************
     CORE TRIANGLE RENDERING
 ***************************************************************************/
@@ -478,12 +475,13 @@ void *poly_get_extra_data(poly_manager *poly)
     triangle given 3 vertexes
 -------------------------------------------------*/
 
-UINT32 poly_render_triangle(poly_manager *poly, void *dest, const rectangle &cliprect, poly_draw_scanline_func callback, int paramcount, const poly_vertex *v1, const poly_vertex *v2, const poly_vertex *v3)
+UINT32 poly_render_triangle(poly_manager* poly, void* dest, const rectangle& cliprect, poly_draw_scanline_func callback,
+                            int paramcount, const poly_vertex* v1, const poly_vertex* v2, const poly_vertex* v3)
 {
 	float dxdy_v1v2, dxdy_v1v3, dxdy_v2v3;
-	const poly_vertex *tv;
+	const poly_vertex* tv;
 	INT32 curscan, scaninc;
-	polygon_info *polygon;
+	polygon_info* polygon;
 	INT32 v1yclip, v3yclip;
 	INT32 v1y, v3y, v1x;
 	INT32 pixels = 0;
@@ -546,13 +544,13 @@ UINT32 poly_render_triangle(poly_manager *poly, void *dest, const rectangle &cli
 	startunit = poly->unit_next;
 	for (curscan = v1yclip; curscan < v3yclip; curscan += scaninc)
 	{
-		UINT32 bucketnum = ((UINT32)curscan / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
+		UINT32 bucketnum = (static_cast<UINT32>(curscan) / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
 		UINT32 unit_index = poly->unit_next++;
-		tri_work_unit *unit = &poly->unit[unit_index]->tri;
+		tri_work_unit* unit = &poly->unit[unit_index]->tri;
 		int extnum;
 
 		/* determine how much to advance to hit the next bucket */
-		scaninc = SCANLINES_PER_BUCKET - (UINT32)curscan % SCANLINES_PER_BUCKET;
+		scaninc = SCANLINES_PER_BUCKET - static_cast<UINT32>(curscan) % SCANLINES_PER_BUCKET;
 
 		/* fill in the work unit basics */
 		unit->shared.polygon = polygon;
@@ -564,7 +562,7 @@ UINT32 poly_render_triangle(poly_manager *poly, void *dest, const rectangle &cli
 		/* iterate over extents */
 		for (extnum = 0; extnum < unit->shared.count_next; extnum++)
 		{
-			float fully = (float)(curscan + extnum) + 0.5f;
+			float fully = static_cast<float>(curscan + extnum) + 0.5f;
 			float startx = v1->x + (fully - v1->y) * dxdy_v1v3;
 			float stopx;
 			INT32 istartx, istopx;
@@ -614,19 +612,20 @@ UINT32 poly_render_triangle(poly_manager *poly, void *dest, const rectangle &cli
 	{
 		float a00 = v2->y - v3->y;
 		float a01 = v3->x - v2->x;
-		float a02 = v2->x*v3->y - v3->x*v2->y;
+		float a02 = v2->x * v3->y - v3->x * v2->y;
 		float a10 = v3->y - v1->y;
 		float a11 = v1->x - v3->x;
-		float a12 = v3->x*v1->y - v1->x*v3->y;
+		float a12 = v3->x * v1->y - v1->x * v3->y;
 		float a20 = v1->y - v2->y;
 		float a21 = v2->x - v1->x;
-		float a22 = v1->x*v2->y - v2->x*v1->y;
+		float a22 = v1->x * v2->y - v2->x * v1->y;
 		float det = a02 + a12 + a22;
 
-		if(fabsf(det) < 0.001) {
+		if (fabsf(det) < 0.001)
+		{
 			for (int paramnum = 0; paramnum < paramcount; paramnum++)
 			{
-				poly_param *params = &polygon->param[paramnum];
+				poly_param* params = &polygon->param[paramnum];
 				params->dpdx = 0;
 				params->dpdy = 0;
 				params->start = v1->p[paramnum];
@@ -634,13 +633,13 @@ UINT32 poly_render_triangle(poly_manager *poly, void *dest, const rectangle &cli
 		}
 		else
 		{
-			float idet = 1/det;
+			float idet = 1 / det;
 			for (int paramnum = 0; paramnum < paramcount; paramnum++)
 			{
-				poly_param *params = &polygon->param[paramnum];
-				params->dpdx  = idet*(v1->p[paramnum]*a00 + v2->p[paramnum]*a10 + v3->p[paramnum]*a20);
-				params->dpdy  = idet*(v1->p[paramnum]*a01 + v2->p[paramnum]*a11 + v3->p[paramnum]*a21);
-				params->start = idet*(v1->p[paramnum]*a02 + v2->p[paramnum]*a12 + v3->p[paramnum]*a22);
+				poly_param* params = &polygon->param[paramnum];
+				params->dpdx = idet * (v1->p[paramnum] * a00 + v2->p[paramnum] * a10 + v3->p[paramnum] * a20);
+				params->dpdy = idet * (v1->p[paramnum] * a01 + v2->p[paramnum] * a11 + v3->p[paramnum] * a21);
+				params->start = idet * (v1->p[paramnum] * a02 + v2->p[paramnum] * a12 + v3->p[paramnum] * a22);
 			}
 		}
 	}
@@ -661,7 +660,8 @@ UINT32 poly_render_triangle(poly_manager *poly, void *dest, const rectangle &cli
     triangles in a fan
 -------------------------------------------------*/
 
-UINT32 poly_render_triangle_fan(poly_manager *poly, void *dest, const rectangle &cliprect, poly_draw_scanline_func callback, int paramcount, int numverts, const poly_vertex *v)
+UINT32 poly_render_triangle_fan(poly_manager* poly, void* dest, const rectangle& cliprect,
+                                poly_draw_scanline_func callback, int paramcount, int numverts, const poly_vertex* v)
 {
 	UINT32 pixels = 0;
 	int vertnum;
@@ -678,10 +678,12 @@ UINT32 poly_render_triangle_fan(poly_manager *poly, void *dest, const rectangle 
     render of an object, given specific extents
 -------------------------------------------------*/
 
-UINT32 poly_render_triangle_custom(poly_manager *poly, void *dest, const rectangle &cliprect, poly_draw_scanline_func callback, int startscanline, int numscanlines, const poly_extent *extents)
+UINT32 poly_render_triangle_custom(poly_manager* poly, void* dest, const rectangle& cliprect,
+                                   poly_draw_scanline_func callback, int startscanline, int numscanlines,
+                                   const poly_extent* extents)
 {
 	INT32 curscan, scaninc;
-	polygon_info *polygon;
+	polygon_info* polygon;
 	INT32 v1yclip, v3yclip;
 	INT32 pixels = 0;
 	UINT32 startunit;
@@ -707,13 +709,13 @@ UINT32 poly_render_triangle_custom(poly_manager *poly, void *dest, const rectang
 	startunit = poly->unit_next;
 	for (curscan = v1yclip; curscan < v3yclip; curscan += scaninc)
 	{
-		UINT32 bucketnum = ((UINT32)curscan / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
+		UINT32 bucketnum = (static_cast<UINT32>(curscan) / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
 		UINT32 unit_index = poly->unit_next++;
-		tri_work_unit *unit = &poly->unit[unit_index]->tri;
+		tri_work_unit* unit = &poly->unit[unit_index]->tri;
 		int extnum;
 
 		/* determine how much to advance to hit the next bucket */
-		scaninc = SCANLINES_PER_BUCKET - (UINT32)curscan % SCANLINES_PER_BUCKET;
+		scaninc = SCANLINES_PER_BUCKET - static_cast<UINT32>(curscan) % SCANLINES_PER_BUCKET;
 
 		/* fill in the work unit basics */
 		unit->shared.polygon = polygon;
@@ -725,7 +727,7 @@ UINT32 poly_render_triangle_custom(poly_manager *poly, void *dest, const rectang
 		/* iterate over extents */
 		for (extnum = 0; extnum < unit->shared.count_next; extnum++)
 		{
-			const poly_extent *extent = &extents[(curscan + extnum) - startscanline];
+			const poly_extent* extent = &extents[(curscan + extnum) - startscanline];
 			INT32 istartx = extent->startx, istopx = extent->stopx;
 
 			/* force start < stop */
@@ -764,7 +766,6 @@ UINT32 poly_render_triangle_custom(poly_manager *poly, void *dest, const rectang
 }
 
 
-
 /***************************************************************************
     CORE QUAD RENDERING
 ***************************************************************************/
@@ -774,17 +775,19 @@ UINT32 poly_render_triangle_custom(poly_manager *poly, void *dest, const rectang
     given 4 vertexes
 -------------------------------------------------*/
 
-UINT32 poly_render_quad(poly_manager *poly, void *dest, const rectangle &cliprect, poly_draw_scanline_func callback, int paramcount, const poly_vertex *v1, const poly_vertex *v2, const poly_vertex *v3, const poly_vertex *v4)
+UINT32 poly_render_quad(poly_manager* poly, void* dest, const rectangle& cliprect, poly_draw_scanline_func callback,
+                        int paramcount, const poly_vertex* v1, const poly_vertex* v2, const poly_vertex* v3,
+                        const poly_vertex* v4)
 {
 	poly_edge fedgelist[3], bedgelist[3];
 	const poly_edge *ledge, *redge;
-	const poly_vertex *v[4];
-	poly_edge *edgeptr;
+	const poly_vertex* v[4];
+	poly_edge* edgeptr;
 	int minv, maxv, curv;
 	INT32 minyclip, maxyclip;
 	INT32 miny, maxy;
 	INT32 curscan, scaninc;
-	polygon_info *polygon;
+	polygon_info* polygon;
 	INT32 pixels = 0;
 	UINT32 startunit;
 
@@ -898,13 +901,13 @@ UINT32 poly_render_quad(poly_manager *poly, void *dest, const rectangle &cliprec
 	startunit = poly->unit_next;
 	for (curscan = minyclip; curscan < maxyclip; curscan += scaninc)
 	{
-		UINT32 bucketnum = ((UINT32)curscan / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
+		UINT32 bucketnum = (static_cast<UINT32>(curscan) / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
 		UINT32 unit_index = poly->unit_next++;
-		quad_work_unit *unit = &poly->unit[unit_index]->quad;
+		quad_work_unit* unit = &poly->unit[unit_index]->quad;
 		int extnum;
 
 		/* determine how much to advance to hit the next bucket */
-		scaninc = SCANLINES_PER_BUCKET - (UINT32)curscan % SCANLINES_PER_BUCKET;
+		scaninc = SCANLINES_PER_BUCKET - static_cast<UINT32>(curscan) % SCANLINES_PER_BUCKET;
 
 		/* fill in the work unit basics */
 		unit->shared.polygon = polygon;
@@ -916,7 +919,7 @@ UINT32 poly_render_quad(poly_manager *poly, void *dest, const rectangle &cliprec
 		/* iterate over extents */
 		for (extnum = 0; extnum < unit->shared.count_next; extnum++)
 		{
-			float fully = (float)(curscan + extnum) + 0.5f;
+			float fully = static_cast<float>(curscan + extnum) + 0.5f;
 			float startx, stopx;
 			INT32 istartx, istopx;
 			int paramnum;
@@ -947,7 +950,7 @@ UINT32 poly_render_quad(poly_manager *poly, void *dest, const rectangle &cliprec
 					float rparam = redge->v1->p[paramnum] + rdy * redge->dpdy[paramnum];
 					float dpdx = (rparam - lparam) * oox;
 
-					unit->extent[extnum].param[paramnum].start = lparam;// - ((float)istartx + 0.5f) * dpdx;
+					unit->extent[extnum].param[paramnum].start = lparam; // - ((float)istartx + 0.5f) * dpdx;
 					unit->extent[extnum].param[paramnum].dpdx = dpdx;
 				}
 			}
@@ -960,7 +963,8 @@ UINT32 poly_render_quad(poly_manager *poly, void *dest, const rectangle &cliprec
 			if (istartx < cliprect.min_x)
 			{
 				for (paramnum = 0; paramnum < paramcount; paramnum++)
-					unit->extent[extnum].param[paramnum].start += (cliprect.min_x - istartx) * unit->extent[extnum].param[paramnum].dpdx;
+					unit->extent[extnum].param[paramnum].start += (cliprect.min_x - istartx) * unit->extent[extnum].
+						param[paramnum].dpdx;
 				istartx = cliprect.min_x;
 			}
 			if (istopx > cliprect.max_x)
@@ -994,17 +998,18 @@ UINT32 poly_render_quad(poly_manager *poly, void *dest, const rectangle &cliprec
     quads in a fan
 -------------------------------------------------*/
 
-UINT32 poly_render_quad_fan(poly_manager *poly, void *dest, const rectangle &cliprect, poly_draw_scanline_func callback, int paramcount, int numverts, const poly_vertex *v)
+UINT32 poly_render_quad_fan(poly_manager* poly, void* dest, const rectangle& cliprect, poly_draw_scanline_func callback,
+                            int paramcount, int numverts, const poly_vertex* v)
 {
 	UINT32 pixels = 0;
 	int vertnum;
 
 	/* iterate over vertices */
 	for (vertnum = 2; vertnum < numverts; vertnum += 2)
-		pixels += poly_render_quad(poly, dest, cliprect, callback, paramcount, &v[0], &v[vertnum - 1], &v[vertnum], &v[MIN(vertnum + 1, numverts - 1)]);
+		pixels += poly_render_quad(poly, dest, cliprect, callback, paramcount, &v[0], &v[vertnum - 1], &v[vertnum],
+		                           &v[MIN(vertnum + 1, numverts - 1)]);
 	return pixels;
 }
-
 
 
 /***************************************************************************
@@ -1016,16 +1021,17 @@ UINT32 poly_render_quad_fan(poly_manager *poly, void *dest, const rectangle &cli
     to 32 vertices
 -------------------------------------------------*/
 
-UINT32 poly_render_polygon(poly_manager *poly, void *dest, const rectangle &cliprect, poly_draw_scanline_func callback, int paramcount, int numverts, const poly_vertex *v)
+UINT32 poly_render_polygon(poly_manager* poly, void* dest, const rectangle& cliprect, poly_draw_scanline_func callback,
+                           int paramcount, int numverts, const poly_vertex* v)
 {
 	poly_edge fedgelist[MAX_POLYGON_VERTS - 1], bedgelist[MAX_POLYGON_VERTS - 1];
 	const poly_edge *ledge, *redge;
-	poly_edge *edgeptr;
+	poly_edge* edgeptr;
 	int minv, maxv, curv;
 	INT32 minyclip, maxyclip;
 	INT32 miny, maxy;
 	INT32 curscan, scaninc;
-	polygon_info *polygon;
+	polygon_info* polygon;
 	INT32 pixels = 0;
 	UINT32 startunit;
 	int vertnum;
@@ -1130,13 +1136,13 @@ UINT32 poly_render_polygon(poly_manager *poly, void *dest, const rectangle &clip
 	startunit = poly->unit_next;
 	for (curscan = minyclip; curscan < maxyclip; curscan += scaninc)
 	{
-		UINT32 bucketnum = ((UINT32)curscan / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
+		UINT32 bucketnum = (static_cast<UINT32>(curscan) / SCANLINES_PER_BUCKET) % TOTAL_BUCKETS;
 		UINT32 unit_index = poly->unit_next++;
-		quad_work_unit *unit = &poly->unit[unit_index]->quad;
+		quad_work_unit* unit = &poly->unit[unit_index]->quad;
 		int extnum;
 
 		/* determine how much to advance to hit the next bucket */
-		scaninc = SCANLINES_PER_BUCKET - (UINT32)curscan % SCANLINES_PER_BUCKET;
+		scaninc = SCANLINES_PER_BUCKET - static_cast<UINT32>(curscan) % SCANLINES_PER_BUCKET;
 
 		/* fill in the work unit basics */
 		unit->shared.polygon = polygon;
@@ -1148,7 +1154,7 @@ UINT32 poly_render_polygon(poly_manager *poly, void *dest, const rectangle &clip
 		/* iterate over extents */
 		for (extnum = 0; extnum < unit->shared.count_next; extnum++)
 		{
-			float fully = (float)(curscan + extnum) + 0.5f;
+			float fully = static_cast<float>(curscan + extnum) + 0.5f;
 			float startx, stopx;
 			INT32 istartx, istopx;
 			int paramnum;
@@ -1179,7 +1185,7 @@ UINT32 poly_render_polygon(poly_manager *poly, void *dest, const rectangle &clip
 					float rparam = redge->v1->p[paramnum] + rdy * redge->dpdy[paramnum];
 					float dpdx = (rparam - lparam) * oox;
 
-					unit->extent[extnum].param[paramnum].start = lparam;// - ((float)istartx + 0.5f) * dpdx;
+					unit->extent[extnum].param[paramnum].start = lparam; // - ((float)istartx + 0.5f) * dpdx;
 					unit->extent[extnum].param[paramnum].dpdx = dpdx;
 				}
 			}
@@ -1192,7 +1198,8 @@ UINT32 poly_render_polygon(poly_manager *poly, void *dest, const rectangle &clip
 			if (istartx < cliprect.min_x)
 			{
 				for (paramnum = 0; paramnum < paramcount; paramnum++)
-					unit->extent[extnum].param[paramnum].start += (cliprect.min_x - istartx) * unit->extent[extnum].param[paramnum].dpdx;
+					unit->extent[extnum].param[paramnum].start += (cliprect.min_x - istartx) * unit->extent[extnum].
+						param[paramnum].dpdx;
 				istartx = cliprect.min_x;
 			}
 			if (istopx > cliprect.max_x)
@@ -1221,7 +1228,6 @@ UINT32 poly_render_polygon(poly_manager *poly, void *dest, const rectangle &clip
 }
 
 
-
 /***************************************************************************
     CLIPPING
 ***************************************************************************/
@@ -1232,10 +1238,10 @@ UINT32 poly_render_polygon(poly_manager *poly, void *dest, const rectangle &clip
     vertices
 -------------------------------------------------*/
 
-int poly_zclip_if_less(int numverts, const poly_vertex *v, poly_vertex *outv, int paramcount, float clipval)
+int poly_zclip_if_less(int numverts, const poly_vertex* v, poly_vertex* outv, int paramcount, float clipval)
 {
 	int prevclipped = (v[numverts - 1].p[0] < clipval);
-	poly_vertex *nextout = outv;
+	poly_vertex* nextout = outv;
 	int vertnum;
 
 	/* iterate over vertices */
@@ -1245,7 +1251,8 @@ int poly_zclip_if_less(int numverts, const poly_vertex *v, poly_vertex *outv, in
 
 		/* if we switched from clipped to non-clipped, interpolate a vertex */
 		if (thisclipped != prevclipped)
-			interpolate_vertex(nextout++, &v[(vertnum == 0) ? (numverts - 1) : (vertnum - 1)], &v[vertnum], paramcount, clipval);
+			interpolate_vertex(nextout++, &v[(vertnum == 0) ? (numverts - 1) : (vertnum - 1)], &v[vertnum], paramcount,
+			                   clipval);
 
 		/* if this vertex is not clipped, copy it in */
 		if (!thisclipped)
@@ -1258,7 +1265,6 @@ int poly_zclip_if_less(int numverts, const poly_vertex *v, poly_vertex *outv, in
 }
 
 
-
 /***************************************************************************
     INTERNAL FUNCTIONS
 ***************************************************************************/
@@ -1267,14 +1273,14 @@ int poly_zclip_if_less(int numverts, const poly_vertex *v, poly_vertex *outv, in
     allocate_array - allocate an array of pointers
 -------------------------------------------------*/
 
-static void **allocate_array(size_t *itemsize, UINT32 itemcount)
+static void** allocate_array(size_t* itemsize, UINT32 itemcount)
 {
-	void **ptrarray;
+	void** ptrarray;
 	int itemnum;
 
 	/* fail if 0 */
 	if (itemcount == 0)
-		return NULL;
+		return nullptr;
 
 	/* round to a cache line boundary */
 	*itemsize = ((*itemsize + CACHE_LINE_SIZE - 1) / CACHE_LINE_SIZE) * CACHE_LINE_SIZE;
@@ -1289,7 +1295,7 @@ static void **allocate_array(size_t *itemsize, UINT32 itemcount)
 
 	/* initialize the pointer array */
 	for (itemnum = 1; itemnum < itemcount; itemnum++)
-		ptrarray[itemnum] = (UINT8 *)ptrarray[0] + *itemsize * itemnum;
+		ptrarray[itemnum] = static_cast<UINT8*>(ptrarray[0]) + *itemsize * itemnum;
 	return ptrarray;
 }
 
@@ -1297,11 +1303,11 @@ static void **allocate_array(size_t *itemsize, UINT32 itemcount)
     free_array - release an array of pointers
 -------------------------------------------------*/
 
-static void free_array(void **array)
+static void free_array(void** array)
 {
-	if (array != NULL)
+	if (array != nullptr)
 	{
-		if (array[0] != NULL)
+		if (array[0] != nullptr)
 			BurnFree(array[0]);
 		BurnFree(array);
 	}
@@ -1312,12 +1318,12 @@ static void free_array(void **array)
     item
 -------------------------------------------------*/
 
-static void *poly_item_callback(void *param, int threadid)
+static void* poly_item_callback(void* param, int threadid)
 {
-	while (1)
+	while (true)
 	{
-		work_unit *unit = (work_unit *)param;
-		polygon_info *polygon = unit->shared.polygon;
+		auto unit = static_cast<work_unit*>(param);
+		polygon_info* polygon = unit->shared.polygon;
 		int count = unit->shared.count_next & 0xffff;
 		UINT32 orig_count_next;
 		int curscan;
@@ -1325,10 +1331,10 @@ static void *poly_item_callback(void *param, int threadid)
 		/* if our previous item isn't done yet, enqueue this item to the end and proceed */
 		if (unit->shared.previtem != 0xffff)
 		{
-			work_unit *prevunit = polygon->poly->unit[unit->shared.previtem];
+			work_unit* prevunit = polygon->poly->unit[unit->shared.previtem];
 			if (prevunit->shared.count_next != 0)
 			{
-				UINT32 unitnum = ((UINT8 *)unit - (UINT8 *)polygon->poly->unit[0]) / polygon->poly->unit_size;
+				UINT32 unitnum = ((UINT8*)unit - (UINT8*)polygon->poly->unit[0]) / polygon->poly->unit_size;
 				UINT32 new_count_next;
 
 				/* attempt to atomically swap in this new value */
@@ -1336,7 +1342,9 @@ static void *poly_item_callback(void *param, int threadid)
 				{
 					orig_count_next = prevunit->shared.count_next;
 					new_count_next = orig_count_next | (unitnum << 16);
-				} while (compare_exchange32((volatile INT32 *)&prevunit->shared.count_next, orig_count_next, new_count_next) != orig_count_next);
+				}
+				while (compare_exchange32((volatile INT32*)&prevunit->shared.count_next, orig_count_next,
+				                          new_count_next) != orig_count_next);
 
 #if KEEP_STATISTICS
 				/* track resolved conflicts */
@@ -1356,18 +1364,22 @@ static void *poly_item_callback(void *param, int threadid)
 			if (polygon->numverts == 3)
 			{
 				poly_extent tmpextent;
-				convert_tri_extent_to_poly_extent(&tmpextent, &unit->tri.extent[curscan], polygon, unit->shared.scanline + curscan);
-				(*polygon->callback)(polygon->dest, unit->shared.scanline + curscan, &tmpextent, polygon->extra, threadid);
+				convert_tri_extent_to_poly_extent(&tmpextent, &unit->tri.extent[curscan], polygon,
+				                                  unit->shared.scanline + curscan);
+				(*polygon->callback)(polygon->dest, unit->shared.scanline + curscan, &tmpextent, polygon->extra,
+				                     threadid);
 			}
 			else
-				(*polygon->callback)(polygon->dest, unit->shared.scanline + curscan, &unit->quad.extent[curscan], polygon->extra, threadid);
+				(*polygon->callback)(polygon->dest, unit->shared.scanline + curscan, &unit->quad.extent[curscan],
+				                     polygon->extra, threadid);
 		}
 
 		/* set our count to 0 and re-fetch the original count value */
 		do
 		{
 			orig_count_next = unit->shared.count_next;
-		} while (compare_exchange32((volatile INT32 *)&unit->shared.count_next, orig_count_next, 0) != orig_count_next);
+		}
+		while (compare_exchange32((volatile INT32*)&unit->shared.count_next, orig_count_next, 0) != orig_count_next);
 
 		/* if we have no more work to do, do nothing */
 		orig_count_next >>= 16;
@@ -1375,6 +1387,5 @@ static void *poly_item_callback(void *param, int threadid)
 			break;
 		param = polygon->poly->unit[orig_count_next];
 	}
-	return NULL;
+	return nullptr;
 }
-

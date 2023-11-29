@@ -17,8 +17,8 @@ void K053251ResetIndexes()
 
 void K053251Reset()
 {
-	memset (K053251Ram, 0, sizeof(K053251Ram));
-	memset (K053251PalIndex, 0, sizeof(K053251PalIndex));
+	memset(K053251Ram, 0, sizeof(K053251Ram));
+	memset(K053251PalIndex, 0, sizeof(K053251PalIndex));
 	K053251ResetIndexes();
 }
 
@@ -31,14 +31,16 @@ void K053251Write(INT32 offset, INT32 data)
 
 	if (offset == 9)
 	{
-		for (INT32 i = 0; i < 3; i++) {
-			K053251PalIndex[0+i] = 32 * ((data >> 2*i) & 0x03);
+		for (INT32 i = 0; i < 3; i++)
+		{
+			K053251PalIndex[0 + i] = 32 * ((data >> 2 * i) & 0x03);
 		}
 	}
 	else if (offset == 10)
 	{
-		for (INT32 i = 0; i < 2; i++) {
-			K053251PalIndex[3+i] = 16 * ((data >> 3*i) & 0x07);
+		for (INT32 i = 0; i < 2; i++)
+		{
+			K053251PalIndex[3 + i] = 16 * ((data >> 3 * i) & 0x07);
 		}
 	}
 }
@@ -56,17 +58,19 @@ INT32 K053251GetPaletteIndex(INT32 idx)
 void K053251Scan(INT32 nAction)
 {
 	struct BurnArea ba;
-	
-	if (nAction & ACB_MEMORY_RAM) {
+
+	if (nAction & ACB_MEMORY_RAM)
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = &K053251Ram;
-		ba.nLen	  = sizeof(K053251Ram);
+		ba.Data = &K053251Ram;
+		ba.nLen = sizeof(K053251Ram);
 		ba.szName = "K053251 Ram";
 		BurnAcb(&ba);
 
 		SCAN_VAR(K053251PalIndex);
 
-		if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD) {
+		if (nAction & ACB_WRITE && ~nAction & ACB_RUNAHEAD)
+		{
 			K053251ResetIndexes();
 		}
 	}

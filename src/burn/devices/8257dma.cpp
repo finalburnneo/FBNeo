@@ -63,15 +63,15 @@ static ior_in_functs m_in_ior_func[I8257_NUM_CHANNELS];
 static ior_out_functs m_out_iow_func[I8257_NUM_CHANNELS];
 static INT32 (*m_idle_func)(INT32);
 
-static UINT16 m_registers[I8257_NUM_CHANNELS*2];
+static UINT16 m_registers[I8257_NUM_CHANNELS * 2];
 static UINT16 m_address[I8257_NUM_CHANNELS];
 static UINT16 m_count[I8257_NUM_CHANNELS];
-static UINT8  m_rwmode[I8257_NUM_CHANNELS];
-static UINT8  m_mode;
-static UINT8  m_rr;
-static UINT8  m_msb;
-static UINT8  m_drq;
-static UINT8  m_status;	/* bits  0- 3 :  Terminal count for channels 0-3 */
+static UINT8 m_rwmode[I8257_NUM_CHANNELS];
+static UINT8 m_mode;
+static UINT8 m_rr;
+static UINT8 m_msb;
+static UINT8 m_drq;
+static UINT8 m_status; /* bits  0- 3 :  Terminal count for channels 0-3 */
 
 void i8257_update_status();
 
@@ -80,28 +80,36 @@ void i8257_update_status();
 //-------------------------------------------------
 
 // fake functions to keep everything safe
-static void null_line(INT32){}
-static UINT8 null_in(UINT16){ return 0; }
-static void null_out(UINT16,UINT8){}
-static INT32 null_idle(INT32){return 0;}
+static void null_line(INT32)
+{
+}
+
+static UINT8 null_in(UINT16) { return 0; }
+
+static void null_out(UINT16, UINT8)
+{
+}
+
+static INT32 null_idle(INT32) { return 0; }
 
 static INT32 trigger_transfer = 0;
 
 void i8257Init()
 {
 	DebugDev_8257DMAInitted = 1;
-	
+
 	// these aren't used atm.
-	m_out_hrq_func  = null_line;
-	m_out_tc_func   = null_line;
+	m_out_hrq_func = null_line;
+	m_out_tc_func = null_line;
 	m_out_mark_func = null_line;
 
-	m_in_memr_func  = null_in;
+	m_in_memr_func = null_in;
 	m_out_memw_func = null_out;
 
 	m_idle_func = null_idle;
 
-	for (INT32 i = 0; i < I8257_NUM_CHANNELS; i++) {
+	for (INT32 i = 0; i < I8257_NUM_CHANNELS; i++)
+	{
 		m_in_ior_func[i] = null_in;
 		m_out_iow_func[i] = null_out;
 	}
@@ -116,21 +124,23 @@ void i8257Exit()
 	DebugDev_8257DMAInitted = 0;
 }
 
-void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16,UINT8), INT32 (*idle)(INT32), ior_in_functs *read_f, ior_out_functs *write_f)
+void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16, UINT8), INT32 (*idle)(INT32), ior_in_functs* read_f,
+                 ior_out_functs* write_f)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Config called without init\n"));
 #endif
 
-	m_in_memr_func  = cpuread;
+	m_in_memr_func = cpuread;
 	m_out_memw_func = cpuwrite;
 
-	for (INT32 i = 0; i < I8257_NUM_CHANNELS; i++) {
-		if (read_f != NULL) m_in_ior_func[i] = (read_f[i] != NULL) ? read_f[i] : null_in;
-		if (write_f != NULL) m_out_iow_func[i] = (write_f[i] != NULL) ? write_f[i] : null_out;
+	for (INT32 i = 0; i < I8257_NUM_CHANNELS; i++)
+	{
+		if (read_f != nullptr) m_in_ior_func[i] = (read_f[i] != nullptr) ? read_f[i] : null_in;
+		if (write_f != nullptr) m_out_iow_func[i] = (write_f[i] != nullptr) ? write_f[i] : null_out;
 	}
 
-	if (idle != NULL) m_idle_func = idle;
+	if (idle != nullptr) m_idle_func = idle;
 }
 
 //-------------------------------------------------
@@ -165,32 +175,32 @@ static INT32 i8257_do_operation(INT32 channel)
 
 	switch (mode)
 	{
-		case 0:
-			m_address[channel]++;
-			m_count[channel]--;
-			done = (m_count[channel] == 0xFFFF);
+	case 0:
+		m_address[channel]++;
+		m_count[channel]--;
+		done = (m_count[channel] == 0xFFFF);
 		break;
 
-		case 1:
-			data = m_in_memr_func(m_address[channel]);
-			m_out_iow_func[channel](m_address[channel], data);
-			m_address[channel]++;
-			m_count[channel]--;
-			done = (m_count[channel] == 0xFFFF);
+	case 1:
+		data = m_in_memr_func(m_address[channel]);
+		m_out_iow_func[channel](m_address[channel], data);
+		m_address[channel]++;
+		m_count[channel]--;
+		done = (m_count[channel] == 0xFFFF);
 		break;
 
-		case 2:
-			data = m_in_ior_func[channel](m_address[channel]);
-			m_out_memw_func(m_address[channel], data);
-			m_address[channel]++;
-			m_count[channel]--;
-			done = (m_count[channel] == 0xFFFF);
+	case 2:
+		data = m_in_ior_func[channel](m_address[channel]);
+		m_out_memw_func(m_address[channel], data);
+		m_address[channel]++;
+		m_count[channel]--;
+		done = (m_count[channel] == 0xFFFF);
 		break;
 	}
 
 	if (done)
 	{
-		if ((channel==2) && DMA_MODE_AUTOLOAD(m_mode))
+		if ((channel == 2) && DMA_MODE_AUTOLOAD(m_mode))
 		{
 			/* in case of autoload at the end channel 3 info is */
 			/* copied to channel 2 info                         */
@@ -208,7 +218,7 @@ static void i8257_timer(INT32 id, INT32 param)
 {
 	switch (id)
 	{
-		case TIMER_OPERATION:
+	case TIMER_OPERATION:
 		{
 			INT32 i, channel = 0, rr;
 			INT32 done;
@@ -233,7 +243,7 @@ static void i8257_timer(INT32 id, INT32 param)
 			{
 				m_drq &= ~(0x01 << channel);
 				trigger_transfer = 1; // i8257_update_status();
-				if (!(DMA_MODE_AUTOLOAD(m_mode) && channel==2))
+				if (!(DMA_MODE_AUTOLOAD(m_mode) && channel == 2))
 				{
 					if (DMA_MODE_TCSTOP(m_mode))
 					{
@@ -244,11 +254,11 @@ static void i8257_timer(INT32 id, INT32 param)
 			break;
 		}
 
-		case TIMER_MSBFLIP:
-			m_msb ^= 1;
-			break;
+	case TIMER_MSBFLIP:
+		m_msb ^= 1;
+		break;
 
-		case TIMER_DRQ_SYNC:
+	case TIMER_DRQ_SYNC:
 		{
 			INT32 channel = param >> 1;
 			INT32 state = param & 0x01;
@@ -257,9 +267,9 @@ static void i8257_timer(INT32 id, INT32 param)
 			if (state)
 			{
 				m_drq |= 0x01 << channel;
-				m_address[channel] =  m_registers[channel * 2];
-				m_count[channel] =  m_registers[channel * 2 + 1] & 0x3FFF;
-				m_rwmode[channel] =  m_registers[channel * 2 + 1] >> 14;
+				m_address[channel] = m_registers[channel * 2];
+				m_count[channel] = m_registers[channel * 2 + 1] & 0x3FFF;
+				m_rwmode[channel] = m_registers[channel * 2 + 1] >> 14;
 				/* clear channel TC */
 				m_status &= ~(0x01 << channel);
 			}
@@ -310,28 +320,28 @@ UINT8 i8257Read(UINT8 offset)
 
 	switch (offset & 0x0f)
 	{
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-			/* DMA address/count register */
-			data = ( m_registers[offset & 7] >> (m_msb ? 8 : 0) ) & 0xFF;
-			i8257_prepare_msb_flip();
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+		/* DMA address/count register */
+		data = (m_registers[offset & 7] >> (m_msb ? 8 : 0)) & 0xFF;
+		i8257_prepare_msb_flip();
 		break;
 
-		case 8:
-			/* DMA status register */
-			data = (UINT8) m_status;
-			/* read resets status ! */
-			m_status &= 0xF0;
+	case 8:
+		/* DMA status register */
+		data = m_status;
+	/* read resets status ! */
+		m_status &= 0xF0;
 		break;
 
-		default:
-			data = 0xFF;
+	default:
+		data = 0xFF;
 		break;
 	}
 
@@ -346,49 +356,49 @@ void i8257Write(UINT8 offset, UINT8 data)
 
 	switch (offset & 0x0f)
 	{
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-			/* DMA address/count register */
-			if (m_msb)
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+		/* DMA address/count register */
+		if (m_msb)
+		{
+			m_registers[offset & 0x7] |= static_cast<UINT16>(data) << 8;
+		}
+		else
+		{
+			m_registers[offset & 0x7] = data;
+		}
+
+		if (DMA_MODE_AUTOLOAD(m_mode))
+		{
+			/* in case of autoload when inserting channel 2 info */
+			/* it is automaticaly copied to channel 3 info       */
+			switch (offset)
 			{
-				m_registers[offset & 0x7] |= ((UINT16) data) << 8;
-			}
-			else
-			{
-				m_registers[offset & 0x7] = data;
-			}
-	
-			if (DMA_MODE_AUTOLOAD(m_mode))
-			{
-				/* in case of autoload when inserting channel 2 info */
-				/* it is automaticaly copied to channel 3 info       */
-				switch(offset)
+			case 4:
+			case 5:
+				if (m_msb)
 				{
-					case 4:
-					case 5:
-						if (m_msb)
-						{
-							m_registers[(offset & 0x7)+2] |= ((UINT16) data) << 8;
-						}
-						else
-						{
-							m_registers[(offset & 0x7)+2] = data;
-						}
+					m_registers[(offset & 0x7) + 2] |= static_cast<UINT16>(data) << 8;
+				}
+				else
+				{
+					m_registers[(offset & 0x7) + 2] = data;
 				}
 			}
-	
-			i8257_prepare_msb_flip();
+		}
+
+		i8257_prepare_msb_flip();
 		break;
 
-		case 8:
-			/* DMA mode register */
-			m_mode = data;
+	case 8:
+		/* DMA mode register */
+		m_mode = data;
 		break;
 	}
 }

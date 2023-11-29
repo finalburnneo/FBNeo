@@ -42,12 +42,12 @@ void K055555LongWrite(INT32 offset, UINT32 data)
 
 void K055555WordWrite(INT32 offset, UINT16 data)
 {
-	K055555WriteReg((offset / 2) & 0x7f, data&0xff);
+	K055555WriteReg((offset / 2) & 0x7f, data & 0xff);
 }
 
 void K055555ByteWrite(INT32 offset, UINT8 data)
 {
-	K055555WriteReg((offset / 2) & 0x7f, data&0xff);
+	K055555WriteReg((offset / 2) & 0x7f, data & 0xff);
 }
 
 INT32 K055555ReadRegister(INT32 regnum)
@@ -79,11 +79,12 @@ void K055555Exit()
 void K055555Scan(INT32 nAction)
 {
 	struct BurnArea ba;
-	
-	if (nAction & ACB_DRIVER_DATA) {
+
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = m_regs;
-		ba.nLen	  = 128;
+		ba.Data = m_regs;
+		ba.nLen = 128;
 		ba.szName = "K055555 Regs";
 		BurnAcb(&ba);
 	}

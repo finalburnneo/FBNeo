@@ -56,17 +56,17 @@
     7Zip Memory / File handling (adapted from 7zfile.c/.h and 7zalloc.c/.h)
 ***************************************************************************/
 
-void *SZipAlloc(ISzAllocPtr p, size_t size)
+void* SZipAlloc(ISzAllocPtr p, size_t size)
 {
 	(void)p;
 
 	if (size == 0)
-		return 0;
+		return nullptr;
 
 	return malloc(size);
 }
 
-void SZipFree(ISzAllocPtr p, void *address)
+void SZipFree(ISzAllocPtr p, void* address)
 {
 	(void)p;
 
@@ -75,30 +75,29 @@ void SZipFree(ISzAllocPtr p, void *address)
 }
 
 
-
-void File_Construct(CSzFile *p)
+void File_Construct(CSzFile* p)
 {
-	p->_7z_osdfile = NULL;
+	p->_7z_osdfile = nullptr;
 }
 
-static WRes File_Open(CSzFile *p, const char *, int)
+static WRes File_Open(CSzFile* p, const char*, int)
 {
 	/* we handle this ourselves ... */
 	if (!p->_7z_osdfile) return 1;
-	else return 0;
+	return 0;
 }
 
-WRes InFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 0); }
-WRes OutFile_Open(CSzFile *p, const char *name) { return File_Open(p, name, 1); }
+WRes InFile_Open(CSzFile* p, const char* name) { return File_Open(p, name, 0); }
+WRes OutFile_Open(CSzFile* p, const char* name) { return File_Open(p, name, 1); }
 
 
-WRes File_Close(CSzFile *)
+WRes File_Close(CSzFile*)
 {
 	/* we handle this ourselves ... */
 	return 0;
 }
 
-WRes File_Read(CSzFile *p, void *data, size_t *size)
+WRes File_Read(CSzFile* p, void* data, size_t* size)
 {
 	UINT32 read_length;
 
@@ -122,23 +121,23 @@ WRes File_Read(CSzFile *p, void *data, size_t *size)
 	return 0;
 }
 
-WRes File_Write(CSzFile *, const void *, size_t *)
+WRes File_Write(CSzFile*, const void*, size_t*)
 {
 	return 0;
 }
 
-WRes File_Seek(CSzFile *p, Int64 *pos, ESzSeek origin)
+WRes File_Seek(CSzFile* p, Int64* pos, ESzSeek origin)
 {
-	if (origin==0) p->_7z_currfpos = *pos;
-	if (origin==1) p->_7z_currfpos = p->_7z_currfpos + *pos;
-	if (origin==2) p->_7z_currfpos = p->_7z_length - *pos;
+	if (origin == 0) p->_7z_currfpos = *pos;
+	if (origin == 1) p->_7z_currfpos = p->_7z_currfpos + *pos;
+	if (origin == 2) p->_7z_currfpos = p->_7z_length - *pos;
 
 	*pos = p->_7z_currfpos;
 
 	return 0;
 }
 
-WRes File_GetLength(CSzFile *p, UInt64 *length)
+WRes File_GetLength(CSzFile* p, UInt64* length)
 {
 	*length = p->_7z_length;
 	return 0;
@@ -146,33 +145,33 @@ WRes File_GetLength(CSzFile *p, UInt64 *length)
 
 /* ---------- FileSeqInStream ---------- */
 
-static SRes FileSeqInStream_Read(const ISeqInStream *pp, void *buf, size_t *size)
+static SRes FileSeqInStream_Read(const ISeqInStream* pp, void* buf, size_t* size)
 {
-	CFileSeqInStream *p = CONTAINER_FROM_VTBL(pp, CFileSeqInStream, vt);
+	auto p = CONTAINER_FROM_VTBL(pp, CFileSeqInStream, vt);
 	return File_Read(&p->file, buf, size) == 0 ? SZ_OK : SZ_ERROR_READ;
 }
 
-void FileSeqInStream_CreateVTable(CFileSeqInStream *p)
+void FileSeqInStream_CreateVTable(CFileSeqInStream* p)
 {
-  p->vt.Read = FileSeqInStream_Read;
+	p->vt.Read = FileSeqInStream_Read;
 }
 
 
 /* ---------- FileInStream ---------- */
 
-static SRes FileInStream_Read(const ISeekInStream *pp, void *buf, size_t *size)
+static SRes FileInStream_Read(const ISeekInStream* pp, void* buf, size_t* size)
 {
-	CFileInStream *p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
+	auto p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
 	return (File_Read(&p->file, buf, size) == 0) ? SZ_OK : SZ_ERROR_READ;
 }
 
-static SRes FileInStream_Seek(const ISeekInStream *pp, Int64 *pos, ESzSeek origin)
+static SRes FileInStream_Seek(const ISeekInStream* pp, Int64* pos, ESzSeek origin)
 {
-	CFileInStream *p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
+	auto p = CONTAINER_FROM_VTBL(pp, CFileInStream, vt);
 	return File_Seek(&p->file, pos, origin);
 }
 
-void FileInStream_CreateVTable(CFileInStream *p)
+void FileInStream_CreateVTable(CFileInStream* p)
 {
 	p->vt.Read = FileInStream_Read;
 	p->vt.Seek = FileInStream_Seek;
@@ -180,16 +179,16 @@ void FileInStream_CreateVTable(CFileInStream *p)
 
 /* ---------- FileOutStream ---------- */
 
-static size_t FileOutStream_Write(const ISeqOutStream *, const void *, size_t size)
+static size_t FileOutStream_Write(const ISeqOutStream*, const void*, size_t size)
 {
-//  CFileOutStream *p = (CFileOutStream *)pp;
-//  File_Write(&p->file, data, &size);
-  return size;
+	//  CFileOutStream *p = (CFileOutStream *)pp;
+	//  File_Write(&p->file, data, &size);
+	return size;
 }
 
-void FileOutStream_CreateVTable(CFileOutStream *p)
+void FileOutStream_CreateVTable(CFileOutStream* p)
 {
-  p->vt.Write = FileOutStream_Write;
+	p->vt.Write = FileOutStream_Write;
 }
 
 /***************************************************************************
@@ -204,14 +203,14 @@ void FileOutStream_CreateVTable(CFileOutStream *p)
     GLOBAL VARIABLES
 ***************************************************************************/
 
-static _7z_file *_7z_cache[_7Z_CACHE_SIZE];
+static _7z_file* _7z_cache[_7Z_CACHE_SIZE];
 
 /***************************************************************************
     FUNCTION PROTOTYPES
 ***************************************************************************/
 
 /* cache management */
-static void free__7z_file(_7z_file *_7z);
+static void free__7z_file(_7z_file* _7z);
 
 
 /***************************************************************************
@@ -222,26 +221,27 @@ static void free__7z_file(_7z_file *_7z);
     _7z_file_open - opens a _7Z file for reading
 -------------------------------------------------*/
 
-int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search_filename, int search_filename_length, bool matchcrc, bool matchname)
+int _7z_search_crc_match(_7z_file* new_7z, UINT32 search_crc, const char* search_filename, int search_filename_length,
+                         bool matchcrc, bool matchname)
 {
-	UInt16 *temp = NULL;
+	UInt16* temp = nullptr;
 	size_t tempSize = 0;
 
 	for (unsigned int i = 0; i < new_7z->db.NumFiles; i++)
 	{
 		size_t len;
 
-		len = SzArEx_GetFileNameUtf16(&new_7z->db, i, NULL);
+		len = SzArEx_GetFileNameUtf16(&new_7z->db, i, nullptr);
 
 		// if it's a directory entry we don't care about it..
 		if (SzArEx_IsDir(&new_7z->db, i)) continue;
 
 		if (len > tempSize)
 		{
-			SZipFree(NULL, temp);
+			SZipFree(nullptr, temp);
 			tempSize = len;
-			temp = (UInt16 *)SZipAlloc(NULL, tempSize * sizeof(temp[0]));
-			if (temp == 0)
+			temp = static_cast<UInt16*>(SZipAlloc(nullptr, tempSize * sizeof(temp[0])));
+			if (temp == nullptr)
 			{
 				return -1; // memory error
 			}
@@ -256,25 +256,25 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 		/* Check for a name match */
 		SzArEx_GetFileNameUtf16(&new_7z->db, i, temp);
 
-		if (len == (unsigned int)search_filename_length+1)
+		if (len == static_cast<unsigned int>(search_filename_length) + 1)
 		{
 			int j;
-			for (j=0;j<search_filename_length;j++)
+			for (j = 0; j < search_filename_length; j++)
 			{
 				UINT8 sn = search_filename[j];
 				UINT16 zn = temp[j]; // these are utf16
 
 				// MAME filenames are always lowercase so be case insensitive
-				if ((zn>=0x41) && (zn<=0x5a)) zn+=0x20;
+				if ((zn >= 0x41) && (zn <= 0x5a)) zn += 0x20;
 
 				if (sn != zn && tolower(sn) != zn) break;
 			}
-			if (j==search_filename_length) namematch = true;
+			if (j == search_filename_length) namematch = true;
 		}
 
 
 		/* Check for a CRC match */
-		if (crc==search_crc) crcmatch = true;
+		if (crc == search_crc) crcmatch = true;
 
 		bool found = false;
 
@@ -296,51 +296,51 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 
 		if (found)
 		{
-		//	printf("found %S %d %08x %08x %08x %s %d\n", temp, len, crc, search_crc, size, search_filename, search_filename_length);
+			//	printf("found %S %d %08x %08x %08x %s %d\n", temp, len, crc, search_crc, size, search_filename, search_filename_length);
 			new_7z->curr_file_idx = i;
 			new_7z->uncompressed_length = size;
 			new_7z->crc = crc;
 
-			SZipFree(NULL, temp);
+			SZipFree(nullptr, temp);
 			return i;
 		}
 	}
 
-	SZipFree(NULL, temp);
+	SZipFree(nullptr, temp);
 	return -1;
 }
 
 
-_7z_error _7z_file_open(const char *filename, _7z_file **_7z)
+_7z_error _7z_file_open(const char* filename, _7z_file** _7z)
 {
 	_7z_error _7zerr = _7ZERR_NONE;
 
-	_7z_file *new_7z;
-	char *string;
+	_7z_file* new_7z;
+	char* string;
 	unsigned int cachenum;
 
 	SRes res;
 
 	/* ensure we start with a NULL result */
-	*_7z = NULL;
+	*_7z = nullptr;
 
 	/* see if we are in the cache, and reopen if so */
 	for (cachenum = 0; cachenum < ARRAY_LENGTH(_7z_cache); cachenum++)
 	{
-		_7z_file *cached = _7z_cache[cachenum];
+		_7z_file* cached = _7z_cache[cachenum];
 
 		/* if we have a valid entry and it matches our filename, use it and remove from the cache */
-		if (cached != NULL && cached->filename != NULL && strcmp(filename, cached->filename) == 0)
+		if (cached != nullptr && cached->filename != nullptr && strcmp(filename, cached->filename) == 0)
 		{
 			*_7z = cached;
-			_7z_cache[cachenum] = NULL;
+			_7z_cache[cachenum] = nullptr;
 			return _7ZERR_NONE;
 		}
 	}
 
 	/* allocate memory for the _7z_file structure */
-	new_7z = (_7z_file *)malloc(sizeof(*new_7z));
-	if (new_7z == NULL)
+	new_7z = static_cast<_7z_file*>(malloc(sizeof(*new_7z)));
+	if (new_7z == nullptr)
 		return _7ZERR_OUT_OF_MEMORY;
 	memset(new_7z, 0, sizeof(*new_7z));
 
@@ -348,7 +348,8 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z)
 	new_7z->archiveStream.file._7z_currfpos = 0;
 
 	new_7z->archiveStream.file._7z_osdfile = fopen(filename, "rb");
-	if (!new_7z->archiveStream.file._7z_osdfile) {
+	if (!new_7z->archiveStream.file._7z_osdfile)
+	{
 		_7zerr = _7ZERR_FILE_ERROR;
 		goto error;
 	}
@@ -374,7 +375,7 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z)
 
 	/* 7z now require to set buf manually, the size is based on older versions */
 	new_7z->lookStream.bufSize = (1 << 14) * sizeof(UINT8);
-	new_7z->lookStream.buf     = (UINT8*)malloc(new_7z->lookStream.bufSize);
+	new_7z->lookStream.buf = static_cast<UINT8*>(malloc(new_7z->lookStream.bufSize));
 	if (!new_7z->lookStream.buf)
 		new_7z->lookStream.bufSize = 0;
 
@@ -394,12 +395,12 @@ _7z_error _7z_file_open(const char *filename, _7z_file **_7z)
 	}
 
 	new_7z->blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
-	new_7z->outBuffer = 0; /* it must be 0 before first call for each new archive. */
-	new_7z->outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
+	new_7z->outBuffer = nullptr; /* it must be 0 before first call for each new archive. */
+	new_7z->outBufferSize = 0; /* it can have any value before first call (if outBuffer = 0) */
 
 	/* make a copy of the filename for caching purposes */
-	string = (char *)malloc(strlen(filename) + 1);
-	if (string == NULL)
+	string = static_cast<char*>(malloc(strlen(filename) + 1));
+	if (string == nullptr)
 	{
 		_7zerr = _7ZERR_OUT_OF_MEMORY;
 		goto error;
@@ -420,18 +421,18 @@ error:
     to the cache
 -------------------------------------------------*/
 
-void _7z_file_close(_7z_file *_7z)
+void _7z_file_close(_7z_file* _7z)
 {
 	unsigned int cachenum;
 
 	/* close the open files */
-	if (_7z->archiveStream.file._7z_osdfile != NULL)
+	if (_7z->archiveStream.file._7z_osdfile != nullptr)
 		fclose(_7z->archiveStream.file._7z_osdfile);
-	_7z->archiveStream.file._7z_osdfile = NULL;
+	_7z->archiveStream.file._7z_osdfile = nullptr;
 
 	/* find the first NULL entry in the cache */
 	for (cachenum = 0; cachenum < ARRAY_LENGTH(_7z_cache); cachenum++)
-		if (_7z_cache[cachenum] == NULL)
+		if (_7z_cache[cachenum] == nullptr)
 			break;
 
 	/* if no room left in the cache, free the bottommost entry */
@@ -456,10 +457,10 @@ void _7z_file_cache_clear(void)
 
 	/* clear call cache entries */
 	for (cachenum = 0; cachenum < ARRAY_LENGTH(_7z_cache); cachenum++)
-		if (_7z_cache[cachenum] != NULL)
+		if (_7z_cache[cachenum] != nullptr)
 		{
 			free__7z_file(_7z_cache[cachenum]);
-			_7z_cache[cachenum] = NULL;
+			_7z_cache[cachenum] = nullptr;
 		}
 }
 
@@ -469,17 +470,18 @@ void _7z_file_cache_clear(void)
     from a _7Z into the target buffer
 -------------------------------------------------*/
 
-_7z_error _7z_file_decompress(_7z_file *new_7z, void *buffer, UINT32 length, UINT32 *Processed)
+_7z_error _7z_file_decompress(_7z_file* new_7z, void* buffer, UINT32 length, UINT32* Processed)
 {
 	SRes res;
 	int index = new_7z->curr_file_idx;
 
 	/* make sure the file is open.. */
-	if (new_7z->archiveStream.file._7z_osdfile==NULL)
+	if (new_7z->archiveStream.file._7z_osdfile == nullptr)
 	{
 		new_7z->archiveStream.file._7z_currfpos = 0;
 		new_7z->archiveStream.file._7z_osdfile = fopen(new_7z->filename, "rb");
-		if (!new_7z->archiveStream.file._7z_osdfile) {
+		if (!new_7z->archiveStream.file._7z_osdfile)
+		{
 			return _7ZERR_FILE_ERROR;
 		}
 	}
@@ -488,9 +490,9 @@ _7z_error _7z_file_decompress(_7z_file *new_7z, void *buffer, UINT32 length, UIN
 	size_t outSizeProcessed = 0;
 
 	res = SzArEx_Extract(&new_7z->db, &new_7z->lookStream.vt, index,
-		&new_7z->blockIndex, &new_7z->outBuffer, &new_7z->outBufferSize,
-		&offset, &outSizeProcessed,
-		&new_7z->allocImp, &new_7z->allocTempImp);
+	                     &new_7z->blockIndex, &new_7z->outBuffer, &new_7z->outBufferSize,
+	                     &offset, &outSizeProcessed,
+	                     &new_7z->allocImp, &new_7z->allocTempImp);
 
 	if (res != SZ_OK)
 		return _7ZERR_FILE_ERROR;
@@ -503,7 +505,6 @@ _7z_error _7z_file_decompress(_7z_file *new_7z, void *buffer, UINT32 length, UIN
 }
 
 
-
 /***************************************************************************
     CACHE MANAGEMENT
 ***************************************************************************/
@@ -513,16 +514,17 @@ _7z_error _7z_file_decompress(_7z_file *new_7z, void *buffer, UINT32 length, UIN
     _7z_file
 -------------------------------------------------*/
 
-static void free__7z_file(_7z_file *_7z)
+static void free__7z_file(_7z_file* _7z)
 {
-	if (_7z != NULL)
+	if (_7z != nullptr)
 	{
-		if (_7z->archiveStream.file._7z_osdfile != NULL)
+		if (_7z->archiveStream.file._7z_osdfile != nullptr)
 			fclose(_7z->archiveStream.file._7z_osdfile);
-		if (_7z->filename != NULL)
-			free((void *)_7z->filename);
+		if (_7z->filename != nullptr)
+			free((void*)_7z->filename);
 
-		if (_7z->outBuffer) IAlloc_Free(&_7z->allocImp, _7z->outBuffer);
+		if (_7z->outBuffer)
+			IAlloc_Free(&_7z->allocImp, _7z->outBuffer);
 		if (_7z->inited) SzArEx_Free(&_7z->db, &_7z->allocImp);
 		if (_7z->lookStream.buf) free(_7z->lookStream.buf);
 

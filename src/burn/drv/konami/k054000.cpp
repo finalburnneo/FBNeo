@@ -45,7 +45,7 @@ void K054000Reset()
 	m_Bay = 1;
 }
 
-static int convert_raw_to_result_delta(UINT8 *buf)
+static int convert_raw_to_result_delta(UINT8* buf)
 {
 	int res = (buf[0] << 16) | (buf[1] << 8) | buf[2];
 
@@ -58,7 +58,7 @@ static int convert_raw_to_result_delta(UINT8 *buf)
 	return res;
 }
 
-static int convert_raw_to_result(UINT8 *buf)
+static int convert_raw_to_result(UINT8* buf)
 {
 	return (buf[0] << 16) | (buf[1] << 8) | buf[2];
 }
@@ -93,49 +93,50 @@ void K054000Write(INT32 offset, INT32 data)
 {
 	offset &= 0x1f;
 
-	switch (offset) {
-		case 0x01:
-		case 0x02:
-		case 0x03:
-		case 0x04:
-			m_raw_Acx[offset - 0x01] = data;
-			m_Acx = convert_raw_to_result_delta(m_raw_Acx);
-			break;
+	switch (offset)
+	{
+	case 0x01:
+	case 0x02:
+	case 0x03:
+	case 0x04:
+		m_raw_Acx[offset - 0x01] = data;
+		m_Acx = convert_raw_to_result_delta(m_raw_Acx);
+		break;
 
-		case 0x09:
-		case 0x0a:
-		case 0x0b:
-		case 0x0c:
-			m_raw_Acy[offset - 0x09] = data;
-			m_Acy = convert_raw_to_result_delta(m_raw_Acy);
-			break;
+	case 0x09:
+	case 0x0a:
+	case 0x0b:
+	case 0x0c:
+		m_raw_Acy[offset - 0x09] = data;
+		m_Acy = convert_raw_to_result_delta(m_raw_Acy);
+		break;
 
-		case 0x11:
-		case 0x12:
-		case 0x13:
-			m_raw_Bcy[offset - 0x11] = data;
-			m_Bcy = convert_raw_to_result(m_raw_Bcy);
-			break;
+	case 0x11:
+	case 0x12:
+	case 0x13:
+		m_raw_Bcy[offset - 0x11] = data;
+		m_Bcy = convert_raw_to_result(m_raw_Bcy);
+		break;
 
-		case 0x15:
-		case 0x16:
-		case 0x17:
-			m_raw_Bcx[offset - 0x15] = data;
-			m_Bcx = convert_raw_to_result(m_raw_Bcx);
-			break;
+	case 0x15:
+	case 0x16:
+	case 0x17:
+		m_raw_Bcx[offset - 0x15] = data;
+		m_Bcx = convert_raw_to_result(m_raw_Bcx);
+		break;
 
-		case 0x06:
-			m_Aax = data;
-			break;
-		case 0x07:
-			m_Aay = data;
-			break;
-		case 0x0e:
-			m_Bax = data;
-			break;
-		case 0x0f:
-			m_Bay = data;
-			break;
+	case 0x06:
+		m_Aax = data;
+		break;
+	case 0x07:
+		m_Aay = data;
+		break;
+	case 0x0e:
+		m_Bax = data;
+		break;
+	case 0x0f:
+		m_Bay = data;
+		break;
 	}
 }
 
@@ -150,7 +151,8 @@ UINT8 K054000Read(INT32 offset)
 
 void K054000Scan(INT32 nAction)
 {
-	if (nAction & ACB_MEMORY_RAM) {
+	if (nAction & ACB_MEMORY_RAM)
+	{
 		SCAN_VAR(m_raw_Acx);
 		SCAN_VAR(m_raw_Acy);
 		SCAN_VAR(m_raw_Bcx);

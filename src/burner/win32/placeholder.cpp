@@ -11,7 +11,6 @@ static void MakeOfn()
 	ofn.lpstrInitialDir = _T("");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("png");
-	return;
 }
 
 int SelectPlaceHolder()
@@ -27,7 +26,9 @@ int SelectPlaceHolder()
 	nRet = GetOpenFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {		// Error
+	if (nRet == 0)
+	{
+		// Error
 		return 1;
 	}
 

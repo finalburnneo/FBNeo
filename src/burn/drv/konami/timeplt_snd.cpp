@@ -8,16 +8,16 @@
 #include "ay8910.h"
 
 static UINT8 soundlatch;
-static UINT8 *z80rom;
-static UINT8 *z80ram;
+static UINT8* z80rom;
+static UINT8* z80ram;
 static INT32 z80_select = 0;
 static INT32 locomotnmode = 0;
 
 static void filter_write(INT32 num, UINT8 d)
 {
 	INT32 C = 0;
-	if (d & 1) C += 220000;	/* 220000pF = 0.220uF */
-	if (d & 2) C +=  47000;	/*  47000pF = 0.047uF */
+	if (d & 1) C += 220000; /* 220000pF = 0.220uF */
+	if (d & 2) C += 47000; /*  47000pF = 0.047uF */
 
 	filter_rc_set_RC(num, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(C));
 }
@@ -25,45 +25,46 @@ static void filter_write(INT32 num, UINT8 d)
 static void __fastcall timeplt_sound_write(UINT16 address, UINT8 data)
 {
 	//bprintf(0, _T("tpsw %X %X\n"), address, data);
-	if (!locomotnmode && address >= 0x8000 /*&& address <= 0xffff*/) {
+	if (!locomotnmode && address >= 0x8000 /*&& address <= 0xffff*/)
+	{
 		INT32 Offset = address & 0xfff;
-		filter_write(3, (Offset >>  0) & 3);
-		filter_write(4, (Offset >>  2) & 3);
-		filter_write(5, (Offset >>  4) & 3);
-		filter_write(0, (Offset >>  6) & 3);
-		filter_write(1, (Offset >>  8) & 3);
+		filter_write(3, (Offset >> 0) & 3);
+		filter_write(4, (Offset >> 2) & 3);
+		filter_write(5, (Offset >> 4) & 3);
+		filter_write(0, (Offset >> 6) & 3);
+		filter_write(1, (Offset >> 8) & 3);
 		filter_write(2, (Offset >> 10) & 3);
 		return;
 	}
 
-	if (locomotnmode && address >= 0x3000 && address <= 0x3fff) {
+	if (locomotnmode && address >= 0x3000 && address <= 0x3fff)
+	{
 		INT32 Offset = address & 0xfff;
-		filter_write(3, (Offset >>  0) & 3);
-		filter_write(4, (Offset >>  2) & 3);
-		filter_write(5, (Offset >>  4) & 3);
-		filter_write(0, (Offset >>  6) & 3);
-		filter_write(1, (Offset >>  8) & 3);
+		filter_write(3, (Offset >> 0) & 3);
+		filter_write(4, (Offset >> 2) & 3);
+		filter_write(5, (Offset >> 4) & 3);
+		filter_write(0, (Offset >> 6) & 3);
+		filter_write(1, (Offset >> 8) & 3);
 		filter_write(2, (Offset >> 10) & 3);
 		return;
 	}
 
 	switch (address & 0xf000)
 	{
-		case 0x4000:
-			AY8910Write(0, 1, data);
+	case 0x4000:
+		AY8910Write(0, 1, data);
 		return;
 
-		case 0x5000:
-			AY8910Write(0, 0, data);
+	case 0x5000:
+		AY8910Write(0, 0, data);
 		return;
 
-		case 0x6000:
-			AY8910Write(1, 1, data);
+	case 0x6000:
+		AY8910Write(1, 1, data);
 		return;
 
-		case 0x7000:
-			AY8910Write(1, 0, data);
-		return;
+	case 0x7000:
+		AY8910Write(1, 0, data);
 	}
 }
 
@@ -71,11 +72,11 @@ static UINT8 __fastcall timeplt_sound_read(UINT16 address)
 {
 	switch (address & 0xf000)
 	{
-		case 0x4000:
-			return AY8910Read(0);
+	case 0x4000:
+		return AY8910Read(0);
 
-		case 0x6000:
-			return AY8910Read(1);
+	case 0x6000:
+		return AY8910Read(1);
 	}
 
 	return 0;
@@ -112,7 +113,7 @@ void TimepltSndReset()
 	soundlatch = 0;
 }
 
-void TimepltSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
+void TimepltSndInit(UINT8* rom, UINT8* ram, INT32 z80number)
 {
 	z80rom = rom;
 	z80ram = ram;
@@ -120,18 +121,18 @@ void TimepltSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 
 	ZetInit(z80_select);
 	ZetOpen(z80_select);
-	ZetMapMemory(z80rom,	0x0000, 0x2fff, MAP_ROM);
-	ZetMapMemory(z80ram,	0x3000, 0x33ff, MAP_RAM);
-	ZetMapMemory(z80ram,	0x3400, 0x37ff, MAP_RAM);
-	ZetMapMemory(z80ram,	0x3800, 0x3bff, MAP_RAM);
-	ZetMapMemory(z80ram,	0x3c00, 0x3fff, MAP_RAM);
+	ZetMapMemory(z80rom, 0x0000, 0x2fff, MAP_ROM);
+	ZetMapMemory(z80ram, 0x3000, 0x33ff, MAP_RAM);
+	ZetMapMemory(z80ram, 0x3400, 0x37ff, MAP_RAM);
+	ZetMapMemory(z80ram, 0x3800, 0x3bff, MAP_RAM);
+	ZetMapMemory(z80ram, 0x3c00, 0x3fff, MAP_RAM);
 	ZetSetWriteHandler(timeplt_sound_write);
 	ZetSetReadHandler(timeplt_sound_read);
 	ZetClose();
 
 	AY8910Init(0, 1789772, 0);
 	AY8910Init(1, 1789772, 1);
-	AY8910SetPorts(0, &AY8910_0_portA, &AY8910_0_portB, NULL, NULL);
+	AY8910SetPorts(0, &AY8910_0_portA, &AY8910_0_portB, nullptr, nullptr);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 1789772);
@@ -152,7 +153,7 @@ void TimepltSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 	locomotnmode = 0;
 }
 
-void LocomotnSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
+void LocomotnSndInit(UINT8* rom, UINT8* ram, INT32 z80number)
 {
 	z80rom = rom;
 	z80ram = ram;
@@ -160,18 +161,18 @@ void LocomotnSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 
 	ZetInit(z80_select);
 	ZetOpen(z80_select);
-	ZetMapMemory(z80rom,	0x0000, 0x1fff, MAP_ROM);
-	ZetMapMemory(z80ram,	0x2000, 0x23ff, MAP_RAM);
-	ZetMapMemory(z80ram,	0x2400, 0x27ff, MAP_RAM);
-	ZetMapMemory(z80ram,	0x2800, 0x2bff, MAP_RAM);
-	ZetMapMemory(z80ram,	0x2c00, 0x2fff, MAP_RAM);
+	ZetMapMemory(z80rom, 0x0000, 0x1fff, MAP_ROM);
+	ZetMapMemory(z80ram, 0x2000, 0x23ff, MAP_RAM);
+	ZetMapMemory(z80ram, 0x2400, 0x27ff, MAP_RAM);
+	ZetMapMemory(z80ram, 0x2800, 0x2bff, MAP_RAM);
+	ZetMapMemory(z80ram, 0x2c00, 0x2fff, MAP_RAM);
 	ZetSetWriteHandler(timeplt_sound_write);
 	ZetSetReadHandler(timeplt_sound_read);
 	ZetClose();
 
 	AY8910Init(0, 1789772, 0);
 	AY8910Init(1, 1789772, 1);
-	AY8910SetPorts(0, &AY8910_0_portA, &AY8910_0_portB, NULL, NULL);
+	AY8910SetPorts(0, &AY8910_0_portA, &AY8910_0_portB, nullptr, nullptr);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetBuffered(ZetTotalCycles, 1789772);
@@ -221,12 +222,12 @@ void TimepltSndExit()
 	filter_rc_exit();
 
 	z80_select = 0;
-	z80rom = NULL;
-	z80ram = NULL;
+	z80rom = nullptr;
+	z80ram = nullptr;
 	locomotnmode = 0;
 }
 
-void TimepltSndUpdate(INT16 *pSoundBuf, INT32 nSegmentLength)
+void TimepltSndUpdate(INT16* pSoundBuf, INT32 nSegmentLength)
 {
 	if (nSegmentLength <= 0) return;
 
@@ -240,9 +241,10 @@ void TimepltSndUpdate(INT16 *pSoundBuf, INT32 nSegmentLength)
 	filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
 }
 
-INT32 TimepltSndScan(INT32 nAction, INT32 *pnMin)
+INT32 TimepltSndScan(INT32 nAction, INT32* pnMin)
 {
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		if (z80_select == 0) ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 

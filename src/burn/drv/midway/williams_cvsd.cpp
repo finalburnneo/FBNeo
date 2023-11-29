@@ -8,8 +8,8 @@
 #include "hc55516.h"
 #include "6821pia.h"
 
-static UINT8 *rom;
-static UINT8 *ram;
+static UINT8* rom;
+static UINT8* ram;
 
 static UINT8 protram[0x80];
 
@@ -33,43 +33,53 @@ static void bankswitch(INT32 data)
 
 static void cvsd_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0 && address <= 0x1fff) {
+	if (address >= 0 && address <= 0x1fff)
+	{
 		ram[address & 0x7ff] = data;
 		return;
 	}
 
-	if (address >= protection_start && address <= protection_end) {
-		if (bankpos == 0x10000) {
+	if (address >= protection_start && address <= protection_end)
+	{
+		if (bankpos == 0x10000)
+		{
 			protram[address - protection_start] = data;
 			//bprintf(0, _T("prot write %x (%x): %x\t@bank %x\n"), address, address - protection_start, data, bankpos);
-		} else {
+		}
+		else
+		{
 			bprintf(0, _T("attempt to write to prot ram in wrong bank (%x)\n"), bankpos);
 		}
 		return;
 	}
 
-	if ((address & 0xe000) == 0x2000) {
+	if ((address & 0xe000) == 0x2000)
+	{
 		BurnYM2151Write(address & 1, data);
 		return;
 	}
 
-	if ((address & 0xe000) == 0x4000) {
+	if ((address & 0xe000) == 0x4000)
+	{
 		pia_write(0, address & 3, data);
 		return;
 	}
 
-	if ((address & 0xf800) == 0x6000) {
+	if ((address & 0xf800) == 0x6000)
+	{
 		hc55516_clock_w(0);
 		hc55516_digit_w(data & 1);
 		return;
 	}
 
-	if ((address & 0xf800) == 0x6800) {
+	if ((address & 0xf800) == 0x6800)
+	{
 		hc55516_clock_w(1);
 		return;
 	}
 
-	if ((address & 0xf800) == 0x7800) {
+	if ((address & 0xf800) == 0x7800)
+	{
 		bankswitch(data & 0xf);
 		if (data & 0xf0) bprintf(0, _T("bank extra bits: %x\n"), data);
 		return;
@@ -79,13 +89,17 @@ static void cvsd_write(UINT16 address, UINT8 data)
 
 static UINT8 cvsd_read(UINT16 address)
 {
-	if (address >= 0 && address <= 0x1fff) {
+	if (address >= 0 && address <= 0x1fff)
+	{
 		return ram[address & 0x7ff];
 	}
 
-	if (address >= 0x8000 && address <= 0xffff) {
-		if (address >= protection_start && address <= protection_end) {
-			if (bankpos == 0x10000) {
+	if (address >= 0x8000 && address <= 0xffff)
+	{
+		if (address >= protection_start && address <= protection_end)
+		{
+			if (bankpos == 0x10000)
+			{
 				//bprintf(0, _T("read protram @ %x (%x): %x\n"), address, address-protection_start,protram[address - protection_start]);
 				return protram[address - protection_start];
 			}
@@ -93,11 +107,13 @@ static UINT8 cvsd_read(UINT16 address)
 		return rom[bankpos + (address & 0x7fff)];
 	}
 
-	if ((address & 0xe000) == 0x2000) {
+	if ((address & 0xe000) == 0x2000)
+	{
 		return BurnYM2151Read();
 	}
 
-	if ((address & 0xe000) == 0x4000) {
+	if ((address & 0xe000) == 0x4000)
+	{
 		return pia_read(0, address & 3);
 	}
 
@@ -128,7 +144,8 @@ static void irq_b_write(INT32 state)
 
 static void out_ca2_write(UINT16 offset, UINT8 data)
 {
-	if (data == 0 && ym_inreset == 0) {
+	if (data == 0 && ym_inreset == 0)
+	{
 		BurnYM2151Reset();
 		bprintf(0, _T("cvsd.out.ca2 reset ym2151() %x\n"), data);
 	}
@@ -136,9 +153,9 @@ static void out_ca2_write(UINT16 offset, UINT8 data)
 }
 
 static pia6821_interface pia_intf = {
-	NULL, NULL,
-	NULL, NULL, NULL, NULL,
-	out_a_write, out_b_write, out_ca2_write, NULL,
+	nullptr, nullptr,
+	nullptr, nullptr, nullptr, nullptr,
+	out_a_write, out_b_write, out_ca2_write, nullptr,
 	irq_a_write, irq_b_write
 };
 
@@ -169,7 +186,7 @@ void williams_cvsd_reset_write(UINT16 state)
 
 void williams_cvsd_reset()
 {
-	memset (ram, 0, 0x800);
+	memset(ram, 0, 0x800);
 
 	// reset protram
 	memcpy(&protram[0], &rom[0x10000 + (protection_start & 0x7fff)], protection_end - protection_start + 1);
@@ -192,10 +209,10 @@ void williams_cvsd_reset()
 	ym_inreset = 0;
 }
 
-void williams_cvsd_init(UINT8 *prgrom, INT32 prot_start, INT32 prot_end, INT32 small)
+void williams_cvsd_init(UINT8* prgrom, INT32 prot_start, INT32 prot_end, INT32 small)
 {
 	rom = prgrom;
-	ram = (UINT8*)BurnMalloc(0x800);
+	ram = BurnMalloc(0x800);
 	cvsd_small = small;
 
 	M6809Init(0);
@@ -208,7 +225,7 @@ void williams_cvsd_init(UINT8 *prgrom, INT32 prot_start, INT32 prot_end, INT32 s
 	pia_init();
 	pia_config(0, PIA_STANDARD_ORDERING, &pia_intf);
 
-	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
+	BurnYM2151InitBuffered(3579545, 1, nullptr, 0);
 	BurnYM2151SetIrqHandler(&YM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
@@ -234,7 +251,7 @@ void williams_cvsd_exit()
 	hc55516_exit();
 	pia_exit();
 
-	BurnFree (ram);
+	BurnFree(ram);
 }
 
 INT32 williams_cvsd_in_reset()
@@ -242,32 +259,34 @@ INT32 williams_cvsd_in_reset()
 	return sound_in_reset;
 }
 
-void williams_cvsd_update(INT16 *stream, INT32 length)
+void williams_cvsd_update(INT16* stream, INT32 length)
 {
 	BurnYM2151Render(stream, length);
 	hc55516_update(stream, length);
 	DACUpdate(stream, length);
 }
 
-INT32 williams_cvsd_scan(INT32 nAction, INT32 *pnMin)
+INT32 williams_cvsd_scan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (nAction & ACB_MEMORY_RAM) {
+	if (nAction & ACB_MEMORY_RAM)
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = ram;
-		ba.nLen	  = 0x800;
+		ba.Data = ram;
+		ba.nLen = 0x800;
 		ba.szName = "Sound Ram";
 		BurnAcb(&ba);
 
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = &protram[0];
-		ba.nLen	  = 0x40;
+		ba.Data = &protram[0];
+		ba.nLen = 0x40;
 		ba.szName = "Sound Ram protection";
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		M6809Scan(nAction);
 		pia_scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);

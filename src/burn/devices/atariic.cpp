@@ -7,19 +7,20 @@ static INT32 atari_eeprom_initialized = 0;
 static INT32 atari_slapstic_initialized = 0;
 
 
-static UINT8 *atari_eeprom;
+static UINT8* atari_eeprom;
 static UINT32 atari_eeprom_size;
 static INT32 atari_eeprom_addrmask;
 static UINT32 atari_eeprom_address_start;
 static INT32 atari_eeprom_unlocked;
 
 
-static UINT8 *atari_slapstic_rom;
+static UINT8* atari_slapstic_rom;
 
 static UINT16 __fastcall atari_eeprom_read_word(UINT32 address)
 {
-	if (atari_eeprom_initialized == 0) {
-		bprintf (0, _T("atari_eeprom_read_word(%x) called without being initialized!\n"), address);
+	if (atari_eeprom_initialized == 0)
+	{
+		bprintf(0, _T("atari_eeprom_read_word(%x) called without being initialized!\n"), address);
 	}
 
 	return atari_eeprom[(address & atari_eeprom_addrmask) >> 1] | 0xff00;
@@ -27,8 +28,9 @@ static UINT16 __fastcall atari_eeprom_read_word(UINT32 address)
 
 static UINT8 __fastcall atari_eeprom_read_byte(UINT32 address)
 {
-	if (atari_eeprom_initialized == 0) {
-		bprintf (0, _T("atari_eeprom_read_byte(%x) called without being initialized!\n"), address);
+	if (atari_eeprom_initialized == 0)
+	{
+		bprintf(0, _T("atari_eeprom_read_byte(%x) called without being initialized!\n"), address);
 	}
 
 	return atari_eeprom[(address & atari_eeprom_addrmask) >> 1];
@@ -36,8 +38,9 @@ static UINT8 __fastcall atari_eeprom_read_byte(UINT32 address)
 
 static void __fastcall atari_eeprom_write_word(UINT32 address, UINT16 data)
 {
-	if (atari_eeprom_initialized == 0) {
-		bprintf (0, _T("atari_eeprom_write_word(%x, %4.4x) called without being initialized!\n"), address, data);
+	if (atari_eeprom_initialized == 0)
+	{
+		bprintf(0, _T("atari_eeprom_write_word(%x, %4.4x) called without being initialized!\n"), address, data);
 	}
 
 	if (atari_eeprom_unlocked)
@@ -49,11 +52,12 @@ static void __fastcall atari_eeprom_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall atari_eeprom_write_byte(UINT32 address, UINT8 data)
 {
-	if (atari_eeprom_initialized == 0) {
-		bprintf (0, _T("atari_eeprom_write_byte(%x, %2.2x) called without being initialized!\n"), address, data);
+	if (atari_eeprom_initialized == 0)
+	{
+		bprintf(0, _T("atari_eeprom_write_byte(%x, %2.2x) called without being initialized!\n"), address, data);
 	}
 
-	if (atari_eeprom_unlocked )
+	if (atari_eeprom_unlocked)
 	{
 		atari_eeprom[(address & atari_eeprom_addrmask) >> 1] = data;
 		atari_eeprom_unlocked = 0;
@@ -62,8 +66,9 @@ static void __fastcall atari_eeprom_write_byte(UINT32 address, UINT8 data)
 
 void AtariEEPROMUnlockWrite()
 {
-	if (atari_eeprom_initialized == 0) {
-		bprintf (0, _T("AtariEEPROMUnlockWrite() called without being initialized!\n"));
+	if (atari_eeprom_initialized == 0)
+	{
+		bprintf(0, _T("AtariEEPROMUnlockWrite() called without being initialized!\n"));
 		return;
 	}
 
@@ -78,24 +83,28 @@ void AtariEEPROMReset()
 void AtariEEPROMInit(INT32 size)
 {
 	atari_eeprom_initialized = 1;
-	atari_eeprom_size = size; // size in 16-bit space, 0x1000 here would mean logical 0x800 eeprom size, since the high byte is discarded.
+	atari_eeprom_size = size;
+	// size in 16-bit space, 0x1000 here would mean logical 0x800 eeprom size, since the high byte is discarded.
 	atari_eeprom_addrmask = (atari_eeprom_size - 1) & ~1;
 
-	atari_eeprom = (UINT8*)BurnMalloc(atari_eeprom_size / 2);
+	atari_eeprom = BurnMalloc(atari_eeprom_size / 2);
 
-	memset (atari_eeprom, 0xff, atari_eeprom_size / 2);
+	memset(atari_eeprom, 0xff, atari_eeprom_size / 2);
 }
 
 void AtariEEPROMInstallMap(INT32 map_handler, UINT32 address_start, UINT32 address_end)
 {
-	if (atari_eeprom_initialized == 0) {
-		bprintf (0, _T("AtariEEPROMInstallMap(%d, %x, %x) called without being initialized!\n"), address_start, address_end);
+	if (atari_eeprom_initialized == 0)
+	{
+		bprintf(0, _T("AtariEEPROMInstallMap(%d, %x, %x) called without being initialized!\n"), address_start,
+		        address_end);
 		return;
 	}
 
-	if (((address_end+1)-address_start) > atari_eeprom_size)
+	if (((address_end + 1) - address_start) > atari_eeprom_size)
 	{
-		bprintf (0, _T("AtariEEPROM: funky configuration? size: %4.4x, address_start: %6.6x, address_end: %6.6x\n"), atari_eeprom_size, address_start, address_end);
+		bprintf(0, _T("AtariEEPROM: funky configuration? size: %4.4x, address_start: %6.6x, address_end: %6.6x\n"),
+		        atari_eeprom_size, address_start, address_end);
 
 		address_end = address_start + (address_end & (atari_eeprom_size - 1));
 	}
@@ -104,21 +113,22 @@ void AtariEEPROMInstallMap(INT32 map_handler, UINT32 address_start, UINT32 addre
 
 	//bprintf (0, _T("atarieeprom size: %4.4x, address_start: %6.6x, address_end: %6.6x\n"), atari_eeprom_size, address_start, address_end);
 
-	SekMapHandler(map_handler,				address_start, address_end, MAP_RAM);
-	SekSetWriteWordHandler(map_handler,		atari_eeprom_write_word);
-	SekSetWriteByteHandler(map_handler,		atari_eeprom_write_byte);
-	SekSetReadWordHandler(map_handler,		atari_eeprom_read_word);
-	SekSetReadByteHandler(map_handler,		atari_eeprom_read_byte);
+	SekMapHandler(map_handler, address_start, address_end, MAP_RAM);
+	SekSetWriteWordHandler(map_handler, atari_eeprom_write_word);
+	SekSetWriteByteHandler(map_handler, atari_eeprom_write_byte);
+	SekSetReadWordHandler(map_handler, atari_eeprom_read_word);
+	SekSetReadByteHandler(map_handler, atari_eeprom_read_byte);
 }
 
-void AtariEEPROMLoad(UINT8 *src)
+void AtariEEPROMLoad(UINT8* src)
 {
-	if (atari_eeprom_initialized == 0) {
-		bprintf (0, _T("AtariEEPROMLoad(UINT8 *src) called without being initialized!\n"));
+	if (atari_eeprom_initialized == 0)
+	{
+		bprintf(0, _T("AtariEEPROMLoad(UINT8 *src) called without being initialized!\n"));
 		return;
 	}
 
-	for (INT32 i = 0; i < atari_eeprom_size/2; i++)
+	for (INT32 i = 0; i < atari_eeprom_size / 2; i++)
 	{
 		atari_eeprom[i] = src[i];
 	}
@@ -130,15 +140,16 @@ void AtariEEPROMExit()
 	atari_eeprom_initialized = 0;
 }
 
-INT32 AtariEEPROMScan(INT32 nAction, INT32 *)
+INT32 AtariEEPROMScan(INT32 nAction, INT32*)
 {
 	struct BurnArea ba;
 
-	if (nAction & ACB_NVRAM) {
-		ba.Data		= atari_eeprom;
-		ba.nLen		= atari_eeprom_size / 2;
-		ba.nAddress	= atari_eeprom_address_start;
-		ba.szName	= "NV RAM";
+	if (nAction & ACB_NVRAM)
+	{
+		ba.Data = atari_eeprom;
+		ba.nLen = atari_eeprom_size / 2;
+		ba.nAddress = atari_eeprom_address_start;
+		ba.szName = "NV RAM";
 		BurnAcb(&ba);
 	}
 
@@ -151,21 +162,22 @@ INT32 AtariEEPROMScan(INT32 nAction, INT32 *)
 }
 
 
-static void __fastcall slapstic_write_word(UINT32 address, UINT16 )
+static void __fastcall slapstic_write_word(UINT32 address, UINT16)
 {
-	SlapsticTweak((address & 0x7ffe)/2);
+	SlapsticTweak((address & 0x7ffe) / 2);
 }
 
-static void __fastcall slapstic_write_byte(UINT32 address, UINT8 )
+static void __fastcall slapstic_write_byte(UINT32 address, UINT8)
 {
-	SlapsticTweak((address & 0x7ffe)/2);
+	SlapsticTweak((address & 0x7ffe) / 2);
 }
 
 static UINT16 __fastcall slapstic_read_word(UINT32 address)
 {
-	UINT16 ret = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(atari_slapstic_rom + (address & 0x1ffe) + ((SlapsticBank() & 3) * 0x2000))));
+	UINT16 ret = BURN_ENDIAN_SWAP_INT16(
+		*((UINT16*)(atari_slapstic_rom + (address & 0x1ffe) + ((SlapsticBank() & 3) * 0x2000))));
 
-	SlapsticTweak((address & 0x7ffe)/2);
+	SlapsticTweak((address & 0x7ffe) / 2);
 
 	return ret;
 }
@@ -174,12 +186,12 @@ static UINT8 __fastcall slapstic_read_byte(UINT32 address)
 {
 	UINT8 ret = atari_slapstic_rom[((address & 0x1fff) ^ 1) + ((SlapsticBank() & 3) * 0x2000)];
 
-	SlapsticTweak((address & 0x7ffe)/2);
+	SlapsticTweak((address & 0x7ffe) / 2);
 
 	return ret;
 }
 
-void AtariSlapsticInit(UINT8 *rom, INT32 slapsticnum)
+void AtariSlapsticInit(UINT8* rom, INT32 slapsticnum)
 {
 	atari_slapstic_initialized = 1;
 
@@ -195,15 +207,16 @@ void AtariSlapsticReset()
 
 void AtariSlapsticInstallMap(INT32 map_handler, UINT32 address_start)
 {
-	if (atari_slapstic_initialized == 0) {
+	if (atari_slapstic_initialized == 0)
+	{
 		return;
 	}
 
-	SekMapHandler(map_handler,				address_start, address_start | 0x7fff, MAP_RAM);
-	SekSetWriteWordHandler(map_handler,		slapstic_write_word);
-	SekSetWriteByteHandler(map_handler,		slapstic_write_byte);
-	SekSetReadWordHandler(map_handler,		slapstic_read_word);
-	SekSetReadByteHandler(map_handler,		slapstic_read_byte);
+	SekMapHandler(map_handler, address_start, address_start | 0x7fff, MAP_RAM);
+	SekSetWriteWordHandler(map_handler, slapstic_write_word);
+	SekSetWriteByteHandler(map_handler, slapstic_write_byte);
+	SekSetReadWordHandler(map_handler, slapstic_read_word);
+	SekSetReadByteHandler(map_handler, slapstic_read_byte);
 }
 
 void AtariSlapsticExit()
@@ -212,7 +225,7 @@ void AtariSlapsticExit()
 	atari_slapstic_initialized = 0;
 }
 
-INT32 AtariSlapsticScan(INT32 nAction, INT32 *)
+INT32 AtariSlapsticScan(INT32 nAction, INT32*)
 {
 	if (nAction & ACB_VOLATILE)
 	{
@@ -223,11 +236,11 @@ INT32 AtariSlapsticScan(INT32 nAction, INT32 *)
 }
 
 
-void AtariPaletteUpdateIRGB(UINT8 *ram, UINT32 *palette, INT32 ramsize)
+void AtariPaletteUpdateIRGB(UINT8* ram, UINT32* palette, INT32 ramsize)
 {
-	UINT16 *p = (UINT16*)ram;
+	auto p = (UINT16*)ram;
 
-	for (INT32 i = 0; i < ramsize/2; i++)
+	for (INT32 i = 0; i < ramsize / 2; i++)
 	{
 		INT32 n = BURN_ENDIAN_SWAP_INT16(p[i]) >> 15;
 		UINT8 r = ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 9) & 0x3e) | n;
@@ -238,40 +251,40 @@ void AtariPaletteUpdateIRGB(UINT8 *ram, UINT32 *palette, INT32 ramsize)
 		g = (g << 2) | (g >> 4);
 		b = (b << 2) | (b >> 4);
 
-		palette[i] = BurnHighCol(r,g,b,0);
+		palette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
-void AtariPaletteWriteIRGB(INT32 offset, UINT8 *ram, UINT32 *palette)
+void AtariPaletteWriteIRGB(INT32 offset, UINT8* ram, UINT32* palette)
 {
 	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(ram + (offset * 2))));
 	UINT8 i = data >> 15;
-	UINT8 r = ((data >>  9) & 0x3e) | i;
-	UINT8 g = ((data >>  4) & 0x3e) | i;
-	UINT8 b = ((data <<  1) & 0x3e) | i;
+	UINT8 r = ((data >> 9) & 0x3e) | i;
+	UINT8 g = ((data >> 4) & 0x3e) | i;
+	UINT8 b = ((data << 1) & 0x3e) | i;
 
 	r = (r << 2) | (r >> 4);
 	g = (g << 2) | (g >> 4);
 	b = (b << 2) | (b >> 4);
 
-	palette[offset] = BurnHighCol(r,g,b,0);
+	palette[offset] = BurnHighCol(r, g, b, 0);
 }
 
-void AtariPaletteUpdate4IRGB(UINT8 *ram, UINT32 *palette, INT32 ramsize)
+void AtariPaletteUpdate4IRGB(UINT8* ram, UINT32* palette, INT32 ramsize)
 {
 	static const UINT8 ztable[16] = {
-		0x0, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9,	0xa, 0xb, 0xc, 0xd, 0xe, 0xf, 0x10, 0x11
+		0x0, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf, 0x10, 0x11
 	};
 
-	UINT16 *p = (UINT16*)ram;
+	auto p = (UINT16*)ram;
 
-	for (INT32 i = 0; i < ramsize/2; i++)
+	for (INT32 i = 0; i < ramsize / 2; i++)
 	{
 		INT32 n = ztable[BURN_ENDIAN_SWAP_INT16(p[i]) >> 12];
 		UINT8 r = ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 8) & 0xf) * n;
 		UINT8 g = ((BURN_ENDIAN_SWAP_INT16(p[i]) >> 4) & 0xf) * n;
 		UINT8 b = ((BURN_ENDIAN_SWAP_INT16(p[i]) << 0) & 0xf) * n;
 
-		palette[i] = BurnHighCol(r,g,b,0);
+		palette[i] = BurnHighCol(r, g, b, 0);
 	}
 }

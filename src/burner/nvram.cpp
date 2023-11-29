@@ -1,7 +1,7 @@
 // Driver nvram module
 #include "burner.h"
 
-static UINT8 *pNvramData;
+static UINT8* pNvramData;
 static INT32 nTotalLen = 0;
 
 static INT32 __cdecl StateLenAcb(struct BurnArea* pba)
@@ -43,14 +43,16 @@ INT32 BurnNvramLoad(TCHAR* szName)
 	char ReadHeader[8];
 
 	FILE* fp = _tfopen(szName, _T("rb"));
-	if (fp == NULL) {
+	if (fp == nullptr)
+	{
 		return 1;
 	}
 
 	// abort the loading of older headered/compressed nvrams
 	memset(ReadHeader, 0, 8);
 	fread(ReadHeader, 1, 8, fp);
-	if (memcmp(ReadHeader, "FB1 FS1 ", 8) == 0) {
+	if (memcmp(ReadHeader, "FB1 FS1 ", 8) == 0)
+	{
 		fclose(fp);
 		return 1;
 	}
@@ -60,8 +62,9 @@ INT32 BurnNvramLoad(TCHAR* szName)
 	nLen = ftell(fp);
 	fseek(fp, 0L, SEEK_SET);
 
-	UINT8 *data = (UINT8*)malloc(nLen);
-	if (data == NULL) {
+	auto data = static_cast<UINT8*>(malloc(nLen));
+	if (data == nullptr)
+	{
 		fclose(fp);
 		return 1;
 	}
@@ -70,11 +73,12 @@ INT32 BurnNvramLoad(TCHAR* szName)
 
 	BurnAcb = NvramLoadAcb;
 	pNvramData = data;
-	BurnAreaScan(ACB_NVRAM | ACB_WRITE, NULL);
+	BurnAreaScan(ACB_NVRAM | ACB_WRITE, nullptr);
 
-	if (data) {
+	if (data)
+	{
 		free(data);
-		data = NULL;
+		data = nullptr;
 	}
 
 	return 0;
@@ -87,35 +91,40 @@ INT32 BurnNvramSave(TCHAR* szName)
 
 	NvramInfo(&nLen);
 
-	if (nLen <= 0) {
+	if (nLen <= 0)
+	{
 		return 1;
 	}
 
 	FILE* fp = _tfopen(szName, _T("wb"));
-	if (fp == NULL) {
+	if (fp == nullptr)
+	{
 		return 1;
 	}
 
-	UINT8 *data = (UINT8*)malloc(nLen);
-	if (data == NULL) {
+	auto data = static_cast<UINT8*>(malloc(nLen));
+	if (data == nullptr)
+	{
 		fclose(fp);
 		return 1;
 	}
 
 	BurnAcb = NvramSaveAcb;
 	pNvramData = data;
-	BurnAreaScan(ACB_NVRAM | ACB_READ, NULL);
+	BurnAreaScan(ACB_NVRAM | ACB_READ, nullptr);
 
 	nRet = fwrite(data, 1, nLen, fp);
 
 	fclose(fp);
 
-	if (data) {
+	if (data)
+	{
 		free(data);
-		data = NULL;
+		data = nullptr;
 	}
 
-	if (nRet != nLen) {
+	if (nRet != nLen)
+	{
 		return 1;
 	}
 

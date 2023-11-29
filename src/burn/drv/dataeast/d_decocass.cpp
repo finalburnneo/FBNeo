@@ -15,34 +15,34 @@ cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
 #include "mcs48.h"
 #include "ay8910.h"
 
-static UINT8 *AllMem;
-static UINT8 *MemEnd;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *DrvMainBIOS;
-static UINT8 *DrvSoundBIOS;
-static UINT8 *DrvCassette;
+static UINT8* AllMem;
+static UINT8* MemEnd;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* DrvMainBIOS;
+static UINT8* DrvSoundBIOS;
+static UINT8* DrvCassette;
 static UINT32 DrvCassetteLen; // here for now
-static UINT8 *DrvDongle;
-static UINT8 *DrvGfxData;
-static UINT8 *DrvMCUROM;
-static UINT8 *DrvCharExp;
-static UINT8 *DrvTileExp;
-static UINT8 *DrvObjExp;
-static UINT8 *DrvMainRAM;
-static UINT8 *DrvCharRAM;
-static UINT8 *DrvFgRAM;
-static UINT8 *DrvColRAM;
-static UINT8 *DrvTileRAM;
-static UINT8 *DrvObjRAM;
-static UINT8 *DrvPalRAM;
-static UINT8 *DrvSoundRAM;
-static UINT8 *DrvPalLut;
-static UINT32 *DrvPaletteTable;
-static UINT32 *DrvPalette;
+static UINT8* DrvDongle;
+static UINT8* DrvGfxData;
+static UINT8* DrvMCUROM;
+static UINT8* DrvCharExp;
+static UINT8* DrvTileExp;
+static UINT8* DrvObjExp;
+static UINT8* DrvMainRAM;
+static UINT8* DrvCharRAM;
+static UINT8* DrvFgRAM;
+static UINT8* DrvColRAM;
+static UINT8* DrvTileRAM;
+static UINT8* DrvObjRAM;
+static UINT8* DrvPalRAM;
+static UINT8* DrvSoundRAM;
+static UINT8* DrvPalLut;
+static UINT32* DrvPaletteTable;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT16 *pTempDraw[2];
+static UINT16* pTempDraw[2];
 
 static UINT8 decocass_reset;
 
@@ -81,8 +81,8 @@ static INT32 flipscreen = 0;
 static UINT8 i8041_p1;
 static UINT8 i8041_p2;
 
-static void (*prot_write)(UINT16, UINT8) = NULL;
-static UINT8 (*prot_read)(UINT16) = NULL;
+static void (*prot_write)(UINT16, UINT8) = nullptr;
+static UINT8 (*prot_read)(UINT16) = nullptr;
 
 #define E5XX_MASK   0x02
 
@@ -100,8 +100,8 @@ static UINT8 (*prot_read)(UINT16) = NULL;
 
 static UINT32 type1_inmap = 0;
 static UINT32 type1_outmap = 0;
-static UINT8  type1_latch1 = 0;
-static UINT8 *type1_map = NULL;
+static UINT8 type1_latch1 = 0;
+static UINT8* type1_map = nullptr;
 
 #define T1PROM 1
 #define T1DIRECT 2
@@ -112,7 +112,8 @@ static UINT8 type2_xx_latch = 0;
 static UINT8 type2_d2_latch = 0;
 static UINT8 type2_promaddr = 0;
 
-enum {
+enum
+{
 	TYPE3_SWAP_01,
 	TYPE3_SWAP_12,
 	TYPE3_SWAP_13,
@@ -154,1284 +155,1284 @@ static INT32 fourway_mode = 0;
 // analog inputs - not emulated - unused by games in this system.
 
 static struct BurnInputInfo DecocassInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy3 + 7, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy3 + 3, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy1 + 2, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy1 + 3, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1 + 1, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1 + 0, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 4, "p1 fire 1"},
+	{"P1 Button 2", BIT_DIGITAL, DrvJoy1 + 5, "p1 fire 2"},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy3 + 6, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy3 + 4, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 2, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 3, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 1, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 0, "p2 right"},
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 4, "p2 fire 1"},
+	{"P2 Button 2", BIT_DIGITAL, DrvJoy2 + 5, "p2 fire 2"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Bios setting",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Bios setting", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Decocass)
 
-static struct BurnDIPInfo DecocassDIPList[]=
+static struct BurnDIPInfo DecocassDIPList[] =
 {
-	{0x11, 0xff, 0xff, 0xff, NULL			},
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x11, 0xff, 0xff, 0xff, nullptr},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"},
+	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
+	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
+	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x11, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x11, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"},
+	{0x11, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"},
+	{0x11, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"},
+	{0x11, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Type of Tape"		},
-	{0x11, 0x01, 0x30, 0x00, "MT (Big)"		},
-	{0x11, 0x01, 0x30, 0x10, "invalid?"		},
-	{0x11, 0x01, 0x30, 0x20, "invalid?"		},
-	{0x11, 0x01, 0x30, 0x30, "MD (Small)"		},
+	{0, 0xfe, 0, 4, "Type of Tape"},
+	{0x11, 0x01, 0x30, 0x00, "MT (Big)"},
+	{0x11, 0x01, 0x30, 0x10, "invalid?"},
+	{0x11, 0x01, 0x30, 0x20, "invalid?"},
+	{0x11, 0x01, 0x30, 0x30, "MD (Small)"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x11, 0x01, 0x40, 0x00, "Upright"		},
-	{0x11, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x11, 0x01, 0x40, 0x00, "Upright"},
+	{0x11, 0x01, 0x40, 0x40, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    6, "Country Code"		},
-	{0x12, 0x01, 0xe0, 0xe0, "A"			},
-	{0x12, 0x01, 0xe0, 0xc0, "B"			},
-	{0x12, 0x01, 0xe0, 0xa0, "C"			},
-	{0x12, 0x01, 0xe0, 0x80, "D"			},
-	{0x12, 0x01, 0xe0, 0x60, "E"			},
-	{0x12, 0x01, 0xe0, 0x40, "F"			},
+	{0, 0xfe, 0, 6, "Country Code"},
+	{0x12, 0x01, 0xe0, 0xe0, "A"},
+	{0x12, 0x01, 0xe0, 0xc0, "B"},
+	{0x12, 0x01, 0xe0, 0xa0, "C"},
+	{0x12, 0x01, 0xe0, 0x80, "D"},
+	{0x12, 0x01, 0xe0, 0x60, "E"},
+	{0x12, 0x01, 0xe0, 0x40, "F"},
 
-	{0   , 0xfe, 0   ,    8, "Bios Version"		},
-	{0x13, 0x01, 0x07, 0x00, "Japan A, Newer"	},
-	{0x13, 0x01, 0x07, 0x01, "Japan A, Older"	},
-	{0x13, 0x01, 0x07, 0x02, "USA B, Newer"		},
-	{0x13, 0x01, 0x07, 0x03, "USA B, Older"		},
-	{0x13, 0x01, 0x07, 0x04, "UK C, Newer"		},
-	{0x13, 0x01, 0x07, 0x05, "UK C, Older"		},
-	{0x13, 0x01, 0x07, 0x06, "Europe D, Newer"	},
-	{0x13, 0x01, 0x07, 0x07, "Europe D, Older"	},
+	{0, 0xfe, 0, 8, "Bios Version"},
+	{0x13, 0x01, 0x07, 0x00, "Japan A, Newer"},
+	{0x13, 0x01, 0x07, 0x01, "Japan A, Older"},
+	{0x13, 0x01, 0x07, 0x02, "USA B, Newer"},
+	{0x13, 0x01, 0x07, 0x03, "USA B, Older"},
+	{0x13, 0x01, 0x07, 0x04, "UK C, Newer"},
+	{0x13, 0x01, 0x07, 0x05, "UK C, Older"},
+	{0x13, 0x01, 0x07, 0x06, "Europe D, Newer"},
+	{0x13, 0x01, 0x07, 0x07, "Europe D, Older"},
 };
 
 STDDIPINFO(Decocass)
 
-static struct BurnDIPInfo CtsttapeDIPList[]=
+static struct BurnDIPInfo CtsttapeDIPList[] =
 {
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 };
 
-STDDIPINFOEXT(Ctsttape,	Decocass,	Ctsttape)
+STDDIPINFOEXT(Ctsttape, Decocass, Ctsttape)
 
-static struct BurnDIPInfo DecomultDIPList[]=
+static struct BurnDIPInfo DecomultDIPList[] =
 {
-	{0x13, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0xff, nullptr},
 };
 
-STDDIPINFOEXT(Decomult,	Decocass,	Decomult)
+STDDIPINFOEXT(Decomult, Decocass, Decomult)
 
-static struct BurnDIPInfo ChwyDIPList[]=
+static struct BurnDIPInfo ChwyDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 };
 
-STDDIPINFOEXT(Chwy,	Decocass,	Chwy)
+STDDIPINFOEXT(Chwy, Decocass, Chwy)
 
-static struct BurnDIPInfo CptennisDIPList[]=
+static struct BurnDIPInfo CptennisDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "2"			},
-	{0x12, 0x01, 0x01, 0x00, "3"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "2"},
+	{0x12, 0x01, 0x01, 0x00, "3"},
 };
 
-STDDIPINFOEXT(Cptennis,	Decocass,	Cptennis)
+STDDIPINFOEXT(Cptennis, Decocass, Cptennis)
 
-static struct BurnDIPInfo CptennisjDIPList[]=
+static struct BurnDIPInfo CptennisjDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "2"			},
-	{0x12, 0x01, 0x01, 0x00, "3"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "2"},
+	{0x12, 0x01, 0x01, 0x00, "3"},
 };
 
-STDDIPINFOEXT(Cptennisj,	Decocass,	Cptennisj)
+STDDIPINFOEXT(Cptennisj, Decocass, Cptennisj)
 
-static struct BurnDIPInfo CmanhatDIPList[]=
+static struct BurnDIPInfo CmanhatDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "4"			},
-	{0x12, 0x01, 0x01, 0x00, "6"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "4"},
+	{0x12, 0x01, 0x01, 0x00, "6"},
 };
 
-STDDIPINFOEXT(Cmanhat,	Decocass,	Cmanhat)
+STDDIPINFOEXT(Cmanhat, Decocass, Cmanhat)
 
-static struct BurnDIPInfo CterraniDIPList[]=
+static struct BurnDIPInfo CterraniDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "3000"			},
-	{0x12, 0x01, 0x06, 0x04, "5000"			},
-	{0x12, 0x01, 0x06, 0x02, "7000"			},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "3000"},
+	{0x12, 0x01, 0x06, 0x04, "5000"},
+	{0x12, 0x01, 0x06, 0x02, "7000"},
 
-	{0   , 0xfe, 0   ,    2, "Rocket Movement"	},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Rocket Movement"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 
-	{0   , 0xfe, 0   ,    2, "Alien Craft Movement"	},
-	{0x12, 0x01, 0x10, 0x10, "Easy"			},
-	{0x12, 0x01, 0x10, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Alien Craft Movement"},
+	{0x12, 0x01, 0x10, 0x10, "Easy"},
+	{0x12, 0x01, 0x10, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Cterrani,	Decocass,	Cterrani)
+STDDIPINFOEXT(Cterrani, Decocass, Cterrani)
 
-static struct BurnDIPInfo CastfantDIPList[]=
+static struct BurnDIPInfo CastfantDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 };
 
-STDDIPINFOEXT(Castfant,	Decocass,	Castfant)
+STDDIPINFOEXT(Castfant, Decocass, Castfant)
 
-static struct BurnDIPInfo CsuperasDIPList[]=
+static struct BurnDIPInfo CsuperasDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xef, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "20000"		},
-	{0x12, 0x01, 0x06, 0x04, "30000"		},
-	{0x12, 0x01, 0x06, 0x02, "40000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "20000"},
+	{0x12, 0x01, 0x06, 0x04, "30000"},
+	{0x12, 0x01, 0x06, 0x02, "40000"},
 
-	{0   , 0xfe, 0   ,    2, "Alien Craft Movement"	},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Alien Craft Movement"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 };
 
 STDDIPINFOEXT(Csuperas, Decocass, Csuperas)
 
-static struct BurnDIPInfo CtislandDIPList[]=
+static struct BurnDIPInfo CtislandDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xef, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x06, "15000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "25000"		},
-	{0x12, 0x01, 0x06, 0x00, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x06, "15000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "25000"},
+	{0x12, 0x01, 0x06, 0x00, "30000"},
 };
 
 STDDIPINFOEXT(Ctisland, Decocass, Ctisland)
 
-static struct BurnDIPInfo Ctisland3DIPList[]=
+static struct BurnDIPInfo Ctisland3DIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x06, NULL			},
+	{0x12, 0xff, 0xff, 0xef, nullptr},
+	{0x13, 0xff, 0xff, 0x06, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x06, "15000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "25000"		},
-	{0x12, 0x01, 0x06, 0x00, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x06, "15000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "25000"},
+	{0x12, 0x01, 0x06, 0x00, "30000"},
 };
 
 STDDIPINFOEXT(Ctisland3, Decocass, Ctisland3)
 
 static struct BurnInputInfo CtowerInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Left Stick Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Left Stick Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left Stick Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
-	{"P1 Left Stick Right",     BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Right Stick Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up 2"	},
-	{"P1 Right Stick Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down 2"	},
-	{"P1 Right Stick Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left 2"	},
-	{"P1 Right Stick Right",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right 2"},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy3 + 7, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy3 + 3, "p1 start"},
+	{"P1 Left Stick Up", BIT_DIGITAL, DrvJoy1 + 2, "p1 up"},
+	{"P1 Left Stick Down", BIT_DIGITAL, DrvJoy1 + 3, "p1 down"},
+	{"P1 Left Stick Left", BIT_DIGITAL, DrvJoy1 + 1, "p1 left"},
+	{"P1 Left Stick Right", BIT_DIGITAL, DrvJoy1 + 0, "p1 right"},
+	{"P1 Right Stick Up", BIT_DIGITAL, DrvJoy1 + 6, "p1 up 2"},
+	{"P1 Right Stick Down", BIT_DIGITAL, DrvJoy1 + 7, "p1 down 2"},
+	{"P1 Right Stick Left", BIT_DIGITAL, DrvJoy1 + 4, "p1 left 2"},
+	{"P1 Right Stick Right", BIT_DIGITAL, DrvJoy1 + 5, "p1 right 2"},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Left Stick Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Left Stick Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left Stick Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
-	{"P2 Left Stick Right",     BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
-	{"P2 Right Stick Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up 2"	},
-	{"P2 Right Stick Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down 2"	},
-	{"P2 Right Stick Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left 2"	},
-	{"P2 Right Stick Right",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right 2"},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy3 + 6, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy3 + 4, "p2 start"},
+	{"P2 Left Stick Up", BIT_DIGITAL, DrvJoy2 + 2, "p2 up"},
+	{"P2 Left Stick Down", BIT_DIGITAL, DrvJoy2 + 3, "p2 down"},
+	{"P2 Left Stick Left", BIT_DIGITAL, DrvJoy2 + 1, "p2 left"},
+	{"P2 Left Stick Right", BIT_DIGITAL, DrvJoy2 + 0, "p2 right"},
+	{"P2 Right Stick Up", BIT_DIGITAL, DrvJoy2 + 6, "p2 up 2"},
+	{"P2 Right Stick Down", BIT_DIGITAL, DrvJoy2 + 7, "p2 down 2"},
+	{"P2 Right Stick Left", BIT_DIGITAL, DrvJoy2 + 4, "p2 left 2"},
+	{"P2 Right Stick Right", BIT_DIGITAL, DrvJoy2 + 5, "p2 right 2"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Bios setting",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Bios setting", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Ctower)
 
-static struct BurnDIPInfo CtowerDIPList[]=
+static struct BurnDIPInfo CtowerDIPList[] =
 {
 	DIP_OFFSET(0x15)
-	{0x00, 0xff, 0xff, 0xff, NULL			},
-	{0x01, 0xff, 0xff, 0x81, NULL			},
-	{0x02, 0xff, 0xff, 0x06, NULL			},
+	{0x00, 0xff, 0xff, 0xff, nullptr},
+	{0x01, 0xff, 0xff, 0x81, nullptr},
+	{0x02, 0xff, 0xff, 0x06, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x00, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x00, 0x01, 0x03, 0x00, "2 Coins 1 Credits"},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
+	{0x00, 0x01, 0x03, 0x01, "1 Coin  3 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x00, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x00, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x00, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"},
+	{0x00, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"},
+	{0x00, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"},
+	{0x00, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Type of Tape"		},
-	{0x00, 0x01, 0x30, 0x00, "MT (Big)"		},
-	{0x00, 0x01, 0x30, 0x10, "invalid?"		},
-	{0x00, 0x01, 0x30, 0x20, "invalid?"		},
-	{0x00, 0x01, 0x30, 0x30, "MD (Small)"		},
+	{0, 0xfe, 0, 4, "Type of Tape"},
+	{0x00, 0x01, 0x30, 0x00, "MT (Big)"},
+	{0x00, 0x01, 0x30, 0x10, "invalid?"},
+	{0x00, 0x01, 0x30, 0x20, "invalid?"},
+	{0x00, 0x01, 0x30, 0x30, "MD (Small)"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x00, 0x01, 0x40, 0x00, "Upright"		},
-	{0x00, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x00, 0x01, 0x40, 0x00, "Upright"},
+	{0x00, 0x01, 0x40, 0x40, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    2, "Lives"			},
-	{0x01, 0x01, 0x01, 0x01, "2"				},
-	{0x01, 0x01, 0x01, 0x00, "4"				},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x01, 0x01, 0x01, 0x01, "2"},
+	{0x01, 0x01, 0x01, 0x00, "4"},
 
-	{0   , 0xfe, 0   ,    6, "Country Code"		},
-	{0x01, 0x01, 0xe0, 0xe0, "A"			},
-	{0x01, 0x01, 0xe0, 0xc0, "B"			},
-	{0x01, 0x01, 0xe0, 0xa0, "C"			},
-	{0x01, 0x01, 0xe0, 0x80, "D"			},
-	{0x01, 0x01, 0xe0, 0x60, "E"			},
-	{0x01, 0x01, 0xe0, 0x40, "F"			},
+	{0, 0xfe, 0, 6, "Country Code"},
+	{0x01, 0x01, 0xe0, 0xe0, "A"},
+	{0x01, 0x01, 0xe0, 0xc0, "B"},
+	{0x01, 0x01, 0xe0, 0xa0, "C"},
+	{0x01, 0x01, 0xe0, 0x80, "D"},
+	{0x01, 0x01, 0xe0, 0x60, "E"},
+	{0x01, 0x01, 0xe0, 0x40, "F"},
 
-	{0   , 0xfe, 0   ,    6, "Bios Version"		},
-	{0x02, 0x01, 0x07, 0x00, "Japan A, Newer"	},
-	{0x02, 0x01, 0x07, 0x01, "Japan A, Older"	},
-	{0x02, 0x01, 0x07, 0x02, "USA B, Newer"		},
-	{0x02, 0x01, 0x07, 0x03, "USA B, Older"		},
-	{0x02, 0x01, 0x07, 0x06, "Europe D, Newer"	},
-	{0x02, 0x01, 0x07, 0x07, "Europe D, Older"	},
+	{0, 0xfe, 0, 6, "Bios Version"},
+	{0x02, 0x01, 0x07, 0x00, "Japan A, Newer"},
+	{0x02, 0x01, 0x07, 0x01, "Japan A, Older"},
+	{0x02, 0x01, 0x07, 0x02, "USA B, Newer"},
+	{0x02, 0x01, 0x07, 0x03, "USA B, Older"},
+	{0x02, 0x01, 0x07, 0x06, "Europe D, Newer"},
+	{0x02, 0x01, 0x07, 0x07, "Europe D, Older"},
 };
 
 STDDIPINFO(Ctower)
 
-static struct BurnDIPInfo Cocean1aDIPList[]=
+static struct BurnDIPInfo Cocean1aDIPList[] =
 {
-	{0x11, 0xff, 0xff, 0x3f, NULL			},
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x11, 0xff, 0xff, 0x3f, nullptr},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    8, "1 Coin Credit"	},
-	{0x11, 0x01, 0x07, 0x07, "1"			},
-	{0x11, 0x01, 0x07, 0x06, "2"			},
-	{0x11, 0x01, 0x07, 0x05, "5"			},
-	{0x11, 0x01, 0x07, 0x04, "10"			},
-	{0x11, 0x01, 0x07, 0x03, "20"			},
-	{0x11, 0x01, 0x07, 0x02, "30"			},
-	{0x11, 0x01, 0x07, 0x01, "40"			},
-	{0x11, 0x01, 0x07, 0x00, "50"			},
+	{0, 0xfe, 0, 8, "1 Coin Credit"},
+	{0x11, 0x01, 0x07, 0x07, "1"},
+	{0x11, 0x01, 0x07, 0x06, "2"},
+	{0x11, 0x01, 0x07, 0x05, "5"},
+	{0x11, 0x01, 0x07, 0x04, "10"},
+	{0x11, 0x01, 0x07, 0x03, "20"},
+	{0x11, 0x01, 0x07, 0x02, "30"},
+	{0x11, 0x01, 0x07, 0x01, "40"},
+	{0x11, 0x01, 0x07, 0x00, "50"},
 
-	{0   , 0xfe, 0   ,    2, "None"			},
-	{0x11, 0x01, 0x08, 0x08, "Off"			},
-	{0x11, 0x01, 0x08, 0x00, "None"			},
+	{0, 0xfe, 0, 2, "None"},
+	{0x11, 0x01, 0x08, 0x08, "Off"},
+	{0x11, 0x01, 0x08, 0x00, "None"},
 
-	{0   , 0xfe, 0   ,    4, "Type of Tape"		},
-	{0x11, 0x01, 0x30, 0x00, "MT (Big)"		},
-	{0x11, 0x01, 0x30, 0x10, "invalid?"		},
-	{0x11, 0x01, 0x30, 0x20, "invalid?"		},
-	{0x11, 0x01, 0x30, 0x30, "MD (Small)"		},
+	{0, 0xfe, 0, 4, "Type of Tape"},
+	{0x11, 0x01, 0x30, 0x00, "MT (Big)"},
+	{0x11, 0x01, 0x30, 0x10, "invalid?"},
+	{0x11, 0x01, 0x30, 0x20, "invalid?"},
+	{0x11, 0x01, 0x30, 0x30, "MD (Small)"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x11, 0x01, 0x40, 0x00, "Upright"		},
-	{0x11, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x11, 0x01, 0x40, 0x00, "Upright"},
+	{0x11, 0x01, 0x40, 0x40, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    4, "Key Switch Credit"	},
-	{0x12, 0x01, 0x03, 0x03, "1 Coin 10 Credits"	},
-	{0x12, 0x01, 0x03, 0x02, "1 Coin 20 Credits"	},
-	{0x12, 0x01, 0x03, 0x01, "1 Coin 50 Credits"	},
-	{0x12, 0x01, 0x03, 0x00, "1 Coin 100 Credits"	},
+	{0, 0xfe, 0, 4, "Key Switch Credit"},
+	{0x12, 0x01, 0x03, 0x03, "1 Coin 10 Credits"},
+	{0x12, 0x01, 0x03, 0x02, "1 Coin 20 Credits"},
+	{0x12, 0x01, 0x03, 0x01, "1 Coin 50 Credits"},
+	{0x12, 0x01, 0x03, 0x00, "1 Coin 100 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Game Select"		},
-	{0x12, 0x01, 0x04, 0x04, "1 to 8 Lines"		},
-	{0x12, 0x01, 0x04, 0x00, "Center Line"		},
+	{0, 0xfe, 0, 2, "Game Select"},
+	{0x12, 0x01, 0x04, 0x04, "1 to 8 Lines"},
+	{0x12, 0x01, 0x04, 0x00, "Center Line"},
 
-	{0   , 0xfe, 0   ,    2, "Background Music"	},
-	{0x12, 0x01, 0x08, 0x08, "Off"			},
-	{0x12, 0x01, 0x08, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Background Music"},
+	{0x12, 0x01, 0x08, 0x08, "Off"},
+	{0x12, 0x01, 0x08, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Pay Out %"		},
-	{0x12, 0x01, 0x10, 0x10, "Payout 75%"		},
-	{0x12, 0x01, 0x10, 0x00, "Payout 85%"		},
+	{0, 0xfe, 0, 2, "Pay Out %"},
+	{0x12, 0x01, 0x10, 0x10, "Payout 75%"},
+	{0x12, 0x01, 0x10, 0x00, "Payout 85%"},
 
-	{0   , 0xfe, 0   ,    6, "Country Code"		},
-	{0x12, 0x01, 0xe0, 0xe0, "A"			},
-	{0x12, 0x01, 0xe0, 0xc0, "B"			},
-	{0x12, 0x01, 0xe0, 0xa0, "C"			},
-	{0x12, 0x01, 0xe0, 0x80, "D"			},
-	{0x12, 0x01, 0xe0, 0x60, "E"			},
-	{0x12, 0x01, 0xe0, 0x40, "F"			},
+	{0, 0xfe, 0, 6, "Country Code"},
+	{0x12, 0x01, 0xe0, 0xe0, "A"},
+	{0x12, 0x01, 0xe0, 0xc0, "B"},
+	{0x12, 0x01, 0xe0, 0xa0, "C"},
+	{0x12, 0x01, 0xe0, 0x80, "D"},
+	{0x12, 0x01, 0xe0, 0x60, "E"},
+	{0x12, 0x01, 0xe0, 0x40, "F"},
 
-	{0   , 0xfe, 0   ,    4, "Bios Version"		},
-	{0x13, 0x01, 0x03, 0x00, "Japan A, Newer"	},
-	{0x13, 0x01, 0x03, 0x01, "Japan A, Older"	},
-	{0x13, 0x01, 0x03, 0x02, "USA B, Newer"		},
-	{0x13, 0x01, 0x03, 0x03, "USA B, Older"		},
+	{0, 0xfe, 0, 4, "Bios Version"},
+	{0x13, 0x01, 0x03, 0x00, "Japan A, Newer"},
+	{0x13, 0x01, 0x03, 0x01, "Japan A, Older"},
+	{0x13, 0x01, 0x03, 0x02, "USA B, Newer"},
+	{0x13, 0x01, 0x03, 0x03, "USA B, Older"},
 };
 
 STDDIPINFO(Cocean1a)
 
-static struct BurnDIPInfo Cocean6bDIPList[]=
+static struct BurnDIPInfo Cocean6bDIPList[] =
 {
-	{0x11, 0xff, 0xff, 0x3f, NULL			},
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x11, 0xff, 0xff, 0x3f, nullptr},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    8, "1 Coin Credit"	},
-	{0x11, 0x01, 0x07, 0x07, "1"			},
-	{0x11, 0x01, 0x07, 0x06, "2"			},
-	{0x11, 0x01, 0x07, 0x05, "5"			},
-	{0x11, 0x01, 0x07, 0x04, "10"			},
-	{0x11, 0x01, 0x07, 0x03, "20"			},
-	{0x11, 0x01, 0x07, 0x02, "30"			},
-	{0x11, 0x01, 0x07, 0x01, "40"			},
-	{0x11, 0x01, 0x07, 0x00, "50"			},
+	{0, 0xfe, 0, 8, "1 Coin Credit"},
+	{0x11, 0x01, 0x07, 0x07, "1"},
+	{0x11, 0x01, 0x07, 0x06, "2"},
+	{0x11, 0x01, 0x07, 0x05, "5"},
+	{0x11, 0x01, 0x07, 0x04, "10"},
+	{0x11, 0x01, 0x07, 0x03, "20"},
+	{0x11, 0x01, 0x07, 0x02, "30"},
+	{0x11, 0x01, 0x07, 0x01, "40"},
+	{0x11, 0x01, 0x07, 0x00, "50"},
 
-	{0   , 0xfe, 0   ,    2, "None"			},
-	{0x11, 0x01, 0x08, 0x08, "Off"			},
-	{0x11, 0x01, 0x08, 0x00, "None"			},
+	{0, 0xfe, 0, 2, "None"},
+	{0x11, 0x01, 0x08, 0x08, "Off"},
+	{0x11, 0x01, 0x08, 0x00, "None"},
 
-	{0   , 0xfe, 0   ,    4, "Type of Tape"		},
-	{0x11, 0x01, 0x30, 0x00, "MT (Big)"		},
-	{0x11, 0x01, 0x30, 0x10, "invalid?"		},
-	{0x11, 0x01, 0x30, 0x20, "invalid?"		},
-	{0x11, 0x01, 0x30, 0x30, "MD (Small)"		},
+	{0, 0xfe, 0, 4, "Type of Tape"},
+	{0x11, 0x01, 0x30, 0x00, "MT (Big)"},
+	{0x11, 0x01, 0x30, 0x10, "invalid?"},
+	{0x11, 0x01, 0x30, 0x20, "invalid?"},
+	{0x11, 0x01, 0x30, 0x30, "MD (Small)"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x11, 0x01, 0x40, 0x00, "Upright"		},
-	{0x11, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x11, 0x01, 0x40, 0x00, "Upright"},
+	{0x11, 0x01, 0x40, 0x40, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    4, "Key Switch Credit"	},
-	{0x12, 0x01, 0x03, 0x03, "1 Coin 10 Credits"	},
-	{0x12, 0x01, 0x03, 0x02, "1 Coin 20 Credits"	},
-	{0x12, 0x01, 0x03, 0x01, "1 Coin 50 Credits"	},
-	{0x12, 0x01, 0x03, 0x00, "1 Coin 100 Credits"	},
+	{0, 0xfe, 0, 4, "Key Switch Credit"},
+	{0x12, 0x01, 0x03, 0x03, "1 Coin 10 Credits"},
+	{0x12, 0x01, 0x03, 0x02, "1 Coin 20 Credits"},
+	{0x12, 0x01, 0x03, 0x01, "1 Coin 50 Credits"},
+	{0x12, 0x01, 0x03, 0x00, "1 Coin 100 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Game Select"		},
-	{0x12, 0x01, 0x04, 0x04, "1 to 8 Lines"		},
-	{0x12, 0x01, 0x04, 0x00, "Center Line"		},
+	{0, 0xfe, 0, 2, "Game Select"},
+	{0x12, 0x01, 0x04, 0x04, "1 to 8 Lines"},
+	{0x12, 0x01, 0x04, 0x00, "Center Line"},
 
-	{0   , 0xfe, 0   ,    2, "Background Music"	},
-	{0x12, 0x01, 0x08, 0x08, "Off"			},
-	{0x12, 0x01, 0x08, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Background Music"},
+	{0x12, 0x01, 0x08, 0x08, "Off"},
+	{0x12, 0x01, 0x08, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Pay Out %"		},
-	{0x12, 0x01, 0x10, 0x10, "Payout 75%"		},
-	{0x12, 0x01, 0x10, 0x00, "Payout 85%"		},
+	{0, 0xfe, 0, 2, "Pay Out %"},
+	{0x12, 0x01, 0x10, 0x10, "Payout 75%"},
+	{0x12, 0x01, 0x10, 0x00, "Payout 85%"},
 
-	{0   , 0xfe, 0   ,    6, "Country Code"		},
-	{0x12, 0x01, 0xe0, 0xe0, "A"			},
-	{0x12, 0x01, 0xe0, 0xc0, "B"			},
-	{0x12, 0x01, 0xe0, 0xa0, "C"			},
-	{0x12, 0x01, 0xe0, 0x80, "D"			},
-	{0x12, 0x01, 0xe0, 0x60, "E"			},
-	{0x12, 0x01, 0xe0, 0x40, "F"			},
+	{0, 0xfe, 0, 6, "Country Code"},
+	{0x12, 0x01, 0xe0, 0xe0, "A"},
+	{0x12, 0x01, 0xe0, 0xc0, "B"},
+	{0x12, 0x01, 0xe0, 0xa0, "C"},
+	{0x12, 0x01, 0xe0, 0x80, "D"},
+	{0x12, 0x01, 0xe0, 0x60, "E"},
+	{0x12, 0x01, 0xe0, 0x40, "F"},
 
-	{0   , 0xfe, 0   ,    4, "Bios Version"		},
-	{0x13, 0x01, 0x03, 0x00, "Japan A, Newer"	},
-	{0x13, 0x01, 0x03, 0x01, "Japan A, Older"	},
-	{0x13, 0x01, 0x03, 0x02, "USA B, Newer"		},
-	{0x13, 0x01, 0x03, 0x03, "USA B, Older"		},
+	{0, 0xfe, 0, 4, "Bios Version"},
+	{0x13, 0x01, 0x03, 0x00, "Japan A, Newer"},
+	{0x13, 0x01, 0x03, 0x01, "Japan A, Older"},
+	{0x13, 0x01, 0x03, 0x02, "USA B, Newer"},
+	{0x13, 0x01, 0x03, 0x03, "USA B, Older"},
 };
 
 STDDIPINFO(Cocean6b)
 
-static struct BurnDIPInfo ClocknchDIPList[]=
+static struct BurnDIPInfo ClocknchDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "15000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "15000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 
-	{0   , 0xfe, 0   ,    2, "Game Speed"		},
-	{0x12, 0x01, 0x08, 0x08, "Slow"			},
-	{0x12, 0x01, 0x08, 0x00, "Hard"			},
+	{0, 0xfe, 0, 2, "Game Speed"},
+	{0x12, 0x01, 0x08, 0x08, "Slow"},
+	{0x12, 0x01, 0x08, 0x00, "Hard"},
 };
 
-STDDIPINFOEXT(Clocknch,	Decocass,	Clocknch)
+STDDIPINFOEXT(Clocknch, Decocass, Clocknch)
 
-static struct BurnDIPInfo ClocknchjDIPList[]=
+static struct BurnDIPInfo ClocknchjDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "15000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "15000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 };
 
-STDDIPINFOEXT(Clocknchj,	Decocass,	Clocknchj)
+STDDIPINFOEXT(Clocknchj, Decocass, Clocknchj)
 
-static struct BurnDIPInfo CprogolfDIPList[]=
+static struct BurnDIPInfo CprogolfDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "2"			},
-	{0x12, 0x01, 0x01, 0x00, "3"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "2"},
+	{0x12, 0x01, 0x01, 0x00, "3"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x02, "6 Under"		},
-	{0x12, 0x01, 0x06, 0x04, "3 Under"		},
-	{0x12, 0x01, 0x06, 0x06, "1 Under"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x02, "6 Under"},
+	{0x12, 0x01, 0x06, 0x04, "3 Under"},
+	{0x12, 0x01, 0x06, 0x06, "1 Under"},
 
-	{0   , 0xfe, 0   ,    2, "Number of Strokes"	},
-	{0x12, 0x01, 0x08, 0x00, "Par +2"		},
-	{0x12, 0x01, 0x08, 0x08, "Par +3"		},
+	{0, 0xfe, 0, 2, "Number of Strokes"},
+	{0x12, 0x01, 0x08, 0x00, "Par +2"},
+	{0x12, 0x01, 0x08, 0x08, "Par +3"},
 
-	{0   , 0xfe, 0   ,    2, "Stroke Power/Ball Direction"		},
-	{0x12, 0x01, 0x10, 0x10, "Off"			},
-	{0x12, 0x01, 0x10, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Stroke Power/Ball Direction"},
+	{0x12, 0x01, 0x10, 0x10, "Off"},
+	{0x12, 0x01, 0x10, 0x00, "On"},
 };
 
-STDDIPINFOEXT(Cprogolf,	Decocass,	Cprogolf)
+STDDIPINFOEXT(Cprogolf, Decocass, Cprogolf)
 
-static struct BurnDIPInfo CprogolfjDIPList[]=
+static struct BurnDIPInfo CprogolfjDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "2"			},
-	{0x12, 0x01, 0x01, 0x00, "3"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "2"},
+	{0x12, 0x01, 0x01, 0x00, "3"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x02, "6 Under"		},
-	{0x12, 0x01, 0x06, 0x04, "3 Under"		},
-	{0x12, 0x01, 0x06, 0x06, "1 Under"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x02, "6 Under"},
+	{0x12, 0x01, 0x06, 0x04, "3 Under"},
+	{0x12, 0x01, 0x06, 0x06, "1 Under"},
 
-	{0   , 0xfe, 0   ,    2, "Number of Strokes"	},
-	{0x12, 0x01, 0x08, 0x00, "Par +2"		},
-	{0x12, 0x01, 0x08, 0x08, "Par +3"		},
+	{0, 0xfe, 0, 2, "Number of Strokes"},
+	{0x12, 0x01, 0x08, 0x00, "Par +2"},
+	{0x12, 0x01, 0x08, 0x08, "Par +3"},
 
-	{0   , 0xfe, 0   ,    2, "Stroke Power/Ball Direction"		},
-	{0x12, 0x01, 0x10, 0x10, "Off"			},
-	{0x12, 0x01, 0x10, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Stroke Power/Ball Direction"},
+	{0x12, 0x01, 0x10, 0x10, "Off"},
+	{0x12, 0x01, 0x10, 0x00, "On"},
 };
 
-STDDIPINFOEXT(Cprogolfj,	Decocass,	Cprogolfj)
+STDDIPINFOEXT(Cprogolfj, Decocass, Cprogolfj)
 
-static struct BurnDIPInfo CexploreDIPList[]=
+static struct BurnDIPInfo CexploreDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "10000"		},
-	{0x12, 0x01, 0x06, 0x04, "1500000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "10000"},
+	{0x12, 0x01, 0x06, 0x04, "1500000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 
-	{0   , 0xfe, 0   ,    2, "Number of UFOs"	},
-	{0x12, 0x01, 0x10, 0x10, "Few"			},
-	{0x12, 0x01, 0x10, 0x00, "Many"			},
+	{0, 0xfe, 0, 2, "Number of UFOs"},
+	{0x12, 0x01, 0x10, 0x10, "Few"},
+	{0x12, 0x01, 0x10, 0x00, "Many"},
 };
 
-STDDIPINFOEXT(Cexplore,	Decocass,	Cexplore)
+STDDIPINFOEXT(Cexplore, Decocass, Cexplore)
 
-static struct BurnDIPInfo CluckypoDIPList[]=
+static struct BurnDIPInfo CluckypoDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Show Dealer Hand"	},
-	{0x12, 0x01, 0x01, 0x00, "Yes"			},
-	{0x12, 0x01, 0x01, 0x01, "No"			},
+	{0, 0xfe, 0, 2, "Show Dealer Hand"},
+	{0x12, 0x01, 0x01, 0x00, "Yes"},
+	{0x12, 0x01, 0x01, 0x01, "No"},
 };
 
-STDDIPINFOEXT(Cluckypo,	Decocass,	Cluckypo)
+STDDIPINFOEXT(Cluckypo, Decocass, Cluckypo)
 
-static struct BurnDIPInfo Cdiscon1DIPList[]=
+static struct BurnDIPInfo Cdiscon1DIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "10000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "10000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 
-	{0   , 0xfe, 0   ,    2, "Music Weapons"	},
-	{0x12, 0x01, 0x08, 0x00, "2"			},
-	{0x12, 0x01, 0x08, 0x08, "1"			},
+	{0, 0xfe, 0, 2, "Music Weapons"},
+	{0x12, 0x01, 0x08, 0x00, "2"},
+	{0x12, 0x01, 0x08, 0x08, "1"},
 };
 
-STDDIPINFOEXT(Cdiscon1,	Decocass,	Cdiscon1)
+STDDIPINFOEXT(Cdiscon1, Decocass, Cdiscon1)
 
-static struct BurnDIPInfo CsweethtDIPList[]=
+static struct BurnDIPInfo CsweethtDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "10000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "10000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 
-	{0   , 0xfe, 0   ,    2, "Music Weapons"	},
-	{0x12, 0x01, 0x08, 0x00, "8"			},
-	{0x12, 0x01, 0x08, 0x08, "5"			},
+	{0, 0xfe, 0, 2, "Music Weapons"},
+	{0x12, 0x01, 0x08, 0x00, "8"},
+	{0x12, 0x01, 0x08, 0x08, "5"},
 };
 
-STDDIPINFOEXT(Csweetht,	Decocass,	Csweetht)
+STDDIPINFOEXT(Csweetht, Decocass, Csweetht)
 
-static struct BurnDIPInfo CtornadoDIPList[]=
+static struct BurnDIPInfo CtornadoDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "10000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "10000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 
-	{0   , 0xfe, 0   ,    2, "Crash Bombs"		},
-	{0x12, 0x01, 0x08, 0x08, "3"			},
-	{0x12, 0x01, 0x08, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Crash Bombs"},
+	{0x12, 0x01, 0x08, 0x08, "3"},
+	{0x12, 0x01, 0x08, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    2, "Alens' Speed"		},
-	{0x12, 0x01, 0x10, 0x10, "Slow"			},
-	{0x12, 0x01, 0x10, 0x00, "Fast"			},
+	{0, 0xfe, 0, 2, "Alens' Speed"},
+	{0x12, 0x01, 0x10, 0x10, "Slow"},
+	{0x12, 0x01, 0x10, 0x00, "Fast"},
 };
 
-STDDIPINFOEXT(Ctornado,	Decocass,	Ctornado)
+STDDIPINFOEXT(Ctornado, Decocass, Ctornado)
 
-static struct BurnDIPInfo CmissnxDIPList[]=
+static struct BurnDIPInfo CmissnxDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "5000"			},
-	{0x12, 0x01, 0x06, 0x04, "10000"		},
-	{0x12, 0x01, 0x06, 0x02, "15000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "5000"},
+	{0x12, 0x01, 0x06, 0x04, "10000"},
+	{0x12, 0x01, 0x06, 0x02, "15000"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x18, 0x18, "Easy"			},
-	{0x12, 0x01, 0x18, 0x10, "Normal"		},
-	{0x12, 0x01, 0x18, 0x08, "Hard"			},
-	{0x12, 0x01, 0x18, 0x00, "Hardest"		},
+	{0, 0xfe, 0, 4, "Difficulty"},
+	{0x12, 0x01, 0x18, 0x18, "Easy"},
+	{0x12, 0x01, 0x18, 0x10, "Normal"},
+	{0x12, 0x01, 0x18, 0x08, "Hard"},
+	{0x12, 0x01, 0x18, 0x00, "Hardest"},
 };
 
-STDDIPINFOEXT(Cmissnx,	Decocass,	Cmissnx)
+STDDIPINFOEXT(Cmissnx, Decocass, Cmissnx)
 
-static struct BurnDIPInfo CbtimeDIPList[]=
+static struct BurnDIPInfo CbtimeDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x06, "20000"		},
-	{0x12, 0x01, 0x06, 0x04, "30000"		},
-	{0x12, 0x01, 0x06, 0x02, "40000"		},
-	{0x12, 0x01, 0x06, 0x00, "50000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x06, "20000"},
+	{0x12, 0x01, 0x06, 0x04, "30000"},
+	{0x12, 0x01, 0x06, 0x02, "40000"},
+	{0x12, 0x01, 0x06, 0x00, "50000"},
 
-	{0   , 0xfe, 0   ,    2, "Enemies"		},
-	{0x12, 0x01, 0x08, 0x08, "4"			},
-	{0x12, 0x01, 0x08, 0x00, "6"			},
+	{0, 0xfe, 0, 2, "Enemies"},
+	{0x12, 0x01, 0x08, 0x08, "4"},
+	{0x12, 0x01, 0x08, 0x00, "6"},
 
-	{0   , 0xfe, 0   ,    2, "End of Level Pepper"	},
-	{0x12, 0x01, 0x10, 0x10, "No"			},
-	{0x12, 0x01, 0x10, 0x00, "Yes"			},
+	{0, 0xfe, 0, 2, "End of Level Pepper"},
+	{0x12, 0x01, 0x10, 0x10, "No"},
+	{0x12, 0x01, 0x10, 0x00, "Yes"},
 };
 
-STDDIPINFOEXT(Cbtime,	Decocass,	Cbtime)
+STDDIPINFOEXT(Cbtime, Decocass, Cbtime)
 
-static struct BurnDIPInfo ChamburgerDIPList[]=
+static struct BurnDIPInfo ChamburgerDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x06, "20000"		},
-	{0x12, 0x01, 0x06, 0x04, "30000"		},
-	{0x12, 0x01, 0x06, 0x02, "40000"		},
-	{0x12, 0x01, 0x06, 0x00, "50000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x06, "20000"},
+	{0x12, 0x01, 0x06, 0x04, "30000"},
+	{0x12, 0x01, 0x06, 0x02, "40000"},
+	{0x12, 0x01, 0x06, 0x00, "50000"},
 
-	{0   , 0xfe, 0   ,    2, "Enemies"		},
-	{0x12, 0x01, 0x08, 0x08, "4"			},
-	{0x12, 0x01, 0x08, 0x00, "6"			},
+	{0, 0xfe, 0, 2, "Enemies"},
+	{0x12, 0x01, 0x08, 0x08, "4"},
+	{0x12, 0x01, 0x08, 0x00, "6"},
 
-	{0   , 0xfe, 0   ,    2, "End of Level Pepper"	},
-	{0x12, 0x01, 0x10, 0x10, "No"			},
-	{0x12, 0x01, 0x10, 0x00, "Yes"			},
+	{0, 0xfe, 0, 2, "End of Level Pepper"},
+	{0x12, 0x01, 0x10, 0x10, "No"},
+	{0x12, 0x01, 0x10, 0x00, "Yes"},
 };
 
-STDDIPINFOEXT(Chamburger,	Decocass,	Chamburger)
+STDDIPINFOEXT(Chamburger, Decocass, Chamburger)
 
-static struct BurnDIPInfo CburnrubDIPList[]=
+static struct BurnDIPInfo CburnrubDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x02, "20000"		},
-	{0x12, 0x01, 0x06, 0x00, "30000"		},
-	{0x12, 0x01, 0x06, 0x06, "Every 30000"		},
-	{0x12, 0x01, 0x06, 0x04, "Every 70000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x02, "20000"},
+	{0x12, 0x01, 0x06, 0x00, "30000"},
+	{0x12, 0x01, 0x06, 0x06, "Every 30000"},
+	{0x12, 0x01, 0x06, 0x04, "Every 70000"},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x12, 0x01, 0x08, 0x08, "Off"			},
-	{0x12, 0x01, 0x08, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Allow Continue"},
+	{0x12, 0x01, 0x08, 0x08, "Off"},
+	{0x12, 0x01, 0x08, 0x00, "On"},
 };
 
-STDDIPINFOEXT(Cburnrub,	Decocass,	Cburnrub)
+STDDIPINFOEXT(Cburnrub, Decocass, Cburnrub)
 
-static struct BurnDIPInfo CgraplopDIPList[]=
+static struct BurnDIPInfo CgraplopDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "20000"		},
-	{0x12, 0x01, 0x06, 0x04, "50000"		},
-	{0x12, 0x01, 0x06, 0x02, "70000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "20000"},
+	{0x12, 0x01, 0x06, 0x04, "50000"},
+	{0x12, 0x01, 0x06, 0x02, "70000"},
 
-	{0   , 0xfe, 0   ,    2, "Number of Up Sign"	},
-	{0x12, 0x01, 0x08, 0x08, "Few"			},
-	{0x12, 0x01, 0x08, 0x00, "Many"			},
+	{0, 0xfe, 0, 2, "Number of Up Sign"},
+	{0x12, 0x01, 0x08, 0x08, "Few"},
+	{0x12, 0x01, 0x08, 0x00, "Many"},
 
-	{0   , 0xfe, 0   ,    2, "Falling Speed"	},
-	{0x12, 0x01, 0x10, 0x10, "Easy"			},
-	{0x12, 0x01, 0x10, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Falling Speed"},
+	{0x12, 0x01, 0x10, 0x10, "Easy"},
+	{0x12, 0x01, 0x10, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Cgraplop,	Decocass,	Cgraplop)
+STDDIPINFOEXT(Cgraplop, Decocass, Cgraplop)
 
-static struct BurnDIPInfo ClapapaDIPList[]=
+static struct BurnDIPInfo ClapapaDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 };
 
-STDDIPINFOEXT(Clapapa,	Decocass,	Clapapa)
+STDDIPINFOEXT(Clapapa, Decocass, Clapapa)
 
-static struct BurnDIPInfo CnightstDIPList[]=
+static struct BurnDIPInfo CnightstDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x06, "When Night Star Completed (First 2 Times)"		},
-	{0x12, 0x01, 0x06, 0x04, "When Night Star Completed (First Time Only)"		},
-	{0x12, 0x01, 0x06, 0x02, "Every 70000"		},
-	{0x12, 0x01, 0x06, 0x00, "30000 Only"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x06, "When Night Star Completed (First 2 Times)"},
+	{0x12, 0x01, 0x06, 0x04, "When Night Star Completed (First Time Only)"},
+	{0x12, 0x01, 0x06, 0x02, "Every 70000"},
+	{0x12, 0x01, 0x06, 0x00, "30000 Only"},
 
-	{0   , 0xfe, 0   ,    2, "Number of Missles"	},
-	{0x12, 0x01, 0x08, 0x08, "Few"			},
-	{0x12, 0x01, 0x08, 0x00, "Many"			},
+	{0, 0xfe, 0, 2, "Number of Missles"},
+	{0x12, 0x01, 0x08, 0x08, "Few"},
+	{0x12, 0x01, 0x08, 0x00, "Many"},
 
-	{0   , 0xfe, 0   ,    2, "Enemy's Speed"	},
-	{0x12, 0x01, 0x10, 0x10, "Slow"			},
-	{0x12, 0x01, 0x10, 0x00, "Fast"			},
+	{0, 0xfe, 0, 2, "Enemy's Speed"},
+	{0x12, 0x01, 0x10, 0x10, "Slow"},
+	{0x12, 0x01, 0x10, 0x00, "Fast"},
 };
 
-STDDIPINFOEXT(Cnightst,	Decocass,	Cnightst)
+STDDIPINFOEXT(Cnightst, Decocass, Cnightst)
 
-static struct BurnDIPInfo CprobowlDIPList[]=
+static struct BurnDIPInfo CprobowlDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Show Bonus Instructions"	},
-	{0x12, 0x01, 0x01, 0x00, "Off"			},
-	{0x12, 0x01, 0x01, 0x01, "On"			},
+	{0, 0xfe, 0, 2, "Show Bonus Instructions"},
+	{0x12, 0x01, 0x01, 0x00, "Off"},
+	{0x12, 0x01, 0x01, 0x01, "On"},
 };
 
-STDDIPINFOEXT(Cprobowl,	Decocass,	Cprobowl)
+STDDIPINFOEXT(Cprobowl, Decocass, Cprobowl)
 
-static struct BurnDIPInfo CskaterDIPList[]=
+static struct BurnDIPInfo CskaterDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "60000"		},
-	{0x12, 0x01, 0x06, 0x06, "20000"		},
-	{0x12, 0x01, 0x06, 0x04, "30000"		},
-	{0x12, 0x01, 0x06, 0x02, "40000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "60000"},
+	{0x12, 0x01, 0x06, 0x06, "20000"},
+	{0x12, 0x01, 0x06, 0x04, "30000"},
+	{0x12, 0x01, 0x06, 0x02, "40000"},
 
-	{0   , 0xfe, 0   ,    2, "Enemy's Speed"	},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Enemy's Speed"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 
-	{0   , 0xfe, 0   ,    2, "Number of Skates"	},
-	{0x12, 0x01, 0x10, 0x10, "Small"		},
-	{0x12, 0x01, 0x10, 0x00, "Large"		},
+	{0, 0xfe, 0, 2, "Number of Skates"},
+	{0x12, 0x01, 0x10, 0x10, "Small"},
+	{0x12, 0x01, 0x10, 0x00, "Large"},
 };
 
-STDDIPINFOEXT(Cskater,	Decocass,	Cskater)
+STDDIPINFOEXT(Cskater, Decocass, Cskater)
 
-static struct BurnDIPInfo CpsoccerDIPList[]=
+static struct BurnDIPInfo CpsoccerDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Number of Nice Goal"	},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "5"			},
-	{0x12, 0x01, 0x06, 0x04, "10"			},
-	{0x12, 0x01, 0x06, 0x02, "20"			},
+	{0, 0xfe, 0, 4, "Number of Nice Goal"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "5"},
+	{0x12, 0x01, 0x06, 0x04, "10"},
+	{0x12, 0x01, 0x06, 0x02, "20"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x12, 0x01, 0x08, 0x00, "Off"			},
-	{0x12, 0x01, 0x08, 0x08, "On"			},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x12, 0x01, 0x08, 0x00, "Off"},
+	{0x12, 0x01, 0x08, 0x08, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x10, 0x10, "Easy"			},
-	{0x12, 0x01, 0x10, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x12, 0x01, 0x10, 0x10, "Easy"},
+	{0x12, 0x01, 0x10, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Cpsoccer,	Decocass,	Cpsoccer)
+STDDIPINFOEXT(Cpsoccer, Decocass, Cpsoccer)
 
-static struct BurnDIPInfo CpsoccerjDIPList[]=
+static struct BurnDIPInfo CpsoccerjDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Number of Nice Goal"	},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "5"			},
-	{0x12, 0x01, 0x06, 0x04, "10"			},
-	{0x12, 0x01, 0x06, 0x02, "20"			},
+	{0, 0xfe, 0, 4, "Number of Nice Goal"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "5"},
+	{0x12, 0x01, 0x06, 0x04, "10"},
+	{0x12, 0x01, 0x06, 0x02, "20"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x12, 0x01, 0x08, 0x00, "Off"			},
-	{0x12, 0x01, 0x08, 0x08, "On"			},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x12, 0x01, 0x08, 0x00, "Off"},
+	{0x12, 0x01, 0x08, 0x08, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x10, 0x10, "Easy"			},
-	{0x12, 0x01, 0x10, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x12, 0x01, 0x10, 0x10, "Easy"},
+	{0x12, 0x01, 0x10, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Cpsoccerj,	Decocass,	Cpsoccerj)
+STDDIPINFOEXT(Cpsoccerj, Decocass, Cpsoccerj)
 
-static struct BurnDIPInfo CsdtenisDIPList[]=
+static struct BurnDIPInfo CsdtenisDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "2"			},
-	{0x12, 0x01, 0x01, 0x00, "1"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "2"},
+	{0x12, 0x01, 0x01, 0x00, "1"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "Every 1set"		},
-	{0x12, 0x01, 0x06, 0x04, "Every 2set"		},
-	{0x12, 0x01, 0x06, 0x02, "Every 3set"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "Every 1set"},
+	{0x12, 0x01, 0x06, 0x04, "Every 2set"},
+	{0x12, 0x01, 0x06, 0x02, "Every 3set"},
 
-	{0   , 0xfe, 0   ,    2, "Speed Level"		},
-	{0x12, 0x01, 0x08, 0x08, "Low Speed"		},
-	{0x12, 0x01, 0x08, 0x00, "High Speed"		},
+	{0, 0xfe, 0, 2, "Speed Level"},
+	{0x12, 0x01, 0x08, 0x08, "Low Speed"},
+	{0x12, 0x01, 0x08, 0x00, "High Speed"},
 
-	{0   , 0xfe, 0   ,    2, "Attack Level"		},
-	{0x12, 0x01, 0x10, 0x10, "Easy"			},
-	{0x12, 0x01, 0x10, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Attack Level"},
+	{0x12, 0x01, 0x10, 0x10, "Easy"},
+	{0x12, 0x01, 0x10, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Csdtenis,	Decocass, Csdtenis)
+STDDIPINFOEXT(Csdtenis, Decocass, Csdtenis)
 
-static struct BurnDIPInfo CzeroizeDIPList[]=
+static struct BurnDIPInfo CzeroizeDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x06, "None"			},
-	{0x12, 0x01, 0x06, 0x04, "50000"		},
-	{0x12, 0x01, 0x06, 0x02, "70000"		},
-	{0x12, 0x01, 0x06, 0x00, "90000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x06, "None"},
+	{0x12, 0x01, 0x06, 0x04, "50000"},
+	{0x12, 0x01, 0x06, 0x02, "70000"},
+	{0x12, 0x01, 0x06, 0x00, "90000"},
 };
 
-STDDIPINFOEXT(Czeroize,	Decocass,	Czeroize)
+STDDIPINFOEXT(Czeroize, Decocass, Czeroize)
 
-static struct BurnDIPInfo CppicfDIPList[]=
+static struct BurnDIPInfo CppicfDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "30000"		},
-	{0x12, 0x01, 0x06, 0x04, "50000"		},
-	{0x12, 0x01, 0x06, 0x02, "70000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "30000"},
+	{0x12, 0x01, 0x06, 0x04, "50000"},
+	{0x12, 0x01, 0x06, 0x02, "70000"},
 
-	{0   , 0xfe, 0   ,    2, "Infinite Lives"	},
-	{0x12, 0x01, 0x10, 0x10, "Off"			},
-	{0x12, 0x01, 0x10, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Infinite Lives"},
+	{0x12, 0x01, 0x10, 0x10, "Off"},
+	{0x12, 0x01, 0x10, 0x00, "On"},
 };
 
-STDDIPINFOEXT(Cppicf,	Decocass,	Cppicf)
+STDDIPINFOEXT(Cppicf, Decocass, Cppicf)
 
-static struct BurnDIPInfo CscrtryDIPList[]=
+static struct BurnDIPInfo CscrtryDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "2"			},
-	{0x12, 0x01, 0x01, 0x00, "4"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "2"},
+	{0x12, 0x01, 0x01, 0x00, "4"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "30000"		},
-	{0x12, 0x01, 0x06, 0x04, "50000"		},
-	{0x12, 0x01, 0x06, 0x02, "70000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "30000"},
+	{0x12, 0x01, 0x06, 0x04, "50000"},
+	{0x12, 0x01, 0x06, 0x02, "70000"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 
-	{0   , 0xfe, 0   ,    2, "Timer(Don't Change)"	},
-	{0x12, 0x01, 0x10, 0x10, "Timer decrease"	},
-	{0x12, 0x01, 0x10, 0x00, "Timer infinity"	},
+	{0, 0xfe, 0, 2, "Timer(Don't Change)"},
+	{0x12, 0x01, 0x10, 0x10, "Timer decrease"},
+	{0x12, 0x01, 0x10, 0x00, "Timer infinity"},
 };
 
-STDDIPINFOEXT(Cscrtry,	Decocass,	Cscrtry)
+STDDIPINFOEXT(Cscrtry, Decocass, Cscrtry)
 
-static struct BurnDIPInfo CoozumouDIPList[]=
+static struct BurnDIPInfo CoozumouDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "2"			},
-	{0x12, 0x01, 0x01, 0x00, "4"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "2"},
+	{0x12, 0x01, 0x01, 0x00, "4"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "30000"		},
-	{0x12, 0x01, 0x06, 0x04, "50000"		},
-	{0x12, 0x01, 0x06, 0x02, "70000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "30000"},
+	{0x12, 0x01, 0x06, 0x04, "50000"},
+	{0x12, 0x01, 0x06, 0x02, "70000"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 
-	{0   , 0xfe, 0   ,    2, "Timer(Don't Change)"	},
-	{0x12, 0x01, 0x10, 0x10, "Timer decrease"	},
-	{0x12, 0x01, 0x10, 0x00, "Timer infinity"	},
+	{0, 0xfe, 0, 2, "Timer(Don't Change)"},
+	{0x12, 0x01, 0x10, 0x10, "Timer decrease"},
+	{0x12, 0x01, 0x10, 0x00, "Timer infinity"},
 };
 
-STDDIPINFOEXT(Coozumou,	Decocass,	Coozumou)
+STDDIPINFOEXT(Coozumou, Decocass, Coozumou)
 
-static struct BurnDIPInfo CfghticeDIPList[]=
+static struct BurnDIPInfo CfghticeDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x03, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x03, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Very Difficult"	},
-	{0x12, 0x01, 0x06, 0x04, "Very Easy"		},
-	{0x12, 0x01, 0x06, 0x06, "Easy"			},
-	{0x12, 0x01, 0x06, 0x00, "Difficult"		},
-	{0x12, 0x01, 0x06, 0x02, "Very Difficult"	},
+	{0, 0xfe, 0, 4, "Very Difficult"},
+	{0x12, 0x01, 0x06, 0x04, "Very Easy"},
+	{0x12, 0x01, 0x06, 0x06, "Easy"},
+	{0x12, 0x01, 0x06, 0x00, "Difficult"},
+	{0x12, 0x01, 0x06, 0x02, "Very Difficult"},
 
-	{0   , 0xfe, 0   ,    2, "Enemy's Speed"	},
-	{0x12, 0x01, 0x08, 0x08, "Normal"		},
-	{0x12, 0x01, 0x08, 0x00, "Fast"			},
+	{0, 0xfe, 0, 2, "Enemy's Speed"},
+	{0x12, 0x01, 0x08, 0x08, "Normal"},
+	{0x12, 0x01, 0x08, 0x00, "Fast"},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x12, 0x01, 0x10, 0x10, "Off"			},
-	{0x12, 0x01, 0x10, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Service Mode"},
+	{0x12, 0x01, 0x10, 0x10, "Off"},
+	{0x12, 0x01, 0x10, 0x00, "On"},
 };
 
-STDDIPINFOEXT(Cfghtice,	Decocass,	Cfghtice)
+STDDIPINFOEXT(Cfghtice, Decocass, Cfghtice)
 
-static struct BurnDIPInfo CbdashDIPList[]=
+static struct BurnDIPInfo CbdashDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x03, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x03, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "20000"		},
-	{0x12, 0x01, 0x06, 0x04, "30000"		},
-	{0x12, 0x01, 0x06, 0x02, "40000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "20000"},
+	{0x12, 0x01, 0x06, 0x04, "30000"},
+	{0x12, 0x01, 0x06, 0x02, "40000"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x12, 0x01, 0x18, 0x18, "Normal"		},
-	{0x12, 0x01, 0x18, 0x10, "Hard"			},
-	{0x12, 0x01, 0x18, 0x08, "Harder"		},
-	{0x12, 0x01, 0x18, 0x00, "Hardest"		},
+	{0, 0xfe, 0, 4, "Difficulty"},
+	{0x12, 0x01, 0x18, 0x18, "Normal"},
+	{0x12, 0x01, 0x18, 0x10, "Hard"},
+	{0x12, 0x01, 0x18, 0x08, "Harder"},
+	{0x12, 0x01, 0x18, 0x00, "Hardest"},
 };
 
-STDDIPINFOEXT(Cbdash,	Decocass,	Cbdash)
+STDDIPINFOEXT(Cbdash, Decocass, Cbdash)
 
-static struct BurnDIPInfo CfishingDIPList[]=
+static struct BurnDIPInfo CfishingDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x03, NULL			},
+	{0x12, 0xff, 0xff, 0xef, nullptr},
+	{0x13, 0xff, 0xff, 0x03, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "10000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "10000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Cfishing,	Decocass,	Cfishing)
+STDDIPINFOEXT(Cfishing, Decocass, Cfishing)
 
-static struct BurnDIPInfo CfishingjDIPList[]=
+static struct BurnDIPInfo CfishingjDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xef, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xef, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "10000"		},
-	{0x12, 0x01, 0x06, 0x04, "20000"		},
-	{0x12, 0x01, 0x06, 0x02, "30000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "10000"},
+	{0x12, 0x01, 0x06, 0x04, "20000"},
+	{0x12, 0x01, 0x06, 0x02, "30000"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Cfishingj,	Decocass,	Cfishingj)
+STDDIPINFOEXT(Cfishingj, Decocass, Cfishingj)
 
-static struct BurnDIPInfo Cfboy0a1DIPList[]=
+static struct BurnDIPInfo Cfboy0a1DIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Number of The Deco Kids"	},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Number of The Deco Kids"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Points"		},
-	{0x12, 0x01, 0x06, 0x06, "5000"			},
-	{0x12, 0x01, 0x06, 0x04, "10000"		},
-	{0x12, 0x01, 0x06, 0x02, "15000"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
+	{0, 0xfe, 0, 4, "Bonus Points"},
+	{0x12, 0x01, 0x06, 0x06, "5000"},
+	{0x12, 0x01, 0x06, 0x04, "10000"},
+	{0x12, 0x01, 0x06, 0x02, "15000"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
 
-	{0   , 0xfe, 0   ,    2, "Number of Alien Missiles"	},
-	{0x12, 0x01, 0x08, 0x08, "Easy"			},
-	{0x12, 0x01, 0x08, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Number of Alien Missiles"},
+	{0x12, 0x01, 0x08, 0x08, "Easy"},
+	{0x12, 0x01, 0x08, 0x00, "Difficult"},
 
-	{0   , 0xfe, 0   ,    2, "Alien Craft Movement"	},
-	{0x12, 0x01, 0x10, 0x10, "Easy"			},
-	{0x12, 0x01, 0x10, 0x00, "Difficult"		},
+	{0, 0xfe, 0, 2, "Alien Craft Movement"},
+	{0x12, 0x01, 0x10, 0x10, "Easy"},
+	{0x12, 0x01, 0x10, 0x00, "Difficult"},
 };
 
-STDDIPINFOEXT(Cfboy0a1,	Decocass,	Cfboy0a1)
+STDDIPINFOEXT(Cfboy0a1, Decocass, Cfboy0a1)
 
-static struct BurnDIPInfo CflyballDIPList[]=
+static struct BurnDIPInfo CflyballDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x02, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Lives"		},
-	{0x12, 0x01, 0x01, 0x01, "3"			},
-	{0x12, 0x01, 0x01, 0x00, "5"			},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x12, 0x01, 0x01, 0x01, "3"},
+	{0x12, 0x01, 0x01, 0x00, "5"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x12, 0x01, 0x06, 0x00, "None"			},
-	{0x12, 0x01, 0x06, 0x06, "20000"			},
-	{0x12, 0x01, 0x06, 0x04, "50000"		},
-	{0x12, 0x01, 0x06, 0x02, "70000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0x06, 0x00, "None"},
+	{0x12, 0x01, 0x06, 0x06, "20000"},
+	{0x12, 0x01, 0x06, 0x04, "50000"},
+	{0x12, 0x01, 0x06, 0x02, "70000"},
 
-	{0   , 0xfe, 0   ,    2, "Push Backs"		},
-	{0x12, 0x01, 0x08, 0x08, "2"			},
-	{0x12, 0x01, 0x08, 0x00, "3"			},
+	{0, 0xfe, 0, 2, "Push Backs"},
+	{0x12, 0x01, 0x08, 0x08, "2"},
+	{0x12, 0x01, 0x08, 0x00, "3"},
 };
 
-STDDIPINFOEXT(Cflyball,	Decocass,	Cflyball)
+STDDIPINFOEXT(Cflyball, Decocass, Cflyball)
 
-static struct BurnDIPInfo CnebulaDIPList[]=
+static struct BurnDIPInfo CnebulaDIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x04, NULL			},
+	{0x12, 0xff, 0xff, 0xff, nullptr},
+	{0x13, 0xff, 0xff, 0x04, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x03, 0x03, "3"			},
-	{0x12, 0x01, 0x03, 0x02, "4"			},
-	{0x12, 0x01, 0x03, 0x01, "5"			},
-	{0x12, 0x01, 0x03, 0x00, "6"			},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x12, 0x01, 0x03, 0x03, "3"},
+	{0x12, 0x01, 0x03, 0x02, "4"},
+	{0x12, 0x01, 0x03, 0x01, "5"},
+	{0x12, 0x01, 0x03, 0x00, "6"},
 };
 
-STDDIPINFOEXT(Cnebula,	Decocass,	Cnebula)
+STDDIPINFOEXT(Cnebula, Decocass, Cnebula)
 
 static struct BurnInputInfo CdsteljnInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-	{"P1 A",		BIT_DIGITAL,	DrvJoy5 + 0,	"mah a"		},
-	{"P1 B",		BIT_DIGITAL,	DrvJoy5 + 1,	"mah b"		},
-	{"P1 C",		BIT_DIGITAL,	DrvJoy5 + 2,	"mah c"		},
-	{"P1 D",		BIT_DIGITAL,	DrvJoy5 + 3,	"mah d"		},
-	{"P1 E",		BIT_DIGITAL,	DrvJoy5 + 4,	"mah e"		},
-	{"P1 F",		BIT_DIGITAL,	DrvJoy5 + 5,	"mah f"		},
-	{"P1 G",		BIT_DIGITAL,	DrvJoy5 + 6,	"mah g"		},
-	{"P1 H",		BIT_DIGITAL,	DrvJoy6 + 0,	"mah h"		},
-	{"P1 I",		BIT_DIGITAL,	DrvJoy6 + 1,	"mah i"		},
-	{"P1 J",		BIT_DIGITAL,	DrvJoy6 + 2,	"mah j"		},
-	{"P1 K",		BIT_DIGITAL,	DrvJoy6 + 3,	"mah k"		},
-	{"P1 L",		BIT_DIGITAL,	DrvJoy6 + 4,	"mah l"		},
-	{"P1 M",		BIT_DIGITAL,	DrvJoy6 + 5,	"mah m"		},
-	{"P1 N",		BIT_DIGITAL,	DrvJoy6 + 6,	"mah n"		},
-	{"P1 Pon",		BIT_DIGITAL,	DrvJoy7 + 1,	"mah pon"	},
-	{"P1 Chi",		BIT_DIGITAL,	DrvJoy7 + 0,	"mah chi"	},
-	{"P1 Kan",		BIT_DIGITAL,	DrvJoy7 + 2,	"mah kan"	},
-	{"P1 Ron",		BIT_DIGITAL,	DrvJoy7 + 4,	"mah ron"	},
-	{"P1 Reach",	BIT_DIGITAL,	DrvJoy7 + 3,	"mah reach"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy3 + 7, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy3 + 3, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy1 + 2, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy1 + 3, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1 + 1, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1 + 0, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 4, "p1 fire 1"},
+	{"P1 Button 2", BIT_DIGITAL, DrvJoy1 + 5, "p1 fire 2"},
+	{"P1 A", BIT_DIGITAL, DrvJoy5 + 0, "mah a"},
+	{"P1 B", BIT_DIGITAL, DrvJoy5 + 1, "mah b"},
+	{"P1 C", BIT_DIGITAL, DrvJoy5 + 2, "mah c"},
+	{"P1 D", BIT_DIGITAL, DrvJoy5 + 3, "mah d"},
+	{"P1 E", BIT_DIGITAL, DrvJoy5 + 4, "mah e"},
+	{"P1 F", BIT_DIGITAL, DrvJoy5 + 5, "mah f"},
+	{"P1 G", BIT_DIGITAL, DrvJoy5 + 6, "mah g"},
+	{"P1 H", BIT_DIGITAL, DrvJoy6 + 0, "mah h"},
+	{"P1 I", BIT_DIGITAL, DrvJoy6 + 1, "mah i"},
+	{"P1 J", BIT_DIGITAL, DrvJoy6 + 2, "mah j"},
+	{"P1 K", BIT_DIGITAL, DrvJoy6 + 3, "mah k"},
+	{"P1 L", BIT_DIGITAL, DrvJoy6 + 4, "mah l"},
+	{"P1 M", BIT_DIGITAL, DrvJoy6 + 5, "mah m"},
+	{"P1 N", BIT_DIGITAL, DrvJoy6 + 6, "mah n"},
+	{"P1 Pon", BIT_DIGITAL, DrvJoy7 + 1, "mah pon"},
+	{"P1 Chi", BIT_DIGITAL, DrvJoy7 + 0, "mah chi"},
+	{"P1 Kan", BIT_DIGITAL, DrvJoy7 + 2, "mah kan"},
+	{"P1 Ron", BIT_DIGITAL, DrvJoy7 + 4, "mah ron"},
+	{"P1 Reach", BIT_DIGITAL, DrvJoy7 + 3, "mah reach"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-	{"P2 A",		BIT_DIGITAL,	DrvJoy9 + 0,	"mah a"		},
-	{"P2 B",		BIT_DIGITAL,	DrvJoy9 + 1,	"mah b"		},
-	{"P2 C",		BIT_DIGITAL,	DrvJoy9 + 2,	"mah c"		},
-	{"P2 D",		BIT_DIGITAL,	DrvJoy9 + 3,	"mah d"		},
-	{"P2 E",		BIT_DIGITAL,	DrvJoy9 + 4,	"mah e"		},
-	{"P2 F",		BIT_DIGITAL,	DrvJoy9 + 5,	"mah f"		},
-	{"P2 G",		BIT_DIGITAL,	DrvJoy9 + 6,	"mah g"		},
-	{"P2 H",		BIT_DIGITAL,	DrvJoy10 + 0,	"mah h"		},
-	{"P2 I",		BIT_DIGITAL,	DrvJoy10 + 1,	"mah i"		},
-	{"P2 J",		BIT_DIGITAL,	DrvJoy10 + 2,	"mah j"		},
-	{"P2 K",		BIT_DIGITAL,	DrvJoy10 + 3,	"mah k"		},
-	{"P2 L",		BIT_DIGITAL,	DrvJoy10 + 4,	"mah l"		},
-	{"P2 M",		BIT_DIGITAL,	DrvJoy10 + 5,	"mah m"		},
-	{"P2 N",		BIT_DIGITAL,	DrvJoy10 + 6,	"mah n"		},
-	{"P2 Pon",		BIT_DIGITAL,	DrvJoy11 + 1,	"mah pon"	},
-	{"P2 Chi",		BIT_DIGITAL,	DrvJoy11 + 0,	"mah chi"	},
-	{"P2 Kan",		BIT_DIGITAL,	DrvJoy11 + 2,	"mah kan"	},
-	{"P2 Ron",		BIT_DIGITAL,	DrvJoy11 + 4,	"mah ron"	},
-	{"P2 Reach",	BIT_DIGITAL,	DrvJoy11 + 3,	"mah reach"	},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy3 + 6, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy3 + 4, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 2, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 3, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 1, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 0, "p2 right"},
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 4, "p2 fire 1"},
+	{"P2 Button 2", BIT_DIGITAL, DrvJoy2 + 5, "p2 fire 2"},
+	{"P2 A", BIT_DIGITAL, DrvJoy9 + 0, "mah a"},
+	{"P2 B", BIT_DIGITAL, DrvJoy9 + 1, "mah b"},
+	{"P2 C", BIT_DIGITAL, DrvJoy9 + 2, "mah c"},
+	{"P2 D", BIT_DIGITAL, DrvJoy9 + 3, "mah d"},
+	{"P2 E", BIT_DIGITAL, DrvJoy9 + 4, "mah e"},
+	{"P2 F", BIT_DIGITAL, DrvJoy9 + 5, "mah f"},
+	{"P2 G", BIT_DIGITAL, DrvJoy9 + 6, "mah g"},
+	{"P2 H", BIT_DIGITAL, DrvJoy10 + 0, "mah h"},
+	{"P2 I", BIT_DIGITAL, DrvJoy10 + 1, "mah i"},
+	{"P2 J", BIT_DIGITAL, DrvJoy10 + 2, "mah j"},
+	{"P2 K", BIT_DIGITAL, DrvJoy10 + 3, "mah k"},
+	{"P2 L", BIT_DIGITAL, DrvJoy10 + 4, "mah l"},
+	{"P2 M", BIT_DIGITAL, DrvJoy10 + 5, "mah m"},
+	{"P2 N", BIT_DIGITAL, DrvJoy10 + 6, "mah n"},
+	{"P2 Pon", BIT_DIGITAL, DrvJoy11 + 1, "mah pon"},
+	{"P2 Chi", BIT_DIGITAL, DrvJoy11 + 0, "mah chi"},
+	{"P2 Kan", BIT_DIGITAL, DrvJoy11 + 2, "mah kan"},
+	{"P2 Ron", BIT_DIGITAL, DrvJoy11 + 4, "mah ron"},
+	{"P2 Reach", BIT_DIGITAL, DrvJoy11 + 3, "mah reach"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Cdsteljn)
 
-static struct BurnDIPInfo CdsteljnDIPList[]=
+static struct BurnDIPInfo CdsteljnDIPList[] =
 {
-	{0x37, 0xff, 0xff, 0xff, NULL			},
-	{0x38, 0xff, 0xff, 0xff, NULL			},
-	{0x39, 0xff, 0xff, 0x00, NULL			},
+	{0x37, 0xff, 0xff, 0xff, nullptr},
+	{0x38, 0xff, 0xff, 0xff, nullptr},
+	{0x39, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x37, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x37, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x37, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x37, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x37, 0x01, 0x03, 0x00, "2 Coins 1 Credits"},
+	{0x37, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
+	{0x37, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
+	{0x37, 0x01, 0x03, 0x01, "1 Coin  3 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x37, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x37, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x37, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x37, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x37, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"},
+	{0x37, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"},
+	{0x37, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"},
+	{0x37, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Type of Tape"		},
-	{0x37, 0x01, 0x30, 0x00, "MT (Big)"		},
-	{0x37, 0x01, 0x30, 0x10, "invalid?"		},
-	{0x37, 0x01, 0x30, 0x20, "invalid?"		},
-	{0x37, 0x01, 0x30, 0x30, "MD (Small)"		},
+	{0, 0xfe, 0, 4, "Type of Tape"},
+	{0x37, 0x01, 0x30, 0x00, "MT (Big)"},
+	{0x37, 0x01, 0x30, 0x10, "invalid?"},
+	{0x37, 0x01, 0x30, 0x20, "invalid?"},
+	{0x37, 0x01, 0x30, 0x30, "MD (Small)"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x37, 0x01, 0x40, 0x00, "Upright"		},
-	{0x37, 0x01, 0x40, 0x40, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x37, 0x01, 0x40, 0x00, "Upright"},
+	{0x37, 0x01, 0x40, 0x40, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    6, "Country Code"		},
-	{0x38, 0x01, 0xe0, 0xe0, "A"			},
-	{0x38, 0x01, 0xe0, 0xc0, "B"			},
-	{0x38, 0x01, 0xe0, 0xa0, "C"			},
-	{0x38, 0x01, 0xe0, 0x80, "D"			},
-	{0x38, 0x01, 0xe0, 0x60, "E"			},
-	{0x38, 0x01, 0xe0, 0x40, "F"			},
+	{0, 0xfe, 0, 6, "Country Code"},
+	{0x38, 0x01, 0xe0, 0xe0, "A"},
+	{0x38, 0x01, 0xe0, 0xc0, "B"},
+	{0x38, 0x01, 0xe0, 0xa0, "C"},
+	{0x38, 0x01, 0xe0, 0x80, "D"},
+	{0x38, 0x01, 0xe0, 0x60, "E"},
+	{0x38, 0x01, 0xe0, 0x40, "F"},
 
-	{0   , 0xfe, 0   ,    4, "Bios Version"		},
-	{0x39, 0x01, 0x03, 0x00, "Japan A, Newer"	},
-	{0x39, 0x01, 0x03, 0x01, "Japan A, Older"	},
-	{0x39, 0x01, 0x03, 0x02, "USA B, Newer"		},
-	{0x39, 0x01, 0x03, 0x03, "USA B, Older"		},
+	{0, 0xfe, 0, 4, "Bios Version"},
+	{0x39, 0x01, 0x03, 0x00, "Japan A, Newer"},
+	{0x39, 0x01, 0x03, 0x01, "Japan A, Older"},
+	{0x39, 0x01, 0x03, 0x02, "USA B, Newer"},
+	{0x39, 0x01, 0x03, 0x03, "USA B, Older"},
 };
 
 STDDIPINFO(Cdsteljn)
@@ -1516,12 +1517,12 @@ static void tape_update(void)
 	if (tape_time < 0.0) tape_time = 0.0;
 	else if (tape_time > 999.9) tape_time = 999.9;
 
-	offset = (int)(tape_time * TAPE_CLOCKRATE + 0.499995);
+	offset = static_cast<int>(tape_time * TAPE_CLOCKRATE + 0.499995);
 
 	rclk = 0;
 	rdata = 0;
 
-	if (offset < TAPE_LEADER)	// LEADER area
+	if (offset < TAPE_LEADER) // LEADER area
 	{
 		if (offset < 0) offset = 0;
 
@@ -1530,28 +1531,25 @@ static void tape_update(void)
 			tape_bot_eot = 1;
 		}
 	}
-	else
-	if (offset < TAPE_LEADER + TAPE_GAP)	// GAP between LEADER and BOT hole 
+	else if (offset < TAPE_LEADER + TAPE_GAP) // GAP between LEADER and BOT hole 
 	{
 		if (tape_bot_eot == 1)
 		{
 			tape_bot_eot = 0;
 		}
 	}
-	else
-	if (offset < TAPE_LEADER + TAPE_GAP + TAPE_HOLE)	// during BOT hole
+	else if (offset < TAPE_LEADER + TAPE_GAP + TAPE_HOLE) // during BOT hole
 	{
 		if (tape_bot_eot == 0)
 		{
 			tape_bot_eot = 1;
 		}
 	}
-	else
-	if (offset < tape_length - TAPE_LEADER - TAPE_GAP - TAPE_HOLE)
+	else if (offset < tape_length - TAPE_LEADER - TAPE_GAP - TAPE_HOLE)
 	{
 		offset -= TAPE_LEADER + TAPE_GAP + TAPE_HOLE;
 
-		if (tape_bot_eot == 1)	// data area
+		if (tape_bot_eot == 1) // data area
 		{
 			tape_bot_eot = 0;
 		}
@@ -1575,7 +1573,7 @@ static void tape_update(void)
 		}
 		else if (tape_byte < TAPE_BLOCK)
 		{
-			UINT8 *ptr = DrvCassette + tape_block * 256 + tape_byte - TAPE_HEADER;
+			UINT8* ptr = DrvCassette + tape_block * 256 + tape_byte - TAPE_HEADER;
 			rdata = (*ptr >> tape_bit) & 1;
 		}
 		else if (tape_byte < TAPE_CRC16_MSB)
@@ -1600,26 +1598,25 @@ static void tape_update(void)
 			rdata = 0;
 		}
 	}
-	else if (offset < tape_length - TAPE_LEADER - TAPE_GAP)// during EOT hole
+	else if (offset < tape_length - TAPE_LEADER - TAPE_GAP) // during EOT hole
 	{
 		if (tape_bot_eot == 0)
 		{
 			tape_bot_eot = 1;
 		}
 	}
-	else if (offset < tape_length - TAPE_LEADER)	// GAP between EOT and trailer
+	else if (offset < tape_length - TAPE_LEADER) // GAP between EOT and trailer
 	{
 		if (tape_bot_eot == 1)
 		{
 			tape_bot_eot = 0;
 		}
 	}
-	else	// TRAILER area
+	else // TRAILER area
 	{
 		if (tape_bot_eot == 0)
 		{
 			tape_bot_eot = 1;
-
 		}
 		offset = tape_length - 1;
 	}
@@ -1629,7 +1626,8 @@ static void tape_update(void)
 
 static void tape_stop(void)
 {
-	if (tape_timer) {
+	if (tape_timer)
+	{
 		tape_time0 += tape_dir * tapetimer();
 		tape_timer = 0; // timer off.
 	}
@@ -1637,7 +1635,7 @@ static void tape_stop(void)
 
 static void decocass_init_common()
 {
-	UINT8 *image = DrvCassette;
+	UINT8* image = DrvCassette;
 	INT32 i, offs;
 
 	tape_dir = 0;
@@ -1650,7 +1648,7 @@ static void decocass_init_common()
 	for (i = DrvCassetteLen / 256 - 1; !tape_blocks && i > 0; i--)
 		for (offs = 256 * i; !tape_blocks && offs < 256 * i + 256; offs++)
 			if (image[offs])
-				tape_blocks = i+1;
+				tape_blocks = i + 1;
 	for (i = 0; i < tape_blocks; i++)
 	{
 		crc16_lsb = 0;
@@ -1674,7 +1672,7 @@ static void decocass_init_common()
 
 	tapetimer_reset();
 
-	tape_time0 = (double)(TAPE_LEADER + TAPE_GAP - TAPE_HOLE) / TAPE_CLOCKRATE;
+	tape_time0 = static_cast<double>((TAPE_LEADER + TAPE_GAP - TAPE_HOLE)) / TAPE_CLOCKRATE;
 
 	tape_bot_eot = 0;
 
@@ -1682,8 +1680,8 @@ static void decocass_init_common()
 	i8041_p1 = 0xff;
 	i8041_p2 = 0xff;
 
-	if (!type1_inmap) type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
-	if (!type1_outmap) type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	if (!type1_inmap) type1_inmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
+	if (!type1_outmap) type1_outmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
 
 	type2_d2_latch = 0;
 	type2_xx_latch = 0;
@@ -1717,12 +1715,12 @@ static UINT8 decocass_type1_read(UINT16 offset)
 	{
 		INT32 promaddr;
 		UINT8 save;
-		UINT8 *prom = DrvDongle;
+		UINT8* prom = DrvDongle;
 
 		if (firsttime)
 		{
 			firsttime = 0;
-			type1_latch1 = 0;    /* reset latch (??) */
+			type1_latch1 = 0; /* reset latch (??) */
 		}
 
 		if (0 == (offset & E5XX_MASK))
@@ -1730,28 +1728,42 @@ static UINT8 decocass_type1_read(UINT16 offset)
 		else
 			data = 0xff;
 
-		save = data;    /* save the unmodifed data for the latch */
+		save = data; /* save the unmodifed data for the latch */
 
 		promaddr = 0;
 		INT32 promshift = 0;
 
-		for (INT32 i=0;i<8;i++)
+		for (INT32 i = 0; i < 8; i++)
 		{
-			if (type1_map[i] == T1PROM) { promaddr |= (((data >> T1MAP(i,type1_inmap)) & 1) << promshift); promshift++; }
+			if (type1_map[i] == T1PROM)
+			{
+				promaddr |= (((data >> T1MAP(i, type1_inmap)) & 1) << promshift);
+				promshift++;
+			}
 		}
 
 		data = 0;
 		promshift = 0;
 
-		for (INT32 i=0;i<8;i++)
+		for (INT32 i = 0; i < 8; i++)
 		{
-			if (type1_map[i] == T1PROM)     { data |= (((prom[promaddr] >> promshift) & 1)               << T1MAP(i,type1_outmap)); promshift++; }
-			if (type1_map[i] == T1LATCHINV) { data |= ((1 - ((type1_latch1 >> T1MAP(i,type1_inmap)) & 1)) << T1MAP(i,type1_outmap)); }
-			if (type1_map[i] == T1LATCH)    { data |= (((type1_latch1 >> T1MAP(i,type1_inmap)) & 1)    << T1MAP(i,type1_outmap)); }
-			if (type1_map[i] == T1DIRECT)   { data |= (((save >> T1MAP(i,type1_inmap)) & 1)        << T1MAP(i,type1_outmap)); }
+			if (type1_map[i] == T1PROM)
+			{
+				data |= (((prom[promaddr] >> promshift) & 1) << T1MAP(i, type1_outmap));
+				promshift++;
+			}
+			if (type1_map[i] == T1LATCHINV)
+			{
+				data |= ((1 - ((type1_latch1 >> T1MAP(i, type1_inmap)) & 1)) << T1MAP(i, type1_outmap));
+			}
+			if (type1_map[i] == T1LATCH)
+			{
+				data |= (((type1_latch1 >> T1MAP(i, type1_inmap)) & 1) << T1MAP(i, type1_outmap));
+			}
+			if (type1_map[i] == T1DIRECT) { data |= (((save >> T1MAP(i, type1_inmap)) & 1) << T1MAP(i, type1_outmap)); }
 		}
 
-		type1_latch1 = save;        /* latch the data for the next A0 == 0 read */
+		type1_latch1 = save; /* latch the data for the next A0 == 0 read */
 	}
 	return data;
 }
@@ -1775,13 +1787,10 @@ static UINT8 decocass_type2_read(UINT16 offset)
 
 		return 0xff;
 	}
-	else
-	{
-		if ((offset & 0x02) == 0)
-			return mcs48_master_r(offset & 1);
+	if ((offset & 0x02) == 0)
+		return mcs48_master_r(offset & 1);
 
-		return offset;
-	}
+	return offset;
 
 	return 0;
 }
@@ -1817,7 +1826,7 @@ static UINT8 decocass_type3_read(UINT16 offset)
 	{
 		if (1 == type3_pal_19)
 		{
-			UINT8 *prom = DrvDongle;
+			UINT8* prom = DrvDongle;
 			data = prom[type3_ctrs];
 			if (++type3_ctrs == 4096)
 				type3_ctrs = 0;
@@ -1830,7 +1839,7 @@ static UINT8 decocass_type3_read(UINT16 offset)
 			}
 			else
 			{
-				data = 0xff;    /* open data bus? */
+				data = 0xff; /* open data bus? */
 			}
 		}
 	}
@@ -1838,7 +1847,7 @@ static UINT8 decocass_type3_read(UINT16 offset)
 	{
 		if (1 == type3_pal_19)
 		{
-			save = data = 0xff;    /* open data bus? */
+			save = data = 0xff; /* open data bus? */
 		}
 		else
 		{
@@ -1984,7 +1993,7 @@ static UINT8 decocass_type3_read(UINT16 offset)
 			}
 			else
 			{
-				save = 0xff;    /* open data bus? */
+				save = 0xff; /* open data bus? */
 				data =
 					type3_d0_latch |
 					(BIT(save, 1) << 1) |
@@ -2002,7 +2011,7 @@ static UINT8 decocass_type3_read(UINT16 offset)
 	return data;
 }
 
-static void decocass_type3_write(UINT16 offset,UINT8 data)
+static void decocass_type3_write(UINT16 offset, UINT8 data)
 {
 	if (1 == (offset & 1))
 	{
@@ -2011,7 +2020,7 @@ static void decocass_type3_write(UINT16 offset,UINT8 data)
 			type3_ctrs = data << 4;
 			return;
 		}
-		else if (0xc0 == (data & 0xf0))
+		if (0xc0 == (data & 0xf0))
 			type3_pal_19 = 1;
 	}
 
@@ -2035,12 +2044,9 @@ static UINT8 decocass_type4_read(UINT16 offset)
 			type4_ctrs = (type4_ctrs + 1) & 0x7fff;
 			return data;
 		}
-		else
+		if ((offset & E5XX_MASK) == 0)
 		{
-			if ((offset & E5XX_MASK) == 0)
-			{
-				return mcs48_master_r(0);
-			}
+			return mcs48_master_r(0);
 		}
 	}
 
@@ -2056,7 +2062,7 @@ static void decocass_type4_write(UINT16 offset, UINT8 data)
 			type4_ctrs = (type4_ctrs & 0x00ff) | ((data & 0x7f) << 8);
 			return;
 		}
-		else if ((data & 0xf0) == 0xc0)
+		if ((data & 0xf0) == 0xc0)
 		{
 			type4_latch = 1;
 		}
@@ -2077,23 +2083,20 @@ static UINT8 decocass_e5xx_read(UINT8 offset)
 {
 	if (2 == (offset & E5XX_MASK))
 	{
-		return  (BIT(i8041_p1, 7)   << 0) |   /* D0 = P17 - REQ/ */
-			(BIT(i8041_p2, 0)   << 1) |   /* D1 = P20 - FNO/ */
-			(BIT(i8041_p2, 1)   << 2) |   /* D2 = P21 - EOT/ */
-			(BIT(i8041_p2, 2)   << 3) |   /* D3 = P22 - ERR/ */
-			((tape_bot_eot)     << 4) |   /* D4 = BOT/EOT (direct from drive) */
-			(1                  << 5) |   /* D5 floating input */
-			(1                  << 6) |   /* D6 floating input */
-			((0) << 7);                   /* D7 = cassette present (active low) */
+		return (BIT(i8041_p1, 7) << 0) | /* D0 = P17 - REQ/ */
+			(BIT(i8041_p2, 0) << 1) | /* D1 = P20 - FNO/ */
+			(BIT(i8041_p2, 1) << 2) | /* D2 = P21 - EOT/ */
+			(BIT(i8041_p2, 2) << 3) | /* D3 = P22 - ERR/ */
+			((tape_bot_eot) << 4) | /* D4 = BOT/EOT (direct from drive) */
+			(1 << 5) | /* D5 floating input */
+			(1 << 6) | /* D6 floating input */
+			((0) << 7); /* D7 = cassette present (active low) */
 	}
-	else
+	if (prot_read)
 	{
-		if (prot_read) {
-			return prot_read(offset);
-		} else {
-			return 0xff;
-		}
+		return prot_read(offset);
 	}
+	return 0xff;
 
 	return 0;
 }
@@ -2120,12 +2123,12 @@ static inline void decode_chars_one(INT32 offset)
 	UINT8 b = DrvCharRAM[0x2000 + offset];
 	UINT8 c = DrvCharRAM[0x4000 + offset];
 
-	UINT8 *d = DrvCharExp + (offset * 8);
+	UINT8* d = DrvCharExp + (offset * 8);
 
 	for (INT32 bit = 0; bit < 8; bit++)
 	{
 		UINT8 p;
-		p  = ((a >> bit) & 1) << 0;
+		p = ((a >> bit) & 1) << 0;
 		p |= ((b >> bit) & 1) << 1;
 		p |= ((c >> bit) & 1) << 2;
 
@@ -2148,7 +2151,7 @@ static inline void decode_tiles_one(INT32 offset)
 		INT32 z = 0xf ^ bit ^ ((i & 0x1e00) >> 1) ^ ((i & 0x78) << 1) ^ ((i & 0x180) >> 5);
 
 		UINT8 p;
-		p  = ((a >> bit) & 1) << 0;
+		p = ((a >> bit) & 1) << 0;
 		p |= ((b >> bit) & 1) << 1;
 		p |= ((c >> bit) & 1) << 2;
 
@@ -2180,7 +2183,6 @@ static void decode_ram_tiles()
 
 	for (INT32 i = 0; i < 0x400; i++)
 		decode_obj_one(i);
-
 }
 
 static void set_gfx_bank(INT32 bank)
@@ -2189,7 +2191,7 @@ static void set_gfx_bank(INT32 bank)
 
 	if (bank == 3 || !e900_enable) return;
 
-	UINT8 *ptr = DrvCharRAM; // bank == 0
+	UINT8* ptr = DrvCharRAM; // bank == 0
 
 	if (bank == 1) ptr = DrvGfxData;
 	if (bank == 2) ptr = DrvGfxData + 0x5000;
@@ -2200,7 +2202,8 @@ static void set_gfx_bank(INT32 bank)
 static void sync_sound()
 {
 	INT32 cyc = (M6502TotalCycles(0) * 510000 / 750000) - M6502TotalCycles(1);
-	if (cyc > 0) {
+	if (cyc > 0)
+	{
 		M6502Run(1, cyc);
 	}
 }
@@ -2209,45 +2212,51 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 {
 	//bprintf (0, _T("MW %4.4x, %2.2x\n"), address, data);
 
-	if (address >= 0x6000 && address <= 0xbfff) {
+	if (address >= 0x6000 && address <= 0xbfff)
+	{
 		DrvCharRAM[address - 0x6000] = data;
 		decode_chars_one(address - 0x6000);
 		return;
 	}
 
-	if ((address & 0xf800) == 0xd000) {
+	if ((address & 0xf800) == 0xd000)
+	{
 		DrvTileRAM[address & 0x7ff] = data;
 		decode_tiles_one(address);
 		return;
 	}
 
-	if ((address & 0xfc00) == 0xd800) {
+	if ((address & 0xfc00) == 0xd800)
+	{
 		DrvObjRAM[address & 0x3ff] = data;
 		decode_obj_one(address);
 		return;
 	}
 
-	if ((address & 0xfc00) == 0xc800) {
+	if ((address & 0xfc00) == 0xc800)
+	{
 		address = ((address >> 5) & 0x1f) | ((address & 0x1f) << 5);
 		DrvFgRAM[address] = data;
 		return;
 	}
 
-	if ((address & 0xfc00) == 0xcc00) {
+	if ((address & 0xfc00) == 0xcc00)
+	{
 		address = ((address >> 5) & 0x1f) | ((address & 0x1f) << 5);
 		DrvColRAM[address] = data;
 		return;
 	}
 
-	if ((address & 0xff00) == 0xe000) {
+	if ((address & 0xff00) == 0xe000)
+	{
 		DrvPalRAM[address & 0xff] = data;
 
 		INT32 offset = (address & 31) ^ 16;
 		data ^= 0xff;
 
-		UINT8 r = (data >>  0) & 7;
-		UINT8 g = (data >>  3) & 7;
-		UINT8 b = (data >>  6) & 3;
+		UINT8 r = (data >> 0) & 7;
+		UINT8 g = (data >> 3) & 7;
+		UINT8 b = (data >> 6) & 3;
 
 		r = (r << 5) | (r << 2) | (r >> 1);
 		g = (g << 5) | (g << 2) | (g >> 1);
@@ -2260,26 +2269,27 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xff00) == 0xe500) {
+	if ((address & 0xff00) == 0xe500)
+	{
 		decocass_e5xx_write(address & 0xff, data);
 		return;
 	}
 
 	switch (address)
 	{
-		case 0xe300:
-			watchdog_count = data & 0x0f;
+	case 0xe300:
+		watchdog_count = data & 0x0f;
 		return;
 
-		case 0xe301:
-			watchdog_flip = data;
+	case 0xe301:
+		watchdog_flip = data;
 		return;
 
-		case 0xe302:
-			color_missiles = data & 0x77;
+	case 0xe302:
+		color_missiles = data & 0x77;
 		return;
 
-		case 0xe400:
+	case 0xe400:
 		{
 			decocass_reset = data;
 
@@ -2289,7 +2299,8 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 
 				audio_nmi_enabled = 0;
 
-				M6502SetIRQLine(1, 0x20, (audio_nmi_enabled && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+				M6502SetIRQLine(
+					1, 0x20, (audio_nmi_enabled && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 			}
 
 			if ((data & 8) ^ 8)
@@ -2299,48 +2310,48 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 		}
 		return;
 
-		case 0xe402:
-			mode_set = data;
+	case 0xe402:
+		mode_set = data;
 		return;
 
-		case 0xe403:
-			back_h_shift = data;
+	case 0xe403:
+		back_h_shift = data;
 		return;
 
-		case 0xe404:
-			back_vl_shift = data;
+	case 0xe404:
+		back_vl_shift = data;
 		return;
 
-		case 0xe405:
-			back_vr_shift = data;
+	case 0xe405:
+		back_vr_shift = data;
 		return;
 
-		case 0xe406:
-			part_h_shift = data;
+	case 0xe406:
+		part_h_shift = data;
 		return;
 
-		case 0xe407:
-			part_v_shift = data;
+	case 0xe407:
+		part_v_shift = data;
 		return;
 
-		case 0xe410:
-			color_center_bot = data;
+	case 0xe410:
+		color_center_bot = data;
 		return;
 
-		case 0xe411:
-			center_h_shift_space = data;
+	case 0xe411:
+		center_h_shift_space = data;
 		return;
 
-		case 0xe412:
-			center_v_shift = data;
+	case 0xe412:
+		center_v_shift = data;
 		return;
 
-		case 0xe413:
-			// coin counter (not emulated)
-			mux_data = (data & 0xc) >> 2; // cdsteljn
+	case 0xe413:
+		// coin counter (not emulated)
+		mux_data = (data & 0xc) >> 2; // cdsteljn
 		return;
 
-		case 0xe414:
+	case 0xe414:
 		{
 			sync_sound();
 			soundlatch = data;
@@ -2350,40 +2361,40 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 		}
 		return;
 
-		case 0xe415:
-		case 0xe416:
-			// Unused analog stuff.
+	case 0xe415:
+	case 0xe416:
+		// Unused analog stuff.
 		return;
 
-		case 0xe417:
-			M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+	case 0xe417:
+		M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		return;
 
-		case 0xe420:
-		case 0xe421:
-		case 0xe422:
-		case 0xe423:
-		case 0xe424:
-		case 0xe425:
-		case 0xe426:
-		case 0xe427:
-		case 0xe428:
-		case 0xe429:
-		case 0xe42a:
-		case 0xe42b:
-		case 0xe42c:
-		case 0xe42d:
-		case 0xe42e:
-		case 0xe42f:
-			// adc_w (UNEMULATED)
+	case 0xe420:
+	case 0xe421:
+	case 0xe422:
+	case 0xe423:
+	case 0xe424:
+	case 0xe425:
+	case 0xe426:
+	case 0xe427:
+	case 0xe428:
+	case 0xe429:
+	case 0xe42a:
+	case 0xe42b:
+	case 0xe42c:
+	case 0xe42d:
+	case 0xe42e:
+	case 0xe42f:
+		// adc_w (UNEMULATED)
 		return;
 
-		case 0xe900:
-			set_gfx_bank(data & 3);
+	case 0xe900:
+		set_gfx_bank(data & 3);
 		return;
 	}
 
-	bprintf (0, _T("MW %4.4x, %2.2x\n"), address, data);
+	bprintf(0, _T("MW %4.4x, %2.2x\n"), address, data);
 }
 
 static UINT8 input_read(INT32 offset)
@@ -2392,16 +2403,16 @@ static UINT8 input_read(INT32 offset)
 
 	switch (offset & 7)
 	{
-		case 0:
-		case 1:
-		case 2:
-			return DrvInputs[offset];
+	case 0:
+	case 1:
+	case 2:
+		return DrvInputs[offset];
 
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-			return 0; // Unused analog stuff.
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+		return 0; // Unused analog stuff.
 	}
 
 	return 0xff;
@@ -2409,21 +2420,25 @@ static UINT8 input_read(INT32 offset)
 
 static UINT8 decocass_main_read(UINT16 address)
 {
-	if ((address & 0xfc00) == 0xc800) {
+	if ((address & 0xfc00) == 0xc800)
+	{
 		address = ((address >> 5) & 0x1f) | ((address & 0x1f) << 5);
 		return DrvFgRAM[address];
 	}
 
-	if ((address & 0xfc00) == 0xcc00) {
+	if ((address & 0xfc00) == 0xcc00)
+	{
 		address = ((address >> 5) & 0x1f) | ((address & 0x1f) << 5);
 		return DrvColRAM[address];
 	}
 
-	if ((address & 0xff00) == 0xe500) {
-		return decocass_e5xx_read(address&0xff);
+	if ((address & 0xff00) == 0xe500)
+	{
+		return decocass_e5xx_read(address & 0xff);
 	}
 
-	if ((address & 0xff00) == 0xe600) {
+	if ((address & 0xff00) == 0xe600)
+	{
 		if ((BurnDrvGetGenreFlags() & GBF_MAHJONG) && (address & 6) == 0)
 			return DrvInputs[3 + mux_data + ((address & 1) * 4)];
 		return input_read(address);
@@ -2431,32 +2446,32 @@ static UINT8 decocass_main_read(UINT16 address)
 
 	switch (address)
 	{
-		case 0xe300:
-			return (DrvDips[0] & 0x7f) | (vblank ? 0x80 : 0);
+	case 0xe300:
+		return (DrvDips[0] & 0x7f) | (vblank ? 0x80 : 0);
 
-		case 0xe301:
-			return DrvDips[1];
+	case 0xe301:
+		return DrvDips[1];
 
-		case 0xe414:
-			return 0xc0; // sound command (0xc0 ok)
+	case 0xe414:
+		return 0xc0; // sound command (0xc0 ok)
 
-		case 0xe700:
-			sync_sound();
-			return soundlatch2;
+	case 0xe700:
+		sync_sound();
+		return soundlatch2;
 
-		case 0xe701:
-			sync_sound();
-			return sound_ack;
+	case 0xe701:
+		sync_sound();
+		return sound_ack;
 	}
 
-	bprintf (0, _T("MR %4.4x\n"), address);
+	bprintf(0, _T("MR %4.4x\n"), address);
 
 	return 0;
 }
 
 // BurgerTime Anti-migraine 8910fixer Hack.  See d_btime.cpp for notes.
-static UINT8 last01[3] = {0xff,0xff};
-static UINT8 last02[3] = {0xff,0xff};
+static UINT8 last01[3] = {0xff, 0xff};
+static UINT8 last02[3] = {0xff, 0xff};
 static UINT8 ignext = 0;
 
 static void checkhiss_add02(UINT8 data)
@@ -2486,67 +2501,71 @@ static void checkhiss_and_add01(UINT8 data)
 
 static void decocass_sound_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0xf800) == 0x1000) {
+	if ((address & 0xf800) == 0x1000)
+	{
 		audio_nmi_enabled = 1;
 		M6502SetIRQLine(0x20, (audio_nmi_enabled && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 		return;
 	}
 
-	if ((address & 0xf800) == 0x1800) {
+	if ((address & 0xf800) == 0x1800)
+	{
 		sound_ack &= ~0x40;
 		return;
 	}
 
 	switch (address & 0xf000)
 	{
-		case 0x2000:
-			if (burgertime_mode && ignext) {
-				data = 0; // set volume to 0
-				ignext = 0;
-			}
-			AY8910Write(0, 1, data);
-			if (burgertime_mode) checkhiss_and_add01(data);
+	case 0x2000:
+		if (burgertime_mode && ignext)
+		{
+			data = 0; // set volume to 0
+			ignext = 0;
+		}
+		AY8910Write(0, 1, data);
+		if (burgertime_mode) checkhiss_and_add01(data);
 		return;
 
-		case 0x4000:
-			AY8910Write(0, 0, data);
-			if (burgertime_mode) checkhiss_add02(data);
+	case 0x4000:
+		AY8910Write(0, 0, data);
+		if (burgertime_mode) checkhiss_add02(data);
 		return;
 
-		case 0x6000:
-			AY8910Write(1, 1, data);
+	case 0x6000:
+		AY8910Write(1, 1, data);
 		return;
 
-		case 0x8000:
-			AY8910Write(1, 0, data);
+	case 0x8000:
+		AY8910Write(1, 0, data);
 		return;
 
-		case 0xc000:
-			soundlatch2 = data;
-			sound_ack |= 0x40;
-		return;
+	case 0xc000:
+		soundlatch2 = data;
+		sound_ack |= 0x40;
 	}
 }
 
 static UINT8 decocass_sound_read(UINT16 address)
 {
-	if ((address & 0xf800) == 0x1000) {
+	if ((address & 0xf800) == 0x1000)
+	{
 		audio_nmi_enabled = 1;
 		M6502SetIRQLine(0x20, (audio_nmi_enabled && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 		return 0xff;
 	}
 
-	if ((address & 0xf800) == 0x1800) {
+	if ((address & 0xf800) == 0x1800)
+	{
 		sound_ack &= ~0x40;
 		return 0xFF;
 	}
 
 	switch (address & 0xf000)
 	{
-		case 0xa000:
+	case 0xa000:
 
-			sound_ack &= ~0x80;
-			return soundlatch;
+		sound_ack &= ~0x80;
+		return soundlatch;
 	}
 
 
@@ -2604,8 +2623,7 @@ static void i8041_p1_write(UINT8 data)
 			tape_timer = 1;
 			tapetimer_reset();
 		}
-		else
-		if (tape_dir > 0)
+		else if (tape_dir > 0)
 		{
 			tape_dir = (tape_speed) ? +7 : +1;
 			tape_timer = 1;
@@ -2637,11 +2655,11 @@ static UINT8 mcs48_read_ports(UINT32 port)
 {
 	switch (port)
 	{
-		case MCS48_P1:
-			return i8041_p1_read();
+	case MCS48_P1:
+		return i8041_p1_read();
 
-		case MCS48_P2:
-			return i8041_p2_read();
+	case MCS48_P2:
+		return i8041_p2_read();
 	}
 
 	return 0;
@@ -2651,22 +2669,21 @@ static void mcs48_write_ports(UINT32 port, UINT8 data)
 {
 	switch (port)
 	{
-		case MCS48_P1:
-			i8041_p1_write(data);
+	case MCS48_P1:
+		i8041_p1_write(data);
 		return;
 
-		case MCS48_P2:
-			i8041_p2_write(data);
-		return;
+	case MCS48_P2:
+		i8041_p2_write(data);
 	}
 }
 
-static tilemap_scan( fg )
+static tilemap_scan(fg)
 {
 	return (31 - col) * 32 + row;
 }
 
-static tilemap_callback( fg )
+static tilemap_callback(fg)
 {
 	UINT16 code = DrvFgRAM[offs] + ((DrvColRAM[offs] & 3) * 256);
 
@@ -2691,7 +2708,9 @@ static INT32 DrvDoReset()
 
 		if (BurnLoadRom(DrvMainBIOS, bios_select + 0, 1)) return 1; // main m6502 bios
 
-		if (BurnGetRomLen(bios_select + 1)) { // older bios' use split main rom
+		if (BurnGetRomLen(bios_select + 1))
+		{
+			// older bios' use split main rom
 			if (BurnLoadRom(DrvMainBIOS + 0x800, bios_select + 1, 1)) return 1;
 		}
 
@@ -2702,7 +2721,7 @@ static INT32 DrvDoReset()
 		if (BurnLoadRom(DrvMCUROM, 0x80 + (bios_sets * 8), 1)) return 1;
 	}
 
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	M6502Open(0);
 	set_gfx_bank(0);
@@ -2756,53 +2775,79 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvMainBIOS		= Next; Next += 0x001000;
-	DrvSoundBIOS	= Next; Next += 0x001000;
-	DrvCassette		= Next; Next += 0x0020000;
-	DrvGfxData		= Next; Next += 0x00a0000;
-	DrvDongle		= Next; Next += 0x0100000; // 1mb (needed for widel multi)
-	DrvMCUROM		= Next; Next += 0x0009000; // 0x400 + 0x500 for ram, for now
+	DrvMainBIOS = Next;
+	Next += 0x001000;
+	DrvSoundBIOS = Next;
+	Next += 0x001000;
+	DrvCassette = Next;
+	Next += 0x0020000;
+	DrvGfxData = Next;
+	Next += 0x00a0000;
+	DrvDongle = Next;
+	Next += 0x0100000; // 1mb (needed for widel multi)
+	DrvMCUROM = Next;
+	Next += 0x0009000; // 0x400 + 0x500 for ram, for now
 
-	DrvCharExp		= Next; Next += 0x0100000;
-	DrvTileExp		= Next; Next += 0x0011000;
-	DrvObjExp		= Next; Next += 0x0008000;
+	DrvCharExp = Next;
+	Next += 0x0100000;
+	DrvTileExp = Next;
+	Next += 0x0011000;
+	DrvObjExp = Next;
+	Next += 0x0008000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
+	DrvPalette = (UINT32*)Next;
+	Next += 0x00400 * sizeof(UINT32);
 
-	DrvPalLut		= Next; Next += 0x0000400;
-	DrvPaletteTable		= (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
+	DrvPalLut = Next;
+	Next += 0x0000400;
+	DrvPaletteTable = (UINT32*)Next;
+	Next += 0x00200 * sizeof(UINT32);
 
-	pTempDraw[0]		= (UINT16*)Next; Next += 512 * 512 * sizeof(UINT16);
-	pTempDraw[1]		= (UINT16*)Next; Next += 512 * 512 * sizeof(UINT16);
+	pTempDraw[0] = (UINT16*)Next;
+	Next += 512 * 512 * sizeof(UINT16);
+	pTempDraw[1] = (UINT16*)Next;
+	Next += 512 * 512 * sizeof(UINT16);
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvMainRAM		= Next; Next += 0x006000;
-	DrvCharRAM		= Next; Next += 0x006000;
-	DrvFgRAM		= Next; Next += 0x000400;
-	DrvColRAM		= Next; Next += 0x000400;
-	DrvTileRAM		= Next; Next += 0x000800;
-	DrvObjRAM		= Next; Next += 0x000400;
+	DrvMainRAM = Next;
+	Next += 0x006000;
+	DrvCharRAM = Next;
+	Next += 0x006000;
+	DrvFgRAM = Next;
+	Next += 0x000400;
+	DrvColRAM = Next;
+	Next += 0x000400;
+	DrvTileRAM = Next;
+	Next += 0x000800;
+	DrvObjRAM = Next;
+	Next += 0x000400;
 
-	DrvPalRAM		= Next; Next += 0x000100;
-	DrvPaletteTable = (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
+	DrvPalRAM = Next;
+	Next += 0x000100;
+	DrvPaletteTable = (UINT32*)Next;
+	Next += 0x00200 * sizeof(UINT32);
 
-	DrvSoundRAM		= Next; Next += 0x001000;
+	DrvSoundRAM = Next;
+	Next += 0x001000;
 
-	RamEnd			= Next;
+	RamEnd = Next;
 
-	MemEnd			= Next;
+	MemEnd = Next;
 
 	return 0;
 }
 
 static void BurnPaletteLut()
 {
-	for (INT32 i = 0; i < 32; i++) { // char/sprite layer
+	for (INT32 i = 0; i < 32; i++)
+	{
+		// char/sprite layer
 		DrvPalLut[i] = i;
-		DrvPalLut[i+32] = BITSWAP08(i, 7,6,5,4,3,1,2,0);
+		DrvPalLut[i + 32] = BITSWAP08(i, 7, 6, 5, 4, 3, 1, 2, 0);
 	}
 }
 
@@ -2811,70 +2856,75 @@ static INT32 DecocassGetRoms()
 	char* pRomName;
 	struct BurnRomInfo ri;
 
-	UINT8 *gfx = DrvGfxData;
-	UINT8 *dnl = DrvDongle;
-	UINT8 *mbi = DrvMainBIOS;
-	UINT8 *sbi = DrvSoundBIOS;
+	UINT8* gfx = DrvGfxData;
+	UINT8* dnl = DrvDongle;
+	UINT8* mbi = DrvMainBIOS;
+	UINT8* sbi = DrvSoundBIOS;
 
-	memset (gfx, 0xff, 0xa000);
+	memset(gfx, 0xff, 0xa000);
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++)
 	{
 		BurnDrvGetRomInfo(&ri, i);
 
-		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 1) {
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 1)
+		{
 			if (BurnLoadRom(dnl, i, 1)) return 1;
 			dnl += ri.nLen;
 			continue;
 		}
 
-		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 2) {
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 2)
+		{
 			if (BurnLoadRom(DrvCassette, i, 1)) return 1;
 			DrvCassetteLen = BurnGetRomLen(i);
 			continue;
 		}
 
-		if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 3) {
+		if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 3)
+		{
 			if (BurnLoadRom(gfx, i, 1)) return 1;
 			gfx += ri.nLen;
 			continue;
 		}
 
-	// widel multi
-		if ((ri.nType & BRF_BIOS) && (ri.nType & 0x0f) == 8) {
+		// widel multi
+		if ((ri.nType & BRF_BIOS) && (ri.nType & 0x0f) == 8)
+		{
 			if (BurnLoadRom(mbi, i, 1)) return 1;
-			if (ri.nLen != 0x1000 && mbi == DrvMainBIOS) memcpy (DrvMainBIOS + 0x800, DrvMainBIOS, 0x800);
+			if (ri.nLen != 0x1000 && mbi == DrvMainBIOS) memcpy(DrvMainBIOS + 0x800, DrvMainBIOS, 0x800);
 			mbi += ri.nLen;
 			continue;
 		}
 
-		if ((ri.nType & BRF_BIOS) && (ri.nType & 0x0f) == 9) {
+		if ((ri.nType & BRF_BIOS) && (ri.nType & 0x0f) == 9)
+		{
 			if (BurnLoadRom(sbi, i, 1)) return 1;
-			if (ri.nLen != 0x800 && sbi == DrvSoundBIOS) memcpy (DrvSoundBIOS + 0x400, DrvSoundBIOS, 0x400);
+			if (ri.nLen != 0x800 && sbi == DrvSoundBIOS) memcpy(DrvSoundBIOS + 0x400, DrvSoundBIOS, 0x400);
 			sbi += ri.nLen;
 			continue;
 		}
 
-		if ((ri.nType & BRF_BIOS) && (ri.nType & 0x0f) == 10) {
+		if ((ri.nType & BRF_BIOS) && (ri.nType & 0x0f) == 10)
+		{
 			if (BurnLoadRom(DrvMCUROM, i, 1)) return 1;
-			continue;
 		}
 	}
 
 	return 0;
 }
 
-static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
+static INT32 DecocassInit(UINT8 (*read)(UINT16), void (*write)(UINT16, UINT8))
 {
 	BurnSetRefreshRate(57.44);
 
 	prot_write = write;
 	prot_read = read;
 
-	AllMem = NULL;
+	AllMem = nullptr;
 	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - static_cast<UINT8*>(nullptr);
+	if ((AllMem = BurnMalloc(nLen)) == nullptr) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -2887,22 +2937,22 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 
 	M6502Init(0, TYPE_DECO222);
 	M6502Open(0);
-	M6502MapMemory(DrvMainRAM,	0x0000, 0x5fff, MAP_RAM);
-	M6502MapMemory(DrvCharRAM,	0x6000, 0xbfff, MAP_ROM);
-	M6502MapMemory(DrvFgRAM,	0xc000, 0xc3ff, MAP_RAM);
-	M6502MapMemory(DrvColRAM,	0xc400, 0xc7ff, MAP_RAM);
-	M6502MapMemory(DrvTileRAM,	0xd000, 0xd7ff, MAP_ROM);
-	M6502MapMemory(DrvObjRAM,	0xd800, 0xdbff, MAP_ROM);
-	M6502MapMemory(DrvPalRAM,	0xe000, 0xe0ff, MAP_ROM);
-	M6502MapMemory(DrvMainBIOS,	0xf000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvMainRAM, 0x0000, 0x5fff, MAP_RAM);
+	M6502MapMemory(DrvCharRAM, 0x6000, 0xbfff, MAP_ROM);
+	M6502MapMemory(DrvFgRAM, 0xc000, 0xc3ff, MAP_RAM);
+	M6502MapMemory(DrvColRAM, 0xc400, 0xc7ff, MAP_RAM);
+	M6502MapMemory(DrvTileRAM, 0xd000, 0xd7ff, MAP_ROM);
+	M6502MapMemory(DrvObjRAM, 0xd800, 0xdbff, MAP_ROM);
+	M6502MapMemory(DrvPalRAM, 0xe000, 0xe0ff, MAP_ROM);
+	M6502MapMemory(DrvMainBIOS, 0xf000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(decocass_main_write);
 	M6502SetReadHandler(decocass_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
-	M6502MapMemory(DrvSoundRAM,	0x0000, 0x0fff, MAP_RAM);
-	M6502MapMemory(DrvSoundBIOS,	0xf800, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvSoundRAM, 0x0000, 0x0fff, MAP_RAM);
+	M6502MapMemory(DrvSoundBIOS, 0xf800, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(decocass_sound_write);
 	M6502SetReadHandler(decocass_sound_read);
 	M6502Close();
@@ -2917,13 +2967,13 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(M6502TotalCycles, 510000);
+	AY8910SetBuffered(M6502TotalCycles, 510000);
 
 	GenericTilesInit();
 	GenericTilemapInit(2, fg_map_scan, fg_map_callback, 8, 8, 32, 32);
 	GenericTilemapSetGfx(1, DrvCharExp, 3, 8, 8, 0x10000, 0, 0x03);
 	GenericTilemapSetOffsets(2, 0, -8);
-	GenericTilemapSetTransparent(2,0);
+	GenericTilemapSetTransparent(2, 0);
 
 	DrvDoReset();
 
@@ -2942,13 +2992,13 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
-	prot_write = NULL;
-	prot_read = NULL;
+	prot_write = nullptr;
+	prot_read = nullptr;
 	type1_inmap = 0;
 	type1_outmap = 0;
 
 	BurnFree(type1_map); // cnebula
-	type1_map = NULL;
+	type1_map = nullptr;
 
 	burgertime_mode = 0;
 	skater_mode = 0;
@@ -2964,7 +3014,8 @@ static INT32 DrvExit()
 
 static void DrvPaletteUpdate()
 {
-	for (INT32 i = 0; i < 64; i++) {
+	for (INT32 i = 0; i < 64; i++)
+	{
 		UINT32 p = DrvPaletteTable[DrvPalLut[i]];
 
 		DrvPalette[i] = BurnHighCol(p >> 16, (p >> 8) & 0xff, p & 0xff, 0);
@@ -2985,8 +3036,8 @@ static void draw_object()
 		sy += 256;
 	INT32 sx = part_h_shift - 128 + 1;
 
-	const UINT8 *objdata0 = DrvObjExp + 0 * (64 * 64);
-	const UINT8 *objdata1 = DrvObjExp + 1 * (64 * 64);
+	const UINT8* objdata0 = DrvObjExp + 0 * (64 * 64);
+	const UINT8* objdata1 = DrvObjExp + 1 * (64 * 64);
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
@@ -3000,22 +3051,27 @@ static void draw_object()
 
 			switch (crossing)
 			{
-				case 0: pri2 = true; break; // outside tunnel (for reference; not usually handled in this loop)
-				case 1: pri2 = (x >= scroll); break; // exiting tunnel
-				case 2: break; // inside tunnel
-				case 3: pri2 = (x < scroll); break; // entering tunnel
+			case 0: pri2 = true;
+				break; // outside tunnel (for reference; not usually handled in this loop)
+			case 1: pri2 = (x >= scroll);
+				break; // exiting tunnel
+			case 2: break; // inside tunnel
+			case 3: pri2 = (x < scroll);
+				break; // entering tunnel
 			}
 
 			if (BIT(mode_set, 7))
 			{
 				// check coordinates against object data
-				if ((dy >= -64 && dy < 0 && dx >= 64 && dx < 128 && objdata0[((-1 - dy) * 64 + dx - 64) & 0xfff] != 0) ||
+				if ((dy >= -64 && dy < 0 && dx >= 64 && dx < 128 && objdata0[((-1 - dy) * 64 + dx - 64) & 0xfff] != 0)
+					||
 					(dy >= 0 && dy < 64 && dx >= 64 && dx < 128 && objdata0[(dy * 64 + dx - 64) & 0xfff] != 0) ||
 					(dy >= -64 && dy < 0 && dx >= 0 && dx < 64 && objdata1[((-1 - dy) * 64 + dx) & 0xfff] != 0) ||
 					(dy >= 0 && dy < 64 && dx >= 0 && dx < 64 && objdata1[(dy * 64 + dx) & 0xfff] != 0))
 				{
 					pri2 = true;
-					if (BIT(mode_set, 5) && pPrioDraw[(y * nScreenWidth) + x] == 0) //priority.pix8(y, x) == 0) // least priority?
+					if (BIT(mode_set, 5) && pPrioDraw[(y * nScreenWidth) + x] == 0)
+						//priority.pix8(y, x) == 0) // least priority?
 						pTransDraw[(y * nScreenWidth) + x] = color;
 				}
 			}
@@ -3026,7 +3082,8 @@ static void draw_object()
 	}
 }
 
-static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_screen, UINT8 *missile_ram, INT32 interleave)
+static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_screen, UINT8* missile_ram,
+                          INT32 interleave)
 {
 	INT32 x;
 
@@ -3050,7 +3107,8 @@ static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_sc
 		if (sy >= min_y && sy <= max_y)
 			for (x = 0; x < 4; x++)
 			{
-				if (sx >= min_x && sx <= max_x) {
+				if (sx >= min_x && sx <= max_x)
+				{
 					pTransDraw[(sy * nScreenWidth) + sx] = (color_missiles & 7) | 8;
 					pPrioDraw[(sy * nScreenWidth) + sx] |= 1 << 2;
 				}
@@ -3068,7 +3126,8 @@ static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_sc
 		if (sy >= min_y && sy <= max_y)
 			for (x = 0; x < 4; x++)
 			{
-				if (sx >= min_x && sx <= max_x) {
+				if (sx >= min_x && sx <= max_x)
+				{
 					pTransDraw[(sy * nScreenWidth) + sx] = ((color_missiles >> 4) & 7) | 8;
 					pPrioDraw[(sy * nScreenWidth) + sx] |= 1 << 3;
 				}
@@ -3077,7 +3136,8 @@ static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_sc
 	}
 }
 
-static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adjust_flip_screen, UINT8 *sprite_ram, INT32 interleave)
+static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adjust_flip_screen, UINT8* sprite_ram,
+                         INT32 interleave)
 {
 	for (INT32 i = 0, offs = 0; i < 8; i++, offs += 4 * interleave)
 	{
@@ -3107,25 +3167,46 @@ static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adju
 
 		code *= 4;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-			} else {
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+		if (flipy)
+		{
+			if (flipx)
+			{
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
 			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-			} else {
+			else
+			{
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+			}
+		}
+		else
+		{
+			if (flipx)
+			{
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+			}
+			else
+			{
 				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
 				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
 				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 3, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
@@ -3136,25 +3217,46 @@ static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adju
 		sy += (flipscreen ? -256 : 256);
 
 		// Wrap around
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-			} else {
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+		if (flipy)
+		{
+			if (flipx)
+			{
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                    DrvCharExp);
 			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
-			} else {
+			else
+			{
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+			}
+		}
+		else
+		{
+			if (flipx)
+			{
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1,
+				                                   DrvCharExp);
+			}
+			else
+			{
 				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
 				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
 				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 3, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
@@ -3208,16 +3310,16 @@ static void draw_edge(INT32 which, bool opaque)
 	INT32 scrollx = 256 - back_h_shift;
 	INT32 scrolly = (which) ? scrolly_r : scrolly_l;
 
-	INT32 miny = (which) ? (nScreenHeight/2) : 0;
+	INT32 miny = (which) ? (nScreenHeight / 2) : 0;
 	INT32 maxy = (which) ? nScreenHeight : (nScreenHeight / 2);
 
-	for (INT32 y=miny; y<maxy;y++)
+	for (INT32 y = miny; y < maxy; y++)
 	{
 		INT32 srcline = (y + scrolly) & 0x1ff;
 		UINT16* src = pTempDraw[which] + srcline * 512;
 		UINT16* dst = pTransDraw + y * nScreenWidth;
 
-		for (INT32 x=0; x<nScreenWidth;x++)
+		for (INT32 x = 0; x < nScreenWidth; x++)
 		{
 			INT32 srccol = 0;
 
@@ -3225,17 +3327,22 @@ static void draw_edge(INT32 which, bool opaque)
 
 			switch (mode_set & 3)
 			{
-				case 0x00: srccol = ((x + scrollx) & 0xff); break; // hwy normal case
-				case 0x01: srccol = (x + scrollx + 0x100) & 0x1ff; break; // manhattan building top
-				case 0x02: srccol = ((x + scrollx) & 0xff) + 0x100; break; // manhattan normal case
-				case 0x03: srccol = (x + scrollx) & 0x1ff; break; // hwy, burnrub etc.
+			case 0x00: srccol = ((x + scrollx) & 0xff);
+				break; // hwy normal case
+			case 0x01: srccol = (x + scrollx + 0x100) & 0x1ff;
+				break; // manhattan building top
+			case 0x02: srccol = ((x + scrollx) & 0xff) + 0x100;
+				break; // manhattan normal case
+			case 0x03: srccol = (x + scrollx) & 0x1ff;
+				break; // hwy, burnrub etc.
 			}
 
 			UINT16 pix = src[srccol];
 
 			if ((pix & 0x3) || opaque)
 			{
-				if (pix!=0) dst[x] = pix; // if (pix!=0) because it needs to inherit the background fill from underneath it.
+				if (pix != 0) dst[x] = pix;
+				// if (pix!=0) because it needs to inherit the background fill from underneath it.
 			}
 		}
 	}
@@ -3249,8 +3356,8 @@ static void predraw_bg()
 
 	color = (color << 3);
 
-	if (~nSpriteEnable & 2) memset(pTempDraw[0], 0, 512*512*sizeof(UINT16));
-	if (~nSpriteEnable & 4) memset(pTempDraw[1], 0, 512*512*sizeof(UINT16));
+	if (~nSpriteEnable & 2) memset(pTempDraw[0], 0, 512 * 512 * sizeof(UINT16));
+	if (~nSpriteEnable & 4) memset(pTempDraw[1], 0, 512 * 512 * sizeof(UINT16));
 
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
@@ -3263,18 +3370,18 @@ static void predraw_bg()
 		INT32 code = DrvTileRAM[ofst] >> 4;
 
 		{
-			UINT8 *gfx0 = DrvTileExp + (code * 0x100);
-			UINT8 *gfx1 = DrvTileExp + (code * 0x100) + (15 * 16);
+			UINT8* gfx0 = DrvTileExp + (code * 0x100);
+			UINT8* gfx1 = DrvTileExp + (code * 0x100) + (15 * 16);
 
-			UINT16 *ds0 = pTempDraw[0] + (sy * 512) + sx;
-			UINT16 *ds1 = pTempDraw[1] + (sy * 512) + sx;
+			UINT16* ds0 = pTempDraw[0] + (sy * 512) + sx;
+			UINT16* ds1 = pTempDraw[1] + (sy * 512) + sx;
 
 			for (INT32 y = 0; y < 16; y++)
 			{
 				for (INT32 x = 0; x < 16; x++)
 				{
 					if (!(ofst & 0x80)) if (nSpriteEnable & 2) ds0[x] = gfx0[x] + color;
-					if ( (ofst & 0x80)) if (nSpriteEnable & 4) ds1[x] = gfx1[x] + color;
+					if ((ofst & 0x80)) if (nSpriteEnable & 4) ds1[x] = gfx1[x] + color;
 				}
 				ds0 += 512;
 				ds1 += 512;
@@ -3287,7 +3394,8 @@ static void predraw_bg()
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteUpdate();
 		DrvRecalc = 0;
 	}
@@ -3320,7 +3428,7 @@ static INT32 DrvDraw()
 
 	if (nSpriteEnable & 1) draw_sprites((color_center_bot >> 1) & 1, 8, 0, DrvFgRAM, 0x20);
 
-	if (nBurnLayer & 8) draw_missiles(1+8, 0, DrvColRAM, 0x20);
+	if (nBurnLayer & 8) draw_missiles(1 + 8, 0, DrvColRAM, 0x20);
 
 	if (nBurnLayer & 1) draw_object();
 
@@ -3337,14 +3445,16 @@ static INT32 DrvFrame()
 		watchdog = 0;
 
 	watchdog++;
-	if (watchdog > 180) {
+	if (watchdog > 180)
+	{
 		M6502Reset(0);
 		M6502Reset(1);
 
 		watchdog = 0;
 	}
 
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
@@ -3353,35 +3463,40 @@ static INT32 DrvFrame()
 	{
 		INT32 prev = DrvInputs[2] & 0xc0;
 
-		memset (DrvInputs, 0, 11);
+		memset(DrvInputs, 0, 11);
 
 		DrvInputs[2] = 0xc0;
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		if (fourway_mode) {
-			ProcessJoystick(&DrvInputs[0], 0, 2,3,1,0, INPUT_4WAY | INPUT_CLEAROPPOSITES );
-			ProcessJoystick(&DrvInputs[1], 1, 2,3,1,0, INPUT_4WAY | INPUT_CLEAROPPOSITES );
+		if (fourway_mode)
+		{
+			ProcessJoystick(&DrvInputs[0], 0, 2, 3, 1, 0, INPUT_4WAY | INPUT_CLEAROPPOSITES);
+			ProcessJoystick(&DrvInputs[1], 1, 2, 3, 1, 0, INPUT_4WAY | INPUT_CLEAROPPOSITES);
 		}
 
-		if (BurnDrvGetGenreFlags() & GBF_MAHJONG) {
-			for (INT32 i = 0; i < 8; i++) {
-				DrvInputs[ 3] ^= (DrvJoy4[i] & 1) << i;
-				DrvInputs[ 4] ^= (DrvJoy5[i] & 1) << i;
-				DrvInputs[ 5] ^= (DrvJoy6[i] & 1) << i;
-				DrvInputs[ 6] ^= (DrvJoy7[i] & 1) << i;
-				DrvInputs[ 7] ^= (DrvJoy8[i] & 1) << i;
-				DrvInputs[ 8] ^= (DrvJoy9[i] & 1) << i;
-				DrvInputs[ 9] ^= (DrvJoy10[i] & 1) << i;
+		if (BurnDrvGetGenreFlags() & GBF_MAHJONG)
+		{
+			for (INT32 i = 0; i < 8; i++)
+			{
+				DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+				DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
+				DrvInputs[5] ^= (DrvJoy6[i] & 1) << i;
+				DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
+				DrvInputs[7] ^= (DrvJoy8[i] & 1) << i;
+				DrvInputs[8] ^= (DrvJoy9[i] & 1) << i;
+				DrvInputs[9] ^= (DrvJoy10[i] & 1) << i;
 				DrvInputs[10] ^= (DrvJoy11[i] & 1) << i;
 			}
 		}
 
-		if (prev != (DrvInputs[2] & 0xc0) && (DrvInputs[2] & 0xc0) == 0xc0) {
+		if (prev != (DrvInputs[2] & 0xc0) && (DrvInputs[2] & 0xc0) == 0xc0)
+		{
 			M6502SetIRQLine(0, 0x20, CPU_IRQSTATUS_ACK);
 		}
 	}
@@ -3390,8 +3505,12 @@ static INT32 DrvFrame()
 	// division loss (1 cycle per line).  some games make bad sounds (cocean1a, wheel spinning noise)
 
 	INT32 nInterleave = 272;
-	INT32 nCyclesTotal[3] = { (INT32)((double)750000 / 57.444853), (INT32)((double)510000 / 57.444853), (INT32)((double)500000 / 57.444853) };
-	INT32 nCyclesDone[3]  = { 0, 0, 0 };
+	INT32 nCyclesTotal[3] = {
+		static_cast<INT32>(static_cast<double>(750000) / 57.444853),
+		static_cast<INT32>(static_cast<double>(510000) / 57.444853),
+		static_cast<INT32>(static_cast<double>(500000) / 57.444853)
+	};
+	INT32 nCyclesDone[3] = {0, 0, 0};
 
 	vblank = 1;
 
@@ -3403,11 +3522,14 @@ static INT32 DrvFrame()
 		M6502Close();
 
 		if (i == 248) vblank = 1;
-		if (i == 8) {
+		if (i == 8)
+		{
 			vblank = 0;
 		}
-		if (i == 248) {
-			if (pBurnDraw) {
+		if (i == 248)
+		{
+			if (pBurnDraw)
+			{
 				BurnDrvRedraw();
 			}
 		}
@@ -3421,7 +3543,8 @@ static INT32 DrvFrame()
 		{
 			CPU_RUN(1, M6502);
 
-			if ((i&7) == 0) {
+			if ((i & 7) == 0)
+			{
 				audio_nmi_state = i & 8;
 				M6502SetIRQLine(0x20, (audio_nmi_enabled && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 			}
@@ -3439,31 +3562,35 @@ static INT32 DrvFrame()
 	}
 	mcs48Close();
 
-	if (pBurnSoundOut) {
-        AY8910Render(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut)
+	{
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	return 0;
 }
 
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
-	
-	if (pnMin != NULL) {
+
+	if (pnMin != nullptr)
+	{
 		*pnMin = 0x029719;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {
+	if (nAction & ACB_MEMORY_RAM)
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd-AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		M6502Scan(nAction);
 		mcs48Scan(nAction);
 
@@ -3520,14 +3647,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(firsttime);
 		SCAN_VAR(tape_bot_eot);
 
-		if (burgertime_mode) {
+		if (burgertime_mode)
+		{
 			SCAN_VAR(last01);
 			SCAN_VAR(last02);
 			SCAN_VAR(ignext);
 		}
 	}
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE)
+	{
 		decode_ram_tiles();
 		M6502Open(0);
 		set_gfx_bank(e900_gfxbank);
@@ -3539,109 +3668,109 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 // necessary for setting up bios relationship
 static struct BurnRomInfo emptyRomDesc[] = {
-	{ "", 0, 0, 0 },
+	{"", 0, 0, 0},
 };
 
 // DECO Cassette System
 
 static struct BurnRomInfo decocassRomDesc[] = {
-	{ "v0a-.7e",   		0x1000, 0x3d33ac34, BRF_BIOS | BRF_PRG }, // 0x80 - BIOS "A" Japan (Main M6502)
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x81
+	{"v0a-.7e", 0x1000, 0x3d33ac34, BRF_BIOS | BRF_PRG}, // 0x80 - BIOS "A" Japan (Main M6502)
+	{"", 0x0000, 0x00000000, 0}, // 0x81
 
-	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0x82 - BIOS "A" Japan (Sound M6502)
+	{"v1-.5a", 0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG}, // 0x82 - BIOS "A" Japan (Sound M6502)
 
-	{ "v2.3m",		0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0x83 - BIOS "A" Japan (prom)
-	{ "v4.10d",		0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0x84 - BIOS "A" Japan (prom)
-	{ "v3.3j",		0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0x85 - BIOS "A" Japan (prom)
+	{"v2.3m", 0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT}, // 0x83 - BIOS "A" Japan (prom)
+	{"v4.10d", 0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT}, // 0x84 - BIOS "A" Japan (prom)
+	{"v3.3j", 0x0020, 0x51eef657, BRF_BIOS | BRF_OPT}, // 0x85 - BIOS "A" Japan (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x86
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x87
+	{"", 0x0000, 0x00000000, 0}, // 0x86
+	{"", 0x0000, 0x00000000, 0}, // 0x87
 
-	{ "dsp-3_p0-a.m9",      0x0800, 0x2541e34b, BRF_BIOS | BRF_PRG }, // 0x88 - BIOS "A" Japan, Older (Main M6502)
-	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0x89 - BIOS "A" Japan, Older (Main M6502)
+	{"dsp-3_p0-a.m9", 0x0800, 0x2541e34b, BRF_BIOS | BRF_PRG}, // 0x88 - BIOS "A" Japan, Older (Main M6502)
+	{"dsp-3_p1-.l9", 0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG}, // 0x89 - BIOS "A" Japan, Older (Main M6502)
 
-	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0x8a - BIOS "A" Japan, Older (Sound M6502)
+	{"rms-3_p2-.c9", 0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG}, // 0x8a - BIOS "A" Japan, Older (Sound M6502)
 
-	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0x8b - BIOS "A" Japan, Older (prom)
-	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0x8c - BIOS "A" Japan, Older (prom)
-	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0x8d - BIOS "A" Japan, Older (prom)
+	{"dsp-3_p3-.e5", 0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT}, // 0x8b - BIOS "A" Japan, Older (prom)
+	{"rms-3_p4-.f6", 0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT}, // 0x8c - BIOS "A" Japan, Older (prom)
+	{"dsp-3_p5-.m4", 0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT}, // 0x8d - BIOS "A" Japan, Older (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x8e
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x8f
+	{"", 0x0000, 0x00000000, 0}, // 0x8e
+	{"", 0x0000, 0x00000000, 0}, // 0x8f
 
-	{ "v0b-.7e",  		0x1000, 0x23d929b7, BRF_BIOS | BRF_PRG }, // 0x90 - BIOS "B" USA (Main M6502)
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x91
+	{"v0b-.7e", 0x1000, 0x23d929b7, BRF_BIOS | BRF_PRG}, // 0x90 - BIOS "B" USA (Main M6502)
+	{"", 0x0000, 0x00000000, 0}, // 0x91
 
-	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0x92 - BIOS "B" USA (Sound M6502)
+	{"v1-.5a", 0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG}, // 0x92 - BIOS "B" USA (Sound M6502)
 
-	{ "v2.3m",		0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0x93 - BIOS "B" USA (prom)
-	{ "v4.10d",		0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0x94 - BIOS "B" USA (prom)
-	{ "v3.3j",		0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0x95 - BIOS "B" USA (prom)
+	{"v2.3m", 0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT}, // 0x93 - BIOS "B" USA (prom)
+	{"v4.10d", 0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT}, // 0x94 - BIOS "B" USA (prom)
+	{"v3.3j", 0x0020, 0x51eef657, BRF_BIOS | BRF_OPT}, // 0x95 - BIOS "B" USA (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x96
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x97
+	{"", 0x0000, 0x00000000, 0}, // 0x96
+	{"", 0x0000, 0x00000000, 0}, // 0x97
 
-	{ "dsp-3_p0-b.m9",      0x0800, 0xb67a91d9, BRF_BIOS | BRF_PRG }, // 0x98 - BIOS "B" USA, Older (Main M6502)
-	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0x99 - BIOS "B" USA, Older (Main M6502)
+	{"dsp-3_p0-b.m9", 0x0800, 0xb67a91d9, BRF_BIOS | BRF_PRG}, // 0x98 - BIOS "B" USA, Older (Main M6502)
+	{"dsp-3_p1-.l9", 0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG}, // 0x99 - BIOS "B" USA, Older (Main M6502)
 
-	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0x9a - BIOS "B" USA, older (Sound M6502)
+	{"rms-3_p2-.c9", 0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG}, // 0x9a - BIOS "B" USA, older (Sound M6502)
 
-	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0x9b - BIOS "B" USA, older (prom)
-	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0x9c - BIOS "B" USA, older (prom)
-	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0x9d - BIOS "B" USA, older (prom)
+	{"dsp-3_p3-.e5", 0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT}, // 0x9b - BIOS "B" USA, older (prom)
+	{"rms-3_p4-.f6", 0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT}, // 0x9c - BIOS "B" USA, older (prom)
+	{"dsp-3_p5-.m4", 0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT}, // 0x9d - BIOS "B" USA, older (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9e
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9f
+	{"", 0x0000, 0x00000000, 0}, // 0x9e
+	{"", 0x0000, 0x00000000, 0}, // 0x9f
 
-	{ "v0c-.7e",		0x1000, 0x9f505709, BRF_BIOS | BRF_PRG }, // 0xa0 - BIOS "C" - cnebula (Main M6502)
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa1
+	{"v0c-.7e", 0x1000, 0x9f505709, BRF_BIOS | BRF_PRG}, // 0xa0 - BIOS "C" - cnebula (Main M6502)
+	{"", 0x0000, 0x00000000, 0}, // 0xa1
 
-	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xa2 - BIOS "C" (Sound M6502)
+	{"v1-.5a", 0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG}, // 0xa2 - BIOS "C" (Sound M6502)
 
-	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xa3 - BIOS "C" (prom)
-	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xa4 - BIOS "C" (prom)
-	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xa5 - BIOS "C" (prom)
+	{"v2.3m", 0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT}, // 0xa3 - BIOS "C" (prom)
+	{"v4.10d", 0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT}, // 0xa4 - BIOS "C" (prom)
+	{"v3.3j", 0x0020, 0x51eef657, BRF_BIOS | BRF_OPT}, // 0xa5 - BIOS "C" (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa6
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xa7
+	{"", 0x0000, 0x00000000, 0}, // 0xa6
+	{"", 0x0000, 0x00000000, 0}, // 0xa7
 
-	{ "dsp-3_p0-c.m9",      0x0800, 0xc76c4057, BRF_BIOS | BRF_PRG }, // 0xa8 - BIOS "C" UK, Older (Main M6502)
-	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0xa9 - BIOS "C" UK, Older (Main M6502)
+	{"dsp-3_p0-c.m9", 0x0800, 0xc76c4057, BRF_BIOS | BRF_PRG}, // 0xa8 - BIOS "C" UK, Older (Main M6502)
+	{"dsp-3_p1-.l9", 0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG}, // 0xa9 - BIOS "C" UK, Older (Main M6502)
 
-	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0xaa - BIOS "C" UK, older (Sound M6502)
+	{"rms-3_p2-.c9", 0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG}, // 0xaa - BIOS "C" UK, older (Sound M6502)
 
-	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0xab - BIOS "C" UK, older (prom)
-	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0xac - BIOS "C" UK, older (prom)
-	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0xad - BIOS "C" UK, older (prom)
+	{"dsp-3_p3-.e5", 0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT}, // 0xab - BIOS "C" UK, older (prom)
+	{"rms-3_p4-.f6", 0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT}, // 0xac - BIOS "C" UK, older (prom)
+	{"dsp-3_p5-.m4", 0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT}, // 0xad - BIOS "C" UK, older (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xae
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xaf
+	{"", 0x0000, 0x00000000, 0}, // 0xae
+	{"", 0x0000, 0x00000000, 0}, // 0xaf
 
-	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xb0 - BIOS "D" - ctisland3, ctower (Main M6502)
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb1
+	{"v0d-.7e", 0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG}, // 0xb0 - BIOS "D" - ctisland3, ctower (Main M6502)
+	{"", 0x0000, 0x00000000, 0}, // 0xb1
 
-	{ "v1-.5a",     	0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG }, // 0xb2 - BIOS "D" (Sound M6502)
+	{"v1-.5a", 0x0800, 0xb66b2c2a, BRF_BIOS | BRF_PRG}, // 0xb2 - BIOS "D" (Sound M6502)
 
-	{ "v2.3m",			0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT }, // 0xb3 - BIOS "D" (prom)
-	{ "v4.10d",			0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT }, // 0xb4 - BIOS "D" (prom)
-	{ "v3.3j",			0x0020, 0x51eef657, BRF_BIOS | BRF_OPT }, // 0xb5 - BIOS "D" (prom)
+	{"v2.3m", 0x0020, 0x238fdb40, BRF_BIOS | BRF_OPT}, // 0xb3 - BIOS "D" (prom)
+	{"v4.10d", 0x0020, 0x3b5836b4, BRF_BIOS | BRF_OPT}, // 0xb4 - BIOS "D" (prom)
+	{"v3.3j", 0x0020, 0x51eef657, BRF_BIOS | BRF_OPT}, // 0xb5 - BIOS "D" (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb6
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xb7
+	{"", 0x0000, 0x00000000, 0}, // 0xb6
+	{"", 0x0000, 0x00000000, 0}, // 0xb7
 
-	{ "dsp-3_p0-d.m9",      0x0800, 0x4b7d72bc, BRF_BIOS | BRF_PRG }, // 0xb8 - BIOS "D" Europe, Older (Main M6502)
-	{ "dsp-3_p1-.l9",       0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG }, // 0xb9 - BIOS "D" Europe, Older (Main M6502)
+	{"dsp-3_p0-d.m9", 0x0800, 0x4b7d72bc, BRF_BIOS | BRF_PRG}, // 0xb8 - BIOS "D" Europe, Older (Main M6502)
+	{"dsp-3_p1-.l9", 0x0800, 0x3bfff5f3, BRF_BIOS | BRF_PRG}, // 0xb9 - BIOS "D" Europe, Older (Main M6502)
 
-	{ "rms-3_p2-.c9",       0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG }, // 0xba - BIOS "D" Europe, older (Sound M6502)
+	{"rms-3_p2-.c9", 0x0400, 0x6c4a891f, BRF_BIOS | BRF_PRG}, // 0xba - BIOS "D" Europe, older (Sound M6502)
 
-	{ "dsp-3_p3-.e5",       0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT }, // 0xbb - BIOS "D" Europe, older (prom)
-	{ "rms-3_p4-.f6",       0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT }, // 0xbc - BIOS "D" Europe, older (prom)
-	{ "dsp-3_p5-.m4",       0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT }, // 0xbd - BIOS "D" Europe, older (prom)
+	{"dsp-3_p3-.e5", 0x0020, 0x539a5a64, BRF_BIOS | BRF_OPT}, // 0xbb - BIOS "D" Europe, older (prom)
+	{"rms-3_p4-.f6", 0x0020, 0x9014c0fd, BRF_BIOS | BRF_OPT}, // 0xbc - BIOS "D" Europe, older (prom)
+	{"dsp-3_p5-.m4", 0x0020, 0xe52089a0, BRF_BIOS | BRF_OPT}, // 0xbd - BIOS "D" Europe, older (prom)
 
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xbe
-	{ "",             	0x0000, 0x00000000, 0                  }, // 0xbf
+	{"", 0x0000, 0x00000000, 0}, // 0xbe
+	{"", 0x0000, 0x00000000, 0}, // 0xbf
 
-	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xc0 - MCU BIOS (Shared)
+	{"cassmcu.1c", 0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG}, // 0xc0 - MCU BIOS (Shared)
 };
 
 STD_ROM_PICK(decocass)
@@ -3653,11 +3782,11 @@ static INT32 BiosInit()
 }
 
 struct BurnDriver BurnDrvDecocass = {
-	"decocass", NULL, NULL, NULL, "1981",
+	"decocass", nullptr, nullptr, nullptr, "1981",
 	"DECO Cassette System Bios\0", "BIOS only", "Data East", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_BOARDROM | BDF_ORIENTATION_VERTICAL, 0, HARDWARE_PREFIX_DATAEAST, GBF_BIOS, 0,
-	NULL, decocassRomInfo, decocassRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, DecocassDIPInfo,
+	nullptr, decocassRomInfo, decocassRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, DecocassDIPInfo,
 	BiosInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3666,29 +3795,29 @@ struct BurnDriver BurnDrvDecocass = {
 // Test Tape (DECO Cassette) (US)
 
 static struct BurnRomInfo ctsttapeRomDesc[] = {
-	{ "de-0061.pro",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"de-0061.pro", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "testtape.cas",	0x2000, 0x4f9d8efb, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"testtape.cas", 0x2000, 0x4f9d8efb, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(ctsttape, ctsttape, decocass)
 STD_ROM_FN(ctsttape)
 
-static UINT8 type1_pass_136_table[8] ={ T1PROM,T1DIRECT,T1PROM,T1DIRECT,T1PROM,T1PROM,T1DIRECT,T1PROM };
+static UINT8 type1_pass_136_table[8] = {T1PROM,T1DIRECT,T1PROM,T1DIRECT,T1PROM,T1PROM,T1DIRECT,T1PROM};
 
 static INT32 CtsttapeInit()
 {
 	type1_map = type1_pass_136_table;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCtsttape = {
-	"ctsttape", NULL, "decocass", NULL, "1981",
-	"Test Tape (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"ctsttape", nullptr, "decocass", nullptr, "1981",
+	"Test Tape (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
-	NULL, ctsttapeRomInfo, ctsttapeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtsttapeDIPInfo,
+	nullptr, ctsttapeRomInfo, ctsttapeRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CtsttapeDIPInfo,
 	CtsttapeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3697,29 +3826,29 @@ struct BurnDriver BurnDrvCtsttape = {
 // Highway Chase (DECO Cassette) (US)
 
 static struct BurnRomInfo chwyRomDesc[] = {
-	{ "chwy.pro",		0x0020, 0x2fae678e, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"chwy.pro", 0x0020, 0x2fae678e, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "chwy.cas",		0x8000, 0x68a48064, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"chwy.cas", 0x8000, 0x68a48064, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(chwy, chwy, decocass)
 STD_ROM_FN(chwy)
 
-static UINT8 type1_latch_27_pass_3_inv_2_table[8] = { T1PROM,T1PROM,T1LATCHINV,T1DIRECT,T1PROM,T1PROM,T1PROM,T1LATCH };
+static UINT8 type1_latch_27_pass_3_inv_2_table[8] = {T1PROM,T1PROM,T1LATCHINV,T1DIRECT,T1PROM,T1PROM,T1PROM,T1LATCH};
 
 static INT32 ChwyInit()
 {
 	type1_map = type1_latch_27_pass_3_inv_2_table;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvChwy = {
-	"chwy", NULL, "decocass", NULL, "1980",
-	"Highway Chase (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"chwy", nullptr, "decocass", nullptr, "1980",
+	"Highway Chase (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, chwyRomInfo, chwyRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ChwyDIPInfo,
+	nullptr, chwyRomInfo, chwyRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, ChwyDIPInfo,
 	ChwyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3728,29 +3857,29 @@ struct BurnDriver BurnDrvChwy = {
 // Manhattan (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cmanhatRomDesc[] = {
-	{ "manhattan.pro",	0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"manhattan.pro", 0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "manhattan.cas",	0x6000, 0x92dae2b1, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"manhattan.cas", 0x6000, 0x92dae2b1, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cmanhat, cmanhat, decocass)
 STD_ROM_FN(cmanhat)
 
-static UINT8 type1_latch_xab_pass_x54_table[8] = { T1PROM,T1PROM,T1DIRECT,T1PROM,T1DIRECT,T1PROM,T1DIRECT,T1PROM };
+static UINT8 type1_latch_xab_pass_x54_table[8] = {T1PROM,T1PROM,T1DIRECT,T1PROM,T1DIRECT,T1PROM,T1DIRECT,T1PROM};
 
 static INT32 CmanhatInit()
 {
 	type1_map = type1_latch_xab_pass_x54_table;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCmanhat = {
-	"cmanhat", NULL, "decocass", NULL, "1981",
-	"Manhattan (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cmanhat", nullptr, "decocass", nullptr, "1981",
+	"Manhattan (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
-	NULL, cmanhatRomInfo, cmanhatRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CmanhatDIPInfo,
+	nullptr, cmanhatRomInfo, cmanhatRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CmanhatDIPInfo,
 	CmanhatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3759,31 +3888,31 @@ struct BurnDriver BurnDrvCmanhat = {
 // Terranean (DECO Cassette) (US)
 
 static struct BurnRomInfo cterraniRomDesc[] = {
-	{ "dp-1040.dgl",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1040.dgl", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1040.cas",	0x8000, 0xeb71adbc, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1040.cas", 0x8000, 0xeb71adbc, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cterrani, cterrani, decocass)
 STD_ROM_FN(cterrani)
 
-static UINT8 type1_latch_26_pass_3_inv_2_table[8] = { T1PROM,T1PROM,T1LATCHINV,T1DIRECT,T1PROM, T1PROM,T1LATCH,T1PROM };
+static UINT8 type1_latch_26_pass_3_inv_2_table[8] = {T1PROM,T1PROM,T1LATCHINV,T1DIRECT,T1PROM, T1PROM,T1LATCH,T1PROM};
 
 static INT32 CterraniInit()
 {
 	type1_map = type1_latch_26_pass_3_inv_2_table;
-	type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCterrani = {
-	"cterrani", NULL, "decocass", NULL, "1981",
-	"Terranean (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cterrani", nullptr, "decocass", nullptr, "1981",
+	"Terranean (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, cterraniRomInfo, cterraniRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CterraniDIPInfo,
+	nullptr, cterraniRomInfo, cterraniRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CterraniDIPInfo,
 	CterraniInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3792,29 +3921,29 @@ struct BurnDriver BurnDrvCterrani = {
 // Astro Fantasia (DECO Cassette) (US)
 
 static struct BurnRomInfo castfantRomDesc[] = {
-	{ "de-0061.pro",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"de-0061.pro", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "castfant.cas",	0x8000, 0x6d77d1b5, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"castfant.cas", 0x8000, 0x6d77d1b5, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(castfant, castfant, decocass)
 STD_ROM_FN(castfant)
 
-static UINT8 type1_latch_16_pass_3_inv_1_table[8] = { T1PROM,T1LATCHINV,T1PROM,T1DIRECT,T1PROM,T1PROM,T1LATCH,T1PROM };
+static UINT8 type1_latch_16_pass_3_inv_1_table[8] = {T1PROM,T1LATCHINV,T1PROM,T1DIRECT,T1PROM,T1PROM,T1LATCH,T1PROM};
 
 static INT32 CastfantInit()
 {
 	type1_map = type1_latch_16_pass_3_inv_1_table;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCastfant = {
-	"castfant", NULL, "decocass", NULL, "1981",
-	"Astro Fantasia (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"castfant", nullptr, "decocass", nullptr, "1981",
+	"Astro Fantasia (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, castfantRomInfo, castfantRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CastfantDIPInfo,
+	nullptr, castfantRomInfo, castfantRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CastfantDIPInfo,
 	CastfantInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3822,9 +3951,9 @@ struct BurnDriver BurnDrvCastfant = {
 // Nebula (DECO Cassette) (UK)
 
 static struct BurnRomInfo cnebulaRomDesc[] = {
-	{ "nebula2.pro",	0x0020, 0x75cae001, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"nebula2.pro", 0x0020, 0x75cae001, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "nebula2.cas",	0x5c00, 0xaaac39e6, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"nebula2.cas", 0x5c00, 0xaaac39e6, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cnebula, cnebula, decocass)
@@ -3834,23 +3963,24 @@ STD_ROM_FN(cnebula)
 static INT32 CnebulaInit()
 {
 	UINT32 nebby = 0xeededdee;
-	UINT8 *nebby2 = (UINT8*)BurnMalloc(sizeof(nebby)*2);
-	for (INT32 i = 0; i < 8; i++) {
-		nebby2[7-i] = (((nebby<<(i*4)) & 0xf0000000) >> 28) ^ 0xf;
-		nebby2[i]  |= (i<<14)/nebby&3;
+	auto nebby2 = BurnMalloc(sizeof(nebby)*2);
+	for (INT32 i = 0; i < 8; i++)
+	{
+		nebby2[7 - i] = (((nebby << (i * 4)) & 0xf0000000) >> 28) ^ 0xf;
+		nebby2[i] |= (i << 14) / nebby & 3;
 	}
 
 	type1_map = nebby2;
 
-	return DecocassInit(decocass_type1_read, NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCnebula = {
-	"cnebula", NULL, "decocass", NULL, "1981",
-	"Nebula (DECO Cassette) (UK)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cnebula", nullptr, "decocass", nullptr, "1981",
+	"Nebula (DECO Cassette) (UK)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, cnebulaRomInfo, cnebulaRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CnebulaDIPInfo,
+	nullptr, cnebulaRomInfo, cnebulaRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CnebulaDIPInfo,
 	CnebulaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3859,9 +3989,9 @@ struct BurnDriver BurnDrvCnebula = {
 // Super Astro Fighter (DECO Cassette) (US)
 
 static struct BurnRomInfo csuperasRomDesc[] = {
-	{ "de-0061.pro",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"de-0061.pro", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "csuperas.cas",	0x8000, 0xfabcd07f, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"csuperas.cas", 0x8000, 0xfabcd07f, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(csuperas, csuperas, decocass)
@@ -3870,18 +4000,18 @@ STD_ROM_FN(csuperas)
 static INT32 CsuperasInit()
 {
 	type1_map = type1_latch_26_pass_3_inv_2_table;
-	type1_inmap = MAKE_MAP(0,1,2,3,5,4,6,7);
-	type1_outmap = MAKE_MAP(0,1,2,3,5,4,6,7);
+	type1_inmap = MAKE_MAP(0, 1, 2, 3, 5, 4, 6, 7);
+	type1_outmap = MAKE_MAP(0, 1, 2, 3, 5, 4, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCsuperas = {
-	"csuperas", NULL, "decocass", NULL, "1981",
-	"Super Astro Fighter (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"csuperas", nullptr, "decocass", nullptr, "1981",
+	"Super Astro Fighter (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, csuperasRomInfo, csuperasRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CsuperasDIPInfo,
+	nullptr, csuperasRomInfo, csuperasRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CsuperasDIPInfo,
 	CsuperasInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3890,31 +4020,32 @@ struct BurnDriver BurnDrvCsuperas = {
 // Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1,Japan)
 
 static struct BurnRomInfo cocean1aRomDesc[] = {
-	{ "dp-1100-a.rom",	0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data'
+	{"dp-1100-a.rom", 0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data'
 
-	{ "dt-1101-a-0.cas",	0x3e00, 0xdb8ab848, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1101-a-0.cas", 0x3e00, 0xdb8ab848, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cocean1a, cocean1a, decocass)
 STD_ROM_FN(cocean1a)
 
-static UINT8 type1_map1100[8] = { T1PROM,T1PROM,T1LATCHINV,T1PROM,T1DIRECT,T1PROM,T1LATCH,T1PROM };
+static UINT8 type1_map1100[8] = {T1PROM,T1PROM,T1LATCHINV,T1PROM,T1DIRECT,T1PROM,T1LATCH,T1PROM};
 
 static INT32 Cocean1aInit()
 {
 	type1_map = type1_map1100;
-	type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCocean1a = {
-	"cocean1a", NULL, "decocass", NULL, "1981",
-	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cocean1a", nullptr, "decocass", nullptr, "1981",
+	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1,Japan)\0", nullptr, "Data East Corporation",
+	"Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
-	NULL, cocean1aRomInfo, cocean1aRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cocean1aDIPInfo,
+	nullptr, cocean1aRomInfo, cocean1aRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, Cocean1aDIPInfo,
 	Cocean1aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3923,20 +4054,21 @@ struct BurnDriver BurnDrvCocean1a = {
 // Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6,US)
 
 static struct BurnRomInfo cocean6bRomDesc[] = {
-	{ "dp-1100-b.rom",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1100-b.rom", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1106-b-0.cas",	0x4500, 0xfa6ffc95, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1106-b-0.cas", 0x4500, 0xfa6ffc95, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cocean6b, cocean6b, decocass)
 STD_ROM_FN(cocean6b)
 
 struct BurnDriver BurnDrvCocean6b = {
-	"cocean6b", "cocean1a", "decocass", NULL, "1981",
-	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6,US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
-	NULL, cocean6bRomInfo, cocean6bRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cocean6bDIPInfo,
+	"cocean6b", "cocean1a", "decocass", nullptr, "1981",
+	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6,US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_CASINO, 0,
+	nullptr, cocean6bRomInfo, cocean6bRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, Cocean6bDIPInfo,
 	Cocean1aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3945,9 +4077,9 @@ struct BurnDriver BurnDrvCocean6b = {
 // Lock'n'Chase (DECO Cassette) (US)
 
 static struct BurnRomInfo clocknchRomDesc[] = {
-	{ "dp-1110_b.dgl",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1110_b.dgl", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "clocknch.cas",	0x8000, 0xc9d163a4, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"clocknch.cas", 0x8000, 0xc9d163a4, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(clocknch, clocknch, decocass)
@@ -3956,18 +4088,18 @@ STD_ROM_FN(clocknch)
 static INT32 ClocknchInit()
 {
 	type1_map = type1_latch_26_pass_3_inv_2_table;
-	type1_inmap = MAKE_MAP(0,1,3,2,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,1,3,2,4,5,6,7);
+	type1_inmap = MAKE_MAP(0, 1, 3, 2, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(0, 1, 3, 2, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvClocknch = {
-	"clocknch", NULL, "decocass", NULL, "1981",
-	"Lock'n'Chase (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"clocknch", nullptr, "decocass", nullptr, "1981",
+	"Lock'n'Chase (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, clocknchRomInfo, clocknchRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClocknchDIPInfo,
+	nullptr, clocknchRomInfo, clocknchRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, ClocknchDIPInfo,
 	ClocknchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3976,31 +4108,33 @@ struct BurnDriver BurnDrvClocknch = {
 // Lock'n'Chase (DECO Cassette) (Japan)
 
 static struct BurnRomInfo clocknchjRomDesc[] = {
-	{ "a-0061.dgl",		0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"a-0061.dgl", 0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1111-a-0.bin",	0x6300, 0x9753e815, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1111-a-0.bin", 0x6300, 0x9753e815, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(clocknchj, clocknchj, decocass)
 STD_ROM_FN(clocknchj)
 
-static UINT8 type1_map_clocknchj[8] = { T1PROM,T1PROM,T1DIRECT,T1LATCHINV,T1PROM,T1PROM,T1LATCH,T1PROM };
+static UINT8 type1_map_clocknchj[8] = {T1PROM,T1PROM,T1DIRECT,T1LATCHINV,T1PROM,T1PROM,T1LATCH,T1PROM};
 
 static INT32 ClocknchjInit()
 {
 	type1_map = type1_map_clocknchj;
-	type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvClocknchj = {
-	"clocknchj", "clocknch", "decocass", NULL, "1981",
-	"Lock'n'Chase (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, clocknchjRomInfo, clocknchjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClocknchjDIPInfo,
+	"clocknchj", "clocknch", "decocass", nullptr, "1981",
+	"Lock'n'Chase (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_MAZE, 0,
+	nullptr, clocknchjRomInfo, clocknchjRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo,
+	ClocknchjDIPInfo,
 	ClocknchjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4009,31 +4143,32 @@ struct BurnDriver BurnDrvClocknchj = {
 // Flash Boy (vertical) (DECO Cassette MD) (No.12/Ver.0/Set.1,Japan)
 
 static struct BurnRomInfo cfboy0a1RomDesc[] = {
-	{ "dp-1120-a.rom",	0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1120-a.rom", 0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1120-a-1.cas",	0x6a00, 0xc6746dc0, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1120-a-1.cas", 0x6a00, 0xc6746dc0, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cfboy0a1, cfboy0a1, decocass)
 STD_ROM_FN(cfboy0a1)
 
-static UINT8 type1_map1120[8] = { T1PROM,T1PROM,T1LATCHINV,T1DIRECT,T1PROM,T1LATCH,T1PROM,T1PROM };
+static UINT8 type1_map1120[8] = {T1PROM,T1PROM,T1LATCHINV,T1DIRECT,T1PROM,T1LATCH,T1PROM,T1PROM};
 
 static INT32 Cfboy0a1Init()
 {
 	type1_map = type1_map1120;
-	type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCfboy0a1 = {
-	"cfboy0a1", NULL, "decocass", NULL, "1981",
-	"Flash Boy (vertical) (DECO Cassette MD) (No.12/Ver.0/Set.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cfboy0a1", nullptr, "decocass", nullptr, "1981",
+	"Flash Boy (vertical) (DECO Cassette MD) (No.12/Ver.0/Set.1,Japan)\0", nullptr, "Data East Corporation",
+	"Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, cfboy0a1RomInfo, cfboy0a1RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cfboy0a1DIPInfo,
+	nullptr, cfboy0a1RomInfo, cfboy0a1RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, Cfboy0a1DIPInfo,
 	Cfboy0a1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4042,9 +4177,9 @@ struct BurnDriver BurnDrvCfboy0a1 = {
 // Tournament Pro Golf (DECO Cassette) (US)
 
 static struct BurnRomInfo cprogolfRomDesc[] = {
-	{ "dp-1130_b.dgl",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1130_b.dgl", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1130_9b.cas",	0x8000, 0x02123cd1, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1130_9b.cas", 0x8000, 0x02123cd1, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cprogolf, cprogolf, decocass)
@@ -4053,18 +4188,18 @@ STD_ROM_FN(cprogolf)
 static INT32 CprogolfInit()
 {
 	type1_map = type1_latch_26_pass_3_inv_2_table;
-	type1_inmap = MAKE_MAP(1,0,2,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(1,0,2,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(1, 0, 2, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(1, 0, 2, 3, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCprogolf = {
-	"cprogolf", NULL, "decocass", NULL, "1981",
-	"Tournament Pro Golf (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cprogolf", nullptr, "decocass", nullptr, "1981",
+	"Tournament Pro Golf (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cprogolfRomInfo, cprogolfRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprogolfDIPInfo,
+	nullptr, cprogolfRomInfo, cprogolfRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CprogolfDIPInfo,
 	CprogolfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4073,9 +4208,9 @@ struct BurnDriver BurnDrvCprogolf = {
 // Tournament Pro Golf (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cprogolfjRomDesc[] = {
-	{ "a-0061.dgl",		0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"a-0061.dgl", 0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-113_a.cas",	0x8000, 0x8408248f, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-113_a.cas", 0x8000, 0x8408248f, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cprogolfj, cprogolfj, decocass)
@@ -4084,18 +4219,20 @@ STD_ROM_FN(cprogolfj)
 static INT32 CprogolfjInit()
 {
 	type1_map = type1_latch_26_pass_3_inv_2_table;
-	type1_inmap = MAKE_MAP(1,0,2,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(1,0,2,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(1, 0, 2, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(1, 0, 2, 3, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCprogolfj = {
-	"cprogolfj", "cprogolf", "decocass", NULL, "1981",
-	"Tournament Pro Golf (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cprogolfjRomInfo, cprogolfjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprogolfjDIPInfo,
+	"cprogolfj", "cprogolf", "decocass", nullptr, "1981",
+	"Tournament Pro Golf (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_SPORTSMISC, 0,
+	nullptr, cprogolfjRomInfo, cprogolfjRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo,
+	CprogolfjDIPInfo,
 	CprogolfjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4104,20 +4241,22 @@ struct BurnDriver BurnDrvCprogolfj = {
 // 18 Challenge Pro Golf (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cprogolf18RomDesc[] = {
-	{ "de-0061-a-0.rom",	0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"de-0061-a-0.rom", 0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "progolf18.cas",	0x6700, 0x3024396c, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"progolf18.cas", 0x6700, 0x3024396c, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cprogolf18, cprogolf18, decocass)
 STD_ROM_FN(cprogolf18)
 
 struct BurnDriver BurnDrvCprogolf18 = {
-	"cprogolf18", "cprogolf", "decocass", NULL, "1982",
-	"18 Challenge Pro Golf (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cprogolf18RomInfo, cprogolf18RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprogolfjDIPInfo,
+	"cprogolf18", "cprogolf", "decocass", nullptr, "1982",
+	"18 Challenge Pro Golf (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_SPORTSMISC, 0,
+	nullptr, cprogolf18RomInfo, cprogolf18RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo,
+	CprogolfjDIPInfo,
 	CprogolfjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4126,9 +4265,9 @@ struct BurnDriver BurnDrvCprogolf18 = {
 // DS Telejan (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cdsteljnRomDesc[] = {
-	{ "a-0061.dgl",		0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"a-0061.dgl", 0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1144-a3.cas",	0x7300, 0x1336a912, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1144-a3.cas", 0x7300, 0x1336a912, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cdsteljn, cdsteljn, decocass)
@@ -4138,15 +4277,15 @@ static INT32 CdsteljnInit()
 {
 	type1_map = type1_latch_27_pass_3_inv_2_table;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCdsteljn = {
-	"cdsteljn", NULL, "decocass", NULL, "1981",
-	"DS Telejan (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cdsteljn", nullptr, "decocass", nullptr, "1981",
+	"DS Telejan (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAHJONG, 0,
-	NULL, cdsteljnRomInfo, cdsteljnRomName, NULL, NULL, NULL, NULL, CdsteljnInputInfo, CdsteljnDIPInfo,
+	nullptr, cdsteljnRomInfo, cdsteljnRomName, nullptr, nullptr, nullptr, nullptr, CdsteljnInputInfo, CdsteljnDIPInfo,
 	CdsteljnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4155,9 +4294,9 @@ struct BurnDriver BurnDrvCdsteljn = {
 // Lucky Poker (DECO Cassette) (US)
 
 static struct BurnRomInfo cluckypoRomDesc[] = {
-	{ "dp-1150_b.dgl",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1150_b.dgl", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cluckypo.cas",	0x8000, 0x2070c243, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cluckypo.cas", 0x8000, 0x2070c243, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cluckypo, cluckypo, decocass)
@@ -4166,18 +4305,18 @@ STD_ROM_FN(cluckypo)
 static INT32 CluckypoInit()
 {
 	type1_map = type1_latch_26_pass_3_inv_2_table;
-	type1_inmap = MAKE_MAP(0,3,2,1,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,3,2,1,4,5,6,7);
+	type1_inmap = MAKE_MAP(0, 3, 2, 1, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(0, 3, 2, 1, 4, 5, 6, 7);
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCluckypo = {
-	"cluckypo", NULL, "decocass", NULL, "1981",
-	"Lucky Poker (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cluckypo", nullptr, "decocass", nullptr, "1981",
+	"Lucky Poker (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
-	NULL, cluckypoRomInfo, cluckypoRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CluckypoDIPInfo,
+	nullptr, cluckypoRomInfo, cluckypoRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CluckypoDIPInfo,
 	CluckypoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4186,14 +4325,14 @@ struct BurnDriver BurnDrvCluckypo = {
 // Treasure Island (DECO Cassette) (US) (set 1)
 
 static struct BurnRomInfo ctislandRomDesc[] = {
-	{ "de-0061.pro",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"de-0061.pro", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "ctisland.cas",	0x8000, 0x3f63b8f8, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"ctisland.cas", 0x8000, 0x3f63b8f8, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 
-	{ "deco-ti.x1",		0x1000, 0xa7f8aeba, 3 | BRF_GRA },           //  2 Overlay data
-	{ "deco-ti.x2",		0x1000, 0x2a0d3c91, 3 | BRF_GRA },           //  3
-	{ "deco-ti.x3",		0x1000, 0x3a26b97c, 3 | BRF_GRA },           //  4
-	{ "deco-ti.x4",		0x1000, 0x1cbe43de, 3 | BRF_GRA },           //  5
+	{"deco-ti.x1", 0x1000, 0xa7f8aeba, 3 | BRF_GRA}, //  2 Overlay data
+	{"deco-ti.x2", 0x1000, 0x2a0d3c91, 3 | BRF_GRA}, //  3
+	{"deco-ti.x3", 0x1000, 0x3a26b97c, 3 | BRF_GRA}, //  4
+	{"deco-ti.x4", 0x1000, 0x1cbe43de, 3 | BRF_GRA}, //  5
 };
 
 STDROMPICKEXT(ctisland, ctisland, decocass)
@@ -4202,22 +4341,22 @@ STD_ROM_FN(ctisland)
 static INT32 CtislandInit()
 {
 	type1_map = type1_latch_26_pass_3_inv_2_table;
-	type1_inmap = MAKE_MAP(2,1,0,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(2,1,0,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(2, 1, 0, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(2, 1, 0, 3, 4, 5, 6, 7);
 
 	e900_enable = 1;
 
 	fourway_mode = 1;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCtisland = {
-	"ctisland", NULL, "decocass", NULL, "1981",
-	"Treasure Island (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"ctisland", nullptr, "decocass", nullptr, "1981",
+	"Treasure Island (DECO Cassette) (US) (set 1)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, ctislandRomInfo, ctislandRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtislandDIPInfo,
+	nullptr, ctislandRomInfo, ctislandRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CtislandDIPInfo,
 	CtislandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4226,25 +4365,26 @@ struct BurnDriver BurnDrvCtisland = {
 // Treasure Island (DECO Cassette) (US) (set 2)
 
 static struct BurnRomInfo ctisland2RomDesc[] = {
-	{ "de-0061.pro",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"de-0061.pro", 0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "ctislnd2.cas",	0x8000, 0x2854b4c0, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"ctislnd2.cas", 0x8000, 0x2854b4c0, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 
-	{ "deco-ti.x1",		0x1000, 0xa7f8aeba, 3 | BRF_GRA },           //  2 Overlay data
-	{ "deco-ti.x2",		0x1000, 0x2a0d3c91, 3 | BRF_GRA },           //  3
-	{ "deco-ti.x3",		0x1000, 0x3a26b97c, 3 | BRF_GRA },           //  4
-	{ "deco-ti.x4",		0x1000, 0x1cbe43de, 3 | BRF_GRA },           //  5
+	{"deco-ti.x1", 0x1000, 0xa7f8aeba, 3 | BRF_GRA}, //  2 Overlay data
+	{"deco-ti.x2", 0x1000, 0x2a0d3c91, 3 | BRF_GRA}, //  3
+	{"deco-ti.x3", 0x1000, 0x3a26b97c, 3 | BRF_GRA}, //  4
+	{"deco-ti.x4", 0x1000, 0x1cbe43de, 3 | BRF_GRA}, //  5
 };
 
 STDROMPICKEXT(ctisland2, ctisland2, decocass)
 STD_ROM_FN(ctisland2)
 
 struct BurnDriver BurnDrvCtisland2 = {
-	"ctisland2", "ctisland", "decocass", NULL, "1981",
-	"Treasure Island (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, ctisland2RomInfo, ctisland2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtislandDIPInfo,
+	"ctisland2", "ctisland", "decocass", nullptr, "1981",
+	"Treasure Island (DECO Cassette) (US) (set 2)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_PLATFORM, 0,
+	nullptr, ctisland2RomInfo, ctisland2RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CtislandDIPInfo,
 	CtislandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4253,40 +4393,42 @@ struct BurnDriver BurnDrvCtisland2 = {
 // Treasure Island (DECO Cassette) (Europe?)
 
 static struct BurnRomInfo ctisland3RomDesc[] = {
-	{ "ctisland3.pro",	0x0020, 0xb87b56a7, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"ctisland3.pro", 0x0020, 0xb87b56a7, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "ctislnd3.cas",	0x8000, 0x45464e1e, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"ctislnd3.cas", 0x8000, 0x45464e1e, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 
-	{ "deco-ti.x1",		0x1000, 0xa7f8aeba, 3 | BRF_GRA },           //  2 Overlay data
-	{ "deco-ti.x2",		0x1000, 0x2a0d3c91, 3 | BRF_GRA },           //  3
-	{ "deco-ti.x3",		0x1000, 0x3a26b97c, 3 | BRF_GRA },           //  4
-	{ "deco-ti.x4",		0x1000, 0x1cbe43de, 3 | BRF_GRA },           //  5
+	{"deco-ti.x1", 0x1000, 0xa7f8aeba, 3 | BRF_GRA}, //  2 Overlay data
+	{"deco-ti.x2", 0x1000, 0x2a0d3c91, 3 | BRF_GRA}, //  3
+	{"deco-ti.x3", 0x1000, 0x3a26b97c, 3 | BRF_GRA}, //  4
+	{"deco-ti.x4", 0x1000, 0x1cbe43de, 3 | BRF_GRA}, //  5
 };
 
 STDROMPICKEXT(ctisland3, ctisland3, decocass)
 STD_ROM_FN(ctisland3)
 
-static UINT8 type1_latch_ctisland3[8] = { T1LATCHINV,T1PROM,T1PROM,T1DIRECT,T1PROM, T1PROM,T1LATCH,T1PROM };
+static UINT8 type1_latch_ctisland3[8] = {T1LATCHINV,T1PROM,T1PROM,T1DIRECT,T1PROM, T1PROM,T1LATCH,T1PROM};
 
 static INT32 Ctisland3Init()
 {
 	type1_map = type1_latch_ctisland3;
-	type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	type1_inmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
+	type1_outmap = MAKE_MAP(0, 1, 2, 3, 4, 5, 6, 7);
 
 	e900_enable = 1;
 
 	fourway_mode = 1;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCtisland3 = {
-	"ctisland3", "ctisland", "decocass", NULL, "1981",
-	"Treasure Island (DECO Cassette) (Europe?)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, ctisland3RomInfo, ctisland3RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Ctisland3DIPInfo,
+	"ctisland3", "ctisland", "decocass", nullptr, "1981",
+	"Treasure Island (DECO Cassette) (Europe?)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_PLATFORM, 0,
+	nullptr, ctisland3RomInfo, ctisland3RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo,
+	Ctisland3DIPInfo,
 	Ctisland3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4294,20 +4436,20 @@ struct BurnDriver BurnDrvCtisland3 = {
 // The Tower (DECO Cassette) (Europe)
 
 static struct BurnRomInfo ctowerRomDesc[] = {
-	{ "ctower.pro",	0x0020, 0x32e9dcd7, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"ctower.pro", 0x0020, 0x32e9dcd7, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "ctower.cas",	0x6900, 0x94ad1dd6, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"ctower.cas", 0x6900, 0x94ad1dd6, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(ctower, ctower, decocass)
 STD_ROM_FN(ctower)
 
 struct BurnDriver BurnDrvCtower = {
-	"ctower", NULL, "decocass", NULL, "1981",
-	"The Tower (DECO Cassette) (Europe)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"ctower", nullptr, "decocass", nullptr, "1981",
+	"The Tower (DECO Cassette) (Europe)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, ctowerRomInfo, ctowerRomName, NULL, NULL, NULL, NULL, CtowerInputInfo, CtowerDIPInfo,
+	nullptr, ctowerRomInfo, ctowerRomName, nullptr, nullptr, nullptr, nullptr, CtowerInputInfo, CtowerDIPInfo,
 	Cfboy0a1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4315,26 +4457,26 @@ struct BurnDriver BurnDrvCtower = {
 // Explorer (DECO Cassette) (US)
 
 static struct BurnRomInfo cexploreRomDesc[] = {
-	{ "dp-1180_b.dgl",	      0x0020, 0xc7a9ac8f, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1180_b.dgl", 0x0020, 0xc7a9ac8f, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cexplore.cas",	      0x8000, 0xfae49c66, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cexplore.cas", 0x8000, 0xfae49c66, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 
-	{ "x1_made_in_japan_18.x1",   0x1000, 0xf2ca58f0, 3 | BRF_GRA },           //  2 Overlay data
-	{ "x2_made_in_japan_18.x2",   0x1000, 0x75d999bf, 3 | BRF_GRA },           //  3
-	{ "x3_made_in_japan_18.x3",   0x1000, 0x941539c6, 3 | BRF_GRA },           //  4
-	{ "x4_made_in_japan_18.x4",   0x1000, 0x73388544, 3 | BRF_GRA },           //  5
-	{ "x5_made_in_japan_18.x5",   0x1000, 0xb40699c5, 3 | BRF_GRA },           //  6
-	{ "y1_made_in_japan_18.y1",   0x1000, 0xd887dc50, 3 | BRF_GRA },           //  7
-	{ "y2_made_in_japan_18.y2",   0x1000, 0xfe325d0d, 3 | BRF_GRA },           //  8
-	{ "y3_made_in_japan_18.y3",   0x1000, 0x7a787ecf, 3 | BRF_GRA },           //  9
-	{ "y4_made_in_japan_18.y4",   0x1000, 0xac30e8c7, 3 | BRF_GRA },           // 10
-	{ "y5_made_in_japan_18.y5",   0x1000, 0x0a6b8f03, 3 | BRF_GRA },           // 11
+	{"x1_made_in_japan_18.x1", 0x1000, 0xf2ca58f0, 3 | BRF_GRA}, //  2 Overlay data
+	{"x2_made_in_japan_18.x2", 0x1000, 0x75d999bf, 3 | BRF_GRA}, //  3
+	{"x3_made_in_japan_18.x3", 0x1000, 0x941539c6, 3 | BRF_GRA}, //  4
+	{"x4_made_in_japan_18.x4", 0x1000, 0x73388544, 3 | BRF_GRA}, //  5
+	{"x5_made_in_japan_18.x5", 0x1000, 0xb40699c5, 3 | BRF_GRA}, //  6
+	{"y1_made_in_japan_18.y1", 0x1000, 0xd887dc50, 3 | BRF_GRA}, //  7
+	{"y2_made_in_japan_18.y2", 0x1000, 0xfe325d0d, 3 | BRF_GRA}, //  8
+	{"y3_made_in_japan_18.y3", 0x1000, 0x7a787ecf, 3 | BRF_GRA}, //  9
+	{"y4_made_in_japan_18.y4", 0x1000, 0xac30e8c7, 3 | BRF_GRA}, // 10
+	{"y5_made_in_japan_18.y5", 0x1000, 0x0a6b8f03, 3 | BRF_GRA}, // 11
 };
 
 STDROMPICKEXT(cexplore, cexplore, decocass)
 STD_ROM_FN(cexplore)
 
-static UINT8 type1_latch_26_pass_5_inv_2_table[8] = { T1PROM,T1PROM,T1LATCHINV,T1PROM,T1PROM,T1DIRECT,T1LATCH,T1PROM };
+static UINT8 type1_latch_26_pass_5_inv_2_table[8] = {T1PROM,T1PROM,T1LATCHINV,T1PROM,T1PROM,T1DIRECT,T1LATCH,T1PROM};
 
 static INT32 CexploreInit()
 {
@@ -4342,15 +4484,15 @@ static INT32 CexploreInit()
 
 	e900_enable = 1;
 
-	return DecocassInit(decocass_type1_read,NULL);
+	return DecocassInit(decocass_type1_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCexplore = {
-	"cexplore", NULL, "decocass", NULL, "1982",
-	"Explorer (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cexplore", nullptr, "decocass", nullptr, "1982",
+	"Explorer (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, cexploreRomInfo, cexploreRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CexploreDIPInfo,
+	nullptr, cexploreRomInfo, cexploreRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CexploreDIPInfo,
 	CexploreInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4359,9 +4501,9 @@ struct BurnDriver BurnDrvCexplore = {
 // Disco No.1 (DECO Cassette) (US)
 
 static struct BurnRomInfo cdiscon1RomDesc[] = {
-	{ "dp-1190_b.dgl",	0x0800, 0x0f793fab, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1190_b.dgl", 0x0800, 0x0f793fab, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cdiscon1.cas",	0x8000, 0x1429a397, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cdiscon1.cas", 0x8000, 0x1429a397, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cdiscon1, cdiscon1, decocass)
@@ -4375,11 +4517,11 @@ static INT32 Cdiscon1Init()
 }
 
 struct BurnDriver BurnDrvCdiscon1 = {
-	"cdiscon1", NULL, "decocass", NULL, "1982",
-	"Disco No.1 (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cdiscon1", nullptr, "decocass", nullptr, "1982",
+	"Disco No.1 (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
-	NULL, cdiscon1RomInfo, cdiscon1RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, Cdiscon1DIPInfo,
+	nullptr, cdiscon1RomInfo, cdiscon1RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, Cdiscon1DIPInfo,
 	Cdiscon1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4388,20 +4530,21 @@ struct BurnDriver BurnDrvCdiscon1 = {
 // Sweet Heart (DECO Cassette) (US)
 
 static struct BurnRomInfo csweethtRomDesc[] = {
-	{ "cdiscon1.pro",	0x0800, 0x0f793fab, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cdiscon1.pro", 0x0800, 0x0f793fab, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "csweetht.cas",	0x8000, 0x175ef706, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"csweetht.cas", 0x8000, 0x175ef706, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(csweetht, csweetht, decocass)
 STD_ROM_FN(csweetht)
 
 struct BurnDriver BurnDrvCsweetht = {
-	"csweetht", "cdiscon1", "decocass", NULL, "1982",
-	"Sweet Heart (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
-	NULL, csweethtRomInfo, csweethtRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CsweethtDIPInfo,
+	"csweetht", "cdiscon1", "decocass", nullptr, "1982",
+	"Sweet Heart (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_ACTION, 0,
+	nullptr, csweethtRomInfo, csweethtRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CsweethtDIPInfo,
 	Cdiscon1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4410,9 +4553,9 @@ struct BurnDriver BurnDrvCsweetht = {
 // Tornado (DECO Cassette) (US)
 
 static struct BurnRomInfo ctornadoRomDesc[] = {
-	{ "ctornado.pro",	0x0800, 0xc9a91697, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"ctornado.pro", 0x0800, 0xc9a91697, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "ctornado.cas",	0x8000, 0xe4e36ce0, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"ctornado.cas", 0x8000, 0xe4e36ce0, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(ctornado, ctornado, decocass)
@@ -4424,11 +4567,11 @@ static INT32 CtornadoInit()
 }
 
 struct BurnDriver BurnDrvCtornado = {
-	"ctornado", NULL, "decocass", NULL, "1982",
-	"Tornado (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"ctornado", nullptr, "decocass", nullptr, "1982",
+	"Tornado (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, ctornadoRomInfo, ctornadoRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CtornadoDIPInfo,
+	nullptr, ctornadoRomInfo, ctornadoRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CtornadoDIPInfo,
 	CtornadoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4437,9 +4580,9 @@ struct BurnDriver BurnDrvCtornado = {
 // Mission-X (DECO Cassette) (US)
 
 static struct BurnRomInfo cmissnxRomDesc[] = {
-	{ "dp-121_b.dgl",	0x0800, 0x8a41c071, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-121_b.dgl", 0x0800, 0x8a41c071, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cmissnx.cas",	0x8000, 0x3a094e11, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cmissnx.cas", 0x8000, 0x3a094e11, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cmissnx, cmissnx, decocass)
@@ -4451,11 +4594,11 @@ static INT32 CmissnxInit()
 }
 
 struct BurnDriver BurnDrvCmissnx = {
-	"cmissnx", NULL, "decocass", NULL, "1982",
-	"Mission-X (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cmissnx", nullptr, "decocass", nullptr, "1982",
+	"Mission-X (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, cmissnxRomInfo, cmissnxRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CmissnxDIPInfo,
+	nullptr, cmissnxRomInfo, cmissnxRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CmissnxDIPInfo,
 	CmissnxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4464,9 +4607,9 @@ struct BurnDriver BurnDrvCmissnx = {
 // Pro Tennis (DECO Cassette) (US)
 
 static struct BurnRomInfo cptennisRomDesc[] = {
-	{ "cptennis.pro",	0x0800, 0x59b8cede, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cptennis.pro", 0x0800, 0x59b8cede, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cptennis.cas",	0x8000, 0x6bb257fe, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cptennis.cas", 0x8000, 0x6bb257fe, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cptennis, cptennis, decocass)
@@ -4478,11 +4621,11 @@ static INT32 CptennisInit()
 }
 
 struct BurnDriver BurnDrvCptennis = {
-	"cptennis", NULL, "decocass", NULL, "1982",
-	"Pro Tennis (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cptennis", nullptr, "decocass", nullptr, "1982",
+	"Pro Tennis (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cptennisRomInfo, cptennisRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CptennisDIPInfo,
+	nullptr, cptennisRomInfo, cptennisRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CptennisDIPInfo,
 	CptennisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4491,20 +4634,22 @@ struct BurnDriver BurnDrvCptennis = {
 // Pro Tennis (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cptennisjRomDesc[] = {
-	{ "dp-1220-a-0.rom",	0x0800, 0x1c603239, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1220-a-0.rom", 0x0800, 0x1c603239, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1222-a-0.bin",	0x6a00, 0xee29eba7, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1222-a-0.bin", 0x6a00, 0xee29eba7, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cptennisj, cptennisj, decocass)
 STD_ROM_FN(cptennisj)
 
 struct BurnDriver BurnDrvCptennisj = {
-	"cptennisj", "cptennis", "decocass", NULL, "1982",
-	"Pro Tennis (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cptennisjRomInfo, cptennisjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CptennisjDIPInfo,
+	"cptennisj", "cptennis", "decocass", nullptr, "1982",
+	"Pro Tennis (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_SPORTSMISC, 0,
+	nullptr, cptennisjRomInfo, cptennisjRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo,
+	CptennisjDIPInfo,
 	CptennisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4513,9 +4658,9 @@ struct BurnDriver BurnDrvCptennisj = {
 // Angler Dangler (DECO Cassette) (US)
 
 static struct BurnRomInfo cadanglrRomDesc[] = {
-	{ "dp-1250-a-0.dgl",	0x1000, 0x92a3b387, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1250-a-0.dgl", 0x1000, 0x92a3b387, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1255-b-0.cas",	0x7400, 0xeb985257, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1255-b-0.cas", 0x7400, 0xeb985257, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cadanglr, cadanglr, decocass)
@@ -4525,15 +4670,15 @@ static INT32 CadanglrInit()
 {
 	type3_swap = TYPE3_SWAP_01;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCadanglr = {
-	"cadanglr", NULL, "decocass", NULL, "1982",
-	"Angler Dangler (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cadanglr", nullptr, "decocass", nullptr, "1982",
+	"Angler Dangler (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cadanglrRomInfo, cadanglrRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CfishingDIPInfo,
+	nullptr, cadanglrRomInfo, cadanglrRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CfishingDIPInfo,
 	CadanglrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4542,20 +4687,21 @@ struct BurnDriver BurnDrvCadanglr = {
 // Fishing (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cfishingRomDesc[] = {
-	{ "dp-1250-a-0.dgl",	0x1000, 0x92a3b387, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-1250-a-0.dgl", 0x1000, 0x92a3b387, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-1250-a-0.cas",	0x7500, 0xd4a16425, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-1250-a-0.cas", 0x7500, 0xd4a16425, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cfishing, cfishing, decocass)
 STD_ROM_FN(cfishing)
 
 struct BurnDriver BurnDrvCfishing = {
-	"cfishing", "cadanglr", "decocass", NULL, "1982",
-	"Fishing (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cfishingRomInfo, cfishingRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CfishingjDIPInfo,
+	"cfishing", "cadanglr", "decocass", nullptr, "1982",
+	"Fishing (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_SPORTSMISC, 0,
+	nullptr, cfishingRomInfo, cfishingRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CfishingjDIPInfo,
 	CadanglrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4564,9 +4710,9 @@ struct BurnDriver BurnDrvCfishing = {
 // Burger Time (DECO Cassette) (US)
 
 static struct BurnRomInfo cbtimeRomDesc[] = {
-	{ "dp-126_b.dgl",	0x1000, 0x25bec0f0, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-126_b.dgl", 0x1000, 0x25bec0f0, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-126_7b.cas",	0x8000, 0x56d7dc58, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-126_7b.cas", 0x8000, 0x56d7dc58, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cbtime, cbtime, decocass)
@@ -4579,15 +4725,16 @@ static INT32 CbtimeInit()
 	burgertime_mode = 1;
 	fourway_mode = 1;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCbtime = {
-	"cbtime", NULL, "decocass", NULL, "1983",
-	"Burger Time (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, cbtimeRomInfo, cbtimeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CbtimeDIPInfo,
+	"cbtime", nullptr, "decocass", nullptr, "1983",
+	"Burger Time (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_PLATFORM | GBF_ACTION, 0,
+	nullptr, cbtimeRomInfo, cbtimeRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CbtimeDIPInfo,
 	CbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4596,20 +4743,22 @@ struct BurnDriver BurnDrvCbtime = {
 // Hamburger (DECO Cassette) (Japan)
 
 static struct BurnRomInfo chamburgerRomDesc[] = {
-	{ "dp-126_a.dgl",	0x1000, 0x25bec0f0, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-126_a.dgl", 0x1000, 0x25bec0f0, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-126_a.cas",	0x8000, 0x334fb987, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-126_a.cas", 0x8000, 0x334fb987, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(chamburger, chamburger, decocass)
 STD_ROM_FN(chamburger)
 
 struct BurnDriver BurnDrvChamburger = {
-	"chamburger", "cbtime", "decocass", NULL, "1982",
-	"Hamburger (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_ACTION, 0,
-	NULL, chamburgerRomInfo, chamburgerRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ChamburgerDIPInfo,
+	"chamburger", "cbtime", "decocass", nullptr, "1982",
+	"Hamburger (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_PLATFORM | GBF_ACTION, 0,
+	nullptr, chamburgerRomInfo, chamburgerRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo,
+	ChamburgerDIPInfo,
 	CbtimeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4618,9 +4767,9 @@ struct BurnDriver BurnDrvChamburger = {
 // Burnin' Rubber (DECO Cassette) (US) (set 1)
 
 static struct BurnRomInfo cburnrubRomDesc[] = {
-	{ "dp-127_b.pro",	0x1000, 0x9f396832, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-127_b.pro", 0x1000, 0x9f396832, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cburnrub.cas",	0x8000, 0x4528ac22, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cburnrub.cas", 0x8000, 0x4528ac22, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cburnrub, cburnrub, decocass)
@@ -4630,15 +4779,16 @@ static INT32 CburnrubInit()
 {
 	type3_swap = TYPE3_SWAP_67;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCburnrub = {
-	"cburnrub", NULL, "decocass", NULL, "1982",
-	"Burnin' Rubber (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
-	NULL, cburnrubRomInfo, cburnrubRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CburnrubDIPInfo,
+	"cburnrub", nullptr, "decocass", nullptr, "1982",
+	"Burnin' Rubber (DECO Cassette) (US) (set 1)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_RACING | GBF_ACTION, 0,
+	nullptr, cburnrubRomInfo, cburnrubRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CburnrubDIPInfo,
 	CburnrubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4647,20 +4797,21 @@ struct BurnDriver BurnDrvCburnrub = {
 // Burnin' Rubber (DECO Cassette) (US) (set 2)
 
 static struct BurnRomInfo cburnrub2RomDesc[] = {
-	{ "dp-127_b.pro",	0x1000, 0x9f396832, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-127_b.pro", 0x1000, 0x9f396832, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cburnrb2.cas",	0x8000, 0x84a9ed66, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cburnrb2.cas", 0x8000, 0x84a9ed66, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cburnrub2, cburnrub2, decocass)
 STD_ROM_FN(cburnrub2)
 
 struct BurnDriver BurnDrvCburnrub2 = {
-	"cburnrub2", "cburnrub", "decocass", NULL, "1982",
-	"Burnin' Rubber (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
-	NULL, cburnrub2RomInfo, cburnrub2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CburnrubDIPInfo,
+	"cburnrub2", "cburnrub", "decocass", nullptr, "1982",
+	"Burnin' Rubber (DECO Cassette) (US) (set 2)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_RACING | GBF_ACTION, 0,
+	nullptr, cburnrub2RomInfo, cburnrub2RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CburnrubDIPInfo,
 	CburnrubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4669,20 +4820,21 @@ struct BurnDriver BurnDrvCburnrub2 = {
 // Bump 'n' Jump (DECO Cassette) (US)
 
 static struct BurnRomInfo cbnjRomDesc[] = {
-	{ "dp-127_b.pro",	0x1000, 0x9f396832, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-127_b.pro", 0x1000, 0x9f396832, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cbnj.cas",		0x8000, 0xeed41560, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cbnj.cas", 0x8000, 0xeed41560, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cbnj, cbnj, decocass)
 STD_ROM_FN(cbnj)
 
 struct BurnDriver BurnDrvCbnj = {
-	"cbnj", "cburnrub", "decocass", NULL, "1982",
-	"Bump 'n' Jump (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING | GBF_ACTION, 0,
-	NULL, cbnjRomInfo, cbnjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CburnrubDIPInfo,
+	"cbnj", "cburnrub", "decocass", nullptr, "1982",
+	"Bump 'n' Jump (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_RACING | GBF_ACTION, 0,
+	nullptr, cbnjRomInfo, cbnjRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CburnrubDIPInfo,
 	CburnrubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4691,9 +4843,9 @@ struct BurnDriver BurnDrvCbnj = {
 // Cluster Buster (DECO Cassette) (US)
 
 static struct BurnRomInfo cgraplopRomDesc[] = {
-	{ "cgraplop.pro",	0x1000, 0xee93787d, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cgraplop.pro", 0x1000, 0xee93787d, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cgraplop.cas",	0x8000, 0xd2c1c1bb, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cgraplop.cas", 0x8000, 0xd2c1c1bb, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cgraplop, cgraplop, decocass)
@@ -4703,15 +4855,15 @@ static INT32 CgraplopInit()
 {
 	type3_swap = TYPE3_SWAP_56;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCgraplop = {
-	"cgraplop", NULL, "decocass", NULL, "1983",
-	"Cluster Buster (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cgraplop", nullptr, "decocass", nullptr, "1983",
+	"Cluster Buster (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
-	NULL, cgraplopRomInfo, cgraplopRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
+	nullptr, cgraplopRomInfo, cgraplopRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CgraplopDIPInfo,
 	CgraplopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4720,9 +4872,9 @@ struct BurnDriver BurnDrvCgraplop = {
 // Graplop (DECO Cassette) (US) (Prototype?)
 
 static struct BurnRomInfo cgraplop2RomDesc[] = {
-	{ "cgraplop.pro",	0x1000, 0xee93787d, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cgraplop.pro", 0x1000, 0xee93787d, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cgraplop2.cas",	0x8000, 0x2e728981, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cgraplop2.cas", 0x8000, 0x2e728981, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cgraplop2, cgraplop2, decocass)
@@ -4732,15 +4884,16 @@ static INT32 Cgraplop2Init()
 {
 	type3_swap = TYPE3_SWAP_67;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCgraplop2 = {
-	"cgraplop2", "cgraplop", "decocass", NULL, "1983",
-	"Graplop (DECO Cassette) (US) (Prototype?)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
-	NULL, cgraplop2RomInfo, cgraplop2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
+	"cgraplop2", "cgraplop", "decocass", nullptr, "1983",
+	"Graplop (DECO Cassette) (US) (Prototype?)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_BREAKOUT, 0,
+	nullptr, cgraplop2RomInfo, cgraplop2RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CgraplopDIPInfo,
 	Cgraplop2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4749,9 +4902,9 @@ struct BurnDriver BurnDrvCgraplop2 = {
 // Rootin' Tootin' / La-Pa-Pa (DECO Cassette) (US)
 
 static struct BurnRomInfo clapapaRomDesc[] = {
-	{ "clapapa.pro",	0x1000, 0xe172819a, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"clapapa.pro", 0x1000, 0xe172819a, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "clapapa.cas",	0x8000, 0x4ffbac24, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"clapapa.cas", 0x8000, 0x4ffbac24, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(clapapa, clapapa, decocass)
@@ -4762,15 +4915,15 @@ static INT32 ClapapaInit()
 	type3_swap = TYPE3_SWAP_34_7;
 	burgertime_mode = 1;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvClapapa = {
-	"clapapa", NULL, "decocass", NULL, "1983",
-	"Rootin' Tootin' / La-Pa-Pa (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"clapapa", nullptr, "decocass", nullptr, "1983",
+	"Rootin' Tootin' / La-Pa-Pa (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, clapapaRomInfo, clapapaRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClapapaDIPInfo,
+	nullptr, clapapaRomInfo, clapapaRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, ClapapaDIPInfo,
 	ClapapaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4779,20 +4932,21 @@ struct BurnDriver BurnDrvClapapa = {
 // Rootin' Tootin' (DECO Cassette) (US)
 
 static struct BurnRomInfo clapapa2RomDesc[] = {
-	{ "clapapa.pro",	0x1000, 0xe172819a, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"clapapa.pro", 0x1000, 0xe172819a, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "clapapa2.cas",	0x8000, 0x069dd3c4, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"clapapa2.cas", 0x8000, 0x069dd3c4, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(clapapa2, clapapa2, decocass)
 STD_ROM_FN(clapapa2)
 
 struct BurnDriver BurnDrvClapapa2 = {
-	"clapapa2", "clapapa", "decocass", NULL, "1983",
-	"Rootin' Tootin' (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, clapapa2RomInfo, clapapa2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, ClapapaDIPInfo,
+	"clapapa2", "clapapa", "decocass", nullptr, "1983",
+	"Rootin' Tootin' (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_MAZE, 0,
+	nullptr, clapapa2RomInfo, clapapa2RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, ClapapaDIPInfo,
 	ClapapaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4801,9 +4955,9 @@ struct BurnDriver BurnDrvClapapa2 = {
 // Skater (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cskaterRomDesc[] = {
-	{ "dp-130_a.dgl",	0x1000, 0x469e80a8, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-130_a.dgl", 0x1000, 0x469e80a8, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-130_a.cas",	0x8000, 0x1722e5e1, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-130_a.cas", 0x8000, 0x1722e5e1, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cskater, cskater, decocass)
@@ -4814,15 +4968,15 @@ static INT32 CskaterInit()
 	type3_swap = TYPE3_SWAP_45;
 	skater_mode = 1; // object "under tilemap" + 1px correction
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCskater = {
-	"cskater", NULL, "decocass", NULL, "1983",
-	"Skater (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cskater", nullptr, "decocass", nullptr, "1983",
+	"Skater (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
-	NULL, cskaterRomInfo, cskaterRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CskaterDIPInfo,
+	nullptr, cskaterRomInfo, cskaterRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CskaterDIPInfo,
 	CskaterInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4831,9 +4985,9 @@ struct BurnDriver BurnDrvCskater = {
 // Pro Bowling (DECO Cassette) (US)
 
 static struct BurnRomInfo cprobowlRomDesc[] = {
-	{ "cprobowl.pro",	0x1000, 0xe3a88e60, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cprobowl.pro", 0x1000, 0xe3a88e60, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cprobowl.cas",	0x8000, 0xcb86c5e1, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cprobowl.cas", 0x8000, 0xcb86c5e1, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cprobowl, cprobowl, decocass)
@@ -4843,15 +4997,15 @@ static INT32 CprobowlInit()
 {
 	type3_swap = TYPE3_SWAP_34_0;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCprobowl = {
-	"cprobowl", NULL, "decocass", NULL, "1983",
-	"Pro Bowling (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cprobowl", nullptr, "decocass", nullptr, "1983",
+	"Pro Bowling (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cprobowlRomInfo, cprobowlRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CprobowlDIPInfo,
+	nullptr, cprobowlRomInfo, cprobowlRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CprobowlDIPInfo,
 	CprobowlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4860,9 +5014,9 @@ struct BurnDriver BurnDrvCprobowl = {
 // Night Star (DECO Cassette) (US) (set 1)
 
 static struct BurnRomInfo cnightstRomDesc[] = {
-	{ "cnightst.pro",	0x1000, 0x553b0fbc, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cnightst.pro", 0x1000, 0x553b0fbc, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cnightst.cas",	0x8000, 0xc6f844cb, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cnightst.cas", 0x8000, 0xc6f844cb, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cnightst, cnightst, decocass)
@@ -4872,15 +5026,15 @@ static INT32 CnightstInit()
 {
 	type3_swap = TYPE3_SWAP_13;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCnightst = {
-	"cnightst", NULL, "decocass", NULL, "1983",
-	"Night Star (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cnightst", nullptr, "decocass", nullptr, "1983",
+	"Night Star (DECO Cassette) (US) (set 1)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, cnightstRomInfo, cnightstRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CnightstDIPInfo,
+	nullptr, cnightstRomInfo, cnightstRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CnightstDIPInfo,
 	CnightstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4889,20 +5043,21 @@ struct BurnDriver BurnDrvCnightst = {
 // Night Star (DECO Cassette) (US) (set 2)
 
 static struct BurnRomInfo cnightst2RomDesc[] = {
-	{ "cnightst.pro",	0x1000, 0x553b0fbc, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cnightst.pro", 0x1000, 0x553b0fbc, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cnights2.cas",	0x8000, 0x1a28128c, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cnights2.cas", 0x8000, 0x1a28128c, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cnightst2, cnightst2, decocass)
 STD_ROM_FN(cnightst2)
 
 struct BurnDriver BurnDrvCnightst2 = {
-	"cnightst2", "cnightst", "decocass", NULL, "1983",
-	"Night Star (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, cnightst2RomInfo, cnightst2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CnightstDIPInfo,
+	"cnightst2", "cnightst", "decocass", nullptr, "1983",
+	"Night Star (DECO Cassette) (US) (set 2)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_VERSHOOT, 0,
+	nullptr, cnightst2RomInfo, cnightst2RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CnightstDIPInfo,
 	CnightstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4911,9 +5066,9 @@ struct BurnDriver BurnDrvCnightst2 = {
 // Pro Soccer (DECO Cassette) (US)
 
 static struct BurnRomInfo cpsoccerRomDesc[] = {
-	{ "cprosocc.pro",	0x01000, 0x919fabb2, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cprosocc.pro", 0x01000, 0x919fabb2, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cprosocc.cas",	0x10000, 0x76b1ad2c, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cprosocc.cas", 0x10000, 0x76b1ad2c, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cpsoccer, cpsoccer, decocass)
@@ -4923,15 +5078,16 @@ static INT32 CpsoccerInit()
 {
 	type3_swap = TYPE3_SWAP_24;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCpsoccer = {
-	"cpsoccer", NULL, "decocass", NULL, "1983",
-	"Pro Soccer (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSFOOTBALL, 0,
-	NULL, cpsoccerRomInfo, cpsoccerRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CpsoccerDIPInfo,
+	"cpsoccer", nullptr, "decocass", nullptr, "1983",
+	"Pro Soccer (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_SPORTSFOOTBALL, 0,
+	nullptr, cpsoccerRomInfo, cpsoccerRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CpsoccerDIPInfo,
 	CpsoccerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4940,20 +5096,22 @@ struct BurnDriver BurnDrvCpsoccer = {
 // Pro Soccer (DECO Cassette) (Japan)
 
 static struct BurnRomInfo cpsoccerjRomDesc[] = {
-	{ "dp-133_a.dgl",	0x01000, 0x919fabb2, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-133_a.dgl", 0x01000, 0x919fabb2, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-133_a.cas",	0x10000, 0xde682a29, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-133_a.cas", 0x10000, 0xde682a29, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cpsoccerj, cpsoccerj, decocass)
 STD_ROM_FN(cpsoccerj)
 
 struct BurnDriver BurnDrvCpsoccerj = {
-	"cpsoccerj", "cpsoccer", "decocass", NULL, "1983",
-	"Pro Soccer (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSFOOTBALL, 0,
-	NULL, cpsoccerjRomInfo, cpsoccerjRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CpsoccerjDIPInfo,
+	"cpsoccerj", "cpsoccer", "decocass", nullptr, "1983",
+	"Pro Soccer (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_SPORTSFOOTBALL, 0,
+	nullptr, cpsoccerjRomInfo, cpsoccerjRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo,
+	CpsoccerjDIPInfo,
 	CpsoccerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4962,9 +5120,9 @@ struct BurnDriver BurnDrvCpsoccerj = {
 // Super Doubles Tennis (DECO Cassette) (Japan)
 
 static struct BurnRomInfo csdtenisRomDesc[] = {
-	{ "dp-134_a.dgl",	0x01000, 0xe484d2f5, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-134_a.dgl", 0x01000, 0xe484d2f5, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-134_a.cas",	0x10000, 0x9a69d961, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-134_a.cas", 0x10000, 0x9a69d961, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(csdtenis, csdtenis, decocass)
@@ -4974,15 +5132,15 @@ static INT32 CsdtenisInit()
 {
 	type3_swap = TYPE3_SWAP_23_56;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCsdtenis = {
-	"csdtenis", NULL, "decocass", NULL, "1983",
-	"Super Doubles Tennis (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"csdtenis", nullptr, "decocass", nullptr, "1983",
+	"Super Doubles Tennis (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, csdtenisRomInfo, csdtenisRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CsdtenisDIPInfo,
+	nullptr, csdtenisRomInfo, csdtenisRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CsdtenisDIPInfo,
 	CsdtenisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4991,9 +5149,9 @@ struct BurnDriver BurnDrvCsdtenis = {
 // Zeroize (DECO Cassette) (US)
 
 static struct BurnRomInfo czeroizeRomDesc[] = {
-	{ "czeroize.pro",	0x01000, 0x00000000, 0 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"czeroize.pro", 0x01000, 0x00000000, 0 | BRF_NODUMP | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "czeroize.cas",	0x10000, 0x3ef0a406, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"czeroize.cas", 0x10000, 0x3ef0a406, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(czeroize, czeroize, decocass)
@@ -5003,25 +5161,24 @@ static INT32 CzeroizeInit()
 {
 	type3_swap = TYPE3_SWAP_23_56;
 
-	INT32 nRet = DecocassInit(decocass_type3_read,decocass_type3_write);
+	INT32 nRet = DecocassInit(decocass_type3_read, decocass_type3_write);
 
 	if (nRet == 0)
 	{
 		// hack around missing dongle
 		DrvDongle[0x8a0] = 0x18;
 		DrvDongle[0x8a1] = 0xf7;
-
 	}
 
 	return nRet;
 }
 
 struct BurnDriver BurnDrvCzeroize = {
-	"czeroize", NULL, "decocass", NULL, "1983",
-	"Zeroize (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"czeroize", nullptr, "decocass", nullptr, "1983",
+	"Zeroize (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_ACTION, 0,
-	NULL, czeroizeRomInfo, czeroizeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CzeroizeDIPInfo,
+	nullptr, czeroizeRomInfo, czeroizeRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CzeroizeDIPInfo,
 	CzeroizeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5030,9 +5187,9 @@ struct BurnDriver BurnDrvCzeroize = {
 // Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 1)
 
 static struct BurnRomInfo cppicfRomDesc[] = {
-	{ "cppicf.pro",		0x1000, 0x0b1a1ecb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cppicf.pro", 0x1000, 0x0b1a1ecb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cppicf.cas",		0x8000, 0x8c02f160, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cppicf.cas", 0x8000, 0x8c02f160, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cppicf, cppicf, decocass)
@@ -5042,15 +5199,16 @@ static INT32 CppicfInit()
 {
 	type3_swap = TYPE3_SWAP_01;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCppicf = {
-	"cppicf", NULL, "decocass", NULL, "1984",
-	"Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cppicf", nullptr, "decocass", nullptr, "1984",
+	"Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 1)\0", nullptr, "Data East Corporation",
+	"Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, cppicfRomInfo, cppicfRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CppicfDIPInfo,
+	nullptr, cppicfRomInfo, cppicfRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CppicfDIPInfo,
 	CppicfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5059,20 +5217,22 @@ struct BurnDriver BurnDrvCppicf = {
 // Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 2)
 
 static struct BurnRomInfo cppicf2RomDesc[] = {
-	{ "cppicf.pro",		0x1000, 0x0b1a1ecb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cppicf.pro", 0x1000, 0x0b1a1ecb, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cppicf2.cas",	0x8000, 0x78ffa1bc, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cppicf2.cas", 0x8000, 0x78ffa1bc, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cppicf2, cppicf2, decocass)
 STD_ROM_FN(cppicf2)
 
 struct BurnDriver BurnDrvCppicf2 = {
-	"cppicf2", "cppicf", "decocass", NULL, "1984",
-	"Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, cppicf2RomInfo, cppicf2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CppicfDIPInfo,
+	"cppicf2", "cppicf", "decocass", nullptr, "1984",
+	"Peter Pepper's Ice Cream Factory (DECO Cassette) (US) (set 2)\0", nullptr, "Data East Corporation",
+	"Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_PLATFORM, 0,
+	nullptr, cppicf2RomInfo, cppicf2RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CppicfDIPInfo,
 	CppicfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5081,9 +5241,9 @@ struct BurnDriver BurnDrvCppicf2 = {
 // Fighting Ice Hockey (DECO Cassette) (US)
 
 static struct BurnRomInfo cfghticeRomDesc[] = {
-	{ "cfghtice.pro",	0x01000, 0x5abd27b5, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cfghtice.pro", 0x01000, 0x5abd27b5, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cfghtice.cas",	0x10000, 0x906dd7fb, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cfghtice.cas", 0x10000, 0x906dd7fb, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cfghtice, cfghtice, decocass)
@@ -5093,15 +5253,15 @@ static INT32 CfghticeInit()
 {
 	type3_swap = TYPE3_SWAP_25;
 
-	return DecocassInit(decocass_type3_read,decocass_type3_write);
+	return DecocassInit(decocass_type3_read, decocass_type3_write);
 }
 
 struct BurnDriver BurnDrvCfghtice = {
-	"cfghtice", NULL, "decocass", NULL, "1984",
-	"Fighting Ice Hockey (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cfghtice", nullptr, "decocass", nullptr, "1984",
+	"Fighting Ice Hockey (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cfghticeRomInfo, cfghticeRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CfghticeDIPInfo,
+	nullptr, cfghticeRomInfo, cfghticeRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CfghticeDIPInfo,
 	CfghticeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5110,9 +5270,9 @@ struct BurnDriver BurnDrvCfghtice = {
 // Scrum Try (DECO Cassette) (US) (set 1)
 
 static struct BurnRomInfo cscrtryRomDesc[] = {
-	{ "cscrtry.pro",	0x8000, 0x7bc3460b, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cscrtry.pro", 0x8000, 0x7bc3460b, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cscrtry.cas",	0x8000, 0x5625f0ca, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cscrtry.cas", 0x8000, 0x5625f0ca, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cscrtry, cscrtry, decocass)
@@ -5120,15 +5280,15 @@ STD_ROM_FN(cscrtry)
 
 static INT32 CscrtryInit()
 {
-	return DecocassInit(decocass_type4_read,decocass_type4_write);
+	return DecocassInit(decocass_type4_read, decocass_type4_write);
 }
 
 struct BurnDriver BurnDrvCscrtry = {
-	"cscrtry", NULL, "decocass", NULL, "1984",
-	"Scrum Try (DECO Cassette) (US) (set 1)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cscrtry", nullptr, "decocass", nullptr, "1984",
+	"Scrum Try (DECO Cassette) (US) (set 1)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cscrtryRomInfo, cscrtryRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CscrtryDIPInfo,
+	nullptr, cscrtryRomInfo, cscrtryRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CscrtryDIPInfo,
 	CscrtryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5137,20 +5297,21 @@ struct BurnDriver BurnDrvCscrtry = {
 // Scrum Try (DECO Cassette) (US) (set 2)
 
 static struct BurnRomInfo cscrtry2RomDesc[] = {
-	{ "cscrtry.pro",	0x8000, 0x7bc3460b, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"cscrtry.pro", 0x8000, 0x7bc3460b, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "cscrtry2.cas",	0x8000, 0x04597842, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"cscrtry2.cas", 0x8000, 0x04597842, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(cscrtry2, cscrtry2, decocass)
 STD_ROM_FN(cscrtry2)
 
 struct BurnDriver BurnDrvCscrtry2 = {
-	"cscrtry2", "cscrtry", "decocass", NULL, "1984",
-	"Scrum Try (DECO Cassette) (US) (set 2)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cscrtry2RomInfo, cscrtry2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CscrtryDIPInfo,
+	"cscrtry2", "cscrtry", "decocass", nullptr, "1984",
+	"Scrum Try (DECO Cassette) (US) (set 2)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_SPORTSMISC, 0,
+	nullptr, cscrtry2RomInfo, cscrtry2RomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CscrtryDIPInfo,
 	CscrtryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5159,20 +5320,20 @@ struct BurnDriver BurnDrvCscrtry2 = {
 // Oozumou - The Grand Sumo (DECO Cassette) (Japan)
 
 static struct BurnRomInfo coozumouRomDesc[] = {
-	{ "dp-141_a.dgl",	0x08000, 0xbc379d2c, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+	{"dp-141_a.dgl", 0x08000, 0xbc379d2c, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
 
-	{ "dt-141_1a.cas",	0x10000, 0x20c2e86a, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{"dt-141_1a.cas", 0x10000, 0x20c2e86a, 2 | BRF_PRG | BRF_ESS}, //  1 Cassette data
 };
 
 STDROMPICKEXT(coozumou, coozumou, decocass)
 STD_ROM_FN(coozumou)
 
 struct BurnDriver BurnDrvCoozumou = {
-	"coozumou", NULL, "decocass", NULL, "1984",
-	"Oozumou - The Grand Sumo (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"coozumou", nullptr, "decocass", nullptr, "1984",
+	"Oozumou - The Grand Sumo (DECO Cassette) (Japan)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, coozumouRomInfo, coozumouRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CoozumouDIPInfo,
+	nullptr, coozumouRomInfo, coozumouRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CoozumouDIPInfo,
 	CscrtryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5181,7 +5342,7 @@ struct BurnDriver BurnDrvCoozumou = {
 // Boulder Dash (DECO Cassette) (US)
 
 static struct BurnRomInfo cbdashRomDesc[] = {
-	{ "cbdash.cas",		0x8000, 0xcba4c1af, 2 | BRF_PRG | BRF_ESS }, //  0 Cassette data
+	{"cbdash.cas", 0x8000, 0xcba4c1af, 2 | BRF_PRG | BRF_ESS}, //  0 Cassette data
 };
 
 STDROMPICKEXT(cbdash, cbdash, decocass)
@@ -5189,22 +5350,22 @@ STD_ROM_FN(cbdash)
 
 static INT32 CbdashInit()
 {
-	INT32 nRet = DecocassInit(decocass_type4_read,decocass_type4_write);
+	INT32 nRet = DecocassInit(decocass_type4_read, decocass_type4_write);
 
 	if (nRet == 0)
 	{
-		memset (DrvDongle, 0x55, 0x8000);
+		memset(DrvDongle, 0x55, 0x8000);
 	}
 
 	return nRet;
 }
 
 struct BurnDriver BurnDrvCbdash = {
-	"cbdash", NULL, "decocass", NULL, "1985",
-	"Boulder Dash (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cbdash", nullptr, "decocass", nullptr, "1985",
+	"Boulder Dash (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
-	NULL, cbdashRomInfo, cbdashRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CbdashDIPInfo,
+	nullptr, cbdashRomInfo, cbdashRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CbdashDIPInfo,
 	CbdashInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -5213,7 +5374,7 @@ struct BurnDriver BurnDrvCbdash = {
 // Flying Ball (DECO Cassette) (US)
 
 static struct BurnRomInfo cflyballRomDesc[] = {
-	{ "cflyball.cas",	0x10000, 0xcb40d043, 2 | BRF_PRG | BRF_ESS }, //  0 Cassette data
+	{"cflyball.cas", 0x10000, 0xcb40d043, 2 | BRF_PRG | BRF_ESS}, //  0 Cassette data
 };
 
 STDROMPICKEXT(cflyball, cflyball, decocass)
@@ -5223,21 +5384,18 @@ static INT32 CflyballInit()
 {
 	cflyball_hack = true;
 
-	return DecocassInit(decocass_nodongle_read,NULL);
+	return DecocassInit(decocass_nodongle_read, nullptr);
 }
 
 struct BurnDriver BurnDrvCflyball = {
-	"cflyball", NULL, "decocass", NULL, "1985",
-	"Flying Ball (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
-	NULL, NULL, NULL, NULL,
+	"cflyball", nullptr, "decocass", nullptr, "1985",
+	"Flying Ball (DECO Cassette) (US)\0", nullptr, "Data East Corporation", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
-	NULL, cflyballRomInfo, cflyballRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CflyballDIPInfo,
+	nullptr, cflyballRomInfo, cflyballRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, CflyballDIPInfo,
 	CflyballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
-
-
-
 
 
 static UINT32 widel_ctrs = 0;
@@ -5262,7 +5420,7 @@ static UINT8 decocass_widel_read(UINT16 offset)
 			widel_ctrs = (widel_ctrs + 1) & 0xfffff;
 			return data;
 		}
-		else if ((offset & E5XX_MASK) == 0)
+		if ((offset & E5XX_MASK) == 0)
 		{
 			return mcs48_master_r(0);
 		}
@@ -5280,7 +5438,7 @@ static void decocass_widel_write(UINT16 offset, UINT8 data)
 			widel_ctrs = 0;
 			return;
 		}
-		else if (0xc0 == (data & 0xf0))
+		if (0xc0 == (data & 0xf0))
 		{
 			widel_latch = 1;
 		}
@@ -5301,18 +5459,18 @@ static void decocass_widel_write(UINT16 offset, UINT8 data)
 // DECO Cassette System ROM Multigame (David Widel)
 
 static struct BurnRomInfo decomultRomDesc[] = {
-	{ "widldeco.low",	0x80000, 0xfd4dc36c,  1 | BRF_PRG | BRF_ESS },  //  0 Dongle data
-	{ "widldeco.hgh",	0x80000, 0xa8a30112,  1 | BRF_PRG | BRF_ESS },  //  1
+	{"widldeco.low", 0x80000, 0xfd4dc36c, 1 | BRF_PRG | BRF_ESS}, //  0 Dongle data
+	{"widldeco.hgh", 0x80000, 0xa8a30112, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "widlbios.v0b",	0x00800, 0x9ad7c451,  8 | BRF_BIOS | BRF_ESS }, //  2 Main M6502 BIOS
+	{"widlbios.v0b", 0x00800, 0x9ad7c451, 8 | BRF_BIOS | BRF_ESS}, //  2 Main M6502 BIOS
 
-	{ "v1-.5a",		0x00800, 0xb66b2c2a,  9 | BRF_BIOS | BRF_ESS }, //  3 Sound M6502 BIOS
+	{"v1-.5a", 0x00800, 0xb66b2c2a, 9 | BRF_BIOS | BRF_ESS}, //  3 Sound M6502 BIOS
 
-	{ "cassmcu.1c", 	0x00400, 0xa6df18fd, 10 | BRF_BIOS | BRF_ESS }, //  4 MCU BIOS
+	{"cassmcu.1c", 0x00400, 0xa6df18fd, 10 | BRF_BIOS | BRF_ESS}, //  4 MCU BIOS
 
-	{ "v2.3m",		0x00020, 0x238fdb40,  0 | BRF_OPT },            //  5 Unknown PROMs
-	{ "v4.10d",		0x00020, 0x3b5836b4,  0 | BRF_OPT },            //  6
-	{ "v3.3j", 		0x00020, 0x51eef657,  0 | BRF_OPT },            //  7
+	{"v2.3m", 0x00020, 0x238fdb40, 0 | BRF_OPT}, //  5 Unknown PROMs
+	{"v4.10d", 0x00020, 0x3b5836b4, 0 | BRF_OPT}, //  6
+	{"v3.3j", 0x00020, 0x51eef657, 0 | BRF_OPT}, //  7
 };
 
 STD_ROM_PICK(decomult)
@@ -5320,15 +5478,16 @@ STD_ROM_FN(decomult)
 
 static INT32 DecomultInit()
 {
-	return DecocassInit(decocass_widel_read,decocass_widel_write);
+	return DecocassInit(decocass_widel_read, decocass_widel_write);
 }
 
 struct BurnDriver BurnDrvDecomult = {
-	"decomult", NULL, "decocass", NULL, "2008",
-	"DECO Cassette System ROM Multigame (David Widel)\0", NULL, "bootleg (David Widel)", "Cassette System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
-	NULL, decomultRomInfo, decomultRomName, NULL, NULL, NULL, NULL, DecocassInputInfo, DecomultDIPInfo,
+	"decomult", nullptr, "decocass", nullptr, "2008",
+	"DECO Cassette System ROM Multigame (David Widel)\0", nullptr, "bootleg (David Widel)", "Cassette System",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST,
+	GBF_MISC, 0,
+	nullptr, decomultRomInfo, decomultRomName, nullptr, nullptr, nullptr, nullptr, DecocassInputInfo, DecomultDIPInfo,
 	DecomultInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };

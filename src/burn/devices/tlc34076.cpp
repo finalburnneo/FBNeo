@@ -48,7 +48,7 @@ static void update_palette(int which)
 				b = (b << 2) | (b >> 4);
 			}
 
-			pBurnDrvPalette[i] = BurnHighCol(r,g,b,0);
+			pBurnDrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}
 	}
 }
@@ -66,14 +66,14 @@ void tlc34076_reset(INT32 dacwidth)
 		dacbits = 6;
 	}
 
-	regs[PIXEL_READ_MASK]	= 0xff;
-	regs[GENERAL_CONTROL]	= 0x03;
-	regs[INPUT_CLOCK_SEL]	= 0x00;
-	regs[OUTPUT_CLOCK_SEL]	= 0x3f;
-	regs[MUX_CONTROL]		= 0x2d;
-	regs[PALETTE_PAGE]		= 0x00;
-	regs[TEST_REGISTER]		= 0x00;
-	regs[RESET_STATE]		= 0x00;
+	regs[PIXEL_READ_MASK] = 0xff;
+	regs[GENERAL_CONTROL] = 0x03;
+	regs[INPUT_CLOCK_SEL] = 0x00;
+	regs[OUTPUT_CLOCK_SEL] = 0x3f;
+	regs[MUX_CONTROL] = 0x2d;
+	regs[PALETTE_PAGE] = 0x00;
+	regs[TEST_REGISTER] = 0x00;
+	regs[RESET_STATE] = 0x00;
 }
 
 UINT8 tlc34076_read(UINT32 offset)
@@ -85,20 +85,20 @@ UINT8 tlc34076_read(UINT32 offset)
 
 	switch (offset)
 	{
-		case PALETTE_DATA:
-			if (readindex == 0)
-			{
-				palettedata[0] = local_paletteram[3 * regs[PALETTE_READ_ADDR] + 0];
-				palettedata[1] = local_paletteram[3 * regs[PALETTE_READ_ADDR] + 1];
-				palettedata[2] = local_paletteram[3 * regs[PALETTE_READ_ADDR] + 2];
-			}
-			result = palettedata[readindex++];
-			if (readindex == 3)
-			{
-				readindex = 0;
-				regs[PALETTE_READ_ADDR]++;
-			}
-			break;
+	case PALETTE_DATA:
+		if (readindex == 0)
+		{
+			palettedata[0] = local_paletteram[3 * regs[PALETTE_READ_ADDR] + 0];
+			palettedata[1] = local_paletteram[3 * regs[PALETTE_READ_ADDR] + 1];
+			palettedata[2] = local_paletteram[3 * regs[PALETTE_READ_ADDR] + 2];
+		}
+		result = palettedata[readindex++];
+		if (readindex == 3)
+		{
+			readindex = 0;
+			regs[PALETTE_READ_ADDR]++;
+		}
+		break;
 	}
 
 	return result;
@@ -114,51 +114,51 @@ void tlc34076_write(UINT32 offset, UINT8 data)
 
 	switch (offset)
 	{
-		case PALETTE_WRITE_ADDR:
+	case PALETTE_WRITE_ADDR:
+		writeindex = 0;
+		break;
+
+	case PALETTE_DATA:
+		palettedata[writeindex++] = data;
+		if (writeindex == 3)
+		{
+			local_paletteram[3 * regs[PALETTE_WRITE_ADDR] + 0] = palettedata[0];
+			local_paletteram[3 * regs[PALETTE_WRITE_ADDR] + 1] = palettedata[1];
+			local_paletteram[3 * regs[PALETTE_WRITE_ADDR] + 2] = palettedata[2];
+			update_palette(regs[PALETTE_WRITE_ADDR]);
 			writeindex = 0;
-			break;
+			regs[PALETTE_WRITE_ADDR]++;
+		}
+		break;
 
-		case PALETTE_DATA:
-			palettedata[writeindex++] = data;
-			if (writeindex == 3)
-			{
-				local_paletteram[3 * regs[PALETTE_WRITE_ADDR] + 0] = palettedata[0];
-				local_paletteram[3 * regs[PALETTE_WRITE_ADDR] + 1] = palettedata[1];
-				local_paletteram[3 * regs[PALETTE_WRITE_ADDR] + 2] = palettedata[2];
-				update_palette(regs[PALETTE_WRITE_ADDR]);
-				writeindex = 0;
-				regs[PALETTE_WRITE_ADDR]++;
-			}
-			break;
+	case PALETTE_READ_ADDR:
+		readindex = 0;
+		break;
 
-		case PALETTE_READ_ADDR:
-			readindex = 0;
-			break;
+	case GENERAL_CONTROL:
+	case INPUT_CLOCK_SEL:
+	case OUTPUT_CLOCK_SEL:
+		break;
 
-		case GENERAL_CONTROL:
-		case INPUT_CLOCK_SEL:
-		case OUTPUT_CLOCK_SEL:
-			break;
+	case PIXEL_READ_MASK:
+	case PALETTE_PAGE:
+		update_palette(-1);
+		break;
 
-		case PIXEL_READ_MASK:
-		case PALETTE_PAGE:
-			update_palette(-1);
-			break;
-
-		case RESET_STATE:
-			tlc34076_reset(dacbits);
-			break;
+	case RESET_STATE:
+		tlc34076_reset(dacbits);
+		break;
 	}
 }
 
 void tlc34076_write16(UINT32 address, UINT16 data)
 {
-	 tlc34076_write(address/2, data);
+	tlc34076_write(address / 2, data);
 }
 
 UINT8 tlc34076_read16(UINT32 address)
 {
-	UINT16 ret = tlc34076_read(address/2);
+	UINT16 ret = tlc34076_read(address / 2);
 
 	return ret | (ret << 8);
 }
@@ -175,10 +175,10 @@ INT32 tlc34076_Scan(INT32 nAction)
 		SCAN_VAR(local_paletteram);
 	}
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE)
+	{
 		tlc34076_recalc_palette();
 	}
 
 	return 0;
 }
-

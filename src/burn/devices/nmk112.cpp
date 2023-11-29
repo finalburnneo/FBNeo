@@ -11,7 +11,7 @@
 static UINT8 page_mask;
 static UINT8 current_bank[8];
 static UINT32 romlen[2];
-static UINT8 *romdata[2];
+static UINT8* romdata[2];
 
 void NMK112_okibank_write(INT32 offset, UINT8 data)
 {
@@ -24,7 +24,7 @@ void NMK112_okibank_write(INT32 offset, UINT8 data)
 	INT32 banknum = offset & 3;
 	INT32 paged = (page_mask & (1 << chip));
 
-	UINT8 *rom = romdata[chip];
+	UINT8* rom = romdata[chip];
 
 	INT32 bankaddr = (data * BANKSIZE) % size;
 
@@ -39,24 +39,26 @@ void NMK112_okibank_write(INT32 offset, UINT8 data)
 
 	if (paged)
 	{
-		MSM6295SetBank(chip, rom + bankaddr + (banknum * TABLESIZE), (banknum * TABLESIZE), (banknum * TABLESIZE) + (TABLESIZE - 1));
+		MSM6295SetBank(chip, rom + bankaddr + (banknum * TABLESIZE), (banknum * TABLESIZE),
+		               (banknum * TABLESIZE) + (TABLESIZE - 1));
 	}
 }
 
 void NMK112Reset()
 {
-	for (INT32 i = 0; i < 8; i++) {
+	for (INT32 i = 0; i < 8; i++)
+	{
 		NMK112_okibank_write(i, 0);
 	}
 }
 
-void NMK112_init(UINT8 disable_page_mask, UINT8 *region0, UINT8 *region1, INT32 length0, INT32 length1)
+void NMK112_init(UINT8 disable_page_mask, UINT8* region0, UINT8* region1, INT32 length0, INT32 length1)
 {
 	romdata[0] = region0;
 	romdata[1] = region1;
-	romlen[0]  = length0;
-	romlen[1]  = length1;
-	page_mask  = ~disable_page_mask;
+	romlen[0] = length0;
+	romlen[1] = length1;
+	page_mask = ~disable_page_mask;
 
 	NMK112Reset();
 }
@@ -65,8 +67,10 @@ INT32 NMK112_Scan(INT32 nAction)
 {
 	SCAN_VAR(current_bank);
 
-	if (nAction & ACB_WRITE) {
-		for (INT32 i = 0; i < 8; i++) {
+	if (nAction & ACB_WRITE)
+	{
+		for (INT32 i = 0; i < 8; i++)
+		{
 			NMK112_okibank_write(i, current_bank[i]);
 		}
 	}

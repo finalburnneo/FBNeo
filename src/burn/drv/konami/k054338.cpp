@@ -14,9 +14,9 @@ static INT32 alpha_cache; // for moomesa
 
 static void reset_shadows()
 {
-	m_shd_rgb[0] = m_shd_rgb[1] = m_shd_rgb[2] = -80;   // shadow bank 0
-	m_shd_rgb[3] = m_shd_rgb[4] = m_shd_rgb[5] = -80;   // shadow bank 1
-	m_shd_rgb[6] = m_shd_rgb[7] = m_shd_rgb[8] = -80;   // shadow bank 2
+	m_shd_rgb[0] = m_shd_rgb[1] = m_shd_rgb[2] = -80; // shadow bank 0
+	m_shd_rgb[3] = m_shd_rgb[4] = m_shd_rgb[5] = -80; // shadow bank 1
+	m_shd_rgb[6] = m_shd_rgb[7] = m_shd_rgb[8] = -80; // shadow bank 2
 	m_shd_rgb[9] = m_shd_rgb[10] = m_shd_rgb[11] = -80; // shadow bank 3 (static)
 }
 
@@ -31,17 +31,17 @@ void K054338Reset()
 
 void K054338Exit()
 {
-
 }
 
 void K054338Scan(INT32 nAction)
 {
 	struct BurnArea ba;
-	
-	if (nAction & ACB_MEMORY_RAM) {
+
+	if (nAction & ACB_MEMORY_RAM)
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = (UINT8*)k54338_regs;
-		ba.nLen	  = sizeof(k54338_regs);
+		ba.Data = (UINT8*)k54338_regs;
+		ba.nLen = sizeof(k54338_regs);
 		ba.szName = "K054338 Regs";
 		BurnAcb(&ba);
 
@@ -61,14 +61,14 @@ void K054338Init()
 
 void K054338WriteWord(INT32 offset, UINT16 data)
 {
-	k54338_regs[(offset & 0x1e)/2] = BURN_ENDIAN_SWAP_INT16(data);
+	k54338_regs[(offset & 0x1e) / 2] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 void K054338WriteByte(INT32 offset, UINT8 data)
 {
-	UINT8 *regs = (UINT8*)&k54338_regs;
+	auto regs = (UINT8*)&k54338_regs;
 
-	regs[(offset & 0x1f)^1] = data;
+	regs[(offset & 0x1f) ^ 1] = data;
 }
 
 // returns a 16-bit '338 register
@@ -89,12 +89,13 @@ void K054338_update_all_shadows(INT32 rushingheroes_hack)
 		m_shd_rgb[i] = d;
 	}
 
-	if (rushingheroes_hack) {
+	if (rushingheroes_hack)
+	{
 		reset_shadows();
 	}
 }
 
-void K054338_export_config(INT32 **shd_rgb)
+void K054338_export_config(INT32** shd_rgb)
 {
 	*shd_rgb = m_shd_rgb;
 }
@@ -103,17 +104,17 @@ void K054338_export_config(INT32 **shd_rgb)
 void K054338_fill_solid_bg()
 {
 	UINT32 bgcolor;
-	UINT32 *pLine;
+	UINT32* pLine;
 	INT32 x, y;
 
-	bgcolor = (K054338_read_register(K338_REG_BGC_R)&0xff)<<16;
+	bgcolor = (K054338_read_register(K338_REG_BGC_R) & 0xff) << 16;
 	bgcolor |= K054338_read_register(K338_REG_BGC_GB);
 
 	/* and fill the screen with it */
 	for (y = 0; y < nScreenHeight; y++)
 	{
 		pLine = konami_bitmap32;
-		pLine += (nScreenWidth*y);
+		pLine += (nScreenWidth * y);
 		for (x = 0; x < nScreenWidth; x++)
 			*pLine++ = bgcolor;
 	}
@@ -130,7 +131,7 @@ void K054338_fill_backcolor(INT32 palette_offset, INT32 mode) // (see p.67)
 	clipx = 0 & ~3;
 	clipy = 0;
 	clipw = ((nScreenWidth - 1) + 4) & ~3;
-	cliph = (nScreenHeight-1) + 1;
+	cliph = (nScreenHeight - 1) + 1;
 
 	dst_ptr = konami_bitmap32 + palette_offset;
 	dst_pitch = nScreenWidth;
@@ -142,16 +143,22 @@ void K054338_fill_backcolor(INT32 palette_offset, INT32 mode) // (see p.67)
 	if (!mode)
 	{
 		// single color output from CLTC
-		bgcolor = (int)(BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_BGC_R])&0xff)<<16 | (int)BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_BGC_GB]);
+		bgcolor = (BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_BGC_R]) & 0xff) << 16 | static_cast<int>(
+			BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_BGC_GB]));
 	}
 	else
 	{
 		BGC_CBLK = K055555ReadRegister(0);
-		BGC_SET  = K055555ReadRegister(1);
+		BGC_SET = K055555ReadRegister(1);
 		pal_ptr += BGC_CBLK << 9;
 
 		// single color output from PCU2
-		if (!(BGC_SET & 2)) { bgcolor = *pal_ptr; mode = 0; } else bgcolor = 0;
+		if (!(BGC_SET & 2))
+		{
+			bgcolor = *pal_ptr;
+			mode = 0;
+		}
+		else bgcolor = 0;
 	}
 
 	if (!mode)
@@ -161,7 +168,8 @@ void K054338_fill_backcolor(INT32 palette_offset, INT32 mode) // (see p.67)
 		i = clipw = -clipw;
 		do
 		{
-			do { dst_ptr[i] = dst_ptr[i+1] = dst_ptr[i+2] = dst_ptr[i+3] = bgcolor; } while (i += 4);
+			do { dst_ptr[i] = dst_ptr[i + 1] = dst_ptr[i + 2] = dst_ptr[i + 3] = bgcolor; }
+			while (i += 4);
 			dst_ptr += dst_pitch;
 			i = clipw;
 		}
@@ -178,7 +186,8 @@ void K054338_fill_backcolor(INT32 palette_offset, INT32 mode) // (see p.67)
 			i = clipw = -clipw;
 			do
 			{
-				do { dst_ptr[i] = dst_ptr[i+1] = dst_ptr[i+2] = dst_ptr[i+3] = bgcolor; } while (i += 4);
+				do { dst_ptr[i] = dst_ptr[i + 1] = dst_ptr[i + 2] = dst_ptr[i + 3] = bgcolor; }
+				while (i += 4);
 				dst_ptr += dst_pitch;
 				bgcolor = *pal_ptr++;
 				i = clipw;
@@ -203,27 +212,27 @@ void K054338_fill_backcolor(INT32 palette_offset, INT32 mode) // (see p.67)
 // addition blending unimplemented (requires major changes to drawgfx and tilemap.c)
 INT32 K054338_set_alpha_level(INT32 pblend)
 {
-	UINT16 *regs;
+	UINT16* regs;
 	INT32 ctrl, mixpri, mixset, mixlv;
 
 	if (pblend <= 0 || pblend > 3)
 	{
-	//	alpha_set_level(255);
-		return(255);
+		//	alpha_set_level(255);
+		return (255);
 	}
 
-	regs   = k54338_regs;
-	ctrl   = BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_CONTROL]);
+	regs = k54338_regs;
+	ctrl = BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_CONTROL]);
 	mixpri = ctrl & K338_CTL_MIXPRI;
-	mixset = BURN_ENDIAN_SWAP_INT16(regs[K338_REG_PBLEND + (pblend>>1 & 1)]) >> (~pblend<<3 & 8);
-	mixlv  = mixset & 0x1f;
+	mixset = BURN_ENDIAN_SWAP_INT16(regs[K338_REG_PBLEND + (pblend>>1 & 1)]) >> (~pblend << 3 & 8);
+	mixlv = mixset & 0x1f;
 
 	if (k054338_alphainverted) mixlv = 0x1f - mixlv;
 
 	if (!(mixset & 0x20))
 	{
-		mixlv = mixlv<<3 | mixlv>>2;
-	//	alpha_set_level(mixlv); // source x alpha/255  +  target x (255-alpha)/255
+		mixlv = mixlv << 3 | mixlv >> 2;
+		//	alpha_set_level(mixlv); // source x alpha/255  +  target x (255-alpha)/255
 	}
 	else
 	{
@@ -237,37 +246,38 @@ INT32 K054338_set_alpha_level(INT32 pblend)
 		}
 
 		// DUMMY
-		if (mixlv && mixlv<0x1f) mixlv = 0x10;
-		mixlv = mixlv<<3 | mixlv>>2;
-	//	alpha_set_level(mixlv);
+		if (mixlv && mixlv < 0x1f) mixlv = 0x10;
+		mixlv = mixlv << 3 | mixlv >> 2;
+		//	alpha_set_level(mixlv);
 	}
 
-	return(mixlv);
+	return (mixlv);
 }
 
 //#define DEBUGMOO
 
 INT32 K054338_alpha_level_moo(INT32 pblend)
 {
-	UINT16 *regs;
+	UINT16* regs;
 	INT32 ctrl, mixpri, mixset, mixlv;
 
 	if (pblend <= 0 || pblend > 3)
 	{
-	//	alpha_set_level(255);
-		return(255);
+		//	alpha_set_level(255);
+		return (255);
 	}
 
-	regs   = k54338_regs;
-	ctrl   = BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_CONTROL]);
+	regs = k54338_regs;
+	ctrl = BURN_ENDIAN_SWAP_INT16(k54338_regs[K338_REG_CONTROL]);
 	mixpri = ctrl & K338_CTL_MIXPRI;
-	mixset = BURN_ENDIAN_SWAP_INT16(regs[K338_REG_PBLEND + (pblend>>1 & 1)]) >> (~pblend<<3 & 8);
-	mixlv  = mixset & 0x1f;
+	mixset = BURN_ENDIAN_SWAP_INT16(regs[K338_REG_PBLEND + (pblend>>1 & 1)]) >> (~pblend << 3 & 8);
+	mixlv = mixset & 0x1f;
 
 #ifdef DEBUGMOO
 	bprintf(0, _T("%X   - %X"), mixlv, mixpri);
 #endif
-	if (mixlv == 0 && alpha_cache == 0x1f) {
+	if (mixlv == 0 && alpha_cache == 0x1f)
+	{
 		mixlv = 0x1f;
 #ifdef DEBUGMOO
 		bprintf(0, _T(" (cached) -> 0x1f"));
@@ -282,8 +292,8 @@ INT32 K054338_alpha_level_moo(INT32 pblend)
 
 	if (!(mixset & 0x20))
 	{
-		mixlv = mixlv<<3 | mixlv>>2;
-	//	alpha_set_level(mixlv); // source x alpha/255  +  target x (255-alpha)/255
+		mixlv = mixlv << 3 | mixlv >> 2;
+		//	alpha_set_level(mixlv); // source x alpha/255  +  target x (255-alpha)/255
 	}
 	else
 	{
@@ -297,12 +307,12 @@ INT32 K054338_alpha_level_moo(INT32 pblend)
 		}
 
 		// DUMMY
-		if (mixlv && mixlv<0x1f) mixlv = 0x10;
-		mixlv = mixlv<<3 | mixlv>>2;
-	//	alpha_set_level(mixlv);
+		if (mixlv && mixlv < 0x1f) mixlv = 0x10;
+		mixlv = mixlv << 3 | mixlv >> 2;
+		//	alpha_set_level(mixlv);
 	}
 
-	return(mixlv);
+	return (mixlv);
 }
 
 void K054338_invert_alpha(INT32 invert)

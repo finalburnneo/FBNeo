@@ -41,7 +41,7 @@ void mathbox_reset()
 	memset(m_reg, 0, sizeof(m_reg));
 }
 
-void mathbox_scan(INT32 nAction, INT32 *)
+void mathbox_scan(INT32 nAction, INT32*)
 {
 	SCAN_VAR(m_reg);
 	SCAN_VAR(m_result);
@@ -50,65 +50,88 @@ void mathbox_scan(INT32 nAction, INT32 *)
 
 void mathbox_go_write(UINT8 offset, UINT8 data)
 {
-	INT32 mb_temp = 0;  /* temp 32-bit multiply results */
-	INT16 mb_q = 0;     /* temp used in division */
+	INT32 mb_temp = 0; /* temp 32-bit multiply results */
+	INT16 mb_q = 0; /* temp used in division */
 	INT32 msb = 0;
 
 	switch (offset)
 	{
-	case 0x00: m_result = REG0 = (REG0 & 0xff00) | data;        break;
-	case 0x01: m_result = REG0 = (REG0 & 0x00ff) | (data << 8); break;
-	case 0x02: m_result = REG1 = (REG1 & 0xff00) | data;        break;
-	case 0x03: m_result = REG1 = (REG1 & 0x00ff) | (data << 8); break;
-	case 0x04: m_result = REG2 = (REG2 & 0xff00) | data;        break;
-	case 0x05: m_result = REG2 = (REG2 & 0x00ff) | (data << 8); break;
-	case 0x06: m_result = REG3 = (REG3 & 0xff00) | data;        break;
-	case 0x07: m_result = REG3 = (REG3 & 0x00ff) | (data << 8); break;
-	case 0x08: m_result = REG4 = (REG4 & 0xff00) | data;        break;
-	case 0x09: m_result = REG4 = (REG4 & 0x00ff) | (data << 8); break;
+	case 0x00: m_result = REG0 = (REG0 & 0xff00) | data;
+		break;
+	case 0x01: m_result = REG0 = (REG0 & 0x00ff) | (data << 8);
+		break;
+	case 0x02: m_result = REG1 = (REG1 & 0xff00) | data;
+		break;
+	case 0x03: m_result = REG1 = (REG1 & 0x00ff) | (data << 8);
+		break;
+	case 0x04: m_result = REG2 = (REG2 & 0xff00) | data;
+		break;
+	case 0x05: m_result = REG2 = (REG2 & 0x00ff) | (data << 8);
+		break;
+	case 0x06: m_result = REG3 = (REG3 & 0xff00) | data;
+		break;
+	case 0x07: m_result = REG3 = (REG3 & 0x00ff) | (data << 8);
+		break;
+	case 0x08: m_result = REG4 = (REG4 & 0xff00) | data;
+		break;
+	case 0x09: m_result = REG4 = (REG4 & 0x00ff) | (data << 8);
+		break;
 
-	case 0x0a: m_result = REG5 = (REG5 & 0xff00) | data;        break;
-		/* note: no function loads low part of REG5 without performing a computation */
+	case 0x0a: m_result = REG5 = (REG5 & 0xff00) | data;
+		break;
+	/* note: no function loads low part of REG5 without performing a computation */
 
-	case 0x0c: m_result = REG6 = data; break;
-		/* note: no function loads high part of REG6 */
+	case 0x0c: m_result = REG6 = data;
+		break;
+	/* note: no function loads high part of REG6 */
 
-	case 0x15: m_result = REG7 = (REG7 & 0xff00) | data;        break;
-	case 0x16: m_result = REG7 = (REG7 & 0x00ff) | (data << 8); break;
+	case 0x15: m_result = REG7 = (REG7 & 0xff00) | data;
+		break;
+	case 0x16: m_result = REG7 = (REG7 & 0x00ff) | (data << 8);
+		break;
 
-	case 0x1a: m_result = REG8 = (REG8 & 0xff00) | data;        break;
-	case 0x1b: m_result = REG8 = (REG8 & 0x00ff) | (data << 8); break;
+	case 0x1a: m_result = REG8 = (REG8 & 0xff00) | data;
+		break;
+	case 0x1b: m_result = REG8 = (REG8 & 0x00ff) | (data << 8);
+		break;
 
-	case 0x0d: m_result = REGa = (REGa & 0xff00) | data;        break;
-	case 0x0e: m_result = REGa = (REGa & 0x00ff) | (data << 8); break;
-	case 0x0f: m_result = REGb = (REGb & 0xff00) | data;        break;
-	case 0x10: m_result = REGb = (REGb & 0x00ff) | (data << 8); break;
+	case 0x0d: m_result = REGa = (REGa & 0xff00) | data;
+		break;
+	case 0x0e: m_result = REGa = (REGa & 0x00ff) | (data << 8);
+		break;
+	case 0x0f: m_result = REGb = (REGb & 0xff00) | data;
+		break;
+	case 0x10: m_result = REGb = (REGb & 0x00ff) | (data << 8);
+		break;
 
-	case 0x17: m_result = REG7; break;
-	case 0x19: m_result = REG8; break;
-	case 0x18: m_result = REG9; break;
+	case 0x17: m_result = REG7;
+		break;
+	case 0x19: m_result = REG8;
+		break;
+	case 0x18: m_result = REG9;
+		break;
 
 	case 0x0b:
 
 		REG5 = (REG5 & 0x00ff) | (data << 8);
 
-		REGf = (INT16)0xffff;
+		REGf = static_cast<INT16>(0xffff);
 		REG4 -= REG2;
 		REG5 -= REG3;
 
 	step_048:
 
-		mb_temp = ((INT32) REG0) * ((INT32) REG4);
+		mb_temp = static_cast<INT32>(REG0) * static_cast<INT32>(REG4);
 		REGc = mb_temp >> 16;
 		REGe = mb_temp & 0xffff;
 
-		mb_temp = ((INT32) -REG1) * ((INT32) REG5);
+		mb_temp = -REG1 * static_cast<INT32>(REG5);
 		REG7 = mb_temp >> 16;
 		mb_q = mb_temp & 0xffff;
 
 		REG7 += REGc;
 
-		/* rounding */
+	/* rounding */
 		REGe = (REGe >> 1) & 0x7fff;
 		REGc = (mb_q >> 1) & 0x7fff;
 		mb_q = REGc + REGe;
@@ -122,26 +145,26 @@ void mathbox_go_write(UINT8 offset, UINT8 data)
 
 		REG7 += REG2;
 
-		/* fall into command 12 */
+	/* fall into command 12 */
 
 	case 0x12:
-		mb_temp = ((INT32) REG1) * ((INT32) REG4);
+		mb_temp = static_cast<INT32>(REG1) * static_cast<INT32>(REG4);
 		REGc = mb_temp >> 16;
 		REG9 = mb_temp & 0xffff;
 
-		mb_temp = ((INT32) REG0) * ((INT32) REG5);
+		mb_temp = static_cast<INT32>(REG0) * static_cast<INT32>(REG5);
 		REG8 = mb_temp >> 16;
 		mb_q = mb_temp & 0xffff;
 
 		REG8 += REGc;
 
-		/* rounding */
+	/* rounding */
 		REG9 = (REG9 >> 1) & 0x7fff;
 		REGc = (mb_q >> 1) & 0x7fff;
 		REG9 += REGc;
 		if (REG9 < 0)
 			REG8++;
-		REG9 <<= 1;  /* why? only to get the desired load address? */
+		REG9 <<= 1; /* why? only to get the desired load address? */
 
 		m_result = REG8;
 
@@ -152,7 +175,7 @@ void mathbox_go_write(UINT8 offset, UINT8 data)
 
 		REG9 &= 0xff00;
 
-		/* fall into command 13 */
+	/* fall into command 13 */
 
 	case 0x13:
 		REGc = REG9;
@@ -164,27 +187,27 @@ void mathbox_go_write(UINT8 offset, UINT8 data)
 		mb_q = REGb;
 
 	step_0bf:
-		REGe = REG7 ^ mb_q;  /* save sign of result */
+		REGe = REG7 ^ mb_q; /* save sign of result */
 		REGd = mb_q;
 		if (mb_q >= 0)
 			mb_q = REGc;
 		else
 		{
-			REGd = - mb_q - 1;
-			mb_q = - REGc - 1;
+			REGd = -mb_q - 1;
+			mb_q = -REGc - 1;
 			if ((mb_q < 0) && ((mb_q + 1) < 0))
 				REGd++;
 			mb_q++;
 		}
 
 	/* step 0c9: */
-		/* REGc = abs (REG7) */
+	/* REGc = abs (REG7) */
 		if (REG7 >= 0)
 			REGc = REG7;
 		else
 			REGc = -REG7;
 
-		REGf = REG6;  /* step counter */
+		REGf = REG6; /* step counter */
 
 		do
 		{
@@ -203,14 +226,14 @@ void mathbox_go_write(UINT8 offset, UINT8 data)
 		if (REGe >= 0)
 			m_result = mb_q;
 		else
-			m_result = - mb_q;
+			m_result = -mb_q;
 		break;
 
 	case 0x11:
 		REG5 = (REG5 & 0x00ff) | (data << 8);
-		REGf = 0x0000;  /* do everything in one step */
+		REGf = 0x0000; /* do everything in one step */
 		goto step_048;
-		//break; // never reached
+	//break; // never reached
 
 	case 0x1c:
 		/* window test? */
@@ -220,9 +243,15 @@ void mathbox_go_write(UINT8 offset, UINT8 data)
 			REGe = (REG4 + REG7) >> 1;
 			REGf = (REG5 + REG8) >> 1;
 			if ((REGb < REGe) && (REGf < REGe) && ((REGe + REGf) >= 0))
-			{ REG7 = REGe; REG8 = REGf; }
+			{
+				REG7 = REGe;
+				REG8 = REGf;
+			}
 			else
-			{ REG4 = REGe; REG5 = REGf; }
+			{
+				REG4 = REGe;
+				REG5 = REGf;
+			}
 		}
 		while (--REG6 >= 0);
 
@@ -240,14 +269,20 @@ void mathbox_go_write(UINT8 offset, UINT8 data)
 		if (REG3 < 0)
 			REG3 = -REG3;
 
-		/* fall into command 1e */
+	/* fall into command 1e */
 
 	case 0x1e:
 		/* result = max (REG2, REG3) + 3/8 * min (REG2, REG3) */
 		if (REG3 >= REG2)
-		{ REGc = REG2; REGd = REG3; }
+		{
+			REGc = REG2;
+			REGd = REG3;
+		}
 		else
-		{ REGd = REG2; REGc = REG3; }
+		{
+			REGd = REG2;
+			REGc = REG3;
+		}
 		REGc >>= 2;
 		REGd += REGc;
 		REGc >>= 1;

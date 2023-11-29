@@ -11,7 +11,7 @@
 
 #define MAX_GFX_ELEMENTS	MAX_GFX
 
-void sect_rect(rectangle *rect, const rectangle *cliprect)
+void sect_rect(rectangle* rect, const rectangle* cliprect)
 {
 	if (rect->min_x < cliprect->min_x) rect->min_x = cliprect->min_x;
 	if (rect->min_y < cliprect->min_y) rect->min_y = cliprect->min_y;
@@ -30,98 +30,97 @@ void sect_rect(rectangle *rect, const rectangle *cliprect)
 /* internal structure containing a word index, shift and mask */
 struct atarimo_mask
 {
-	UINT16					word;				/* word index */
-	UINT16					shift;				/* shift amount */
-	UINT16					mask;				/* final mask */
+	UINT16 word; /* word index */
+	UINT16 shift; /* shift amount */
+	UINT16 mask; /* final mask */
 };
 
 /* internal structure containing the state of the motion objects */
 struct atarimo_data
 {
-	int					gfxchanged;			/* true if the gfx info has changed */
-	GenericTilesGfx		gfxelement[MAX_GFX_ELEMENTS]; /* local copy of graphics elements */
-	int					gfxgranularity[MAX_GFX_ELEMENTS];
+	int gfxchanged; /* true if the gfx info has changed */
+	GenericTilesGfx gfxelement[MAX_GFX_ELEMENTS]; /* local copy of graphics elements */
+	int gfxgranularity[MAX_GFX_ELEMENTS];
 
-	UINT16 				*bitmap;				/* temporary bitmap to render to */
+	UINT16* bitmap; /* temporary bitmap to render to */
 
-	int					linked;				/* are the entries linked? */
-	int					split;				/* are entries split or together? */
-	int					reverse;			/* render in reverse order? */
-	int					swapxy;				/* render in swapped X/Y order? */
-	UINT8				nextneighbor;		/* does the neighbor bit affect the next object? */
-	int					slipshift;			/* log2(pixels_per_SLIP) */
-	int					slipoffset;			/* pixel offset for SLIP */
+	int linked; /* are the entries linked? */
+	int split; /* are entries split or together? */
+	int reverse; /* render in reverse order? */
+	int swapxy; /* render in swapped X/Y order? */
+	UINT8 nextneighbor; /* does the neighbor bit affect the next object? */
+	int slipshift; /* log2(pixels_per_SLIP) */
+	int slipoffset; /* pixel offset for SLIP */
 
-	int					entrycount;			/* number of entries per bank */
-	int					entrybits;			/* number of bits needed to represent entrycount */
-	int					bankcount;			/* number of banks */
+	int entrycount; /* number of entries per bank */
+	int entrybits; /* number of bits needed to represent entrycount */
+	int bankcount; /* number of banks */
 
-	int					tilewidth;			/* width of non-rotated tile */
-	int					tileheight;			/* height of non-rotated tile */
-	int					tilexshift;			/* bits to shift X coordinate when drawing */
-	int					tileyshift;			/* bits to shift Y coordinate when drawing */
-	int					bitmapwidth;		/* width of the full playfield bitmap */
-	int					bitmapheight;		/* height of the full playfield bitmap */
-	int					bitmapxmask;		/* x coordinate mask for the playfield bitmap */
-	int					bitmapymask;		/* y coordinate mask for the playfield bitmap */
+	int tilewidth; /* width of non-rotated tile */
+	int tileheight; /* height of non-rotated tile */
+	int tilexshift; /* bits to shift X coordinate when drawing */
+	int tileyshift; /* bits to shift Y coordinate when drawing */
+	int bitmapwidth; /* width of the full playfield bitmap */
+	int bitmapheight; /* height of the full playfield bitmap */
+	int bitmapxmask; /* x coordinate mask for the playfield bitmap */
+	int bitmapymask; /* y coordinate mask for the playfield bitmap */
 
-	int					spriterammask;		/* combined mask when accessing sprite RAM with raw addresses */
-	int					spriteramsize;		/* total size of sprite RAM, in entries */
-	int					sliprammask;		/* combined mask when accessing SLIP RAM with raw addresses */
-	int					slipramsize;		/* total size of SLIP RAM, in entries */
+	int spriterammask; /* combined mask when accessing sprite RAM with raw addresses */
+	int spriteramsize; /* total size of sprite RAM, in entries */
+	int sliprammask; /* combined mask when accessing SLIP RAM with raw addresses */
+	int slipramsize; /* total size of SLIP RAM, in entries */
 
-	UINT32  			palettebase;		/* base palette entry */
-	int					maxcolors;			/* maximum number of colors */
-	int					transpen;			/* transparent pen index */
+	UINT32 palettebase; /* base palette entry */
+	int maxcolors; /* maximum number of colors */
+	int transpen; /* transparent pen index */
 
-	UINT32  			bank;				/* current bank number */
-	UINT32  			xscroll;			/* current x scroll offset */
-	UINT32  			yscroll;			/* current y scroll offset */
+	UINT32 bank; /* current bank number */
+	UINT32 xscroll; /* current x scroll offset */
+	UINT32 yscroll; /* current y scroll offset */
 
-	int					maxperline;			/* maximum number of entries/line */
+	int maxperline; /* maximum number of entries/line */
 
-	atarimo_mask		linkmask;			/* mask for the link */
-	atarimo_mask		gfxmask;			/* mask for the graphics bank */
-	atarimo_mask		codemask;			/* mask for the code index */
-	atarimo_mask		codehighmask;		/* mask for the upper code index */
-	atarimo_mask		colormask;			/* mask for the color */
-	atarimo_mask		xposmask;			/* mask for the X position */
-	atarimo_mask		yposmask;			/* mask for the Y position */
-	atarimo_mask		widthmask;			/* mask for the width, in tiles*/
-	atarimo_mask		heightmask;			/* mask for the height, in tiles */
-	atarimo_mask		hflipmask;			/* mask for the horizontal flip */
-	atarimo_mask		vflipmask;			/* mask for the vertical flip */
-	atarimo_mask		prioritymask;		/* mask for the priority */
-	atarimo_mask		neighbormask;		/* mask for the neighbor */
-	atarimo_mask		absolutemask;		/* mask for absolute coordinates */
+	atarimo_mask linkmask; /* mask for the link */
+	atarimo_mask gfxmask; /* mask for the graphics bank */
+	atarimo_mask codemask; /* mask for the code index */
+	atarimo_mask codehighmask; /* mask for the upper code index */
+	atarimo_mask colormask; /* mask for the color */
+	atarimo_mask xposmask; /* mask for the X position */
+	atarimo_mask yposmask; /* mask for the Y position */
+	atarimo_mask widthmask; /* mask for the width, in tiles*/
+	atarimo_mask heightmask; /* mask for the height, in tiles */
+	atarimo_mask hflipmask; /* mask for the horizontal flip */
+	atarimo_mask vflipmask; /* mask for the vertical flip */
+	atarimo_mask prioritymask; /* mask for the priority */
+	atarimo_mask neighbormask; /* mask for the neighbor */
+	atarimo_mask absolutemask; /* mask for absolute coordinates */
 
-	atarimo_mask		specialmask;		/* mask for the special value */
-	int					specialvalue;		/* resulting value to indicate "special" */
-	atarimo_special_cb	specialcb;			/* callback routine for special entries */
-	int					codehighshift;		/* shift count for the upper code */
+	atarimo_mask specialmask; /* mask for the special value */
+	int specialvalue; /* resulting value to indicate "special" */
+	atarimo_special_cb specialcb; /* callback routine for special entries */
+	int codehighshift; /* shift count for the upper code */
 
-	atarimo_entry *		spriteram;			/* pointer to sprite RAM */
-	UINT16 *			slipram;			/* pointer to the SLIP RAM pointer */
-	UINT16 *			codelookup;			/* lookup table for codes */
-	UINT8 *				colorlookup;		/* lookup table for colors */
-	UINT8 *				gfxlookup;			/* lookup table for graphics */
+	atarimo_entry* spriteram; /* pointer to sprite RAM */
+	UINT16* slipram; /* pointer to the SLIP RAM pointer */
+	UINT16* codelookup; /* lookup table for codes */
+	UINT8* colorlookup; /* lookup table for colors */
+	UINT8* gfxlookup; /* lookup table for graphics */
 
-	atarimo_entry *		activelist[ATARIMO_MAXPERBANK];	/* pointers to active motion objects */
-	atarimo_entry **	activelast;			/* pointer to the last pointer in the active list */
-	int					last_link;			/* previous starting point */
-	int                 rebase_last_link;   // runahead testfix
+	atarimo_entry* activelist[ATARIMO_MAXPERBANK]; /* pointers to active motion objects */
+	atarimo_entry** activelast; /* pointer to the last pointer in the active list */
+	int last_link; /* previous starting point */
+	int rebase_last_link; // runahead testfix
 
-	UINT8 *				dirtygrid;			/* grid of dirty rects for blending */
-	int					dirtywidth;			/* width of dirty grid */
-	int					dirtyheight;		/* height of dirty grid */
+	UINT8* dirtygrid; /* grid of dirty rects for blending */
+	int dirtywidth; /* width of dirty grid */
+	int dirtyheight; /* height of dirty grid */
 
-	rectangle           rectlist[ATARIMO_MAXPERBANK];   /* list of bounding rectangles */
-	int					rectcount;
+	rectangle rectlist[ATARIMO_MAXPERBANK]; /* list of bounding rectangles */
+	int rectcount;
 
-	UINT32				last_xpos;			/* (during processing) the previous X position */
-	UINT32				next_xpos;			/* (during processing) the next X position */
+	UINT32 last_xpos; /* (during processing) the previous X position */
+	UINT32 next_xpos; /* (during processing) the next X position */
 };
-
 
 
 /*##########################################################################
@@ -132,17 +131,15 @@ struct atarimo_data
 #define EXTRACT_DATA(_input, _mask) (((_input)->data[(_mask).word] >> (_mask).shift) & (_mask).mask)
 
 
-
 /*##########################################################################
     GLOBAL VARIABLES
 ##########################################################################*/
 
-UINT16 *atarimo_0_spriteram = NULL;
-UINT16 *atarimo_0_slipram = NULL;
+UINT16* atarimo_0_spriteram = nullptr;
+UINT16* atarimo_0_slipram = nullptr;
 
-UINT16 *atarimo_1_spriteram = NULL;
-UINT16 *atarimo_1_slipram = NULL;
-
+UINT16* atarimo_1_spriteram = nullptr;
+UINT16* atarimo_1_slipram = nullptr;
 
 
 /*##########################################################################
@@ -154,13 +151,11 @@ static atarimo_data atarimo[ATARIMO_MAX];
 static rectangle mainclippy; // holds the clipping info when AtariMoRender() was called.
 
 
-
 /*##########################################################################
     STATIC FUNCTION DECLARATIONS
 ##########################################################################*/
 
-static int mo_render_object(atarimo_data *mo, const atarimo_entry *entry, const rectangle *cliprect);
-
+static int mo_render_object(atarimo_data* mo, const atarimo_entry* entry, const rectangle* cliprect);
 
 
 /*##########################################################################
@@ -210,7 +205,7 @@ inline int round_to_powerof2(int value)
     shift, and adjusted mask. Returns 0 if invalid.
 ---------------------------------------------------------------*/
 
-inline int convert_mask(const atarimo_entry *input, atarimo_mask *result)
+inline int convert_mask(const atarimo_entry* input, atarimo_mask* result)
 {
 	/* determine the word and make sure it's only 1 */
 	result->word = 0xffff;
@@ -248,28 +243,27 @@ inline int convert_mask(const atarimo_entry *input, atarimo_mask *result)
     gives us full control over colors.
 ---------------------------------------------------------------*/
 
-inline void init_gfxelement(atarimo_data *mo, int idx)
+inline void init_gfxelement(atarimo_data* mo, int idx)
 {
-	memcpy ((void*)&mo->gfxelement[idx], (void*)&GenericGfxData[idx], sizeof(GenericTilesGfx));
-	mo->gfxgranularity[idx] = 1<<mo->gfxelement[idx].depth;
-//	mo->gfxelement[idx].depth = 1;
-//	mo->gfxelement[idx].colortable = Machine->remapped_colortable;
+	memcpy(&mo->gfxelement[idx], &GenericGfxData[idx], sizeof(GenericTilesGfx));
+	mo->gfxgranularity[idx] = 1 << mo->gfxelement[idx].depth;
+	//	mo->gfxelement[idx].depth = 1;
+	//	mo->gfxelement[idx].colortable = Machine->remapped_colortable;
 	mo->gfxelement[idx].color_mask = 65536;
 }
-
 
 
 /*##########################################################################
     GLOBAL FUNCTIONS
 ##########################################################################*/
 
-void atarimo_apply_stain(UINT16 *pf, UINT16 *mo, INT32 x, INT32 /*y*/, INT32 maxx)
+void atarimo_apply_stain(UINT16* pf, UINT16* mo, INT32 x, INT32 /*y*/, INT32 maxx)
 {
-	const UINT16 START_MARKER = ((4 << 12) | 2);
-	const UINT16 END_MARKER =   ((4 << 12) | 4);
+	constexpr UINT16 START_MARKER = ((4 << 12) | 2);
+	constexpr UINT16 END_MARKER = ((4 << 12) | 4);
 	bool offnext = false;
 
-	for ( ; x < maxx; x++)
+	for (; x < maxx; x++)
 	{
 		pf[x] |= 0x400;
 		if (offnext && ((mo[x] == 0xffff) || (mo[x] & START_MARKER) != START_MARKER))
@@ -278,13 +272,13 @@ void atarimo_apply_stain(UINT16 *pf, UINT16 *mo, INT32 x, INT32 /*y*/, INT32 max
 	}
 }
 
-void AtariMoApplyStain(UINT16 *pf, UINT16 *mo, INT32 x)
+void AtariMoApplyStain(UINT16* pf, UINT16* mo, INT32 x)
 {
-	const UINT16 START_MARKER = ((4 << 12) | 2);
-	const UINT16 END_MARKER =   ((4 << 12) | 4);
+	constexpr UINT16 START_MARKER = ((4 << 12) | 2);
+	constexpr UINT16 END_MARKER = ((4 << 12) | 4);
 	bool offnext = false;
 
-	for ( ; x < nScreenWidth; x++)
+	for (; x < nScreenWidth; x++)
 	{
 		pf[x] |= 0x400;
 		if (offnext && ((mo[x] == 0xffff) || (mo[x] & START_MARKER) != START_MARKER))
@@ -313,83 +307,83 @@ static void force_update(int scanline)
     the attribute lookup table.
 ---------------------------------------------------------------*/
 
-int atarimo_init(int map, const atarimo_desc *desc)
+int atarimo_init(int map, const atarimo_desc* desc)
 {
-	GenericTilesGfx *gfx = &GenericGfxData[desc->gfxindex];
-	atarimo_data *mo = &atarimo[map];
+	GenericTilesGfx* gfx = &GenericGfxData[desc->gfxindex];
+	atarimo_data* mo = &atarimo[map];
 	int i;
 
 	if (map == 0)
 		memset(&atarimo, 0, sizeof(atarimo));
 
 	/* determine the masks first */
-	convert_mask(&desc->linkmask,      &mo->linkmask);
-	convert_mask(&desc->gfxmask,       &mo->gfxmask);
-	convert_mask(&desc->codemask,      &mo->codemask);
-	convert_mask(&desc->codehighmask,  &mo->codehighmask);
-	convert_mask(&desc->colormask,     &mo->colormask);
-	convert_mask(&desc->xposmask,      &mo->xposmask);
-	convert_mask(&desc->yposmask,      &mo->yposmask);
-	convert_mask(&desc->widthmask,     &mo->widthmask);
-	convert_mask(&desc->heightmask,    &mo->heightmask);
-	convert_mask(&desc->hflipmask,     &mo->hflipmask);
-	convert_mask(&desc->vflipmask,     &mo->vflipmask);
-	convert_mask(&desc->prioritymask,  &mo->prioritymask);
-	convert_mask(&desc->neighbormask,  &mo->neighbormask);
-	convert_mask(&desc->absolutemask,  &mo->absolutemask);
+	convert_mask(&desc->linkmask, &mo->linkmask);
+	convert_mask(&desc->gfxmask, &mo->gfxmask);
+	convert_mask(&desc->codemask, &mo->codemask);
+	convert_mask(&desc->codehighmask, &mo->codehighmask);
+	convert_mask(&desc->colormask, &mo->colormask);
+	convert_mask(&desc->xposmask, &mo->xposmask);
+	convert_mask(&desc->yposmask, &mo->yposmask);
+	convert_mask(&desc->widthmask, &mo->widthmask);
+	convert_mask(&desc->heightmask, &mo->heightmask);
+	convert_mask(&desc->hflipmask, &mo->hflipmask);
+	convert_mask(&desc->vflipmask, &mo->vflipmask);
+	convert_mask(&desc->prioritymask, &mo->prioritymask);
+	convert_mask(&desc->neighbormask, &mo->neighbormask);
+	convert_mask(&desc->absolutemask, &mo->absolutemask);
 
 	/* copy in the basic data */
-	mo->gfxchanged    = 0;
+	mo->gfxchanged = 0;
 
-	mo->linked        = desc->linked;
-	mo->split         = desc->split;
-	mo->reverse       = desc->reverse;
-	mo->swapxy        = desc->swapxy;
-	mo->nextneighbor  = desc->nextneighbor;
-	mo->slipshift     = desc->slipheight ? compute_log(desc->slipheight) : 0;
-	mo->slipoffset    = desc->slipoffset;
+	mo->linked = desc->linked;
+	mo->split = desc->split;
+	mo->reverse = desc->reverse;
+	mo->swapxy = desc->swapxy;
+	mo->nextneighbor = desc->nextneighbor;
+	mo->slipshift = desc->slipheight ? compute_log(desc->slipheight) : 0;
+	mo->slipoffset = desc->slipoffset;
 
-	mo->entrycount    = round_to_powerof2(mo->linkmask.mask);
-	mo->entrybits     = compute_log(mo->entrycount);
-	mo->bankcount     = desc->banks;
+	mo->entrycount = round_to_powerof2(mo->linkmask.mask);
+	mo->entrybits = compute_log(mo->entrycount);
+	mo->bankcount = desc->banks;
 
-	mo->tilewidth     = gfx->width;
-	mo->tileheight    = gfx->height;
-	mo->tilexshift    = compute_log(mo->tilewidth);
-	mo->tileyshift    = compute_log(mo->tileheight);
-	mo->bitmapwidth   = round_to_powerof2(mo->xposmask.mask);
-	mo->bitmapheight  = round_to_powerof2(mo->yposmask.mask);
-	mo->bitmapxmask   = mo->bitmapwidth - 1;
-	mo->bitmapymask   = mo->bitmapheight - 1;
+	mo->tilewidth = gfx->width;
+	mo->tileheight = gfx->height;
+	mo->tilexshift = compute_log(mo->tilewidth);
+	mo->tileyshift = compute_log(mo->tileheight);
+	mo->bitmapwidth = round_to_powerof2(mo->xposmask.mask);
+	mo->bitmapheight = round_to_powerof2(mo->yposmask.mask);
+	mo->bitmapxmask = mo->bitmapwidth - 1;
+	mo->bitmapymask = mo->bitmapheight - 1;
 
 	mo->spriteramsize = mo->bankcount * mo->entrycount;
 	mo->spriterammask = mo->spriteramsize - 1;
-	mo->slipramsize   = mo->bitmapheight >> mo->slipshift;
-	mo->sliprammask   = mo->slipramsize - 1;
+	mo->slipramsize = mo->bitmapheight >> mo->slipshift;
+	mo->sliprammask = mo->slipramsize - 1;
 
-	mo->palettebase   = desc->palettebase;
-	mo->maxcolors     = desc->maxcolors / (1<<gfx->depth);
-	mo->transpen      = desc->transpen;
+	mo->palettebase = desc->palettebase;
+	mo->maxcolors = desc->maxcolors / (1 << gfx->depth);
+	mo->transpen = desc->transpen;
 
-	mo->bank          = 0;
-	mo->xscroll       = 0;
-	mo->yscroll       = 0;
+	mo->bank = 0;
+	mo->xscroll = 0;
+	mo->yscroll = 0;
 
-	mo->maxperline    = desc->maxlinks ? desc->maxlinks : 0x400;
+	mo->maxperline = desc->maxlinks ? desc->maxlinks : 0x400;
 
 	convert_mask(&desc->specialmask, &mo->specialmask);
-	mo->specialvalue  = desc->specialvalue;
-	mo->specialcb     = desc->specialcb;
+	mo->specialvalue = desc->specialvalue;
+	mo->specialcb = desc->specialcb;
 	mo->codehighshift = compute_log(round_to_powerof2(mo->codemask.mask));
 
-	mo->slipram       = (map == 0) ? atarimo_0_slipram : atarimo_1_slipram;
+	mo->slipram = (map == 0) ? atarimo_0_slipram : atarimo_1_slipram;
 
-	mo->last_link     = -1;
+	mo->last_link = -1;
 	mo->rebase_last_link = 0;
 
 	/* allocate the temp bitmap */
 	BurnBitmapAllocate(31, nScreenWidth, nScreenHeight, false);
-	mo->bitmap        = BurnBitmapGetBitmap(31);
+	mo->bitmap = BurnBitmapGetBitmap(31);
 
 	BurnBitmapFill(31, 0xffff); // why not transpen?? -dink.  because. -dink
 
@@ -430,7 +424,7 @@ int atarimo_init(int map, const atarimo_desc *desc)
 	init_gfxelement(mo, desc->gfxindex);
 
 	/* start a timer to update a few times during refresh */
-//	timer_set(cpu_getscanlinetime(0), 0, force_update);
+	//	timer_set(cpu_getscanlinetime(0), 0, force_update);
 
 	//bprintf(0, L"atarimo_init:\n");
 	//bprintf(0, L"  width=%d (shift=%d),  height=%d (shift=%d)\n", mo->tilewidth, mo->tilexshift, mo->tileheight, mo->tileyshift);
@@ -441,7 +435,7 @@ int atarimo_init(int map, const atarimo_desc *desc)
 	return 1;
 }
 
-void AtariMoInit(INT32 map, const atarimo_desc *desc)
+void AtariMoInit(INT32 map, const atarimo_desc* desc)
 {
 	atarimo_init(map, desc);
 }
@@ -450,7 +444,7 @@ void atarimo_exit()
 {
 	for (INT32 i = 0; i < 2; i++)
 	{
-		atarimo_data *mo = &atarimo[i];
+		atarimo_data* mo = &atarimo[i];
 
 		if (mo->tilewidth)
 		{
@@ -461,7 +455,7 @@ void atarimo_exit()
 			BurnFree(mo->gfxlookup);
 		}
 
-		memset (mo, 0, sizeof(atarimo_data));
+		memset(mo, 0, sizeof(atarimo_data));
 	}
 }
 
@@ -470,13 +464,13 @@ void AtariMoExit()
 	atarimo_exit();
 }
 
-INT32 AtariMoScan(INT32 nAction, INT32 *pnMin)
+INT32 AtariMoScan(INT32 nAction, INT32* pnMin)
 {
 	if (nAction & ACB_VOLATILE)
 	{
 		for (INT32 i = 0; i < 2; i++)
 		{
-			atarimo_data *mo = &atarimo[i];
+			atarimo_data* mo = &atarimo[i];
 			if (mo->tilewidth)
 			{
 				ScanVar(mo->spriteram, sizeof(atarimo_entry) * mo->spriteramsize, "AtariMO RAM");
@@ -488,10 +482,10 @@ INT32 AtariMoScan(INT32 nAction, INT32 *pnMin)
 				SCAN_VAR(mo->next_xpos);
 			}
 
-			if (nAction & ACB_WRITE) {
+			if (nAction & ACB_WRITE)
+			{
 				mo->rebase_last_link = 1;
 			}
-
 		}
 	}
 
@@ -503,9 +497,9 @@ INT32 AtariMoScan(INT32 nAction, INT32 *pnMin)
     lookup table.
 ---------------------------------------------------------------*/
 
-UINT16 *atarimo_get_code_lookup(int map, int *size)
+UINT16* atarimo_get_code_lookup(int map, int* size)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 
 	if (size)
 		*size = round_to_powerof2(mo->codemask.mask);
@@ -518,9 +512,9 @@ UINT16 *atarimo_get_code_lookup(int map, int *size)
     lookup table.
 ---------------------------------------------------------------*/
 
-UINT8 *atarimo_get_color_lookup(int map, int *size)
+UINT8* atarimo_get_color_lookup(int map, int* size)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 
 	if (size)
 		*size = round_to_powerof2(mo->colormask.mask);
@@ -533,9 +527,9 @@ UINT8 *atarimo_get_color_lookup(int map, int *size)
     lookup table.
 ---------------------------------------------------------------*/
 
-UINT8 *atarimo_get_gfx_lookup(int map, int *size)
+UINT8* atarimo_get_gfx_lookup(int map, int* size)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 
 	mo->gfxchanged = 1;
 	if (size)
@@ -548,11 +542,11 @@ UINT8 *atarimo_get_gfx_lookup(int map, int *size)
     build_active_list: Build a list of active objects.
 ---------------------------------------------------------------*/
 
-static void build_active_list(atarimo_data *mo, int link)
+static void build_active_list(atarimo_data* mo, int link)
 {
-	atarimo_entry *bankbase = &mo->spriteram[mo->bank << mo->entrybits];
+	atarimo_entry* bankbase = &mo->spriteram[mo->bank << mo->entrybits];
 	UINT8 movisit[ATARIMO_MAXPERBANK];
-	atarimo_entry **current;
+	atarimo_entry** current;
 	int i;
 
 	/* reset the visit map */
@@ -565,7 +559,7 @@ static void build_active_list(atarimo_data *mo, int link)
 	/* visit all the motion objects and copy their data into the display list */
 	for (i = 0, current = mo->activelist; i < mo->maxperline && !movisit[link]; i++)
 	{
-		atarimo_entry *modata = &bankbase[link];
+		atarimo_entry* modata = &bankbase[link];
 
 		/* copy the current entry into the list */
 		*current++ = modata;
@@ -588,12 +582,12 @@ static void build_active_list(atarimo_data *mo, int link)
     X and Y position.
 ---------------------------------------------------------------*/
 
-inline UINT8 *get_dirty_base(atarimo_data *mo, int x, int y)
+inline UINT8* get_dirty_base(atarimo_data* mo, int x, int y)
 {
 	if (x < 0) x = 0;
 	if (y < 0) y = 0;
 
-	UINT8 *result = mo->dirtygrid;
+	UINT8* result = mo->dirtygrid;
 	result += ((y >> mo->tileyshift) + 1) * mo->dirtywidth;
 	result += (x >> mo->tilexshift) + 1;
 	return result;
@@ -605,7 +599,7 @@ inline UINT8 *get_dirty_base(atarimo_data *mo, int x, int y)
     cliprect.
 ---------------------------------------------------------------*/
 
-static void erase_dirty_grid(atarimo_data *mo, const rectangle *cliprect)
+static void erase_dirty_grid(atarimo_data* mo, const rectangle* cliprect)
 {
 	int sx = cliprect->min_x >> mo->tilexshift;
 	int ex = cliprect->max_x >> mo->tilexshift;
@@ -617,7 +611,7 @@ static void erase_dirty_grid(atarimo_data *mo, const rectangle *cliprect)
 	for (y = sy; y <= ey; y++)
 	{
 		/* get the base pointer and memset the row */
-		UINT8 *dirtybase = get_dirty_base(mo, cliprect->min_x, y << mo->tileyshift);
+		UINT8* dirtybase = get_dirty_base(mo, cliprect->min_x, y << mo->tileyshift);
 		memset(dirtybase, 0, ex - sx + 1);
 	}
 }
@@ -628,7 +622,7 @@ static void erase_dirty_grid(atarimo_data *mo, const rectangle *cliprect)
     series of cliprects.
 ---------------------------------------------------------------*/
 
-static void convert_dirty_grid_to_rects(atarimo_data *mo, const rectangle *cliprect, struct atarimo_rect_list *rectlist)
+static void convert_dirty_grid_to_rects(atarimo_data* mo, const rectangle* cliprect, struct atarimo_rect_list* rectlist)
 {
 	int sx = cliprect->min_x >> mo->tilexshift;
 	int ex = cliprect->max_x >> mo->tilexshift;
@@ -636,18 +630,18 @@ static void convert_dirty_grid_to_rects(atarimo_data *mo, const rectangle *clipr
 	int ey = cliprect->max_y >> mo->tileyshift;
 	int tilewidth = 1 << mo->tilexshift;
 	int tileheight = 1 << mo->tileyshift;
-	rectangle *rect;
+	rectangle* rect;
 	int x, y;
 
 	/* initialize the rect list */
 	rectlist->numrects = 0;
 	rectlist->rect = mo->rectlist;
-	rect = NULL;
+	rect = nullptr;
 
 	/* loop over all grid rows that intersect our cliprect */
 	for (y = sy; y <= ey; y++)
 	{
-		UINT8 *dirtybase = get_dirty_base(mo, cliprect->min_x, y << mo->tileyshift);
+		UINT8* dirtybase = get_dirty_base(mo, cliprect->min_x, y << mo->tileyshift);
 		int can_add_to_existing = 0;
 
 		/* loop over all grid columns that intersect our cliprect */
@@ -661,9 +655,12 @@ static void convert_dirty_grid_to_rects(atarimo_data *mo, const rectangle *clipr
 				{
 					/* advance pointers */
 					rectlist->numrects++;
-					if (rect == NULL) {
+					if (rect == nullptr)
+					{
 						rect = &mo->rectlist[0];
-					} else {
+					}
+					else
+					{
 						rect++;
 					}
 
@@ -695,11 +692,11 @@ static void convert_dirty_grid_to_rects(atarimo_data *mo, const rectangle *clipr
     destination bitmap.
 ---------------------------------------------------------------*/
 
-UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_list *rectlist)
+UINT16* atarimo_render(int map, const rectangle* cliprect, struct atarimo_rect_list* rectlist)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 	int startband, stopband, band, i;
-	rectangle *rect;
+	rectangle* rect;
 
 	/* if the graphics info has changed, recompute */
 	if (mo->gfxchanged)
@@ -731,7 +728,8 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 		/* otherwise, grab the SLIP and compute the bandrect */
 		if (mo->slipshift != 0)
 		{
-			link = (BURN_ENDIAN_SWAP_INT16(mo->slipram[band & mo->sliprammask]) >> mo->linkmask.shift) & mo->linkmask.mask;
+			link = (BURN_ENDIAN_SWAP_INT16(mo->slipram[band & mo->sliprammask]) >> mo->linkmask.shift) & mo->linkmask.
+				mask;
 
 			/* compute minimum Y and wrap around if necessary */
 			bandclip.min_y = ((band << mo->slipshift) - mo->yscroll + mo->slipoffset) & mo->bitmapymask;
@@ -742,7 +740,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 			bandclip.max_y = bandclip.min_y + (1 << mo->slipshift) - 1;
 
 			/* keep within the cliprect */
-		    sect_rect(&bandclip, cliprect);
+			sect_rect(&bandclip, cliprect);
 		}
 
 		/* if this matches the last link, we don't need to re-process the list */
@@ -782,7 +780,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 	return mo->bitmap;
 }
 
-void AtariMoRender(INT32 map, struct atarimo_rect_list *rectlist)
+void AtariMoRender(INT32 map, struct atarimo_rect_list* rectlist)
 {
 	rectangle cliprect;
 	GenericTilesGetClip(&cliprect.min_x, &cliprect.max_x, &cliprect.min_y, &cliprect.max_y);
@@ -808,15 +806,16 @@ void AtariMoRender(INT32 map)
     to the destination.
 ---------------------------------------------------------------*/
 
-static int mo_render_object(atarimo_data *mo, const atarimo_entry *entry, const rectangle *cliprect)
+static int mo_render_object(atarimo_data* mo, const atarimo_entry* entry, const rectangle* cliprect)
 {
 	int gfxindex = mo->gfxlookup[EXTRACT_DATA(entry, mo->gfxmask)];
-	const GenericTilesGfx *gfx = &mo->gfxelement[gfxindex];
-	UINT16 *bitmap = mo->bitmap;
+	const GenericTilesGfx* gfx = &mo->gfxelement[gfxindex];
+	UINT16* bitmap = mo->bitmap;
 	int x, y, sx, sy;
 
 	/* extract data from the various words */
-	int code = mo->codelookup[EXTRACT_DATA(entry, mo->codemask)] | (EXTRACT_DATA(entry, mo->codehighmask) << mo->codehighshift);
+	int code = mo->codelookup[EXTRACT_DATA(entry, mo->codemask)] | (EXTRACT_DATA(entry, mo->codehighmask) << mo->
+		codehighshift);
 	int color = mo->colorlookup[EXTRACT_DATA(entry, mo->colormask)];
 	int xpos = EXTRACT_DATA(entry, mo->xposmask);
 	int ypos = -EXTRACT_DATA(entry, mo->yposmask);
@@ -826,7 +825,7 @@ static int mo_render_object(atarimo_data *mo, const atarimo_entry *entry, const 
 	int height = EXTRACT_DATA(entry, mo->heightmask) + 1;
 	int priority = EXTRACT_DATA(entry, mo->prioritymask);
 	int xadv, yadv, rendered = 0;
-	UINT8 *dirtybase;
+	UINT8* dirtybase;
 
 #ifdef TEMPDEBUG
 int temp = EXTRACT_DATA(entry, mo->codemask);
@@ -880,7 +879,7 @@ if ((temp & 0xff00) == 0xc800)
 	if (mo->specialmask.mask != 0 && EXTRACT_DATA(entry, mo->specialmask) == mo->specialvalue)
 	{
 		if (mo->specialcb)
-			return (*mo->specialcb)(bitmap, cliprect, code, color, xpos, ypos, NULL);
+			return (*mo->specialcb)(bitmap, cliprect, code, color, xpos, ypos, nullptr);
 		return 0;
 	}
 
@@ -912,7 +911,7 @@ if ((temp & 0xff00) == 0xc800)
 				code += width;
 				continue;
 			}
-			else if (sy > cliprect->max_y)
+			if (sy > cliprect->max_y)
 				break;
 
 			/* loop over the width */
@@ -924,9 +923,11 @@ if ((temp & 0xff00) == 0xc800)
 
 				/* draw the sprite */
 				// 1. set clipping to this sprite's bandclip:
-				GenericTilesSetClip(cliprect->min_x, cliprect->max_x, cliprect->min_y, (cliprect->max_y+1 > nScreenHeight) ? nScreenHeight : cliprect->max_y+1);
+				GenericTilesSetClip(cliprect->min_x, cliprect->max_x, cliprect->min_y,
+				                    (cliprect->max_y + 1 > nScreenHeight) ? nScreenHeight : cliprect->max_y + 1);
 				// 2: draw sprite:
-				DrawCustomMaskTile(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen, 0, gfx->gfxbase);
+				DrawCustomMaskTile(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen,
+				                   0, gfx->gfxbase);
 				// 3: set clipping back to cached value @ AtariMoRender()
 				GenericTilesSetClip(mainclippy.min_x, mainclippy.max_x, mainclippy.min_y, mainclippy.max_y);
 				rendered = 1;
@@ -953,7 +954,7 @@ if ((temp & 0xff00) == 0xc800)
 				code += height;
 				continue;
 			}
-			else if (sx > cliprect->max_x)
+			if (sx > cliprect->max_x)
 				break;
 
 			/* loop over the height */
@@ -965,8 +966,10 @@ if ((temp & 0xff00) == 0xc800)
 					continue;
 
 				/* draw the sprite */
-				GenericTilesSetClip(cliprect->min_x, cliprect->max_x, cliprect->min_y, (cliprect->max_y+1 > nScreenHeight) ? nScreenHeight : cliprect->max_y+1);
-				DrawCustomMaskTile(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen, 0, gfx->gfxbase);
+				GenericTilesSetClip(cliprect->min_x, cliprect->max_x, cliprect->min_y,
+				                    (cliprect->max_y + 1 > nScreenHeight) ? nScreenHeight : cliprect->max_y + 1);
+				DrawCustomMaskTile(bitmap, gfx->width, gfx->height, code, sx, sy, hflip, vflip, color, 0, mo->transpen,
+				                   0, gfx->gfxbase);
 				GenericTilesSetClip(mainclippy.min_x, mainclippy.max_x, mainclippy.min_y, mainclippy.max_y);
 				rendered = 1;
 
@@ -991,7 +994,7 @@ if ((temp & 0xff00) == 0xc800)
 
 void atarimo_set_bank(int map, int bank)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 	if (mo->bank != bank)
 	{
 		mo->bank = bank;
@@ -1007,13 +1010,13 @@ void atarimo_set_bank(int map, int bank)
 
 void atarimo_set_palettebase(int map, int base)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 
 	mo->palettebase = base;
 
-//	iq_132
-//	for (INT32 i = 0; i < MAX_GFX_ELEMENTS; i++)
-//		mo->gfxelement[i].colortable = &Machine->remapped_colortable[base];
+	//	iq_132
+	//	for (INT32 i = 0; i < MAX_GFX_ELEMENTS; i++)
+	//		mo->gfxelement[i].colortable = &Machine->remapped_colortable[base];
 }
 
 
@@ -1024,7 +1027,7 @@ void atarimo_set_palettebase(int map, int base)
 
 void atarimo_set_xscroll(int map, int xscroll)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 	mo->xscroll = xscroll;
 }
 
@@ -1036,7 +1039,7 @@ void atarimo_set_xscroll(int map, int xscroll)
 
 void atarimo_set_yscroll(int map, int yscroll)
 {
-	atarimo_data *mo = &atarimo[map];
+	atarimo_data* mo = &atarimo[map];
 	mo->yscroll = yscroll;
 }
 
@@ -1092,7 +1095,7 @@ int atarimo_get_yscroll(int map)
 void AtariMoWrite(INT32 map, INT32 offset, UINT16 data)
 {
 	int entry, idx, bank;
-//	COMBINE_DATA(&atarimo_0_spriteram[offset]);
+	//	COMBINE_DATA(&atarimo_0_spriteram[offset]);
 	if (atarimo[map].split)
 	{
 		entry = offset & atarimo[map].linkmask.mask;
@@ -1118,7 +1121,7 @@ void AtariMoExpandedWrite(INT32 map, INT32 offset, UINT16 data)
 {
 	int entry, idx, bank;
 
-//	COMBINE_DATA(&atarimo_0_spriteram[offset]);
+	//	COMBINE_DATA(&atarimo_0_spriteram[offset]);
 	if (!(offset & 1))
 	{
 		offset >>= 1;

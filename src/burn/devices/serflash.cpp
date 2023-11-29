@@ -9,7 +9,7 @@
 // runtime state
 enum { IDLE = 0, READ, READ_ID, READ_STATUS, BLOCK_ERASE, PAGE_PROGRAM };
 
-static INT32  m_length;
+static INT32 m_length;
 static UINT8* m_region;
 
 static UINT32 m_row_num;
@@ -30,13 +30,13 @@ static UINT16 m_flash_col;
 static int m_flash_page_addr;
 static UINT32 m_flash_page_index;
 
-static UINT8 *m_flashwritemap;
+static UINT8* m_flashwritemap;
 
 static UINT8 m_last_flash_cmd;
 
 static UINT32 m_flash_addr;
 
-static UINT8 *m_flash_page_data;
+static UINT8* m_flash_page_data;
 
 static void flash_change_state(UINT8 state); // forward
 
@@ -46,9 +46,10 @@ static void flash_change_state(UINT8 state); // forward
 void serflash_nvram_read();
 void serflash_nvram_write();
 
-void serflash_scan(INT32 nAction, INT32 *pnMin)
+void serflash_scan(INT32 nAction, INT32* pnMin)
 {
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		SCAN_VAR(m_flash_state);
 		SCAN_VAR(m_flash_enab);
 		SCAN_VAR(m_flash_cmd_seq);
@@ -69,28 +70,33 @@ void serflash_scan(INT32 nAction, INT32 *pnMin)
 		ScanVar(m_flash_page_data, m_flash_page_size, "FlashPageData");
 	}
 
-	if (nAction & ACB_NVRAM) {
-		if (nAction & ACB_READ) { // read from game -> write to state
+	if (nAction & ACB_NVRAM)
+	{
+		if (nAction & ACB_READ)
+		{
+			// read from game -> write to state
 			serflash_nvram_write();
 		}
-		if (nAction & ACB_WRITE) { // write to game <- read from state
+		if (nAction & ACB_WRITE)
+		{
+			// write to game <- read from state
 			serflash_nvram_read();
 		}
 	}
 }
 
-void serflash_init(UINT8 *rom, INT32 length)
+void serflash_init(UINT8* rom, INT32 length)
 {
 	m_length = length;
 	m_region = rom;
 
-	m_flash_page_size = 2048+64;
+	m_flash_page_size = 2048 + 64;
 	m_row_num = m_length / m_flash_page_size;
 
-	m_flashwritemap = (UINT8*)BurnMalloc(m_row_num);
+	m_flashwritemap = BurnMalloc(m_row_num);
 	memset(m_flashwritemap, 0, m_row_num);
 
-	m_flash_page_data = (UINT8*)BurnMalloc(m_flash_page_size);
+	m_flash_page_data = BurnMalloc(m_flash_page_size);
 	memset(m_flash_page_data, 0, m_flash_page_size);
 }
 
@@ -102,7 +108,7 @@ void serflash_exit()
 
 static void serflash_hard_reset()
 {
-//  logerror("%08x FLASH: RESET\n", cpuexec_describe_context(machine));
+	//  logerror("%08x FLASH: RESET\n", cpuexec_describe_context(machine));
 
 	m_flash_state = READ;
 
@@ -217,33 +223,33 @@ void serflash_cmd_write(UINT8 data)
 
 		switch (data)
 		{
-			case 0x00:  // READ
-				m_flash_addr_seq = 0;
-				break;
+		case 0x00: // READ
+			m_flash_addr_seq = 0;
+			break;
 
-			case 0x60:  // BLOCK ERASE
-				m_flash_addr_seq = 2; // row address only
-				break;
+		case 0x60: // BLOCK ERASE
+			m_flash_addr_seq = 2; // row address only
+			break;
 
-			case 0x70:  // READ STATUS
-				flash_change_state( READ_STATUS );
-				break;
+		case 0x70: // READ STATUS
+			flash_change_state(READ_STATUS);
+			break;
 
-			case 0x80:  // PAGE / CACHE PROGRAM
-				m_flash_addr_seq = 0;
-				// this actually seems to be set with the next 2 writes?
-				m_flash_page_addr = 0;
-				break;
+		case 0x80: // PAGE / CACHE PROGRAM
+			m_flash_addr_seq = 0;
+		// this actually seems to be set with the next 2 writes?
+			m_flash_page_addr = 0;
+			break;
 
-			case 0x90:  // READ ID
-				flash_change_state( READ_ID );
-				break;
+		case 0x90: // READ ID
+			flash_change_state(READ_ID);
+			break;
 
-			case 0xff:  // RESET
-				flash_change_state( IDLE );
-				break;
+		case 0xff: // RESET
+			flash_change_state(IDLE);
+			break;
 
-			default:
+		default:
 			{
 				//logerror("%s FLASH: unknown cmd1 = %02X\n", machine().describe_context(), data);
 			}
@@ -253,57 +259,58 @@ void serflash_cmd_write(UINT8 data)
 	{
 		switch (m_flash_cmd_prev)
 		{
-			case 0x00:  // READ
-				if (data == 0x30)
+		case 0x00: // READ
+			if (data == 0x30)
+			{
+				if (m_flash_row < m_row_num)
 				{
-					if (m_flash_row < m_row_num)
-					{
-						memcpy(m_flash_page_data, m_region + m_flash_row * m_flash_page_size, m_flash_page_size);
-						m_flash_page_addr = m_flash_col;
-						m_flash_page_index = m_flash_row;
-					}
-					flash_change_state( READ );
+					memcpy(m_flash_page_data, m_region + m_flash_row * m_flash_page_size, m_flash_page_size);
+					m_flash_page_addr = m_flash_col;
+					m_flash_page_index = m_flash_row;
+				}
+				flash_change_state(READ);
 
-					//logerror("%08x FLASH: caching page = %04X\n", m_maincpu->pc(), m_flash_row);
-				}
-				break;
+				//logerror("%08x FLASH: caching page = %04X\n", m_maincpu->pc(), m_flash_row);
+			}
+			break;
 
-			case 0x60: // BLOCK ERASE
-				if (data==0xd0)
+		case 0x60: // BLOCK ERASE
+			if (data == 0xd0)
+			{
+				flash_change_state(BLOCK_ERASE);
+				if (m_flash_row < m_row_num)
 				{
-					flash_change_state( BLOCK_ERASE );
-					if (m_flash_row < m_row_num)
-					{
-						m_flashwritemap[m_flash_row] |= 1;
-						memset(m_region + m_flash_row * m_flash_page_size, 0xff, m_flash_page_size);
-					}
-					//bprintf(0, _T("erased block %04x (%08x - %08x)\n"), m_flash_row, m_flash_row * m_flash_page_size,  ((m_flash_row+1) * m_flash_page_size)-1);
+					m_flashwritemap[m_flash_row] |= 1;
+					memset(m_region + m_flash_row * m_flash_page_size, 0xff, m_flash_page_size);
 				}
-				else
+				//bprintf(0, _T("erased block %04x (%08x - %08x)\n"), m_flash_row, m_flash_row * m_flash_page_size,  ((m_flash_row+1) * m_flash_page_size)-1);
+			}
+			else
+			{
+				//logerror("unexpected 2nd command after BLOCK ERASE\n");
+			}
+			break;
+		case 0x80:
+			if (data == 0x10)
+			{
+				flash_change_state(PAGE_PROGRAM);
+				if (m_flash_row < m_row_num)
 				{
-					//logerror("unexpected 2nd command after BLOCK ERASE\n");
+					m_flashwritemap[m_flash_row] |= (memcmp(m_region + m_flash_row * m_flash_page_size,
+					                                        m_flash_page_data, m_flash_page_size) != 0);
+					memcpy(m_region + m_flash_row * m_flash_page_size, m_flash_page_data, m_flash_page_size);
 				}
-				break;
-			case 0x80:
-				if (data==0x10)
-				{
-					flash_change_state( PAGE_PROGRAM );
-					if (m_flash_row < m_row_num)
-					{
-						m_flashwritemap[m_flash_row] |= (memcmp(m_region + m_flash_row * m_flash_page_size, m_flash_page_data, m_flash_page_size) != 0);
-						memcpy(m_region + m_flash_row * m_flash_page_size, m_flash_page_data, m_flash_page_size);
-					}
-					//bprintf(0, _T("re-written block %04x (%08x - %08x)\n"), m_flash_row, m_flash_row * m_flash_page_size,  ((m_flash_row+1) * m_flash_page_size)-1);
-					//bprintf(0, _T("writemap for block %x: %x\n"), m_flash_row, m_flashwritemap[m_flash_row]);
-				}
-				else
-				{
-					//logerror("unexpected 2nd command after SPAGE PROGRAM\n");
-				}
-				break;
+				//bprintf(0, _T("re-written block %04x (%08x - %08x)\n"), m_flash_row, m_flash_row * m_flash_page_size,  ((m_flash_row+1) * m_flash_page_size)-1);
+				//bprintf(0, _T("writemap for block %x: %x\n"), m_flash_row, m_flashwritemap[m_flash_row]);
+			}
+			else
+			{
+				//logerror("unexpected 2nd command after SPAGE PROGRAM\n");
+			}
+			break;
 
 
-			default:
+		default:
 			{
 				//logerror("%08x FLASH: unknown cmd2 = %02X (cmd1 = %02X)\n", m_maincpu->pc(), data, m_flash_cmd_prev);
 			}
@@ -331,88 +338,88 @@ void serflash_addr_write(UINT8 data)
 
 	//logerror("%08x FLASH: addr = %02X (seq = %02X)\n", m_maincpu->pc(), data, m_flash_addr_seq);
 
-	switch( m_flash_addr_seq++ )
+	switch (m_flash_addr_seq++)
 	{
-		case 0:
-			m_flash_col = (m_flash_col & 0xff00) | data;
-			break;
-		case 1:
-			m_flash_col = (m_flash_col & 0x00ff) | (data << 8);
-			break;
-		case 2:
-			m_flash_row = (m_flash_row & 0xffff00) | data;
-			if (m_row_num <= 256)
-			{
-				m_flash_addr_seq = 0;
-			}
-			break;
-		case 3:
-			m_flash_row = (m_flash_row & 0xff00ff) | (data << 8);
-			if (m_row_num <= 65536)
-			{
-				m_flash_addr_seq = 0;
-			}
-			break;
-		case 4:
-			m_flash_row = (m_flash_row & 0x00ffff) | (data << 16);
+	case 0:
+		m_flash_col = (m_flash_col & 0xff00) | data;
+		break;
+	case 1:
+		m_flash_col = (m_flash_col & 0x00ff) | (data << 8);
+		break;
+	case 2:
+		m_flash_row = (m_flash_row & 0xffff00) | data;
+		if (m_row_num <= 256)
+		{
 			m_flash_addr_seq = 0;
-			break;
+		}
+		break;
+	case 3:
+		m_flash_row = (m_flash_row & 0xff00ff) | (data << 8);
+		if (m_row_num <= 65536)
+		{
+			m_flash_addr_seq = 0;
+		}
+		break;
+	case 4:
+		m_flash_row = (m_flash_row & 0x00ffff) | (data << 16);
+		m_flash_addr_seq = 0;
+		break;
 	}
 }
 
 UINT8 serflash_io_read()
 {
 	UINT8 data = 0x00;
-//  UINT32 old;
+	//  UINT32 old;
 
 	if (!m_flash_enab)
 		return 0xff;
 
 	switch (m_flash_state)
 	{
-		case READ_ID:
-			//old = m_flash_read_seq;
+	case READ_ID:
+		//old = m_flash_read_seq;
 
-			switch( m_flash_read_seq++ )
-			{
-				case 0:
-					data = 0xEC;    // Manufacturer
-					break;
-				case 1:
-					data = 0xF1;    // Device
-					break;
-				case 2:
-					data = 0x00;    // XX
-					break;
-				case 3:
-					data = 0x15;    // Flags
-					m_flash_read_seq = 0;
-					break;
-			}
-
-			//logerror("%08x FLASH: read %02X from id(%02X)\n", m_maincpu->pc(), data, old);
-			break;
-
-		case READ:
-			if (m_flash_page_addr > m_flash_page_size-1)
-				m_flash_page_addr = m_flash_page_size-1;
-
-			//old = m_flash_page_addr;
-
-			data = m_flash_page_data[m_flash_page_addr++];
-
-			//logerror("%08x FLASH: read data %02X from addr %03X (page %04X)\n", m_maincpu->pc(), data, old, m_flash_page_index);
-			break;
-
-		case READ_STATUS:
-			// bit 7 = writeable, bit 6 = ready, bit 5 = ready/true ready, bit 1 = fail(N-1), bit 0 = fail
-			data = 0xe0;
-			//logerror("%08x FLASH: read status %02X\n", m_maincpu->pc(), data);
-			break;
-
-		default:
+		switch (m_flash_read_seq++)
 		{
-		//  logerror("%08x FLASH: unknown read in state %s\n",0x00/*m_maincpu->pc()*/, m_flash_state_name[m_flash_state]);
+		case 0:
+			data = 0xEC; // Manufacturer
+			break;
+		case 1:
+			data = 0xF1; // Device
+			break;
+		case 2:
+			data = 0x00; // XX
+			break;
+		case 3:
+			data = 0x15; // Flags
+			m_flash_read_seq = 0;
+			break;
+		}
+
+	//logerror("%08x FLASH: read %02X from id(%02X)\n", m_maincpu->pc(), data, old);
+		break;
+
+	case READ:
+		if (m_flash_page_addr > m_flash_page_size - 1)
+			m_flash_page_addr = m_flash_page_size - 1;
+
+	//old = m_flash_page_addr;
+
+		data = m_flash_page_data[m_flash_page_addr++];
+
+	//logerror("%08x FLASH: read data %02X from addr %03X (page %04X)\n", m_maincpu->pc(), data, old, m_flash_page_index);
+		break;
+
+	case READ_STATUS:
+		// bit 7 = writeable, bit 6 = ready, bit 5 = ready/true ready, bit 1 = fail(N-1), bit 0 = fail
+		data = 0xe0;
+	//logerror("%08x FLASH: read status %02X\n", m_maincpu->pc(), data);
+		break;
+
+	default:
+		{
+			//  logerror("%08x FLASH: unknown read in state %s\n",0x00/*m_maincpu->pc()*/, m_flash_state_name[m_flash_state]);
 		}
 	}
 
@@ -425,12 +432,11 @@ UINT8 serflash_ready_read()
 }
 
 
-
 UINT8 serflash_n3d_flash_read(INT32 offset)
 {
-	if (m_last_flash_cmd==0x70) return 0xe0;
+	if (m_last_flash_cmd == 0x70) return 0xe0;
 
-	if (m_last_flash_cmd==0x00)
+	if (m_last_flash_cmd == 0x00)
 	{
 		UINT8 retdat = m_flash_page_data[m_flash_page_addr];
 
@@ -448,7 +454,7 @@ void serflash_n3d_flash_cmd_write(INT32 offset, UINT8 data)
 {
 	m_last_flash_cmd = data;
 
-	if (data==0x00)
+	if (data == 0x00)
 	{
 		if (m_flash_addr < m_row_num)
 		{
@@ -459,11 +465,11 @@ void serflash_n3d_flash_cmd_write(INT32 offset, UINT8 data)
 
 void serflash_n3d_flash_addr_write(INT32 offset, UINT8 data)
 {
-//  logerror("n3d_flash_addr_w %02x %02x\n", offset, data);
+	//  logerror("n3d_flash_addr_w %02x %02x\n", offset, data);
 
 	m_flash_addr_seq++;
 
-	if (m_flash_addr_seq==3)
+	if (m_flash_addr_seq == 3)
 	{
 		m_flash_addr = (m_flash_addr & 0xffff00) | data;
 		if (m_row_num <= 256)
@@ -473,7 +479,7 @@ void serflash_n3d_flash_addr_write(INT32 offset, UINT8 data)
 			//logerror("set flash block to %08x\n", m_flash_addr);
 		}
 	}
-	if (m_flash_addr_seq==4)
+	if (m_flash_addr_seq == 4)
 	{
 		m_flash_addr = (m_flash_addr & 0xff00ff) | data << 8;
 		if (m_row_num <= 65536)
@@ -483,7 +489,7 @@ void serflash_n3d_flash_addr_write(INT32 offset, UINT8 data)
 			//logerror("set flash block to %08x\n", m_flash_addr);
 		}
 	}
-	if (m_flash_addr_seq==5)
+	if (m_flash_addr_seq == 5)
 	{
 		m_flash_addr = (m_flash_addr & 0x00ffff) | data << 16;
 		m_flash_addr_seq = 0;

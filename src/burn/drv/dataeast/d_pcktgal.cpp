@@ -10,18 +10,18 @@
 #include "bitswap.h"
 #include "burn_pal.h"
 
-static UINT8 *AllMem;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *MemEnd;
-static UINT8 *DrvMainROM;
-static UINT8 *DrvSoundROM;
-static UINT8 *DrvGfxROM[2];
-static UINT8 *DrvColPROM;
-static UINT8 *DrvMainRAM;
-static UINT8 *DrvSoundRAM;
-static UINT8 *DrvPfRAM;
-static UINT8 *DrvSprRAM;
+static UINT8* AllMem;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* MemEnd;
+static UINT8* DrvMainROM;
+static UINT8* DrvSoundROM;
+static UINT8* DrvGfxROM[2];
+static UINT8* DrvColPROM;
+static UINT8* DrvMainRAM;
+static UINT8* DrvSoundRAM;
+static UINT8* DrvPfRAM;
+static UINT8* DrvSprRAM;
 
 static INT32 main_bank;
 static INT32 sound_bank;
@@ -42,59 +42,59 @@ static UINT8 DrvReset;
 static INT32 nCyclesExtra;
 
 static struct BurnInputInfo PcktgalInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy2 + 4, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy1 + 4, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy1 + 3, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy1 + 2, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1 + 1, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1 + 0, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 7, "p1 fire 1"},
+	{"P1 Button 2", BIT_DIGITAL, DrvJoy1 + 6, "p1 fire 2"},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy2 + 5, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy1 + 5, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 3, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 2, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 1, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 0, "p2 right"},
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 7, "p2 fire 1"},
+	{"P2 Button 2", BIT_DIGITAL, DrvJoy2 + 6, "p2 fire 2"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
 };
 
 STDINPUTINFO(Pcktgal)
 
-static struct BurnDIPInfo PcktgalDIPList[]=
+static struct BurnDIPInfo PcktgalDIPList[] =
 {
-	{0x11, 0xff, 0xff, 0xbf, NULL					},
+	{0x11, 0xff, 0xff, 0xbf, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0, 0xfe, 0, 4, "Coinage"},
+	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"},
+	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
+	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
+	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x11, 0x01, 0x04, 0x04, "Off"					},
-	{0x11, 0x01, 0x04, 0x00, "On"					},
+	{0, 0xfe, 0, 2, "Flip Screen"},
+	{0x11, 0x01, 0x04, 0x04, "Off"},
+	{0x11, 0x01, 0x04, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Allow 2 Players Game"	},
-	{0x11, 0x01, 0x08, 0x00, "No"					},
-	{0x11, 0x01, 0x08, 0x08, "Yes"					},
+	{0, 0xfe, 0, 2, "Allow 2 Players Game"},
+	{0x11, 0x01, 0x08, 0x00, "No"},
+	{0x11, 0x01, 0x08, 0x08, "Yes"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x11, 0x01, 0x10, 0x00, "Off"					},
-	{0x11, 0x01, 0x10, 0x10, "On"					},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x11, 0x01, 0x10, 0x00, "Off"},
+	{0x11, 0x01, 0x10, 0x10, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Time"					},
-	{0x11, 0x01, 0x20, 0x00, "100"					},
-	{0x11, 0x01, 0x20, 0x20, "120"					},
+	{0, 0xfe, 0, 2, "Time"},
+	{0x11, 0x01, 0x20, 0x00, "100"},
+	{0x11, 0x01, 0x20, 0x20, "120"},
 
-	{0   , 0xfe, 0   ,    2, "Lives"				},
-	{0x11, 0x01, 0x40, 0x00, "3"					},
-	{0x11, 0x01, 0x40, 0x40, "4"					},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x11, 0x01, 0x40, 0x00, "3"},
+	{0x11, 0x01, 0x40, 0x40, "4"},
 };
 
 STDDIPINFO(Pcktgal)
@@ -116,66 +116,72 @@ static void sound_bankswitch(INT32 data)
 
 static void pcktgal_main_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0xf800) == 0x800) {
+	if ((address & 0xf800) == 0x800)
+	{
 		DrvPfRAM[(address & 0x7ff) ^ 1] = data;
 		return;
 	}
 
-	if ((address & 0xfff8) == 0x1800) {
+	if ((address & 0xfff8) == 0x1800)
+	{
 		pf_control[0][(address / 2) & 3] = data;
 		return;
 	}
 
-	if ((address & 0xfff0) == 0x1810) {
+	if ((address & 0xfff0) == 0x1810)
+	{
 		INT32 offset = address & 0xf;
-		if (offset < 4) {
-			UINT8 *pf = (UINT8*)pf_control[1];
+		if (offset < 4)
+		{
+			auto pf = (UINT8*)pf_control[1];
 			pf[offset] = data;
-		} else {
-		//	pf_control[1][offset / 2] = data;
+		}
+		else
+		{
+			//	pf_control[1][offset / 2] = data;
 		}
 		return;
 	}
 
 	switch (address)
 	{
-		case 0x1a00:
-			soundlatch = data;
-			M6502SetIRQLine(1, CPU_IRQLINE_NMI, CPU_IRQSTATUS_AUTO);
+	case 0x1a00:
+		soundlatch = data;
+		M6502SetIRQLine(1, CPU_IRQLINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
-		case 0x1c00:
-			main_bankswitch(data);
-		return;
+	case 0x1c00:
+		main_bankswitch(data);
 	}
 }
 
 static UINT8 pcktgal_main_read(UINT16 address)
 {
-	if ((address & 0xf800) == 0x800) {
+	if ((address & 0xf800) == 0x800)
+	{
 		return DrvPfRAM[(address & 0x7ff) ^ 1];
 	}
 
-	if ((address & 0xfff0) == 0x1810) {
+	if ((address & 0xfff0) == 0x1810)
+	{
 		INT32 offset = address & 0xf;
-		if (offset < 4) {
-			UINT8 *pf = (UINT8*)pf_control[1];
+		if (offset < 4)
+		{
+			auto pf = (UINT8*)pf_control[1];
 			return pf[offset];
-		} else {
-		//	return pf_control[1][offset / 2];
-		}
+		} //	return pf_control[1][offset / 2];
 	}
 
 	switch (address)
 	{
-		case 0x1800:
-			return DrvInputs[0];
+	case 0x1800:
+		return DrvInputs[0];
 
-		case 0x1a00:
-			return DrvInputs[1];
+	case 0x1a00:
+		return DrvInputs[1];
 
-		case 0x1c00:
-			return DrvDips[0];
+	case 0x1c00:
+		return DrvDips[0];
 	}
 
 	return 0;
@@ -185,24 +191,23 @@ static void pcktgal_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0x0800:
-		case 0x0801:
-			BurnYM2203Write(0, address & 1, data);
+	case 0x0800:
+	case 0x0801:
+		BurnYM2203Write(0, address & 1, data);
 		return;
 
-		case 0x1000:
-		case 0x1001:
-			BurnYM3812Write(0, address & 1, data);
+	case 0x1000:
+	case 0x1001:
+		BurnYM3812Write(0, address & 1, data);
 		return;
 
-		case 0x1800:
-			msm5205next = data;
+	case 0x1800:
+		msm5205next = data;
 		return;
 
-		case 0x2000:
-			sound_bankswitch(data);
-			MSM5205ResetWrite(0, (data & 2) >> 1);
-		return;
+	case 0x2000:
+		sound_bankswitch(data);
+		MSM5205ResetWrite(0, (data & 2) >> 1);
 	}
 }
 
@@ -210,11 +215,11 @@ static UINT8 pcktgal_sound_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0x3000:
-			return soundlatch;
+	case 0x3000:
+		return soundlatch;
 
-		case 0x3400:
-			return 0; // ?
+	case 0x3400:
+		return 0; // ?
 	}
 
 	return 0;
@@ -231,12 +236,12 @@ static void msm5205_interrupt()
 
 static INT32 SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)M6502TotalCycles() * nSoundRate / 1500000;
+	return static_cast<INT64>(M6502TotalCycles()) * nSoundRate / 1500000;
 }
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	M6502Open(0);
 	M6502Reset();
@@ -253,7 +258,7 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	soundtoggle = 0;
 	msm5205next = 0;
-	memset (pf_control, 0, sizeof(pf_control));
+	memset(pf_control, 0, sizeof(pf_control));
 
 	nCyclesExtra = 0;
 
@@ -264,51 +269,65 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvMainROM		= Next; Next += 0x020000;
-	DrvSoundROM		= Next; Next += 0x020000;
+	DrvMainROM = Next;
+	Next += 0x020000;
+	DrvSoundROM = Next;
+	Next += 0x020000;
 
-	DrvGfxROM[0]	= Next; Next += 0x040000;
-	DrvGfxROM[1]	= Next; Next += 0x020000;
+	DrvGfxROM[0] = Next;
+	Next += 0x040000;
+	DrvGfxROM[1] = Next;
+	Next += 0x020000;
 
-	DrvColPROM		= Next; Next += 0x000400;
+	DrvColPROM = Next;
+	Next += 0x000400;
 
-	BurnPalette		= (UINT32*)Next; Next += 0x200 * sizeof(UINT32);
+	BurnPalette = (UINT32*)Next;
+	Next += 0x200 * sizeof(UINT32);
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvMainRAM		= Next; Next += 0x000800;
-	DrvSoundRAM		= Next; Next += 0x000800;
-	DrvPfRAM		= Next; Next += 0x000800;
-	DrvSprRAM		= Next; Next += 0x000200;
+	DrvMainRAM = Next;
+	Next += 0x000800;
+	DrvSoundRAM = Next;
+	Next += 0x000800;
+	DrvPfRAM = Next;
+	Next += 0x000800;
+	DrvSprRAM = Next;
+	Next += 0x000200;
 
-	RamEnd			= Next;
+	RamEnd = Next;
 
-	MemEnd			= Next;
+	MemEnd = Next;
 
 	return 0;
 }
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane0[4] = { 0x10000*8, 0, 0x18000*8, 0x8000*8 };
-	INT32 Plane1[2] = { 0x8000*8, 0 };
-	INT32 XOffs[16] = { STEP8(128,1), STEP8(0,1) };
-	INT32 YOffs[16] = { STEP16(0,8) };
+	INT32 Plane0[4] = {0x10000 * 8, 0, 0x18000 * 8, 0x8000 * 8};
+	INT32 Plane1[2] = {0x8000 * 8, 0};
+	INT32 XOffs[16] = {STEP8(128, 1), STEP8(0, 1)};
+	INT32 YOffs[16] = {STEP16(0, 8)};
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x20000);
-	if (tmp == NULL) {
+	auto tmp = BurnMalloc(0x20000);
+	if (tmp == nullptr)
+	{
 		return 1;
 	}
 
-	for (INT32 i = 0; i < 0x20000; i++) {
+	for (INT32 i = 0; i < 0x20000; i++)
+	{
 		tmp[i] = DrvGfxROM[0][i ^ (is_bootleg ? 0x8000 : 0x10)];
 	}
 
 	GfxDecode(0x1000, 4, 8, 8, Plane0, XOffs + 8, YOffs, 0x040, tmp, DrvGfxROM[0]);
 
-	for (INT32 i = 0; i < 0x10000; i++) {
+	for (INT32 i = 0; i < 0x10000; i++)
+	{
 		tmp[i] = (is_bootleg) ? BITSWAP08(DrvGfxROM[1][i], 0, 1, 2, 3, 4, 5, 6, 7) : DrvGfxROM[1][i];
 	}
 
@@ -328,10 +347,10 @@ static INT32 CommonInit(INT32 is_pcktgal)
 	{
 		INT32 t = 0;
 		if (BurnLoadRom(DrvMainROM + 0x10000, t++, 1)) return 1;
-		memcpy (DrvMainROM + 0x4000, DrvMainROM + 0x14000, 0xc000);
+		memcpy(DrvMainROM + 0x4000, DrvMainROM + 0x14000, 0xc000);
 
 		if (BurnLoadRom(DrvSoundROM + 0x10000, t++, 1)) return 1;
-		memcpy (DrvSoundROM + 0x8000, DrvSoundROM + 0x18000, 0x8000);
+		memcpy(DrvSoundROM + 0x8000, DrvSoundROM + 0x18000, 0x8000);
 
 		if (BurnLoadRom(DrvGfxROM[0] + 0x00000, t++, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM[0] + 0x10000, t++, 1)) return 1;
@@ -347,29 +366,29 @@ static INT32 CommonInit(INT32 is_pcktgal)
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvMainRAM,				0x0000, 0x07ff, MAP_RAM);
-//	M6502MapMemory(DrvPfRAM,				0x0800, 0x0fff, MAP_RAM);
-	M6502MapMemory(DrvSprRAM,				0x1000, 0x11ff, MAP_RAM);
-	M6502MapMemory(DrvMainROM + 0x8000,		0x8000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvMainRAM, 0x0000, 0x07ff, MAP_RAM);
+	//	M6502MapMemory(DrvPfRAM,				0x0800, 0x0fff, MAP_RAM);
+	M6502MapMemory(DrvSprRAM, 0x1000, 0x11ff, MAP_RAM);
+	M6502MapMemory(DrvMainROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(pcktgal_main_write);
 	M6502SetReadHandler(pcktgal_main_read);
 	M6502Close();
 
 	M6502Init(1, is_pcktgal ? TYPE_DECO222 : TYPE_M6502);
 	M6502Open(1);
-	M6502MapMemory(DrvSoundRAM,				0x0000, 0x07ff, MAP_RAM);
-	M6502MapMemory(DrvSoundROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvSoundRAM, 0x0000, 0x07ff, MAP_RAM);
+	M6502MapMemory(DrvSoundROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(pcktgal_sound_write);
 	M6502SetReadHandler(pcktgal_sound_read);
 	M6502Close();
 
-	BurnYM2203Init(1, 1500000, NULL, 0);
+	BurnYM2203Init(1, 1500000, nullptr, 0);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 
-	BurnYM3812Init(1, 3000000, NULL, 1);
+	BurnYM3812Init(1, 3000000, nullptr, 1);
 	BurnTimerAttach(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -379,7 +398,7 @@ static INT32 CommonInit(INT32 is_pcktgal)
 	GenericTilesInit();
 
 	bac06_yadjust = 16; // -16
-	memset (dummy_control, 0, sizeof(dummy_control));
+	memset(dummy_control, 0, sizeof(dummy_control));
 	dummy_control[0][0] = 1; // force 8x8
 
 	DrvDoReset();
@@ -424,7 +443,7 @@ static void BurnPaletteInit()
 		bit3 = BIT(DrvColPROM[i + 0x200], 3);
 		INT32 b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		BurnPalette[i] = BurnHighCol(r,g,b,0);
+		BurnPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
@@ -432,10 +451,10 @@ static void draw_sprites()
 {
 	for (INT32 offs = 0; offs < 0x200; offs += 4)
 	{
-		INT32 sx = 240 - DrvSprRAM[offs+2];
-		INT32 sy = 240 - DrvSprRAM[offs+0];
-		INT32 attr = DrvSprRAM[offs+1];
-		INT32 code = DrvSprRAM[offs+3] + ((attr & 1) << 8);
+		INT32 sx = 240 - DrvSprRAM[offs + 2];
+		INT32 sy = 240 - DrvSprRAM[offs + 0];
+		INT32 attr = DrvSprRAM[offs + 1];
+		INT32 code = DrvSprRAM[offs + 3] + ((attr & 1) << 8);
 		INT32 color = (attr & 0x70) >> 4;
 		INT32 flipx = attr & 0x04;
 		INT32 flipy = attr & 0x02;
@@ -446,14 +465,16 @@ static void draw_sprites()
 
 static INT32 DrvDraw()
 {
-	if (BurnRecalc) {
+	if (BurnRecalc)
+	{
 		BurnPaletteInit();
 		BurnRecalc = 0;
 	}
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) bac06_draw_layer(DrvPfRAM, is_bootleg ? dummy_control : pf_control, NULL, NULL, DrvGfxROM[0], 0x100, 0xfff, DrvGfxROM[0], 0x100, 0, 0, 1);
+	if (nBurnLayer & 1) bac06_draw_layer(DrvPfRAM, is_bootleg ? dummy_control : pf_control, nullptr, nullptr,
+	                                     DrvGfxROM[0], 0x100, 0xfff, DrvGfxROM[0], 0x100, 0, 0, 1);
 
 	if (nSpriteEnable & 1) draw_sprites();
 
@@ -464,16 +485,18 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
 	M6502NewFrame();
 
 	{
-		memset (DrvInputs, 0xff, sizeof(DrvInputs));
+		memset(DrvInputs, 0xff, sizeof(DrvInputs));
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
@@ -486,8 +509,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, 1500000);
-	INT32 nCyclesTotal[2] = { 2000000 / 60, 1500000 / 60 };
-	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
+	INT32 nCyclesTotal[2] = {2000000 / 60, 1500000 / 60};
+	INT32 nCyclesDone[2] = {nCyclesExtra, 0};
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -504,32 +527,36 @@ static INT32 DrvFrame()
 
 	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		BurnDrvRedraw();
 	}
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -566,17 +593,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Pocket Gal (Japan)
 
 static struct BurnRomInfo pcktgalRomDesc[] = {
-	{ "eb04.j7",		0x10000, 0x8215d60d, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{"eb04.j7", 0x10000, 0x8215d60d, 1 | BRF_PRG | BRF_ESS}, //  0 M6502 #0 Code
 
-	{ "eb03.f2",		0x10000, 0xcb029b02, 2 | BRF_PRG | BRF_ESS }, //  1 DECO 222 Encrypted CPU
+	{"eb03.f2", 0x10000, 0xcb029b02, 2 | BRF_PRG | BRF_ESS}, //  1 DECO 222 Encrypted CPU
 
-	{ "eb01.d11",		0x10000, 0x63542c3d, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "eb02.d12",		0x10000, 0xa9dcd339, 3 | BRF_GRA },           //  3
+	{"eb01.d11", 0x10000, 0x63542c3d, 3 | BRF_GRA}, //  2 Background Tiles
+	{"eb02.d12", 0x10000, 0xa9dcd339, 3 | BRF_GRA}, //  3
 
-	{ "eb00.a1",		0x10000, 0x6c1a14a8, 4 | BRF_GRA },           //  4 Sprites
+	{"eb00.a1", 0x10000, 0x6c1a14a8, 4 | BRF_GRA}, //  4 Sprites
 
-	{ "eb05.k14",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  5 Color PROMs
-	{ "eb06.k15",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  6
+	{"eb05.k14", 0x00200, 0x3b6198cb, 5 | BRF_GRA}, //  5 Color PROMs
+	{"eb06.k15", 0x00200, 0x1fbd4b59, 5 | BRF_GRA}, //  6
 };
 
 STD_ROM_PICK(pcktgal)
@@ -588,11 +615,11 @@ static INT32 DrvInit()
 }
 
 struct BurnDriver BurnDrvPcktgal = {
-	"pcktgal", NULL, NULL, NULL, "1987",
-	"Pocket Gal (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"pcktgal", nullptr, nullptr, nullptr, "1987",
+	"Pocket Gal (Japan)\0", nullptr, "Data East Corporation", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pcktgalRomInfo, pcktgalRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	nullptr, pcktgalRomInfo, pcktgalRomName, nullptr, nullptr, nullptr, nullptr, PcktgalInputInfo, PcktgalDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -601,32 +628,32 @@ struct BurnDriver BurnDrvPcktgal = {
 // Pocket Gal (Yada East bootleg)
 
 static struct BurnRomInfo pcktgalbRomDesc[] = {
-	{ "sexybill.001",	0x10000, 0x4acb3e84, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{"sexybill.001", 0x10000, 0x4acb3e84, 1 | BRF_PRG | BRF_ESS}, //  0 M6502 #0 Code
 
-	{ "eb03.f2",		0x10000, 0xcb029b02, 2 | BRF_PRG | BRF_ESS }, //  1 DECO 222 Encrypted CPU
+	{"eb03.f2", 0x10000, 0xcb029b02, 2 | BRF_PRG | BRF_ESS}, //  1 DECO 222 Encrypted CPU
 
-	{ "sexybill.005",	0x10000, 0x3128dc7b, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "sexybill.006",	0x10000, 0x0fc91eeb, 3 | BRF_GRA },           //  3
+	{"sexybill.005", 0x10000, 0x3128dc7b, 3 | BRF_GRA}, //  2 Background Tiles
+	{"sexybill.006", 0x10000, 0x0fc91eeb, 3 | BRF_GRA}, //  3
 
-	{ "sexybill.003",	0x08000, 0x58182daa, 4 | BRF_GRA },           //  4 Sprites
-	{ "sexybill.004",	0x08000, 0x33a67af6, 4 | BRF_GRA },           //  5
+	{"sexybill.003", 0x08000, 0x58182daa, 4 | BRF_GRA}, //  4 Sprites
+	{"sexybill.004", 0x08000, 0x33a67af6, 4 | BRF_GRA}, //  5
 
-	{ "eb05.k14",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  6 Color PROMs
-	{ "eb06.k15",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  7
+	{"eb05.k14", 0x00200, 0x3b6198cb, 5 | BRF_GRA}, //  6 Color PROMs
+	{"eb06.k15", 0x00200, 0x1fbd4b59, 5 | BRF_GRA}, //  7
 
-	{ "pal16l8",		0x00104, 0xb8d4b318, 6 | BRF_OPT },           //  8 PLDs
-	{ "pal16r6",		0x00104, 0x43aad537, 6 | BRF_OPT },           //  9
+	{"pal16l8", 0x00104, 0xb8d4b318, 6 | BRF_OPT}, //  8 PLDs
+	{"pal16r6", 0x00104, 0x43aad537, 6 | BRF_OPT}, //  9
 };
 
 STD_ROM_PICK(pcktgalb)
 STD_ROM_FN(pcktgalb)
 
 struct BurnDriver BurnDrvPcktgalb = {
-	"pcktgalb", "pcktgal", NULL, NULL, "1987",
-	"Pocket Gal (Yada East bootleg)\0", NULL, "bootleg", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"pcktgalb", "pcktgal", nullptr, nullptr, "1987",
+	"Pocket Gal (Yada East bootleg)\0", nullptr, "bootleg", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pcktgalbRomInfo, pcktgalbRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	nullptr, pcktgalbRomInfo, pcktgalbRomName, nullptr, nullptr, nullptr, nullptr, PcktgalInputInfo, PcktgalDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -638,36 +665,36 @@ struct BurnDriver BurnDrvPcktgalb = {
 
 static struct BurnRomInfo pcktgalbaRomDesc[] = {
 	// Pocket Gal PCB: standard chips emulated in this driver, with no Data East customs
-	{ "sex_v1.3",	0x10000, 0xe278da6b, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{"sex_v1.3", 0x10000, 0xe278da6b, 1 | BRF_PRG | BRF_ESS}, //  0 M6502 #0 Code
 
-	{ "2_sex",		0x10000, 0xcb029b02, 2 | BRF_PRG | BRF_ESS }, //  1 DECO 222 Encrypted CPU
+	{"2_sex", 0x10000, 0xcb029b02, 2 | BRF_PRG | BRF_ESS}, //  1 DECO 222 Encrypted CPU
 
-	{ "5_sex",		0x10000, 0x3128dc7b, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "6_sex",		0x10000, 0x0fc91eeb, 3 | BRF_GRA },           //  3
+	{"5_sex", 0x10000, 0x3128dc7b, 3 | BRF_GRA}, //  2 Background Tiles
+	{"6_sex", 0x10000, 0x0fc91eeb, 3 | BRF_GRA}, //  3
 
-	{ "3_sex",		0x08000, 0x58182daa, 4 | BRF_GRA },           //  4 Sprites
-	{ "4_sex",		0x08000, 0x33a67af6, 4 | BRF_GRA },           //  5
+	{"3_sex", 0x08000, 0x58182daa, 4 | BRF_GRA}, //  4 Sprites
+	{"4_sex", 0x08000, 0x33a67af6, 4 | BRF_GRA}, //  5
 
-	{ "prom1",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  6 Color PROMs / BAD DUMP
-	{ "prom2",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  7             / BAD DUMP
+	{"prom1", 0x00200, 0x3b6198cb, 5 | BRF_GRA}, //  6 Color PROMs / BAD DUMP
+	{"prom2", 0x00200, 0x1fbd4b59, 5 | BRF_GRA}, //  7             / BAD DUMP
 
 	// unknown card game PCB: Z84C00AB6 (Z80), 2 scratched off chips (possibly I8255?), AY38912A/P, 4 8-dip banks
-	{ "7_sex.u45",	0x04000, 0x65b0b6d0, 7 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{"7_sex.u45", 0x04000, 0x65b0b6d0, 7 | BRF_PRG | BRF_ESS}, //  8 Z80 Code
 
-	{ "8_sex.u35",	0x02000, 0x36e450e5, 8 | BRF_GRA },           //  9 Graphics
-	{ "9_sex.u36",	0x02000, 0xffcc1198, 8 | BRF_GRA },           // 10
-	{ "10_sex.u37",	0x02000, 0x73cf56a0, 8 | BRF_GRA },           // 11
+	{"8_sex.u35", 0x02000, 0x36e450e5, 8 | BRF_GRA}, //  9 Graphics
+	{"9_sex.u36", 0x02000, 0xffcc1198, 8 | BRF_GRA}, // 10
+	{"10_sex.u37", 0x02000, 0x73cf56a0, 8 | BRF_GRA}, // 11
 };
 
 STD_ROM_PICK(pcktgalba)
 STD_ROM_FN(pcktgalba)
 
 struct BurnDriver BurnDrvPcktgalba = {
-	"pcktgalba", "pcktgal", NULL, NULL, "1987",
-	"Pocket Gal / unknown card game\0", NULL, "bootleg", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"pcktgalba", "pcktgal", nullptr, nullptr, "1987",
+	"Pocket Gal / unknown card game\0", nullptr, "bootleg", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pcktgalbaRomInfo, pcktgalbaRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	nullptr, pcktgalbaRomInfo, pcktgalbaRomName, nullptr, nullptr, nullptr, nullptr, PcktgalInputInfo, PcktgalDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -676,17 +703,17 @@ struct BurnDriver BurnDrvPcktgalba = {
 // Pocket Gal 2 (English)
 
 static struct BurnRomInfo pcktgal2RomDesc[] = {
-	{ "eb04-2.j7",		0x10000, 0x0c7f2905, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{"eb04-2.j7", 0x10000, 0x0c7f2905, 1 | BRF_PRG | BRF_ESS}, //  0 M6502 #0 Code
 
-	{ "eb03-2.f2",		0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS }, //  1 M6502 #1 Code
+	{"eb03-2.f2", 0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS}, //  1 M6502 #1 Code
 
-	{ "eb01-2.rom",		0x10000, 0xe52b1f97, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "eb02-2.rom",		0x10000, 0xf30d965d, 3 | BRF_GRA },           //  3
+	{"eb01-2.rom", 0x10000, 0xe52b1f97, 3 | BRF_GRA}, //  2 Background Tiles
+	{"eb02-2.rom", 0x10000, 0xf30d965d, 3 | BRF_GRA}, //  3
 
-	{ "eb00.a1",		0x10000, 0x6c1a14a8, 4 | BRF_GRA },           //  4 Sprites
+	{"eb00.a1", 0x10000, 0x6c1a14a8, 4 | BRF_GRA}, //  4 Sprites
 
-	{ "eb05.k14",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  5 Color PROMs
-	{ "eb06.k15",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  6
+	{"eb05.k14", 0x00200, 0x3b6198cb, 5 | BRF_GRA}, //  5 Color PROMs
+	{"eb06.k15", 0x00200, 0x1fbd4b59, 5 | BRF_GRA}, //  6
 };
 
 STD_ROM_PICK(pcktgal2)
@@ -698,11 +725,11 @@ static INT32 Drv2Init()
 }
 
 struct BurnDriver BurnDrvPcktgal2 = {
-	"pcktgal2", "pcktgal", NULL, NULL, "1989",
-	"Pocket Gal 2 (English)\0", NULL, "Data East Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"pcktgal2", "pcktgal", nullptr, nullptr, "1989",
+	"Pocket Gal 2 (English)\0", nullptr, "Data East Corporation", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pcktgal2RomInfo, pcktgal2RomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	nullptr, pcktgal2RomInfo, pcktgal2RomName, nullptr, nullptr, nullptr, nullptr, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -711,28 +738,28 @@ struct BurnDriver BurnDrvPcktgal2 = {
 // Pocket Gal 2 (Japanese)
 
 static struct BurnRomInfo pcktgal2jRomDesc[] = {
-	{ "eb04-2.j7",		0x10000, 0x0c7f2905, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{"eb04-2.j7", 0x10000, 0x0c7f2905, 1 | BRF_PRG | BRF_ESS}, //  0 M6502 #0 Code
 
-	{ "eb03-2.f2",		0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS }, //  1 M6502 #1 Code
+	{"eb03-2.f2", 0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS}, //  1 M6502 #1 Code
 
-	{ "eb01-2.d11",		0x10000, 0x8f42ab1a, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "eb02-2.d12",		0x10000, 0xf394cb35, 3 | BRF_GRA },           //  3
+	{"eb01-2.d11", 0x10000, 0x8f42ab1a, 3 | BRF_GRA}, //  2 Background Tiles
+	{"eb02-2.d12", 0x10000, 0xf394cb35, 3 | BRF_GRA}, //  3
 
-	{ "eb00.a1",		0x10000, 0x6c1a14a8, 4 | BRF_GRA },           //  4 Sprites
+	{"eb00.a1", 0x10000, 0x6c1a14a8, 4 | BRF_GRA}, //  4 Sprites
 
-	{ "eb05.k14",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  5 Color PROMs
-	{ "eb06.k15",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  6
+	{"eb05.k14", 0x00200, 0x3b6198cb, 5 | BRF_GRA}, //  5 Color PROMs
+	{"eb06.k15", 0x00200, 0x1fbd4b59, 5 | BRF_GRA}, //  6
 };
 
 STD_ROM_PICK(pcktgal2j)
 STD_ROM_FN(pcktgal2j)
 
 struct BurnDriver BurnDrvPcktgal2j = {
-	"pcktgal2j", "pcktgal", NULL, NULL, "1989",
-	"Pocket Gal 2 (Japanese)\0", NULL, "Data East Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"pcktgal2j", "pcktgal", nullptr, nullptr, "1989",
+	"Pocket Gal 2 (Japanese)\0", nullptr, "Data East Corporation", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, pcktgal2jRomInfo, pcktgal2jRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	nullptr, pcktgal2jRomInfo, pcktgal2jRomName, nullptr, nullptr, nullptr, nullptr, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -741,28 +768,28 @@ struct BurnDriver BurnDrvPcktgal2j = {
 // Super Pool III (English)
 
 static struct BurnRomInfo spool3RomDesc[] = {
-	{ "eb04-2.j7",		0x10000, 0x0c7f2905, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{"eb04-2.j7", 0x10000, 0x0c7f2905, 1 | BRF_PRG | BRF_ESS}, //  0 M6502 #0 Code
 
-	{ "eb03-2.f2",		0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS }, //  1 M6502 #1 Code
+	{"eb03-2.f2", 0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS}, //  1 M6502 #1 Code
 
-	{ "deco2.bin",		0x10000, 0x0a23f0cf, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "deco3.bin",		0x10000, 0x55ea7c45, 3 | BRF_GRA },           //  3
+	{"deco2.bin", 0x10000, 0x0a23f0cf, 3 | BRF_GRA}, //  2 Background Tiles
+	{"deco3.bin", 0x10000, 0x55ea7c45, 3 | BRF_GRA}, //  3
 
-	{ "eb00.a1",		0x10000, 0x6c1a14a8, 4 | BRF_GRA },           //  4 Sprites
+	{"eb00.a1", 0x10000, 0x6c1a14a8, 4 | BRF_GRA}, //  4 Sprites
 
-	{ "eb05.k14",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  5 Color PROMs
-	{ "eb06.k15",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  6
+	{"eb05.k14", 0x00200, 0x3b6198cb, 5 | BRF_GRA}, //  5 Color PROMs
+	{"eb06.k15", 0x00200, 0x1fbd4b59, 5 | BRF_GRA}, //  6
 };
 
 STD_ROM_PICK(spool3)
 STD_ROM_FN(spool3)
 
 struct BurnDriver BurnDrvSpool3 = {
-	"spool3", "pcktgal", NULL, NULL, "1989",
-	"Super Pool III (English)\0", NULL, "Data East Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"spool3", "pcktgal", nullptr, nullptr, "1989",
+	"Super Pool III (English)\0", nullptr, "Data East Corporation", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, spool3RomInfo, spool3RomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	nullptr, spool3RomInfo, spool3RomName, nullptr, nullptr, nullptr, nullptr, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };
@@ -771,28 +798,28 @@ struct BurnDriver BurnDrvSpool3 = {
 // Super Pool III (I-Vics)
 
 static struct BurnRomInfo spool3iRomDesc[] = {
-	{ "de1.bin",		0x10000, 0xa59980fe, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 #0 Code
+	{"de1.bin", 0x10000, 0xa59980fe, 1 | BRF_PRG | BRF_ESS}, //  0 M6502 #0 Code
 
-	{ "eb03-2.f2",		0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS }, //  1 M6502 #1 Code
+	{"eb03-2.f2", 0x10000, 0x9408ffb4, 2 | BRF_PRG | BRF_ESS}, //  1 M6502 #1 Code
 
-	{ "deco2.bin",		0x10000, 0x0a23f0cf, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "deco3.bin",		0x10000, 0x55ea7c45, 3 | BRF_GRA },           //  3
+	{"deco2.bin", 0x10000, 0x0a23f0cf, 3 | BRF_GRA}, //  2 Background Tiles
+	{"deco3.bin", 0x10000, 0x55ea7c45, 3 | BRF_GRA}, //  3
 
-	{ "eb00.a1",		0x10000, 0x6c1a14a8, 4 | BRF_GRA },           //  4 Sprites
+	{"eb00.a1", 0x10000, 0x6c1a14a8, 4 | BRF_GRA}, //  4 Sprites
 
-	{ "eb05.k14",		0x00200, 0x3b6198cb, 5 | BRF_GRA },           //  5 Color PROMs
-	{ "eb06.k15",		0x00200, 0x1fbd4b59, 5 | BRF_GRA },           //  6
+	{"eb05.k14", 0x00200, 0x3b6198cb, 5 | BRF_GRA}, //  5 Color PROMs
+	{"eb06.k15", 0x00200, 0x1fbd4b59, 5 | BRF_GRA}, //  6
 };
 
 STD_ROM_PICK(spool3i)
 STD_ROM_FN(spool3i)
 
 struct BurnDriver BurnDrvSpool3i = {
-	"spool3i", "pcktgal", NULL, NULL, "1990",
-	"Super Pool III (I-Vics)\0", NULL, "Data East Corporation (I-Vics license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"spool3i", "pcktgal", nullptr, nullptr, "1990",
+	"Super Pool III (I-Vics)\0", nullptr, "Data East Corporation (I-Vics license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
-	NULL, spool3iRomInfo, spool3iRomName, NULL, NULL, NULL, NULL, PcktgalInputInfo, PcktgalDIPInfo,
+	nullptr, spool3iRomInfo, spool3iRomName, nullptr, nullptr, nullptr, nullptr, PcktgalInputInfo, PcktgalDIPInfo,
 	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x200,
 	256, 224, 4, 3
 };

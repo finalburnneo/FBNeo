@@ -7,9 +7,9 @@ UINT8 Cpi01A = 0, Cpi01C = 0, Cpi01E = 0;
 
 static INT32 nInterrupt;
 static INT32 nIrqLine, nIrqCycles;
-static bool bEnableAutoIrq50, bEnableAutoIrq52;				// Trigger an interrupt every 32 scanlines
+static bool bEnableAutoIrq50, bEnableAutoIrq52; // Trigger an interrupt every 32 scanlines
 
-static const INT32 nFirstLine = 0x10;							// The first scanline of the display
+static constexpr INT32 nFirstLine = 0x10; // The first scanline of the display
 
 INT32 nCpsCyclesExtra;
 
@@ -22,22 +22,24 @@ INT32 Cps1VBlankIRQLine = 2;
 
 INT32 Cps1DrawAtVblank = 0;
 
-CpsRunInitCallback CpsRunInitCallbackFunction = NULL;
-CpsRunInitCallback CpsRunExitCallbackFunction = NULL;
-CpsRunResetCallback CpsRunResetCallbackFunction = NULL;
-CpsRunFrameStartCallback CpsRunFrameStartCallbackFunction = NULL;
-CpsRunFrameMiddleCallback CpsRunFrameMiddleCallbackFunction = NULL;
-CpsRunFrameEndCallback CpsRunFrameEndCallbackFunction = NULL;
+CpsRunInitCallback CpsRunInitCallbackFunction = nullptr;
+CpsRunInitCallback CpsRunExitCallbackFunction = nullptr;
+CpsRunResetCallback CpsRunResetCallbackFunction = nullptr;
+CpsRunFrameStartCallback CpsRunFrameStartCallbackFunction = nullptr;
+CpsRunFrameMiddleCallback CpsRunFrameMiddleCallbackFunction = nullptr;
+CpsRunFrameEndCallback CpsRunFrameEndCallbackFunction = nullptr;
 
 static void CpsQSoundCheatSearchCallback()
 {
 	// Q-Sound Shared RAM ranges - not useful for cheat searching, and runs the Z80
 	// in the handler, exclude it from cheat searching
-	if (Cps == 2) {
+	if (Cps == 2)
+	{
 		CheatSearchExcludeAddressRange(0x618000, 0x619FFF);
 	}
-	
-	if (Cps1Qs == 1) {	
+
+	if (Cps1Qs == 1)
+	{
 		CheatSearchExcludeAddressRange(0xF18000, 0xF19FFF);
 		CheatSearchExcludeAddressRange(0xF1E000, 0xF1FFFF);
 	}
@@ -52,13 +54,15 @@ static INT32 DrvReset()
 	SekReset();
 	SekClose();
 
-	if (((Cps & 1) && !Cps1DisablePSnd) || ((Cps == 2) && !Cps2DisableQSnd)) {
+	if (((Cps & 1) && !Cps1DisablePSnd) || ((Cps == 2) && !Cps2DisableQSnd))
+	{
 		ZetOpen(0);
 		ZetReset();
 		ZetClose();
 	}
 
-	if (Cps == 2) {
+	if (Cps == 2)
+	{
 		// Disable beam-synchronized interrupts
 		*((UINT16*)(CpsReg + 0x4E)) = BURN_ENDIAN_SWAP_INT16(0x0200);
 		*((UINT16*)(CpsReg + 0x50)) = BURN_ENDIAN_SWAP_INT16(nCpsNumScanlines);
@@ -73,78 +77,97 @@ static INT32 DrvReset()
 
 	nCpsCyclesExtra = 0;
 
-	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {			// Sound init (QSound)
+	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1)
+	{
+		// Sound init (QSound)
 		QsndReset();
 	}
-	
-	if (CpsRunResetCallbackFunction) {
+
+	if (CpsRunResetCallbackFunction)
+	{
 		CpsRunResetCallbackFunction();
 	}
-	
+
 	HiscoreReset();
 
 	return 0;
 }
 
-static const eeprom_interface qsound_eeprom_interface =
+static constexpr eeprom_interface qsound_eeprom_interface =
 {
-	7,		/* address bits */
-	8,		/* data bits */
-	"0110",	/*  read command */
-	"0101",	/* write command */
-	"0111",	/* erase command */
-	0,
-	0,
+	7, /* address bits */
+	8, /* data bits */
+	"0110", /*  read command */
+	"0101", /* write command */
+	"0111", /* erase command */
+	nullptr,
+	nullptr,
 	0,
 	0
 };
 
-static const eeprom_interface cps2_eeprom_interface =
+static constexpr eeprom_interface cps2_eeprom_interface =
 {
-	6,		/* address bits */
-	16,		/* data bits */
-	"0110",	/*  read command */
-	"0101",	/* write command */
-	"0111",	/* erase command */
-	0,
-	0,
+	6, /* address bits */
+	16, /* data bits */
+	"0110", /*  read command */
+	"0101", /* write command */
+	"0111", /* erase command */
+	nullptr,
+	nullptr,
 	0,
 	0
 };
 
 INT32 CpsRunInit()
 {
-	SekInit(0, 0x68000);					// Allocate 68000
-	
-	if (CpsMemInit()) {						// Memory init
+	SekInit(0, 0x68000); // Allocate 68000
+
+	if (CpsMemInit())
+	{
+		// Memory init
 		return 1;
 	}
-	
-	if (Cps == 2 || PangEEP) {
+
+	if (Cps == 2 || PangEEP)
+	{
 		EEPROMInit(&cps2_eeprom_interface);
-	} else {
-		if (Cps1Qs == 1 || CpsBootlegEEPROM) {
+	}
+	else
+	{
+		if (Cps1Qs == 1 || CpsBootlegEEPROM)
+		{
 			EEPROMInit(&qsound_eeprom_interface);
 		}
 	}
 
-	CpsRwInit();							// Registers setup
+	CpsRwInit(); // Registers setup
 
-	if (CpsPalInit()) {						// Palette init
+	if (CpsPalInit())
+	{
+		// Palette init
 		return 1;
 	}
-	if (CpsObjInit()) {						// Sprite init
+	if (CpsObjInit())
+	{
+		// Sprite init
 		return 1;
 	}
 
-	if ((Cps & 1) && Cps1Qs == 0 && Cps1DisablePSnd == 0) {			// Sound init (MSM6295 + YM2151)
-		if (PsndInit()) {
+	if ((Cps & 1) && Cps1Qs == 0 && Cps1DisablePSnd == 0)
+	{
+		// Sound init (MSM6295 + YM2151)
+		if (PsndInit())
+		{
 			return 1;
 		}
 	}
 
-	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {			// Sound init (QSound)
-		if (QsndInit()) {
+	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1)
+	{
+		// Sound init (QSound)
+		if (QsndInit())
+		{
 			return 1;
 		}
 		QsndSetRoute(BURN_SND_QSND_OUTPUT_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -152,19 +175,21 @@ INT32 CpsRunInit()
 	}
 
 	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMReset();
-	
-	if (CpsRunInitCallbackFunction) {
+
+	if (CpsRunInitCallbackFunction)
+	{
 		CpsRunInitCallbackFunction();
 	}
-	
+
 	DrvReset();
 
 	//Init Draw Function
 	DrawFnInit();
-	
+
 	pBurnDrvPalette = CpsPal;
-	
-	if (Cps == 2 || Cps1Qs == 1) {
+
+	if (Cps == 2 || Cps1Qs == 1)
+	{
 		CheatSearchInitCallbackFunction = CpsQSoundCheatSearchCallback;
 	}
 
@@ -184,26 +209,27 @@ INT32 CpsRunExit()
 	CpsPalExit();
 
 	// Sprite Masking exit
-	ZBuf = NULL;
+	ZBuf = nullptr;
 
 	// Memory exit
 	CpsRwExit();
 	CpsMemExit();
 
 	SekExit();
-	
-	if (CpsRunExitCallbackFunction) {
+
+	if (CpsRunExitCallbackFunction)
+	{
 		CpsRunExitCallbackFunction();
-		CpsRunExitCallbackFunction = NULL;
+		CpsRunExitCallbackFunction = nullptr;
 	}
-	CpsRunInitCallbackFunction = NULL;
-	CpsRunResetCallbackFunction = NULL;
-	CpsRunFrameStartCallbackFunction = NULL;
-	CpsRunFrameMiddleCallbackFunction = NULL;
-	CpsRunFrameEndCallbackFunction = NULL;
-	
+	CpsRunInitCallbackFunction = nullptr;
+	CpsRunResetCallbackFunction = nullptr;
+	CpsRunFrameStartCallbackFunction = nullptr;
+	CpsRunFrameMiddleCallbackFunction = nullptr;
+	CpsRunFrameEndCallbackFunction = nullptr;
+
 	Cps1VBlankIRQLine = 2;
-	
+
 	Cps2DisableQSnd = 0;
 	CpsBootlegEEPROM = 0;
 
@@ -227,21 +253,24 @@ static void ScheduleIRQ()
 {
 	INT32 nLine = nCpsNumScanlines;
 
-	if (nIrqLine50 <= nLine) {
+	if (nIrqLine50 <= nLine)
+	{
 		nLine = nIrqLine50;
 	}
-	if (nIrqLine52 < nLine) {
+	if (nIrqLine52 < nLine)
+	{
 		nLine = nIrqLine52;
 	}
 
-	if (nLine < nCpsNumScanlines) {
+	if (nLine < nCpsNumScanlines)
+	{
 		nIrqLine = nLine;
 		nIrqCycles = (nLine * nCpsCycles / nCpsNumScanlines) + 1;
-	} else {
+	}
+	else
+	{
 		nIrqCycles = nCpsCycles + 1;
 	}
-
-	return;
 }
 
 // Execute a beam-synchronised interrupt and schedule the next one
@@ -252,122 +281,148 @@ static void DoIRQ()
 	// 0x52 - Beam synchronized interrupt #2 occurs at raster line.
 
 	// Trigger IRQ and copy registers.
-	if (nIrqLine >= nFirstLine) {
-
+	if (nIrqLine >= nFirstLine)
+	{
 		nInterrupt++;
 		nRasterline[nInterrupt] = nIrqLine - nFirstLine;
 	}
 
 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekRun(nCpsCycles * 0x01 / nCpsNumScanlines);
-	if (nRasterline[nInterrupt] < 224) {
+	if (nRasterline[nInterrupt] < 224)
+	{
 		CopyCpsReg(nInterrupt);
 		CopyCpsFrg(nInterrupt);
-	} else {
+	}
+	else
+	{
 		nRasterline[nInterrupt] = 0;
 	}
 
 	// Schedule next interrupt
-	if (!bEnableAutoIrq50) {
-		if (nIrqLine >= nIrqLine50) {
+	if (!bEnableAutoIrq50)
+	{
+		if (nIrqLine >= nIrqLine50)
+		{
 			nIrqLine50 = nCpsNumScanlines;
 		}
-	} else {
-		if (bEnableAutoIrq50 && nIrqLine == nIrqLine50) {
+	}
+	else
+	{
+		if (bEnableAutoIrq50 && nIrqLine == nIrqLine50)
+		{
 			nIrqLine50 += 32;
 		}
 	}
-	if (!bEnableAutoIrq52 && nIrqLine >= nIrqLine52) {
+	if (!bEnableAutoIrq52 && nIrqLine >= nIrqLine52)
+	{
 		nIrqLine52 = nCpsNumScanlines;
-	} else {
-		if (bEnableAutoIrq52 && nIrqLine == nIrqLine52) {
+	}
+	else
+	{
+		if (bEnableAutoIrq52 && nIrqLine == nIrqLine52)
+		{
 			nIrqLine52 += 32;
 		}
 	}
 	ScheduleIRQ();
-	if (nIrqCycles < SekTotalCycles()) {
+	if (nIrqCycles < SekTotalCycles())
+	{
 		nIrqCycles = SekTotalCycles() + 1;
 	}
-
-	return;
 }
 
 INT32 Cps1Frame()
 {
 	INT32 nDisplayEnd, nNext, i;
 
-	if (CpsReset) {
+	if (CpsReset)
+	{
 		DrvReset();
 	}
 
 	SekNewFrame();
-	if (Cps1Qs == 1) {
+	if (Cps1Qs == 1)
+	{
 		QsndNewFrame();
-	} else {
-		if (!Cps1DisablePSnd) {
+	}
+	else
+	{
+		if (!Cps1DisablePSnd)
+		{
 			ZetOpen(0);
 			PsndNewFrame();
 		}
 	}
-	
-	if (CpsRunFrameStartCallbackFunction) {
+
+	if (CpsRunFrameStartCallbackFunction)
+	{
 		CpsRunFrameStartCallbackFunction();
 	}
 
-	nCpsCycles = (INT32)((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust >> 8);
+	nCpsCycles = static_cast<INT32>(static_cast<INT64>(nCPS68KClockspeed) * nBurnCPUSpeedAdjust >> 8);
 
-	CpsRwGetInp();												// Update the input port values
+	CpsRwGetInp(); // Update the input port values
 
-	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / nCpsNumScanlines;	// Account for VBlank
+	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / nCpsNumScanlines; // Account for VBlank
 
 	SekOpen(0);
 
 	SekIdle(nCpsCyclesExtra);
 	nCpsCyclesExtra = 0;
 
-	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines));					// run 68K for the first few lines
+	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines)); // run 68K for the first few lines
 
-	CpsObjGet();											// Get objects
+	CpsObjGet(); // Get objects
 
-	for (i = 0; i < 4; i++) {
-		nNext = ((i + 1) * nCpsCycles) >> 2;					// find out next cycle count to run to
-		
-		if (i == 2 && CpsRunFrameMiddleCallbackFunction) {
+	for (i = 0; i < 4; i++)
+	{
+		nNext = ((i + 1) * nCpsCycles) >> 2; // find out next cycle count to run to
+
+		if (i == 2 && CpsRunFrameMiddleCallbackFunction)
+		{
 			CpsRunFrameMiddleCallbackFunction();
 		}
 
-		if (SekTotalCycles() < nDisplayEnd && nNext > nDisplayEnd) {
+		if (SekTotalCycles() < nDisplayEnd && nNext > nDisplayEnd)
+		{
+			SekRun(nNext - nDisplayEnd); // run 68K
 
-			SekRun(nNext - nDisplayEnd);						// run 68K
+			memcpy(CpsSaveReg[0], CpsReg, 0x100); // Registers correct now
 
-			memcpy(CpsSaveReg[0], CpsReg, 0x100);				// Registers correct now
+			SekSetIRQLine(Cps1VBlankIRQLine, CPU_IRQSTATUS_AUTO); // Trigger VBlank interrupt
 
-			SekSetIRQLine(Cps1VBlankIRQLine, CPU_IRQSTATUS_AUTO);				// Trigger VBlank interrupt
-
-			if (Cps1DrawAtVblank && pBurnDraw) {
-				CpsDraw();										// Draw frame
+			if (Cps1DrawAtVblank && pBurnDraw)
+			{
+				CpsDraw(); // Draw frame
 			}
 		}
 
-		SekRun(nNext - SekTotalCycles());						// run 68K
+		SekRun(nNext - SekTotalCycles()); // run 68K
 	}
 
-	if (pBurnDraw && !Cps1DrawAtVblank) {
-		CpsDraw();												// Draw frame
+	if (pBurnDraw && !Cps1DrawAtVblank)
+	{
+		CpsDraw(); // Draw frame
 	}
 
-	if (Cps1Qs == 1) {
+	if (Cps1Qs == 1)
+	{
 		QsndEndFrame();
-	} else {
-		if (!Cps1DisablePSnd) {
+	}
+	else
+	{
+		if (!Cps1DisablePSnd)
+		{
 			PsndSyncZ80(nCpsZ80Cycles); // sync z80
-			PsndEndFrame();             // end frame (BurnTimer: z80)
-			PsmUpdateEnd();             // render msm6295, ym2151
+			PsndEndFrame(); // end frame (BurnTimer: z80)
+			PsmUpdateEnd(); // render msm6295, ym2151
 			ZetClose();
 		}
 	}
-	
-	if (CpsRunFrameEndCallbackFunction) {
+
+	if (CpsRunFrameEndCallbackFunction)
+	{
 		CpsRunFrameEndCallbackFunction();
 	}
 
@@ -380,57 +435,64 @@ INT32 Cps1Frame()
 
 INT32 Cps2Frame()
 {
-	INT32 nDisplayEnd, nNext;									// variables to keep track of executed 68K cyles
+	INT32 nDisplayEnd, nNext; // variables to keep track of executed 68K cyles
 	INT32 i;
 
-	if (CpsReset) {
+	if (CpsReset)
+	{
 		DrvReset();
 	}
 
-//	extern INT32 prevline;
-//	prevline = -1;
+	//	extern INT32 prevline;
+	//	prevline = -1;
 
 	SekNewFrame();
 	if (!Cps2DisableQSnd) QsndNewFrame();
 
-	nCpsCycles = (INT32)(((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust) / 0x0100);
+	nCpsCycles = static_cast<INT32>((static_cast<INT64>(nCPS68KClockspeed) * nBurnCPUSpeedAdjust) / 0x0100);
 	SekOpen(0);
 	SekSetCyclesScanline(nCpsCycles / nCpsNumScanlines);
 
-	CpsRwGetInp();											// Update the input port values
-	
+	CpsRwGetInp(); // Update the input port values
+
 	// Check the volumes every 5 frames or so
-	if (GetCurrentFrame() % 5 == 0) {
+	if (GetCurrentFrame() % 5 == 0)
+	{
 		if (Cps2VolUp) Cps2Volume++;
 		if (Cps2VolDwn) Cps2Volume--;
-		
+
 		if (Cps2Volume > 39) Cps2Volume = 39;
 		if (Cps2Volume < 0) Cps2Volume = 0;
-		
+
 		QscSetRoute(BURN_SND_QSND_OUTPUT_1, Cps2Volume / 39.0, BURN_SND_ROUTE_LEFT);
 		QscSetRoute(BURN_SND_QSND_OUTPUT_2, Cps2Volume / 39.0, BURN_SND_ROUTE_RIGHT);
 	}
-	
-	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / nCpsNumScanlines;	// Account for VBlank
+
+	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / nCpsNumScanlines; // Account for VBlank
 
 	nInterrupt = 0;
-	for (i = 0; i < MAX_RASTER + 2; i++) {
+	for (i = 0; i < MAX_RASTER + 2; i++)
+	{
 		nRasterline[i] = 0;
 	}
 
 	// Determine which (if any) of the line counters generates the first IRQ
 	bEnableAutoIrq50 = bEnableAutoIrq52 = false;
 	nIrqLine50 = nIrqLine52 = nCpsNumScanlines;
-	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x8000) {
+	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x8000)
+	{
 		bEnableAutoIrq50 = true;
 	}
-	if (bEnableAutoIrq50 || (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0) {
+	if (bEnableAutoIrq50 || (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0)
+	{
 		nIrqLine50 = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x01FF);
 	}
-	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x52))) & 0x8000) {
+	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x52))) & 0x8000)
+	{
 		bEnableAutoIrq52 = true;
 	}
-	if (bEnableAutoIrq52 || (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0) {
+	if (bEnableAutoIrq52 || (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0)
+	{
 		nIrqLine52 = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x52))) & 0x01FF);
 	}
 	ScheduleIRQ();
@@ -438,41 +500,47 @@ INT32 Cps2Frame()
 	SekIdle(nCpsCyclesExtra);
 	nCpsCyclesExtra = 0;
 
-	if (nIrqCycles < nCpsCycles * nFirstLine / nCpsNumScanlines) {
+	if (nIrqCycles < nCpsCycles * nFirstLine / nCpsNumScanlines)
+	{
 		SekRun(nIrqCycles);
 		DoIRQ();
 	}
 	nNext = nCpsCycles * nFirstLine / nCpsNumScanlines;
-	if (SekTotalCycles() < nNext) {
+	if (SekTotalCycles() < nNext)
+	{
 		SekRun(nNext - SekTotalCycles());
 	}
 
-	CopyCpsReg(0);										// Get inititial copy of registers
-	CopyCpsFrg(0);										//
+	CopyCpsReg(0); // Get inititial copy of registers
+	CopyCpsFrg(0); //
 
-	if (nIrqLine >= nCpsNumScanlines && (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0) {
+	if (nIrqLine >= nCpsNumScanlines && (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0)
+	{
 		nIrqLine50 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x01FF;
 		nIrqLine52 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x52))) & 0x01FF;
 		ScheduleIRQ();
 	}
 
-	for (i = 0; i < 3; i++) {
-		nNext = ((i + 1) * nDisplayEnd) / 3;			// find out next cycle count to run to
+	for (i = 0; i < 3; i++)
+	{
+		nNext = ((i + 1) * nDisplayEnd) / 3; // find out next cycle count to run to
 
-		while (nNext > nIrqCycles && nInterrupt < MAX_RASTER) {
+		while (nNext > nIrqCycles && nInterrupt < MAX_RASTER)
+		{
 			SekRun(nIrqCycles - SekTotalCycles());
 			DoIRQ();
 		}
-		SekRun(nNext - SekTotalCycles());				// run cpu
+		SekRun(nNext - SekTotalCycles()); // run cpu
 	}
-	
-	CpsObjGet();										// Get objects
 
-//	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / nCpsNumScanlines;
-//	nDone += SekRun(nCpsCyclesSegment[0] - nDone);
+	CpsObjGet(); // Get objects
 
-	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);				// VBlank
-	if (pBurnDraw) {
+	//	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / nCpsNumScanlines;
+	//	nDone += SekRun(nCpsCyclesSegment[0] - nDone);
+
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); // VBlank
+	if (pBurnDraw)
+	{
 		CpsDraw();
 	}
 	SekRun(nCpsCycles - SekTotalCycles());
@@ -483,7 +551,7 @@ INT32 Cps2Frame()
 
 	SekClose();
 
-//	bprintf(PRINT_NORMAL, _T("    -\n"));
+	//	bprintf(PRINT_NORMAL, _T("    -\n"));
 
 #if 0 && defined FBNEO_DEBUG
 	if (nInterrupt) {
@@ -543,4 +611,3 @@ INT32 Cps2Frame()
 
 	return 0;
 }
-

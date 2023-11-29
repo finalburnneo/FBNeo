@@ -7,111 +7,111 @@
 #include "sn76496.h"
 #include "msm5205.h"
 
-static UINT8 *AllMem;
-static UINT8 *MemEnd;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *DrvZ80ROM;
-static UINT8 *DrvZ80RAM;
-static UINT8 *DrvZ80RAM1;
-static UINT8 *DrvVidRAM;
-static UINT8 *DrvColorPROM;
-static UINT8 *DrvSndROM;
-static UINT8 *DrvChar4GFX;
-static UINT8 *DrvChar8GFX;
-static UINT8 *DrvSprite4GFX;
-static UINT8 *DrvSprite8GFX;
+static UINT8* AllMem;
+static UINT8* MemEnd;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* DrvZ80ROM;
+static UINT8* DrvZ80RAM;
+static UINT8* DrvZ80RAM1;
+static UINT8* DrvVidRAM;
+static UINT8* DrvColorPROM;
+static UINT8* DrvSndROM;
+static UINT8* DrvChar4GFX;
+static UINT8* DrvChar8GFX;
+static UINT8* DrvSprite4GFX;
+static UINT8* DrvSprite8GFX;
 
 static INT32 DrvGfxROM0Len;
 
-static UINT8 *nmi_mask;
+static UINT8* nmi_mask;
 static INT32 pcm_adr;
 
 static UINT8 flipscreen;
 
-static UINT32 *DrvPalette;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvDips[2] = { 0, 0 };
+static UINT8 DrvDips[2] = {0, 0};
 static UINT8 DrvInput[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo DrmicroInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy1 + 5, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy2 + 5, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy1 + 0, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy1 + 2, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1 + 3, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1 + 1, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 4, "p1 fire 1"},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Start", BIT_DIGITAL, DrvJoy2 + 6, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 0, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 2, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 3, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 1, "p2 right"},
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 4, "p2 fire 1"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Service", BIT_DIGITAL, DrvJoy1 + 6, "service"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
 };
 
 STDINPUTINFO(Drmicro)
 
 
-static struct BurnDIPInfo DrmicroDIPList[]=
+static struct BurnDIPInfo DrmicroDIPList[] =
 {
-	{0x0f, 0xff, 0xff, 0x4d, NULL		},
-	{0x10, 0xff, 0xff, 0x00, NULL		},
+	{0x0f, 0xff, 0xff, 0x4d, nullptr},
+	{0x10, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x0f, 0x01, 0x03, 0x00, "2"		},
-	{0x0f, 0x01, 0x03, 0x01, "3"		},
-	{0x0f, 0x01, 0x03, 0x02, "4"		},
-	{0x0f, 0x01, 0x03, 0x03, "5"		},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x0f, 0x01, 0x03, 0x00, "2"},
+	{0x0f, 0x01, 0x03, 0x01, "3"},
+	{0x0f, 0x01, 0x03, 0x02, "4"},
+	{0x0f, 0x01, 0x03, 0x03, "5"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x0f, 0x01, 0x04, 0x00, "Off"		},
-	{0x0f, 0x01, 0x04, 0x04, "On"		},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x0f, 0x01, 0x04, 0x00, "Off"},
+	{0x0f, 0x01, 0x04, 0x04, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0f, 0x01, 0x18, 0x00, "30000 100000"		},
-	{0x0f, 0x01, 0x18, 0x08, "50000 150000"		},
-	{0x0f, 0x01, 0x18, 0x10, "70000 200000"		},
-	{0x0f, 0x01, 0x18, 0x18, "100000 300000"		},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x0f, 0x01, 0x18, 0x00, "30000 100000"},
+	{0x0f, 0x01, 0x18, 0x08, "50000 150000"},
+	{0x0f, 0x01, 0x18, 0x10, "70000 200000"},
+	{0x0f, 0x01, 0x18, 0x18, "100000 300000"},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0f, 0x01, 0x20, 0x00, "Off"		},
-	{0x0f, 0x01, 0x20, 0x20, "On"		},
+	{0, 0xfe, 0, 2, "Service Mode"},
+	{0x0f, 0x01, 0x20, 0x00, "Off"},
+	{0x0f, 0x01, 0x20, 0x20, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0f, 0x01, 0x40, 0x40, "Upright"		},
-	{0x0f, 0x01, 0x40, 0x00, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x0f, 0x01, 0x40, 0x40, "Upright"},
+	{0x0f, 0x01, 0x40, 0x00, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x0f, 0x01, 0x80, 0x00, "Off"		},
-	{0x0f, 0x01, 0x80, 0x80, "On"		},
+	{0, 0xfe, 0, 2, "Flip Screen"},
+	{0x0f, 0x01, 0x80, 0x00, "Off"},
+	{0x0f, 0x01, 0x80, 0x80, "On"},
 
-	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x10, 0x01, 0x07, 0x07, "4 Coins 1 Credits"		},
-	{0x10, 0x01, 0x07, 0x06, "3 Coins 1 Credits"		},
-	{0x10, 0x01, 0x07, 0x05, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x07, 0x00, "1 Coin  1 Credits"		},
-	{0x10, 0x01, 0x07, 0x01, "1 Coin  2 Credits"		},
-	{0x10, 0x01, 0x07, 0x02, "1 Coin  3 Credits"		},
-	{0x10, 0x01, 0x07, 0x03, "1 Coin  4 Credits"		},
-	{0x10, 0x01, 0x07, 0x04, "1 Coin  5 Credits"		},
+	{0, 0xfe, 0, 8, "Coinage"},
+	{0x10, 0x01, 0x07, 0x07, "4 Coins 1 Credits"},
+	{0x10, 0x01, 0x07, 0x06, "3 Coins 1 Credits"},
+	{0x10, 0x01, 0x07, 0x05, "2 Coins 1 Credits"},
+	{0x10, 0x01, 0x07, 0x00, "1 Coin  1 Credits"},
+	{0x10, 0x01, 0x07, 0x01, "1 Coin  2 Credits"},
+	{0x10, 0x01, 0x07, 0x02, "1 Coin  3 Credits"},
+	{0x10, 0x01, 0x07, 0x03, "1 Coin  4 Credits"},
+	{0x10, 0x01, 0x07, 0x04, "1 Coin  5 Credits"},
 };
 
 STDDIPINFO(Drmicro)
 
 static void DrvPaletteInit()
 {
-	const UINT8 *color_prom = DrvColorPROM;
+	const UINT8* color_prom = DrvColorPROM;
 
 	INT32 pal[0x100];
 
@@ -147,7 +147,7 @@ static void DrvPaletteInit()
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)((double)ZetTotalCycles() * nSoundRate / 3072000);
+	return static_cast<INT64>((double)ZetTotalCycles() * nSoundRate / 3072000);
 }
 
 static void pcm_clock_data_in()
@@ -177,24 +177,22 @@ static void __fastcall main_out(UINT16 port, UINT8 data)
 	port &= 0xff;
 	switch (port)
 	{
-		case 0x00:
-		case 0x01:
-		case 0x02:
-			SN76496Write(port & 1, data);
+	case 0x00:
+	case 0x01:
+	case 0x02:
+		SN76496Write(port & 1, data);
 		return;
 
-		case 0x03:
-			pcm_adr = ((data & 0x3f) << 9);
-			pcm_clock_data_in();
+	case 0x03:
+		pcm_adr = ((data & 0x3f) << 9);
+		pcm_clock_data_in();
 		return;
 
-		case 0x04:
-			*nmi_mask = data & 1;
-			flipscreen = (data & 2) >> 1;
+	case 0x04:
+		*nmi_mask = data & 1;
+		flipscreen = (data & 2) >> 1;
 		return;
 	}
-
-	return;
 }
 
 static UINT8 __fastcall main_in(UINT16 port)
@@ -202,14 +200,14 @@ static UINT8 __fastcall main_in(UINT16 port)
 	port &= 0xff;
 	switch (port)
 	{
-		case 0x00:
-			return DrvInput[0];
-		case 0x01:
-			return DrvInput[1];
-		case 0x03:
-			return DrvDips[0];
-		case 0x04:
-			return DrvDips[1];
+	case 0x00:
+		return DrvInput[0];
+	case 0x01:
+		return DrvInput[1];
+	case 0x03:
+		return DrvDips[0];
+	case 0x04:
+		return DrvDips[1];
 	}
 
 	return 0;
@@ -218,7 +216,7 @@ static UINT8 __fastcall main_in(UINT16 port)
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	pcm_adr = 0;
 	flipscreen = 0;
@@ -237,28 +235,41 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvZ80ROM		= Next; Next += 0x10000;
+	DrvZ80ROM = Next;
+	Next += 0x10000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
-	DrvChar4GFX		= Next; Next += 0x10000;
-	DrvChar8GFX     = Next; Next += 0x10000;
-	DrvSprite4GFX	= Next; Next += 0x10000;
-	DrvSprite8GFX	= Next; Next += 0x10000;
-	DrvColorPROM    = Next; Next += 0x00400;
-	DrvSndROM		= Next; Next += 0x100000;
+	DrvPalette = (UINT32*)Next;
+	Next += 0x0200 * sizeof(UINT32);
+	DrvChar4GFX = Next;
+	Next += 0x10000;
+	DrvChar8GFX = Next;
+	Next += 0x10000;
+	DrvSprite4GFX = Next;
+	Next += 0x10000;
+	DrvSprite8GFX = Next;
+	Next += 0x10000;
+	DrvColorPROM = Next;
+	Next += 0x00400;
+	DrvSndROM = Next;
+	Next += 0x100000;
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvZ80RAM		= Next; Next += 0x01000;
-	DrvZ80RAM1		= Next; Next += 0x01000;
-	DrvVidRAM		= Next; Next += 0x01000;
+	DrvZ80RAM = Next;
+	Next += 0x01000;
+	DrvZ80RAM1 = Next;
+	Next += 0x01000;
+	DrvVidRAM = Next;
+	Next += 0x01000;
 
-	nmi_mask		= Next; Next += 0x00001;
+	nmi_mask = Next;
+	Next += 0x00001;
 
-	RamEnd			= Next;
-	MemEnd			= Next;
+	RamEnd = Next;
+	MemEnd = Next;
 
 	return 0;
 }
@@ -267,51 +278,54 @@ static INT32 GetRoms()
 {
 	char* pRomName;
 	struct BurnRomInfo ri;
-	UINT8 *Load0 = DrvZ80ROM; //    1 main
-	UINT8 *Loadg4 = DrvChar4GFX; //  2 gfx4
-	UINT8 *Loadg8 = DrvChar8GFX; //  3 gfx8
-	UINT8 *Loads = DrvSndROM; //   4 sound samples rom
-	UINT8 *Loadc = DrvColorPROM; //   5 prom
+	UINT8* Load0 = DrvZ80ROM; //    1 main
+	UINT8* Loadg4 = DrvChar4GFX; //  2 gfx4
+	UINT8* Loadg8 = DrvChar8GFX; //  3 gfx8
+	UINT8* Loads = DrvSndROM; //   4 sound samples rom
+	UINT8* Loadc = DrvColorPROM; //   5 prom
 
 	DrvGfxROM0Len = 0;
 
-	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
-
+	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++)
+	{
 		BurnDrvGetRomInfo(&ri, i);
 
-		if ((ri.nType & 7) == 1) {
+		if ((ri.nType & 7) == 1)
+		{
 			if (BurnLoadRom(Load0, i, 1)) return 1;
 			Load0 += ri.nLen;
 
 			continue;
 		}
 
-		if ((ri.nType & 7) == 2) {
+		if ((ri.nType & 7) == 2)
+		{
 			if (BurnLoadRom(Loadg4, i, 1)) return 1;
 			Loadg4 += ri.nLen;
 
 			continue;
 		}
 
-		if ((ri.nType & 7) == 3) {
+		if ((ri.nType & 7) == 3)
+		{
 			if (BurnLoadRom(Loadg8, i, 1)) return 1;
 			Loadg8 += ri.nLen;
 
 			continue;
 		}
 
-		if ((ri.nType & 7) == 4) {
+		if ((ri.nType & 7) == 4)
+		{
 			if (BurnLoadRom(Loads, i, 1)) return 1;
 			Loads += ri.nLen;
 
 			continue;
 		}
 
-		if ((ri.nType & 7) == 5) {
+		if ((ri.nType & 7) == 5)
+		{
 			if (BurnLoadRom(Loadc, i, 1)) return 1;
 			Loadc += ri.nLen;
-
-			continue;
 		}
 	}
 
@@ -320,19 +334,20 @@ static INT32 GetRoms()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 charPlane4[2] =   { 0,0x2000*8 };
-	INT32 charPlane8[3] =   { 0x2000*16,0x2000*8,0 };
-	INT32 spritePlane4[2] = { 0,0x2000*8 };
-	INT32 spritePlane8[3] = { 0x2000*16,0x2000*8,0 };
+	INT32 charPlane4[2] = {0, 0x2000 * 8};
+	INT32 charPlane8[3] = {0x2000 * 16, 0x2000 * 8, 0};
+	INT32 spritePlane4[2] = {0, 0x2000 * 8};
+	INT32 spritePlane8[3] = {0x2000 * 16, 0x2000 * 8, 0};
 
-	INT32 sprXOffs[16] = { STEP8(7,-1),STEP8(71,-1) };
-	INT32 sprYOffs[16] = { STEP8(0,8),STEP8(128,8) };
+	INT32 sprXOffs[16] = {STEP8(7, -1),STEP8(71, -1)};
+	INT32 sprYOffs[16] = {STEP8(0, 8),STEP8(128, 8)};
 
-	INT32 charXOffs[8] = { STEP8(7,-1) };
-	INT32 charYOffs[8] = { STEP8(0,8) };
+	INT32 charXOffs[8] = {STEP8(7, -1)};
+	INT32 charYOffs[8] = {STEP8(0, 8)};
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x20000);
-	if (tmp == NULL) {
+	auto tmp = BurnMalloc(0x20000);
+	if (tmp == nullptr)
+	{
 		return 1;
 	}
 	memset(tmp, 0, 0x20000);
@@ -347,7 +362,7 @@ static INT32 DrvGfxDecode()
 	GfxDecode(0x100, 3, 16, 16, spritePlane8, sprXOffs, sprYOffs, 0x100, tmp + 0x0000, DrvSprite8GFX);
 	GfxDecode(0x400, 3, 8, 8, charPlane8, charXOffs, charYOffs, 0x040, tmp + 0x0000, DrvChar8GFX);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 
 	return 0;
 }
@@ -367,10 +382,10 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,		    0x0000, 0xbfff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,		    0xc000, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAM1,		0xf000, 0xffff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM,		    0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM1, 0xf000, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0xe000, 0xefff, MAP_RAM);
 	ZetSetOutHandler(main_out);
 	ZetSetInHandler(main_in);
 	ZetClose();
@@ -381,7 +396,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496Init(2, 4608000, 1);
 	SN76496SetRoute(2, 0.50, BURN_SND_ROUTE_BOTH);
-    SN76496SetBuffered(ZetTotalCycles, 3072000);
+	SN76496SetBuffered(ZetTotalCycles, 3072000);
 
 	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, pcm_clock_data_in, MSM5205_S64_4B, 1);
 	MSM5205SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
@@ -428,7 +443,8 @@ static void draw_bg(INT32 layer)
 		INT32 code = DrvVidRAM[offs + 0x0800];
 		INT32 color = DrvVidRAM[offs + 0x0c00];
 
-		if (layer == 1) {
+		if (layer == 1)
+		{
 			code = DrvVidRAM[offs + 0x0000];
 			color = DrvVidRAM[offs + 0x0400];
 		}
@@ -441,7 +457,8 @@ static void draw_bg(INT32 layer)
 
 		if (sx > nScreenWidth || sy > nScreenHeight) continue;
 
-		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind, (layer == 0) ? DrvChar4GFX : DrvChar8GFX);
+		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind,
+		                (layer == 0) ? DrvChar4GFX : DrvChar8GFX);
 	}
 }
 
@@ -479,11 +496,14 @@ static void draw_sprites()
 			if (sx < -15) sx += 256;
 
 
-			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
+			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind,
+			                  (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
 
-			if (sx > 240) {
+			if (sx > 240)
+			{
 				sx -= 256;
-				Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind, (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
+				Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, palind,
+				                  (g == 0) ? DrvSprite8GFX : DrvSprite4GFX);
 			}
 		}
 	}
@@ -491,7 +511,8 @@ static void draw_sprites()
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
@@ -509,7 +530,8 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
@@ -519,20 +541,22 @@ static INT32 DrvFrame()
 		DrvInput[0] = 0;
 		DrvInput[1] = 0;
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
 
-    INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
-    INT32 nCyclesTotal[1] = { 3072000 / 60 };
-    INT32 nCyclesDone[1] = { 0 };
+	INT32 nInterleave = MSM5205CalcInterleave(0, 3072000);
+	INT32 nCyclesTotal[1] = {3072000 / 60};
+	INT32 nCyclesDone[1] = {0};
 
-    ZetOpen(0);
+	ZetOpen(0);
 
-	for (INT32 i = 0; i < nInterleave; i++) {
-        CPU_RUN(0, Zet);
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		CPU_RUN(0, Zet);
 
 		if (*nmi_mask && i == (nInterleave - 1))
 			ZetNmi();
@@ -540,32 +564,36 @@ static INT32 DrvFrame()
 		MSM5205Update();
 	}
 
-	if (pBurnSoundOut) {
-        SN76496Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut)
+	{
+		SN76496Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-    ZetClose();
+	ZetClose();
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		DrvDraw();
 	}
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029735;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -574,8 +602,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SN76496Scan(nAction, pnMin);
 		MSM5205Scan(nAction, pnMin);
 
-        SCAN_VAR(pcm_adr);
-        SCAN_VAR(flipscreen);
+		SCAN_VAR(pcm_adr);
+		SCAN_VAR(flipscreen);
 	}
 
 	return 0;
@@ -584,38 +612,37 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Dr. Micro
 
 static struct BurnRomInfo drmicroRomDesc[] = {
-	{ "dm-00.13b",	0x2000, 0x270f2145, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "dm-01.14b",	0x2000, 0xbba30c80, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dm-02.15b",	0x2000, 0xd9e4ca6b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "dm-03.13d",	0x2000, 0xb7bcb45b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "dm-04.14d",	0x2000, 0x071db054, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "dm-05.15d",	0x2000, 0xf41b8d8a, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"dm-00.13b", 0x2000, 0x270f2145, 1 | BRF_PRG | BRF_ESS}, //  0 maincpu
+	{"dm-01.14b", 0x2000, 0xbba30c80, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"dm-02.15b", 0x2000, 0xd9e4ca6b, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"dm-03.13d", 0x2000, 0xb7bcb45b, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"dm-04.14d", 0x2000, 0x071db054, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"dm-05.15d", 0x2000, 0xf41b8d8a, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "dm-23.5l",	0x2000, 0x279a76b8, 2 | BRF_GRA },           //  6 gfx1
-	{ "dm-24.5n",	0x2000, 0xee8ed1ec, 2 | BRF_GRA },           //  7
+	{"dm-23.5l", 0x2000, 0x279a76b8, 2 | BRF_GRA}, //  6 gfx1
+	{"dm-24.5n", 0x2000, 0xee8ed1ec, 2 | BRF_GRA}, //  7
 
-	{ "dm-20.4a",	0x2000, 0x6f5dbf22, 3 | BRF_GRA },           //  8 gfx2
-	{ "dm-21.4c",	0x2000, 0x8b17ff47, 3 | BRF_GRA },           //  9
-	{ "dm-22.4d",	0x2000, 0x84daf771, 3 | BRF_GRA },           // 10
+	{"dm-20.4a", 0x2000, 0x6f5dbf22, 3 | BRF_GRA}, //  8 gfx2
+	{"dm-21.4c", 0x2000, 0x8b17ff47, 3 | BRF_GRA}, //  9
+	{"dm-22.4d", 0x2000, 0x84daf771, 3 | BRF_GRA}, // 10
 
-	{ "dm-40.12m",	0x2000, 0x3d080af9, 4 | BRF_SND },           // 11 adpcm
-	{ "dm-41.13m",	0x2000, 0xddd7bda2, 4 | BRF_SND },           // 12
+	{"dm-40.12m", 0x2000, 0x3d080af9, 4 | BRF_SND}, // 11 adpcm
+	{"dm-41.13m", 0x2000, 0xddd7bda2, 4 | BRF_SND}, // 12
 
-	{ "dm-62.9h",	0x0020, 0xe3e36eaf, 5 | BRF_GRA },           // 13 proms
-	{ "dm-61.4m",	0x0100, 0x0dd8e365, 5 | BRF_GRA },           // 14
-	{ "dm-60.6e",	0x0100, 0x540a3953, 5 | BRF_GRA },           // 15
+	{"dm-62.9h", 0x0020, 0xe3e36eaf, 5 | BRF_GRA}, // 13 proms
+	{"dm-61.4m", 0x0100, 0x0dd8e365, 5 | BRF_GRA}, // 14
+	{"dm-60.6e", 0x0100, 0x540a3953, 5 | BRF_GRA}, // 15
 };
 
 STD_ROM_PICK(drmicro)
 STD_ROM_FN(drmicro)
 
 struct BurnDriver BurnDrvDrmicro = {
-	"drmicro", NULL, NULL, NULL, "1983",
-	"Dr. Micro\0", NULL, "Sanritsu", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"drmicro", nullptr, nullptr, nullptr, "1983",
+	"Dr. Micro\0", nullptr, "Sanritsu", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, drmicroRomInfo, drmicroRomName, NULL, NULL, NULL, NULL, DrmicroInputInfo, DrmicroDIPInfo,
+	nullptr, drmicroRomInfo, drmicroRomName, nullptr, nullptr, nullptr, nullptr, DrmicroInputInfo, DrmicroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
-

@@ -29,71 +29,70 @@
 /* internal structure containing a word index, shift and mask */
 struct atarirle_mask
 {
-	int					word;				/* word index */
-	int					shift;				/* shift amount */
-	int					mask;				/* final mask */
+	int word; /* word index */
+	int shift; /* shift amount */
+	int mask; /* final mask */
 };
 
 /* internal structure for sorting the motion objects */
 struct mo_sort_entry
 {
-	struct mo_sort_entry *next;
+	struct mo_sort_entry* next;
 	int entry;
 };
 
 /* internal structure describing each object in the ROMs */
 struct atarirle_info
 {
-	INT16				width;
-	INT16 				height;
-	INT16 				xoffs;
-	INT16 				yoffs;
-	UINT8 				bpp;
-	const UINT16 *	table;
-	const UINT16 *	data;
+	INT16 width;
+	INT16 height;
+	INT16 xoffs;
+	INT16 yoffs;
+	UINT8 bpp;
+	const UINT16* table;
+	const UINT16* data;
 };
 
 /* internal structure containing the state of the motion objects */
 struct atarirle_data
 {
-	int					bitmapwidth;		/* width of the full playfield bitmap */
-	int					bitmapheight;		/* height of the full playfield bitmap */
-	int					bitmapxmask;		/* x coordinate mask for the playfield bitmap */
-	int					bitmapymask;		/* y coordinate mask for the playfield bitmap */
+	int bitmapwidth; /* width of the full playfield bitmap */
+	int bitmapheight; /* height of the full playfield bitmap */
+	int bitmapxmask; /* x coordinate mask for the playfield bitmap */
+	int bitmapymask; /* y coordinate mask for the playfield bitmap */
 
-	int					spriterammask;		/* combined mask when accessing sprite RAM with raw addresses */
-	int					spriteramsize;		/* total size of sprite RAM, in entries */
+	int spriterammask; /* combined mask when accessing sprite RAM with raw addresses */
+	int spriteramsize; /* total size of sprite RAM, in entries */
 
-	int					palettebase;		/* base palette entry */
-	int					maxcolors;			/* maximum number of colors */
+	int palettebase; /* base palette entry */
+	int maxcolors; /* maximum number of colors */
 
-	clip_struct	cliprect;			/* clipping clip_struct */
+	clip_struct cliprect; /* clipping clip_struct */
 
-	struct atarirle_mask codemask;			/* mask for the code index */
-	struct atarirle_mask colormask;			/* mask for the color */
-	struct atarirle_mask xposmask;			/* mask for the X position */
-	struct atarirle_mask yposmask;			/* mask for the Y position */
-	struct atarirle_mask scalemask;			/* mask for the scale factor */
-	struct atarirle_mask hflipmask;			/* mask for the horizontal flip */
-	struct atarirle_mask ordermask;			/* mask for the order */
-	struct atarirle_mask prioritymask;		/* mask for the priority */
-	struct atarirle_mask vrammask;			/* mask for the VRAM target */
+	struct atarirle_mask codemask; /* mask for the code index */
+	struct atarirle_mask colormask; /* mask for the color */
+	struct atarirle_mask xposmask; /* mask for the X position */
+	struct atarirle_mask yposmask; /* mask for the Y position */
+	struct atarirle_mask scalemask; /* mask for the scale factor */
+	struct atarirle_mask hflipmask; /* mask for the horizontal flip */
+	struct atarirle_mask ordermask; /* mask for the order */
+	struct atarirle_mask prioritymask; /* mask for the priority */
+	struct atarirle_mask vrammask; /* mask for the VRAM target */
 
-	const UINT16 *	rombase;			/* pointer to the base of the GFX ROM */
-	int					romlength;			/* length of the GFX ROM */
-	int					objectcount;		/* number of objects in the ROM */
-	struct atarirle_info *info;				/* list of info records */
-	struct atarirle_entry *spriteram;		/* pointer to sprite RAM */
+	const UINT16* rombase; /* pointer to the base of the GFX ROM */
+	int romlength; /* length of the GFX ROM */
+	int objectcount; /* number of objects in the ROM */
+	struct atarirle_info* info; /* list of info records */
+	struct atarirle_entry* spriteram; /* pointer to sprite RAM */
 
-	UINT16 *vram[2][2];			/* pointers to VRAM bitmaps and backbuffers */
-	int					partial_scanline;	/* partial update scanline */
+	UINT16* vram[2][2]; /* pointers to VRAM bitmaps and backbuffers */
+	int partial_scanline; /* partial update scanline */
 
-	UINT8				control_bits;		/* current control bits */
-	UINT8				command;			/* current command */
-	UINT8				is32bit;			/* 32-bit or 16-bit? */
-	UINT16				checksums[256];		/* checksums for each 0x40000 bytes */
+	UINT8 control_bits; /* current control bits */
+	UINT8 command; /* current command */
+	UINT8 is32bit; /* 32-bit or 16-bit? */
+	UINT16 checksums[256]; /* checksums for each 0x40000 bytes */
 };
-
 
 
 /*##########################################################################
@@ -104,22 +103,20 @@ struct atarirle_data
 #define EXTRACT_DATA(_input, _mask) (((_input)->data[(_mask).word] >> (_mask).shift) & (_mask).mask)
 
 
-
 /*##########################################################################
     GLOBAL VARIABLES
 ##########################################################################*/
 
-UINT16 *atarirle_0_spriteram;
-UINT32 *atarirle_0_spriteram32;
+UINT16* atarirle_0_spriteram;
+UINT32* atarirle_0_spriteram32;
 
-UINT16 *atarirle_0_command;
-UINT32 *atarirle_0_command32;
+UINT16* atarirle_0_command;
+UINT32* atarirle_0_command32;
 
-UINT16 *atarirle_0_table;
-UINT32 *atarirle_0_table32;
+UINT16* atarirle_0_table;
+UINT32* atarirle_0_table32;
 
 int atarirle_hilite_index = -1;
-
 
 
 /*##########################################################################
@@ -129,9 +126,8 @@ int atarirle_hilite_index = -1;
 static struct atarirle_data atarirle[ATARIRLE_MAX];
 
 static UINT8 rle_bpp[8];
-static UINT16 *rle_table[8];
-static UINT16 *rle_table_base;
-
+static UINT16* rle_table[8];
+static UINT16* rle_table_base;
 
 
 /*##########################################################################
@@ -139,19 +135,18 @@ static UINT16 *rle_table_base;
 ##########################################################################*/
 
 static int build_rle_tables(void);
-static int count_objects(const UINT16 *base, int length);
-static void prescan_rle(const struct atarirle_data *mo, int which);
-static void sort_and_render(struct atarirle_data *mo);
-static void compute_checksum(struct atarirle_data *mo);
-static void draw_rle(struct atarirle_data *mo, UINT16 *bitmap, int code, int color, int hflip, int vflip,
-		int x, int y, int xscale, int yscale, const clip_struct *clip);
-static void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
-		UINT32 palette, int sx, int sy, int scalex, int scaley,
-		const clip_struct *clip);
-static void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
-		UINT32 palette, int sx, int sy, int scalex, int scaley,
-		const clip_struct *clip);
-
+static int count_objects(const UINT16* base, int length);
+static void prescan_rle(const struct atarirle_data* mo, int which);
+static void sort_and_render(struct atarirle_data* mo);
+static void compute_checksum(struct atarirle_data* mo);
+static void draw_rle(struct atarirle_data* mo, UINT16* bitmap, int code, int color, int hflip, int vflip,
+                     int x, int y, int xscale, int yscale, const clip_struct* clip);
+static void draw_rle_zoom(UINT16* bitmap, const struct atarirle_info* gfx,
+                          UINT32 palette, int sx, int sy, int scalex, int scaley,
+                          const clip_struct* clip);
+static void draw_rle_zoom_hflip(UINT16* bitmap, const struct atarirle_info* gfx,
+                                UINT32 palette, int sx, int sy, int scalex, int scaley,
+                                const clip_struct* clip);
 
 
 /*##########################################################################
@@ -223,7 +218,7 @@ inline int collapse_bits(int value, int mask)
     shift, and adjusted mask. Returns 0 if invalid.
 ---------------------------------------------------------------*/
 
-inline int convert_mask(const struct atarirle_entry *input, struct atarirle_mask *result)
+inline int convert_mask(const struct atarirle_entry* input, struct atarirle_mask* result)
 {
 	int i, temp;
 
@@ -258,7 +253,6 @@ inline int convert_mask(const struct atarirle_entry *input, struct atarirle_mask
 }
 
 
-
 /*##########################################################################
     GLOBAL FUNCTIONS
 ##########################################################################*/
@@ -269,10 +263,10 @@ inline int convert_mask(const struct atarirle_entry *input, struct atarirle_mask
     the attribute lookup table.
 ---------------------------------------------------------------*/
 
-int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT32 romsize)
+int atarirle_init(int map, const struct atarirle_desc* desc, UINT8* rombase, INT32 romsize)
 {
-	const UINT16 *base = (const UINT16 *)rombase;
-	struct atarirle_data *mo = &atarirle[map];
+	auto base = (const UINT16*)rombase;
+	struct atarirle_data* mo = &atarirle[map];
 	int i;
 
 	/* verify the map index */
@@ -284,31 +278,31 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 		return 0;
 
 	/* determine the masks first */
-	convert_mask(&desc->codemask,     &mo->codemask);
-	convert_mask(&desc->colormask,    &mo->colormask);
-	convert_mask(&desc->xposmask,     &mo->xposmask);
-	convert_mask(&desc->yposmask,     &mo->yposmask);
-	convert_mask(&desc->scalemask,    &mo->scalemask);
-	convert_mask(&desc->hflipmask,    &mo->hflipmask);
-	convert_mask(&desc->ordermask,    &mo->ordermask);
+	convert_mask(&desc->codemask, &mo->codemask);
+	convert_mask(&desc->colormask, &mo->colormask);
+	convert_mask(&desc->xposmask, &mo->xposmask);
+	convert_mask(&desc->yposmask, &mo->yposmask);
+	convert_mask(&desc->scalemask, &mo->scalemask);
+	convert_mask(&desc->hflipmask, &mo->hflipmask);
+	convert_mask(&desc->ordermask, &mo->ordermask);
 	convert_mask(&desc->prioritymask, &mo->prioritymask);
-	convert_mask(&desc->vrammask,     &mo->vrammask);
+	convert_mask(&desc->vrammask, &mo->vrammask);
 
 	/* copy in the basic data */
-	mo->bitmapwidth   = round_to_powerof2(mo->xposmask.mask);
-	mo->bitmapheight  = round_to_powerof2(mo->yposmask.mask);
-	mo->bitmapxmask   = mo->bitmapwidth - 1;
-	mo->bitmapymask   = mo->bitmapheight - 1;
+	mo->bitmapwidth = round_to_powerof2(mo->xposmask.mask);
+	mo->bitmapheight = round_to_powerof2(mo->yposmask.mask);
+	mo->bitmapxmask = mo->bitmapwidth - 1;
+	mo->bitmapymask = mo->bitmapheight - 1;
 
 	mo->spriteramsize = desc->spriteramentries;
 	mo->spriterammask = desc->spriteramentries - 1;
 
-	mo->palettebase   = desc->palettebase;
-	mo->maxcolors     = desc->maxcolors / 16;
+	mo->palettebase = desc->palettebase;
+	mo->maxcolors = desc->maxcolors / 16;
 
-	mo->rombase       = base;
-	mo->romlength     = romsize;
-	mo->objectcount   = count_objects(base, mo->romlength);
+	mo->rombase = base;
+	mo->romlength = romsize;
+	mo->objectcount = count_objects(base, mo->romlength);
 
 	mo->cliprect.nMinx = 0;
 	mo->cliprect.nMaxx = nScreenWidth;
@@ -325,9 +319,10 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 	memset(mo->checksums, 0, sizeof(mo->checksums));
 	for (i = 0; i < mo->romlength / 0x20000; i++)
 	{
-		const UINT16 *csbase = &mo->rombase[0x10000 * i];
+		const UINT16* csbase = &mo->rombase[0x10000 * i];
 		int cursum = 0, j;
-		for (j = 0; j < 0x10000; j++) {
+		for (j = 0; j < 0x10000; j++)
+		{
 			cursum += BURN_ENDIAN_SWAP_INT16(((*csbase) & 0xff00) | ((*csbase) & 0x00ff));
 			csbase++;
 		}
@@ -348,10 +343,11 @@ int atarirle_init(int map, const struct atarirle_desc *desc, UINT8 *rombase, INT
 	/* clear it to zero */
 	memset(mo->spriteram, 0, sizeof(atarirle_entry) * mo->spriteramsize);
 
-	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight+4, 0); // +4 because rle sometimes likes to ignore clipping and go out of bounds..
-	BurnBitmapAllocate(2, nScreenWidth, nScreenHeight+4, 0);
-	BurnBitmapAllocate(3, nScreenWidth, nScreenHeight+4, 0);
-	BurnBitmapAllocate(4, nScreenWidth, nScreenHeight+4, 0);
+	BurnBitmapAllocate(1, nScreenWidth, nScreenHeight + 4, false);
+	// +4 because rle sometimes likes to ignore clipping and go out of bounds..
+	BurnBitmapAllocate(2, nScreenWidth, nScreenHeight + 4, false);
+	BurnBitmapAllocate(3, nScreenWidth, nScreenHeight + 4, false);
+	BurnBitmapAllocate(4, nScreenWidth, nScreenHeight + 4, false);
 
 	/* allocate bitmaps */
 	mo->vram[0][0] = BurnBitmapGetBitmap(1);
@@ -380,21 +376,22 @@ void atarirle_exit()
 {
 	BurnFree(rle_table_base);
 
-	for (INT32 i = 0; i < ATARIRLE_MAX; i++) {
-		struct atarirle_data *mo = &atarirle[i];
+	for (INT32 i = 0; i < ATARIRLE_MAX; i++)
+	{
+		struct atarirle_data* mo = &atarirle[i];
 
 		BurnFree(mo->info);
 		BurnFree(mo->spriteram);
 	}
 }
 
-INT32 atarirle_scan(INT32 nAction, INT32 *pnMin)
+INT32 atarirle_scan(INT32 nAction, INT32* pnMin)
 {
 	if (nAction & ACB_VOLATILE)
 	{
 		for (INT32 i = 0; i < ATARIRLE_MAX; i++)
 		{
-			atarirle_data *mo = &atarirle[i];
+			atarirle_data* mo = &atarirle[i];
 
 			if (mo->spriteram)
 			{
@@ -410,13 +407,14 @@ INT32 atarirle_scan(INT32 nAction, INT32 *pnMin)
 }
 
 // partial_erase() only erases full lines (doesn't respect nMinx/nMaxx as it doesn't need to)
-static void partial_erase(INT32 map, clip_struct *cliprect)
+static void partial_erase(INT32 map, clip_struct* cliprect)
 {
 	if (cliprect->nMiny > cliprect->nMaxy || cliprect->nMiny == cliprect->nMaxy)
 		return;
 
-	for (INT32 y = cliprect->nMiny; y < cliprect->nMaxy; y++) {
-		UINT16 *line = BurnBitmapGetPosition(map, 0, y);
+	for (INT32 y = cliprect->nMiny; y < cliprect->nMaxy; y++)
+	{
+		UINT16* line = BurnBitmapGetPosition(map, 0, y);
 
 		if (y < nScreenHeight)
 			memset(line, 0, nScreenWidth * sizeof(UINT16));
@@ -429,7 +427,7 @@ static void partial_erase(INT32 map, clip_struct *cliprect)
 
 void atarirle_control_w(int map, UINT8 bits, INT32 scanline)
 {
-	struct atarirle_data *mo = &atarirle[map];
+	struct atarirle_data* mo = &atarirle[map];
 	int oldbits = mo->control_bits;
 
 	/* do nothing if nothing changed */
@@ -454,9 +452,9 @@ void atarirle_control_w(int map, UINT8 bits, INT32 scanline)
 
 		/* erase the bitmap */
 		//BurnBitmapFill(1+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
-		partial_erase(1+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
+		partial_erase(1 + ((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
 		if (mo->vrammask.mask != 0)
-			partial_erase(3+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
+			partial_erase(3 + ((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
 		// BurnBitmapFill(3+((oldbits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
 	}
 
@@ -466,7 +464,8 @@ void atarirle_control_w(int map, UINT8 bits, INT32 scanline)
 	/* if mogo is set, do a render on the rising edge */
 	if (!(oldbits & ATARIRLE_CONTROL_MOGO) && (bits & ATARIRLE_CONTROL_MOGO))
 	{
-		if (mo->command == ATARIRLE_COMMAND_DRAW) {
+		if (mo->command == ATARIRLE_COMMAND_DRAW)
+		{
 			sort_and_render(mo);
 		}
 		else if (mo->command == ATARIRLE_COMMAND_CHECKSUM)
@@ -478,17 +477,15 @@ void atarirle_control_w(int map, UINT8 bits, INT32 scanline)
 }
 
 
-
 /*---------------------------------------------------------------
     atarirle_control_w: Write handler for MO command bits.
 ---------------------------------------------------------------*/
 
 void atarirle_command_w(int map, UINT8 command)
 {
-	struct atarirle_data *mo = &atarirle[map];
+	struct atarirle_data* mo = &atarirle[map];
 	mo->command = command;
 }
-
 
 
 /*---------------------------------------------------------------
@@ -499,12 +496,12 @@ void atarirle_eof()
 {
 	int i;
 
-//logerror("video_eof_atarirle\n");
+	//logerror("video_eof_atarirle\n");
 
 	/* loop over all RLE handlers */
 	for (i = 0; i < ATARIRLE_MAX; i++)
 	{
-		struct atarirle_data *mo = &atarirle[i];
+		struct atarirle_data* mo = &atarirle[i];
 
 		/* if the erase flag is set, erase to the end of the screen */
 		if (mo->control_bits & ATARIRLE_CONTROL_ERASE)
@@ -519,17 +516,16 @@ void atarirle_eof()
 
 			/* erase the bitmap */
 			//BurnBitmapFill(1+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
-			partial_erase(1+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
+			partial_erase(1 + ((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
 			if (mo->vrammask.mask != 0)
-				partial_erase(3+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
-				//BurnBitmapFill(3+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
+				partial_erase(3 + ((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), &cliprect);
+			//BurnBitmapFill(3+((mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2), 0);
 		}
 
 		/* reset the partial scanline to -1 so we can detect full updates */
 		mo->partial_scanline = -1;
 	}
 }
-
 
 
 /*---------------------------------------------------------------
@@ -542,13 +538,12 @@ void atarirle_0_spriteram_w(UINT32 offset)
 	int idx = offset & 7;
 
 	/* combine raw data */
-//	COMBINE_DATA(&atarirle_0_spriteram[offset]);
+	//	COMBINE_DATA(&atarirle_0_spriteram[offset]);
 
 	/* store a copy in our local spriteram */
 	atarirle[0].spriteram[entry].data[idx] = BURN_ENDIAN_SWAP_INT16(atarirle_0_spriteram[offset]);
 	atarirle[0].is32bit = 0;
 }
-
 
 
 /*---------------------------------------------------------------
@@ -576,13 +571,12 @@ WRITE32_HANDLER( atarirle_0_spriteram32_w )
     atarirle_get_vram: Return the VRAM bitmap.
 ---------------------------------------------------------------*/
 
-UINT16 *atarirle_get_vram(int map, int idx)
+UINT16* atarirle_get_vram(int map, int idx)
 {
-	struct atarirle_data *mo = &atarirle[map];
-//logerror("atarirle_get_vram (frame %d)\n", (mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2);
+	struct atarirle_data* mo = &atarirle[map];
+	//logerror("atarirle_get_vram (frame %d)\n", (mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2);
 	return mo->vram[idx][(mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2];
 }
-
 
 
 /*---------------------------------------------------------------
@@ -594,8 +588,8 @@ static int build_rle_tables(void)
 	int i;
 
 	/* if we've already done it, don't bother */
-//  if (rle_table[0])
-//      return 0;
+	//  if (rle_table[0])
+	//      return 0;
 
 	/* allocate all 5 tables */
 	rle_table_base = (UINT16*)BurnMalloc(0x500 * sizeof(UINT16));
@@ -646,13 +640,12 @@ static int build_rle_tables(void)
 }
 
 
-
 /*---------------------------------------------------------------
     count_objects: Determines the number of objects in the
     motion object ROM.
 ---------------------------------------------------------------*/
 
-int count_objects(const UINT16 *base, int length)
+int count_objects(const UINT16* base, int length)
 {
 	int lowest_address = length;
 	int i;
@@ -673,23 +666,22 @@ int count_objects(const UINT16 *base, int length)
 }
 
 
-
 /*---------------------------------------------------------------
     prescan_rle: Prescans an RLE object, computing the
     width, height, and other goodies.
 ---------------------------------------------------------------*/
 
-static void prescan_rle(const struct atarirle_data *mo, int which)
+static void prescan_rle(const struct atarirle_data* mo, int which)
 {
-	struct atarirle_info *rledata = &mo->info[which];
-	UINT16 *base = (UINT16 *)&mo->rombase[which * 4];
-	const UINT16 *end = mo->rombase + mo->romlength / 2;
+	struct atarirle_info* rledata = &mo->info[which];
+	auto base = (UINT16*)&mo->rombase[which * 4];
+	const UINT16* end = mo->rombase + mo->romlength / 2;
 	int width = 0, height, flags, offset;
-	const UINT16 *table;
+	const UINT16* table;
 
 	/* look up the offset */
-	rledata->xoffs = BURN_ENDIAN_SWAP_INT16((INT16)base[0]);
-	rledata->yoffs = BURN_ENDIAN_SWAP_INT16((INT16)base[1]);
+	rledata->xoffs = BURN_ENDIAN_SWAP_INT16(static_cast<INT16>(base[0]));
+	rledata->yoffs = BURN_ENDIAN_SWAP_INT16(static_cast<INT16>(base[1]));
 
 	/* determine the depth and table */
 	flags = BURN_ENDIAN_SWAP_INT16(base[2]);
@@ -698,7 +690,7 @@ static void prescan_rle(const struct atarirle_data *mo, int which)
 
 	/* determine the starting offset */
 	offset = ((BURN_ENDIAN_SWAP_INT16(base[2]) & 0xff) << 16) | BURN_ENDIAN_SWAP_INT16(base[3]);
-	rledata->data = base = (UINT16 *)&mo->rombase[offset];
+	rledata->data = base = (UINT16*)&mo->rombase[offset];
 
 	/* make sure it's valid */
 	if (offset < which * 4 || offset >= mo->romlength)
@@ -754,12 +746,11 @@ static void prescan_rle(const struct atarirle_data *mo, int which)
 }
 
 
-
 /*---------------------------------------------------------------
     compute_checksum: Compute the checksum values on the ROMs.
 ---------------------------------------------------------------*/
 
-static void compute_checksum(struct atarirle_data *mo)
+static void compute_checksum(struct atarirle_data* mo)
 {
 	int reqsums = mo->spriteram[0].data[0] + 1;
 	int i;
@@ -780,9 +771,9 @@ static void compute_checksum(struct atarirle_data *mo)
 	{
 		for (i = 0; i < reqsums; i++)
 			if (i & 1)
-				atarirle_0_spriteram32[i/2] = (atarirle_0_spriteram32[i/2] & 0xffff0000) | mo->checksums[i];
+				atarirle_0_spriteram32[i / 2] = (atarirle_0_spriteram32[i / 2] & 0xffff0000) | mo->checksums[i];
 			else
-				atarirle_0_spriteram32[i/2] = (atarirle_0_spriteram32[i/2] & 0x0000ffff) | (mo->checksums[i] << 16);
+				atarirle_0_spriteram32[i / 2] = (atarirle_0_spriteram32[i / 2] & 0x0000ffff) | (mo->checksums[i] << 16);
 	}
 }
 
@@ -791,17 +782,17 @@ static void compute_checksum(struct atarirle_data *mo)
     sort_and_render: Render all motion objects in order.
 ---------------------------------------------------------------*/
 
-static void sort_and_render(struct atarirle_data *mo)
+static void sort_and_render(struct atarirle_data* mo)
 {
-	UINT16 *bitmap1 = mo->vram[0][(~mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2];
-	UINT16 *bitmap2 = mo->vram[1][(~mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2];
-	struct atarirle_entry *obj = mo->spriteram;
+	UINT16* bitmap1 = mo->vram[0][(~mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2];
+	UINT16* bitmap2 = mo->vram[1][(~mo->control_bits & ATARIRLE_CONTROL_FRAME) >> 2];
+	struct atarirle_entry* obj = mo->spriteram;
 	struct mo_sort_entry sort_entry[256];
-	struct mo_sort_entry *list_head[256];
-	struct mo_sort_entry *current;
+	struct mo_sort_entry* list_head[256];
+	struct mo_sort_entry* current;
 	int i;
 
-	struct atarirle_entry *hilite = NULL;
+	struct atarirle_entry* hilite = nullptr;
 	int count = 0;
 
 	/* sort the motion objects into their proper priorities */
@@ -842,16 +833,17 @@ static void sort_and_render(struct atarirle_data *mo)
 					hilite = obj;
 
 				if (x & ((mo->xposmask.mask + 1) >> 1))
-					x = (INT16)(x | ~mo->xposmask.mask);
+					x = static_cast<INT16>(x | ~mo->xposmask.mask);
 				if (y & ((mo->yposmask.mask + 1) >> 1))
-					y = (INT16)(y | ~mo->yposmask.mask);
+					y = static_cast<INT16>(y | ~mo->yposmask.mask);
 				x += mo->cliprect.nMinx;
 
 				/* merge priority and color */
 				color = (color << 4) | (priority << ATARIRLE_PRIORITY_SHIFT);
 
 				/* render to one or both bitmaps */
-				if (which == 0) {
+				if (which == 0)
+				{
 					draw_rle(mo, bitmap1, code, color, hflip, 0, x, y, scale, scale, &mo->cliprect);
 				}
 				if (bitmap2 && which != 0)
@@ -878,12 +870,12 @@ static void sort_and_render(struct atarirle_data *mo)
 			int x = EXTRACT_DATA(obj, mo->xposmask);
 			int y = EXTRACT_DATA(obj, mo->yposmask);
 			int scaled_xoffs, scaled_yoffs;
-			const struct atarirle_info *info;
+			const struct atarirle_info* info;
 
 			if (x & ((mo->xposmask.mask + 1) >> 1))
-				x = (INT16)(x | ~mo->xposmask.mask);
+				x = static_cast<INT16>(x | ~mo->xposmask.mask);
 			if (y & ((mo->yposmask.mask + 1) >> 1))
-				y = (INT16)(y | ~mo->yposmask.mask);
+				y = static_cast<INT16>(y | ~mo->yposmask.mask);
 			x += mo->cliprect.nMinx;
 
 			/* merge priority and color */
@@ -937,7 +929,7 @@ static void sort_and_render(struct atarirle_data *mo)
 
 				/* bottom edge clip */
 				if (ey >= nScreenHeight)
-					ey = nScreenHeight-1; // right?? iq_132
+					ey = nScreenHeight - 1; // right?? iq_132
 				else if (ey < 0)
 					break;
 
@@ -955,7 +947,8 @@ static void sort_and_render(struct atarirle_data *mo)
 					//	plot_pixel(bitmap1, tx, sy, rand() & 0xff);
 					//	plot_pixel(bitmap1, tx, ey, rand() & 0xff);
 				}
-			} while (0);
+			}
+			while (false);
 
 			/*fprintf(stderr, "   Sprite: c=%04X l=%04X h=%d X=%4d (o=%4d w=%3d) Y=%4d (o=%4d h=%d) s=%04X\n",
 			 code, color, hflip,
@@ -966,31 +959,32 @@ static void sort_and_render(struct atarirle_data *mo)
 }
 
 
-
 /*---------------------------------------------------------------
     draw_rle: Render a single RLE-compressed motion
     object.
 ---------------------------------------------------------------*/
 
-void draw_rle(struct atarirle_data *mo, UINT16 *bitmap, int code, int color, int hflip, int vflip,
-	int x, int y, int xscale, int yscale, const clip_struct *clip)
+void draw_rle(struct atarirle_data* mo, UINT16* bitmap, int code, int color, int hflip, int vflip,
+              int x, int y, int xscale, int yscale, const clip_struct* clip)
 {
 	UINT32 palettebase = mo->palettebase + color;
-	const struct atarirle_info *info = &mo->info[code];
+	const struct atarirle_info* info = &mo->info[code];
 	int scaled_xoffs = (xscale * info->xoffs) >> 12;
 	int scaled_yoffs = (yscale * info->yoffs) >> 12;
 
-	if (vflip) {}
+	if (vflip)
+	{
+	}
 
 	/* we're hflipped, account for it */
 	if (hflip)
 		scaled_xoffs = ((xscale * info->width) >> 12) - scaled_xoffs;
 
-//if (clip->nMiny == Machine->screen[0].visarea.nMiny)
-//logerror("   Sprite: c=%04X l=%04X h=%d X=%4d (o=%4d w=%3d) Y=%4d (o=%4d h=%d) s=%04X\n",
-//  code, color, hflip,
-//  x, -scaled_xoffs, (xscale * info->width) >> 12,
-//  y, -scaled_yoffs, (yscale * info->height) >> 12, xscale);
+	//if (clip->nMiny == Machine->screen[0].visarea.nMiny)
+	//logerror("   Sprite: c=%04X l=%04X h=%d X=%4d (o=%4d w=%3d) Y=%4d (o=%4d h=%d) s=%04X\n",
+	//  code, color, hflip,
+	//  x, -scaled_xoffs, (xscale * info->width) >> 12,
+	//  y, -scaled_yoffs, (yscale * info->height) >> 12, xscale);
 
 	/* adjust for the x and y offsets */
 	x -= scaled_xoffs;
@@ -1001,7 +995,7 @@ void draw_rle(struct atarirle_data *mo, UINT16 *bitmap, int code, int color, int
 		return;
 
 	/* 16-bit case */
-//	if (bitmap->depth == 16)
+	//	if (bitmap->depth == 16)
 	{
 		if (!hflip)
 			draw_rle_zoom(bitmap, info, palettebase, x, y, xscale << 4, yscale << 4, clip);
@@ -1011,20 +1005,17 @@ void draw_rle(struct atarirle_data *mo, UINT16 *bitmap, int code, int color, int
 }
 
 
-
 /*---------------------------------------------------------------
     draw_rle_zoom: Draw an RLE-compressed object to a 16-bit
     bitmap.
 ---------------------------------------------------------------*/
 
-void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
-		UINT32 palette, int sx, int sy, int scalex, int scaley,
-		const clip_struct *clip)
+void draw_rle_zoom(UINT16* bitmap, const struct atarirle_info* gfx,
+                   UINT32 palette, int sx, int sy, int scalex, int scaley,
+                   const clip_struct* clip)
 {
-
-
-	const UINT16 *row_start = gfx->data;
-	const UINT16 *table = gfx->table;
+	const UINT16* row_start = gfx->data;
+	const UINT16* table = gfx->table;
 	volatile int current_row = 0;
 
 	int scaled_width = (scalex * gfx->width + 0x7fff) >> 16;
@@ -1079,13 +1070,13 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 	/* loop top to bottom */
 	for (y = sy; y <= ey; y++, sourcey += dy)
 	{
-		UINT16 *dest = bitmap + (y * nScreenWidth) + sx; //UINT16 *)bitmap->line[y])[sx];
+		UINT16* dest = bitmap + (y * nScreenWidth) + sx; //UINT16 *)bitmap->line[y])[sx];
 		int j, sourcex = dx / 2, rle_end = 0;
-		const UINT16 *base;
+		const UINT16* base;
 		int entry_count;
 
 		/* loop until we hit the row we're on */
-		for ( ; current_row != (sourcey >> 16); current_row++)
+		for (; current_row != (sourcey >> 16); current_row++)
 			row_start += 1 + BURN_ENDIAN_SWAP_INT16(*row_start);
 
 		/* grab our starting parameters from this row */
@@ -1142,7 +1133,7 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 		/* clipped case */
 		else
 		{
-			const UINT16 *end = bitmap + (y * nScreenWidth) + ex; //&((const UINT16 *)bitmap->line[y])[ex];
+			const UINT16* end = bitmap + (y * nScreenWidth) + ex; //&((const UINT16 *)bitmap->line[y])[ex];
 			int to_be_skipped = pixels_to_skip;
 
 			/* decode the pixels */
@@ -1207,18 +1198,17 @@ void draw_rle_zoom(UINT16 *bitmap, const struct atarirle_info *gfx,
 }
 
 
-
 /*---------------------------------------------------------------
     draw_rle_zoom_hflip: Draw an RLE-compressed object to a
     16-bit bitmap with horizontal flip.
 ---------------------------------------------------------------*/
 
-void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
-		UINT32 palette, int sx, int sy, int scalex, int scaley,
-		const clip_struct *clip)
+void draw_rle_zoom_hflip(UINT16* bitmap, const struct atarirle_info* gfx,
+                         UINT32 palette, int sx, int sy, int scalex, int scaley,
+                         const clip_struct* clip)
 {
-	const UINT16 *row_start = gfx->data;
-	const UINT16 *table = gfx->table;
+	const UINT16* row_start = gfx->data;
+	const UINT16* table = gfx->table;
 	volatile int current_row = 0;
 
 	int scaled_width = (scalex * gfx->width + 0x7fff) >> 16;
@@ -1268,13 +1258,13 @@ void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
 	/* loop top to bottom */
 	for (y = sy; y <= ey; y++, sourcey += dy)
 	{
-		UINT16 *dest = bitmap + (y * nScreenWidth) + ex; //&((UINT16 *)bitmap->line[y])[ex];
+		UINT16* dest = bitmap + (y * nScreenWidth) + ex; //&((UINT16 *)bitmap->line[y])[ex];
 		int j, sourcex = dx / 2, rle_end = 0;
-		const UINT16 *base;
+		const UINT16* base;
 		int entry_count;
 
 		/* loop until we hit the row we're on */
-		for ( ; current_row != (sourcey >> 16); current_row++)
+		for (; current_row != (sourcey >> 16); current_row++)
 			row_start += 1 + BURN_ENDIAN_SWAP_INT16(*row_start);
 
 		/* grab our starting parameters from this row */
@@ -1331,7 +1321,7 @@ void draw_rle_zoom_hflip(UINT16 *bitmap, const struct atarirle_info *gfx,
 		/* clipped case */
 		else
 		{
-			const UINT16 *start = bitmap + (y * nScreenWidth) + sx; //&((const UINT16 *)bitmap->line[y])[sx];
+			const UINT16* start = bitmap + (y * nScreenWidth) + sx; //&((const UINT16 *)bitmap->line[y])[sx];
 			int to_be_skipped = pixels_to_skip;
 
 			/* decode the pixels */

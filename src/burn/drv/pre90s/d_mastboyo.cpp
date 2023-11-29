@@ -5,17 +5,17 @@
 #include "z80_intf.h"
 #include "ay8910.h"
 
-static UINT8 *AllMem;
-static UINT8 *MemEnd;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *DrvZ80ROM;
-static UINT8 *DrvGfxROM;
-static UINT8 *DrvColPROM;
-static UINT8 *DrvNVRAM;
-static UINT8 *DrvVidRAM;
+static UINT8* AllMem;
+static UINT8* MemEnd;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* DrvZ80ROM;
+static UINT8* DrvGfxROM;
+static UINT8* DrvColPROM;
+static UINT8* DrvNVRAM;
+static UINT8* DrvVidRAM;
 
-static UINT32 *DrvPalette;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 z80_bank;
@@ -26,47 +26,47 @@ static UINT8 DrvInputs[1];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo MastboyoInputList[] = {
-	{"P1 Coin",						BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
-	{"P1 Start",					BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Green / >>",				BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
-	{"P1 Red / <<",					BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy1 + 1, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy1 + 3, "p1 start"},
+	{"P1 Green / >>", BIT_DIGITAL, DrvJoy1 + 7, "p1 fire 1"},
+	{"P1 Red / <<", BIT_DIGITAL, DrvJoy1 + 6, "p1 fire 2"},
 
-	{"P2 Coin",						BIT_DIGITAL,	DrvJoy1 + 0,	"p2 coin"	},
-	{"P2 Start",					BIT_DIGITAL,	DrvJoy1 + 2,	"p2 start"	},
-	{"P2 Green / Delete Initial",	BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 1"	},
-	{"P2 Red / Enter Initial",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 2"	},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy1 + 0, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy1 + 2, "p2 start"},
+	{"P2 Green / Delete Initial", BIT_DIGITAL, DrvJoy1 + 5, "p2 fire 1"},
+	{"P2 Red / Enter Initial", BIT_DIGITAL, DrvJoy1 + 4, "p2 fire 2"},
 
-	{"Reset",						BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dips",						BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dips", BIT_DIPSWITCH, DrvDips + 0, "dip"},
 };
 
 STDINPUTINFO(Mastboyo)
 
-static struct BurnDIPInfo MastboyoDIPList[]=
+static struct BurnDIPInfo MastboyoDIPList[] =
 {
-	{0x09, 0xff, 0xff, 0xe1, NULL						},
+	{0x09, 0xff, 0xff, 0xe1, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"					},
-	{0x09, 0x01, 0x03, 0x00, "2 Coins 1 Credits"		},
-	{0x09, 0x01, 0x03, 0x01, "1 Coin  1 Credits"		},
-	{0x09, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
-	{0x09, 0x01, 0x03, 0x03, "Disabled"					},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x09, 0x01, 0x03, 0x00, "2 Coins 1 Credits"},
+	{0x09, 0x01, 0x03, 0x01, "1 Coin  1 Credits"},
+	{0x09, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
+	{0x09, 0x01, 0x03, 0x03, "Disabled"},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"					},
-	{0x09, 0x01, 0x0c, 0x00, "1 Coin  1 Credits"		},
-	{0x09, 0x01, 0x0c, 0x04, "1 Coin  2 Credits"		},
-	{0x09, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"		},
-	{0x09, 0x01, 0x0c, 0x08, "1 Coin  4 Credits"		},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x09, 0x01, 0x0c, 0x00, "1 Coin  1 Credits"},
+	{0x09, 0x01, 0x0c, 0x04, "1 Coin  2 Credits"},
+	{0x09, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"},
+	{0x09, 0x01, 0x0c, 0x08, "1 Coin  4 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Lives"					},
-	{0x09, 0x01, 0x30, 0x00, "2"						},
-	{0x09, 0x01, 0x30, 0x10, "3"						},
-	{0x09, 0x01, 0x30, 0x20, "4"						},
-	{0x09, 0x01, 0x30, 0x30, "6"						},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x09, 0x01, 0x30, 0x00, "2"},
+	{0x09, 0x01, 0x30, 0x10, "3"},
+	{0x09, 0x01, 0x30, 0x20, "4"},
+	{0x09, 0x01, 0x30, 0x30, "6"},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x09, 0x01, 0x80, 0x80, "Off"						},
-	{0x09, 0x01, 0x80, 0x00, "On"						},
+	{0, 0xfe, 0, 2, "Service Mode"},
+	{0x09, 0x01, 0x80, 0x80, "Off"},
+	{0x09, 0x01, 0x80, 0x00, "On"},
 };
 
 STDDIPINFO(Mastboyo)
@@ -75,16 +75,15 @@ static void bankswitch(INT32 data)
 {
 	z80_bank = data & 0xf;
 
-	ZetMapMemory(DrvZ80ROM + 0x10000 + ((data & 0xf) * 0x8000),	0x8000, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM + 0x10000 + ((data & 0xf) * 0x8000), 0x8000, 0xffff, MAP_RAM);
 }
 
 static void __fastcall mastboyo_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0x6000:
-			bankswitch(data);
-		return;
+	case 0x6000:
+		bankswitch(data);
 	}
 }
 
@@ -92,10 +91,9 @@ static void __fastcall mastboyo_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
-		case 0x00:
-		case 0x01:
-			AY8910Write(0, port & 1, data);
-		return;
+	case 0x00:
+	case 0x01:
+		AY8910Write(0, port & 1, data);
 	}
 }
 
@@ -103,8 +101,8 @@ static UINT8 __fastcall mastboyo_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x00:
-			return AY8910Read(0);
+	case 0x00:
+		return AY8910Read(0);
 	}
 
 	return 0;
@@ -120,7 +118,7 @@ static UINT8 AY8910_portB(UINT32)
 	return DrvInputs[0];
 }
 
-static tilemap_callback( bg )
+static tilemap_callback(bg)
 {
 	TILE_SET_INFO(0, DrvVidRAM[offs], DrvVidRAM[offs + 0x400], 0);
 }
@@ -141,37 +139,45 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvZ80ROM		= Next; Next += 0x090000;
+	DrvZ80ROM = Next;
+	Next += 0x090000;
 
-	DrvGfxROM		= Next; Next += 0x008000;
+	DrvGfxROM = Next;
+	Next += 0x008000;
 
-	DrvColPROM		= Next; Next += 0x000200;
+	DrvColPROM = Next;
+	Next += 0x000200;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
+	DrvPalette = (UINT32*)Next;
+	Next += 0x100 * sizeof(UINT32);
 
-	DrvNVRAM		= Next; Next += 0x000800;
+	DrvNVRAM = Next;
+	Next += 0x000800;
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvVidRAM		= Next; Next += 0x000800;
+	DrvVidRAM = Next;
+	Next += 0x000800;
 
-	RamEnd			= Next;
+	RamEnd = Next;
 
-	MemEnd			= Next;
+	MemEnd = Next;
 
 	return 0;
 }
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane[4] = { STEP4(0,1) };
-	INT32 XOffs[8] = { 24, 28, 0, 4, 8, 12, 16, 20 };
-	INT32 YOffs[8] = { STEP8(0,32) };
+	INT32 Plane[4] = {STEP4(0, 1)};
+	INT32 XOffs[8] = {24, 28, 0, 4, 8, 12, 16, 20};
+	INT32 YOffs[8] = {STEP8(0, 32)};
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x4000);
-	if (tmp == NULL) {
+	auto tmp = BurnMalloc(0x4000);
+	if (tmp == nullptr)
+	{
 		return 1;
 	}
 
@@ -186,76 +192,84 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 which)
 {
-	AllMem = NULL;
+	AllMem = nullptr;
 	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - static_cast<UINT8*>(nullptr);
+	if ((AllMem = BurnMalloc(nLen)) == nullptr) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	if (which == 0) {
-		memset (DrvZ80ROM, 0xff, 0x90000);
+	if (which == 0)
+	{
+		memset(DrvZ80ROM, 0xff, 0x90000);
 
-		if (BurnLoadRom(DrvZ80ROM  + 0x00000, 0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x50000, 1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x60000, 2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x70000, 3, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x80000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x50000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x60000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x70000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x80000, 4, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM  + 0x00000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x00000, 5, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00100, 6, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00000, 7, 1)) return 1;
 
-		for (INT32 i = 0; i < 0x100; i++) {
+		for (INT32 i = 0; i < 0x100; i++)
+		{
 			DrvColPROM[i] = (DrvColPROM[i] & 0xf) | (DrvColPROM[0x100 + i] << 4);
 		}
 
 		DrvGfxDecode();
-	} else if (which == 1) {
-		memset (DrvZ80ROM, 0xff, 0x90000);
+	}
+	else if (which == 1)
+	{
+		memset(DrvZ80ROM, 0xff, 0x90000);
 
-		if (BurnLoadRom(DrvZ80ROM  + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
 		memcpy(DrvZ80ROM + 0x0000, DrvZ80ROM + 0x4000, 0x4000);
 		memset(DrvZ80ROM + 0x4000, 0, 0x4000);
-		
-		if (BurnLoadRom(DrvZ80ROM  + 0x50000, 1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x58000, 2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x60000, 3, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x70000, 4, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x78000, 5, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x80000, 6, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x88000, 7, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM  + 0x00000, 8, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x50000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x58000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x60000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x70000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x78000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x80000, 6, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x88000, 7, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM + 0x00000, 8, 1)) return 1;
 		memcpy(DrvGfxROM + 0x0000, DrvGfxROM + 0x4000, 0x4000);
 		memset(DrvGfxROM + 0x4000, 0, 0x4000);
 
 		if (BurnLoadRom(DrvColPROM + 0x00100, 9, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00000, 10, 1)) return 1;
 
-		for (INT32 i = 0; i < 0x100; i++) {
+		for (INT32 i = 0; i < 0x100; i++)
+		{
 			DrvColPROM[i] = (DrvColPROM[i] & 0xf) | (DrvColPROM[0x100 + i] << 4);
 		}
 
 		DrvGfxDecode();
-	} else {
+	}
+	else
+	{
 		memset(DrvZ80ROM, 0xff, 0x90000);
 
-		if (BurnLoadRom(DrvZ80ROM  + 0x00000, 0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x50000, 1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x58000, 2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x60000, 3, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x68000, 4, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x70000, 5, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM  + 0x78000, 6, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x50000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x58000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x60000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x68000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x70000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x78000, 6, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM  + 0x00000, 7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x00000, 7, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00100, 8, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00000, 9, 1)) return 1;
 
-		for (INT32 i = 0; i < 0x100; i++) {
+		for (INT32 i = 0; i < 0x100; i++)
+		{
 			DrvColPROM[i] = (DrvColPROM[i] & 0xf) | (DrvColPROM[0x100 + i] << 4);
 		}
 
@@ -264,16 +278,16 @@ static INT32 DrvInit(INT32 which)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0x3fff, MAP_ROM);
-	ZetMapMemory(DrvNVRAM,			0x4000, 0x47ff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM,			0x5000, 0x57ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvNVRAM, 0x4000, 0x47ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0x5000, 0x57ff, MAP_RAM);
 	ZetSetWriteHandler(mastboyo_write);
 	ZetSetOutHandler(mastboyo_write_port);
 	ZetSetInHandler(mastboyo_read_port);
 	ZetClose();
 
 	AY8910Init(0, 5000000, 0);
-	AY8910SetPorts(0, &AY8910_portA, &AY8910_portB, NULL, NULL);
+	AY8910SetPorts(0, &AY8910_portA, &AY8910_portB, nullptr, nullptr);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -301,7 +315,7 @@ static void DrvPaletteInit()
 {
 	for (INT32 i = 0; i < 0x100; i++)
 	{
-		UINT8 r =(DrvColPROM[i] >> 3) & 7;
+		UINT8 r = (DrvColPROM[i] >> 3) & 7;
 		UINT8 g = DrvColPROM[i] & 7;
 		UINT8 b = DrvColPROM[i] >> 6;
 
@@ -309,13 +323,14 @@ static void DrvPaletteInit()
 		g = (g << 5) | (g << 2) | (b >> 1);
 		b = (b << 6) | (b << 4) | (b << 2) | b;
 
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
@@ -329,13 +344,15 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
 	{
 		DrvInputs[0] = 0xf3;
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 	}
@@ -357,30 +374,34 @@ static INT32 DrvFrame()
 
 	ZetClose();
 
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		DrvDraw();
 	}
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -390,15 +411,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(z80_bank);
 	}
 
-	if (nAction & ACB_NVRAM) {
-		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x00800;
-		ba.nAddress	= 0;
-		ba.szName	= "NV RAM";
+	if (nAction & ACB_NVRAM)
+	{
+		ba.Data = DrvNVRAM;
+		ba.nLen = 0x00800;
+		ba.nAddress = 0;
+		ba.szName = "NV RAM";
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE)
+	{
 		ZetOpen(0);
 		bankswitch(z80_bank);
 		ZetClose();
@@ -411,21 +434,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Master Boy (1987, Z80 hardware, Covielsa, set 1)
 
 static struct BurnRomInfo mastboyoRomDesc[] = {
-	{ "mastboy_27256.ic14",			0x08000, 0xa212ff85, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "mastboy_27256.ic7",			0x08000, 0x3a214efd, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "mastboy_27256.ic6",			0x08000, 0x4d682cfb, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "mastboy_27256.ic8",			0x08000, 0x40b07eeb, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "mastboy_27256.ic10",			0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "mastboy_27256.ic9",			0x08000, 0x266e7d37, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "mastboy_27256.ic12",			0x08000, 0xefb4b2f9, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "mastboy_27256.ic11",			0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS }, //  7
+	{"mastboy_27256.ic14", 0x08000, 0xa212ff85, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"mastboy_27256.ic7", 0x08000, 0x3a214efd, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"mastboy_27256.ic6", 0x08000, 0x4d682cfb, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"mastboy_27256.ic8", 0x08000, 0x40b07eeb, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"mastboy_27256.ic10", 0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"mastboy_27256.ic9", 0x08000, 0x266e7d37, 1 | BRF_PRG | BRF_ESS}, //  5
+	{"mastboy_27256.ic12", 0x08000, 0xefb4b2f9, 1 | BRF_PRG | BRF_ESS}, //  6
+	{"mastboy_27256.ic11", 0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS}, //  7
 
-	{ "mastboy_27256.ic36",			0x08000, 0xd862ca23, 2 | BRF_GRA },           //  8 Graphics
+	{"mastboy_27256.ic36", 0x08000, 0xd862ca23, 2 | BRF_GRA}, //  8 Graphics
 
-	{ "h_82s129.ic39",				0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  9 Color data
-	{ "l_82s129.ic40",				0x00100, 0x4d061216, 3 | BRF_GRA },           //  10
+	{"h_82s129.ic39", 0x00100, 0x8e965fc3, 3 | BRF_GRA}, //  9 Color data
+	{"l_82s129.ic40", 0x00100, 0x4d061216, 3 | BRF_GRA}, //  10
 
-	{ "d_82s129.ic23",				0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           //  11 Unused PROM
+	{"d_82s129.ic23", 0x00100, 0xd5fd2dfd, 0 | BRF_OPT}, //  11 Unused PROM
 };
 
 STD_ROM_PICK(mastboyo)
@@ -437,11 +460,11 @@ static INT32 mastboyoInit()
 }
 
 struct BurnDriver BurnDrvMastboyo = {
-	"mastboyo", NULL, NULL, NULL, "1987",
-	"Master Boy (1987, Z80 hardware, Covielsa, set 1)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"mastboyo", nullptr, nullptr, nullptr, "1987",
+	"Master Boy (1987, Z80 hardware, Covielsa, set 1)\0", nullptr, "Gaelco (Covielsa license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, mastboyoRomInfo, mastboyoRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	nullptr, mastboyoRomInfo, mastboyoRomName, nullptr, nullptr, nullptr, nullptr, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -449,18 +472,18 @@ struct BurnDriver BurnDrvMastboyo = {
 // Master Boy (1987, Z80 hardware, Covielsa, set 2)
 
 static struct BurnRomInfo mastboyoaRomDesc[] = {
-	{ "masterboy-1987-27128-ic14.bin",			0x04000, 0xd05a22eb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "masterboy-1987-27c512-ic10.bin",			0x10000, 0x66da2826, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "masterboy-1987-27256-ic11.bin",			0x08000, 0x40b07eeb, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "masterboy-1987-27c512-ic12.bin",			0x10000, 0xb2819e38, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "masterboy-1987-27c512-ic13.bin",			0x10000, 0x71df82e9, 1 | BRF_PRG | BRF_ESS }, //  4
+	{"masterboy-1987-27128-ic14.bin", 0x04000, 0xd05a22eb, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"masterboy-1987-27c512-ic10.bin", 0x10000, 0x66da2826, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"masterboy-1987-27256-ic11.bin", 0x08000, 0x40b07eeb, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"masterboy-1987-27c512-ic12.bin", 0x10000, 0xb2819e38, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"masterboy-1987-27c512-ic13.bin", 0x10000, 0x71df82e9, 1 | BRF_PRG | BRF_ESS}, //  4
 
-	{ "masterboy-1987-27128-mbfij-ic36.bin",	0x04000, 0xaa2a174d, 2 | BRF_GRA },           //  5 Graphics
+	{"masterboy-1987-27128-mbfij-ic36.bin", 0x04000, 0xaa2a174d, 2 | BRF_GRA}, //  5 Graphics
 
-	{ "masterboy-1987-82s129-h-ic39.bin",		0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  6 Color data
-	{ "masterboy-1987-82s129-l-ic40.bin",		0x00100, 0x4d061216, 3 | BRF_GRA },           //  7
+	{"masterboy-1987-82s129-h-ic39.bin", 0x00100, 0x8e965fc3, 3 | BRF_GRA}, //  6 Color data
+	{"masterboy-1987-82s129-l-ic40.bin", 0x00100, 0x4d061216, 3 | BRF_GRA}, //  7
 
-	{ "masterboy-1987-82s129-d-ic23.bin",		0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           //  8 Unused PROM
+	{"masterboy-1987-82s129-d-ic23.bin", 0x00100, 0xd5fd2dfd, 0 | BRF_OPT}, //  8 Unused PROM
 };
 
 STD_ROM_PICK(mastboyoa)
@@ -472,11 +495,11 @@ static INT32 mastboyoaInit()
 }
 
 struct BurnDriver BurnDrvMastboyoa = {
-	"mastboyoa", "mastboyo", NULL, NULL, "1987",
-	"Master Boy (1987, Z80 hardware, Covielsa, set 2)\0", NULL, "Gaelco (Covielsa license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"mastboyoa", "mastboyo", nullptr, nullptr, "1987",
+	"Master Boy (1987, Z80 hardware, Covielsa, set 2)\0", nullptr, "Gaelco (Covielsa license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, mastboyoaRomInfo, mastboyoaRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	nullptr, mastboyoaRomInfo, mastboyoaRomName, nullptr, nullptr, nullptr, nullptr, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -484,29 +507,29 @@ struct BurnDriver BurnDrvMastboyoa = {
 // Master Boy (1987, Z80 hardware, Ichi-Funtel, set 1)
 
 static struct BurnRomInfo mastboyobRomDesc[] = {
-	{ "mb_p1.ic14",			0x04000, 0x9ff8d386, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "mb_3.ic9",			0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "mb_4.ic8",			0x08000, 0xc4844264, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "mb_1.ic11",			0x08000, 0xf5a9bf63, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "mb_2.ic10",			0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS }, //  4
+	{"mb_p1.ic14", 0x04000, 0x9ff8d386, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"mb_3.ic9", 0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"mb_4.ic8", 0x08000, 0xc4844264, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"mb_1.ic11", 0x08000, 0xf5a9bf63, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"mb_2.ic10", 0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS}, //  4
 
-	{ "fij.c36",			0x04000, 0xbdd0f821, 2 | BRF_GRA },           //  5 Graphics
+	{"fij.c36", 0x04000, 0xbdd0f821, 2 | BRF_GRA}, //  5 Graphics
 
-	{ "h_82s129.ic39",		0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  6 Color data
-	{ "l_82s129.ic40",		0x00100, 0x4d061216, 3 | BRF_GRA },           //  7
+	{"h_82s129.ic39", 0x00100, 0x8e965fc3, 3 | BRF_GRA}, //  6 Color data
+	{"l_82s129.ic40", 0x00100, 0x4d061216, 3 | BRF_GRA}, //  7
 
-	{ "d_82s129.ic23",		0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           //  8 Unused PROM
+	{"d_82s129.ic23", 0x00100, 0xd5fd2dfd, 0 | BRF_OPT}, //  8 Unused PROM
 };
 
 STD_ROM_PICK(mastboyob)
 STD_ROM_FN(mastboyob)
 
 struct BurnDriver BurnDrvMastboyob = {
-	"mastboyob", "mastboyo", NULL, NULL, "1987",
-	"Master Boy (1987, Z80 hardware, Ichi-Funtel, set 1)\0", NULL, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"mastboyob", "mastboyo", nullptr, nullptr, "1987",
+	"Master Boy (1987, Z80 hardware, Ichi-Funtel, set 1)\0", nullptr, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, mastboyobRomInfo, mastboyobRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	nullptr, mastboyobRomInfo, mastboyobRomName, nullptr, nullptr, nullptr, nullptr, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyoaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
@@ -514,20 +537,20 @@ struct BurnDriver BurnDrvMastboyob = {
 // Master Boy (1987, Z80 hardware, Ichi-Funtel, set 2)
 
 static struct BurnRomInfo mastboyocRomDesc[] = {
-	{ "ic14-mb-pt-27128.bin",	0x04000, 0x3a42c74d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "ic13-mb-1-27256.bin",	0x08000, 0xefb4b2f9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ic12-mb-2-27256.bin",	0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ic11-mb-3-27256.bin",	0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ic10-mb-4-27256.bin",	0x08000, 0x266e7d37, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ic9-mb-5-27256.bin",		0x08000, 0x40b07eeb, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "ic8-mb-6-27256.bin",		0x08000, 0x3a214efd, 1 | BRF_PRG | BRF_ESS }, //  6
+	{"ic14-mb-pt-27128.bin", 0x04000, 0x3a42c74d, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"ic13-mb-1-27256.bin", 0x08000, 0xefb4b2f9, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"ic12-mb-2-27256.bin", 0x08000, 0xf2611186, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"ic11-mb-3-27256.bin", 0x08000, 0xb92ffd4f, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"ic10-mb-4-27256.bin", 0x08000, 0x266e7d37, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"ic9-mb-5-27256.bin", 0x08000, 0x40b07eeb, 1 | BRF_PRG | BRF_ESS}, //  5
+	{"ic8-mb-6-27256.bin", 0x08000, 0x3a214efd, 1 | BRF_PRG | BRF_ESS}, //  6
 
-	{ "ic36-fij-27128.bin",		0x04000, 0xbdd0f821, 2 | BRF_GRA },           //  7 Graphics
+	{"ic36-fij-27128.bin", 0x04000, 0xbdd0f821, 2 | BRF_GRA}, //  7 Graphics
 
-	{ "h_82s129.ic39",			0x00100, 0x8e965fc3, 3 | BRF_GRA },           //  8 Color data
-	{ "l_82s129.ic40",			0x00100, 0x4d061216, 3 | BRF_GRA },           //  9
+	{"h_82s129.ic39", 0x00100, 0x8e965fc3, 3 | BRF_GRA}, //  8 Color data
+	{"l_82s129.ic40", 0x00100, 0x4d061216, 3 | BRF_GRA}, //  9
 
-	{ "d_82s129.ic23",			0x00100, 0xd5fd2dfd, 0 | BRF_OPT },           // 10 Unused PROM
+	{"d_82s129.ic23", 0x00100, 0xd5fd2dfd, 0 | BRF_OPT}, // 10 Unused PROM
 };
 
 STD_ROM_PICK(mastboyoc)
@@ -539,11 +562,11 @@ static INT32 mastboyocInit()
 }
 
 struct BurnDriver BurnDrvMastboyoc = {
-	"mastboyoc", "mastboyo", NULL, NULL, "1987",
-	"Master Boy (1987, Z80 hardware, Ichi-Funtel, set 2)\0", NULL, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"mastboyoc", "mastboyo", nullptr, nullptr, "1987",
+	"Master Boy (1987, Z80 hardware, Ichi-Funtel, set 2)\0", nullptr, "Gaelco (Ichi-Funtel license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, mastboyocRomInfo, mastboyocRomName, NULL, NULL, NULL, NULL, MastboyoInputInfo, MastboyoDIPInfo,
+	nullptr, mastboyocRomInfo, mastboyocRomName, nullptr, nullptr, nullptr, nullptr, MastboyoInputInfo, MastboyoDIPInfo,
 	mastboyocInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };

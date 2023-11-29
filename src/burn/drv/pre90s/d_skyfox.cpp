@@ -5,21 +5,21 @@
 #include "z80_intf.h"
 #include "burn_ym2203.h"
 
-static UINT8 *AllMem;
-static UINT8 *MemEnd;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *DrvZ80ROM0;
-static UINT8 *DrvZ80ROM1;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
-static UINT8 *DrvColPROM;
-static UINT8 *DrvSprRAM;
-static UINT8 *DrvZ80RAM0;
-static UINT8 *DrvZ80RAM1;
-static UINT8 *DrvVidRegs;
+static UINT8* AllMem;
+static UINT8* MemEnd;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* DrvZ80ROM0;
+static UINT8* DrvZ80ROM1;
+static UINT8* DrvGfxROM0;
+static UINT8* DrvGfxROM1;
+static UINT8* DrvColPROM;
+static UINT8* DrvSprRAM;
+static UINT8* DrvZ80RAM0;
+static UINT8* DrvZ80RAM1;
+static UINT8* DrvVidRegs;
 
-static UINT32 *DrvPalette;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
@@ -28,71 +28,71 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[1];
 static UINT8 DrvReset;
 
-static UINT8 *soundlatch;
-static UINT8 *DrvBgCtrl;
+static UINT8* soundlatch;
+static UINT8* DrvBgCtrl;
 
 static INT32 vblank;
 
 static struct BurnInputInfo SkyfoxInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy2 + 0, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy1 + 6, "p1 start"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy1 + 7, "p2 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy1 + 0, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy1 + 1, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1 + 3, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1 + 2, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 5, "p1 fire 1"},
+	{"P1 Button 2", BIT_DIGITAL, DrvJoy1 + 4, "p1 fire 2"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Skyfox)
 
-static struct BurnDIPInfo SkyfoxDIPList[]=
+static struct BurnDIPInfo SkyfoxDIPList[] =
 {
-	{0x0a, 0xff, 0xff, 0x6f, NULL			},
-	{0x0b, 0xff, 0xff, 0xf0, NULL			},
-	{0x0c, 0xff, 0xff, 0xfa, NULL			},
+	{0x0a, 0xff, 0xff, 0x6f, nullptr},
+	{0x0b, 0xff, 0xff, 0xf0, nullptr},
+	{0x0c, 0xff, 0xff, 0xfa, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0a, 0x01, 0x18, 0x00, "20K"			},
-	{0x0a, 0x01, 0x18, 0x08, "30K"			},
-	{0x0a, 0x01, 0x18, 0x10, "40K"			},
-	{0x0a, 0x01, 0x18, 0x18, "50K"			},
-	
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x0a, 0x01, 0x20, 0x20, "Medium"		},
-	{0x0a, 0x01, 0x20, 0x00, "Hard"			},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x0a, 0x01, 0x18, 0x00, "20K"},
+	{0x0a, 0x01, 0x18, 0x08, "30K"},
+	{0x0a, 0x01, 0x18, 0x10, "40K"},
+	{0x0a, 0x01, 0x18, 0x18, "50K"},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x0a, 0x01, 0x40, 0x40, "Off"			},
-	{0x0a, 0x01, 0x40, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x0a, 0x01, 0x20, 0x20, "Medium"},
+	{0x0a, 0x01, 0x20, 0x00, "Hard"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0a, 0x01, 0x80, 0x00, "Upright"		},
-	{0x0a, 0x01, 0x80, 0x80, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Flip Screen"},
+	{0x0a, 0x01, 0x40, 0x40, "Off"},
+	{0x0a, 0x01, 0x40, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x0a, 0x01, 0x0e, 0x0e, "5 Coins 1 Credits"	},
-	{0x0a, 0x01, 0x0e, 0x0a, "4 Coins 1 Credits"	},
-	{0x0a, 0x01, 0x0e, 0x06, "3 Coins 1 Credits"	},
-	{0x0a, 0x01, 0x0e, 0x02, "2 Coins 1 Credits"	},
-	{0x0a, 0x01, 0x0e, 0x00, "1 Coin  1 Credits"	},
-	{0x0a, 0x01, 0x0e, 0x04, "1 Coin  2 Credits"	},
-	{0x0a, 0x01, 0x0e, 0x08, "1 Coin  3 Credits"	},
-	{0x0a, 0x01, 0x0e, 0x0c, "1 Coin  4 Credits"	},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x0a, 0x01, 0x80, 0x00, "Upright"},
+	{0x0a, 0x01, 0x80, 0x80, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    6, "Lives"		},
-	{0x0c, 0x01, 0x07, 0x00, "1"			},
-	{0x0c, 0x01, 0x07, 0x01, "2"			},
-	{0x0c, 0x01, 0x07, 0x02, "3"			},
-	{0x0c, 0x01, 0x07, 0x03, "4"			},
-	{0x0c, 0x01, 0x07, 0x04, "5"			},
-	{0x0c, 0x01, 0x07, 0x07, "Infinite (Cheat)"	},
+	{0, 0xfe, 0, 8, "Coinage"},
+	{0x0a, 0x01, 0x0e, 0x0e, "5 Coins 1 Credits"},
+	{0x0a, 0x01, 0x0e, 0x0a, "4 Coins 1 Credits"},
+	{0x0a, 0x01, 0x0e, 0x06, "3 Coins 1 Credits"},
+	{0x0a, 0x01, 0x0e, 0x02, "2 Coins 1 Credits"},
+	{0x0a, 0x01, 0x0e, 0x00, "1 Coin  1 Credits"},
+	{0x0a, 0x01, 0x0e, 0x04, "1 Coin  2 Credits"},
+	{0x0a, 0x01, 0x0e, 0x08, "1 Coin  3 Credits"},
+	{0x0a, 0x01, 0x0e, 0x0c, "1 Coin  4 Credits"},
+
+	{0, 0xfe, 0, 6, "Lives"},
+	{0x0c, 0x01, 0x07, 0x00, "1"},
+	{0x0c, 0x01, 0x07, 0x01, "2"},
+	{0x0c, 0x01, 0x07, 0x02, "3"},
+	{0x0c, 0x01, 0x07, 0x03, "4"},
+	{0x0c, 0x01, 0x07, 0x04, "5"},
+	{0x0c, 0x01, 0x07, 0x07, "Infinite (Cheat)"},
 };
 
 STDDIPINFO(Skyfox)
@@ -101,16 +101,15 @@ void __fastcall skyfox_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0xe008:
-		case 0xe009:
-		case 0xe00a:
-		case 0xe00b:
-		case 0xe00c:
-		case 0xe00d:
-		case 0xe00e:
-		case 0xe00f:
-			DrvVidRegs[address & 7] = data;
-		return;
+	case 0xe008:
+	case 0xe009:
+	case 0xe00a:
+	case 0xe00b:
+	case 0xe00c:
+	case 0xe00d:
+	case 0xe00e:
+	case 0xe00f:
+		DrvVidRegs[address & 7] = data;
 	}
 }
 
@@ -118,17 +117,17 @@ UINT8 __fastcall skyfox_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0xe000:
-			return DrvInputs[0];
+	case 0xe000:
+		return DrvInputs[0];
 
-		case 0xe001:
-			return DrvDips[0];
+	case 0xe001:
+		return DrvDips[0];
 
-		case 0xe002:
-			return DrvDips[1] | vblank;
+	case 0xe002:
+		return DrvDips[1] | vblank;
 
-		case 0xf001:
-			return DrvDips[2];
+	case 0xf001:
+		return DrvDips[2];
 	}
 
 	return 0;
@@ -138,15 +137,14 @@ void __fastcall skyfox_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0xa000:
-		case 0xa001:
-			BurnYM2203Write(0, address & 1, data);
-			return;
+	case 0xa000:
+	case 0xa001:
+		BurnYM2203Write(0, address & 1, data);
+		return;
 
-		case 0xc000:
-		case 0xc001:
-			BurnYM2203Write(1, address & 1, data);
-			return;
+	case 0xc000:
+	case 0xc001:
+		BurnYM2203Write(1, address & 1, data);
 	}
 }
 
@@ -154,11 +152,11 @@ UINT8 __fastcall skyfox_sound_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0xa001:
-			return BurnYM2203Read(0, 0);
+	case 0xa001:
+		return BurnYM2203Read(0, 0);
 
-		case 0xb000:
-			return *soundlatch;
+	case 0xb000:
+		return *soundlatch;
 	}
 
 	return 0;
@@ -166,53 +164,65 @@ UINT8 __fastcall skyfox_sound_read(UINT16 address)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvZ80ROM0	= Next; Next += 0x010000;
-	DrvZ80ROM1	= Next; Next += 0x010000;
+	DrvZ80ROM0 = Next;
+	Next += 0x010000;
+	DrvZ80ROM1 = Next;
+	Next += 0x010000;
 
-	DrvGfxROM0	= Next; Next += 0x060000;
-	DrvGfxROM1	= Next; Next += 0x008000;
+	DrvGfxROM0 = Next;
+	Next += 0x060000;
+	DrvGfxROM1 = Next;
+	Next += 0x008000;
 
-	DrvColPROM	= Next; Next += 0x000300;
+	DrvColPROM = Next;
+	Next += 0x000300;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x0100 * sizeof(UINT32);
+	DrvPalette = (UINT32*)Next;
+	Next += 0x0100 * sizeof(UINT32);
 
-	AllRam		= Next;
+	AllRam = Next;
 
-	DrvZ80RAM0	= Next; Next += 0x001000;
-	DrvZ80RAM1	= Next; Next += 0x000800;
-	DrvSprRAM	= Next; Next += 0x001000;
+	DrvZ80RAM0 = Next;
+	Next += 0x001000;
+	DrvZ80RAM1 = Next;
+	Next += 0x000800;
+	DrvSprRAM = Next;
+	Next += 0x001000;
 
-	DrvVidRegs	= Next;
-	DrvBgCtrl	= Next;
-	soundlatch	= Next + 1; Next += 0x000008;
+	DrvVidRegs = Next;
+	DrvBgCtrl = Next;
+	soundlatch = Next + 1;
+	Next += 0x000008;
 
-	RamEnd		= Next;
+	RamEnd = Next;
 
-	MemEnd		= Next;
+	MemEnd = Next;
 
 	return 0;
 }
 
 static void DrvGfxDecode()
 {
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x60000);
+	auto tmp = BurnMalloc(0x60000);
 
-	for (INT32 i = 0; i < 0x60000; i++) {
-		tmp[i] = DrvGfxROM0[(i&~0x3ff) | (i&7) | (((i>>3)&7)<<5) | (((i>>6)&3)<<3) | (i&0x300)];
+	for (INT32 i = 0; i < 0x60000; i++)
+	{
+		tmp[i] = DrvGfxROM0[(i & ~0x3ff) | (i & 7) | (((i >> 3) & 7) << 5) | (((i >> 6) & 3) << 3) | (i & 0x300)];
 	}
 
-	memcpy (DrvGfxROM0, tmp, 0x60000);
+	memcpy(DrvGfxROM0, tmp, 0x60000);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 }
 
 static void DrvPaletteInit()
 {
 	for (INT32 i = 0; i < 256; i++)
 	{
-		INT32 bit0,bit1,bit2,bit3,r,g,b;
+		INT32 bit0, bit1, bit2, bit3, r, g, b;
 
 		bit0 = (DrvColPROM[i] >> 0) & 0x01;
 		bit1 = (DrvColPROM[i] >> 1) & 0x01;
@@ -226,13 +236,13 @@ static void DrvPaletteInit()
 		bit3 = (DrvColPROM[i + 256] >> 3) & 0x01;
 		g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		bit0 = (DrvColPROM[i + 2*256] >> 0) & 0x01;
-		bit1 = (DrvColPROM[i + 2*256] >> 1) & 0x01;
-		bit2 = (DrvColPROM[i + 2*256] >> 2) & 0x01;
-		bit3 = (DrvColPROM[i + 2*256] >> 3) & 0x01;
+		bit0 = (DrvColPROM[i + 2 * 256] >> 0) & 0x01;
+		bit1 = (DrvColPROM[i + 2 * 256] >> 1) & 0x01;
+		bit2 = (DrvColPROM[i + 2 * 256] >> 2) & 0x01;
+		bit3 = (DrvColPROM[i + 2 * 256] >> 3) & 0x01;
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
@@ -257,27 +267,27 @@ static INT32 DrvDoReset()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
+	AllMem = nullptr;
 	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - static_cast<UINT8*>(nullptr);
+	if ((AllMem = BurnMalloc(nLen)) == nullptr) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x08000, 1, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x10000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x20000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x30000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x40000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x50000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x10000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x20000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x30000, 6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x40000, 7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x50000, 8, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x00000, 9, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00000, 10, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00100, 11, 1)) return 1;
@@ -313,7 +323,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(skyfox_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(2, 14318181 / 8, NULL, 0);
+	BurnYM2203Init(2, 14318181 / 8, nullptr, 0);
 	BurnTimerAttachZet(14318181 / 8);
 	BurnYM2203SetAllRoutes(0, 0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.80, BURN_SND_ROUTE_BOTH);
@@ -333,14 +343,14 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFree(AllMem);
 
 	return 0;
 }
 
 static void draw_sprites()
 {
-	INT32 shift = (*DrvBgCtrl & 0x80) ? (4-1) : 4;
+	INT32 shift = (*DrvBgCtrl & 0x80) ? (4 - 1) : 4;
 
 	for (INT32 offs = 0; offs < 0x400; offs += 4)
 	{
@@ -348,39 +358,67 @@ static void draw_sprites()
 		INT32 xinc, yinc, dx, dy;
 		INT32 low_code, n;
 
-		INT32 y     = DrvSprRAM[offs + 0];
-		INT32 x     = DrvSprRAM[offs + 1];
-		INT32 code  = DrvSprRAM[offs + 2] | (DrvSprRAM[offs+3] << 8);
+		INT32 y = DrvSprRAM[offs + 0];
+		INT32 x = DrvSprRAM[offs + 1];
+		INT32 code = DrvSprRAM[offs + 2] | (DrvSprRAM[offs + 3] << 8);
 		INT32 flipx = code & 0x02;
 		INT32 flipy = code & 0x04;
 
 		x = (x << 1) | (code & 1);
 
-		INT32 high_code = ((code >> 4) & 0x7f0) +	((code & 0x8000) >> shift);
+		INT32 high_code = ((code >> 4) & 0x7f0) + ((code & 0x8000) >> shift);
 
 		switch (code & 0x88)
 		{
-			case 0x88:	n = 4;	low_code = 0;						break;
-			case 0x08:	n = 2;	low_code = ((code & 0x20) >> 2) + ((code & 0x10) >> 3);	break;
-			default:	n = 1;	low_code = (code >> 4) & 0x0f;				break;
+		case 0x88: n = 4;
+			low_code = 0;
+			break;
+		case 0x08: n = 2;
+			low_code = ((code & 0x20) >> 2) + ((code & 0x10) >> 3);
+			break;
+		default: n = 1;
+			low_code = (code >> 4) & 0x0f;
+			break;
 		}
 
 		if (*DrvBgCtrl & 1)
 		{
-			x = ((nScreenWidth-1)  - x - ((n - 1) << 3)) + 88;
-			y = ((nScreenHeight-1) - y - ((n - 1) << 3)) + 8;
+			x = ((nScreenWidth - 1) - x - ((n - 1) << 3)) + 88;
+			y = ((nScreenHeight - 1) - y - ((n - 1) << 3)) + 8;
 			flipx = !flipx;
 			flipy = !flipy;
-		} else {
+		}
+		else
+		{
 			x -= 0x60;
 			y -= 0x10;
 		}
 
-		if (flipx) { xstart = n-1;  xend = -1;  xinc = -1; }
-		else	   { xstart = 0;    xend = n;   xinc = +1; }
+		if (flipx)
+		{
+			xstart = n - 1;
+			xend = -1;
+			xinc = -1;
+		}
+		else
+		{
+			xstart = 0;
+			xend = n;
+			xinc = +1;
+		}
 
-		if (flipy) { ystart = n-1;  yend = -1;  yinc = -1; }
-		else	   { ystart = 0;    yend = n;   yinc = +1; }
+		if (flipy)
+		{
+			ystart = n - 1;
+			yend = -1;
+			yinc = -1;
+		}
+		else
+		{
+			ystart = 0;
+			yend = n;
+			yinc = +1;
+		}
 
 		code = low_code + high_code;
 
@@ -392,16 +430,25 @@ static void draw_sprites()
 			{
 				INT32 sx = x + (dx << 3);
 
-				if (flipy) {
-					if (flipx) {
+				if (flipy)
+				{
+					if (flipx)
+					{
 						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code++, sx, sy, 0, 8, 0xff, 0, DrvGfxROM0);
-					} else {
+					}
+					else
+					{
 						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code++, sx, sy, 0, 8, 0xff, 0, DrvGfxROM0);
 					}
-				} else {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code++,sx, sy, 0, 8, 0xff, 0, DrvGfxROM0);
-					} else {
+				}
+				else
+				{
+					if (flipx)
+					{
+						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code++, sx, sy, 0, 8, 0xff, 0, DrvGfxROM0);
+					}
+					else
+					{
 						Render8x8Tile_Mask_Clip(pTransDraw, code++, sx, sy, 0, 8, 0xff, 0, DrvGfxROM0);
 					}
 				}
@@ -442,12 +489,14 @@ static void draw_background()
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
 
-	for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++) {
+	for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++)
+	{
 		pTransDraw[offs] = 0x00ff;
 	}
 
@@ -461,13 +510,15 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
 	{
 		DrvInputs[0] = 0xff;
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 	}
@@ -477,8 +528,11 @@ static INT32 DrvFrame()
 
 	INT32 nCycleSegment;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { (INT32)((double)4000000 / 62.65), (INT32)((double)14318181 / 8 / 62.65) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = {
+		static_cast<INT32>(static_cast<double>(4000000) / 62.65),
+		static_cast<INT32>(static_cast<double>(14318181) / 8 / 62.65)
+	};
+	INT32 nCyclesDone[2] = {0, 0};
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -488,7 +542,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCycleSegment);
-		if (i == (nInterleave-1) && DrvJoy2[0]) ZetNmi();
+		if (i == (nInterleave - 1) && DrvJoy2[0]) ZetNmi();
 		ZetClose();
 
 		nCycleSegment = nCyclesTotal[1] / nInterleave;
@@ -504,24 +558,27 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		DrvDraw();
 	}
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+	if (nAction & ACB_VOLATILE)
+	{
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All RAM";
 		BurnAcb(&ba);
 
@@ -536,34 +593,35 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Sky Fox
 
 static struct BurnRomInfo skyfoxRomDesc[] = {
-	{ "skyfox1.bin",	0x08000, 0xb4d4bb6f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "skyfox2.bin",	0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"skyfox1.bin", 0x08000, 0xb4d4bb6f, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"skyfox2.bin", 0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "skyfox9.bin",	0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"skyfox9.bin", 0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "skyfox3.bin",	0x10000, 0x3a17a929, 3 | BRF_GRA },           //  3 Sprites
-	{ "skyfox4.bin",	0x10000, 0x358053bb, 3 | BRF_GRA },           //  4
-	{ "skyfox5.bin",	0x10000, 0xc1215a6e, 3 | BRF_GRA },           //  5
-	{ "skyfox6.bin",	0x10000, 0xcc37e15d, 3 | BRF_GRA },           //  6
-	{ "skyfox7.bin",	0x10000, 0xfa2ab5b4, 3 | BRF_GRA },           //  7
-	{ "skyfox8.bin",	0x10000, 0x0e3edc49, 3 | BRF_GRA },           //  8
+	{"skyfox3.bin", 0x10000, 0x3a17a929, 3 | BRF_GRA}, //  3 Sprites
+	{"skyfox4.bin", 0x10000, 0x358053bb, 3 | BRF_GRA}, //  4
+	{"skyfox5.bin", 0x10000, 0xc1215a6e, 3 | BRF_GRA}, //  5
+	{"skyfox6.bin", 0x10000, 0xcc37e15d, 3 | BRF_GRA}, //  6
+	{"skyfox7.bin", 0x10000, 0xfa2ab5b4, 3 | BRF_GRA}, //  7
+	{"skyfox8.bin", 0x10000, 0x0e3edc49, 3 | BRF_GRA}, //  8
 
-	{ "skyfox10.bin",	0x08000, 0x19f58f9c, 4 | BRF_GRA },           //  9 Starfield
+	{"skyfox10.bin", 0x08000, 0x19f58f9c, 4 | BRF_GRA}, //  9 Starfield
 
-	{ "sfoxrprm.bin",	0x00100, 0x79913c7f, 5 | BRF_GRA },           // 10 Color Proms
-	{ "sfoxgprm.bin",	0x00100, 0xfb73d434, 5 | BRF_GRA },           // 11
-	{ "sfoxbprm.bin",	0x00100, 0x60d2ab41, 5 | BRF_GRA },           // 12
+	{"sfoxrprm.bin", 0x00100, 0x79913c7f, 5 | BRF_GRA}, // 10 Color Proms
+	{"sfoxgprm.bin", 0x00100, 0xfb73d434, 5 | BRF_GRA}, // 11
+	{"sfoxbprm.bin", 0x00100, 0x60d2ab41, 5 | BRF_GRA}, // 12
 };
 
 STD_ROM_PICK(skyfox)
 STD_ROM_FN(skyfox)
 
 struct BurnDriver BurnDrvSkyfox = {
-	"skyfox", NULL, NULL, NULL, "1987",
-	"Sky Fox\0", NULL, "Jaleco (Nichibutsu USA license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, skyfoxRomInfo, skyfoxRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
+	"skyfox", nullptr, nullptr, nullptr, "1987",
+	"Sky Fox\0", nullptr, "Jaleco (Nichibutsu USA license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 1,
+	HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	nullptr, skyfoxRomInfo, skyfoxRomName, nullptr, nullptr, nullptr, nullptr, SkyfoxInputInfo, SkyfoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4
 };
@@ -572,34 +630,35 @@ struct BurnDriver BurnDrvSkyfox = {
 // Exerizer (Japan)
 
 static struct BurnRomInfo exerizerRomDesc[] = {
-	{ "1.2v",			0x08000, 0x5df72a5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "2.3v",			0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"1.2v", 0x08000, 0x5df72a5d, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"2.3v", 0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "9.5n",			0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"9.5n", 0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "3-1.7w",			0x10000, 0x3a17a929, 3 | BRF_GRA },           //  3 Sprites
-	{ "4.7u",			0x10000, 0x358053bb, 3 | BRF_GRA },           //  4
-	{ "5-1.7t",			0x10000, 0xc1215a6e, 3 | BRF_GRA },           //  5
-	{ "6.7s",			0x10000, 0xcc37e15d, 3 | BRF_GRA },           //  6
-	{ "7.7p",			0x10000, 0xc9bbfe5c, 3 | BRF_GRA },           //  7
-	{ "8.7n",			0x10000, 0x0e3edc49, 3 | BRF_GRA },           //  8
+	{"3-1.7w", 0x10000, 0x3a17a929, 3 | BRF_GRA}, //  3 Sprites
+	{"4.7u", 0x10000, 0x358053bb, 3 | BRF_GRA}, //  4
+	{"5-1.7t", 0x10000, 0xc1215a6e, 3 | BRF_GRA}, //  5
+	{"6.7s", 0x10000, 0xcc37e15d, 3 | BRF_GRA}, //  6
+	{"7.7p", 0x10000, 0xc9bbfe5c, 3 | BRF_GRA}, //  7
+	{"8.7n", 0x10000, 0x0e3edc49, 3 | BRF_GRA}, //  8
 
-	{ "10.5e",			0x08000, 0x19f58f9c, 4 | BRF_GRA },           //  9 Starfield
+	{"10.5e", 0x08000, 0x19f58f9c, 4 | BRF_GRA}, //  9 Starfield
 
-	{ "r.1c",			0x00100, 0x79913c7f, 5 | BRF_GRA },           // 10 Color Proms
-	{ "g.1b",			0x00100, 0xfb73d434, 5 | BRF_GRA },           // 11
-	{ "b.1d",			0x00100, 0x60d2ab41, 5 | BRF_GRA },           // 12
+	{"r.1c", 0x00100, 0x79913c7f, 5 | BRF_GRA}, // 10 Color Proms
+	{"g.1b", 0x00100, 0xfb73d434, 5 | BRF_GRA}, // 11
+	{"b.1d", 0x00100, 0x60d2ab41, 5 | BRF_GRA}, // 12
 };
 
 STD_ROM_PICK(exerizer)
 STD_ROM_FN(exerizer)
 
 struct BurnDriver BurnDrvExerizer = {
-	"exerizer", "skyfox", NULL, NULL, "1987",
-	"Exerizer (Japan)\0", NULL, "Jaleco", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, exerizerRomInfo, exerizerRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
+	"exerizer", "skyfox", nullptr, nullptr, "1987",
+	"Exerizer (Japan)\0", nullptr, "Jaleco", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 1,
+	HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	nullptr, exerizerRomInfo, exerizerRomName, nullptr, nullptr, nullptr, nullptr, SkyfoxInputInfo, SkyfoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4
 };
@@ -608,34 +667,36 @@ struct BurnDriver BurnDrvExerizer = {
 // Exerizer (bootleg)
 
 static struct BurnRomInfo exerizrbRomDesc[] = {
-	{ "1-a",			0x08000, 0x5df72a5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "skyfox2.bin",	0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"1-a", 0x08000, 0x5df72a5d, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"skyfox2.bin", 0x08000, 0xe15e0263, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "skyfox9.bin",	0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"skyfox9.bin", 0x08000, 0x0b283bf5, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "1-c",			0x10000, 0x450e9381, 3 | BRF_GRA },           //  3 Sprites
-	{ "skyfox4.bin",	0x10000, 0x358053bb, 3 | BRF_GRA },           //  4
-	{ "1-e",			0x10000, 0x50a38c60, 3 | BRF_GRA },           //  5
-	{ "skyfox6.bin",	0x10000, 0xcc37e15d, 3 | BRF_GRA },           //  6
-	{ "1-g",			0x10000, 0xc9bbfe5c, 3 | BRF_GRA },           //  7
-	{ "skyfox8.bin",	0x10000, 0x0e3edc49, 3 | BRF_GRA },           //  8
+	{"1-c", 0x10000, 0x450e9381, 3 | BRF_GRA}, //  3 Sprites
+	{"skyfox4.bin", 0x10000, 0x358053bb, 3 | BRF_GRA}, //  4
+	{"1-e", 0x10000, 0x50a38c60, 3 | BRF_GRA}, //  5
+	{"skyfox6.bin", 0x10000, 0xcc37e15d, 3 | BRF_GRA}, //  6
+	{"1-g", 0x10000, 0xc9bbfe5c, 3 | BRF_GRA}, //  7
+	{"skyfox8.bin", 0x10000, 0x0e3edc49, 3 | BRF_GRA}, //  8
 
-	{ "skyfox10.bin",	0x08000, 0x19f58f9c, 4 | BRF_GRA },           //  9 Starfield
+	{"skyfox10.bin", 0x08000, 0x19f58f9c, 4 | BRF_GRA}, //  9 Starfield
 
-	{ "sfoxrprm.bin",	0x00100, 0x79913c7f, 5 | BRF_GRA },           // 10 Color Proms
-	{ "sfoxgprm.bin",	0x00100, 0xfb73d434, 5 | BRF_GRA },           // 11
-	{ "sfoxbprm.bin",	0x00100, 0x60d2ab41, 5 | BRF_GRA },           // 12
+	{"sfoxrprm.bin", 0x00100, 0x79913c7f, 5 | BRF_GRA}, // 10 Color Proms
+	{"sfoxgprm.bin", 0x00100, 0xfb73d434, 5 | BRF_GRA}, // 11
+	{"sfoxbprm.bin", 0x00100, 0x60d2ab41, 5 | BRF_GRA}, // 12
 };
 
 STD_ROM_PICK(exerizrb)
 STD_ROM_FN(exerizrb)
 
 struct BurnDriver BurnDrvExerizrb = {
-	"exerizerb", "skyfox", NULL, NULL, "1987",
-	"Exerizer (bootleg)\0", NULL, "bootleg", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, exerizrbRomInfo, exerizrbRomName, NULL, NULL, NULL, NULL, SkyfoxInputInfo, SkyfoxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x100,
+	"exerizerb", "skyfox", nullptr, nullptr, "1987",
+	"Exerizer (bootleg)\0", nullptr, "bootleg", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG |
+	BDF_HISCORE_SUPPORTED,
+	1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	nullptr, exerizrbRomInfo, exerizrbRomName, nullptr, nullptr, nullptr, nullptr, SkyfoxInputInfo, SkyfoxDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, nullptr, &DrvRecalc, 0x100,
 	224, 320, 3, 4
 };

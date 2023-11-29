@@ -7,8 +7,8 @@
 #include "dac.h"
 #include "hc55516.h"
 
-static UINT8 *rom[2];
-static UINT8 *ram[2];
+static UINT8* rom[2];
+static UINT8* ram[2];
 
 static INT32 latch[2];
 static INT32 talkback;
@@ -71,46 +71,47 @@ void narc_sound_reset_write(INT32 state)
 static void sync_slave()
 {
 	INT32 cyc = M6809TotalCycles(0) - M6809TotalCycles(1);
-	if (cyc > 0) {
+	if (cyc > 0)
+	{
 		M6809Run(1, cyc);
 	}
 }
 
 static void narc_sound0_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0xcdff && address <= 0xce29) {
+	if (address >= 0xcdff && address <= 0xce29)
+	{
 		rom[0][0x80000 + address] = data;
 		return;
 	}
 
 	switch (address & ~0x3ff)
 	{
-		case 0x2000:
-			BurnYM2151Write(address & 1, data);
+	case 0x2000:
+		BurnYM2151Write(address & 1, data);
 		return;
 
-		case 0x2800:
-			talkback = data;
+	case 0x2800:
+		talkback = data;
 		return;
 
-		case 0x2c00:
-			latch[1] = data;
-			sync_slave();
-			M6809SetIRQLine(1, 1, CPU_IRQSTATUS_ACK);
+	case 0x2c00:
+		latch[1] = data;
+		sync_slave();
+		M6809SetIRQLine(1, 1, CPU_IRQSTATUS_ACK);
 		return;
 
-		case 0x3000:
-			DACSignedWrite(0, data);
+	case 0x3000:
+		DACSignedWrite(0, data);
 		return;
 
-		case 0x3800:
-			bankswitch(0, data & 0xf);
+	case 0x3800:
+		bankswitch(0, data & 0xf);
 		return;
 
-		case 0x3c00:
-			audio_sync |= 1;
-			audio_sync &= ~1; // should be delayed
-		return;
+	case 0x3c00:
+		audio_sync |= 1;
+		audio_sync &= ~1; // should be delayed
 	}
 }
 
@@ -118,13 +119,13 @@ static UINT8 narc_sound0_read(UINT16 address)
 {
 	switch (address & ~0x3ff)
 	{
-		case 0x2000:
-			return BurnYM2151Read();
+	case 0x2000:
+		return BurnYM2151Read();
 
-		case 0x3400:
-			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
-			sound_int_state = 0;
-			return latch[0];
+	case 0x3400:
+		M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		sound_int_state = 0;
+		return latch[0];
 	}
 
 	return 0;
@@ -135,12 +136,15 @@ static UINT8 narc_sound0_read(UINT16 address)
 // that of burger time.  This bytefilter effectively removes the "idle stream" -dink jan26, 2021
 static INT32 hc_idlefilter_check(UINT8 in)
 {
-	const UINT8 crap[8] = { 0x01, 0x00, 0x55, 0x2a, 0x15, 0x0a, 0x05, 0x02 };
+	const UINT8 crap[8] = {0x01, 0x00, 0x55, 0x2a, 0x15, 0x0a, 0x05, 0x02};
 
-	if (in == crap[if_clk]) {
+	if (in == crap[if_clk])
+	{
 		if_clk = (if_clk + 1) & 7;
 		if_seq++;
-	} else {
+	}
+	else
+	{
 		if_seq = 0;
 	}
 
@@ -152,34 +156,33 @@ static void narc_sound1_write(UINT16 address, UINT8 data)
 	//bprintf(0, _T("s1 wb %x  %x\n"), address, data);
 	switch (address & ~0x3ff)
 	{
-		case 0x2000:
-			hc55516_clock_w(1);
+	case 0x2000:
+		hc55516_clock_w(1);
 		return;
 
-		case 0x2400:
-			if (!hc_idlefilter_check(data))
-			{
-				hc55516_clock_w(0);
-				hc55516_digit_w(data & 1);
-			}
+	case 0x2400:
+		if (!hc_idlefilter_check(data))
+		{
+			hc55516_clock_w(0);
+			hc55516_digit_w(data & 1);
+		}
 		return;
 
-		case 0x2800:
-			// nop - talkback
+	case 0x2800:
+		// nop - talkback
 		return;
 
-		case 0x3000:
-			DACSignedWrite(1, data);
+	case 0x3000:
+		DACSignedWrite(1, data);
 		return;
 
-		case 0x3800:
-			bankswitch(1, data & 0xf);
+	case 0x3800:
+		bankswitch(1, data & 0xf);
 		return;
 
-		case 0x3c00:
-			audio_sync |= 2;
-			audio_sync &= ~2; // should be delayed
-		return;
+	case 0x3c00:
+		audio_sync |= 2;
+		audio_sync &= ~2; // should be delayed
 	}
 }
 
@@ -187,9 +190,9 @@ static UINT8 narc_sound1_read(UINT16 address)
 {
 	switch (address & ~0x3ff)
 	{
-		case 0x3400:
-			M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
-			return latch[1];
+	case 0x3400:
+		M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
+		return latch[1];
 	}
 
 	return 0;
@@ -218,30 +221,30 @@ void narc_sound_reset()
 	if_seq = 0;
 }
 
-void narc_sound_init(UINT8 *rom0, UINT8 *rom1)
+void narc_sound_init(UINT8* rom0, UINT8* rom1)
 {
 	rom[0] = rom0;
 	rom[1] = rom1;
-	ram[0] = (UINT8*)BurnMalloc(0x4000);
+	ram[0] = BurnMalloc(0x4000);
 	ram[1] = ram[0] + 0x2000;
 
 	M6809Init(0);
 	M6809Open(0);
-	M6809MapMemory(ram[0],				0x0000, 0x1fff, MAP_RAM);
-	M6809MapMemory(rom[0] + 0x8c000,	0xc000, 0xffff, MAP_ROM);
+	M6809MapMemory(ram[0], 0x0000, 0x1fff, MAP_RAM);
+	M6809MapMemory(rom[0] + 0x8c000, 0xc000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(narc_sound0_write);
 	M6809SetReadHandler(narc_sound0_read);
 	M6809Close();
 
 	M6809Init(1);
 	M6809Open(1);
-	M6809MapMemory(ram[1],				0x0000, 0x1fff, MAP_RAM);
-	M6809MapMemory(rom[1] + 0x8c000,	0xc000, 0xffff, MAP_ROM);
+	M6809MapMemory(ram[1], 0x0000, 0x1fff, MAP_RAM);
+	M6809MapMemory(rom[1] + 0x8c000, 0xc000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(narc_sound1_write);
 	M6809SetReadHandler(narc_sound1_read);
 	M6809Close();
 
-	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
+	BurnYM2151InitBuffered(3579545, 1, nullptr, 0);
 	BurnYM2151SetIrqHandler(&YM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.20, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.20, BURN_SND_ROUTE_RIGHT);
@@ -265,7 +268,7 @@ void narc_sound_exit()
 	DACExit();
 	hc55516_exit();
 
-	BurnFree (ram[0]);
+	BurnFree(ram[0]);
 }
 
 INT32 narc_sound_in_reset()
@@ -273,31 +276,33 @@ INT32 narc_sound_in_reset()
 	return sound_in_reset;
 }
 
-void narc_sound_update(INT16 *stream, INT32 length)
+void narc_sound_update(INT16* stream, INT32 length)
 {
 	BurnYM2151Render(stream, length);
 	hc55516_update(stream, length);
 	DACUpdate(stream, length);
 }
 
-INT32 narc_sound_scan(INT32 nAction, INT32 *pnMin)
+INT32 narc_sound_scan(INT32 nAction, INT32* pnMin)
 {
-	if (nAction & ACB_MEMORY_RAM) {
+	if (nAction & ACB_MEMORY_RAM)
+	{
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = ram[0];
-		ba.nLen	  = 0x4000;
+		ba.Data = ram[0];
+		ba.nLen = 0x4000;
 		ba.szName = "Sound Ram";
 		BurnAcb(&ba);
 
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = rom[0] + 0x8cdff;
-		ba.nLen	  = 0x2b;
+		ba.Data = rom[0] + 0x8cdff;
+		ba.nLen = 0x2b;
 		ba.szName = "Prot Ram";
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		M6809Scan(nAction);
 
 		BurnYM2151Scan(nAction, pnMin);

@@ -3,9 +3,9 @@
 
 #include "tiles_generic.h"
 
-static UINT16 *pandora_temp	= NULL;
-static UINT8 *pandora_ram	= NULL;
-static UINT8 *pandora_gfx	= NULL;
+static UINT16* pandora_temp = nullptr;
+static UINT8* pandora_ram = nullptr;
+static UINT8* pandora_gfx = nullptr;
 static INT32 pandora_clear;
 static INT32 pandora_xoffset;
 static INT32 pandora_yoffset;
@@ -22,14 +22,16 @@ void pandora_set_clear(INT32 clear)
 	pandora_clear = clear;
 }
 
-void pandora_update(UINT16 *dest)
+void pandora_update(UINT16* dest)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_update called without init\n"));
 #endif
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		if (pandora_temp[i]) {
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
+	{
+		if (pandora_temp[i])
+		{
 			dest[i] = pandora_temp[i] & 0x3ff;
 		}
 	}
@@ -41,19 +43,19 @@ void pandora_buffer_sprites()
 	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_buffer_sprites called without init\n"));
 #endif
 
-	INT32 sx=0, sy=0, x=0, y=0;
+	INT32 sx = 0, sy = 0, x = 0, y = 0;
 
-	if (pandora_clear) memset (pandora_temp, 0, nScreenWidth * nScreenHeight * sizeof(UINT16));
+	if (pandora_clear) memset(pandora_temp, 0, nScreenWidth * nScreenHeight * sizeof(UINT16));
 
 	for (INT32 offs = 0; offs < 0x1000; offs += 8)
 	{
-		INT32 attr	= pandora_ram[offs+7];
-		INT32 code	= pandora_ram[offs+6] + ((attr & 0x3f) << 8);
-		INT32 dy		= pandora_ram[offs+5];
-		INT32 dx		= pandora_ram[offs+4];
-		INT32 color	= pandora_ram[offs+3];
-		INT32 flipy	= attr & 0x40;
-		INT32 flipx	= attr & 0x80;
+		INT32 attr = pandora_ram[offs + 7];
+		INT32 code = pandora_ram[offs + 6] + ((attr & 0x3f) << 8);
+		INT32 dy = pandora_ram[offs + 5];
+		INT32 dx = pandora_ram[offs + 4];
+		INT32 color = pandora_ram[offs + 3];
+		INT32 flipy = attr & 0x40;
+		INT32 flipx = attr & 0x80;
 
 		if (color & 1) dx |= 0x100;
 		if (color & 2) dy |= 0x100;
@@ -89,40 +91,56 @@ void pandora_buffer_sprites()
 		if (sx & 0x100) sx -= 0x200;
 		if (sy & 0x100) sy -= 0x200;
 
-		if (sx >= nScreenWidth  || sx < -15) continue;
+		if (sx >= nScreenWidth || sx < -15) continue;
 		if (sy >= nScreenHeight || sy < -15) continue;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset, pandora_gfx);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset, pandora_gfx);
+		if (flipy)
+		{
+			if (flipx)
+			{
+				Render16x16Tile_Mask_FlipXY_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset,
+				                                 pandora_gfx);
 			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset, pandora_gfx);
-			} else {
-				Render16x16Tile_Mask_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset, pandora_gfx);
+			else
+			{
+				Render16x16Tile_Mask_FlipY_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset,
+				                                pandora_gfx);
+			}
+		}
+		else
+		{
+			if (flipx)
+			{
+				Render16x16Tile_Mask_FlipX_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset,
+				                                pandora_gfx);
+			}
+			else
+			{
+				Render16x16Tile_Mask_Clip(pandora_temp, code, sx, sy, color >> 4, 4, 0, pandora_color_offset,
+				                          pandora_gfx);
 			}
 		}
 	}
 }
 
 // must be called after GenericTilesInit()
-void pandora_init(UINT8 *ram, UINT8 *gfx, INT32 gfx_mod, INT32 color_offset, INT32 x, INT32 y)
+void pandora_init(UINT8* ram, UINT8* gfx, INT32 gfx_mod, INT32 color_offset, INT32 x, INT32 y)
 {
 	DebugDev_PandoraInitted = 1;
-	
-	pandora_ram	= ram;
-	pandora_xoffset	= x;
-	pandora_yoffset	= y;
-	pandora_gfx	= gfx;
-	pandora_color_offset	= color_offset;
+
+	pandora_ram = ram;
+	pandora_xoffset = x;
+	pandora_yoffset = y;
+	pandora_gfx = gfx;
+	pandora_color_offset = color_offset;
 	pandora_code_max = gfx_mod;
 
-	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)
+	{
 		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
-	} else {
+	}
+	else
+	{
 		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
 	}
 
@@ -136,9 +154,9 @@ void pandora_exit()
 	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_exit called without init\n"));
 #endif
 
-	BurnFree (pandora_temp);
+	BurnFree(pandora_temp);
 
-	pandora_ram = pandora_gfx = NULL;
-	
+	pandora_ram = pandora_gfx = nullptr;
+
 	DebugDev_PandoraInitted = 0;
 }

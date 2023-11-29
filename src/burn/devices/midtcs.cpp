@@ -38,7 +38,8 @@ void tcs_data_write(UINT16 data)
 	if (tcs_is_initialized == 0) return;
 
 	INT32 cpunum = M6809GetActive();
-	if (cpunum == -1) {
+	if (cpunum == -1)
+	{
 		M6809Open(cpu_select);
 	}
 	else if (cpunum != cpu_select)
@@ -50,7 +51,8 @@ void tcs_data_write(UINT16 data)
 	pia_set_input_b(pia_select, (data >> 1) & 0xf);
 	pia_set_input_ca1(pia_select, ~data & 0x01);
 
-	if (cpunum == -1) {
+	if (cpunum == -1)
+	{
 		M6809Close();
 	}
 	else if (cpunum != cpu_select)
@@ -72,9 +74,11 @@ void tcs_reset_write(int state)
 
 	tcs_in_reset = state;
 
-	if (state) {
+	if (state)
+	{
 		INT32 cpunum = M6809GetActive();
-		if (cpunum == -1) {
+		if (cpunum == -1)
+		{
 			M6809Open(cpu_select);
 		}
 		else if (cpunum != cpu_select)
@@ -83,7 +87,8 @@ void tcs_reset_write(int state)
 			M6809Open(cpu_select);
 		}
 		M6809Reset();
-		if (cpunum == -1) {
+		if (cpunum == -1)
+		{
 			M6809Close();
 		}
 		else if (cpunum != cpu_select)
@@ -96,15 +101,16 @@ void tcs_reset_write(int state)
 
 static void tcs_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0xc000) == 0x4000) {
+	if ((address & 0xc000) == 0x4000)
+	{
 		pia_write(pia_select, address & 3, data);
-		return;
 	}
 }
 
 static UINT8 tcs_read(UINT16 address)
 {
-	if ((address & 0xc000) == 0x4000) {
+	if ((address & 0xc000) == 0x4000)
+	{
 		return pia_read(pia_select, address & 3);
 	}
 
@@ -127,18 +133,19 @@ void tcs_reset()
 	dacvalue = 0;
 }
 
-static const pia6821_interface pia_intf = {
-	0, 0, 0, 0, 0, 0,
-	tcs_porta_w, tcs_portb_w, 0, 0,
+static constexpr pia6821_interface pia_intf = {
+	nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,
+	tcs_porta_w, tcs_portb_w, nullptr, nullptr,
 	tcs_irq, tcs_irq
 };
 
 static INT32 DACSync()
 {
-	return (INT32)(float)(nBurnSoundLen * (M6809TotalCycles() / (2000000 / (nBurnFPS / 100.0000))));
+	return static_cast<INT32>(static_cast<float>(nBurnSoundLen * (M6809TotalCycles() / (2000000 / (nBurnFPS /
+		100.0000)))));
 }
 
-void tcs_init(INT32 cpunum, INT32 pianum, INT32 dacnum, UINT8 *rom, UINT8 *ram)
+void tcs_init(INT32 cpunum, INT32 pianum, INT32 dacnum, UINT8* rom, UINT8* ram)
 {
 	cpu_select = cpunum;
 	pia_select = pianum;
@@ -146,20 +153,21 @@ void tcs_init(INT32 cpunum, INT32 pianum, INT32 dacnum, UINT8 *rom, UINT8 *ram)
 
 	M6809Init(cpu_select);
 	M6809Open(cpu_select);
-	for (INT32 i = 0; i < 0x4000; i+=0x800) {
-		M6809MapMemory(ram,	0x0000 + i, 0x07ff + i, MAP_RAM);
+	for (INT32 i = 0; i < 0x4000; i += 0x800)
+	{
+		M6809MapMemory(ram, 0x0000 + i, 0x07ff + i, MAP_RAM);
 	}
-	M6809MapMemory(rom + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(rom + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(tcs_write);
 	M6809SetReadHandler(tcs_read);
 	M6809Close();
 
 	if (pia_select == 0) pia_init();
 	pia_config(pia_select, PIA_ALTERNATE_ORDERING, &pia_intf);
-	
+
 	DACInit(dacnum, 0, 0, DACSync);
-    DACSetRoute(dacnum, 1.00, BURN_SND_ROUTE_BOTH);
-    DACDCBlock(1);
+	DACSetRoute(dacnum, 1.00, BURN_SND_ROUTE_BOTH);
+	DACDCBlock(1);
 
 	tcs_is_initialized = 1;
 }
@@ -174,7 +182,7 @@ void tcs_exit()
 	tcs_is_initialized = 0;
 }
 
-void tcs_scan(INT32 nAction, INT32 *pnMin)
+void tcs_scan(INT32 nAction, INT32* pnMin)
 {
 	if (tcs_is_initialized == 0) return;
 
@@ -201,4 +209,3 @@ INT32 tcs_initialized()
 {
 	return tcs_is_initialized;
 }
-

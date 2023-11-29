@@ -4,10 +4,10 @@
 #include "burner.h"
 #include "burnint.h"
 
-static FILE *input_f = NULL;
+static FILE* input_f = nullptr;
 static INT32 input_f_embed_pos = 0; // embeded position in file
 
-static UINT8 *buffer = NULL;
+static UINT8* buffer = nullptr;
 static INT32 buffer_pos;
 static INT32 buffer_size;
 static INT32 buffer_eof = 0;
@@ -15,7 +15,7 @@ static INT32 buffer_eof = 0;
 static void inputbuf_init() // called internally!
 {
 	buffer_size = 1024 * 1024; // 1meg starting
-	buffer = (UINT8*)malloc(buffer_size);
+	buffer = static_cast<UINT8*>(malloc(buffer_size));
 	memset(buffer, 0, buffer_size);
 
 	buffer_pos = 0;
@@ -26,21 +26,21 @@ void inputbuf_exit()
 {
 	free(buffer);
 
-	buffer = NULL;
+	buffer = nullptr;
 	buffer_eof = 0;
 
-	input_f = NULL;
+	input_f = nullptr;
 	input_f_embed_pos = 0;
 }
 
 #define FREEZE_EXTRA (sizeof(INT32)*4)
 
-INT32 inputbuf_freeze(UINT8 **buf, INT32 *size)
+INT32 inputbuf_freeze(UINT8** buf, INT32* size)
 {
-	UINT8 *b = (UINT8*)malloc(buffer_pos + FREEZE_EXTRA);
+	auto b = static_cast<UINT8*>(malloc(buffer_pos + FREEZE_EXTRA));
 	*buf = b;
 
-	if (b == NULL) return 1;
+	if (b == nullptr) return 1;
 
 	memcpy(b, &buffer_pos, sizeof(buffer_pos));
 	b += sizeof(buffer_pos);
@@ -51,14 +51,15 @@ INT32 inputbuf_freeze(UINT8 **buf, INT32 *size)
 	return 0;
 }
 
-INT32 inputbuf_unfreeze(UINT8 *buf, INT32 size)
+INT32 inputbuf_unfreeze(UINT8* buf, INT32 size)
 {
 	memcpy(&buffer_pos, buf, sizeof(buffer_pos));
 
-	if (buffer_pos >= buffer_size) {
-		buffer = (UINT8*)realloc(buffer, buffer_pos + 1);
+	if (buffer_pos >= buffer_size)
+	{
+		buffer = static_cast<UINT8*>(realloc(buffer, buffer_pos + 1));
 
-		if (buffer == NULL) return 1;
+		if (buffer == nullptr) return 1;
 
 		buffer_size = buffer_pos;
 	}
@@ -69,7 +70,7 @@ INT32 inputbuf_unfreeze(UINT8 *buf, INT32 size)
 	return 0;
 }
 
-INT32 inputbuf_embed(FILE *fp)
+INT32 inputbuf_embed(FILE* fp)
 {
 	input_f = fp;
 	input_f_embed_pos = ftell(fp);
@@ -87,13 +88,14 @@ void inputbuf_load()
 	INT32 packet_len = 0;
 	INT32 data_len = 0;
 
-	fread(&packet_len, sizeof(packet_len), 1, input_f); // packet length (data len rounded to multiple of 4 / dword aligned)
+	fread(&packet_len, sizeof(packet_len), 1, input_f);
+	// packet length (data len rounded to multiple of 4 / dword aligned)
 	fread(&data_len, sizeof(data_len), 1, input_f);
 
 	bprintf(0, _T("inputbuf_load() - loading %d bytes (%d data)\n"), packet_len, data_len);
 
-	buffer = (UINT8*)realloc(buffer, packet_len + 1); // need to fread() packet_len
-	buffer_size = data_len;                       // but only keep data_len!
+	buffer = static_cast<UINT8*>(realloc(buffer, packet_len + 1)); // need to fread() packet_len
+	buffer_size = data_len; // but only keep data_len!
 
 	fread(buffer, packet_len, 1, input_f);
 }
@@ -114,7 +116,8 @@ void inputbuf_save()
 	bprintf(0, _T("inputbuf_save() - saving %d bytes (%d data)\n"), packet_len, data_len);
 
 	fwrite(buffer, data_len, 1, input_f);
-	if (difference) {
+	if (difference)
+	{
 		fwrite(&align, difference, 1, input_f);
 		bprintf(0, _T("... alignment of + %d\n"), difference);
 	}
@@ -128,16 +131,18 @@ INT32 inputbuf_eof()
 
 void inputbuf_addbuffer(UINT8 c)
 {
-	if (buffer == NULL) {
+	if (buffer == nullptr)
+	{
 		bprintf(0, _T("inputbuf_addbuffer: init!\n"));
 		inputbuf_init();
 	}
 
-	if (buffer_pos >= buffer_size) {
+	if (buffer_pos >= buffer_size)
+	{
 		// realloc buffer!!
 		INT32 previous_size = buffer_size;
 		buffer_size += 0x10000; // +64k
-		buffer = (UINT8*)realloc(buffer, buffer_size + 1);
+		buffer = static_cast<UINT8*>(realloc(buffer, buffer_size + 1));
 		bprintf(0, _T("inputbuf_addbuffer: reallocing buffer, was / new:  %d   %d\n"), previous_size, buffer_size);
 	}
 
@@ -150,7 +155,9 @@ UINT8 inputbuf_getbuffer()
 	// buffer_size = 1079 == buffer_pos[0..1078]
 	// buffer_size = 1079 && buffer_pos = 1079 (end of video)
 
-	if (buffer_pos + 2 <= buffer_size) { // 2 frames or more left
+	if (buffer_pos + 2 <= buffer_size)
+	{
+		// 2 frames or more left
 		return buffer[buffer_pos++];
 	}
 

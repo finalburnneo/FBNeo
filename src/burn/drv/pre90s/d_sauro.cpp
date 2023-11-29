@@ -6,24 +6,24 @@
 #include "burn_ym3812.h"
 #include "sp0256.h"
 
-static UINT8 *AllMem;
-static UINT8 *MemEnd;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *DrvZ80ROM0;
-static UINT8 *DrvZ80ROM1;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
-static UINT8 *DrvGfxROM2;
-static UINT8 *DrvSndROM;
-static UINT8 *DrvColPROM;
-static UINT8 *DrvNVRAM;
-static UINT8 *DrvSprRAM;
-static UINT8 *DrvVidRAM0;
-static UINT8 *DrvVidRAM1;
-static UINT8 *DrvZ80RAM1;
+static UINT8* AllMem;
+static UINT8* MemEnd;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* DrvZ80ROM0;
+static UINT8* DrvZ80ROM1;
+static UINT8* DrvGfxROM0;
+static UINT8* DrvGfxROM1;
+static UINT8* DrvGfxROM2;
+static UINT8* DrvSndROM;
+static UINT8* DrvColPROM;
+static UINT8* DrvNVRAM;
+static UINT8* DrvSprRAM;
+static UINT8* DrvVidRAM0;
+static UINT8* DrvVidRAM1;
+static UINT8* DrvZ80RAM1;
 
-static UINT32 *DrvPalette;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 flipscreen;
@@ -45,198 +45,198 @@ static UINT8 DrvReset;
 static INT32 nCyclesExtra;
 
 static struct BurnInputInfo TecfriInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy1 + 2, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy2 + 2, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy1 + 6, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy1 + 7, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1 + 4, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1 + 5, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 0, "p1 fire 1"},
+	{"P1 Button 2", BIT_DIGITAL, DrvJoy1 + 1, "p1 fire 2"},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy1 + 3, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy2 + 3, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 6, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 7, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 4, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 5, "p2 right"},
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 0, "p2 fire 1"},
+	{"P2 Button 2", BIT_DIGITAL, DrvJoy2 + 1, "p2 fire 2"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
 };
 
 STDINPUTINFO(Tecfri)
 
-static struct BurnDIPInfo TecfriDIPList[]=
+static struct BurnDIPInfo TecfriDIPList[] =
 {
 	DIP_OFFSET(0x11)
-	{0x00, 0xff, 0xff, 0x66, NULL					},
-	{0x01, 0xff, 0xff, 0x2f, NULL					},
+	{0x00, 0xff, 0xff, 0x66, nullptr},
+	{0x01, 0xff, 0xff, 0x2f, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x00, 0x01, 0x01, 0x00, "Off"					},
-	{0x00, 0x01, 0x01, 0x01, "On"					},
+	{0, 0xfe, 0, 2, "Service Mode"},
+	{0x00, 0x01, 0x01, 0x00, "Off"},
+	{0x00, 0x01, 0x01, 0x01, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x00, 0x01, 0x02, 0x00, "Off"					},
-	{0x00, 0x01, 0x02, 0x02, "On"					},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x00, 0x01, 0x02, 0x00, "Off"},
+	{0x00, 0x01, 0x02, 0x02, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x00, 0x01, 0x04, 0x04, "Upright"				},
-	{0x00, 0x01, 0x04, 0x00, "Cocktail"				},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x00, 0x01, 0x04, 0x04, "Upright"},
+	{0x00, 0x01, 0x04, 0x00, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"			},
-	{0x00, 0x01, 0x08, 0x00, "Off"					},
-	{0x00, 0x01, 0x08, 0x08, "On"					},
+	{0, 0xfe, 0, 2, "Free Play"},
+	{0x00, 0x01, 0x08, 0x00, "Off"},
+	{0x00, 0x01, 0x08, 0x08, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x00, 0x01, 0x30, 0x30, "Very Easy"			},
-	{0x00, 0x01, 0x30, 0x20, "Easy"					},
-	{0x00, 0x01, 0x30, 0x10, "Hard"					},
-	{0x00, 0x01, 0x30, 0x00, "Very Hard"			},
+	{0, 0xfe, 0, 4, "Difficulty"},
+	{0x00, 0x01, 0x30, 0x30, "Very Easy"},
+	{0x00, 0x01, 0x30, 0x20, "Easy"},
+	{0x00, 0x01, 0x30, 0x10, "Hard"},
+	{0x00, 0x01, 0x30, 0x00, "Very Hard"},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x00, 0x01, 0x40, 0x00, "No"					},
-	{0x00, 0x01, 0x40, 0x40, "Yes"					},
+	{0, 0xfe, 0, 2, "Allow Continue"},
+	{0x00, 0x01, 0x40, 0x00, "No"},
+	{0x00, 0x01, 0x40, 0x40, "Yes"},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x00, 0x01, 0x80, 0x00, "Off"					},
-	{0x00, 0x01, 0x80, 0x80, "On"					},
+	{0, 0xfe, 0, 2, "Freeze"},
+	{0x00, 0x01, 0x80, 0x00, "Off"},
+	{0x00, 0x01, 0x80, 0x80, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x01, 0x01, 0x03, 0x00, "4 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x01, "3 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x01, 0x01, 0x03, 0x00, "4 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x01, "3 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x02, "2 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x01, 0x01, 0x0c, 0x0c, "1 Coin  2 Credits"	},
-	{0x01, 0x01, 0x0c, 0x08, "1 Coin  3 Credits"	},
-	{0x01, 0x01, 0x0c, 0x04, "1 Coin  4 Credits"	},
-	{0x01, 0x01, 0x0c, 0x00, "1 Coin  5 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x01, 0x01, 0x0c, 0x0c, "1 Coin  2 Credits"},
+	{0x01, 0x01, 0x0c, 0x08, "1 Coin  3 Credits"},
+	{0x01, 0x01, 0x0c, 0x04, "1 Coin  4 Credits"},
+	{0x01, 0x01, 0x0c, 0x00, "1 Coin  5 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x01, 0x01, 0x30, 0x30, "2"					},
-	{0x01, 0x01, 0x30, 0x20, "3"					},
-	{0x01, 0x01, 0x30, 0x10, "4"					},
-	{0x01, 0x01, 0x30, 0x00, "5"					},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x01, 0x01, 0x30, 0x30, "2"},
+	{0x01, 0x01, 0x30, 0x20, "3"},
+	{0x01, 0x01, 0x30, 0x10, "4"},
+	{0x01, 0x01, 0x30, 0x00, "5"},
 };
 
 STDDIPINFO(Tecfri)
 
-static struct BurnDIPInfo TrckydocaDIPList[]=
+static struct BurnDIPInfo TrckydocaDIPList[] =
 {
 	DIP_OFFSET(0x11)
-	{0x00, 0xff, 0xff, 0x66, NULL					},
-	{0x01, 0xff, 0xff, 0x2f, NULL					},
+	{0x00, 0xff, 0xff, 0x66, nullptr},
+	{0x01, 0xff, 0xff, 0x2f, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x00, 0x01, 0x01, 0x00, "Off"					},
-	{0x00, 0x01, 0x01, 0x01, "On"					},
+	{0, 0xfe, 0, 2, "Service Mode"},
+	{0x00, 0x01, 0x01, 0x00, "Off"},
+	{0x00, 0x01, 0x01, 0x01, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x00, 0x01, 0x02, 0x00, "Off"					},
-	{0x00, 0x01, 0x02, 0x02, "On"					},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x00, 0x01, 0x02, 0x00, "Off"},
+	{0x00, 0x01, 0x02, 0x02, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x00, 0x01, 0x04, 0x04, "Upright"				},
-	{0x00, 0x01, 0x04, 0x00, "Cocktail"				},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x00, 0x01, 0x04, 0x04, "Upright"},
+	{0x00, 0x01, 0x04, 0x00, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"			},
-	{0x00, 0x01, 0x08, 0x00, "Off"					},
-	{0x00, 0x01, 0x08, 0x08, "On"					},
+	{0, 0xfe, 0, 2, "Free Play"},
+	{0x00, 0x01, 0x08, 0x00, "Off"},
+	{0x00, 0x01, 0x08, 0x08, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x00, 0x01, 0x30, 0x30, "Very Easy"			},
-	{0x00, 0x01, 0x30, 0x20, "Easy"					},
-	{0x00, 0x01, 0x30, 0x10, "Hard"					},
-	{0x00, 0x01, 0x30, 0x00, "Very Hard"			},
+	{0, 0xfe, 0, 4, "Difficulty"},
+	{0x00, 0x01, 0x30, 0x30, "Very Easy"},
+	{0x00, 0x01, 0x30, 0x20, "Easy"},
+	{0x00, 0x01, 0x30, 0x10, "Hard"},
+	{0x00, 0x01, 0x30, 0x00, "Very Hard"},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x00, 0x01, 0x40, 0x00, "No"					},
-	{0x00, 0x01, 0x40, 0x40, "Yes"					},
+	{0, 0xfe, 0, 2, "Allow Continue"},
+	{0x00, 0x01, 0x40, 0x00, "No"},
+	{0x00, 0x01, 0x40, 0x40, "Yes"},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x00, 0x01, 0x80, 0x00, "Off"					},
-	{0x00, 0x01, 0x80, 0x80, "On"					},
+	{0, 0xfe, 0, 2, "Freeze"},
+	{0x00, 0x01, 0x80, 0x00, "Off"},
+	{0x00, 0x01, 0x80, 0x80, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x01, 0x01, 0x03, 0x00, "4 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x01, "3 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x01, 0x01, 0x03, 0x00, "4 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x01, "3 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x02, "2 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x01, 0x01, 0x0c, 0x00, "1 Coin  1 Credits"	},
-	{0x01, 0x01, 0x0c, 0x0c, "1 Coin  2 Credits"	},
-	{0x01, 0x01, 0x0c, 0x08, "1 Coin  3 Credits"	},
-	{0x01, 0x01, 0x0c, 0x04, "1 Coin  4 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x01, 0x01, 0x0c, 0x00, "1 Coin  1 Credits"},
+	{0x01, 0x01, 0x0c, 0x0c, "1 Coin  2 Credits"},
+	{0x01, 0x01, 0x0c, 0x08, "1 Coin  3 Credits"},
+	{0x01, 0x01, 0x0c, 0x04, "1 Coin  4 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x01, 0x01, 0x30, 0x30, "2"					},
-	{0x01, 0x01, 0x30, 0x20, "3"					},
-	{0x01, 0x01, 0x30, 0x10, "4"					},
-	{0x01, 0x01, 0x30, 0x00, "5"					},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x01, 0x01, 0x30, 0x30, "2"},
+	{0x01, 0x01, 0x30, 0x20, "3"},
+	{0x01, 0x01, 0x30, 0x10, "4"},
+	{0x01, 0x01, 0x30, 0x00, "5"},
 };
 
 STDDIPINFO(Trckydoca)
 
-static struct BurnDIPInfo SaurobDIPList[]=
+static struct BurnDIPInfo SaurobDIPList[] =
 {
 	DIP_OFFSET(0x11)
-	{0x00, 0xff, 0xff, 0x99, NULL					},
-	{0x01, 0xff, 0xff, 0xd0, NULL					},
+	{0x00, 0xff, 0xff, 0x99, nullptr},
+	{0x01, 0xff, 0xff, 0xd0, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x00, 0x01, 0x01, 0x01, "Off"					},
-	{0x00, 0x01, 0x01, 0x00, "On"					},
+	{0, 0xfe, 0, 2, "Service Mode"},
+	{0x00, 0x01, 0x01, 0x01, "Off"},
+	{0x00, 0x01, 0x01, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x00, 0x01, 0x02, 0x00, "On"					},
-	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x00, 0x01, 0x02, 0x00, "On"},
+	{0x00, 0x01, 0x02, 0x02, "Off"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x00, 0x01, 0x04, 0x04, "Cocktail"				},
-	{0x00, 0x01, 0x04, 0x00, "Upright"				},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x00, 0x01, 0x04, 0x04, "Cocktail"},
+	{0x00, 0x01, 0x04, 0x00, "Upright"},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"			},
-	{0x00, 0x01, 0x08, 0x00, "On"					},
-	{0x00, 0x01, 0x08, 0x08, "Off"					},
+	{0, 0xfe, 0, 2, "Free Play"},
+	{0x00, 0x01, 0x08, 0x00, "On"},
+	{0x00, 0x01, 0x08, 0x08, "Off"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x00, 0x01, 0x30, 0x30, "Very Hard"			},
-	{0x00, 0x01, 0x30, 0x20, "Hard"					},
-	{0x00, 0x01, 0x30, 0x10, "Easy"					},
-	{0x00, 0x01, 0x30, 0x00, "Very Easy"			},
+	{0, 0xfe, 0, 4, "Difficulty"},
+	{0x00, 0x01, 0x30, 0x30, "Very Hard"},
+	{0x00, 0x01, 0x30, 0x20, "Hard"},
+	{0x00, 0x01, 0x30, 0x10, "Easy"},
+	{0x00, 0x01, 0x30, 0x00, "Very Easy"},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x00, 0x01, 0x40, 0x00, "Yes"					},
-	{0x00, 0x01, 0x40, 0x40, "No"					},
+	{0, 0xfe, 0, 2, "Allow Continue"},
+	{0x00, 0x01, 0x40, 0x00, "Yes"},
+	{0x00, 0x01, 0x40, 0x40, "No"},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x00, 0x01, 0x80, 0x00, "On"					},
-	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0, 0xfe, 0, 2, "Freeze"},
+	{0x00, 0x01, 0x80, 0x00, "On"},
+	{0x00, 0x01, 0x80, 0x80, "Off"},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x01, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
-	{0x01, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x02, "3 Coins 1 Credits"	},
-	{0x01, 0x01, 0x03, 0x03, "4 Coins 1 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x01, 0x01, 0x03, 0x00, "1 Coin  1 Credits"},
+	{0x01, 0x01, 0x03, 0x01, "2 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x02, "3 Coins 1 Credits"},
+	{0x01, 0x01, 0x03, 0x03, "4 Coins 1 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x01, 0x01, 0x0c, 0x0c, "1 Coin  5 Credits"	},
-	{0x01, 0x01, 0x0c, 0x08, "1 Coin  4 Credits"	},
-	{0x01, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
-	{0x01, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x01, 0x01, 0x0c, 0x0c, "1 Coin  5 Credits"},
+	{0x01, 0x01, 0x0c, 0x08, "1 Coin  4 Credits"},
+	{0x01, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"},
+	{0x01, 0x01, 0x0c, 0x00, "1 Coin  2 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x01, 0x01, 0x30, 0x30, "5"					},
-	{0x01, 0x01, 0x30, 0x20, "4"					},
-	{0x01, 0x01, 0x30, 0x10, "3"					},
-	{0x01, 0x01, 0x30, 0x00, "2"					},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x01, 0x01, 0x30, 0x30, "5"},
+	{0x01, 0x01, 0x30, 0x20, "4"},
+	{0x01, 0x01, 0x30, 0x10, "3"},
+	{0x01, 0x01, 0x30, 0x00, "2"},
 };
 
 STDDIPINFO(Saurob)
@@ -245,42 +245,42 @@ static void __fastcall sauro_main_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
-		case 0x80:
-			soundlatch = data | 0x80;
+	case 0x80:
+		soundlatch = data | 0x80;
 		return;
 
-		case 0xa0:
-			bg_scrollx = data;
+	case 0xa0:
+		bg_scrollx = data;
 		return;
 
-		case 0xa1:
-			fg_scrollx = data;
+	case 0xa1:
+		fg_scrollx = data;
 		return;
 
-		case 0xc0:
-			flipscreen = data ? 1 : 0;
+	case 0xc0:
+		flipscreen = data ? 1 : 0;
 		return;
 
-		case 0xe0:
-			watchdog = 0;
+	case 0xe0:
+		watchdog = 0;
 		return;
 
-		case 0xca:
-		case 0xcb:
-			palette_bank = (data & 3) << 4;
+	case 0xca:
+	case 0xcb:
+		palette_bank = (data & 3) << 4;
 		return;
 
-		case 0xc3: // coin counter - coin 1
-		case 0xc5: // coin counter - coin 2
-		case 0xc2:
-		case 0xc4:
-		case 0xc6:
-		case 0xc7:
-		case 0xc8:
-		case 0xc9:
-		case 0xcc:
-		case 0xcd:
-		case 0xce:
+	case 0xc3: // coin counter - coin 1
+	case 0xc5: // coin counter - coin 2
+	case 0xc2:
+	case 0xc4:
+	case 0xc6:
+	case 0xc7:
+	case 0xc8:
+	case 0xc9:
+	case 0xcc:
+	case 0xcd:
+	case 0xce:
 		return;
 	}
 }
@@ -289,17 +289,17 @@ static UINT8 __fastcall sauro_main_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x00:
-			return DrvDips[0];
+	case 0x00:
+		return DrvDips[0];
 
-		case 0x20:
-			return DrvDips[1];
+	case 0x20:
+		return DrvDips[1];
 
-		case 0x40:
-			return DrvInputs[0];
+	case 0x40:
+		return DrvInputs[0];
 
-		case 0x60:
-			return DrvInputs[1];
+	case 0x60:
+		return DrvInputs[1];
 	}
 
 	return 0;
@@ -309,27 +309,27 @@ static void __fastcall trckydoc_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0xf820:
-		case 0xf821:
-			BurnYM3812Write(0, address & 1, data);
+	case 0xf820:
+	case 0xf821:
+		BurnYM3812Write(0, address & 1, data);
 		return;
 
-		case 0xf830:
-			bg_scrollx = data;
+	case 0xf830:
+		bg_scrollx = data;
 		return;
 
-		case 0xf839:
-			flipscreen = data ? 1 : 0;
+	case 0xf839:
+		flipscreen = data ? 1 : 0;
 		return;
 
-		case 0xf83c:
-			watchdog = 0;
+	case 0xf83c:
+		watchdog = 0;
 		return;
 
-		case 0xf838: // nop
-		case 0xf83a: // coin counters
-		case 0xf83b: // coin counters
-		case 0xf83f:
+	case 0xf838: // nop
+	case 0xf83a: // coin counters
+	case 0xf83b: // coin counters
+	case 0xf83f:
 		return;
 	}
 }
@@ -338,17 +338,17 @@ static UINT8 __fastcall trckydoc_sound_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0xf800:
-			return DrvDips[0];
+	case 0xf800:
+		return DrvDips[0];
 
-		case 0xf808:
-			return DrvDips[1];
+	case 0xf808:
+		return DrvDips[1];
 
-		case 0xf810:
-			return DrvInputs[0];
+	case 0xf810:
+		return DrvInputs[0];
 
-		case 0xf818:
-			return DrvInputs[1];
+	case 0xf818:
+		return DrvInputs[1];
 	}
 
 	return 0;
@@ -358,24 +358,24 @@ static void __fastcall sauro_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0xc000:
-		case 0xc001:
-			BurnYM3812Write(0, address & 1, data);
+	case 0xc000:
+	case 0xc001:
+		BurnYM3812Write(0, address & 1, data);
 		return;
 
-		case 0xa000:
-			sp0256_ald_write(data);
+	case 0xa000:
+		sp0256_ald_write(data);
 		return;
 
-		case 0xe000:
-		case 0xe001:
-		case 0xe002:
-		case 0xe003:
-		case 0xe004:
-		case 0xe005:
-		case 0xe006:
-		case 0xe00e:
-		case 0xe00f:
+	case 0xe000:
+	case 0xe001:
+	case 0xe002:
+	case 0xe003:
+	case 0xe004:
+	case 0xe005:
+	case 0xe006:
+	case 0xe00e:
+	case 0xe00f:
 		return;
 	}
 }
@@ -384,29 +384,29 @@ static UINT8 __fastcall sauro_sound_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0xe000:
-			UINT8 ret = soundlatch;
-			soundlatch = 0;
-			return ret;
+	case 0xe000:
+		UINT8 ret = soundlatch;
+		soundlatch = 0;
+		return ret;
 	}
 
 	return 0;
 }
 
-static tilemap_callback( background )
+static tilemap_callback(background)
 {
-	INT32 attr  = DrvVidRAM0[offs + 0x400];
-	INT32 code  = DrvVidRAM0[offs] + ((attr & 0x07) << 8);
+	INT32 attr = DrvVidRAM0[offs + 0x400];
+	INT32 code = DrvVidRAM0[offs] + ((attr & 0x07) << 8);
 	INT32 color = ((attr >> 4) & 0x0f) + palette_bank;
 	INT32 flipx = attr & 0x08;
 
 	TILE_SET_INFO(0, code, color, flipx ? TILE_FLIPX : 0);
 }
 
-static tilemap_callback( foreground )
+static tilemap_callback(foreground)
 {
-	INT32 attr  = DrvVidRAM1[offs + 0x400];
-	INT32 code  = DrvVidRAM1[offs] + ((attr & 0x07) << 8);
+	INT32 attr = DrvVidRAM1[offs + 0x400];
+	INT32 code = DrvVidRAM1[offs] + ((attr & 0x07) << 8);
 	INT32 color = ((attr >> 4) & 0x0f) + palette_bank;
 	INT32 flipx = attr & 0x08;
 
@@ -415,8 +415,9 @@ static tilemap_callback( foreground )
 
 static INT32 DrvDoReset(INT32 clear_mem)
 {
-	if (clear_mem) {
-		memset (AllRam, 0, RamEnd - AllRam);
+	if (clear_mem)
+	{
+		memset(AllRam, 0, RamEnd - AllRam);
 	}
 
 	ZetOpen(0);
@@ -445,61 +446,79 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvZ80ROM0		= Next; Next += 0x00e000;
-	DrvZ80ROM1		= Next; Next += 0x008000;
+	DrvZ80ROM0 = Next;
+	Next += 0x00e000;
+	DrvZ80ROM1 = Next;
+	Next += 0x008000;
 
-	DrvGfxROM0		= Next; Next += 0x020000;
-	DrvGfxROM1		= Next; Next += 0x020000;
-	DrvGfxROM2		= Next; Next += 0x040000;
+	DrvGfxROM0 = Next;
+	Next += 0x020000;
+	DrvGfxROM1 = Next;
+	Next += 0x020000;
+	DrvGfxROM2 = Next;
+	Next += 0x040000;
 
-	DrvSndROM		= Next; Next += 0x010000;
+	DrvSndROM = Next;
+	Next += 0x010000;
 
-	DrvColPROM		= Next; Next += 0x000c00;
+	DrvColPROM = Next;
+	Next += 0x000c00;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
+	DrvPalette = (UINT32*)Next;
+	Next += 0x400 * sizeof(UINT32);
 
-	DrvNVRAM		= Next; Next += 0x000800;
+	DrvNVRAM = Next;
+	Next += 0x000800;
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvSprRAM		= Next; Next += 0x000800;
-	DrvVidRAM0		= Next; Next += 0x000800;
-	DrvVidRAM1		= Next; Next += 0x000800;
+	DrvSprRAM = Next;
+	Next += 0x000800;
+	DrvVidRAM0 = Next;
+	Next += 0x000800;
+	DrvVidRAM1 = Next;
+	Next += 0x000800;
 
-	DrvZ80RAM1		= Next; Next += 0x000800;
+	DrvZ80RAM1 = Next;
+	Next += 0x000800;
 
-	RamEnd			= Next;
-	MemEnd			= Next;
+	RamEnd = Next;
+	MemEnd = Next;
 
 	return 0;
 }
 
 static void DrvGfxDecode()
 {
-	INT32 Planes[4] = { STEP4(0,1) };
-	INT32 XOffs[16] = { 1*4, 0*4, 3*4, 2*4, 5*4, 4*4, 7*4, 6*4, 9*4, 8*4, 11*4, 10*4, 13*4, 12*4, 15*4, 14*4 };
+	INT32 Planes[4] = {STEP4(0, 1)};
+	INT32 XOffs[16] = {
+		1 * 4, 0 * 4, 3 * 4, 2 * 4, 5 * 4, 4 * 4, 7 * 4, 6 * 4, 9 * 4, 8 * 4, 11 * 4, 10 * 4, 13 * 4, 12 * 4, 15 * 4,
+		14 * 4
+	};
 	INT32 YOffs[16] = {
-		(0x8000*8*3) +   0, (0x8000*8*2) +   0, (0x8000*8*1) +   0, (0x8000*8*0) +   0,
-		(0x8000*8*3) +  64, (0x8000*8*2) +  64, (0x8000*8*1) +  64, (0x8000*8*0) +  64,
-		(0x8000*8*3) + 128, (0x8000*8*2) + 128, (0x8000*8*1) + 128, (0x8000*8*0) + 128,
-		(0x8000*8*3) + 192, (0x8000*8*2) + 192, (0x8000*8*1) + 192, (0x8000*8*0) + 192
+		(0x8000 * 8 * 3) + 0, (0x8000 * 8 * 2) + 0, (0x8000 * 8 * 1) + 0, (0x8000 * 8 * 0) + 0,
+		(0x8000 * 8 * 3) + 64, (0x8000 * 8 * 2) + 64, (0x8000 * 8 * 1) + 64, (0x8000 * 8 * 0) + 64,
+		(0x8000 * 8 * 3) + 128, (0x8000 * 8 * 2) + 128, (0x8000 * 8 * 1) + 128, (0x8000 * 8 * 0) + 128,
+		(0x8000 * 8 * 3) + 192, (0x8000 * 8 * 2) + 192, (0x8000 * 8 * 1) + 192, (0x8000 * 8 * 0) + 192
 	};
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x20000);
+	auto tmp = BurnMalloc(0x20000);
 
-	memcpy (tmp, DrvGfxROM2, 0x20000);
+	memcpy(tmp, DrvGfxROM2, 0x20000);
 
 	GfxDecode(0x0400, 4, 16, 16, Planes, XOffs, YOffs, 0x100, tmp, DrvGfxROM2);
 
-	BurnFree (tmp);
+	BurnFree(tmp);
 
-	for (INT32 i = 0x10000-1; i >= 0; i--) {
-		DrvGfxROM0[i*2+1] = DrvGfxROM0[i] & 0xf;
-		DrvGfxROM0[i*2+0] = DrvGfxROM0[i] >> 4;
-		DrvGfxROM1[i*2+1] = DrvGfxROM1[i] & 0xf;
-		DrvGfxROM1[i*2+0] = DrvGfxROM1[i] >> 4;
+	for (INT32 i = 0x10000 - 1; i >= 0; i--)
+	{
+		DrvGfxROM0[i * 2 + 1] = DrvGfxROM0[i] & 0xf;
+		DrvGfxROM0[i * 2 + 0] = DrvGfxROM0[i] >> 4;
+		DrvGfxROM1[i * 2 + 1] = DrvGfxROM1[i] & 0xf;
+		DrvGfxROM1[i * 2 + 0] = DrvGfxROM1[i] >> 4;
 	}
 }
 
@@ -513,20 +532,20 @@ static INT32 SauroInit()
 	BurnAllocMemIndex();
 
 	{
-		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x08000, 1, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x08000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x08000, 4, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x08000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x00000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x08000, 6, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM2 + 0x00000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x08000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x10000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x10000, 9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x18000, 10, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00000, 11, 1)) return 1;
@@ -534,31 +553,31 @@ static INT32 SauroInit()
 		if (BurnLoadRom(DrvColPROM + 0x00800, 13, 1)) return 1;
 
 		if ((BurnDrvGetFlags() & BDF_BOOTLEG) == 0)
-			BurnLoadRom(DrvSndROM  + 0x01000, 14, 1);
+			BurnLoadRom(DrvSndROM + 0x01000, 14, 1);
 
 		DrvGfxDecode();
 	}
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xdfff, MAP_ROM);
-	ZetMapMemory(DrvNVRAM,			0xe000, 0xe7ff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,			0xe800, 0xebff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM0,		0xf000, 0xf7ff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM1,		0xf800, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0xdfff, MAP_ROM);
+	ZetMapMemory(DrvNVRAM, 0xe000, 0xe7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 0xe800, 0xebff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM0, 0xf000, 0xf7ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM1, 0xf800, 0xffff, MAP_RAM);
 	ZetSetOutHandler(sauro_main_write_port);
 	ZetSetInHandler(sauro_main_read_port);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0x8000, 0x87ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0x8000, 0x87ff, MAP_RAM);
 	ZetSetWriteHandler(sauro_sound_write);
 	ZetSetReadHandler(sauro_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, NULL, 0);
+	BurnYM3812Init(1, 4000000, nullptr, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -575,7 +594,7 @@ static INT32 SauroInit()
 	GenericTilemapSetOffsets(TMAP_GLOBAL, -8, -16);
 
 	// necessary?
-	memset (DrvNVRAM, 0xff, 0x800);
+	memset(DrvNVRAM, 0xff, 0x800);
 	DrvNVRAM[0] = 1;
 
 	DrvDoReset(1);
@@ -588,19 +607,19 @@ static INT32 TrckydocInit()
 	BurnAllocMemIndex();
 
 	{
-		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x08000, 1, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x08000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x08000, 3, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM2 + 0x00000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x08000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x10000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x18000,  7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x10000, 6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x18000, 7, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM + 0x00000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00400,  9, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00000, 8, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00400, 9, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00800, 10, 1)) return 1;
 
 		DrvGfxDecode();
@@ -608,18 +627,18 @@ static INT32 TrckydocInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xdfff, MAP_ROM);
-	ZetMapMemory(DrvNVRAM,			0xe000, 0xe7ff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,			0xe800, 0xebff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,			0xec00, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM0,		0xf000, 0xf7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0xdfff, MAP_ROM);
+	ZetMapMemory(DrvNVRAM, 0xe000, 0xe7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 0xe800, 0xebff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 0xec00, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM0, 0xf000, 0xf7ff, MAP_RAM);
 	ZetSetWriteHandler(trckydoc_sound_write);
 	ZetSetReadHandler(trckydoc_sound_read);
 	ZetClose();
 
 	ZetInit(1); // Just here to let us use same reset routine
 
-	BurnYM3812Init(1, 2500000, NULL, 0);
+	BurnYM3812Init(1, 2500000, nullptr, 0);
 	BurnTimerAttach(&ZetConfig, 5000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -629,7 +648,7 @@ static INT32 TrckydocInit()
 	GenericTilemapSetOffsets(TMAP_GLOBAL, -8, -16);
 
 	// necessary?
-	memset (DrvNVRAM, 0xff, 0x800);
+	memset(DrvNVRAM, 0xff, 0x800);
 	DrvNVRAM[0] = 1;
 
 	DrvDoReset(1);
@@ -661,7 +680,7 @@ static void DrvPaletteInit()
 		UINT8 g = DrvColPROM[0x400 + i] & 0xf;
 		UINT8 b = DrvColPROM[0x800 + i] & 0xf;
 
-		DrvPalette[i] = BurnHighCol(r+r*16, g+g*16, b+b*16, 0);
+		DrvPalette[i] = BurnHighCol(r + r * 16, g + g * 16, b + b * 16, 0);
 	}
 }
 
@@ -670,15 +689,15 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 	for (INT32 offs = 3; offs < 0x400 - 1; offs += 4)
 	{
 		INT32 sy = DrvSprRAM[offs];
-		INT32 sx = DrvSprRAM[offs+2];
-		INT32 code = DrvSprRAM[offs+1] + ((DrvSprRAM[offs+3] & 0x03) << 8);
-		INT32 color = ((DrvSprRAM[offs+3] >> 4) & 0x0f) | color_bank;
+		INT32 sx = DrvSprRAM[offs + 2];
+		INT32 code = DrvSprRAM[offs + 1] + ((DrvSprRAM[offs + 3] & 0x03) << 8);
+		INT32 color = ((DrvSprRAM[offs + 3] >> 4) & 0x0f) | color_bank;
 
-		if (DrvSprRAM[offs+3] & ext_bit)
+		if (DrvSprRAM[offs + 3] & ext_bit)
 		{
 			if (sx > 0xc0)
 			{
-				sx = (signed int)(signed char)sx;
+				sx = static_cast<signed int>((signed char)sx);
 			}
 		}
 		else
@@ -688,8 +707,10 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 
 		sx -= x_offset;
 
-		if (ext_bit == 2) {
-			if (DrvSprRAM[offs + 3] & 0x08) {
+		if (ext_bit == 2)
+		{
+			if (DrvSprRAM[offs + 3] & 0x08)
+			{
 				sy += 8;
 			}
 			code &= 0x1ff;
@@ -698,7 +719,7 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 		sy = 236 - sy;
 
 		INT32 flipy = flipscreen;
-		INT32 flipx = DrvSprRAM[offs+3] & 0x04;
+		INT32 flipx = DrvSprRAM[offs + 3] & 0x04;
 
 		if (flipy)
 		{
@@ -716,7 +737,8 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 
 static INT32 SauroDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
@@ -724,7 +746,7 @@ static INT32 SauroDraw()
 	// weird!
 	const UINT8 fg_scrollmap[2][8] = {
 		{2, 1, 4, 3, 6, 5, 0, 7}, // not flipped
-		{0, 7, 2, 1, 4, 3, 6, 5}  // flipped
+		{0, 7, 2, 1, 4, 3, 6, 5} // flipped
 	};
 
 	INT32 scrollx = (fg_scrollx & 0xf8) | fg_scrollmap[flipscreen][fg_scrollx & 7];
@@ -732,9 +754,12 @@ static INT32 SauroDraw()
 	GenericTilemapSetScrollX(0, bg_scrollx);
 	GenericTilemapSetScrollX(1, scrollx);
 
-	if (nBurnLayer & 1) {
+	if (nBurnLayer & 1)
+	{
 		GenericTilemapDraw(0, pTransDraw, 0);
-	} else {
+	}
+	else
+	{
 		BurnTransferClear();
 	}
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
@@ -748,20 +773,24 @@ static INT32 SauroDraw()
 
 static INT32 TrckydocDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
 
 	GenericTilemapSetScrollX(0, bg_scrollx);
 
-	if (nBurnLayer & 1) {
+	if (nBurnLayer & 1)
+	{
 		GenericTilemapDraw(0, pTransDraw, 0);
-	} else {
+	}
+	else
+	{
 		BurnTransferClear();
 	}
 
-	if (nBurnLayer & 2) draw_sprites(0x02, 0, 8+2);
+	if (nBurnLayer & 2) draw_sprites(0x02, 0, 8 + 2);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -770,11 +799,13 @@ static INT32 TrckydocDraw()
 
 static INT32 SauroFrame()
 {
-	if (++watchdog >= 120) {
+	if (++watchdog >= 120)
+	{
 		DrvDoReset(0);
 	}
 
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset(1);
 	}
 
@@ -784,17 +815,18 @@ static INT32 SauroFrame()
 		// bootleg's input lines are inverted
 		INT32 state = (BurnDrvGetFlags() & BDF_BOOTLEG) ? 0xff : 0;
 
-		memset (DrvInputs, state, 2);
+		memset(DrvInputs, state, 2);
 
-		for (INT32 i = 0 ; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
 
 	INT32 nInterleave = 128;
-	INT32 nCyclesTotal[2] = { 5000000 / 56, 4000000 / 56 };
-	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
+	INT32 nCyclesTotal[2] = {5000000 / 56, 4000000 / 56};
+	INT32 nCyclesDone[2] = {nCyclesExtra, 0};
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -811,16 +843,19 @@ static INT32 SauroFrame()
 
 	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		if (sp0256_inuse) {
+		if (sp0256_inuse)
+		{
 			ZetOpen(1);
 			sp0256_update(pBurnSoundOut, nBurnSoundLen);
 			ZetClose();
 		}
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		BurnDrvRedraw();
 	}
 
@@ -829,27 +864,30 @@ static INT32 SauroFrame()
 
 static INT32 TrckydocFrame()
 {
-	if (++watchdog >= 120) {
+	if (++watchdog >= 120)
+	{
 		DrvDoReset(0);
 	}
 
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset(1);
 	}
 
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 2);
+		memset(DrvInputs, 0, 2);
 
-		for (INT32 i = 0 ; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
 
 	INT32 nInterleave = 128;
-	INT32 nCyclesTotal[1] = { 5000000 / 56 };
+	INT32 nCyclesTotal[1] = {5000000 / 56};
 	//INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
@@ -862,30 +900,34 @@ static INT32 TrckydocFrame()
 
 	ZetClose();
 
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		BurnDrvRedraw();
 	}
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -895,7 +937,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (sp0256_inuse) sp0256_scan(nAction, pnMin);
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(bg_scrollx);
@@ -906,11 +949,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nCyclesExtra);
 	}
 
-	if (nAction & ACB_NVRAM) {
-		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x000800;
-		ba.nAddress	= 0;
-		ba.szName	= "NV RAM";
+	if (nAction & ACB_NVRAM)
+	{
+		ba.Data = DrvNVRAM;
+		ba.nLen = 0x000800;
+		ba.nAddress = 0;
+		ba.szName = "NV RAM";
 		BurnAcb(&ba);
 	}
 
@@ -921,38 +965,38 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Sauro (set 1)
 
 static struct BurnRomInfo sauroRomDesc[] = {
-	{ "sauro-2.bin",	0x8000, 0x2e356e2d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "sauro-1.bin",	0x8000, 0x95d03e5e, 1 | BRF_PRG | BRF_ESS }, //  1
-	
-	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"sauro-2.bin", 0x8000, 0x2e356e2d, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"sauro-1.bin", 0x8000, 0x95d03e5e, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "sauro-7.bin",	0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{"sauro-3.bin", 0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "sauro-4.bin",	0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "sauro-5.bin",	0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+	{"sauro-6.bin", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"sauro-7.bin", 0x8000, 0x187da060, 3 | BRF_GRA}, //  4
 
-	{ "sauro-8.bin",	0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "sauro-9.bin",	0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
-	{ "sauro-10.bin",	0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
-	{ "sauro-11.bin",	0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+	{"sauro-4.bin", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"sauro-5.bin", 0x8000, 0xa6e2640d, 4 | BRF_GRA}, //  6
 
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"sauro-8.bin", 0x8000, 0xe08b5d5e, 5 | BRF_GRA}, //  7 Sprites
+	{"sauro-9.bin", 0x8000, 0x7c707195, 5 | BRF_GRA}, //  8
+	{"sauro-10.bin", 0x8000, 0xc93380d1, 5 | BRF_GRA}, //  9
+	{"sauro-11.bin", 0x8000, 0xf47982a8, 5 | BRF_GRA}, // 10
 
-	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
+
+	{"sp0256-al2.bin", 0x0800, 0xb504ac15, 7 | BRF_GRA}, // 14 Speech data
 };
 
 STD_ROM_PICK(sauro)
 STD_ROM_FN(sauro)
 
 struct BurnDriver BurnDrvSauro = {
-	"sauro", NULL, NULL, NULL, "1987",
-	"Sauro (set 1)\0", NULL, "Tecfri", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"sauro", nullptr, nullptr, nullptr, "1987",
+	"Sauro (set 1)\0", nullptr, "Tecfri", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sauroRomInfo, sauroRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, sauroRomInfo, sauroRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -961,38 +1005,38 @@ struct BurnDriver BurnDrvSauro = {
 // Sauro (set 2)
 
 static struct BurnRomInfo sauroaRomDesc[] = {
-	{ "sauro-2.bin",	0x8000, 0x19f8de25, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "sauro-1.bin",	0x8000, 0x0f8b876f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"sauro-2.bin", 0x8000, 0x19f8de25, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"sauro-1.bin", 0x8000, 0x0f8b876f, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"sauro-3.bin", 0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "sauro-7.bin",	0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{"sauro-6.bin", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"sauro-7.bin", 0x8000, 0x187da060, 3 | BRF_GRA}, //  4
 
-	{ "sauro-4.bin",	0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "sauro-5.bin",	0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+	{"sauro-4.bin", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"sauro-5.bin", 0x8000, 0xa6e2640d, 4 | BRF_GRA}, //  6
 
-	{ "sauro-8.bin",	0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "sauro-9.bin",	0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
-	{ "sauro-10.bin",	0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
-	{ "sauro-11.bin",	0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+	{"sauro-8.bin", 0x8000, 0xe08b5d5e, 5 | BRF_GRA}, //  7 Sprites
+	{"sauro-9.bin", 0x8000, 0x7c707195, 5 | BRF_GRA}, //  8
+	{"sauro-10.bin", 0x8000, 0xc93380d1, 5 | BRF_GRA}, //  9
+	{"sauro-11.bin", 0x8000, 0xf47982a8, 5 | BRF_GRA}, // 10
 
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
 
-	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+	{"sp0256-al2.bin", 0x0800, 0xb504ac15, 7 | BRF_GRA}, // 14 Speech data
 };
 
 STD_ROM_PICK(sauroa)
 STD_ROM_FN(sauroa)
 
 struct BurnDriver BurnDrvSauroa = {
-	"sauroa", "sauro", NULL, NULL, "1987",
-	"Sauro (set 2)\0", NULL, "Tecfri", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"sauroa", "sauro", nullptr, nullptr, "1987",
+	"Sauro (set 2)\0", nullptr, "Tecfri", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sauroaRomInfo, sauroaRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, sauroaRomInfo, sauroaRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1001,38 +1045,38 @@ struct BurnDriver BurnDrvSauroa = {
 // Sauro (set 3)
 
 static struct BurnRomInfo saurobRomDesc[] = {
-	{ "2 tecfri",		0x8000, 0x961567c7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "1 tecfri",		0x8000, 0x6b564429, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"2 tecfri", 0x8000, 0x961567c7, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"1 tecfri", 0x8000, 0x6b564429, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "3 tecfri",		0x8000, 0x3eca1c5c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"3 tecfri", 0x8000, 0x3eca1c5c, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "6 tecfri",		0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "7 tecfri",		0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{"6 tecfri", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"7 tecfri", 0x8000, 0x187da060, 3 | BRF_GRA}, //  4
 
-	{ "4 tecfri",		0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "5 tecfri",		0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+	{"4 tecfri", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"5 tecfri", 0x8000, 0xa6e2640d, 4 | BRF_GRA}, //  6
 
-	{ "8 tecfri",		0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "9 tecfri",		0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
-	{ "10 tecfri",		0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
-	{ "11 tecfri",		0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+	{"8 tecfri", 0x8000, 0xe08b5d5e, 5 | BRF_GRA}, //  7 Sprites
+	{"9 tecfri", 0x8000, 0x7c707195, 5 | BRF_GRA}, //  8
+	{"10 tecfri", 0x8000, 0xc93380d1, 5 | BRF_GRA}, //  9
+	{"11 tecfri", 0x8000, 0xf47982a8, 5 | BRF_GRA}, // 10
 
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
 
-	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+	{"sp0256-al2.bin", 0x0800, 0xb504ac15, 7 | BRF_GRA}, // 14 Speech data
 };
 
 STD_ROM_PICK(saurob)
 STD_ROM_FN(saurob)
 
 struct BurnDriver BurnDrvSaurob = {
-	"saurob", "sauro", NULL, NULL, "1987",
-	"Sauro (set 3)\0", NULL, "Tecfri", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"saurob", "sauro", nullptr, nullptr, "1987",
+	"Sauro (set 3)\0", nullptr, "Tecfri", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, saurobRomInfo, saurobRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, saurobRomInfo, saurobRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1041,38 +1085,38 @@ struct BurnDriver BurnDrvSaurob = {
 // Sauro (set 4, easier)
 
 static struct BurnRomInfo saurocRomDesc[] = {
-	{ "sauro_facil.2",	0x8000, 0xac2e1290, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "sauro_facil.1",	0x8000, 0xc7705d1d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"sauro_facil.2", 0x8000, 0xac2e1290, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"sauro_facil.1", 0x8000, 0xc7705d1d, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"sauro-3.bin", 0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "sauro-7.bin",	0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{"sauro-6.bin", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"sauro-7.bin", 0x8000, 0x187da060, 3 | BRF_GRA}, //  4
 
-	{ "sauro-4.bin",	0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "sauro-5.bin",	0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+	{"sauro-4.bin", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"sauro-5.bin", 0x8000, 0xa6e2640d, 4 | BRF_GRA}, //  6
 
-	{ "sauro-8.bin",	0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "sauro-9.bin",	0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
-	{ "sauro-10.bin",	0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
-	{ "sauro-11.bin",	0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+	{"sauro-8.bin", 0x8000, 0xe08b5d5e, 5 | BRF_GRA}, //  7 Sprites
+	{"sauro-9.bin", 0x8000, 0x7c707195, 5 | BRF_GRA}, //  8
+	{"sauro-10.bin", 0x8000, 0xc93380d1, 5 | BRF_GRA}, //  9
+	{"sauro-11.bin", 0x8000, 0xf47982a8, 5 | BRF_GRA}, // 10
 
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
 
-	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+	{"sp0256-al2.bin", 0x0800, 0xb504ac15, 7 | BRF_GRA}, // 14 Speech data
 };
 
 STD_ROM_PICK(sauroc)
 STD_ROM_FN(sauroc)
 
 struct BurnDriver BurnDrvSauroc = {
-	"sauroc", "sauro", NULL, NULL, "1987",
-	"Sauro (set 4, easier)\0", NULL, "Tecfri", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"sauroc", "sauro", nullptr, nullptr, "1987",
+	"Sauro (set 4, easier)\0", nullptr, "Tecfri", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, saurocRomInfo, saurocRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, saurocRomInfo, saurocRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1081,38 +1125,38 @@ struct BurnDriver BurnDrvSauroc = {
 // Sauro (Philko license)
 
 static struct BurnRomInfo sauropRomDesc[] = {
-	{ "s2.3k",			0x8000, 0x79846222, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "s1.3f",			0x8000, 0x3efd13ed, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"s2.3k", 0x8000, 0x79846222, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"s1.3f", 0x8000, 0x3efd13ed, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "s3.5x",			0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"s3.5x", 0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "s6.7x",			0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "s7.7z",			0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{"s6.7x", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"s7.7z", 0x8000, 0x187da060, 3 | BRF_GRA}, //  4
 
-	{ "s4.7h",			0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "s5.7k",			0x8000, 0xde5cd249, 4 | BRF_GRA },           //  6
+	{"s4.7h", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"s5.7k", 0x8000, 0xde5cd249, 4 | BRF_GRA}, //  6
 
-	{ "s8.10l",			0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "s9.10p",			0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
-	{ "s10.10r",		0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
-	{ "s11.10t",		0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+	{"s8.10l", 0x8000, 0xe08b5d5e, 5 | BRF_GRA}, //  7 Sprites
+	{"s9.10p", 0x8000, 0x7c707195, 5 | BRF_GRA}, //  8
+	{"s10.10r", 0x8000, 0xc93380d1, 5 | BRF_GRA}, //  9
+	{"s11.10t", 0x8000, 0xf47982a8, 5 | BRF_GRA}, // 10
 
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
 
-	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+	{"sp0256-al2.bin", 0x0800, 0xb504ac15, 7 | BRF_GRA}, // 14 Speech data
 };
 
 STD_ROM_PICK(saurop)
 STD_ROM_FN(saurop)
 
 struct BurnDriver BurnDrvSaurop = {
-	"saurop", "sauro", NULL, NULL, "1987",
-	"Sauro (Philko license)\0", NULL, "Tecfri (Philko license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"saurop", "sauro", nullptr, nullptr, "1987",
+	"Sauro (Philko license)\0", nullptr, "Tecfri (Philko license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sauropRomInfo, sauropRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, sauropRomInfo, sauropRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1121,38 +1165,38 @@ struct BurnDriver BurnDrvSaurop = {
 // Sauro (Recreativos Real S.A. license)
 
 static struct BurnRomInfo saurorrRomDesc[] = {
-	{ "27256-2.bin",	0x8000, 0xb0d80eab, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "27256-1.bin",	0x8000, 0xcbb5f06e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"27256-2.bin", 0x8000, 0xb0d80eab, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"27256-1.bin", 0x8000, 0xcbb5f06e, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "sauro-3.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"sauro-3.bin", 0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "sauro-7.bin",	0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{"sauro-6.bin", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"sauro-7.bin", 0x8000, 0x187da060, 3 | BRF_GRA}, //  4
 
-	{ "sauro-4.bin",	0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "27256-5.bin",	0x8000, 0x9aabdbe5, 4 | BRF_GRA },           //  6
+	{"sauro-4.bin", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"27256-5.bin", 0x8000, 0x9aabdbe5, 4 | BRF_GRA}, //  6
 
-	{ "sauro-8.bin",	0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "sauro-9.bin",	0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
-	{ "sauro-10.bin",	0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
-	{ "sauro-11.bin",	0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+	{"sauro-8.bin", 0x8000, 0xe08b5d5e, 5 | BRF_GRA}, //  7 Sprites
+	{"sauro-9.bin", 0x8000, 0x7c707195, 5 | BRF_GRA}, //  8
+	{"sauro-10.bin", 0x8000, 0xc93380d1, 5 | BRF_GRA}, //  9
+	{"sauro-11.bin", 0x8000, 0xf47982a8, 5 | BRF_GRA}, // 10
 
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
 
-	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+	{"sp0256-al2.bin", 0x0800, 0xb504ac15, 7 | BRF_GRA}, // 14 Speech data
 };
 
 STD_ROM_PICK(saurorr)
 STD_ROM_FN(saurorr)
 
 struct BurnDriver BurnDrvSaurorr = {
-	"saurorr", "sauro", NULL, NULL, "1987",
-	"Sauro (Recreativos Real S.A. license)\0", NULL, "Tecfri (Recreativos Real S.A. license)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"saurorr", "sauro", nullptr, nullptr, "1987",
+	"Sauro (Recreativos Real S.A. license)\0", nullptr, "Tecfri (Recreativos Real S.A. license)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, saurorrRomInfo, saurorrRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, saurorrRomInfo, saurorrRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1161,38 +1205,38 @@ struct BurnDriver BurnDrvSaurorr = {
 // Sauro (bootleg)
 
 static struct BurnRomInfo sauroblRomDesc[] = {
-	{ "sauro02.7c",		0x8000, 0x72026b9a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "sauro01.6c",		0x8000, 0x4ff12c25, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"sauro02.7c", 0x8000, 0x72026b9a, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"sauro01.6c", 0x8000, 0x4ff12c25, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "sauro03.16e",	0x8000, 0xa30b60fc, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"sauro03.16e", 0x8000, 0xa30b60fc, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "sauro-6.bin",	0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "sauro-7.bin",	0x8000, 0x187da060, 3 | BRF_GRA },           //  4
+	{"sauro-6.bin", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"sauro-7.bin", 0x8000, 0x187da060, 3 | BRF_GRA}, //  4
 
-	{ "sauro-4.bin",	0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "sauro-5.bin",	0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+	{"sauro-4.bin", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"sauro-5.bin", 0x8000, 0xa6e2640d, 4 | BRF_GRA}, //  6
 
-	{ "sauro-8.bin",	0x8000, 0xe08b5d5e, 5 | BRF_GRA },           //  7 Sprites
-	{ "sauro-9.bin",	0x8000, 0x7c707195, 5 | BRF_GRA },           //  8
-	{ "sauro-10.bin",	0x8000, 0xc93380d1, 5 | BRF_GRA },           //  9
-	{ "sauro-11.bin",	0x8000, 0xf47982a8, 5 | BRF_GRA },           // 10
+	{"sauro-8.bin", 0x8000, 0xe08b5d5e, 5 | BRF_GRA}, //  7 Sprites
+	{"sauro-9.bin", 0x8000, 0x7c707195, 5 | BRF_GRA}, //  8
+	{"sauro-10.bin", 0x8000, 0xc93380d1, 5 | BRF_GRA}, //  9
+	{"sauro-11.bin", 0x8000, 0xf47982a8, 5 | BRF_GRA}, // 10
 
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
 
-	{ "sauropr4.16h",	0x0200, 0x5261bc11, 7 | BRF_GRA },           // 14 Unknown prom
+	{"sauropr4.16h", 0x0200, 0x5261bc11, 7 | BRF_GRA}, // 14 Unknown prom
 };
 
 STD_ROM_PICK(saurobl)
 STD_ROM_FN(saurobl)
 
 struct BurnDriver BurnDrvSaurobl = {
-	"saurobl", "sauro", NULL, NULL, "1987",
+	"saurobl", "sauro", nullptr, nullptr, "1987",
 	"Sauro (bootleg)\0", "Missing speech is normal", "bootleg", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sauroblRomInfo, sauroblRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, SaurobDIPInfo,
+	nullptr, sauroblRomInfo, sauroblRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, SaurobDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1201,40 +1245,40 @@ struct BurnDriver BurnDrvSaurobl = {
 // Sea Wolf (Tecfri)
 
 static struct BurnRomInfo seawolftRomDesc[] = {
-	{ "1.bin",			0x8000, 0xbd8bd328, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "2.bin",			0x8000, 0x870b05ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"1.bin", 0x8000, 0xbd8bd328, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"2.bin", 0x8000, 0x870b05ef, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "tmm24256ap.bin",	0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{"tmm24256ap.bin", 0x8000, 0x0d501e1b, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "4.bin",			0x8000, 0x4b77cb0f, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "3.bin",			0x8000, 0x883bb7d1, 3 | BRF_GRA },           //  4
+	{"4.bin", 0x8000, 0x4b77cb0f, 3 | BRF_GRA}, //  3 Background Tiles
+	{"3.bin", 0x8000, 0x883bb7d1, 3 | BRF_GRA}, //  4
 
-	{ "6.bin",			0x8000, 0x9b617cda, 4 | BRF_GRA },           //  5 Foreground Tiles
-	{ "5.bin",			0x8000, 0xa6e2640d, 4 | BRF_GRA },           //  6
+	{"6.bin", 0x8000, 0x9b617cda, 4 | BRF_GRA}, //  5 Foreground Tiles
+	{"5.bin", 0x8000, 0xa6e2640d, 4 | BRF_GRA}, //  6
 
-	{ "10.bin",			0x8000, 0xb93f5487, 5 | BRF_GRA },           //  7 Sprites
-	{ "9.bin",			0x8000, 0x0964ac95, 5 | BRF_GRA },           //  8
-	{ "8.bin",			0x8000, 0xe71726a9, 5 | BRF_GRA },           //  9
-	{ "7.bin",			0x8000, 0x8a700276, 5 | BRF_GRA },           // 10
+	{"10.bin", 0x8000, 0xb93f5487, 5 | BRF_GRA}, //  7 Sprites
+	{"9.bin", 0x8000, 0x0964ac95, 5 | BRF_GRA}, //  8
+	{"8.bin", 0x8000, 0xe71726a9, 5 | BRF_GRA}, //  9
+	{"7.bin", 0x8000, 0x8a700276, 5 | BRF_GRA}, // 10
 
 	// PROMs not dumped on this PCB
-	{ "82s137-3.bin",	0x0400, 0xd52c4cd0, 6 | BRF_GRA },           // 11 Color data
-	{ "82s137-2.bin",	0x0400, 0xc3e96d5d, 6 | BRF_GRA },           // 12
-	{ "82s137-1.bin",	0x0400, 0xbdfcf00c, 6 | BRF_GRA },           // 13
+	{"82s137-3.bin", 0x0400, 0xd52c4cd0, 6 | BRF_GRA}, // 11 Color data
+	{"82s137-2.bin", 0x0400, 0xc3e96d5d, 6 | BRF_GRA}, // 12
+	{"82s137-1.bin", 0x0400, 0xbdfcf00c, 6 | BRF_GRA}, // 13
 
 	// SP0256 mask ROM, not dumped on this PCB, but it's a generic GI ROM
-	{ "sp0256-al2.bin",	0x0800, 0xb504ac15, 7 | BRF_GRA },           // 14 Speech data
+	{"sp0256-al2.bin", 0x0800, 0xb504ac15, 7 | BRF_GRA}, // 14 Speech data
 };
 
 STD_ROM_PICK(seawolft)
 STD_ROM_FN(seawolft)
 
 struct BurnDriver BurnDrvSeawolft = {
-	"seawolft", "sauro", NULL, NULL, "1987",
-	"Sea Wolf (Tecfri)\0", NULL, "Tecfri", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"seawolft", "sauro", nullptr, nullptr, "1987",
+	"Sea Wolf (Tecfri)\0", nullptr, "Tecfri", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, seawolftRomInfo, seawolftRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, seawolftRomInfo, seawolftRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	SauroInit, DrvExit, SauroFrame, SauroDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1243,33 +1287,33 @@ struct BurnDriver BurnDrvSeawolft = {
 // Tricky Doc (set 1)
 
 static struct BurnRomInfo trckydocRomDesc[] = {
-	{ "trckydoc.d9",	0x8000, 0xc6242fc3, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "trckydoc.b9",	0x8000, 0x8645c840, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"trckydoc.d9", 0x8000, 0xc6242fc3, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"trckydoc.b9", 0x8000, 0x8645c840, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "trckydoc.e6",	0x8000, 0xec326392, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "trckydoc.g6",	0x8000, 0x6a65c088, 3 | BRF_GRA },           //  3
+	{"trckydoc.e6", 0x8000, 0xec326392, 3 | BRF_GRA}, //  2 Background Tiles
+	{"trckydoc.g6", 0x8000, 0x6a65c088, 3 | BRF_GRA}, //  3
 
-	{ "trckydoc.h1",	0x4000, 0x8b73cbf3, 5 | BRF_GRA },           //  4 Sprites
-	{ "trckydoc.e1",	0x4000, 0x841be98e, 5 | BRF_GRA },           //  5
-	{ "trckydoc.c1",	0x4000, 0x1d25574b, 5 | BRF_GRA },           //  6
-	{ "trckydoc.a1",	0x4000, 0x436c59ba, 5 | BRF_GRA },           //  7
+	{"trckydoc.h1", 0x4000, 0x8b73cbf3, 5 | BRF_GRA}, //  4 Sprites
+	{"trckydoc.e1", 0x4000, 0x841be98e, 5 | BRF_GRA}, //  5
+	{"trckydoc.c1", 0x4000, 0x1d25574b, 5 | BRF_GRA}, //  6
+	{"trckydoc.a1", 0x4000, 0x436c59ba, 5 | BRF_GRA}, //  7
 
-	{ "tdclr3.prm",		0x0100, 0x671d0140, 6 | BRF_GRA },           //  8 Color data
-	{ "tdclr2.prm",		0x0100, 0x874f9050, 6 | BRF_GRA },           //  9
-	{ "tdclr1.prm",		0x0100, 0x57f127b0, 6 | BRF_GRA },           // 10
+	{"tdclr3.prm", 0x0100, 0x671d0140, 6 | BRF_GRA}, //  8 Color data
+	{"tdclr2.prm", 0x0100, 0x874f9050, 6 | BRF_GRA}, //  9
+	{"tdclr1.prm", 0x0100, 0x57f127b0, 6 | BRF_GRA}, // 10
 
-	{ "tdprm.prm",		0x0200, 0x5261bc11, 0 | BRF_OPT },           // 11 Unknown prom
+	{"tdprm.prm", 0x0200, 0x5261bc11, 0 | BRF_OPT}, // 11 Unknown prom
 };
 
 STD_ROM_PICK(trckydoc)
 STD_ROM_FN(trckydoc)
 
 struct BurnDriver BurnDrvTrckydoc = {
-	"trckydoc", NULL, NULL, NULL, "1987",
-	"Tricky Doc (set 1)\0", NULL, "Tecfri", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"trckydoc", nullptr, nullptr, nullptr, "1987",
+	"Tricky Doc (set 1)\0", nullptr, "Tecfri", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, trckydocRomInfo, trckydocRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
+	nullptr, trckydocRomInfo, trckydocRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TecfriDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };
@@ -1278,33 +1322,33 @@ struct BurnDriver BurnDrvTrckydoc = {
 // Tricky Doc (set 2)
 
 static struct BurnRomInfo trckydocaRomDesc[] = {
-	{ "trckydca.d9",	0x8000, 0x99c38aa4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "trckydca.b9",	0x8000, 0xb6048a15, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"trckydca.d9", 0x8000, 0x99c38aa4, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{"trckydca.b9", 0x8000, 0xb6048a15, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "trckydoc.e6",	0x8000, 0xec326392, 3 | BRF_GRA },           //  2 Background Tiles
-	{ "trckydoc.g6",	0x8000, 0x6a65c088, 3 | BRF_GRA },           //  3
+	{"trckydoc.e6", 0x8000, 0xec326392, 3 | BRF_GRA}, //  2 Background Tiles
+	{"trckydoc.g6", 0x8000, 0x6a65c088, 3 | BRF_GRA}, //  3
 
-	{ "trckydoc.h1",	0x4000, 0x8b73cbf3, 5 | BRF_GRA },           //  4 Sprites
-	{ "trckydoc.e1",	0x4000, 0x841be98e, 5 | BRF_GRA },           //  5
-	{ "trckydoc.c1",	0x4000, 0x1d25574b, 5 | BRF_GRA },           //  6
-	{ "trckydoc.a1",	0x4000, 0x436c59ba, 5 | BRF_GRA },           //  7
+	{"trckydoc.h1", 0x4000, 0x8b73cbf3, 5 | BRF_GRA}, //  4 Sprites
+	{"trckydoc.e1", 0x4000, 0x841be98e, 5 | BRF_GRA}, //  5
+	{"trckydoc.c1", 0x4000, 0x1d25574b, 5 | BRF_GRA}, //  6
+	{"trckydoc.a1", 0x4000, 0x436c59ba, 5 | BRF_GRA}, //  7
 
-	{ "tdclr3.prm",		0x0100, 0x671d0140, 6 | BRF_GRA },           //  8 Color data
-	{ "tdclr2.prm",		0x0100, 0x874f9050, 6 | BRF_GRA },           //  9
-	{ "tdclr1.prm",		0x0100, 0x57f127b0, 6 | BRF_GRA },           // 10
+	{"tdclr3.prm", 0x0100, 0x671d0140, 6 | BRF_GRA}, //  8 Color data
+	{"tdclr2.prm", 0x0100, 0x874f9050, 6 | BRF_GRA}, //  9
+	{"tdclr1.prm", 0x0100, 0x57f127b0, 6 | BRF_GRA}, // 10
 
-	{ "tdprm.prm",		0x0200, 0x5261bc11, 0 | BRF_OPT },           // 11 Unkown prom
+	{"tdprm.prm", 0x0200, 0x5261bc11, 0 | BRF_OPT}, // 11 Unkown prom
 };
 
 STD_ROM_PICK(trckydoca)
 STD_ROM_FN(trckydoca)
 
 struct BurnDriver BurnDrvTrckydoca = {
-	"trckydoca", "trckydoc", NULL, NULL, "1987",
-	"Tricky Doc (set 2)\0", NULL, "Tecfri", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"trckydoca", "trckydoc", nullptr, nullptr, "1987",
+	"Tricky Doc (set 2)\0", nullptr, "Tecfri", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, trckydocaRomInfo, trckydocaRomName, NULL, NULL, NULL, NULL, TecfriInputInfo, TrckydocaDIPInfo,
+	nullptr, trckydocaRomInfo, trckydocaRomName, nullptr, nullptr, nullptr, nullptr, TecfriInputInfo, TrckydocaDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
 };

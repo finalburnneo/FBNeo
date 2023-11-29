@@ -8,18 +8,18 @@
 #include "s14001a.h"
 #include "stream.h"
 
-static UINT8 *AllMem;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *MemEnd;
-static UINT8 *DrvZ80ROM;
-static UINT8 *DrvSndROM;
-static UINT8 *DrvNVRAM;
-static UINT8 *DrvVidRAM;
-static UINT8 *DrvMagicRAM;
-static UINT8 *DrvColRAM;
+static UINT8* AllMem;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* MemEnd;
+static UINT8* DrvZ80ROM;
+static UINT8* DrvSndROM;
+static UINT8* DrvNVRAM;
+static UINT8* DrvVidRAM;
+static UINT8* DrvMagicRAM;
+static UINT8* DrvColRAM;
 
-static UINT32 *DrvPalette;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT32 nExtraCycles[1];
@@ -46,410 +46,410 @@ static INT32 vblank;
 static INT32 moonwarp_mode = 0;
 
 static struct BurnInputInfo BerzerkInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy3 + 7, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy3 + 0, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy1 + 2, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy1 + 3, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1 + 0, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1 + 1, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 4, "p1 fire 1"},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy3 + 6, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy3 + 1, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 2, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 3, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 0, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 1, "p2 right"},
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 4, "p2 fire 1"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",	BIT_DIGITAL,	DrvJoy4 + 7,	"diag"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
-	{"Dip E",			BIT_DIPSWITCH,	DrvDips + 4,	"dip"		},
-	{"Dip F",			BIT_DIPSWITCH,	DrvDips + 5,	"dip"		},
-	{"Dip G",			BIT_DIPSWITCH,	DrvDips + 6,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Service", BIT_DIGITAL, DrvJoy4 + 0, "service"},
+	{"Service Mode", BIT_DIGITAL, DrvJoy4 + 7, "diag"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
+	{"Dip D", BIT_DIPSWITCH, DrvDips + 3, "dip"},
+	{"Dip E", BIT_DIPSWITCH, DrvDips + 4, "dip"},
+	{"Dip F", BIT_DIPSWITCH, DrvDips + 5, "dip"},
+	{"Dip G", BIT_DIPSWITCH, DrvDips + 6, "dip"},
 };
 
 STDINPUTINFO(Berzerk)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo MoonwarpInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy1f+ 0,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1f+ 1,	"p1 right"	},
-	A("P1 Spinner",		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 4"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy3 + 7, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy3 + 0, "p1 start"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy1f + 0, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy1f + 1, "p1 right"},
+	A("P1 Spinner", BIT_ANALOG_REL, &Analog[0], "p1 x-axis"),
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy1 + 7, "p1 fire 1"},
+	{"P1 Button 2", BIT_DIGITAL, DrvJoy1 + 6, "p1 fire 2"},
+	{"P1 Button 3", BIT_DIGITAL, DrvJoy1 + 5, "p1 fire 3"},
+	{"P1 Button 4", BIT_DIGITAL, DrvJoy3 + 3, "p1 fire 4"},
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy1f+ 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy1f+ 3,	"p2 right"	},
-	A("P2 Spinner",		BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 3"	},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy1f + 4,	"p2 fire 4"	}, // shared w/ p1 button 4!
+	{"P2 Coin", BIT_DIGITAL, DrvJoy3 + 6, "p2 coin"},
+	{"P2 Start", BIT_DIGITAL, DrvJoy3 + 1, "p2 start"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy1f + 2, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy1f + 3, "p2 right"},
+	A("P2 Spinner", BIT_ANALOG_REL, &Analog[1], "p2 x-axis"),
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 7, "p2 fire 1"},
+	{"P2 Button 2", BIT_DIGITAL, DrvJoy2 + 6, "p2 fire 2"},
+	{"P2 Button 3", BIT_DIGITAL, DrvJoy2 + 5, "p2 fire 3"},
+	{"P2 Button 4", BIT_DIGITAL, DrvJoy1f + 4, "p2 fire 4"}, // shared w/ p1 button 4!
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy4 + 0,	"service"	},
-	{"Service Mode",	BIT_DIGITAL,	DrvJoy4 + 7,	"diag"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
-	{"Dip D",			BIT_DIPSWITCH,	DrvDips + 4,	"dip"		},
-	{"Dip E",			BIT_DIPSWITCH,	DrvDips + 5,	"dip"		},
-	{"Dip F",			BIT_DIPSWITCH,	DrvDips + 6,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Service", BIT_DIGITAL, DrvJoy4 + 0, "service"},
+	{"Service Mode", BIT_DIGITAL, DrvJoy4 + 7, "diag"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 2, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 3, "dip"},
+	{"Dip D", BIT_DIPSWITCH, DrvDips + 4, "dip"},
+	{"Dip E", BIT_DIPSWITCH, DrvDips + 5, "dip"},
+	{"Dip F", BIT_DIPSWITCH, DrvDips + 6, "dip"},
 };
 #undef A
 
 STDINPUTINFO(Moonwarp)
 
-static struct BurnDIPInfo BerzerkDIPList[]=
+static struct BurnDIPInfo BerzerkDIPList[] =
 {
-	{0x11, 0xff, 0xff, 0x80, NULL					},
-	{0x12, 0xff, 0xff, 0xfc, NULL					},
-	{0x13, 0xff, 0xff, 0x3c, NULL					},
-	{0x14, 0xff, 0xff, 0xf0, NULL					},
-	{0x15, 0xff, 0xff, 0xf0, NULL					},
-	{0x16, 0xff, 0xff, 0xf0, NULL					},
-	{0x17, 0xff, 0xff, 0x00, NULL					},
+	{0x11, 0xff, 0xff, 0x80, nullptr},
+	{0x12, 0xff, 0xff, 0xfc, nullptr},
+	{0x13, 0xff, 0xff, 0x3c, nullptr},
+	{0x14, 0xff, 0xff, 0xf0, nullptr},
+	{0x15, 0xff, 0xff, 0xf0, nullptr},
+	{0x16, 0xff, 0xff, 0xf0, nullptr},
+	{0x17, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x11, 0x01, 0x80, 0x80, "Upright"				},
-	{0x11, 0x01, 0x80, 0x00, "Cocktail"				},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x11, 0x01, 0x80, 0x80, "Upright"},
+	{0x11, 0x01, 0x80, 0x00, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    2, "Color Test"			},
-	{0x12, 0x01, 0x03, 0x00, "Off"					},
-	{0x12, 0x01, 0x03, 0x03, "On"					},
+	{0, 0xfe, 0, 2, "Color Test"},
+	{0x12, 0x01, 0x03, 0x00, "Off"},
+	{0x12, 0x01, 0x03, 0x03, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x12, 0x01, 0xc0, 0xc0, "5000 and 10000"		},
-	{0x12, 0x01, 0xc0, 0x40, "5000"					},
-	{0x12, 0x01, 0xc0, 0x80, "10000"				},
-	{0x12, 0x01, 0xc0, 0x00, "None"					},
+	{0, 0xfe, 0, 4, "Bonus Life"},
+	{0x12, 0x01, 0xc0, 0xc0, "5000 and 10000"},
+	{0x12, 0x01, 0xc0, 0x40, "5000"},
+	{0x12, 0x01, 0xc0, 0x80, "10000"},
+	{0x12, 0x01, 0xc0, 0x00, "None"},
 
-	{0   , 0xfe, 0   ,    2, "Input Test Mode"		},
-	{0x13, 0x01, 0x01, 0x00, "Off"					},
-	{0x13, 0x01, 0x01, 0x01, "On"					},
+	{0, 0xfe, 0, 2, "Input Test Mode"},
+	{0x13, 0x01, 0x01, 0x00, "Off"},
+	{0x13, 0x01, 0x01, 0x01, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Crosshair Pattern"	},
-	{0x13, 0x01, 0x02, 0x00, "Off"					},
-	{0x13, 0x01, 0x02, 0x02, "On"					},
+	{0, 0xfe, 0, 2, "Crosshair Pattern"},
+	{0x13, 0x01, 0x02, 0x00, "Off"},
+	{0x13, 0x01, 0x02, 0x02, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Language"				},
-	{0x13, 0x01, 0xc0, 0x00, "English"				},
-	{0x13, 0x01, 0xc0, 0x40, "German"				},
-	{0x13, 0x01, 0xc0, 0x80, "French"				},
-	{0x13, 0x01, 0xc0, 0xc0, "Spanish"				},
+	{0, 0xfe, 0, 4, "Language"},
+	{0x13, 0x01, 0xc0, 0x00, "English"},
+	{0x13, 0x01, 0xc0, 0x40, "German"},
+	{0x13, 0x01, 0xc0, 0x80, "French"},
+	{0x13, 0x01, 0xc0, 0xc0, "Spanish"},
 
-	{0   , 0xfe, 0   ,    16, "Coin 1"				},
-	{0x14, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x14, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x14, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x14, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x14, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x14, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x14, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x14, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x14, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x14, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x14, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0, 0xfe, 0, 16, "Coin 1"},
+	{0x14, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"},
+	{0x14, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"},
+	{0x14, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"},
+	{0x14, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"},
+	{0x14, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"},
+	{0x14, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"},
+	{0x14, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"},
+	{0x14, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"},
+	{0x14, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"},
+	{0x14, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"},
+	{0x14, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"},
+	{0x14, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"},
+	{0x14, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"},
+	{0x14, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"},
+	{0x14, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"},
+	{0x14, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"},
 
-	{0   , 0xfe, 0   ,    16, "Coin 2"				},
-	{0x15, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x15, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x15, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x15, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x15, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x15, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x15, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x15, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x15, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x15, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x15, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0, 0xfe, 0, 16, "Coin 2"},
+	{0x15, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"},
+	{0x15, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"},
+	{0x15, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"},
+	{0x15, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"},
+	{0x15, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"},
+	{0x15, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"},
+	{0x15, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"},
+	{0x15, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"},
+	{0x15, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"},
+	{0x15, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"},
+	{0x15, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"},
+	{0x15, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"},
+	{0x15, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"},
+	{0x15, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"},
+	{0x15, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"},
+	{0x15, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"},
 
-	{0   , 0xfe, 0   ,    16, "Coin 3"				},
-	{0x16, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x16, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x16, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x16, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x16, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x16, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x16, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x16, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x16, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x16, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x16, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x16, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x16, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x16, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x16, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x16, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0, 0xfe, 0, 16, "Coin 3"},
+	{0x16, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"},
+	{0x16, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"},
+	{0x16, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"},
+	{0x16, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"},
+	{0x16, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"},
+	{0x16, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"},
+	{0x16, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"},
+	{0x16, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"},
+	{0x16, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"},
+	{0x16, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"},
+	{0x16, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"},
+	{0x16, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"},
+	{0x16, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"},
+	{0x16, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"},
+	{0x16, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"},
+	{0x16, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Monitor Type"			},
-	{0x17, 0x01, 0x01, 0x00, "Wells-Gardner"		},
-	{0x17, 0x01, 0x01, 0x02, "Electrohome"			},
+	{0, 0xfe, 0, 2, "Monitor Type"},
+	{0x17, 0x01, 0x01, 0x00, "Wells-Gardner"},
+	{0x17, 0x01, 0x01, 0x02, "Electrohome"},
 };
 
 STDDIPINFO(Berzerk)
 
 static struct BurnDIPInfo BerzerkfDIPList[] = {
-	{0x13,	0xFF, 0xFF,	0xbc, NULL					},
+	{0x13, 0xFF, 0xFF, 0xbc, nullptr},
 };
 
-STDDIPINFOEXT(Berzerkf,	Berzerk,	Berzerkf )
+STDDIPINFOEXT(Berzerkf, Berzerk, Berzerkf)
 
 static struct BurnDIPInfo BerzerkgDIPList[] = {
-	{0x13,	0xFF, 0xFF,	0x7c, NULL					},
+	{0x13, 0xFF, 0xFF, 0x7c, nullptr},
 };
 
-STDDIPINFOEXT(Berzerkg,	Berzerk,	Berzerkg )
+STDDIPINFOEXT(Berzerkg, Berzerk, Berzerkg)
 
 static struct BurnDIPInfo BerzerksDIPList[] = {
-	{0x13,	0xFF, 0xFF,	0xfc, NULL					},
+	{0x13, 0xFF, 0xFF, 0xfc, nullptr},
 };
 
-STDDIPINFOEXT(Berzerks,	Berzerk,	Berzerks )
+STDDIPINFOEXT(Berzerks, Berzerk, Berzerks)
 
-static struct BurnDIPInfo FrenzyDIPList[]=
+static struct BurnDIPInfo FrenzyDIPList[] =
 {
-	{0x11, 0xff, 0xff, 0x80, NULL					},
-	{0x12, 0xff, 0xff, 0x00, NULL					},
-	{0x13, 0xff, 0xff, 0x03, NULL					},
-	{0x14, 0xff, 0xff, 0x01, NULL					},
-	{0x15, 0xff, 0xff, 0x01, NULL					},
-	{0x16, 0xff, 0xff, 0x01, NULL					},
-	{0x17, 0xff, 0xff, 0x00, NULL					},
+	{0x11, 0xff, 0xff, 0x80, nullptr},
+	{0x12, 0xff, 0xff, 0x00, nullptr},
+	{0x13, 0xff, 0xff, 0x03, nullptr},
+	{0x14, 0xff, 0xff, 0x01, nullptr},
+	{0x15, 0xff, 0xff, 0x01, nullptr},
+	{0x16, 0xff, 0xff, 0x01, nullptr},
+	{0x17, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x11, 0x01, 0x80, 0x80, "Upright"				},
-	{0x11, 0x01, 0x80, 0x00, "Cocktail"				},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x11, 0x01, 0x80, 0x80, "Upright"},
+	{0x11, 0x01, 0x80, 0x00, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    4, "Hardware Tests"		},
-	{0x12, 0x01, 0x03, 0x00, "Off"					},
-	{0x12, 0x01, 0x03, 0x01, "Color test"			},
-	{0x12, 0x01, 0x03, 0x02, "Unknown"				},
-	{0x12, 0x01, 0x03, 0x03, "Signature Analysis"	},
+	{0, 0xfe, 0, 4, "Hardware Tests"},
+	{0x12, 0x01, 0x03, 0x00, "Off"},
+	{0x12, 0x01, 0x03, 0x01, "Color test"},
+	{0x12, 0x01, 0x03, 0x02, "Unknown"},
+	{0x12, 0x01, 0x03, 0x03, "Signature Analysis"},
 
-	{0   , 0xfe, 0   ,    2, "Input Test Mode"		},
-	{0x12, 0x01, 0x04, 0x00, "Off"					},
-	{0x12, 0x01, 0x04, 0x04, "On"					},
+	{0, 0xfe, 0, 2, "Input Test Mode"},
+	{0x12, 0x01, 0x04, 0x00, "Off"},
+	{0x12, 0x01, 0x04, 0x04, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Crosshair Pattern"	},
-	{0x12, 0x01, 0x08, 0x00, "Off"					},
-	{0x12, 0x01, 0x08, 0x08, "On"					},
+	{0, 0xfe, 0, 2, "Crosshair Pattern"},
+	{0x12, 0x01, 0x08, 0x00, "Off"},
+	{0x12, 0x01, 0x08, 0x08, "On"},
 
-	{0   , 0xfe, 0   ,    16, "Bonus Life"			},
-	{0x13, 0x01, 0x0f, 0x01, "1000"					},
-	{0x13, 0x01, 0x0f, 0x02, "2000"					},
-	{0x13, 0x01, 0x0f, 0x03, "3000"					},
-	{0x13, 0x01, 0x0f, 0x04, "4000"					},
-	{0x13, 0x01, 0x0f, 0x05, "5000"					},
-	{0x13, 0x01, 0x0f, 0x06, "6000"					},
-	{0x13, 0x01, 0x0f, 0x07, "7000"					},
-	{0x12, 0x01, 0x0f, 0x08, "8000"					},
-	{0x13, 0x01, 0x0f, 0x09, "9000"					},
-	{0x13, 0x01, 0x0f, 0x0a, "10000"				},
-	{0x13, 0x01, 0x0f, 0x0b, "11000"				},
-	{0x13, 0x01, 0x0f, 0x0c, "12000"				},
-	{0x13, 0x01, 0x0f, 0x0d, "13000"				},
-	{0x13, 0x01, 0x0f, 0x0e, "14000"				},
-	{0x13, 0x01, 0x0f, 0x0f, "15000"				},
-	{0x13, 0x01, 0x0f, 0x00, "None"					},
+	{0, 0xfe, 0, 16, "Bonus Life"},
+	{0x13, 0x01, 0x0f, 0x01, "1000"},
+	{0x13, 0x01, 0x0f, 0x02, "2000"},
+	{0x13, 0x01, 0x0f, 0x03, "3000"},
+	{0x13, 0x01, 0x0f, 0x04, "4000"},
+	{0x13, 0x01, 0x0f, 0x05, "5000"},
+	{0x13, 0x01, 0x0f, 0x06, "6000"},
+	{0x13, 0x01, 0x0f, 0x07, "7000"},
+	{0x12, 0x01, 0x0f, 0x08, "8000"},
+	{0x13, 0x01, 0x0f, 0x09, "9000"},
+	{0x13, 0x01, 0x0f, 0x0a, "10000"},
+	{0x13, 0x01, 0x0f, 0x0b, "11000"},
+	{0x13, 0x01, 0x0f, 0x0c, "12000"},
+	{0x13, 0x01, 0x0f, 0x0d, "13000"},
+	{0x13, 0x01, 0x0f, 0x0e, "14000"},
+	{0x13, 0x01, 0x0f, 0x0f, "15000"},
+	{0x13, 0x01, 0x0f, 0x00, "None"},
 
-	{0   , 0xfe, 0   ,    4, "Language"				},
-	{0x13, 0x01, 0xc0, 0x00, "English"				},
-	{0x13, 0x01, 0xc0, 0x40, "German"				},
-	{0x13, 0x01, 0xc0, 0x80, "French"				},
-	{0x13, 0x01, 0xc0, 0xc0, "Spanish"				},
+	{0, 0xfe, 0, 4, "Language"},
+	{0x13, 0x01, 0xc0, 0x00, "English"},
+	{0x13, 0x01, 0xc0, 0x40, "German"},
+	{0x13, 0x01, 0xc0, 0x80, "French"},
+	{0x13, 0x01, 0xc0, 0xc0, "Spanish"},
 
-	{0   , 0xfe, 0   ,    17, "Coin Multiplier"		},
-	{0x14, 0x01, 0xff, 0x00, "Free Play"			},
-	{0x14, 0x01, 0xff, 0x01, "1"					},
-	{0x14, 0x01, 0xff, 0x02, "2"					},
-	{0x14, 0x01, 0xff, 0x03, "3"					},
-	{0x14, 0x01, 0xff, 0x04, "4"					},
-	{0x14, 0x01, 0xff, 0x05, "5"					},
-	{0x14, 0x01, 0xff, 0x06, "6"					},
-	{0x14, 0x01, 0xff, 0x07, "7"					},
-	{0x14, 0x01, 0xff, 0x08, "8"					},
-	{0x14, 0x01, 0xff, 0x09, "9"					},
-	{0x14, 0x01, 0xff, 0x0a, "10"					},
-	{0x14, 0x01, 0xff, 0x0b, "11"					},
-	{0x14, 0x01, 0xff, 0x0c, "12"					},
-	{0x14, 0x01, 0xff, 0x0d, "13"					},
-	{0x14, 0x01, 0xff, 0x0e, "14"					},
-	{0x14, 0x01, 0xff, 0x0f, "15"					},
-	{0x14, 0x01, 0xff, 0xff, "255"					},
+	{0, 0xfe, 0, 17, "Coin Multiplier"},
+	{0x14, 0x01, 0xff, 0x00, "Free Play"},
+	{0x14, 0x01, 0xff, 0x01, "1"},
+	{0x14, 0x01, 0xff, 0x02, "2"},
+	{0x14, 0x01, 0xff, 0x03, "3"},
+	{0x14, 0x01, 0xff, 0x04, "4"},
+	{0x14, 0x01, 0xff, 0x05, "5"},
+	{0x14, 0x01, 0xff, 0x06, "6"},
+	{0x14, 0x01, 0xff, 0x07, "7"},
+	{0x14, 0x01, 0xff, 0x08, "8"},
+	{0x14, 0x01, 0xff, 0x09, "9"},
+	{0x14, 0x01, 0xff, 0x0a, "10"},
+	{0x14, 0x01, 0xff, 0x0b, "11"},
+	{0x14, 0x01, 0xff, 0x0c, "12"},
+	{0x14, 0x01, 0xff, 0x0d, "13"},
+	{0x14, 0x01, 0xff, 0x0e, "14"},
+	{0x14, 0x01, 0xff, 0x0f, "15"},
+	{0x14, 0x01, 0xff, 0xff, "255"},
 
-	{0   , 0xfe, 0   ,    17, "Coins/Credit A"		},
-	{0x15, 0x01, 0xff, 0x00, "0 (invalid)"			},
-	{0x15, 0x01, 0xff, 0x01, "1"					},
-	{0x15, 0x01, 0xff, 0x02, "2"					},
-	{0x15, 0x01, 0xff, 0x03, "3"					},
-	{0x15, 0x01, 0xff, 0x04, "4"					},
-	{0x15, 0x01, 0xff, 0x05, "5"					},
-	{0x15, 0x01, 0xff, 0x06, "6"					},
-	{0x15, 0x01, 0xff, 0x07, "7"					},
-	{0x15, 0x01, 0xff, 0x08, "8"					},
-	{0x15, 0x01, 0xff, 0x09, "9"					},
-	{0x15, 0x01, 0xff, 0x0a, "10"					},
-	{0x15, 0x01, 0xff, 0x0b, "11"					},
-	{0x15, 0x01, 0xff, 0x0c, "12"					},
-	{0x15, 0x01, 0xff, 0x0d, "13"					},
-	{0x15, 0x01, 0xff, 0x0e, "14"					},
-	{0x15, 0x01, 0xff, 0x0f, "15"					},
-	{0x15, 0x01, 0xff, 0xff, "255"					},
+	{0, 0xfe, 0, 17, "Coins/Credit A"},
+	{0x15, 0x01, 0xff, 0x00, "0 (invalid)"},
+	{0x15, 0x01, 0xff, 0x01, "1"},
+	{0x15, 0x01, 0xff, 0x02, "2"},
+	{0x15, 0x01, 0xff, 0x03, "3"},
+	{0x15, 0x01, 0xff, 0x04, "4"},
+	{0x15, 0x01, 0xff, 0x05, "5"},
+	{0x15, 0x01, 0xff, 0x06, "6"},
+	{0x15, 0x01, 0xff, 0x07, "7"},
+	{0x15, 0x01, 0xff, 0x08, "8"},
+	{0x15, 0x01, 0xff, 0x09, "9"},
+	{0x15, 0x01, 0xff, 0x0a, "10"},
+	{0x15, 0x01, 0xff, 0x0b, "11"},
+	{0x15, 0x01, 0xff, 0x0c, "12"},
+	{0x15, 0x01, 0xff, 0x0d, "13"},
+	{0x15, 0x01, 0xff, 0x0e, "14"},
+	{0x15, 0x01, 0xff, 0x0f, "15"},
+	{0x15, 0x01, 0xff, 0xff, "255"},
 
-	{0   , 0xfe, 0   ,    17, "Coins/Credit B"		},
-	{0x16, 0x01, 0xff, 0x00, "0 (invalid)"			},
-	{0x16, 0x01, 0xff, 0x01, "1"					},
-	{0x16, 0x01, 0xff, 0x02, "2"					},
-	{0x16, 0x01, 0xff, 0x03, "3"					},
-	{0x16, 0x01, 0xff, 0x04, "4"					},
-	{0x16, 0x01, 0xff, 0x05, "5"					},
-	{0x16, 0x01, 0xff, 0x06, "6"					},
-	{0x16, 0x01, 0xff, 0x07, "7"					},
-	{0x16, 0x01, 0xff, 0x08, "8"					},
-	{0x16, 0x01, 0xff, 0x09, "9"					},
-	{0x16, 0x01, 0xff, 0x0a, "10"					},
-	{0x16, 0x01, 0xff, 0x0b, "11"					},
-	{0x16, 0x01, 0xff, 0x0c, "12"					},
-	{0x16, 0x01, 0xff, 0x0d, "13"					},
-	{0x16, 0x01, 0xff, 0x0e, "14"					},
-	{0x16, 0x01, 0xff, 0x0f, "15"					},
-	{0x16, 0x01, 0xff, 0xff, "255"					},
+	{0, 0xfe, 0, 17, "Coins/Credit B"},
+	{0x16, 0x01, 0xff, 0x00, "0 (invalid)"},
+	{0x16, 0x01, 0xff, 0x01, "1"},
+	{0x16, 0x01, 0xff, 0x02, "2"},
+	{0x16, 0x01, 0xff, 0x03, "3"},
+	{0x16, 0x01, 0xff, 0x04, "4"},
+	{0x16, 0x01, 0xff, 0x05, "5"},
+	{0x16, 0x01, 0xff, 0x06, "6"},
+	{0x16, 0x01, 0xff, 0x07, "7"},
+	{0x16, 0x01, 0xff, 0x08, "8"},
+	{0x16, 0x01, 0xff, 0x09, "9"},
+	{0x16, 0x01, 0xff, 0x0a, "10"},
+	{0x16, 0x01, 0xff, 0x0b, "11"},
+	{0x16, 0x01, 0xff, 0x0c, "12"},
+	{0x16, 0x01, 0xff, 0x0d, "13"},
+	{0x16, 0x01, 0xff, 0x0e, "14"},
+	{0x16, 0x01, 0xff, 0x0f, "15"},
+	{0x16, 0x01, 0xff, 0xff, "255"},
 
-	{0   , 0xfe, 0   ,    2, "Monitor Type"			},
-	{0x17, 0x01, 0x01, 0x00, "Wells-Gardner"		},
-	{0x17, 0x01, 0x01, 0x02, "Electrohome"			},
+	{0, 0xfe, 0, 2, "Monitor Type"},
+	{0x17, 0x01, 0x01, 0x00, "Wells-Gardner"},
+	{0x17, 0x01, 0x01, 0x02, "Electrohome"},
 
 };
 
 STDDIPINFO(Frenzy)
 
-static struct BurnDIPInfo MoonwarpDIPList[]=
+static struct BurnDIPInfo MoonwarpDIPList[] =
 {
 	DIP_OFFSET(0x15)
-	{0x00, 0xff, 0xff, 0x00, NULL					},
-	{0x01, 0xff, 0xff, 0x00, NULL					},
-	{0x02, 0xff, 0xff, 0x00, NULL					},
-	{0x03, 0xff, 0xff, 0x00, NULL					},
-	{0x04, 0xff, 0xff, 0x00, NULL					},
+	{0x00, 0xff, 0xff, 0x00, nullptr},
+	{0x01, 0xff, 0xff, 0x00, nullptr},
+	{0x02, 0xff, 0xff, 0x00, nullptr},
+	{0x03, 0xff, 0xff, 0x00, nullptr},
+	{0x04, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Hardware Tests"		},
-	{0x00, 0x01, 0x03, 0x00, "Off"					},
-	{0x00, 0x01, 0x03, 0x01, "Color test"			},
-	{0x00, 0x01, 0x03, 0x02, "Unknown"				},
-	{0x00, 0x01, 0x03, 0x03, "Signature Analysis"	},
+	{0, 0xfe, 0, 4, "Hardware Tests"},
+	{0x00, 0x01, 0x03, 0x00, "Off"},
+	{0x00, 0x01, 0x03, 0x01, "Color test"},
+	{0x00, 0x01, 0x03, 0x02, "Unknown"},
+	{0x00, 0x01, 0x03, 0x03, "Signature Analysis"},
 
-	{0   , 0xfe, 0   ,    6, "Bonus Life"			},
-	{0x00, 0x01, 0xf8, 0x00, "10000"				},
-	{0x00, 0x01, 0xf8, 0x08, "15000"				},
-	{0x00, 0x01, 0xf8, 0x10, "20000"				},
-	{0x00, 0x01, 0xf8, 0x20, "30000"				},
-	{0x00, 0x01, 0xf8, 0x40, "40000"				},
-	{0x00, 0x01, 0xf8, 0x80, "50000"				},
+	{0, 0xfe, 0, 6, "Bonus Life"},
+	{0x00, 0x01, 0xf8, 0x00, "10000"},
+	{0x00, 0x01, 0xf8, 0x08, "15000"},
+	{0x00, 0x01, 0xf8, 0x10, "20000"},
+	{0x00, 0x01, 0xf8, 0x20, "30000"},
+	{0x00, 0x01, 0xf8, 0x40, "40000"},
+	{0x00, 0x01, 0xf8, 0x80, "50000"},
 
-	{0   , 0xfe, 0   ,    2, "Input Test Mode"		},
-	{0x01, 0x01, 0x01, 0x00, "Off"					},
-	{0x01, 0x01, 0x01, 0x01, "On"					},
+	{0, 0xfe, 0, 2, "Input Test Mode"},
+	{0x01, 0x01, 0x01, 0x00, "Off"},
+	{0x01, 0x01, 0x01, 0x01, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Crosshair Pattern"	},
-	{0x01, 0x01, 0x02, 0x00, "Off"					},
-	{0x01, 0x01, 0x02, 0x02, "On"					},
+	{0, 0xfe, 0, 2, "Crosshair Pattern"},
+	{0x01, 0x01, 0x02, 0x00, "Off"},
+	{0x01, 0x01, 0x02, 0x02, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Spinner Orientation"	},
-	{0x01, 0x01, 0x08, 0x08, "Reverse"				},
-	{0x01, 0x01, 0x08, 0x00, "Standard"				},
+	{0, 0xfe, 0, 2, "Spinner Orientation"},
+	{0x01, 0x01, 0x08, 0x08, "Reverse"},
+	{0x01, 0x01, 0x08, 0x00, "Standard"},
 
-	{0   , 0xfe, 0   ,    4, "Language"				},
-	{0x01, 0x01, 0xc0, 0x00, "English"				},
-	{0x01, 0x01, 0xc0, 0x40, "German"				},
-	{0x01, 0x01, 0xc0, 0x80, "French"				},
-	{0x01, 0x01, 0xc0, 0xc0, "Spanish"				},
+	{0, 0xfe, 0, 4, "Language"},
+	{0x01, 0x01, 0xc0, 0x00, "English"},
+	{0x01, 0x01, 0xc0, 0x40, "German"},
+	{0x01, 0x01, 0xc0, 0x80, "French"},
+	{0x01, 0x01, 0xc0, 0xc0, "Spanish"},
 
-	{0   , 0xfe, 0   ,    16, "Coin 1"				},
-	{0x02, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x02, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x02, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x02, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x02, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x02, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x02, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x02, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x02, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x02, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x02, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x02, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x02, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x02, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x02, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0, 0xfe, 0, 16, "Coin 1"},
+	{0x02, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"},
+	{0x02, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"},
+	{0x02, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"},
+	{0x02, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"},
+	{0x02, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"},
+	{0x02, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"},
+	{0x02, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"},
+	{0x02, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"},
+	{0x02, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"},
+	{0x02, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"},
+	{0x02, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"},
+	{0x02, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"},
+	{0x02, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"},
+	{0x02, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"},
+	{0x02, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"},
+	{0x02, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"},
 
-	{0   , 0xfe, 0   ,    16, "Coin 2"				},
-	{0x03, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x03, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x03, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x03, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x03, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x03, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x03, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x03, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x03, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x03, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x03, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x03, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x03, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x03, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x03, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x03, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0, 0xfe, 0, 16, "Coin 2"},
+	{0x03, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"},
+	{0x03, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"},
+	{0x03, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"},
+	{0x03, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"},
+	{0x03, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"},
+	{0x03, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"},
+	{0x03, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"},
+	{0x03, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"},
+	{0x03, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"},
+	{0x03, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"},
+	{0x03, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"},
+	{0x03, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"},
+	{0x03, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"},
+	{0x03, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"},
+	{0x03, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"},
+	{0x03, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x03, 0x01, 0x80, 0x00, "Upright"				},
-	{0x03, 0x01, 0x80, 0x80, "Cocktail"				},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x03, 0x01, 0x80, 0x00, "Upright"},
+	{0x03, 0x01, 0x80, 0x80, "Cocktail"},
 
-	{0   , 0xfe, 0   ,    16, "Coin 3"				},
-	{0x04, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"	},
-	{0x04, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"	},
-	{0x04, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"	},
-	{0x04, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"	},
-	{0x04, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"	},
-	{0x04, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"	},
-	{0x04, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"	},
-	{0x04, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"	},
-	{0x04, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"	},
-	{0x04, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"	},
-	{0x04, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"	},
-	{0x04, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"	},
-	{0x04, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"	},
-	{0x04, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"	},
-	{0x04, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"	},
-	{0x04, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"	},
+	{0, 0xfe, 0, 16, "Coin 3"},
+	{0x04, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"},
+	{0x04, 0x01, 0x0f, 0x0d, "4 Coins 3 Credits"},
+	{0x04, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"},
+	{0x04, 0x01, 0x0f, 0x0e, "4 Coins 5 Credits"},
+	{0x04, 0x01, 0x0f, 0x0a, "2 Coins 3 Credits"},
+	{0x04, 0x01, 0x0f, 0x0f, "4 Coins 7 Credits"},
+	{0x04, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"},
+	{0x04, 0x01, 0x0f, 0x0b, "2 Coins 5 Credits"},
+	{0x04, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"},
+	{0x04, 0x01, 0x0f, 0x0c, "2 Coins 7 Credits"},
+	{0x04, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"},
+	{0x04, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"},
+	{0x04, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"},
+	{0x04, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"},
+	{0x04, 0x01, 0x0f, 0x07, "1 Coin/10 Credits"},
+	{0x04, 0x01, 0x0f, 0x08, "1 Coin/14 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x04, 0x01, 0xc0, 0x00, "Very Easy"			},
-	{0x04, 0x01, 0xc0, 0x40, "Easy"					},
-	{0x04, 0x01, 0xc0, 0x80, "Normal"				},
-	{0x04, 0x01, 0xc0, 0xc0, "Hard"					},
+	{0, 0xfe, 0, 4, "Difficulty"},
+	{0x04, 0x01, 0xc0, 0x00, "Very Easy"},
+	{0x04, 0x01, 0xc0, 0x40, "Easy"},
+	{0x04, 0x01, 0xc0, 0x80, "Normal"},
+	{0x04, 0x01, 0xc0, 0xc0, "Hard"},
 };
 
 STDDIPINFO(Moonwarp)
@@ -465,7 +465,7 @@ static void magicram_write(UINT16 offset, UINT8 data)
 
 	if (magicram_control & 0x08)
 	{
-		data3 = BITSWAP08(data3,0,1,2,3,4,5,6,7);
+		data3 = BITSWAP08(data3, 0, 1, 2, 3, 4, 5, 6, 7);
 	}
 
 	magicram_latch = data;
@@ -474,22 +474,37 @@ static void magicram_write(UINT16 offset, UINT8 data)
 
 	switch (magicram_control & 0xf0)
 	{
-		case 0x00: 											break;	/* No change */
-		case 0x10: data3 |=  DrvVidRAM[offset]; 			break;
-		case 0x20: data3 |= ~DrvVidRAM[offset]; 			break;
-		case 0x30: data3  = 0xff;  							break;
-		case 0x40: data3 &=  DrvVidRAM[offset]; 			break;
-		case 0x50: data3  =  DrvVidRAM[offset]; 			break;
-		case 0x60: data3  = ~(data3 ^ DrvVidRAM[offset]);	break;
-		case 0x70: data3  = ~data3 | DrvVidRAM[offset]; 	break;
-		case 0x80: data3 &= ~DrvVidRAM[offset];			 	break;
-		case 0x90: data3 ^=  DrvVidRAM[offset];			 	break;
-		case 0xa0: data3  = ~DrvVidRAM[offset];				break;
-		case 0xb0: data3  = ~(data3 & DrvVidRAM[offset]);	break;
-		case 0xc0: data3  = 0x00; 						 	break;
-		case 0xd0: data3  = ~data3 & DrvVidRAM[offset]; 	break;
-		case 0xe0: data3  = ~(data3 | DrvVidRAM[offset]); 	break;
-		case 0xf0: data3  = ~data3; 					 	break;
+	case 0x00: break; /* No change */
+	case 0x10: data3 |= DrvVidRAM[offset];
+		break;
+	case 0x20: data3 |= ~DrvVidRAM[offset];
+		break;
+	case 0x30: data3 = 0xff;
+		break;
+	case 0x40: data3 &= DrvVidRAM[offset];
+		break;
+	case 0x50: data3 = DrvVidRAM[offset];
+		break;
+	case 0x60: data3 = ~(data3 ^ DrvVidRAM[offset]);
+		break;
+	case 0x70: data3 = ~data3 | DrvVidRAM[offset];
+		break;
+	case 0x80: data3 &= ~DrvVidRAM[offset];
+		break;
+	case 0x90: data3 ^= DrvVidRAM[offset];
+		break;
+	case 0xa0: data3 = ~DrvVidRAM[offset];
+		break;
+	case 0xb0: data3 = ~(data3 & DrvVidRAM[offset]);
+		break;
+	case 0xc0: data3 = 0x00;
+		break;
+	case 0xd0: data3 = ~data3 & DrvVidRAM[offset];
+		break;
+	case 0xe0: data3 = ~(data3 | DrvVidRAM[offset]);
+		break;
+	case 0xf0: data3 = ~data3;
+		break;
 	}
 
 	DrvMagicRAM[offset] = data3;
@@ -497,10 +512,10 @@ static void magicram_write(UINT16 offset, UINT8 data)
 }
 
 static void __fastcall berzerk_write(UINT16 address, UINT8 data)
-{	
-	if ((address & 0xe000) == 0x6000) {
+{
+	if ((address & 0xe000) == 0x6000)
+	{
 		magicram_write(address & 0x1fff, data);
-		return;
 	}
 }
 
@@ -514,21 +529,26 @@ static void __fastcall berzerk_write(UINT16 address, UINT8 data)
 /* 6840 variables */
 struct sh6840_timer_channel
 {
-	UINT8	cr;
-	UINT8	state;
-	UINT8	leftovers;
-	UINT16	timer;
-	UINT32	clocks;
+	UINT8 cr;
+	UINT8 state;
+	UINT8 leftovers;
+	UINT16 timer;
+	UINT32 clocks;
+
 	union
 	{
 #ifdef LSB_FIRST
-		struct { UINT8 l, h; } b;
+		struct
+		{
+			UINT8 l, h;
+		} b;
 #else
 		struct { UINT8 h, l; } b;
 #endif
 		UINT16 w;
 	} counter;
 };
+
 static struct sh6840_timer_channel sh6840_timer[3];
 static INT16 sh6840_volume[3];
 static UINT8 sh6840_MSB;
@@ -542,16 +562,16 @@ static UINT32 sh6840_clock_count;
 
 static UINT8 exidy_sfxctrl;
 
-static void exidy_update(INT16 **streams, INT32 length); // forward
+static void exidy_update(INT16** streams, INT32 length); // forward
 
 static Stream stream;
 
 static void exidy_sound_init()
 {
-	stream.init(SH8253_CLOCK, nBurnSoundRate, 1, 0, exidy_update);
+	stream.init(SH8253_CLOCK, nBurnSoundRate, 1, false, exidy_update);
 	stream.set_buffered(ZetTotalCycles, 2500000);
 	stream.set_volume(0.20);
-	sh6840_clocks_per_sample = (INT32)((double)SH6840_CLOCK / (double)SH8253_CLOCK * (double)(1 << 24));
+	sh6840_clocks_per_sample = static_cast<INT32>((double)SH6840_CLOCK / (double)SH8253_CLOCK * (double)(1 << 24));
 
 	s14001a_init(DrvSndROM, ZetTotalCycles, 2500000);
 }
@@ -607,30 +627,30 @@ static void exidy_sound_write(UINT8 offset, UINT8 data)
 
 	switch (offset)
 	{
-		/* offset 0 writes to either channel 0 control or channel 2 control */
-		case 0:
-			if (sh6840_timer[1].cr & 0x01)
-				sh6840_timer[0].cr = data;
-			else
-				sh6840_timer[2].cr = data;
-			break;
+	/* offset 0 writes to either channel 0 control or channel 2 control */
+	case 0:
+		if (sh6840_timer[1].cr & 0x01)
+			sh6840_timer[0].cr = data;
+		else
+			sh6840_timer[2].cr = data;
+		break;
 
-		/* offset 1 writes to channel 1 control */
-		case 1:
-			sh6840_timer[1].cr = data;
-			break;
+	/* offset 1 writes to channel 1 control */
+	case 1:
+		sh6840_timer[1].cr = data;
+		break;
 
-		/* offsets 2/4/6 write to the common MSB latch */
-		case 2:
-		case 4:
-		case 6:
-			sh6840_MSB = data;
-			break;
+	/* offsets 2/4/6 write to the common MSB latch */
+	case 2:
+	case 4:
+	case 6:
+		sh6840_MSB = data;
+		break;
 
-		/* offsets 3/5/7 write to the LSB controls */
-		case 3:
-		case 5:
-		case 7:
+	/* offsets 3/5/7 write to the LSB controls */
+	case 3:
+	case 5:
+	case 7:
 		{
 			/* latch the timer value */
 			INT32 ch = (offset - 3) / 2;
@@ -650,19 +670,19 @@ static void exidy_sfx_write(UINT8 offset, UINT8 data)
 
 	switch (offset)
 	{
-		case 0:
-			exidy_sfxctrl = data;
-			break;
+	case 0:
+		exidy_sfxctrl = data;
+		break;
 
-		case 1:
-		case 2:
-		case 3:
-			sh6840_volume[offset - 1] = ((data & 7) * BASE_VOLUME) / 7;
-			break;
+	case 1:
+	case 2:
+	case 3:
+		sh6840_volume[offset - 1] = ((data & 7) * BASE_VOLUME) / 7;
+		break;
 	}
 }
 
-static void sh6840_apply_clock(struct sh6840_timer_channel *t, INT32 clocks)
+static void sh6840_apply_clock(struct sh6840_timer_channel* t, INT32 clocks)
 {
 	/* dual 8-bit case */
 	if (t->cr & 0x04)
@@ -749,23 +769,22 @@ static INT32 sh6840_update_noise(INT32 clocks)
 }
 
 
-
 /*************************************
  *
  *  Core sound generation
  *
  *************************************/
 
-static void exidy_update(INT16 **streams, INT32 length)
+static void exidy_update(INT16** streams, INT32 length)
 {
-	INT16 *buffer = streams[0];
+	INT16* buffer = streams[0];
 
 	INT32 noisy = ((sh6840_timer[0].cr & sh6840_timer[1].cr & sh6840_timer[2].cr & 0x02) == 0);
 
 	/* loop over samples */
 	while (length--)
 	{
-		struct sh6840_timer_channel *t;
+		struct sh6840_timer_channel* t;
 		//struct sh8253_timer_channel *c;
 		INT32 clocks_this_sample;
 		INT32 sample = 0;
@@ -839,9 +858,10 @@ static void exidy_sync_stream()
 	stream.update();
 }
 
-void exidy_render(INT16 *buffer, INT32 length)
+void exidy_render(INT16* buffer, INT32 length)
 {
-	if (length != nBurnSoundLen) {
+	if (length != nBurnSoundLen)
+	{
 		bprintf(0, _T("exidy_render(): once per frame, please!\n"));
 		return;
 	}
@@ -855,48 +875,47 @@ static void berzerk_sound_write(UINT8 offset, UINT8 data)
 
 	switch (offset)
 	{
-		case 4:
-			switch (data >> 6)
-			{
-				/* write data to the S14001 */
-				case 0:
-					s14001a_data_write(data & 0x3f);
+	case 4:
+		switch (data >> 6)
+		{
+		/* write data to the S14001 */
+		case 0:
+			s14001a_data_write(data & 0x3f);
 
-					/* clock the chip -- via a 555 timer */
-					s14001a_start_write(1);
-					s14001a_start_write(0);
-					break;
+		/* clock the chip -- via a 555 timer */
+			s14001a_start_write(1);
+			s14001a_start_write(0);
+			break;
 
-				case 1:
-					if (ZetGetActive() != -1)
-						s14001a_force_update();
+		case 1:
+			if (ZetGetActive() != -1)
+				s14001a_force_update();
 
-					/* volume */
-					s14001a_set_volume(((data >> 3 & 0xf) + 1) / 16.0);
+		/* volume */
+			s14001a_set_volume(((data >> 3 & 0xf) + 1) / 16.0);
 
-					/* clock control - the first LS161 divides the clock by 9 to 16, the 2nd by 8,
-					 giving a final clock from 19.5kHz to 34.7kHz */
-					clock_divisor = 16 - (data & 0x07);
+		/* clock control - the first LS161 divides the clock by 9 to 16, the 2nd by 8,
+		 giving a final clock from 19.5kHz to 34.7kHz */
+			clock_divisor = 16 - (data & 0x07);
 
-					s14001a_set_clock(S14001_CLOCK / clock_divisor / 8);
-
-					break;
-
-				default: break; /* 2 and 3 are not connected */
-			}
+			s14001a_set_clock(S14001_CLOCK / clock_divisor / 8);
 
 			break;
 
-			/* offset 6 writes to the sfxcontrol latch */
-		case 6:
-			exidy_sfx_write(data >> 6, data);
-			break;
+		default: break; /* 2 and 3 are not connected */
+		}
 
-			/* everything else writes to the 6840 */
-		default:
-			exidy_sound_write(offset, data);
-			break;
+		break;
 
+	/* offset 6 writes to the sfxcontrol latch */
+	case 6:
+		exidy_sfx_write(data >> 6, data);
+		break;
+
+	/* everything else writes to the 6840 */
+	default:
+		exidy_sound_write(offset, data);
+		break;
 	}
 }
 
@@ -904,49 +923,49 @@ static void __fastcall berzerk_write_port(UINT16 address, UINT8 data)
 {
 	switch (address & 0xff)
 	{
-		case 0x40:
-		case 0x41:
-		case 0x42:
-		case 0x43:
-		case 0x44:
-		case 0x45:
-		case 0x46:
-		case 0x47:
-			berzerk_sound_write(address&7, data);
+	case 0x40:
+	case 0x41:
+	case 0x42:
+	case 0x43:
+	case 0x44:
+	case 0x45:
+	case 0x46:
+	case 0x47:
+		berzerk_sound_write(address & 7, data);
 		return;
 
-		case 0x48:
-		case 0x49:
-		case 0x4a:
+	case 0x48:
+	case 0x49:
+	case 0x4a:
 		return; // nop
 
-		case 0x4b:
-			magicram_control = data;
-			magicram_latch = 0;
-			collision = 0;
+	case 0x4b:
+		magicram_control = data;
+		magicram_latch = 0;
+		collision = 0;
 		return;
 
-		case 0x4c:
-			nmi_enable = 1;
+	case 0x4c:
+		nmi_enable = 1;
 		return;
 
-		case 0x4d:
-			nmi_enable = 0;
+	case 0x4d:
+		nmi_enable = 0;
 		return;
 
-		case 0x4f:
-			irq_enable = data & 1;
+	case 0x4f:
+		irq_enable = data & 1;
 		return;
 
-		case 0x50:
-		case 0x51:
-		case 0x52:
-		case 0x53:
-		case 0x54:
-		case 0x55:
-		case 0x56:
-		case 0x57:
-			// sound board #2 (not used)
+	case 0x50:
+	case 0x51:
+	case 0x52:
+	case 0x53:
+	case 0x54:
+	case 0x55:
+	case 0x56:
+	case 0x57:
+		// sound board #2 (not used)
 		return;
 	}
 }
@@ -958,51 +977,51 @@ static UINT8 __fastcall berzerk_read_port(UINT16 address)
 
 	switch (address & 0xff)
 	{
-		case 0x44:
-			return (s14001a_busy_read()) ? 0xc0 : 0x40;
+	case 0x44:
+		return (s14001a_busy_read()) ? 0xc0 : 0x40;
 
-		case 0x48: // p1
-			return DrvInputs[0];
+	case 0x48: // p1
+		return DrvInputs[0];
 
-		case 0x49: // system
-			return DrvInputs[2];
+	case 0x49: // system
+		return DrvInputs[2];
 
-		case 0x4a: // p2
-			return DrvInputs[1];
+	case 0x4a: // p2
+		return DrvInputs[1];
 
-		case 0x4c:
-			nmi_enable = 1;
-			return 0;
+	case 0x4c:
+		nmi_enable = 1;
+		return 0;
 
-		case 0x4d:
-			nmi_enable = 0;
-			return 0;
+	case 0x4d:
+		nmi_enable = 0;
+		return 0;
 
-		case 0x4e:
-			return (collision & 0x80) | 0x7e | (vblank & 1);
+	case 0x4e:
+		return (collision & 0x80) | 0x7e | (vblank & 1);
 
-		case 0x60: // f3 = input test
-			return DrvInputs[5];
+	case 0x60: // f3 = input test
+		return DrvInputs[5];
 
-		case 0x61: // f2 = color test
-			return DrvInputs[4];
+	case 0x61: // f2 = color test
+		return DrvInputs[4];
 
-		case 0x62: // coin chute 3
-			return DrvInputs[8];
+	case 0x62: // coin chute 3
+		return DrvInputs[8];
 
-		case 0x63: // coin chute 2
-			return DrvInputs[7];
+	case 0x63: // coin chute 2
+		return DrvInputs[7];
 
-		case 0x64: // coin chute 1
-			return DrvInputs[6];
+	case 0x64: // coin chute 1
+		return DrvInputs[6];
 
-		case 0x65: // service
-			return DrvInputs[3];
+	case 0x65: // service
+		return DrvInputs[3];
 
-		case 0x66:
-		case 0x67:
-			// led off, led on [67]
-			return 0;
+	case 0x66:
+	case 0x67:
+		// led off, led on [67]
+		return 0;
 	}
 
 	return 0;
@@ -1010,7 +1029,7 @@ static UINT8 __fastcall berzerk_read_port(UINT16 address)
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	ZetReset(0);
 
@@ -1031,24 +1050,32 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvZ80ROM		= Next; Next += 0x010000;
-	DrvSndROM		= Next; Next += 0x001000;
+	DrvZ80ROM = Next;
+	Next += 0x010000;
+	DrvSndROM = Next;
+	Next += 0x001000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0010 * sizeof(UINT32);
+	DrvPalette = (UINT32*)Next;
+	Next += 0x0010 * sizeof(UINT32);
 
-	DrvNVRAM		= Next; Next += 0x000400;
+	DrvNVRAM = Next;
+	Next += 0x000400;
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvVidRAM		= Next; Next += 0x002000;
-	DrvMagicRAM		= Next; Next += 0x002000;
-	DrvColRAM		= Next; Next += 0x000800;
+	DrvVidRAM = Next;
+	Next += 0x002000;
+	DrvMagicRAM = Next;
+	Next += 0x002000;
+	DrvColRAM = Next;
+	Next += 0x000800;
 
-	RamEnd			= Next;
+	RamEnd = Next;
 
-	MemEnd			= Next;
+	MemEnd = Next;
 
 	return 0;
 }
@@ -1063,47 +1090,47 @@ static INT32 DrvInit(INT32 berzerk)
 
 	{
 		INT32 k = 0;
-		if (BurnLoadRom(DrvZ80ROM + 0x0000,  k++, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM + 0x1000,  k++, 1)) return 1;
-		
+		if (BurnLoadRom(DrvZ80ROM + 0x0000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x1000, k++, 1)) return 1;
+
 		if (berzerk)
 		{
-			if (BurnLoadRom(DrvZ80ROM + 0x1800,  k++, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM + 0x2000,  k++, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM + 0x2800,  k++, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM + 0x3000,  k++, 1)) return 1;
-			memset (DrvZ80ROM + 0x3800, 0xff, 0x800);
+			if (BurnLoadRom(DrvZ80ROM + 0x1800, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x2000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x2800, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x3000, k++, 1)) return 1;
+			memset(DrvZ80ROM + 0x3800, 0xff, 0x800);
 		}
 		else
 		{
-			if (BurnLoadRom(DrvZ80ROM + 0x2000,  k++, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM + 0x3000,  k++, 1)) return 1;
-			if (BurnLoadRom(DrvZ80ROM + 0xc000,  k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x2000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x3000, k++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0xc000, k++, 1)) return 1;
 		}
 
-		if (BurnLoadRom(DrvSndROM + 0x0000,  k++, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM + 0x0800,  k++, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM + 0x0000, k++, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM + 0x0800, k++, 1)) return 1;
 	}
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,				0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x3fff, MAP_ROM);
 	if (berzerk)
 	{
-		ZetMapMemory(DrvNVRAM,			0x0800, 0x0bff, MAP_RAM); // over rom!
-		ZetMapMemory(DrvNVRAM,			0x0c00, 0x0fff, MAP_RAM);
+		ZetMapMemory(DrvNVRAM, 0x0800, 0x0bff, MAP_RAM); // over rom!
+		ZetMapMemory(DrvNVRAM, 0x0c00, 0x0fff, MAP_RAM);
 	}
-	ZetMapMemory(DrvVidRAM,				0x4000, 0x5fff, MAP_RAM);
-	ZetMapMemory(DrvMagicRAM,			0x6000, 0x7fff, MAP_ROM); // handler
-	for (INT32 i = 0; i < 0x4000; i+= 0x800)
+	ZetMapMemory(DrvVidRAM, 0x4000, 0x5fff, MAP_RAM);
+	ZetMapMemory(DrvMagicRAM, 0x6000, 0x7fff, MAP_ROM); // handler
+	for (INT32 i = 0; i < 0x4000; i += 0x800)
 	{
-		ZetMapMemory(DrvColRAM,			0x8000 + i, 0x87ff + i, MAP_RAM);
+		ZetMapMemory(DrvColRAM, 0x8000 + i, 0x87ff + i, MAP_RAM);
 	}
 	if (berzerk == 0)
 	{
-		ZetMapMemory(DrvZ80ROM + 0xc000,	0xc000, 0xcfff, MAP_ROM);
-		ZetMapMemory(DrvNVRAM,				0xf800, 0xfbff, MAP_RAM);
-		ZetMapMemory(DrvNVRAM,				0xfc00, 0xffff, MAP_RAM);
+		ZetMapMemory(DrvZ80ROM + 0xc000, 0xc000, 0xcfff, MAP_ROM);
+		ZetMapMemory(DrvNVRAM, 0xf800, 0xfbff, MAP_RAM);
+		ZetMapMemory(DrvNVRAM, 0xfc00, 0xffff, MAP_RAM);
 	}
 	ZetSetWriteHandler(berzerk_write);
 	ZetSetOutHandler(berzerk_write_port);
@@ -1147,7 +1174,7 @@ static void DrvPaletteInit()
 		INT32 g = (i & 2) ? 0xff : n;
 		INT32 b = (i & 4) ? 0xff : n;
 
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
@@ -1155,20 +1182,23 @@ static void draw_layer()
 {
 	for (INT32 y = 32; y < 256; y++)
 	{
-		UINT16 *dst = pTransDraw + (y - 32) * nScreenWidth;
-		UINT8 *vsrc = DrvVidRAM + (y * 32);
-		UINT8 *csrc = DrvColRAM + ((y / 4) * 32);
+		UINT16* dst = pTransDraw + (y - 32) * nScreenWidth;
+		UINT8* vsrc = DrvVidRAM + (y * 32);
+		UINT8* csrc = DrvColRAM + ((y / 4) * 32);
 
 		for (INT32 x = 0; x < 256; x += 8)
 		{
-			INT32 data = vsrc[x/8];
-			INT32 color = csrc[x/8];
+			INT32 data = vsrc[x / 8];
+			INT32 color = csrc[x / 8];
 
 			for (INT32 sx = 0; sx < 8; sx++, dst++, data <<= 1)
 			{
-				if (sx & 4) {
+				if (sx & 4)
+				{
 					*dst = (data & 0x80) ? (color & 0xf) : 0;
-				} else {
+				}
+				else
+				{
 					*dst = (data & 0x80) ? (color >> 4) : 0;
 				}
 			}
@@ -1178,7 +1208,8 @@ static void draw_layer()
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
@@ -1192,7 +1223,8 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
@@ -1209,18 +1241,21 @@ static INT32 DrvFrame()
 		DrvInputs[7] = DrvDips[4]; // coin chute 2
 		DrvInputs[8] = DrvDips[5]; // coin chute 3
 
-		if (moonwarp_mode) {
+		if (moonwarp_mode)
+		{
 			DrvJoy3[3] |= DrvJoy1f[4]; // shared hyper-flip button! (#4)
 		}
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
-		if (moonwarp_mode) {
+		if (moonwarp_mode)
+		{
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
 			BurnTrackballFrame(0, Analog[0], Analog[1], 0x00, 0x07);
 			BurnTrackballUDLR(0, DrvJoy1f[2], DrvJoy1f[3], DrvJoy1f[0], DrvJoy1f[1]);
@@ -1234,26 +1269,31 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal[1] = { (INT32)(2500000 / 59.63) };
-	INT32 nCyclesDone[1] = { nExtraCycles[0] };
+	INT32 nCyclesTotal[1] = {static_cast<INT32>(2500000 / 59.63)};
+	INT32 nCyclesDone[1] = {nExtraCycles[0]};
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		if (i == 32) vblank = 0;
-		if (i == 256) {
-			if (pBurnDraw) {
+		if (i == 256)
+		{
+			if (pBurnDraw)
+			{
 				BurnDrvRedraw();
 			}
 			vblank = 1;
 		}
 
-		if (((i + 1) % 32) == 0 && nmi_enable) {
+		if (((i + 1) % 32) == 0 && nmi_enable)
+		{
 			ZetNmi();
 		}
-		if (i == 128 || i == 256) {
-			if (irq_enable) {
+		if (i == 128 || i == 256)
+		{
+			if (irq_enable)
+			{
 				ZetSetVector(0xfc);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
@@ -1266,7 +1306,8 @@ static INT32 DrvFrame()
 
 	ZetClose();
 
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		exidy_render(pBurnSoundOut, nBurnSoundLen);
 		s14001a_render(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -1274,19 +1315,21 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -1294,7 +1337,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		exidy_sound_scan();
 
-		if (moonwarp_mode) {
+		if (moonwarp_mode)
+		{
 			BurnTrackballScan();
 		}
 
@@ -1309,11 +1353,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nExtraCycles);
 	}
 
-	if (nAction & ACB_NVRAM) {
-		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x00400;
-		ba.nAddress	= 0;
-		ba.szName	= "NV RAM";
+	if (nAction & ACB_NVRAM)
+	{
+		ba.Data = DrvNVRAM;
+		ba.nLen = 0x00400;
+		ba.nAddress = 0;
+		ba.szName = "NV RAM";
 		BurnAcb(&ba);
 	}
 
@@ -1324,15 +1369,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Berzerk (revision RC31A)
 
 static struct BurnRomInfo berzerkRomDesc[] = {
-	{ "berzerk_rc31_1c.rom0.1c",	0x0800, 0xca566dbc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "berzerk_rc31_1d.rom1.1d",	0x0800, 0x7ba69fde, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "berzerk_rc31_3d.rom2.3d",	0x0800, 0xa1d5248b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "berzerk_rc31_5d.rom3.5d",	0x0800, 0xfcaefa95, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "berzerk_rc31_6d.rom4.6d",	0x0800, 0x1e35b9a0, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "berzerk_rc31a_5c.rom5.5c",	0x0800, 0xe0fab8f5, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"berzerk_rc31_1c.rom0.1c", 0x0800, 0xca566dbc, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"berzerk_rc31_1d.rom1.1d", 0x0800, 0x7ba69fde, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"berzerk_rc31_3d.rom2.3d", 0x0800, 0xa1d5248b, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"berzerk_rc31_5d.rom3.5d", 0x0800, 0xfcaefa95, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"berzerk_rc31_6d.rom4.6d", 0x0800, 0x1e35b9a0, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"berzerk_rc31a_5c.rom5.5c", 0x0800, 0xe0fab8f5, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "berzerk_r_vo_1c.1c",			0x0800, 0x2cfe825d, 2 | BRF_SND },           //  6 Speech Data
-	{ "berzerk_r_vo_2c.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  7
+	{"berzerk_r_vo_1c.1c", 0x0800, 0x2cfe825d, 2 | BRF_SND}, //  6 Speech Data
+	{"berzerk_r_vo_2c.2c", 0x0800, 0xd2b6324e, 2 | BRF_SND}, //  7
 };
 
 STD_ROM_PICK(berzerk)
@@ -1344,11 +1389,11 @@ static INT32 BerzerkInit()
 }
 
 struct BurnDriver BurnDrvBerzerk = {
-	"berzerk", NULL, NULL, NULL, "1980",
-	"Berzerk (revision RC31A)\0", NULL, "Stern Electronics", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"berzerk", nullptr, nullptr, nullptr, "1980",
+	"Berzerk (revision RC31A)\0", nullptr, "Stern Electronics", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, berzerkRomInfo, berzerkRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkDIPInfo,
+	nullptr, berzerkRomInfo, berzerkRomName, nullptr, nullptr, nullptr, nullptr, BerzerkInputInfo, BerzerkDIPInfo,
 	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
@@ -1357,26 +1402,26 @@ struct BurnDriver BurnDrvBerzerk = {
 // Berzerk (revision RC31)
 
 static struct BurnRomInfo berzerkaRomDesc[] = {
-	{ "berzerk_rc31_1c.rom0.1c",	0x0800, 0xca566dbc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "berzerk_rc31_1d.rom1.1d",	0x0800, 0x7ba69fde, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "berzerk_rc31_3d.rom2.3d",	0x0800, 0xa1d5248b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "berzerk_rc31_5d.rom3.5d",	0x0800, 0xfcaefa95, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "berzerk_rc31_6d.rom4.6d",	0x0800, 0x1e35b9a0, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "berzerk_rc31_5c.rom5.5c",	0x0800, 0xc8c665e5, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"berzerk_rc31_1c.rom0.1c", 0x0800, 0xca566dbc, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"berzerk_rc31_1d.rom1.1d", 0x0800, 0x7ba69fde, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"berzerk_rc31_3d.rom2.3d", 0x0800, 0xa1d5248b, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"berzerk_rc31_5d.rom3.5d", 0x0800, 0xfcaefa95, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"berzerk_rc31_6d.rom4.6d", 0x0800, 0x1e35b9a0, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"berzerk_rc31_5c.rom5.5c", 0x0800, 0xc8c665e5, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "berzerk_r_vo_1c.1c",			0x0800, 0x2cfe825d, 2 | BRF_SND },           //  6 Speech Data
-	{ "berzerk_r_vo_2c.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  7
+	{"berzerk_r_vo_1c.1c", 0x0800, 0x2cfe825d, 2 | BRF_SND}, //  6 Speech Data
+	{"berzerk_r_vo_2c.2c", 0x0800, 0xd2b6324e, 2 | BRF_SND}, //  7
 };
 
 STD_ROM_PICK(berzerka)
 STD_ROM_FN(berzerka)
 
 struct BurnDriver BurnDrvBerzerka = {
-	"berzerka", "berzerk", NULL, NULL, "1980",
-	"Berzerk (revision RC31)\0", NULL, "Stern Electronics", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"berzerka", "berzerk", nullptr, nullptr, "1980",
+	"Berzerk (revision RC31)\0", nullptr, "Stern Electronics", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, berzerkaRomInfo, berzerkaRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkDIPInfo,
+	nullptr, berzerkaRomInfo, berzerkaRomName, nullptr, nullptr, nullptr, nullptr, BerzerkInputInfo, BerzerkDIPInfo,
 	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
@@ -1385,26 +1430,26 @@ struct BurnDriver BurnDrvBerzerka = {
 // Berzerk (revision RC28)
 
 static struct BurnRomInfo berzerkbRomDesc[] = {
-	{ "berzerk_rc28_1c.rom0.1c",	0x0800, 0x5b7eb77d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "berzerk_rc28_1d.rom1.1d",	0x0800, 0xe58c8678, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "berzerk_rc28_3d.rom2.3d",	0x0800, 0x705bb339, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "berzerk_rc28_5d.rom3.5d",	0x0800, 0x6a1936b4, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "berzerk_rc28_6d.rom4.6d",	0x0800, 0xfa5dce40, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "berzerk_rc28_5c.rom5.5c",	0x0800, 0x2579b9f4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"berzerk_rc28_1c.rom0.1c", 0x0800, 0x5b7eb77d, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"berzerk_rc28_1d.rom1.1d", 0x0800, 0xe58c8678, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"berzerk_rc28_3d.rom2.3d", 0x0800, 0x705bb339, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"berzerk_rc28_5d.rom3.5d", 0x0800, 0x6a1936b4, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"berzerk_rc28_6d.rom4.6d", 0x0800, 0xfa5dce40, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"berzerk_rc28_5c.rom5.5c", 0x0800, 0x2579b9f4, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "berzerk_r_vo_1c.1c",			0x0800, 0x2cfe825d, 2 | BRF_SND },           //  6 Speech Data
-	{ "berzerk_r_vo_2c.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  7
+	{"berzerk_r_vo_1c.1c", 0x0800, 0x2cfe825d, 2 | BRF_SND}, //  6 Speech Data
+	{"berzerk_r_vo_2c.2c", 0x0800, 0xd2b6324e, 2 | BRF_SND}, //  7
 };
 
 STD_ROM_PICK(berzerkb)
 STD_ROM_FN(berzerkb)
 
 struct BurnDriver BurnDrvBerzerkb = {
-	"berzerkb", "berzerk", NULL, NULL, "1980",
-	"Berzerk (revision RC28)\0", NULL, "Stern Electronics", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"berzerkb", "berzerk", nullptr, nullptr, "1980",
+	"Berzerk (revision RC28)\0", nullptr, "Stern Electronics", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, berzerkbRomInfo, berzerkbRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkDIPInfo,
+	nullptr, berzerkbRomInfo, berzerkbRomName, nullptr, nullptr, nullptr, nullptr, BerzerkInputInfo, BerzerkDIPInfo,
 	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
@@ -1413,26 +1458,26 @@ struct BurnDriver BurnDrvBerzerkb = {
 // Berzerk (French Speech, revision RC31)
 
 static struct BurnRomInfo berzerkfRomDesc[] = {
-	{ "berzerk_rc31f_1c.rom0.1c",	0x0800, 0x3ba6e56e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "berzerk_rc31f_1d.rom1.1d",	0x0800, 0xa1de2a3e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "berzerk_rc31f_3d.rom2.3d",	0x0800, 0xbc31c478, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "berzerk_rc31f_5d.rom3.5d",	0x0800, 0x316192b5, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "berzerk_rc31f_6d.rom4.6d",	0x0800, 0xcd51238c, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "berzerk_rc31f_5c.rom5.5c",	0x0800, 0x563b13b6, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"berzerk_rc31f_1c.rom0.1c", 0x0800, 0x3ba6e56e, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"berzerk_rc31f_1d.rom1.1d", 0x0800, 0xa1de2a3e, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"berzerk_rc31f_3d.rom2.3d", 0x0800, 0xbc31c478, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"berzerk_rc31f_5d.rom3.5d", 0x0800, 0x316192b5, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"berzerk_rc31f_6d.rom4.6d", 0x0800, 0xcd51238c, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"berzerk_rc31f_5c.rom5.5c", 0x0800, 0x563b13b6, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "berzerk_rvof_1c.1c",			0x0800, 0xd7bfaca2, 2 | BRF_SND },           //  6 Speech Data
-	{ "berzerk_rvof_2c.2c",			0x0800, 0x7bdc3573, 2 | BRF_SND },           //  7
+	{"berzerk_rvof_1c.1c", 0x0800, 0xd7bfaca2, 2 | BRF_SND}, //  6 Speech Data
+	{"berzerk_rvof_2c.2c", 0x0800, 0x7bdc3573, 2 | BRF_SND}, //  7
 };
 
 STD_ROM_PICK(berzerkf)
 STD_ROM_FN(berzerkf)
 
 struct BurnDriver BurnDrvBerzerkf = {
-	"berzerkf", "berzerk", NULL, NULL, "1980",
-	"Berzerk (French Speech, revision RC31)\0", NULL, "Stern Electronics", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"berzerkf", "berzerk", nullptr, nullptr, "1980",
+	"Berzerk (French Speech, revision RC31)\0", nullptr, "Stern Electronics", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, berzerkfRomInfo, berzerkfRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkfDIPInfo,
+	nullptr, berzerkfRomInfo, berzerkfRomName, nullptr, nullptr, nullptr, nullptr, BerzerkInputInfo, BerzerkfDIPInfo,
 	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
@@ -1441,26 +1486,26 @@ struct BurnDriver BurnDrvBerzerkf = {
 // Berzerk (German Speech, revision RC32)
 
 static struct BurnRomInfo berzerkgRomDesc[] = {
-	{ "berzerk_rc32_1c.rom0.1c",	0x0800, 0x77923a9e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "berzerk_rc32_1d.rom1.1d",	0x0800, 0x19bb3aac, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "berzerk_rc32g_3d.rom2.3d",	0x0800, 0xb0888ff7, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "berzerk_rc32_5d.rom3.5d",	0x0800, 0xe23239a9, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "berzerk_rc32g_6d.rom4.6d",	0x0800, 0x651b31b7, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "berzerk_rc32g_5c.rom5.5c",	0x0800, 0x8a403bba, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"berzerk_rc32_1c.rom0.1c", 0x0800, 0x77923a9e, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"berzerk_rc32_1d.rom1.1d", 0x0800, 0x19bb3aac, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"berzerk_rc32g_3d.rom2.3d", 0x0800, 0xb0888ff7, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"berzerk_rc32_5d.rom3.5d", 0x0800, 0xe23239a9, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"berzerk_rc32g_6d.rom4.6d", 0x0800, 0x651b31b7, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"berzerk_rc32g_5c.rom5.5c", 0x0800, 0x8a403bba, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "berzerk_rvog_1c.1c",			0x0800, 0xfc1da15f, 2 | BRF_SND },           //  6 Speech Data
-	{ "berzerk_rvog_2c.2c",			0x0800, 0x7f6808fb, 2 | BRF_SND },           //  7
+	{"berzerk_rvog_1c.1c", 0x0800, 0xfc1da15f, 2 | BRF_SND}, //  6 Speech Data
+	{"berzerk_rvog_2c.2c", 0x0800, 0x7f6808fb, 2 | BRF_SND}, //  7
 };
 
 STD_ROM_PICK(berzerkg)
 STD_ROM_FN(berzerkg)
 
 struct BurnDriver BurnDrvBerzerkg = {
-	"berzerkg", "berzerk", NULL, NULL, "1980",
-	"Berzerk (German Speech, revision RC32)\0", NULL, "Stern Electronics", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"berzerkg", "berzerk", nullptr, nullptr, "1980",
+	"Berzerk (German Speech, revision RC32)\0", nullptr, "Stern Electronics", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, berzerkgRomInfo, berzerkgRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerkgDIPInfo,
+	nullptr, berzerkgRomInfo, berzerkgRomName, nullptr, nullptr, nullptr, nullptr, BerzerkInputInfo, BerzerkgDIPInfo,
 	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
@@ -1469,25 +1514,25 @@ struct BurnDriver BurnDrvBerzerkg = {
 // Berzerk (Spanish Speech, revision RC32)
 
 static struct BurnRomInfo berzerksRomDesc[] = {
-	{ "berzerk_rc32_1c.rom0.1c",	0x0800, 0x77923a9e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "berzerk_rc32_1d.rom1.1d",	0x0800, 0x19bb3aac, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "berzerk_rc32_3d.rom2.3d",	0x0800, 0x5423ea87, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "berzerk_rc32_5d.rom3.5d",	0x0800, 0xe23239a9, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "berzerk_rc32_6d.rom4.6d",	0x0800, 0x959efd86, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "berzerk_rc32s_5c.rom5.5c",	0x0800, 0x9ad80e4e, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"berzerk_rc32_1c.rom0.1c", 0x0800, 0x77923a9e, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"berzerk_rc32_1d.rom1.1d", 0x0800, 0x19bb3aac, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"berzerk_rc32_3d.rom2.3d", 0x0800, 0x5423ea87, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"berzerk_rc32_5d.rom3.5d", 0x0800, 0xe23239a9, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"berzerk_rc32_6d.rom4.6d", 0x0800, 0x959efd86, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"berzerk_rc32s_5c.rom5.5c", 0x0800, 0x9ad80e4e, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "berzerk_rvos_1c.1c",			0x0800, 0x0b51409c, 2 | BRF_SND },           //  6 Speech Data
+	{"berzerk_rvos_1c.1c", 0x0800, 0x0b51409c, 2 | BRF_SND}, //  6 Speech Data
 };
 
 STD_ROM_PICK(berzerks)
 STD_ROM_FN(berzerks)
 
 struct BurnDriver BurnDrvBerzerks = {
-	"berzerks", "berzerk", NULL, NULL, "1980",
-	"Berzerk (Spanish Speech, revision RC32)\0", NULL, "Stern Electronics (Sonic License)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"berzerks", "berzerk", nullptr, nullptr, "1980",
+	"Berzerk (Spanish Speech, revision RC32)\0", nullptr, "Stern Electronics (Sonic License)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, berzerksRomInfo, berzerksRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, BerzerksDIPInfo,
+	nullptr, berzerksRomInfo, berzerksRomName, nullptr, nullptr, nullptr, nullptr, BerzerkInputInfo, BerzerksDIPInfo,
 	BerzerkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
@@ -1496,16 +1541,16 @@ struct BurnDriver BurnDrvBerzerks = {
 // Frenzy (revision RA1)
 
 static struct BurnRomInfo frenzyRomDesc[] = {
-	{ "frenzy_ra1_rom1.1d",		0x1000, 0xabdd25b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "frenzy_ra1_rom2.3d",		0x1000, 0x536e4ae8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "frenzy_ra1_rom3.5d",		0x1000, 0x3eb9bc9b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "frenzy_ra1_rom4.6d",		0x1000, 0xe1d3133c, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "frenzy_ra1_rom5.5c",		0x1000, 0x5581a7b1, 1 | BRF_PRG | BRF_ESS }, //  4
+	{"frenzy_ra1_rom1.1d", 0x1000, 0xabdd25b8, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"frenzy_ra1_rom2.3d", 0x1000, 0x536e4ae8, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"frenzy_ra1_rom3.5d", 0x1000, 0x3eb9bc9b, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"frenzy_ra1_rom4.6d", 0x1000, 0xe1d3133c, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"frenzy_ra1_rom5.5c", 0x1000, 0x5581a7b1, 1 | BRF_PRG | BRF_ESS}, //  4
 
-	{ "e169-1cvo.1c",			0x0800, 0x2cfe825d, 2 | BRF_SND },           //  5 Speech Data
-	{ "e169-2cvo.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  6
+	{"e169-1cvo.1c", 0x0800, 0x2cfe825d, 2 | BRF_SND}, //  5 Speech Data
+	{"e169-2cvo.2c", 0x0800, 0xd2b6324e, 2 | BRF_SND}, //  6
 
-	{ "frenzy_decoder_6ea1.6e",	0x0020, 0x4471ca5d, 3 | BRF_GRA },           //  7 Address PROM
+	{"frenzy_decoder_6ea1.6e", 0x0020, 0x4471ca5d, 3 | BRF_GRA}, //  7 Address PROM
 };
 
 STD_ROM_PICK(frenzy)
@@ -1517,11 +1562,11 @@ static INT32 FrenzyInit()
 }
 
 struct BurnDriver BurnDrvFrenzy = {
-	"frenzy", NULL, NULL, NULL, "1982",
-	"Frenzy (revision RA1)\0", NULL, "Stern Electronics", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"frenzy", nullptr, nullptr, nullptr, "1982",
+	"Frenzy (revision RA1)\0", nullptr, "Stern Electronics", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, frenzyRomInfo, frenzyRomName, NULL, NULL, NULL, NULL, BerzerkInputInfo, FrenzyDIPInfo,
+	nullptr, frenzyRomInfo, frenzyRomName, nullptr, nullptr, nullptr, nullptr, BerzerkInputInfo, FrenzyDIPInfo,
 	FrenzyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };
@@ -1530,17 +1575,17 @@ struct BurnDriver BurnDrvFrenzy = {
 // Moon War (prototype on Frenzy hardware)
 
 static struct BurnRomInfo moonwarpRomDesc[] = {
-	{ "1d.bin",					0x1000, 0x75470634, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "3d.bin",					0x1000, 0xa9d046dc, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "5d.bin",					0x1000, 0xbf671737, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "6d.bin",					0x1000, 0xcef2d697, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "5c.bin",					0x1000, 0xa3d551ab, 1 | BRF_PRG | BRF_ESS }, //  4
+	{"1d.bin", 0x1000, 0x75470634, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{"3d.bin", 0x1000, 0xa9d046dc, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"5d.bin", 0x1000, 0xbf671737, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"6d.bin", 0x1000, 0xcef2d697, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"5c.bin", 0x1000, 0xa3d551ab, 1 | BRF_PRG | BRF_ESS}, //  4
 
-	{ "moon_war_rv0_1c.1c",		0x0800, 0x9e9a653f, 2 | BRF_SND },           //  5 Speech Data
-	{ "moon_war_rv0_2c.2c",		0x0800, 0x73fd988d, 2 | BRF_SND },           //  6
+	{"moon_war_rv0_1c.1c", 0x0800, 0x9e9a653f, 2 | BRF_SND}, //  5 Speech Data
+	{"moon_war_rv0_2c.2c", 0x0800, 0x73fd988d, 2 | BRF_SND}, //  6
 
-	{ "n82s123.6e",				0x0020, 0x4471ca5d, 3 | BRF_GRA },           //  7 Address PROMs
-	{ "prom.6e",				0x0020, 0x56bffba3, 3 | BRF_GRA },           //  8
+	{"n82s123.6e", 0x0020, 0x4471ca5d, 3 | BRF_GRA}, //  7 Address PROMs
+	{"prom.6e", 0x0020, 0x56bffba3, 3 | BRF_GRA}, //  8
 };
 
 STD_ROM_PICK(moonwarp)
@@ -1552,11 +1597,11 @@ static INT32 MoonwarpInit()
 }
 
 struct BurnDriver BurnDrvMoonwarp = {
-	"moonwarp", NULL, NULL, NULL, "1981",
-	"Moon War (prototype on Frenzy hardware)\0", NULL, "Stern Electronics", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"moonwarp", nullptr, nullptr, nullptr, "1981",
+	"Moon War (prototype on Frenzy hardware)\0", nullptr, "Stern Electronics", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, moonwarpRomInfo, moonwarpRomName, NULL, NULL, NULL, NULL, MoonwarpInputInfo, MoonwarpDIPInfo,
+	nullptr, moonwarpRomInfo, moonwarpRomName, nullptr, nullptr, nullptr, nullptr, MoonwarpInputInfo, MoonwarpDIPInfo,
 	MoonwarpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 224, 4, 3
 };

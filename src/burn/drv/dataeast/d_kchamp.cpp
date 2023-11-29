@@ -7,24 +7,24 @@
 #include "dac.h"
 #include "msm5205.h"
 
-static UINT8 *AllMem;
-static UINT8 *MemEnd;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *DrvZ80ROM0;
-static UINT8 *DrvZ80Ops;
-static UINT8 *DrvZ80ROM1;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
-static UINT8 *DrvColPROM;
-static UINT8 *DrvZ80RAMA;
-static UINT8 *DrvZ80RAMB;
-static UINT8 *DrvZ80RAM1;
-static UINT8 *DrvVidRAM;
-static UINT8 *DrvColRAM;
-static UINT8 *DrvSprRAM;
+static UINT8* AllMem;
+static UINT8* MemEnd;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* DrvZ80ROM0;
+static UINT8* DrvZ80Ops;
+static UINT8* DrvZ80ROM1;
+static UINT8* DrvGfxROM0;
+static UINT8* DrvGfxROM1;
+static UINT8* DrvColPROM;
+static UINT8* DrvZ80RAMA;
+static UINT8* DrvZ80RAMB;
+static UINT8* DrvZ80RAM1;
+static UINT8* DrvVidRAM;
+static UINT8* DrvColRAM;
+static UINT8* DrvSprRAM;
 
-static UINT32 *DrvPalette;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
@@ -43,100 +43,100 @@ static UINT8 msm_data;
 static UINT8 msm_counter;
 
 static struct BurnInputInfo KchampInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
-	{"P1 Up (left)",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down (left)",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left (left)",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
-	{"P1 Right (left)",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Up (right)",	BIT_DIGITAL,	DrvJoy1 + 6,	"p3 up"		},
-	{"P1 Down (right)",		BIT_DIGITAL,	DrvJoy1 + 7,	"p3 down"	},
-	{"P1 Left (right)",	BIT_DIGITAL,	DrvJoy1 + 5,	"p3 left"	},
-	{"P1 Right (right)",	BIT_DIGITAL,	DrvJoy1 + 4,	"p3 right"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy3 + 0, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy3 + 2, "p1 start"},
+	{"P1 Up (left)", BIT_DIGITAL, DrvJoy1 + 2, "p1 up"},
+	{"P1 Down (left)", BIT_DIGITAL, DrvJoy1 + 3, "p1 down"},
+	{"P1 Left (left)", BIT_DIGITAL, DrvJoy1 + 1, "p1 left"},
+	{"P1 Right (left)", BIT_DIGITAL, DrvJoy1 + 0, "p1 right"},
+	{"P1 Up (right)", BIT_DIGITAL, DrvJoy1 + 6, "p3 up"},
+	{"P1 Down (right)", BIT_DIGITAL, DrvJoy1 + 7, "p3 down"},
+	{"P1 Left (right)", BIT_DIGITAL, DrvJoy1 + 5, "p3 left"},
+	{"P1 Right (right)", BIT_DIGITAL, DrvJoy1 + 4, "p3 right"},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P2 Up (left)",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down (left)",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left (left)",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
-	{"P2 Right (left)",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
-	{"P2 Up (right)",		BIT_DIGITAL,	DrvJoy2 + 6,	"p4 up"		},
-	{"P2 Down (right)",	BIT_DIGITAL,	DrvJoy2 + 7,	"p4 down"	},
-	{"P2 Left (right)",	BIT_DIGITAL,	DrvJoy2 + 5,	"p4 left"	},
-	{"P2 Right (right)",	BIT_DIGITAL,	DrvJoy2 + 4,	"p4 right"	},
+	{"P2 Start", BIT_DIGITAL, DrvJoy3 + 3, "p2 start"},
+	{"P2 Coin", BIT_DIGITAL, DrvJoy3 + 1, "p2 coin"},
+	{"P2 Up (left)", BIT_DIGITAL, DrvJoy2 + 2, "p2 up"},
+	{"P2 Down (left)", BIT_DIGITAL, DrvJoy2 + 3, "p2 down"},
+	{"P2 Left (left)", BIT_DIGITAL, DrvJoy2 + 1, "p2 left"},
+	{"P2 Right (left)", BIT_DIGITAL, DrvJoy2 + 0, "p2 right"},
+	{"P2 Up (right)", BIT_DIGITAL, DrvJoy2 + 6, "p4 up"},
+	{"P2 Down (right)", BIT_DIGITAL, DrvJoy2 + 7, "p4 down"},
+	{"P2 Left (right)", BIT_DIGITAL, DrvJoy2 + 5, "p4 left"},
+	{"P2 Right (right)", BIT_DIGITAL, DrvJoy2 + 4, "p4 right"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
 };
 
 STDINPUTINFO(Kchamp)
 
-static struct BurnDIPInfo KchampDIPList[]=
+static struct BurnDIPInfo KchampDIPList[] =
 {
-	{0x15, 0xff, 0xff, 0x3f, NULL			},
+	{0x15, 0xff, 0xff, 0x3f, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x15, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
-	{0x15, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x15, 0x01, 0x03, 0x00, "3 Coins 1 Credits"},
+	{0x15, 0x01, 0x03, 0x01, "2 Coins 1 Credits"},
+	{0x15, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
+	{0x15, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x15, 0x01, 0x0c, 0x00, "3 Coins 1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x15, 0x01, 0x0c, 0x00, "3 Coins 1 Credits"},
+	{0x15, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"},
+	{0x15, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"},
+	{0x15, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x15, 0x01, 0x10, 0x00, "Hard"			},
-	{0x15, 0x01, 0x10, 0x10, "Normal"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x15, 0x01, 0x10, 0x00, "Hard"},
+	{0x15, 0x01, 0x10, 0x10, "Normal"},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x15, 0x01, 0x20, 0x20, "Off"			},
-	{0x15, 0x01, 0x20, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Free Play"},
+	{0x15, 0x01, 0x20, 0x20, "Off"},
+	{0x15, 0x01, 0x20, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x15, 0x01, 0x40, 0x40, "Off"			},
-	{0x15, 0x01, 0x40, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x15, 0x01, 0x40, 0x40, "Off"},
+	{0x15, 0x01, 0x40, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x15, 0x01, 0x80, 0x00, "Upright"		},
-	{0x15, 0x01, 0x80, 0x80, "Cocktail"		},
+	{0, 0xfe, 0, 2, "Cabinet"},
+	{0x15, 0x01, 0x80, 0x00, "Upright"},
+	{0x15, 0x01, 0x80, 0x80, "Cocktail"},
 };
 
 STDDIPINFO(Kchamp)
 
-static struct BurnDIPInfo KchampvsDIPList[]=
+static struct BurnDIPInfo KchampvsDIPList[] =
 {
-	{0x15, 0xff, 0xff, 0xbf, NULL			},
+	{0x15, 0xff, 0xff, 0xbf, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x15, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
-	{0x15, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0, 0xfe, 0, 4, "Coin B"},
+	{0x15, 0x01, 0x03, 0x00, "3 Coins 1 Credits"},
+	{0x15, 0x01, 0x03, 0x01, "2 Coins 1 Credits"},
+	{0x15, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
+	{0x15, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x15, 0x01, 0x0c, 0x00, "3 Coins 1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0, 0xfe, 0, 4, "Coin A"},
+	{0x15, 0x01, 0x0c, 0x00, "3 Coins 1 Credits"},
+	{0x15, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"},
+	{0x15, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"},
+	{0x15, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x15, 0x01, 0x10, 0x00, "Hard"			},
-	{0x15, 0x01, 0x10, 0x10, "Normal"		},
+	{0, 0xfe, 0, 2, "Difficulty"},
+	{0x15, 0x01, 0x10, 0x00, "Hard"},
+	{0x15, 0x01, 0x10, 0x10, "Normal"},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x15, 0x01, 0x20, 0x20, "Off"			},
-	{0x15, 0x01, 0x20, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Free Play"},
+	{0x15, 0x01, 0x20, 0x20, "Off"},
+	{0x15, 0x01, 0x20, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x15, 0x01, 0x40, 0x40, "Off"			},
-	{0x15, 0x01, 0x40, 0x00, "On"			},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x15, 0x01, 0x40, 0x40, "Off"},
+	{0x15, 0x01, 0x40, 0x00, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x15, 0x01, 0x80, 0x00, "On"			},
-	{0x15, 0x01, 0x80, 0x80, "Off"			},
+	{0, 0xfe, 0, 2, "Free Play"},
+	{0x15, 0x01, 0x80, 0x00, "On"},
+	{0x15, 0x01, 0x80, 0x80, "Off"},
 };
 
 STDDIPINFO(Kchampvs)
@@ -145,22 +145,21 @@ static void __fastcall kchamp_main_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
-		case 0x80:
-			flipscreen = data & 1;
+	case 0x80:
+		flipscreen = data & 1;
 		return;
 
-		case 0x81:
-			nmi_enable = data & 1;
+	case 0x81:
+		nmi_enable = data & 1;
 		return;
 
-		case 0xa8:
-			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
-		return;
+	case 0xa8:
+		soundlatch = data;
+		ZetClose();
+		ZetOpen(1);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		ZetClose();
+		ZetOpen(0);
 	}
 }
 
@@ -168,25 +167,25 @@ static UINT8 __fastcall kchamp_main_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x80:
-			return DrvDips[0];
+	case 0x80:
+		return DrvDips[0];
 
-		case 0x90:
-			return DrvInputs[0];
+	case 0x90:
+		return DrvInputs[0];
 
-		case 0x98:
-			return DrvInputs[1];
+	case 0x98:
+		return DrvInputs[1];
 
-		case 0xa0:
-			return DrvInputs[2];
+	case 0xa0:
+		return DrvInputs[2];
 
-		case 0xa8:
-			ZetClose();
-			ZetOpen(1);
-			ZetReset();
-			ZetClose();
-			ZetOpen(0);
-			return 0;
+	case 0xa8:
+		ZetClose();
+		ZetOpen(1);
+		ZetReset();
+		ZetClose();
+		ZetOpen(0);
+		return 0;
 	}
 
 	return 0;
@@ -196,22 +195,21 @@ static void __fastcall kchamp_sound_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
-		case 0x00:
-		case 0x01:
-		case 0x02:
-		case 0x03:
-			AY8910Write((port/2)&1, ~port & 1, data);
+	case 0x00:
+	case 0x01:
+	case 0x02:
+	case 0x03:
+		AY8910Write((port / 2) & 1, ~port & 1, data);
 		return;
 
-		case 0x04:
-			if (data < 0x40) return; // take a little edge off the distortion
-			if (data > 0xc0) return;
-			DACSignedWrite(0, data);
+	case 0x04:
+		if (data < 0x40) return; // take a little edge off the distortion
+		if (data > 0xc0) return;
+		DACSignedWrite(0, data);
 		return;
 
-		case 0x05:
-			sound_nmi_enable = data & 0x80;
-		return;
+	case 0x05:
+		sound_nmi_enable = data & 0x80;
 	}
 }
 
@@ -219,8 +217,8 @@ static UINT8 __fastcall kchamp_sound_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x06:
-			return soundlatch;
+	case 0x06:
+		return soundlatch;
 	}
 
 	return 0;
@@ -230,30 +228,29 @@ static void __fastcall kchampvs_main_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
-		case 0x00:
-			flipscreen = data & 1;
+	case 0x00:
+		flipscreen = data & 1;
 		return;
 
-		case 0x01:
-			nmi_enable = data & 1;
+	case 0x01:
+		nmi_enable = data & 1;
 		return;
 
-		case 0x02:
-			ZetClose();
-			ZetOpen(1);
-			ZetReset();
-			ZetClose();
-			ZetOpen(0);
+	case 0x02:
+		ZetClose();
+		ZetOpen(1);
+		ZetReset();
+		ZetClose();
+		ZetOpen(0);
 		return;
 
-		case 0x40:
-			soundlatch = data;
-			ZetClose();
-			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			ZetClose();
-			ZetOpen(0);
-		return;
+	case 0x40:
+		soundlatch = data;
+		ZetClose();
+		ZetOpen(1);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		ZetClose();
+		ZetOpen(0);
 	}
 }
 
@@ -261,17 +258,17 @@ static UINT8 __fastcall kchampvs_main_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x00:
-			return DrvInputs[0];
+	case 0x00:
+		return DrvInputs[0];
 
-		case 0x40:
-			return DrvInputs[1];
+	case 0x40:
+		return DrvInputs[1];
 
-		case 0x80:
-			return DrvInputs[2];
+	case 0x80:
+		return DrvInputs[2];
 
-		case 0xc0:
-			return DrvDips[0];
+	case 0xc0:
+		return DrvDips[0];
 	}
 
 	return 0;
@@ -281,22 +278,21 @@ static void __fastcall kchampvs_sound_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
-		case 0x00:
-		case 0x01:
-		case 0x02:
-		case 0x03:
-			AY8910Write((port/2)&1, ~port & 1, data);
+	case 0x00:
+	case 0x01:
+	case 0x02:
+	case 0x03:
+		AY8910Write((port / 2) & 1, ~port & 1, data);
 		return;
 
-		case 0x04:
-			msm_data = data;
-			msm_play_lo_nibble = 1;
+	case 0x04:
+		msm_data = data;
+		msm_play_lo_nibble = 1;
 		return;
 
-		case 0x05:
-			MSM5205ResetWrite(0, ~data & 1);
-			sound_nmi_enable = data & 0x02;
-		return;
+	case 0x05:
+		MSM5205ResetWrite(0, ~data & 1);
+		sound_nmi_enable = data & 0x02;
 	}
 }
 
@@ -304,8 +300,8 @@ static UINT8 __fastcall kchampvs_sound_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x01:
-			return soundlatch;
+	case 0x01:
+		return soundlatch;
 	}
 
 	return 0;
@@ -320,19 +316,20 @@ static void kchampvs_adpcm_interrupt()
 
 	msm_play_lo_nibble = !msm_play_lo_nibble;
 
-	if (!(msm_counter ^= 1) && sound_nmi_enable) {
+	if (!(msm_counter ^= 1) && sound_nmi_enable)
+	{
 		ZetNmi();
 	}
 }
 
 static INT32 SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)ZetTotalCycles() * nSoundRate / 3000000;
+	return static_cast<INT64>(ZetTotalCycles()) * nSoundRate / 3000000;
 }
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
 	ZetReset();
@@ -362,52 +359,67 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvZ80ROM0		= Next; Next += 0x010000;
-	DrvZ80Ops		= Next; Next += 0x010000;
-	DrvZ80ROM1		= Next; Next += 0x010000;
+	DrvZ80ROM0 = Next;
+	Next += 0x010000;
+	DrvZ80Ops = Next;
+	Next += 0x010000;
+	DrvZ80ROM1 = Next;
+	Next += 0x010000;
 
-	DrvGfxROM0		= Next; Next += 0x040000;
-	DrvGfxROM1		= Next; Next += 0x080000;
+	DrvGfxROM0 = Next;
+	Next += 0x040000;
+	DrvGfxROM1 = Next;
+	Next += 0x080000;
 
-	DrvColPROM		= Next; Next += 0x000300;
+	DrvColPROM = Next;
+	Next += 0x000300;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
+	DrvPalette = (UINT32*)Next;
+	Next += 0x100 * sizeof(UINT32);
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvZ80RAMA		= Next; Next += 0x002000;
-	DrvZ80RAMB		= Next; Next += 0x002000;
-	DrvZ80RAM1		= Next; Next += 0x00a000;
-	DrvVidRAM		= Next; Next += 0x000400;
-	DrvColRAM		= Next; Next += 0x000400;
-	DrvSprRAM		= Next; Next += 0x000100;
+	DrvZ80RAMA = Next;
+	Next += 0x002000;
+	DrvZ80RAMB = Next;
+	Next += 0x002000;
+	DrvZ80RAM1 = Next;
+	Next += 0x00a000;
+	DrvVidRAM = Next;
+	Next += 0x000400;
+	DrvColRAM = Next;
+	Next += 0x000400;
+	DrvSprRAM = Next;
+	Next += 0x000100;
 
-	RamEnd			= Next;
+	RamEnd = Next;
 
-	MemEnd			= Next;
+	MemEnd = Next;
 
 	return 0;
 }
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane0[2] = { 0x4000*8, 0 };
-	INT32 Plane1[2] = { 0xc000*8, 0 };
-	INT32 XOffs[16] = { STEP8(0,1), STEP8(0x2000*8,1) };
-	INT32 YOffs[16] = { STEP8(0,8), STEP8(8*8,8) };
+	INT32 Plane0[2] = {0x4000 * 8, 0};
+	INT32 Plane1[2] = {0xc000 * 8, 0};
+	INT32 XOffs[16] = {STEP8(0, 1), STEP8(0x2000*8, 1)};
+	INT32 YOffs[16] = {STEP8(0, 8), STEP8(8*8, 8)};
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x18000);
-	if (tmp == NULL) {
+	auto tmp = BurnMalloc(0x18000);
+	if (tmp == nullptr)
+	{
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM0, 0x8000);
+	memcpy(tmp, DrvGfxROM0, 0x8000);
 
-	GfxDecode(0x0800, 2,  8,  8, Plane0, XOffs, YOffs, 0x040, tmp, DrvGfxROM0);
+	GfxDecode(0x0800, 2, 8, 8, Plane0, XOffs, YOffs, 0x040, tmp, DrvGfxROM0);
 
-	memcpy (tmp, DrvGfxROM1, 0x18000);
+	memcpy(tmp, DrvGfxROM1, 0x18000);
 
 	GfxDecode(0x0200, 2, 16, 16, Plane1, XOffs, YOffs, 0x080, tmp + 0x8000, DrvGfxROM1 + 0x40000);
 	GfxDecode(0x0200, 2, 16, 16, Plane1, XOffs, YOffs, 0x080, tmp + 0x4000, DrvGfxROM1 + 0x20000);
@@ -420,25 +432,25 @@ static INT32 DrvGfxDecode()
 
 static INT32 KchampInit()
 {
-	AllMem = NULL;
+	AllMem = nullptr;
 	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - static_cast<UINT8*>(nullptr);
+	if ((AllMem = BurnMalloc(nLen)) == nullptr) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x02000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x06000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x0a000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x02000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x04000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x06000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x08000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x0a000, 5, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM1 + 0x02000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM1 + 0x04000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM1 + 0x06000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 6, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x02000, 7, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x04000, 8, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x06000, 9, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM1 + 0x08000, 10, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM1 + 0x0a000, 11, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM1 + 0x0c000, 12, 1)) return 1;
@@ -468,20 +480,20 @@ static INT32 KchampInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xbfff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAMA,		0xc000, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM,			0xe000, 0xe3ff, MAP_RAM);
-	ZetMapMemory(DrvColRAM,			0xe400, 0xe7ff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,			0xea00, 0xeaff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAMB,		0xeb00, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAMA, 0xc000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0xe000, 0xe3ff, MAP_RAM);
+	ZetMapMemory(DrvColRAM, 0xe400, 0xe7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 0xea00, 0xeaff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAMB, 0xeb00, 0xffff, MAP_RAM);
 	ZetSetOutHandler(kchamp_main_write_port);
 	ZetSetInHandler(kchamp_main_read_port);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0xdfff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0xe000, 0xe2ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0xdfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0xe000, 0xe2ff, MAP_RAM);
 	ZetSetOutHandler(kchamp_sound_write_port);
 	ZetSetInHandler(kchamp_sound_read_port);
 	ZetClose();
@@ -490,7 +502,7 @@ static INT32 KchampInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 3579545);
+	AY8910SetBuffered(ZetTotalCycles, 3579545);
 
 	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -514,27 +526,27 @@ static void decode()
 
 static INT32 KchampvsInit()
 {
-	AllMem = NULL;
+	AllMem = nullptr;
 	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - static_cast<UINT8*>(nullptr);
+	if ((AllMem = BurnMalloc(nLen)) == nullptr) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x02000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x06000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x0a000,  5, 1)) return 1;
-		memcpy (DrvZ80ROM0 + 0xe000, DrvZ80ROM0 + 0xc000, 0x2000);
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x02000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x04000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x06000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x08000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x0a000, 5, 1)) return 1;
+		memcpy(DrvZ80ROM0 + 0xe000, DrvZ80ROM0 + 0xc000, 0x2000);
 
-		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM1 + 0x02000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM1 + 0x04000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 6, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x02000, 7, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x04000, 8, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000, 9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x02000, 10, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x04000, 11, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x06000, 12, 1)) return 1;
@@ -562,14 +574,14 @@ static INT32 KchampvsInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xbfff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAMA,		0xc000, 0xcfff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM,			0xd000, 0xd3ff, MAP_RAM);
-	ZetMapMemory(DrvColRAM,			0xd400, 0xd7ff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,			0xd800, 0xd9ff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAMB,		0xd900, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvZ80ROM0 + 0xe000,	0xe000, 0xffff, MAP_ROM);
-//	ZetMapMemory(DrvZ80Ops,			0x0000, 0xffff, MAP_FETCH);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAMA, 0xc000, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(DrvColRAM, 0xd400, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 0xd800, 0xd9ff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAMB, 0xd900, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0 + 0xe000, 0xe000, 0xffff, MAP_ROM);
+	//	ZetMapMemory(DrvZ80Ops,			0x0000, 0xffff, MAP_FETCH);
 	ZetMapArea(0x0000, 0xffff, 2, DrvZ80Ops, DrvZ80ROM0);
 	ZetSetOutHandler(kchampvs_main_write_port);
 	ZetSetInHandler(kchampvs_main_read_port);
@@ -577,8 +589,8 @@ static INT32 KchampvsInit()
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x5fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0x6000, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0x6000, 0xffff, MAP_RAM);
 	ZetSetOutHandler(kchampvs_sound_write_port);
 	ZetSetInHandler(kchampvs_sound_read_port);
 	ZetClose();
@@ -587,7 +599,7 @@ static INT32 KchampvsInit()
 	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
-    AY8910SetBuffered(ZetTotalCycles, 3000000);
+	AY8910SetBuffered(ZetTotalCycles, 3000000);
 
 	MSM5205Init(0, SynchroniseStream, 375000, kchampvs_adpcm_interrupt, MSM5205_S96_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -630,7 +642,7 @@ static void DrvPaletteInit()
 		g += g * 16;
 		b += b * 16;
 
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
@@ -643,7 +655,7 @@ static void draw_layer()
 
 		INT32 attr = DrvColRAM[offs];
 		INT32 code = DrvVidRAM[offs] + ((attr & 0x07) * 256);
-		INT32 color= (attr >> 3) & 0x1f;
+		INT32 color = (attr >> 3) & 0x1f;
 
 		Render8x8Tile(pTransDraw, code, sx, sy - 16, color, 2, 0x80, DrvGfxROM0);
 	}
@@ -651,7 +663,7 @@ static void draw_layer()
 
 static void draw_sprites(INT32 sxoffs, INT32 syoffs)
 {
-	INT32 banks[4] = { 0x400, 0x200, 0 };
+	INT32 banks[4] = {0x400, 0x200, 0};
 
 	for (INT32 offs = 0; offs < 0x100; offs += 4)
 	{
@@ -663,7 +675,7 @@ static void draw_sprites(INT32 sxoffs, INT32 syoffs)
 		INT32 sx = DrvSprRAM[offs + 3] - sxoffs;
 		INT32 sy = syoffs - DrvSprRAM[offs];
 
-		if ((nBurnLayer & (1 << ((attr>>5)&3))) == 0) continue;
+		if ((nBurnLayer & (1 << ((attr >> 5) & 3))) == 0) continue;
 
 		if (flipscreen)
 		{
@@ -673,16 +685,25 @@ static void draw_sprites(INT32 sxoffs, INT32 syoffs)
 			flipy = !flipy;
 		}
 
-		if (flipy) {
-			if (flipx) {
+		if (flipy)
+		{
+			if (flipx)
+			{
 				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
-			} else {
+			}
+			else
+			{
 				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
 			}
-		} else {
-			if (flipx) {
+		}
+		else
+		{
+			if (flipx)
+			{
 				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
-			} else {
+			}
+			else
+			{
 				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM1);
 			}
 		}
@@ -691,13 +712,14 @@ static void draw_sprites(INT32 sxoffs, INT32 syoffs)
 
 static INT32 KchampDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
 
 	draw_layer();
-	draw_sprites(8,247);
+	draw_sprites(8, 247);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -706,16 +728,18 @@ static INT32 KchampDraw()
 
 static INT32 KchampFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 3);
+		memset(DrvInputs, 0xff, 3);
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
@@ -723,8 +747,8 @@ static INT32 KchampFrame()
 	}
 
 	INT32 nInterleave = 40;
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = {3000000 / 60, 3579545 / 60};
+	INT32 nCyclesDone[2] = {0, 0};
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -735,16 +759,18 @@ static INT32 KchampFrame()
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-		if (sound_nmi_enable && ((i%20) == 19)) ZetNmi();
+		if (sound_nmi_enable && ((i % 20) == 19)) ZetNmi();
 		ZetClose();
 	}
 
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		KchampDraw();
 	}
 
@@ -753,13 +779,14 @@ static INT32 KchampFrame()
 
 static INT32 KchampvsDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
 
 	draw_layer();
-	draw_sprites(0,240);
+	draw_sprites(0, 240);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -768,16 +795,18 @@ static INT32 KchampvsDraw()
 
 static INT32 KchampvsFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 3);
+		memset(DrvInputs, 0xff, 3);
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
@@ -785,8 +814,8 @@ static INT32 KchampvsFrame()
 	}
 
 	INT32 nInterleave = MSM5205CalcInterleave(0, 3000000);
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = {3000000 / 60, 3000000 / 60};
+	INT32 nCyclesDone[2] = {0, 0};
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -804,32 +833,36 @@ static INT32 KchampvsFrame()
 	}
 
 	ZetOpen(1);
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		KchampvsDraw();
 	}
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -854,51 +887,52 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Karate Champ (US)
 
 static struct BurnRomInfo kchampRomDesc[] = {
-	{ "b014.bin",	0x2000, 0x0000d1a0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0
-	{ "b015.bin",	0x2000, 0x03fae67e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "b016.bin",	0x2000, 0x3b6e1d08, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "b017.bin",	0x2000, 0xc1848d1a, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "b018.bin",	0x2000, 0xb824abc7, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "b019.bin",	0x2000, 0x3b487a46, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"b014.bin", 0x2000, 0x0000d1a0, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0
+	{"b015.bin", 0x2000, 0x03fae67e, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"b016.bin", 0x2000, 0x3b6e1d08, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"b017.bin", 0x2000, 0xc1848d1a, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"b018.bin", 0x2000, 0xb824abc7, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"b019.bin", 0x2000, 0x3b487a46, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "b026.bin",	0x2000, 0x999ed2c7, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "b025.bin",	0x2000, 0x33171e07, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "b024.bin",	0x2000, 0x910b48b9, 2 | BRF_PRG | BRF_ESS }, //  8
-	{ "b023.bin",	0x2000, 0x47f66aac, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "b022.bin",	0x2000, 0x5928e749, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "b021.bin",	0x2000, 0xca17e3ba, 2 | BRF_PRG | BRF_ESS }, // 11
-	{ "b020.bin",	0x2000, 0xada4f2cd, 2 | BRF_PRG | BRF_ESS }, // 12
+	{"b026.bin", 0x2000, 0x999ed2c7, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"b025.bin", 0x2000, 0x33171e07, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"b024.bin", 0x2000, 0x910b48b9, 2 | BRF_PRG | BRF_ESS}, //  8
+	{"b023.bin", 0x2000, 0x47f66aac, 2 | BRF_PRG | BRF_ESS}, //  9
+	{"b022.bin", 0x2000, 0x5928e749, 2 | BRF_PRG | BRF_ESS}, // 10
+	{"b021.bin", 0x2000, 0xca17e3ba, 2 | BRF_PRG | BRF_ESS}, // 11
+	{"b020.bin", 0x2000, 0xada4f2cd, 2 | BRF_PRG | BRF_ESS}, // 12
 
-	{ "b000.bin",	0x2000, 0xa4fa98a1, 3 | BRF_GRA },           // 13 Characters
-	{ "b001.bin",	0x2000, 0xfea09f7c, 3 | BRF_GRA },           // 14
+	{"b000.bin", 0x2000, 0xa4fa98a1, 3 | BRF_GRA}, // 13 Characters
+	{"b001.bin", 0x2000, 0xfea09f7c, 3 | BRF_GRA}, // 14
 
-	{ "b013.bin",	0x2000, 0xeaad4168, 4 | BRF_GRA },           // 15 Sprites
-	{ "b004.bin",	0x2000, 0x10a47e2d, 4 | BRF_GRA },           // 16
-	{ "b012.bin",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
-	{ "b003.bin",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
-	{ "b011.bin",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
-	{ "b002.bin",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
-	{ "b007.bin",	0x2000, 0xcb91d16b, 4 | BRF_GRA },           // 21
-	{ "b010.bin",	0x2000, 0x489c9c04, 4 | BRF_GRA },           // 22
-	{ "b006.bin",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
-	{ "b009.bin",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
-	{ "b005.bin",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
-	{ "b008.bin",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
+	{"b013.bin", 0x2000, 0xeaad4168, 4 | BRF_GRA}, // 15 Sprites
+	{"b004.bin", 0x2000, 0x10a47e2d, 4 | BRF_GRA}, // 16
+	{"b012.bin", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 17
+	{"b003.bin", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 18
+	{"b011.bin", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 19
+	{"b002.bin", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 20
+	{"b007.bin", 0x2000, 0xcb91d16b, 4 | BRF_GRA}, // 21
+	{"b010.bin", 0x2000, 0x489c9c04, 4 | BRF_GRA}, // 22
+	{"b006.bin", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 23
+	{"b009.bin", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 24
+	{"b005.bin", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 25
+	{"b008.bin", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 26
 
-	{ "br27",		0x0100, 0xf683c54a, 5 | BRF_GRA },           // 27 Color data
-	{ "br26",		0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 28
-	{ "br25",		0x0100, 0xba4a5651, 5 | BRF_GRA },           // 29
+	{"br27", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 27 Color data
+	{"br26", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 28
+	{"br25", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 29
 };
 
 STD_ROM_PICK(kchamp)
 STD_ROM_FN(kchamp)
 
 struct BurnDriver BurnDrvKchamp = {
-	"kchamp", NULL, NULL, NULL, "1984",
-	"Karate Champ (US)\0", NULL, "Data East USA", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampRomInfo, kchampRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
+	"kchamp", nullptr, nullptr, nullptr, "1984",
+	"Karate Champ (US)\0", nullptr, "Data East USA", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4,
+	HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, kchampRomInfo, kchampRomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -907,51 +941,52 @@ struct BurnDriver BurnDrvKchamp = {
 // Karate Dou (Japan)
 
 static struct BurnRomInfo karatedoRomDesc[] = {
-	{ "be14",		0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "be15",		0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "be16",		0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "be17",		0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "be18",		0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "be19",		0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"be14", 0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"be15", 0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"be16", 0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"be17", 0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"be18", 0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"be19", 0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "be26",		0x2000, 0x999ab0a3, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "be25",		0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "be24",		0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS }, //  8
-	{ "be23",		0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "be22",		0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "be21",		0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS }, // 11
-	{ "be20",		0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS }, // 12
+	{"be26", 0x2000, 0x999ab0a3, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"be25", 0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"be24", 0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS}, //  8
+	{"be23", 0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS}, //  9
+	{"be22", 0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS}, // 10
+	{"be21", 0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS}, // 11
+	{"be20", 0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS}, // 12
 
-	{ "be00",		0x2000, 0xcec020f2, 3 | BRF_GRA },           // 13 Characters
-	{ "be01",		0x2000, 0xcd96271c, 3 | BRF_GRA },           // 14
+	{"be00", 0x2000, 0xcec020f2, 3 | BRF_GRA}, // 13 Characters
+	{"be01", 0x2000, 0xcd96271c, 3 | BRF_GRA}, // 14
 
-	{ "be13",		0x2000, 0xfb358707, 4 | BRF_GRA },           // 15 Sprites
-	{ "be04",		0x2000, 0x48372bf8, 4 | BRF_GRA },           // 16
-	{ "b012.bin",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
-	{ "b003.bin",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
-	{ "b011.bin",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
-	{ "b002.bin",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
-	{ "be07",		0x2000, 0x40f2b6fb, 4 | BRF_GRA },           // 21
-	{ "be10",		0x2000, 0x325c0a97, 4 | BRF_GRA },           // 22
-	{ "b006.bin",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
-	{ "b009.bin",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
-	{ "b005.bin",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
-	{ "b008.bin",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
+	{"be13", 0x2000, 0xfb358707, 4 | BRF_GRA}, // 15 Sprites
+	{"be04", 0x2000, 0x48372bf8, 4 | BRF_GRA}, // 16
+	{"b012.bin", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 17
+	{"b003.bin", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 18
+	{"b011.bin", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 19
+	{"b002.bin", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 20
+	{"be07", 0x2000, 0x40f2b6fb, 4 | BRF_GRA}, // 21
+	{"be10", 0x2000, 0x325c0a97, 4 | BRF_GRA}, // 22
+	{"b006.bin", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 23
+	{"b009.bin", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 24
+	{"b005.bin", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 25
+	{"b008.bin", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 26
 
-	{ "br27",		0x0100, 0xf683c54a, 5 | BRF_GRA },           // 27 Color data
-	{ "br26",		0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 28
-	{ "br25",		0x0100, 0xba4a5651, 5 | BRF_GRA },           // 29
+	{"br27", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 27 Color data
+	{"br26", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 28
+	{"br25", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 29
 };
 
 STD_ROM_PICK(karatedo)
 STD_ROM_FN(karatedo)
 
 struct BurnDriver BurnDrvKaratedo = {
-	"karatedo", "kchamp", NULL, NULL, "1984",
-	"Karate Dou (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, karatedoRomInfo, karatedoRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
+	"karatedo", "kchamp", nullptr, nullptr, "1984",
+	"Karate Dou (Japan)\0", nullptr, "Data East Corporation", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4,
+	HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, karatedoRomInfo, karatedoRomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -969,51 +1004,53 @@ struct BurnDriver BurnDrvKaratedo = {
 // Karate Dou (Arfyc bootleg)
 
 static struct BurnRomInfo karatedaRomDesc[] = {
-	{ "k-14_2764.d1",			0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "k-15_2764.d2",			0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "k-16_2764.d4",			0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "k-17_2764.d5",			0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "k-18_2764.d6",			0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "k-19_2764.d7",			0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"k-14_2764.d1", 0x2000, 0x44e60aa0, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"k-15_2764.d2", 0x2000, 0xa65e3793, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"k-16_2764.d4", 0x2000, 0x151d8872, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"k-17_2764.d5", 0x2000, 0x8f393b6a, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"k-18_2764.d6", 0x2000, 0xa09046ad, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"k-19_2764.d7", 0x2000, 0x0cdc4da9, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "k-26_2764.e10",			0x2000, 0x645232ba, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "k-25_2764.e9",			0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "k-24_2764.e8",			0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS }, //  8
-	{ "k-23_2764.e6",			0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "k-22_2764.e5",			0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "k-21_2764.e4",			0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS }, // 11
-	{ "k-20_2764.e2",			0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS }, // 12
+	{"k-26_2764.e10", 0x2000, 0x645232ba, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"k-25_2764.e9", 0x2000, 0x253bf0da, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"k-24_2764.e8", 0x2000, 0xe2c188af, 2 | BRF_PRG | BRF_ESS}, //  8
+	{"k-23_2764.e6", 0x2000, 0x25262de1, 2 | BRF_PRG | BRF_ESS}, //  9
+	{"k-22_2764.e5", 0x2000, 0x38055c48, 2 | BRF_PRG | BRF_ESS}, // 10
+	{"k-21_2764.e4", 0x2000, 0x5f0efbe7, 2 | BRF_PRG | BRF_ESS}, // 11
+	{"k-20_2764.e2", 0x2000, 0xcbe8a533, 2 | BRF_PRG | BRF_ESS}, // 12
 
-	{ "k-0_2764.h3",			0x2000, 0xcec020f2, 3 | BRF_GRA },           // 13 Characters
-	{ "k-1_2764.h6",			0x2000, 0xcd96271c, 3 | BRF_GRA },           // 14
+	{"k-0_2764.h3", 0x2000, 0xcec020f2, 3 | BRF_GRA}, // 13 Characters
+	{"k-1_2764.h6", 0x2000, 0xcd96271c, 3 | BRF_GRA}, // 14
 
-	{ "k-13_2764.k15",			0x2000, 0xfb358707, 4 | BRF_GRA },           // 15 Sprites
-	{ "k-4_2764.j15",			0x2000, 0x48372bf8, 4 | BRF_GRA },           // 16
-	{ "k-12_2764.k13",			0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
-	{ "k-3_2764.j13",			0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
-	{ "k-11_2764.k12",			0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
-	{ "k-2_2764.j12",			0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
-	{ "k-7_2764.k4",			0x2000, 0x40f2b6fb, 4 | BRF_GRA },           // 21
-	{ "k-10_2764.k9",			0x2000, 0x325c0a97, 4 | BRF_GRA },           // 22
-	{ "k-6_2764.k2",			0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
-	{ "k-9_2764.k8",			0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
-	{ "k-5_2764.k1",			0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
-	{ "k-8_2764.k7",			0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
+	{"k-13_2764.k15", 0x2000, 0xfb358707, 4 | BRF_GRA}, // 15 Sprites
+	{"k-4_2764.j15", 0x2000, 0x48372bf8, 4 | BRF_GRA}, // 16
+	{"k-12_2764.k13", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 17
+	{"k-3_2764.j13", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 18
+	{"k-11_2764.k12", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 19
+	{"k-2_2764.j12", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 20
+	{"k-7_2764.k4", 0x2000, 0x40f2b6fb, 4 | BRF_GRA}, // 21
+	{"k-10_2764.k9", 0x2000, 0x325c0a97, 4 | BRF_GRA}, // 22
+	{"k-6_2764.k2", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 23
+	{"k-9_2764.k8", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 24
+	{"k-5_2764.k1", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 25
+	{"k-8_2764.k7", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 26
 
-	{ "1_dm74s287_82s129.f11",	0x0100, 0xf05bda76, 5 | BRF_GRA },       // 27 Color data
-	{ "2_dm74s287_82s129.f12",	0x0100, 0xd26d6fa9, 5 | BRF_GRA },       // 28
-	{ "3_dm74s287_82s129.f13",	0x0100, 0x111ccb15, 5 | BRF_GRA },       // 29
+	{"1_dm74s287_82s129.f11", 0x0100, 0xf05bda76, 5 | BRF_GRA}, // 27 Color data
+	{"2_dm74s287_82s129.f12", 0x0100, 0xd26d6fa9, 5 | BRF_GRA}, // 28
+	{"3_dm74s287_82s129.f13", 0x0100, 0x111ccb15, 5 | BRF_GRA}, // 29
 };
 
 STD_ROM_PICK(karateda)
 STD_ROM_FN(karateda)
 
 struct BurnDriver BurnDrvKarateda = {
-	"karateda", "kchamp", NULL, NULL, "1984",
-	"Karate Dou (Arfyc bootleg)\0", NULL, "bootleg (Arfyc)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, karatedaRomInfo, karatedaRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
+	"karateda", "kchamp", nullptr, nullptr, "1984",
+	"Karate Dou (Arfyc bootleg)\0", nullptr, "bootleg (Arfyc)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG |
+	BDF_HISCORE_SUPPORTED,
+	4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, karatedaRomInfo, karatedaRomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1022,51 +1059,53 @@ struct BurnDriver BurnDrvKarateda = {
 // Karate Champ (Tecfri bootleg)
 
 static struct BurnRomInfo kchamptecRomDesc[] = {
-	{ "13.bin",		0x2000, 0x0000d1a0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "12.bin",		0x2000, 0x03fae67e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "11.bin",		0x2000, 0x3b6e1d08, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "10.bin",		0x2000, 0x53036ef7, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "9.bin",		0x2000, 0xb824abc7, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "8.bin",		0x2000, 0x18cd5a0c, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"13.bin", 0x2000, 0x0000d1a0, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"12.bin", 0x2000, 0x03fae67e, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"11.bin", 0x2000, 0x3b6e1d08, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"10.bin", 0x2000, 0x53036ef7, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"9.bin", 0x2000, 0xb824abc7, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"8.bin", 0x2000, 0x18cd5a0c, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "1.bin",		0x2000, 0x999ed2c7, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "2.bin",		0x2000, 0x33171e07, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "3.bin",		0x2000, 0xd5501588, 2 | BRF_PRG | BRF_ESS }, //  8
-	{ "4.bin",		0x2000, 0x47f66aac, 2 | BRF_PRG | BRF_ESS }, //  9
-	{ "5.bin",		0x2000, 0x5928e749, 2 | BRF_PRG | BRF_ESS }, // 10
-	{ "6.bin",		0x2000, 0xca17e3ba, 2 | BRF_PRG | BRF_ESS }, // 11
-	{ "7.bin",		0x2000, 0xada4f2cd, 2 | BRF_PRG | BRF_ESS }, // 12
+	{"1.bin", 0x2000, 0x999ed2c7, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"2.bin", 0x2000, 0x33171e07, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"3.bin", 0x2000, 0xd5501588, 2 | BRF_PRG | BRF_ESS}, //  8
+	{"4.bin", 0x2000, 0x47f66aac, 2 | BRF_PRG | BRF_ESS}, //  9
+	{"5.bin", 0x2000, 0x5928e749, 2 | BRF_PRG | BRF_ESS}, // 10
+	{"6.bin", 0x2000, 0xca17e3ba, 2 | BRF_PRG | BRF_ESS}, // 11
+	{"7.bin", 0x2000, 0xada4f2cd, 2 | BRF_PRG | BRF_ESS}, // 12
 
-	{ "27.bin",		0x2000, 0xa4fa98a1, 3 | BRF_GRA },           // 13 Characters
-	{ "26.bin",		0x2000, 0xfea09f7c, 3 | BRF_GRA },           // 14
+	{"27.bin", 0x2000, 0xa4fa98a1, 3 | BRF_GRA}, // 13 Characters
+	{"26.bin", 0x2000, 0xfea09f7c, 3 | BRF_GRA}, // 14
 
-	{ "14.bin",		0x2000, 0xeaad4168, 4 | BRF_GRA },           // 15 Sprites
-	{ "23.bin",		0x2000, 0x10a47e2d, 4 | BRF_GRA },           // 16
-	{ "15.bin",		0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 17
-	{ "24.bin",		0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 18
-	{ "16.bin",		0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 19
-	{ "25.bin",		0x2000, 0x6be342a6, 4 | BRF_GRA },           // 20
-	{ "20.bin",		0x2000, 0xcb91d16b, 4 | BRF_GRA },           // 21
-	{ "17.bin",		0x2000, 0x489c9c04, 4 | BRF_GRA },           // 22
-	{ "21.bin",		0x2000, 0x7346db8a, 4 | BRF_GRA },           // 23
-	{ "18.bin",		0x2000, 0xb78714fc, 4 | BRF_GRA },           // 24
-	{ "22.bin",		0x2000, 0xb2557102, 4 | BRF_GRA },           // 25
-	{ "19.bin",		0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 26
+	{"14.bin", 0x2000, 0xeaad4168, 4 | BRF_GRA}, // 15 Sprites
+	{"23.bin", 0x2000, 0x10a47e2d, 4 | BRF_GRA}, // 16
+	{"15.bin", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 17
+	{"24.bin", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 18
+	{"16.bin", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 19
+	{"25.bin", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 20
+	{"20.bin", 0x2000, 0xcb91d16b, 4 | BRF_GRA}, // 21
+	{"17.bin", 0x2000, 0x489c9c04, 4 | BRF_GRA}, // 22
+	{"21.bin", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 23
+	{"18.bin", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 24
+	{"22.bin", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 25
+	{"19.bin", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 26
 
-	{ "br27.1",		0x0100, 0xf683c54a, 5 | BRF_GRA },       	 // 27 Color data
-	{ "br26.2",		0x0100, 0x3ddbb6c4, 5 | BRF_GRA },       	 // 28
-	{ "br25.3",		0x0100, 0xba4a5651, 5 | BRF_GRA },       	 // 29
+	{"br27.1", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 27 Color data
+	{"br26.2", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 28
+	{"br25.3", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 29
 };
 
 STD_ROM_PICK(kchamptec)
 STD_ROM_FN(kchamptec)
 
 struct BurnDriver BurnDrvKchamptec = {
-	"kchamptec", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (Tecfri bootleg)\0", NULL, "bootleg (Tecfri)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchamptecRomInfo, kchamptecRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampDIPInfo,
+	"kchamptec", "kchamp", nullptr, nullptr, "1984",
+	"Karate Champ (Tecfri bootleg)\0", nullptr, "bootleg (Tecfri)", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG |
+	BDF_HISCORE_SUPPORTED,
+	4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, kchamptecRomInfo, kchamptecRomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampDIPInfo,
 	KchampInit, DrvExit, KchampFrame, KchampDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1075,38 +1114,38 @@ struct BurnDriver BurnDrvKchamptec = {
 // Karate Champ (US VS version, set 1)
 
 static struct BurnRomInfo kchampvsRomDesc[] = {
-	{ "bs24.d13",	0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "bs23.d11",	0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bs22.d10",	0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bs21.d8",	0x2000, 0x3d4ef0da, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "bs20.d7",	0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "bs19.d6",	0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"bs24.d13", 0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"bs23.d11", 0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"bs22.d10", 0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"bs21.d8", 0x2000, 0x3d4ef0da, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"bs20.d7", 0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"bs19.d6", 0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "bs18.d4",	0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "bs17.d2",	0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "bs16.d1",	0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS }, //  8
+	{"bs18.d4", 0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"bs17.d2", 0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"bs16.d1", 0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS}, //  8
 
-	{ "bs12.k1",	0x2000, 0x4c574ecd, 3 | BRF_GRA },           //  9 Characters
-	{ "bs13.k3",	0x2000, 0x750b66af, 3 | BRF_GRA },           // 10
-	{ "bs14.k5",	0x2000, 0x9ad6227c, 3 | BRF_GRA },           // 11
-	{ "bs15.k6",	0x2000, 0x3b6d5de5, 3 | BRF_GRA },           // 12
+	{"bs12.k1", 0x2000, 0x4c574ecd, 3 | BRF_GRA}, //  9 Characters
+	{"bs13.k3", 0x2000, 0x750b66af, 3 | BRF_GRA}, // 10
+	{"bs14.k5", 0x2000, 0x9ad6227c, 3 | BRF_GRA}, // 11
+	{"bs15.k6", 0x2000, 0x3b6d5de5, 3 | BRF_GRA}, // 12
 
-	{ "bs00.a1",	0x2000, 0x51eda56c, 4 | BRF_GRA },           // 13 Sprites
-	{ "bs06.c1",	0x2000, 0x593264cf, 4 | BRF_GRA },           // 14
-	{ "bs01.a3",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 15
-	{ "bs07.c3",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 16
-	{ "bs02.a5",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 17
-	{ "bs08.c5",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 18
-	{ "bs03.a6",	0x2000, 0x8dcd271a, 4 | BRF_GRA },           // 19
-	{ "bs09.c6",	0x2000, 0x4ee1dba7, 4 | BRF_GRA },           // 20
-	{ "bs04.a8",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 21
-	{ "bs10.c8",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 22
-	{ "bs05.a10",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 23
-	{ "bs11.c10",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 24
+	{"bs00.a1", 0x2000, 0x51eda56c, 4 | BRF_GRA}, // 13 Sprites
+	{"bs06.c1", 0x2000, 0x593264cf, 4 | BRF_GRA}, // 14
+	{"bs01.a3", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 15
+	{"bs07.c3", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 16
+	{"bs02.a5", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 17
+	{"bs08.c5", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 18
+	{"bs03.a6", 0x2000, 0x8dcd271a, 4 | BRF_GRA}, // 19
+	{"bs09.c6", 0x2000, 0x4ee1dba7, 4 | BRF_GRA}, // 20
+	{"bs04.a8", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 21
+	{"bs10.c8", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 22
+	{"bs05.a10", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 23
+	{"bs11.c10", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 24
 
-	{ "br27.k10",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 25 Color data
-	{ "br26.k9",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 26
-	{ "br25.k8",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 27
+	{"br27.k10", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 25 Color data
+	{"br26.k9", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 26
+	{"br25.k8", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 27
 };
 
 STD_ROM_PICK(kchampvs)
@@ -1114,13 +1153,13 @@ STD_ROM_FN(kchampvs)
 
 static void patch_decode()
 {
-	UINT8 *rom = DrvZ80ROM0;
+	UINT8* rom = DrvZ80ROM0;
 
 	DrvZ80Ops[0] = rom[0];
 	INT32 A = rom[1] + 256 * rom[2];
 	DrvZ80Ops[A] = rom[A];
-	rom[A+1] ^= 0xee;
-	A = rom[A+1] + 256 * rom[A+2];
+	rom[A + 1] ^= 0xee;
+	A = rom[A + 1] + 256 * rom[A + 2];
 	DrvZ80Ops[A] = rom[A];
 	A += 2;
 	DrvZ80Ops[A] = rom[A];
@@ -1134,7 +1173,8 @@ static INT32 KchampvsInit1()
 {
 	INT32 nRet = KchampvsInit();
 
-	if (nRet == 0) {
+	if (nRet == 0)
+	{
 		patch_decode();
 	}
 
@@ -1142,11 +1182,12 @@ static INT32 KchampvsInit1()
 }
 
 struct BurnDriver BurnDrvKchampvs = {
-	"kchampvs", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 1)\0", NULL, "Data East USA", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampvsRomInfo, kchampvsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	"kchampvs", "kchamp", nullptr, nullptr, "1984",
+	"Karate Champ (US VS version, set 1)\0", nullptr, "Data East USA", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4,
+	HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, kchampvsRomInfo, kchampvsRomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1155,49 +1196,50 @@ struct BurnDriver BurnDrvKchampvs = {
 // Karate Champ (US VS version, set 2)
 
 static struct BurnRomInfo kchampvs2RomDesc[] = {
-	{ "lt.d13",	0x2000, 0xeef41aa8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "lt.d11",	0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "lt.d10",	0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "lt.d8",	0x2000, 0x3d4ef0da, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "lt.d7",	0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "lt.d6",	0x4000, 0xc3bc6e46, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"lt.d13", 0x2000, 0xeef41aa8, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"lt.d11", 0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"lt.d10", 0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"lt.d8", 0x2000, 0x3d4ef0da, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"lt.d7", 0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"lt.d6", 0x4000, 0xc3bc6e46, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "lt.d4",	0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "lt.d2",	0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "lt.d1",	0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS }, //  8
+	{"lt.d4", 0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"lt.d2", 0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"lt.d1", 0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS}, //  8
 
-	{ "lt.k1",	0x2000, 0x4c574ecd, 3 | BRF_GRA },           //  9 Characters
-	{ "lt.k3",	0x2000, 0x750b66af, 3 | BRF_GRA },           // 10
-	{ "lt.k5",	0x2000, 0x9ad6227c, 3 | BRF_GRA },           // 11
-	{ "lt.k6",	0x2000, 0x3b6d5de5, 3 | BRF_GRA },           // 12
+	{"lt.k1", 0x2000, 0x4c574ecd, 3 | BRF_GRA}, //  9 Characters
+	{"lt.k3", 0x2000, 0x750b66af, 3 | BRF_GRA}, // 10
+	{"lt.k5", 0x2000, 0x9ad6227c, 3 | BRF_GRA}, // 11
+	{"lt.k6", 0x2000, 0x3b6d5de5, 3 | BRF_GRA}, // 12
 
-	{ "lt.a1",	0x2000, 0x51eda56c, 4 | BRF_GRA },           // 13 Sprites
-	{ "lt.c1",	0x2000, 0x593264cf, 4 | BRF_GRA },           // 14
-	{ "lt.a3",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 15
-	{ "lt.c3",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 16
-	{ "lt.a5",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 17
-	{ "lt.c5",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 18
-	{ "lt.a6",	0x2000, 0x8dcd271a, 4 | BRF_GRA },           // 19
-	{ "lt.c6",	0x2000, 0x4ee1dba7, 4 | BRF_GRA },           // 20
-	{ "lt.a8",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 21
-	{ "lt.c8",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 22
-	{ "lt.a10",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 23
-	{ "lt.c10",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 24
+	{"lt.a1", 0x2000, 0x51eda56c, 4 | BRF_GRA}, // 13 Sprites
+	{"lt.c1", 0x2000, 0x593264cf, 4 | BRF_GRA}, // 14
+	{"lt.a3", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 15
+	{"lt.c3", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 16
+	{"lt.a5", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 17
+	{"lt.c5", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 18
+	{"lt.a6", 0x2000, 0x8dcd271a, 4 | BRF_GRA}, // 19
+	{"lt.c6", 0x2000, 0x4ee1dba7, 4 | BRF_GRA}, // 20
+	{"lt.a8", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 21
+	{"lt.c8", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 22
+	{"lt.a10", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 23
+	{"lt.c10", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 24
 
-	{ "lt.k10",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 25 Color data
-	{ "lt.k9",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 26
-	{ "lt.k8",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 27
+	{"lt.k10", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 25 Color data
+	{"lt.k9", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 26
+	{"lt.k8", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 27
 };
 
 STD_ROM_PICK(kchampvs2)
 STD_ROM_FN(kchampvs2)
 
 struct BurnDriver BurnDrvKchampvs2 = {
-	"kchampvs2", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 2)\0", NULL, "Data East USA", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampvs2RomInfo, kchampvs2RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	"kchampvs2", "kchamp", nullptr, nullptr, "1984",
+	"Karate Champ (US VS version, set 2)\0", nullptr, "Data East USA", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4,
+	HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, kchampvs2RomInfo, kchampvs2RomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1208,50 +1250,51 @@ struct BurnDriver BurnDrvKchampvs2 = {
 // The only difference is instead of "My hero" as found in the later US sets it says "My hero deserves the fair".
 
 static struct BurnRomInfo kchampvs3RomDesc[] = {
-	{ "bs24.d13",	0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "bs23.d11",	0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bs22.d10",	0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bs21.d8",	0x2000, 0x80839912, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "bs20.d7",	0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "bs19.d6",	0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"bs24.d13", 0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"bs23.d11", 0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"bs22.d10", 0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"bs21.d8", 0x2000, 0x80839912, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"bs20.d7", 0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"bs19.d6", 0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "bs18.d4",	0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "bs17.d2",	0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "bs16.d1",	0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS }, //  8
+	{"bs18.d4", 0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"bs17.d2", 0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"bs16.d1", 0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS}, //  8
 
-	{ "bs12.k1",	0x2000, 0x4c574ecd, 3 | BRF_GRA },           //  9 Characters
-	{ "bs13.k3",	0x2000, 0x750b66af, 3 | BRF_GRA },           // 10
-	{ "bs14.k5",	0x2000, 0x9ad6227c, 3 | BRF_GRA },           // 11
-	{ "bs15.k6",	0x2000, 0x3b6d5de5, 3 | BRF_GRA },           // 12
+	{"bs12.k1", 0x2000, 0x4c574ecd, 3 | BRF_GRA}, //  9 Characters
+	{"bs13.k3", 0x2000, 0x750b66af, 3 | BRF_GRA}, // 10
+	{"bs14.k5", 0x2000, 0x9ad6227c, 3 | BRF_GRA}, // 11
+	{"bs15.k6", 0x2000, 0x3b6d5de5, 3 | BRF_GRA}, // 12
 
 	// 00, 06, 03 and 09 match the karatevs set
-	{ "bs00.a1",	0x2000, 0xc46a8b88, 4 | BRF_GRA },           // 13 Sprites
-	{ "bs06.c1",	0x2000, 0xcf8982ff, 4 | BRF_GRA },           // 14
-	{ "bs01.a3",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 15
-	{ "bs07.c3",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 16
-	{ "bs02.a5",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 17
-	{ "bs08.c5",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 18
-	{ "bs03.a6",	0x2000, 0xbde8a52b, 4 | BRF_GRA },           // 19
-	{ "bs09.c6",	0x2000, 0xe9a5f945, 4 | BRF_GRA },           // 20
-	{ "bs04.a8",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 21
-	{ "bs10.c8",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 22
-	{ "bs05.a10",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 23
-	{ "bs11.c10",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 24
+	{"bs00.a1", 0x2000, 0xc46a8b88, 4 | BRF_GRA}, // 13 Sprites
+	{"bs06.c1", 0x2000, 0xcf8982ff, 4 | BRF_GRA}, // 14
+	{"bs01.a3", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 15
+	{"bs07.c3", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 16
+	{"bs02.a5", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 17
+	{"bs08.c5", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 18
+	{"bs03.a6", 0x2000, 0xbde8a52b, 4 | BRF_GRA}, // 19
+	{"bs09.c6", 0x2000, 0xe9a5f945, 4 | BRF_GRA}, // 20
+	{"bs04.a8", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 21
+	{"bs10.c8", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 22
+	{"bs05.a10", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 23
+	{"bs11.c10", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 24
 
-	{ "br27.k10",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 25 Color data
-	{ "br26.k9",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 26
-	{ "br25.k8",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 27
+	{"br27.k10", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 25 Color data
+	{"br26.k9", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 26
+	{"br25.k8", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 27
 };
 
 STD_ROM_PICK(kchampvs3)
 STD_ROM_FN(kchampvs3)
 
 struct BurnDriver BurnDrvKchampvs3 = {
-	"kchampvs3", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 3)\0", NULL, "Data East USA", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampvs3RomInfo, kchampvs3RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	"kchampvs3", "kchamp", nullptr, nullptr, "1984",
+	"Karate Champ (US VS version, set 3)\0", nullptr, "Data East USA", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4,
+	HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, kchampvs3RomInfo, kchampvs3RomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1262,50 +1305,51 @@ struct BurnDriver BurnDrvKchampvs3 = {
 // It displays the dialog balloon in red with a boat below it.
 
 static struct BurnRomInfo kchampvs4RomDesc[] = {
-	{ "bs24.d13",	0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "bs23.d11",	0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bs22.d10",	0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bs21.d8",	0x2000, 0x3d4ef0da, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "bs20.d7",	0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "bs19.d6",	0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"bs24.d13", 0x2000, 0x829da69b, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"bs23.d11", 0x2000, 0x091f810e, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"bs22.d10", 0x2000, 0xd4df2a52, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"bs21.d8", 0x2000, 0x3d4ef0da, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"bs20.d7", 0x2000, 0x623a467b, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"bs19.d6", 0x4000, 0x43e196c4, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "bs18.d4",	0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "bs17.d2",	0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "bs16.d1",	0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS }, //  8
+	{"bs18.d4", 0x2000, 0xeaa646eb, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"bs17.d2", 0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"bs16.d1", 0x2000, 0x6f811c43, 2 | BRF_PRG | BRF_ESS}, //  8
 
-	{ "bs12.k1",	0x2000, 0x4c574ecd, 3 | BRF_GRA },           //  9 Characters
-	{ "bs13.k3",	0x2000, 0x750b66af, 3 | BRF_GRA },           // 10
-	{ "bs14.k5",	0x2000, 0x9ad6227c, 3 | BRF_GRA },           // 11
-	{ "bs15.k6",	0x2000, 0x3b6d5de5, 3 | BRF_GRA },           // 12
+	{"bs12.k1", 0x2000, 0x4c574ecd, 3 | BRF_GRA}, //  9 Characters
+	{"bs13.k3", 0x2000, 0x750b66af, 3 | BRF_GRA}, // 10
+	{"bs14.k5", 0x2000, 0x9ad6227c, 3 | BRF_GRA}, // 11
+	{"bs15.k6", 0x2000, 0x3b6d5de5, 3 | BRF_GRA}, // 12
 
 	// 00, 06, 03 and 09 match the karatevs set
-	{ "bs00.a1",	0x2000, 0xc46a8b88, 4 | BRF_GRA },           // 13 Sprites
-	{ "bs06.c1",	0x2000, 0xcf8982ff, 4 | BRF_GRA },           // 14
-	{ "bs01.a3",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 15
-	{ "bs07.c3",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 16
-	{ "bs02.a5",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 17
-	{ "bs08.c5",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 18
-	{ "bs03.a6",	0x2000, 0xbde8a52b, 4 | BRF_GRA },           // 19
-	{ "bs09.c6",	0x2000, 0xe9a5f945, 4 | BRF_GRA },           // 20
-	{ "bs04.a8",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 21
-	{ "bs10.c8",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 22
-	{ "bs05.a10",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 23
-	{ "bs11.c10",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 24
+	{"bs00.a1", 0x2000, 0xc46a8b88, 4 | BRF_GRA}, // 13 Sprites
+	{"bs06.c1", 0x2000, 0xcf8982ff, 4 | BRF_GRA}, // 14
+	{"bs01.a3", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 15
+	{"bs07.c3", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 16
+	{"bs02.a5", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 17
+	{"bs08.c5", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 18
+	{"bs03.a6", 0x2000, 0xbde8a52b, 4 | BRF_GRA}, // 19
+	{"bs09.c6", 0x2000, 0xe9a5f945, 4 | BRF_GRA}, // 20
+	{"bs04.a8", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 21
+	{"bs10.c8", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 22
+	{"bs05.a10", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 23
+	{"bs11.c10", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 24
 
-	{ "br27.k10",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 25 Color data
-	{ "br26.k9",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 26
-	{ "br25.k8",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 27
+	{"br27.k10", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 25 Color data
+	{"br26.k9", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 26
+	{"br25.k8", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 27
 };
 
 STD_ROM_PICK(kchampvs4)
 STD_ROM_FN(kchampvs4)
 
 struct BurnDriver BurnDrvKchampvs4 = {
-	"kchampvs4", "kchamp", NULL, NULL, "1984",
-	"Karate Champ (US VS version, set 4)\0", NULL, "Data East USA", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, kchampvs4RomInfo, kchampvs4RomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	"kchampvs4", "kchamp", nullptr, nullptr, "1984",
+	"Karate Champ (US VS version, set 4)\0", nullptr, "Data East USA", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4,
+	HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, kchampvs4RomInfo, kchampvs4RomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
@@ -1314,49 +1358,50 @@ struct BurnDriver BurnDrvKchampvs4 = {
 // Taisen Karate Dou (Japan VS version)
 
 static struct BurnRomInfo karatevsRomDesc[] = {
-	{ "br24.d13",	0x2000, 0xea9cda49, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code #0 (Encrypted)
-	{ "br23.d11",	0x2000, 0x46074489, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "br22.d10",	0x2000, 0x294f67ba, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "br21.d8",	0x2000, 0x934ea874, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "br20.d7",	0x2000, 0x97d7816a, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "br19.d6",	0x4000, 0xdd2239d2, 1 | BRF_PRG | BRF_ESS }, //  5
+	{"br24.d13", 0x2000, 0xea9cda49, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code #0 (Encrypted)
+	{"br23.d11", 0x2000, 0x46074489, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"br22.d10", 0x2000, 0x294f67ba, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"br21.d8", 0x2000, 0x934ea874, 1 | BRF_PRG | BRF_ESS}, //  3
+	{"br20.d7", 0x2000, 0x97d7816a, 1 | BRF_PRG | BRF_ESS}, //  4
+	{"br19.d6", 0x4000, 0xdd2239d2, 1 | BRF_PRG | BRF_ESS}, //  5
 
-	{ "br18.d4",	0x2000, 0x00ccb8ea, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code #1
-	{ "bs17.d2",	0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "br16.d1",	0x2000, 0x2512d961, 2 | BRF_PRG | BRF_ESS }, //  8
+	{"br18.d4", 0x2000, 0x00ccb8ea, 2 | BRF_PRG | BRF_ESS}, //  6 Z80 Code #1
+	{"bs17.d2", 0x2000, 0xd71031ad, 2 | BRF_PRG | BRF_ESS}, //  7
+	{"br16.d1", 0x2000, 0x2512d961, 2 | BRF_PRG | BRF_ESS}, //  8
 
-	{ "br12.k1",	0x2000, 0x9ed6f00d, 3 | BRF_GRA },           //  9 Characters
-	{ "bs13.k3",	0x2000, 0x750b66af, 3 | BRF_GRA },           // 10
-	{ "br14.k5",	0x2000, 0xfc399229, 3 | BRF_GRA },           // 11
-	{ "bs15.k6",	0x2000, 0x3b6d5de5, 3 | BRF_GRA },           // 12
+	{"br12.k1", 0x2000, 0x9ed6f00d, 3 | BRF_GRA}, //  9 Characters
+	{"bs13.k3", 0x2000, 0x750b66af, 3 | BRF_GRA}, // 10
+	{"br14.k5", 0x2000, 0xfc399229, 3 | BRF_GRA}, // 11
+	{"bs15.k6", 0x2000, 0x3b6d5de5, 3 | BRF_GRA}, // 12
 
-	{ "br00.a1",	0x2000, 0xc46a8b88, 4 | BRF_GRA },           // 13 Sprites
-	{ "br06.c1",	0x2000, 0xcf8982ff, 4 | BRF_GRA },           // 14
-	{ "bs01.a3",	0x2000, 0xb4842ea9, 4 | BRF_GRA },           // 15
-	{ "bs07.c3",	0x2000, 0x8cd166a5, 4 | BRF_GRA },           // 16
-	{ "bs02.a5",	0x2000, 0x4cbd3aa3, 4 | BRF_GRA },           // 17
-	{ "bs08.c5",	0x2000, 0x6be342a6, 4 | BRF_GRA },           // 18
-	{ "br03.a6",	0x2000, 0xbde8a52b, 4 | BRF_GRA },           // 19
-	{ "br09.c6",	0x2000, 0xe9a5f945, 4 | BRF_GRA },           // 20
-	{ "bs04.a8",	0x2000, 0x7346db8a, 4 | BRF_GRA },           // 21
-	{ "bs10.c8",	0x2000, 0xb78714fc, 4 | BRF_GRA },           // 22
-	{ "bs05.a10",	0x2000, 0xb2557102, 4 | BRF_GRA },           // 23
-	{ "bs11.c10",	0x2000, 0xc85aba0e, 4 | BRF_GRA },           // 24
+	{"br00.a1", 0x2000, 0xc46a8b88, 4 | BRF_GRA}, // 13 Sprites
+	{"br06.c1", 0x2000, 0xcf8982ff, 4 | BRF_GRA}, // 14
+	{"bs01.a3", 0x2000, 0xb4842ea9, 4 | BRF_GRA}, // 15
+	{"bs07.c3", 0x2000, 0x8cd166a5, 4 | BRF_GRA}, // 16
+	{"bs02.a5", 0x2000, 0x4cbd3aa3, 4 | BRF_GRA}, // 17
+	{"bs08.c5", 0x2000, 0x6be342a6, 4 | BRF_GRA}, // 18
+	{"br03.a6", 0x2000, 0xbde8a52b, 4 | BRF_GRA}, // 19
+	{"br09.c6", 0x2000, 0xe9a5f945, 4 | BRF_GRA}, // 20
+	{"bs04.a8", 0x2000, 0x7346db8a, 4 | BRF_GRA}, // 21
+	{"bs10.c8", 0x2000, 0xb78714fc, 4 | BRF_GRA}, // 22
+	{"bs05.a10", 0x2000, 0xb2557102, 4 | BRF_GRA}, // 23
+	{"bs11.c10", 0x2000, 0xc85aba0e, 4 | BRF_GRA}, // 24
 
-	{ "br27.k10",	0x0100, 0xf683c54a, 5 | BRF_GRA },           // 25 Color data
-	{ "br26.k9",	0x0100, 0x3ddbb6c4, 5 | BRF_GRA },           // 26
-	{ "br25.k8",	0x0100, 0xba4a5651, 5 | BRF_GRA },           // 27
+	{"br27.k10", 0x0100, 0xf683c54a, 5 | BRF_GRA}, // 25 Color data
+	{"br26.k9", 0x0100, 0x3ddbb6c4, 5 | BRF_GRA}, // 26
+	{"br25.k8", 0x0100, 0xba4a5651, 5 | BRF_GRA}, // 27
 };
 
 STD_ROM_PICK(karatevs)
 STD_ROM_FN(karatevs)
 
 struct BurnDriver BurnDrvKaratevs = {
-	"karatevs", "kchamp", NULL, NULL, "1984",
-	"Taisen Karate Dou (Japan VS version)\0", NULL, "Data East Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, karatevsRomInfo, karatevsRomName, NULL, NULL, NULL, NULL, KchampInputInfo, KchampvsDIPInfo,
+	"karatevs", "kchamp", nullptr, nullptr, "1984",
+	"Taisen Karate Dou (Japan VS version)\0", nullptr, "Data East Corporation", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 4,
+	HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	nullptr, karatevsRomInfo, karatevsRomName, nullptr, nullptr, nullptr, nullptr, KchampInputInfo, KchampvsDIPInfo,
 	KchampvsInit1, DrvExit, KchampvsFrame, KchampvsDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

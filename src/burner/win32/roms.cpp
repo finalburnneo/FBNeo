@@ -2,27 +2,25 @@
 #include <shlobj.h>
 #include <process.h>
 
-static HWND hTabControl = NULL;
+static HWND hTabControl = nullptr;
 
-HWND hRomsDlg = NULL;
-static HWND hParent = NULL;
+HWND hRomsDlg = nullptr;
+static HWND hParent = nullptr;
 
-char* gameAv = NULL;
+char* gameAv = nullptr;
 bool avOk = false;
 
 bool bSkipStartupCheck = false;
 
 static unsigned ScanThreadId = 0;
-static HANDLE hScanThread = NULL;
+static HANDLE hScanThread = nullptr;
 static int nOldSelect = 0;
 
-static HANDLE hEvent = NULL;
+static HANDLE hEvent = nullptr;
 
 static void CreateRomDatName(TCHAR* szRomDat)
 {
 	_stprintf(szRomDat, _T("config/%s.roms.dat"), szAppExeName);
-
-	return;
 }
 
 //Select Directory Dialog//////////////////////////////////////////////////////////////////////////
@@ -32,12 +30,15 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	int var;
 	static bool chOk;
 
-	switch (Msg) {
-		case WM_INITDIALOG: {
+	switch (Msg)
+	{
+	case WM_INITDIALOG:
+		{
 			chOk = false;
 
 			// Setup edit controls values (ROMs Paths)
-			for(int x = 0; x < 20; x++) {
+			for (int x = 0; x < 20; x++)
+			{
 				SetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + x, szAppRomPaths[x]);
 			}
 
@@ -47,9 +48,14 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TC_ITEM tcItem;
 			tcItem.mask = TCIF_TEXT;
 
-			UINT idsString[20] = { IDS_ROMPATH_1,IDS_ROMPATH_2,IDS_ROMPATH_3,IDS_ROMPATH_4,IDS_ROMPATH_5,IDS_ROMPATH_6,IDS_ROMPATH_7,IDS_ROMPATH_8,IDS_ROMPATH_9,IDS_ROMPATH_10,IDS_ROMPATH_11,IDS_ROMPATH_12,IDS_ROMPATH_13,IDS_ROMPATH_14,IDS_ROMPATH_15,IDS_ROMPATH_16,IDS_ROMPATH_17,IDS_ROMPATH_18,IDS_ROMPATH_19,IDS_ROMPATH_20 };
+			UINT idsString[20] = {
+				IDS_ROMPATH_1,IDS_ROMPATH_2,IDS_ROMPATH_3,IDS_ROMPATH_4,IDS_ROMPATH_5,IDS_ROMPATH_6,IDS_ROMPATH_7,
+				IDS_ROMPATH_8,IDS_ROMPATH_9,IDS_ROMPATH_10,IDS_ROMPATH_11,IDS_ROMPATH_12,IDS_ROMPATH_13,IDS_ROMPATH_14,
+				IDS_ROMPATH_15,IDS_ROMPATH_16,IDS_ROMPATH_17,IDS_ROMPATH_18,IDS_ROMPATH_19,IDS_ROMPATH_20
+			};
 
-			for(int nIndex = 0; nIndex < 20; nIndex++) {
+			for (int nIndex = 0; nIndex < 20; nIndex++)
+			{
 				tcItem.pszText = FBALoadStringEx(hAppInst, idsString[nIndex], true);
 				TabCtrl_InsertItem(hTabControl, nIndex, &tcItem);
 			}
@@ -57,41 +63,46 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			int TabPage = TabCtrl_GetCurSel(hTabControl);
 
 			// hide all controls excluding the selected controls
-			for(int x = 0; x < 20; x++) {
-				if(x != TabPage) {
-					ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + x), SW_HIDE);		// browse buttons
-					ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_HIDE);	// edit controls
+			for (int x = 0; x < 20; x++)
+			{
+				if (x != TabPage)
+				{
+					ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + x), SW_HIDE); // browse buttons
+					ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_HIDE); // edit controls
 				}
 			}
 
 			// Show the proper controls
-			ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + TabPage), SW_SHOW);		// browse buttons
-			ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + TabPage), SW_SHOW);		// edit controls
+			ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + TabPage), SW_SHOW); // browse buttons
+			ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + TabPage), SW_SHOW); // edit controls
 
 			UpdateWindow(hDlg);
 
 			WndInMid(hDlg, hParent);
-			SetFocus(hDlg);											// Enable Esc=close
+			SetFocus(hDlg); // Enable Esc=close
 			break;
 		}
-		case WM_NOTIFY: {
-			NMHDR* pNmHdr = (NMHDR*)lParam;
+	case WM_NOTIFY:
+		{
+			auto pNmHdr = (NMHDR*)lParam;
 
-			if (pNmHdr->code == TCN_SELCHANGE) {
-
+			if (pNmHdr->code == TCN_SELCHANGE)
+			{
 				int TabPage = TabCtrl_GetCurSel(hTabControl);
 
 				// hide all controls excluding the selected controls
-				for(int x = 0; x < 20; x++) {
-					if(x != TabPage) {
-						ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + x), SW_HIDE);		// browse buttons
-						ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_HIDE);	// edit controls
+				for (int x = 0; x < 20; x++)
+				{
+					if (x != TabPage)
+					{
+						ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + x), SW_HIDE); // browse buttons
+						ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + x), SW_HIDE); // edit controls
 					}
 				}
 
 				// Show the proper controls
-				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + TabPage), SW_SHOW);		// browse buttons
-				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + TabPage), SW_SHOW);		// edit controls
+				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_BR1 + TabPage), SW_SHOW); // browse buttons
+				ShowWindow(GetDlgItem(hDlg, IDC_ROMSDIR_EDIT1 + TabPage), SW_SHOW); // edit controls
 
 				UpdateWindow(hDlg);
 
@@ -99,46 +110,53 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 			break;
 		}
-		case WM_COMMAND: {
-			LPMALLOC pMalloc = NULL;
+	case WM_COMMAND:
+		{
+			LPMALLOC pMalloc = nullptr;
 			BROWSEINFO bInfo;
-			ITEMIDLIST* pItemIDList = NULL;
+			ITEMIDLIST* pItemIDList = nullptr;
 			TCHAR buffer[MAX_PATH];
 
-			if (LOWORD(wParam) == IDOK) {
-
-				for (int i = 0; i < 20; i++) {
-//					if (GetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + i, buffer, sizeof(buffer)) && lstrcmp(szAppRomPaths[i], buffer)) {
+			if (LOWORD(wParam) == IDOK)
+			{
+				for (int i = 0; i < 20; i++)
+				{
+					//					if (GetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + i, buffer, sizeof(buffer)) && lstrcmp(szAppRomPaths[i], buffer)) {
 					GetDlgItemText(hDlg, IDC_ROMSDIR_EDIT1 + i, buffer, sizeof(buffer));
 					if (lstrcmp(szAppRomPaths[i], buffer)) chOk = true;
 
 					// add trailing backslash
 					int strLen = _tcslen(buffer);
-					if (strLen) {
-						if ( buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/') ) {
+					if (strLen)
+					{
+						if (buffer[strLen - 1] != _T('\\') && buffer[strLen - 1] != _T('/'))
+						{
 							buffer[strLen] = _T('\\');
 							buffer[strLen + 1] = _T('\0');
 						}
 					}
 
 					lstrcpy(szAppRomPaths[i], buffer);
-//					}
+					//					}
 				}
 
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
-			} else {
-				if (LOWORD(wParam) >= IDC_ROMSDIR_BR1 && LOWORD(wParam) <= IDC_ROMSDIR_BR20) {
-					var = IDC_ROMSDIR_EDIT1 + LOWORD(wParam) - IDC_ROMSDIR_BR1;
-				} else {
-					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL) {
-						SendMessage(hDlg, WM_CLOSE, 0, 0);
-					}
-					break;
+			}
+			if (LOWORD(wParam) >= IDC_ROMSDIR_BR1 && LOWORD(wParam) <= IDC_ROMSDIR_BR20)
+			{
+				var = IDC_ROMSDIR_EDIT1 + LOWORD(wParam) - IDC_ROMSDIR_BR1;
+			}
+			else
+			{
+				if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL)
+				{
+					SendMessage(hDlg, WM_CLOSE, 0, 0);
 				}
+				break;
 			}
 
-		    SHGetMalloc(&pMalloc);
+			SHGetMalloc(&pMalloc);
 
 			memset(&bInfo, 0, sizeof(bInfo));
 			bInfo.hwndOwner = hDlg;
@@ -148,11 +166,15 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			pItemIDList = SHBrowseForFolder(&bInfo);
 
-			if (pItemIDList) {
-				if (SHGetPathFromIDList(pItemIDList, buffer)) {
+			if (pItemIDList)
+			{
+				if (SHGetPathFromIDList(pItemIDList, buffer))
+				{
 					int strLen = _tcslen(buffer);
-					if (strLen) {
-						if (buffer[strLen - 1] != _T('\\')) {
+					if (strLen)
+					{
+						if (buffer[strLen - 1] != _T('\\'))
+						{
 							buffer[strLen] = _T('\\');
 							buffer[strLen + 1] = _T('\0');
 						}
@@ -165,10 +187,12 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			break;
 		}
-		case WM_CLOSE: {
-			hParent = NULL;
+	case WM_CLOSE:
+		{
+			hParent = nullptr;
 			EndDialog(hDlg, 0);
-			if (chOk && bSkipStartupCheck == false) {
+			if (chOk && bSkipStartupCheck == false)
+			{
 				bRescanRoms = true;
 				CreateROMInfo(hDlg);
 			}
@@ -183,7 +207,7 @@ int RomsDirCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 
-	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMSDIR), hParent, (DLGPROC)DefInpProc);
+	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMSDIR), hParent, DefInpProc);
 	return 1;
 }
 
@@ -197,26 +221,34 @@ int WriteGameAvb()
 
 	CreateRomDatName(szRomDat);
 
-	if ((h = _tfopen(szRomDat, _T("wt"))) == NULL) {
+	if ((h = _tfopen(szRomDat, _T("wt"))) == nullptr)
+	{
 		return 1;
 	}
 
-	_ftprintf(h, _T(APP_TITLE) _T(" v%.20s ROMs"), szAppBurnVer);	// identifier
-	_ftprintf(h, _T(" 0x%04X "), nBurnDrvCount);					// no of games
+	_ftprintf(h, _T(APP_TITLE) _T(" v%.20s ROMs"), szAppBurnVer); // identifier
+	_ftprintf(h, _T(" 0x%04X "), nBurnDrvCount); // no of games
 
-	for (unsigned int i = 0; i < nBurnDrvCount; i++) {
-		if (gameAv[i] & 2) {
+	for (unsigned int i = 0; i < nBurnDrvCount; i++)
+	{
+		if (gameAv[i] & 2)
+		{
 			_fputtc(_T('*'), h);
-		} else {
-			if (gameAv[i] & 1) {
+		}
+		else
+		{
+			if (gameAv[i] & 1)
+			{
 				_fputtc(_T('+'), h);
-			} else {
+			}
+			else
+			{
 				_fputtc(_T('-'), h);
 			}
 		}
 	}
 
-	_ftprintf(h, _T(" END"));									// end marker
+	_ftprintf(h, _T(" END")); // end marker
 
 	fclose(h);
 
@@ -230,7 +262,8 @@ static int DoCheck(TCHAR* buffPos)
 	// Check identifier
 	memset(label, 0, sizeof(label));
 	_stprintf(label, _T(APP_TITLE) _T(" v%.20s ROMs"), szAppBurnVer);
-	if ((buffPos = LabelCheck(buffPos, label)) == NULL) {
+	if ((buffPos = LabelCheck(buffPos, label)) == nullptr)
+	{
 		return 1;
 	}
 
@@ -238,21 +271,32 @@ static int DoCheck(TCHAR* buffPos)
 	memset(label, 0, sizeof(label));
 	memcpy(label, buffPos, 16);
 	buffPos += 8;
-	unsigned int n = _tcstol(label, NULL, 0);
-	if (n != nBurnDrvCount) {
+	unsigned int n = _tcstol(label, nullptr, 0);
+	if (n != nBurnDrvCount)
+	{
 		return 1;
 	}
 
-	for (unsigned int i = 0; i < nBurnDrvCount; i++) {
-		if (*buffPos == _T('*')) {
+	for (unsigned int i = 0; i < nBurnDrvCount; i++)
+	{
+		if (*buffPos == _T('*'))
+		{
 			gameAv[i] = 3;
-		} else {
-			if (*buffPos == _T('+')) {
+		}
+		else
+		{
+			if (*buffPos == _T('+'))
+			{
 				gameAv[i] = 1;
-			} else {
-				if (*buffPos == _T('-')) {
+			}
+			else
+			{
+				if (*buffPos == _T('-'))
+				{
 					gameAv[i] = 0;
-				} else {
+				}
+				else
+				{
 					return 1;
 				}
 			}
@@ -263,12 +307,12 @@ static int DoCheck(TCHAR* buffPos)
 
 	memset(label, 0, sizeof(label));
 	_stprintf(label, _T(" END"));
-	if (LabelCheck(buffPos, label) == NULL) {
+	if (LabelCheck(buffPos, label) == nullptr)
+	{
 		avOk = true;
 		return 0;
-	} else {
-		return 1;
 	}
+	return 1;
 }
 
 int CheckGameAvb()
@@ -277,19 +321,21 @@ int CheckGameAvb()
 	FILE* h;
 	int bOK;
 	int nBufferSize = nBurnDrvCount + 256;
-	TCHAR* buffer = (TCHAR*)malloc(nBufferSize * sizeof(TCHAR));
-	if (buffer == NULL) {
+	auto buffer = static_cast<TCHAR*>(malloc(nBufferSize * sizeof(TCHAR)));
+	if (buffer == nullptr)
+	{
 		return 1;
 	}
 
 	memset(buffer, 0, nBufferSize * sizeof(TCHAR));
 	CreateRomDatName(szRomDat);
 
-	if ((h = _tfopen(szRomDat, _T("r"))) == NULL) {
+	if ((h = _tfopen(szRomDat, _T("r"))) == nullptr)
+	{
 		if (buffer)
 		{
 			free(buffer);
-			buffer = NULL;
+			buffer = nullptr;
 		}
 		return 1;
 	}
@@ -299,9 +345,10 @@ int CheckGameAvb()
 
 	bOK = DoCheck(buffer);
 
-	if (buffer) {
+	if (buffer)
+	{
 		free(buffer);
-		buffer = NULL;
+		buffer = nullptr;
 	}
 	return bOK;
 }
@@ -312,13 +359,14 @@ static int QuitRomsScan()
 
 	GetExitCodeThread(hScanThread, &dwExitCode);
 
-	if (dwExitCode == STILL_ACTIVE) {
-
+	if (dwExitCode == STILL_ACTIVE)
+	{
 		// Signal the scan thread to abort
 		SetEvent(hEvent);
 
 		// Wait for the thread to finish
-		if (WaitForSingleObject(hScanThread, 10000) != WAIT_OBJECT_0) {
+		if (WaitForSingleObject(hScanThread, 10000) != WAIT_OBJECT_0)
+		{
 			// If the thread doesn't finish within 10 seconds, forcibly kill it
 			TerminateThread(hScanThread, 1);
 		}
@@ -328,9 +376,9 @@ static int QuitRomsScan()
 
 	CloseHandle(hEvent);
 
-	hEvent = NULL;
+	hEvent = nullptr;
 
-	hScanThread = NULL;
+	hScanThread = nullptr;
 	ScanThreadId = 0;
 
 	BzipClose();
@@ -339,7 +387,8 @@ static int QuitRomsScan()
 	nOldSelect = 0;
 	bRescanRoms = false;
 
-	if (avOk) {
+	if (avOk)
+	{
 		WriteGameAvb();
 	}
 
@@ -348,28 +397,31 @@ static int QuitRomsScan()
 
 static unsigned __stdcall AnalyzingRoms(void*)
 {
-	for (unsigned int z = 0; z < nBurnDrvCount; z++) {
+	for (unsigned int z = 0; z < nBurnDrvCount; z++)
+	{
 		nBurnDrvActive = z;
 
 		// See if we need to abort
-		if (WaitForSingleObject(hEvent, 0) == WAIT_OBJECT_0) {
+		if (WaitForSingleObject(hEvent, 0) == WAIT_OBJECT_0)
+		{
 			ExitThread(0);
 		}
 
 		SendDlgItemMessage(hRomsDlg, IDC_WAIT_PROG, PBM_STEPIT, 0, 0);
 
-		switch (BzipOpen(TRUE))	{
-			case 0:
-				gameAv[z] = 3;
-				break;
-			case 2:
-				gameAv[z] = 1;
-				break;
-			case 1:
-				gameAv[z] = 0;
+		switch (BzipOpen(TRUE))
+		{
+		case 0:
+			gameAv[z] = 3;
+			break;
+		case 2:
+			gameAv[z] = 1;
+			break;
+		case 1:
+			gameAv[z] = 0;
 		}
 		BzipClose();
-   }
+	}
 
 	avOk = true;
 
@@ -382,26 +434,30 @@ static unsigned __stdcall AnalyzingRoms(void*)
 static int xClick;
 static int yClick;
 
-static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)		// LPARAM lParam
+static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam) // LPARAM lParam
 {
-	switch (Msg) {
-		case WM_INITDIALOG: {
+	switch (Msg)
+	{
+	case WM_INITDIALOG:
+		{
 			hRomsDlg = hDlg;
 			nOldSelect = nBurnDrvActive;
 			memset(gameAv, 0, nBurnDrvCount); // clear game list
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETRANGE, 0, MAKELPARAM(0, nBurnDrvCount));
-			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETSTEP, (WPARAM)1, 0);
+			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETSTEP, 1, 0);
 
 			ShowWindow(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), TRUE);
-			SendMessage(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), WM_SETTEXT, (WPARAM)0, (LPARAM)FBALoadStringEx(hAppInst, IDS_SCANNING_ROMS, true));
+			SendMessage(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), WM_SETTEXT, 0,
+			            (LPARAM)FBALoadStringEx(hAppInst, IDS_SCANNING_ROMS, true));
 			ShowWindow(GetDlgItem(hDlg, IDCANCEL), TRUE);
 
 			avOk = false;
-			hScanThread = (HANDLE)_beginthreadex(NULL, 0, AnalyzingRoms, NULL, 0, &ScanThreadId);
+			hScanThread = (HANDLE)_beginthreadex(nullptr, 0, AnalyzingRoms, nullptr, 0, &ScanThreadId);
 
-			hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+			hEvent = CreateEvent(nullptr, TRUE, FALSE, nullptr);
 
-			if (hParent == NULL) {
+			if (hParent == nullptr)
+			{
 #if 0
 				RECT rect;
 				int x, y;
@@ -417,16 +473,19 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				ShowWindow(hDlg, SW_SHOWNORMAL);
 #endif
 				WndInMid(hDlg, hParent);
-				SetFocus(hDlg);		// Enable Esc=close
-			} else {
+				SetFocus(hDlg); // Enable Esc=close
+			}
+			else
+			{
 				WndInMid(hDlg, hParent);
-				SetFocus(hDlg);		// Enable Esc=close
+				SetFocus(hDlg); // Enable Esc=close
 			}
 
 			break;
 		}
 
-		case WM_LBUTTONDOWN: {
+	case WM_LBUTTONDOWN:
+		{
 			SetCapture(hDlg);
 
 			xClick = GET_X_LPARAM(lParam);
@@ -434,38 +493,44 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			break;
 		}
 
-		case WM_LBUTTONUP: {
+	case WM_LBUTTONUP:
+		{
 			ReleaseCapture();
 			break;
 		}
 
-		case WM_MOUSEMOVE: {
-			if (GetCapture() == hDlg) {
+	case WM_MOUSEMOVE:
+		{
+			if (GetCapture() == hDlg)
+			{
 				RECT rcWindow;
-				GetWindowRect(hDlg,&rcWindow);
+				GetWindowRect(hDlg, &rcWindow);
 
 				int xMouse = GET_X_LPARAM(lParam);
 				int yMouse = GET_Y_LPARAM(lParam);
 				int xWindow = rcWindow.left + xMouse - xClick;
 				int yWindow = rcWindow.top + yMouse - yClick;
 
-				SetWindowPos(hDlg,NULL,xWindow,yWindow,0,0,SWP_NOSIZE|SWP_NOZORDER);
+				SetWindowPos(hDlg, nullptr, xWindow, yWindow, 0, 0,SWP_NOSIZE | SWP_NOZORDER);
 			}
 			break;
 		}
 
-		case WM_COMMAND: {
-			if (LOWORD(wParam) == IDCANCEL) {
+	case WM_COMMAND:
+		{
+			if (LOWORD(wParam) == IDCANCEL)
+			{
 				PostMessage(hDlg, WM_CLOSE, 0, 0);
 			}
 			break;
 		}
 
-		case WM_CLOSE: {
+	case WM_CLOSE:
+		{
 			QuitRomsScan();
 			EndDialog(hDlg, 0);
-			hRomsDlg = NULL;
-			hParent = NULL;
+			hRomsDlg = nullptr;
+			hParent = nullptr;
 		}
 	}
 
@@ -475,18 +540,21 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 int CreateROMInfo(HWND hParentWND)
 {
 	hParent = hParentWND;
-	bool bStarting = 0;
+	bool bStarting = false;
 
-	if (gameAv == NULL) {
-		gameAv = (char*)malloc(nBurnDrvCount);
+	if (gameAv == nullptr)
+	{
+		gameAv = static_cast<char*>(malloc(nBurnDrvCount));
 		memset(gameAv, 0, nBurnDrvCount);
-		bStarting = 1;
+		bStarting = true;
 	}
 
-	if (gameAv) {
-		if (CheckGameAvb() || bRescanRoms) {
+	if (gameAv)
+	{
+		if (CheckGameAvb() || bRescanRoms)
+		{
 			if ((bStarting && bSkipStartupCheck == false) || bRescanRoms)
-				FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
+				FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, WaitProc);
 		}
 	}
 
@@ -495,8 +563,9 @@ int CreateROMInfo(HWND hParentWND)
 
 void FreeROMInfo()
 {
-	if (gameAv) {
+	if (gameAv)
+	{
 		free(gameAv);
-		gameAv = NULL;
+		gameAv = nullptr;
 	}
 }

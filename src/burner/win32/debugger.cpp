@@ -1,6 +1,6 @@
 #include "burner.h"
 
-HWND hDbgDlg = NULL;
+HWND hDbgDlg = nullptr;
 
 #if defined (FBNEO_DEBUG)
 
@@ -1508,7 +1508,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 int DebugExit()
 {
-
 #if defined (FBNEO_DEBUG)
 
 	if (DbgMemoryAreaInfo) {
@@ -1541,7 +1540,6 @@ int DebugExit()
 
 int DebugCreate()
 {
-
 #if defined (FBNEO_DEBUG)
 
 	if (DebugCPU_SekInitted == 0) {
@@ -1588,5 +1586,4 @@ int DebugCreate()
 	return 1;
 
 #endif
-
 }

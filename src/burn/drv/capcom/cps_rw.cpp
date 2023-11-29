@@ -47,11 +47,11 @@ INT32 Dinohunt = 0;
 INT32 Port6SoundWrite = 0;
 INT32 CpsBootlegEEPROM = 0;
 
-CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = NULL;
+CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = nullptr;
 
 static INT32 nCalc[2] = {0, 0};
 
-static const bool nCPSExtraNVRAM = false;
+static constexpr bool nCPSExtraNVRAM = false;
 static INT32 n664001;
 
 #define INP(nnnn) UINT8 CpsInp##nnnn[8];
@@ -64,12 +64,14 @@ CPSINPEX
 
 void CpsRwScan()
 {
-	if (Hkittymp) {
+	if (Hkittymp)
+	{
 		SCAN_VAR(CpsPaddle1Value);
 		SCAN_VAR(CpsPaddle1);
 	}
 
-	if (Pzloop2) {
+	if (Pzloop2)
+	{
 		SCAN_VAR(ReadPaddle);
 		SCAN_VAR(CpsPaddle1Value);
 		SCAN_VAR(CpsPaddle2Value);
@@ -77,12 +79,14 @@ void CpsRwScan()
 		SCAN_VAR(CpsPaddle2);
 	}
 
-	if (Forgottn) {
+	if (Forgottn)
+	{
 		SCAN_VAR(nDial055);
 		SCAN_VAR(nDial05d);
 	}
 
-	if (Ghouls) {
+	if (Ghouls)
+	{
 		SCAN_VAR(nPrevInp000);
 		SCAN_VAR(nPrevInp001);
 	}
@@ -97,234 +101,292 @@ static UINT8 CpsReadPort(const UINT32 ia)
 {
 	UINT8 d = 0xFF;
 
-	if (ia == 0x000) {
-		d = (UINT8)~Inp000;
-		if (Pzloop2) {
-			if (ReadPaddle) {
+	if (ia == 0x000)
+	{
+		d = static_cast<UINT8>(~Inp000);
+		if (Pzloop2)
+		{
+			if (ReadPaddle)
+			{
 				d -= CpsPaddle2Value;
-			} else {
+			}
+			else
+			{
 				d = CpsPaddle2;
 			}
 		}
 		return d;
 	}
-	if (ia == 0x001) {
-		d = (UINT8)~Inp001;
-		if (Pzloop2) {
-			if (ReadPaddle) {
+	if (ia == 0x001)
+	{
+		d = static_cast<UINT8>(~Inp001);
+		if (Pzloop2)
+		{
+			if (ReadPaddle)
+			{
 				d -= CpsPaddle1Value;
-			} else {
+			}
+			else
+			{
 				d = CpsPaddle1;
 			}
 		}
-		if (Hkittymp) {
-			const UINT8 quadradic_sequence[4] = { 0, 1, 3, 2 };
+		if (Hkittymp)
+		{
+			constexpr UINT8 quadradic_sequence[4] = {0, 1, 3, 2};
 			d = quadradic_sequence[(CpsPaddle1 / 8) & 3];
 
 			d = (~d & 3) | (~Inp001 & ~3); // add bit 0,1 from quadradic encoder, rest from inputs
 		}
 		return d;
 	}
-	if (ia == 0x010) {
-		d = (UINT8)~Inp010;
+	if (ia == 0x010)
+	{
+		d = static_cast<UINT8>(~Inp010);
 		return d;
 	}
-	if (ia == 0x011) {
-		d = (UINT8)~Inp011;
+	if (ia == 0x011)
+	{
+		d = static_cast<UINT8>(~Inp011);
 		return d;
 	}
-	if (ia == 0x012) {
-		d = (UINT8)~Inp012;
+	if (ia == 0x012)
+	{
+		d = static_cast<UINT8>(~Inp012);
 		return d;
 	}
-	if (ia == 0x018) {
-		d = (UINT8)~Inp018;
+	if (ia == 0x018)
+	{
+		d = static_cast<UINT8>(~Inp018);
 		return d;
 	}
-	if (ia == 0x019) {
-		d = (UINT8)~Inp019;
+	if (ia == 0x019)
+	{
+		d = static_cast<UINT8>(~Inp019);
 		return d;
 	}
-	if (ia == 0x01B) {
-		d = (UINT8)~Inp01B;
-		return d;
-	}
-	
-	if (ia == 0x01A) {
-		d = (UINT8)~Cpi01A;
-		return d;
-	}
-	if (ia == 0x01C) {
-		d = (UINT8)~Cpi01C;
-		return d;
-	}
-	if (ia == 0x01E) {
-		d = (UINT8)~Cpi01E;
+	if (ia == 0x01B)
+	{
+		d = static_cast<UINT8>(~Inp01B);
 		return d;
 	}
 
-	if (Cps == 2) {
+	if (ia == 0x01A)
+	{
+		d = static_cast<UINT8>(~Cpi01A);
+		return d;
+	}
+	if (ia == 0x01C)
+	{
+		d = static_cast<UINT8>(~Cpi01C);
+		return d;
+	}
+	if (ia == 0x01E)
+	{
+		d = static_cast<UINT8>(~Cpi01E);
+		return d;
+	}
+
+	if (Cps == 2)
+	{
 		// Used on CPS2 only I think
-		if (ia == 0x020) {
-			d = (UINT8)~Inp020;
+		if (ia == 0x020)
+		{
+			d = static_cast<UINT8>(~Inp020);
 			return d;
 		}
-		if (ia == 0x021) {
-			d = (UINT8)~Inp021;
+		if (ia == 0x021)
+		{
+			d = static_cast<UINT8>(~Inp021);
 			d &= 0xFE;
 			d |= EEPROMRead();
 			return d;
 		}
 
 		// CPS2 Volume control
-		if (ia == 0x030) {
-			if (Ssf2tb) {
+		if (ia == 0x030)
+		{
+			if (Ssf2tb)
+			{
 				d = 0x20;
-			} else {
+			}
+			else
+			{
 				d = Cps2VolumeStates[Cps2Volume] >> 8;
 				if (Cps2DisableDigitalVolume) d = 0xd0;
 			}
 			return d;
 		}
-		if (ia == 0x031) {
+		if (ia == 0x031)
+		{
 			d = Cps2VolumeStates[Cps2Volume] & 0xff;
 			return d;
 		}
 
-		if (ia >= 0x0100 && ia < 0x0200) {
-//			bprintf(PRINT_NORMAL, _T("  - port 0x%02X (%3i)\n"), ia & 255, SekCurrentScanline());
+		if (ia >= 0x0100 && ia < 0x0200)
+		{
+			//			bprintf(PRINT_NORMAL, _T("  - port 0x%02X (%3i)\n"), ia & 255, SekCurrentScanline());
 
 			// The linecounters seem to return the line at which the last IRQ triggered by this counter is scheduled minus the current line
-			if ((ia & 0x0FE) == 0x50) {
-				if ((ia & 1) == 0) {
+			if ((ia & 0x0FE) == 0x50)
+			{
+				if ((ia & 1) == 0)
+				{
 					nRasterLine = nIrqLine50 - SekCurrentScanline();
 					return nRasterLine >> 8;
-				} else {
-					return nRasterLine & 0xFF;
 				}
+				return nRasterLine & 0xFF;
 			}
-			if ((ia & 0x0FE) == 0x52) {
-				if ((ia & 1) == 0) {
+			if ((ia & 0x0FE) == 0x52)
+			{
+				if ((ia & 1) == 0)
+				{
 					nRasterLine = nIrqLine52 - SekCurrentScanline();
 					return nRasterLine >> 8;
-				} else {
-					return nRasterLine & 0xFF;
 				}
+				return nRasterLine & 0xFF;
+			}
+		}
+	}
+	else
+	{
+		// Board ID
+		if (ia == 0x100 + CpsBID[0])
+		{
+			d = static_cast<UINT8>(CpsBID[1]);
+			return d;
+		}
+		if (ia == 0x100 + (CpsBID[0] + 1))
+		{
+			d = static_cast<UINT8>(CpsBID[2]);
+			return d;
+		}
+
+		if (Sf2thndr)
+		{
+			// this reads the B-ID from here on startup as well as the normal location in-game
+			if (ia == 0x1c8)
+			{
+				d = static_cast<UINT8>(CpsBID[1]);
+				return d;
 			}
 
-		}
-	} else {
-		// Board ID
-		if (ia == 0x100 + CpsBID[0]) {
-			d = (UINT8)CpsBID[1];
-			return d;
-		}
-		if (ia == 0x100 + (CpsBID[0] + 1)) {
-			d = (UINT8)CpsBID[2];
-			return d;
-		}
-		
-		if (Sf2thndr) {
-			// this reads the B-ID from here on startup as well as the normal location in-game
-			if (ia == 0x1c8) {
-				d = (UINT8)CpsBID[1];
-				return d;
-			}
-		
-			if (ia == 0x1c9) {
-				d = (UINT8)CpsBID[2];
+			if (ia == 0x1c9)
+			{
+				d = static_cast<UINT8>(CpsBID[2]);
 				return d;
 			}
 		}
-		
+
 		// CPS1 EEPROM read
-		if (ia == 0xC007) {
-			if (Cps1Qs || CpsBootlegEEPROM) {
+		if (ia == 0xC007)
+		{
+			if (Cps1Qs || CpsBootlegEEPROM)
+			{
 				return EEPROMRead();
-			} else {
-				return 0;
 			}
+			return 0;
 		}
-		
+
 		// Pang3 EEPROM
-		if (PangEEP == 1) {
-			if (ia == 0x17B) {
+		if (PangEEP == 1)
+		{
+			if (ia == 0x17B)
+			{
 				return EEPROMRead();
 			}
 		}
-		
+
 		// Extra Input ports (move from game-to-game)
-		if (ia == 0x006) {
-			d = (UINT8)~Inp006;
+		if (ia == 0x006)
+		{
+			d = static_cast<UINT8>(~Inp006);
 			return d;
 		}
-		if (ia == 0x007) {
-			d = (UINT8)~Inp007;
+		if (ia == 0x007)
+		{
+			d = static_cast<UINT8>(~Inp007);
 			return d;
 		}
-		if (ia == 0x008) {
-			d = (UINT8)~Inp008;
+		if (ia == 0x008)
+		{
+			d = static_cast<UINT8>(~Inp008);
 			return d;
 		}
-		if (ia == 0x029) {
-			d = (UINT8)~Inp029;
-			return d;
-		}		
-		if (ia == 0x176) {
-			d = (UINT8)~Inp176;
+		if (ia == 0x029)
+		{
+			d = static_cast<UINT8>(~Inp029);
 			return d;
 		}
-		if (ia == 0x177) {
-			d = (UINT8)~Inp177;
-			return d;
-		}		
-		if (ia == 0x179) {
-			d = (UINT8)~Inp179;
+		if (ia == 0x176)
+		{
+			d = static_cast<UINT8>(~Inp176);
 			return d;
 		}
-		if (ia == 0x186) {
-			d = (UINT8)~Inp186;
-			return d;
-		}		
-		if (ia == 0x1fd) {
-			d = (UINT8)~Inp1fd;
-			return d;
-		}		
-		if (ia == 0xC000) {
-			d = (UINT8)~Inpc000;
+		if (ia == 0x177)
+		{
+			d = static_cast<UINT8>(~Inp177);
 			return d;
 		}
-		if (ia == 0xC001) {
-			d = (UINT8)~Inpc001;
+		if (ia == 0x179)
+		{
+			d = static_cast<UINT8>(~Inp179);
 			return d;
 		}
-		if (ia == 0xC002) {
-			d = (UINT8)~Inpc002;
+		if (ia == 0x186)
+		{
+			d = static_cast<UINT8>(~Inp186);
 			return d;
 		}
-		if (ia == 0xC003) {
-			d = (UINT8)~Inpc003;
+		if (ia == 0x1fd)
+		{
+			d = static_cast<UINT8>(~Inp1fd);
 			return d;
 		}
-		
+		if (ia == 0xC000)
+		{
+			d = static_cast<UINT8>(~Inpc000);
+			return d;
+		}
+		if (ia == 0xC001)
+		{
+			d = static_cast<UINT8>(~Inpc001);
+			return d;
+		}
+		if (ia == 0xC002)
+		{
+			d = static_cast<UINT8>(~Inpc002);
+			return d;
+		}
+		if (ia == 0xC003)
+		{
+			d = static_cast<UINT8>(~Inpc003);
+			return d;
+		}
+
 		// Forgotten Worlds Dial
-		if (Forgottn) {
-			if (ia == 0x053) {
-				return (nDial055 >>  8) & 0xFF;
+		if (Forgottn)
+		{
+			if (ia == 0x053)
+			{
+				return (nDial055 >> 8) & 0xFF;
 			}
-			if (ia == 0x055) {
+			if (ia == 0x055)
+			{
 				return (nDial055 >> 16) & 0xFF;
 			}
-			if (ia == 0x05B) {
-				return (nDial05d >>  8) & 0xFF;
+			if (ia == 0x05B)
+			{
+				return (nDial05d >> 8) & 0xFF;
 			}
-			if (ia == 0x05D) {
+			if (ia == 0x05D)
+			{
 				return (nDial05d >> 16) & 0xFF;
 			}
-		}	
+		}
 	}
-	
-//	bprintf(PRINT_NORMAL, _T("Read Port %x\n"), ia);
+
+	//	bprintf(PRINT_NORMAL, _T("Read Port %x\n"), ia);
 
 	return d;
 }
@@ -332,102 +394,126 @@ static UINT8 CpsReadPort(const UINT32 ia)
 // Write output port 0x000-0x1ff
 void CpsWritePort(const UINT32 ia, UINT8 d)
 {
-	if ((Cps & 1) && Cps1Qs == 0) {
-		if (!Cps1DisablePSnd) {
+	if ((Cps & 1) && Cps1Qs == 0)
+	{
+		if (!Cps1DisablePSnd)
+		{
 			// CPS1 sound code
-			if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007))) {
-				PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+			if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007)))
+			{
+				PsndSyncZ80(static_cast<INT64>(SekTotalCycles()) * nCpsZ80Cycles / nCpsCycles);
 
 				PsndCode = d;
 				return;
 			}
 
 			// CPS1 sound fade
-			if (ia == 0x189) {
-				PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+			if (ia == 0x189)
+			{
+				PsndSyncZ80(static_cast<INT64>(SekTotalCycles()) * nCpsZ80Cycles / nCpsCycles);
 
 				PsndFade = d;
 				return;
 			}
-		} else {
-			if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007))) {
-				if (CpsRWSoundCommandCallbackFunction) {
+		}
+		else
+		{
+			if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007)))
+			{
+				if (CpsRWSoundCommandCallbackFunction)
+				{
 					CpsRWSoundCommandCallbackFunction(d);
 				}
 			}
 		}
 
-		if (ia == 0x041) {
+		if (ia == 0x041)
+		{
 			nDial055 = 0;
 		}
-		if (ia == 0x049) {
+		if (ia == 0x049)
+		{
 			nDial05d = 0;
 		}
 	}
 
-	if (Cps == 1 && Cps1QsHack == 1) {
-		if (ia == 0x181) {
+	if (Cps == 1 && Cps1QsHack == 1)
+	{
+		if (ia == 0x181)
+		{
 			// Pass the Sound Code to the Q-Sound Shared Ram
 			CpsZRamC0[0x001] = d;
 		}
 	}
 
 	// CPS registers
-	if (ia >= 0x100 && ia < 0x200) {
+	if (ia >= 0x100 && ia < 0x200)
+	{
 		//Pang3 EEPROM
-		if (PangEEP == 1 && ia == 0x17B) {
+		if (PangEEP == 1 && ia == 0x17B)
+		{
 			EEPROMWrite(d & 0x40, d & 0x80, d & 0x01);
 			return;
 		}
 		CpsReg[(ia ^ 1) & 0xFF] = d;
-		
-		if (ia == 0x10b) {
+
+		if (ia == 0x10b)
+		{
 			GetPalette(0, 6);
 			CpsPalUpdate(CpsSavePal);
 		}
 		return;
 	}
 
-	if (Cps == 2) {
-		if (ia == 0x40) {
+	if (Cps == 2)
+	{
+		if (ia == 0x40)
+		{
 			EEPROMWrite(d & 0x20, d& 0x40, d & 0x10);
 			return;
 		}
 
 		// CPS2 object bank select
-		if ((ia & 0x1FF) == 0x0E1) {
-//			bprintf(PRINT_NORMAL, _T("  - %2i (%3i)\n"), d & 1, SekCurrentScanline());
-//			CpsObjGet();
+		if ((ia & 0x1FF) == 0x0E1)
+		{
+			//			bprintf(PRINT_NORMAL, _T("  - %2i (%3i)\n"), d & 1, SekCurrentScanline());
+			//			CpsObjGet();
 			CpsMapObjectBanks(d & 1);
 			return;
 		}
-		
-		if (ia == 0x41 && Pzloop2) {
+
+		if (ia == 0x41 && Pzloop2)
+		{
 			ReadPaddle = d & 0x02;
 		}
 	}
 
-	if (Cps1Qs == 1 || CpsBootlegEEPROM) {
+	if (Cps1Qs == 1 || CpsBootlegEEPROM)
+	{
 		//CPS1 EEPROM write
-		if (ia == 0xc007) {
+		if (ia == 0xc007)
+		{
 			EEPROMWrite(d & 0x40, d & 0x80, d & 0x01);
-			return;
 		}
 	}
-	
-//	bprintf(PRINT_NORMAL, _T("Write Port %x, %x\n"), ia, d);
+
+	//	bprintf(PRINT_NORMAL, _T("Write Port %x, %x\n"), ia, d);
 }
 
 UINT8 __fastcall CpsReadByte(UINT32 a)
 {
 	// Input ports mirrored between 0x800000 and 0x807fff
-	if ((a & 0xFF8000) == 0x800000) {
+	if ((a & 0xFF8000) == 0x800000)
+	{
 		return CpsReadPort(a & 0x1FF);
 	}
 
-	if (Cps == 2) {
-		if ((a & 0xFF8000) == 0x660000) {
-			if (a == 0x664001) {
+	if (Cps == 2)
+	{
+		if ((a & 0xFF8000) == 0x660000)
+		{
+			if (a == 0x664001)
+			{
 				return n664001;
 			}
 		}
@@ -435,66 +521,75 @@ UINT8 __fastcall CpsReadByte(UINT32 a)
 		return 0x00;
 	}
 
-	if (a >= 0xF1C000 && a <= 0xF1C007) {
+	if (a >= 0xF1C000 && a <= 0xF1C007)
+	{
 		return CpsReadPort(a & 0xC00F);
 	}
-	
-	if (Dinohunt && a == 0xfc0001) return (UINT8)~Inpc001;
-	
-//	bprintf(PRINT_NORMAL, _T("Read Byte %x\n"), a);
-	
+
+	if (Dinohunt && a == 0xfc0001) return static_cast<UINT8>(~Inpc001);
+
+	//	bprintf(PRINT_NORMAL, _T("Read Byte %x\n"), a);
+
 	return 0x00;
 }
 
-void __fastcall CpsWriteByte(UINT32 a,UINT8 d)
+void __fastcall CpsWriteByte(UINT32 a, UINT8 d)
 {
 	// Output ports mirrored between 0x800000 and 0x807fff
-	if ((a & 0xFF8000) == 0x800000) {
+	if ((a & 0xFF8000) == 0x800000)
+	{
 		CpsWritePort(a & 0x1FF, d);
 		return;
 	}
-	
-	if (Cps == 2) {
+
+	if (Cps == 2)
+	{
 		// 0x400000 registers
-		if ((a & 0xFFFFF0) == 0x400000)	{
+		if ((a & 0xFFFFF0) == 0x400000)
+		{
 			CpsFrg[a & 0x0F] = d;
 			return;
 		}
-		if ((a & 0xFF8000) == 0x660000) {
-			if (a == 0x664001) {
+		if ((a & 0xFF8000) == 0x660000)
+		{
+			if (a == 0x664001)
+			{
 				// bit 1 toggled on/off each frame
 				n664001 = d;
 			}
-			
+
 			return;
 		}
 
 		return;
 	}
-	
-	if (Cps1Qs == 1 || CpsBootlegEEPROM) {
+
+	if (Cps1Qs == 1 || CpsBootlegEEPROM)
+	{
 		// CPS1 EEPROM
-		if (a == 0xf1c007) {
+		if (a == 0xf1c007)
+		{
 			CpsWritePort(a & 0xC00F, d);
-			return;
 		}
 	}
-	
-//	bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), a, d);
+
+	//	bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), a, d);
 }
 
 UINT16 __fastcall CpsReadWord(UINT32 a)
 {
-	if ((a & 0xFF8FFF) == 0x800100 + CpsMProt[3]) {
-		return (UINT16)((nCalc[0] * nCalc[1]) >> 16);
+	if ((a & 0xFF8FFF) == 0x800100 + CpsMProt[3])
+	{
+		return static_cast<UINT16>((nCalc[0] * nCalc[1]) >> 16);
 	}
 	// ports mirrored between 0x800000 and 0x807fff
-	if ((a & 0xFF8FFF) == 0x800100 + CpsMProt[2]) {
-		return (UINT16)((nCalc[0] * nCalc[1]));
+	if ((a & 0xFF8FFF) == 0x800100 + CpsMProt[2])
+	{
+		return static_cast<UINT16>((nCalc[0] * nCalc[1]));
 	}
-	
-//	bprintf(PRINT_NORMAL, _T("Read Word %x\n"), a);
-	
+
+	//	bprintf(PRINT_NORMAL, _T("Read Word %x\n"), a);
+
 	SEK_DEF_READ_WORD(0, a);
 }
 
@@ -506,14 +601,16 @@ void __fastcall CpsWriteWord(UINT32 a, UINT16 d)
 	if ((a & 0xFF8FFF) == 0x800100 + CpsMProt[1])
 		nCalc[1] = d;
 
-	if (a == 0x804040) {
-		if ((d & 0x0008) == 0) {
+	if (a == 0x804040)
+	{
+		if ((d & 0x0008) == 0)
+		{
 			if (!Cps2DisableQSnd) ZetReset();
 		}
 	}
-	
-//	bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
-	
+
+	//	bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+
 	SEK_DEF_WRITE_WORD(0, a, d);
 }
 
@@ -543,16 +640,18 @@ INT32 CpsRwInit()
 INT32 CpsRwExit()
 {
 	InpBlank();
-	CpsRWSoundCommandCallbackFunction = NULL;
+	CpsRWSoundCommandCallbackFunction = nullptr;
 	return 0;
 }
 
 inline static void StopOpposite(UINT8* pInput)
 {
-	if ((*pInput & 0x03) == 0x03) {
+	if ((*pInput & 0x03) == 0x03)
+	{
 		*pInput &= ~0x03;
 	}
-	if ((*pInput & 0x0C) == 0x0C) {
+	if ((*pInput & 0x0C) == 0x0C)
+	{
 		*pInput &= ~0x0C;
 	}
 }
@@ -573,61 +672,74 @@ INT32 CpsRwGetInp()
 	CPSINPEX
 #undef INP
 
-	if (Forgottn) {
+	if (Forgottn)
+	{
 		// Handle analog controls
-		if (fFakeDip & 0x80) {
-			if (CpsDigUD[0]) nDial055 += 1<<13; // p1
-			if (CpsDigUD[1]) nDial055 -= 1<<13;
-			if (CpsDigUD[2]) nDial05d += 1<<13; // p2
-			if (CpsDigUD[3]) nDial05d -= 1<<13;
-			nDial055 += (INT32)((INT16)CpsInp055)<<3;
-			nDial05d += (INT32)((INT16)CpsInp05d)<<3;
-		} else {
-			if (CpsDigUD[0]) nDial055 -= 1<<13; // p1
-			if (CpsDigUD[1]) nDial055 += 1<<13;
-			if (CpsDigUD[2]) nDial05d -= 1<<13; // p2
-			if (CpsDigUD[3]) nDial05d += 1<<13;
-			nDial055 -= (INT32)((INT16)CpsInp055)<<3;
-			nDial05d -= (INT32)((INT16)CpsInp05d)<<3;
+		if (fFakeDip & 0x80)
+		{
+			if (CpsDigUD[0]) nDial055 += 1 << 13; // p1
+			if (CpsDigUD[1]) nDial055 -= 1 << 13;
+			if (CpsDigUD[2]) nDial05d += 1 << 13; // p2
+			if (CpsDigUD[3]) nDial05d -= 1 << 13;
+			nDial055 += static_cast<INT32>(static_cast<INT16>(CpsInp055)) << 3;
+			nDial05d += static_cast<INT32>(static_cast<INT16>(CpsInp05d)) << 3;
+		}
+		else
+		{
+			if (CpsDigUD[0]) nDial055 -= 1 << 13; // p1
+			if (CpsDigUD[1]) nDial055 += 1 << 13;
+			if (CpsDigUD[2]) nDial05d -= 1 << 13; // p2
+			if (CpsDigUD[3]) nDial05d += 1 << 13;
+			nDial055 -= static_cast<INT32>(static_cast<INT16>(CpsInp055)) << 3;
+			nDial05d -= static_cast<INT32>(static_cast<INT16>(CpsInp05d)) << 3;
 		}
 	}
-	
-	if (Pzloop2) {
-		if (ReadPaddle) {
+
+	if (Pzloop2)
+	{
+		if (ReadPaddle)
+		{
 			CpsPaddle1Value = 0;
 			CpsPaddle2Value = 0;
-			if (CpsInpPaddle1) {
-				if (CpsInpPaddle1 > 0x3fe) {
+			if (CpsInpPaddle1)
+			{
+				if (CpsInpPaddle1 > 0x3fe)
+				{
 					CpsPaddle1Value = 2;
 				}
-	
-				if (CpsInpPaddle1 < -0x3fe) {
+
+				if (CpsInpPaddle1 < -0x3fe)
+				{
 					CpsPaddle1Value = 1;
 				}
 			}
-			
-			if (CpsInpPaddle2) {
-				if (CpsInpPaddle2 > 0x3fe) {
+
+			if (CpsInpPaddle2)
+			{
+				if (CpsInpPaddle2 > 0x3fe)
+				{
 					CpsPaddle2Value = 2;
 				}
-	
-				if (CpsInpPaddle2 < -0x3fe) {
+
+				if (CpsInpPaddle2 < -0x3fe)
+				{
 					CpsPaddle2Value = 1;
 				}
 			}
 		}
-		
+
 		CpsPaddle1 += CpsInpPaddle1 / 0x100;
 		CpsPaddle2 += CpsInpPaddle2 / 0x100;
 	}
 
-	if (Hkittymp) {
+	if (Hkittymp)
+	{
 		// In new drivers I'd use my paddle device, but..
 		// This crude analog handling was in fb for probably 20 years now,
 		// Let's stay with it, just for fun! -dink
 
 		// Clamp at +- 0x400 (-0x400 to +0x3ff, range of typical analog thumbstick)
-		if (CpsInpPaddle1 >  0x3fe) CpsInpPaddle1 =  0x400;
+		if (CpsInpPaddle1 > 0x3fe) CpsInpPaddle1 = 0x400;
 		if (CpsInpPaddle1 < -0x3fe) CpsInpPaddle1 = -0x400;
 
 		CpsPaddle1 += CpsInpPaddle1 / 0x80; // add +-8 maximum to paddle-accumulator
@@ -637,46 +749,66 @@ INT32 CpsRwGetInp()
 	StopOpposite(&Inp001);
 
 	// Ghouls uses a 4-way stick
-	if (Ghouls) {
-		if (fFakeDip & 1) {
-			if ((Inp000 & 0xf) & ((Inp000 & 0xf) - 1)) {
+	if (Ghouls)
+	{
+		if (fFakeDip & 1)
+		{
+			if ((Inp000 & 0xf) & ((Inp000 & 0xf) - 1))
+			{
 				Inp000 = (Inp000 & ~0xf) | (nPrevInp000 & 0xf);
 			}
 			nPrevInp000 = Inp000;
 
-			if ((Inp001 & 0xf) & ((Inp001 & 0xf) - 1)) {
+			if ((Inp001 & 0xf) & ((Inp001 & 0xf) - 1))
+			{
 				Inp001 = (Inp001 & ~0xf) | (nPrevInp001 & 0xf);
 			}
 			nPrevInp001 = Inp001;
-		} else {
-			if ((Inp000 & 0x03) && (Inp000 & 0x0C)) {
+		}
+		else
+		{
+			if ((Inp000 & 0x03) && (Inp000 & 0x0C))
+			{
 				Inp000 ^= (nPrevInp000 & 0x0F);
-			} else {
+			}
+			else
+			{
 				nPrevInp000 = Inp000;
 			}
 
-			if ((Inp001 & 0x03) && (Inp001 & 0x0C)) {
+			if ((Inp001 & 0x03) && (Inp001 & 0x0C))
+			{
 				Inp001 ^= (nPrevInp001 & 0x0F);
-			} else {
+			}
+			else
+			{
 				nPrevInp001 = Inp001;
 			}
 		}
 	}
 
-	if (nMaxPlayers > 2) {
-		if (Cps == 2) {
+	if (nMaxPlayers > 2)
+	{
+		if (Cps == 2)
+		{
 			StopOpposite(&Inp011);
-			if (nMaxPlayers == 4) {
+			if (nMaxPlayers == 4)
+			{
 				StopOpposite(&Inp010);
 			}
-		} else {
+		}
+		else
+		{
 			StopOpposite(&Inp177);
-			if (nMaxPlayers == 4) {
+			if (nMaxPlayers == 4)
+			{
 				StopOpposite(&Inp179);
 			}
-			if (Cps1Qs) {
+			if (Cps1Qs)
+			{
 				StopOpposite(&Inpc001);
-				if (nMaxPlayers == 4) {
+				if (nMaxPlayers == 4)
+				{
 					StopOpposite(&Inpc003);
 				}
 			}
@@ -686,7 +818,8 @@ INT32 CpsRwGetInp()
 	return 0;
 }
 
-void CpsSoundCmd(UINT16 sound_code) {
-//	CpsWritePort(0x181, sound_code);
+void CpsSoundCmd(UINT16 sound_code)
+{
+	//	CpsWritePort(0x181, sound_code);
 	PsndCode = sound_code;
 }

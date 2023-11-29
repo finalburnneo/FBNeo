@@ -3,31 +3,32 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 
-UINT8 *c45RoadRAM = NULL; // external
+UINT8* c45RoadRAM = nullptr; // external
 
-static UINT8 *c45RoadTiles = NULL;
-static UINT16 *c45RoadBitmap = NULL;
-static UINT8 *c45RoadClut = NULL;
+static UINT8* c45RoadTiles = nullptr;
+static UINT16* c45RoadBitmap = nullptr;
+static UINT8* c45RoadClut = nullptr;
 static UINT8 c45_temp_clut[0x100];
 static INT32 c45_transparent_color = 0x7fffffff;
 
 void c45RoadReset()
 {
-	if (c45RoadRAM != NULL) memset (c45RoadRAM, 0, 0x20000);
-	if (c45RoadTiles != NULL) memset (c45RoadTiles, 0, 0x40000);
+	if (c45RoadRAM != nullptr) memset(c45RoadRAM, 0, 0x20000);
+	if (c45RoadTiles != nullptr) memset(c45RoadTiles, 0, 0x40000);
 }
 
-void c45RoadInit(UINT32 transparent_color, UINT8 *clut)
+void c45RoadInit(UINT32 transparent_color, UINT8* clut)
 {
-	c45RoadRAM = (UINT8*)BurnMalloc(0x20000);
-	c45RoadTiles = (UINT8*)BurnMalloc(0x40000);
+	c45RoadRAM = BurnMalloc(0x20000);
+	c45RoadTiles = BurnMalloc(0x40000);
 
 	c45RoadClut = clut;
 	c45RoadBitmap = (UINT16*)BurnMalloc(0x400 * sizeof(UINT16));
 
 	c45_transparent_color = transparent_color;
-	
-	if (c45RoadClut == NULL) {
+
+	if (c45RoadClut == nullptr)
+	{
 		c45RoadClut = c45_temp_clut;
 		for (INT32 i = 0; i < 0x100; i++) c45RoadClut[i] = i;
 	}
@@ -35,15 +36,18 @@ void c45RoadInit(UINT32 transparent_color, UINT8 *clut)
 
 void c45RoadExit()
 {
-	if (c45RoadRAM != NULL) BurnFree(c45RoadRAM);
-	if (c45RoadTiles != NULL) BurnFree(c45RoadTiles);
-	if (c45RoadBitmap != NULL) BurnFree(c45RoadBitmap);
+	if (c45RoadRAM != nullptr)
+		BurnFree(c45RoadRAM);
+	if (c45RoadTiles != nullptr)
+		BurnFree(c45RoadTiles);
+	if (c45RoadBitmap != nullptr)
+		BurnFree(c45RoadBitmap);
 
-	c45RoadRAM = NULL;
-	c45RoadTiles = NULL;
-	c45RoadBitmap = NULL;
+	c45RoadRAM = nullptr;
+	c45RoadTiles = nullptr;
+	c45RoadBitmap = nullptr;
 
-	c45RoadClut = NULL;
+	c45RoadClut = nullptr;
 
 	c45_transparent_color = 0x7fffffff;
 }
@@ -51,28 +55,30 @@ void c45RoadExit()
 static inline void update_tile_pixel(INT32 offset)
 {
 	UINT16 s = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(c45RoadRAM + (offset * 2))));
-	
-	UINT8 *pxl = c45RoadTiles + ((offset * 8) & 0x3fff8);
 
-	for (INT32 x = 7; x >= 0; x--) {
-		pxl[7-x] = (((s >> (x + 8)) & 1) << 1) | ((s >> x) & 1);
+	UINT8* pxl = c45RoadTiles + ((offset * 8) & 0x3fff8);
+
+	for (INT32 x = 7; x >= 0; x--)
+	{
+		pxl[7 - x] = (((s >> (x + 8)) & 1) << 1) | ((s >> x) & 1);
 	}
 }
 
 static void __fastcall c45_road_write_word(UINT32 address, UINT16 data)
 {
-	UINT16 *ram = (UINT16*)c45RoadRAM;
+	auto ram = (UINT16*)c45RoadRAM;
 
 	INT32 offset = (address & 0x1ffff) / 2;
 
 	if (offset < (0x1fa00 / 2)) // tiles
 	{
-		if (data != BURN_ENDIAN_SWAP_INT16(ram[offset])) {
+		if (data != BURN_ENDIAN_SWAP_INT16(ram[offset]))
+		{
 			ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 			update_tile_pixel(offset);
 		}
 	}
-	else	// scroll regs
+	else // scroll regs
 	{
 		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 	}
@@ -80,18 +86,19 @@ static void __fastcall c45_road_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall c45_road_write_byte(UINT32 address, UINT8 data)
 {
-	UINT16 *ram = (UINT16*)c45RoadRAM;
-	
+	auto ram = (UINT16*)c45RoadRAM;
+
 	INT32 offset = (address & 0x1ffff) ^ 1;
 
-	if (offset < 0x1fa00)	// tiles
+	if (offset < 0x1fa00) // tiles
 	{
-		if (data != ram[offset]) {
+		if (data != ram[offset])
+		{
 			c45RoadRAM[offset] = data;
-			update_tile_pixel(offset/2);
+			update_tile_pixel(offset / 2);
 		}
 	}
-	else	// scroll regs
+	else // scroll regs
 	{
 		c45RoadRAM[offset] = data;
 	}
@@ -99,16 +106,16 @@ static void __fastcall c45_road_write_byte(UINT32 address, UINT8 data)
 
 void c45RoadMap68k(UINT32 address)
 {
-	SekMapHandler(7,		address, address | 0x1ffff, MAP_WRITE);
-	SekSetWriteWordHandler(7,	c45_road_write_word);
-	SekSetWriteByteHandler(7,	c45_road_write_byte);
+	SekMapHandler(7, address, address | 0x1ffff, MAP_WRITE);
+	SekSetWriteWordHandler(7, c45_road_write_word);
+	SekSetWriteByteHandler(7, c45_road_write_byte);
 
-	SekMapMemory(c45RoadRAM,	address, address | 0x0ffff, MAP_WRITE);
+	SekMapMemory(c45RoadRAM, address, address | 0x0ffff, MAP_WRITE);
 }
 
 static void predraw_c45_road_tiles_line(UINT32 line, UINT32 startx, UINT32 pixels_wide, UINT32 incx)
 {
-	UINT16 *ram = (UINT16*)c45RoadRAM;
+	auto ram = (UINT16*)c45RoadRAM;
 
 	INT32 startx_shift = startx >> 20;
 	INT32 endx_shift = (((pixels_wide * incx) >> 20) + 1) + startx_shift;
@@ -120,8 +127,8 @@ static void predraw_c45_road_tiles_line(UINT32 line, UINT32 startx, UINT32 pixel
 	for (INT32 sx = startx_shift; sx < endx_shift; sx++, offs++)
 	{
 		INT32 color = ((BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 10) << 2);
-		UINT8 *gfx = c45RoadTiles + ((BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x3ff) * 256 + code_offset);
-		UINT8 *clut = c45RoadClut + color;
+		UINT8* gfx = c45RoadTiles + ((BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x3ff) * 256 + code_offset);
+		UINT8* clut = c45RoadClut + color;
 
 		for (INT32 x = 0; x < 16; x++)
 		{
@@ -136,7 +143,7 @@ void c45RoadDraw()
 
 	GenericTilesGetClip(&min_x, &max_x, &min_y, &max_y);
 
-	UINT16 *m_lineram = (UINT16*)(c45RoadRAM + 0x1fa00);
+	auto m_lineram = (UINT16*)(c45RoadRAM + 0x1fa00);
 
 	UINT32 yscroll = BURN_ENDIAN_SWAP_INT16(m_lineram[0x3fe/2]);
 
@@ -161,7 +168,7 @@ void c45RoadDraw()
 
 		// skip if we don't have a valid source increment
 		UINT32 sourcey = BURN_ENDIAN_SWAP_INT16(m_lineram[0x200/2 + y + 15]) + yscroll;
-		const UINT16 *source_gfx = c45RoadBitmap;
+		const UINT16* source_gfx = c45RoadBitmap;
 		UINT32 dsourcex = (ROAD_TILEMAP_WIDTH << 16) / zoomx;
 		if (dsourcex == 0)
 			continue;
@@ -172,7 +179,7 @@ void c45RoadDraw()
 			screenx |= ~0x7ff;
 
 		// adjust the horizontal placement
-		screenx -= (64+16); // needs adjustment to left
+		screenx -= (64 + 16); // needs adjustment to left
 
 		INT32 numpixels = (44 * ROAD_TILE_SIZE << 16) / dsourcex;
 		UINT32 sourcex = 0;
@@ -182,7 +189,7 @@ void c45RoadDraw()
 		if (clip_pixels > 0)
 		{
 			numpixels -= clip_pixels;
-			sourcex += dsourcex*clip_pixels;
+			sourcex += dsourcex * clip_pixels;
 			screenx = min_x;
 		}
 
@@ -191,8 +198,8 @@ void c45RoadDraw()
 		if (clip_pixels > 0)
 			numpixels -= clip_pixels;
 
-		UINT16 *dest = pTransDraw + y * nScreenWidth;
-		UINT8 *pdest = pPrioDraw + y * nScreenWidth;
+		UINT16* dest = pTransDraw + y * nScreenWidth;
+		UINT8* pdest = pPrioDraw + y * nScreenWidth;
 
 		predraw_c45_road_tiles_line(sourcey & (ROAD_TILEMAP_HEIGHT - 1), sourcex, numpixels, dsourcex);
 
@@ -201,8 +208,10 @@ void c45RoadDraw()
 			INT32 destpri = pdest[screenx];
 			INT32 pixel = source_gfx[sourcex >> 16];
 
-			if (destpri <= pri ) {
-				if (pixel != c45_transparent_color) {
+			if (destpri <= pri)
+			{
+				if (pixel != c45_transparent_color)
+				{
 					dest[screenx] = BURN_ENDIAN_SWAP_INT16(pixel);
 				}
 				pdest[screenx] = pri;
@@ -216,18 +225,19 @@ void c45RoadDraw()
 // call from save state
 void c45RoadState(INT32 nAction)
 {
-	if (c45RoadRAM == NULL) return;
+	if (c45RoadRAM == nullptr) return;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));
-	ba.Data		= c45RoadRAM;
-	ba.nLen		= 0x20000;
-	ba.szName	= "C45 Road RAM";
+	ba.Data = c45RoadRAM;
+	ba.nLen = 0x20000;
+	ba.szName = "C45 Road RAM";
 	BurnAcb(&ba);
 
 	if (nAction & ACB_WRITE)
 	{
-		for (INT32 i = 0x10000; i < 0x1fa00; i++) {
+		for (INT32 i = 0x10000; i < 0x1fa00; i++)
+		{
 			update_tile_pixel(i / 2);
 		}
 #if 0

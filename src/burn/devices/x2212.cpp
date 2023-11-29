@@ -13,9 +13,10 @@
 #define X2212_RECALL    (1 << 1)
 #define X2212_AUTOSTORE  (1 << 16)
 
-struct x2212_chip {
-	UINT8 *eerom;
-	UINT8 *sram;
+struct x2212_chip
+{
+	UINT8* eerom;
+	UINT8* sram;
 	UINT32 mode;
 };
 
@@ -39,7 +40,8 @@ static void store_internal(INT32 chip)
 
 void x2212_store(INT32 chip, INT32 state)
 {
-	if (state && (~x2212_chips[chip].mode & X2212_STORE)) {
+	if (state && (~x2212_chips[chip].mode & X2212_STORE))
+	{
 		store_internal(chip);
 		if (X2212_DEBUG) bprintf(0, _T("X2212 chip %d: store.\n"), chip);
 	}
@@ -49,7 +51,8 @@ void x2212_store(INT32 chip, INT32 state)
 
 void x2212_recall(INT32 chip, INT32 state)
 {
-	if (state && (~x2212_chips[chip].mode & X2212_RECALL)) {
+	if (state && (~x2212_chips[chip].mode & X2212_RECALL))
+	{
 		memcpy(x2212_chips[chip].sram, x2212_chips[chip].eerom, X2212_SIZE);
 		if (X2212_DEBUG) bprintf(0, _T("X2212 chip %d: recall.\n"), chip);
 	}
@@ -59,8 +62,9 @@ void x2212_recall(INT32 chip, INT32 state)
 
 void x2212_reset()
 {
-	for (INT32 i = 0; i < x2212_chipnum; i++) {
-		memset(x2212_chips[i].sram,  0xff, X2212_SIZE);
+	for (INT32 i = 0; i < x2212_chipnum; i++)
+	{
+		memset(x2212_chips[i].sram, 0xff, X2212_SIZE);
 		x2212_chips[i].mode = X2212_IDLE | (x2212_chips[i].mode & X2212_AUTOSTORE);
 	}
 }
@@ -69,13 +73,15 @@ void x2212_init(INT32 num_chips)
 {
 	x2212_chipnum = num_chips & 0xff;
 
-	for (INT32 i = 0; i < x2212_chipnum; i++) {
-		x2212_chips[i].eerom = (UINT8*)BurnMalloc(X2212_SIZE);
-		x2212_chips[i].sram  = (UINT8*)BurnMalloc(X2212_SIZE);
+	for (INT32 i = 0; i < x2212_chipnum; i++)
+	{
+		x2212_chips[i].eerom = BurnMalloc(X2212_SIZE);
+		x2212_chips[i].sram = BurnMalloc(X2212_SIZE);
 		memset(x2212_chips[i].eerom, 0xff, X2212_SIZE);
-		memset(x2212_chips[i].sram,  0xff, X2212_SIZE);
+		memset(x2212_chips[i].sram, 0xff, X2212_SIZE);
 
-		if (num_chips & X2212_AUTOSTORE) {
+		if (num_chips & X2212_AUTOSTORE)
+		{
 			x2212_chips[i].mode = X2212_AUTOSTORE;
 		}
 	}
@@ -90,7 +96,8 @@ void x2212_init_autostore(INT32 num_chips)
 
 void x2212_exit()
 {
-	for (INT32 i = 0; i < x2212_chipnum; i++) {
+	for (INT32 i = 0; i < x2212_chipnum; i++)
+	{
 		BurnFree(x2212_chips[i].eerom);
 		BurnFree(x2212_chips[i].sram);
 		x2212_chips[i].mode = X2212_IDLE;
@@ -99,19 +106,22 @@ void x2212_exit()
 	x2212_chipnum = 0;
 }
 
-void x2212_scan(INT32 nAction, INT32 *pnMin)
+void x2212_scan(INT32 nAction, INT32* pnMin)
 {
-	for (INT32 i = 0; i < x2212_chipnum; i++) {
-		if (nAction & ACB_VOLATILE) {
-
+	for (INT32 i = 0; i < x2212_chipnum; i++)
+	{
+		if (nAction & ACB_VOLATILE)
+		{
 			if (X2212_DEBUG) bprintf(0, _T("X2212 chip %d: scan volatile.\n"), i);
 
 			ScanVar(x2212_chips[i].sram, X2212_SIZE, "X2212 SRAM");
 			SCAN_VAR(x2212_chips[i].mode);
 		}
 
-		if (nAction & ACB_NVRAM) {
-			if ((nAction & ACB_READ) && (x2212_chips[i].mode & X2212_AUTOSTORE)) {
+		if (nAction & ACB_NVRAM)
+		{
+			if ((nAction & ACB_READ) && (x2212_chips[i].mode & X2212_AUTOSTORE))
+			{
 				if (X2212_DEBUG) bprintf(0, _T("X2212 chip %d: NVRAM Write Auto-Store.\n"), i);
 				store_internal(i);
 			}

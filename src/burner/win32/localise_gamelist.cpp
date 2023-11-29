@@ -9,7 +9,7 @@ TCHAR szGamelistLocalisationTemplate[MAX_PATH] = _T("");
 bool nGamelistLocalisationActive = false;
 static int nCodePage = CP_ACP;
 static TCHAR szGamelistExLocalisationTemplate[MAX_PATH] = _T("");
-static TCHAR *szLongNamesArray[MAX_LST_GAMES];
+static TCHAR* szLongNamesArray[MAX_LST_GAMES];
 static TCHAR* szLongNamesExArray[MAX_LSTEX_GAMES];
 
 void BurnerDoGameListExLocalisation()
@@ -17,25 +17,28 @@ void BurnerDoGameListExLocalisation()
 #if defined (_UNICODE)
 	if (!nGamelistLocalisationActive) return;
 
-	const TCHAR szExt[] = _T(".glt");
+	constexpr TCHAR szExt[] = _T(".glt");
 
 	_tcscpy(szGamelistExLocalisationTemplate, szGamelistLocalisationTemplate);
 
-	if (NULL != szGamelistExLocalisationTemplate) {
-		PTCHAR pszPos = _tcsstr(szGamelistExLocalisationTemplate, szExt);	// Point to ".glt"
+	if (nullptr != szGamelistExLocalisationTemplate)
+	{
+		PTCHAR pszPos = _tcsstr(szGamelistExLocalisationTemplate, szExt); // Point to ".glt"
 
-		if (NULL != pszPos) {
+		if (nullptr != pszPos)
+		{
 			pszPos[0] = _T('\0');
 		}
 
 		_tcscat(szGamelistExLocalisationTemplate, _T("ex"));
 		_tcscat(szGamelistExLocalisationTemplate, szExt);
 
-		pszPos = NULL;
+		pszPos = nullptr;
 	}
 
 	FILE* fp = _tfopen(szGamelistExLocalisationTemplate, _T("rt"));
-	if (fp) {
+	if (fp)
+	{
 		TCHAR* szShortNamesArray[MAX_LSTEX_GAMES];
 		TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
 		int nTokenPos = 0;
@@ -43,28 +46,34 @@ void BurnerDoGameListExLocalisation()
 		int nNumGames = 0;
 
 		// Allocate arrays to read the file into
-		for (int i = 0; i < MAX_LSTEX_GAMES; i++) {
-			szLongNamesExArray[i] = (TCHAR*)malloc( MAX_LST_LINE_LEN * sizeof(TCHAR));
-			szShortNamesArray[i]  = (TCHAR*)malloc( 100              * sizeof(TCHAR));
+		for (int i = 0; i < MAX_LSTEX_GAMES; i++)
+		{
+			szLongNamesExArray[i] = static_cast<TCHAR*>(malloc(MAX_LST_LINE_LEN * sizeof(TCHAR)));
+			szShortNamesArray[i] = static_cast<TCHAR*>(malloc(100 * sizeof(TCHAR)));
 			memset(szLongNamesExArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
-			memset(szShortNamesArray[i],  _T('\0'), 100              * sizeof(TCHAR));
+			memset(szShortNamesArray[i], _T('\0'), 100 * sizeof(TCHAR));
 		}
 
 		char szTemp[MAX_LST_LINE_LEN];
 
-		while (fgets(szTemp, sizeof(szTemp), fp)) {
-			if (szTemp[0] == '/' && szTemp[1] == '/') {
+		while (fgets(szTemp, sizeof(szTemp), fp))
+		{
+			if (szTemp[0] == '/' && szTemp[1] == '/')
+			{
 				continue;
 			}
 
-			if (!strncmp(szTemp, "codepage=", 9)) {
-				if ((strlen(szTemp) - 10) == 4) {
+			if (!strncmp(szTemp, "codepage=", 9))
+			{
+				if ((strlen(szTemp) - 10) == 4)
+				{
 					nCodePage = (szTemp[9] - '0') * 1000;
 					nCodePage += (szTemp[10] - '0') * 100;
 					nCodePage += (szTemp[11] - '0') * 10;
 					nCodePage += (szTemp[12] - '0');
 				}
-				if ((strlen(szTemp) - 10) == 3) {
+				if ((strlen(szTemp) - 10) == 3)
+				{
 					nCodePage = (szTemp[9] - '0') * 100;
 					nCodePage += (szTemp[10] - '0') * 10;
 					nCodePage += (szTemp[11] - '0');
@@ -74,7 +83,8 @@ void BurnerDoGameListExLocalisation()
 
 			// Get rid of the linefeed at the end
 			int nLen = strlen(szTemp);
-			if (nLen > 0 && szTemp[nLen - 1] == 10) {
+			if (nLen > 0 && szTemp[nLen - 1] == 10)
+			{
 				szTemp[nLen - 1] = 0;
 				nLen--;
 			}
@@ -85,18 +95,21 @@ void BurnerDoGameListExLocalisation()
 
 			// Read the file into arrays
 			Tokens = _tcstok(szLine, _T("\t"));
-			while (Tokens != NULL) {
-				if (nTokenPos == 0) {
+			while (Tokens != nullptr)
+			{
+				if (nTokenPos == 0)
+				{
 					wcscpy(szShortNamesArray[nArrayPos], Tokens);
 					// szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 
-				if (nTokenPos == 1) {
+				if (nTokenPos == 1)
+				{
 					wcscpy(szLongNamesExArray[nArrayPos], Tokens);
 					// szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 
-				Tokens = _tcstok(NULL, _T("\t"));
+				Tokens = _tcstok(nullptr, _T("\t"));
 				nTokenPos++;
 			}
 
@@ -105,15 +118,18 @@ void BurnerDoGameListExLocalisation()
 		}
 		nNumGames = nArrayPos;
 
-		for (int i = 0; i < nNumGames; i++) {
-			BurnLocalisationSetNameEx(TCHARToANSI(szShortNamesArray[i], NULL, 0), szLongNamesExArray[i], nNumGames);
+		for (int i = 0; i < nNumGames; i++)
+		{
+			BurnLocalisationSetNameEx(TCHARToANSI(szShortNamesArray[i], nullptr, 0), szLongNamesExArray[i], nNumGames);
 		}
 
 		// tidy up
-		for (int i = 0; i < MAX_LSTEX_GAMES; i++) {
-			if (szShortNamesArray[i]) {
+		for (int i = 0; i < MAX_LSTEX_GAMES; i++)
+		{
+			if (szShortNamesArray[i])
+			{
 				free(szShortNamesArray[i]);
-				szShortNamesArray[i] = NULL;
+				szShortNamesArray[i] = nullptr;
 			}
 		}
 
@@ -127,37 +143,44 @@ void BurnerDoGameListLocalisation()
 	if (!nGamelistLocalisationActive) return;
 
 	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("rt"));
-	if (fp) {
-		TCHAR *szShortNamesArray[MAX_LST_GAMES];
+	if (fp)
+	{
+		TCHAR* szShortNamesArray[MAX_LST_GAMES];
 		TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
 		int nTokenPos = 0;
 		int nArrayPos = 0;
 		int nNumGames = 0;
 
 		// Allocate arrays to read the file into
-		for (int i = 0; i < MAX_LST_GAMES; i++) {
-			szLongNamesArray[i] = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
-			szShortNamesArray[i] = (TCHAR*)malloc(100 * sizeof(TCHAR));
+		for (int i = 0; i < MAX_LST_GAMES; i++)
+		{
+			szLongNamesArray[i] = static_cast<TCHAR*>(malloc(MAX_LST_LINE_LEN * sizeof(TCHAR)));
+			szShortNamesArray[i] = static_cast<TCHAR*>(malloc(100 * sizeof(TCHAR)));
 			memset(szLongNamesArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
 			memset(szShortNamesArray[i], _T('\0'), 100 * sizeof(TCHAR));
 		}
 
 		char szTemp[MAX_LST_LINE_LEN];
 
-		while (fgets(szTemp, sizeof(szTemp), fp)) {
-			if (szTemp[0] == '/' && szTemp[1] == '/') {
+		while (fgets(szTemp, sizeof(szTemp), fp))
+		{
+			if (szTemp[0] == '/' && szTemp[1] == '/')
+			{
 				continue;
 			}
 
-			if (!strncmp(szTemp, "codepage=", 9)) {
-				if ((strlen(szTemp) - 10) == 4) {
-					nCodePage  = (szTemp[9] - '0') * 1000;
+			if (!strncmp(szTemp, "codepage=", 9))
+			{
+				if ((strlen(szTemp) - 10) == 4)
+				{
+					nCodePage = (szTemp[9] - '0') * 1000;
 					nCodePage += (szTemp[10] - '0') * 100;
 					nCodePage += (szTemp[11] - '0') * 10;
 					nCodePage += (szTemp[12] - '0');
 				}
-				if ((strlen(szTemp) - 10) == 3) {
-					nCodePage  = (szTemp[9] - '0') * 100;
+				if ((strlen(szTemp) - 10) == 3)
+				{
+					nCodePage = (szTemp[9] - '0') * 100;
 					nCodePage += (szTemp[10] - '0') * 10;
 					nCodePage += (szTemp[11] - '0');
 				}
@@ -166,29 +189,33 @@ void BurnerDoGameListLocalisation()
 
 			// Get rid of the linefeed at the end
 			int nLen = strlen(szTemp);
-			if (nLen > 0 && szTemp[nLen - 1] == 10) {
+			if (nLen > 0 && szTemp[nLen - 1] == 10)
+			{
 				szTemp[nLen - 1] = 0;
 				nLen--;
 			}
 
 			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));
 
-			TCHAR *Tokens;
+			TCHAR* Tokens;
 
 			// Read the file into arrays
 			Tokens = _tcstok(szLine, _T("\t"));
-			while (Tokens != NULL) {
-				if (nTokenPos == 0) {
+			while (Tokens != nullptr)
+			{
+				if (nTokenPos == 0)
+				{
 					wcscpy(szShortNamesArray[nArrayPos], Tokens);
-//					szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+					//					szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 
-				if (nTokenPos == 1) {
+				if (nTokenPos == 1)
+				{
 					wcscpy(szLongNamesArray[nArrayPos], Tokens);
-//					szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+					//					szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 
-				Tokens = _tcstok(NULL, _T("\t"));
+				Tokens = _tcstok(nullptr, _T("\t"));
 				nTokenPos++;
 			}
 
@@ -197,15 +224,18 @@ void BurnerDoGameListLocalisation()
 		}
 		nNumGames = nArrayPos;
 
-		for (int i = 0; i < nNumGames; i++) {
-			BurnLocalisationSetName(TCHARToANSI(szShortNamesArray[i], NULL, 0), szLongNamesArray[i]);
+		for (int i = 0; i < nNumGames; i++)
+		{
+			BurnLocalisationSetName(TCHARToANSI(szShortNamesArray[i], nullptr, 0), szLongNamesArray[i]);
 		}
 
 		// tidy up
-		for (int i = 0; i < MAX_LST_GAMES; i++) {
-			if (szShortNamesArray[i]) {
+		for (int i = 0; i < MAX_LST_GAMES; i++)
+		{
+			if (szShortNamesArray[i])
+			{
 				free(szShortNamesArray[i]);
-				szShortNamesArray[i] = NULL;
+				szShortNamesArray[i] = nullptr;
 			}
 		}
 
@@ -218,11 +248,13 @@ static void BurnerGameListCreateTemplate()
 	unsigned int nOldDrvSelect = nBurnDrvActive;
 
 	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("wt"));
-	if (fp) {
+	if (fp)
+	{
 		_ftprintf(fp, _T("// game list translation template for FinalBurn Neo version 0x%06X\n\n"), nBurnVer);
 		_ftprintf(fp, _T("// codepage=1252\n\n"));
 
-		for (unsigned int i = 0; i < nBurnDrvCount; i++) {
+		for (unsigned int i = 0; i < nBurnDrvCount; i++)
+		{
 			nBurnDrvActive = i;
 			_ftprintf(fp, _T("%s\t%s\n"), BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 		}
@@ -235,15 +267,19 @@ static void BurnerGameListCreateTemplate()
 
 void BurnerExitGameListLocalisation()
 {
-	for (int i = 0; i < MAX_LST_GAMES; i++) {
-		if (szLongNamesArray[i]) {
+	for (int i = 0; i < MAX_LST_GAMES; i++)
+	{
+		if (szLongNamesArray[i])
+		{
 			free(szLongNamesArray[i]);
-			szLongNamesArray[i] = NULL;
+			szLongNamesArray[i] = nullptr;
 		}
-		if (i < MAX_LSTEX_GAMES) {
-			if (szLongNamesExArray[i]) {
+		if (i < MAX_LSTEX_GAMES)
+		{
+			if (szLongNamesExArray[i])
+			{
 				free(szLongNamesExArray[i]);
-				szLongNamesExArray[i] = NULL;
+				szLongNamesExArray[i] = nullptr;
 			}
 		}
 	}
@@ -270,8 +306,6 @@ static void MakeOfn()
 	ofn.lpstrInitialDir = _T(".\\config\\localisation");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("glt");
-
-	return;
 }
 
 int FBALocaliseGamelistLoadTemplate()
@@ -288,7 +322,8 @@ int FBALocaliseGamelistLoadTemplate()
 	int nRet = GetOpenFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	if (nRet == 0)
+	{
 		return 1;
 	}
 
@@ -312,7 +347,8 @@ int FBALocaliseGamelistCreateTemplate()
 	int nRet = GetSaveFileName(&ofn);
 	bRunPause = bOldPause;
 
-	if (nRet == 0) {
+	if (nRet == 0)
+	{
 		return 1;
 	}
 

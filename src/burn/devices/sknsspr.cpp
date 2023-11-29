@@ -26,31 +26,41 @@
 static INT32 sprite_kludge_x, sprite_kludge_y;
 static UINT8 decodebuffer[0x2000];
 
-static INT32 skns_rle_decode ( INT32 romoffset, INT32 size, UINT8*gfx_source, INT32 gfx_length )
+static INT32 skns_rle_decode(INT32 romoffset, INT32 size, UINT8* gfx_source, INT32 gfx_length)
 {
-	UINT8 *src = gfx_source;
+	UINT8* src = gfx_source;
 	INT32 srcsize = gfx_length;
-	UINT8 *dst = decodebuffer;
+	UINT8* dst = decodebuffer;
 	INT32 decodeoffset = 0;
 
-	while(size>0) {
-		UINT8 code = src[(romoffset++)%srcsize];
+	while (size > 0)
+	{
+		UINT8 code = src[(romoffset++) % srcsize];
 		size -= (code & 0x7f) + 1;
-		if(code & 0x80) { /* (code & 0x7f) normal values will follow */
+		if (code & 0x80)
+		{
+			/* (code & 0x7f) normal values will follow */
 			code &= 0x7f;
-			do {
-				dst[(decodeoffset++)%SUPRNOVA_DECODE_BUFFER_SIZE] = src[(romoffset++)%srcsize];
+			do
+			{
+				dst[(decodeoffset++) % SUPRNOVA_DECODE_BUFFER_SIZE] = src[(romoffset++) % srcsize];
 				code--;
-			} while(code != 0xff);
-		} else {  /* repeat next value (code & 0x7f) times */
-			UINT8 val = src[(romoffset++)%srcsize];
-			do {
-				dst[(decodeoffset++)%SUPRNOVA_DECODE_BUFFER_SIZE] = val;
+			}
+			while (code != 0xff);
+		}
+		else
+		{
+			/* repeat next value (code & 0x7f) times */
+			UINT8 val = src[(romoffset++) % srcsize];
+			do
+			{
+				dst[(decodeoffset++) % SUPRNOVA_DECODE_BUFFER_SIZE] = val;
 				code--;
-			} while(code != 0xff);
+			}
+			while (code != 0xff);
 		}
 	}
-	return &src[romoffset%srcsize]-gfx_source;
+	return &src[romoffset % srcsize] - gfx_source;
 }
 
 void skns_sprite_kludge(INT32 x, INT32 y)
@@ -162,13 +172,16 @@ void skns_sprite_kludge(INT32 x, INT32 y)
 		old2 += 0x40;				\
 	}
 
-static void blit_nf_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+static void blit_nf_z(UINT16* bitmap, const UINT8* src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s,
+                      UINT16 zy_m, UINT16 zy_s, INT32 colour)
 {
 	z_decls(sx);
 	z_clamp_x_min();
 	z_clamp_y_min();
-	z_loop_y() {
-		z_loop_x() {
+	z_loop_y()
+	{
+		z_loop_x()
+		{
 			z_draw_pixel();
 			z_x_dst(+=);
 		}
@@ -176,13 +189,16 @@ static void blit_nf_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 
 	}
 }
 
-static void blit_fy_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+static void blit_fy_z(UINT16* bitmap, const UINT8* src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s,
+                      UINT16 zy_m, UINT16 zy_s, INT32 colour)
 {
 	z_decls(sx);
 	z_clamp_x_min();
 	z_clamp_y_max();
-	z_loop_y_flip() {
-		z_loop_x() {
+	z_loop_y_flip()
+	{
+		z_loop_x()
+		{
 			z_draw_pixel();
 			z_x_dst(+=);
 		}
@@ -190,13 +206,16 @@ static void blit_fy_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 
 	}
 }
 
-static void blit_fx_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+static void blit_fx_z(UINT16* bitmap, const UINT8* src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s,
+                      UINT16 zy_m, UINT16 zy_s, INT32 colour)
 {
 	z_decls(sx);
 	z_clamp_x_max();
 	z_clamp_y_min();
-	z_loop_y() {
-		z_loop_x_flip() {
+	z_loop_y()
+	{
+		z_loop_x_flip()
+		{
 			z_draw_pixel();
 			z_x_dst(-=);
 		}
@@ -204,13 +223,16 @@ static void blit_fx_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 
 	}
 }
 
-static void blit_fxy_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour)
+static void blit_fxy_z(UINT16* bitmap, const UINT8* src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s,
+                       UINT16 zy_m, UINT16 zy_s, INT32 colour)
 {
 	z_decls(sx);
 	z_clamp_x_max();
 	z_clamp_y_max();
-	z_loop_y_flip() {
-		z_loop_x_flip() {
+	z_loop_y_flip()
+	{
+		z_loop_x_flip()
+		{
 			z_draw_pixel();
 			z_x_dst(-=);
 		}
@@ -218,7 +240,8 @@ static void blit_fxy_z(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32
 	}
 }
 
-static void (*const blit_z[4])(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 y, INT32 sx, INT32 sy, UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour) = {
+static constexpr void (*const blit_z[4])(UINT16* bitmap, const UINT8* src, INT32 x, INT32 y, INT32 sx, INT32 sy,
+                                         UINT16 zx_m, UINT16 zx_s, UINT16 zy_m, UINT16 zy_s, INT32 colour) = {
 	blit_nf_z,
 	blit_fy_z,
 	blit_fx_z,
@@ -226,7 +249,8 @@ static void (*const blit_z[4])(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 
 };
 
 // disable_priority is a hack to make jchan drawing a bit quicker (rather than moving the sprites around different bitmaps and adding colors
-void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram_size, UINT8* gfx_source, INT32 gfx_length, UINT32* sprite_regs, INT32 disable_priority)
+void skns_draw_sprites(UINT16* bitmap, UINT32* spriteram_source, INT32 spriteram_size, UINT8* gfx_source,
+                       INT32 gfx_length, UINT32* sprite_regs, INT32 disable_priority)
 {
 #if defined FBNEO_DEBUG
 	if (!DebugDev_SknsSprInitted) bprintf(PRINT_ERROR, _T("skns_draw_sprites called without init\n"));
@@ -264,8 +288,8 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 
 	**- End of Comments -*/
 
-	UINT32 *source = spriteram_source;
-	UINT32 *finish = source + spriteram_size/4;
+	UINT32* source = spriteram_source;
+	UINT32* finish = source + spriteram_size / 4;
 
 	INT32 group_x_offset[4];
 	INT32 group_y_offset[4];
@@ -274,44 +298,44 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 	INT32 sprite_flip;
 	INT32 sprite_x_scroll;
 	INT32 sprite_y_scroll;
-	INT32 disabled = sprite_regs[0x04/4] & 0x08; // RWR1
-	INT32 xsize,ysize, size, xpos=0,ypos=0, pri=0, romoffset, colour=0, xflip,yflip, joint;
-	INT32 sx,sy;
-	INT32 endromoffs=0, gfxlen;
+	INT32 disabled = sprite_regs[0x04 / 4] & 0x08; // RWR1
+	INT32 xsize, ysize, size, xpos = 0, ypos = 0, pri = 0, romoffset, colour = 0, xflip, yflip, joint;
+	INT32 sx, sy;
+	INT32 endromoffs = 0, gfxlen;
 	INT32 grow;
 	UINT16 zoomx_m, zoomx_s, zoomy_m, zoomy_s;
 
-	if ((!disabled)){
-
-		group_enable    = (sprite_regs[0x00/4] & 0x0040) >> 6; // RWR0
+	if ((!disabled))
+	{
+		group_enable = (sprite_regs[0x00 / 4] & 0x0040) >> 6; // RWR0
 
 		/* Sengekis uses global flip */
-		sprite_flip = (sprite_regs[0x04/4] & 0x03); // RWR1
+		sprite_flip = (sprite_regs[0x04 / 4] & 0x03); // RWR1
 
-		sprite_y_scroll = ((sprite_regs[0x08/4] & 0x7fc0) >> 6); // RWR2
-		sprite_x_scroll = ((sprite_regs[0x10/4] & 0x7fc0) >> 6); // RWR4
-		if (sprite_y_scroll&0x100) sprite_y_scroll -= 0x200; // Signed
-		if (sprite_x_scroll&0x100) sprite_x_scroll -= 0x200; // Signed
+		sprite_y_scroll = ((sprite_regs[0x08 / 4] & 0x7fc0) >> 6); // RWR2
+		sprite_x_scroll = ((sprite_regs[0x10 / 4] & 0x7fc0) >> 6); // RWR4
+		if (sprite_y_scroll & 0x100) sprite_y_scroll -= 0x200; // Signed
+		if (sprite_x_scroll & 0x100) sprite_x_scroll -= 0x200; // Signed
 
-		group_x_offset[0] = (sprite_regs[0x18/4] & 0xffc0) >> 6; // RWR6
-		group_y_offset[0] = (sprite_regs[0x1c/4] & 0xffc0) >> 6; // RWR7
-		if (group_x_offset[0]&0x200) group_x_offset[0] -= 0x400; // Signed
-		if (group_y_offset[0]&0x200) group_y_offset[0] -= 0x400; // Signed
+		group_x_offset[0] = (sprite_regs[0x18 / 4] & 0xffc0) >> 6; // RWR6
+		group_y_offset[0] = (sprite_regs[0x1c / 4] & 0xffc0) >> 6; // RWR7
+		if (group_x_offset[0] & 0x200) group_x_offset[0] -= 0x400; // Signed
+		if (group_y_offset[0] & 0x200) group_y_offset[0] -= 0x400; // Signed
 
-		group_x_offset[1] = (sprite_regs[0x20/4] & 0xffc0) >> 6; // RWR8
-		group_y_offset[1] = (sprite_regs[0x24/4] & 0xffc0) >> 6; // RWR9
-		if (group_x_offset[1]&0x200) group_x_offset[1] -= 0x400; // Signed
-		if (group_y_offset[1]&0x200) group_y_offset[1] -= 0x400; // Signed
+		group_x_offset[1] = (sprite_regs[0x20 / 4] & 0xffc0) >> 6; // RWR8
+		group_y_offset[1] = (sprite_regs[0x24 / 4] & 0xffc0) >> 6; // RWR9
+		if (group_x_offset[1] & 0x200) group_x_offset[1] -= 0x400; // Signed
+		if (group_y_offset[1] & 0x200) group_y_offset[1] -= 0x400; // Signed
 
-		group_x_offset[2] = (sprite_regs[0x28/4] & 0xffc0) >> 6; // RWR10
-		group_y_offset[2] = (sprite_regs[0x2c/4] & 0xffc0) >> 6; // RWR11
-		if (group_x_offset[2]&0x200) group_x_offset[2] -= 0x400; // Signed
-		if (group_y_offset[2]&0x200) group_y_offset[2] -= 0x400; // Signed
+		group_x_offset[2] = (sprite_regs[0x28 / 4] & 0xffc0) >> 6; // RWR10
+		group_y_offset[2] = (sprite_regs[0x2c / 4] & 0xffc0) >> 6; // RWR11
+		if (group_x_offset[2] & 0x200) group_x_offset[2] -= 0x400; // Signed
+		if (group_y_offset[2] & 0x200) group_y_offset[2] -= 0x400; // Signed
 
-		group_x_offset[3] = (sprite_regs[0x30/4] & 0xffc0) >> 6; // RWR12
-		group_y_offset[3] = (sprite_regs[0x34/4] & 0xffc0) >> 6; // RWR13
-		if (group_x_offset[3]&0x200) group_x_offset[3] -= 0x400; // Signed
-		if (group_y_offset[3]&0x200) group_y_offset[3] -= 0x400; // Signed
+		group_x_offset[3] = (sprite_regs[0x30 / 4] & 0xffc0) >> 6; // RWR12
+		group_y_offset[3] = (sprite_regs[0x34 / 4] & 0xffc0) >> 6; // RWR13
+		if (group_x_offset[3] & 0x200) group_x_offset[3] -= 0x400; // Signed
+		if (group_y_offset[3] & 0x200) group_y_offset[3] -= 0x400; // Signed
 
 		/* Seems that sprites are consistently off by a fixed no. of pixels in different games
            (Patterns emerge through Manufacturer/Date/Orientation) */
@@ -320,15 +344,15 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 
 
 		gfxlen = gfx_length;
-		while( source<finish )
+		while (source < finish)
 		{
 			xflip = (source[0] & 0x00000200) >> 9;
 			yflip = (source[0] & 0x00000100) >> 8;
 
 			ysize = (source[0] & 0x30000000) >> 28;
 			xsize = (source[0] & 0x03000000) >> 24;
-			xsize ++;
-			ysize ++;
+			xsize++;
+			ysize++;
 
 			xsize *= 16;
 			ysize *= 16;
@@ -339,8 +363,8 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 
 			if (!(joint & 1))
 			{
-				xpos =  (source[2] & 0x0000ffc0) >> 6;
-				ypos =  (source[3] & 0x0000ffc0) >> 6;
+				xpos = (source[2] & 0x0000ffc0) >> 6;
+				ypos = (source[3] & 0x0000ffc0) >> 6;
 
 				xpos += sprite_x_scroll; // Global offset
 				ypos += sprite_y_scroll;
@@ -366,8 +390,8 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 			}
 			else
 			{
-				xpos +=  (source[2] & 0x0000ffc0) >> 6;
-				ypos +=  (source[3] & 0x0000ffc0) >> 6;
+				xpos += (source[2] & 0x0000ffc0) >> 6;
+				ypos += (source[3] & 0x0000ffc0) >> 6;
 			}
 
 			if (xpos > 0x1ff) xpos -= 0x400;
@@ -378,12 +402,12 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 			sy = ypos;
 
 			/* Global Sprite Flip (sengekis) */
-			if (sprite_flip&2)
+			if (sprite_flip & 2)
 			{
 				xflip ^= 1;
 				sx = nScreenWidth - sx;
 			}
-			if (sprite_flip&1)
+			if (sprite_flip & 1)
 			{
 				yflip ^= 1;
 				sy = nScreenHeight - sy;
@@ -400,18 +424,20 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 			{
 				romoffset = (source[1] & 0x07ffffff) >> 0;
 				pri = (source[0] & 0x000000c0) >> 6;
-			} else {
+			}
+			else
+			{
 				romoffset = endromoffs;
 			}
 
-			grow = (source[0]>>23) & 1;
+			grow = (source[0] >> 23) & 1;
 
 			if (!grow)
 			{
-				zoomx_m = (source[2] >> 24)&0x00fc;
-				zoomx_s = (source[2] >> 16)&0x00fc;
-				zoomy_m = (source[3] >> 24)&0x00fc;
-				zoomy_s = (source[3] >> 16)&0x00fc;
+				zoomx_m = (source[2] >> 24) & 0x00fc;
+				zoomx_s = (source[2] >> 16) & 0x00fc;
+				zoomy_m = (source[3] >> 24) & 0x00fc;
+				zoomy_s = (source[3] >> 16) & 0x00fc;
 			}
 			else
 			{
@@ -422,16 +448,14 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 				//  convinced this implementation is correct because we simply end up ignoring
 				//  part of the data)
 				zoomx_m = 0;
-				zoomx_s = (source[2] >> 24)&0x00fc;
+				zoomx_s = (source[2] >> 24) & 0x00fc;
 				zoomy_m = 0;
-				zoomy_s = (source[3] >> 24)&0x00fc;
-
-
+				zoomy_s = (source[3] >> 24) & 0x00fc;
 			}
 
-			romoffset &= gfxlen-1;
+			romoffset &= gfxlen - 1;
 
-			endromoffs = skns_rle_decode ( romoffset, size, gfx_source, gfx_length );
+			endromoffs = skns_rle_decode(romoffset, size, gfx_source, gfx_length);
 
 			// in Cyvern
 
@@ -441,95 +465,114 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 			//  pickups etc. pri = 0x03
 
 			{
-				INT32 NewColour = (colour<<8);
-				if (disable_priority) {
-					NewColour += disable_priority; // jchan hack
-				} else {
-					NewColour += (pri << 14);
-				}
-
-				if(zoomx_m || zoomx_s || zoomy_m || zoomy_s)
+				INT32 NewColour = (colour << 8);
+				if (disable_priority)
 				{
-					blit_z[ (xflip<<1) | yflip ](bitmap, decodebuffer, sx, sy, xsize, ysize, zoomx_m, zoomx_s, zoomy_m, zoomy_s, NewColour);
+					NewColour += disable_priority; // jchan hack
 				}
 				else
 				{
-					if (!xflip && !yflip) {
-						INT32 xx,yy;
+					NewColour += (pri << 14);
+				}
 
-						for (xx = 0; xx<xsize; xx++)
+				if (zoomx_m || zoomx_s || zoomy_m || zoomy_s)
+				{
+					blit_z[(xflip << 1) | yflip](bitmap, decodebuffer, sx, sy, xsize, ysize, zoomx_m, zoomx_s, zoomy_m,
+					                             zoomy_s, NewColour);
+				}
+				else
+				{
+					if (!xflip && !yflip)
+					{
+						INT32 xx, yy;
+
+						for (xx = 0; xx < xsize; xx++)
 						{
-							if ((sx+xx < (cliprect_max_x+1)) && (sx+xx >= cliprect_min_x))
+							if ((sx + xx < (cliprect_max_x + 1)) && (sx + xx >= cliprect_min_x))
 							{
-								for (yy = 0; yy<ysize; yy++)
+								for (yy = 0; yy < ysize; yy++)
 								{
-									if ((sy+yy < (cliprect_max_y+1)) && (sy+yy >= cliprect_min_y))
+									if ((sy + yy < (cliprect_max_y + 1)) && (sy + yy >= cliprect_min_y))
 									{
 										INT32 pix;
-										pix = decodebuffer[xsize*yy+xx];
+										pix = decodebuffer[xsize * yy + xx];
 										if (pix)
-											bitmap[(sy+yy) * nScreenWidth + (sx+xx)] = pix+ NewColour; // change later
+											bitmap[(sy + yy) * nScreenWidth + (sx + xx)] = pix + NewColour;
+										// change later
 									}
 								}
 							}
 						}
-					} else if (!xflip && yflip) {
-						INT32 xx,yy;
+					}
+					else if (!xflip && yflip)
+					{
+						INT32 xx, yy;
 						sy -= ysize;
 
-						for (xx = 0; xx<xsize; xx++)
+						for (xx = 0; xx < xsize; xx++)
 						{
-							if ((sx+xx < (cliprect_max_x+1)) && (sx+xx >= cliprect_min_x))
+							if ((sx + xx < (cliprect_max_x + 1)) && (sx + xx >= cliprect_min_x))
 							{
-								for (yy = 0; yy<ysize; yy++)
+								for (yy = 0; yy < ysize; yy++)
 								{
-									if ((sy+(ysize-1-yy) < (cliprect_max_y+1)) && (sy+(ysize-1-yy) >= cliprect_min_y))
+									if ((sy + (ysize - 1 - yy) < (cliprect_max_y + 1)) && (sy + (ysize - 1 - yy) >=
+										cliprect_min_y))
 									{
 										INT32 pix;
-										pix = decodebuffer[xsize*yy+xx];
+										pix = decodebuffer[xsize * yy + xx];
 										if (pix)
-											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+xx)] = pix+ NewColour; // change later
+											bitmap[(sy + (ysize - 1 - yy)) * nScreenWidth + (sx + xx)] = pix +
+												NewColour; // change later
 									}
 								}
 							}
 						}
-					} else if (xflip && !yflip) {
-						INT32 xx,yy;
+					}
+					else if (xflip && !yflip)
+					{
+						INT32 xx, yy;
 						sx -= xsize;
 
-						for (xx = 0; xx<xsize; xx++)
+						for (xx = 0; xx < xsize; xx++)
 						{
-							if ( (sx+(xsize-1-xx) < (cliprect_max_x+1)) && (sx+(xsize-1-xx) >= cliprect_min_x))
+							if ((sx + (xsize - 1 - xx) < (cliprect_max_x + 1)) && (sx + (xsize - 1 - xx) >=
+								cliprect_min_x))
 							{
-								for (yy = 0; yy<ysize; yy++)
+								for (yy = 0; yy < ysize; yy++)
 								{
-									if ((sy+yy < (cliprect_max_y+1)) && (sy+yy >= cliprect_min_y))
+									if ((sy + yy < (cliprect_max_y + 1)) && (sy + yy >= cliprect_min_y))
 									{
 										INT32 pix;
-										pix = decodebuffer[xsize*yy+xx];
+										pix = decodebuffer[xsize * yy + xx];
 										if (pix)
-											bitmap[(sy+yy) * nScreenWidth + (sx+(xsize-1-xx))] = pix+ NewColour; // change later
+											bitmap[(sy + yy) * nScreenWidth + (sx + (xsize - 1 - xx))] = pix +
+												NewColour; // change later
 									}
 								}
 							}
 						}
-					} else if (xflip && yflip) {
-						INT32 xx,yy;
+					}
+					else if (xflip && yflip)
+					{
+						INT32 xx, yy;
 						sx -= xsize;
 						sy -= ysize;
 
-						for (xx = 0; xx<xsize; xx++)
+						for (xx = 0; xx < xsize; xx++)
 						{
-							if ((sx+(xsize-1-xx) < (cliprect_max_x+1)) && (sx+(xsize-1-xx) >= cliprect_min_x))
+							if ((sx + (xsize - 1 - xx) < (cliprect_max_x + 1)) && (sx + (xsize - 1 - xx) >=
+								cliprect_min_x))
 							{
-								for (yy = 0; yy<ysize; yy++)
+								for (yy = 0; yy < ysize; yy++)
 								{
-									if ((sy+(ysize-1-yy) < (cliprect_max_y+1)) && (sy+(ysize-1-yy) >= cliprect_min_y))
+									if ((sy + (ysize - 1 - yy) < (cliprect_max_y + 1)) && (sy + (ysize - 1 - yy) >=
+										cliprect_min_y))
 									{
 										INT32 pix;
-										pix = decodebuffer[xsize*yy+xx];
+										pix = decodebuffer[xsize * yy + xx];
 										if (pix)
-											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+(xsize-1-xx))] = pix+ NewColour; // change later
+											bitmap[(sy + (ysize - 1 - yy)) * nScreenWidth + (sx + (xsize - 1 - xx))] =
+												pix + NewColour; // change later
 									}
 								}
 							}
@@ -538,7 +581,7 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 				}
 			}
 
-			source+=4;
+			source += 4;
 		}
 	}
 }

@@ -6,16 +6,16 @@
 #include "samples.h"
 #include <math.h>
 
-static UINT8 *AllMem;
-static UINT8 *AllRam;
-static UINT8 *RamEnd;
-static UINT8 *MemEnd;
-static UINT8 *DrvMainROM;
-static UINT8 *DrvGfxROM;
-static UINT8 *DrvMainRAM;
-static UINT8 *DrvVidRAM;
+static UINT8* AllMem;
+static UINT8* AllRam;
+static UINT8* RamEnd;
+static UINT8* MemEnd;
+static UINT8* DrvMainROM;
+static UINT8* DrvGfxROM;
+static UINT8* DrvMainRAM;
+static UINT8* DrvVidRAM;
 
-static UINT32 *DrvPalette;
+static UINT32* DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 coin_latch;
@@ -38,317 +38,320 @@ static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BlockadeInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 right"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy4 + 0, "p1 coin"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy2 + 4, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy2 + 6, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy2 + 7, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy2 + 5, "p1 right"},
 
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 0, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 2, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 3, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 1, "p2 right"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Blockade)
 
 static struct BurnInputInfo ComotionInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy4 + 0, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy1 + 4, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy2 + 0, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy2 + 2, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy2 + 3, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy2 + 1, "p1 right"},
 
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Up", BIT_DIGITAL, DrvJoy3 + 0, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy3 + 2, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy3 + 3, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy3 + 1, "p2 right"},
 
-	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p3 up"		},
-	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p3 down"	},
-	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p3 left"	},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 right"	},
+	{"P3 Up", BIT_DIGITAL, DrvJoy2 + 4, "p3 up"},
+	{"P3 Down", BIT_DIGITAL, DrvJoy2 + 6, "p3 down"},
+	{"P3 Left", BIT_DIGITAL, DrvJoy2 + 7, "p3 left"},
+	{"P3 Right", BIT_DIGITAL, DrvJoy2 + 5, "p3 right"},
 
-	{"P4 Up",			BIT_DIGITAL,	DrvJoy3 + 4,	"p4 up"		},
-	{"P4 Down",			BIT_DIGITAL,	DrvJoy3 + 6,	"p4 down"	},
-	{"P4 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p4 left"	},
-	{"P4 Right",		BIT_DIGITAL,	DrvJoy3 + 5,	"p4 right"	},
+	{"P4 Up", BIT_DIGITAL, DrvJoy3 + 4, "p4 up"},
+	{"P4 Down", BIT_DIGITAL, DrvJoy3 + 6, "p4 down"},
+	{"P4 Left", BIT_DIGITAL, DrvJoy3 + 7, "p4 left"},
+	{"P4 Right", BIT_DIGITAL, DrvJoy3 + 5, "p4 right"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Comotion)
 
 static struct BurnInputInfo BlastoInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy3 + 5,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 1"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy4 + 0, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy2 + 5, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy3 + 7, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy3 + 5, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy3 + 6, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy3 + 4, "p1 right"},
+	{"P1 Button 1", BIT_DIGITAL, DrvJoy2 + 7, "p1 fire 1"},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
+	{"P2 Start", BIT_DIGITAL, DrvJoy1 + 6, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy3 + 3, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy3 + 1, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy3 + 2, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy3 + 0, "p2 right"},
+	{"P2 Button 1", BIT_DIGITAL, DrvJoy2 + 0, "p2 fire 1"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Blasto)
 
 static struct BurnInputInfo HustleInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 right"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy4 + 0, "p1 coin"},
+	{"P1 Start", BIT_DIGITAL, DrvJoy1 + 3, "p1 start"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy2 + 4, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy2 + 6, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy2 + 7, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy2 + 5, "p1 right"},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Start", BIT_DIGITAL, DrvJoy1 + 4, "p2 start"},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 0, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 2, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 3, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 1, "p2 right"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Hustle)
 
 static struct BurnInputInfo MineswprInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy4 + 0, "p1 coin"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy2 + 0, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy2 + 2, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy2 + 3, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy2 + 1, "p1 right"},
 
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 4, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 6, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 7, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 5, "p2 right"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Mineswpr)
 
 static struct BurnInputInfo Mineswpr4InputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Coin", BIT_DIGITAL, DrvJoy4 + 0, "p1 coin"},
+	{"P1 Up", BIT_DIGITAL, DrvJoy2 + 0, "p1 up"},
+	{"P1 Down", BIT_DIGITAL, DrvJoy2 + 2, "p1 down"},
+	{"P1 Left", BIT_DIGITAL, DrvJoy2 + 3, "p1 left"},
+	{"P1 Right", BIT_DIGITAL, DrvJoy2 + 1, "p1 right"},
 
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
+	{"P2 Up", BIT_DIGITAL, DrvJoy2 + 4, "p2 up"},
+	{"P2 Down", BIT_DIGITAL, DrvJoy2 + 6, "p2 down"},
+	{"P2 Left", BIT_DIGITAL, DrvJoy2 + 7, "p2 left"},
+	{"P2 Right", BIT_DIGITAL, DrvJoy2 + 5, "p2 right"},
 
-	{"P3 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"		},
-	{"P3 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 down"	},
-	{"P3 Left",			BIT_DIGITAL,	DrvJoy3 + 3,	"p3 left"	},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 right"	},
+	{"P3 Up", BIT_DIGITAL, DrvJoy3 + 0, "p3 up"},
+	{"P3 Down", BIT_DIGITAL, DrvJoy3 + 2, "p3 down"},
+	{"P3 Left", BIT_DIGITAL, DrvJoy3 + 3, "p3 left"},
+	{"P3 Right", BIT_DIGITAL, DrvJoy3 + 1, "p3 right"},
 
-	{"P4 Up",			BIT_DIGITAL,	DrvJoy3 + 4,	"p4 up"		},
-	{"P4 Down",			BIT_DIGITAL,	DrvJoy3 + 6,	"p4 down"	},
-	{"P4 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p4 left"	},
-	{"P4 Right",		BIT_DIGITAL,	DrvJoy3 + 5,	"p4 right"	},
+	{"P4 Up", BIT_DIGITAL, DrvJoy3 + 4, "p4 up"},
+	{"P4 Down", BIT_DIGITAL, DrvJoy3 + 6, "p4 down"},
+	{"P4 Left", BIT_DIGITAL, DrvJoy3 + 7, "p4 left"},
+	{"P4 Right", BIT_DIGITAL, DrvJoy3 + 5, "p4 right"},
 
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset", BIT_DIGITAL, &DrvReset, "reset"},
+	{"Dip A", BIT_DIPSWITCH, DrvDips + 0, "dip"},
+	{"Dip B", BIT_DIPSWITCH, DrvDips + 1, "dip"},
+	{"Dip C", BIT_DIPSWITCH, DrvDips + 2, "dip"},
 };
 
 STDINPUTINFO(Mineswpr4)
 
-static struct BurnDIPInfo BlockadeDIPList[]=
+static struct BurnDIPInfo BlockadeDIPList[] =
 {
-	{0x0a, 0xff, 0xff, 0xff, NULL					},
-	{0x0b, 0xff, 0xff, 0xff, NULL					},
-	{0x0c, 0xff, 0xff, 0x00, NULL                   },
+	{0x0a, 0xff, 0xff, 0xff, nullptr},
+	{0x0b, 0xff, 0xff, 0xff, nullptr},
+	{0x0c, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
-	{0x0a, 0x01, 0x04, 0x00, "Off"					},
-	{0x0a, 0x01, 0x04, 0x04, "On"					},
+	{0, 0xfe, 0, 2, "Boom Switch"},
+	{0x0a, 0x01, 0x04, 0x00, "Off"},
+	{0x0a, 0x01, 0x04, 0x04, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x0a, 0x01, 0x70, 0x60, "3"					},
-	{0x0a, 0x01, 0x70, 0x50, "4"					},
-	{0x0a, 0x01, 0x70, 0x30, "5"					},
-	{0x0a, 0x01, 0x70, 0x70, "6"					},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x0a, 0x01, 0x70, 0x60, "3"},
+	{0x0a, 0x01, 0x70, 0x50, "4"},
+	{0x0a, 0x01, 0x70, 0x30, "5"},
+	{0x0a, 0x01, 0x70, 0x70, "6"},
 
-	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
-	{0x0c, 0x01, 0x03, 0x00, "Green"				},
-	{0x0c, 0x01, 0x03, 0x01, "Amber"				},
-	{0x0c, 0x01, 0x03, 0x02, "White"				},
+	{0, 0xfe, 0, 3, "Phosphor Color"},
+	{0x0c, 0x01, 0x03, 0x00, "Green"},
+	{0x0c, 0x01, 0x03, 0x01, "Amber"},
+	{0x0c, 0x01, 0x03, 0x02, "White"},
 };
 
 STDDIPINFO(Blockade)
 
-static struct BurnDIPInfo ComotionDIPList[]=
+static struct BurnDIPInfo ComotionDIPList[] =
 {
-	{0x13, 0xff, 0xff, 0xf7, NULL					},
-	{0x14, 0xff, 0xff, 0xff, NULL					},
-	{0x15, 0xff, 0xff, 0x00, NULL                   },
+	{0x13, 0xff, 0xff, 0xf7, nullptr},
+	{0x14, 0xff, 0xff, 0xff, nullptr},
+	{0x15, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
-	{0x13, 0x01, 0x04, 0x00, "Off"					},
-	{0x13, 0x01, 0x04, 0x04, "On"					},
+	{0, 0xfe, 0, 2, "Boom Switch"},
+	{0x13, 0x01, 0x04, 0x00, "Off"},
+	{0x13, 0x01, 0x04, 0x04, "On"},
 
-	{0   , 0xfe, 0   ,    2, "Lives"				},
-	{0x13, 0x01, 0x08, 0x00, "3"					},
-	{0x13, 0x01, 0x08, 0x08, "4"					},
+	{0, 0xfe, 0, 2, "Lives"},
+	{0x13, 0x01, 0x08, 0x00, "3"},
+	{0x13, 0x01, 0x08, 0x08, "4"},
 
-	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
-	{0x15, 0x01, 0x03, 0x00, "Green"				},
-	{0x15, 0x01, 0x03, 0x01, "Amber"				},
-	{0x15, 0x01, 0x03, 0x02, "White"				},
+	{0, 0xfe, 0, 3, "Phosphor Color"},
+	{0x15, 0x01, 0x03, 0x00, "Green"},
+	{0x15, 0x01, 0x03, 0x01, "Amber"},
+	{0x15, 0x01, 0x03, 0x02, "White"},
 };
 
 STDDIPINFO(Comotion)
 
-static struct BurnDIPInfo BlastoDIPList[]=
+static struct BurnDIPInfo BlastoDIPList[] =
 {
-	{0x0e, 0xff, 0xff, 0xff, NULL					},
-	{0x0f, 0xff, 0xff, 0xff, NULL					},
-	{0x10, 0xff, 0xff, 0x00, NULL                   },
-	
-	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x0e, 0x01, 0x03, 0x00, "4 Coins 1 Credits"	},
-	{0x0e, 0x01, 0x03, 0x01, "3 Coins 1 Credits"	},
-	{0x0e, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
-	{0x0e, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x0e, 0xff, 0xff, 0xff, nullptr},
+	{0x0f, 0xff, 0xff, 0xff, nullptr},
+	{0x10, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x0e, 0x01, 0x04, 0x00, "Off"					},
-	{0x0e, 0x01, 0x04, 0x04, "On"					},
+	{0, 0xfe, 0, 4, "Coinage"},
+	{0x0e, 0x01, 0x03, 0x00, "4 Coins 1 Credits"},
+	{0x0e, 0x01, 0x03, 0x01, "3 Coins 1 Credits"},
+	{0x0e, 0x01, 0x03, 0x02, "2 Coins 1 Credits"},
+	{0x0e, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Game Time"			},
-	{0x0e, 0x01, 0x08, 0x00, "70 Secs"				},
-	{0x0e, 0x01, 0x08, 0x08, "90 Secs"				},
+	{0, 0xfe, 0, 2, "Demo Sounds"},
+	{0x0e, 0x01, 0x04, 0x00, "Off"},
+	{0x0e, 0x01, 0x04, 0x04, "On"},
 
-	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
-	{0x10, 0x01, 0x03, 0x00, "Green"				},
-	{0x10, 0x01, 0x03, 0x01, "Amber"				},
-	{0x10, 0x01, 0x03, 0x02, "White"				},
+	{0, 0xfe, 0, 2, "Game Time"},
+	{0x0e, 0x01, 0x08, 0x00, "70 Secs"},
+	{0x0e, 0x01, 0x08, 0x08, "90 Secs"},
+
+	{0, 0xfe, 0, 3, "Phosphor Color"},
+	{0x10, 0x01, 0x03, 0x00, "Green"},
+	{0x10, 0x01, 0x03, 0x01, "Amber"},
+	{0x10, 0x01, 0x03, 0x02, "White"},
 };
 
 STDDIPINFO(Blasto)
 
-static struct BurnDIPInfo HustleDIPList[]=
+static struct BurnDIPInfo HustleDIPList[] =
 {
-	{0x0c, 0xff, 0xff, 0xff, NULL					},
-	{0x0d, 0xff, 0xff, 0xfe, NULL					},
-	{0x0e, 0xff, 0xff, 0x00, NULL                   },
+	{0x0c, 0xff, 0xff, 0xff, nullptr},
+	{0x0d, 0xff, 0xff, 0xfe, nullptr},
+	{0x0e, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x0c, 0x01, 0x03, 0x00, "4 Coins 1 Credits"	},
-	{0x0c, 0x01, 0x03, 0x01, "3 Coins 1 Credits"	},
-	{0x0c, 0x01, 0x03, 0x02, "2 Coins 1 Credits"	},
-	{0x0c, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0, 0xfe, 0, 4, "Coinage"},
+	{0x0c, 0x01, 0x03, 0x00, "4 Coins 1 Credits"},
+	{0x0c, 0x01, 0x03, 0x01, "3 Coins 1 Credits"},
+	{0x0c, 0x01, 0x03, 0x02, "2 Coins 1 Credits"},
+	{0x0c, 0x01, 0x03, 0x03, "1 Coin  1 Credits"},
 
-	{0   , 0xfe, 0   ,    2, "Game Time"			},
-	{0x0c, 0x01, 0x04, 0x00, "1.5 mins"				},
-	{0x0c, 0x01, 0x04, 0x04, "2 mins"				},
+	{0, 0xfe, 0, 2, "Game Time"},
+	{0x0c, 0x01, 0x04, 0x00, "1.5 mins"},
+	{0x0c, 0x01, 0x04, 0x04, "2 mins"},
 
-	{0   , 0xfe, 0   ,    5, "Free Game"			},
-	{0x0d, 0x01, 0xf1, 0x71, "11000"				},
-	{0x0d, 0x01, 0xf1, 0xb1, "13000"				},
-	{0x0d, 0x01, 0xf1, 0xd1, "15000"				},
-	{0x0d, 0x01, 0xf1, 0xe1, "17000"				},
-	{0x0d, 0x01, 0xf1, 0xf0, "Disabled"				},
+	{0, 0xfe, 0, 5, "Free Game"},
+	{0x0d, 0x01, 0xf1, 0x71, "11000"},
+	{0x0d, 0x01, 0xf1, 0xb1, "13000"},
+	{0x0d, 0x01, 0xf1, 0xd1, "15000"},
+	{0x0d, 0x01, 0xf1, 0xe1, "17000"},
+	{0x0d, 0x01, 0xf1, 0xf0, "Disabled"},
 
-	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
-	{0x0e, 0x01, 0x03, 0x00, "Green"				},
-	{0x0e, 0x01, 0x03, 0x01, "Amber"				},
-	{0x0e, 0x01, 0x03, 0x02, "White"				},
+	{0, 0xfe, 0, 3, "Phosphor Color"},
+	{0x0e, 0x01, 0x03, 0x00, "Green"},
+	{0x0e, 0x01, 0x03, 0x01, "Amber"},
+	{0x0e, 0x01, 0x03, 0x02, "White"},
 };
 
 STDDIPINFO(Hustle)
 
-static struct BurnDIPInfo MineswprDIPList[]=
+static struct BurnDIPInfo MineswprDIPList[] =
 {
-	{0x0a, 0xff, 0xff, 0xff, NULL					},
-	{0x0b, 0xff, 0xff, 0xff, NULL					},
-	{0x0c, 0xff, 0xff, 0x00, NULL                   },
+	{0x0a, 0xff, 0xff, 0xff, nullptr},
+	{0x0b, 0xff, 0xff, 0xff, nullptr},
+	{0x0c, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
-	{0x0a, 0x01, 0x04, 0x00, "Off"					},
-	{0x0a, 0x01, 0x04, 0x04, "On"					},
+	{0, 0xfe, 0, 2, "Boom Switch"},
+	{0x0a, 0x01, 0x04, 0x00, "Off"},
+	{0x0a, 0x01, 0x04, 0x04, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x0a, 0x01, 0x70, 0x60, "3"					},
-	{0x0a, 0x01, 0x70, 0x50, "4"					},
-	{0x0a, 0x01, 0x70, 0x30, "5"					},
-	{0x0a, 0x01, 0x70, 0x70, "6"					},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x0a, 0x01, 0x70, 0x60, "3"},
+	{0x0a, 0x01, 0x70, 0x50, "4"},
+	{0x0a, 0x01, 0x70, 0x30, "5"},
+	{0x0a, 0x01, 0x70, 0x70, "6"},
 
-	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
-	{0x0c, 0x01, 0x03, 0x00, "Green"				},
-	{0x0c, 0x01, 0x03, 0x01, "Amber"				},
-	{0x0c, 0x01, 0x03, 0x02, "White"				},
+	{0, 0xfe, 0, 3, "Phosphor Color"},
+	{0x0c, 0x01, 0x03, 0x00, "Green"},
+	{0x0c, 0x01, 0x03, 0x01, "Amber"},
+	{0x0c, 0x01, 0x03, 0x02, "White"},
 };
 
 STDDIPINFO(Mineswpr)
 
-static struct BurnDIPInfo Mineswpr4DIPList[]=
+static struct BurnDIPInfo Mineswpr4DIPList[] =
 {
-	{0x12, 0xff, 0xff, 0xfd, NULL					},
-	{0x13, 0xff, 0xff, 0xff, NULL					},
-	{0x14, 0xff, 0xff, 0x00, NULL                   },
+	{0x12, 0xff, 0xff, 0xfd, nullptr},
+	{0x13, 0xff, 0xff, 0xff, nullptr},
+	{0x14, 0xff, 0xff, 0x00, nullptr},
 
-	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
-	{0x12, 0x01, 0x04, 0x00, "Off"					},
-	{0x12, 0x01, 0x04, 0x04, "On"					},
+	{0, 0xfe, 0, 2, "Boom Switch"},
+	{0x12, 0x01, 0x04, 0x00, "Off"},
+	{0x12, 0x01, 0x04, 0x04, "On"},
 
-	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x12, 0x01, 0x70, 0x60, "3"					},
-	{0x12, 0x01, 0x70, 0x50, "4"					},
-	{0x12, 0x01, 0x70, 0x30, "5"					},
-	{0x12, 0x01, 0x70, 0x70, "6"					},
+	{0, 0xfe, 0, 4, "Lives"},
+	{0x12, 0x01, 0x70, 0x60, "3"},
+	{0x12, 0x01, 0x70, 0x50, "4"},
+	{0x12, 0x01, 0x70, 0x30, "5"},
+	{0x12, 0x01, 0x70, 0x70, "6"},
 
-	{0   , 0xfe, 0   ,    3, "Phosphor Color"		},
-	{0x14, 0x01, 0x03, 0x00, "Green"				},
-	{0x14, 0x01, 0x03, 0x01, "Amber"				},
-	{0x14, 0x01, 0x03, 0x02, "White"				},
+	{0, 0xfe, 0, 3, "Phosphor Color"},
+	{0x14, 0x01, 0x03, 0x00, "Green"},
+	{0x14, 0x01, 0x03, 0x01, "Amber"},
+	{0x14, 0x01, 0x03, 0x02, "White"},
 };
 
 STDDIPINFO(Mineswpr4)
 
-static void sound_tone_render(INT16 *buffer, INT32 len)
+static void sound_tone_render(INT16* buffer, INT32 len)
 {
 	INT16 square = 0;
 
 	memset(buffer, 0, len * 2 * sizeof(INT16));
 
-	if (crbaloon_tone_step)	{
-		while (len-- > 0) {
+	if (crbaloon_tone_step)
+	{
+		while (len-- > 0)
+		{
 			square = crbaloon_tone_pos & 0x80000000 ? 32767 : -32768;
-			square = (INT16)((double)square * 0.05);        // volume
-			square = (INT16)(square * exp(-envelope_ctr));  // envelope volume
-			envelope_ctr += (crbaloon_tone_freq > 1100.0) ? 0.0005 : 0.0003; // step envelope, treat the higher pitched sounds w/ a faster envelope
+			square = static_cast<INT16>(static_cast<double>(square) * 0.05); // volume
+			square = static_cast<INT16>(square * exp(-envelope_ctr)); // envelope volume
+			envelope_ctr += (crbaloon_tone_freq > 1100.0) ? 0.0005 : 0.0003;
+			// step envelope, treat the higher pitched sounds w/ a faster envelope
 			*buffer++ = square;
 			*buffer++ = square;
 
@@ -362,17 +365,19 @@ static void sound_tone_write(UINT8 data)
 	crbaloon_tone_step = 0;
 	envelope_ctr = 0.0;
 
-	if (data != 0xff) {
+	if (data != 0xff)
+	{
 		double freq = (93630.0 / (256 - data) + (data >= 0xea ? 13 : 0)) * 0.5;
 
 		crbaloon_tone_freq = freq;
-		crbaloon_tone_step = (UINT32)(freq * 65536.0 * 65536.0 / (double)nBurnSoundRate);
+		crbaloon_tone_step = static_cast<UINT32>(freq * 65536.0 * 65536.0 / static_cast<double>(nBurnSoundRate));
 	}
 }
 
 static void __fastcall blockade_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0x9000) == 0x8000) {
+	if ((address & 0x9000) == 0x8000)
+	{
 		DrvVidRAM[address & 0x3ff] = data;
 
 		if (vblank == 0)
@@ -384,27 +389,28 @@ static void __fastcall blockade_write(UINT16 address, UINT8 data)
 
 static void __fastcall blockade_write_port(UINT16 port, UINT8 data)
 {
-   // bprintf (0, _T("%2.2x, %2.2x\n"), port&0xff,data);
-	
+	// bprintf (0, _T("%2.2x, %2.2x\n"), port&0xff,data);
+
 	switch (port & 0xff)
 	{
-		case 0x01:
-			if (data & 0x80) {
-				coin_latch = coin_inserted;
-				coin_inserted = 0;
-			}
+	case 0x01:
+		if (data & 0x80)
+		{
+			coin_latch = coin_inserted;
+			coin_inserted = 0;
+		}
 		return;
 
-		case 0x02:
-			sound_tone_write(data);
+	case 0x02:
+		sound_tone_write(data);
 		return;
 
-		case 0x04:
-			BurnSamplePlay(0);
+	case 0x04:
+		BurnSamplePlay(0);
 		return;
 
-		case 0x08:
-			// env?
+	case 0x08:
+		// env?
 		return;
 	}
 }
@@ -413,27 +419,27 @@ static UINT8 __fastcall blockade_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x01:
-			return (DrvInputs[0] & 0xff) ^ (coin_latch ? 0x80 : 0);
+	case 0x01:
+		return (DrvInputs[0] & 0xff) ^ (coin_latch ? 0x80 : 0);
 
-		case 0x02:
-			return DrvInputs[1];
+	case 0x02:
+		return DrvInputs[1];
 
-		case 0x04:
-			return DrvInputs[2];
+	case 0x04:
+		return DrvInputs[2];
 	}
 
 	return 0;
 }
 
-static tilemap_callback( layer )
+static tilemap_callback(layer)
 {
 	TILE_SET_INFO(0, DrvVidRAM[offs], 0, 0);
 }
 
 static INT32 DrvDoReset()
 {
-	memset (AllRam, 0, RamEnd - AllRam);
+	memset(AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
 	ZetReset();
@@ -442,7 +448,7 @@ static INT32 DrvDoReset()
 	BurnSampleReset();
 	HiscoreReset();
 
-	coin_latch   = 0;
+	coin_latch = 0;
 	coin_inserted = 0;
 
 	crbaloon_tone_step = 0;
@@ -453,38 +459,45 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = AllMem;
+	UINT8* Next;
+	Next = AllMem;
 
-	DrvMainROM		= Next; Next += 0x001000;
+	DrvMainROM = Next;
+	Next += 0x001000;
 
-	DrvGfxROM		= Next; Next += 0x001000;
+	DrvGfxROM = Next;
+	Next += 0x001000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0002 * sizeof(UINT32);
+	DrvPalette = (UINT32*)Next;
+	Next += 0x0002 * sizeof(UINT32);
 
-	AllRam			= Next;
+	AllRam = Next;
 
-	DrvMainRAM		= Next; Next += 0x000100;
-	DrvVidRAM		= Next; Next += 0x000400;
+	DrvMainRAM = Next;
+	Next += 0x000100;
+	DrvVidRAM = Next;
+	Next += 0x000400;
 
-	RamEnd			= Next;
+	RamEnd = Next;
 
-	MemEnd			= Next;
+	MemEnd = Next;
 
 	return 0;
 }
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane[1] = { 0 };
-	INT32 XOffs[8] = { STEP8(0,1) };
-	INT32 YOffs[8] = { STEP8(0,8) };
+	INT32 Plane[1] = {0};
+	INT32 XOffs[8] = {STEP8(0, 1)};
+	INT32 YOffs[8] = {STEP8(0, 8)};
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x0200);
-	if (tmp == NULL) {
+	auto tmp = BurnMalloc(0x0200);
+	if (tmp == nullptr)
+	{
 		return 1;
 	}
 
-	memcpy (tmp, DrvGfxROM, 0x0200);
+	memcpy(tmp, DrvGfxROM, 0x0200);
 
 	GfxDecode(0x40, 1, 8, 8, Plane, XOffs, YOffs, 0x040, tmp, DrvGfxROM);
 
@@ -495,70 +508,72 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit(INT32 game_select)
 {
-	AllMem = NULL;
+	AllMem = nullptr;
 	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - static_cast<UINT8*>(nullptr);
+	if ((AllMem = BurnMalloc(nLen)) == nullptr) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
 	{
 		switch (game_select)
 		{
-			case 0: // blockade
+		case 0: // blockade
 			{
-				if (BurnLoadRom(DrvMainROM + 0x000,  0, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0x800,  1, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x000, 0, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x800, 1, 1)) return 1;
 
-				if (BurnLoadRom(DrvGfxROM  + 0x000,  2, 1)) return 1;
-				if (BurnLoadRom(DrvGfxROM  + 0x100,  2, 1)) return 1; // mirror
-				if (BurnLoadRom(DrvGfxROM  + 0x200,  3, 1)) return 1;
-				if (BurnLoadRom(DrvGfxROM  + 0x300,  3, 1)) return 1; // mirror
+				if (BurnLoadRom(DrvGfxROM + 0x000, 2, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x100, 2, 1)) return 1; // mirror
+				if (BurnLoadRom(DrvGfxROM + 0x200, 3, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x300, 3, 1)) return 1; // mirror
 			}
 			break;
 
-			case 1: // comotion
+		case 1: // comotion
 			{
-				if (BurnLoadRom(DrvMainROM + 0x000,  0, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0x800,  1, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0x400,  2, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0xc00,  3, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x000, 0, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x800, 1, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x400, 2, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0xc00, 3, 1)) return 1;
 
-				if (BurnLoadRom(DrvGfxROM  + 0x000,  4, 1)) return 1;
-				if (BurnLoadRom(DrvGfxROM  + 0x100,  4, 1)) return 1; // mirror
-				if (BurnLoadRom(DrvGfxROM  + 0x200,  5, 1)) return 1;
-				if (BurnLoadRom(DrvGfxROM  + 0x300,  5, 1)) return 1; // mirror
+				if (BurnLoadRom(DrvGfxROM + 0x000, 4, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x100, 4, 1)) return 1; // mirror
+				if (BurnLoadRom(DrvGfxROM + 0x200, 5, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x300, 5, 1)) return 1; // mirror
 			}
 			break;
 
-			case 2: // blasto
+		case 2: // blasto
 			{
-				if (BurnLoadRom(DrvMainROM + 0x000,  0, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0x800,  1, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0x400,  2, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0xc00,  3, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x000, 0, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x800, 1, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x400, 2, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0xc00, 3, 1)) return 1;
 
-				if (BurnLoadRom(DrvGfxROM  + 0x000,  4, 1)) return 1;
-				if (BurnLoadRom(DrvGfxROM  + 0x200,  5, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x000, 4, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x200, 5, 1)) return 1;
 			}
 			break;
 
-			case 3: // mineswpr
+		case 3: // mineswpr
 			{
-				if (BurnLoadRom(DrvMainROM + 0x000,  0, 1)) return 1;
-				if (BurnLoadRom(DrvMainROM + 0x800,  1, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x000, 0, 1)) return 1;
+				if (BurnLoadRom(DrvMainROM + 0x800, 1, 1)) return 1;
 
-				if (BurnLoadRom(DrvGfxROM  + 0x000,  2, 1)) return 1;
-				if (BurnLoadRom(DrvGfxROM  + 0x200,  3, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x000, 2, 1)) return 1;
+				if (BurnLoadRom(DrvGfxROM + 0x200, 3, 1)) return 1;
 			}
 			break;
 		}
 
-		for (INT32 i = 0; i < 0x800; i++) {
+		for (INT32 i = 0; i < 0x800; i++)
+		{
 			DrvMainROM[i] = (DrvMainROM[i + 0x800] & 0xf) | (DrvMainROM[i] << 4);
 		}
 
-		for (INT32 i = 0; i < 0x200; i++) {
+		for (INT32 i = 0; i < 0x200; i++)
+		{
 			DrvGfxROM[i] = (DrvGfxROM[i + 0x200] & 0xf) | (DrvGfxROM[i] << 4);
 		}
 
@@ -567,17 +582,19 @@ static INT32 DrvInit(INT32 game_select)
 
 	ZetInit(0);
 	ZetOpen(0);
-	for (INT32 i = 0; i < 0x8000; i+=0x2000)
+	for (INT32 i = 0; i < 0x8000; i += 0x2000)
 	{
-		ZetMapMemory(DrvMainROM,		0x0000 + i, 0x07ff + i, MAP_ROM);
-		ZetMapMemory(DrvMainROM,		0x0800 + i, 0x0fff + i, MAP_ROM);
+		ZetMapMemory(DrvMainROM, 0x0000 + i, 0x07ff + i, MAP_ROM);
+		ZetMapMemory(DrvMainROM, 0x0800 + i, 0x0fff + i, MAP_ROM);
 
-		for (INT32 j = 0; j < 0x1000; j+=0x400) {
-			ZetMapMemory(DrvVidRAM,		0x8000 + i + j, 0x83ff + i + j, MAP_ROM);
+		for (INT32 j = 0; j < 0x1000; j += 0x400)
+		{
+			ZetMapMemory(DrvVidRAM, 0x8000 + i + j, 0x83ff + i + j, MAP_ROM);
 		}
 
-		for (INT32 j = 0; j < 0x1000; j+=0x100) {
-			ZetMapMemory(DrvMainRAM,	0x9000 + i + j, 0x90ff + i + j, MAP_RAM);
+		for (INT32 j = 0; j < 0x1000; j += 0x100)
+		{
+			ZetMapMemory(DrvMainRAM, 0x9000 + i + j, 0x90ff + i + j, MAP_RAM);
 		}
 	}
 	ZetSetWriteHandler(blockade_write);
@@ -612,19 +629,21 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
+	if (DrvRecalc)
+	{
 		DrvPalette[0] = 0;
 
-		switch (DrvDips[2]) {
-			case 0:
-				DrvPalette[1] = BurnHighCol(0x00,0xff,0x00, 0); // green
-				break;
-			case 1:
-				DrvPalette[1] = BurnHighCol(0xff,0xc3,0x00, 0); // amber
-				break;
-			case 2:
-				DrvPalette[1] = BurnHighCol(0xff,0xff,0xff, 0); // b & w
-				break;
+		switch (DrvDips[2])
+		{
+		case 0:
+			DrvPalette[1] = BurnHighCol(0x00, 0xff, 0x00, 0); // green
+			break;
+		case 1:
+			DrvPalette[1] = BurnHighCol(0xff, 0xc3, 0x00, 0); // amber
+			break;
+		case 2:
+			DrvPalette[1] = BurnHighCol(0xff, 0xff, 0xff, 0); // b & w
+			break;
 		}
 		DrvRecalc = 1;
 	}
@@ -638,24 +657,27 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) {
+	if (DrvReset)
+	{
 		DrvDoReset();
 	}
 
 	ZetNewFrame();
-	
+
 	{
 		DrvInputs[0] = DrvDips[0];
 		DrvInputs[1] = 0xff;
 		DrvInputs[2] = DrvDips[1];
 
-		for (INT32 i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++)
+		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		if (DrvJoy4[0] && coin_inserted == 0) {
+		if (DrvJoy4[0] && coin_inserted == 0)
+		{
 			ZetOpen(0);
 			ZetReset();
 			ZetClose();
@@ -664,14 +686,15 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal[1] = { 2007900 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesTotal[1] = {2007900 / 60};
+	INT32 nCyclesDone[1] = {0};
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		if (i == 0) vblank = 0;
-		if (i == 224) {
+		if (i == 224)
+		{
 			ZetSetHALT(0);
 			vblank = 1;
 		}
@@ -679,31 +702,35 @@ static INT32 DrvFrame()
 	}
 	ZetClose();
 
-	if (pBurnSoundOut) {
+	if (pBurnSoundOut)
+	{
 		sound_tone_render(pBurnSoundOut, nBurnSoundLen);
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (pBurnDraw) {
+	if (pBurnDraw)
+	{
 		DrvDraw();
 	}
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {
+	if (pnMin)
+	{
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {
+	if (nAction & ACB_VOLATILE)
+	{
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data = AllRam;
+		ba.nLen = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -722,8 +749,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnSampleInfo BlockadeSampleDesc[] = {
-	{ "boom",  SAMPLE_NOLOOP },
-	{ "", 0 }
+	{"boom", SAMPLE_NOLOOP},
+	{"", 0}
 };
 
 STD_SAMPLE_PICK(Blockade)
@@ -733,11 +760,11 @@ STD_SAMPLE_FN(Blockade)
 // Blockade
 
 static struct BurnRomInfo blockadeRomDesc[] = {
-	{ "316-0004.u2",	0x0400, 0xa93833e9, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
-	{ "316-0003.u3",	0x0400, 0x85960d3b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"316-0004.u2", 0x0400, 0xa93833e9, 1 | BRF_PRG | BRF_ESS}, //  0 I8080 Code
+	{"316-0003.u3", 0x0400, 0x85960d3b, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "316-0002.u29",	0x0100, 0x409f610f, 2 | BRF_GRA },           //  2 Tiles
-	{ "316-0001.u43",	0x0100, 0x41a00b28, 2 | BRF_GRA },           //  3
+	{"316-0002.u29", 0x0100, 0x409f610f, 2 | BRF_GRA}, //  2 Tiles
+	{"316-0001.u43", 0x0100, 0x41a00b28, 2 | BRF_GRA}, //  3
 };
 
 STD_ROM_PICK(blockade)
@@ -749,11 +776,12 @@ static INT32 BlockadeInit()
 }
 
 struct BurnDriver BurnDrvBlockade = {
-	"blockade", NULL, NULL, "blockade", "1976",
-	"Blockade\0", NULL, "Gremlin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"blockade", nullptr, nullptr, "blockade", "1976",
+	"Blockade\0", nullptr, "Gremlin", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, blockadeRomInfo, blockadeRomName, NULL, NULL, BlockadeSampleInfo, BlockadeSampleName, BlockadeInputInfo, BlockadeDIPInfo,
+	nullptr, blockadeRomInfo, blockadeRomName, nullptr, nullptr, BlockadeSampleInfo, BlockadeSampleName,
+	BlockadeInputInfo, BlockadeDIPInfo,
 	BlockadeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -762,13 +790,13 @@ struct BurnDriver BurnDrvBlockade = {
 // CoMotion
 
 static struct BurnRomInfo comotionRomDesc[] = {
-	{ "316-0007.u2",	0x0400, 0x5b9bd054, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
-	{ "316-0008.u3",	0x0400, 0x1a856042, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "316-0009.u4",	0x0400, 0x2590f87c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "316-0010.u5",	0x0400, 0xfb49a69b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{"316-0007.u2", 0x0400, 0x5b9bd054, 1 | BRF_PRG | BRF_ESS}, //  0 I8080 Code
+	{"316-0008.u3", 0x0400, 0x1a856042, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"316-0009.u4", 0x0400, 0x2590f87c, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"316-0010.u5", 0x0400, 0xfb49a69b, 1 | BRF_PRG | BRF_ESS}, //  3
 
-	{ "316-0006.u43",	0x0100, 0x8f071297, 2 | BRF_GRA },           //  4 Tiles
-	{ "316-0005.u29",	0x0100, 0x53fb8821, 2 | BRF_GRA },           //  5
+	{"316-0006.u43", 0x0100, 0x8f071297, 2 | BRF_GRA}, //  4 Tiles
+	{"316-0005.u29", 0x0100, 0x53fb8821, 2 | BRF_GRA}, //  5
 };
 
 STD_ROM_PICK(comotion)
@@ -780,11 +808,12 @@ static INT32 ComotionInit()
 }
 
 struct BurnDriver BurnDrvComotion = {
-	"comotion", NULL, NULL, "blockade", "1976",
-	"CoMotion\0", NULL, "Gremlin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"comotion", nullptr, nullptr, "blockade", "1976",
+	"CoMotion\0", nullptr, "Gremlin", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, comotionRomInfo, comotionRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, ComotionInputInfo, ComotionDIPInfo,
+	nullptr, comotionRomInfo, comotionRomName, nullptr, nullptr, BlockadeSampleInfo, BlockadeSampleName,
+	ComotionInputInfo, ComotionDIPInfo,
 	ComotionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -793,24 +822,25 @@ struct BurnDriver BurnDrvComotion = {
 // CoMotion (patent)
 
 static struct BurnRomInfo comotionpRomDesc[] = {
-	{ "comotionp-1h.u2",	0x0400, 0x3e88b7dd, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
-	{ "comotionp-1l.u3",	0x0400, 0x1f5bbfd9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "comotionp-2h.u4",	0x0400, 0xeec29372, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "comotionp-2l.u5",	0x0400, 0xc68b63de, 1 | BRF_PRG | BRF_ESS }, //  3
+	{"comotionp-1h.u2", 0x0400, 0x3e88b7dd, 1 | BRF_PRG | BRF_ESS}, //  0 I8080 Code
+	{"comotionp-1l.u3", 0x0400, 0x1f5bbfd9, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"comotionp-2h.u4", 0x0400, 0xeec29372, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"comotionp-2l.u5", 0x0400, 0xc68b63de, 1 | BRF_PRG | BRF_ESS}, //  3
 
-	{ "316-0006.u43",	0x0100, 0x8f071297, 2 | BRF_GRA },           //  4 Tiles
-	{ "316-0005.u29",	0x0100, 0x53fb8821, 2 | BRF_GRA },           //  5
+	{"316-0006.u43", 0x0100, 0x8f071297, 2 | BRF_GRA}, //  4 Tiles
+	{"316-0005.u29", 0x0100, 0x53fb8821, 2 | BRF_GRA}, //  5
 };
 
 STD_ROM_PICK(comotionp)
 STD_ROM_FN(comotionp)
 
 struct BurnDriver BurnDrvComotionp = {
-	"comotionp", "comotion", NULL, "blockade", "1976",
-	"CoMotion (patent)\0", NULL, "Gremlin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"comotionp", "comotion", nullptr, "blockade", "1976",
+	"CoMotion (patent)\0", nullptr, "Gremlin", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, comotionpRomInfo, comotionpRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, ComotionInputInfo, ComotionDIPInfo,
+	nullptr, comotionpRomInfo, comotionpRomName, nullptr, nullptr, BlockadeSampleInfo, BlockadeSampleName,
+	ComotionInputInfo, ComotionDIPInfo,
 	ComotionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -819,13 +849,13 @@ struct BurnDriver BurnDrvComotionp = {
 // Blasto
 
 static struct BurnRomInfo blastoRomDesc[] = {
-	{ "316-0089.u2",	0x0400, 0xec99d043, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
-	{ "316-0090.u3",	0x0400, 0xbe333415, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "316-0091.u4",	0x0400, 0x1c889993, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "316-0092.u5",	0x0400, 0xefb640cb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{"316-0089.u2", 0x0400, 0xec99d043, 1 | BRF_PRG | BRF_ESS}, //  0 I8080 Code
+	{"316-0090.u3", 0x0400, 0xbe333415, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"316-0091.u4", 0x0400, 0x1c889993, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"316-0092.u5", 0x0400, 0xefb640cb, 1 | BRF_PRG | BRF_ESS}, //  3
 
-	{ "316-0093.u29",	0x0200, 0x4dd69499, 2 | BRF_GRA },           //  4 Tiles
-	{ "316-0094.u43",	0x0200, 0x104051a4, 2 | BRF_GRA },           //  5
+	{"316-0093.u29", 0x0200, 0x4dd69499, 2 | BRF_GRA}, //  4 Tiles
+	{"316-0094.u43", 0x0200, 0x104051a4, 2 | BRF_GRA}, //  5
 };
 
 STD_ROM_PICK(blasto)
@@ -837,11 +867,12 @@ static INT32 BlastoInit()
 }
 
 struct BurnDriver BurnDrvBlasto = {
-	"blasto", NULL, NULL, "blockade", "1978",
-	"Blasto\0", NULL, "Gremlin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"blasto", nullptr, nullptr, "blockade", "1978",
+	"Blasto\0", nullptr, "Gremlin", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, blastoRomInfo, blastoRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, BlastoInputInfo, BlastoDIPInfo,
+	nullptr, blastoRomInfo, blastoRomName, nullptr, nullptr, BlockadeSampleInfo, BlockadeSampleName, BlastoInputInfo,
+	BlastoDIPInfo,
 	BlastoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -850,13 +881,13 @@ struct BurnDriver BurnDrvBlasto = {
 // Hustle
 
 static struct BurnRomInfo hustleRomDesc[] = {
-	{ "316-0016.u2",	0x0400, 0xd983de7c, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
-	{ "316-0017.u3",	0x0400, 0xedec9cb9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "316-0018.u4",	0x0400, 0xf599b9c0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "316-0019.u5",	0x0400, 0x7794bc7e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{"316-0016.u2", 0x0400, 0xd983de7c, 1 | BRF_PRG | BRF_ESS}, //  0 I8080 Code
+	{"316-0017.u3", 0x0400, 0xedec9cb9, 1 | BRF_PRG | BRF_ESS}, //  1
+	{"316-0018.u4", 0x0400, 0xf599b9c0, 1 | BRF_PRG | BRF_ESS}, //  2
+	{"316-0019.u5", 0x0400, 0x7794bc7e, 1 | BRF_PRG | BRF_ESS}, //  3
 
-	{ "316-0020.u29",	0x0200, 0x541d2c67, 2 | BRF_GRA },           //  4 Tiles
-	{ "316-0021.u43",	0x0200, 0xb5083128, 2 | BRF_GRA },           //  5
+	{"316-0020.u29", 0x0200, 0x541d2c67, 2 | BRF_GRA}, //  4 Tiles
+	{"316-0021.u43", 0x0200, 0xb5083128, 2 | BRF_GRA}, //  5
 };
 
 STD_ROM_PICK(hustle)
@@ -868,11 +899,12 @@ static INT32 HustleInit()
 }
 
 struct BurnDriver BurnDrvHustle = {
-	"hustle", NULL, NULL, "blockade", "1977",
-	"Hustle\0", NULL, "Gremlin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"hustle", nullptr, nullptr, "blockade", "1977",
+	"Hustle\0", nullptr, "Gremlin", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, hustleRomInfo, hustleRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, HustleInputInfo, HustleDIPInfo,
+	nullptr, hustleRomInfo, hustleRomName, nullptr, nullptr, BlockadeSampleInfo, BlockadeSampleName, HustleInputInfo,
+	HustleDIPInfo,
 	HustleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -881,11 +913,11 @@ struct BurnDriver BurnDrvHustle = {
 // Minesweeper
 
 static struct BurnRomInfo mineswprRomDesc[] = {
-	{ "mineswee.h0p",	0x0400, 0x5850a4ba, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
-	{ "mineswee.l0p",	0x0400, 0x05961379, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"mineswee.h0p", 0x0400, 0x5850a4ba, 1 | BRF_PRG | BRF_ESS}, //  0 I8080 Code
+	{"mineswee.l0p", 0x0400, 0x05961379, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "mineswee.ums",	0x0200, 0x0e1c5c37, 2 | BRF_GRA },           //  2 Tiles
-	{ "mineswee.uls",	0x0200, 0x3a4f66e1, 2 | BRF_GRA },           //  3
+	{"mineswee.ums", 0x0200, 0x0e1c5c37, 2 | BRF_GRA}, //  2 Tiles
+	{"mineswee.uls", 0x0200, 0x3a4f66e1, 2 | BRF_GRA}, //  3
 };
 
 STD_ROM_PICK(mineswpr)
@@ -897,11 +929,12 @@ static INT32 MineswprInit()
 }
 
 struct BurnDriver BurnDrvMineswpr = {
-	"mineswpr", NULL, NULL, "blockade", "1977",
-	"Minesweeper\0", NULL, "Amutech", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"mineswpr", nullptr, nullptr, "blockade", "1977",
+	"Minesweeper\0", nullptr, "Amutech", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mineswprRomInfo, mineswprRomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, MineswprInputInfo, MineswprDIPInfo,
+	nullptr, mineswprRomInfo, mineswprRomName, nullptr, nullptr, BlockadeSampleInfo, BlockadeSampleName,
+	MineswprInputInfo, MineswprDIPInfo,
 	MineswprInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };
@@ -910,22 +943,23 @@ struct BurnDriver BurnDrvMineswpr = {
 // Minesweeper (4-Player)
 
 static struct BurnRomInfo mineswpr4RomDesc[] = {
-	{ "mineswee.h0p",	0x0400, 0x5850a4ba, 1 | BRF_PRG | BRF_ESS }, //  0 I8080 Code
-	{ "mineswee.l0p",	0x0400, 0x05961379, 1 | BRF_PRG | BRF_ESS }, //  1
+	{"mineswee.h0p", 0x0400, 0x5850a4ba, 1 | BRF_PRG | BRF_ESS}, //  0 I8080 Code
+	{"mineswee.l0p", 0x0400, 0x05961379, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "mineswee.cms",	0x0200, 0xaad3ce0c, 2 | BRF_GRA },           //  2 Tiles
-	{ "mineswee.cls",	0x0200, 0x70959755, 2 | BRF_GRA },           //  3
+	{"mineswee.cms", 0x0200, 0xaad3ce0c, 2 | BRF_GRA}, //  2 Tiles
+	{"mineswee.cls", 0x0200, 0x70959755, 2 | BRF_GRA}, //  3
 };
 
 STD_ROM_PICK(mineswpr4)
 STD_ROM_FN(mineswpr4)
 
 struct BurnDriver BurnDrvMineswpr4 = {
-	"mineswpr4", "mineswpr", NULL, "blockade", "1977",
-	"Minesweeper (4-Player)\0", NULL, "Amutech", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
+	"mineswpr4", "mineswpr", nullptr, "blockade", "1977",
+	"Minesweeper (4-Player)\0", nullptr, "Amutech", "Miscellaneous",
+	nullptr, nullptr, nullptr, nullptr,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, mineswpr4RomInfo, mineswpr4RomName, NULL, NULL,  BlockadeSampleInfo, BlockadeSampleName, Mineswpr4InputInfo, Mineswpr4DIPInfo,
+	nullptr, mineswpr4RomInfo, mineswpr4RomName, nullptr, nullptr, BlockadeSampleInfo, BlockadeSampleName,
+	Mineswpr4InputInfo, Mineswpr4DIPInfo,
 	MineswprInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	256, 224, 4, 3
 };

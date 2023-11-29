@@ -44621,59 +44621,40 @@ struct BurnDriver BurnSpecSbotp2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Seraphima (English) (128K) (HB)
+// Seraphima Final Version (English) (128K) (HB)
 
-static struct BurnRomInfo SpecSeraphimafenRomDesc[] = {
-	{ "Seraphima EN 128K (2023)(Zosya Ent.).tap", 120379, 0xe03b415f, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecSeraphimafen, SpecSeraphimafen, Spec128)
-STD_ROM_FN(SpecSeraphimafen)
-
-struct BurnDriver BurnSpecSeraphimafen = {
-	"spec_seraphimafen", NULL, "spec_spec128", NULL, "2023",
-	"Seraphima (English) (128K) (HB)\0", NULL, "Zosya Entertainment", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_ADV, 0,
-	SpectrumGetZipName, SpecSeraphimafenRomInfo, SpecSeraphimafenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Seraphima (Portuguese) (128K) (HB)
-
-static struct BurnRomInfo SpecSeraphimafptRomDesc[] = {
-	{ "Seraphima PT 128K (2023)(Zosya Ent.).tap", 120493, 0x1f7bb40c, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(SpecSeraphimafpt, SpecSeraphimafpt, Spec128)
-STD_ROM_FN(SpecSeraphimafpt)
-
-struct BurnDriver BurnSpecSeraphimafpt = {
-	"spec_seraphimafpt", "spec_seraphimafen", "spec_spec128", NULL, "2023",
-	"Seraphima (Portuguese) (128K) (HB)\0", NULL, "Zosya Entertainment", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_ADV, 0,
-	SpectrumGetZipName, SpecSeraphimafptRomInfo, SpecSeraphimafptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 288, 224, 4, 3
-};
-
-// Seraphima - First Edition (128K) (HB)
-
-static struct BurnRomInfo SpecSeraphimaRomDesc[] = {
-	{ "Seraphima 128K (2023)(Zosya Entertainment).tap", 119727, 0x70cd9fb0, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecSeraphimafomDesc[] = {
+	{ "Seraphima Final Version EN 128K (2023)(Zosya Ent.).tap", 120379, 0xe03b415f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecSeraphima, SpecSeraphima, Spec128)
 STD_ROM_FN(SpecSeraphima)
 
 struct BurnDriver BurnSpecSeraphima = {
-	"spec_seraphima", "spec_seraphimafen", "spec_spec128", NULL, "2023",
-	"Seraphima - First Edition (128K) (HB)\0", "'Yandex Retro Games Battle' version", "Zosya Entertainment", "ZX Spectrum",
+	"spec_seraphima", NULL, "spec_spec128", NULL, "2023",
+	"Seraphima Final Version (English) (128K) (HB)\0", NULL, "Zosya Entertainment", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_ADV, 0,
+	SpectrumGetZipName, SpecSeraphimaRomInfo, SpecSeraphimaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Seraphima Final Version (Portuguese) (128K) (HB)
+
+static struct BurnRomInfo SpecSeraphimaptRomDesc[] = {
+	{ "Seraphima Final Version PT 128K (2023)(Zosya Ent.).tap", 120493, 0x1f7bb40c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecSeraphimapt, SpecSeraphimapt, Spec128)
+STD_ROM_FN(SpecSeraphimapt)
+
+struct BurnDriver BurnSpecSeraphimafpt = {
+	"spec_seraphimapt", "spec_seraphima", "spec_spec128", NULL, "2023",
+	"Seraphima Final Version (Portuguese) (128K) (HB)\0", NULL, "Zosya Entertainment", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_RUNGUN | GBF_ADV, 0,
-	SpectrumGetZipName, SpecSeraphimaRomInfo, SpecSeraphimaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecSeraphimaptRomInfo, SpecSeraphimaptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

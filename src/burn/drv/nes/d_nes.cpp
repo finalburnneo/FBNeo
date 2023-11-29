@@ -13096,6 +13096,7 @@ struct BurnDriver BurnDrvfds_kaettmarbro = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Kalin no Tsurugi (Japan)
 static struct BurnRomInfo fds_kalinnotsurugijRomDesc[] = {
 	{ "Kalin no Tsurugi (Japan).fds",          131000, 0xc63a0059, BRF_ESS | BRF_PRG },
 };
@@ -13113,6 +13114,7 @@ struct BurnDriver BurnDrvfds_kalinnotsurugij = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Kalin no Tsurugi (Hack, English)
 static struct BurnRomInfo fds_kalinnotsurugiRomDesc[] = {
 	{ "Kalin no Tsurugi (T-Eng).fds",          131000, 0x7825c974, BRF_ESS | BRF_PRG },
 };
@@ -13130,6 +13132,7 @@ struct BurnDriver BurnDrvfds_kalinnotsurugi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Kamen Rider Black - Taiketsu Shadow Moon (Japan)
 static struct BurnRomInfo fds_kamenridblaRomDesc[] = {
 	{ "Kamen Rider Black - Taiketsu Shadow Moon (Japan).fds",          131016, 0x0db848ea, BRF_ESS | BRF_PRG },
 };
@@ -13147,6 +13150,7 @@ struct BurnDriver BurnDrvfds_kamenridbla = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Kamen Rider Black - Taiketsu Shadow Moon (Hack, English)
 static struct BurnRomInfo fds_kamenridblaenRomDesc[] = {
 	{ "Kamen Rider Black - Taiketsu Shadow Moon T-Eng (2022)(BlackPaladin).fds",          131016, 0x0ca67b03, BRF_ESS | BRF_PRG },
 };
@@ -13615,7 +13619,7 @@ STD_ROM_FN(fds_namida)
 
 struct BurnDriver BurnDrvfds_namida = {
 	"fds_namida", NULL, "fds_fdsbios", NULL, "1986",
-	"Namida no Soukoban Special (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Namida no Soukoban Special (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_PUZZLE, 0,
 	NESGetZipName, fds_namidaRomInfo, fds_namidaRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -13666,7 +13670,7 @@ STD_ROM_FN(fds_otocky)
 
 struct BurnDriver BurnDrvfds_otocky = {
 	"fds_otocky", NULL, "fds_fdsbios", NULL, "1987",
-	"Otocky (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Otocky (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_HORSHOOT, 0,
 	NESGetZipName, fds_otockyRomInfo, fds_otockyRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
@@ -13810,6 +13814,7 @@ struct BurnDriver BurnDrvfds_reflectworld = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Relics - Ankoku Yousai (Japan)
 static struct BurnRomInfo fds_relicsRomDesc[] = {
 	{ "Relics - Ankoku Yousai (Japan).fds",          131016, 0xfb0ae491, BRF_ESS | BRF_PRG },
 };
@@ -13818,15 +13823,34 @@ STDROMPICKEXT(fds_relics, fds_relics, fds_fdsbios)
 STD_ROM_FN(fds_relics)
 
 struct BurnDriver BurnDrvfds_relics = {
-	"fds_relics", NULL, "fds_fdsbios", NULL, "1987",
+	"fds_relics", "fds_relicsen", "fds_fdsbios", NULL, "1987",
 	"Relics - Ankoku Yousai (Japan)\0", NULL, "Bothtec", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_FDS, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_FDS, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NESGetZipName, fds_relicsRomInfo, fds_relicsRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Relics - The Dark Fortress (Hack, English)
+static struct BurnRomInfo fds_relicsenRomDesc[] = {
+	{ "Relics - Ankoku Yousai T-Eng (2023)(BlackPaladin).fds",          131000, 0x389a10ad, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_relicsen, fds_relicsen, fds_fdsbios)
+STD_ROM_FN(fds_relicsen)
+
+struct BurnDriver BurnDrvfds_relicsen = {
+	"fds_relicsen", NULL, "fds_fdsbios", NULL, "2023",
+	"Relics - The Dark Fortress (Hack, English)\0", NULL, "BlackPaladin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_FDS, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NESGetZipName, fds_relicsenRomInfo, fds_relicsenRomName, NULL, NULL, NULL, NULL, NESFDSInputInfo, NESFDSDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Replicart (Japan)
 static struct BurnRomInfo fds_replicartRomDesc[] = {
 	{ "Replicart (Japan).fds",          131016, 0xc3cbc847, BRF_ESS | BRF_PRG },
 };
@@ -13844,6 +13868,7 @@ struct BurnDriver BurnDrvfds_replicart = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Roger Rabbit (Japan)
 static struct BurnRomInfo fds_rogerrabbitRomDesc[] = {
 	{ "Roger Rabbit (Japan).fds",          131016, 0xb43f9b16, BRF_ESS | BRF_PRG },
 };
@@ -13861,6 +13886,7 @@ struct BurnDriver BurnDrvfds_rogerrabbit = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Samurai Sword (Japan)
 static struct BurnRomInfo fds_samswordRomDesc[] = {
 	{ "Samurai Sword (Japan)(1988)(Capcom).fds",          131016, 0x5ca021ff, BRF_ESS | BRF_PRG },
 };
@@ -13878,6 +13904,7 @@ struct BurnDriver BurnDrvfds_samsword = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Samurai Sword (Hack, English)
 static struct BurnRomInfo fds_samswordenRomDesc[] = {
 	{ "Samurai Sword (T-Eng)(2003)(Mute).fds",          131016, 0x45ddd0f4, BRF_ESS | BRF_PRG },
 };
@@ -15389,9 +15416,9 @@ struct BurnDriver BurnDrvnes_vstopgun = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// --------------------------
-// Non Homebrew (hand-added!)
-// --------------------------
+// -------------------------------
+// Non Homebrew (Unlicensed) Games
+// -------------------------------
 
 // Minna no Taabou no Nakayoshi Daisakusen (Japan)
 static struct BurnRomInfo nes_minnanotaaboujRomDesc[] = {
@@ -15465,57 +15492,6 @@ struct BurnDriver BurnDrvnes_xiaomali = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_xiaomaliRomInfo, nes_xiaomaliRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_1991dumaracRomDesc[] = {
-	{ "1991 Du Ma Racing (Unl).nes",          65552, 0x8cd7f9b1, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_1991dumarac)
-STD_ROM_FN(nes_1991dumarac)
-
-struct BurnDriver BurnDrvnes_1991dumarac = {
-	"nes_1991dumarac", NULL, NULL, NULL, "1991",
-	"1991 Du Ma Racing (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC | GBF_MISC, 0,
-	NESGetZipName, nes_1991dumaracRomInfo, nes_1991dumaracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_mahjongblockRomDesc[] = {
-	{ "Mahjong Block (Idea-tek) (Unl).nes",          65552, 0x30820b60, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_mahjongblock)
-STD_ROM_FN(nes_mahjongblock)
-
-struct BurnDriver BurnDrvnes_mahjongblock = {
-	"nes_mahjongblock", NULL, NULL, NULL, "1991",
-	"Mahjong Block (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_mahjongblockRomInfo, nes_mahjongblockRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_samuraispiritsRomDesc[] = {
-	{ "Samurai Spirits (Unl).nes",          786448, 0x9b7305f7, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_samuraispirits)
-STD_ROM_FN(nes_samuraispirits)
-
-struct BurnDriver BurnDrvnes_samuraispirits = {
-	"nes_samuraispirits", NULL, NULL, NULL, "199?",
-	"Samurai Spirits (Unl)\0", NULL, "Rex Soft", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
-	NESGetZipName, nes_samuraispiritsRomInfo, nes_samuraispiritsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -16174,6 +16150,42 @@ struct BurnDriver BurnDrvnes_batmavidgamc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bio Hazard (China) (Unl)
+static struct BurnRomInfo nes_biohazardcRomDesc[] = {
+	{ "Bio Hazard (China).nes",          1048592, 0xb4c8012d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_biohazardc)
+STD_ROM_FN(nes_biohazardc)
+
+struct BurnDriver BurnDrvnes_biohazardc = {
+	"nes_biohazardc", "nes_biohazard", NULL, NULL, "2003",
+	"Bio Hazard (China) (Unl)\0", NULL, "Waixing", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_biohazardcRomInfo, nes_biohazardcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Bio Hazard (Hack, English)
+static struct BurnRomInfo nes_biohazardRomDesc[] = {
+	{ "Bio Hazard (T-Eng).nes",          1048592, 0x4dffd969, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_biohazard)
+STD_ROM_FN(nes_biohazard)
+
+struct BurnDriver BurnDrvnes_biohazard = {
+	"nes_biohazard", NULL, NULL, NULL, "2018",
+	"Bio Hazard (Hack, English)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_biohazardRomInfo, nes_biohazardRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Bucky O'Hare (Hack, Chinese)
 // https://www.nesbbs.com/bbs/thread-44657-1-1.html [Logo by ZARD]
 static struct BurnRomInfo nes_buckyoharecRomDesc[] = {
@@ -16512,7 +16524,7 @@ struct BurnDriver BurnDrvnes_gomokuc = {
 	"nes_gomokuc", "nes_gomoku", NULL, NULL, "2020",
 	"Gomoku Narabe Renju (Hack, Chinese)\0", NULL, "Yan Yu Mao Mao", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_gomokucRomInfo, nes_gomokucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -16595,6 +16607,25 @@ struct BurnDriver BurnDrvnes_kickmasterc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Kirby's Adventure (Hack, Chinese)
+// https://www.nesbbs.com/bbs/thread-50985-1-1.html
+static struct BurnRomInfo nes_kirbysadvcRomDesc[] = {
+	{ "Kirby's Adventure (T-Chi).nes",          1048592, 0x0efa7d0f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kirbysadvc)
+STD_ROM_FN(nes_kirbysadvc)
+
+struct BurnDriver BurnDrvnes_kirbysadvc = {
+	"nes_kirbysadvc", "nes_kirbysadv", NULL, NULL, "2020",
+	"Kirby's Adventure (Hack, Chinese)\0", NULL, "DMG Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_kirbysadvcRomInfo, nes_kirbysadvcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Kung Fu (Hack, Chinese)
 static struct BurnRomInfo nes_kungfucRomDesc[] = {
 	{ "Kung Fu (T-Chi).nes",          24592, 0x480a29b7, BRF_ESS | BRF_PRG },
@@ -16667,6 +16698,25 @@ struct BurnDriver BurnDrvnes_littlnemc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_littlnemcRomInfo, nes_littlnemcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Lupin Sansei - Pandora no Isan (Hack, Chinese)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=705303&fromuid=17888
+static struct BurnRomInfo nes_lupinsanscRomDesc[] = {
+	{ "Lupin Sansei - Pandora no Isan (T-Chi).nes",          524304, 0x1fd2e927, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_lupinsansc)
+STD_ROM_FN(nes_lupinsansc)
+
+struct BurnDriver BurnDrvnes_lupinsansc = {
+	"nes_lupinsansc", "nes_lupinsan", NULL, NULL, "2021",
+	"Lupin Sansei - Pandora no Isan (Hack, Chinese)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_lupinsanscRomInfo, nes_lupinsanscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -16824,6 +16874,24 @@ struct BurnDriver BurnDrvnes_powerblade2c = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Qi Wang - Chinese Chess (China, MGC-001)
+static struct BurnRomInfo nes_qiwanRomDesc[] = {
+	{ "Qi Wang - Chinese Chess (China, MGC-001).nes",          98320, 0x5eef4729, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_qiwan)
+STD_ROM_FN(nes_qiwan)
+
+struct BurnDriver BurnDrvnes_qiwan = {
+	"nes_qiwan", NULL, NULL, NULL, "199?",
+	"Qi Wang - Chinese Chess (China, MGC-001)\0", NULL, "TXC Corp.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
+	NESGetZipName, nes_qiwanRomInfo, nes_qiwanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Rad Racer (Hack, Chinese)
 static struct BurnRomInfo nes_radracercRomDesc[] = {
 	{ "Rad Racer (T-Chi).nes",          131088, 0x13cfd9ca, BRF_ESS | BRF_PRG },
@@ -16913,6 +16981,81 @@ struct BurnDriver BurnDrvnes_rockm3c = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_rockm3cRomInfo, nes_rockm3cRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saint Saiya - Tian Ma Huan Xiang (China)
+static struct BurnRomInfo nes_saintsaitiamahuxiRomDesc[] = {
+	{ "Saint Saiya - Tian Ma Huan Xiang (China).nes",          2097168, 0x31f810f2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintsaitiamahuxi)
+STD_ROM_FN(nes_saintsaitiamahuxi)
+
+struct BurnDriver BurnDrvnes_saintsaitiamahuxi = {
+	"nes_saintsaitiamahuxi", NULL, NULL, NULL, "200?",
+	"Saint Saiya - Tian Ma Huan Xiang (China)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_saintsaitiamahuxiRomInfo, nes_saintsaitiamahuxiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saint Seiya - Ougon Densetsu (Hack, Chinese v2.0)
+// https://www.nesbbs.com/bbs/thread-45841-1-1.html
+static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes",          1310736, 0xf7df4b56, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiyaodc)
+STD_ROM_FN(nes_saintseiyaodc)
+
+struct BurnDriver BurnDrvnes_saintseiyaodc = {
+	"nes_saintseiyaodc", "nes_saintseiougden", NULL, NULL, "2018",
+	"Saint Seiya - Ougon Densetsu (Hack, Chinese v2.0)\0", NULL, "HHNM Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_saintseiyaodcRomInfo, nes_saintseiyaodcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Saint Seiya - Ougon Densetsu Kanketsu Hen (Hack, Chinese)
+// https://www.nesbbs.com/bbs/thread-40836-1-1.html
+static struct BurnRomInfo nes_saintseiyaodkhcRomDesc[] = {
+	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes",          524304, 0xb1651b70, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_saintseiyaodkhc)
+STD_ROM_FN(nes_saintseiyaodkhc)
+
+struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
+	"nes_saintseiyaodkhc", "nes_saintseiougdenkahen", NULL, NULL, "2017",
+	"Saint Seiya - Ougon Densetsu Kanketsu Hen (Hack, Chinese)\0", NULL, "HHNM Team", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
+	NESGetZipName, nes_saintseiyaodkhcRomInfo, nes_saintseiyaodkhcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Sangokushi II - Haou no Tairiku (Hack, Chinese)
+// https://www.nesbbs.com/bbs/thread-52813-1-1.html
+static struct BurnRomInfo nes_sangokushiiihanoucRomDesc[] = {
+	{ "Sangokushi II - Haou no Tairiku (T-Chi).nes",          524304, 0x611d79ff, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sangokushiiihanouc)
+STD_ROM_FN(nes_sangokushiiihanouc)
+
+struct BurnDriver BurnDrvnes_sangokushiiihanouc = {
+	"nes_sangokushiiihanouc", "nes_sangokushiiihanou", NULL, NULL, "2017",
+	"Sangokushi II - Haou no Tairiku (Hack, Chinese)\0", NULL, "Unkown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_sangokushiiihanoucRomInfo, nes_sangokushiiihanoucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -17050,6 +17193,25 @@ struct BurnDriver BurnDrvnes_tmntiiarcgamtc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tiny Toon Adventures (Hack, Chinese)
+// https://www.ppxclub.com/forum.php?mod=viewthread&tid=709671&fromuid=17888
+static struct BurnRomInfo nes_tinytooadvscRomDesc[] = {
+	{ "Tiny Toon Adventures (T-Chi).nes",          344080, 0xfbf2bb98, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tinytooadvsc)
+STD_ROM_FN(nes_tinytooadvsc)
+
+struct BurnDriver BurnDrvnes_tinytooadvsc = {
+	"nes_tinytooadvsc", "nes_tinytooadv", NULL, NULL, "2022",
+	"Tiny Toon Adventures (Hack, Chinese)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tinytooadvscRomInfo, nes_tinytooadvscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Tokkyuu Shirei Solbrain (Hack, Chinese)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=705238
 static struct BurnRomInfo nes_tokkyshisolcRomDesc[] = {
@@ -17107,6 +17269,60 @@ struct BurnDriver BurnDrvnes_wanpakuduckc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// World of Warcraft - Demon Hunter (China) (Unl)
+static struct BurnRomInfo nes_worldwarcRomDesc[] = {
+	{ "World of Warcraft - Demon Hunter (China).nes",          1048592, 0xc9644f6c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_worldwarc)
+STD_ROM_FN(nes_worldwarc)
+
+struct BurnDriver BurnDrvnes_worldwarc = {
+	"nes_worldwarc", "nes_worldwar", NULL, NULL, "2008",
+	"World of Warcraft - Demon Hunter (China) (Unl)\0", NULL, "ShenZhen Nanjing Technology", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_worldwarcRomInfo, nes_worldwarcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// World of Warcraft - Demon Hunter (Hack, English)
+static struct BurnRomInfo nes_worldwarRomDesc[] = {
+	{ "World of Warcraft - Demon Hunter (T-Eng).nes",          1048592, 0x45593e64, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_worldwar)
+STD_ROM_FN(nes_worldwar)
+
+struct BurnDriver BurnDrvnes_worldwar = {
+	"nes_worldwar", NULL, NULL, NULL, "2020",
+	"World of Warcraft - Demon Hunter (Hack, English)\0", NULL, "pacnsacdave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_worldwarRomInfo, nes_worldwarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Xiao Hong Mao - Little Red Hood (China) (Unl)
+static struct BurnRomInfo nes_xiaohonmaoRomDesc[] = {
+	{ "Xiao Hong Mao - Little Red Hood (Ch).nes",          40976, 0xeb6df8e3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_xiaohonmao)
+STD_ROM_FN(nes_xiaohonmao)
+
+struct BurnDriver BurnDrvnes_xiaohonmao = {
+	"nes_xiaohonmao", NULL, NULL, NULL, "1989",
+	"Xiao Hong Mao - Little Red Hood (China) (Unl)\0", NULL, "Joy Van", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_xiaohonmaoRomInfo, nes_xiaohonmaoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Zelda no Densetsu - The Hyrule Fantasy (Hack, Chinese) - (FDS to NES)
 // https://www.ppxclub.com/forum.php?mod=viewthread&tid=711227
 static struct BurnRomInfo nes_zeldanodencRomDesc[] = {
@@ -17142,120 +17358,6 @@ struct BurnDriver BurnDrvnes_zenc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_zencRomInfo, nes_zencRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Sangokushi II - Haou no Tairiku (Hack, Chinese)
-// https://www.nesbbs.com/bbs/thread-52813-1-1.html
-static struct BurnRomInfo nes_sangokushiiihanoucRomDesc[] = {
-	{ "Sangokushi II - Haou no Tairiku (T-Chi).nes",          524304, 0x611d79ff, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_sangokushiiihanouc)
-STD_ROM_FN(nes_sangokushiiihanouc)
-
-struct BurnDriver BurnDrvnes_sangokushiiihanouc = {
-	"nes_sangokushiiihanouc", "nes_sangokushiiihanou", NULL, NULL, "2017",
-	"Sangokushi II - Haou no Tairiku (Hack, Chinese)\0", NULL, "Unkown", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
-	NESGetZipName, nes_sangokushiiihanoucRomInfo, nes_sangokushiiihanoucRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Kirby's Adventure (Hack, Chinese)
-// https://www.nesbbs.com/bbs/thread-50985-1-1.html
-static struct BurnRomInfo nes_kirbysadvcRomDesc[] = {
-	{ "Kirby's Adventure (T-Chi).nes",          1048592, 0x0efa7d0f, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_kirbysadvc)
-STD_ROM_FN(nes_kirbysadvc)
-
-struct BurnDriver BurnDrvnes_kirbysadvc = {
-	"nes_kirbysadvc", "nes_kirbysadv", NULL, NULL, "2020",
-	"Kirby's Adventure (Hack, Chinese)\0", NULL, "DMG Team", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_kirbysadvcRomInfo, nes_kirbysadvcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Tiny Toon Adventures (Hack, Chinese)
-// https://www.ppxclub.com/forum.php?mod=viewthread&tid=709671&fromuid=17888
-static struct BurnRomInfo nes_tinytooadvscRomDesc[] = {
-	{ "Tiny Toon Adventures (T-Chi).nes",          344080, 0xfbf2bb98, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_tinytooadvsc)
-STD_ROM_FN(nes_tinytooadvsc)
-
-struct BurnDriver BurnDrvnes_tinytooadvsc = {
-	"nes_tinytooadvsc", "nes_tinytooadv", NULL, NULL, "2022",
-	"Tiny Toon Adventures (Hack, Chinese)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_tinytooadvscRomInfo, nes_tinytooadvscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Lupin Sansei - Pandora no Isan (Hack, Chinese)
-// https://www.ppxclub.com/forum.php?mod=viewthread&tid=705303&fromuid=17888
-static struct BurnRomInfo nes_lupinsanscRomDesc[] = {
-	{ "Lupin Sansei - Pandora no Isan (T-Chi).nes",          524304, 0x1fd2e927, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_lupinsansc)
-STD_ROM_FN(nes_lupinsansc)
-
-struct BurnDriver BurnDrvnes_lupinsansc = {
-	"nes_lupinsansc", "nes_lupinsan", NULL, NULL, "2021",
-	"Lupin Sansei - Pandora no Isan (Hack, Chinese)\0", NULL, "Ni You De Wu Cai Yu", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_lupinsanscRomInfo, nes_lupinsanscRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Saint Seiya - Ougon Densetsu (Hack, Chinese v2.0)
-// https://www.nesbbs.com/bbs/thread-45841-1-1.html
-static struct BurnRomInfo nes_saintseiyaodcRomDesc[] = {
-	{ "Saint Seiya - Ougon Densetsu (T-Chi, v2.0).nes",          1310736, 0xf7df4b56, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_saintseiyaodc)
-STD_ROM_FN(nes_saintseiyaodc)
-
-struct BurnDriver BurnDrvnes_saintseiyaodc = {
-	"nes_saintseiyaodc", "nes_saintseiougden", NULL, NULL, "2018",
-	"Saint Seiya - Ougon Densetsu (Hack, Chinese v2.0)\0", NULL, "HHNM Team", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
-	NESGetZipName, nes_saintseiyaodcRomInfo, nes_saintseiyaodcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Saint Seiya - Ougon Densetsu Kanketsu Hen (Hack, Chinese)
-// https://www.nesbbs.com/bbs/thread-40836-1-1.html
-static struct BurnRomInfo nes_saintseiyaodkhcRomDesc[] = {
-	{ "Saint Seiya - Ougon Densetsu Kanketsu Hen (T-Chi).nes",          524304, 0xb1651b70, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_saintseiyaodkhc)
-STD_ROM_FN(nes_saintseiyaodkhc)
-
-struct BurnDriver BurnDrvnes_saintseiyaodkhc = {
-	"nes_saintseiyaodkhc", "nes_saintseiougdenkahen", NULL, NULL, "2017",
-	"Saint Seiya - Ougon Densetsu Kanketsu Hen (Hack, Chinese)\0", NULL, "HHNM Team", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RPG, 0,
-	NESGetZipName, nes_saintseiyaodkhcRomInfo, nes_saintseiyaodkhcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -18209,7 +18311,7 @@ struct BurnDriver BurnDrvnes_battleshipc = {
 	"nes_battleshipc", "nes_battleship", NULL, NULL, "2019",
 	"Battleship (Hack, Spanish)\0", NULL, "Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_battleshipcRomInfo, nes_battleshipcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21476,13 +21578,13 @@ struct BurnDriver BurnDrvnes_hyakuen = {
 	"nes_hyakuen", NULL, NULL, NULL, "2007",
 	"Hyaku no Sekai no Monogatari - The 100 World Story (Hack, English)\0", NULL, "AlanMidas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 4, HARDWARE_NES, GBF_ADV | GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HACK, 4, HARDWARE_NES, GBF_ADV | GBF_BOARD, 0,
 	NESGetZipName, nes_hyakuenRomInfo, nes_hyakuenRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-//Hyaku no Sekai no Monogatari - The 100 World Story (T-Ita)
+//Hyaku no Sekai no Monogatari ~ The 100 World Story (Hack, Italian)
 static struct BurnRomInfo nes_hyakuitRomDesc[] = {
 	{ "Hyaku no Sekai no Monogatari - The 100 World Story (T-Ita)(2021)(Mog).nes",	262160, 0x4d740153, BRF_ESS | BRF_PRG },
 };
@@ -21492,15 +21594,15 @@ STD_ROM_FN(nes_hyakuit)
 
 struct BurnDriver BurnDrvnes_hyakuit = {
 	"nes_hyakuit", "nes_hyakuen", NULL, NULL, "2021",
-	"Hyaku no Sekai no Monogatari - The 100 World Story (Hack, Italian v1.0)\0", NULL, "Mog", "Miscellaneous",
+	"Hyaku no Sekai no Monogatari ~ The 100 World Story (Hack, Italian)\0", NULL, "Mog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_NES, GBF_ADV | GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_NES, GBF_ADV | GBF_BOARD, 0,
 	NESGetZipName, nes_hyakuitRomInfo, nes_hyakuitRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-//Hyaku no Sekai no Monogatari - The 100 World Story (Japan)
+//Hyaku no Sekai no Monogatari ~ The 100 World Story (Japan)
 static struct BurnRomInfo nes_hyakujpRomDesc[] = {
 	{ "Hyaku no Sekai no Monogatari - The 100 World Story (J)(1991)(ASK).nes",	262160, 0x84ed70ce, BRF_ESS | BRF_PRG },
 };
@@ -21510,9 +21612,9 @@ STD_ROM_FN(nes_hyakujp)
 
 struct BurnDriver BurnDrvnes_hyakujp = {
 	"nes_hyakujp", "nes_hyakuen", NULL, NULL, "1991",
-	"Hyaku no Sekai no Monogatari - The 100 World Story (Japan)\0", NULL, "ASK", "Miscellaneous",
+	"Hyaku no Sekai no Monogatari ~ The 100 World Story (Japan)\0", NULL, "ASK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_ADV | GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_NES, GBF_ADV | GBF_BOARD, 0,
 	NESGetZipName, nes_hyakujpRomInfo, nes_hyakujpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21693,7 +21795,7 @@ struct BurnDriver BurnDrvnes_depbomb1 = {
 	"nes_depbomb1", NULL, NULL, NULL, "2004",
 	"Depth Bomb v1 (Unl)\0", NULL, "Nice Code Software", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_depbomb1RomInfo, nes_depbomb1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -21711,62 +21813,8 @@ struct BurnDriver BurnDrvnes_depbomb2 = {
 	"nes_depbomb2", "nes_depbomb1", NULL, NULL, "2004",
 	"Depth Bomb v2 (Unl)\0", NULL, "Nice Code Software", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_depbomb2RomInfo, nes_depbomb2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-//Ushio to Tora - Shinen no Taiyou (Hack, English)
-static struct BurnRomInfo nes_ushiotoraRomDesc[] = {
-	{ "Ushio to Tora - Shinen no Taiyou T-Eng (2022)(BlackPaladin).nes",          393232, 0x9472f0af, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ushiotora)
-STD_ROM_FN(nes_ushiotora)
-
-struct BurnDriver BurnDrvnes_ushiotora = {
-	"nes_ushiotora", NULL, NULL, NULL, "2022",
-	"Ushio to Tora - Shinen no Taiyou (Hack, English)\0", NULL, "BlackPaladin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
-	NESGetZipName, nes_ushiotoraRomInfo, nes_ushiotoraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-//Ushio to Tora - Shinen no Taiyou (Japan)
-static struct BurnRomInfo nes_ushiotorajRomDesc[] = {
-	{ "Ushio to Tora - Shinen no Taiyou (J)(1993)(Yutaka).nes",          393232, 0x7aa8f7d0, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ushiotoraj)
-STD_ROM_FN(nes_ushiotoraj)
-
-struct BurnDriver BurnDrvnes_ushiotoraj = {
-	"nes_ushiotoraj", "nes_ushiotora", NULL, NULL, "1993",
-	"Ushio to Tora - Shinen no Taiyou (Japan)\0", NULL, "Yutaka", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
-	NESGetZipName, nes_ushiotorajRomInfo, nes_ushiotorajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-//Xybots (USA) (Prototype)
-static struct BurnRomInfo nes_xybotsRomDesc[] = {
-	{ "Xybots (proto)(1990)(Tengen).nes",          196624, 0x59dae478, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_xybots)
-STD_ROM_FN(nes_xybots)
-
-struct BurnDriver BurnDrvnes_xybots = {
-	"nes_xybots", NULL, NULL, NULL, "1990",
-	"Xybots (USA) (Prototype)\0", NULL, "Tengen", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_SHOOT | GBF_MAZE, 0,
-	NESGetZipName, nes_xybotsRomInfo, nes_xybotsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -22061,99 +22109,6 @@ struct BurnDriver BurnDrvnes_ddball2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// NES Wars (Hack, English)
-// https://www.romhacking.net/translations/6828/
-static struct BurnRomInfo nes_neswarsRomDesc[] = {
-	{ "NES Wars T-Eng (2023)(Stardust Crusaders).nes",          196624, 0x35da4b73, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_neswars)
-STD_ROM_FN(nes_neswars)
-
-struct BurnDriver BurnDrvnes_neswars = {
-	"nes_neswars", "nes_famicomwars", NULL, NULL, "2023",
-	"NES Wars (Hack, English)\0", NULL, "Stardust Crusaders", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
-	NESGetZipName, nes_neswarsRomInfo, nes_neswarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Ripple Island (Japan)
-static struct BurnRomInfo nes_ripislandjRomDesc[] = {
-	{ "Ripple Island (J)(1988)(Sunsoft).nes",          131088, 0x7148c342, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ripislandj)
-STD_ROM_FN(nes_ripislandj)
-
-struct BurnDriver BurnDrvnes_ripislandj = {
-	"nes_ripislandj", "nes_ripisland", NULL, NULL, "1988",
-	"Ripple Island (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
-	NESGetZipName, nes_ripislandjRomInfo, nes_ripislandjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Ripple Island (Hack, English)
-// https://www.romhacking.net/translations/3769/
-static struct BurnRomInfo nes_ripislandRomDesc[] = {
-	{ "Ripple Island T-Eng (2018)(LIPEMCO! Translations).nes",          262160, 0x51f5e289, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ripisland)
-STD_ROM_FN(nes_ripisland)
-
-struct BurnDriver BurnDrvnes_ripisland = {
-	"nes_ripisland", NULL, NULL, NULL, "2018",
-	"Ripple Island (Hack, English)\0", NULL, "LIPEMCO! Translations", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
-	NESGetZipName, nes_ripislandRomInfo, nes_ripislandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Zoids - Chuuou Tairiku no Tatakai (Japan)
-static struct BurnRomInfo nes_zoidsjRomDesc[] = {
-	{ "Zoids - Chuuou Tairiku no Tatakai (J)(1987)(Toshiba-EMI).nes",          131088, 0xe3d6a15a, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_zoidsj)
-STD_ROM_FN(nes_zoidsj)
-
-struct BurnDriver BurnDrvnes_zoidsj = {
-	"nes_zoidsj", "nes_zoids", NULL, NULL, "1987",
-	"Zoids - Chuuou Tairiku no Tatakai (Japan)\0", NULL, "Toshiba-EMI", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
-	NESGetZipName, nes_zoidsjRomInfo, nes_zoidsjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Zoids - Battle of Central Continent (Hack, English)
-// https://www.romhacking.net/translations/6845/
-static struct BurnRomInfo nes_zoidsRomDesc[] = {
-	{ "Zoids - Chuuou Tairiku no Tatakai T-Eng (2023)(Life With Matthew).nes",          131088, 0x1528e6c0, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_zoids)
-STD_ROM_FN(nes_zoids)
-
-struct BurnDriver BurnDrvnes_zoids = {
-	"nes_zoids", NULL, NULL, NULL, "2023",
-	"Zoids - Battle of Central Continent (Hack, English)\0", NULL, "Life With Matthew", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
-	NESGetZipName, nes_zoidsRomInfo, nes_zoidsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Dino Hockey (Prototype)
 static struct BurnRomInfo nes_dinohockeyRomDesc[] = {
 	{ "Dino Hockey (Proto)(1991)(Virgin Games).nes",          262160, 0xc3710b73, BRF_ESS | BRF_PRG },
@@ -22226,6 +22181,24 @@ struct BurnDriver BurnDrvnes_mdfootball = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// 1991 Du Ma Racing (Unl)
+static struct BurnRomInfo nes_1991dumaracRomDesc[] = {
+	{ "1991 Du Ma Racing (Unl).nes",          65552, 0x8cd7f9b1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_1991dumarac)
+STD_ROM_FN(nes_1991dumarac)
+
+struct BurnDriver BurnDrvnes_1991dumarac = {
+	"nes_1991dumarac", NULL, NULL, NULL, "1991",
+	"1991 Du Ma Racing (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC | GBF_MISC, 0,
+	NESGetZipName, nes_1991dumaracRomInfo, nes_1991dumaracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Airball
 static struct BurnRomInfo nes_airballRomDesc[] = {
 	{ "Airball (2007)(Retrozone).nes",          131088, 0x9a535a93, BRF_ESS | BRF_PRG },
@@ -22262,6 +22235,132 @@ struct BurnDriver BurnDrvnes_airballp = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Aladdin 4 (Unl)
+static struct BurnRomInfo nes_aladdin4RomDesc[] = {
+	{ "Aladdin 4 (Unl).nes",          524304, 0xdda79434, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_aladdin4)
+STD_ROM_FN(nes_aladdin4)
+
+struct BurnDriver BurnDrvnes_aladdin4 = {
+	"nes_aladdin4", NULL, NULL, NULL, "1996",
+	"Aladdin 4 (Unl)\0", NULL, "J.Y. Company", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_aladdin4RomInfo, nes_aladdin4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Archer, The (Unl)
+static struct BurnRomInfo nes_archerRomDesc[] = {
+	{ "Archer, The (200X)(Power Joy).nes",          24592, 0x911e0365, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_archer)
+STD_ROM_FN(nes_archer)
+
+struct BurnDriver BurnDrvnes_archer = {
+	"nes_archer", NULL, NULL, NULL, "200?",
+	"Archer, The (Unl)\0", NULL, "Power Joy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_archerRomInfo, nes_archerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Blob Man (Unl)
+static struct BurnRomInfo nes_blobmanRomDesc[] = {
+	{ "Blob Man (Unl).nes",          40976, 0xeef9db4b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blobman)
+STD_ROM_FN(nes_blobman)
+
+struct BurnDriver BurnDrvnes_blobman = {
+	"nes_blobman", NULL, NULL, NULL, "2007",
+	"Blob Man (Unl)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_blobmanRomInfo, nes_blobmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Boogerman (Unl)
+static struct BurnRomInfo nes_boogermanRomDesc[] = {
+	{ "Boogerman (Unl).nes",          524304, 0xf10d5e5b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_boogerman)
+STD_ROM_FN(nes_boogerman)
+
+struct BurnDriver BurnDrvnes_boogerman = {
+	"nes_boogerman", NULL, NULL, NULL, "1997",
+	"Boogerman (Unl)\0", NULL, "Realtec", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_boogermanRomInfo, nes_boogermanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Bookyman (Unl)
+static struct BurnRomInfo nes_bookymanRomDesc[] = {
+	{ "Bookyman (1991)(Mega Soft).nes",          24592, 0xd8f11b78, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bookyman)
+STD_ROM_FN(nes_bookyman)
+
+struct BurnDriver BurnDrvnes_bookyman = {
+	"nes_bookyman", NULL, NULL, NULL, "1991",
+	"Bookyman (Unl)\0", NULL, "Mega Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
+	NESGetZipName, nes_bookymanRomInfo, nes_bookymanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Danger Bridge (Unl)
+static struct BurnRomInfo nes_dangbridgeRomDesc[] = {
+	{ "Danger Bridge (200X)(Power Joy).nes",          49168, 0x5e59a8b1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dangbridge)
+STD_ROM_FN(nes_dangbridge)
+
+struct BurnDriver BurnDrvnes_dangbridge = {
+	"nes_dangbridge", NULL, NULL, NULL, "200?",
+	"Danger Bridge (Unl)\0", NULL, "Power Joy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_dangbridgeRomInfo, nes_dangbridgeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dringle (Unl)
+static struct BurnRomInfo nes_dringleRomDesc[] = {
+	{ "Dringle (Unl).nes",          40976, 0x05c38615, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dringle)
+STD_ROM_FN(nes_dringle)
+
+struct BurnDriver BurnDrvnes_dringle = {
+	"nes_dringle", NULL, NULL, NULL, "2005",
+	"Dringle (Unl)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_dringleRomInfo, nes_dringleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Elfland (Unl)
 // https://www.romhacking.net/forum/index.php?topic=29783.0
 static struct BurnRomInfo nes_elflandRomDesc[] = {
@@ -22281,13 +22380,212 @@ struct BurnDriver BurnDrvnes_elfland = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// -----------------------------------
-// END of "Non Homebrew (hand-added!)"
-// -----------------------------------
+// Huang Di (Asia) (Unl)
+static struct BurnRomInfo nes_huangdiRomDesc[] = {
+	{ "Huang Di (Asia) (Unl).nes",          393232, 0xdfdec378, BRF_ESS | BRF_PRG },
+};
 
-// ---------------------
-// Homebrew (hand-added)
-// ---------------------
+STD_ROM_PICK(nes_huangdi)
+STD_ROM_FN(nes_huangdi)
+
+struct BurnDriver BurnDrvnes_huangdi = {
+	"nes_huangdi", NULL, NULL, NULL, "1994",
+	"Huang Di (Asia) (Unl)\0", NULL, "Asder", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_huangdiRomInfo, nes_huangdiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Huge Insect (Asia) (Unl)
+static struct BurnRomInfo nes_hugeinsectRomDesc[] = {
+	{ "Huge Insect (Asia) (Unl).nes",          65552, 0x552a903a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hugeinsect)
+STD_ROM_FN(nes_hugeinsect)
+
+struct BurnDriver BurnDrvnes_hugeinsect = {
+	"nes_hugeinsect", NULL, NULL, NULL, "1993",
+	"Huge Insect (Asia) (Unl)\0", NULL, "Thin Chen", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_hugeinsectRomInfo, nes_hugeinsectRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mahjong Block (Unl)
+static struct BurnRomInfo nes_mahjongblockRomDesc[] = {
+	{ "Mahjong Block (Idea-tek) (Unl).nes",          65552, 0x30820b60, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mahjongblock)
+STD_ROM_FN(nes_mahjongblock)
+
+struct BurnDriver BurnDrvnes_mahjongblock = {
+	"nes_mahjongblock", NULL, NULL, NULL, "1991",
+	"Mahjong Block (Unl)\0", NULL, "Idea-tek", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_mahjongblockRomInfo, nes_mahjongblockRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Master Shooter (Unl)
+static struct BurnRomInfo nes_mastershooterRomDesc[] = {
+	{ "Master Shooter (Unl).nes",          65552, 0xd2dcae89, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mastershooter)
+STD_ROM_FN(nes_mastershooter)
+
+struct BurnDriver BurnDrvnes_mastershooter = {
+	"nes_mastershooter", NULL, NULL, NULL, "1993",
+	"Master Shooter (Unl)\0", NULL, "NTDEC", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_mastershooterRomInfo, nes_mastershooterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Panda Baby (Unl)
+static struct BurnRomInfo nes_pandababyRomDesc[] = {
+	{ "Panda Baby (Unl).nes",          524304, 0x042f5b25, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pandababy)
+STD_ROM_FN(nes_pandababy)
+
+struct BurnDriver BurnDrvnes_pandababy = {
+	"nes_pandababy", NULL, NULL, NULL, "1997",
+	"Panda Baby (Unl)\0", NULL, "Dragon Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_pandababyRomInfo, nes_pandababyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Panda World (Unl)
+static struct BurnRomInfo nes_pandaworldRomDesc[] = {
+	{ "Panda World (Unl)(20XX).nes",          262160, 0xdff2fe93, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pandaworld)
+STD_ROM_FN(nes_pandaworld)
+
+struct BurnDriver BurnDrvnes_pandaworld = {
+	"nes_pandaworld", NULL, NULL, NULL, "20??",
+	"Panda World (Unl)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_pandaworldRomInfo, nes_pandaworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Samurai Spirits (Unl)
+static struct BurnRomInfo nes_samuraispiritsRomDesc[] = {
+	{ "Samurai Spirits (Unl).nes",          786448, 0x9b7305f7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_samuraispirits)
+STD_ROM_FN(nes_samuraispirits)
+
+struct BurnDriver BurnDrvnes_samuraispirits = {
+	"nes_samuraispirits", NULL, NULL, NULL, "199?",
+	"Samurai Spirits (Unl)\0", NULL, "Rex Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_samuraispiritsRomInfo, nes_samuraispiritsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ultimate Mortal Kombat 3 (Hack)
+// https://www.romhacking.net/hacks/4052/
+static struct BurnRomInfo nes_ultimmorkom3hRomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 (Hack).nes",          2097168, 0xa0a183e6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ultimmorkom3h)
+STD_ROM_FN(nes_ultimmorkom3h)
+
+struct BurnDriver BurnDrvnes_ultimmorkom3h = {
+	"nes_ultimmorkom3h", "nes_ultimmorkom3", NULL, NULL, "2020",
+	"Ultimate Mortal Kombat 3 (Hack)\0", NULL, "Vasil", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_ultimmorkom3hRomInfo, nes_ultimmorkom3hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ultimate Mortal Kombat 3 (Unl)
+static struct BurnRomInfo nes_ultimmorkom3RomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 (Unl).nes",          1048592, 0xc9495564, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ultimmorkom3)
+STD_ROM_FN(nes_ultimmorkom3)
+
+struct BurnDriver BurnDrvnes_ultimmorkom3 = {
+	"nes_ultimmorkom3", NULL, NULL, NULL, "1996",
+	"Ultimate Mortal Kombat 3 (Unl)\0", NULL, "Ka Sheng", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_ultimmorkom3RomInfo, nes_ultimmorkom3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Urban Strike (Unl)
+static struct BurnRomInfo nes_urbanstrikeRomDesc[] = {
+	{ "Urban Strike (USA).nes",          262160, 0xfd02591b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_urbanstrike)
+STD_ROM_FN(nes_urbanstrike)
+
+struct BurnDriver BurnDrvnes_urbanstrike = {
+	"nes_urbanstrike", NULL, NULL, NULL, "1995",
+	"Urban Strike (Unl)\0", NULL, "Unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_urbanstrikeRomInfo, nes_urbanstrikeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Vanguard (Unl)
+static struct BurnRomInfo nes_vanguardRomDesc[] = {
+	{ "Vanguard (20XX)(Power Joy).nes",          163856, 0xb6c0c49e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_vanguard)
+STD_ROM_FN(nes_vanguard)
+
+struct BurnDriver BurnDrvnes_vanguard = {
+	"nes_vanguard", NULL, NULL, NULL, "200?",
+	"Vanguard (Unl)\0", NULL, "Power Joy", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_vanguardRomInfo, nes_vanguardRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// ----------------------------------------
+// END of "Non Homebrew (Unlicensed) Games"
+// ----------------------------------------
+
+// -------------------------------
+// Aftermarket/Hack/Homebrew Games
+// -------------------------------
 
 // 5-star Restaurant (HB)
 static struct BurnRomInfo nes_5starRomDesc[] = {
@@ -22505,6 +22803,24 @@ struct BurnDriver BurnDrvnes_almika = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Altercation (HB, v0.1)
+static struct BurnRomInfo nes_altercationRomDesc[] = {
+	{ "Altercation v0.1 (2021)(Scottlowe).nes",          40976, 0x27288df5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_altercation)
+STD_ROM_FN(nes_altercation)
+
+struct BurnDriver BurnDrvnes_altercation = {
+	"nes_altercation", NULL, NULL, NULL, "2021",
+	"Altercation (HB, v0.1)\0", NULL, "Scottlowe", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_altercationRomInfo, nes_altercationRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Alwa's Awakening (HB)
 static struct BurnRomInfo nes_awakeningRomDesc[] = {
 	{ "Alwa's Awakening (2021)(Elden Pixels).nes",          524304, 0x5cc1abc7, BRF_ESS | BRF_PRG },
@@ -22537,6 +22853,42 @@ struct BurnDriver BurnDrvnes_awakeningp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_awakeningpRomInfo, nes_awakeningpRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Amazons Running Diet (HB, Japan)
+static struct BurnRomInfo nes_amazorundiejRomDesc[] = {
+	{ "Amazons Running Diet (Japan).nes",          524304, 0x1eced454, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_amazorundiej)
+STD_ROM_FN(nes_amazorundiej)
+
+struct BurnDriver BurnDrvnes_amazorundiej = {
+	"nes_amazorundiej", "nes_amazorundie", NULL, NULL, "2017",
+	"Amazons Running Diet (HB, Japan)\0", NULL, "Ancient", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_amazorundiejRomInfo, nes_amazorundiejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Amazons Running Diet (HB, USA)
+static struct BurnRomInfo nes_amazorundieRomDesc[] = {
+	{ "Amazons Running Diet (USA).nes",          524304, 0x4db6acdd, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_amazorundie)
+STD_ROM_FN(nes_amazorundie)
+
+struct BurnDriver BurnDrvnes_amazorundie = {
+	"nes_amazorundie", NULL, NULL, NULL, "2017",
+	"Amazons Running Diet (HB, USA)\0", NULL, "Ancient", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_amazorundieRomInfo, nes_amazorundieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -22681,6 +23033,24 @@ struct BurnDriver BurnDrvnes_ballstand = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_ballstandRomInfo, nes_ballstandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Bandana (HB)
+static struct BurnRomInfo nes_bandanaRomDesc[] = {
+	{ "Bandana (2021)(Rodnade).nes",          524304, 0x292de1a8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bandana)
+STD_ROM_FN(nes_bandana)
+
+struct BurnDriver BurnDrvnes_bandana = {
+	"nes_bandana", NULL, NULL, NULL, "2021",
+	"Bandana (HB)\0", NULL, "Rodnade", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_bandanaRomInfo, nes_bandanaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -22947,7 +23317,7 @@ STD_ROM_FN(nes_bowbeast)
 
 struct BurnDriver BurnDrvnes_bowbeast = {
 	"nes_bowbeast", NULL, NULL, NULL, "2021",
-	"Bowels of the Beast (HB)\0", NULL, "T-Bone", "Miscellaneous",
+	"Bowels of the Beast (HB)\0", NULL, "T-Bone Studios", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bowbeastRomInfo, nes_bowbeastRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -22987,6 +23357,24 @@ struct BurnDriver BurnDrvnes_carpetshark = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_carpetsharkRomInfo, nes_carpetsharkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Cave Driller (HB, v2.2)
+static struct BurnRomInfo nes_cavedrillRomDesc[] = {
+	{ "Cave Driller v2.2 (2021)(Mazin).nes",          40976, 0xf11b4a70, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cavedrill)
+STD_ROM_FN(nes_cavedrill)
+
+struct BurnDriver BurnDrvnes_cavedrill = {
+	"nes_cavedrill", NULL, NULL, NULL, "2021",
+	"Cave Driller (HB, v2.2)\0", NULL, "Mazin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_cavedrillRomInfo, nes_cavedrillRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23153,6 +23541,24 @@ struct BurnDriver BurnDrvnes_crabbieatk = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Creepy Brawlers (HB)
+static struct BurnRomInfo nes_creepybrawlersRomDesc[] = {
+	{ "Creepy Brawlers (HB).nes",          524304, 0xc8f05be4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_creepybrawlers)
+STD_ROM_FN(nes_creepybrawlers)
+
+struct BurnDriver BurnDrvnes_creepybrawlers = {
+	"nes_creepybrawlers", NULL, NULL, NULL, "2017",
+	"Creepy Brawlers (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
+	NESGetZipName, nes_creepybrawlersRomInfo, nes_creepybrawlersRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Crillion (HB, v1.1)
 static struct BurnRomInfo nes_crillionRomDesc[] = {
 	{ "Crillion v1.1 (2023)(kevin81).nes",          24592, 0x3eaa1bb9, BRF_ESS | BRF_PRG },
@@ -23167,6 +23573,24 @@ struct BurnDriver BurnDrvnes_crillion = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_crillionRomInfo, nes_crillionRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Crypto (HB)
+static struct BurnRomInfo nes_cryptoRomDesc[] = {
+	{ "Crypto (HB).nes",          49168, 0x45aaa381, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_crypto)
+STD_ROM_FN(nes_crypto)
+
+struct BurnDriver BurnDrvnes_crypto = {
+	"nes_crypto", NULL, NULL, NULL, "2016",
+	"Crypto (HB)\0", NULL, "EEMU", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_cryptoRomInfo, nes_cryptoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23274,7 +23698,7 @@ struct BurnDriver BurnDrvnes_donsol = {
 	"nes_donsol", NULL, NULL, NULL, "2017",
 	"Donsol (HB, v15)\0", NULL, "Rek & Devine", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MISC | GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_CARD | GBF_RPG, 0,
 	NESGetZipName, nes_donsolRomInfo, nes_donsolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -23316,6 +23740,24 @@ struct BurnDriver BurnDrvnes_doodleworldrdw = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Draiocht (HB)
+static struct BurnRomInfo nes_draiochtRomDesc[] = {
+	{ "Draiocht (HB).nes",          40976, 0x3e7aa82d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_draiocht)
+STD_ROM_FN(nes_draiocht)
+
+struct BurnDriver BurnDrvnes_draiocht = {
+	"nes_draiocht", NULL, NULL, NULL, "2019",
+	"Draiocht (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_draiochtRomInfo, nes_draiochtRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Dr. Garfield (Hack, v22)
 static struct BurnRomInfo nes_drgarfieldRomDesc[] = {
 	{ "Dr. Garfield hack v22 (2022)(Pangent Technologies).nes",          114704, 0xfdd0a135, BRF_ESS | BRF_PRG },
@@ -23348,6 +23790,24 @@ struct BurnDriver BurnDrvnes_dude = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_dudeRomInfo, nes_dudeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Dungeons & Doomknights (HB)
+static struct BurnRomInfo nes_dungdoomRomDesc[] = {
+	{ "Dungeons & Doomknights (2021)(Artix Ent.).nes",          524304, 0xd4e96569, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_dungdoom)
+STD_ROM_FN(nes_dungdoom)
+
+struct BurnDriver BurnDrvnes_dungdoom = {
+	"nes_dungdoom", NULL, NULL, NULL, "2021",
+	"Dungeons & Doomknights (HB)\0", NULL, "Artix Entertainment", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_dungdoomRomInfo, nes_dungdoomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23420,6 +23880,24 @@ struct BurnDriver BurnDrvnes_enormadv = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_enormadvRomInfo, nes_enormadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Espitene (HB)
+static struct BurnRomInfo nes_espiteneRomDesc[] = {
+	{ "Espitene (2018)(The Mojon Twins).nes",          65552, 0x1f80c94e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_espitene)
+STD_ROM_FN(nes_espitene)
+
+struct BurnDriver BurnDrvnes_espitene = {
+	"nes_espitene", NULL, NULL, NULL, "2018",
+	"Espitene (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_espiteneRomInfo, nes_espiteneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23892,6 +24370,24 @@ struct BurnDriver BurnDrvnes_halloween86roe = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Haunted House Adventure (HB)
+static struct BurnRomInfo nes_hauntedadvRomDesc[] = {
+	{ "Haunted House Adventure (2019)(M. Stave).nes",          524304, 0xd0c3acbc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hauntedadv)
+STD_ROM_FN(nes_hauntedadv)
+
+struct BurnDriver BurnDrvnes_hauntedadv = {
+	"nes_hauntedadv", NULL, NULL, NULL, "2019",
+	"Haunted House Adventure (HB)\0", NULL, "M. Stave", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_hauntedadvRomInfo, nes_hauntedadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // HBC Phutball (HB)
 static struct BurnRomInfo nes_hbcpballRomDesc[] = {
 	{ "HBC Phutball (2022)(Wendel Scardua).nes",          65552, 0xb2f98884, BRF_ESS | BRF_PRG },
@@ -23924,6 +24420,24 @@ struct BurnDriver BurnDrvnes_heist = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_heistRomInfo, nes_heistRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// HEOH demo (HB, Tech-Demo)
+static struct BurnRomInfo nes_heohdemoRomDesc[] = {
+	{ "HEOH demo (2019)(shiru).nes",          524304, 0x4fcd5116, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_heohdemo)
+STD_ROM_FN(nes_heohdemo)
+
+struct BurnDriver BurnDrvnes_heohdemo = {
+	"nes_heohdemo", NULL, NULL, NULL, "2019",
+	"HEOH demo (HB, Tech-Demo)\0", NULL, "shiru", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_NES, GBF_MISC, 0,
+	NESGetZipName, nes_heohdemoRomInfo, nes_heohdemoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23997,6 +24511,24 @@ struct BurnDriver BurnDrvnes_junkoid = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_junkoidRomInfo, nes_junkoidRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Justice Duel (HB)
+static struct BurnRomInfo nes_justiceduelRomDesc[] = {
+	{ "Justice Duel (HB).nes",          196624, 0xada8853b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_justiceduel)
+STD_ROM_FN(nes_justiceduel)
+
+struct BurnDriver BurnDrvnes_justiceduel = {
+	"nes_justiceduel", NULL, NULL, NULL, "2019",
+	"Justice Duel (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_justiceduelRomInfo, nes_justiceduelRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -24451,6 +24983,24 @@ struct BurnDriver BurnDrvnes_monterev = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Moonglow (HB)
+static struct BurnRomInfo nes_moonglowRomDesc[] = {
+	{ "Moonglow (2021)(Yurt Fiend).nes",          40976, 0xb4255e99, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_moonglow)
+STD_ROM_FN(nes_moonglow)
+
+struct BurnDriver BurnDrvnes_moonglow = {
+	"nes_moonglow", NULL, NULL, NULL, "2021",
+	"Moonglow (HB)\0", NULL, "Yurt Fiend", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_moonglowRomInfo, nes_moonglowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT_PAL+8, SCREEN_WIDTH, SCREEN_HEIGHT_PAL+8
+};
+
 // More Glider (HB)
 static struct BurnRomInfo nes_moregliderRomDesc[] = {
 	{ "More Glider (2009)(Retro USB).nes",          524304, 0x4ed588ce, BRF_ESS | BRF_PRG },
@@ -24519,6 +25069,24 @@ struct BurnDriver BurnDrvnes_mystpillars = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_mystpillarsRomInfo, nes_mystpillarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Nalle Land (HB, v0.4.0)
+static struct BurnRomInfo nes_nallelandRomDesc[] = {
+	{ "Nalle Land (HB, v040).nes",          49168, 0xc1a447b0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nalleland)
+STD_ROM_FN(nes_nalleland)
+
+struct BurnDriver BurnDrvnes_nalleland = {
+	"nes_nalleland", NULL, NULL, NULL, "2020",
+	"Nalle Land (HB, v0.4.0)\0", NULL, "Benjamin Larsson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_nallelandRomInfo, nes_nallelandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -24974,6 +25542,42 @@ struct BurnDriver BurnDrvnes_ravensgatemmc1 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Reknum - The Awakening (HB)
+static struct BurnRomInfo nes_reknum1RomDesc[] = {
+	{ "Reknum - The Awakening (2019).nes",          524304, 0xe2e0ea31, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_reknum1)
+STD_ROM_FN(nes_reknum1)
+
+struct BurnDriver BurnDrvnes_reknum1 = {
+	"nes_reknum1", NULL, NULL, NULL, "2019",
+	"Reknum - The Awakening (HB)\0", "No Sound", "NAPE Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_reknum1RomInfo, nes_reknum1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Reknum - Souls Adventure (HB)
+static struct BurnRomInfo nes_reknum2RomDesc[] = {
+	{ "Reknum - Souls Adventure (2021).nes",          524304, 0xccdc9c66, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_reknum2)
+STD_ROM_FN(nes_reknum2)
+
+struct BurnDriver BurnDrvnes_reknum2 = {
+	"nes_reknum2", NULL, NULL, NULL, "2021",
+	"Reknum - Souls Adventure (HB)\0", NULL, "NAPE Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_reknum2RomInfo, nes_reknum2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Revolving Gems (HB)
 static struct BurnRomInfo nes_revgemsRomDesc[] = {
 	{ "Revolving Gems (2023)(Kyoske Maeda).nes",          65552, 0xa159af5a, BRF_ESS | BRF_PRG },
@@ -25042,6 +25646,24 @@ struct BurnDriver BurnDrvnes_riseamo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_riseamoRomInfo, nes_riseamoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Rock Paper Scissors Lizard Sbock (HB, v0.9b)
+static struct BurnRomInfo nes_roshamboRomDesc[] = {
+	{ "Rock Paper Scissors Lizard Sbock v0.9b (2017)(Doug Fraker).nes",          24592, 0x8c17a094, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_roshambo)
+STD_ROM_FN(nes_roshambo)
+
+struct BurnDriver BurnDrvnes_roshambo = {
+	"nes_roshambo", NULL, NULL, NULL, "2017",
+	"Rock Paper Scissors Lizard Sbock (HB, v0.9b)\0", NULL, "Doug Fraker", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_roshamboRomInfo, nes_roshamboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -25227,6 +25849,24 @@ struct BurnDriver BurnDrvnes_spacecat = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Spacegulls (HB, v1.1)
+static struct BurnRomInfo nes_spacegullsRomDesc[] = {
+	{ "Spacegulls (HB)(2021)(Morphcat Games).nes",          65552, 0x539f87d4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spacegulls)
+STD_ROM_FN(nes_spacegulls)
+
+struct BurnDriver BurnDrvnes_spacegulls = {
+	"nes_spacegulls", NULL, NULL, NULL, "2021",
+	"Spacegulls (HB, v1.1)\0", NULL, "Morphcat Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_spacegullsRomInfo, nes_spacegullsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Space Mutants - DG BGM (HB)
 static struct BurnRomInfo nes_spacemutdgRomDesc[] = {
 	{ "Space Mutants DG (2023)(T-Bone).nes",          524304, 0x3f73e619, BRF_ESS | BRF_PRG },
@@ -25237,7 +25877,7 @@ STD_ROM_FN(nes_spacemutdg)
 
 struct BurnDriver BurnDrvnes_spacemutdg = {
 	"nes_spacemutdg", NULL, NULL, NULL, "2023",
-	"Space Mutants - DG BGM (HB)\0", NULL, "T-Bone", "Miscellaneous",
+	"Space Mutants - DG BGM (HB)\0", NULL, "T-Bone Studios", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_spacemutdgRomInfo, nes_spacemutdgRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -25255,10 +25895,28 @@ STD_ROM_FN(nes_spacemutjk)
 
 struct BurnDriver BurnDrvnes_spacemutjk = {
 	"nes_spacemutjk", "nes_spacemutdg", NULL, NULL, "2023",
-	"Space Mutants - JK BGM (HB)\0", NULL, "T-Bone", "Miscellaneous",
+	"Space Mutants - JK BGM (HB)\0", NULL, "T-Bone Studios", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_spacemutjkRomInfo, nes_spacemutjkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Space Mutants - Extendo UnCut Edition (HB)
+static struct BurnRomInfo nes_spacemuteueRomDesc[] = {
+	{ "Space Mutants Extendo UnCut Edition (2023)(T-Bone Studios).nes",          524304, 0x1520e4b6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_spacemuteue)
+STD_ROM_FN(nes_spacemuteue)
+
+struct BurnDriver BurnDrvnes_spacemuteue = {
+	"nes_spacemuteue", NULL, NULL, NULL, "2023",
+	"Space Mutants - Extendo UnCut Edition (HB)\0", NULL, "T-Bone Studios", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_spacemuteueRomInfo, nes_spacemuteueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -25642,6 +26300,60 @@ struct BurnDriver BurnDrvnes_tctwh = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tina's Adventure Island (Hack)
+static struct BurnRomInfo nes_tinasadvislRomDesc[] = {
+	{ "Tina's Adventure Island (USA).nes",          65552, 0x6663d1aa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tinasadvisl)
+STD_ROM_FN(nes_tinasadvisl)
+
+struct BurnDriver BurnDrvnes_tinasadvisl = {
+	"nes_tinasadvisl", "nes_adventureisland", NULL, NULL, "2019",
+	"Tina's Adventure Island (Hack)\0", NULL, "Zynk Oxhyde", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tinasadvislRomInfo, nes_tinasadvislRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tina's Adventure Island II (Hack)
+static struct BurnRomInfo nes_tinasadvisliiRomDesc[] = {
+	{ "Tina's Adventure Island II (USA).nes",          262160, 0x28b36ecc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tinasadvislii)
+STD_ROM_FN(nes_tinasadvislii)
+
+struct BurnDriver BurnDrvnes_tinasadvislii = {
+	"nes_tinasadvislii", "nes_advenislii", NULL, NULL, "2019",
+	"Tina's Adventure Island II (Hack)\0", NULL, "Zynk Oxhyde", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tinasadvisliiRomInfo, nes_tinasadvisliiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Tina's Advanture Island III (Hack)
+static struct BurnRomInfo nes_tinasadvisliiiRomDesc[] = {
+	{ "Tina's Advanture Island III (USA).nes",          262160, 0x774a6c79, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tinasadvisliii)
+STD_ROM_FN(nes_tinasadvisliii)
+
+struct BurnDriver BurnDrvnes_tinasadvisliii = {
+	"nes_tinasadvisliii", "nes_advenisl3", NULL, NULL, "2019",
+	"Tina's Advanture Island III (Hack)\0", NULL, "Zynk Oxhyde", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_tinasadvisliiiRomInfo, nes_tinasadvisliiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Tola (HB)
 static struct BurnRomInfo nes_tolaRomDesc[] = {
 	{ "Tola (2022)(OmniRetro Games).nes",          40976, 0x315309f6, BRF_ESS | BRF_PRG },
@@ -25710,6 +26422,24 @@ struct BurnDriver BurnDrvnes_td1990 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_td1990RomInfo, nes_td1990RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Trophy (HB)
+static struct BurnRomInfo nes_trophyRomDesc[] = {
+	{ "Trophy (2020)(the 6502 collective).nes",          786448, 0x94c16bfc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_trophy)
+STD_ROM_FN(nes_trophy)
+
+struct BurnDriver BurnDrvnes_trophy = {
+	"nes_trophy", NULL, NULL, NULL, "2020",
+	"Trophy (HB)\0", NULL, "the 6502 collective", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_trophyRomInfo, nes_trophyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -25876,6 +26606,60 @@ struct BurnDriver BurnDrvnes_weedstiff2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Witch n' Wiz (HB)
+static struct BurnRomInfo nes_witchnwizRomDesc[] = {
+	{ "Witch n' Wiz (2021)(mhughson).nes",          262160, 0x4ac76d3f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_witchnwiz)
+STD_ROM_FN(nes_witchnwiz)
+
+struct BurnDriver BurnDrvnes_witchnwiz = {
+	"nes_witchnwiz", NULL, NULL, NULL, "2021",
+	"Witch n' Wiz (HB)\0", NULL, "Matt Hughson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE | GBF_ADV, 0,
+	NESGetZipName, nes_witchnwizRomInfo, nes_witchnwizRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Witch n' Wiz (HB, NESDev Ed.)
+static struct BurnRomInfo nes_witchnwizndRomDesc[] = {
+	{ "Witch n' Wiz (2020-21)(NESDev Ed.).nes",          65552, 0xbddd6cba, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_witchnwiznd)
+STD_ROM_FN(nes_witchnwiznd)
+
+struct BurnDriver BurnDrvnes_witchnwiznd = {
+	"nes_witchnwiznd", "nes_witchnwiz", NULL, NULL, "2020-21",
+	"Witch n' Wiz (HB, NESDev Ed.)\0", NULL, "Matt Hughson", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_witchnwizndRomInfo, nes_witchnwizndRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Wolfling (HB, v1.4)
+static struct BurnRomInfo nes_wolflingRomDesc[] = {
+	{ "Wolfling (HB, v1.4).nes",          65552, 0xf22ae9b8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_wolfling)
+STD_ROM_FN(nes_wolfling)
+
+struct BurnDriver BurnDrvnes_wolfling = {
+	"nes_wolfling", NULL, NULL, NULL, "2018",
+	"Wolfling (HB, v1.4)\0", NULL, "Lazy Cow", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_wolflingRomInfo, nes_wolflingRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Wordle (HB, v1.1)
 static struct BurnRomInfo nes_wordleRomDesc[] = {
 	{ "Wordle v1.1 (2022)(FG Software).nes",          65552, 0x604ff03b, BRF_ESS | BRF_PRG },
@@ -25949,108 +26733,6 @@ struct BurnDriver BurnDrvnes_zombhuntbob = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_roshamboRomDesc[] = {
-	{ "Rock Paper Scissors Lizard Sbock v0.9b (2017)(Doug Fraker).nes",          24592, 0x8c17a094, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_roshambo)
-STD_ROM_FN(nes_roshambo)
-
-struct BurnDriver BurnDrvnes_roshambo = {
-	"nes_roshambo", NULL, NULL, NULL, "2017",
-	"Rock Paper Scissors Lizard Sbock (HB, v0.9b)\0", NULL, "Doug Fraker", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_roshamboRomInfo, nes_roshamboRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_bandanaRomDesc[] = {
-	{ "Bandana (2021)(Rodnade).nes",          524304, 0x292de1a8, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_bandana)
-STD_ROM_FN(nes_bandana)
-
-struct BurnDriver BurnDrvnes_bandana = {
-	"nes_bandana", NULL, NULL, NULL, "2021",
-	"Bandana (HB)\0", NULL, "Rodnade", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_bandanaRomInfo, nes_bandanaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_cavedrillRomDesc[] = {
-	{ "Cave Driller v2.2 (2021)(Mazin).nes",          40976, 0xf11b4a70, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_cavedrill)
-STD_ROM_FN(nes_cavedrill)
-
-struct BurnDriver BurnDrvnes_cavedrill = {
-	"nes_cavedrill", NULL, NULL, NULL, "2021",
-	"Cave Driller (HB, v2.2)\0", NULL, "Mazin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_cavedrillRomInfo, nes_cavedrillRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_dangbridgeRomDesc[] = {
-	{ "Danger Bridge (200X)(Power Joy).nes",          49168, 0x5e59a8b1, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_dangbridge)
-STD_ROM_FN(nes_dangbridge)
-
-struct BurnDriver BurnDrvnes_dangbridge = {
-	"nes_dangbridge", NULL, NULL, NULL, "200?",
-	"Danger Bridge (HB)\0", NULL, "Power Joy", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_dangbridgeRomInfo, nes_dangbridgeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_pandaworldRomDesc[] = {
-	{ "Panda World (Unl)(20XX).nes",          262160, 0xdff2fe93, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_pandaworld)
-STD_ROM_FN(nes_pandaworld)
-
-struct BurnDriver BurnDrvnes_pandaworld = {
-	"nes_pandaworld", NULL, NULL, NULL, "20??",
-	"Panda World (HB)\0", NULL, "Unknown", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_pandaworldRomInfo, nes_pandaworldRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_heohdemoRomDesc[] = {
-	{ "HEOH demo (2019)(shiru).nes",          524304, 0x4fcd5116, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_heohdemo)
-STD_ROM_FN(nes_heohdemo)
-
-struct BurnDriver BurnDrvnes_heohdemo = {
-	"nes_heohdemo", NULL, NULL, NULL, "2019",
-	"HEOH demo (HB, Tech-Demo)\0", NULL, "shiru", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_NES, GBF_MISC, 0,
-	NESGetZipName, nes_heohdemoRomInfo, nes_heohdemoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_animalblkRomDesc[] = {
 	{ "Animal Blockes (200X)(Unknown).nes",          49168, 0xfc2b860c, BRF_ESS | BRF_PRG },
 };
@@ -26064,23 +26746,6 @@ struct BurnDriver BurnDrvnes_animalblk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_animalblkRomInfo, nes_animalblkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_archerRomDesc[] = {
-	{ "Archer, The (200X)(Power Joy).nes",          24592, 0x911e0365, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_archer)
-STD_ROM_FN(nes_archer)
-
-struct BurnDriver BurnDrvnes_archer = {
-	"nes_archer", NULL, NULL, NULL, "200?",
-	"Archer, The (HB)\0", NULL, "Power Joy", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_archerRomInfo, nes_archerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -26119,23 +26784,6 @@ struct BurnDriver BurnDrvnes_tombice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_vanguardRomDesc[] = {
-	{ "Vanguard (20XX)(Power Joy).nes",          163856, 0xb6c0c49e, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_vanguard)
-STD_ROM_FN(nes_vanguard)
-
-struct BurnDriver BurnDrvnes_vanguard = {
-	"nes_vanguard", NULL, NULL, NULL, "200?",
-	"Vanguard (HB)\0", NULL, "Power Joy", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RUNGUN, 0,
-	NESGetZipName, nes_vanguardRomInfo, nes_vanguardRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_lunarlimitswRomDesc[] = {
 	{ "Lunar Limit - Star Wars Edition (2021)(Pubby).nes",          40976, 0xc130d230, BRF_ESS | BRF_PRG },
 };
@@ -26153,23 +26801,6 @@ struct BurnDriver BurnDrvnes_lunarlimitsw = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_moonglowRomDesc[] = {
-	{ "Moonglow (2021)(Yurt Fiend).nes",          40976, 0xb4255e99, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_moonglow)
-STD_ROM_FN(nes_moonglow)
-
-struct BurnDriver BurnDrvnes_moonglow = {
-	"nes_moonglow", NULL, NULL, NULL, "2021",
-	"Moonglow (HB)\0", NULL, "Yurt Fiend", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_moonglowRomInfo, nes_moonglowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT_PAL+8, SCREEN_WIDTH, SCREEN_HEIGHT_PAL+8
-};
-
 static struct BurnRomInfo nes_mariokartRomDesc[] = {
 	{ "Mario Kart GlobHack (2017)(pacnsacdave).nes",          65552, 0xca29d3f0, BRF_ESS | BRF_PRG },
 };
@@ -26183,74 +26814,6 @@ struct BurnDriver BurnDrvnes_mariokart = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_NES, GBF_RACING, 0,
 	NESGetZipName, nes_mariokartRomInfo, nes_mariokartRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_reknum1RomDesc[] = {
-	{ "Reknum - The Awakening (2019).nes",          524304, 0xe2e0ea31, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_reknum1)
-STD_ROM_FN(nes_reknum1)
-
-struct BurnDriver BurnDrvnes_reknum1 = {
-	"nes_reknum1", NULL, NULL, NULL, "2019",
-	"Reknum - The Awakening (HB)\0", "No Sound", "NAPE Games", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_reknum1RomInfo, nes_reknum1RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_reknum2RomDesc[] = {
-	{ "Reknum - Souls Adventure (2021).nes",          524304, 0xccdc9c66, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_reknum2)
-STD_ROM_FN(nes_reknum2)
-
-struct BurnDriver BurnDrvnes_reknum2 = {
-	"nes_reknum2", NULL, NULL, NULL, "2021",
-	"Reknum - Souls Adventure (HB)\0", NULL, "NAPE Games", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
-	NESGetZipName, nes_reknum2RomInfo, nes_reknum2RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_dungdoomRomDesc[] = {
-	{ "Dungeons & Doomknights (2021)(Artix Ent.).nes",          524304, 0xd4e96569, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_dungdoom)
-STD_ROM_FN(nes_dungdoom)
-
-struct BurnDriver BurnDrvnes_dungdoom = {
-	"nes_dungdoom", NULL, NULL, NULL, "2021",
-	"Dungeons & Doomknights (HB)\0", NULL, "Artix Entertainment", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
-	NESGetZipName, nes_dungdoomRomInfo, nes_dungdoomRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_espiteneRomDesc[] = {
-	{ "Espitene (2018)(The Mojon Twins).nes",          65552, 0x1f80c94e, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_espitene)
-STD_ROM_FN(nes_espitene)
-
-struct BurnDriver BurnDrvnes_espitene = {
-	"nes_espitene", NULL, NULL, NULL, "2018",
-	"Espitene (HB)\0", NULL, "The Mojon Twins", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_espiteneRomInfo, nes_espiteneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -26421,23 +26984,6 @@ struct BurnDriver BurnDrvnes_explodingfistpi = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 3, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_explodingfistpiRomInfo, nes_explodingfistpiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_hauntedadvRomDesc[] = {
-	{ "Haunted House Adventure (2019)(M. Stave).nes",          524304, 0xd0c3acbc, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_hauntedadv)
-STD_ROM_FN(nes_hauntedadv)
-
-struct BurnDriver BurnDrvnes_hauntedadv = {
-	"nes_hauntedadv", NULL, NULL, NULL, "2019",
-	"Haunted House Adventure (HB)\0", NULL, "M. Stave", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_hauntedadvRomInfo, nes_hauntedadvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -26919,23 +27465,6 @@ struct BurnDriver BurnDrvnes_justice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_altercationRomDesc[] = {
-	{ "Altercation v0.1 (2021)(Scottlowe).nes",          40976, 0x27288df5, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_altercation)
-STD_ROM_FN(nes_altercation)
-
-struct BurnDriver BurnDrvnes_altercation = {
-	"nes_altercation", NULL, NULL, NULL, "2021",
-	"Altercation (HB, v0.1)\0", NULL, "Scottlowe", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_altercationRomInfo, nes_altercationRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_crapjobRomDesc[] = {
 	{ "Crap Job (2021)(Oniric Factor).nes",          524304, 0xcfa265ab, BRF_ESS | BRF_PRG },
 };
@@ -27327,23 +27856,6 @@ struct BurnDriver BurnDrvnes_porunamabie = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_trophyRomDesc[] = {
-	{ "Trophy (2020)(the 6502 collective).nes",          786448, 0x94c16bfc, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_trophy)
-STD_ROM_FN(nes_trophy)
-
-struct BurnDriver BurnDrvnes_trophy = {
-	"nes_trophy", NULL, NULL, NULL, "2020",
-	"Trophy (HB)\0", NULL, "the 6502 collective", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_trophyRomInfo, nes_trophyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_arkaderushRomDesc[] = {
 	{ "Arkade Rush (HB)(2021)(Nathan Tolbert).nes",          32784, 0xd40c212e, BRF_ESS | BRF_PRG },
 };
@@ -27391,57 +27903,6 @@ struct BurnDriver BurnDrvnes_blobquest = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_blobquestRomInfo, nes_blobquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_spacegullsRomDesc[] = {
-	{ "Spacegulls (HB)(2021)(Morphcat Games).nes",          65552, 0x539f87d4, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_spacegulls)
-STD_ROM_FN(nes_spacegulls)
-
-struct BurnDriver BurnDrvnes_spacegulls = {
-	"nes_spacegulls", NULL, NULL, NULL, "2021",
-	"Spacegulls (HB, v1.1)\0", NULL, "Morphcat Games", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_spacegullsRomInfo, nes_spacegullsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_witchnwizRomDesc[] = {
-	{ "Witch n' Wiz (2021)(mhughson).nes",          262160, 0x4ac76d3f, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_witchnwiz)
-STD_ROM_FN(nes_witchnwiz)
-
-struct BurnDriver BurnDrvnes_witchnwiz = {
-	"nes_witchnwiz", NULL, NULL, NULL, "2021",
-	"Witch n' Wiz (HB)\0", NULL, "Matt Hughson", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE | GBF_ADV, 0,
-	NESGetZipName, nes_witchnwizRomInfo, nes_witchnwizRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_witchnwizndRomDesc[] = {
-	{ "Witch n' Wiz (2020-21)(NESDev Ed.).nes",          65552, 0xbddd6cba, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_witchnwiznd)
-STD_ROM_FN(nes_witchnwiznd)
-
-struct BurnDriver BurnDrvnes_witchnwiznd = {
-	"nes_witchnwiznd", "nes_witchnwiz", NULL, NULL, "2020-21",
-	"Witch n' Wiz (HB, NESDev Ed.)\0", NULL, "Matt Hughson", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_witchnwizndRomInfo, nes_witchnwizndRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -27960,23 +28421,6 @@ struct BurnDriver BurnDrvnes_machinecave = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_wolflingRomDesc[] = {
-	{ "Wolfling (HB, v1.4).nes",          65552, 0xf22ae9b8, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_wolfling)
-STD_ROM_FN(nes_wolfling)
-
-struct BurnDriver BurnDrvnes_wolfling = {
-	"nes_wolfling", NULL, NULL, NULL, "2018",
-	"Wolfling (HB, v1.4)\0", NULL, "Lazy Cow", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_wolflingRomInfo, nes_wolflingRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_scrambleRomDesc[] = {
 	{ "Scramble (HB).nes",          131088, 0xca6130a6, BRF_ESS | BRF_PRG },
 };
@@ -28348,57 +28792,6 @@ struct BurnDriver BurnDrvnes_novasqu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_novasquRomInfo, nes_novasquRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_nallelandRomDesc[] = {
-	{ "Nalle Land (HB, v040).nes",          49168, 0xc1a447b0, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_nalleland)
-STD_ROM_FN(nes_nalleland)
-
-struct BurnDriver BurnDrvnes_nalleland = {
-	"nes_nalleland", NULL, NULL, NULL, "2020",
-	"Nalle Land (HB, v0.4.0)\0", NULL, "Benjamin Larsson", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_nallelandRomInfo, nes_nallelandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_amazorundiejRomDesc[] = {
-	{ "Amazons Running Diet (Japan).nes",          524304, 0x1eced454, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_amazorundiej)
-STD_ROM_FN(nes_amazorundiej)
-
-struct BurnDriver BurnDrvnes_amazorundiej = {
-	"nes_amazorundiej", "nes_amazorundie", NULL, NULL, "2017",
-	"Amazons Running Diet (HB, Japan)\0", NULL, "Ancient", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_amazorundiejRomInfo, nes_amazorundiejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_amazorundieRomDesc[] = {
-	{ "Amazons Running Diet (USA).nes",          524304, 0x4db6acdd, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_amazorundie)
-STD_ROM_FN(nes_amazorundie)
-
-struct BurnDriver BurnDrvnes_amazorundie = {
-	"nes_amazorundie", NULL, NULL, NULL, "2017",
-	"Amazons Running Diet (HB, USA)\0", NULL, "Ancient", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_amazorundieRomInfo, nes_amazorundieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -28859,40 +29252,6 @@ struct BurnDriver BurnDrvnes_almosthero = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SCRFIGHT, 0,
 	NESGetZipName, nes_almostheroRomInfo, nes_almostheroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_creepybrawlersRomDesc[] = {
-	{ "Creepy Brawlers (HB).nes",          524304, 0xc8f05be4, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_creepybrawlers)
-STD_ROM_FN(nes_creepybrawlers)
-
-struct BurnDriver BurnDrvnes_creepybrawlers = {
-	"nes_creepybrawlers", NULL, NULL, NULL, "2017",
-	"Creepy Brawlers (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
-	NESGetZipName, nes_creepybrawlersRomInfo, nes_creepybrawlersRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_cryptoRomDesc[] = {
-	{ "Crypto (HB).nes",          49168, 0x45aaa381, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_crypto)
-STD_ROM_FN(nes_crypto)
-
-struct BurnDriver BurnDrvnes_crypto = {
-	"nes_crypto", NULL, NULL, NULL, "2016",
-	"Crypto (HB)\0", NULL, "EEMU", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_cryptoRomInfo, nes_cryptoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -29458,45 +29817,13 @@ struct BurnDriver BurnDrvnes_jetpaco = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_draiochtRomDesc[] = {
-	{ "Draiocht (HB).nes",          40976, 0x3e7aa82d, BRF_ESS | BRF_PRG },
-};
+// --------------------------------------------
+// Aftermarket/Hack/Homebrew Games section end.
+// --------------------------------------------
 
-STD_ROM_PICK(nes_draiocht)
-STD_ROM_FN(nes_draiocht)
-
-struct BurnDriver BurnDrvnes_draiocht = {
-	"nes_draiocht", NULL, NULL, NULL, "2019",
-	"Draiocht (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_draiochtRomInfo, nes_draiochtRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_justiceduelRomDesc[] = {
-	{ "Justice Duel (HB).nes",          196624, 0xada8853b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_justiceduel)
-STD_ROM_FN(nes_justiceduel)
-
-struct BurnDriver BurnDrvnes_justiceduel = {
-	"nes_justiceduel", NULL, NULL, NULL, "2019",
-	"Justice Duel (HB)\0", NULL, "Mega Cat Studios", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_justiceduelRomInfo, nes_justiceduelRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
-	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// ---------------------
-// Homebrew section end.
-// ---------------------
-
-// GAMES (robot-generated)
+// ---------------------------------------------------------
+// GAMES (licensed products + translation/improvement hacks)
+// ---------------------------------------------------------
 
 // 10-Yard Fight (USA)
 static struct BurnRomInfo nes_10yardfightRomDesc[] = {
@@ -29949,6 +30276,7 @@ struct BurnDriver BurnDrvnes_advenisliv = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures in the Magic Kingdom (USA)
 static struct BurnRomInfo nes_adveninmagkinRomDesc[] = {
 	{ "Adventures in the Magic Kingdom (USA).nes",          262160, 0x300e41b7, BRF_ESS | BRF_PRG },
 };
@@ -29966,6 +30294,7 @@ struct BurnDriver BurnDrvnes_adveninmagkin = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Bayou Billy, The (USA)
 static struct BurnRomInfo nes_advenbaybilRomDesc[] = {
 	{ "Adventures of Bayou Billy, The (USA).nes",          262160, 0x0ac631ba, BRF_ESS | BRF_PRG },
 };
@@ -29983,6 +30312,7 @@ struct BurnDriver BurnDrvnes_advenbaybil = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Dino Riki (USA)
 static struct BurnRomInfo nes_advendinrikRomDesc[] = {
 	{ "Adventures of Dino Riki (USA).nes",          65552, 0xd4f5287b, BRF_ESS | BRF_PRG },
 };
@@ -30000,6 +30330,7 @@ struct BurnDriver BurnDrvnes_advendinrik = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Gilligan's Island, The (USA)
 static struct BurnRomInfo nes_advengilsislRomDesc[] = {
 	{ "Adventures of Gilligan's Island, The (USA).nes",          131088, 0x667eebb4, BRF_ESS | BRF_PRG },
 };
@@ -30017,6 +30348,7 @@ struct BurnDriver BurnDrvnes_advengilsisl = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Lolo (USA)
 static struct BurnRomInfo nes_advenlolRomDesc[] = {
 	{ "Adventures of Lolo (USA).nes",          65552, 0xd9c4cbf7, BRF_ESS | BRF_PRG },
 };
@@ -30034,6 +30366,7 @@ struct BurnDriver BurnDrvnes_advenlol = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Lolo 2 (USA)
 static struct BurnRomInfo nes_advenlol2RomDesc[] = {
 	{ "Adventures of Lolo 2 (USA).nes",          65552, 0x862ab1e5, BRF_ESS | BRF_PRG },
 };
@@ -30051,6 +30384,7 @@ struct BurnDriver BurnDrvnes_advenlol2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Lolo 3 (USA)
 static struct BurnRomInfo nes_advenlol3RomDesc[] = {
 	{ "Adventures of Lolo 3 (USA).nes",          262160, 0xb852cb26, BRF_ESS | BRF_PRG },
 };
@@ -30068,6 +30402,7 @@ struct BurnDriver BurnDrvnes_advenlol3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Rad Gravity, The (USA)
 static struct BurnRomInfo nes_advenradgraRomDesc[] = {
 	{ "Adventures of Rad Gravity, The (USA).nes",          262160, 0xb55d5747, BRF_ESS | BRF_PRG },
 };
@@ -30085,6 +30420,7 @@ struct BurnDriver BurnDrvnes_advenradgra = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Rocky and Bullwinkle and Friends, The (USA)
 static struct BurnRomInfo nes_advenrocandbulandfrRomDesc[] = {
 	{ "Adventures of Rocky and Bullwinkle and Friends, The (USA).nes",          262160, 0x08effde5, BRF_ESS | BRF_PRG },
 };
@@ -30102,6 +30438,7 @@ struct BurnDriver BurnDrvnes_advenrocandbulandfr = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Tom Sawyer (USA)
 static struct BurnRomInfo nes_adventomsawRomDesc[] = {
 	{ "Adventures of Tom Sawyer (USA).nes",          262160, 0x0336f9f3, BRF_ESS | BRF_PRG },
 };
@@ -30119,6 +30456,7 @@ struct BurnDriver BurnDrvnes_adventomsaw = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// After Burner (USA)
 static struct BurnRomInfo nes_afterburnerRomDesc[] = {
 	{ "After Burner (USA).nes",          393232, 0xa0c558a9, BRF_ESS | BRF_PRG },
 };
@@ -30136,6 +30474,7 @@ struct BurnDriver BurnDrvnes_afterburner = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// After Burner II (Japan)
 static struct BurnRomInfo nes_afterburneriiRomDesc[] = {
 	{ "After Burner II (Japan).nes",          393232, 0xa4928096, BRF_ESS | BRF_PRG },
 };
@@ -30153,6 +30492,7 @@ struct BurnDriver BurnDrvnes_afterburnerii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Air Fortress (USA)
 static struct BurnRomInfo nes_airfortressRomDesc[] = {
 	{ "Air Fortress (USA).nes",          163856, 0xb8fd02b7, BRF_ESS | BRF_PRG },
 };
@@ -30350,6 +30690,7 @@ struct BurnDriver BurnDrvnes_alunsjrturra = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Aladdin (Euro)
 static struct BurnRomInfo nes_aladdinRomDesc[] = {
 	{ "Aladdin (Europe).nes",          262160, 0xdcd55bec, BRF_ESS | BRF_PRG },
 };
@@ -30359,7 +30700,7 @@ STD_ROM_FN(nes_aladdin)
 
 struct BurnDriver BurnDrvnes_aladdin = {
 	"nes_aladdin", NULL, NULL, NULL, "1994",
-	"Aladdin (Europe)\0", NULL, "Virgin Games", "Miscellaneous",
+	"Aladdin (Euro)\0", NULL, "Virgin Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_aladdinRomInfo, nes_aladdinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -30367,23 +30708,7 @@ struct BurnDriver BurnDrvnes_aladdin = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
-static struct BurnRomInfo nes_aladdin4RomDesc[] = {
-	{ "Aladdin 4 (Unl).nes",          524304, 0xdda79434, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_aladdin4)
-STD_ROM_FN(nes_aladdin4)
-
-struct BurnDriver BurnDrvnes_aladdin4 = {
-	"nes_aladdin4", NULL, NULL, NULL, "1996",
-	"Aladdin 4 (Unl)\0", NULL, "J.Y. Company", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_aladdin4RomInfo, nes_aladdin4RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
+// Alfombra Magica, La (Euro) (Rev 1)
 static struct BurnRomInfo nes_alfommaglaRomDesc[] = {
 	{ "Alfombra Magica, La (Spain) (Rev 1) (Gluk Video) (Unl).nes",          65552, 0x7f165221, BRF_ESS | BRF_PRG },
 };
@@ -30393,7 +30718,7 @@ STD_ROM_FN(nes_alfommagla)
 
 struct BurnDriver BurnDrvnes_alfommagla = {
 	"nes_alfommagla", NULL, NULL, NULL, "1991-92",
-	"Alfombra Magica, La (Unl) (Rev 1)\0", NULL, "Mega Soft - Gluk Video", "Miscellaneous",
+	"Alfombra Magica, La (Euro) (Rev 1)\0", NULL, "Mega Soft - Gluk Video", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_alfommaglaRomInfo, nes_alfommaglaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -30401,6 +30726,7 @@ struct BurnDriver BurnDrvnes_alfommagla = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Alfred Chicken (USA)
 static struct BurnRomInfo nes_alfredchickenRomDesc[] = {
 	{ "Alfred Chicken (USA).nes",          131088, 0xa01ef87e, BRF_ESS | BRF_PRG },
 };
@@ -30418,6 +30744,7 @@ struct BurnDriver BurnDrvnes_alfredchicken = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Alien 3 (USA)
 static struct BurnRomInfo nes_alien3RomDesc[] = {
 	{ "Alien 3 (USA).nes",          262160, 0xefb4ca05, BRF_ESS | BRF_PRG },
 };
@@ -30435,6 +30762,7 @@ struct BurnDriver BurnDrvnes_alien3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Alien Syndrome (USA)
 static struct BurnRomInfo nes_aliensyndromeRomDesc[] = {
 	{ "Alien Syndrome (USA).nes",          262160, 0x9e8351af, BRF_ESS | BRF_PRG },
 };
@@ -30570,7 +30898,7 @@ struct BurnDriver BurnDrvnes_anticipation = {
 	"nes_anticipation", NULL, NULL, NULL, "1988",
 	"Anticipation (USA)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_anticipationRomInfo, nes_anticipationRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -30606,7 +30934,7 @@ struct BurnDriver BurnDrvnes_archon = {
 	"nes_archon", NULL, NULL, NULL, "1989",
 	"Archon (USA)\0", NULL, "Activision", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_archonRomInfo, nes_archonRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -30902,6 +31230,7 @@ struct BurnDriver BurnDrvnes_astrofan = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Astro Robo Sasa (Japan)
 static struct BurnRomInfo nes_astrorobosasaRomDesc[] = {
 	{ "Astro Robo Sasa (Japan).nes",          40976, 0xcab240b1, BRF_ESS | BRF_PRG },
 };
@@ -30911,7 +31240,7 @@ STD_ROM_FN(nes_astrorobosasa)
 
 struct BurnDriver BurnDrvnes_astrorobosasa = {
 	"nes_astrorobosasa", NULL, NULL, NULL, "1985",
-	"Astro Robo Sasa (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Astro Robo Sasa (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_astrorobosasaRomInfo, nes_astrorobosasaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -30919,6 +31248,7 @@ struct BurnDriver BurnDrvnes_astrorobosasa = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Astyanax (USA)
 static struct BurnRomInfo nes_astyanaxRomDesc[] = {
 	{ "Astyanax (USA).nes",          262160, 0x2fdfbc79, BRF_ESS | BRF_PRG },
 };
@@ -30936,6 +31266,7 @@ struct BurnDriver BurnDrvnes_astyanax = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Athena (USA)
 static struct BurnRomInfo nes_athenaRomDesc[] = {
 	{ "Athena (USA).nes",          131088, 0x14d42113, BRF_ESS | BRF_PRG },
 };
@@ -31662,7 +31993,7 @@ struct BurnDriver BurnDrvnes_battlechess = {
 	"nes_battlechess", NULL, NULL, NULL, "1990",
 	"Battle Chess (USA)\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_battlechessRomInfo, nes_battlechessRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -31799,7 +32130,7 @@ struct BurnDriver BurnDrvnes_battleship = {
 	"nes_battleship", NULL, NULL, NULL, "1993",
 	"Battleship (USA)\0", NULL, "Mindscape", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_battleshipRomInfo, nes_battleshipRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -31856,6 +32187,7 @@ struct BurnDriver BurnDrvnes_beautandbea = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// Bee 52 (USA) (Unl)
 static struct BurnRomInfo nes_bee52RomDesc[] = {
 	{ "Bee 52 (USA) (Unl).nes",          65552, 0x77a8486f, BRF_ESS | BRF_PRG },
 };
@@ -31873,6 +32205,7 @@ struct BurnDriver BurnDrvnes_bee52 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Beetlejuice (USA)
 static struct BurnRomInfo nes_beetlejuiceRomDesc[] = {
 	{ "Beetlejuice (USA).nes",          131088, 0x1b2bad13, BRF_ESS | BRF_PRG },
 };
@@ -31890,6 +32223,7 @@ struct BurnDriver BurnDrvnes_beetlejuice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bible Adventures (Unl)
 static struct BurnRomInfo nes_bibleadventuresRomDesc[] = {
 	{ "Bible Adventures (Unl).nes",          131088, 0x5eb290af, BRF_ESS | BRF_PRG },
 };
@@ -31907,6 +32241,7 @@ struct BurnDriver BurnDrvnes_bibleadventures = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bible Buffet (Unl)
 static struct BurnRomInfo nes_biblebuffetRomDesc[] = {
 	{ "Bible Buffet (Unl).nes",          262160, 0xdbbd1de9, BRF_ESS | BRF_PRG },
 };
@@ -31924,6 +32259,7 @@ struct BurnDriver BurnDrvnes_biblebuffet = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Big Nose Freaks Out (USA)
 static struct BurnRomInfo nes_bignosfreoutRomDesc[] = {
 	{ "Big Nose Freaks Out (USA).nes",          262160, 0xad16f6c7, BRF_ESS | BRF_PRG },
 };
@@ -31941,6 +32277,7 @@ struct BurnDriver BurnDrvnes_bignosfreout = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Big Nose the Caveman (USA)
 static struct BurnRomInfo nes_bignoscavRomDesc[] = {
 	{ "Big Nose the Caveman (USA).nes",          262160, 0xdcdf053f, BRF_ESS | BRF_PRG },
 };
@@ -31958,6 +32295,7 @@ struct BurnDriver BurnDrvnes_bignoscav = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bigfoot (USA)
 static struct BurnRomInfo nes_bigfootRomDesc[] = {
 	{ "Bigfoot (USA).nes",          262160, 0xa99d45a4, BRF_ESS | BRF_PRG },
 };
@@ -31975,6 +32313,7 @@ struct BurnDriver BurnDrvnes_bigfoot = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bill & Ted's Excellent Video Game Adventure (USA)
 static struct BurnRomInfo nes_billtedsexcvigaadRomDesc[] = {
 	{ "Bill & Ted's Excellent Video Game Adventure (USA).nes",          262160, 0xa905cc12, BRF_ESS | BRF_PRG },
 };
@@ -31992,6 +32331,7 @@ struct BurnDriver BurnDrvnes_billtedsexcvigaad = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Binary Land (Japan)
 static struct BurnRomInfo nes_binarylandRomDesc[] = {
 	{ "Binary Land (Japan).nes",          24592, 0x7e68abab, BRF_ESS | BRF_PRG },
 };
@@ -32009,6 +32349,7 @@ struct BurnDriver BurnDrvnes_binaryland = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bio Force Ape (Japan) (English) (Prototype)
 static struct BurnRomInfo nes_bioforceapeRomDesc[] = {
 	{ "Bio Force Ape (Japan) (En) (Proto).nes",          262160, 0x339d5a6d, BRF_ESS | BRF_PRG },
 };
@@ -32018,7 +32359,7 @@ STD_ROM_FN(nes_bioforceape)
 
 struct BurnDriver BurnDrvnes_bioforceape = {
 	"nes_bioforceape", NULL, NULL, NULL, "1991",
-	"Bio Force Ape (Japan) (Eng) (Prototype)\0", NULL, "Seta", "Miscellaneous",
+	"Bio Force Ape (Japan) (English) (Prototype)\0", NULL, "Seta", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_bioforceapeRomInfo, nes_bioforceapeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32026,59 +32367,43 @@ struct BurnDriver BurnDrvnes_bioforceape = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Bio Hazard (China) (Unl)
-static struct BurnRomInfo nes_biohazardcRomDesc[] = {
-	{ "Bio Hazard (China).nes",          1048592, 0xb4c8012d, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_biohazardc)
-STD_ROM_FN(nes_biohazardc)
-
-struct BurnDriver BurnDrvnes_biohazardc = {
-	"nes_biohazardc", "nes_biohazard", NULL, NULL, "2003",
-	"Bio Hazard (China) (Unl)\0", NULL, "Waixing", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
-	NESGetZipName, nes_biohazardcRomInfo, nes_biohazardcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Bio Hazard (Hack, English)
-static struct BurnRomInfo nes_biohazardRomDesc[] = {
-	{ "Bio Hazard (T-Eng).nes",          1048592, 0x4dffd969, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_biohazard)
-STD_ROM_FN(nes_biohazard)
-
-struct BurnDriver BurnDrvnes_biohazard = {
-	"nes_biohazard", NULL, NULL, NULL, "2018",
-	"Bio Hazard (Hack, English)\0", NULL, "pacnsacdave", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
-	NESGetZipName, nes_biohazardRomInfo, nes_biohazardRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_biomirbokupaRomDesc[] = {
+// Bio Miracle Bokutte Upa (Japan)
+static struct BurnRomInfo nes_biomirbokupajRomDesc[] = {
 	{ "Bio Miracle Bokutte Upa (Japan).nes",          262160, 0xe50ad737, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_biomirbokupaj)
+STD_ROM_FN(nes_biomirbokupaj)
+
+struct BurnDriver BurnDrvnes_biomirbokupaj = {
+	"nes_biomirbokupaj", "nes_biomirbokupa", NULL, NULL, "1993",
+	"Bio Miracle Bokutte Upa (Japan)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_biomirbokupajRomInfo, nes_biomirbokupajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Bio Miracle Baby Upa!! (Hack, English)
+static struct BurnRomInfo nes_biomirbokupaRomDesc[] = {
+	{ "Bio Miracle Bokutte Upa T-Eng (2013)(Vice Translations).nes",          262160, 0x31a8ed51, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_biomirbokupa)
 STD_ROM_FN(nes_biomirbokupa)
 
 struct BurnDriver BurnDrvnes_biomirbokupa = {
-	"nes_biomirbokupa", NULL, NULL, NULL, "1993",
-	"Bio Miracle Bokutte Upa (Japan)\0", NULL, "Konami", "Miscellaneous",
+	"nes_biomirbokupa", NULL, NULL, NULL, "2013",
+	"Bio Miracle Baby Upa!! (Hack, English)\0", NULL, "Vice Translations", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_biomirbokupaRomInfo, nes_biomirbokupaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bio Senshi Dan - Increaser Tono Tatakai (Japan)
 static struct BurnRomInfo nes_biosendanRomDesc[] = {
 	{ "Bio Senshi Dan - Increaser Tono Tatakai (Japan).nes",          262160, 0x5b2d91d0, BRF_ESS | BRF_PRG },
 };
@@ -32132,6 +32457,7 @@ struct BurnDriver BurnDrvnes_bionicom = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bird Week (Japan)
 static struct BurnRomInfo nes_birdweekRomDesc[] = {
 	{ "Bird Week (Japan).nes",          24592, 0xd9b9b3ab, BRF_ESS | BRF_PRG },
 };
@@ -32149,6 +32475,7 @@ struct BurnDriver BurnDrvnes_birdweek = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Black Bass 2, The (Japan)
 static struct BurnRomInfo nes_blackbas2jRomDesc[] = {
 	{ "Black Bass 2, The (Japan).nes",          131088, 0x5a514495, BRF_ESS | BRF_PRG },
 };
@@ -32166,6 +32493,7 @@ struct BurnDriver BurnDrvnes_blackbas2j = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Black Bass 2, The (USA)
 static struct BurnRomInfo nes_blackbas2RomDesc[] = {
 	{ "Black Bass 2, The (USA).nes",          131088, 0x2e069e5f, BRF_ESS | BRF_PRG },
 };
@@ -32183,6 +32511,7 @@ struct BurnDriver BurnDrvnes_blackbas2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Black Bass, The (Japan)
 static struct BurnRomInfo nes_blackbasstheRomDesc[] = {
 	{ "Black Bass, The (Japan).nes",          131088, 0x73bccc8b, BRF_ESS | BRF_PRG },
 };
@@ -32200,6 +32529,25 @@ struct BurnDriver BurnDrvnes_blackbassthe = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Blackjack (USA)
+static struct BurnRomInfo nes_blackjackRomDesc[] = {
+	{ "Blackjack (U)(1992)(AVE).nes",          65552, 0x00ac0fac, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_blackjack)
+STD_ROM_FN(nes_blackjack)
+
+struct BurnDriver BurnDrvnes_blackjack = {
+	"nes_blackjack", NULL, NULL, NULL, "1992",
+	"Blackjack (USA)\0", NULL, "American Video Entertainment", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_CARD, 0,
+	NESGetZipName, nes_blackjackRomInfo, nes_blackjackRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Blades of Steel (USA)
 static struct BurnRomInfo nes_bladesofsteelRomDesc[] = {
 	{ "Blades of Steel (USA).nes",          131088, 0xb9bcf910, BRF_ESS | BRF_PRG },
 };
@@ -32217,6 +32565,7 @@ struct BurnDriver BurnDrvnes_bladesofsteel = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Blaster Master (USA)
 static struct BurnRomInfo nes_blastermasterRomDesc[] = {
 	{ "Blaster Master (USA).nes",          262160, 0x52bcf64a, BRF_ESS | BRF_PRG },
 };
@@ -32230,24 +32579,6 @@ struct BurnDriver BurnDrvnes_blastermaster = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_blastermasterRomInfo, nes_blastermasterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Blob Man (Unl)
-static struct BurnRomInfo nes_blobmanRomDesc[] = {
-	{ "Blob Man (Unl).nes",          40976, 0xeef9db4b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_blobman)
-STD_ROM_FN(nes_blobman)
-
-struct BurnDriver BurnDrvnes_blobman = {
-	"nes_blobman", NULL, NULL, NULL, "2007",
-	"Blob Man (Unl)\0", NULL, "Unknown", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_ACTION, 0,
-	NESGetZipName, nes_blobmanRomInfo, nes_blobmanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -32306,6 +32637,7 @@ struct BurnDriver BurnDrvnes_bloodwar = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Blue Marlin, The (USA)
 static struct BurnRomInfo nes_bluemarlintheRomDesc[] = {
 	{ "Blue Marlin, The (USA).nes",          262160, 0xd9e8e747, BRF_ESS | BRF_PRG },
 };
@@ -32323,6 +32655,7 @@ struct BurnDriver BurnDrvnes_bluemarlinthe = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Blue Shadow (Euro)
 static struct BurnRomInfo nes_blueshadowRomDesc[] = {
 	{ "Blue Shadow (Europe).nes",          262160, 0xe3b889d9, BRF_ESS | BRF_PRG },
 };
@@ -32332,7 +32665,7 @@ STD_ROM_FN(nes_blueshadow)
 
 struct BurnDriver BurnDrvnes_blueshadow = {
 	"nes_blueshadow", "nes_shadonin", NULL, NULL, "1991",
-	"Blue Shadow (Europe)\0", NULL, "Taito", "Miscellaneous",
+	"Blue Shadow (Euro)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NESGetZipName, nes_blueshadowRomInfo, nes_blueshadowRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32340,6 +32673,7 @@ struct BurnDriver BurnDrvnes_blueshadow = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// Blues Brothers, The (USA)
 static struct BurnRomInfo nes_bluesbroRomDesc[] = {
 	{ "Blues Brothers, The (USA).nes",          131088, 0xac273c14, BRF_ESS | BRF_PRG },
 };
@@ -32357,6 +32691,7 @@ struct BurnDriver BurnDrvnes_bluesbro = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bokosuka Wars (Japan)
 static struct BurnRomInfo nes_bokosukawarsRomDesc[] = {
 	{ "Bokosuka Wars (Japan).nes",          40976, 0x196afc68, BRF_ESS | BRF_PRG },
 };
@@ -32366,7 +32701,7 @@ STD_ROM_FN(nes_bokosukawars)
 
 struct BurnDriver BurnDrvnes_bokosukawars = {
 	"nes_bokosukawars", NULL, NULL, NULL, "1985",
-	"Bokosuka Wars (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Bokosuka Wars (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_bokosukawarsRomInfo, nes_bokosukawarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32442,42 +32777,6 @@ struct BurnDriver BurnDrvnes_boobykids = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_boobykidsRomInfo, nes_boobykidsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Boogerman (Unl)
-static struct BurnRomInfo nes_boogermanRomDesc[] = {
-	{ "Boogerman (Unl).nes",          524304, 0xf10d5e5b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_boogerman)
-STD_ROM_FN(nes_boogerman)
-
-struct BurnDriver BurnDrvnes_boogerman = {
-	"nes_boogerman", NULL, NULL, NULL, "1997",
-	"Boogerman (Unl)\0", NULL, "Realtec", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_boogermanRomInfo, nes_boogermanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Bookyman (Unl)
-static struct BurnRomInfo nes_bookymanRomDesc[] = {
-	{ "Bookyman (1991)(Mega Soft).nes",          24592, 0xd8f11b78, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_bookyman)
-STD_ROM_FN(nes_bookyman)
-
-struct BurnDriver BurnDrvnes_bookyman = {
-	"nes_bookyman", NULL, NULL, NULL, "1991",
-	"Bookyman (Unl)\0", NULL, "Mega Soft", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_MAZE | GBF_ACTION, 0,
-	NESGetZipName, nes_bookymanRomInfo, nes_bookymanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -32590,6 +32889,7 @@ struct BurnDriver BurnDrvnes_buckyohare = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Buggy Popper (Japan)
 static struct BurnRomInfo nes_buggypopperRomDesc[] = {
 	{ "Buggy Popper (Japan).nes",          65552, 0x46cc2d53, BRF_ESS | BRF_PRG },
 };
@@ -32607,6 +32907,7 @@ struct BurnDriver BurnDrvnes_buggypopper = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bugs Bunny Birthday Blowout, The (USA)
 static struct BurnRomInfo nes_bugsbunbirbloRomDesc[] = {
 	{ "Bugs Bunny Birthday Blowout, The (USA).nes",          262160, 0x38fdb7f4, BRF_ESS | BRF_PRG },
 };
@@ -32624,6 +32925,7 @@ struct BurnDriver BurnDrvnes_bugsbunbirblo = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bugs Bunny Crazy Castle, The (USA)
 static struct BurnRomInfo nes_bugsbuncracasRomDesc[] = {
 	{ "Bugs Bunny Crazy Castle, The (USA).nes",          98320, 0xdb0c3656, BRF_ESS | BRF_PRG },
 };
@@ -32641,6 +32943,7 @@ struct BurnDriver BurnDrvnes_bugsbuncracas = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Bump'n'Jump (USA)
 static struct BurnRomInfo nes_bumpnjumpRomDesc[] = {
 	{ "Bump'n'Jump (USA).nes",          65552, 0x79bfe095, BRF_ESS | BRF_PRG },
 };
@@ -32658,6 +32961,7 @@ struct BurnDriver BurnDrvnes_bumpnjump = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Burai Fighter (Japan)
 static struct BurnRomInfo nes_buraifighterjRomDesc[] = {
 	{ "Burai Fighter (Japan).nes",          65552, 0x76af01af, BRF_ESS | BRF_PRG },
 };
@@ -32675,6 +32979,7 @@ struct BurnDriver BurnDrvnes_buraifighterj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Burai Fighter (USA)
 static struct BurnRomInfo nes_buraifighterRomDesc[] = {
 	{ "Burai Fighter (USA).nes",          65552, 0x519ae8f2, BRF_ESS | BRF_PRG },
 };
@@ -32692,6 +32997,7 @@ struct BurnDriver BurnDrvnes_buraifighter = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// BurgerTime (USA)
 static struct BurnRomInfo nes_burgertimeRomDesc[] = {
 	{ "BurgerTime (USA).nes",          24592, 0x516549f9, BRF_ESS | BRF_PRG },
 };
@@ -32709,6 +33015,7 @@ struct BurnDriver BurnDrvnes_burgertime = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Buzz & Waldog (USA) (Prototype)
 static struct BurnRomInfo nes_buzzwaldogRomDesc[] = {
 	{ "Buzz & Waldog (USA) (Proto) (Unl).nes",          262160, 0x1587bc5f, BRF_ESS | BRF_PRG },
 };
@@ -32718,7 +33025,7 @@ STD_ROM_FN(nes_buzzwaldog)
 
 struct BurnDriver BurnDrvnes_buzzwaldog = {
 	"nes_buzzwaldog", NULL, NULL, NULL, "1993",
-	"Buzz & Waldog (USA) (Unl) (Prototype)\0", NULL, "Inovation Tech.", "Miscellaneous",
+	"Buzz & Waldog (USA) (Prototype)\0", NULL, "Inovation Tech.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_buzzwaldogRomInfo, nes_buzzwaldogRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -32726,6 +33033,7 @@ struct BurnDriver BurnDrvnes_buzzwaldog = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Cabal (USA)
 static struct BurnRomInfo nes_cabalRomDesc[] = {
 	{ "Cabal (USA).nes",          131088, 0x4d5f2eb0, BRF_ESS | BRF_PRG },
 };
@@ -32743,6 +33051,25 @@ struct BurnDriver BurnDrvnes_cabal = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Caesars Palace (USA)
+static struct BurnRomInfo nes_cspalaceRomDesc[] = {
+	{ "Caesars Palace (U)(1990)(Virgin Games).nes",          131088, 0xe814d0d1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_cspalace)
+STD_ROM_FN(nes_cspalace)
+
+struct BurnDriver BurnDrvnes_cspalace = {
+	"nes_cspalace", NULL, NULL, NULL, "1990",
+	"Caesars Palace (USA)\0", NULL, "Virgin Games", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_CASINO, 0,
+	NESGetZipName, nes_cspalaceRomInfo, nes_cspalaceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// California Games (USA)
 static struct BurnRomInfo nes_californiagamesRomDesc[] = {
 	{ "California Games (USA).nes",          131088, 0x1c6f3036, BRF_ESS | BRF_PRG },
 };
@@ -33044,7 +33371,7 @@ STD_ROM_FN(nes_castleexcellent)
 
 struct BurnDriver BurnDrvnes_castleexcellent = {
 	"nes_castleexcellent", "nes_castlequest", NULL, NULL, "1986",
-	"Castle Excellent (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Castle Excellent (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_castleexcellentRomInfo, nes_castleexcellentRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -33096,7 +33423,7 @@ STD_ROM_FN(nes_castlequest)
 
 struct BurnDriver BurnDrvnes_castlequest = {
 	"nes_castlequest", NULL, NULL, NULL, "1989",
-	"Castlequest (USA)\0", NULL, "Nexoft - ASCII", "Miscellaneous",
+	"Castlequest (USA)\0", NULL, "Nexoft - ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_castlequestRomInfo, nes_castlequestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -33116,7 +33443,7 @@ struct BurnDriver BurnDrvnes_cstlquest = {
 	"nes_cstlquest", NULL, NULL, NULL, "2012",
 	"Castle Quest (Hack, English v2.01)\0", NULL, "Stardust Crusaders", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_cstlquestRomInfo, nes_cstlquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -33134,7 +33461,7 @@ struct BurnDriver BurnDrvnes_cstlquestj = {
 	"nes_cstlquestj", "nes_cstlquest", NULL, NULL, "1990",
 	"Castle Quest (Japan)\0", NULL, "Hudson Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
 	NESGetZipName, nes_cstlquestjRomInfo, nes_cstlquestjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -33284,6 +33611,7 @@ struct BurnDriver BurnDrvnes_chacknpop = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Challenge of the Dragon (USA)
 static struct BurnRomInfo nes_challdraRomDesc[] = {
 	{ "Challenge of the Dragon (USA).nes",          131088, 0xe737a11f, BRF_ESS | BRF_PRG },
 };
@@ -33301,6 +33629,7 @@ struct BurnDriver BurnDrvnes_challdra = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Challenger (Japan)
 static struct BurnRomInfo nes_challengerRomDesc[] = {
 	{ "Challenger (Japan).nes",          40976, 0x94339dff, BRF_ESS | BRF_PRG },
 };
@@ -33318,6 +33647,7 @@ struct BurnDriver BurnDrvnes_challenger = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Championship Bowling (USA)
 static struct BurnRomInfo nes_champbowRomDesc[] = {
 	{ "Championship Bowling (USA).nes",          65552, 0xa5e89b19, BRF_ESS | BRF_PRG },
 };
@@ -33335,6 +33665,7 @@ struct BurnDriver BurnDrvnes_champbow = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Championship Lode Runner (Japan)
 static struct BurnRomInfo nes_champlodrunRomDesc[] = {
 	{ "Championship Lode Runner (Japan).nes",          24592, 0xcfa85f7c, BRF_ESS | BRF_PRG },
 };
@@ -33388,6 +33719,25 @@ struct BurnDriver BurnDrvnes_chaosworld = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Chessmaster, The (USA)
+static struct BurnRomInfo nes_chessmasterRomDesc[] = {
+	{ "Chessmaster, The (U)(1989)(Software Toolworks).nes",          163856, 0x5acf2c6f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_chessmaster)
+STD_ROM_FN(nes_chessmaster)
+
+struct BurnDriver BurnDrvnes_chessmaster = {
+	"nes_chessmaster", NULL, NULL, NULL, "1989",
+	"Chessmaster, The (USA)\0", NULL, "Software Toolworks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY | GBF_BOARD, 0,
+	NESGetZipName, nes_chessmasterRomInfo, nes_chessmasterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Chester Field - Ankoku Shin e no Chousen (Japan)
 static struct BurnRomInfo nes_chestfieRomDesc[] = {
 	{ "Chester Field - Ankoku Shin e no Chousen (Japan).nes",          131088, 0xa6f40bd1, BRF_ESS | BRF_PRG },
 };
@@ -34253,7 +34603,7 @@ STD_ROM_FN(nes_cosmogenesis)
 
 struct BurnDriver BurnDrvnes_cosmogenesis = {
 	"nes_cosmogenesis", "nes_starvoyager", NULL, NULL, "1986",
-	"Cosmo Genesis (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Cosmo Genesis (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_SIM | GBF_SHOOT, 0,
 	NESGetZipName, nes_cosmogenesisRomInfo, nes_cosmogenesisRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -34858,7 +35208,7 @@ STD_ROM_FN(nes_deathbots)
 
 struct BurnDriver BurnDrvnes_deathbots = {
 	"nes_deathbots", NULL, NULL, NULL, "1990",
-	"Deathbots (USA) (Rev 1) (Unl)\0", NULL, "AVE", "Miscellaneous",
+	"Deathbots (USA) (Rev 1) (Unl)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN, 0,
 	NESGetZipName, nes_deathbotsRomInfo, nes_deathbotsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -35669,7 +36019,7 @@ struct BurnDriver BurnDrvnes_doubledare = {
 	"nes_doubledare", NULL, NULL, NULL, "1990",
 	"Double Dare (USA)\0", NULL, "GameTek", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_MINIGAMES | GBF_QUIZ, 0,
 	NESGetZipName, nes_doubledareRomInfo, nes_doubledareRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -35779,6 +36129,7 @@ struct BurnDriver BurnDrvnes_doublmooden = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Double Strike (Unl)
 static struct BurnRomInfo nes_doublestrikeRomDesc[] = {
 	{ "Double Strike (Unl).nes",          65552, 0xf4bb370a, BRF_ESS | BRF_PRG },
 };
@@ -35788,7 +36139,7 @@ STD_ROM_FN(nes_doublestrike)
 
 struct BurnDriver BurnDrvnes_doublestrike = {
 	"nes_doublestrike", NULL, NULL, NULL, "1990",
-	"Double Strike (Unl)\0", NULL, "AVE", "Miscellaneous",
+	"Double Strike (Unl)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_doublestrikeRomInfo, nes_doublestrikeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36596,23 +36947,7 @@ struct BurnDriver BurnDrvnes_dreamworldpogie = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_dringleRomDesc[] = {
-	{ "Dringle (Unl).nes",          40976, 0x05c38615, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_dringle)
-STD_ROM_FN(nes_dringle)
-
-struct BurnDriver BurnDrvnes_dringle = {
-	"nes_dringle", NULL, NULL, NULL, "2005",
-	"Dringle (Unl)\0", NULL, "Unknown", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PUZZLE, 0,
-	NESGetZipName, nes_dringleRomInfo, nes_dringleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
+// Dropzone (Euro)
 static struct BurnRomInfo nes_dropzoneRomDesc[] = {
 	{ "Dropzone (Europe).nes",          65552, 0xab29ab28, BRF_ESS | BRF_PRG },
 };
@@ -36622,7 +36957,7 @@ STD_ROM_FN(nes_dropzone)
 
 struct BurnDriver BurnDrvnes_dropzone = {
 	"nes_dropzone", NULL, NULL, NULL, "1992",
-	"Dropzone (Europe)\0", NULL, "Mindscape", "Miscellaneous",
+	"Dropzone (Euro)\0", NULL, "Mindscape", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
 	NESGetZipName, nes_dropzoneRomInfo, nes_dropzoneRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -36630,6 +36965,7 @@ struct BurnDriver BurnDrvnes_dropzone = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// Druaga no Tou (Japan)
 static struct BurnRomInfo nes_druaganotouRomDesc[] = {
 	{ "Druaga no Tou (Japan).nes",          40976, 0x0c045fb9, BRF_ESS | BRF_PRG },
 };
@@ -36647,6 +36983,7 @@ struct BurnDriver BurnDrvnes_druaganotou = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Duck Hunt (USA)
 static struct BurnRomInfo nes_duckhuntRomDesc[] = {
 	{ "Duck Hunt (USA).nes",          24592, 0x4644085e, BRF_ESS | BRF_PRG },
 };
@@ -36664,6 +37001,7 @@ struct BurnDriver BurnDrvnes_duckhunt = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Duck Maze (USA)
 static struct BurnRomInfo nes_duckmazeRomDesc[] = {
 	{ "Duck Maze (USA).nes",          40976, 0x01c1ca36, BRF_ESS | BRF_PRG },
 };
@@ -36681,6 +37019,7 @@ struct BurnDriver BurnDrvnes_duckmaze = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// DuckTales (USA)
 static struct BurnRomInfo nes_ducktalesRomDesc[] = {
 	{ "DuckTales (USA).nes",          131088, 0x06b994b2, BRF_ESS | BRF_PRG },
 };
@@ -36717,6 +37056,7 @@ struct BurnDriver BurnDrvnes_dellatales = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// DuckTales 2 (USA)
 static struct BurnRomInfo nes_ducktales2RomDesc[] = {
 	{ "DuckTales 2 (USA).nes",          131088, 0x40ce2fc0, BRF_ESS | BRF_PRG },
 };
@@ -36743,7 +37083,7 @@ STD_ROM_FN(nes_dudeswitatt)
 
 struct BurnDriver BurnDrvnes_dudeswitatt = {
 	"nes_dudeswitatt", NULL, NULL, NULL, "1990",
-	"Dudes With Attitude (Unl)\0", NULL, "AVE", "Miscellaneous",
+	"Dudes With Attitude (Unl)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_dudeswitattRomInfo, nes_dudeswitattRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -37306,7 +37646,7 @@ STD_ROM_FN(nes_f15citywar)
 
 struct BurnDriver BurnDrvnes_f15citywar = {
 	"nes_f15citywar", NULL, NULL, NULL, "1990",
-	"F-15 City War (USA) (Unl)\0", NULL, "AVE", "Miscellaneous",
+	"F-15 City War (USA) (Unl)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_f15citywarRomInfo, nes_f15citywarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -37368,6 +37708,7 @@ struct BurnDriver BurnDrvnes_f1circus = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Famicom Jump - Eiyuu Retsuden (Japan)
 static struct BurnRomInfo nes_famicjumRomDesc[] = {
 	{ "Famicom Jump - Eiyuu Retsuden (Japan).nes",          393232, 0xb91afcaf, BRF_ESS | BRF_PRG },
 };
@@ -37385,6 +37726,7 @@ struct BurnDriver BurnDrvnes_famicjum = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Famicom Jump II - Saikyou no 7 Nin (Japan)
 static struct BurnRomInfo nes_famicjumiiRomDesc[] = {
 	{ "Famicom Jump II - Saikyou no 7 Nin (Japan).nes",          524304, 0x6b41421c, BRF_ESS | BRF_PRG },
 };
@@ -37438,6 +37780,26 @@ struct BurnDriver BurnDrvnes_famicomwars = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// NES Wars (Hack, English)
+// https://www.romhacking.net/translations/6828/
+static struct BurnRomInfo nes_neswarsRomDesc[] = {
+	{ "NES Wars T-Eng (2023)(Stardust Crusaders).nes",          196624, 0x35da4b73, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_neswars)
+STD_ROM_FN(nes_neswars)
+
+struct BurnDriver BurnDrvnes_neswars = {
+	"nes_neswars", "nes_famicomwars", NULL, NULL, "2023",
+	"NES Wars (Hack, English)\0", NULL, "Stardust Crusaders", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	NESGetZipName, nes_neswarsRomInfo, nes_neswarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Family Boxing (Japan)
 static struct BurnRomInfo nes_familyboxingRomDesc[] = {
 	{ "Family Boxing (Japan).nes",          131088, 0x381b51f3, BRF_ESS | BRF_PRG },
 };
@@ -37455,6 +37817,7 @@ struct BurnDriver BurnDrvnes_familyboxing = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Family Circuit '91 (Japan)
 static struct BurnRomInfo nes_familcir91RomDesc[] = {
 	{ "Family Circuit '91 (Japan).nes",          655376, 0xcfbb646d, BRF_ESS | BRF_PRG },
 };
@@ -38239,7 +38602,7 @@ struct BurnDriver BurnDrvnes_sangokushi = {
 	"nes_sangokushi", NULL, NULL, NULL, "1988",
 	"Sangokushi - Chuugen no Hasha (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_sangokushiRomInfo, nes_sangokushiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -38585,7 +38948,7 @@ STD_ROM_FN(nes_flyinghero)
 
 struct BurnDriver BurnDrvnes_flyinghero = {
 	"nes_flyinghero", NULL, NULL, NULL, "1989",
-	"Flying Hero (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Flying Hero (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_flyingheroRomInfo, nes_flyingheroRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -39287,7 +39650,7 @@ STD_ROM_FN(nes_geimos)
 
 struct BurnDriver BurnDrvnes_geimos = {
 	"nes_geimos", NULL, NULL, NULL, "1985",
-	"Geimos (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Geimos (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_geimosRomInfo, nes_geimosRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -39812,7 +40175,7 @@ struct BurnDriver BurnDrvnes_gomoku = {
 	"nes_gomoku", NULL, NULL, NULL, "2017",
 	"Gomoku Narabe Renju (Hack, English)\0", NULL, "Psyklax", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_gomokuRomInfo, nes_gomokuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -39830,7 +40193,7 @@ struct BurnDriver BurnDrvnes_gomokuj = {
 	"nes_gomokuj", "nes_gomoku", NULL, NULL, "1983",
 	"Gomoku Narabe Renju (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_gomokujRomInfo, nes_gomokujRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -40617,6 +40980,7 @@ struct BurnDriver BurnDrvnes_heisetenbak = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hell Fighter (Asia) (Unl)
 static struct BurnRomInfo nes_hellfighterRomDesc[] = {
 	{ "Hell Fighter (Asia) (PAL) (Unl).nes",          327696, 0x61700c98, BRF_ESS | BRF_PRG },
 };
@@ -40634,6 +40998,7 @@ struct BurnDriver BurnDrvnes_hellfighter = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hello Kitty no Ohanabatake (Japan)
 static struct BurnRomInfo nes_hellokitnoohaRomDesc[] = {
 	{ "Hello Kitty no Ohanabatake (Japan).nes",          65552, 0x69900690, BRF_ESS | BRF_PRG },
 };
@@ -40651,6 +41016,7 @@ struct BurnDriver BurnDrvnes_hellokitnooha = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hello Kitty World (Japan)
 static struct BurnRomInfo nes_hellokitworRomDesc[] = {
 	{ "Hello Kitty World (Japan).nes",          131088, 0x54dc10cd, BRF_ESS | BRF_PRG },
 };
@@ -40668,6 +41034,7 @@ struct BurnDriver BurnDrvnes_hellokitwor = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hero Quest (Europe) (Prototype)
 static struct BurnRomInfo nes_heroquesteRomDesc[] = {
 	{ "Hero Quest (Europe) (Prototype).nes",          131088, 0x3a0b6dd2, BRF_ESS | BRF_PRG },
 };
@@ -40679,12 +41046,13 @@ struct BurnDriver BurnDrvnes_heroqueste = {
 	"nes_heroqueste", "nes_heroquest", NULL, NULL, "1991",
 	"Hero Quest (Europe) (Prototype)\0", NULL, "Gremlin Graphics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
 	NESGetZipName, nes_heroquesteRomInfo, nes_heroquesteRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// Hero Quest (USA) (Prototype)
 static struct BurnRomInfo nes_heroquestRomDesc[] = {
 	{ "Hero Quest (USA) (Prototype).nes",          131088, 0x60484008, BRF_ESS | BRF_PRG },
 };
@@ -40696,12 +41064,13 @@ struct BurnDriver BurnDrvnes_heroquest = {
 	"nes_heroquest", NULL, NULL, NULL, "1991",
 	"Hero Quest (USA) (Prototype)\0", NULL, "Gremlin Graphics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
 	NESGetZipName, nes_heroquestRomInfo, nes_heroquestRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Higemaru - Makai-jima - Nanatsu no Shima Daibouken (Japan)
 static struct BurnRomInfo nes_higemRomDesc[] = {
 	{ "Higemaru - Makai-jima - Nanatsu no Shima Daibouken (Japan).nes",          131088, 0xc480eb6d, BRF_ESS | BRF_PRG },
 };
@@ -40719,6 +41088,7 @@ struct BurnDriver BurnDrvnes_higem = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// High Speed (USA)
 static struct BurnRomInfo nes_highspeedRomDesc[] = {
 	{ "High Speed (USA).nes",          196624, 0x8ca37960, BRF_ESS | BRF_PRG },
 };
@@ -40736,6 +41106,7 @@ struct BurnDriver BurnDrvnes_highspeed = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Highway Star (Japan)
 static struct BurnRomInfo nes_highwaystarRomDesc[] = {
 	{ "Highway Star (Japan).nes",          131088, 0xd0980131, BRF_ESS | BRF_PRG },
 };
@@ -41035,6 +41406,7 @@ struct BurnDriver BurnDrvnes_holydiver = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Home Alone (USA) (Rev A)
 static struct BurnRomInfo nes_homealoneRomDesc[] = {
 	{ "Home Alone (USA) (Rev A).nes",          262160, 0xd98e3e31, BRF_ESS | BRF_PRG },
 };
@@ -41052,6 +41424,7 @@ struct BurnDriver BurnDrvnes_homealone = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Home Alone 2 - Lost in New York (USA)
 static struct BurnRomInfo nes_homealo2RomDesc[] = {
 	{ "Home Alone 2 - Lost in New York (USA).nes",          262160, 0x04944924, BRF_ESS | BRF_PRG },
 };
@@ -41069,6 +41442,7 @@ struct BurnDriver BurnDrvnes_homealo2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hook (USA)
 static struct BurnRomInfo nes_hookRomDesc[] = {
 	{ "Hook (USA).nes",          262160, 0xb5902c20, BRF_ESS | BRF_PRG },
 };
@@ -41086,6 +41460,7 @@ struct BurnDriver BurnDrvnes_hook = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hostages - The Embassy Mission (Japan)
 static struct BurnRomInfo nes_hostaRomDesc[] = {
 	{ "Hostages - The Embassy Mission (Japan).nes",          262160, 0xe876b411, BRF_ESS | BRF_PRG },
 };
@@ -41103,6 +41478,7 @@ struct BurnDriver BurnDrvnes_hosta = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hottaaman no Chitei Tanken (Japan)
 static struct BurnRomInfo nes_hottanochitanRomDesc[] = {
 	{ "Hottaaman no Chitei Tanken (Japan).nes",          65552, 0x7d5ee762, BRF_ESS | BRF_PRG },
 };
@@ -41120,23 +41496,7 @@ struct BurnDriver BurnDrvnes_hottanochitan = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_huangdiRomDesc[] = {
-	{ "Huang Di (Asia) (Unl).nes",          393232, 0xdfdec378, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_huangdi)
-STD_ROM_FN(nes_huangdi)
-
-struct BurnDriver BurnDrvnes_huangdi = {
-	"nes_huangdi", NULL, NULL, NULL, "1994",
-	"Huang Di (Asia) (Unl)\0", NULL, "Asder", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_huangdiRomInfo, nes_huangdiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
+// Hudson Hawk (USA)
 static struct BurnRomInfo nes_hudsonhawkRomDesc[] = {
 	{ "Hudson Hawk (USA).nes",          262160, 0x37fc3443, BRF_ESS | BRF_PRG },
 };
@@ -41154,23 +41514,7 @@ struct BurnDriver BurnDrvnes_hudsonhawk = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_hugeinsectRomDesc[] = {
-	{ "Huge Insect (Asia) (Unl).nes",          65552, 0x552a903a, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_hugeinsect)
-STD_ROM_FN(nes_hugeinsect)
-
-struct BurnDriver BurnDrvnes_hugeinsect = {
-	"nes_hugeinsect", NULL, NULL, NULL, "1993",
-	"Huge Insect (Asia) (Unl)\0", NULL, "Thin Chen", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
-	NESGetZipName, nes_hugeinsectRomInfo, nes_hugeinsectRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
+// Hunt for Red October, The (USA)
 static struct BurnRomInfo nes_huntredoctRomDesc[] = {
 	{ "Hunt for Red October, The (USA).nes",          262160, 0x64e47ba8, BRF_ESS | BRF_PRG },
 };
@@ -41327,6 +41671,7 @@ struct BurnDriver BurnDrvnes_ikki = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Image Fight (USA)
 static struct BurnRomInfo nes_imagefightRomDesc[] = {
 	{ "Image Fight (USA).nes",          262160, 0x2f1c2b30, BRF_ESS | BRF_PRG },
 };
@@ -41344,6 +41689,7 @@ struct BurnDriver BurnDrvnes_imagefight = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Immortal, The (USA)
 static struct BurnRomInfo nes_immortaltheRomDesc[] = {
 	{ "Immortal, The (USA).nes",          393232, 0xaceb84c1, BRF_ESS | BRF_PRG },
 };
@@ -41361,6 +41707,7 @@ struct BurnDriver BurnDrvnes_immortalthe = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Impossible Mission II (USA)
 static struct BurnRomInfo nes_imposmisiiRomDesc[] = {
 	{ "Impossible Mission II (USA).nes",          131088, 0xf73d26d6, BRF_ESS | BRF_PRG },
 };
@@ -41370,7 +41717,7 @@ STD_ROM_FN(nes_imposmisii)
 
 struct BurnDriver BurnDrvnes_imposmisii = {
 	"nes_imposmisii", NULL, NULL, NULL, "1989",
-	"Impossible Mission II (USA)\0", NULL, "AVE", "Miscellaneous",
+	"Impossible Mission II (USA)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_imposmisiiRomInfo, nes_imposmisiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -41378,6 +41725,7 @@ struct BurnDriver BurnDrvnes_imposmisii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Incredible Crash Dummies, The (USA)
 static struct BurnRomInfo nes_increcradumRomDesc[] = {
 	{ "Incredible Crash Dummies, The (USA).nes",          393232, 0x8c684ea4, BRF_ESS | BRF_PRG },
 };
@@ -43381,6 +43729,7 @@ struct BurnDriver BurnDrvnes_knightrider = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Koko Adventure (Korea)
 static struct BurnRomInfo nes_kokoadventureRomDesc[] = {
 	{ "Koko Adventure (Korea).nes",          262160, 0xa86e4d73, BRF_ESS | BRF_PRG },
 };
@@ -43398,6 +43747,7 @@ struct BurnDriver BurnDrvnes_kokoadventure = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Konami Hyper Soccer (Euro)
 static struct BurnRomInfo nes_konamhypsocRomDesc[] = {
 	{ "Konami Hyper Soccer (Europe).nes",          131088, 0x144435af, BRF_ESS | BRF_PRG },
 };
@@ -43407,7 +43757,7 @@ STD_ROM_FN(nes_konamhypsoc)
 
 struct BurnDriver BurnDrvnes_konamhypsoc = {
 	"nes_konamhypsoc", NULL, NULL, NULL, "1992",
-	"Konami Hyper Soccer (Europe)\0", NULL, "Konami", "Miscellaneous",
+	"Konami Hyper Soccer (Euro)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
 	NESGetZipName, nes_konamhypsocRomInfo, nes_konamhypsocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -43415,6 +43765,7 @@ struct BurnDriver BurnDrvnes_konamhypsoc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// Konamic Sports in Seoul (Japan)
 static struct BurnRomInfo nes_konamspoinseoRomDesc[] = {
 	{ "Konamic Sports in Seoul (Japan).nes",          262160, 0xaad70549, BRF_ESS | BRF_PRG },
 };
@@ -43432,6 +43783,7 @@ struct BurnDriver BurnDrvnes_konamspoinseo = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Krazy Kreatures (USA) (Unl)
 static struct BurnRomInfo nes_krazykreaturesRomDesc[] = {
 	{ "Krazy Kreatures (USA) (Unl).nes",          65552, 0xa17788de, BRF_ESS | BRF_PRG },
 };
@@ -43441,7 +43793,7 @@ STD_ROM_FN(nes_krazykreatures)
 
 struct BurnDriver BurnDrvnes_krazykreatures = {
 	"nes_krazykreatures", NULL, NULL, NULL, "1990",
-	"Krazy Kreatures (USA) (Unl)\0", NULL, "AVE", "Miscellaneous",
+	"Krazy Kreatures (USA) (Unl)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_krazykreaturesRomInfo, nes_krazykreaturesRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -44828,6 +45180,43 @@ struct BurnDriver BurnDrvnes_maharaja = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mahou no Princess Minky Momo - Remember Dream (Japan)
+static struct BurnRomInfo nes_minkymomojRomDesc[] = {
+	{ "Mahou no Princess Minky Momo - Remember Dream (J)(1992)(Yutaka).nes",          262160, 0xd1b65a3e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minkymomoj)
+STD_ROM_FN(nes_minkymomoj)
+
+struct BurnDriver BurnDrvnes_minkymomoj = {
+	"nes_minkymomoj", "nes_minkymomo", NULL, NULL, "2023",
+	"Mahou no Princess Minky Momo - Remember Dream (Japan)\0", NULL, "Yutaka", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_minkymomojRomInfo, nes_minkymomojRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mahou no Princess Minky Momo - Remember Dream (Hack, English)
+// https://www.romhacking.net/translations/7108/
+static struct BurnRomInfo nes_minkymomoRomDesc[] = {
+	{ "Mahou no Princess Minky Momo - Remember Dream T-Eng (2023)(karmic).nes",          262160, 0xa6eba573, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_minkymomo)
+STD_ROM_FN(nes_minkymomo)
+
+struct BurnDriver BurnDrvnes_minkymomo = {
+	"nes_minkymomo", NULL, NULL, NULL, "2023",
+	"Mahou no Princess Minky Momo - Remember Dream (Hack, English)\0", NULL, "karmic", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
+	NESGetZipName, nes_minkymomoRomInfo, nes_minkymomoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Major League (Japan)
 static struct BurnRomInfo nes_majorleagueRomDesc[] = {
 	{ "Major League (Japan).nes",          262160, 0xd8dfd3d1, BRF_ESS | BRF_PRG },
@@ -44882,6 +45271,7 @@ struct BurnDriver BurnDrvnes_majoudenii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Makaimura (Japan)
 static struct BurnRomInfo nes_makaimuraRomDesc[] = {
 	{ "Makaimura (Japan).nes",          131088, 0x8c3fe6fb, BRF_ESS | BRF_PRG },
 };
@@ -44899,6 +45289,7 @@ struct BurnDriver BurnDrvnes_makaimura = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Makaimura Arcade (Hack)
 static struct BurnRomInfo nes_makaimuraarcadeRomDesc[] = {
 	{ "Makaimura Arcade (Japan).nes",          131088, 0xb523b441, BRF_ESS | BRF_PRG },
 };
@@ -44916,6 +45307,7 @@ struct BurnDriver BurnDrvnes_makaimuraarcade = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Maniac Mansion (USA)
 static struct BurnRomInfo nes_maniacmansionRomDesc[] = {
 	{ "Maniac Mansion (USA).nes",          262160, 0x68309d06, BRF_ESS | BRF_PRG },
 };
@@ -44933,6 +45325,7 @@ struct BurnDriver BurnDrvnes_maniacmansion = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mappy (Japan)
 static struct BurnRomInfo nes_mappyRomDesc[] = {
 	{ "Mappy (Japan).nes",          24592, 0x3f0e8e0a, BRF_ESS | BRF_PRG },
 };
@@ -44950,6 +45343,7 @@ struct BurnDriver BurnDrvnes_mappy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mappy Kids (Japan)
 static struct BurnRomInfo nes_mappykidsRomDesc[] = {
 	{ "Mappy Kids (Japan).nes",          262160, 0x3350c674, BRF_ESS | BRF_PRG },
 };
@@ -45071,6 +45465,7 @@ struct BurnDriver BurnDrvnes_mashieiydenwatga = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Master Chu and the Drunkard Hu (USA)
 static struct BurnRomInfo nes_mastechuanddruhuRomDesc[] = {
 	{ "Master Chu and the Drunkard Hu (USA) (Unl).nes",          65552, 0x062a680a, BRF_ESS | BRF_PRG },
 };
@@ -45080,27 +45475,10 @@ STD_ROM_FN(nes_mastechuanddruhu)
 
 struct BurnDriver BurnDrvnes_mastechuanddruhu = {
 	"nes_mastechuanddruhu", NULL, NULL, NULL, "1989",
-	"Master Chu and the Drunkard Hu (USA) (Unl)\0", NULL, "Color Dreams", "Miscellaneous",
+	"Master Chu and the Drunkard Hu (USA)\0", NULL, "Color Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mastechuanddruhuRomInfo, nes_mastechuanddruhuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_mastershooterRomDesc[] = {
-	{ "Master Shooter (Unl).nes",          65552, 0xd2dcae89, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_mastershooter)
-STD_ROM_FN(nes_mastershooter)
-
-struct BurnDriver BurnDrvnes_mastershooter = {
-	"nes_mastershooter", NULL, NULL, NULL, "1993",
-	"Master Shooter (Unl)\0", NULL, "NTDEC", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SHOOT, 0,
-	NESGetZipName, nes_mastershooterRomInfo, nes_mastershooterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -46138,6 +46516,7 @@ struct BurnDriver BurnDrvnes_moaikun = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Moero TwinBee - Cinnamon Hakase o Sukue! (Japan)
 static struct BurnRomInfo nes_moerotwiRomDesc[] = {
 	{ "Moero TwinBee - Cinnamon Hakase o Sukue! (Japan).nes",          131088, 0xac0a622b, BRF_ESS | BRF_PRG },
 };
@@ -46155,6 +46534,7 @@ struct BurnDriver BurnDrvnes_moerotwi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Moero!! Pro Tennis (Japan)
 static struct BurnRomInfo nes_moeroprotenRomDesc[] = {
 	{ "Moero!! Pro Tennis (Japan).nes",          262160, 0xf891e3e5, BRF_ESS | BRF_PRG },
 };
@@ -46172,6 +46552,44 @@ struct BurnDriver BurnDrvnes_moeroproten = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Momotarou Densetsu ~ The Peach Boy Legend (Japan)
+static struct BurnRomInfo nes_mdensetsujRomDesc[] = {
+	{ "Momotarou Densetsu ~ The Peach Boy Legend (J)(1987)(Hudson Soft).nes",          262160, 0xe4be2f0c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mdensetsuj)
+STD_ROM_FN(nes_mdensetsuj)
+
+struct BurnDriver BurnDrvnes_mdensetsuj = {
+	"nes_mdensetsuj", "nes_mdensetsu", NULL, NULL, "1987",
+	"Momotarou Densetsu ~ The Peach Boy Legend (Japan)\0", NULL, "Hudson Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_mdensetsujRomInfo, nes_mdensetsujRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Momotarou Densetsu ~ The Peach Boy Legend (Hack, English)
+// https://www.romhacking.net/translations/1779/
+static struct BurnRomInfo nes_mdensetsuRomDesc[] = {
+	{ "Momotarou Densetsu ~ The Peach Boy Legend T-Eng (2012)(KingMike).nes",          524304, 0x9d3fa8a5, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_mdensetsu)
+STD_ROM_FN(nes_mdensetsu)
+
+struct BurnDriver BurnDrvnes_mdensetsu = {
+	"nes_mdensetsu", NULL, NULL, NULL, "2012",
+	"Momotarou Densetsu ~ The Peach Boy Legend (Hack, English)\0", NULL, "KingMike's Translations", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_mdensetsuRomInfo, nes_mdensetsuRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
+	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Monopoly (USA)
 static struct BurnRomInfo nes_monopolyRomDesc[] = {
 	{ "Monopoly (USA).nes",          262160, 0xfaf48d27, BRF_ESS | BRF_PRG },
 };
@@ -46183,12 +46601,13 @@ struct BurnDriver BurnDrvnes_monopoly = {
 	"nes_monopoly", NULL, NULL, NULL, "1991",
 	"Monopoly (USA)\0", NULL, "Parker Brothers", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 8, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 8, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_monopolyRomInfo, nes_monopolyRomName, NULL, NULL, NULL, NULL, NES4ScoreInputInfo, NES4ScoreDIPInfo,
 	NES4ScoreInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Monster in My Pocket (USA)
 static struct BurnRomInfo nes_monstinmypocRomDesc[] = {
 	{ "Monster in My Pocket (USA).nes",          262160, 0xcfd1eb5d, BRF_ESS | BRF_PRG },
 };
@@ -46206,6 +46625,7 @@ struct BurnDriver BurnDrvnes_monstinmypoc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Monster Party (USA)
 static struct BurnRomInfo nes_monsterpartyRomDesc[] = {
 	{ "Monster Party (USA).nes",          262160, 0x6f0ac6ec, BRF_ESS | BRF_PRG },
 };
@@ -46223,6 +46643,7 @@ struct BurnDriver BurnDrvnes_monsterparty = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Monster Truck Rally (USA)
 static struct BurnRomInfo nes_monsttruralRomDesc[] = {
 	{ "Monster Truck Rally (USA).nes",          65552, 0x60429651, BRF_ESS | BRF_PRG },
 };
@@ -47276,7 +47697,7 @@ STD_ROM_FN(nes_ninjarahoij)
 
 struct BurnDriver BurnDrvnes_ninjarahoij = {
 	"nes_ninjarahoij", "nes_ninjarahoi", NULL, NULL, "1990",
-	"Ninjara Hoi! (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Ninjara Hoi! (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
 	NESGetZipName, nes_ninjarahoijRomInfo, nes_ninjarahoijRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -47302,6 +47723,7 @@ struct BurnDriver BurnDrvnes_ninjarahoi = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Nintendo World Cup (USA)
 static struct BurnRomInfo nes_ninteworcupRomDesc[] = {
 	{ "Nintendo World Cup (USA).nes",          262160, 0x88b55f68, BRF_ESS | BRF_PRG },
 };
@@ -47319,6 +47741,7 @@ struct BurnDriver BurnDrvnes_ninteworcup = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Noah's Ark (Euro)
 static struct BurnRomInfo nes_noahsarkRomDesc[] = {
 	{ "Noah's Ark (Europe).nes",          262160, 0xab21ab5f, BRF_ESS | BRF_PRG },
 };
@@ -47328,7 +47751,7 @@ STD_ROM_FN(nes_noahsark)
 
 struct BurnDriver BurnDrvnes_noahsark = {
 	"nes_noahsark", NULL, NULL, NULL, "1992",
-	"Noah's Ark (Europe)\0", NULL, "Konami", "Miscellaneous",
+	"Noah's Ark (Euro)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_noahsarkRomInfo, nes_noahsarkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -47336,6 +47759,7 @@ struct BurnDriver BurnDrvnes_noahsark = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// North & South (USA)
 static struct BurnRomInfo nes_northsouthRomDesc[] = {
 	{ "North & South (USA).nes",          262160, 0x840c3b42, BRF_ESS | BRF_PRG },
 };
@@ -47353,6 +47777,7 @@ struct BurnDriver BurnDrvnes_northsouth = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Nuts & Milk (Japan)
 static struct BurnRomInfo nes_nutsmilkRomDesc[] = {
 	{ "Nuts & Milk (Japan).nes",          24592, 0x11879fe8, BRF_ESS | BRF_PRG },
 };
@@ -47370,6 +47795,7 @@ struct BurnDriver BurnDrvnes_nutsmilk = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Obake no Q Tarou - Wanwan Panic (Japan)
 static struct BurnRomInfo nes_obakenoqtarRomDesc[] = {
 	{ "Obake no Q Tarou - Wanwan Panic (Japan).nes",          40976, 0x16f8e815, BRF_ESS | BRF_PRG },
 };
@@ -47387,6 +47813,7 @@ struct BurnDriver BurnDrvnes_obakenoqtar = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Onyanko Town (Japan)
 static struct BurnRomInfo nes_onyankotownRomDesc[] = {
 	{ "Onyanko Town (Japan).nes",          40976, 0xc07cb40b, BRF_ESS | BRF_PRG },
 };
@@ -47404,6 +47831,7 @@ struct BurnDriver BurnDrvnes_onyankotown = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Operation Wolf (USA)
 static struct BurnRomInfo nes_operationwolfRomDesc[] = {
 	{ "Operation Wolf (USA).nes",          262160, 0x80704705, BRF_ESS | BRF_PRG },
 };
@@ -47418,6 +47846,60 @@ struct BurnDriver BurnDrvnes_operationwolf = {
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_operationwolfRomInfo, nes_operationwolfRomName, NULL, NULL, NULL, NULL, NESZapperInputInfo, NESZapperDIPInfo,
 	NESZapperInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Othello (HES)
+static struct BurnRomInfo nes_othellohRomDesc[] = {
+	{ "Othello (HES)(1988)(HES Interactive).nes",          24592, 0xfe58062c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_othelloh)
+STD_ROM_FN(nes_othelloh)
+
+struct BurnDriver BurnDrvnes_othelloh = {
+	"nes_othelloh", NULL, NULL, NULL, "1988",
+	"Othello (HES)\0", NULL, "HES Interactive", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_BOARD, 0,
+	NESGetZipName, nes_othellohRomInfo, nes_othellohRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Othello (USA)
+static struct BurnRomInfo nes_othelloRomDesc[] = {
+	{ "Othello (U)(1988)(Acclaim).nes",          40976, 0x97428519, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_othello)
+STD_ROM_FN(nes_othello)
+
+struct BurnDriver BurnDrvnes_othello = {
+	"nes_othello", NULL, NULL, NULL, "1988",
+	"Othello (USA)\0", NULL, "Acclaim", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_BOARD, 0,
+	NESGetZipName, nes_othelloRomInfo, nes_othelloRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Family Computer - Othello (Japan)
+static struct BurnRomInfo nes_othellojRomDesc[] = {
+	{ "Family Computer - Othello (J)(1986)(HAL Lab.).nes",          40976, 0xe68398a4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_othelloj)
+STD_ROM_FN(nes_othelloj)
+
+struct BurnDriver BurnDrvnes_othelloj = {
+	"nes_othelloj", "nes_othello", NULL, NULL, "1986",
+	"Family Computer - Othello (Japan)\0", NULL, "HAL Laboratory", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_BOARD, 0,
+	NESGetZipName, nes_othellojRomInfo, nes_othellojRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
@@ -47601,24 +48083,7 @@ struct BurnDriver BurnDrvnes_palamii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Panda Baby (Unl)
-static struct BurnRomInfo nes_pandababyRomDesc[] = {
-	{ "Panda Baby (Unl).nes",          524304, 0x042f5b25, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_pandababy)
-STD_ROM_FN(nes_pandababy)
-
-struct BurnDriver BurnDrvnes_pandababy = {
-	"nes_pandababy", NULL, NULL, NULL, "1997",
-	"Panda Baby (Unl)\0", NULL, "Dragon Co.", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_pandababyRomInfo, nes_pandababyRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
+// Panic Restaurant (USA)
 static struct BurnRomInfo nes_panicrestaurantRomDesc[] = {
 	{ "Panic Restaurant (USA).nes",          262160, 0x69c9e654, BRF_ESS | BRF_PRG },
 };
@@ -47636,6 +48101,7 @@ struct BurnDriver BurnDrvnes_panicrestaurant = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Paperboy (USA)
 static struct BurnRomInfo nes_paperboyRomDesc[] = {
 	{ "Paperboy (USA).nes",          65552, 0xeb171d77, BRF_ESS | BRF_PRG },
 };
@@ -47653,6 +48119,7 @@ struct BurnDriver BurnDrvnes_paperboy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Paperboy 2 (USA)
 static struct BurnRomInfo nes_paperboy2RomDesc[] = {
 	{ "Paperboy 2 (USA).nes",          262160, 0xe02f3836, BRF_ESS | BRF_PRG },
 };
@@ -47860,7 +48327,7 @@ struct BurnDriver BurnDrvnes_peekaboopoker = {
 	"nes_peekaboopoker", NULL, NULL, NULL, "1991",
 	"Peek-A-Boo Poker (Unl)\0", NULL, "Panesian", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_CASINO, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_CARD, 0,
 	NESGetZipName, nes_peekaboopokerRomInfo, nes_peekaboopokerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -47901,6 +48368,7 @@ struct BurnDriver BurnDrvnes_pengusea = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Penguin-kun Wars (Japan)
 static struct BurnRomInfo nes_penguinkunwarsRomDesc[] = {
 	{ "Penguin-kun Wars (Japan).nes",          40976, 0x27229b16, BRF_ESS | BRF_PRG },
 };
@@ -47910,7 +48378,7 @@ STD_ROM_FN(nes_penguinkunwars)
 
 struct BurnDriver BurnDrvnes_penguinkunwars = {
 	"nes_penguinkunwars", NULL, NULL, NULL, "1985",
-	"Penguin-kun Wars (Japan)\0", NULL, "ASCII", "Miscellaneous",
+	"Penguin-kun Wars (Japan)\0", NULL, "ASCII Corp.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_BALLPADDLE, 0,
 	NESGetZipName, nes_penguinkunwarsRomInfo, nes_penguinkunwarsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -47918,6 +48386,7 @@ struct BurnDriver BurnDrvnes_penguinkunwars = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Perfect Bowling (Japan)
 static struct BurnRomInfo nes_perfectbowlingRomDesc[] = {
 	{ "Perfect Bowling (Japan).nes",          163856, 0x13f283ae, BRF_ESS | BRF_PRG },
 };
@@ -47935,6 +48404,7 @@ struct BurnDriver BurnDrvnes_perfectbowling = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Perman (Japan)
 static struct BurnRomInfo nes_permanRomDesc[] = {
 	{ "Perman (Japan).nes",          262160, 0x02dd2b01, BRF_ESS | BRF_PRG },
 };
@@ -47952,6 +48422,7 @@ struct BurnDriver BurnDrvnes_perman = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Perman Part 2 - Himitsu Kessha Madoodan o Taose! (Japan)
 static struct BurnRomInfo nes_permapar2RomDesc[] = {
 	{ "Perman Part 2 - Himitsu Kessha Madoodan o Taose! (Japan).nes",          393232, 0x687837c8, BRF_ESS | BRF_PRG },
 };
@@ -47969,6 +48440,7 @@ struct BurnDriver BurnDrvnes_permapar2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Pesterminator (USA)
 static struct BurnRomInfo nes_pesterminatorRomDesc[] = {
 	{ "Pesterminator (USA) (Unl).nes",          131088, 0x5cf70751, BRF_ESS | BRF_PRG },
 };
@@ -47978,7 +48450,7 @@ STD_ROM_FN(nes_pesterminator)
 
 struct BurnDriver BurnDrvnes_pesterminator = {
 	"nes_pesterminator", NULL, NULL, NULL, "1990",
-	"Pesterminator (USA) (Unl)\0", NULL, "Color Dreams", "Miscellaneous",
+	"Pesterminator (USA)\0", NULL, "Color Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_pesterminatorRomInfo, nes_pesterminatorRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -47986,6 +48458,7 @@ struct BurnDriver BurnDrvnes_pesterminator = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Peter Pan & The Pirates (USA)
 static struct BurnRomInfo nes_peterpanpirRomDesc[] = {
 	{ "Peter Pan & The Pirates (USA).nes",          196624, 0xd21e83bb, BRF_ESS | BRF_PRG },
 };
@@ -48003,6 +48476,7 @@ struct BurnDriver BurnDrvnes_peterpanpir = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Phantom Fighter (USA)
 static struct BurnRomInfo nes_phantomfighterRomDesc[] = {
 	{ "Phantom Fighter (USA).nes",          262160, 0x9dde4e60, BRF_ESS | BRF_PRG },
 };
@@ -48020,6 +48494,7 @@ struct BurnDriver BurnDrvnes_phantomfighter = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Pictionary (USA)
 static struct BurnRomInfo nes_pictionaryRomDesc[] = {
 	{ "Pictionary (USA).nes",          262160, 0xb1b1d1bb, BRF_ESS | BRF_PRG },
 };
@@ -48031,12 +48506,13 @@ struct BurnDriver BurnDrvnes_pictionary = {
 	"nes_pictionary", NULL, NULL, NULL, "1990",
 	"Pictionary (USA)\0", NULL, "LJN", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_PUZZLE | GBF_BOARD, 0,
 	NESGetZipName, nes_pictionaryRomInfo, nes_pictionaryRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Pin Bot (USA)
 static struct BurnRomInfo nes_pinbotRomDesc[] = {
 	{ "Pin Bot (USA).nes",          196624, 0x65050f34, BRF_ESS | BRF_PRG },
 };
@@ -48664,6 +49140,7 @@ struct BurnDriver BurnDrvnes_puzslot = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Puzznic (USA)
 static struct BurnRomInfo nes_puzznicRomDesc[] = {
 	{ "Puzznic (USA).nes",          65552, 0xa44a0927, BRF_ESS | BRF_PRG },
 };
@@ -48681,6 +49158,7 @@ struct BurnDriver BurnDrvnes_puzznic = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Pyokotan no Daimeiro (Japan)
 static struct BurnRomInfo nes_pyokonodaiRomDesc[] = {
 	{ "Pyokotan no Daimeiro (Japan).nes",          262160, 0x1bb879b0, BRF_ESS | BRF_PRG },
 };
@@ -48698,6 +49176,7 @@ struct BurnDriver BurnDrvnes_pyokonodai = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Pyramid (Unl)
 static struct BurnRomInfo nes_pyramidRomDesc[] = {
 	{ "Pyramid (Unl).nes",          24592, 0xafee5df1, BRF_ESS | BRF_PRG },
 };
@@ -48715,6 +49194,7 @@ struct BurnDriver BurnDrvnes_pyramid = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Pyramid II (Unl)
 static struct BurnRomInfo nes_pyramidiiRomDesc[] = {
 	{ "Pyramid II (Unl).nes",          81936, 0x36f1ad35, BRF_ESS | BRF_PRG },
 };
@@ -48732,6 +49212,7 @@ struct BurnDriver BurnDrvnes_pyramidii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Q Boy (Asia) (Unl)
 static struct BurnRomInfo nes_qboyRomDesc[] = {
 	{ "Q Boy (Asia) (Unl).nes",          262160, 0x2dce9f48, BRF_ESS | BRF_PRG },
 };
@@ -48749,6 +49230,7 @@ struct BurnDriver BurnDrvnes_qboy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Q-bert (USA)
 static struct BurnRomInfo nes_qbertRomDesc[] = {
 	{ "Q-bert (USA).nes",          65552, 0x8f992f3c, BRF_ESS | BRF_PRG },
 };
@@ -48762,23 +49244,6 @@ struct BurnDriver BurnDrvnes_qbert = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_qbertRomInfo, nes_qbertRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_qiwanRomDesc[] = {
-	{ "Qi Wang - Chinese Chess (China, MGC-001).nes",          98320, 0x5eef4729, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_qiwan)
-STD_ROM_FN(nes_qiwan)
-
-struct BurnDriver BurnDrvnes_qiwan = {
-	"nes_qiwan", NULL, NULL, NULL, "199?",
-	"Qi Wang - Chinese Chess (China, MGC-001)\0", NULL, "TXC Corp.", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
-	NESGetZipName, nes_qiwanRomInfo, nes_qiwanRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -49046,6 +49511,7 @@ struct BurnDriver BurnDrvnes_racketsrivals = {
 	SCREEN_WIDTH, SCREEN_HEIGHT_PAL, SCREEN_WIDTH, SCREEN_HEIGHT_PAL
 };
 
+// Rad Racer (USA)
 static struct BurnRomInfo nes_radracerRomDesc[] = {
 	{ "Rad Racer (USA).nes",          131088, 0x595daa35, BRF_ESS | BRF_PRG },
 };
@@ -49063,6 +49529,7 @@ struct BurnDriver BurnDrvnes_radracer = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rad Racer II (USA)
 static struct BurnRomInfo nes_radraceriiRomDesc[] = {
 	{ "Rad Racer II (USA).nes",          131088, 0x39d371ec, BRF_ESS | BRF_PRG },
 };
@@ -49080,6 +49547,7 @@ struct BurnDriver BurnDrvnes_radracerii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rad Racket - Deluxe Tennis II (USA)
 static struct BurnRomInfo nes_radracRomDesc[] = {
 	{ "Rad Racket - Deluxe Tennis II (USA).nes",          65552, 0xdb37c5b2, BRF_ESS | BRF_PRG },
 };
@@ -49089,7 +49557,7 @@ STD_ROM_FN(nes_radrac)
 
 struct BurnDriver BurnDrvnes_radrac = {
 	"nes_radrac", NULL, NULL, NULL, "1991",
-	"Rad Racket - Deluxe Tennis II (USA)\0", NULL, "AVE", "Miscellaneous",
+	"Rad Racket - Deluxe Tennis II (USA)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_radracRomInfo, nes_radracRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -49235,6 +49703,7 @@ struct BurnDriver BurnDrvnes_rallybike = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rambo (USA) (Rev A)
 static struct BurnRomInfo nes_ramboRomDesc[] = {
 	{ "Rambo (USA) (Rev A).nes",          131088, 0x7c9468d1, BRF_ESS | BRF_PRG },
 };
@@ -49252,6 +49721,7 @@ struct BurnDriver BurnDrvnes_rambo = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rampage (USA)
 static struct BurnRomInfo nes_rampageRomDesc[] = {
 	{ "Rampage (USA).nes",          196624, 0x628fe3c9, BRF_ESS | BRF_PRG },
 };
@@ -49269,6 +49739,7 @@ struct BurnDriver BurnDrvnes_rampage = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Rampart (USA)
 static struct BurnRomInfo nes_rampartRomDesc[] = {
 	{ "Rampart (USA).nes",          262160, 0x0cea6fca, BRF_ESS | BRF_PRG },
 };
@@ -49286,6 +49757,7 @@ struct BurnDriver BurnDrvnes_rampart = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Red Arremer II (Japan)
 static struct BurnRomInfo nes_redarremeriiRomDesc[] = {
 	{ "Red Arremer II (Japan).nes",          262160, 0x7998c426, BRF_ESS | BRF_PRG },
 };
@@ -49303,6 +49775,7 @@ struct BurnDriver BurnDrvnes_redarremerii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ren & Stimpy Show, The - Buckeroo$! (USA)
 static struct BurnRomInfo nes_renstishoRomDesc[] = {
 	{ "Ren & Stimpy Show, The - Buckeroo$! (USA).nes",          262160, 0xc319b1d1, BRF_ESS | BRF_PRG },
 };
@@ -49320,6 +49793,7 @@ struct BurnDriver BurnDrvnes_renstisho = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Renegade (USA)
 static struct BurnRomInfo nes_renegadeRomDesc[] = {
 	{ "Renegade (USA).nes",          131088, 0x935f5d29, BRF_ESS | BRF_PRG },
 };
@@ -49351,6 +49825,43 @@ struct BurnDriver BurnDrvnes_rescue = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_SHOOT | GBF_ADV, 0,
 	NESGetZipName, nes_rescueRomInfo, nes_rescueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ripple Island (Hack, English)
+// https://www.romhacking.net/translations/3769/
+static struct BurnRomInfo nes_ripislandRomDesc[] = {
+	{ "Ripple Island T-Eng (2018)(LIPEMCO! Translations).nes",          262160, 0x51f5e289, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ripisland)
+STD_ROM_FN(nes_ripisland)
+
+struct BurnDriver BurnDrvnes_ripisland = {
+	"nes_ripisland", NULL, NULL, NULL, "2018",
+	"Ripple Island (Hack, English)\0", NULL, "LIPEMCO! Translations", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_ripislandRomInfo, nes_ripislandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ripple Island (Japan)
+static struct BurnRomInfo nes_ripislandjRomDesc[] = {
+	{ "Ripple Island (J)(1988)(Sunsoft).nes",          131088, 0x7148c342, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ripislandj)
+STD_ROM_FN(nes_ripislandj)
+
+struct BurnDriver BurnDrvnes_ripislandj = {
+	"nes_ripislandj", "nes_ripisland", NULL, NULL, "1988",
+	"Ripple Island (Japan)\0", NULL, "Sunsoft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ADV, 0,
+	NESGetZipName, nes_ripislandjRomInfo, nes_ripislandjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -50064,24 +50575,6 @@ struct BurnDriver BurnDrvnes_scat = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Saint Saiya - Tian Ma Huan Xiang (China)
-static struct BurnRomInfo nes_saintsaitiamahuxiRomDesc[] = {
-	{ "Saint Saiya - Tian Ma Huan Xiang (China).nes",          2097168, 0x31f810f2, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_saintsaitiamahuxi)
-STD_ROM_FN(nes_saintsaitiamahuxi)
-
-struct BurnDriver BurnDrvnes_saintsaitiamahuxi = {
-	"nes_saintsaitiamahuxi", NULL, NULL, NULL, "200?",
-	"Saint Saiya - Tian Ma Huan Xiang (China)\0", NULL, "Unknown", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
-	NESGetZipName, nes_saintsaitiamahuxiRomInfo, nes_saintsaitiamahuxiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Saint Seiya - Ougon Densetsu (Japan)
 static struct BurnRomInfo nes_saintseiougdenjRomDesc[] = {
 	{ "Saint Seiya - Ougon Densetsu (Japan).nes",          262160, 0xe54ef7f0, BRF_ESS | BRF_PRG },
@@ -50220,7 +50713,7 @@ struct BurnDriver BurnDrvnes_sangokushiiihanou = {
 	"nes_sangokushiiihanou", NULL, NULL, NULL, "1992",
 	"Sangokushi II - Haou no Tairiku (Japan)\0", NULL, "Namco", "Miscellaneous",
 	L"Sangokushi II - Haou no Tairiku (Japan)\0\u4e09\u56fd\u5fd7\u2161 - \u8987\u738b\u306e\u5927\u9678\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_STRATEGY, 0,
 	NESGetZipName, nes_sangokushiiihanouRomInfo, nes_sangokushiiihanouRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -51101,6 +51594,7 @@ struct BurnDriver BurnDrvnes_soccelea = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Solar Jetman - Hunt for the Golden Warpship (USA)
 static struct BurnRomInfo nes_solarjetRomDesc[] = {
 	{ "Solar Jetman - Hunt for the Golden Warpship (USA).nes",          262160, 0x1c17ce33, BRF_ESS | BRF_PRG },
 };
@@ -51118,6 +51612,25 @@ struct BurnDriver BurnDrvnes_solarjet = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Solitaire (USA) (REV1.1)
+static struct BurnRomInfo nes_solitaireRomDesc[] = {
+	{ "Solitaire REV1.1 (U)(1992)(AVE).nes",          65552, 0x74aad703, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_solitaire)
+STD_ROM_FN(nes_solitaire)
+
+struct BurnDriver BurnDrvnes_solitaire = {
+	"nes_solitaire", NULL, NULL, NULL, "1992",
+	"Solitaire (USA) (REV1.1)\0", NULL, "American Video Entertainment", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_CARD, 0,
+	NESGetZipName, nes_solitaireRomInfo, nes_solitaireRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Solomon's Key (USA)
 static struct BurnRomInfo nes_solomonskeyRomDesc[] = {
 	{ "Solomon's Key (USA).nes",          65552, 0x99773bc4, BRF_ESS | BRF_PRG },
 };
@@ -51135,6 +51648,7 @@ struct BurnDriver BurnDrvnes_solomonskey = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Solomon no Kagi (Japan)
 static struct BurnRomInfo nes_solomonskeyjRomDesc[] = {
 	{ "Solomon no Kagi (Jpn)(1986)(Tecmo).nes",          65552, 0x013ed497, BRF_ESS | BRF_PRG },
 };
@@ -51152,6 +51666,7 @@ struct BurnDriver BurnDrvnes_solomonskeyj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Solstice - Sanjigen Meikyuu no Kyoujuu (Japan)
 static struct BurnRomInfo nes_solsticeRomDesc[] = {
 	{ "Solstice (Japan).nes",          131088, 0x59bb08e7, BRF_ESS | BRF_PRG },
 };
@@ -51169,6 +51684,7 @@ struct BurnDriver BurnDrvnes_solstice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Solstice - The Quest for the Staff of Demnos (USA)
 static struct BurnRomInfo nes_solstRomDesc[] = {
 	{ "Solstice - The Quest for the Staff of Demnos (USA).nes",          131088, 0x1d60732e, BRF_ESS | BRF_PRG },
 };
@@ -51186,6 +51702,7 @@ struct BurnDriver BurnDrvnes_solst = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Son Son (Japan)
 static struct BurnRomInfo nes_sonsonRomDesc[] = {
 	{ "Son Son (Japan).nes",          40976, 0xf7c8f42d, BRF_ESS | BRF_PRG },
 };
@@ -51544,6 +52061,7 @@ struct BurnDriver BurnDrvnes_stanley = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Star Force (USA)
 static struct BurnRomInfo nes_starforceRomDesc[] = {
 	{ "Star Force (USA).nes",          65552, 0xb3cf12b8, BRF_ESS | BRF_PRG },
 };
@@ -51561,6 +52079,7 @@ struct BurnDriver BurnDrvnes_starforce = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Star Gate (Japan)
 static struct BurnRomInfo nes_stargateRomDesc[] = {
 	{ "Star Gate (Japan).nes",          24592, 0x2b265d30, BRF_ESS | BRF_PRG },
 };
@@ -51578,6 +52097,44 @@ struct BurnDriver BurnDrvnes_stargate = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hoshi wo Miru Hito (Japan)
+static struct BurnRomInfo nes_hosmiruhitoRomDesc[] = {
+	{ "Hoshi wo Miru Hito (J)(1987)(Hot-B).nes",          131088, 0x0ec30976, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hosmiruhito)
+STD_ROM_FN(nes_hosmiruhito)
+
+struct BurnDriver BurnDrvnes_hosmiruhito = {
+	"nes_hosmiruhito", "nes_stargazers", NULL, NULL, "1987",
+	"Hoshi wo Miru Hito (Japan)\0", NULL, "Hot-B", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_hosmiruhitoRomInfo, nes_hosmiruhitoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Stargazers (Hack, English)
+// https://www.romhacking.net/translations/7105/
+static struct BurnRomInfo nes_stargazersRomDesc[] = {
+	{ "Stargazers T-Eng (2023)(brandnewscooby).nes",          262160, 0x06feb35c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_stargazers)
+STD_ROM_FN(nes_stargazers)
+
+struct BurnDriver BurnDrvnes_stargazers = {
+	"nes_stargazers", NULL, NULL, NULL, "2023",
+	"Stargazers (Hack, English)\0", NULL, "brandnewscooby", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_stargazersRomInfo, nes_stargazersRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Star Luster (Japan)
 static struct BurnRomInfo nes_starlusterRomDesc[] = {
 	{ "Star Luster (Japan).nes",          40976, 0xd8604b5a, BRF_ESS | BRF_PRG },
 };
@@ -51595,6 +52152,7 @@ struct BurnDriver BurnDrvnes_starluster = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Star Soldier (USA)
 static struct BurnRomInfo nes_starsoldierRomDesc[] = {
 	{ "Star Soldier (USA).nes",          65552, 0x69004001, BRF_ESS | BRF_PRG },
 };
@@ -51612,6 +52170,7 @@ struct BurnDriver BurnDrvnes_starsoldier = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Star Trek - 25th Anniversary (USA)
 static struct BurnRomInfo nes_startre25tannRomDesc[] = {
 	{ "Star Trek - 25th Anniversary (USA).nes",          524304, 0x76356073, BRF_ESS | BRF_PRG },
 };
@@ -51629,6 +52188,7 @@ struct BurnDriver BurnDrvnes_startre25tann = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Star Trek - The Next Generation (USA)
 static struct BurnRomInfo nes_startrenexgenRomDesc[] = {
 	{ "Star Trek - The Next Generation (USA).nes",          131088, 0x268202ae, BRF_ESS | BRF_PRG },
 };
@@ -51646,6 +52206,7 @@ struct BurnDriver BurnDrvnes_startrenexgen = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Star Trek V - The Final Frontier (Prototype)
 static struct BurnRomInfo nes_startrevfinfrRomDesc[] = {
 	{ "Star Trek V - The Final Frontier (Prototype).nes",          262160, 0x49365548, BRF_ESS | BRF_PRG },
 };
@@ -51663,6 +52224,7 @@ struct BurnDriver BurnDrvnes_startrevfinfr = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Star Voyager (USA)
 static struct BurnRomInfo nes_starvoyagerRomDesc[] = {
 	{ "Star Voyager (USA).nes",          65552, 0x686d4669, BRF_ESS | BRF_PRG },
 };
@@ -51897,6 +52459,7 @@ struct BurnDriver BurnDrvnes_sted = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Stick Hunter - Exciting Ice Hockey (Japan)
 static struct BurnRomInfo nes_stickhunRomDesc[] = {
 	{ "Stick Hunter - Exciting Ice Hockey (Japan).nes",          131088, 0x67495228, BRF_ESS | BRF_PRG },
 };
@@ -51914,6 +52477,7 @@ struct BurnDriver BurnDrvnes_stickhun = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Stinger (USA)
 static struct BurnRomInfo nes_stingerRomDesc[] = {
 	{ "Stinger (USA).nes",          131088, 0xf6b9629f, BRF_ESS | BRF_PRG },
 };
@@ -52079,7 +52643,7 @@ struct BurnDriver BurnDrvnes_sugorquej = {
 	"nes_sugorquej", "nes_sugorque", NULL, NULL, "1991",
 	"Sugoro Quest - Dice no Senshitachi (Japan)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
 	NESGetZipName, nes_sugorquejRomInfo, nes_sugorquejRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -52097,7 +52661,7 @@ struct BurnDriver BurnDrvnes_sugorque = {
 	"nes_sugorque", NULL, NULL, NULL, "2007",
 	"Sugoro Quest - Dice no Senshitachi (Hack, English)\0", NULL, "AlanMidas", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG | GBF_BOARD, 0,
 	NESGetZipName, nes_sugorqueRomInfo, nes_sugorqueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -53075,7 +53639,7 @@ struct BurnDriver BurnDrvnes_takesnosenfuu = {
 	"nes_takesnosenfuu", NULL, NULL, NULL, "1988",
 	"Takeshi no Sengoku Fuuunji (Japan)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_takesnosenfuuRomInfo, nes_takesnosenfuuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
@@ -53331,6 +53895,7 @@ struct BurnDriver BurnDrvnes_tecmocup = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tecmo NBA Basketball (USA)
 static struct BurnRomInfo nes_tecmonbabasRomDesc[] = {
 	{ "Tecmo NBA Basketball (USA).nes",          393232, 0xd31d7ab8, BRF_ESS | BRF_PRG },
 };
@@ -53348,6 +53913,7 @@ struct BurnDriver BurnDrvnes_tecmonbabas = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tecmo Super Bowl (USA)
 static struct BurnRomInfo nes_tecmosuperbowlRomDesc[] = {
 	{ "Tecmo Super Bowl (USA).nes",          393232, 0x1f7c5660, BRF_ESS | BRF_PRG },
 };
@@ -53365,6 +53931,7 @@ struct BurnDriver BurnDrvnes_tecmosuperbowl = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tecmo World Cup Soccer (Japan)
 static struct BurnRomInfo nes_tecmoworcupsocRomDesc[] = {
 	{ "Tecmo World Cup Soccer (Japan).nes",          131088, 0x19f24980, BRF_ESS | BRF_PRG },
 };
@@ -53382,6 +53949,7 @@ struct BurnDriver BurnDrvnes_tecmoworcupsoc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tecmo World Wrestling (USA)
 static struct BurnRomInfo nes_tecmoworwreRomDesc[] = {
 	{ "Tecmo World Wrestling (USA).nes",          262160, 0x12444337, BRF_ESS | BRF_PRG },
 };
@@ -54114,57 +54682,6 @@ struct BurnDriver BurnDrvnes_timezone = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-static struct BurnRomInfo nes_tinasadvisliiiRomDesc[] = {
-	{ "Tina's Advanture Island III (USA).nes",          262160, 0x774a6c79, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_tinasadvisliii)
-STD_ROM_FN(nes_tinasadvisliii)
-
-struct BurnDriver BurnDrvnes_tinasadvisliii = {
-	"nes_tinasadvisliii", "nes_advenisl3", NULL, NULL, "2019",
-	"Tina's Advanture Island III (Hack)\0", NULL, "Zynk Oxhyde", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_tinasadvisliiiRomInfo, nes_tinasadvisliiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_tinasadvislRomDesc[] = {
-	{ "Tina's Adventure Island (USA).nes",          65552, 0x6663d1aa, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_tinasadvisl)
-STD_ROM_FN(nes_tinasadvisl)
-
-struct BurnDriver BurnDrvnes_tinasadvisl = {
-	"nes_tinasadvisl", "nes_adventureisland", NULL, NULL, "2019",
-	"Tina's Adventure Island (Hack)\0", NULL, "Zynk Oxhyde", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_tinasadvislRomInfo, nes_tinasadvislRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-static struct BurnRomInfo nes_tinasadvisliiRomDesc[] = {
-	{ "Tina's Adventure Island II (USA).nes",          262160, 0x28b36ecc, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_tinasadvislii)
-STD_ROM_FN(nes_tinasadvislii)
-
-struct BurnDriver BurnDrvnes_tinasadvislii = {
-	"nes_tinasadvislii", "nes_advenislii", NULL, NULL, "2019",
-	"Tina's Adventure Island II (Hack)\0", NULL, "Zynk Oxhyde", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
-	NESGetZipName, nes_tinasadvisliiRomInfo, nes_tinasadvisliiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 static struct BurnRomInfo nes_tinytooadvRomDesc[] = {
 	{ "Tiny Toon Adventures (USA).nes",          262160, 0xb34ed396, BRF_ESS | BRF_PRG },
 };
@@ -54284,6 +54801,7 @@ struct BurnDriver BurnDrvnes_totheearth = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Toki (USA)
 static struct BurnRomInfo nes_tokiRomDesc[] = {
 	{ "Toki (USA).nes",          393232, 0x5bd50be6, BRF_ESS | BRF_PRG },
 };
@@ -54347,7 +54865,7 @@ STD_ROM_FN(nes_tokorsannomammosemo)
 
 struct BurnDriver BurnDrvnes_tokorsannomammosemo = {
 	"nes_tokorsannomammosemo", NULL, NULL, NULL, "1987",
-	"Tokoro-san no Mamoru mo Semeru mo (Japan)\0", NULL, "Epic / Sony Records", "Miscellaneous",
+	"Tokoro-san no Mamoru mo Semeru mo (Japan)\0", NULL, "Epic/Sony Records", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_tokorsannomammosemoRomInfo, nes_tokorsannomammosemoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -54819,6 +55337,7 @@ struct BurnDriver BurnDrvnes_uchuukeisdf = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Uchuusen Cosmo Carrier (Japan)
 static struct BurnRomInfo nes_uchuucoscarRomDesc[] = {
 	{ "Uchuusen Cosmo Carrier (Japan).nes",          262160, 0x9298943a, BRF_ESS | BRF_PRG },
 };
@@ -54836,6 +55355,7 @@ struct BurnDriver BurnDrvnes_uchuucoscar = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Ufouria - The Saga (Euro)
 static struct BurnRomInfo nes_ufouriaRomDesc[] = {
 	{ "Ufouria - The Saga (Europe).nes",          262160, 0x6453f65e, BRF_ESS | BRF_PRG },
 };
@@ -54845,7 +55365,7 @@ STD_ROM_FN(nes_ufouria)
 
 struct BurnDriver BurnDrvnes_ufouria = {
 	"nes_ufouria", NULL, NULL, NULL, "1992",
-	"Ufouria - The Saga (Europe)\0", NULL, "Sunsoft", "Miscellaneous",
+	"Ufouria - The Saga (Euro)\0", NULL, "Sunsoft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ADV, 0,
 	NESGetZipName, nes_ufouriaRomInfo, nes_ufouriaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -54935,7 +55455,7 @@ STD_ROM_FN(nes_ultimleasoci)
 
 struct BurnDriver BurnDrvnes_ultimleasoci = {
 	"nes_ultimleasoci", "nes_ultimleasoc", NULL, NULL, "1991",
-	"Ultimate League Soccer (Italy)\0", NULL, "AVE", "Miscellaneous",
+	"Ultimate League Soccer (Italy)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
 	NESGetZipName, nes_ultimleasociRomInfo, nes_ultimleasociRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -54953,7 +55473,7 @@ STD_ROM_FN(nes_ultimleasoc)
 
 struct BurnDriver BurnDrvnes_ultimleasoc = {
 	"nes_ultimleasoc", NULL, NULL, NULL, "1991",
-	"Ultimate League Soccer (USA)\0", NULL, "AVE", "Miscellaneous",
+	"Ultimate League Soccer (USA)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
 	NESGetZipName, nes_ultimleasocRomInfo, nes_ultimleasocRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -54961,44 +55481,7 @@ struct BurnDriver BurnDrvnes_ultimleasoc = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Ultimate Mortal Kombat 3 (Hack)
-// https://www.romhacking.net/hacks/4052/
-static struct BurnRomInfo nes_ultimmorkom3hRomDesc[] = {
-	{ "Ultimate Mortal Kombat 3 (Hack).nes",          2097168, 0xa0a183e6, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ultimmorkom3h)
-STD_ROM_FN(nes_ultimmorkom3h)
-
-struct BurnDriver BurnDrvnes_ultimmorkom3h = {
-	"nes_ultimmorkom3h", "nes_ultimmorkom3", NULL, NULL, "2020",
-	"Ultimate Mortal Kombat 3 (Hack)\0", NULL, "Vasil", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
-	NESGetZipName, nes_ultimmorkom3hRomInfo, nes_ultimmorkom3hRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Ultimate Mortal Kombat 3 (Unl)
-static struct BurnRomInfo nes_ultimmorkom3RomDesc[] = {
-	{ "Ultimate Mortal Kombat 3 (Unl).nes",          1048592, 0xc9495564, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ultimmorkom3)
-STD_ROM_FN(nes_ultimmorkom3)
-
-struct BurnDriver BurnDrvnes_ultimmorkom3 = {
-	"nes_ultimmorkom3", NULL, NULL, NULL, "1996",
-	"Ultimate Mortal Kombat 3 (Unl)\0", NULL, "Ka Sheng", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
-	NESGetZipName, nes_ultimmorkom3RomInfo, nes_ultimmorkom3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Ultimate Stuntman, The (USA) (Unl)
+// Ultimate Stuntman, The (USA)
 static struct BurnRomInfo nes_ultimstuRomDesc[] = {
 	{ "Ultimate Stuntman, The (USA) (Unl).nes",          262160, 0xe8ee7ddc, BRF_ESS | BRF_PRG },
 };
@@ -55008,10 +55491,28 @@ STD_ROM_FN(nes_ultimstu)
 
 struct BurnDriver BurnDrvnes_ultimstu = {
 	"nes_ultimstu", NULL, NULL, NULL, "1991",
-	"Ultimate Stuntman, The (USA) (Unl)\0", NULL, "Camerica", "Miscellaneous",
+	"Ultimate Stuntman, The (USA)\0", NULL, "Camerica", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_RACING | GBF_VERSHOOT, 0,
 	NESGetZipName, nes_ultimstuRomInfo, nes_ultimstuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Ultraman Club - Kaijuu Daikessen!! (Japan)
+static struct BurnRomInfo nes_ultraclubgkbjRomDesc[] = {
+	{ "Ultraman Club - Kaijuu Daikessen!! (Japan)(1992)(Angel - Bandai).nes",          393232, 0x45fdb281, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ultraclubgkbj)
+STD_ROM_FN(nes_ultraclubgkbj)
+
+struct BurnDriver BurnDrvnes_ultraclubgkbj = {
+	"nes_ultraclubgkbj", "nes_ultraclubgkb", NULL, NULL, "1992",
+	"Ultraman Club - Kaijuu Daikessen!! (Japan)\0", NULL, "Angel - Bandai", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	NESGetZipName, nes_ultraclubgkbjRomInfo, nes_ultraclubgkbjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -55031,24 +55532,6 @@ struct BurnDriver BurnDrvnes_ultraclubgkb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
 	NESGetZipName, nes_ultraclubgkbRomInfo, nes_ultraclubgkbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// Ultraman Club - Kaijuu Daikessen!! (Japan)
-static struct BurnRomInfo nes_ultraclubgkbjRomDesc[] = {
-	{ "Ultraman Club - Kaijuu Daikessen!! (Japan)(1992)(Angel - Bandai).nes",          393232, 0x45fdb281, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_ultraclubgkbj)
-STD_ROM_FN(nes_ultraclubgkbj)
-
-struct BurnDriver BurnDrvnes_ultraclubgkbj = {
-	"nes_ultraclubgkbj", "nes_ultraclubgkb", NULL, NULL, "1992",
-	"Ultraman Club - Kaijuu Daikessen!! (Japan)\0", NULL, "Angel - Bandai", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RUNGUN | GBF_PLATFORM, 0,
-	NESGetZipName, nes_ultraclubgkbjRomInfo, nes_ultraclubgkbjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -55179,24 +55662,6 @@ struct BurnDriver BurnDrvnes_urbanchampion = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Urban Strike (Unl)
-static struct BurnRomInfo nes_urbanstrikeRomDesc[] = {
-	{ "Urban Strike (USA).nes",          262160, 0xfd02591b, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_urbanstrike)
-STD_ROM_FN(nes_urbanstrike)
-
-struct BurnDriver BurnDrvnes_urbanstrike = {
-	"nes_urbanstrike", NULL, NULL, NULL, "1995",
-	"Urban Strike (Unl)\0", NULL, "Unknown", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
-	NESGetZipName, nes_urbanstrikeRomInfo, nes_urbanstrikeRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
 // Urusei Yatsura - Lum no Wedding Bell (Japan)
 static struct BurnRomInfo nes_uruseyatRomDesc[] = {
 	{ "Urusei Yatsura - Lum no Wedding Bell (Japan).nes",          65552, 0x7516a5b4, BRF_ESS | BRF_PRG },
@@ -55211,6 +55676,42 @@ struct BurnDriver BurnDrvnes_uruseyat = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_uruseyatRomInfo, nes_uruseyatRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Ushio to Tora - Shinen no Taiyou (Japan)
+static struct BurnRomInfo nes_ushiotorajRomDesc[] = {
+	{ "Ushio to Tora - Shinen no Taiyou (J)(1993)(Yutaka).nes",          393232, 0x7aa8f7d0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ushiotoraj)
+STD_ROM_FN(nes_ushiotoraj)
+
+struct BurnDriver BurnDrvnes_ushiotoraj = {
+	"nes_ushiotoraj", "nes_ushiotora", NULL, NULL, "1993",
+	"Ushio to Tora - Shinen no Taiyou (Japan)\0", NULL, "Yutaka", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_ushiotorajRomInfo, nes_ushiotorajRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+//Ushio to Tora - Shinen no Taiyou (Hack, English)
+static struct BurnRomInfo nes_ushiotoraRomDesc[] = {
+	{ "Ushio to Tora - Shinen no Taiyou T-Eng (2022)(BlackPaladin).nes",          393232, 0x9472f0af, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ushiotora)
+STD_ROM_FN(nes_ushiotora)
+
+struct BurnDriver BurnDrvnes_ushiotora = {
+	"nes_ushiotora", NULL, NULL, NULL, "2022",
+	"Ushio to Tora - Shinen no Taiyou (Hack, English)\0", NULL, "BlackPaladin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
+	NESGetZipName, nes_ushiotoraRomInfo, nes_ushiotoraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -55297,7 +55798,7 @@ STD_ROM_FN(nes_venicbeavol)
 
 struct BurnDriver BurnDrvnes_venicbeavol = {
 	"nes_venicbeavol", NULL, NULL, NULL, "1991",
-	"Venice Beach Volleyball (Unl)\0", NULL, "AVE", "Miscellaneous",
+	"Venice Beach Volleyball (Unl)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_SPORTSMISC, 0,
 	NESGetZipName, nes_venicbeavolRomInfo, nes_venicbeavolRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -55305,6 +55806,7 @@ struct BurnDriver BurnDrvnes_venicbeavol = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Vice - Project Doom (USA)
 static struct BurnRomInfo nes_viceRomDesc[] = {
 	{ "Vice - Project Doom (USA).nes",          262160, 0x5fa46034, BRF_ESS | BRF_PRG },
 };
@@ -55322,6 +55824,25 @@ struct BurnDriver BurnDrvnes_vice = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Vindicators (USA) (Prototype)
+static struct BurnRomInfo nes_vindicatorsRomDesc[] = {
+	{ "Vindicators (U)(Proto)(1988)(Tengen).nes",          98320, 0xcb2ef149, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_vindicators)
+STD_ROM_FN(nes_vindicators)
+
+struct BurnDriver BurnDrvnes_vindicators = {
+	"nes_vindicators", NULL, NULL, NULL, "1988",
+	"Vindicators (USA) (Prototype)\0", NULL, "Tengen", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_RUNGUN, 0,
+	NESGetZipName, nes_vindicatorsRomInfo, nes_vindicatorsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Volguard II (Japan)
 static struct BurnRomInfo nes_volguardiiRomDesc[] = {
 	{ "Volguard II (Japan).nes",          40976, 0x1a935610, BRF_ESS | BRF_PRG },
 };
@@ -55339,6 +55860,7 @@ struct BurnDriver BurnDrvnes_volguardii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Volleyball (USA)
 static struct BurnRomInfo nes_volleyballRomDesc[] = {
 	{ "Volleyball (USA).nes",          40976, 0xc0056ceb, BRF_ESS | BRF_PRG },
 };
@@ -55546,7 +56068,7 @@ STD_ROM_FN(nes_wallybeanogan)
 
 struct BurnDriver BurnDrvnes_wallybeanogan = {
 	"nes_wallybeanogan", NULL, NULL, NULL, "1990",
-	"Wally Bear & the No Gang (Unl)\0", NULL, "AVE", "Miscellaneous",
+	"Wally Bear & the No Gang (Unl)\0", NULL, "American Video Entertainment", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_wallybeanoganRomInfo, nes_wallybeanoganRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -55897,6 +56419,7 @@ struct BurnDriver BurnDrvnes_wintergames = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Wit's (Japan)
 static struct BurnRomInfo nes_witsRomDesc[] = {
 	{ "Wit's (Japan).nes",          131088, 0x82b8b8be, BRF_ESS | BRF_PRG },
 };
@@ -55914,6 +56437,7 @@ struct BurnDriver BurnDrvnes_wits = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Wizards & Warriors (USA)
 static struct BurnRomInfo nes_wizarwarRomDesc[] = {
 	{ "Wizards & Warriors (USA).nes",          131088, 0xd6fc36aa, BRF_ESS | BRF_PRG },
 };
@@ -55931,6 +56455,7 @@ struct BurnDriver BurnDrvnes_wizarwar = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Wizards & Warriors III - Kuros - Visions of Power (USA)
 static struct BurnRomInfo nes_wizarwariiiRomDesc[] = {
 	{ "Wizards & Warriors III - Kuros - Visions of Power (USA).nes",          262160, 0x4f505449, BRF_ESS | BRF_PRG },
 };
@@ -55948,6 +56473,7 @@ struct BurnDriver BurnDrvnes_wizarwariii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Wolverine (USA)
 static struct BurnRomInfo nes_wolverineRomDesc[] = {
 	{ "Wolverine (USA).nes",          262160, 0x1fd46615, BRF_ESS | BRF_PRG },
 };
@@ -55965,6 +56491,7 @@ struct BurnDriver BurnDrvnes_wolverine = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Woody Poko (Japan)
 static struct BurnRomInfo nes_woodypokoRomDesc[] = {
 	{ "Woody Poko (Japan).nes",          131088, 0x9eb1c3cc, BRF_ESS | BRF_PRG },
 };
@@ -55982,6 +56509,7 @@ struct BurnDriver BurnDrvnes_woodypoko = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// World Champ (USA)
 static struct BurnRomInfo nes_worldchampRomDesc[] = {
 	{ "World Champ (USA).nes",          262160, 0xaf00ed3f, BRF_ESS | BRF_PRG },
 };
@@ -55995,42 +56523,6 @@ struct BurnDriver BurnDrvnes_worldchamp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_worldchampRomInfo, nes_worldchampRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// World of Warcraft - Demon Hunter (China) (Unl)
-static struct BurnRomInfo nes_worldwarcRomDesc[] = {
-	{ "World of Warcraft - Demon Hunter (China).nes",          1048592, 0xc9644f6c, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_worldwarc)
-STD_ROM_FN(nes_worldwarc)
-
-struct BurnDriver BurnDrvnes_worldwarc = {
-	"nes_worldwarc", "nes_worldwar", NULL, NULL, "2008",
-	"World of Warcraft - Demon Hunter (China) (Unl)\0", NULL, "ShenZhen Nanjing Technology", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_RPG, 0,
-	NESGetZipName, nes_worldwarcRomInfo, nes_worldwarcRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
-	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
-	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
-};
-
-// World of Warcraft - Demon Hunter (Hack, English)
-static struct BurnRomInfo nes_worldwarRomDesc[] = {
-	{ "World of Warcraft - Demon Hunter (T-Eng).nes",          1048592, 0x45593e64, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(nes_worldwar)
-STD_ROM_FN(nes_worldwar)
-
-struct BurnDriver BurnDrvnes_worldwar = {
-	"nes_worldwar", NULL, NULL, NULL, "2020",
-	"World of Warcraft - Demon Hunter (Hack, English)\0", NULL, "pacnsacdave", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_RPG, 0,
-	NESGetZipName, nes_worldwarRomInfo, nes_worldwarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -56159,20 +56651,20 @@ struct BurnDriver BurnDrvnes_xexyz = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Xiao Hong Mao - Little Red Hood (China) (Unl)
-static struct BurnRomInfo nes_xiaohonmaoRomDesc[] = {
-	{ "Xiao Hong Mao - Little Red Hood (Ch).nes",          40976, 0xeb6df8e3, BRF_ESS | BRF_PRG },
+//Xybots (USA) (Prototype)
+static struct BurnRomInfo nes_xybotsRomDesc[] = {
+	{ "Xybots (proto)(1990)(Tengen).nes",          196624, 0x59dae478, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(nes_xiaohonmao)
-STD_ROM_FN(nes_xiaohonmao)
+STD_ROM_PICK(nes_xybots)
+STD_ROM_FN(nes_xybots)
 
-struct BurnDriver BurnDrvnes_xiaohonmao = {
-	"nes_xiaohonmao", NULL, NULL, NULL, "1989",
-	"Xiao Hong Mao - Little Red Hood (China) (Unl)\0", NULL, "Joy Van", "Miscellaneous",
+struct BurnDriver BurnDrvnes_xybots = {
+	"nes_xybots", NULL, NULL, NULL, "1990",
+	"Xybots (USA) (Prototype)\0", NULL, "Tengen", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
-	NESGetZipName, nes_xiaohonmaoRomInfo, nes_xiaohonmaoRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_NES, GBF_SHOOT | GBF_MAZE, 0,
+	NESGetZipName, nes_xybotsRomInfo, nes_xybotsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -56465,6 +56957,7 @@ struct BurnDriver BurnDrvnes_yumepenmon = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)
 static struct BurnRomInfo nes_yuuyuuhakfinRomDesc[] = {
 	{ "Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan).nes",          393232, 0x93b37bb3, BRF_ESS | BRF_PRG },
 };
@@ -56474,7 +56967,7 @@ STD_ROM_FN(nes_yuuyuuhakfin)
 
 struct BurnDriver BurnDrvnes_yuuyuuhakfin = {
 	"nes_yuuyuuhakfin", NULL, NULL, NULL, "1996",
-	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan) (Unl)\0", NULL, "N.T", "Miscellaneous",
+	"Yuu Yuu Hakusho Final - Makai Saikyou Retsuden (Japan)\0", NULL, "N.T", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_NES, GBF_VSFIGHT, 0,
 	NESGetZipName, nes_yuuyuuhakfinRomInfo, nes_yuuyuuhakfinRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -56482,6 +56975,7 @@ struct BurnDriver BurnDrvnes_yuuyuuhakfin = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zanac (USA)
 static struct BurnRomInfo nes_zanacRomDesc[] = {
 	{ "Zanac (USA).nes",          131088, 0x2165c0c2, BRF_ESS | BRF_PRG },
 };
@@ -56499,6 +56993,7 @@ struct BurnDriver BurnDrvnes_zanac = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zelda II - The Adventure of Link (USA)
 static struct BurnRomInfo nes_zeldaiiRomDesc[] = {
 	{ "Zelda II - The Adventure of Link (USA).nes",          262160, 0xe3c788b0, BRF_ESS | BRF_PRG },
 };
@@ -56516,6 +57011,7 @@ struct BurnDriver BurnDrvnes_zeldaii = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zen - Intergalactic Ninja (USA)
 static struct BurnRomInfo nes_zenRomDesc[] = {
 	{ "Zen - Intergalactic Ninja (USA).nes",          262160, 0xf2c4836f, BRF_ESS | BRF_PRG },
 };
@@ -56533,6 +57029,7 @@ struct BurnDriver BurnDrvnes_zen = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zhen Ben Xi You Ji (Asia) (Unl)
 static struct BurnRomInfo nes_zhenbenxiyoujiRomDesc[] = {
 	{ "Zhen Ben Xi You Ji (Asia) (Unl).nes",          393232, 0x301ce43a, BRF_ESS | BRF_PRG },
 };
@@ -56550,6 +57047,7 @@ struct BurnDriver BurnDrvnes_zhenbenxiyouji = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zippy Race (Japan)
 static struct BurnRomInfo nes_zippyraceRomDesc[] = {
 	{ "Zippy Race (Japan).nes",          24592, 0x6f0e4a40, BRF_ESS | BRF_PRG },
 };
@@ -56567,6 +57065,44 @@ struct BurnDriver BurnDrvnes_zippyrace = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zoids - Chuuou Tairiku no Tatakai (Japan)
+static struct BurnRomInfo nes_zoidsjRomDesc[] = {
+	{ "Zoids - Chuuou Tairiku no Tatakai (J)(1987)(Toshiba-EMI).nes",          131088, 0xe3d6a15a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zoidsj)
+STD_ROM_FN(nes_zoidsj)
+
+struct BurnDriver BurnDrvnes_zoidsj = {
+	"nes_zoidsj", "nes_zoids", NULL, NULL, "1987",
+	"Zoids - Chuuou Tairiku no Tatakai (Japan)\0", NULL, "Toshiba-EMI", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_zoidsjRomInfo, nes_zoidsjRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Zoids - Battle of Central Continent (Hack, English)
+// https://www.romhacking.net/translations/6845/
+static struct BurnRomInfo nes_zoidsRomDesc[] = {
+	{ "Zoids - Chuuou Tairiku no Tatakai T-Eng (2023)(Life With Matthew).nes",          131088, 0x1528e6c0, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_zoids)
+STD_ROM_FN(nes_zoids)
+
+struct BurnDriver BurnDrvnes_zoids = {
+	"nes_zoids", NULL, NULL, NULL, "2023",
+	"Zoids - Battle of Central Continent (Hack, English)\0", NULL, "Life With Matthew", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_ACTION | GBF_RPG, 0,
+	NESGetZipName, nes_zoidsRomInfo, nes_zoidsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Zombie Hunter (Japan)
 static struct BurnRomInfo nes_zombiehunterRomDesc[] = {
 	{ "Zombie Hunter (Japan).nes",          163856, 0xcc5a32d5, BRF_ESS | BRF_PRG },
 };
@@ -56584,6 +57120,7 @@ struct BurnDriver BurnDrvnes_zombiehunter = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zombie Nation (USA)
 static struct BurnRomInfo nes_zombienationRomDesc[] = {
 	{ "Zombie Nation (USA).nes",          262160, 0x29685f24, BRF_ESS | BRF_PRG },
 };
@@ -56601,6 +57138,7 @@ struct BurnDriver BurnDrvnes_zombienation = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Zunou Senkan Galg (Japan)
 static struct BurnRomInfo nes_zunousengalRomDesc[] = {
 	{ "Zunou Senkan Galg (Japan).nes",          40976, 0x12d83258, BRF_ESS | BRF_PRG },
 };
@@ -56617,3 +57155,4 @@ struct BurnDriver BurnDrvnes_zunousengal = {
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
+

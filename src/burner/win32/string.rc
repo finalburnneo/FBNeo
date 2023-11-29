@@ -242,6 +242,8 @@ BEGIN
     IDS_GENRE_RPG               "RPG"
     IDS_GENRE_SIM               "Simulator"
     IDS_GENRE_ADV               "Adventure"
+    IDS_GENRE_CARD              "Card Game"
+    IDS_GENRE_BOARD             "Board Game"
 
 	IDS_FAMILY					"Family"
 	IDS_FAMILY_MSLUG			"Metal Slug"

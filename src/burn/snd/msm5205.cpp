@@ -61,6 +61,7 @@ struct _MSM5205_state
 	INT32 streampos;
 
 	INT32 diff_lookup[49*16];
+	BIQ biquad;
 };
 
 static INT16 *stream[MAX_MSM5205];
@@ -72,8 +73,6 @@ static void MSM5205_playmode(INT32 chip, INT32 select);
 static const INT32 index_shift[8] = { -1, -1, -1, -1, 2, 4, 6, 8 };
 
 static UINT8 *scanline_table = NULL;
-
-static BIQ biquad;
 
 static void ComputeTables(INT32 chip)
 {
@@ -246,7 +245,7 @@ void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 	
 	for (INT32 i = 0; i < len; i++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
-		INT32 source_sample = (voice->lpfilter) ? biquad.filter(source[i]) : source[i];
+		INT32 source_sample = (voice->lpfilter) ? voice->biquad.filter(source[i]) : source[i];
 
 		if (voice->use_seperate_vols) {
 			nLeftSample += (INT32)(source_sample * voice->left_volume);
@@ -300,7 +299,7 @@ void MSM5205Reset()
 		MSM5205_playmode(chip,voice->select);
 		voice->streampos = 0;
 
-		if (chip == 0) biquad.reset();
+		voice->biquad.reset();
 	}
 }
 
@@ -335,7 +334,7 @@ void MSM5205Init(INT32 chip, INT32 (*stream_sync)(INT32), INT32 clock, void (*vc
 	
 	nNumChips = chip;
 
-	biquad.init(FILT_LOWPASS, nBurnSoundRate, 2000.00, 0.929, 0);
+	voice->biquad.init(FILT_LOWPASS, nBurnSoundRate, 2000.00, 0.929, 0);
 }
 
 void MSM5205SetRoute(INT32 chip, double nVolume, INT32 nRouteDir)
@@ -401,7 +400,7 @@ void MSM5205Exit()
 
 		BurnFree (stream[chip]);
 
-		if (chip == 0) biquad.exit();
+		voice->biquad.exit();
 	}
 
 	BurnFree(scanline_table);

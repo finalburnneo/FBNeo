@@ -44649,7 +44649,7 @@ static struct BurnRomInfo SpecSeraphimaptRomDesc[] = {
 STDROMPICKEXT(SpecSeraphimapt, SpecSeraphimapt, Spec128)
 STD_ROM_FN(SpecSeraphimapt)
 
-struct BurnDriver BurnSpecSeraphimafpt = {
+struct BurnDriver BurnSpecSeraphimapt = {
 	"spec_seraphimapt", "spec_seraphima", "spec_spec128", NULL, "2023",
 	"Seraphima Final Version (Portuguese) (128K) (HB)\0", NULL, "Zosya Entertainment", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,

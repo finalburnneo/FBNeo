@@ -2116,10 +2116,10 @@ struct BurnDriver BurnDrvRallyxeg = {
 	"rallyxeg", "rallyx", NULL, "rallyx", "1981",
 	"Rally X (Video Game bootleg)\0", NULL, "bootleg (Video Game / Electrogame)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxegRomInfo, RallyxegRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, RallyxegInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
-	NULL, 260, 288, 224, 4, 3
+	NULL, 260, 224, 288, 3, 4
 };
 
 struct BurnDriver BurnDrvDngrtrck = {

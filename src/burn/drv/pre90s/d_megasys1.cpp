@@ -5687,7 +5687,7 @@ static struct BurnRomInfo Street64RomDesc[] = {
 	{ "64th_08.rom",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
 	{ "64th_07.rom",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mo-91009.mcu",	0x01000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
+	{ "mo-91009.mcu",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
 
 	{ "64th_01.rom",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 
@@ -5739,7 +5739,7 @@ static struct BurnRomInfo Street64jRomDesc[] = {
 	{ "64th_08.rom",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
 	{ "64th_07.rom",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mo-91009.mcu",	0x01000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
+	{ "mo-91009.mcu",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
 
 	{ "64th_01.rom",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 
@@ -5780,7 +5780,7 @@ static struct BurnRomInfo Street64jaRomDesc[] = {
 	{ "64th_08.rom",	0x10000, 0x632be0c1, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
 	{ "64th_07.rom",	0x10000, 0x13595d01, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mo-91009.mcu",	0x01000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
+	{ "mo-91009.mcu",	0x04000, 0xc6f509ac, 0 | BRF_OPT },           //  4 MCU Code
 
 	{ "64th_01.rom",	0x80000, 0x06222f90, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 
@@ -5821,7 +5821,7 @@ static struct BurnRomInfo bigstrikRomDesc[] = {
 	{ "91105v10.8",		0x10000, 0x7dd69ece, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
 	{ "91105v10.7",		0x10000, 0xbc2c1508, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mo-91021.mcu",	0x01000, 0xdbda258a, 0 | BRF_OPT },           //  4 MCU Code
+	{ "mo-91021.mcu",	0x04000, 0xdbda258a, 0 | BRF_OPT },           //  4 MCU Code
 
 	{ "91021-01.1",		0x80000, 0xf1945858, 3 | BRF_GRA },           //  5 Tilemap #0 Tiles
 

@@ -161,24 +161,24 @@ static void DisplayFPSInit()
 {
 	nDoFPS = 0;
 	fpstimer = 0;
-	nPreviousFrames = nFramesRendered;
+	nPreviousFrames = (bAppDoFast) ? nFramesEmulated : nFramesRendered;
 }
 
 static void DisplayFPS()
 {
+	const int nFPSTotal = (bAppDoFast) ? nFramesEmulated : nFramesRendered;
+
 	TCHAR fpsstring[8];
 	time_t temptime = clock();
-	double fps = (double)(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
-	if (bAppDoFast) {
-		fps *= nFastSpeed+1;
-	}
+	double fps = (double)(nFPSTotal - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
+
 	_sntprintf(fpsstring, 7, _T("%2.2lf"), fps);
 	if (fpstimer && temptime - fpstimer>0) { // avoid strange fps values
 		VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
 	}
 
 	fpstimer = temptime;
-	nPreviousFrames = nFramesRendered;
+	nPreviousFrames = nFPSTotal;
 }
 
 // define this function somewhere above RunMessageLoop()
@@ -301,7 +301,7 @@ int RunFrame(int bDraw, int bPause)
 		if (bShowFPS) {
 			if (nDoFPS < nFramesRendered) {
 				DisplayFPS();
-				nDoFPS = nFramesRendered + 30;
+				nDoFPS = nFramesRendered + ((bAppDoFast) ? 15 : 30);
 			}
 		}
 

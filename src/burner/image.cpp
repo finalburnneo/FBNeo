@@ -489,8 +489,8 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		if (!ret) bprintf(0, _T("palette entries: %u\n"), plte.n_entries);
 #endif
 
-		size_t image_size, image_width_bytes;
-		int fmt = (ihdr.color_type == SPNG_COLOR_TYPE_INDEXED) ? SPNG_FMT_RGB8 : SPNG_FMT_PNG;
+		size_t image_size = 0, image_width_bytes = 0;
+		int fmt = SPNG_FMT_RGB8;
 
 		ret = spng_decoded_image_size(ctx, fmt, &image_size);
 		ret = spng_decode_image(ctx, NULL, 0, fmt, SPNG_DECODE_PROGRESSIVE);

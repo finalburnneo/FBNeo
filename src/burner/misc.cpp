@@ -344,6 +344,16 @@ TCHAR* DecorateGenreInfo()
 			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
 		}
 
+		if (nGenre & GBF_CARD) {
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_CARD, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
+		}
+
+		if (nGenre & GBF_BOARD) {
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), FBALoadStringEx(hAppInst, IDS_GENRE_BOARD, true));
+			_stprintf(szDecoratedGenre + _tcslen(szDecoratedGenre), _T(", "));
+		}
+
 		szDecoratedGenre[_tcslen(szDecoratedGenre) - 2] = _T('\0');
 	}
 

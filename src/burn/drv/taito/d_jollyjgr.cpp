@@ -732,7 +732,7 @@ struct BurnDriver BurnDrvFspiderb = {
 	"fspiderb", NULL, NULL, NULL, "1981",
 	"Frog & Spiders (bootleg?)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_TAITO, GBF_VERSHOOT, 0,
 	NULL, fspiderbRomInfo, fspiderbRomName, NULL, NULL, NULL, NULL, FspiderInputInfo, FspiderDIPInfo,
 	FspiderbInit, DrvExit, DrvFrame, FspiderbDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4

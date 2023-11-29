@@ -3872,21 +3872,21 @@ STD_ROM_PICK(Driveout)
 STD_ROM_FN(Driveout)
 
 static struct BurnRomInfo FinalbRomDesc[] = {
-	{ "b82-09.10",          0x20000, 0x632f1ecd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "b82-17.11",          0x20000, 0xe91b2ec9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b82-09.ic23",        0x20000, 0x632f1ecd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b82-17.ic11",        0x20000, 0xe91b2ec9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 
-	{ "b82_10.16",          0x10000, 0xa38aaaed, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "b82_10.ic5",         0x10000, 0xa38aaaed, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 
-	{ "b82-06.19",          0x20000, 0xfc450a25, BRF_GRA | TAITO_CHARS_BYTESWAP },
-	{ "b82-07.18",          0x20000, 0xec3df577, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "b82-06.ic33",        0x20000, 0xfc450a25, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "b82-07.ic34",        0x20000, 0xec3df577, BRF_GRA | TAITO_CHARS_BYTESWAP },
 
-	{ "b82-04.4",           0x80000, 0x6346f98e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
-	{ "b82-03.5",           0x80000, 0xdaa11561, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
-	{ "b82-05.3",           0x80000, 0xaa90b93a, BRF_GRA | TAITO_SPRITESA },
+	{ "b82-04.ic8",         0x80000, 0x6346f98e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "b82-03.ic9",         0x80000, 0xdaa11561, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "b82-05.ic7",         0x80000, 0xaa90b93a, BRF_GRA | TAITO_SPRITESA },
 
-	{ "b82-02.1",           0x80000, 0x5dd06bdd, BRF_SND | TAITO_YM2610A },
+	{ "b82-02.ic1",         0x80000, 0x5dd06bdd, BRF_SND | TAITO_YM2610A },
 
-	{ "b82-01.2",           0x80000, 0xf0eb6846, BRF_SND | TAITO_YM2610B },
+	{ "b82-01.ic2",         0x80000, 0xf0eb6846, BRF_SND | TAITO_YM2610B },
 
 	{ "tibpal16l8.ic41",    0x00104, 0x11a0a19a, BRF_OPT },
 	{ "tibpal16l8.ic42",    0x00104, 0xcc53deb8, BRF_OPT },
@@ -3899,21 +3899,21 @@ STD_ROM_PICK(Finalb)
 STD_ROM_FN(Finalb)
 
 static struct BurnRomInfo FinalbjRomDesc[] = {
-	{ "b82-09.10",          0x20000, 0x632f1ecd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "b82-08.11",          0x20000, 0x07154fe5, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b82-09.ic23",        0x20000, 0x632f1ecd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b82-08.ic11",        0x20000, 0x07154fe5, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 
-	{ "b82_10.16",          0x10000, 0xa38aaaed, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "b82_10.ic5",         0x10000, 0xa38aaaed, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 
-	{ "b82-06.19",          0x20000, 0xfc450a25, BRF_GRA | TAITO_CHARS_BYTESWAP },
-	{ "b82-07.18",          0x20000, 0xec3df577, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "b82-06.ic33",        0x20000, 0xfc450a25, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "b82-07.ic34",        0x20000, 0xec3df577, BRF_GRA | TAITO_CHARS_BYTESWAP },
 
-	{ "b82-04.4",           0x80000, 0x6346f98e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
-	{ "b82-03.5",           0x80000, 0xdaa11561, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
-	{ "b82-05.3",           0x80000, 0xaa90b93a, BRF_GRA | TAITO_SPRITESA },
+	{ "b82-04.ic8",         0x80000, 0x6346f98e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "b82-03.ic9",         0x80000, 0xdaa11561, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "b82-05.ic7",         0x80000, 0xaa90b93a, BRF_GRA | TAITO_SPRITESA },
 
-	{ "b82-02.1",           0x80000, 0x5dd06bdd, BRF_SND | TAITO_YM2610A },
+	{ "b82-02.ic1",         0x80000, 0x5dd06bdd, BRF_SND | TAITO_YM2610A },
 
-	{ "b82-01.2",           0x80000, 0xf0eb6846, BRF_SND | TAITO_YM2610B },
+	{ "b82-01.ic2",         0x80000, 0xf0eb6846, BRF_SND | TAITO_YM2610B },
 
 	{ "tibpal16l8.ic41",    0x00104, 0x11a0a19a, BRF_OPT },
 	{ "tibpal16l8.ic42",    0x00104, 0xcc53deb8, BRF_OPT },
@@ -3926,21 +3926,21 @@ STD_ROM_PICK(Finalbj)
 STD_ROM_FN(Finalbj)
 
 static struct BurnRomInfo FinalbuRomDesc[] = {
-	{ "b82-09-1",           0x20000, 0x66729cb9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "b82-6-14",           0x20000, 0x879387fa, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b82-09-1.ic23",      0x20000, 0x66729cb9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b82-16-1.ic11",      0x20000, 0x879387fa, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 
-	{ "b82_10.16",          0x10000, 0xa38aaaed, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "b82_10.ic5",         0x10000, 0xa38aaaed, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 
-	{ "b82-06.19",          0x20000, 0xfc450a25, BRF_GRA | TAITO_CHARS_BYTESWAP },
-	{ "b82-07.18",          0x20000, 0xec3df577, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "b82-06.ic33",        0x20000, 0xfc450a25, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "b82-07.ic34",        0x20000, 0xec3df577, BRF_GRA | TAITO_CHARS_BYTESWAP },
 
-	{ "b82-04.4",           0x80000, 0x6346f98e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
-	{ "b82-03.5",           0x80000, 0xdaa11561, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
-	{ "b82-05.3",           0x80000, 0xaa90b93a, BRF_GRA | TAITO_SPRITESA },
+	{ "b82-04.ic8",         0x80000, 0x6346f98e, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "b82-03.ic9",         0x80000, 0xdaa11561, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	{ "b82-05.ic7",         0x80000, 0xaa90b93a, BRF_GRA | TAITO_SPRITESA },
 
-	{ "b82-02.1",           0x80000, 0x5dd06bdd, BRF_SND | TAITO_YM2610A },
+	{ "b82-02.ic1",         0x80000, 0x5dd06bdd, BRF_SND | TAITO_YM2610A },
 
-	{ "b82-01.2",           0x80000, 0xf0eb6846, BRF_SND | TAITO_YM2610B },
+	{ "b82-01.ic2",         0x80000, 0xf0eb6846, BRF_SND | TAITO_YM2610B },
 
 	{ "tibpal16l8.ic41",    0x00104, 0x11a0a19a, BRF_OPT },
 	{ "tibpal16l8.ic42",    0x00104, 0xcc53deb8, BRF_OPT },

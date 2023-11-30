@@ -10110,7 +10110,7 @@ struct BurnDriver BurnDrvGundharac = {
 	"gundharac", "gundhara", NULL, NULL, "1995",
 	"Gundhara (Chinese, bootleg?)\0", NULL, "Banpresto", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_RUNGUN, 0,
 	NULL, gundharacRomInfo, gundharacRomName, NULL, NULL, NULL, NULL, GundharaInputInfo, GundharaDIPInfo,
 	gundharacInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
 	240, 384, 3, 4
@@ -10452,7 +10452,7 @@ struct BurnDriver BurnDrvOrbs = {
 	"orbs", NULL, NULL, NULL, "1994",
 	"Orbs (10/7/94 prototype?)\0", NULL, "American Sammy", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA1, GBF_PUZZLE, 0,
 	NULL, orbsRomInfo, orbsRomName, NULL, NULL, NULL, NULL, OrbsInputInfo, OrbsDIPInfo,
 	orbsInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3

@@ -2035,7 +2035,7 @@ struct BurnDriver BurnDrvNinjakd2a = {
 	"ninjakd2a", "ninjakd2", NULL, NULL, "1987",
 	"Ninja-Kid II / NinjaKun Ashura no Shou (set 2, bootleg?)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, ninjakd2aRomInfo, ninjakd2aRomName, NULL, NULL, NULL, NULL, DrvInputInfo, Ninjakd2DIPInfo,
 	Ninjakd2DecryptedInit, DrvExit, DrvFrame, Ninjakd2Draw, DrvScan, &DrvRecalc, 0x300,
 	256, 192, 4, 3
@@ -2071,7 +2071,7 @@ struct BurnDriver BurnDrvNinjakd2b = {
 	"ninjakd2b", "ninjakd2", NULL, NULL, "1987",
 	"Ninja-Kid II / NinjaKun Ashura no Shou (set 3, bootleg?)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, ninjakd2bRomInfo, ninjakd2bRomName, NULL, NULL, NULL, NULL, DrvInputInfo, RdactionDIPInfo,
 	Ninjakd2DecryptedInit, DrvExit, DrvFrame, Ninjakd2Draw, DrvScan, &DrvRecalc, 0x300,
 	256, 192, 4, 3

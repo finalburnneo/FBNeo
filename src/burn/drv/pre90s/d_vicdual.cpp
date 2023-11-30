@@ -2479,7 +2479,7 @@ struct BurnDriverD BurnDrvSafaria = {
 	"safaria", "safari", NULL, NULL, "1977",
 	"Safari (set 2, bootleg?)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, safariaRomInfo, safariaRomName, NULL, NULL, NULL, NULL, SafariInputInfo, SafariDIPInfo,
 	SafariInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3

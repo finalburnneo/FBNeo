@@ -2010,7 +2010,7 @@ struct BurnDriverD BurnDrvShangonro = {
 	"shangonro", "shangon", NULL, NULL, "1987",
 	"Super Hang-On (Hang-On conversion, ride-on, Japan, FD1094 317-0038)\0", NULL, "Sega", "Hang-On",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_FD1094_ENC_CPU2, GBF_RACING, 0,
+	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_FD1094_ENC_CPU2, GBF_RACING, 0,
 	NULL, ShangonroRomInfo, ShangonroRomName, NULL, NULL, NULL, NULL, ShangonrbInputInfo, ShangonrbDIPInfo,
 	ShangonrbInit, System16Exit, HangonFrame, HangonRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -2020,7 +2020,7 @@ struct BurnDriverD BurnDrvShangonho = {
 	"shangonho", "shangon", NULL, NULL, "1987",
 	"Super Hang-On (Hang-On conversion, Japan, FD1094 317-0039)\0", NULL, "Sega", "Hang-On",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_FD1094_ENC_CPU2, GBF_RACING, 0,
+	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_FD1094_ENC_CPU2, GBF_RACING, 0,
 	NULL, ShangonhoRomInfo, ShangonhoRomName, NULL, NULL, NULL, NULL, ShangonrbInputInfo, ShangonrbDIPInfo,
 	ShangonrbInit, System16Exit, HangonFrame, HangonRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

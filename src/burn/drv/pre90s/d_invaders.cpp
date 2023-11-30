@@ -553,10 +553,10 @@ STD_SAMPLE_FN(Ozmawars)
 // Space Invaders / Space Invaders M
 
 static struct BurnRomInfo invadersRomDesc[] = {
-	{ "invaders.h",		0x0800, 0x734f5ad8, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 code
-	{ "invaders.g",		0x0800, 0x6bfaca4a, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "invaders.f",		0x0800, 0x0ccead96, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "invaders.e",		0x0800, 0x14e538b0, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "9316b-0869_m739h.h1",	0x0800, 0x734f5ad8, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 code
+	{ "9316b-0856_m739g.g1",	0x0800, 0x6bfaca4a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "9316b-0855_m739f.f1",	0x0800, 0x0ccead96, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "9316b-0854_m739e.e1",	0x0800, 0x14e538b0, 1 | BRF_ESS | BRF_PRG }, //  3
 };
 
 STD_ROM_PICK(invaders)

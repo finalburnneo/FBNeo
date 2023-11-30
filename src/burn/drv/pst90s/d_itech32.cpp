@@ -3681,7 +3681,7 @@ struct BurnDriver BurnDrvTimekill121a = {
 };
 
 
-// Time Killers (v1.20)
+// Time Killers (v1.20, alternate ROM board)
 /* Version 1.20 (3-tier board set: P/N 1050 Rev 1, P/N 1057 Rev 0 &  P/N 1052 Rev 2) */
 
 static struct BurnRomInfo timekill120RomDesc[] = {
@@ -3709,7 +3709,7 @@ STD_ROM_FN(timekill120)
 
 struct BurnDriver BurnDrvTimekill120 = {
 	"timekill120", "timekill", NULL, NULL, "1992",
-	"Time Killers (v1.20)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
+	"Time Killers (v1.20, alternate ROM board)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, timekill120RomInfo, timekill120RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
@@ -5040,10 +5040,10 @@ struct BurnDriverX BurnDrvDrivedge = {
 // Street Fighter: The Movie (v1.12)
 
 static struct BurnRomInfo sftmRomDesc[] = {
-	{ "sfm_0_v1.12.prom0",					0x040000, 0x9d09355c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "sfm_1_v1.12.prom1",					0x040000, 0xa58ac6a9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfm_2_v1.12.prom2",					0x040000, 0x2f21a4f6, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfm_3_v1.12.prom3",					0x040000, 0xd26648d9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfm_prom0_v1.12.prom0",				0x040000, 0x9d09355c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "sfm_prom1_v1.12.prom1",				0x040000, 0xa58ac6a9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfm_prom2_v1.12.prom2",				0x040000, 0x2f21a4f6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfm_prom3_v1.12.prom3",				0x040000, 0xd26648d9, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "sfm_snd_v1.u23",						0x040000, 0x10d85366, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
@@ -5087,10 +5087,10 @@ struct BurnDriver BurnDrvSftm = {
 // Street Fighter: The Movie (v1.11)
 
 static struct BurnRomInfo sftm111RomDesc[] = {
-	{ "sfm_0_v1.11.prom0",					0x040000, 0x28187ddc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "sfm_1_v1.11.prom1",					0x040000, 0xec2ce6fa, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfm_2_v1.11.prom2",					0x040000, 0xbe20510e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfm_3_v1.11.prom3",					0x040000, 0xeead342f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfm_prom0_v1.11.prom0",				0x040000, 0x28187ddc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "sfm_prom1_v1.11.prom1",				0x040000, 0xec2ce6fa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfm_prom2_v1.11.prom2",				0x040000, 0xbe20510e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfm_prom3_v1.11.prom3",				0x040000, 0xeead342f, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "sfm_snd_v1.u23",						0x040000, 0x10d85366, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
@@ -5134,10 +5134,10 @@ struct BurnDriver BurnDrvSftm111 = {
 // Street Fighter: The Movie (v1.10)
 
 static struct BurnRomInfo sftm110RomDesc[] = {
-	{ "sfm_0_v1.1.prom0",					0x040000, 0x00c0c63c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "sfm_1_v1.1.prom1",					0x040000, 0xd4d2a67e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfm_2_v1.1.prom2",					0x040000, 0xd7b36c92, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfm_3_v1.1.prom3",					0x040000, 0xbe3efdbd, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfm_prom0_v1.1.prom0",				0x040000, 0x00c0c63c, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "sfm_prom1_v1.1.prom1",				0x040000, 0xd4d2a67e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfm_prom2_v1.1.prom2",				0x040000, 0xd7b36c92, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfm_prom3_v1.1.prom3",				0x040000, 0xbe3efdbd, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "sfm_snd_v1.u23",						0x040000, 0x10d85366, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
@@ -5176,10 +5176,10 @@ struct BurnDriver BurnDrvSftm110 = {
 // Street Fighter: The Movie (v1.14N, Japan)
 
 static struct BurnRomInfo sftmj114RomDesc[] = {
-	{ "sfmn_0_v1.14.prom0",					0x040000, 0x2a0c0bb7, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "sfmn_1_v1.14.prom1",					0x040000, 0x088aa12c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfmn_2_v1.14.prom2",					0x040000, 0x7120836e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfmn_3_v1.14.prom3",					0x040000, 0x84eb200d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfmn_prom0_v1.14.prom0",				0x040000, 0x2a0c0bb7, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "sfmn_prom1_v1.14.prom1",				0x040000, 0x088aa12c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfmn_prom2_v1.14.prom2",				0x040000, 0x7120836e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfmn_prom3_v1.14.prom3",				0x040000, 0x84eb200d, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "sfm_snd_v1.11.u23",					0x040000, 0x004854ed, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
@@ -5218,10 +5218,10 @@ struct BurnDriver BurnDrvSftmj114 = {
 // Street Fighter: The Movie (v1.12N, Japan)
 
 static struct BurnRomInfo sftmj112RomDesc[] = {
-	{ "sfmn_0_v1.12.prom0",					0x040000, 0x640a04a8, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "sfmn_1_v1.12.prom1",					0x040000, 0x2a27b690, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfmn_2_v1.12.prom2",					0x040000, 0xcec1dd7b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfmn_3_v1.12.prom3",					0x040000, 0x48fa60f4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfmn_prom0_v1.12.prom0",				0x040000, 0x640a04a8, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "sfmn_prom1_v1.12.prom1",				0x040000, 0x2a27b690, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfmn_prom2_v1.12.prom2",				0x040000, 0xcec1dd7b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfmn_prom3_v1.12.prom3",				0x040000, 0x48fa60f4, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "sfm_snd_v1.11.u23",					0x040000, 0x004854ed, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
@@ -5252,6 +5252,48 @@ struct BurnDriver BurnDrvSftmj112 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, sftmj112RomInfo, sftmj112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
+	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 256, 4, 3
+};
+
+
+// Street Fighter: The Movie (v1.12K, Korea)
+
+static struct BurnRomInfo sftmk112RomDesc[] = {
+	{ "sfmk_prom0_v1.12.prom0",				0x040000, 0x1864ca77, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "sfmk_prom1_v1.12.prom1",				0x040000, 0xa93c52aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfmk_prom2_v1.12.prom2",				0x040000, 0x8ddf8a7d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfmk_prom3_v1.12.prom3",				0x040000, 0x9a83e6fe, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "sfm_snd_v1.11.u23",					0x040000, 0x004854ed, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "rm0-0.grm0_0",						0x400000, 0x09ef29cb, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "rm0-1.grm0_1",						0x400000, 0x6f5910fa, 3 | BRF_GRA },           //  6
+	{ "rm0-2.grm0_2",						0x400000, 0xb8a2add5, 3 | BRF_GRA },           //  7
+	{ "rm0-3.grm0_3",						0x400000, 0x6b6ff867, 3 | BRF_GRA },           //  8
+	{ "rm1-0.grm1_0",						0x400000, 0xd5d65f77, 3 | BRF_GRA },           //  9
+	{ "rm1-1.grm1_1",						0x400000, 0x90467e27, 3 | BRF_GRA },           // 10
+	{ "rm1-2.grm1_2",						0x400000, 0x903e56c2, 3 | BRF_GRA },           // 11
+	{ "rm1-3.grm1_3",						0x400000, 0xfac35686, 3 | BRF_GRA },           // 12
+	{ "sfm_grm3_0.grm3_0",					0x020000, 0x3e1f76f7, 3 | BRF_GRA },           // 13
+	{ "sfm_grm3_1.grm3_1",					0x020000, 0x578054b6, 3 | BRF_GRA },           // 14
+	{ "sfm_grm3_2.grm3_2",					0x020000, 0x9af2f698, 3 | BRF_GRA },           // 15
+	{ "sfm_grm3_3.grm3_3",					0x020000, 0xcd38d1d6, 3 | BRF_GRA },           // 16
+
+	{ "sfm_srom0.srom0",					0x200000, 0x6ca1d3fc, 4 | BRF_SND },           // 17 Ensoniq Bank 0
+
+	{ "sfm_srom3.srom3",					0x080000, 0x4f181534, 7 | BRF_SND },           // 18 Ensoniq Bank 3
+};
+
+STD_ROM_PICK(sftmk112)
+STD_ROM_FN(sftmk112)
+
+struct BurnDriver BurnDrvSftmk112 = {
+	"sftmk112", "sftm", NULL, NULL, "1995",
+	"Street Fighter: The Movie (v1.12K, Korea)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, sftmk112RomInfo, sftmk112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
 };
@@ -5294,7 +5336,7 @@ struct BurnDriver BurnDrvShoottv = {
 	"shoottv", NULL, NULL, NULL, "199?",
 	"Must Shoot TV (prototype)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, shoottvRomInfo, shoottvRomName, NULL, NULL, NULL, NULL, ShoottvInputInfo, ShoottvDIPInfo,
 	ShoottvInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5350,7 +5392,7 @@ struct BurnDriver BurnDrvPubball = {
 	"pubball", NULL, NULL, NULL, "1996",
 	"Power Up Baseball (prototype)\0", NULL, "Midway / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pubballRomInfo, pubballRomName, NULL, NULL, NULL, NULL, PubballInputInfo, PubballDIPInfo,
 	PubballInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -6522,6 +6564,47 @@ struct BurnDriver BurnDrvGt98v100 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gt98v100RomInfo, gt98v100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98DIPInfo,
+	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
+	384, 240, 4, 3
+};
+
+
+// Golden Tee '98 (v1.00C)
+
+static struct BurnRomInfo gt98c100RomDesc[] = {
+	{ "gt98_prom0_v1.00c.prom0",			0x080000, 0xbb508580, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "gt98_prom1_v1.00c.prom1",			0x080000, 0x0e414c17, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gt98_prom2_v1.00c.prom2",			0x080000, 0x628e84eb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gt98_prom3_v1.00c.prom3",			0x080000, 0x870f2464, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "gt98nr_u88_v1.0.u88",				0x020000, 0x2cee9e98, 2 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "gt98_grom0_0.grm0_0",				0x080000, 0x2d79492b, 3 | BRF_GRA },           //  5 Graphics (Blitter data)
+	{ "gt98_grom0_1.grm0_1",				0x080000, 0x79afda1a, 3 | BRF_GRA },           //  6
+	{ "gt98_grom0_2.grm0_2",				0x080000, 0x8c381f56, 3 | BRF_GRA },           //  7
+	{ "gt98_grom0_3.grm0_3",				0x080000, 0x46c35ba6, 3 | BRF_GRA },           //  8
+	{ "gt98_grom1_0.grm1_0",				0x080000, 0xb07bc634, 3 | BRF_GRA },           //  9
+	{ "gt98_grom1_1.grm1_1",				0x080000, 0xb23d59a7, 3 | BRF_GRA },           // 10
+	{ "gt98_grom1_2.grm1_2",				0x080000, 0x9c113abc, 3 | BRF_GRA },           // 11
+	{ "gt98_grom1_3.grm1_3",				0x080000, 0x231bbe58, 3 | BRF_GRA },           // 12
+	{ "gt98_grom2_0.grm2_0",				0x080000, 0xdb5cec87, 3 | BRF_GRA },           // 13
+	{ "gt98_grom2_1.grm2_1",				0x080000, 0xc74fc7d3, 3 | BRF_GRA },           // 14
+	{ "gt98_grom2_2.grm2_2",				0x080000, 0x1227609d, 3 | BRF_GRA },           // 15
+	{ "gt98_grom2_3.grm2_3",				0x080000, 0x78745131, 3 | BRF_GRA },           // 16
+
+	{ "gt98_srom0_nr.srom0",				0x100000, 0x44983bd7, 4 | BRF_SND },           // 17 Ensoniq Bank 0
+	{ "gt98_srom1_nr.srom1",				0x080000, 0x1b3f18b6, 4 | BRF_SND },           // 18
+};
+
+STD_ROM_PICK(gt98c100)
+STD_ROM_FN(gt98c100)
+
+struct BurnDriver BurnDrvGt98c100 = {
+	"gt98c100", "gt98", NULL, NULL, "1998",
+	"Golden Tee '98 (v1.00C)\0", NULL, "Incredible Technologies", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, gt98c100RomInfo, gt98c100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98DIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
 };

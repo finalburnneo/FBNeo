@@ -4739,7 +4739,7 @@ struct BurnDriver BurnDrvCgraplop2 = {
 	"cgraplop2", "cgraplop", "decocass", NULL, "1983",
 	"Graplop (DECO Cassette) (US) (Prototype?)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
 	NULL, cgraplop2RomInfo, cgraplop2RomName, NULL, NULL, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
 	Cgraplop2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4

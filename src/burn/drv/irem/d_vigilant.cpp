@@ -2405,7 +2405,7 @@ struct BurnDriver BurnDrvVigilanta = {
 
 struct BurnDriver BurnDrvVigilantb = {
 	"vigilantb", "vigilant", NULL, NULL, "1988",
-	"Vigilante (US, Rev B)\0", NULL, "Irem (Data East License)", "Miscellaneous",
+	"Vigilante (US, Rev B)\0", NULL, "Irem (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, VigilantbRomInfo, VigilantbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2425,7 +2425,7 @@ struct BurnDriver BurnDrvVigilantc = {
 
 struct BurnDriver BurnDrvVigilanto = {
 	"vigilanto", "vigilant", NULL, NULL, "1988",
-	"Vigilante (US)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
+	"Vigilante (US)\0", NULL, "Irem (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2435,7 +2435,7 @@ struct BurnDriver BurnDrvVigilanto = {
 
 struct BurnDriver BurnDrvVigilantg = {
 	"vigilantg", "vigilant", NULL, NULL, "1988",
-	"Vigilante (US, Rev G)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
+	"Vigilante (US, Rev G)\0", NULL, "Irem (Data East license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2457,7 +2457,7 @@ struct BurnDriver BurnDrvVigilantbl = {
 	"vigilantbl", "vigilant", NULL, NULL, "1988",
 	"Vigilante (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3

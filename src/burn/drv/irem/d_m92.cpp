@@ -2999,7 +2999,7 @@ struct BurnDriver BurnDrvMysticrib = {
 	"mysticrib", "mysticri", NULL, NULL, "1992",
 	"Mystic Riders (bootleg?)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
 	NULL, mysticribRomInfo, mysticribRomName, NULL, NULL, NULL, NULL, p2CommonInputInfo, MysticriDIPInfo,
 	mysticriInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -3443,7 +3443,7 @@ struct BurnDriver BurnDrvGunforc2 = {
 };
 
 
-// Geo Storm (Japan)
+// Geo Storm (Japan, 014 custom sound CPU)
 
 static struct BurnRomInfo geostormRomDesc[] = {
 	{ "a2_-h0-.ic37",		0x040000, 0x9be58d09, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
@@ -3479,7 +3479,7 @@ STD_ROM_FN(geostorm)
 
 struct BurnDriver BurnDrvGeostorm = {
 	"geostorm", "gunforc2", NULL, NULL, "1994",
-	"Geo Storm (Japan)\0", NULL, "Irem", "Irem M92",
+	"Geo Storm (Japan, 014 custom sound CPU)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_RUNGUN, 0,
 	NULL, geostormRomInfo, geostormRomName, NULL, NULL, NULL, NULL, p2CommonInputInfo, Gunforc2DIPInfo,
@@ -3488,7 +3488,7 @@ struct BurnDriver BurnDrvGeostorm = {
 };
 
 
-// Ninja Baseball Batman (World)
+// Ninja Baseball Bat Man (World)
 
 static struct BurnRomInfo nbbatmanRomDesc[] = {
 	{ "a1_-h0-c.ic34",		0x040000, 0x5c4a1e3f, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
@@ -3544,7 +3544,7 @@ static INT32 nbbatmanInit()
 
 struct BurnDriver BurnDrvNbbatman = {
 	"nbbatman", NULL, NULL, NULL, "1993",
-	"Ninja Baseball Batman (World)\0", NULL, "Irem", "Irem M92",
+	"Ninja Baseball Bat Man (World)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanRomInfo, nbbatmanRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
@@ -3553,7 +3553,7 @@ struct BurnDriver BurnDrvNbbatman = {
 };
 
 
-// Ninja Baseball Batman (US)
+// Ninja Baseball Bat Man (US)
 
 static struct BurnRomInfo nbbatmanuRomDesc[] = {
 	{ "a1_-h0-a.ic34",		0x040000, 0x24a9b794, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
@@ -3588,7 +3588,7 @@ STD_ROM_FN(nbbatmanu)
 
 struct BurnDriver BurnDrvNbbatmanu = {
 	"nbbatmanu", "nbbatman", NULL, NULL, "1993",
-	"Ninja Baseball Batman (US)\0", NULL, "Irem America", "Irem M92",
+	"Ninja Baseball Bat Man (US)\0", NULL, "Irem America", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanuRomInfo, nbbatmanuRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
@@ -4007,7 +4007,7 @@ static INT32 majtitl2Init()
 
 struct BurnDriver BurnDrvMajtitl2 = {
 	"majtitl2", NULL, NULL, NULL, "1992",
-	"Major Title 2 (World)\0", NULL, "Irem", "Irem M92",
+	"Major Title 2 (World, set 1)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_SPORTSMISC, 0,
 	NULL, majtitl2RomInfo, majtitl2RomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Majtitl2DIPInfo,

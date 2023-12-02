@@ -4334,7 +4334,7 @@ struct BurnDriver BurnDrvFourin1boot = {
 	"4in1boot", NULL, NULL, NULL, "2002",
 	"Puzzle King (PacMan 2, Tetris, HyperMan 2, Snow Bros.)\0", NULL, "K1 Soft", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, Fourin1bootRomInfo, Fourin1bootRomName, NULL, NULL, NULL, NULL, HyperpacInputInfo, Fourin1bootDIPInfo,
 	Fourin1bootInit, HyperpacExit, HyperpacFrame, HyperpacRender, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3

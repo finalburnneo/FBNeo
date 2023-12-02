@@ -2417,7 +2417,7 @@ struct BurnDriver BurnDrvRtypejp = {
 	"rtypejp", "rtype", NULL, NULL, "1987",
 	"R-Type (Japan prototype)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypejpRomInfo, rtypejpRomName, NULL, NULL, NULL, NULL, CommonInputInfo, RtypepDIPInfo,
 	rtypeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
@@ -3014,7 +3014,7 @@ static INT32 nspiritInit()
 }
 
 struct BurnDriver BurnDrvNspirit = {
-	"nspirit", NULL, NULL, NULL, "1987",
+	"nspirit", NULL, NULL, NULL, "1988",
 	"Ninja Spirit (World)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
@@ -3072,7 +3072,7 @@ static INT32 nspiritjInit()
 }
 
 struct BurnDriver BurnDrvNspiritj = {
-	"nspiritj", "nspirit", NULL, NULL, "1987",
+	"nspiritj", "nspirit", NULL, NULL, "1988",
 	"Saigo no Nindou (Japan)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
@@ -3333,7 +3333,7 @@ struct BurnDriver BurnDrvAirduelu = {
 	"airduelu", "airduel", NULL, NULL, "1990",
 	"Air Duel (US location test, M82 hardware)\0", NULL, "Irem America", "Irem M82",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, airdueluRomInfo, airdueluRomName, NULL, NULL, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
 	airduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
@@ -3630,7 +3630,7 @@ STD_ROM_FN(rtype2m82b)
 
 struct BurnDriver BurnDrvRtype2m82b = {
 	"rtype2m82b", "rtype2", NULL, NULL, "1997",
-	"R-Type II (Japan, bootleg M82 conversion)\0", NULL, "Irem", "Irem M82",
+	"R-Type II (Japan, bootleg M82 conversion)\0", NULL, "bootleg", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2m82bRomInfo, rtype2m82bRomName, NULL, NULL, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
@@ -3680,7 +3680,7 @@ static INT32 hharryInit()
 
 struct BurnDriver BurnDrvHharry = {
 	"hharry", NULL, NULL, NULL, "1990",
-	"Hammerin' Harry (World, M81 hardware))\0", NULL, "Irem", "Irem M82",
+	"Hammerin' Harry (World, M81 hardware)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharryRomInfo, hharryRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3774,7 +3774,7 @@ struct BurnDriver BurnDrvHharryb = {
 	"hharryb", "hharry", NULL, NULL, "1990",
 	"Hammerin' Harry (World, M84 hardware bootleg)\0", NULL, "bootleg", "Irem M82",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharrybRomInfo, hharrybRomName, NULL, NULL, NULL, NULL, CommonInputInfo, HharryDIPInfo,
 	hharryuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
@@ -4424,7 +4424,7 @@ static INT32 lohtbRomLoadCallback()
 	return 0;
 }
 
-// Legend of Hero Tonma (unprotected bootleg)
+// Legend of Hero Tonma (Playmark unprotected bootleg)
 
 static struct BurnRomInfo lohtbRomDesc[] = {
 	{ "lohtb03.b",			0x20000, 0x8b845a70, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -4468,7 +4468,7 @@ static INT32 lohtbInit()
 
 struct BurnDriver BurnDrvLohtb = {
 	"lohtb", "loht", NULL, NULL, "1989",
-	"Legend of Hero Tonma (unprotected bootleg)\0", NULL, "bootleg", "Irem M72",
+	"Legend of Hero Tonma (Playmark unprotected bootleg)\0", NULL, "bootleg (Playmark)", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_RUNGUN, 0,
 	NULL, lohtbRomInfo, lohtbRomName, NULL, NULL, NULL, NULL, CommonInputInfo, LohtDIPInfo,

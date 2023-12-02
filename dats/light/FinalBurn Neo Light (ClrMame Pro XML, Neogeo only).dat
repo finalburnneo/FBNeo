@@ -1348,7 +1348,6 @@
 		<driver status="good"/>
 	</game>
 	<game name="b2b" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
-		<comment>Prototype</comment>
 		<description>Bang Bang Busters (2010 NCI release)</description>
 		<year>2000</year>
 		<manufacturer>Visco</manufacturer>

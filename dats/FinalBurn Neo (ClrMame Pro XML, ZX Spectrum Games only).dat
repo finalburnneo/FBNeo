@@ -1454,6 +1454,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="archon" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Archon - The Light and the Dark (48K)</description>
+		<year>1985</year>
+		<manufacturer>Ariolasoft UK</manufacturer>
+		<rom name="Archon - The Light and the Dark 48K (1985)(Ariolasoft UK).tap" size="50271" crc="97a9d660"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="area51rie" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Area 51 - Roswell Incident (English) (48K) (HB)</description>
@@ -1981,6 +1990,15 @@
 		<rom name="Back to the Future III (1991)(Image Works).tap" size="222746" crc="5de2c954"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="backgammon" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Backgammon (48K)</description>
+		<year>1988</year>
+		<manufacturer>CDS Microsystems</manufacturer>
+		<rom name="Backgammon 48K (1988)(CDS Microsystems).tap" size="20113" crc="e501a833"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5628,6 +5646,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cyrus2" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>SHIFT + 'cursor keys': move marker - ENTER: select a piece</comment>
+		<description>Cyrus II Chess (128K)</description>
+		<year>1986</year>
+		<manufacturer>Alligata Software</manufacturer>
+		<rom name="Cyrus II Chess 128K (1986)(Alligata).tap" size="39926" crc="2eee30a5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="dveelng" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>D'Veel'Ng (48K) (HB)</description>
@@ -8274,6 +8303,17 @@
 		<manufacturer>Gremlin Graphics</manufacturer>
 		<rom name="Footballer of the Year 2 (1987)(Gremlin Graphics Software).z80" size="36239" crc="3722f534"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="forestescape" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Forest Escape - A Knight's Quest (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>IrataHack</manufacturer>
+		<rom name="Forest Escape - A Knight's Quest 128K (2023)(IrataHack).tap" size="37329" crc="d183be0c"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12366,12 +12406,31 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="lockdownzxmasce" cloneof="lockdownzx" romof="lockdownzx" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Lockdown Town ZXMas - Crash Exclusive (48K) (HB, v1.01)</description>
+		<year>2023</year>
+		<manufacturer>PuttyCAD, Tin Soldiers</manufacturer>
+		<rom name="Lockdown Town ZXMAS - Crash Exclusive v1.01 48K (2023)(PuttyCAD).tap" size="32868" crc="8cfbb3e5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="lockdownzxween" cloneof="lockdownzx" romof="lockdownzx" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Lockdown Town ZXWeen (48K) (HB)</description>
 		<year>2022</year>
 		<manufacturer>PuttyCAD, Tin Soldiers</manufacturer>
 		<rom name="Lockdown Town ZXWeen (2022)(PuttyCAD, Tin Soldiers).tap" size="30441" crc="4d6a99cf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="loco" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Loco (48K)</description>
+		<year>1986</year>
+		<manufacturer>Alligata Software</manufacturer>
+		<rom name="Loco 48K (1986)(Alligata).z80" size="29077" crc="ed68d9d3"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15287,23 +15346,34 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="phrehab" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>Homebrew</comment>
-		<description>PAC - HIC Rehab (128K) (HB)</description>
-		<year>2022</year>
-		<manufacturer>Daniel Isoba</manufacturer>
-		<rom name="Pac - Hic Rehab 128k (2022)(Daniel Isoba).tap" size="30767" crc="170729dc"/>
-		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
-		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
-		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
 	<game name="pachic" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Pac Hic (48K)</description>
 		<year>1986</year>
 		<manufacturer>Daniel Isoba</manufacturer>
 		<rom name="Pac Hic (1986)(Daniel Isoba).tap" size="45730" crc="42bb1258"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pachic3" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Pac Hic III (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Pac Hic III 128K (2023)(Daniel Isoba).tap" size="45683" crc="e6573dbd"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="phrehab" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Pac Hic Rehab (128K) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Daniel Isoba</manufacturer>
+		<rom name="Pac - Hic Rehab 128k (2022)(Daniel Isoba).tap" size="30767" crc="170729dc"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15503,6 +15573,16 @@
 		<year>1983</year>
 		<manufacturer>Rabbit</manufacturer>
 		<rom name="Paratroopers (1983)(Rabbit).tap" size="21732" crc="c19b3a5d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="parazxland" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>ParaZXland (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Massimiliano Arca</manufacturer>
+		<rom name="ParaZXland 48K (2023)(Massimiliano Arca).tap" size="41886" crc="aeac50ff"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -18314,29 +18394,40 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="seraphimafen" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+	<game name="seraphimaen" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>Seraphima - Enhanced Final Edition (English) (128K) (HB)</description>
+		<description>Seraphima (English) (128K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Zosya Entertainment</manufacturer>
-		<rom name="Seraphima EN EFE 128K (2023)(Zosya Ent.).tap" size="120379" crc="faf11a08"/>
+		<rom name="Seraphima EN 128K (2023)(Zosya Entertainment).tap" size="120381" crc="e03b415f"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="seraphimafpt" cloneof="seraphimafen" romof="seraphimafen" sourcefile="spectrum/d_spectrum.cpp">
+	<game name="seraphimapt" cloneof="seraphimaen" romof="seraphimaen" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>Seraphima - Enhanced Final Edition (Portuguese) (128K) (HB)</description>
+		<description>Seraphima (Portuguese) (128K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Zosya Entertainment</manufacturer>
-		<rom name="Seraphima PT EFE 128K (2023)(Zosya Ent.).tap" size="120493" crc="c3a32b51"/>
+		<rom name="Seraphima PT 128K (2023)(Zosya Entertainment).tap" size="120493" crc="1f7bb40c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="seraphima" cloneof="seraphimafen" romof="seraphimafen" sourcefile="spectrum/d_spectrum.cpp">
+	<game name="seraphimaru" cloneof="seraphimaen" romof="seraphimaen" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Seraphima (Russian) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Seraphima RU 128K (2023)(Zosya Entertainment).tap" size="120408" crc="f93bb1b5"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="seraphima" cloneof="seraphimaen" romof="seraphimaen" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew, 'Yandex Retro Games Battle' version</comment>
 		<description>Seraphima - First Edition (128K) (HB)</description>
 		<year>2023</year>
@@ -18542,6 +18633,16 @@
 		<rom name="Shovel Adventure ZX 1.2 (2021)(Pat Morita Team).tap" size="62841" crc="75d4a6ee"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="showjump" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Press 'Enter' to skip loading screen</comment>
+		<description>Show Jumping (48K)</description>
+		<year>1986</year>
+		<manufacturer>Alligata Software</manufacturer>
+		<rom name="Show Jumping 48K (1986)(Alligata).tap" size="48330" crc="3b71fc97"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -21903,6 +22004,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="turdle" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Turdle (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Megastyle</manufacturer>
+		<rom name="Turdle 48K (2023)(Megastyle).tap" size="16188" crc="582949e5"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="turrican1" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Turrican (48K)</description>
 		<year>1990</year>
@@ -22577,7 +22688,7 @@
 	<game name="whodareswinsii" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Who Dares Wins II (48K)</description>
 		<year>1986</year>
-		<manufacturer>Alligata</manufacturer>
+		<manufacturer>Alligata Software</manufacturer>
 		<rom name="Who Dares Wins II (1986)(Alligata).tap" size="48631" crc="02dc6931"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>

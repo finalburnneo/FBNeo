@@ -884,7 +884,7 @@ struct BurnDriver BurnDrvPopflamen = {
 	"popflamen", "popflame", NULL, NULL, "1982",
 	"Pop Flamer (bootleg on Naughty Boy PCB)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popflamenRomInfo, popflamenRomName, NULL, NULL, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4

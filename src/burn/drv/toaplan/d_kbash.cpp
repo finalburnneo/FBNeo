@@ -743,7 +743,7 @@ struct BurnDriver BurnDrvKBashp = {
 	"kbashp", "kbash", NULL, NULL, "1993",
 	"Knuckle Bash (location test)\0", NULL, "Toaplan / Taito", "Toaplan GP9001 based",
 	L"Knuckle Bash\0Knuckle Bash \u30CA\u30C3\u30AF\u30EB\u30D0\u30C3\u30B7\u30E5 (location test)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_SCRFIGHT, 0,
 	NULL, drvpRomInfo, drvpRomName, NULL, NULL, NULL, NULL, kbashInputInfo,kbashDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3

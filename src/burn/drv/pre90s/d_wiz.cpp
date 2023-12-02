@@ -1483,7 +1483,7 @@ struct BurnDriver BurnDrvStinger2 = {
 	"stinger2", "stinger", NULL, "stinger", "1983",
 	"Stinger (prototype?)\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stinger2RomInfo, stinger2RomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4

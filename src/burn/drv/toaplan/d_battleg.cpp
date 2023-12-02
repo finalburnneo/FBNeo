@@ -1109,7 +1109,7 @@ struct BurnDriver BurnDrvBgareggat = {
 	"bgareggat", "bgaregga", NULL, NULL, "1996",
 	"Battle Garegga (location test) (Wed Jan 17 1996)\0", NULL, "Raizing / Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggatRomInfo, bgareggatRomName, NULL, NULL, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	BgareggatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4

@@ -1985,7 +1985,7 @@ struct BurnDriver BurnDrvKnckheadjp = {
 	"knckheadjp", "knckhead", "namcoc70", NULL, "1992",
 	"Knuckle Heads (Japan, Prototype?)\0", NULL, "Namco", "NA-1 / NA-2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, knckheadjpRomInfo, knckheadjpRomName, NULL, NULL, NULL, NULL, Namcona1InputInfo, Namcona1DIPInfo,
 	KnckheadInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	304, 224, 4, 3

@@ -3451,7 +3451,7 @@ STD_ROM_FN(pacmanvg)
 
 struct BurnDriver BurnDrvpacmanvg = {
 	"pacmanvg", "puckman", NULL, NULL, "1980",
-	"Pac-Man (bootleg, Video Game SA)\0", NULL, "bootleg (Video Game SA)", "Pac-man",
+	"Pac-Man (Video Game SA bootleg)\0", NULL, "bootleg (Video Game SA)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, pacmanvgRomInfo, pacmanvgRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -3851,6 +3851,44 @@ struct BurnDriver BurnDrvcrockmnf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crockmnfRomInfo, crockmnfRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Puck Man (Alca bootleg)
+
+static struct BurnRomInfo puckmanaRomDesc[] = {
+	{ "1.6e",      0x0800, 0x2c0fa0ab, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "5.6k",      0x0800, 0xafeca2f1, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "2.6f",      0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "6.6m",      0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "3.6h",      0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "7.6n",      0x0800, 0x93f344c5, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "4.6j",      0x0800, 0xbed4a077, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "8.6p",      0x0800, 0x800be41e, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "9a.5e",     0x0800, 0x35de2118, 2 | BRF_GRA },			//  8 Graphics
+	{ "11.5h",     0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "10.5f",     0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "12.5j",     0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+
+	{ "mb7051.7f", 0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "6301.4a",   0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
+
+	{ "6301.1m",   0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "6301.3m",   0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(puckmana)
+STD_ROM_FN(puckmana)
+
+struct BurnDriver BurnDrvpuckmana = {
+	"puckmana", "puckman", NULL, NULL, "1980",
+	"Puck Man (Alca bootleg)\0", NULL, "bootleg (Alca)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, puckmanaRomInfo, puckmanaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

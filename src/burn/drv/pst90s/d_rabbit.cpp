@@ -825,7 +825,7 @@ STD_ROM_PICK(rabbita)
 STD_ROM_FN(rabbita)
 
 struct BurnDriver BurnDrvRabbita = {
-	"rabbita", "rabbit", NULL, NULL, "1997",
+	"rabbita", "rabbit", NULL, NULL, "1996",
 	"Rabbit (Asia 1/28?)\0", NULL, "Aorn / Electronic Arts", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
@@ -904,7 +904,7 @@ struct BurnDriver BurnDrvRabbitjt = {
 	"rabbitjt", "rabbit", NULL, NULL, "1996",
 	"Rabbit (Japan 1/28, location test)\0", NULL, "Aorn / Electronic Arts", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, rabbitjtRomInfo, rabbitjtRomName, NULL, NULL, NULL, NULL, RabbitInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	320, 224, 4, 3

@@ -913,7 +913,7 @@ struct BurnDriver BurnDrvEmpcity = {
 	"empcity", NULL, NULL, NULL, "1986",
 	"Empire City: 1931 (bootleg?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, empcityRomInfo, empcityRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -1287,7 +1287,7 @@ struct BurnDriver BurnDrvStfighta = {
 	"stfighta", "empcity", NULL, NULL, "1986",
 	"Street Fight (bootleg?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stfightaRomInfo, stfightaRomName, NULL, NULL, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

@@ -3640,7 +3640,7 @@ struct BurnDriver BurnDrvBlastero = {
 	"blastero", "blaster", NULL, NULL, "1983",
 	"Blaster (location test)\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, blasteroRomInfo, blasteroRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
 	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
 	292, 240, 4, 3

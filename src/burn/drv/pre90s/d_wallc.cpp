@@ -27,6 +27,9 @@ static UINT8 DrvReset;
 
 static UINT8 Dial1;
 
+static INT32 is_brkblast = 0;
+static INT32 has_altclock = 0;
+
 static struct BurnInputInfo WallcInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -214,14 +217,19 @@ static INT32 DrvInit(INT32 incr)
 	MemIndex();
 
 	{
-		if (BurnLoadRom(DrvZ80ROM + 0x0000,        0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM + 0x2000,        1, 1)) return 1;
+		INT32 i = 0;
+		if (is_brkblast) {
+			if (BurnLoadRom(DrvZ80ROM + 0x0000,        i++, 1)) return 1;
+		} else {
+			if (BurnLoadRom(DrvZ80ROM + 0x0000,        i++, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x2000,        i++, 1)) return 1;
+		}
 
-		if (BurnLoadRom(DrvGfxROM + 0x0000 + incr, 2, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM + 0x1000 + incr, 3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM + 0x2000 + incr, 4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000 + incr, i++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x1000 + incr, i++, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x2000 + incr, i++, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM,                5, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM,                i++, 1)) return 1;
 
 		DrvPaletteInit();
 		DrvGfxDecode();
@@ -256,6 +264,9 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 
 	BurnFree (AllMem);
+
+	is_brkblast = 0;
+	has_altclock = 0;
 
 	return 0;
 }
@@ -305,7 +316,7 @@ static INT32 DrvFrame()
 	}
 
 	ZetOpen(0);
-	ZetRun(3000000 / 60);
+	ZetRun((has_altclock ? 3720000 : 3000000) / 60);
 	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	ZetRun(72000 / 60);
 	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -374,6 +385,8 @@ static void wallcDecode()
 
 static INT32 wallcInit()
 {
+	has_altclock = 1;
+
 	INT32 nRet = DrvInit(0);
 
 	if (nRet == 0) {
@@ -439,5 +452,39 @@ struct BurnDriver BurnDrvWallca = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, wallcaRomInfo, wallcaRomName, NULL, NULL, NULL, NULL, WallcInputInfo, WallcDIPInfo,
 	wallcaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
+	256, 256, 4, 3
+};
+
+
+// Wall Crash (set 2)
+
+static struct BurnRomInfo brkblastRomDesc[] = {
+	{ "fadesa-r0.6m",	0x4000, 0x4e96ca15, 0 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+
+	{ "rom3.rom",		0x0800, 0x6634db73, 1 | BRF_GRA },	     //  2 Graphics
+	{ "rom2.rom",		0x0800, 0x79f49c2c, 1 | BRF_GRA },	     //  3
+	{ "rom1.rom",   	0x0800, 0x3884fd4f, 1 | BRF_GRA },	     //  4
+
+	{ "74s288.c2",		0x0020, 0x83e3e293, 2 | BRF_GRA },	     //  5 Color Prom
+};
+
+STD_ROM_PICK(brkblast)
+STD_ROM_FN(brkblast)
+
+static INT32 brkblastInit()
+{
+	is_brkblast = 1;
+	has_altclock = 1;
+
+	return wallcaInit();
+}
+
+struct BurnDriver BurnDrvBrkblast = {
+	"brkblast", "wallc", NULL, NULL, "1984",
+	"Brick Blast (bootleg of Wall Crash)\0", NULL, "bootleg (Fadesa)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	NULL, brkblastRomInfo, brkblastRomName, NULL, NULL, NULL, NULL, WallcInputInfo, WallcDIPInfo,
+	brkblastInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
 	256, 256, 4, 3
 };

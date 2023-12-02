@@ -930,7 +930,7 @@ struct BurnDriver BurnDrvTbowlp = {
 	"tbowlp", "tbowl", NULL, NULL, "1987",
 	"Tecmo Bowl (World, prototype?)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlpRomInfo, tbowlpRomName, NULL, NULL, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	512, 224, 8, 3

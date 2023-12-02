@@ -637,7 +637,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Bishi Bashi Championship Mini Game Senshuken (ver JAA, 3 Players)
+// Bishi Bashi Champ Mini Game Senshuken (ver JAA, 3 Players)
 
 static struct BurnRomInfo bishiRomDesc[] = {
 	{ "575jaa05.12e",	0x80000, 0x7d354567, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -659,7 +659,7 @@ STD_ROM_FN(bishi)
 
 struct BurnDriver BurnDrvBishi = {
 	"bishi", NULL, NULL, NULL, "1996",
-	"Bishi Bashi Championship Mini Game Senshuken (ver JAA, 3 Players)\0", "Imperfect gfx (one gfx rom bad, bad priorities)", "Konami", "Miscellaneous",
+	"Bishi Bashi Champ Mini Game Senshuken (ver JAA, 3 Players)\0", "Imperfect gfx (one gfx rom bad, bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, bishiRomInfo, bishiRomName, NULL, NULL, NULL, NULL, BishiInputInfo, BishiDIPInfo,
@@ -668,7 +668,7 @@ struct BurnDriver BurnDrvBishi = {
 };
 
 
-// Super Bishi Bashi Championship (ver JAA, 2 Players)
+// Super Bishi Bashi Champ (ver JAA, 2 Players)
 
 static struct BurnRomInfo sbishiRomDesc[] = {
 	{ "675jaa05.12e",	0x80000, 0x28a09c01, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -690,7 +690,7 @@ STD_ROM_FN(sbishi)
 
 struct BurnDriver BurnDrvSbishi = {
 	"sbishi", NULL, NULL, NULL, "1998",
-	"Super Bishi Bashi Championship (ver JAA, 2 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
+	"Super Bishi Bashi Champ (ver JAA, 2 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, sbishiRomInfo, sbishiRomName, NULL, NULL, NULL, NULL, Bishi2pInputInfo, Bishi2pDIPInfo,
@@ -699,7 +699,7 @@ struct BurnDriver BurnDrvSbishi = {
 };
 
 
-// Super Bishi Bashi Championship (ver KAB, 3 Players)
+// Super Bishi Bashi Champ (ver KAB, 3 Players)
 
 static struct BurnRomInfo sbishikRomDesc[] = {
 	{ "kab05.12e",		0x80000, 0x749063ca, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -721,7 +721,7 @@ STD_ROM_FN(sbishik)
 
 struct BurnDriver BurnDrvSbishik = {
 	"sbishik", "sbishi", NULL, NULL, "1998",
-	"Super Bishi Bashi Championship (ver KAB, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
+	"Super Bishi Bashi Champ (ver KAB, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, sbishikRomInfo, sbishikRomName, NULL, NULL, NULL, NULL, BishiInputInfo, BishiDIPInfo,
@@ -730,7 +730,7 @@ struct BurnDriver BurnDrvSbishik = {
 };
 
 
-// Super Bishi Bashi Championship (ver KAA, 3 Players)
+// Super Bishi Bashi Champ (ver KAA, 3 Players)
 
 static struct BurnRomInfo sbishikaRomDesc[] = {
 	{ "675kaa05.12e",	0x80000, 0x23600e1d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -752,7 +752,7 @@ STD_ROM_FN(sbishika)
 
 struct BurnDriver BurnDrvSbishika = {
 	"sbishika", "sbishi", NULL, NULL, "1998",
-	"Super Bishi Bashi Championship (ver KAA, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
+	"Super Bishi Bashi Champ (ver KAA, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, sbishikaRomInfo, sbishikaRomName, NULL, NULL, NULL, NULL, BishiInputInfo, BishiDIPInfo,

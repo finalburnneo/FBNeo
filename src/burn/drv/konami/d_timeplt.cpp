@@ -911,7 +911,7 @@ struct BurnDriver BurnDrvSpaceplt = {
 	"spaceplt", "timeplt", NULL, NULL, "1982",
 	"Space Pilot (set 1)\0", NULL, "bootleg", "GX393",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, spacepltRomInfo, spacepltRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
@@ -945,7 +945,7 @@ struct BurnDriver BurnDrvSpaceplta = {
 	"spaceplta", "timeplt", NULL, NULL, "1982",
 	"Space Pilot (set 2)\0", NULL, "bootleg", "GX393",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, spacepltaRomInfo, spacepltaRomName, NULL, NULL, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
 	timepltInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	224, 256, 3, 4
@@ -1026,7 +1026,7 @@ static INT32 chkunInit()
 
 struct BurnDriver BurnDrvChkun = {
 	"chkun", NULL, NULL, NULL, "1988",
-	"Chance Kun (Japan)\0", NULL, "Peni Soft", "Miscellaneous",
+	"Chance Kun (Japan)\0", NULL, "Peni", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_CASINO, 0,
 	NULL, chkunRomInfo, chkunRomName, NULL, NULL, NULL, NULL, ChkunInputInfo, ChkunDIPInfo,
@@ -1066,7 +1066,7 @@ static INT32 bikkuricInit()
 
 struct BurnDriver BurnDrvBikkuric = {
 	"bikkuric", NULL, NULL, NULL, "1987",
-	"Bikkuri Card (Japan)\0", NULL, "Peni Soft", "Miscellaneous",
+	"Bikkuri Card (Japan)\0", NULL, "Peni", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_CASINO, 0,
 	NULL, bikkuricRomInfo, bikkuricRomName, NULL, NULL, NULL, NULL, BikkuricInputInfo, BikkuricDIPInfo,

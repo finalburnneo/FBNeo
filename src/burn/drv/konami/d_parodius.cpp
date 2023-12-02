@@ -600,7 +600,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Parodius DA! (World, set 1)
+// Parodius Da!: Shinwa kara Owarai e (World, set 1)
 
 static struct BurnRomInfo parodiusRomDesc[] = {
 	{ "955l01.f5",	0x20000, 0x49a658eb, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -622,7 +622,7 @@ STD_ROM_FN(parodius)
 
 struct BurnDriver BurnDrvParodius = {
 	"parodius", NULL, NULL, NULL, "1990",
-	"Parodius DA! (World, set 1)\0", NULL, "Konami", "GX955",
+	"Parodius Da!: Shinwa kara Owarai e (World, set 1)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (World, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, parodiusRomInfo, parodiusRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
@@ -631,7 +631,7 @@ struct BurnDriver BurnDrvParodius = {
 };
 
 
-// Parodius DA! (World, set 2)
+// Parodius Da!: Shinwa kara Owarai e (World, set 2)
 
 static struct BurnRomInfo parodiuseRomDesc[] = {
 	{ "2.f5",		0x20000, 0x26a6410b, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -653,7 +653,7 @@ STD_ROM_FN(parodiuse)
 
 struct BurnDriver BurnDrvParodiuse = {
 	"parodiuse", "parodius", NULL, NULL, "1990",
-	"Parodius DA! (World, set 2)\0", NULL, "Konami", "GX955",
+	"Parodius Da!: Shinwa kara Owarai e (World, set 2)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (World, set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, parodiuseRomInfo, parodiuseRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
@@ -662,7 +662,7 @@ struct BurnDriver BurnDrvParodiuse = {
 };
 
 
-// Parodius DA! (Japan)
+// Parodius Da!: Shinwa kara Owarai e (Japan)
 
 static struct BurnRomInfo parodiusjRomDesc[] = {
 	{ "955e01.f5",	0x20000, 0x49baa334, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -684,7 +684,7 @@ STD_ROM_FN(parodiusj)
 
 struct BurnDriver BurnDrvParodiusj = {
 	"parodiusj", "parodius", NULL, NULL, "1990",
-	"Parodius DA! (Japan)\0", NULL, "Konami", "GX955",
+	"Parodius Da!: Shinwa kara Owarai e (Japan)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, parodiusjRomInfo, parodiusjRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,
@@ -693,7 +693,7 @@ struct BurnDriver BurnDrvParodiusj = {
 };
 
 
-// Parodius DA! (Asia)
+// Parodius Da!: Shinwa kara Owarai e (Asia)
 
 static struct BurnRomInfo parodiusaRomDesc[] = {
 	{ "b-18.f5",	0x20000, 0x006356cd, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -715,7 +715,7 @@ STD_ROM_FN(parodiusa)
 
 struct BurnDriver BurnDrvParodiusa = {
 	"parodiusa", "parodius", NULL, NULL, "1990",
-	"Parodius DA! (Asia)\0", NULL, "Konami", "GX955",
+	"Parodius Da!: Shinwa kara Owarai e (Asia)\0", NULL, "Konami", "GX955",
 	L"Parodius \u30D1\u30ED\u30C7\u30A3\u30A6\u30B9\u3060\uFF01 \uFF0D\u795E\u8A71\u304B\u3089\u304A\u7B11\u3044\u3078\uFF0D (Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, parodiusaRomInfo, parodiusaRomName, NULL, NULL, NULL, NULL, ParodiusInputInfo, ParodiusDIPInfo,

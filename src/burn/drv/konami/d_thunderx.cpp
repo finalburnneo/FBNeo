@@ -573,7 +573,21 @@ static INT32 DrvInit(INT32 type)
 	BurnAllocMemIndex();
 
 	{
-		if (type) {
+		if (type == 2) {
+			if (BurnLoadRom(DrvKonROM  + 0x010000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvKonROM  + 0x020000,  1, 1)) return 1;
+			memcpy (DrvKonROM + 0x08000, DrvKonROM + 0x18000, 0x8000);
+
+			if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+			if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  4, 4, 2)) return 1;
+
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  5, 4, 2)) return 1;
+			if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  6, 4, 2)) return 1;
+
+			if (BurnLoadRom(DrvSndROM  + 0x000000,  7, 1)) return 1;
+		} else if (type == 1) {
 			if (BurnLoadRom(DrvKonROM  + 0x010000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvKonROM  + 0x020000,  1, 1)) return 1;
 			memcpy (DrvKonROM + 0x08000, DrvKonROM + 0x18000, 0x8000);
@@ -834,7 +848,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Super Contra
+// Super Contra (set 1)
 
 static struct BurnRomInfo scontraRomDesc[] = {
 	{ "775-e02.k11",	0x10000, 0xa61c0ead, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -894,11 +908,49 @@ static INT32 scontraInit()
 
 struct BurnDriver BurnDrvScontra = {
 	"scontra", NULL, NULL, NULL, "1988",
-	"Super Contra\0", NULL, "Konami", "GX775",
+	"Super Contra (set 1)\0", NULL, "Konami", "GX775",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, scontraRomInfo, scontraRomName, NULL, NULL, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
 	scontraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 304, 3, 4
+};
+
+
+// Super Contra (set 2)
+
+static struct BurnRomInfo scontraaRomDesc[] = {
+	{ "cpu 27c512.k11",		0x10000, 0x7f2b8001, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "cpu 27c512.k13",		0x10000, 0x2d65c313, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sound_27c256.f9",	0x08000, 0x0ced785a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "775f07.h22",			0x80000, 0x0e75d2e1, 3 | BRF_GRA },           //  3 Background Tiles
+	{ "775f08.k22",			0x80000, 0xd4f2ed1e, 3 | BRF_GRA },           //  4
+
+	{ "775f05.h4",			0x80000, 0xd1c788b0, 4 | BRF_GRA },           //  5 Sprites
+	{ "775f06.k4",			0x80000, 0x623a9c9b, 4 | BRF_GRA },           //  6
+
+	{ "sound-775f04.d4",	0x80000, 0x0447dbae, 5 | BRF_SND },           //  7 K007232 Samples
+
+	{ "775a09.b19",			0x00100, 0x46d1e0df, 6 | BRF_OPT },           //  8 Proms
+};
+
+STD_ROM_PICK(scontraa)
+STD_ROM_FN(scontraa)
+
+static INT32 scontraaInit()
+{
+	return DrvInit(2);
+}
+
+struct BurnDriver BurnDrvScontraa = {
+	"scontraa", "scontra", NULL, NULL, "1988",
+	"Super Contra (set 2)\0", NULL, "Konami", "GX775",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
+	NULL, scontraaRomInfo, scontraaRomName, NULL, NULL, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
+	scontraaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 304, 3, 4
 };
 
@@ -958,7 +1010,7 @@ STD_ROM_FN(scontraj)
 
 struct BurnDriver BurnDrvScontraj = {
 	"scontraj", "scontra", NULL, NULL, "1988",
-	"Super Contra (Japan)\0", NULL, "Konami", "GX775",
+	"Super Contra - Alien no Gyakushuu (Japan)\0", NULL, "Konami", "GX775",
 	L"Super \u9B42\u6597\u7F85 \u30A8\u30A4\u30EA\u30A2\u30F3 \u306E\u9006\u8972 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, scontrajRomInfo, scontrajRomName, NULL, NULL, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,

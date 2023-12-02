@@ -1057,3 +1057,39 @@ struct BurnDriver BurnDrvStarwarr = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
 	224, 512, 3, 4
 };
+
+
+// Red Bird (bootleg of Space Firebird)
+
+static struct BurnRomInfo redbirdRomDesc[] = {
+	{ "1721.e5",		0x0800, 0x12926811, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "1722.fg5",		0x0800, 0x30ab3872, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1723.gh5",		0x0800, 0x89740d35, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1724.i5",		0x0800, 0x61c00a65, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "2725.j5",		0x0800, 0xac3fc251, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "3726.k5",		0x0800, 0xcd6ced71, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "2727.lm5",		0x0800, 0x6286f534, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "2728.mn5",		0x0800, 0x1c9f91ee, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "ic20.snd",		0x0400, 0x1c8670b3, 2 | BRF_PRG | BRF_ESS }, //  8 I8035 Code
+
+	{ "4711.k5",		0x0800, 0x236e1ff7, 3 | BRF_GRA },           //  9 Sprites
+	{ "4712.k6",		0x0800, 0xbf901a4e, 3 | BRF_GRA },           // 10
+
+	{ "7052.i4",		0x0100, 0xfeccde96, 4 | BRF_GRA },           // 11 Bullets
+
+	{ "6331.m3",		0x0020, 0x465d07af, 5 | BRF_GRA },           // 12 Color data
+};
+
+STD_ROM_PICK(redbird)
+STD_ROM_FN(redbird)
+
+struct BurnDriver BurnDrvRedbird = {
+	"redbird", "spacefb", NULL, "spacefb", "1980",
+	"Red Bird (bootleg of Space Firebird)\0", NULL, "bootleg (Codematic)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, redbirdRomInfo, redbirdRomName, NULL, NULL, SpacefbSampleInfo, SpacefbSampleName, SpacefbInputInfo, SpacefbDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x81,
+	224, 512, 3, 4
+};

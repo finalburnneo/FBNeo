@@ -701,7 +701,7 @@ struct BurnDriver BurnDrvrockduck = {
 	"rockduck", NULL, NULL, NULL, "1983",
 	"Rock Duck (prototype?)\0", "incorrect colors", "Datel SAS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, rockduckRomInfo, rockduckRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	rockduckInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
 	240, 240, 3, 4

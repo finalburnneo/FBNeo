@@ -5730,7 +5730,7 @@ static struct BurnRomInfo shackledRomDesc[] = {
 	{ "dk-09.15k",		0x10000, 0xc1557fac, 7 }, // 18
 	{ "dk-08.17k",		0x10000, 0x5e54e9f5, 7 }, // 19
 
-	{ "dk.18a",			0x01000, 0x1af06149, 4 | BRF_ESS }, // 20 mcu
+	{ "dk-e.18a",		0x01000, 0x1af06149, 4 | BRF_ESS }, // 20 mcu
 
 	{ "dk-20.9c",		0x00100, 0xff3cd588, 0 | BRF_OPT }, // priority PROM
 };

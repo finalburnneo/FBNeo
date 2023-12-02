@@ -1978,7 +1978,7 @@ struct BurnDriver BurnDrvRaidrs5ta = {
 	"raiders5ta", "raiders5", NULL, NULL, "1985",
 	"Raiders5 (Japan, set 2, bootleg?)\0", NULL, "UPL (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, raiders5taRomInfo, raiders5taRomName, NULL, NULL, NULL, NULL, Raiders5InputInfo, Raiders5taDIPInfo,
 	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
 	256, 192, 4, 3

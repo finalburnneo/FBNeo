@@ -7,9 +7,6 @@
 #include "resnet.h"
 #include "wiping.h"
 
-// to do
-//	bug fix
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -36,7 +33,6 @@ static UINT8 sound_irq_mask;
 static UINT8 main_irq_mask;
 static UINT8 flipscreen;
 
-static INT32 sub_cpu_in_reset;
 static INT32 skip_tile_enable = 0;
 
 static UINT8 DrvJoy1[8];
@@ -47,115 +43,117 @@ static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo WipingInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Wiping)
 
 static struct BurnDIPInfo WipingDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x20, NULL			},
-	{0x10, 0xff, 0xff, 0x49, NULL			},
+	DIP_OFFSET(0x0f)
+	{0x00, 0xff, 0xff, 0x20, NULL			},
+	{0x01, 0xff, 0xff, 0x49, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0f, 0x01, 0x20, 0x20, "Upright"		},
-	{0x0f, 0x01, 0x20, 0x00, "Cocktail"		},
+	{0x00, 0x01, 0x20, 0x20, "Upright"		},
+	{0x00, 0x01, 0x20, 0x00, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0f, 0x01, 0x40, 0x40, "On"			},
-	{0x0f, 0x01, 0x40, 0x00, "Off"			},
+	{0x00, 0x01, 0x40, 0x40, "On"			},
+	{0x00, 0x01, 0x40, 0x00, "Off"			},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
-	{0x0f, 0x01, 0x80, 0x00, "30000 70000"		},
-	{0x0f, 0x01, 0x80, 0x80, "50000 150000"		},
+	{0x00, 0x01, 0x80, 0x00, "30000 70000"		},
+	{0x00, 0x01, 0x80, 0x80, "50000 150000"		},
 
 	{0   , 0xfe, 0   ,    7, "Coin B"		},
-	{0x10, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
-	{0x10, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
-	{0x10, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
-	{0x10, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x10, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
-	{0x10, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
-	{0x10, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x10, 0x01, 0x38, 0x38, "7 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x30, "6 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x28, "5 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x20, "4 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x18, "3 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x08, "1 Coin  1 Credits"	},
-	{0x10, 0x01, 0x38, 0x00, "Free Play"		},
+	{0x01, 0x01, 0x38, 0x38, "7 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x30, "6 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x28, "5 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x20, "4 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x18, "3 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x08, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x38, 0x00, "0 Coin  1 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x10, 0x01, 0xc0, 0x00, "2"			},
-	{0x10, 0x01, 0xc0, 0x40, "3"			},
-	{0x10, 0x01, 0xc0, 0x80, "4"			},
-	{0x10, 0x01, 0xc0, 0xc0, "5"			},
+	{0x01, 0x01, 0xc0, 0x00, "2"			},
+	{0x01, 0x01, 0xc0, 0x40, "3"			},
+	{0x01, 0x01, 0xc0, 0x80, "4"			},
+	{0x01, 0x01, 0xc0, 0xc0, "5"			},
 };
 
 STDDIPINFO(Wiping)
 
 static struct BurnDIPInfo RugratsDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x20, NULL			},
-	{0x10, 0xff, 0xff, 0x49, NULL			},
+	DIP_OFFSET(0x0f)
+	{0x00, 0xff, 0xff, 0x20, NULL			},
+	{0x01, 0xff, 0xff, 0x49, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0f, 0x01, 0x20, 0x20, "Upright"		},
-	{0x0f, 0x01, 0x20, 0x00, "Cocktail"		},
+	{0x00, 0x01, 0x20, 0x20, "Upright"		},
+	{0x00, 0x01, 0x20, 0x00, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0f, 0x01, 0x40, 0x40, "On"			},
-	{0x0f, 0x01, 0x40, 0x00, "Off"			},
+	{0x00, 0x01, 0x40, 0x40, "On"			},
+	{0x00, 0x01, 0x40, 0x00, "Off"			},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
-	{0x0f, 0x01, 0x80, 0x00, "100000 200000"	},
-	{0x0f, 0x01, 0x80, 0x80, "150000 300000"	},
+	{0x00, 0x01, 0x80, 0x00, "100000 200000"	},
+	{0x00, 0x01, 0x80, 0x80, "150000 300000"	},
 
 	{0   , 0xfe, 0   ,    7, "Coin B"		},
-	{0x10, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
-	{0x10, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
-	{0x10, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
-	{0x10, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x10, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
-	{0x10, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
-	{0x10, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
+	{0x01, 0x01, 0x07, 0x01, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x07, 0x02, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x07, 0x03, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0x07, 0x05, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0x07, 0x06, "1 Coin  6 Credits"	},
+	{0x01, 0x01, 0x07, 0x07, "1 Coin  7 Credits"	},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x10, 0x01, 0x38, 0x38, "7 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x30, "6 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x28, "5 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x20, "4 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x18, "3 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
-	{0x10, 0x01, 0x38, 0x08, "1 Coin  1 Credits"	},
-	{0x10, 0x01, 0x38, 0x00, "Free Play"		},
+	{0x01, 0x01, 0x38, 0x38, "7 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x30, "6 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x28, "5 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x20, "4 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x18, "3 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x38, 0x08, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x38, 0x00, "0 Coin  1 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x10, 0x01, 0xc0, 0x00, "2"			},
-	{0x10, 0x01, 0xc0, 0x40, "3"			},
-	{0x10, 0x01, 0xc0, 0x80, "4"			},
-	{0x10, 0x01, 0xc0, 0xc0, "5"			},
+	{0x01, 0x01, 0xc0, 0x00, "2"			},
+	{0x01, 0x01, 0xc0, 0x40, "3"			},
+	{0x01, 0x01, 0xc0, 0x80, "4"			},
+	{0x01, 0x01, 0xc0, 0xc0, "5"			},
 };
 
 STDDIPINFO(Rugrats)
@@ -173,11 +171,7 @@ static void __fastcall wiping_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa003:
-			sub_cpu_in_reset = ~data & 1;
-			if (sub_cpu_in_reset)
-			{
-				ZetReset(1);
-			}
+			ZetSetRESETLine(1, ~data & 1);
 		return;
 
 		case 0xb800:
@@ -245,7 +239,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	BurnWatchdogReset();
 
-	sub_cpu_in_reset = 1;
 	main_irq_mask = 0;
 	sound_irq_mask = 0;
 	flipscreen = 0;
@@ -281,8 +274,8 @@ static INT32 MemIndex()
 	DrvVidRAM		= Next; Next += 0x000400;
 	DrvColRAM		= Next; Next += 0x000400;
 	DrvSprRAM		= Next; Next += 0x000400;
-	DrvShareRAM0		= Next; Next += 0x000400;
-	DrvShareRAM1		= Next; Next += 0x000400;
+	DrvShareRAM0	= Next; Next += 0x000400;
+	DrvShareRAM1	= Next; Next += 0x000400;
 
 	RamEnd			= Next;
 
@@ -314,15 +307,10 @@ static INT32 DrvGfxDecode()
 
 	return 0;
 }
-				
+
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -391,7 +379,7 @@ static INT32 DrvExit()
 
 	wipingsnd_exit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -505,8 +493,8 @@ static INT32 DrvFrame()
 
 			// ..and back again - game needs a very strange DrvInputs layout - below this block
 			for (INT32 i = 0; i < 8; i++) {
-				DrvJoy1[i] = (DrvInputs[0] & 1<<i) ? 1 : 0;
-				DrvJoy2[i] = (DrvInputs[1] & 1<<i) ? 1 : 0;
+				DrvJoy1[i] = (DrvInputs[0] & 1 << i) ? 1 : 0;
+				DrvJoy2[i] = (DrvInputs[1] & 1 << i) ? 1 : 0;
 			}
 		}
 
@@ -528,17 +516,13 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1))
 			if (main_irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);
-		if (sub_cpu_in_reset) {
-			nCyclesDone[1] += nCyclesTotal[1] / nInterleave;
-		} else {
-			nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		}
+		CPU_RUN(1, Zet);
 		if (i == (nInterleave - 1) || i == (nInterleave / 2) - 1)
 			if (sound_irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
@@ -580,7 +564,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_irq_mask);
 		SCAN_VAR(main_irq_mask);
 		SCAN_VAR(flipscreen);
-		SCAN_VAR(sub_cpu_in_reset);
 	}
 
 	return 0;

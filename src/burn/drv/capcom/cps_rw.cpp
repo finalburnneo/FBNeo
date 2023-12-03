@@ -46,6 +46,7 @@ INT32 Ssf2tb = 0;
 INT32 Dinohunt = 0;
 INT32 Port6SoundWrite = 0;
 INT32 CpsBootlegEEPROM = 0;
+INT32 Cps2Turbo = 0;
 
 CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = NULL;
 
@@ -456,9 +457,20 @@ void __fastcall CpsWriteByte(UINT32 a,UINT8 d)
 	
 	if (Cps == 2) {
 		// 0x400000 registers
-		if ((a & 0xFFFFF0) == 0x400000)	{
-			CpsFrg[a & 0x0F] = d;
-			return;
+		if (Cps2Turbo) {
+			if ((a & 0xFFFFF0) == 0x665000)	{
+				CpsFrg[a & 0x0F] = d;
+				return;
+			}
+			if ((a & 0xFFFFF0) == 0xfffff0)	{
+				CpsFrg[a & 0x0F] = d;
+				return;
+			}
+		} else {
+			if ((a & 0xFFFFF0) == 0x400000)	{
+				CpsFrg[a & 0x0F] = d;
+				return;
+			}
 		}
 		if ((a & 0xFF8000) == 0x660000) {
 			if (a == 0x664001) {

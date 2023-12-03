@@ -1778,6 +1778,97 @@ INT32 Cps2LoadTiles(UINT8* Tile, INT32 nStart)
 	return 0;
 }
 
+#if 0
+"usual cps2":
+rom0 12
+rom1 34
+rom2 56
+rom3 78
+
+"interleaved (zero800/cps2turbo)"
+rom 12345678
+
+    12      12      12      12
+      34      34      34      34
+        56      56      56      56
+          78      78      78      78
+(visualization helper)
+#endif
+
+#define BLOCK_MOD 4
+
+inline static void Cps2LoadBlockInterleaved(UINT8* Tile, UINT8* Sect, INT32 nShift)
+{
+	UINT8 *pt, *pEnd, *ps;
+	pt = Tile; pEnd = Tile + 0x100000; ps = Sect;
+
+	do {
+		UINT32 Pix;				// Eight pixels
+		Pix  = SepTable[ps[0]];
+		Pix |= SepTable[ps[1]] << 1;
+		Pix <<= nShift;
+		*((UINT32*)pt) |= Pix;
+
+		pt += 8; ps += 4 * BLOCK_MOD;
+	}
+	while (pt < pEnd);
+}
+
+INT32 Cps2LoadTilesInterleaved(UINT8 *Tile, UINT8 *pSrc, UINT32 nSize)
+{
+	UINT8 *pt;
+	UINT8 *pr;
+
+	pt = Tile;
+	pr = pSrc;
+	for (INT32 b = 0; b < ((nSize >> 19)/BLOCK_MOD); b++) {
+		Cps2LoadBlockInterleaved(pt, pr,                 0); pt += 0x100000;
+		Cps2LoadBlockInterleaved(pt, pr + 2 * BLOCK_MOD, 0); pt += 0x100000;
+		pr += 0x80000 * BLOCK_MOD;
+	}
+
+	pt = Tile;
+	pr = pSrc+2;
+	for (INT32 b = 0; b < ((nSize >> 19)/BLOCK_MOD); b++) {
+		Cps2LoadBlockInterleaved(pt, pr,                 2); pt += 0x100000;
+		Cps2LoadBlockInterleaved(pt, pr + 2 * BLOCK_MOD, 2); pt += 0x100000;
+		pr += 0x80000 * BLOCK_MOD;
+	}
+
+	pt = Tile+4;
+	pr = pSrc+4;
+	for (INT32 b = 0; b < ((nSize >> 19)/BLOCK_MOD); b++) {
+		Cps2LoadBlockInterleaved(pt, pr,                 0); pt += 0x100000;
+		Cps2LoadBlockInterleaved(pt, pr + 2 * BLOCK_MOD, 0); pt += 0x100000;
+		pr += 0x80000 * BLOCK_MOD;
+	}
+
+	pt = Tile+4;
+	pr = pSrc+6;
+	for (INT32 b = 0; b < ((nSize >> 19)/BLOCK_MOD); b++) {
+		Cps2LoadBlockInterleaved(pt, pr,                 2); pt += 0x100000;
+		Cps2LoadBlockInterleaved(pt, pr + 2 * BLOCK_MOD, 2); pt += 0x100000;
+		pr += 0x80000 * BLOCK_MOD;
+	}
+
+	return 0;
+}
+
+#undef BLOCK_MOD
+
+INT32 Cps2LoadTilesTurbo(UINT8* Tile, INT32 nSize) // cps2turbo
+{
+	UINT8 *Rom = (UINT8*)BurnMalloc(nSize);
+	memcpy(Rom, Tile, nSize);
+	memset(Tile, 0, nSize);
+
+	Cps2LoadTilesInterleaved(Tile, Rom, nSize);
+
+	BurnFree(Rom);
+
+	return 0;
+}
+
 INT32 Cps2LoadTilesSplit4(UINT8* Tile, INT32 nStart)
 {
 	// left  side of 16x16 tiles
@@ -1932,6 +2023,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K) {
 			if (bLoad) {
 				if (BurnLoadRom(CpsRomLoad, i, 1)) return 1;
+				if (Cps2Turbo) BurnByteswap(CpsRomLoad, ri.nLen);
 				CpsRomLoad += ri.nLen;
 			} else {
 				nCpsRomLen += ri.nLen;
@@ -1960,9 +2052,16 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_GFX) {
 			if (bLoad) {
-				Cps2LoadTiles(CpsGfxLoad, i);
-				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
-				nLoadedRoms = 4;
+				if (Cps2Turbo) {
+					BurnLoadRom(CpsGfxLoad, i, 1);
+
+					CpsGfxLoad += ri.nLen;
+				} else {
+					Cps2LoadTiles(CpsGfxLoad, i);
+
+					CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
+					nLoadedRoms = 4;
+				}
 			} else {
 				if (ri.nLen > nGfxMaxSize) {
 					nGfxMaxSize = ri.nLen;
@@ -2043,7 +2142,9 @@ static INT32 CpsGetROMs(bool bLoad)
 		if ((ri.nType & 0x0f) == CPS2_QSND) {
 			if (bLoad) {
 				BurnLoadRom(CpsQSamLoad, i, 1);
-				BurnByteswap(CpsQSamLoad, ri.nLen);
+				if (Cps2Turbo == 0) {
+					BurnByteswap(CpsQSamLoad, ri.nLen);
+				}
 				CpsQSamLoad += ri.nLen;
 			} else {
 				nCpsQSamLen += ri.nLen;
@@ -2088,8 +2189,12 @@ static INT32 CpsGetROMs(bool bLoad)
 			((UINT32*)CpsCode)[i] ^= ((UINT32*)CpsRom)[i];
 		}
 #endif
+		if (Cps2Turbo) {
+			Cps2LoadTilesTurbo(CpsGfx, nCpsGfxLen);
+		}
+
 		cps2_decrypt_game_data();
-		
+
 //		if (!nCpsCodeLen) return 1;
 	} else {
 
@@ -2138,7 +2243,10 @@ INT32 CpsInit()
 			nCPS68KClockspeed = 10000000;
 		}
 	}
-	nCPS68KClockspeed = nCPS68KClockspeed * 100 / nBurnFPS;
+	if (Cps2Turbo) {
+		nCPS68KClockspeed = 32000000;
+	}
+	nCPS68KClockspeed = (INT64)nCPS68KClockspeed * 100 / nBurnFPS;
 
 	nMemLen = nCpsGfxLen + nCpsRomLen + nCpsCodeLen + nCpsZRomLen + nCpsQSamLen + nCpsAdLen + nCpsKeyLen;
 
@@ -2246,6 +2354,14 @@ INT32 CpsExit()
 	nCPS68KClockspeed = 0;
 	Cps = 0;
 	nCpsNumScanlines = 262;
+
+	nCpsScreenWidth = 384;
+	nCpsGlobalXOffset = 0;
+
+	if (Cps2Turbo) {
+		BurnSampleExit();
+		Cps2Turbo = 0;
+	}
 
 	return 0;
 }

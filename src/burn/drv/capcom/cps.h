@@ -280,6 +280,7 @@ extern INT32 Ssf2tb;
 extern INT32 Dinohunt;
 extern INT32 Port6SoundWrite;
 extern INT32 CpsBootlegEEPROM;
+extern INT32 Cps2Turbo;
 
 extern UINT8* CpsEncZRom;
 
@@ -314,6 +315,8 @@ extern INT32 CpsDisableRowScroll;
 extern INT32 Cps1OverrideLayers;
 extern INT32 nCps1Layers[4];
 extern INT32 nCps1LayerOffs[3];
+extern INT32 nCpsScreenWidth;
+extern INT32 nCpsGlobalXOffset;
 void DrawFnInit();
 INT32  CpsDraw();
 INT32  CpsRedraw();

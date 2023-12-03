@@ -145,7 +145,7 @@ INT32 Cps1rPrepare()
     pli->nWidth=nWidth;
     // Find range of tiles to draw to see whole width:
     pli->nTileStart=nStart>>4;
-    pli->nTileEnd=(nStart+nWidth+0x18f)>>4;
+    pli->nTileEnd=(nStart+nWidth+nCpsScreenWidth+15)>>4;
   }
 
   PrepareRows();
@@ -190,7 +190,7 @@ INT32 Cps2rPrepare()
     pli->nWidth=nWidth;
     // Find range of tiles to draw to see whole width:
     pli->nTileStart=nStart>>4;
-    pli->nTileEnd=(nStart+nWidth+0x18f)>>4;
+    pli->nTileEnd=(nStart+nWidth+nCpsScreenWidth+15)>>4;
   }
 
   PrepareRows();

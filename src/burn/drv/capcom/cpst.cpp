@@ -37,10 +37,10 @@ static INT32 CpstOne()
       if (nCpstX <= -nSize) return 0;
       if (nCpstX >= nCpsScreenWidth) return 0;
       if (nCpstY <= -nSize) return 0;
-      if (nCpstY >= 224) return 0;
+      if (nCpstY >= nCpsScreenHeight) return 0;
     }
     nCtvRollX=(0x40000000 + nCpsScreenWidth - 1) + nCpstX * 0x7fff;
-    nCtvRollY=0x400000df + nCpstY * 0x7fff;
+    nCtvRollY=(0x40000000 + nCpsScreenHeight - 1) + nCpstY * 0x7fff;
   }
 
   // Clip to loaded graphics data (we have a gap of 0x200 at the end)
@@ -78,11 +78,10 @@ static INT32 CpstOneBgHi()
       if (nCpstX<=-nSize) return 0;
       if (nCpstX>=nCpsScreenWidth)   return 0;
       if (nCpstY<=-nSize) return 0;
-      if (nCpstY>=224)   return 0;
+      if (nCpstY>=nCpsScreenHeight)   return 0;
     }
     nCtvRollX=(0x40000000 + nCpsScreenWidth - 1) + nCpstX * 0x7fff;
-//    nCtvRollX=0x4000017f + nCpstX * 0x7fff;
-    nCtvRollY=0x400000df + nCpstY * 0x7fff;
+    nCtvRollY=(0x40000000 + nCpsScreenHeight - 1) + nCpstY * 0x7fff;
   }
 
   // Clip to loaded graphics data (we have a gap of 0x200 at the end)
@@ -164,10 +163,10 @@ static INT32 CpstOneObjZ()
 		if (nCpstX <= -nSize) return 0;
 		if (nCpstX >= nCpsScreenWidth)    return 0;
 		if (nCpstY <= -nSize) return 0;
-		if (nCpstY >= 224)    return 0;
+		if (nCpstY >= nCpsScreenHeight)    return 0;
     }
     nCtvRollX=(0x40000000 + nCpsScreenWidth - 1) + nCpstX * 0x7fff;
-    nCtvRollY=0x400000df + nCpstY * 0x7fff;
+    nCtvRollY=(0x40000000 + nCpsScreenHeight - 1) + nCpstY * 0x7fff;
   }
 
 

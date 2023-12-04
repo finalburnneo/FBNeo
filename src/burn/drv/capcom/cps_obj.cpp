@@ -123,7 +123,7 @@ INT32 CpsObjInit()
 	nGetNext=0;
 
 	if (Cps == 2) {
-		memset(ZBuf, 0, nCpsScreenWidth * 224 * 2);
+		memset(ZBuf, 0, nCpsScreenWidth * nCpsScreenHeight * 2);
 		nMaxZMask = nZOffset = 0;
 		nMaxZValue = 1;
 	}
@@ -180,7 +180,7 @@ INT32 CpsObjGet()
 
 		pof->nShiftX = (-CpsSaveFrg[0][0x9]) + nCpsGlobalXOffset;
 //		bprintf(0, _T("shift-x  %d\n"), pof->nShiftX);
-		pof->nShiftY = -CpsSaveFrg[0][0xB];
+		pof->nShiftY = (-CpsSaveFrg[0][0xB]) + nCpsGlobalYOffset;
 	} else {
 		INT32 nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x00))) << 8;
 		nOff &= 0xfff800;
@@ -240,7 +240,7 @@ void CpsObjDrawInit()
 
 	if (nZOffset >= 0xFC00) {
 		// The Z buffer might moverflow the next fram, so initialise it
-		memset(ZBuf, 0, nCpsScreenWidth * 224 * 2);
+		memset(ZBuf, 0, nCpsScreenWidth * nCpsScreenHeight * 2);
 		nZOffset = 0;
 	}
 
@@ -300,7 +300,7 @@ INT32 Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		nFlip=(a>>5)&3;		
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x<0 || y<0 || x+(bx<<4)>nCpsScreenWidth || y+(by<<4)>224) {
+		if (x<0 || y<0 || x+(bx<<4)>nCpsScreenWidth || y+(by<<4)>nCpsScreenHeight) {
 			nCpstType=CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType=CTT_16X16;
@@ -432,7 +432,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 		by = ((a >> 12) & 15) + 1;
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x < 0 || y < 0 || x + (bx << 4) > (nCpsScreenWidth-1) || y + (by << 4) > 223) {
+		if (x < 0 || y < 0 || x + (bx << 4) > (nCpsScreenWidth-1) || y + (by << 4) > (nCpsScreenHeight-1)) {
 			nCpstType = CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType = CTT_16X16;
@@ -857,7 +857,7 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		nFlip=(a>>5)&3;		
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x<0 || y<0 || x+(1<<4)>nCpsScreenWidth || y+(1<<4)>224) {
+		if (x<0 || y<0 || x+(1<<4)>nCpsScreenWidth || y+(1<<4)>nCpsScreenHeight) {
 			nCpstType=CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType=CTT_16X16;

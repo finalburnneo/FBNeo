@@ -4,6 +4,7 @@ INT32 Cps2Volume = 39;
 INT32 Cps2DisableDigitalVolume = 0;
 UINT8 Cps2VolUp;
 UINT8 Cps2VolDwn;
+UINT8 AspectDIP; // only for Cps2Turbo == 1
 
 UINT16 Cps2VolumeStates[40] = {
 	0xf010, 0xf008, 0xf004, 0xf002, 0xf001, 0xe810, 0xe808, 0xe804, 0xe802, 0xe801,
@@ -49,6 +50,57 @@ static struct BurnInputInfo Cps2FightingInputList[] = {
 };
 
 STDINPUTINFO(Cps2Fighting)
+
+static struct BurnInputInfo Sfz3mixInputList[] = {
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp020+0, "p1 start"  },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+	{"P1 Weak Punch"    , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+	{"P1 Medium Punch"  , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+	{"P1 Strong Punch"  , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+	{"P1 Weak Kick"     , BIT_DIGITAL  , CpsInp011+0, "p1 fire 4" },
+	{"P1 Medium Kick"   , BIT_DIGITAL  , CpsInp011+1, "p1 fire 5" },
+	{"P1 Strong Kick"   , BIT_DIGITAL  , CpsInp011+2, "p1 fire 6" },
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp020+5, "p2 coin"   },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp020+1, "p2 start"  },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+	{"P2 Weak Punch"    , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+	{"P2 Medium Punch"  , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+	{"P2 Strong Punch"  , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+	{"P2 Weak Kick"     , BIT_DIGITAL  , CpsInp011+4, "p2 fire 4" },
+	{"P2 Medium Kick"   , BIT_DIGITAL  , CpsInp011+5, "p2 fire 5" },
+	{"P2 Strong Kick"   , BIT_DIGITAL  , CpsInp020+6, "p2 fire 6" },
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp021+1, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp021+2, "service"   },
+	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "p1 fire 7" },
+	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "p1 fire 8" },
+	{"Dip A"            , BIT_DIPSWITCH, &AspectDIP , "dip"       },
+};
+
+STDINPUTINFO(Sfz3mix)
+
+// sfz3miz 0.20+ only!
+static struct BurnDIPInfo Sfz3mixDIPList[] =
+{
+	DIP_OFFSET(0x1d)
+	{0x00, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    3, "Aspect Ratio"	},
+	{0x00, 0x01, 0x03, 0x00, "16:9"			},
+	{0x00, 0x01, 0x03, 0x01, "4:3"			},
+	{0x00, 0x01, 0x03, 0x02, "112:81"		},
+};
+
+STDDIPINFO(Sfz3mix)
 
 static struct BurnInputInfo NineXXInputList[] = {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
@@ -11528,7 +11580,9 @@ static INT32 Cps2TurboInit()
 	}
 
 	nCpsScreenWidth = 416;
+	nCpsScreenHeight = 234;
 	nCpsGlobalXOffset = 16;
+	nCpsGlobalYOffset = 5;
 
 	return Cps2Init();
 }
@@ -11538,9 +11592,9 @@ struct BurnDriver BurnDrvCpsSfz3mix = {
 	"Street Fighter Zero 3 Mix v0.22\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Cps2FightingInputInfo, NULL,
+	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
 	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 416, 224, 16, 9
+	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
 };
 
 struct BurnDriver BurnDrvCpsSfz3mix13 = {
@@ -14651,7 +14705,7 @@ struct BurnDriver BurnDrvCpsGigaman2 = {
 };
 
 // Dungeons & Dragons - shadow over mystara (T-Chi)
-// Modified by ¥Õ¥§¥Ë¥Ã¥¯¥¹
+// Modified by �ե��˥å���
 static struct BurnRomInfo DdsomjcRomDesc[] = {
 	{ "dd2jc.03g",		0x080000, 0xed73e646, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2jc.04g",		0x080000, 0xc5a6e4b5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },

@@ -2356,7 +2356,9 @@ INT32 CpsExit()
 	nCpsNumScanlines = 262;
 
 	nCpsScreenWidth = 384;
+	nCpsScreenHeight = 224;
 	nCpsGlobalXOffset = 0;
+	nCpsGlobalYOffset = 0;
 
 	if (Cps2Turbo) {
 		BurnSampleExit();

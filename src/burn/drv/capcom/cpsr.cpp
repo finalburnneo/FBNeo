@@ -9,7 +9,7 @@ int nCpsrRowStart=0; // Start of row scroll (can wrap?)
 static INT32 nShiftY=0;
 static INT32 EndLineInfo=0;
 
-struct CpsrLineInfo CpsrLineInfo[15];
+struct CpsrLineInfo CpsrLineInfo[16]; // +1 added for Cps2Turbo
 
 static void GetRowsRange(INT32 *pnStart,INT32 *pnWidth,INT32 nRowFrom,INT32 nRowTo)
 {

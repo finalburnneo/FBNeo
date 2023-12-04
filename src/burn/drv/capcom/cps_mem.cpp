@@ -39,7 +39,7 @@ static INT32 CpsMemIndex()
 		CpsRam708 = Next; Next += 0x010000;							// Obj Ram
 		CpsFrg    = Next; Next += 0x000010;							// 'Four' Registers (Registers at 0x400000)
 
-		ZBuf      = (UINT16*)Next; Next += nCpsScreenWidth * 224 * 2;	// Sprite Masking Z buffer
+		ZBuf      = (UINT16*)Next; Next += nCpsScreenWidth * nCpsScreenHeight * 2;	// Sprite Masking Z buffer
 
 		CpsSaveRegData = Next; Next += 0x0100 * (MAX_RASTER + 1);	// Draw Copy of registers
 		CpsSaveFrgData = Next; Next += 0x0010 * (MAX_RASTER + 1);	// Draw Copy of 'Four' Registers

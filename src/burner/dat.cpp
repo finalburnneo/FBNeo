@@ -3,6 +3,7 @@
 // updated 11/2003 by LvR -- essentially a rewrite
 
 #include "burner.h"
+#include "samples.h"
 
 // If "Generate dat" crashes or hangs, uncomment this next line to find the guilty driver.
 //#define DAT_DEBUG
@@ -575,7 +576,13 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 					nRet=BurnDrvGetSampleInfo(&si,i);
 					nRet+=BurnDrvGetSampleName(&szPossibleName,i,0);
 
-					if (si.nFlags==0) continue;
+					if (si.nFlags == 0 || szPossibleName == NULL) { // "end of samples" list marker
+						continue;
+					}
+
+					if (si.nFlags & SAMPLE_NODUMP) {
+						continue;
+					}
 
 					if (nPass == 1) {
 						char szPossibleNameBuffer[255];

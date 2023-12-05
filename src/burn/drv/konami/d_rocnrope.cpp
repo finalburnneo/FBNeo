@@ -634,7 +634,7 @@ STD_ROM_FN(rocnropek)
 
 struct BurnDriver BurnDrvRocnropek = {
 	"rocnropek", "rocnrope", NULL, NULL, "1983",
-	"Roc'n Rope (Kosuka)\0", NULL, "Konami / Kosuka", "GX364",
+	"Roc'n Rope (Kosuka)\0", NULL, "Konami (Kosuka license)", "GX364",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, rocnropekRomInfo, rocnropekRomName, NULL, NULL, NULL, NULL, RocnropeInputInfo, RocnropeDIPInfo,

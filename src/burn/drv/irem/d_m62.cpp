@@ -4889,7 +4889,7 @@ struct BurnDriver BurnDrvLdrun = {
 
 struct BurnDriver BurnDrvLdruna = {
 	"ldruna", "ldrun", NULL, NULL, "1984",
-	"Lode Runner (set 2)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
+	"Lode Runner (set 2)\0", NULL, "Irem (licensed from Broderbund, Digital Controls Inc. license)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, LdrunaRomInfo, LdrunaRomName, NULL, NULL, NULL, NULL, M62InputInfo, LdrunDIPInfo,
@@ -4919,7 +4919,7 @@ struct BurnDriver BurnDrvLdrun3 = {
 
 struct BurnDriver BurnDrvLdrun3j = {
 	"ldrun3j", "ldrun3", NULL, NULL, "1985",
-	"Lode Runner III - Majin No Fukkatsu\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
+	"Lode Runner III - Majin no Fukkatsu (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun3jRomInfo, Ldrun3jRomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun2DIPInfo,
@@ -4929,7 +4929,7 @@ struct BurnDriver BurnDrvLdrun3j = {
 
 struct BurnDriver BurnDrvLdrun4 = {
 	"ldrun4", NULL, NULL, NULL, "1986",
-	"Lode Runner IV - Teikoku Karano Dasshutsu\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
+	"Lode Runner IV - Teikoku Karano Dasshutsu (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Ldrun4RomInfo, Ldrun4RomName, NULL, NULL, NULL, NULL, M62InputInfo, Ldrun4DIPInfo,
@@ -5029,7 +5029,7 @@ struct BurnDriver BurnDrvYoujyudn = {
 
 struct BurnDriver BurnDrvHorizon = {
 	"horizon", NULL, NULL, "tr606drumkit", "1985",
-	"Horizon\0", NULL, "Irem", "Irem M62",
+	"Horizon (Irem)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, HorizonRomInfo, HorizonRomName, NULL, NULL, M62SampleInfo, M62SampleName, M62InputInfo, HorizonDIPInfo,

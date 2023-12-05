@@ -717,7 +717,7 @@ struct BurnDriver BurnDrvAliens4 = {
 };
 
 
-// Aliens (US set 1)
+// Aliens (US, set 1)
 
 static struct BurnRomInfo aliensuRomDesc[] = {
 	{ "875_n02.e24",	0x10000, 0x24dd612e, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
@@ -745,7 +745,7 @@ STD_ROM_FN(aliensu)
 
 struct BurnDriver BurnDrvAliensu = {
 	"aliensu", "aliens", NULL, NULL, "1990",
-	"Aliens (US set 1)\0", NULL, "Konami", "GX875",
+	"Aliens (US, set 1)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, aliensuRomInfo, aliensuRomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
@@ -754,7 +754,7 @@ struct BurnDriver BurnDrvAliensu = {
 };
 
 
-// Aliens (US set 2)
+// Aliens (US, set 2)
 
 static struct BurnRomInfo aliensu2RomDesc[] = {
 	{ "875_h02.e24",	0x10000, 0x328ddb15, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
@@ -782,7 +782,7 @@ STD_ROM_FN(aliensu2)
 
 struct BurnDriver BurnDrvAliensu2 = {
 	"aliensu2", "aliens", NULL, NULL, "1990",
-	"Aliens (US set 2)\0", NULL, "Konami", "GX875",
+	"Aliens (US, set 2)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, aliensu2RomInfo, aliensu2RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,

@@ -884,7 +884,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Vendetta (World, 4 Players ver. T)
+// Vendetta (World, 4 Players, ver. T)
 
 static struct BurnRomInfo vendettaRomDesc[] = {
 	{ "081t01.17c",	0x040000, 0xe76267f5, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -917,7 +917,7 @@ static INT32 VendettaInit()
 
 struct BurnDriver BurnDrvVendetta = {
 	"vendetta", NULL, NULL, NULL, "1991",
-	"Vendetta (World, 4 Players ver. T)\0", NULL, "Konami", "GX081",
+	"Vendetta (World, 4 Players, ver. T)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettaRomInfo, vendettaRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
@@ -926,7 +926,7 @@ struct BurnDriver BurnDrvVendetta = {
 };
 
 
-// Vendetta (US, 4 Players ver. R)
+// Vendetta (US, 4 Players, ver. R)
 
 static struct BurnRomInfo vendettarRomDesc[] = {
 	{ "081r01.17c",	0x040000, 0x84796281, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -954,7 +954,7 @@ STD_ROM_FN(vendettar)
 
 struct BurnDriver BurnDrvVendettar = {
 	"vendettar", "vendetta", NULL, NULL, "1991",
-	"Vendetta (US, 4 Players ver. R)\0", NULL, "Konami", "GX081",
+	"Vendetta (US, 4 Players, ver. R)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettarRomInfo, vendettarRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
@@ -963,7 +963,7 @@ struct BurnDriver BurnDrvVendettar = {
 };
 
 
-// Vendetta (Asia, 4 Players ver. Z)
+// Vendetta (Asia, 4 Players, ver. Z)
 
 static struct BurnRomInfo vendettazRomDesc[] = {
 	{ "081z01.17c",	0x040000, 0x4d225a8d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -991,7 +991,7 @@ STD_ROM_FN(vendettaz)
 
 struct BurnDriver BurnDrvVendettaz = {
 	"vendettaz", "vendetta", NULL, NULL, "1991",
-	"Vendetta (Asia, 4 Players ver. Z)\0", NULL, "Konami", "GX081",
+	"Vendetta (Asia, 4 Players, ver. Z)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettazRomInfo, vendettazRomName, NULL, NULL, NULL, NULL, Vendet4pInputInfo, NULL,
@@ -1038,7 +1038,7 @@ struct BurnDriver BurnDrvVendettaun = {
 };
 
 
-// Vendetta (World, 2 Players ver. W)
+// Vendetta (World, 2 Players, ver. W)
 
 static struct BurnRomInfo vendetta2pwRomDesc[] = {
 	{ "081w01.17c",	0x040000, 0xcee57132, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -1066,7 +1066,7 @@ STD_ROM_FN(vendetta2pw)
 
 struct BurnDriver BurnDrvVendetta2pw = {
 	"vendetta2pw", "vendetta", NULL, NULL, "1991",
-	"Vendetta (World, 2 Players ver. W)\0", NULL, "Konami", "GX081",
+	"Vendetta (World, 2 Players, ver. W)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2pwRomInfo, vendetta2pwRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
@@ -1075,7 +1075,7 @@ struct BurnDriver BurnDrvVendetta2pw = {
 };
 
 
-// Vendetta (World, 2 Players ver. EB-A?)
+// Vendetta (World, 2 Players, ver. EB-A?)
 
 static struct BurnRomInfo vendetta2pebaRomDesc[] = {
 	{ "081-eb-a01.17c",    0x040000, 0x8430bb52, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -1102,17 +1102,17 @@ STD_ROM_PICK(vendetta2peba)
 STD_ROM_FN(vendetta2peba)
 
 struct BurnDriver BurnDrvVendetta2peba = {
-    "vendetta2peba", "vendetta", NULL, NULL, "1991",
-    "Vendetta (World, 2 Players ver. EB-A?)\0", NULL, "Konami", "GX081",
-    NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-    NULL, vendetta2pebaRomInfo, vendetta2pebaRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
-    VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-    304, 224, 4, 3
+	"vendetta2peba", "vendetta", NULL, NULL, "1991",
+	"Vendetta (World, 2 Players, ver. EB-A?)\0", NULL, "Konami", "GX081",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, vendetta2pebaRomInfo, vendetta2pebaRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
+	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	304, 224, 4, 3
 };
 
 
-// Vendetta (World, 2 Players ver. ?)
+// Vendetta (World, 2 Players, ver. ?)
 
 static struct BurnRomInfo vendetta2punRomDesc[] = {
 	/* program rom labeled as 1 */
@@ -1141,7 +1141,7 @@ STD_ROM_FN(vendetta2pun)
 
 struct BurnDriver BurnDrvVendetta2pun = {
 	"vendetta2pun", "vendetta", NULL, NULL, "1991",
-	"Vendetta (World, 2 Players ver. ?)\0", NULL, "Konami", "GX081",
+	"Vendetta (World, 2 Players, ver. ?)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2punRomInfo, vendetta2punRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
@@ -1150,7 +1150,7 @@ struct BurnDriver BurnDrvVendetta2pun = {
 };
 
 
-// Vendetta (Asia, 2 Players ver. U)
+// Vendetta (Asia, 2 Players, ver. U)
 
 static struct BurnRomInfo vendetta2puRomDesc[] = {
 	{ "081u01.17c",	0x040000, 0xb4d9ade5, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -1178,7 +1178,7 @@ STD_ROM_FN(vendetta2pu)
 
 struct BurnDriver BurnDrvVendetta2pu = {
 	"vendetta2pu", "vendetta", NULL, NULL, "1991",
-	"Vendetta (Asia, 2 Players ver. U)\0", NULL, "Konami", "GX081",
+	"Vendetta (Asia, 2 Players, ver. U)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2puRomInfo, vendetta2puRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
@@ -1187,7 +1187,7 @@ struct BurnDriver BurnDrvVendetta2pu = {
 };
 
 
-// Vendetta (Asia, 2 Players ver. D)
+// Vendetta (Asia, 2 Players, ver. D)
 
 static struct BurnRomInfo vendetta2pdRomDesc[] = {
 	{ "081d01.17c",	0x040000, 0x335da495, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -1215,7 +1215,7 @@ STD_ROM_FN(vendetta2pd)
 
 struct BurnDriver BurnDrvVendetta2pd = {
 	"vendetta2pd", "vendetta", NULL, NULL, "1991",
-	"Vendetta (Asia, 2 Players ver. D)\0", NULL, "Konami", "GX081",
+	"Vendetta (Asia, 2 Players, ver. D)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2pdRomInfo, vendetta2pdRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,
@@ -1224,7 +1224,7 @@ struct BurnDriver BurnDrvVendetta2pd = {
 };
 
 
-// Crime Fighters 2 (Japan, 4 Players ver. N)
+// Crime Fighters 2 (Japan, 4 Players, ver. N)
 
 static struct BurnRomInfo vendettanRomDesc[] = {
 	{ "081n01.17c",			0x040000, 0xfc766fab, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -1252,7 +1252,7 @@ STD_ROM_FN(vendettan)
 
 struct BurnDriver BurnDrvVendettan = {
 	"vendettan", "vendetta", NULL, NULL, "1991",
-	"Crime Fighters 2 (Japan, 4 Players ver. N)\0", NULL, "Konami", "GX081",
+	"Crime Fighters 2 (Japan, 4 Players, ver. N)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendettanRomInfo, vendettanRomName, NULL, NULL, NULL, NULL, VendettanInputInfo, NULL,
@@ -1261,7 +1261,7 @@ struct BurnDriver BurnDrvVendettan = {
 };
 
 
-// Crime Fighters 2 (Japan, 2 Players ver. P)
+// Crime Fighters 2 (Japan, 2 Players, ver. P)
 
 static struct BurnRomInfo vendetta2ppRomDesc[] = {
 	{ "081p01.17c",	0x040000, 0x5fe30242, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
@@ -1289,7 +1289,7 @@ STD_ROM_FN(vendetta2pp)
 
 struct BurnDriver BurnDrvVendetta2pp = {
 	"vendetta2pp", "vendetta", NULL, NULL, "1991",
-	"Crime Fighters 2 (Japan, 2 Players ver. P)\0", NULL, "Konami", "GX081",
+	"Crime Fighters 2 (Japan, 2 Players, ver. P)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, vendetta2ppRomInfo, vendetta2ppRomName, NULL, NULL, NULL, NULL, VendettaInputInfo, NULL,

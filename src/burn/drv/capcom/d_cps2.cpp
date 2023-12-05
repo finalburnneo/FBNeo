@@ -4,6 +4,7 @@ INT32 Cps2Volume = 39;
 INT32 Cps2DisableDigitalVolume = 0;
 UINT8 Cps2VolUp;
 UINT8 Cps2VolDwn;
+UINT8 AspectDIP; // only for Cps2Turbo == 1
 
 UINT16 Cps2VolumeStates[40] = {
 	0xf010, 0xf008, 0xf004, 0xf002, 0xf001, 0xe810, 0xe808, 0xe804, 0xe802, 0xe801,
@@ -49,6 +50,57 @@ static struct BurnInputInfo Cps2FightingInputList[] = {
 };
 
 STDINPUTINFO(Cps2Fighting)
+
+static struct BurnInputInfo Sfz3mixInputList[] = {
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp020+0, "p1 start"  },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+	{"P1 Weak Punch"    , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+	{"P1 Medium Punch"  , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+	{"P1 Strong Punch"  , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+	{"P1 Weak Kick"     , BIT_DIGITAL  , CpsInp011+0, "p1 fire 4" },
+	{"P1 Medium Kick"   , BIT_DIGITAL  , CpsInp011+1, "p1 fire 5" },
+	{"P1 Strong Kick"   , BIT_DIGITAL  , CpsInp011+2, "p1 fire 6" },
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp020+5, "p2 coin"   },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp020+1, "p2 start"  },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+	{"P2 Weak Punch"    , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+	{"P2 Medium Punch"  , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+	{"P2 Strong Punch"  , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+	{"P2 Weak Kick"     , BIT_DIGITAL  , CpsInp011+4, "p2 fire 4" },
+	{"P2 Medium Kick"   , BIT_DIGITAL  , CpsInp011+5, "p2 fire 5" },
+	{"P2 Strong Kick"   , BIT_DIGITAL  , CpsInp020+6, "p2 fire 6" },
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp021+1, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp021+2, "service"   },
+	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "p1 fire 7" },
+	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "p1 fire 8" },
+	{"Dip A"            , BIT_DIPSWITCH, &AspectDIP , "dip"       },
+};
+
+STDINPUTINFO(Sfz3mix)
+
+// sfz3miz 0.20+ only!
+static struct BurnDIPInfo Sfz3mixDIPList[] =
+{
+	DIP_OFFSET(0x1d)
+	{0x00, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    3, "Aspect Ratio"	},
+	{0x00, 0x01, 0x03, 0x00, "16:9"			},
+	{0x00, 0x01, 0x03, 0x01, "4:3"			},
+	{0x00, 0x01, 0x03, 0x02, "112:81"		},
+};
+
+STDDIPINFO(Sfz3mix)
 
 static struct BurnInputInfo NineXXInputList[] = {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
@@ -6769,47 +6821,134 @@ STD_ROM_FN(Sfz3te)
 // https://sfz3mix.github.io/
 
 static struct BurnSampleInfo Sfz3mixSampleDesc[] = {
-	{ "empty", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L09",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L0A",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L0B",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L0C",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L0D",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L0E",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L12",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L13",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L14",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L16",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L18",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L19",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L1E",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L1F",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L21",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L22",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L25",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L26",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L28",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "L2e",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R09",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R0A",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R0B",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R0C",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R0D",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R0E",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R12",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R13",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R14",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R16",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R18",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R19",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R1E",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R1F",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R21",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R22",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R25",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R26",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R28",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "R2e",   SAMPLE_NOLOOP | SAMPLE_NOSTORE },
+	{ "empty", SAMPLE_NOLOOP },
+	{ "L01",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L02",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L03",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L04",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L05",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L06",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L07",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L08",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L09",   SAMPLE_NOLOOP },
+	{ "L0A",   SAMPLE_NOLOOP },
+	{ "L0B",   SAMPLE_NOLOOP },
+	{ "L0C",   SAMPLE_NOLOOP },
+	{ "L0D",   SAMPLE_NOLOOP },
+	{ "L0E",   SAMPLE_NOLOOP },
+	{ "L0F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L10",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L11",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L12",   SAMPLE_NOLOOP },
+	{ "L13",   SAMPLE_NOLOOP },
+	{ "L14",   SAMPLE_NOLOOP },
+	{ "L15",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L16",   SAMPLE_NOLOOP },
+	{ "L17",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L18",   SAMPLE_NOLOOP },
+	{ "L19",   SAMPLE_NOLOOP },
+	{ "L1A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1E",   SAMPLE_NOLOOP },
+	{ "L1F",   SAMPLE_NOLOOP },
+	{ "L20",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L21",   SAMPLE_NOLOOP },
+	{ "L22",   SAMPLE_NOLOOP },
+	{ "L23",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L24",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L25",   SAMPLE_NOLOOP },
+	{ "L26",   SAMPLE_NOLOOP },
+	{ "L27",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L28",   SAMPLE_NOLOOP },
+	{ "L29",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2E",   SAMPLE_NOLOOP },
+	{ "L2F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L30",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L31",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L32",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L33",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L34",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L35",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L36",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L37",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L38",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L39",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3E",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "empty", SAMPLE_NOLOOP },
+	{ "R01",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R02",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R03",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R04",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R05",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R06",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R07",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R08",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R09",   SAMPLE_NOLOOP },
+	{ "R0A",   SAMPLE_NOLOOP },
+	{ "R0B",   SAMPLE_NOLOOP },
+	{ "R0C",   SAMPLE_NOLOOP },
+	{ "R0D",   SAMPLE_NOLOOP },
+	{ "R0E",   SAMPLE_NOLOOP },
+	{ "R0F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R10",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R11",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R12",   SAMPLE_NOLOOP },
+	{ "R13",   SAMPLE_NOLOOP },
+	{ "R14",   SAMPLE_NOLOOP },
+	{ "R15",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R16",   SAMPLE_NOLOOP },
+	{ "R17",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R18",   SAMPLE_NOLOOP },
+	{ "R19",   SAMPLE_NOLOOP },
+	{ "R1A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1E",   SAMPLE_NOLOOP },
+	{ "R1F",   SAMPLE_NOLOOP },
+	{ "R20",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R21",   SAMPLE_NOLOOP },
+	{ "R22",   SAMPLE_NOLOOP },
+	{ "R23",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R24",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R25",   SAMPLE_NOLOOP },
+	{ "R26",   SAMPLE_NOLOOP },
+	{ "R27",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R28",   SAMPLE_NOLOOP },
+	{ "R29",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2E",   SAMPLE_NOLOOP },
+	{ "R2F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R30",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R31",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R32",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R33",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R34",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R35",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R36",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R37",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R38",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R39",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3E",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
 	{ "", 0 }
 };
 
@@ -11426,14 +11565,36 @@ struct BurnDriver BurnDrvCpsSfz3te = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+static INT32 Cps2TurboInit()
+{
+	Cps2Turbo = 1;
+
+	BurnSampleInit(1);
+	for (int i = 0; i < 0x40; i++) {
+		// Left side
+		BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
+		BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_LEFT);
+		// Right side
+		BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_RIGHT);
+		BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
+	}
+
+	nCpsScreenWidth = 416;
+	nCpsScreenHeight = 234;
+	nCpsGlobalXOffset = 16;
+	nCpsGlobalYOffset = 5;
+
+	return Cps2Init();
+}
+
 struct BurnDriver BurnDrvCpsSfz3mix = {
 	"sfz3mix", "sfa3", NULL, "sfz3mix", "2023",
 	"Street Fighter Zero 3 Mix v0.22\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Cps2FightingInputInfo, NULL,
-	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
+	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
 };
 
 struct BurnDriver BurnDrvCpsSfz3mix13 = {

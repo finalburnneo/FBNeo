@@ -280,6 +280,7 @@ extern INT32 Ssf2tb;
 extern INT32 Dinohunt;
 extern INT32 Port6SoundWrite;
 extern INT32 CpsBootlegEEPROM;
+extern INT32 Cps2Turbo;
 
 extern UINT8* CpsEncZRom;
 
@@ -314,6 +315,10 @@ extern INT32 CpsDisableRowScroll;
 extern INT32 Cps1OverrideLayers;
 extern INT32 nCps1Layers[4];
 extern INT32 nCps1LayerOffs[3];
+extern INT32 nCpsScreenWidth;
+extern INT32 nCpsScreenHeight;
+extern INT32 nCpsGlobalXOffset;
+extern INT32 nCpsGlobalYOffset;
 void DrawFnInit();
 INT32  CpsDraw();
 INT32  CpsRedraw();
@@ -444,7 +449,7 @@ struct CpsrLineInfo {
 	INT16 Rows[16];									// 16 row scroll values for this line
 	INT32 nMaxLeft, nMaxRight;						// Maximum row shifts left and right
 };
-extern struct CpsrLineInfo CpsrLineInfo[15];
+extern struct CpsrLineInfo CpsrLineInfo[16];
 INT32 Cps1rPrepare();
 INT32 Cps2rPrepare();
 
@@ -525,3 +530,4 @@ extern UINT16 Cps2VolumeStates[40];
 extern INT32 Cps2DisableDigitalVolume;
 extern UINT8 Cps2VolUp;
 extern UINT8 Cps2VolDwn;
+extern UINT8 AspectDIP;

@@ -570,7 +570,7 @@ struct BurnDriver BurnDrvPooyan = {
 };
 
 
-// Pooyan (Stern)
+// Pooyan (Stern Electronics)
 
 static struct BurnRomInfo pooyansRomDesc[] = {
 	{ "ic22_a4.cpu",  0x2000, 0x916ae7d7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -597,7 +597,7 @@ STD_ROM_FN(pooyans)
 
 struct BurnDriver BurnDrvPooyans = {
 	"pooyans", "pooyan", NULL, NULL, "1982",
-	"Pooyan (Stern)\0", NULL, "[Konami] (Stern license)", "GX320",
+	"Pooyan (Stern Electronics)\0", NULL, "Konami (Stern Electronics license)", "GX320",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, pooyansRomInfo, pooyansRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,

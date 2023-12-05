@@ -2066,7 +2066,7 @@ struct BurnDriver BurnDrvWeclemanb = {
 	"weclemanb", "wecleman", NULL, NULL, "1988",
 	"WEC Le Mans 24 (v2.00, hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, weclemanbRomInfo, weclemanbRomName, NULL, NULL, NULL, NULL, WeclemanInputInfo, WeclemanDIPInfo,
 	WeclemanInit, DrvExit, DrvFrame, WeclemanDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3

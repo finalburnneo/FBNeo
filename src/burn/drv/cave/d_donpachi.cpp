@@ -466,6 +466,19 @@ static INT32 DrvFrame()
     	INT32 nCurrentCPU = 0;
 		INT32 nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
 
+		// Render sound segment
+		if ((i & 1) == 0) {
+			if (pBurnSoundOut) {
+				INT32 nSegmentEnd = nBurnSoundLen * i / nInterleave;
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				MSM6295Render(pSoundBuf, nSegmentEnd - nSoundBufferPos);
+#ifdef USE_SAMPLE_HACK
+				BurnSampleRender(pSoundBuf, nSegmentEnd - nSoundBufferPos);
+#endif
+				nSoundBufferPos = nSegmentEnd;
+			}
+		}
+
 		// Run 68000
 
 		// See if we need to trigger the VBlank interrupt

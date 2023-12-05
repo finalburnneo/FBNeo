@@ -10,7 +10,7 @@ static INT32 QsndZBankMap()
 	UINT32 nOff;
 	UINT8* Bank;
 	nOff = nQsndZBank << 14;
-	nOff += 0x8000;
+	nOff += (Cps2Turbo) ? 0x10000 : 0x8000; // sfz3mix .22 z80 rom stored in mame memmap format (banks start at 0x10000, instead of 0x8000 like fbneo)
 
 	if (Cps1Qs == 0) {
 		if (nOff + 0x4000 > nCpsZRomLen) {			// End of bank is out of range

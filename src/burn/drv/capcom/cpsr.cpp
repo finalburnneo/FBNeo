@@ -9,7 +9,7 @@ int nCpsrRowStart=0; // Start of row scroll (can wrap?)
 static INT32 nShiftY=0;
 static INT32 EndLineInfo=0;
 
-struct CpsrLineInfo CpsrLineInfo[15];
+struct CpsrLineInfo CpsrLineInfo[16]; // +1 added for Cps2Turbo
 
 static void GetRowsRange(INT32 *pnStart,INT32 *pnWidth,INT32 nRowFrom,INT32 nRowTo)
 {
@@ -145,7 +145,7 @@ INT32 Cps1rPrepare()
     pli->nWidth=nWidth;
     // Find range of tiles to draw to see whole width:
     pli->nTileStart=nStart>>4;
-    pli->nTileEnd=(nStart+nWidth+0x18f)>>4;
+    pli->nTileEnd=(nStart+nWidth+nCpsScreenWidth+15)>>4;
   }
 
   PrepareRows();
@@ -190,7 +190,7 @@ INT32 Cps2rPrepare()
     pli->nWidth=nWidth;
     // Find range of tiles to draw to see whole width:
     pli->nTileStart=nStart>>4;
-    pli->nTileEnd=(nStart+nWidth+0x18f)>>4;
+    pli->nTileEnd=(nStart+nWidth+nCpsScreenWidth+15)>>4;
   }
 
   PrepareRows();

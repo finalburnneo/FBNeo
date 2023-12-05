@@ -2015,10 +2015,10 @@ static INT32 DicegameInit()
 }
 
 struct BurnDriver BurnDrvDicegame = {
-	"dicegame", NULL, NULL, NULL, "199?",
+	"dicegame", NULL, NULL, NULL, "1991",
 	"Dice - The Dice Game!\0", NULL, "bootleg (Tuning)", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, dicegameRomInfo, dicegameRomName, NULL, NULL, NULL, NULL, p2commonInputInfo, DicegameDIPInfo,
 	DicegameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3

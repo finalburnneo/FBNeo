@@ -5,6 +5,7 @@
 // Change this to 0 to 1 if using samples in a low-ram environment.
 // May cause momentary stutter while sample loads.
 #define SAMPLE_NOSTORE		(0<<3) // only keep in memory while playing
+#define SAMPLE_NODUMP       (1<<4) // dump not available
 
 #define SAMPLE_PLAYING		(1<<0) // playing
 #define SAMPLE_PAUSED		(1<<1) // paused

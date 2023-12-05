@@ -78,6 +78,7 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	INT32 ix, iy;
 	INT32 nFirstY, nLastY;
 	INT32 nKnowBlank = -1; // The tile we know is blank
+	INT32 nXTile = (Cps2Turbo) ? 52 : 48; // 48*8 = 384, 52*8 = 416
 
 	ix = (sx >> 3) + 1;
 	sx &= 7;
@@ -93,7 +94,7 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 
 	for (y = nFirstY - 1; y < nLastY; y++) {
 		INT32 nClipY = ((y << 3) < nStartline) | (((y << 3) + 8) >= nEndline);
-		for (x = -1; x < 48; x++) {
+		for (x = -1; x < nXTile; x++) {
 			INT32 t, a;
 			UINT16 *pst;
 			INT32 fx, fy, p;
@@ -121,7 +122,7 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 				nCpstFlip = (a >> 5) & 3;
 
 				// Don't need to clip except around the border
-				if (x < 0 || x >= 48 - 1 || nClipY) {
+				if (x < 0 || x >= nXTile - 1 || nClipY) {
 					nCpstType = CTT_8X8 | CTT_CARE;
 				} else {
 					nCpstType = CTT_8X8;
@@ -200,6 +201,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	INT32 ix, iy;
 	INT32 nFirstY, nLastY;
 	INT32 nKnowBlank = -1; // The tile we know is blank
+	INT32 nXTile = (Cps2Turbo) ? 13 : 12; // 12*32 = 384, 13*32 = 416
 
 	ix = (sx >> 5) + 1;
 	sx &= 31;
@@ -215,7 +217,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 
 	for (y = nFirstY - 1; y < nLastY; y++) {
 		INT32 nClipY = ((y << 5) < nStartline) | (((y << 5) + 32) >= nEndline);
-		for (x = -1; x < 12; x++) {
+		for (x = -1; x < nXTile; x++) {
 			INT32 t, a;
 			UINT16 *pst;
 			INT32 fx, fy, p;
@@ -245,7 +247,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 				nCpstFlip = (a >> 5) & 3;
 
 				// Don't need to clip except around the border
-				if (x < 0 || x >= 12 - 1 || nClipY) {
+				if (x < 0 || x >= nXTile - 1 || nClipY) {
 					nCpstType = CTT_32X32 | CTT_CARE;
 				} else {
 					nCpstType = CTT_32X32;

@@ -11,6 +11,11 @@ INT32 nCpsLcReg = 0;						// Address of layer controller register
 INT32 CpsLayEn[6] = {0, 0, 0, 0, 0, 0};	// bits for layer enable
 INT32 MaskAddr[4] = {0, 0, 0, 0};
 
+INT32 nCpsScreenWidth = 384;
+INT32 nCpsScreenHeight = 224;
+INT32 nCpsGlobalXOffset = 0;
+INT32 nCpsGlobalYOffset = 0;
+
 INT32 CpsLayer1XOffs = 0;
 INT32 CpsLayer2XOffs = 0;
 INT32 CpsLayer3XOffs = 0;
@@ -75,12 +80,12 @@ static INT32 DrawScroll1(INT32 i)
 	nScrX = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x0c))); // Scroll 1 X
 	nScrY = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x0e))); // Scroll 1 Y
 
-	nScrX += 0x40;
+	nScrX += 0x40 - nCpsGlobalXOffset;
 
 //	bprintf(PRINT_NORMAL, _T("1 %x, %x, %x\n"), nOff, nScrX, nScrY);
 
 	nScrX += CpsLayer1XOffs;
-	nScrY += 0x10;
+	nScrY += 0x10 - nCpsGlobalYOffset;
 	nScrY += CpsLayer1YOffs;
 	nOff <<= 8;
 	nOff &= 0xffc000;
@@ -111,14 +116,14 @@ static INT32 DrawScroll2Init(INT32 i)
 
 	nScr2Off <<= 8;
 
-	nCpsrScrX += 0x40;
+	nCpsrScrX += 0x40 - nCpsGlobalXOffset;
 
 //	bprintf(PRINT_NORMAL, _T("2 %x, %x, %x\n"), nScr2Off, nCpsrScrX, nCpsrScrY);
 
 	nCpsrScrX += CpsLayer2XOffs;
 	nCpsrScrX &= 0x03FF;
 
-	nCpsrScrY += 0x10;
+	nCpsrScrY += 0x10 - nCpsGlobalYOffset;
 	nCpsrScrY += CpsLayer2YOffs;
 	nCpsrScrY &= 0x03FF;
 
@@ -183,12 +188,12 @@ static INT32 DrawScroll3(INT32 i)
 	nScrX = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x14))); // Scroll 3 X
 	nScrY = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x16))); // Scroll 3 Y
 
-	nScrX += 0x40;
+	nScrX += 0x40 - nCpsGlobalXOffset;
 
 //	bprintf(PRINT_NORMAL, _T("3 %x, %x, %x\n"), nOff, nScrX, nScrY);
 
 	nScrX += CpsLayer3XOffs;
-	nScrY += 0x10;
+	nScrY += 0x10 - nCpsGlobalYOffset;
 	nScrY += CpsLayer3YOffs;
 
 	nOff <<= 8;
@@ -397,7 +402,7 @@ static void Cps2Layers()
 					nStartline = nRasterline[nSlice];
 					nEndline = nRasterline[nSlice + 1];
 					if (!nEndline) {
-						nEndline = 224;
+						nEndline = nCpsScreenHeight;
 					}
 
 					// Render layer
@@ -486,7 +491,7 @@ void CpsClearScreen()
 			}
 		}
 	} else {
-		memset(pBurnDraw, 0, 384 * 224 * nBurnBpp);
+		memset(pBurnDraw, 0, nCpsScreenWidth * nCpsScreenHeight * nBurnBpp);
 	}
 }
 
@@ -496,7 +501,7 @@ static void DoDraw(INT32 Recalc)
 
 	if (CpsRecalcPal || bCpsUpdatePalEveryFrame) GetPalette(0, 6);
 	if (Recalc || bCpsUpdatePalEveryFrame) CpsPalUpdate(CpsSavePal);		// recalc whole palette if needed
-	
+
 	CpsClearScreen();
 
 	CpsLayersDoX();

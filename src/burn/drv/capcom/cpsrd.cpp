@@ -5,6 +5,8 @@ static INT32 nKnowBlank=-1;	// The tile we know is blank
 static INT32 nFirstY, nLastY;
 static INT32 bVCare;
 
+static INT32 nXTiles = 24;
+
 inline static UINT16 *FindTile(INT32 fx,INT32 fy)
 {
   INT32 p; UINT16 *pst;
@@ -63,11 +65,11 @@ static void Cps2TileLine(INT32 y,INT32 sx)
   sy=16-(nCpsrScrY&15); iy=(nCpsrScrY>>4)+1;
   nCpstY=sy+(y<<4);
 
-  for (x=-1; x<24; x++)
+  for (x=-1; x<nXTiles; x++)
   {
     UINT16 *pst; INT32 t,a;
     // Don't need to clip except around the border
-    if (bVCare || x<0 || x>=24-1) nCpstType=CTT_16X16 | CTT_CARE;
+    if (bVCare || x<0 || x>=nXTiles-1) nCpstType=CTT_16X16 | CTT_CARE;
     else nCpstType=CTT_16X16;
 
     pst=FindTile(ix+x,iy+y);
@@ -115,7 +117,7 @@ static void Cps1TileLineRows(INT32 y,struct CpsrLineInfo *pli)
     {
       // Check screen limits of this tile
       if (nLimLeft <      0) bCare=1; // Will cross left egde
-      if (nLimRight> 384-16) bCare=1; // Will cross right edge
+      if (nLimRight> nCpsScreenWidth-16) bCare=1; // Will cross right edge
     }
     if (bCare) nCpstType=CTT_16X16 | CTT_ROWS | CTT_CARE;
     else       nCpstType=CTT_16X16 | CTT_ROWS;
@@ -174,7 +176,7 @@ static void Cps2TileLineRows(INT32 y,struct CpsrLineInfo *pli)
     {
       // Check screen limits of this tile
       if (nLimLeft <      0) bCare=1; // Will cross left egde
-      if (nLimRight> 384-16) bCare=1; // Will cross right edge
+      if (nLimRight> nCpsScreenWidth-1) bCare=1; // Will cross right edge
     }
     if (bCare) nCpstType=CTT_16X16 | CTT_ROWS | CTT_CARE;
     else       nCpstType=CTT_16X16 | CTT_ROWS;
@@ -216,6 +218,7 @@ INT32 Cps2rRender()
 	INT32 y;
 	struct CpsrLineInfo *pli;
 	if (CpsrBase==NULL) return 1;
+	nXTiles = (Cps2Turbo) ? 26 : 24;
 
 	nKnowBlank = -1;					// We don't know which tile is blank yet
 

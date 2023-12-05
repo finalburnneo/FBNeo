@@ -55,7 +55,7 @@ for (y = 0; y < CU_SIZE; y++, pCtvLine += nBurnPitch, pCtvTile += nCtvTileAdd
 #endif
 
 #if CU_MASK==1
-	 ,pZVal += 384
+	 ,pZVal += nCpsScreenWidth
 #endif
 
 )

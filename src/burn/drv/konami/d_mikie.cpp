@@ -662,6 +662,43 @@ struct BurnDriver BurnDrvMikiej = {
 };
 
 
+// Shin-ip Sawon - Seok Dol-i
+
+static struct BurnRomInfo mikiekRomDesc[] = {
+	{ "n14.11c",	0x2000, 0xf698e6dd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "o13.12a",	0x4000, 0x826e7035, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "o17.12d",	0x4000, 0x161c25c8, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "n10.6e",		0x2000, 0x2cf9d670, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "q11.8i",		0x4000, 0x29286fce, 3 | BRF_GRA },           //  4 Characters
+
+	{ "q01.f1",		0x4000, 0x31551987, 4 | BRF_GRA },           //  5 Sprites
+	{ "q03.f3",		0x4000, 0x707cc98e, 4 | BRF_GRA },           //  6
+	{ "q05.h1",		0x4000, 0xf9e1ebb1, 4 | BRF_GRA },           //  7
+	{ "q07.h3",		0x4000, 0x44502ca9, 4 | BRF_GRA },           //  8
+
+	{ "d19.1i",		0x0100, 0x8b83e7cf, 5 | BRF_GRA },           //  9 Color Proms
+	{ "d21.3i",		0x0100, 0x3556304a, 5 | BRF_GRA },           // 10
+	{ "d20.2i",		0x0100, 0x676a0669, 5 | BRF_GRA },           // 11
+	{ "d22.12h",	0x0100, 0x872be05c, 5 | BRF_GRA },           // 12
+	{ "d18.f9",		0x0100, 0x7396b374, 5 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(mikiek)
+STD_ROM_FN(mikiek)
+
+struct BurnDriver BurnDrvMikiek = {
+	"mikiek", "mikie", NULL, NULL, "1984",
+	"Shin-ip Sawon - Seok Dol-i\0", NULL, "bootleg", "GX469",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
+	NULL, mikiekRomInfo, mikiekRomName, NULL, NULL, NULL, NULL, MikieInputInfo, MikieDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 256, 3, 4
+};
+
+
 // Mikie (High School Graffiti)
 
 static struct BurnRomInfo mikiehsRomDesc[] = {

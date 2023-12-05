@@ -457,10 +457,16 @@ static void sprite_copy()
 			if (mo[x] != 0xffff)
 			{
 				INT32 o13 = ((pf[x] & 0xf0) == 0xf0);
+				INT32 mopf = ((!(pf[x] & 0x80) && ((mo[x] & 0xc0) != 0xc0) && !o13) ||
+							  ((pf[x] & 0x80) && ((mo[x] & 0xc0) == 0xc0) && !o13));
 
-				if ((!(pf[x] & 0x80) && ((mo[x] & 0xc0) != 0xc0) && ((mo[x] & 0x0e) != 0x00) && !o13) ||
-					((pf[x] & 0x80) && ((mo[x] & 0xc0) == 0xc0) && ((mo[x] & 0x0e) != 0x00) && !o13))
-					pf[x] = mo[x];
+				if (mopf)
+				{
+					if ((mo[x] & 0x0e) != 0x00)		// MO colors 2 to F are solid
+						pf[x] = mo[x];
+					else if ((mo[x] & 0x0f) == 0x1) // MO color 1 causes a shadow on the PF
+						pf[x] |= 0x200;		        // Game sets palette 300:3FF to shadowed values of palette 100:1FF
+				}
 
 				mo[x] = 0xffff;
 			}

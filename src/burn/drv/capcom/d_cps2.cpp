@@ -11579,11 +11579,6 @@ static INT32 Cps2TurboInit()
 		BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
 	}
 
-	nCpsScreenWidth = 416;
-	nCpsScreenHeight = 234;
-	nCpsGlobalXOffset = 16;
-	nCpsGlobalYOffset = 5;
-
 	return Cps2Init();
 }
 

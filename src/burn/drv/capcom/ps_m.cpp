@@ -89,9 +89,6 @@ INT32 PsmUpdateEnd()
 
 	MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-	if (Cps2Turbo) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
-	}
 
 	return 0;
 }

@@ -2466,7 +2466,7 @@ struct BurnDriver BurnDrvSqbert = {
 	"sqbert", NULL, NULL, "qbert", "1983",
 	"Faster, Harder, More Challenging Q*bert (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, sqbertRomInfo, sqbertRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2661,7 +2661,7 @@ struct BurnDriver BurnDrvArgusg = {
 	"argusg", NULL, NULL, NULL, "1984",
 	"Argus (Gottlieb, prototype)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, argusgRomInfo, argusgRomName, NULL, NULL, NULL, NULL, ArgusgInputInfo, ArgusgDIPInfo,
 	DrvInitArgusg, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2778,7 +2778,7 @@ struct BurnDriver BurnDrvTylz = {
 	"tylz", NULL, NULL, NULL, "1982",
 	"Tylz (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tylzRomInfo, tylzRomName, NULL, NULL, NULL, NULL, TylzInputInfo, TylzDIPInfo,
 	DrvInitTylz, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2811,7 +2811,7 @@ struct BurnDriver BurnDrvKngtmare = {
 	"kngtmare", NULL, NULL, NULL, "1983",
 	"Knightmare (prototype)\0", "Game has NO sound", "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, kngtmareRomInfo, kngtmareRomName, NULL, NULL, NULL, NULL, KngtmareInputInfo, KngtmareDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -3001,7 +3001,7 @@ struct BurnDriver BurnDrvVidvince = {
 	"vidvince", NULL, NULL, NULL, "1984",
 	"Video Vince and the Game Factory (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, vidvinceRomInfo, vidvinceRomName, NULL, NULL, NULL, NULL, VidvinceInputInfo, VidvinceDIPInfo,
 	DrvInitVidvince, DrvExit, Drv2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3

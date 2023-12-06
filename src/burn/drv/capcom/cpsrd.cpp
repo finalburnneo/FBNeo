@@ -176,7 +176,7 @@ static void Cps2TileLineRows(INT32 y,struct CpsrLineInfo *pli)
     {
       // Check screen limits of this tile
       if (nLimLeft <      0) bCare=1; // Will cross left egde
-      if (nLimRight> nCpsScreenWidth-1) bCare=1; // Will cross right edge
+      if (nLimRight> nCpsScreenWidth-16) bCare=1; // Will cross right edge
     }
     if (bCare) nCpstType=CTT_16X16 | CTT_ROWS | CTT_CARE;
     else       nCpstType=CTT_16X16 | CTT_ROWS;

@@ -5445,8 +5445,8 @@ DRV		BurnDrvnes_explodingfistpi;
 DRV		BurnDrvnes_explodingfist;
 DRV		BurnSpecFistplus;
 DRV		BurnSpecExplodwall;
-DRV		BurnDrvCexplore;
 DRV		BurnDrvExplorer;
+DRV		BurnDrvCexplore;
 DRV		BurnDrvExplbrkrk;
 DRV		BurnDrvExplbrkr;
 DRV		BurnSpecExpraider;
@@ -6165,16 +6165,17 @@ DRV		BurnDrvngfrog;
 DRV		BurnDrvPgmfrog;
 DRV		BurnSpecFrogger2009;
 DRV		BurnSpecfrogger;
+DRV		BurnDrvFroggrs;
 DRV		BurnDrvmd_froggers;
 DRV		BurnDrvMSX_frogger;
 DRV		BurnDrvMSX_froggera;
 DRV		BurnDrvFroggermc;
-DRV		BurnDrvFroggrs;
 DRV		BurnDrvFroggers1;
 DRV		BurnDrvFroggers2;
 DRV		BurnDrvFroggers3;
 DRV		BurnDrvmd_frogger;
 DRV		BurnDrvgg_frogger;
+DRV		BurnDrvFroggereb;
 DRV		BurnDrvcv_frogger2;
 DRV		BurnDrvMSX_frogadvs;
 DRV		BurnDrvcv_frogger;
@@ -10773,8 +10774,8 @@ DRV		BurnSpecMoonrangerv2;
 DRV		BurnDrvMranger;
 DRV		BurnDrvnes_moonranger;
 DRV		BurnDrvMSX_moonridr;
-DRV		BurnDrvMshuttlej2;
 DRV		BurnDrvMshuttlej;
+DRV		BurnDrvMshuttlej2;
 DRV		BurnDrvMshuttlea;
 DRV		BurnDrvMshuttle;
 DRV		BurnDrvMshuttle2;
@@ -15882,7 +15883,6 @@ DRV		BurnDrvmd_starcrus;
 DRV		BurnSpecStardragon;
 DRV		BurnDrvnes_starevil;
 DRV		BurnSpecstarfarc;
-DRV		BurnDrvStarfgmc;
 DRV		BurnDrvStarfigh;
 DRV		BurnDrvStarfght;
 DRV		BurnDrvcv_starfire;
@@ -15966,6 +15966,7 @@ DRV		BurnDrvcv_starcom;
 DRV		BurnDrvnes_stardomwar;
 DRV		BurnSpecStardust;
 DRV		BurnDrvMSX_stardust;
+DRV		BurnDrvStarfgmc;
 DRV		BurnDrvmd_starfl1;
 DRV		BurnDrvmd_starfl;
 DRV		BurnDrvmd_stargatep;
@@ -16901,6 +16902,7 @@ DRV		BurnDrvmd_supshin2p1;
 DRV		BurnDrvmd_supshin2p2;
 DRV		BurnDrvmd_supshin;
 DRV		BurnDrvnes_supershi;
+DRV		BurnDrvSupershp;
 DRV		BurnDrvSsideki;
 DRV		BurnDrvSsideki2;
 DRV		BurnDrvSsideki3;
@@ -17054,7 +17056,6 @@ DRV		BurnDrvgg_superman;
 DRV		BurnDrvmd_superman;
 DRV		BurnDrvsms_superman;
 DRV		BurnDrvgg_supermanp;
-DRV		BurnDrvSupershp;
 DRV		BurnSpecSuperted;
 DRV		BurnDrvMSX_suptrip;
 DRV		BurnDrvnes_super16in1;
@@ -20678,7 +20679,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAgtbluedm,			// Agent Blue - Daytime Missions (128K) (HB)
 	&BurnSpecAgtbluenm,			// Agent Blue - Night Missions (128K) (HB)
 	&BurnSpecAgentorange,		// Agent Orange (48K)
-	&BurnDrvSuperbon,			// Agent Super Bond (scobra hardware)
+	&BurnDrvSuperbon,			// Agent Super Bond (Super Cobra conversion, encrypted)
 	&BurnSpecAgentx,			// Agent X (48K)
 	&BurnDrvAgentx1,			// Agent X (prototype, rev 1)
 	&BurnDrvAgentx2,			// Agent X (prototype, rev 2)
@@ -20993,14 +20994,14 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecAttwrest,			// American Tag-Team Wrestling (48K)
 	&BurnDrvMSX_amtrucka,		// American Truck (Japan)
 	&BurnDrvMSX_amida,			// Amida (Japan)
-	&BurnDrvAmidarb,			// Amidar (bootleg)
+	&BurnDrvAmidarb,			// Amidar (bootleg, set 1)
 	&BurnDrvAmidar1,			// Amidar (older)
 	&BurnDrvAmidaro,			// Amidar (Olympia)
 	&BurnDrvAmidars,			// Amidar (Scramble hardware)
 	&BurnSpecAmidar,			// Amidar (Spanish) (48K) (HB)
-	&BurnDrvAmidaru,			// Amidar (Stern)
+	&BurnDrvAmidaru,			// Amidar (Stern Electronics)
 	&BurnDrvAmidar,				// Amidar
-	&BurnDrvAmigo,				// Amigo
+	&BurnDrvAmigo,				// Amigo (bootleg of Amidar, set 1)
 	&BurnSpecAmmytris,			// Ammytris (128K)
 	&BurnDrvMSX_amomundo,		// Amo del Mundo (Euro, Spanish)
 	&BurnDrvMSX_amotopuf,		// Amoto's Puf (Euro, Spanish)
@@ -21090,7 +21091,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvArabianmj,			// Arabian Magic (Ver 1.0J 1992/07/06)
 	&BurnDrvArabianm,			// Arabian Magic (Ver 1.0O 1992/07/06)
 	&BurnDrvarabian,			// Arabian
-	&BurnDrvAracnis,			// Aracnis (bootleg of Scorpion on Moon Cresta hardware)
+	&BurnDrvAracnis,			// Aracnis (bootleg of Scorpion on Moon Cresta hardware, set 1)
 	&BurnDrvMSX_aramo,			// Aramo (Japan)
 	&BurnDrvmd_arapuca,			// Arapuca (HB)
 	&BurnDrvArbalest,			// Arbalester
@@ -21540,9 +21541,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecBaffojones,		// Baffo Jones (48K) (HB)
 	&BurnDrvMSX_bagman,			// Bag Man (HB)
 #if defined FBNEO_DEBUG
-	&BurnDrvBagmanmc,			// Bagman (bootleg on Moon Cresta hardware set 1) [Bad Colours, NOT WORKING]
+	&BurnDrvBagmanmc,			// Bagman (bootleg on Moon Cresta hardware, set 1) [Bad Colours, NOT WORKING]
 #endif
-	&BurnDrvBagmanm2,			// Bagman (bootleg on Moon Cresta hardware set 2) [Bad Colours, NOT WORKING]
+	&BurnDrvBagmanm2,			// Bagman (bootleg on Moon Cresta hardware, set 2) [Bad Colours, NOT WORKING]
 	&BurnDrvcv_bagman,			// Bagman (HB)
 	&BurnDrvBagmans3,			// Bagman (Stern Electronics, revision A3) [no comment, NOT WORKING]
 	&BurnDrvBagmans4,			// Bagman (Stern Electronics, revision A4)
@@ -22288,7 +22289,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bodycop2,		// Body Count (USA, Prototype, 19940308)
 	&BurnDrvBodyslam,			// Body Slam (8751 317-0015)
 	&BurnDrvBogeyman,			// Bogey Manor
-	&BurnDrvBoggy84b,			// Boggy '84 (bootleg)
+	&BurnDrvBoggy84b,			// Boggy '84 (bootleg, set 1)
 	&BurnDrvMSX_boggy84,		// Boggy '84 (Japan)
 	&BurnDrvMSX_boggy84b,		// Boggy '84 (Japan, Alt 2)
 	&BurnDrvMSX_boggy84a,		// Boggy '84 (Japan, Alt)
@@ -23880,7 +23881,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecCrazyforest,		// Crazy Forest (128K) (HB)
 	&BurnSpecCrazyhouse,		// Crazy House (48K)
 	&BurnDrvCkongg,				// Crazy Kong (bootleg on Galaxian hardware)
-	&BurnDrvCkongmc,			// Crazy Kong (bootleg on Moon Cresta hardware)
+	&BurnDrvCkongmc,			// Crazy Kong (bootleg on Moon Cresta hardware, set 1)
 	&BurnDrvCkongs,				// Crazy Kong (bootleg on Scramble hardware)
 	&BurnDrvCkongpt2b,			// Crazy Kong Part II (alternative levels)
 	&BurnDrvCkongpt2b2,			// Crazy Kong Part II (bootleg)
@@ -23898,7 +23899,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCrazywar,			// Crazy War
 	&BurnDrvnes_creatom,		// Creatom (Unl)
 	&BurnDrvnes_creepybrawlers,	// Creepy Brawlers (HB)
-	&BurnDrvMooncrsl,			// Cresta Mundo (Laguna S.A. Spanish Moon Cresta bootleg)
+	&BurnDrvMooncrsl,			// Cresta Mundo (Spanish bootleg of Moon Cresta)
 	&BurnDrvmd_criatura,		// Criatura (HB)
 	&BurnDrvnes_crillion,		// Crillion (HB, v1.1)
 	&BurnSpecCrimbo,			// Crimbo: A Gloop Troops Tale (128K) (HB)
@@ -25698,8 +25699,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_explodingfist,	// Exploding Fist (USA) (Prototype)
 	&BurnSpecFistplus,			// Exploding Fist+ (48K)
 	&BurnSpecExplodwall,		// Exploding Wall (48K)
+	&BurnDrvExplorer,			// Explorer (bootleg of Scramble)
 	&BurnDrvCexplore,			// Explorer (DECO Cassette) (US)
-	&BurnDrvExplorer,			// Explorer
 	&BurnDrvExplbrkrk,			// Explosive Breaker (Korea)
 	&BurnDrvExplbrkr,			// Explosive Breaker (World)
 	&BurnSpecExpraider,			// Express Raider (48K)
@@ -26284,8 +26285,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvFlipull,			// Flipull (Japan)
 	&BurnDrvnes_flipull,		// Flipull - An Exciting Cube Game (Japan)
 	&BurnDrvcv_flora,			// Flora and the Ghost Mirror (SGM) (HB)
-	&BurnDrvFloritas,			// Floritas (Moon Cresta bootleg)
-	&BurnDrvFloritasm,			// Floritas (Multivideo Spanish Moon Cresta bootleg)
+	&BurnDrvFloritas,			// Floritas (bootleg of Moon Cresta)
+	&BurnDrvFloritasm,			// Floritas (Multivideo Spanish bootleg of Moon Cresta)
 	&BurnDrvFlowerj,			// Flower (Japan)
 	&BurnDrvFlower,				// Flower (US)
 	&BurnDrvMSX_flubber,		// Flubber in the Upside Down World (HB, v1.2)
@@ -26418,16 +26419,17 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPgmfrog,			// Frog Feast (PGM)
 	&BurnSpecFrogger2009,		// Frogger (128K) (HB)
 	&BurnSpecfrogger,			// Frogger (48K)
+	&BurnDrvFroggrs,			// Frogger (Coin Music, bootleg on Scramble hardware)
 	&BurnDrvmd_froggers,		// Frogger (Hack, Spanish)
 	&BurnDrvMSX_frogger,		// Frogger (Japan)
 	&BurnDrvMSX_froggera,		// Frogger (Japan, Alt)
 	&BurnDrvFroggermc,			// Frogger (Moon Cresta hardware)
-	&BurnDrvFroggrs,			// Frogger (Scramble hardware)
-	&BurnDrvFroggers1,			// Frogger (Sega set 1)
-	&BurnDrvFroggers2,			// Frogger (Sega set 2)
-	&BurnDrvFroggers3,			// Frogger (Sega set 3)
+	&BurnDrvFroggers1,			// Frogger (Sega, set 1)
+	&BurnDrvFroggers2,			// Frogger (Sega, set 2)
+	&BurnDrvFroggers3,			// Frogger (Sega, set 3)
 	&BurnDrvmd_frogger,			// Frogger (USA)
 	&BurnDrvgg_frogger,			// Frogger (USA, Prototype)
+	&BurnDrvFroggereb,			// Frogger - New Serie 92 (bootleg)
 	&BurnDrvcv_frogger2,		// Frogger II: Threedeep!
 	&BurnDrvMSX_frogadvs,		// Frogger's Adventures (HB)
 	&BurnDrvcv_frogger,			// Frogger
@@ -26558,7 +26560,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCHF_galactic,		// Galactic Space Wars / Lunar Lander
 	&BurnDrvGalastrm,			// Galactic Storm (Japan)
 	&BurnDrvGwarrior,			// Galactic Warriors
-	&BurnDrvGalactica2,			// Galactica-2 (Moon Alien Part 2 bootleg)
+	&BurnDrvGalactica2,			// Galactica-2 (bootleg of Moon Alien Part 2)
 	&BurnDrvGalaga88a,			// Galaga '88 (02-03-88)
 	&BurnDrvGalaga88j,			// Galaga '88 (Japan)
 	&BurnDrvpce_galaga88,		// Galaga '88 (Japan)
@@ -26614,9 +26616,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGalaxrcgg,			// Galaxian Growing Galaxip / Galaxian Nave Creciente (Recreativos Covadonga Spanish bootleg)
 	&BurnDrvGalaxrfgg,			// Galaxian Growing Galaxip / Galaxian Nave Creciente (Recreativos Franco S.A. Spanish bootleg)
 	&BurnDrvGalap4,				// Galaxian Part 4 (hack)
-	&BurnDrvGalapx,				// Galaxian Part X (moonaln hack)
+	&BurnDrvGalapx,				// Galaxian Part X (hack of 'Moon Alien')
 	&BurnDrvTstgalx,			// Galaxian Test ROM
-	&BurnDrvGalturbo,			// Galaxian Turbo (superg hack)
+	&BurnDrvGalturbo,			// Galaxian Turbo (hack of 'Super Galaxians')
 	&BurnDrvcv_galaxian,		// Galaxian
 	&BurnDrvnes_galaxy5000,		// Galaxy 5000 (USA)
 	&BurnDrvGalemp,				// Galaxy Empire (bootleg?)
@@ -26982,9 +26984,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvfds_gingaden,		// Ginga Denshou - Galaxy Odyssey (Japan)
 	&BurnDrvGinganin,			// Ginga Ninkyouden (set 1)
 	&BurnDrvGinganina,			// Ginga Ninkyouden (set 2)
-	&BurnDrvGteikokub,			// Gingateikoku No Gyakushu (bootleg set 1)
-	&BurnDrvGteikokub2,			// Gingateikoku No Gyakushu (bootleg set 2)
-	&BurnDrvGteikoku,			// Gingateikoku No Gyakushu
+	&BurnDrvGteikokub,			// Gingateikoku no Gyakushu (bootleg set 1)
+	&BurnDrvGteikokub2,			// Gingateikoku no Gyakushu (bootleg set 2)
+	&BurnDrvGteikoku,			// Gingateikoku no Gyakushu
 	&BurnDrvcv_ggarden,			// Girl's Garden (HB)
 	&BurnDrvsg1k_girlgard,		// Girl's Garden (Japan)
 	&BurnDrvsg1k_girlgardt,		// Girl's Garden (Taiwan)
@@ -27195,7 +27197,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvgorkans,			// Gorkans
 	&BurnDrvGorodki,			// Gorodki
 	&BurnDrvGotcha,				// Got-cha Mini Game Festival
-	&BurnDrvGotya,				// Got-Ya (12/24/1981, prototype?)
+	&BurnDrvGotya,				// Got-Ya (12/24/1981)
 	&BurnDrvnes_gotcha,			// Gotcha! - The Sport! (USA)
 	&BurnSpecGothik,			// Gothik (48K)
 	&BurnDrvsms_gotris,			// Gotris (HB, v0.8)
@@ -28766,7 +28768,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_kakefkunnojumte,// Kakefu-kun no Jump Tengoku - Speed Jigoku (Japan)
 	&BurnDrvfds_kalinnotsurugi,	// Kalin no Tsurugi (Hack, English)
 	&BurnDrvfds_kalinnotsurugij,// Kalin no Tsurugi (Japan)
-	&BurnDrvKamakazi3,			// Kamakazi III (superg hack)
+	&BurnDrvKamakazi3,			// Kamakazi III (hack of 'Super Galaxians')
 	&BurnDrvnes_kamenoong,		// Kame no Ongaeshi - Urashima Densetsu (Japan)
 	&BurnDrvnes_kamennoninaka,	// Kamen no Ninja - Akakage (Japan)
 	&BurnDrvnes_kamennoninhan,	// Kamen no Ninja - Hanamaru (Japan)
@@ -29709,8 +29711,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecLims48,			// Lost In My Spectrum (48K) (HB)
 	&BurnDrvsms_lostraider101,	// Lost Raider (HB, v1.01)
 	&BurnSpecLosttapes,			// Lost Tapes of Albion, The (48K) (HB)
-	&BurnDrvLosttomb,			// Lost Tomb (Easy)
-	&BurnDrvLosttombh,			// Lost Tomb (Hard)
+	&BurnDrvLosttomb,			// Lost Tomb (easy)
+	&BurnDrvLosttombh,			// Lost Tomb (hard)
 	&BurnSpeclostulumen,		// Lost Treasures of Tulum, The (English) (128K) (HB)
 	&BurnSpeclostulumes,		// Lost Treasures of Tulum, The (Spanish) (128K) (HB)
 	&BurnDrvmd_lostvik,			// Lost Vikings, The (Euro)
@@ -30970,7 +30972,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mworld4eng2,		// Monster World IV (USA, Europe) (English, Japanese) (Virtual Console)
 	&BurnDrvmd_mworld4f,		// Monster World IV - WB 6 (Hack, French)
 #if defined FBNEO_DEBUG
-	&BurnDrvMonsterz,			// Monster Zero [Protected, NOT WORKING]
+	&BurnDrvMonsterz,			// Monster Zero (set 1) [Protected, NOT WORKING]
 #endif
 	&BurnDrvMSX_mnstfair,		// Monster's Fair (Japan)
 	&BurnDrvMstworld,			// Monsters World (bootleg of Super Pang)
@@ -30991,7 +30993,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMoonal2b,			// Moon Alien Part 2 (older version)
 	&BurnDrvMoonal2,			// Moon Alien Part 2
 	&BurnDrvMoonaln,			// Moon Alien
-	&BurnDrvMooncrs4,			// Moon Crest (Moon Cresta bootleg)
+	&BurnDrvMooncrs4,			// Moon Crest (bootleg of Moon Cresta)
 	&BurnSpecmooncrst,			// Moon Cresta (48K)
 	&BurnDrvMooncrgx,			// Moon Cresta (bootleg on Galaxian hardware)
 	&BurnDrvMooncrsb,			// Moon Cresta (bootleg set 1)
@@ -31026,13 +31028,13 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMranger,			// Moon Ranger (bootleg of Moon Patrol)
 	&BurnDrvnes_moonranger,		// Moon Ranger (USA) (Unl)
 	&BurnDrvMSX_moonridr,		// Moon Rider (Euro)
+	&BurnDrvMshuttlej,			// Moon Shuttle (Japan set 1)
 	&BurnDrvMshuttlej2,			// Moon Shuttle (Japan set 2)
-	&BurnDrvMshuttlej,			// Moon Shuttle (Japan)
 	&BurnDrvMshuttlea,			// Moon Shuttle (US, version A)
 	&BurnDrvMshuttle,			// Moon Shuttle (US? set 1)
 	&BurnDrvMshuttle2,			// Moon Shuttle (US? set 2)
 	&BurnSpecMoonstrike,		// Moon Strike (48K)
-	&BurnDrvMooncmw,			// Moon War (Moon Cresta bootleg)
+	&BurnDrvMooncmw,			// Moon War (bootleg of Moon Cresta)
 	&BurnDrvMoonwarp,			// Moon War (prototype on Frenzy hardware)
 	&BurnDrvfds_moonballmagic,	// Moonball Magic (Japan)
 	&BurnDrvnes_moonglow,		// Moonglow (HB)
@@ -31171,7 +31173,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMototour,			// MotoTour / Zippy Race (Tecfri license)
 	&BurnDrvnes_mottoabudek,	// Mottomo Abunai Deka (Japan)
 	&BurnDrvsg1k_hangon2t2,		// Motuo Feiche (Taiwan)
-	&BurnDrvMouncrst,			// Moune Creste (Jeutel French Moon Cresta bootleg)
+	&BurnDrvMouncrst,			// Moune Creste (Jeutel French bootleg of Moon Cresta)
 	&BurnSpecMountainbikesim,	// Mountain Bike Simulator (128K)
 	&BurnDrvcv_mkinga,			// Mountain King (Alt)
 	&BurnDrvcv_mking,			// Mountain King
@@ -32096,7 +32098,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecoldtower,			// Old Tower (128K) (HB)
 	&BurnDrvmd_oldtowers,		// Old Towers (HB, v1.2)
 	&BurnDrvMSX_Ole,			// Ole! (Euro, Spanish)
-	&BurnDrvOlibug,				// Oli Bug (Jump Bug bootleg)
+	&BurnDrvOlibug,				// Oli Bug (bootleg of Jump Bug)
 	&BurnDrvOlibochu,			// Oli-Boo-Chu (USA)
 	&BurnSpecollilsa,			// Olli & Lissa - The Ghost of Shilmoore Castle (48K)
 	&BurnSpecollilsa2,			// Olli & Lissa II - Halloween (48K)
@@ -34759,11 +34761,11 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvScramblebb,			// Scramble (bootleg?)
 	&BurnDrvScramce,			// Scramble (Centromatic S.A., Spanish bootleg)
 	&BurnDrvnes_scramble,		// Scramble (HB)
-	&BurnDrvScramblebf,			// Scramble (Karateko, French bootleg)
+	&BurnDrvScramblebf,			// Scramble (Karateco, French bootleg)
 	&BurnDrvScrampt,			// Scramble (Petaco S.A., Spanish bootleg)
 	&BurnDrvScrambler,			// Scramble (Reben S.A. Spanish bootleg)
 	&BurnDrvScramrf,			// Scramble (Recreativos Franco, Spanish bootleg)
-	&BurnDrvScrambles,			// Scramble (Stern)
+	&BurnDrvScrambles,			// Scramble (Stern Electronics, set 1)
 	&BurnDrvMSX_scramegg,		// Scramble Eggs (Japan)
 	&BurnSpecscrspirt,			// Scramble Spirits (128K)
 	&BurnDrvMSX_scrspirit,		// Scramble Spirits (Euro)
@@ -35265,7 +35267,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_sirfred,		// Sir Fred (Euro, Spanish)
 	&BurnSpecSirlancelot,		// Sir Lancelot (48K)
 	&BurnDrvcv_lancelot,		// Sir Lancelot
-	&BurnDrvSirio2,				// Sirio II (Calfesa S.L. Spanish Moon Cresta bootleg)
+	&BurnDrvSirio2,				// Sirio II (Calfesa S.L. Spanish bootleg of Moon Cresta)
 	&BurnSpecsirwoodintro,		// Sirwood - Intro (128K)
 	&BurnSpecsirwoodg1,			// Sirwood - Part 1 (128K)
 	&BurnSpecsirwoodg2,			// Sirwood - Part 2 (128K)
@@ -35335,7 +35337,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSkykiddxo,			// Sky Kid Deluxe (set 2)
 	&BurnDrvskylance,			// Sky Lancer (Esco Trading Co license)
 	&BurnDrvskylancr,			// Sky Lancer
-	&BurnDrvSkyraidr,			// Sky Raiders
+	&BurnDrvSkyraidr,			// Sky Raider (bootleg of UniWar S)
 	&BurnDrvSkyrobo,			// Sky Robo
 	&BurnDrvSkysharkb,			// Sky Shark (bootleg)
 	&BurnDrvSkyshark,			// Sky Shark (US, set 1)
@@ -35765,7 +35767,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpacecr,			// Space Cruiser
 	&BurnSpecSpacecrusade,		// Space Crusade (128K)
 	&BurnDrvSpacedem,			// Space Demon
-	&BurnDrvSpcdrag,			// Space Dragon (Moon Cresta bootleg)
+	&BurnDrvSpcdrag,			// Space Dragon (bootleg of Moon Cresta)
 	&BurnDrvSpacduel0,			// Space Duel (prototype)
 	&BurnDrvSpacduel1,			// Space Duel (version 1)
 	&BurnDrvSpacduel,			// Space Duel (version 2)
@@ -35831,7 +35833,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSpacedxj,			// Space Invaders DX (Japan, v2.1)
 	&BurnDrvSpacedx,			// Space Invaders DX (US, v2.1)
 	&BurnDrvSpcinvdj,			// Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)
-	&BurnDrvGalap1,				// Space Invaders Galactica (galaxiaj hack)
+	&BurnDrvGalap1,				// Space Invaders Galactica (hack of 'Galaxian (Namco set 2)')
 	&BurnDrvSinvasnb,			// Space Invasion (bootleg)
 	&BurnDrvSinvasn,			// Space Invasion (Europe)
 	&BurnDrvcv_spaceinvasion,	// Space Invasion (HB)
@@ -36135,7 +36137,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecStardragon,		// Star Dragon (128K)
 	&BurnDrvnes_starevil,		// Star Evil (HB)
 	&BurnSpecstarfarc,			// Star Farce (48K)
-	&BurnDrvStarfgmc,			// Star Fighter (Moon Cresta bootleg)
 	&BurnDrvStarfigh,			// Star Fighter (v1)
 	&BurnDrvStarfght,			// Star Fighter
 	&BurnDrvcv_starfire,		// Star Fire (HB)
@@ -36219,6 +36220,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_stardomwar,		// Stardom Warriors (Hack, English)
 	&BurnSpecStardust,			// Stardust (48K)
 	&BurnDrvMSX_stardust,		// Stardust (Euro, Spanish)
+	&BurnDrvStarfgmc,			// Starfighter (bootleg of Moon Cresta)
 	&BurnDrvmd_starfl1,			// Starflight (Euro, USA)
 	&BurnDrvmd_starfl,			// Starflight (Euro, USA, v1.1)
 	&BurnDrvmd_stargatep,		// Stargate (Euro, Prototype)
@@ -36266,7 +36268,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_stepupa,		// Step Up (Japan, Alt)
 	&BurnDrvMSX_stepupk,		// Step Up (Korea) (Unl)
 	&BurnDrvMSX_stepper,		// Stepper (Japan)
-	&BurnDrvStera,				// Steraranger (Moon Cresta bootleg)
+	&BurnDrvStera,				// Steraranger (bootleg of Moon Cresta)
 	&BurnSpecStercore,			// Stercore (48K) (HB)
 	&BurnDrvMSX_stevedore,		// Stevedore (HB, v1.2)
 	&BurnDrvMSX_stevedored,		// Stevedore Demo (HB)
@@ -36325,7 +36327,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_thorf,			// Story of Thor, The - A Successor of The Light (Euro, French)
 	&BurnDrvmd_thorc,			// Story of Thor, The - Hikari o Tsugumono (Hack, Chinese)
 	&BurnDrvmd_thorj,			// Story of Thor, The - Hikari o Tsugumono (Japan)
-	&BurnDrvStrfbomb,			// Strafe Bomb
+	&BurnDrvStrfbomb,			// Strafe Bomb (bootleg of Scramble)
 	&BurnSpecStranded,			// Stranded (48K) (HB)
 	&BurnSpecStranded25,		// Stranded 2.5 (128K) (HB)
 	&BurnDrvMSX_stranglp,		// Strange Loop (Japan)
@@ -36591,7 +36593,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz3a,			// Street Fighter Zero 3 (980904 Asia)
 	&BurnDrvCpsSfz3j,			// Street Fighter Zero 3 (980904 Japan)
 	&BurnDrvCpsSfz3mix13,		// Street Fighter Zero 3 Mix v0.13
-	&BurnDrvCpsSfz3mix,			// Street Fighter Zero 3 Mix v0.22 [no comment, NOT WORKING]
+	&BurnDrvCpsSfz3mix,			// Street Fighter Zero 3 Mix v0.22
 	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.1 (980629 Japan)
 	&BurnDrvSftm110,			// Street Fighter: The Movie (v1.10)
 	&BurnDrvSftm111,			// Street Fighter: The Movie (v1.11)
@@ -36920,7 +36922,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvSformula,			// Super Formula (Japan, set 1)
 	&BurnDrvSformulaa,			// Super Formula (Japan, set 2)
 	&BurnSpecSupergman,			// Super G-Man (48K)
-	&BurnDrvSuperg,				// Super Galaxians (galaxiaj hack)
+	&BurnDrvSuperg,				// Super Galaxians (hack of 'Galaxian (Namco set 2)')
 	&BurnDrvCpsSgemfa,			// Super Gem Fighter Mini Mix (970904 Asia)
 	&BurnDrvCpsSgemfh,			// Super Gem Fighter Mini Mix (970904 Hispanic)
 	&BurnDrvCpsSgemfd,			// Super Gem Fighter Mini Mix (970904 USA Phoenix Edition)
@@ -36958,7 +36960,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecshangon4,			// Super Hang-On - Part 4 - Expert (48K)
 	&BurnDrvmd_shangone,		// Super Hang-On Enhanced (Hack)
 	&BurnDrvmd_shduty,			// Super Heavy Duty (HB)
-	&BurnDrvSuprheli,			// Super Heli (Super Cobra bootleg)
+	&BurnDrvSuprheli,			// Super Heli (bootleg of Super Cobra)
 	&BurnSpecSuperhero,			// Super Hero (48K)
 	&BurnDrvShimpactp4,			// Super High Impact (prototype, proto 4.0 09/10/91)
 	&BurnDrvShimpactp5,			// Super High Impact (prototype, proto 5.0 09/15/91)
@@ -37154,6 +37156,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_supshin2p2,		// Super Shinobi II, The (Japan, Prototype, Earlier)
 	&BurnDrvmd_supshin,			// Super Shinobi, The (Japan)
 	&BurnDrvnes_supershi,		// Super Shinobi, The (Unl)
+	&BurnDrvSupershp,			// Super Ship
 	&BurnDrvSsideki,			// Super Sidekicks / Tokuten Ou
 	&BurnDrvSsideki2,			// Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - Real Fight Football (NGM-061 ~ NGH-061)
 	&BurnDrvSsideki3,			// Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - Eikou e no Chousen
@@ -37307,7 +37310,6 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_superman,		// Superman - The Man of Steel (Euro)
 	&BurnDrvsms_superman,		// Superman - The Man of Steel (Euro, Brazil)
 	&BurnDrvgg_supermanp,		// Superman - The Man of Steel (Euro, Prototype)
-	&BurnDrvSupershp,			// Supershp
 	&BurnSpecSuperted,			// SuperTed - The Search for Spotty (48K)
 	&BurnDrvMSX_suptrip,		// Supertripper (Euro, Spanish)
 	&BurnDrvnes_super16in1,		// Supervision 16-in-1 (Unl)
@@ -37920,7 +37922,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvElecyoyo2,			// The Electric Yo-Yo (set 2)
 	&BurnDrvEsb,				// The Empire Strikes Back
 	&BurnDrvTheendss,			// The End (SegaSA / Sonic)
-	&BurnDrvTheends,			// The End (Stern)
+	&BurnDrvTheends,			// The End (Stern Electronics)
 	&BurnDrvTheend,				// The End
 	&BurnDrvTeot,				// The Eye of Typhoon (Beta 7 Version)
 	&BurnDrvFlstoryo,			// The FairyLand Story (earlier)
@@ -38829,7 +38831,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_turmoil,		// Turmoil (Japan)
 	&BurnDrvMSX_turmoilk,		// Turmoil (Korea)
 	&BurnDrvcv_turmoil2022,		// Turmoil 2022 (HB)
-	&BurnDrvTurpins,			// Turpin (bootleg on Scramble hardware)
+	&BurnDrvTurpins,			// Turpin (bootleg on Super Cobra hardware)
 	&BurnDrvTurpin,				// Turpin
 	&BurnSpecturrican1,			// Turrican (48K)
 	&BurnDrvmd_turrican,		// Turrican (Euro, USA)
@@ -45903,8 +45905,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_explodingfist", "nes/d_nes.cpp"},
 	{ "spec_fistplus", "spectrum/d_spectrum.cpp"},
 	{ "spec_explodwall", "spectrum/d_spectrum.cpp"},
-	{ "cexplore", "dataeast/d_decocass.cpp"},
 	{ "explorer", "galaxian/d_galaxian.cpp"},
+	{ "cexplore", "dataeast/d_decocass.cpp"},
 	{ "explbrkrk", "pst90s/d_kaneko16.cpp"},
 	{ "explbrkr", "pst90s/d_kaneko16.cpp"},
 	{ "spec_expraider", "spectrum/d_spectrum.cpp"},
@@ -46619,16 +46621,17 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "pgmfrog", "pgm/d_pgm.cpp"},
 	{ "spec_frogger2009", "spectrum/d_spectrum.cpp"},
 	{ "spec_frogger", "spectrum/d_spectrum.cpp"},
+	{ "froggrs", "galaxian/d_galaxian.cpp"},
 	{ "md_froggers", "megadrive/d_megadrive.cpp"},
 	{ "msx_frogger", "msx/d_msx.cpp"},
 	{ "msx_froggera", "msx/d_msx.cpp"},
 	{ "froggermc", "galaxian/d_galaxian.cpp"},
-	{ "froggrs", "galaxian/d_galaxian.cpp"},
 	{ "froggers1", "galaxian/d_galaxian.cpp"},
 	{ "froggers2", "galaxian/d_galaxian.cpp"},
 	{ "froggers3", "galaxian/d_galaxian.cpp"},
 	{ "md_frogger", "megadrive/d_megadrive.cpp"},
 	{ "gg_frogger", "sms/d_sms.cpp"},
+	{ "froggereb", "galaxian/d_galaxian.cpp"},
 	{ "cv_frogger2", "coleco/d_coleco.cpp"},
 	{ "msx_frogadvs", "msx/d_msx.cpp"},
 	{ "cv_frogger", "coleco/d_coleco.cpp"},
@@ -51181,8 +51184,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "mranger", "irem/d_m52.cpp"},
 	{ "nes_moonranger", "nes/d_nes.cpp"},
 	{ "msx_moonridr", "msx/d_msx.cpp"},
-	{ "mshuttlej2", "galaxian/d_galaxian.cpp"},
 	{ "mshuttlej", "galaxian/d_galaxian.cpp"},
+	{ "mshuttlej2", "galaxian/d_galaxian.cpp"},
 	{ "mshuttlea", "galaxian/d_galaxian.cpp"},
 	{ "mshuttle", "galaxian/d_galaxian.cpp"},
 	{ "mshuttle2", "galaxian/d_galaxian.cpp"},
@@ -56240,7 +56243,6 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "spec_stardragon", "spectrum/d_spectrum.cpp"},
 	{ "nes_starevil", "nes/d_nes.cpp"},
 	{ "spec_starfarc", "spectrum/d_spectrum.cpp"},
-	{ "starfgmc", "galaxian/d_galaxian.cpp"},
 	{ "starfigh", "pre90s/d_suna8.cpp"},
 	{ "starfght", "galaxian/d_galaxian.cpp"},
 	{ "cv_starfire", "coleco/d_coleco.cpp"},
@@ -56322,6 +56324,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_stardomwar", "nes/d_nes.cpp"},
 	{ "spec_stardust", "spectrum/d_spectrum.cpp"},
 	{ "msx_stardust", "msx/d_msx.cpp"},
+	{ "starfgmc", "galaxian/d_galaxian.cpp"},
 	{ "md_starfl1", "megadrive/d_megadrive.cpp"},
 	{ "md_starfl", "megadrive/d_megadrive.cpp"},
 	{ "md_stargatep", "megadrive/d_megadrive.cpp"},
@@ -57239,6 +57242,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_supshin2p2", "megadrive/d_megadrive.cpp"},
 	{ "md_supshin", "megadrive/d_megadrive.cpp"},
 	{ "nes_supershi", "nes/d_nes.cpp"},
+	{ "supershp", "galaxian/d_galaxian.cpp"},
 	{ "ssideki", "neogeo/d_neogeo.cpp"},
 	{ "ssideki2", "neogeo/d_neogeo.cpp"},
 	{ "ssideki3", "neogeo/d_neogeo.cpp"},
@@ -57390,7 +57394,6 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_superman", "megadrive/d_megadrive.cpp"},
 	{ "sms_superman", "sms/d_sms.cpp"},
 	{ "gg_supermanp", "sms/d_sms.cpp"},
-	{ "supershp", "galaxian/d_galaxian.cpp"},
 	{ "spec_superted", "spectrum/d_spectrum.cpp"},
 	{ "msx_suptrip", "msx/d_msx.cpp"},
 	{ "nes_super16in1", "nes/d_nes.cpp"},

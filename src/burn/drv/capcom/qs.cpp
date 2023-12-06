@@ -93,6 +93,9 @@ void QsndEndFrame()
 {
 	BurnTimerEndFrame(nCpsZ80Cycles);
 	if (pBurnSoundOut) QscUpdate(nBurnSoundLen);
+	if (Cps2Turbo && pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	nQsndCyclesExtra = ZetTotalCycles() - nCpsZ80Cycles;
 	ZetClose();

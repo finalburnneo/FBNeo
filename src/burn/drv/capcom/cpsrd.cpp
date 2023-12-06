@@ -218,7 +218,7 @@ INT32 Cps2rRender()
 	INT32 y;
 	struct CpsrLineInfo *pli;
 	if (CpsrBase==NULL) return 1;
-	nXTiles = (Cps2Turbo) ? 26 : 24;
+	nXTiles = nCpsScreenWidth>>4; // 24*16 = 384, 26*16 = 416
 
 	nKnowBlank = -1;					// We don't know which tile is blank yet
 

@@ -112,6 +112,8 @@ static INT32 Cps2tOne()
   INT32 nFun; INT32 nSize;
   nSize=(nCpstType&24)+8;
 
+  if (nCpstY + nSize >= nEndline) nCpstType |= CTT_CARE;
+
   if (nCpstType&CTT_CARE)
   {
     if ((nCpstType&CTT_ROWS)==0)

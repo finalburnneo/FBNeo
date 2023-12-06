@@ -280,7 +280,7 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="testsuite240p" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
+	<game name="test240p" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Homebrew</comment>
 		<description>240p Test Suite (v1.0)</description>
 		<year>2023</year>
@@ -1959,7 +1959,7 @@
 	<game name="breakrevbh" cloneof="breakrev" romof="breakrev" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Hack</comment>
 		<description>Breakers Revenge (Boss Hack)</description>
-		<year>1998</year>
+		<year>2007</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="245-p1bh.p1" size="2097152" crc="52c978b5"/>
 		<rom name="245-s1.s1" merge="245-s1.s1" size="131072" crc="e7660a5d"/>
@@ -2013,11 +2013,69 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="brkrevjq" cloneof="breakrev" romof="breakrev" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>Breakers Revenge (Enhanced, Hack)</description>
+		<year>2022</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="245-p1jq.p1" size="1048576" crc="85779451"/>
+		<rom name="245-p2d.sp2" size="1048576" crc="615bdad6"/>
+		<rom name="245-s1.s1" merge="245-s1.s1" size="131072" crc="e7660a5d"/>
+		<rom name="245-c1.c1" merge="245-c1.c1" size="4194304" crc="68d4ae76"/>
+		<rom name="245-c2.c2" merge="245-c2.c2" size="4194304" crc="fdee05cd"/>
+		<rom name="245-c3.c3" merge="245-c3.c3" size="4194304" crc="645077f3"/>
+		<rom name="245-c4.c4" merge="245-c4.c4" size="4194304" crc="63aeb74c"/>
+		<rom name="245-c5.c5" merge="245-c5.c5" size="4194304" crc="b5f40e7f"/>
+		<rom name="245-c6.c6" merge="245-c6.c6" size="4194304" crc="d0337328"/>
+		<rom name="245-m1.m1" merge="245-m1.m1" size="131072" crc="00f31c66"/>
+		<rom name="245-v1.v1" merge="245-v1.v1" size="4194304" crc="e255446c"/>
+		<rom name="245-v2.v2" merge="245-v2.v2" size="4194304" crc="9068198a"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="brkrevext" cloneof="breakrev" romof="breakrev" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Hack</comment>
-		<description>Breakers Revenge - Extra Mode (Hack)</description>
+		<description>Breakers Revenge (Extra Mode, Hack)</description>
 		<year>2018</year>
-		<manufacturer>Visco</manufacturer>
+		<manufacturer>hack</manufacturer>
 		<rom name="245-p1ext.p1" size="2097152" crc="603b47a4"/>
 		<rom name="245-s1.s1" merge="245-s1.s1" size="131072" crc="e7660a5d"/>
 		<rom name="245-c1.c1" merge="245-c1.c1" size="4194304" crc="68d4ae76"/>
@@ -4163,9 +4221,67 @@
 	<game name="kabukiklb" cloneof="kabukikl" romof="kabukikl" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Hack</comment>
 		<description>Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den (Add hidden characters)</description>
-		<year>1995</year>
+		<year>2008</year>
 		<manufacturer>Ydmis / Creamymami[EGCG]</manufacturer>
 		<rom name="092-p1b.p1" size="2097152" crc="9e814a43"/>
+		<rom name="092-s1.s1" merge="092-s1.s1" size="131072" crc="a3d68ee2"/>
+		<rom name="092-c1.c1" merge="092-c1.c1" size="4194304" crc="2a9fab01"/>
+		<rom name="092-c2.c2" merge="092-c2.c2" size="4194304" crc="6d2bac02"/>
+		<rom name="092-c3.c3" merge="092-c3.c3" size="4194304" crc="5da735d6"/>
+		<rom name="092-c4.c4" merge="092-c4.c4" size="4194304" crc="de07f997"/>
+		<rom name="092-m1.m1" merge="092-m1.m1" size="131072" crc="91957ef6"/>
+		<rom name="092-v1.v1" merge="092-v1.v1" size="2097152" crc="69e90596"/>
+		<rom name="092-v2.v2" merge="092-v2.v2" size="2097152" crc="7abdb75d"/>
+		<rom name="092-v3.v3" merge="092-v3.v3" size="2097152" crc="eccc98d3"/>
+		<rom name="092-v4.v4" merge="092-v4.v4" size="1048576" crc="a7c9c949"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kabukijq" cloneof="kabukikl" romof="kabukikl" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den (Enhanced, Hack)</description>
+		<year>2023</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="092-p1jq.p1" size="1048576" crc="bcc0fbec"/>
+		<rom name="092-p2d.sp2" size="1048576" crc="9e5fbe42"/>
 		<rom name="092-s1.s1" merge="092-s1.s1" size="131072" crc="a3d68ee2"/>
 		<rom name="092-c1.c1" merge="092-c1.c1" size="4194304" crc="2a9fab01"/>
 		<rom name="092-c2.c2" merge="092-c2.c2" size="4194304" crc="6d2bac02"/>
@@ -8228,6 +8344,118 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mslugfc2" cloneof="mslug" romof="mslug" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>Metal Slug - Super Vehicle-001 (Item Random &amp; Powerful Enemy Defense FC2, Hack)</description>
+		<year>2023</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="201-p1fc2.p1" size="1048576" crc="c167facf"/>
+		<rom name="201-p2fc2.sp2" size="1048576" crc="1c278a37"/>
+		<rom name="201-s1.s1" merge="201-s1.s1" size="131072" crc="2f55958d"/>
+		<rom name="201-c1.c1" merge="201-c1.c1" size="4194304" crc="72813676"/>
+		<rom name="201-c2.c2" merge="201-c2.c2" size="4194304" crc="96f62574"/>
+		<rom name="201-c3.c3" merge="201-c3.c3" size="4194304" crc="5121456a"/>
+		<rom name="201-c4.c4" merge="201-c4.c4" size="4194304" crc="f4ad59a3"/>
+		<rom name="201-m1.m1" merge="201-m1.m1" size="131072" crc="c28b3253"/>
+		<rom name="201-v1.v1" merge="201-v1.v1" size="4194304" crc="23d22ed1"/>
+		<rom name="201-v2.v2" merge="201-v2.v2" size="4194304" crc="472cf9db"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mslugfc1" cloneof="mslug" romof="mslug" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>Metal Slug - Super Vehicle-001 (Item Random FC2, Hack)</description>
+		<year>2023</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="201-p1fc1.p1" size="1048576" crc="aa915a0e"/>
+		<rom name="201-p2fc1.sp2" size="1048576" crc="6de5637a"/>
+		<rom name="201-s1.s1" merge="201-s1.s1" size="131072" crc="2f55958d"/>
+		<rom name="201-c1.c1" merge="201-c1.c1" size="4194304" crc="72813676"/>
+		<rom name="201-c2.c2" merge="201-c2.c2" size="4194304" crc="96f62574"/>
+		<rom name="201-c3.c3" merge="201-c3.c3" size="4194304" crc="5121456a"/>
+		<rom name="201-c4.c4" merge="201-c4.c4" size="4194304" crc="f4ad59a3"/>
+		<rom name="201-m1.m1" merge="201-m1.m1" size="131072" crc="c28b3253"/>
+		<rom name="201-v1.v1" merge="201-v1.v1" size="4194304" crc="23d22ed1"/>
+		<rom name="201-v2.v2" merge="201-v2.v2" size="4194304" crc="472cf9db"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mslugdg" cloneof="mslug" romof="mslug" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Hack</comment>
 		<description>Metal Slug - Super Vehicle-001 (Multifunction, Hack)</description>
@@ -8291,62 +8519,6 @@
 		<manufacturer>hack</manufacturer>
 		<rom name="201-p1qy.p1" size="1048576" crc="750c90c8"/>
 		<rom name="201-p2dg.sp2" size="1048576" crc="c3cb544c"/>
-		<rom name="201-s1.s1" merge="201-s1.s1" size="131072" crc="2f55958d"/>
-		<rom name="201-c1.c1" merge="201-c1.c1" size="4194304" crc="72813676"/>
-		<rom name="201-c2.c2" merge="201-c2.c2" size="4194304" crc="96f62574"/>
-		<rom name="201-c3.c3" merge="201-c3.c3" size="4194304" crc="5121456a"/>
-		<rom name="201-c4.c4" merge="201-c4.c4" size="4194304" crc="f4ad59a3"/>
-		<rom name="201-m1.m1" merge="201-m1.m1" size="131072" crc="c28b3253"/>
-		<rom name="201-v1.v1" merge="201-v1.v1" size="4194304" crc="23d22ed1"/>
-		<rom name="201-v2.v2" merge="201-v2.v2" size="4194304" crc="472cf9db"/>
-		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
-		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
-		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
-		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
-		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
-		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
-		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
-		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
-		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
-		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
-		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
-		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
-		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
-		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
-		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
-		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
-		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
-		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
-		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
-		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
-		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
-		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
-		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
-		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
-		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
-		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
-		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
-		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
-		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
-		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
-		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
-		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
-		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
-		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
-		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
-		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
-		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
-		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
-		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
-		<driver status="good"/>
-	</game>
-	<game name="mslugufc" cloneof="mslug" romof="mslug" sourcefile="neogeo/d_neogeo.cpp">
-		<comment>Hack</comment>
-		<description>Metal Slug - Super Vehicle-001 (Unity FC2, Hack)</description>
-		<year>2023</year>
-		<manufacturer>hack</manufacturer>
-		<rom name="201-p1ufc.p1" size="1048576" crc="23727db0"/>
-		<rom name="201-p2ufc.sp2" size="1048576" crc="9947862c"/>
 		<rom name="201-s1.s1" merge="201-s1.s1" size="131072" crc="2f55958d"/>
 		<rom name="201-c1.c1" merge="201-c1.c1" size="4194304" crc="72813676"/>
 		<rom name="201-c2.c2" merge="201-c2.c2" size="4194304" crc="96f62574"/>
@@ -9132,11 +9304,11 @@
 	<game name="mslug3eb" cloneof="mslug3" romof="mslug3" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Hack</comment>
 		<description>Metal Slug 3 (Blue, Hack)</description>
-		<year>2013</year>
+		<year>2014</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="ms3eb.neo-sma" size="262144" crc="2a9935c2"/>
+		<rom name="ms3eb.neo-sma" size="262144" crc="c2dc0b28"/>
 		<rom name="256-pg1eb.p1" size="4194304" crc="6ec2e58d"/>
-		<rom name="256-pg2eb.p2" size="4194304" crc="ca4eb0d3"/>
+		<rom name="256-pg2eb.p2" size="4194304" crc="faaf8cd8"/>
 		<rom name="256-c1.c1" merge="256-c1.c1" size="8388608" crc="5a79c34e"/>
 		<rom name="256-c2.c2" merge="256-c2.c2" size="8388608" crc="944c362c"/>
 		<rom name="256-c3.c3" merge="256-c3.c3" size="8388608" crc="6e69d36f"/>
@@ -9630,7 +9802,7 @@
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="256-p1cq.p1" size="1048576" crc="aa7ab5eb"/>
-		<rom name="256-p2cq.sp2" size="4194304" crc="3f4bcc3a"/>
+		<rom name="256-p2cq.sp2" size="4194304" crc="ab60c99a"/>
 		<rom name="256-s1d.s1" size="131072" crc="8458fff9"/>
 		<rom name="256-c1d.c1" size="8388608" crc="3540398c"/>
 		<rom name="256-c2d.c2" size="8388608" crc="bdd220f0"/>
@@ -10563,7 +10735,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="mslug4a" cloneof="mslug4" romof="mslug4" sourcefile="neogeo/d_neogeo.cpp">
-		<comment>Hack</comment>
+		<comment>Hack, Enter [Soft Dip] to turn on level display</comment>
 		<description>Metal Slug 4 (20th Anniversary, Hack)</description>
 		<year>2021</year>
 		<manufacturer>hack</manufacturer>
@@ -10811,15 +10983,15 @@
 		<rom name="263-s1d.s1" size="131072" crc="a9446774"/>
 		<rom name="263-c1d.c1" size="8388608" crc="a75ffcde"/>
 		<rom name="263-c2d.c2" size="8388608" crc="5ab0d12b"/>
-		<rom name="263-c3dlw.c3" size="8388608" crc="e296612c"/>
-		<rom name="263-c4dlw.c4" size="8388608" crc="c22e3ad0"/>
-		<rom name="263-c5dlw.c5" size="4194304" crc="288cd91f"/>
-		<rom name="263-c6dlw.c6" size="4194304" crc="b015aeee"/>
-		<rom name="263-m1dlw.m1" size="131072" crc="49b1453e"/>
+		<rom name="263-c3lw.c3" size="8388608" crc="e296612c"/>
+		<rom name="263-c4lw.c4" size="8388608" crc="c22e3ad0"/>
+		<rom name="263-c5lw.c5" size="4194304" crc="288cd91f"/>
+		<rom name="263-c6lw.c6" size="4194304" crc="b015aeee"/>
+		<rom name="263-m1lw.m1" size="131072" crc="49b1453e"/>
 		<rom name="263-v1d.v1" size="4194304" crc="8cb5a9ef"/>
-		<rom name="263-v2dlw.v2" size="4194304" crc="c9572c14"/>
-		<rom name="263-v3dlw.v3" size="4194304" crc="e7c14624"/>
-		<rom name="263-v4dlw.v4" size="4194304" crc="9260c539"/>
+		<rom name="263-v2lw.v2" size="4194304" crc="c9572c14"/>
+		<rom name="263-v3lw.v3" size="4194304" crc="e7c14624"/>
+		<rom name="263-v4lw.v4" size="4194304" crc="9260c539"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -10875,11 +11047,11 @@
 		<rom name="263-c4dlw.c4" size="8388608" crc="c22e3ad0"/>
 		<rom name="263-c5dlw.c5" size="4194304" crc="288cd91f"/>
 		<rom name="263-c6dlw.c6" size="4194304" crc="b015aeee"/>
-		<rom name="263-m1dlw.m1" size="131072" crc="49b1453e"/>
+		<rom name="263-m1lw.m1" size="131072" crc="49b1453e"/>
 		<rom name="263-v1d.v1" size="4194304" crc="8cb5a9ef"/>
-		<rom name="263-v2dlw.v2" size="4194304" crc="c9572c14"/>
-		<rom name="263-v3dlw.v3" size="4194304" crc="e7c14624"/>
-		<rom name="263-v4dlw.v4" size="4194304" crc="9260c539"/>
+		<rom name="263-v2lw.v2" size="4194304" crc="c9572c14"/>
+		<rom name="263-v3lw.v3" size="4194304" crc="e7c14624"/>
+		<rom name="263-v4lw.v4" size="4194304" crc="9260c539"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
 		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
@@ -11403,7 +11575,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11582,7 +11754,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11641,7 +11813,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11700,7 +11872,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11759,7 +11931,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11818,7 +11990,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11878,7 +12050,7 @@
 		<rom name="268-c6f.c6" size="8388608" crc="0db5ce14"/>
 		<rom name="268-c7f.c7" size="8388608" crc="aa4f3214"/>
 		<rom name="268-c8f.c8" size="8388608" crc="c86d0d81"/>
-		<rom name="268-m1w.m1" size="524288" crc="464c72ad"/>
+		<rom name="268-m1w.m1" size="131072" crc="9577a692"/>
 		<rom name="268-v1f.v1" size="8388608" crc="ebae8143"/>
 		<rom name="268-v2f.v2" size="8615200" crc="84aac915"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11937,7 +12109,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -11996,7 +12168,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12055,7 +12227,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12115,7 +12287,7 @@
 		<rom name="268-c6w.c6" size="8388608" crc="d918f796"/>
 		<rom name="268-c7w.c7" size="8388608" crc="bdb9a887"/>
 		<rom name="268-c8w.c8" size="8388608" crc="6f8ac6fb"/>
-		<rom name="268-m1w.m1" size="524288" crc="464c72ad"/>
+		<rom name="268-m1w.m1" size="131072" crc="9577a692"/>
 		<rom name="268-v1w.v1" size="8388608" crc="c0cafa36"/>
 		<rom name="268-v2w.v2" size="8389360" crc="cc81efa3"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12289,7 +12461,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12350,7 +12522,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12409,7 +12581,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12468,7 +12640,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12517,7 +12689,7 @@
 		<description>Metal Slug 5 (Stone Turtle, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="268-p1sc.p1" size="6291456" crc="71a0953f"/>
+		<rom name="268-p1sg.p1" size="6291456" crc="1b6a6163"/>
 		<rom name="268-s1d.s1" size="131072" crc="64952683"/>
 		<rom name="268-c1d.c1" size="8388608" crc="e8239365"/>
 		<rom name="268-c2d.c2" size="8388608" crc="89b21d4c"/>
@@ -12527,7 +12699,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12586,7 +12758,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7sc.c7" size="8388608" crc="080b585a"/>
 		<rom name="268-c8sc.c8" size="8388608" crc="a6450c3a"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12645,7 +12817,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12704,7 +12876,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -12763,7 +12935,7 @@
 		<rom name="268-c6d.c6" size="8388608" crc="59d33e9c"/>
 		<rom name="268-c7d.c7" size="8388608" crc="c9f8c357"/>
 		<rom name="268-c8d.c8" size="8388608" crc="fafc3eb9"/>
-		<rom name="268-m1d.m1" size="524288" crc="39f3cbba"/>
+		<rom name="268-m1d.m1" size="131072" crc="346d4a30"/>
 		<rom name="268-v1d.v1" size="8388608" crc="7ff6ca47"/>
 		<rom name="268-v2d.v2" size="8388608" crc="696cce3b"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
@@ -13639,8 +13811,8 @@
 		<description>Metal Slug X - Super Vehicle-001 (Legend, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="250-p1cq.p1" size="1048576" crc="504fedda"/>
-		<rom name="250-p2cq.ep1" size="4194304" crc="aea38555"/>
+		<rom name="250-p1cq.p1" size="1048576" crc="0912c6c4"/>
+		<rom name="250-p2cq.ep1" size="4194304" crc="3e1585f4"/>
 		<rom name="250-s1sc.s1" size="131072" crc="03bce893"/>
 		<rom name="250-c1.c1" merge="250-c1.c1" size="8388608" crc="09a52c6f"/>
 		<rom name="250-c2.c2" merge="250-c2.c2" size="8388608" crc="31679821"/>
@@ -20252,6 +20424,67 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="savagerp" cloneof="savagere" romof="savagere" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>Savage Reign / Fu'un Mokushiroku - Kakutou Sousei (Plus, Hack)</description>
+		<year>2015</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="059-p1p.p1" size="1048576" crc="d8598aa0"/>
+		<rom name="059-p2d.sp2" size="1048576" crc="58a9af72"/>
+		<rom name="059-s1.s1" merge="059-s1.s1" size="131072" crc="e08978ca"/>
+		<rom name="059-c1.c1" merge="059-c1.c1" size="2097152" crc="763ba611"/>
+		<rom name="059-c2.c2" merge="059-c2.c2" size="2097152" crc="e05e8ca6"/>
+		<rom name="059-c3.c3" merge="059-c3.c3" size="2097152" crc="3e4eba4b"/>
+		<rom name="059-c4.c4" merge="059-c4.c4" size="2097152" crc="3c2a3808"/>
+		<rom name="059-c5.c5" merge="059-c5.c5" size="2097152" crc="59013f9e"/>
+		<rom name="059-c6.c6" merge="059-c6.c6" size="2097152" crc="1c8d5def"/>
+		<rom name="059-c7.c7" merge="059-c7.c7" size="2097152" crc="c88f7035"/>
+		<rom name="059-c8.c8" merge="059-c8.c8" size="2097152" crc="484ce3ba"/>
+		<rom name="059-m1.m1" merge="059-m1.m1" size="131072" crc="29992eba"/>
+		<rom name="059-v1.v1" merge="059-v1.v1" size="2097152" crc="530c50fd"/>
+		<rom name="059-v2.v2" merge="059-v2.v2" size="2097152" crc="eb6f1cdb"/>
+		<rom name="059-v3.v3" merge="059-v3.v3" size="2097152" crc="7038c2f9"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="savagere" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
 		<description>Savage Reign / Fu'un Mokushiroku - Kakutou Sousei</description>
 		<year>1995</year>
@@ -24017,20 +24250,138 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="kof97bs" cloneof="kof97" romof="kof97" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (Boss, Hack)</description>
+		<year>2023</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="232-p1bs.p1" size="1048576" crc="5e287c6f"/>
+		<rom name="232-p2bs.sp2" size="4194304" crc="05c0500c"/>
+		<rom name="232-s1bs.s1" size="131072" crc="ece9abba"/>
+		<rom name="232-c1plc.c1" size="8388608" crc="fdfa1933"/>
+		<rom name="232-c2plc.c2" size="8388608" crc="ebd8a2c0"/>
+		<rom name="232-c3st.c3" size="8388608" crc="b092e64f"/>
+		<rom name="232-c4st.c4" size="8388608" crc="d25e8a04"/>
+		<rom name="232-c5bs.c5" size="4194304" crc="22fbe729"/>
+		<rom name="232-c6bs.c6" size="4194304" crc="50831866"/>
+		<rom name="232-m1.m1" merge="232-m1.m1" size="131072" crc="45348747"/>
+		<rom name="232-v1.v1" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
+		<rom name="232-v2.v2" merge="232-v2.v2" size="4194304" crc="2304e744"/>
+		<rom name="232-v3.v3" merge="232-v3.v3" size="4194304" crc="759eb954"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="kof97cbt" cloneof="kof97" romof="kof97" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Hack</comment>
 		<description>The King of Fighters '97 (Combo Training, Hack, Ver. 2018)</description>
 		<year>2019</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="232-p1cbt.p1" size="1048576" crc="323e4263"/>
-		<rom name="232-p2cbt.sp2" size="4194304" crc="91c0cfdb"/>
-		<rom name="232-s1cbt.s1" size="131072" crc="d4957067"/>
-		<rom name="232-c1cbt.c1" size="8388608" crc="ea16b711"/>
-		<rom name="232-c2cbt.c2" size="8388608" crc="b7bef674"/>
+		<rom name="232-p2cb.sp2" size="4194304" crc="91c0cfdb"/>
+		<rom name="232-s1cb.s1" size="131072" crc="d4957067"/>
+		<rom name="232-c1cb.c1" size="8388608" crc="ea16b711"/>
+		<rom name="232-c2cb.c2" size="8388608" crc="b7bef674"/>
 		<rom name="232-c3.c3" merge="232-c3.c3" size="8388608" crc="581d6618"/>
 		<rom name="232-c4.c4" merge="232-c4.c4" size="8388608" crc="49bb1e68"/>
 		<rom name="232-c5cbt.c5" size="4194304" crc="6fe02054"/>
 		<rom name="232-c6cbt.c6" size="4194304" crc="0f96c84a"/>
+		<rom name="232-m1.m1" merge="232-m1.m1" size="131072" crc="45348747"/>
+		<rom name="232-v1.v1" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
+		<rom name="232-v2.v2" merge="232-v2.v2" size="4194304" crc="2304e744"/>
+		<rom name="232-v3.v3" merge="232-v3.v3" size="4194304" crc="759eb954"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kof97cb" cloneof="kof97" romof="kof97" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (Combo, Hack)</description>
+		<year>2018</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="232-p1cb.p1" size="1048576" crc="827670ab"/>
+		<rom name="232-p2cb.sp2" size="4194304" crc="91c0cfdb"/>
+		<rom name="232-s1cb.s1" size="131072" crc="d4957067"/>
+		<rom name="232-c1cb.c1" size="8388608" crc="ea16b711"/>
+		<rom name="232-c2cb.c2" size="8388608" crc="b7bef674"/>
+		<rom name="232-c3.c3" merge="232-c3.c3" size="8388608" crc="581d6618"/>
+		<rom name="232-c4.c4" merge="232-c4.c4" size="8388608" crc="49bb1e68"/>
+		<rom name="232-c5.c5" merge="232-c5.c5" size="4194304" crc="34fc4e51"/>
+		<rom name="232-c6.c6" merge="232-c6.c6" size="4194304" crc="4ff4d47b"/>
 		<rom name="232-m1.m1" merge="232-m1.m1" size="131072" crc="45348747"/>
 		<rom name="232-v1.v1" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
 		<rom name="232-v2.v2" merge="232-v2.v2" size="4194304" crc="2304e744"/>
@@ -24798,7 +25149,7 @@
 		<manufacturer>hack</manufacturer>
 		<rom name="232-p1rc.p1" size="1048576" crc="1d476235"/>
 		<rom name="232-p2rc.sp2" size="4194304" crc="406e4a4b"/>
-		<rom name="232-s1rc.s1" size="131072" crc="d4957067"/>
+		<rom name="232-s1cb.s1" size="131072" crc="d4957067"/>
 		<rom name="232-c1rc.c1" size="8388608" crc="e2fe7d7a"/>
 		<rom name="232-c2rc.c2" size="8388608" crc="d0746893"/>
 		<rom name="232-c3.c3" merge="232-c3.c3" size="8388608" crc="581d6618"/>
@@ -24926,6 +25277,65 @@
 		<rom name="232-m1.m1" merge="232-m1.m1" size="131072" crc="45348747"/>
 		<rom name="232-v1.v1" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
 		<rom name="232-v2.v2" merge="232-v2.v2" size="4194304" crc="2304e744"/>
+		<rom name="232-v3.v3" merge="232-v3.v3" size="4194304" crc="759eb954"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="kof97ubp" cloneof="kof97" romof="kof97" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>The King of Fighters '97 (Ultimate Battle Plus, Hack)</description>
+		<year>2020</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="232-p1ubp.p1" size="1048576" crc="8490e92e"/>
+		<rom name="232-p2ubp.sp2" size="4194304" crc="33482c71"/>
+		<rom name="232-s1ubp.s1" size="131072" crc="0016c83a"/>
+		<rom name="232-c1ubp.c1" size="8388608" crc="e1b11416"/>
+		<rom name="232-c2ubp.c2" size="8388608" crc="0ea40438"/>
+		<rom name="232-c3st.c3" size="8388608" crc="b092e64f"/>
+		<rom name="232-c4st.c4" size="8388608" crc="d25e8a04"/>
+		<rom name="232-c5ubp.c5" size="8388608" crc="8572aa61"/>
+		<rom name="232-c6ubp.c6" size="8388608" crc="dcef5f41"/>
+		<rom name="232-m1.m1" merge="232-m1.m1" size="131072" crc="45348747"/>
+		<rom name="232-v1.v1" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
+		<rom name="232-v2ubp.v2" size="4194304" crc="92b14f89"/>
 		<rom name="232-v3.v3" merge="232-v3.v3" size="4194304" crc="759eb954"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
@@ -26699,9 +27109,9 @@
 		<description>The King of Fighters '99 - Millennium Battle (Infinite Energy, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="152-p1jq.p1" size="1048576" crc="c52d8736"/>
-		<rom name="152-p2jq.sp2" size="4194304" crc="39a94303"/>
-		<rom name="proto_251-s1eur.s1" size="131072" crc="a6747969"/>
+		<rom name="152-p1jq.p1" size="1048576" crc="d785cc0e"/>
+		<rom name="152-p2jq.sp2" size="4194304" crc="496ee6c8"/>
+		<rom name="152-s1jq.s1" size="131072" crc="b39bf6ed"/>
 		<rom name="251-c1eur.c1" size="8388608" crc="c7e8bf32"/>
 		<rom name="251-c2eur.c2" size="8388608" crc="4e8f9f7d"/>
 		<rom name="proto_251-c3.c3" size="8388608" crc="f20959e8"/>
@@ -27962,8 +28372,8 @@
 		<rom name="257-v3.v3" merge="257-v3.v3" size="4194304" crc="4605036a"/>
 		<rom name="257-v4.v4" merge="257-v4.v4" size="4194304" crc="764bbd6b"/>
 		<rom name="257-v5otc.v5" size="4194304" crc="54df285f"/>
-		<rom name="257-p1otc.dif" size="1048576" crc="49b3f779"/>
-		<rom name="257-p2otc.dif" size="4194304" crc="5f946a0c"/>
+		<rom name="257-p1otc.dif" size="1048576" crc="6e51e168"/>
+		<rom name="257-p2otc.dif" size="4194304" crc="ba4d48d2"/>
 		<rom name="257-c1otc.dif" size="8388608" crc="51081b95"/>
 		<rom name="257-c2otc.dif" size="8388608" crc="9c76d30e"/>
 		<rom name="257-c3otc.dif" size="8388608" crc="abb6b9b1"/>
@@ -32889,6 +33299,64 @@
 		<year>1996</year>
 		<manufacturer>hack</manufacturer>
 		<rom name="225-p1bh.p1" size="1048576" crc="0b7a3776"/>
+		<rom name="225-p2.sp2" merge="225-p2.sp2" size="2097152" crc="fe190665"/>
+		<rom name="225-s1.s1" merge="225-s1.s1" size="131072" crc="71c4b4b5"/>
+		<rom name="225-c1.c1" merge="225-c1.c1" size="4194304" crc="ee4fea54"/>
+		<rom name="225-c2.c2" merge="225-c2.c2" size="4194304" crc="0c549e2d"/>
+		<rom name="225-c3.c3" merge="225-c3.c3" size="4194304" crc="af0897c0"/>
+		<rom name="225-c4.c4" merge="225-c4.c4" size="4194304" crc="4c66527a"/>
+		<rom name="225-c5.c5" merge="225-c5.c5" size="4194304" crc="8ecea2b5"/>
+		<rom name="225-c6.c6" merge="225-c6.c6" size="4194304" crc="0eb11a6d"/>
+		<rom name="225-m1.m1" merge="225-m1.m1" size="131072" crc="0634bba6"/>
+		<rom name="225-v1.v1" merge="225-v1.v1" size="4194304" crc="6195c6b4"/>
+		<rom name="225-v2.v2" merge="225-v2.v2" size="4194304" crc="6159c5fe"/>
+		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
+		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
+		<rom name="sp-s.sp1" merge="sp-s.sp1" size="131072" crc="c7f2fa45"/>
+		<rom name="sp-u2.sp1" merge="sp-u2.sp1" size="131072" crc="e72943de"/>
+		<rom name="sp1-u2" merge="sp1-u2" size="131072" crc="62f021f4"/>
+		<rom name="sp-e.sp1" merge="sp-e.sp1" size="131072" crc="2723a5b5"/>
+		<rom name="sp1-u4.bin" merge="sp1-u4.bin" size="131072" crc="1179a30f"/>
+		<rom name="sp1-u3.bin" merge="sp1-u3.bin" size="131072" crc="2025b7a2"/>
+		<rom name="vs-bios.rom" merge="vs-bios.rom" size="131072" crc="f0e8f27d"/>
+		<rom name="sp-j2.sp1" merge="sp-j2.sp1" size="131072" crc="acede59c"/>
+		<rom name="sp1.jipan.1024" merge="sp1.jipan.1024" size="131072" crc="9fb0abe4"/>
+		<rom name="sp-45.sp1" merge="sp-45.sp1" size="524288" crc="03cc9f6a"/>
+		<rom name="sp-j3.sp1" merge="sp-j3.sp1" size="524288" crc="486cb450"/>
+		<rom name="japan-j3.bin" merge="japan-j3.bin" size="131072" crc="dff6d41f"/>
+		<rom name="sp1-j3.bin" merge="sp1-j3.bin" size="131072" crc="fbc6d469"/>
+		<rom name="neo-po.bin" merge="neo-po.bin" size="131072" crc="16d0c132"/>
+		<rom name="neo-epo.bin" merge="neo-epo.bin" size="131072" crc="d27a71f1"/>
+		<rom name="neodebug.bin" merge="neodebug.bin" size="131072" crc="698ebb7d"/>
+		<rom name="sp-1v1_3db8c.bin" merge="sp-1v1_3db8c.bin" size="131072" crc="162f0ebe"/>
+		<rom name="uni-bios_4_0.rom" merge="uni-bios_4_0.rom" size="131072" crc="a7aab458"/>
+		<rom name="uni-bios_3_3.rom" merge="uni-bios_3_3.rom" size="131072" crc="24858466"/>
+		<rom name="uni-bios_3_2.rom" merge="uni-bios_3_2.rom" size="131072" crc="a4e8b9b3"/>
+		<rom name="uni-bios_3_1.rom" merge="uni-bios_3_1.rom" size="131072" crc="0c58093f"/>
+		<rom name="uni-bios_3_0.rom" merge="uni-bios_3_0.rom" size="131072" crc="a97c89a9"/>
+		<rom name="uni-bios_2_3.rom" merge="uni-bios_2_3.rom" size="131072" crc="27664eb5"/>
+		<rom name="uni-bios_2_3o.rom" merge="uni-bios_2_3o.rom" size="131072" crc="601720ae"/>
+		<rom name="uni-bios_2_2.rom" merge="uni-bios_2_2.rom" size="131072" crc="2d50996a"/>
+		<rom name="uni-bios_2_1.rom" merge="uni-bios_2_1.rom" size="131072" crc="8dabf76b"/>
+		<rom name="uni-bios_2_0.rom" merge="uni-bios_2_0.rom" size="131072" crc="0c12c2ad"/>
+		<rom name="uni-bios_1_3.rom" merge="uni-bios_1_3.rom" size="131072" crc="b24b44a0"/>
+		<rom name="uni-bios_1_2.rom" merge="uni-bios_1_2.rom" size="131072" crc="4fa698e9"/>
+		<rom name="uni-bios_1_2o.rom" merge="uni-bios_1_2o.rom" size="131072" crc="e19d3ce9"/>
+		<rom name="uni-bios_1_1.rom" merge="uni-bios_1_1.rom" size="131072" crc="5dda0d84"/>
+		<rom name="uni-bios_1_0.rom" merge="uni-bios_1_0.rom" size="131072" crc="0ce453a0"/>
+		<rom name="neopen.sp1" merge="neopen.sp1" size="131072" crc="cb915e76"/>
+		<rom name="sm1.sm1" merge="sm1.sm1" size="131072" crc="94416d67"/>
+		<rom name="sfix.sfix" merge="sfix.sfix" size="131072" crc="c2ea0cfd"/>
+		<rom name="000-lo.lo" merge="000-lo.lo" size="131072" crc="5a86cff2"/>
+		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="wakuw7jq" cloneof="wakuwak7" romof="wakuwak7" sourcefile="neogeo/d_neogeo.cpp">
+		<comment>Hack</comment>
+		<description>Waku Waku 7 (Enhanced, Hack)</description>
+		<year>2023</year>
+		<manufacturer>hack</manufacturer>
+		<rom name="225-p1jq.p1" size="1048576" crc="680b0912"/>
 		<rom name="225-p2.sp2" merge="225-p2.sp2" size="2097152" crc="fe190665"/>
 		<rom name="225-s1.s1" merge="225-s1.s1" size="131072" crc="71c4b4b5"/>
 		<rom name="225-c1.c1" merge="225-c1.c1" size="4194304" crc="ee4fea54"/>

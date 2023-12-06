@@ -1459,7 +1459,7 @@ struct BurnDriver BurnDrvFlyboyb = {
 	"flyboyb", "flyboy", NULL, NULL, "1982",
 	"Fly-Boy (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, flyboybRomInfo, flyboybRomName, NULL, NULL, NULL, NULL, CommonInputInfo, FlyboyDIPInfo,
 	fastfredInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1496,7 +1496,7 @@ static INT32 jumpcoasInit()
 
 struct BurnDriver BurnDrvJumpcoas = {
 	"jumpcoas", NULL, NULL, NULL, "1983",
-	"Jump Coaster (World)\0", NULL, "Kaneko Elc. Co", "Miscellaneous",
+	"Jump Coaster (World)\0", NULL, "Kaneko Elc. Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, jumpcoasRomInfo, jumpcoasRomName, NULL, NULL, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
@@ -1616,7 +1616,7 @@ struct BurnDriver BurnDrvBoggy84 = {
 	224, 256, 3, 4
 };
 
-// Boggy '84 (bootleg)
+// Boggy '84 (bootleg, set 1)
 
 static struct BurnRomInfo boggy84bRomDesc[] = {
 	{ "cpurom1.bin",	0x2000, 0x665266c0, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1638,9 +1638,9 @@ STD_ROM_FN(boggy84b)
 
 struct BurnDriver BurnDrvBoggy84b = {
 	"boggy84b", "boggy84", NULL, NULL, "1983",
-	"Boggy '84 (bootleg)\0", NULL, "bootleg (Eddie's Games)", "Miscellaneous",
+	"Boggy '84 (bootleg, set 1)\0", NULL, "bootleg (Eddie's Games)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, boggy84bRomInfo, boggy84bRomName, NULL, NULL, NULL, NULL, TwoBtnInputInfo, Boggy84DIPInfo,
 	boggy84bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

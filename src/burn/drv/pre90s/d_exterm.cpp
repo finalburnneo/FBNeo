@@ -796,7 +796,7 @@ STD_ROM_FN(exterm)
 
 struct BurnDriver BurnDrvExterm = {
 	"exterm", NULL, NULL, NULL, "1989",
-	"Exterminator\0", NULL, "Gottlieb / Premier Technology", "Miscellaneous",
+	"Exterminator\0", NULL, "Premier Technology", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, extermRomInfo, extermRomName, NULL, NULL, NULL, NULL, ExtermInputInfo, ExtermDIPInfo,

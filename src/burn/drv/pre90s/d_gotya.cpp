@@ -559,7 +559,7 @@ struct BurnDriver BurnDrvThehand = {
 };
 
 
-// Got-Ya (12/24/1981, prototype?)
+// Got-Ya (12/24/1981)
 
 static struct BurnRomInfo gotyaRomDesc[] = {
 	{ "gb-06.bin",	0x1000, 0x7793985a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -587,9 +587,9 @@ STD_ROM_FN(gotya)
 
 struct BurnDriver BurnDrvGotya = {
 	"gotya", "thehand", NULL, "thehand", "1981",
-	"Got-Ya (12/24/1981, prototype?)\0", NULL, "Game-A-Tron", "Miscellaneous",
+	"Got-Ya (12/24/1981)\0", NULL, "T.I.C. (Game-A-Tron license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, gotyaRomInfo, gotyaRomName, NULL, NULL, ThehandSampleInfo, ThehandSampleName, GotyaInputInfo, GotyaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 288, 3, 4

@@ -78,7 +78,7 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	INT32 ix, iy;
 	INT32 nFirstY, nLastY;
 	INT32 nKnowBlank = -1; // The tile we know is blank
-	INT32 nXTile = (Cps2Turbo) ? 52 : 48; // 48*8 = 384, 52*8 = 416
+	INT32 nXTile = nCpsScreenWidth>>3; // 48*8 = 384, 52*8 = 416
 
 	ix = (sx >> 3) + 1;
 	sx &= 7;
@@ -201,7 +201,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	INT32 ix, iy;
 	INT32 nFirstY, nLastY;
 	INT32 nKnowBlank = -1; // The tile we know is blank
-	INT32 nXTile = (Cps2Turbo) ? 13 : 12; // 12*32 = 384, 13*32 = 416
+	INT32 nXTile = nCpsScreenWidth>>5; // 12*32 = 384, 13*32 = 416
 
 	ix = (sx >> 5) + 1;
 	sx &= 31;

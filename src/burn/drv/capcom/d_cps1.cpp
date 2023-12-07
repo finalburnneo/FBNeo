@@ -26054,20 +26054,20 @@ struct BurnDriver BurnDrvCpsdinosyn = {
 	{ "cc-4m.10a",		0x080000, 0x1f9ebb97, BRF_GRA | CPS1_TILES },				\
 	CAPTCOMM_MISC
 
-// Captain Commando Readjusted, hacked by GameHackFan 
+// Captain Commando Readjusted v1.2, hacked by GameHackFan 
 // source: https://gamehackfan.github.io/captre/
 
 static struct BurnRomInfo CaptreRomDesc[] = {
-	{ "cce_re.10f",    0x200000, 0xb9e27229, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cce_re.10f",		0x200000, 0x7d7463a1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "cc-5re.3a",     0x080000, 0xd78482a8, BRF_GRA | CPS1_TILES },
-	{ "cc-7re.5a",     0x080000, 0xfe4f474d, BRF_GRA | CPS1_TILES },
-	{ "cc-1re.4a",     0x080000, 0xe45c8021, BRF_GRA | CPS1_TILES },
-	{ "cc-3re.6a",     0x080000, 0x0d7f9314, BRF_GRA | CPS1_TILES },
-	{ "cc-6re.7a",     0x080000, 0xbd687ae8, BRF_GRA | CPS1_TILES },
-	{ "cc-8re.9a",     0x080000, 0xf222c02e, BRF_GRA | CPS1_TILES },
-	{ "cc-2re.8a",     0x080000, 0x8296149a, BRF_GRA | CPS1_TILES },
-	{ "cc-4re.10a",    0x080000, 0xa7b9288e, BRF_GRA | CPS1_TILES },
+	{ "cc-5re.3a",		0x080000, 0xd78482a8, BRF_GRA | CPS1_TILES },
+	{ "cc-7re.5a",		0x080000, 0xfe4f474d, BRF_GRA | CPS1_TILES },
+	{ "cc-1re.4a",		0x080000, 0xe45c8021, BRF_GRA | CPS1_TILES },
+	{ "cc-3re.6a",		0x080000, 0x0d7f9314, BRF_GRA | CPS1_TILES },
+	{ "cc-6re.7a",		0x080000, 0xbd687ae8, BRF_GRA | CPS1_TILES },
+	{ "cc-8re.9a",		0x080000, 0xf222c02e, BRF_GRA | CPS1_TILES },
+	{ "cc-2re.8a",		0x080000, 0x8296149a, BRF_GRA | CPS1_TILES },
+	{ "cc-4re.10a",		0x080000, 0xa7b9288e, BRF_GRA | CPS1_TILES },
 
 	CAPTCOMM_MISC
 };
@@ -26077,7 +26077,7 @@ STD_ROM_FN(Captre)
 
 struct BurnDriver BurnDrvCpsCaptre = {
 	"captre", "captcomm", NULL, NULL, "2023",
-	"Captain Commando Readjusted (Hack, v1.1)\0", NULL, "GameHackFan", "CPS1",
+	"Captain Commando Readjusted (Hack, v1.2)\0", NULL, "GameHackFan", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptreRomInfo, CaptreRomName, NULL, NULL, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,

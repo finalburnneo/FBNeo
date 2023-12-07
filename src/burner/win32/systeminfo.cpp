@@ -543,8 +543,8 @@ int PrintGlobalMemoryInfo()
 	float fTotalPageFile = stat.ullTotalPageFile / pow(1024, 2);
 	float fAvailPageFile = stat.ullAvailPageFile / pow(1024, 2);
 
-	AddLine(_T("Physical RAM: %.2f MB (%.2f GB) total, %.2f MB (%.2f GB) avail"), fTotalPhys, fTotalPhys / 1024, fAvailPhys, fAvailPhys / 1024);
-	AddLine(_T("PageFile RAM: %.2f MB (%.2f GB) total, %.2f MB (%.2f GB) avail"), fTotalPageFile, fTotalPageFile / 1024, fAvailPageFile, fAvailPageFile / 1024);
+	AddLine(_T("Physical RAM:  %.2f MB (%.2f GB) total, %.2f MB (%.2f GB) avail"), fTotalPhys, fTotalPhys / 1024, fAvailPhys, fAvailPhys / 1024);
+	AddLine(_T("PageFile RAM:  %.2f MB (%.2f GB) total, %.2f MB (%.2f GB) avail"), fTotalPageFile, fTotalPageFile / 1024, fAvailPageFile, fAvailPageFile / 1024);
 
 	// Information on FB Neo memory usage
 	BOOL (WINAPI* pGetProcessMemoryInfo)(HANDLE, PPROCESS_MEMORY_COUNTERS, DWORD) = NULL;
@@ -559,11 +559,11 @@ int PrintGlobalMemoryInfo()
 			if (pGetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
 				TCHAR szLine[1024] = _T("");
 				int length = _tcslen(_T(APP_TITLE));
-				if (length > 12) {
-					length = 12;
+				if (length > 13) {
+					length = 13;
 				}
-				_sntprintf(szLine, 12, _T(APP_TITLE));
-				_sntprintf(szLine + length, 14 - length, _T(":                 "));
+				_sntprintf(szLine, 13, _T(APP_TITLE));
+				_sntprintf(szLine + length, 15 - length, _T(":                 "));
 
 				float fWorkingSetSize = pmc.WorkingSetSize / pow(1024, 2);
 				float fPeakWorkingSetSize = pmc.PeakWorkingSetSize / pow(1024, 2);

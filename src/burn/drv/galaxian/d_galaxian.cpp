@@ -6726,6 +6726,22 @@ static struct BurnRomInfo Galap1RomDesc[] = {
 STD_ROM_PICK(Galap1)
 STD_ROM_FN(Galap1)
 
+static struct BurnRomInfo Galap2RomDesc[] = {
+	{ "p2-1.1",        0x00800, 0xacfde501, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p2-2.2",        0x00800, 0x65cf3c77, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p2-3.3",        0x00800, 0x9eef9ae6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p2-4.4",        0x00800, 0x56a5ddd1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "p2-5.5",        0x00800, 0xf4bc7262, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "galii.1j",      0x00800, 0x3dcdb3d2, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "galii.1k",      0x00800, 0x25789c21, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galap2)
+STD_ROM_FN(Galap2)
+
 static struct BurnRomInfo Galap4RomDesc[] = {
 	{ "galnamco.u",    0x00800, 0xacfde501, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "galnamco.v",    0x00800, 0x65cf3c77, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -7151,6 +7167,22 @@ static struct BurnRomInfo GalaxrcggRomDesc[] = {
 STD_ROM_PICK(Galaxrcgg)
 STD_ROM_FN(Galaxrcgg)
 
+static struct BurnRomInfo GalaxianiiiRomDesc[] = {
+	{ "galiii_u.u",    0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galiii_v.v",    0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galiii_x.x",    0x00800, 0xddeabdae, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galiii_y.y",    0x00800, 0x87b24ab8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "galiii_z.z",    0x00800, 0xb960abbd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "1h",            0x00800, 0x84decf98, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "1k",            0x00800, 0xc31ada9e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxianiii)
+STD_ROM_FN(Galaxianiii)
+
 static INT32 SupergxInit()
 {
 	INT32 nRet;
@@ -7220,6 +7252,16 @@ struct BurnDriver BurnDrvGalap1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Galap1RomInfo, Galap1RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalap2 = {
+	"galap2", "galaxian", NULL, NULL, "1979",
+	"GX Part 2 (hack of Galaxian)\0", NULL, "hack (International Scientific)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Galap2RomInfo, Galap2RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -7470,6 +7512,16 @@ struct BurnDriver BurnDrvGalaxrcgg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaxrcggRomInfo, GalaxrcggRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
+	GalInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxianiii = {
+	"galaxianiii", "galaxian", NULL, NULL, "1979",
+	"Galaxian III (bootleg of Galaxian)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxianiiiRomInfo, GalaxianiiiRomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, GalaxianDIPInfo,
 	GalInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -8901,7 +8953,7 @@ struct BurnDriver BurnDrvScramblb = {
 
 struct BurnDriver BurnDrvScramb2 = {
 	"scramb2", "scramble", NULL, NULL, "1981",
-	"Scramble (bootleg)\0", NULL, "bootleg", "Galaxian",
+	"Scramble (bootleg, set 1)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, Scramb2RomInfo, Scramb2RomName, NULL, NULL, NULL, NULL, Scramb2InputInfo, Scramb2DIPInfo,
@@ -9112,6 +9164,27 @@ static struct BurnRomInfo Gteikokub2RomDesc[] = {
 
 STD_ROM_PICK(Gteikokub2)
 STD_ROM_FN(Gteikokub2)
+
+static struct BurnRomInfo Gteikokub3RomDesc[] = {
+	{ "g1.a3",         0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g0.a2",         0x00800, 0x378aba50, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "xx.a1",         0x00800, 0x945f4160, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g2.a4",         0x00800, 0xddc80bc5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g5.b1",         0x00800, 0x62354351, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g6.b2",         0x00800, 0xd915a389, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g7.b3",         0x00800, 0xc9245346, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "xx.b4",         0x00800, 0x797d45c7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "g10.2",         0x00800, 0x8313c959, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "g12.4",         0x00800, 0xc26132af, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "g9.1",          0x00800, 0xc9d4537e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "g11.3",         0x00800, 0xdcc2b33b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "colprom.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Gteikokub3)
+STD_ROM_FN(Gteikokub3)
 
 static struct BurnRomInfo SpacbattRomDesc[] = {
 	{ "sb1",           0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9457,6 +9530,16 @@ struct BurnDriver BurnDrvGteikokub2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Gteikokub2RomInfo, Gteikokub2RomName, NULL, NULL, NULL, NULL, OmegabInputInfo, Gteikokub2DIPInfo,
+	PiscesInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGteikokub3 = {
+	"gteikokub3", "uniwars", NULL, NULL, "1980",
+	"Gingateikoku no Gyakushu (bootleg set 3)\0", NULL, "bootleg (Honly)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Gteikokub3RomInfo, Gteikokub3RomName, NULL, NULL, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	PiscesInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -10701,7 +10784,7 @@ struct BurnDriver BurnDrvFourin1 = {
 	"4in1", NULL, NULL, NULL, "1981",
 	"4 Fun in 1\0", NULL, "Armenia / Food and Fun", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Fourin1RomInfo, Fourin1RomName, NULL, NULL, NULL, NULL, Fourin1InputInfo, Fourin1DIPInfo,
 	Fourin1Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -13567,7 +13650,7 @@ struct BurnDriver BurnDrvBagmanm2 = {
 
 struct BurnDriver BurnDrvDkongjrm = {
 	"dkongjrm", "dkongjr", NULL, NULL, "1982",
-	"Donkey Kong Jr. (Moon Cresta hardware)\0", "Bad Colours", "bootleg", "Galaxian",
+	"Donkey Kong Jr. (bootleg on Moon Cresta hardware, set 1)\0", "Bad Colours", "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
 	NULL, DkongjrmRomInfo, DkongjrmRomName, NULL, NULL, NULL, NULL, DkongjrmInputInfo, DkongjrmDIPInfo,
@@ -13576,7 +13659,7 @@ struct BurnDriver BurnDrvDkongjrm = {
 };
 
 struct BurnDriver BurnDrvVpool = {
-	"vpool", "hustler", NULL, NULL, "1980",
+	"vpool", "hustler", NULL, NULL, "1981",
 	"Video Pool (bootleg on Moon Cresta hardware)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
@@ -15604,6 +15687,24 @@ static struct BurnRomInfo Froggers3RomDesc[] = {
 STD_ROM_PICK(Froggers3)
 STD_ROM_FN(Froggers3)
 
+static struct BurnRomInfo FroggertRomDesc[] = {
+	{ "epr-1398.2c",        0x01000, 0xcd6d3b43, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "epr-1399.2e",        0x01000, 0x71c365d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "epr-1400.2f",        0x01000, 0x5bd230b5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "epr-1401.2h",        0x01000, 0x4e94d34f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "epr-1402.5c",        0x01000, 0x12890497, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "epr-1403.5d",        0x01000, 0x1d4d1083, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	
+	{ "epr-1391.5f",        0x00800, 0x05f7d883, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "epr-1392.5h",        0x00800, 0x658745f8, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "pr-91.6e",           0x00020, 0x413703bf, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Froggert)
+STD_ROM_FN(Froggert)
+
 static struct BurnRomInfo FroggermcRomDesc[] = {
 	{ "epr-1031.15",   0x01000, 0x4b7c8d11, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "epr-1032.16",   0x01000, 0xac00b9d9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -16074,6 +16175,31 @@ static INT32 FroggrsInit()
 	return nRet;
 }
 
+static INT32 FroggertInit()
+{
+	INT32 nRet;
+	
+	GalPostLoadCallbackFunction = MapTurtles;
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
+	
+	nRet = GalInit(); if (nRet) return 1;
+	KonamiSoundInit();
+
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
+	GalScreenUnflipper = 1; // unflip coctail!
+	
+	GalRenderBackgroundFunction = FroggerDrawBackground;
+	GalDrawBulletsFunction = NULL;
+	GalExtendTileInfoFunction = FroggerExtendTileInfo;
+	GalExtendSpriteInfoFunction = FroggerExtendSpriteInfo;
+	
+	KonamiPPIInit();
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvFrogger = {
 	"frogger", NULL, NULL, NULL, "1981",
 	"Frogger\0", NULL, "Konami", "Galaxian",
@@ -16111,6 +16237,16 @@ struct BurnDriver BurnDrvFroggers3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_ACTION, 0,
 	NULL, Froggers3RomInfo, Froggers3RomName, NULL, NULL, NULL, NULL, FroggerInputInfo, FroggerDIPInfo,
 	FroggerEncGfxInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvFroggert = {
+	"froggert", "frogger", NULL, NULL, "1981",
+	"Frogger (Turtles hardware)\0", NULL, "Konami (Sega license)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_ACTION, 0,
+	NULL, FroggertRomInfo, FroggertRomName, NULL, NULL, NULL, NULL, FroggerInputInfo, FroggerDIPInfo,
+	FroggertInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -19118,7 +19254,7 @@ struct BurnDriver BurnDrvDevilfshgb = {
 
 struct BurnDriver BurnDrvNewsin7 = {
 	"newsin7", NULL, NULL, NULL, "1983",
-	"New Sinbad 7\0", NULL, "ATW USA, Inc.", "Galaxian",
+	"New Sinbad 7 (set 1)\0", NULL, "ATW USA, Inc.", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Newsin7RomInfo, Newsin7RomName, NULL, NULL, NULL, NULL, DevilfshInputInfo, Newsin7DIPInfo,
@@ -19147,8 +19283,8 @@ struct BurnDriver BurnDrvMrkougar2 = {
 };
 
 struct BurnDriver BurnDrvMrkougb = {
-	"mrkougb", "mrkougar", NULL, NULL, "1983",
-	"Mr. Kougar (bootleg set 1)\0", NULL, "bootleg", "Galaxian",
+	"mrkougb", "mrkougar", NULL, NULL, "1984",
+	"Mr. Kougar (German bootleg)\0", NULL, "bootleg (Gross)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
 	NULL, MrkougbRomInfo, MrkougbRomName, NULL, NULL, NULL, NULL, MrkougarInputInfo, MrkougarDIPInfo,
@@ -19158,7 +19294,7 @@ struct BurnDriver BurnDrvMrkougb = {
 
 struct BurnDriver BurnDrvMrkougb2 = {
 	"mrkougb2", "mrkougar", NULL, NULL, "1983",
-	"Mr. Kougar (bootleg set 2)\0", NULL, "bootleg", "Galaxian",
+	"Mr. Kougar (bootleg)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
 	NULL, Mrkougb2RomInfo, Mrkougb2RomName, NULL, NULL, NULL, NULL, MrkougarInputInfo, MrkougarDIPInfo,
@@ -19178,17 +19314,17 @@ struct BurnDriver BurnDrvHotshock = {
 
 struct BurnDriver BurnDrvHotshockb = {
 	"hotshockb", "hotshock", NULL, NULL, "1982",
-	"Hot Shocker (bootleg)\0", NULL, "bootleg", "Galaxian",
+	"Hot Shocker (early revision?)\0", NULL, "E.G. Felaco", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, HotshockbRomInfo, HotshockbRomName, NULL, NULL, NULL, NULL, HotshockInputInfo, HotshockDIPInfo,
 	HotshockInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
 struct BurnDriverD BurnDrvConquer = {
-	"conquer", NULL, NULL, NULL, "1982",
-	"Conquer\0", "Bad dump", "unknown", "Galaxian",
+	"conquer", NULL, NULL, NULL, "198?",
+	"Conqueror\0", "Bad dump", "<unknown>", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, ConquerRomInfo, ConquerRomName, NULL, NULL, NULL, NULL, HotshockInputInfo, HotshockDIPInfo,
@@ -19485,7 +19621,7 @@ static INT32 MarinerInit()
 
 struct BurnDriver BurnDrvTriplep = {
 	"triplep", NULL, NULL, NULL, "1982",
-	"Triple Punch (set 1)\0", NULL, "KKI", "Galaxian",
+	"Triple Punch (set 1)\0", NULL, "K.K. International", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, TriplepRomInfo, TriplepRomName, NULL, NULL, NULL, NULL, AmidarInputInfo, TriplepDIPInfo,
@@ -19495,7 +19631,7 @@ struct BurnDriver BurnDrvTriplep = {
 
 struct BurnDriver BurnDrvTriplepa = {
 	"triplepa", "triplep", NULL, NULL, "1982",
-	"Triple Punch (set 2)\0", NULL, "KKK", "Galaxian",
+	"Triple Punch (set 2)\0", NULL, "K.K. International", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, TriplepaRomInfo, TriplepaRomName, NULL, NULL, NULL, NULL, AmidarInputInfo, TriplepDIPInfo,
@@ -19505,9 +19641,9 @@ struct BurnDriver BurnDrvTriplepa = {
 
 struct BurnDriver BurnDrvKnockout = {
 	"knockout", "triplep", NULL, NULL, "1982",
-	"Knock Out!!\0", NULL, "KKK", "Galaxian",
+	"Knock Out!! (bootleg, set 1)\0", NULL, "bootleg? (KKK)", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, KnockoutRomInfo, KnockoutRomName, NULL, NULL, NULL, NULL, AmidarInputInfo, TriplepDIPInfo,
 	TriplepInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -19515,7 +19651,7 @@ struct BurnDriver BurnDrvKnockout = {
 
 struct BurnDriver BurnDrvMariner = {
 	"mariner", NULL, NULL, NULL, "1981",
-	"Mariner\0", NULL, "Armenip", "Galaxian",
+	"Mariner\0", NULL, "Amenip", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, MarinerRomInfo, MarinerRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
@@ -20368,7 +20504,7 @@ static INT32 Ad2083Init()
 
 struct BurnDriver BurnDrvAd2083 = {
 	"ad2083", NULL, NULL, NULL, "1983",
-	"A.D. 2083\0", "Incomplete Sound", "Midcoin", "Galaxian",
+	"A. D. 2083\0", "Incomplete Sound", "Midcoin", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, Ad2083RomInfo, Ad2083RomName, NULL, NULL, NULL, NULL, Ad2083InputInfo, Ad2083DIPInfo,
@@ -23193,7 +23329,7 @@ struct BurnDriver BurnDrvTazmania = {
 
 struct BurnDriver BurnDrvTazmani2 = {
 	"tazmani2", "tazmania", NULL, NULL, "1982",
-	"Tazz-Mania (set 2)\0", NULL, "Stern", "Galaxian",
+	"Tazz-Mania (set 2, alt hardware)\0", NULL, "Stern Electronics", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Tazmani2RomInfo, Tazmani2RomName, NULL, NULL, NULL, NULL, TazmaniaInputInfo, ArmorcarDIPInfo,
@@ -23293,7 +23429,7 @@ struct BurnDriver BurnDrvStratgyx = {
 
 struct BurnDriver BurnDrvStratgys = {
 	"stratgys", "stratgyx", NULL, NULL, "1981",
-	"Strategy X (Stern)\0", NULL, "Konami (Stern License)", "Galaxian",
+	"Strategy X (Stern Electronics)\0", NULL, "Konami (Stern Electronics license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, StratgysRomInfo, StratgysRomName, NULL, NULL, NULL, NULL, StratgyxInputInfo, StratgyxDIPInfo,
@@ -23313,7 +23449,7 @@ struct BurnDriver BurnDrvStrongx = {
 
 struct BurnDriver BurnDrvDarkplnt = {
 	"darkplnt", NULL, NULL, NULL, "1982",
-	"Dark Planet\0", NULL, "Stern", "Galaxian",
+	"Dark Planet\0", NULL, "Stern Electronics", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SHOOT, 0,
 	NULL, DarkplntRomInfo, DarkplntRomName, NULL, NULL, NULL, NULL, DarkplntInputInfo, DarkplntDIPInfo,
@@ -23323,7 +23459,7 @@ struct BurnDriver BurnDrvDarkplnt = {
 
 struct BurnDriver BurnDrvRescue = {
 	"rescue", NULL, NULL, NULL, "1982",
-	"Rescue\0", NULL, "Stern", "Galaxian",
+	"Rescue\0", NULL, "Stern Electronics", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, RescueRomInfo, RescueRomName, NULL, NULL, NULL, NULL, RescueInputInfo, RescueDIPInfo,
@@ -23333,7 +23469,7 @@ struct BurnDriver BurnDrvRescue = {
 
 struct BurnDriver BurnDrvAponow = {
 	"aponow", "rescue", NULL, NULL, "1982",
-	"Apocaljpse Now\0", NULL, "bootleg", "Galaxian",
+	"Apocaljpse Now (bootleg of Rescue)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, AponowRomInfo, AponowRomName, NULL, NULL, NULL, NULL, RescueInputInfo, RescueDIPInfo,
@@ -23343,7 +23479,7 @@ struct BurnDriver BurnDrvAponow = {
 
 struct BurnDriver BurnDrvMinefld = {
 	"minefld", NULL, NULL, NULL, "1983",
-	"Minefield\0", NULL, "Stern", "Galaxian",
+	"Minefield\0", NULL, "Stern Electronics", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, MinefldRomInfo, MinefldRomName, NULL, NULL, NULL, NULL, RescueInputInfo, MinefldDIPInfo,
@@ -23363,7 +23499,7 @@ struct BurnDriver BurnDrvHustler = {
 
 struct BurnDriver BurnDrvBilliard = {
 	"billiard", "hustler", NULL, NULL, "1981",
-	"The Billiards\0", NULL, "bootleg", "Galaxian",
+	"The Billiards (bootleg of Video Hustler)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, BilliardRomInfo, BilliardRomName, NULL, NULL, NULL, NULL, HustlerInputInfo, HustlerDIPInfo,
@@ -23373,7 +23509,7 @@ struct BurnDriver BurnDrvBilliard = {
 
 struct BurnDriver BurnDrvHustlerb = {
 	"hustlerb", "hustler", NULL, NULL, "1981",
-	"Video Hustler (bootleg)\0", NULL, "bootleg", "Galaxian",
+	"Video Hustler (bootleg, set 1)\0", NULL, "bootleg (Digimatic)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, HustlerbRomInfo, HustlerbRomName, NULL, NULL, NULL, NULL, HustlerInputInfo, HustlerDIPInfo,
@@ -24976,7 +25112,7 @@ static INT32 HncholmsInit()
 }
 
 struct BurnDriver BurnDrvHunchbkg = {
-	"hunchbkg", "hunchbak", NULL, NULL, "1981",
+	"hunchbkg", "hunchbak", NULL, NULL, "1983",
 	"Hunchback (Galaxian hardware)\0", NULL, "Century Electronics", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
@@ -24987,7 +25123,7 @@ struct BurnDriver BurnDrvHunchbkg = {
 
 struct BurnDriver BurnDrvDrivfrcg = {
 	"drivfrcg", "drivfrcp", NULL, NULL, "1984",
-	"Driving Force (Galaxian conversion)\0", NULL, "Shinkai Inc. (Magic Eletronics USA licence)", "Galaxian",
+	"Driving Force (Galaxian conversion)\0", NULL, "Shinkai Inc. (Magic Electronics USA license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_RACING, 0,
 	NULL, DrivfrcgRomInfo, DrivfrcgRomName, NULL, NULL, NULL, NULL, DrivfrcgInputInfo, DrivfrcgDIPInfo,
@@ -24996,7 +25132,7 @@ struct BurnDriver BurnDrvDrivfrcg = {
 };
 
 struct BurnDriver BurnDrvDrivfrct = {
-	"drivfrct", "drivfrcp", NULL, NULL, "1985",
+	"drivfrct", "drivfrcp", NULL, NULL, "1984",
 	"Top Racer (bootleg of Driving Force)\0", NULL, "bootleg (EMT Germany)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_RACING, 0,
@@ -25017,7 +25153,7 @@ struct BurnDriver BurnDrvDrivfrcb = {
 
 struct BurnDriver BurnDrvRacknrol = {
 	"racknrol", NULL, NULL, NULL, "1986",
-	"Rack + Roll\0", NULL, "Status (Shinkai License)", "Galaxian",
+	"Rack + Roll\0", NULL, "Senko Industries (Status license from Shinkai Inc.)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, RacknrolRomInfo, RacknrolRomName, NULL, NULL, NULL, NULL, RacknrolInputInfo, RacknrolDIPInfo,
@@ -25027,7 +25163,7 @@ struct BurnDriver BurnDrvRacknrol = {
 
 struct BurnDriver BurnDrvHexpool = {
 	"hexpool", "racknrol", NULL, NULL, "1986",
-	"Hex Pool (Shinkai)\0", NULL, "Shinkai", "Galaxian",
+	"Hex Pool (Shinkai)\0", NULL, "Senko Industries (Shinkai Inc. license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, HexpoolRomInfo, HexpoolRomName, NULL, NULL, NULL, NULL, RacknrolInputInfo, RacknrolDIPInfo,
@@ -25037,7 +25173,7 @@ struct BurnDriver BurnDrvHexpool = {
 
 struct BurnDriver BurnDrvHexpoola = {
 	"hexpoola", "racknrol", NULL, NULL, "1985",
-	"Hex Pool (Senko)\0", NULL, "Senko", "Galaxian",
+	"Hex Pool (Senko)\0", NULL, "Senko Industries", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, HexpoolaRomInfo, HexpoolaRomName, NULL, NULL, NULL, NULL, RacknrolInputInfo, RacknrolDIPInfo,
@@ -25057,7 +25193,7 @@ struct BurnDriver BurnDrvHunchbks = {
 
 struct BurnDriver BurnDrvHncholms = {
 	"hncholms", "huncholy", NULL, NULL, "1984",
-	"Hunchback Olympic (Scramble hardware)\0", "Imperfect Sound", "Century Electronics", "Galaxian",
+	"Hunchback Olympic (Scramble hardware)\0", "Imperfect Sound", "Seatongrove UK, Ltd.", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, HncholmsRomInfo, HncholmsRomName, NULL, NULL, NULL, NULL, HunchbksInputInfo, HunchbksDIPInfo,

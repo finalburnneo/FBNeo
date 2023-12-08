@@ -26711,6 +26711,8 @@ static struct BurnRomInfo knightscRomDesc[] = {
 	{ "kr_07c.9a",	0x080000, 0xd5e377a1, BRF_GRA | CPS1_TILES },
 	{ "kr_08c.10a",	0x080000, 0x90860da1, BRF_GRA | CPS1_TILES },
 
+	{ "kr_09.11a",	0x010000, 0x5e44d9ee, BRF_PRG | CPS1_Z80_PROGRAM },
+
 	KNIGHTS_MISC
 };
 

@@ -20691,7 +20691,7 @@ struct BurnDriver BurnDrvmslugdqy = {
 // Metal Slug (Item Random, Hack)
 
 static struct BurnRomInfo mslugfc1RomDesc[] = {
-	{ "201-p1fc1.p1",	0x200000, 0x72b65245, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1fc1.p1",	0x200000, 0x4e32fbd2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -20722,7 +20722,7 @@ struct BurnDriver BurnDrvmslugfc1 = {
 // Metal Slug (Item Random, Powerful Enemy Defense, Hack)
 
 static struct BurnRomInfo mslugfc2RomDesc[] = {
-	{ "201-p1fc2.p1",	0x200000, 0xdf9ecdc2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1fc2.p1",	0x200000, 0xe31a6455, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 

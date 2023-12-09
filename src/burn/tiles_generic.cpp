@@ -307,6 +307,12 @@ void BurnTransferFlip(INT32 bFlipX, INT32 bFlipY)
 	}
 }
 
+void BurnTransferRealloc()
+{
+	pTransDraw = (UINT16 *)BurnRealloc(pTransDraw, nTransWidth * (nTransHeight + nTransOverflow) * sizeof(UINT16));
+	pPrioDraw = (UINT8 *)BurnRealloc(pPrioDraw, nTransWidth * (nTransHeight + nTransOverflow));
+}
+
 /*================================================================================================
 Graphics Decoding
 ================================================================================================*/

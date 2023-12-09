@@ -2310,7 +2310,12 @@ INT32 CpsInit()
 INT32 Cps2Init()
 {
 	Cps = 2;
-	BurnDrvGetVisibleSize(&nCpsScreenWidth, &nCpsScreenHeight);
+
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nCpsScreenHeight, &nCpsScreenWidth);
+	} else {
+		BurnDrvGetVisibleSize(&nCpsScreenWidth, &nCpsScreenHeight);
+	}
 	nCpsGlobalXOffset = (nCpsScreenWidth-384)>>1;
 	nCpsGlobalYOffset = (nCpsScreenHeight-224)>>1;
 

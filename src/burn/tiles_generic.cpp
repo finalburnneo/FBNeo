@@ -311,6 +311,9 @@ void BurnTransferRealloc()
 {
 	pTransDraw = (UINT16 *)BurnRealloc(pTransDraw, nTransWidth * (nTransHeight + nTransOverflow) * sizeof(UINT16));
 	pPrioDraw = (UINT8 *)BurnRealloc(pPrioDraw, nTransWidth * (nTransHeight + nTransOverflow));
+	// avoid spill detector false positives
+	memset((void*)pTransDraw, 0, nTransWidth * (nTransHeight + nTransOverflow) * sizeof(UINT16));
+	memset(pPrioDraw, 0, nTransWidth * (nTransHeight + nTransOverflow));
 }
 
 /*================================================================================================

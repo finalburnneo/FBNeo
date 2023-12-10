@@ -449,7 +449,7 @@ struct CpsrLineInfo {
 	INT16 Rows[16];									// 16 row scroll values for this line
 	INT32 nMaxLeft, nMaxRight;						// Maximum row shifts left and right
 };
-extern struct CpsrLineInfo CpsrLineInfo[16];
+extern struct CpsrLineInfo CpsrLineInfo[32];
 INT32 Cps1rPrepare();
 INT32 Cps2rPrepare();
 

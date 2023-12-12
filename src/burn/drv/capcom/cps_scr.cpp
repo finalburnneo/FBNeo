@@ -238,6 +238,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 			if(Xmcota && t>=0x5800)      t-=0x4000;
 	        else if(Ssf2t && t<0x5600)   t+=0x4000;
 			t <<= 9;										// Get real tile address
+			if (Cps2Turbo) t &= ~nCpsGfxScroll[3];			// buggy hack
  			t += nCpsGfxScroll[3];							// add on offset to scroll tiles
 
 			if (t != nKnowBlank) {							// Draw tile

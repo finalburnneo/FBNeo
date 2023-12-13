@@ -1050,7 +1050,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority, INT32 prior
 
 			INT32 sy = y;
 			if (cur_map->flags & TMAP_FLIPY) {
-				sy = ((maxy - miny) - cur_map->theight) - sy;
+				sy = ((maxy - miny) - 1) - sy;
 			}
 
 			dest = Bitmap + sy * nScreenWidth;

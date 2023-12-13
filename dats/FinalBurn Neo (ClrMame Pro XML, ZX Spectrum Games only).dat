@@ -1958,7 +1958,7 @@
 		<description>Back to Skool (48K)</description>
 		<year>1985</year>
 		<manufacturer>Microsphere</manufacturer>
-		<rom name="Back to Skool (1985)(Microsphere).z80" size="44979" crc="6bf68f3d"/>
+		<rom name="Back to Skool 48K (1985)(Microsphere).tap" size="48013" crc="c8136fa9"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2110,7 +2110,7 @@
 		<description>Barbarian: The Ultimate Warrior - Part 1 (48K)</description>
 		<year>1987</year>
 		<manufacturer>Palace Software</manufacturer>
-		<rom name="Barbarian - 2 Players (1987)(Palace Software).z80" size="41650" crc="a856967f"/>
+		<rom name="Barbarian - 2 Players (1987)(Palace Software).tap" size="56407" crc="18dd79c2"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2120,7 +2120,17 @@
 		<description>Barbarian: The Ultimate Warrior - Part 2 (48K)</description>
 		<year>1987</year>
 		<manufacturer>Palace Software</manufacturer>
-		<rom name="Barbarian - 1 Player (1987)(Palace Software).z80" size="42390" crc="5f06bc26"/>
+		<rom name="Barbarian - 1 Player (1987)(Palace Software).tap" size="56407" crc="a99a7baf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="bark" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Bark, The (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Zosya Entertainment</manufacturer>
+		<rom name="Bark, The 48K (2023)(Zosya Entertainment).tap" size="35166" crc="075f4b7b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -2344,6 +2354,15 @@
 		<year>1985</year>
 		<manufacturer>U.S. Gold</manufacturer>
 		<rom name="Beach-Head II - The Dictator Strikes Back! 48K (1985)(U.S. Gold).tap" size="48857" crc="e977cfce"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="beamrider" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Beamrider (48K)</description>
+		<year>1984</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Beamrider 48K (1984)(Activision).tap" size="36219" crc="c80c9aa7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9886,6 +9905,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="haunthouse" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Haunted House (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Philip Perrin</manufacturer>
+		<rom name="Haunted House 48K (2023)(bwganblack).tap" size="48529" crc="1c6689c9"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="havoc" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Havoc (128K)</description>
 		<year>1990</year>
@@ -10858,6 +10887,17 @@
 		<manufacturer>Cronosoft</manufacturer>
 		<rom name="Iron Sphere 48K (2006)(Cronosoft).tap" size="41960" crc="271afa7c"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="isabrave" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Isa Brave (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Tom Martin</manufacturer>
+		<rom name="Isa Brave 128K (2023)(Tom Martin).tap" size="50274" crc="32f917e4"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11835,6 +11875,16 @@
 		<rom name="Knight Tyme (1986)(Mastertronic).tap" size="119348" crc="79c80fac"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="knightmare" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Hold down 'fire button' to start game</comment>
+		<description>Knightmare (48K)</description>
+		<year>1987</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Knightmare 48K (1987)(Activision).tap" size="46267" crc="198f02d2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -12989,12 +13039,43 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mandarinii128" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Mandarin II, The (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Mananuk</manufacturer>
+		<rom name="Mandarin II, The 128K (2023)(Mananuk).tap" size="53594" crc="6929ccd8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mandarinii48" cloneof="mandarinii128" romof="mandarinii128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Mandarin II, The (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Mananuk</manufacturer>
+		<rom name="Mandarin II, The 48K (2023)(Mananuk).tap" size="46001" crc="45817831"/>
+		<rom name="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mandarino" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>Mandarino, El (48K) (HB)</description>
+		<description>Mandarino, El (English) (48K) (HB)</description>
 		<year>2021</year>
 		<manufacturer>Mananuk</manufacturer>
 		<rom name="Mandarino, El 48K (2021)(Mananuk).tap" size="44308" crc="9d9b9c94"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mandarinos" cloneof="mandarino" romof="mandarino" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Mandarino, El (Spanish) (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Mananuk</manufacturer>
+		<rom name="Mandarino, El ES 48K (2021)(Mananuk).tap" size="44317" crc="e0e44898"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15996,6 +16077,16 @@
 		<year>2023</year>
 		<manufacturer>Furillo Productions</manufacturer>
 		<rom name="Pirate Captain Creed ES 48K (2023)(Furillo Productions).tap" size="44740" crc="00f568ca"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pifallii" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Press 'M' to open controller menu and 'Space' to stop music (during a game session)</comment>
+		<description>Pitfall II - Lost Caverns (48K)</description>
+		<year>1984</year>
+		<manufacturer>Activision</manufacturer>
+		<rom name="Pitfall II - Lost Caverns 48K (1984)(Activision).tap" size="27294" crc="9acc04e1"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

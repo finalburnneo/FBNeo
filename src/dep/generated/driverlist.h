@@ -1393,6 +1393,7 @@ DRV		BurnDrvmd_bk3p;
 DRV		BurnDrvmd_bk3pro;
 DRV		BurnDrvnes_bmetal2;
 DRV		BurnDrvpce_baribari;
+DRV		BurnSpecBark;
 DRV		BurnDrvnes_barkebilstrish;
 DRV		BurnDrvmd_barkley;
 DRV		BurnDrvmd_barkley2;
@@ -1595,6 +1596,7 @@ DRV		BurnSpecBhead2;
 #if defined FBNEO_DEBUG
 DRV		BurnDrvBeaminv;			// No sound
 #endif
+DRV		BurnSpecBeamrider;
 DRV		BurnDrvMSX_beamridr;
 DRV		BurnDrvcv_beamridr;
 DRV		BurnSpecBeamslight;
@@ -7441,6 +7443,7 @@ DRV		BurnDrvnes_halloween85;
 DRV		BurnDrvnes_halloween86;
 DRV		BurnDrvnes_halloween86a;
 DRV		BurnDrvnes_halloween86roe;
+DRV		BurnSpecHaunthouse;
 DRV		BurnDrvMSX_hhouse;
 DRV		BurnDrvnes_hauntedadv;
 DRV		BurnDrvmd_haunting;
@@ -8059,6 +8062,7 @@ DRV		BurnSpecIronsphere;
 DRV		BurnDrvnes_irontan;
 DRV		BurnDrvnes_irons;
 DRV		BurnDrvnes_irritship;
+DRV		BurnSpecIsabrave;
 DRV		BurnDrvIsgsm;
 DRV		BurnSpecIshido;
 DRV		BurnDrvmd_ishidos;
@@ -8818,6 +8822,7 @@ DRV		BurnDrvpce_knightrse;
 DRV		BurnDrvpce_knightrs;
 DRV		BurnSpecknighttyme;
 DRV		BurnDrvcv_knightmore;
+DRV		BurnSpecKnightmare;
 DRV		BurnDrvKngtmare;
 DRV		BurnDrvcv_kngtmare;
 DRV		BurnDrvMSX_knightmr;
@@ -9832,7 +9837,10 @@ DRV		BurnDrvMSX_mambo;
 DRV		BurnDrvmd_mamono;
 DRV		BurnSpecMangoldjoy;
 DRV		BurnSpecmanutdeu;
+DRV		BurnSpecMandarinii128;
+DRV		BurnSpecMandarinii48;
 DRV		BurnSpecMandarino;
+DRV		BurnSpecMandarinos;
 DRV		BurnDrvMSX_manes;
 DRV		BurnDrvMSX_manesb;
 DRV		BurnDrvMSX_manesa;
@@ -12681,6 +12689,7 @@ DRV		BurnDrvmd_pitfallu;
 DRV		BurnDrvPitfall2;
 DRV		BurnDrvPitfall2a;
 DRV		BurnDrvPitfall2u;
+DRV		BurnSpecPifallii;
 DRV		BurnDrvMSX_pitfall2;
 DRV		BurnDrvMSX_pitfall2a;
 DRV		BurnDrvsg1k_pitfall2a;
@@ -21713,6 +21722,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_bk3pro,			// Bare Knuckle III Project (Japan) (Hack, v0.3)
 	&BurnDrvnes_bmetal2,		// Bare Metal 2.0 (HB)
 	&BurnDrvpce_baribari,		// Bari Bari Densetsu (Japan)
+	&BurnSpecBark,				// Bark, The (48K) (HB)
 	&BurnDrvnes_barkebilstrish,	// Barker Bill's Trick Shooting (USA)
 	&BurnDrvmd_barkley,			// Barkley Shut Up and Jam! (Euro, USA)
 	&BurnDrvmd_barkley2,		// Barkley Shut Up and Jam! 2 (USA)
@@ -21915,6 +21925,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvBeaminv,			// Beam Invader [No sound]
 #endif
+	&BurnSpecBeamrider,			// Beamrider (48K)
 	&BurnDrvMSX_beamridr,		// Beamrider (Japan)
 	&BurnDrvcv_beamridr,		// Beamrider
 	&BurnSpecBeamslight,		// Beams of Light (48K) (HB)
@@ -27761,6 +27772,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_halloween86,	// Haunted Halloween '86 (HB)
 	&BurnDrvnes_halloween86a,	// Haunted Halloween '86 (HB, Alt)
 	&BurnDrvnes_halloween86roe,	// Haunted Halloween '86 - Remastered Onslaught Edition (HB)
+	&BurnSpecHaunthouse,		// Haunted House (48K) (HB)
 	&BurnDrvMSX_hhouse,			// Haunted House (Euro)
 	&BurnDrvnes_hauntedadv,		// Haunted House Adventure (HB)
 	&BurnDrvmd_haunting,		// Haunting Starring Polterguy (Euro, USA)
@@ -28379,6 +28391,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvnes_irontan,		// Iron Tank - The Invasion of Normandy (USA)
 	&BurnDrvnes_irons,			// Ironsword - Wizards & Warriors II (USA)
 	&BurnDrvnes_irritship,		// Irritating Ship (HB)
+	&BurnSpecIsabrave,			// Isa Brave (128K) (HB)
 	&BurnDrvIsgsm,				// ISG Selection Master Type 2006 System BIOS
 	&BurnSpecIshido,			// Ishido - The Way of Stones (48K) (HB)
 	&BurnDrvmd_ishidos,			// Ishido - The Way of Stones (Hack, Spanish)
@@ -29138,6 +29151,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_knightrs,		// Knight Rider Special (Japan)
 	&BurnSpecknighttyme,		// Knight Tyme (128K)
 	&BurnDrvcv_knightmore,		// Knight'n More (HB)
+	&BurnSpecKnightmare,		// Knightmare (48K)
 	&BurnDrvKngtmare,			// Knightmare (prototype)
 	&BurnDrvcv_kngtmare,		// Knightmare (SGM) (HB)
 	&BurnDrvMSX_knightmr,		// Knightmare - Majou Densetsu (Japan)
@@ -30152,7 +30166,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_mamono,			// Mamono Hunter Youko - Dai 7 no Keishou (Japan)
 	&BurnSpecMangoldjoy,		// Man with the Golden Joystick, The (128K) (HB, v1.2)
 	&BurnSpecmanutdeu,			// Manchester United Europe (128K)
-	&BurnSpecMandarino,			// Mandarino, El (48K) (HB)
+	&BurnSpecMandarinii128,		// Mandarin II, The (128K) (HB)
+	&BurnSpecMandarinii48,		// Mandarin II, The (48K) (HB)
+	&BurnSpecMandarino,			// Mandarino, El (English) (48K) (HB)
+	&BurnSpecMandarinos,		// Mandarino, El (Spanish) (48K) (HB)
 	&BurnDrvMSX_manes,			// Manes (Japan)
 	&BurnDrvMSX_manesb,			// Manes (Japan, Alt 2)
 	&BurnDrvMSX_manesa,			// Manes (Japan, Alt)
@@ -33001,6 +33018,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPitfall2,			// Pitfall II (315-5093)
 	&BurnDrvPitfall2a,			// Pitfall II (315-5093, Flicky Conversion)
 	&BurnDrvPitfall2u,			// Pitfall II (not encrypted)
+	&BurnSpecPifallii,			// Pitfall II - Lost Caverns (48K)
 	&BurnDrvMSX_pitfall2,		// Pitfall II - Lost Caverns (Japan)
 	&BurnDrvMSX_pitfall2a,		// Pitfall II - Lost Caverns (Japan, Alt)
 	&BurnDrvsg1k_pitfall2a,		// Pitfall II - The Lost Caverns (Japan, v0)
@@ -42025,6 +42043,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_bk3pro", "megadrive/d_megadrive.cpp"},
 	{ "nes_bmetal2", "nes/d_nes.cpp"},
 	{ "pce_baribari", "pce/d_pce.cpp"},
+	{ "spec_bark", "spectrum/d_spectrum.cpp"},
 	{ "nes_barkebilstrish", "nes/d_nes.cpp"},
 	{ "md_barkley", "megadrive/d_megadrive.cpp"},
 	{ "md_barkley2", "megadrive/d_megadrive.cpp"},
@@ -42225,6 +42244,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "msx_beachead", "msx/d_msx.cpp"},
 	{ "spec_bhead2", "spectrum/d_spectrum.cpp"},
 	{ "beaminv", "pre90s/d_beaminv.cpp"},
+	{ "spec_beamrider", "spectrum/d_spectrum.cpp"},
 	{ "msx_beamridr", "msx/d_msx.cpp"},
 	{ "cv_beamridr", "coleco/d_coleco.cpp"},
 	{ "spec_beamslight", "spectrum/d_spectrum.cpp"},
@@ -48019,6 +48039,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_halloween86", "nes/d_nes.cpp"},
 	{ "nes_halloween86a", "nes/d_nes.cpp"},
 	{ "nes_halloween86roe", "nes/d_nes.cpp"},
+	{ "spec_haunthouse", "spectrum/d_spectrum.cpp"},
 	{ "msx_hhouse", "msx/d_msx.cpp"},
 	{ "nes_hauntedadv", "nes/d_nes.cpp"},
 	{ "md_haunting", "megadrive/d_megadrive.cpp"},
@@ -48627,6 +48648,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_irontan", "nes/d_nes.cpp"},
 	{ "nes_irons", "nes/d_nes.cpp"},
 	{ "nes_irritship", "nes/d_nes.cpp"},
+	{ "spec_isabrave", "spectrum/d_spectrum.cpp"},
 	{ "isgsm", "sega/d_sys16b.cpp"},
 	{ "spec_ishido", "spectrum/d_spectrum.cpp"},
 	{ "md_ishidos", "megadrive/d_megadrive.cpp"},
@@ -49374,6 +49396,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "pce_knightrs", "pce/d_pce.cpp"},
 	{ "spec_knighttyme", "spectrum/d_spectrum.cpp"},
 	{ "cv_knightmore", "coleco/d_coleco.cpp"},
+	{ "spec_knightmare", "spectrum/d_spectrum.cpp"},
 	{ "kngtmare", "pre90s/d_qbert.cpp"},
 	{ "cv_kngtmare", "coleco/d_coleco.cpp"},
 	{ "msx_knightmr", "msx/d_msx.cpp"},
@@ -50380,7 +50403,10 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_mamono", "megadrive/d_megadrive.cpp"},
 	{ "spec_mangoldjoy", "spectrum/d_spectrum.cpp"},
 	{ "spec_manutdeu", "spectrum/d_spectrum.cpp"},
+	{ "spec_mandarinii128", "spectrum/d_spectrum.cpp"},
+	{ "spec_mandarinii48", "spectrum/d_spectrum.cpp"},
 	{ "spec_mandarino", "spectrum/d_spectrum.cpp"},
+	{ "spec_mandarinos", "spectrum/d_spectrum.cpp"},
 	{ "msx_manes", "msx/d_msx.cpp"},
 	{ "msx_manesb", "msx/d_msx.cpp"},
 	{ "msx_manesa", "msx/d_msx.cpp"},
@@ -53205,6 +53231,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "pitfall2", "sega/d_sys1.cpp"},
 	{ "pitfall2a", "sega/d_sys1.cpp"},
 	{ "pitfall2u", "sega/d_sys1.cpp"},
+	{ "spec_pifallii", "spectrum/d_spectrum.cpp"},
 	{ "msx_pitfall2", "msx/d_msx.cpp"},
 	{ "msx_pitfall2a", "msx/d_msx.cpp"},
 	{ "sg1k_pitfall2a", "sg1000/d_sg1000.cpp"},

@@ -189,6 +189,8 @@ INT32 CpsObjGet()
 		if (Cps1LockSpriteList910000) {
 			Get = CpsFindGfxRam(0x910000, 0x800);
 		}
+		pof->nShiftX += nCpsGlobalXOffset;
+		pof->nShiftY += nCpsGlobalYOffset;
 	}
 	
 	if (Get==NULL) return 1;
@@ -300,7 +302,7 @@ INT32 Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		nFlip=(a>>5)&3;		
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x<0 || y<0 || x+(bx<<4)>nCpsScreenWidth || y+(by<<4)>nCpsScreenHeight) {
+		if (x<0 || y<0 || x+(bx<<4)>(nCpsScreenWidth-1) || y+(by<<4)>(nCpsScreenHeight-1)) {
 			nCpstType=CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType=CTT_16X16;
@@ -857,7 +859,7 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		nFlip=(a>>5)&3;		
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x<0 || y<0 || x+(1<<4)>nCpsScreenWidth || y+(1<<4)>nCpsScreenHeight) {
+		if (x<0 || y<0 || x+(1<<4)>(nCpsScreenWidth-1) || y+(1<<4)>(nCpsScreenHeight-1)) {
 			nCpstType=CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType=CTT_16X16;

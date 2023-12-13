@@ -2236,6 +2236,15 @@ INT32 CpsInit()
 		}
 	}
 
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nCpsScreenHeight, &nCpsScreenWidth);
+	} else {
+		BurnDrvGetVisibleSize(&nCpsScreenWidth, &nCpsScreenHeight);
+	}
+
+	nCpsGlobalXOffset = (nCpsScreenWidth-384)>>1;
+	nCpsGlobalYOffset = (nCpsScreenHeight-224)>>1;
+
 	if (!nCPS68KClockspeed) {
 		if (!(Cps & 1)) {
 			nCPS68KClockspeed = 11800000;
@@ -2310,9 +2319,6 @@ INT32 CpsInit()
 INT32 Cps2Init()
 {
 	Cps = 2;
-	BurnDrvGetVisibleSize(&nCpsScreenWidth, &nCpsScreenHeight);
-	nCpsGlobalXOffset = (nCpsScreenWidth-384)>>1;
-	nCpsGlobalYOffset = (nCpsScreenHeight-224)>>1;
 
 	if (CpsGetROMs(false)) {
 		return 1;

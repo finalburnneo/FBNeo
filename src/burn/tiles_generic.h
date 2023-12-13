@@ -260,3 +260,4 @@ void BurnTransferExit();
 INT32 BurnTransferInit();
 void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight); // Use extreme caution!
 void BurnTransferFlip(INT32 bFlipX, INT32 bFlipY);
+void BurnTransferRealloc();

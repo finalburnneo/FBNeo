@@ -5427,7 +5427,7 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 		else
 			mult = -16;
 
-		if ((spriteram[offs] & 0x8000) == 0) {
+		if ((BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x8000) == 0) {
 			offs+=4;
 			continue;
 		}
@@ -5438,7 +5438,7 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 			{
 				INT32 code = (BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]) & 0x1fff) & ~(h - 1);
 
-				if (spriteram[offs] & 0x4000) {
+				if (BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x4000) {
 					incy = -1;
 				} else {
 					code += h - 1;
@@ -5470,26 +5470,26 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 static INT32 BaddudesDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 	
 	if ((DrvPriority & 0x01) == 0x00) {
-		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
-		DrvRenderSprites(0, 0);
-		if (DrvPriority & 0x04) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 4) if (DrvPriority & 0x02) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
+		if (nSpriteEnable & 1) DrvRenderSprites(0, 0);
+		if (nBurnLayer & 8) if (DrvPriority & 0x04) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
-		DrvRenderSprites(0, 0);
-		if (DrvPriority & 0x04) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
-	}	
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 4) if (DrvPriority & 0x02) DrvRenderTile2Layer(0, TILEMAP_LAYER0);
+		if (nSpriteEnable & 1) DrvRenderSprites(0, 0);
+		if (nBurnLayer & 8) if (DrvPriority & 0x04) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
+	}
 	
-	DrvRenderCharLayer();
+	if (nSpriteEnable & 2) DrvRenderCharLayer(); // not sprite layer, but ran out of layer bits
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5498,17 +5498,17 @@ static INT32 BaddudesDraw()
 static INT32 BirdtryDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 
-	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
-	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 1) DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
 		
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5517,17 +5517,17 @@ static INT32 BirdtryDraw()
 static INT32 HbarrelDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 	
-	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x08, 0x08);
-	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x08, 0x00);
+	if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 1) DrvRenderSprites(0x08, 0x08);
+	if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 2) DrvRenderSprites(0x08, 0x00);
 		
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5536,21 +5536,21 @@ static INT32 HbarrelDraw()
 static INT32 HippodrmDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	DrvCalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
 	}
 	
-	DrvRenderSprites(0x00, 0x00);
-	DrvRenderCharLayer();
+	if (nSpriteEnable & 1) DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5560,7 +5560,7 @@ static INT32 MidresDraw()
 {
 	INT32 Trans;
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	if (DrvPriority & 0x04) {
 		Trans = 0x00;
@@ -5572,22 +5572,22 @@ static INT32 MidresDraw()
 	Dec1CalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
 	}
 	
 	if (DrvPriority & 0x02) {
-		DrvRenderSprites(0x08, Trans ^ 0x08);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x08, Trans ^ 0x08);
 	} else {
-		DrvRenderSprites(0x00, 0x00);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
 	}
 	
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5597,7 +5597,7 @@ static INT32 RobocopDraw()
 {
 	INT32 Trans;
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	if (DrvPriority & 0x04) {
 		Trans = 0x08;
@@ -5609,22 +5609,22 @@ static INT32 RobocopDraw()
 	DrvCalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(1, TILEMAP_LAYER1);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile1Layer(1, TILEMAP_LAYER1);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);
 	} else {
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (nSpriteEnable & 1) if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
 	}
 	
 	if (DrvPriority & 0x02) {
-		DrvRenderSprites(0x08, Trans ^ 0x08);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x08, Trans ^ 0x08);
 	} else {
-		DrvRenderSprites(0x00, 0x00);
+		if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
 	}
 	
-	DrvRenderCharLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -5633,16 +5633,16 @@ static INT32 RobocopDraw()
 static INT32 SlyspyDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
+	DrvFlipScreen = BURN_ENDIAN_SWAP_INT16(Control0[0]) & 0x80;
 	
 	BurnTransferClear();
 	Dec1CalcPalette();
 	
-	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
-	if (DrvPriority & 0x80) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
-	DrvRenderCharLayer();
+	if (nBurnLayer & 1) DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	if (nBurnLayer & 2) DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	if (nSpriteEnable & 2) DrvRenderSprites(0x00, 0x00);
+	if (nBurnLayer & 4) if (DrvPriority & 0x80) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
+	if (nBurnLayer & 8) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 
 	return 0;

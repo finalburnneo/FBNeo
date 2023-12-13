@@ -17,13 +17,15 @@ INT32 Cps1Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy)
   INT32 x,y;
   INT32 ix,iy;
   INT32 nKnowBlank=-1; // The tile we know is blank
+  INT32 nXTile = nCpsScreenWidth>>3; // 8x8 tiles
+  INT32 nYTile = nCpsScreenHeight>>3; // ""
 
   ix=(sx>>3)+1; iy=(sy>>3)+1;
   sx&=7; sy&=7; sx=8-sx; sy=8-sy;
 
-  for (y=-1; y<28; y++)
+  for (y=-1; y<nYTile; y++)
   {
-    for (x=-1; x<48; x++)
+    for (x=-1; x<nXTile; x++)
     {
       INT32 t,a;
       UINT16 *pst;
@@ -52,7 +54,7 @@ INT32 Cps1Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy)
       CpstSetPal(0x20 | (a&0x1f));
 
       // Don't need to clip except around the border
-      if (x<0 || x>=48-1 || y<0 || y>=28-1)
+      if (x<0 || x>=nXTile-1 || y<0 || y>=nYTile-1)
         nCpstType=CTT_8X8 | CTT_CARE;
       else
         nCpstType=CTT_8X8;
@@ -78,7 +80,7 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	INT32 ix, iy;
 	INT32 nFirstY, nLastY;
 	INT32 nKnowBlank = -1; // The tile we know is blank
-	INT32 nXTile = nCpsScreenWidth>>3; // 48*8 = 384, 52*8 = 416
+	INT32 nXTile = nCpsScreenWidth>>3; // 8x8 tiles
 
 	ix = (sx >> 3) + 1;
 	sx &= 7;
@@ -144,10 +146,12 @@ INT32 Cps1Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy)
   INT32 nKnowBlank=-1; // The tile we know is blank
   ix=(sx>>5)+1; iy=(sy>>5)+1;
   sx&=31; sy&=31; sx=32-sx; sy=32-sy;
+  INT32 nXTile = nCpsScreenWidth>>5; // 32x32 tiles
+  INT32 nYTile = nCpsScreenHeight>>5;
 
-  for (y=-1; y<7; y++)
+  for (y=-1; y<nYTile; y++)
   {
-    for (x=-1; x<12; x++)
+    for (x=-1; x<nXTile; x++)
     {
       INT32 t,a;
       UINT16 *pst;
@@ -176,7 +180,7 @@ INT32 Cps1Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy)
       CpstSetPal(0x60 | (a&0x1f));
 
       // Don't need to clip except around the border
-      if (x<0 || x>=12-1 || y<0 || y>=7-1)
+      if (x<0 || x>=nXTile-1 || y<0 || y>=nYTile-1)
         nCpstType=CTT_32X32 | CTT_CARE;
       else
         nCpstType=CTT_32X32;
@@ -201,7 +205,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	INT32 ix, iy;
 	INT32 nFirstY, nLastY;
 	INT32 nKnowBlank = -1; // The tile we know is blank
-	INT32 nXTile = nCpsScreenWidth>>5; // 12*32 = 384, 13*32 = 416
+	INT32 nXTile = nCpsScreenWidth>>5; // 32x32 tiles
 
 	ix = (sx >> 5) + 1;
 	sx &= 31;
@@ -234,6 +238,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 			if(Xmcota && t>=0x5800)      t-=0x4000;
 	        else if(Ssf2t && t<0x5600)   t+=0x4000;
 			t <<= 9;										// Get real tile address
+			if (Cps2Turbo) t &= ~nCpsGfxScroll[3];			// buggy hack
  			t += nCpsGfxScroll[3];							// add on offset to scroll tiles
 
 			if (t != nKnowBlank) {							// Draw tile

@@ -5,7 +5,8 @@ static INT32 nKnowBlank=-1;	// The tile we know is blank
 static INT32 nFirstY, nLastY;
 static INT32 bVCare;
 
-static INT32 nXTiles = 24;
+static INT32 nXTiles = 0;
+static INT32 nYTiles = 0;
 
 inline static UINT16 *FindTile(INT32 fx,INT32 fy)
 {
@@ -22,17 +23,17 @@ static void Cps1TileLine(INT32 y,INT32 sx)
   INT32 x,ix,iy,sy;
 
   bVCare=0;
-  if (y<0 || y>=14-1) bVCare=1; // Take care on the edges
+  if (y<0 || y>=nYTiles-1) bVCare=1; // Take care on the edges
 
   ix=(sx>>4)+1; sx&=15; sx=16-sx;
   sy=16-(nCpsrScrY&15); iy=(nCpsrScrY>>4)+1;
   nCpstY=sy+(y<<4);
 
-  for (x=-1; x<24; x++)
+  for (x=-1; x<nXTiles; x++)
   {
     UINT16 *pst; INT32 t,a;
     // Don't need to clip except around the border
-    if (bVCare || x<0 || x>=24-1) nCpstType=CTT_16X16 | CTT_CARE;
+    if (bVCare || x<0 || x>=nXTiles-1) nCpstType=CTT_16X16 | CTT_CARE;
     else nCpstType=CTT_16X16;
 
     pst=FindTile(ix+x,iy+y);
@@ -93,7 +94,7 @@ static void Cps1TileLineRows(INT32 y,struct CpsrLineInfo *pli)
   INT32 nLimLeft,nLimRight;
 
   bVCare=0;
-  if (y<0 || y>=14-1) bVCare=1; // Take care on the edges
+  if (y<0 || y>=nYTiles-1) bVCare=1; // Take care on the edges
 
   nTileCount=pli->nTileEnd-pli->nTileStart;
 
@@ -200,10 +201,12 @@ INT32 Cps1rRender()
 {
   INT32 y; struct CpsrLineInfo *pli;
   if (CpsrBase==NULL) return 1;
+  nXTiles = nCpsScreenWidth>>4; // 16x16 tiles
+  nYTiles = nCpsScreenHeight>>4;
 
   nKnowBlank=-1; // We don't know which tile is blank yet
 
-  for (y=-1,pli=CpsrLineInfo; y<14; y++,pli++)
+  for (y=-1,pli=CpsrLineInfo; y<nYTiles; y++,pli++)
   {
     if (pli->nWidth==0)
 	  Cps1TileLine(y,pli->nStart); // no rowscroll needed
@@ -218,7 +221,8 @@ INT32 Cps2rRender()
 	INT32 y;
 	struct CpsrLineInfo *pli;
 	if (CpsrBase==NULL) return 1;
-	nXTiles = nCpsScreenWidth>>4; // 24*16 = 384, 26*16 = 416
+	nXTiles = nCpsScreenWidth>>4; // 16x16 tiles
+	nYTiles = nCpsScreenHeight>>4;
 
 	nKnowBlank = -1;					// We don't know which tile is blank yet
 

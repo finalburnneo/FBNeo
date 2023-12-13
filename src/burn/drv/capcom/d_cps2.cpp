@@ -11569,17 +11569,21 @@ static INT32 Cps2TurboInit()
 {
 	Cps2Turbo = 1;
 
-	BurnSampleInit(1);
-	for (int i = 0; i < 0x40; i++) {
-		// Left side
-		BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
-		BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_LEFT);
-		// Right side
-		BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_RIGHT);
-		BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
+	INT32 rc = Cps2Init();
+
+	if (!rc) {
+		BurnSampleInit(1);
+		for (int i = 0; i < 0x40; i++) {
+			// Left side
+			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
+			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_LEFT);
+			// Right side
+			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_RIGHT);
+			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
+		}
 	}
 
-	return Cps2Init();
+	return rc;
 }
 
 struct BurnDriver BurnDrvCpsSfz3mix = {

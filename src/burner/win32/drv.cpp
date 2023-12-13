@@ -77,7 +77,12 @@ static int DoLibInit()					// Do Init of Burn library driver
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_MVS) {
-		if (!bQuietLoading) ProgressCreate();
+		if (!bQuietLoading) {
+			ProgressCreate();
+			if (BurnDrvGetTextA(DRV_SAMPLENAME) != NULL) { // has samples
+				BurnSetProgressRange(0.99); // Increase range for samples
+			}
+		}
 	}
 
 	nRet = BurnDrvInit();
@@ -127,7 +132,12 @@ int __cdecl DrvCartridgeAccess(BurnCartrigeCommand nCommand)
 {
 	switch (nCommand) {
 		case CART_INIT_START:
-			if (!bQuietLoading) ProgressCreate();
+			if (!bQuietLoading) {
+				ProgressCreate();
+				if (BurnDrvGetTextA(DRV_SAMPLENAME) != NULL) { // has samples
+					BurnSetProgressRange(0.99); // Increase range for samples
+				}
+			}
 			if (DrvBzipOpen()) {
 				return 1;
 			}

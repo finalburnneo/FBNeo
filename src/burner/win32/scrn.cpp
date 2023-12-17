@@ -596,8 +596,22 @@ static int OnRButtonUp(HWND hwnd, int, int, UINT)
 }
 /*************************************************************************/
 
+static int mousex, mousey;
+
+int ScrnGetMouseX()
+{
+	return mousex;
+}
+
+int ScrnGetMouseY()
+{
+	return mousey;
+}
+
 static int OnMouseMove(HWND hwnd, int x, int y, UINT keyIndicators)
 {
+	mousex = x;
+	mousey = y;
 	if (bDrag && hwnd == hScrnWnd && keyIndicators == MK_LBUTTON && !nVidFullscreen && !bMenuEnabled) {
 		RECT clientRect;
 

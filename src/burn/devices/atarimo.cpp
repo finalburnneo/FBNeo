@@ -11,18 +11,6 @@
 
 #define MAX_GFX_ELEMENTS	MAX_GFX
 
-void sect_rect(rectangle *rect, const rectangle *cliprect)
-{
-	if (rect->min_x < cliprect->min_x) rect->min_x = cliprect->min_x;
-	if (rect->min_y < cliprect->min_y) rect->min_y = cliprect->min_y;
-	if (rect->max_x > cliprect->max_x) rect->max_x = cliprect->max_x;
-	if (rect->max_y > cliprect->max_y) rect->max_y = cliprect->max_y;
-	if (rect->min_y >= rect->max_y) rect->min_y = rect->max_y;
-	if (rect->min_x >= rect->max_x) rect->min_x = rect->max_x;
-
-	if (cliprect) return; // iq_132
-}
-
 /*##########################################################################
     TYPES & STRUCTURES
 ##########################################################################*/
@@ -461,7 +449,7 @@ void atarimo_exit()
 			BurnFree(mo->gfxlookup);
 		}
 
-		memset (mo, 0, sizeof(atarimo_data));
+		memset ((void*)mo, 0, sizeof(atarimo_data));
 	}
 }
 
@@ -742,7 +730,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 			bandclip.max_y = bandclip.min_y + (1 << mo->slipshift) - 1;
 
 			/* keep within the cliprect */
-		    sect_rect(&bandclip, cliprect);
+			bandclip &= *cliprect;
 		}
 
 		/* if this matches the last link, we don't need to re-process the list */
@@ -776,7 +764,7 @@ UINT16 *atarimo_render(int map, const rectangle *cliprect, struct atarimo_rect_l
 
 	/* clip the rectlist */
 	for (i = 0, rect = rectlist->rect; i < rectlist->numrects; i++, rect++)
-		sect_rect(rect, cliprect);
+		*rect &= *cliprect;
 
 	/* return the bitmap */
 	return mo->bitmap;

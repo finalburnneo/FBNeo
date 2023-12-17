@@ -4080,6 +4080,8 @@ DRV		BurnDrvmd_deadlymvs;
 DRV		BurnDrvmd_deadlymv;
 DRV		BurnDrvnes_deadlytowers;
 DRV		BurnDrvnes_deadpool;
+DRV		BurnDrvnes_deadpoolsm1;
+DRV		BurnDrvnes_deadpoolsm2;
 DRV		BurnDrvmd_deathrets;
 DRV		BurnDrvmd_deathret;
 DRV		BurnDrvDeathbrd;
@@ -6427,8 +6429,15 @@ DRV		BurnDrvGallopm72;
 DRV		BurnDrvGallop;
 DRV		BurnDrvGalmedes;
 DRV		BurnDrvGalhustl;
+DRV		BurnDrvGalsnew;
+DRV		BurnDrvGalsnewj;
+DRV		BurnDrvGalsnewk;
+DRV		BurnDrvGalsnewt;
+DRV		BurnDrvGalpanicb;
+DRV		BurnDrvGalpanicc;
 DRV		BurnDrvGalpanica;
 DRV		BurnDrvGalpanic;
+DRV		BurnDrvGalsnewu;
 DRV		BurnDrvGalpani3;
 DRV		BurnDrvGalpani3hk;
 DRV		BurnDrvGalpani3j;
@@ -7732,6 +7741,7 @@ DRV		BurnDrvHotmemry11;
 DRV		BurnDrvHotmemry;
 DRV		BurnDrvHotminda;
 DRV		BurnDrvHotmind;
+DRV		BurnDrvHotnight;
 DRV		BurnDrvHotpinbl;
 DRV		BurnDrvHotrodja;
 DRV		BurnDrvHotrodj;
@@ -15218,6 +15228,7 @@ DRV		BurnDrvgg_smurfs;
 DRV		BurnDrvsms_smurfs;
 DRV		BurnDrvmd_smurfs;
 DRV		BurnDrvnes_smurfs;
+DRV		BurnDrvnes_snailhop;
 DRV		BurnDrvMSX_snailmaze;
 DRV		BurnSpecSnake;
 DRV		BurnDrvcv_snake;
@@ -15292,6 +15303,7 @@ DRV		BurnDrvnes_soccelea;
 DRV		BurnSpecSoccerpinball;
 DRV		BurnDrvmd_socket;
 DRV		BurnDrvMSX_sofia;
+DRV		BurnDrvnes_sokobanana;
 DRV		BurnSpecSokoban;
 DRV		BurnDrvSokoban;
 DRV		BurnDrvpce_sokoban;
@@ -16389,6 +16401,7 @@ DRV		BurnDrvCpsSfz3jr1;
 DRV		BurnDrvCpsSfz3a;
 DRV		BurnDrvCpsSfz3j;
 DRV		BurnDrvCpsSfz3mix13;
+DRV		BurnDrvCpsSfz3mix22f;
 DRV		BurnDrvCpsSfz3mix;
 DRV		BurnDrvCpsSfz3te;
 DRV		BurnDrvSftm110;
@@ -16833,8 +16846,10 @@ DRV		BurnDrvSgmast;
 DRV		BurnDrvmd_smoverkill;
 DRV		BurnDrvpce_smcrush;
 DRV		BurnSpecSupmeteorbl;
+DRV		BurnDrvSmissw;
 DRV		BurnDrvSuprmatk;
 DRV		BurnDrvSuprmatkd;
+DRV		BurnDrvSupmodl2;
 DRV		BurnDrvSupmodel;
 DRV		BurnDrvpce_smomo;
 DRV		BurnDrvpce_smomo2;
@@ -20235,6 +20250,7 @@ DRV		BurnDrvzintrkcd;
 DRV		BurnSpecZquestg;
 DRV		BurnSpecZquestt;
 DRV		BurnDrvZipzap;
+DRV		BurnDrvZipzapa;
 DRV		BurnSpecZipzap;
 DRV		BurnDrvpce_zipang;
 DRV		BurnDrvMSX_zipper;
@@ -24324,7 +24340,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvDarkedgej,			// Dark Edge (Japan)
 	&BurnDrvDarkedge,			// Dark Edge (World)
 	&BurnSpecdarkfusion,		// Dark Fusion (128K)
-	&BurnDrvnes_dgimmick,		// Dark Gimmick (HB, v1.1)
+	&BurnDrvnes_dgimmick,		// Dark Gimmick (GlobalHack, v1.1)
 	&BurnDrvnes_darklord,		// Dark Lord (Japan)
 	&BurnDrvDarkplnt,			// Dark Planet
 	&BurnSpecDarkredux,			// Dark Redux, The (English) (48K) (HB)
@@ -24409,6 +24425,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_deadlymv,		// Deadly Moves (USA)
 	&BurnDrvnes_deadlytowers,	// Deadly Towers (USA)
 	&BurnDrvnes_deadpool,		// Deadpool (GlobalHack)
+	&BurnDrvnes_deadpoolsm1,	// Deadpool Special Mission (GlobalHack, v1.3, Alt 1)
+	&BurnDrvnes_deadpoolsm2,	// Deadpool Special Mission (GlobalHack, v1.3, Alt 2)
 	&BurnDrvmd_deathrets,		// Death and Return of Superman, The (Hack, Spanish)
 	&BurnDrvmd_deathret,		// Death and Return of Superman, The (USA)
 	&BurnDrvDeathbrd,			// Death Brade (Japan ver JM-3)
@@ -26352,7 +26370,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_fpoint,			// Flashpoint (Korea)
 	&BurnDrvMSX_fpointa,		// Flashpoint (Korea, Alt) (Unl)
 	&BurnDrvnes_flea,			// FLEA! (HB)
-	&BurnDrvnes_fleademo,		// FLEA! demo (HB)
+	&BurnDrvnes_fleademo,		// FLEA! Demo (HB)
 	&BurnDrvFlicky,				// Flicky (128k Version, 315-5051)
 	&BurnDrvFlickya,			// Flicky (128k Version, 315-5051, larger roms)
 	&BurnDrvFlickys2,			// Flicky (128k Version, not encrypted)
@@ -26756,8 +26774,15 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvGallop,				// Gallop - Armed Police Unit (Japan, M84 hardware)
 	&BurnDrvGalmedes,			// Galmedes (Japan)
 	&BurnDrvGalhustl,			// Gals Hustler
+	&BurnDrvGalsnew,			// Gals Panic (Export, EXPRO-02 PCB)
+	&BurnDrvGalsnewj,			// Gals Panic (Japan, EXPRO-02 PCB)
+	&BurnDrvGalsnewk,			// Gals Panic (Korea, EXPRO-02 PCB)
+	&BurnDrvGalsnewt,			// Gals Panic (Taiwan, EXPRO-02 PCB)
+	&BurnDrvGalpanicb,			// Gals Panic (ULA protected, set 1)
+	&BurnDrvGalpanicc,			// Gals Panic (ULA protected, set 2)
 	&BurnDrvGalpanica,			// Gals Panic (unprotected)
 	&BurnDrvGalpanic,			// Gals Panic (unprotected, ver. 2.0)
+	&BurnDrvGalsnewu,			// Gals Panic (US, EXPRO-02 PCB)
 	&BurnDrvGalpani3,			// Gals Panic 3 (Euro)
 	&BurnDrvGalpani3hk,			// Gals Panic 3 (Hong Kong)
 	&BurnDrvGalpani3j,			// Gals Panic 3 (Japan)
@@ -28061,6 +28086,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvHotmemry,			// Hot Memory (V1.2, Germany, 12/28/94)
 	&BurnDrvHotminda,			// Hot Mind (adjustable prize)
 	&BurnDrvHotmind,			// Hot Mind (Hard Times hardware)
+	&BurnDrvHotnight,			// Hot Night
 	&BurnDrvHotpinbl,			// Hot Pinball
 	&BurnDrvHotrodja,			// Hot Rod (Japan, 4 Players, Floppy Based, Rev B)
 	&BurnDrvHotrodj,			// Hot Rod (Japan, 4 Players, Floppy Based, Rev C)
@@ -34799,7 +34825,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsercharj,			// SAR - Search And Rescue (Japan version 3)
 	&BurnDrvsercharu,			// SAR - Search And Rescue (US)
 	&BurnDrvsearchar,			// SAR - Search And Rescue (World)
-	&BurnDrvnes_spoolchal,		// Sara Parker's Pool Challenge
+	&BurnDrvnes_spoolchal,		// Sara Parker's Pool Challenge (Unl)
 	&BurnDrvSarge,				// Sarge
 	&BurnDrvSarukani,			// Saru-Kani-Hamu-Zou (Japan)
 	&BurnDrvMSX_sasa,			// Sasa (Japan)
@@ -35253,7 +35279,7 @@ static struct BurnDriver* pDriver[] = {
 #if defined FBNEO_DEBUG
 	&BurnDrvshootbul,			// Shoot the Bull [Analog inputs not hooked up, NOT WORKING]
 #endif
-	&BurnDrvnes_shootufo,		// Shoot UFO (HB)
+	&BurnDrvnes_shootufo,		// Shoot UFO (GlobalHack)
 	&BurnSpecShootout,			// Shoot-Out (128K)
 	&BurnDrvsms_shooting,		// Shooting Gallery (Euro, USA, Brazil)
 	&BurnDrvShtngmst,			// Shooting Master (8751 315-5159a)
@@ -35547,6 +35573,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_smurfs,			// Smurfs, The (Euro, Brazil)
 	&BurnDrvmd_smurfs,			// Smurfs, The (Euro, Rev. A)
 	&BurnDrvnes_smurfs,			// Smurfs, The (Europe)
+	&BurnDrvnes_snailhop,		// Snail Hop (HB)
 	&BurnDrvMSX_snailmaze,		// Snail Maze (HB)
 	&BurnSpecSnake,				// Snake (48K) (HB, v3)
 	&BurnDrvcv_snake,			// Snake (HB)
@@ -35621,6 +35648,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecSoccerpinball,		// Soccer Pinball (128K)
 	&BurnDrvmd_socket,			// Socket (USA)
 	&BurnDrvMSX_sofia,			// Sofia (Japan)
+	&BurnDrvnes_sokobanana,		// Soko Banana (HB)
 	&BurnSpecSokoban,			// Sokoban (Spanish) (128K) (HB)
 	&BurnDrvSokoban,			// Sokoban LE
 	&BurnDrvpce_sokoban,		// Sokoban World (Japan)
@@ -36718,6 +36746,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz3a,			// Street Fighter Zero 3 (980904 Asia)
 	&BurnDrvCpsSfz3j,			// Street Fighter Zero 3 (980904 Japan)
 	&BurnDrvCpsSfz3mix13,		// Street Fighter Zero 3 Mix v0.13
+	&BurnDrvCpsSfz3mix22f,		// Street Fighter Zero 3 Mix v0.22f (beta)
 	&BurnDrvCpsSfz3mix,			// Street Fighter Zero 3 Mix v0.22
 	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.1 (980629 Japan)
 	&BurnDrvSftm110,			// Street Fighter: The Movie (v1.10)
@@ -37162,8 +37191,10 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvmd_smoverkill,		// Super Maximum Overkill (HB)
 	&BurnDrvpce_smcrush,		// Super Metal Crusher (Japan)
 	&BurnSpecSupmeteorbl,		// Super Meteor Blast (48K) (HB)
+	&BurnDrvSmissw,				// Super Miss World
 	&BurnDrvSuprmatk,			// Super Missile Attack (for rev 1)
 	&BurnDrvSuprmatkd,			// Super Missile Attack (not encrypted)
+	&BurnDrvSupmodl2,			// Super Model II
 	&BurnDrvSupmodel,			// Super Model
 	&BurnDrvpce_smomo,			// Super Momotarou Dentetsu (Japan)
 	&BurnDrvpce_smomo2,			// Super Momotarou Dentetsu II (Japan)
@@ -40564,6 +40595,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpecZquestg,			// Ziona Quest - Game (128K) (HB)
 	&BurnSpecZquestt,			// Ziona Quest - Training (128K) (HB)
 	&BurnDrvZipzap,				// Zip & Zap (Explicit)
+	&BurnDrvZipzapa,			// Zip & Zap (Less Explicit)
 	&BurnSpecZipzap,			// Zip-Zap (48K)
 	&BurnDrvpce_zipang,			// Zipang (Japan)
 	&BurnDrvMSX_zipper,			// Zipper (Japan)
@@ -44706,6 +44738,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_deadlymv", "megadrive/d_megadrive.cpp"},
 	{ "nes_deadlytowers", "nes/d_nes.cpp"},
 	{ "nes_deadpool", "nes/d_nes.cpp"},
+	{ "nes_deadpoolsm1", "nes/d_nes.cpp"},
+	{ "nes_deadpoolsm2", "nes/d_nes.cpp"},
 	{ "md_deathrets", "megadrive/d_megadrive.cpp"},
 	{ "md_deathret", "megadrive/d_megadrive.cpp"},
 	{ "deathbrd", "dataeast/d_cninja.cpp"},
@@ -46237,15 +46271,15 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "nes_famista94", "nes/d_nes.cpp"},
 	{ "fncywld", "pst90s/d_tumbleb.cpp"},
 	{ "msx_fankypun", "msx/d_msx.cpp"},
-	{ "fantasiaa", "pst90s/d_galpanic.cpp"},
-	{ "fantasia", "pst90s/d_galpanic.cpp"},
-	{ "fantasiab", "pst90s/d_galpanic.cpp"},
-	{ "fantasian", "pst90s/d_galpanic.cpp"},
+	{ "fantasiaa", "pst90s/d_expro02.cpp"},
+	{ "fantasia", "pst90s/d_expro02.cpp"},
+	{ "fantasiab", "pst90s/d_expro02.cpp"},
+	{ "fantasian", "pst90s/d_expro02.cpp"},
 	{ "md_fantasia1", "megadrive/d_megadrive.cpp"},
 	{ "md_fantasia", "megadrive/d_megadrive.cpp"},
-	{ "fantsia2n", "pst90s/d_galpanic.cpp"},
-	{ "fantsia2", "pst90s/d_galpanic.cpp"},
-	{ "fantsia2a", "pst90s/d_galpanic.cpp"},
+	{ "fantsia2n", "pst90s/d_expro02.cpp"},
+	{ "fantsia2", "pst90s/d_expro02.cpp"},
+	{ "fantsia2a", "pst90s/d_expro02.cpp"},
 	{ "fantastc", "galaxian/d_galaxian.cpp"},
 	{ "nes_fantaadvdiz", "nes/d_nes.cpp"},
 	{ "sms_fantdizz", "sms/d_sms.cpp"},
@@ -46256,7 +46290,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "ngp_cotton", "pst90s/d_ngp.cpp"},
 	{ "ngp_cottonj", "pst90s/d_ngp.cpp"},
 	{ "spec_fantvoyage", "spectrum/d_spectrum.cpp"},
-	{ "fantsy95", "pst90s/d_galpanic.cpp"},
+	{ "fantsy95", "pst90s/d_expro02.cpp"},
 	{ "fantasyg", "pre90s/d_snk6502.cpp"},
 	{ "fantasyg2", "pre90s/d_snk6502.cpp"},
 	{ "fantasyj", "pre90s/d_snk6502.cpp"},
@@ -47028,9 +47062,16 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "gallopm72", "irem/d_m72.cpp"},
 	{ "gallop", "irem/d_m72.cpp"},
 	{ "galmedes", "taito/d_asuka.cpp"},
-	{ "galhustl", "pst90s/d_galpanic.cpp"},
+	{ "galhustl", "pst90s/d_expro02.cpp"},
+	{ "galsnew", "pst90s/d_expro02.cpp"},
+	{ "galsnewj", "pst90s/d_expro02.cpp"},
+	{ "galsnewk", "pst90s/d_expro02.cpp"},
+	{ "galsnewt", "pst90s/d_expro02.cpp"},
+	{ "galpanicb", "pst90s/d_galpanic.cpp"},
+	{ "galpanicc", "pst90s/d_galpanic.cpp"},
 	{ "galpanica", "pst90s/d_galpanic.cpp"},
 	{ "galpanic", "pst90s/d_galpanic.cpp"},
+	{ "galsnewu", "pst90s/d_expro02.cpp"},
 	{ "galpani3", "pst90s/d_galpani3.cpp"},
 	{ "galpani3hk", "pst90s/d_galpani3.cpp"},
 	{ "galpani3j", "pst90s/d_galpani3.cpp"},
@@ -48324,6 +48365,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "hotmemry", "pst90s/d_itech32.cpp"},
 	{ "hotminda", "pst90s/d_powerbal.cpp"},
 	{ "hotmind", "pst90s/d_playmark.cpp"},
+	{ "hotnight", "pst90s/d_expro02.cpp"},
 	{ "hotpinbl", "pst90s/d_galspnbl.cpp"},
 	{ "hotrodja", "sega/d_sys24.cpp"},
 	{ "hotrodj", "sega/d_sys24.cpp"},
@@ -51177,17 +51219,17 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_misplacedr", "megadrive/d_megadrive.cpp"},
 	{ "msbingo", "pst90s/d_gumbo.cpp"},
 	{ "missb2", "pst90s/d_missb2.cpp"},
-	{ "missmw96", "pst90s/d_galpanic.cpp"},
+	{ "missmw96", "pst90s/d_expro02.cpp"},
 	{ "mspacmanbgd", "pre90s/d_pacman.cpp"},
 	{ "mspuzzleg", "pst90s/d_gumbo.cpp"},
 	{ "mspuzzlea", "pst90s/d_gumbo.cpp"},
 	{ "mspuzzleb", "pst90s/d_gumbo.cpp"},
 	{ "mspuzzle", "pst90s/d_gumbo.cpp"},
-	{ "missw96", "pst90s/d_galpanic.cpp"},
-	{ "missw96a", "pst90s/d_galpanic.cpp"},
-	{ "missw96b", "pst90s/d_galpanic.cpp"},
-	{ "missw96c", "pst90s/d_galpanic.cpp"},
-	{ "missw02", "pst90s/d_galpanic.cpp"},
+	{ "missw96", "pst90s/d_expro02.cpp"},
+	{ "missw96a", "pst90s/d_expro02.cpp"},
+	{ "missw96b", "pst90s/d_expro02.cpp"},
+	{ "missw96c", "pst90s/d_expro02.cpp"},
+	{ "missw02", "pst90s/d_expro02.cpp"},
 	{ "msx_missilecmd", "msx/d_msx.cpp"},
 	{ "missile1", "atari/d_missile.cpp"},
 	{ "missile2", "atari/d_missile.cpp"},
@@ -52052,8 +52094,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "sms_newbogl2", "sms/d_sms.cpp"},
 	{ "newxpang", "pst90s/d_vamphalf.cpp"},
 	{ "newxpanga", "pst90s/d_vamphalf.cpp"},
-	{ "newfanta", "pst90s/d_galpanic.cpp"},
-	{ "newfant", "pst90s/d_galpanic.cpp"},
+	{ "newfanta", "pst90s/d_expro02.cpp"},
+	{ "newfant", "pst90s/d_expro02.cpp"},
 	{ "nes_newghoii", "nes/d_nes.cpp"},
 	{ "nhidctch", "pst90s/d_eolith.cpp"},
 	{ "md_newhoriz", "megadrive/d_megadrive.cpp"},
@@ -53325,8 +53367,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "pktgaldx", "dataeast/d_pktgaldx.cpp"},
 	{ "pktgaldxb", "dataeast/d_pktgaldx.cpp"},
 	{ "pktgaldxj", "dataeast/d_pktgaldx.cpp"},
-	{ "pgalvip", "pst90s/d_galpanic.cpp"},
-	{ "pgalvipa", "pst90s/d_galpanic.cpp"},
+	{ "pgalvip", "pst90s/d_expro02.cpp"},
+	{ "pgalvipa", "pst90s/d_expro02.cpp"},
 	{ "gg_pocketj", "sms/d_sms.cpp"},
 	{ "ngp_poktlove", "pst90s/d_ngp.cpp"},
 	{ "md_pokemona", "megadrive/d_megadrive.cpp"},
@@ -55732,6 +55774,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "sms_smurfs", "sms/d_sms.cpp"},
 	{ "md_smurfs", "megadrive/d_megadrive.cpp"},
 	{ "nes_smurfs", "nes/d_nes.cpp"},
+	{ "nes_snailhop", "nes/d_nes.cpp"},
 	{ "msx_snailmaze", "msx/d_msx.cpp"},
 	{ "spec_snake", "spectrum/d_spectrum.cpp"},
 	{ "cv_snake", "coleco/d_coleco.cpp"},
@@ -55806,6 +55849,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "spec_soccerpinball", "spectrum/d_spectrum.cpp"},
 	{ "md_socket", "megadrive/d_megadrive.cpp"},
 	{ "msx_sofia", "msx/d_msx.cpp"},
+	{ "nes_sokobanana", "nes/d_nes.cpp"},
 	{ "spec_sokoban", "spectrum/d_spectrum.cpp"},
 	{ "sokoban", "taito/d_taitol.cpp"},
 	{ "pce_sokoban", "pce/d_pce.cpp"},
@@ -56895,6 +56939,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "sfz3a", "capcom/d_cps2.cpp"},
 	{ "sfz3j", "capcom/d_cps2.cpp"},
 	{ "sfz3mix13", "capcom/d_cps2.cpp"},
+	{ "sfz3mix22f", "capcom/d_cps2.cpp"},
 	{ "sfz3mix", "capcom/d_cps2.cpp"},
 	{ "sfz3te", "capcom/d_cps2.cpp"},
 	{ "sftm110", "pst90s/d_itech32.cpp"},
@@ -57325,9 +57370,11 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "md_smoverkill", "megadrive/d_megadrive.cpp"},
 	{ "pce_smcrush", "pce/d_pce.cpp"},
 	{ "spec_supmeteorbl", "spectrum/d_spectrum.cpp"},
+	{ "smissw", "pst90s/d_expro02.cpp"},
 	{ "suprmatk", "atari/d_missile.cpp"},
 	{ "suprmatkd", "atari/d_missile.cpp"},
-	{ "supmodel", "pst90s/d_galpanic.cpp"},
+	{ "supmodl2", "pst90s/d_expro02.cpp"},
+	{ "supmodel", "pst90s/d_expro02.cpp"},
 	{ "pce_smomo", "pce/d_pce.cpp"},
 	{ "pce_smomo2", "pce/d_pce.cpp"},
 	{ "gg_smomo3", "sms/d_sms.cpp"},
@@ -60238,7 +60285,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "twcup90b2", "pre90s/d_wc90b.cpp"},
 	{ "md_worms", "megadrive/d_megadrive.cpp"},
 	{ "md_wormsp", "megadrive/d_megadrive.cpp"},
-	{ "wownfant", "pst90s/d_galpanic.cpp"},
+	{ "wownfant", "pst90s/d_expro02.cpp"},
 	{ "msx_wrangler", "msx/d_msx.cpp"},
 	{ "nes_wrathblaman", "nes/d_nes.cpp"},
 	{ "chf_wrdlf", "channelf/d_channelf.cpp"},
@@ -60680,7 +60727,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "zintrkcd", "neogeo/d_neogeo.cpp"},
 	{ "spec_zquestg", "spectrum/d_spectrum.cpp"},
 	{ "spec_zquestt", "spectrum/d_spectrum.cpp"},
-	{ "zipzap", "pst90s/d_galpanic.cpp"},
+	{ "zipzap", "pst90s/d_expro02.cpp"},
+	{ "zipzapa", "pst90s/d_expro02.cpp"},
 	{ "spec_zipzap", "spectrum/d_spectrum.cpp"},
 	{ "pce_zipang", "pce/d_pce.cpp"},
 	{ "msx_zipper", "msx/d_msx.cpp"},

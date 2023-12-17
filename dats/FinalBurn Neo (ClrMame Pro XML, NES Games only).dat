@@ -3898,7 +3898,7 @@
 	</game>
 	<game name="dgimmick" cloneof="gimmick" romof="gimmick" sourcefile="nes/d_nes.cpp">
 		<comment>Hack, Homebrew</comment>
-		<description>Dark Gimmick (HB, v1.1)</description>
+		<description>Dark Gimmick (GlobalHack, v1.1)</description>
 		<year>2014</year>
 		<manufacturer>Berion - Dizzy9</manufacturer>
 		<rom name="Dark Gimmick v1.1 (2014).nes" size="393232" crc="d7ddb1d6"/>
@@ -4035,6 +4035,24 @@
 		<year>2019</year>
 		<manufacturer>Techmoon</manufacturer>
 		<rom name="Deadpool Globalhack (2019)(Techmoon).nes" size="786448" crc="5e36e542"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="deadpoolsm1" cloneof="contra" romof="contra" sourcefile="nes/d_nes.cpp">
+		<comment>Hack, Homebrew</comment>
+		<description>Deadpool Special Mission (GlobalHack, v1.3, Alt 1)</description>
+		<year>2023</year>
+		<manufacturer>Techmoon</manufacturer>
+		<rom name="Deadpool Special Mission v1.3 MMC3 (2023)(Techmoon).nes" size="393232" crc="f5565dab"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="deadpoolsm2" cloneof="contra" romof="contra" sourcefile="nes/d_nes.cpp">
+		<comment>Hack, Homebrew</comment>
+		<description>Deadpool Special Mission (GlobalHack, v1.3, Alt 2)</description>
+		<year>2023</year>
+		<manufacturer>Techmoon</manufacturer>
+		<rom name="Deadpool Special Mission v1.3 VCR2 (2023)(Techmoon).nes" size="262160" crc="245b8aa0"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -6368,7 +6386,7 @@
 	</game>
 	<game name="fleademo" cloneof="flea" romof="flea" sourcefile="nes/d_nes.cpp">
 		<comment>Homebrew</comment>
-		<description>FLEA! demo (HB)</description>
+		<description>FLEA! Demo (HB)</description>
 		<year>2019</year>
 		<manufacturer>Lowtek</manufacturer>
 		<rom name="flea! demo (HB).nes" size="524304" crc="6d18f7c4"/>
@@ -14881,7 +14899,7 @@
 	</game>
 	<game name="spoolchal" cloneof="rpoolchal" romof="rpoolchal" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Sara Parker's Pool Challenge</description>
+		<description>Sara Parker's Pool Challenge (Unl)</description>
 		<year>2010</year>
 		<manufacturer>retroUSB</manufacturer>
 		<rom name="Sara Parker's Pool Challenge (2010)(RetroUSB).nes" size="98320" crc="5a34e197"/>
@@ -15190,7 +15208,7 @@
 	</game>
 	<game name="shootufo" sourcefile="nes/d_nes.cpp">
 		<comment>Hack, Homebrew, A GlobalHack of Duck Hunt</comment>
-		<description>Shoot UFO (HB)</description>
+		<description>Shoot UFO (GlobalHack)</description>
 		<year>2015</year>
 		<manufacturer>&lt;unknown&gt;</manufacturer>
 		<rom name="Shoot UFO (2015)(GlobHack).nes" size="40976" crc="b5c91a2a"/>
@@ -15489,6 +15507,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
+	<game name="snailhop" sourcefile="nes/d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Snail Hop (HB)</description>
+		<year>2023</year>
+		<manufacturer>Libra Bits</manufacturer>
+		<rom name="Snail Hop (2023)(Libra Bits).nes" size="163856" crc="ba16a036"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="snakeratnrol" sourcefile="nes/d_nes.cpp">
 		<description>Snake Rattle n Roll (USA)</description>
 		<year>1990</year>
@@ -15570,6 +15597,15 @@
 		<year>1988</year>
 		<manufacturer>Data East</manufacturer>
 		<rom name="Soccer League - Winner's Cup (Japan).nes" size="262160" crc="e08f129d"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="sokobanana" sourcefile="nes/d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Soko Banana (HB)</description>
+		<year>2023</year>
+		<manufacturer>Flip For Fate</manufacturer>
+		<rom name="Soko Banana (2023)(Flip For Fate).nes" size="524304" crc="a3973b4b"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

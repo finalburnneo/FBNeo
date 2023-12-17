@@ -6964,12 +6964,28 @@ static struct BurnRomInfo Sfz3mixRomDesc[] = {
 	{ "sfz3mix.m1",   0x0080000, 0x0b29471e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "sfz3mix.q1",   0x1000000, 0x3e35e4ca, CPS2_QSND | BRF_SND },
-	
+
 	{ "phoenix.key",  0x0000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3mix)
 STD_ROM_FN(Sfz3mix)
+
+static struct BurnRomInfo Sfz3mix22fRomDesc[] = {
+	{ "sfz3mix.p1",   0x0600000, 0xcf806364, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sfz3mix.c1",   0x2000000, 0x09f422ed, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.c2",   0x2000000, 0x9a017bea, CPS2_GFX | BRF_GRA },
+
+	{ "sfz3mix.m1",   0x0080000, 0x0b29471e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sfz3mix.q1",   0x1000000, 0x3e35e4ca, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",  0x0000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz3mix22f)
+STD_ROM_FN(Sfz3mix22f)
 
 // Street Fighter Zero 3 Mix v0.13 (hacked by Zero800)
 // https://sfz3mix.github.io/
@@ -6998,7 +7014,7 @@ static struct BurnRomInfo Sfz3mix13RomDesc[] = {
 
 	{ "c78mix13.q1",   0x400000, 0xab9415fb, CPS2_QSND | BRF_SND },
 	{ "c78.q2",        0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
-	
+
 	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
@@ -11592,6 +11608,16 @@ struct BurnDriver BurnDrvCpsSfz3mix = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
+	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
+};
+
+struct BurnDriver BurnDrvCpsSfz3mix22f = {
+	"sfz3mix22f", "sfa3", NULL, "sfz3mix", "2023",
+	"Street Fighter Zero 3 Mix v0.22f (beta)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3mix22fRomInfo, Sfz3mix22fRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
 	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
 };

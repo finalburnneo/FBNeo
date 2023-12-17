@@ -1133,6 +1133,12 @@ LuaMemHookType MatchHookTypeToCPU(lua_State* L, LuaMemHookType hookType)
 		case LUAMEMHOOK_WRITE: return LUAMEMHOOK_WRITE_SUB;
 		case LUAMEMHOOK_READ: return LUAMEMHOOK_READ_SUB;
 		case LUAMEMHOOK_EXEC: return LUAMEMHOOK_EXEC_SUB;
+
+		case LUAMEMHOOK_WRITE_SUB: // shh
+		case LUAMEMHOOK_READ_SUB:
+		case LUAMEMHOOK_EXEC_SUB:
+		case LUAMEMHOOK_COUNT:
+			return hookType;
 		}
 	}
 	return hookType;
@@ -3371,13 +3377,15 @@ const char* s_keyToName[256] =
 	"quote",
 };
 
+extern int ScrnGetMouseX();
+extern int ScrnGetMouseY();
+
 void GetMouseData(UINT32 *md)
 {
-	extern UINT32 mousex,mousey;
 	RECT t;
 	GetClientRect(hScrnWnd, &t);
-	//md[0] = (UINT32)(mousex / ((float)t.right / iScreenWidth));
-	//md[1] = (UINT32)(mousey / ((float)t.bottom / iScreenHeight));
+	md[0] = (UINT32)(ScrnGetMouseX() / ((float)t.right / iScreenWidth));
+	md[1] = (UINT32)(ScrnGetMouseY() / ((float)t.bottom / iScreenHeight));
 }
 
 #endif
@@ -3413,7 +3421,7 @@ static int input_getcurrentinputstatus(lua_State *L) {
 	}
 	// mouse position in game screen pixel coordinates
 	{
-		UINT32 MouseData[2];
+		UINT32 MouseData[2] = { 0, 0 };
 		int x, y;
 		GetMouseData(MouseData);
 		x = MouseData[0];

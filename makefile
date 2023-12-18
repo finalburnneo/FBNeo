@@ -8,7 +8,7 @@ export
 
 # Make a special build, pass the quoted text as comment (use FORCE_UPDATE declaration below to force recompilation of resources)
 # SPECIALBUILD = "This text will appear in the property sheet of the .exe file"
-
+#
 
 
 #

@@ -17781,22 +17781,22 @@ struct BurnDriver BurnDrvmslug1v2 = {
 // Modified by 合金弹头爱克斯
 // GOTVG 20231028
 
-static struct BurnRomInfo mslugyqRomDesc[] = {
+static struct BurnRomInfo mslugqyRomDesc[] = {
 	{ "201-p1qy.p1",	0x100000, 0x750c90c8, 1 | BRF_ESS | BRF_PRG },
 	{ "201-p2dg.sp2",	0x100000, 0xc3cb544c, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENT
 };
 
-STDROMPICKEXT(mslugyq, mslugyq, neogeo)
-STD_ROM_FN(mslugyq)
+STDROMPICKEXT(mslugqy, mslugqy, neogeo)
+STD_ROM_FN(mslugqy)
 
-struct BurnDriver BurnDrvmslugyq = {
-	"mslugyq", "mslug", "neogeo", NULL, "2023",
+struct BurnDriver BurnDrvmslugqy = {
+	"mslugqy", "mslug", "neogeo", NULL, "2023",
 	"Metal Slug - Super Vehicle-001 (Origins, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
-	NULL, mslugyqRomInfo, mslugyqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, mslugqyRomInfo, mslugqyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -17804,11 +17804,11 @@ struct BurnDriver BurnDrvmslugyq = {
 
 // Metal Slug - Super Vehicle-001 (Item Random FC2, Hack)
 // Modified by Alice
-// 20231204
+// 20231215
 
 static struct BurnRomInfo mslugfc1RomDesc[] = {
-	{ "201-p1fc1.p1",	0x100000, 0xaa915a0e, 1 | BRF_ESS | BRF_PRG },
-	{ "201-p2fc1.sp2",	0x100000, 0x6de5637a, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1fc1.p1",	0x100000, 0xdb8f7d81, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p2fc1.sp2",	0x100000, 0xad244b93, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENT
 };
@@ -17829,11 +17829,11 @@ struct BurnDriver BurnDrvmslugfc1 = {
 
 // Metal Slug - Super Vehicle-001 (Item Random & Powerful Enemy Defense FC2, Hack)
 // Modified by Alice
-// 20231204
+// 20231215
 
 static struct BurnRomInfo mslugfc2RomDesc[] = {
-	{ "201-p1fc2.p1",	0x100000, 0xc167facf, 1 | BRF_ESS | BRF_PRG },
-	{ "201-p2fc2.sp2",	0x100000, 0x1c278a37, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p1fc2.p1",	0x100000, 0xb079dd40, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p2fc2.sp2",	0x100000, 0xdce6a2de, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENT
 };
@@ -22285,11 +22285,11 @@ struct BurnDriver BurnDrvkof97t = {
 
 
 // The King of Fighters '97 (Strengthen Innovation, Hack)
-// GOTVG 20230129
+// GOTVG 20231218
 
 static struct BurnRomInfo kof97stRomDesc[] = {
-	{ "232-p1st.p1",	0x100000, 0x32b4ce56, 1 | BRF_ESS | BRF_PRG },
-	{ "232-p2st.sp2",	0x400000, 0xb0aee031, 1 | BRF_ESS | BRF_PRG },
+	{ "232-p1st.p1",	0x100000, 0x4d4dfd30, 1 | BRF_ESS | BRF_PRG },
+	{ "232-p2st.sp2",	0x400000, 0xf144c697, 1 | BRF_ESS | BRF_PRG },
 
 	KOF97_TEXT
 
@@ -22297,7 +22297,8 @@ static struct BurnRomInfo kof97stRomDesc[] = {
 	{ "232-c2st.c2",	0x800000, 0x831ec266, 3 | BRF_GRA },
 	{ "232-c3st.c3",	0x800000, 0xb092e64f, 3 | BRF_GRA },
 	{ "232-c4st.c4",	0x800000, 0xd25e8a04, 3 | BRF_GRA },
-	KOF97_SPR3
+	{ "232-c5st.c5",	0x400000, 0x91771218, 3 | BRF_GRA },
+	{ "232-c6st.c6",	0x400000, 0x55a1bf39, 3 | BRF_GRA },
 
 	KOF97_Z80
 

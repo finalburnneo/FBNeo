@@ -4,10 +4,19 @@
 #define STD_ROM_PICK(Name)												\
 static struct BurnRomInfo* Name##PickRom(UINT32 i)						\
 {																		\
-	if (i >= sizeof(Name##RomDesc) / sizeof(Name##RomDesc[0])) {		\
-		return NULL;													\
+	if ((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) {			\
+		/* Replace with the contents of Romdata */						\
+		/* Differences in array pointers */								\
+		if (i > pRDI->nDescCount) {										\
+			return NULL;												\
+		}																\
+		return pDataRomDesc + i;										\
+	} else {															\
+		if (i >= sizeof(Name##RomDesc) / sizeof(Name##RomDesc[0])) {	\
+			return NULL;												\
+		}																\
+		return Name##RomDesc + i;										\
 	}																	\
-	return Name##RomDesc + i;											\
 }
 
 #define STDROMPICKEXT(Name, Info1, Info2)									\

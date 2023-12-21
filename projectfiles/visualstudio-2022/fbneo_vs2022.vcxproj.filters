@@ -3529,6 +3529,12 @@
     <ClCompile Include="..\..\src\dep\libs\libspng\spng.c">
       <Filter>libs\libspng</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_expro02.cpp">
+      <Filter>burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\kaneko_hit.cpp">
+      <Filter>burn\devices</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="cpus">

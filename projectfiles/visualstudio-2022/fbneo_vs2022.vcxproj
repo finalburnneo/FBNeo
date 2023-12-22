@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\src\burn\devices\intelfsh.cpp" />
     <ClCompile Include="..\..\src\burn\devices\joyprocess.cpp" />
     <ClCompile Include="..\..\src\burn\devices\k1ge.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\kaneko_hit.cpp" />
     <ClCompile Include="..\..\src\burn\devices\kaneko_tmap.cpp" />
     <ClCompile Include="..\..\src\burn\devices\mathbox.cpp" />
     <ClCompile Include="..\..\src\burn\devices\mb87078.cpp" />
@@ -238,6 +239,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_discoboy.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_eolith16.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_expro02.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_f-32.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_galpani3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_goori.cpp" />

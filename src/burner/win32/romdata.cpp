@@ -57,7 +57,38 @@ static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
 	return token;
 }
 
-#define UTF8_SIGNATURE	"\xef\xbb\xbf"
+static INT32 IsUTF8Text(const void* pBuffer, long size)
+{
+	INT32 nCode = 0;
+	unsigned char* start = (unsigned char*)pBuffer;
+	unsigned char* end = (unsigned char*)pBuffer + size;
+
+	while (start < end) {
+		if (*start < 0x80) {        // (10000000) ASCII
+			if (0 == nCode) nCode = 1;
+
+			start++;
+		} else if (*start < 0xc0) { // (11000000) Invalid UTF-8
+			return 0;
+		} else if (*start < 0xe0) { // (11100000) 2-byte UTF-8
+			if (nCode < 2) nCode = 2;
+			if (start >= end - 1) break;
+			if (0x80 != (start[1] & 0xc0)) return 0;
+
+			start += 2;
+		} else if (*start < 0xf0) { // (11110000) 3-byte UTF-8
+			if (nCode < 3) nCode = 3;
+			if (start >= end - 2) break;
+			if ((0x80 != (start[1] & 0xc0)) || (0x80 != (start[2] & 0xc0))) return 0;
+
+			start += 3;
+		} else {
+			return 0;
+		}
+	}
+
+	return nCode;
+}
 
 static INT32 IsDatUTF8BOM()
 {
@@ -71,24 +102,20 @@ static INT32 IsDatUTF8BOM()
 
 	INT32 nRet = 0;
 
-	if (nDatSize > strlen(UTF8_SIGNATURE)) {
-		char* pszTest = (char*)malloc(nDatSize);
+	char* pszTest = (char*)malloc(nDatSize + 1);
 
-		if (NULL != pszTest) {
-			fread(pszTest, nDatSize, 1, fp);
-			if (0 == strncmp(pszTest, UTF8_SIGNATURE, strlen(UTF8_SIGNATURE))) {
-				nRet = 1;
-			}
-			free(pszTest);
-			pszTest = NULL;
-		}
+	if (NULL != pszTest) {
+		memset(pszTest, 0, nDatSize + 1);
+		fread(pszTest, nDatSize, 1, fp);
+		nRet = IsUTF8Text(pszTest, nDatSize);
+		free(pszTest);
+		pszTest = NULL;
 	}
+
 	fclose(fp);
 
 	return nRet;
 }
-
-#undef UTF8_SIGNATURE
 
 #define DELIM_TOKENS_NAME	_T(" \t\r\n,%:|{}")
 
@@ -99,7 +126,7 @@ static INT32 LoadRomdata()
 
 	RDI.nDescCount = -1;	// Failed
 
-	const TCHAR* szReadMode = (0 == nType) ? _T("rt") : _T("rt, ccs=UTF-8");
+	const TCHAR* szReadMode = (3 == nType) ? _T("rt, ccs=UTF-8") : _T("rt");
 
 	FILE* fp = _tfopen(szRomdataName, szReadMode);
 	if (NULL == fp) return RDI.nDescCount;
@@ -305,7 +332,7 @@ char* RomdataGetDrvName()
 	INT32 nType = IsDatUTF8BOM();
 	if (-1 == nType) return NULL;
 
-	const TCHAR* szReadMode = (0 == nType) ? _T("rt") : _T("rt, ccs=UTF-8");
+	const TCHAR* szReadMode = (3 == nType) ? _T("rt, ccs=UTF-8") : _T("rt");
 
 	FILE* fp = _tfopen(szRomdataName, szReadMode);
 	if (NULL == fp) return NULL;

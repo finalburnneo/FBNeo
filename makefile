@@ -10,7 +10,6 @@ export
 # SPECIALBUILD = "This text will appear in the property sheet of the .exe file"
 
 
-
 #
 #	Flags. Uncomment any of these declarations to enable their function.
 #

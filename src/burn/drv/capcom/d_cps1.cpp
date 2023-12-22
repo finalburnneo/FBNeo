@@ -16545,7 +16545,7 @@ static char* szGameName = NULL;
 
 static void SetGameConfig()
 {
-	const char* GameName = (NULL != szGameName) ? szGameName : BurnDrvGetTextA(DRV_NAME);
+	const char* GameName = (NULL != szGameName) ? szGameName : (((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) ? pRDI->szDrvName : BurnDrvGetTextA(DRV_NAME));
 	const struct GameConfig *k = &ConfigTable[0];
 
 	while (k->DriverName) {

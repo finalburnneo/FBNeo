@@ -1170,7 +1170,7 @@
 		<description>Dangerous Demolition (HB, v1.0)</description>
 		<year>2020</year>
 		<manufacturer>DrLudos</manufacturer>
-		<rom name="dangerousdemolition.gg" size="32768" crc="638c4252"/>
+		<rom name="Dangerous Demolition (2020)(DrLudos).gg" size="32768" crc="638c4252"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2038,7 +2038,7 @@
 		<description>GG Turrican (HB, Demo v1.0)</description>
 		<year>2005</year>
 		<manufacturer>Martin Konrad</manufacturer>
-		<rom name="gg turrican (demo1.0).gg" size="524288" crc="971ca630"/>
+		<rom name="GG Turrican (demo-1.0)(2005)(Martin Konrad).gg" size="524288" crc="971ca630"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

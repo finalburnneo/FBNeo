@@ -7114,6 +7114,42 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="heracles2" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Glory of Heracles II, The - Titans' Downfall (Hack, English v1.31)</description>
+		<year>2016</year>
+		<manufacturer>The Spoony Bard</manufacturer>
+		<rom name="Glory of Heracles II, The - Titans' Downfall T-Eng v1.31 (2016)(The Spoony Bard).nes" size="262160" crc="ce222646"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="heracles2s" cloneof="heracles2" romof="heracles2" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Glory of Heracles II, The - Titans' Downfall (Hack, Spanish)</description>
+		<year>2023</year>
+		<manufacturer>Max1323</manufacturer>
+		<rom name="Glory of Heracles II, The - Titans' Downfall T-Spa (2023)(Max1323).nes" size="262160" crc="f7a6eb95"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="heracles" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Glory of Heracles, The - Labors of the Divine Hero (Hack, English)</description>
+		<year>2014</year>
+		<manufacturer>DvD Translations</manufacturer>
+		<rom name="Glory of Heracles, The - Labors of the Divine Hero T-Eng (2014)(DvD Translations).nes" size="262160" crc="724489c8"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="heracless" cloneof="heracles" romof="heracles" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Glory of Heracles, The - Labors of the Divine Hero (Hack, Spanish v1.1)</description>
+		<year>2022</year>
+		<manufacturer>Max1323</manufacturer>
+		<rom name="Glory of Heracles, The - Labors of the Divine Hero T-Spa v1.1 (2022)(Max1323).nes" size="262160" crc="c7510b91"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="glukthuwar" sourcefile="nes/d_nes.cpp">
 		<description>Gluk the Thunder Warrior (Spain) (Gluk Video) (Unl)</description>
 		<year>1992</year>
@@ -7937,6 +7973,22 @@
 		<year>2019</year>
 		<manufacturer>shiru</manufacturer>
 		<rom name="HEOH demo (2019)(shiru).nes" size="524304" crc="4fcd5116"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="heraclesj" cloneof="heracles" romof="heracles" sourcefile="nes/d_nes.cpp">
+		<description>Heracles no Eikou - Toujin Makyou Den (Japan)</description>
+		<year>1987</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="Heracles no Eikou - Toujin Makyou Den (J)(1987)(Data East).nes" size="131088" crc="825f8089"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="heracles2j" cloneof="heracles2" romof="heracles2" sourcefile="nes/d_nes.cpp">
+		<description>Heracles no Eikou II - Titan no Metsubou (Japan)</description>
+		<year>1989</year>
+		<manufacturer>Data East</manufacturer>
+		<rom name="Heracles no Eikou II - Titan no Metsubou (J)(1989)(Data East).nes" size="262160" crc="dfd9a811"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -14631,6 +14683,15 @@
 		<year>2008</year>
 		<manufacturer>DvD Translations</manufacturer>
 		<rom name="Romancia (T-Eng).nes" size="131088" crc="c0785ed4"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="romancias" cloneof="romancia" romof="romancia" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Romancia (Hack, Spanish)</description>
+		<year>2023</year>
+		<manufacturer>Max1323</manufacturer>
+		<rom name="Romancia T-Spa (2023)(Max1323).nes" size="131088" crc="4befb4a7"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>

@@ -191,7 +191,7 @@
 		<description>Alex Kidd 3 - Curse in Miracle World (GlobalHack, Demo v.4)</description>
 		<year>2016</year>
 		<manufacturer>Yeti</manufacturer>
-		<rom name="alex kidd 3 - curse in miracle world (2016)(yeti-demo4).sms" size="1048576" crc="35b498a4"/>
+		<rom name="Alex Kidd 3 - Curse in Miracle World (2016)(Yeti-Demo4).sms" size="1048576" crc="35b498a4"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -200,7 +200,7 @@
 		<description>Alex Kidd 3 - Curse in Miracle World (GlobalHack, v3.0)</description>
 		<year>2021</year>
 		<manufacturer>Yeti</manufacturer>
-		<rom name="alex kidd 3 - curse in miracle world v3.0 (2021)(yeti).sms" size="524288" crc="2096b9f1"/>
+		<rom name="Alex Kidd 3 - Curse in Miracle World v3.0 (2021)(Yeti).sms" size="524288" crc="2096b9f1"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -259,7 +259,7 @@
 		<description>Alex Kidd in Miracle World 2 (GlobalHack)</description>
 		<year>2016</year>
 		<manufacturer>Ian Wall</manufacturer>
-		<rom name="Alex Kidd in Miracle World 2.sms" size="524288" crc="7de172ff"/>
+		<rom name="Alex Kidd in Miracle World 2 (GlobalHack)(2016)(Ian Wall).sms" size="524288" crc="7de172ff"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -540,7 +540,7 @@
 		<description>Astro Force (HB, v1.03)</description>
 		<year>2017</year>
 		<manufacturer>MikGames</manufacturer>
-		<rom name="astroforce_v103.sms" size="262144" crc="1bad75c5"/>
+		<rom name="Astro Force v1.03 (2017)(MikGames).sms" size="262144" crc="1bad75c5"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -615,7 +615,7 @@
 		<description>Bad Apple (HB, Tech-Demo)</description>
 		<year>2017</year>
 		<manufacturer>SMS Power!</manufacturer>
-		<rom name="bad apple v100.sms" size="4194304" crc="38434560"/>
+		<rom name="Bad Apple (2017)(Tech-Demo).sms" size="4194304" crc="38434560"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -641,7 +641,7 @@
 		<description>Baluba Balok (HB)</description>
 		<year>2017</year>
 		<manufacturer>MikGames</manufacturer>
-		<rom name="baluba_balok.sms" size="32768" crc="4f8e512c"/>
+		<rom name="Baluba Balok (2017)(MikGames).sms" size="32768" crc="4f8e512c"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -666,7 +666,7 @@
 		<description>Bara Buruu (HB, v1.0)</description>
 		<year>2016</year>
 		<manufacturer>Kagesan</manufacturer>
-		<rom name="BaraBuruu-SMS-1.00.sms" size="131072" crc="43e39aa4"/>
+		<rom name="BaraBuruu v1.0 (2016)(Kagesan).sms" size="131072" crc="43e39aa4"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -686,6 +686,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="battlecityv2" sourcefile="sms/d_sms.cpp">
+		<comment>Homebrew</comment>
+		<description>Battle City (HB, v2)</description>
+		<year>2023</year>
+		<manufacturer>old pirate</manufacturer>
+		<rom name="Battle City v2 (2023)(old pirate).sms" size="114688" crc="0e0c4b81"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="battleor" sourcefile="sms/d_sms.cpp">
 		<description>Battle Out Run (Euro, Brazil)</description>
 		<year>1989</year>
@@ -699,7 +708,7 @@
 		<description>Battle Out Run (Hack, FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - SMS Power!</manufacturer>
-		<rom name="battle out run (fm mod).sms" size="262144" crc="7c849999"/>
+		<rom name="Battle Out Run (FM Mod)(2018)(SMS Power).sms" size="262144" crc="7c849999"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -716,7 +725,7 @@
 		<description>Be No Sqr (HB, Tech-Demo v1.01)</description>
 		<year>2016</year>
 		<manufacturer>psidum, sim, slimeball</manufacturer>
-		<rom name="Be No Sqr 1.01.sms" size="524288" crc="ee701be6"/>
+		<rom name="Be No Sqr v1.01 (2016)(Tech-Demo).sms" size="524288" crc="ee701be6"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -751,6 +760,15 @@
 		<year>1988</year>
 		<manufacturer>Sega</manufacturer>
 		<rom name="mpr-11421.ic1" size="262144" crc="8ecd201c"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="blastarena" sourcefile="sms/d_sms.cpp">
+		<comment>Homebrew</comment>
+		<description>Blast Arena (HB)</description>
+		<year>2023</year>
+		<manufacturer>HelpComputer0</manufacturer>
+		<rom name="Blast Arena (2023)(helpcomputer0).sms" size="65536" crc="a4233ea3"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -809,7 +827,7 @@
 		<description>Bruce Lee (HB, v1.0)</description>
 		<year>2015</year>
 		<manufacturer>Kagesan</manufacturer>
-		<rom name="BruceLee-SMS-1.00.sms" size="131072" crc="37e27a38"/>
+		<rom name="Bruce Lee v1.0 (2015)(Kagesan).sms" size="131072" crc="37e27a38"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1220,7 +1238,7 @@
 		<description>DARC (HB, v1.0)</description>
 		<year>2015</year>
 		<manufacturer>Zipper</manufacturer>
-		<rom name="DARC.sms" size="524288" crc="61b3c657"/>
+		<rom name="DARC (2015)(Zipper).sms" size="524288" crc="61b3c657"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1229,7 +1247,7 @@
 		<description>Data Storm (HB, v1.0)</description>
 		<year>2016</year>
 		<manufacturer>haroldoop</manufacturer>
-		<rom name="datastorm.sms" size="32768" crc="37b775d6"/>
+		<rom name="Data Storm (2016)(haroldoop).sms" size="32768" crc="37b775d6"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1497,7 +1515,7 @@
 		<description>Duke Nukem (GlobalHack, v0.93)</description>
 		<year>2017</year>
 		<manufacturer>revo, tibone, calindro</manufacturer>
-		<rom name="duke nukem (2017)(revo-tibone-calindro).sms" size="524288" crc="a16dba3b"/>
+		<rom name="Duke Nukem (2017)(revo-tibone-calindro).sms" size="524288" crc="a16dba3b"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -1930,8 +1948,8 @@
 		<comment>Hack, Homebrew</comment>
 		<description>Galactic Boogers (GlobalHack)</description>
 		<year>2020</year>
-		<manufacturer>YETI</manufacturer>
-		<rom name="Galactic Boogers.sms" size="1048576" crc="b5dac318"/>
+		<manufacturer>Yeti</manufacturer>
+		<rom name="Galactic Boogers (GlobalHack)(2020)(Yeti).sms" size="1048576" crc="b5dac318"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2023,7 +2041,7 @@
 		<description>Geki Oko PunPun Maru ((HB, v2015.10.31b)</description>
 		<year>2013-15</year>
 		<manufacturer>Future Driver</manufacturer>
-		<rom name="punpun_20151031b.sms" size="262144" crc="b35ebcdf"/>
+		<rom name="Geki Oko PunPun Maru v2015.10.31b (2015)(Future Driver).sms" size="262144" crc="b35ebcdf"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2513,7 +2531,7 @@
 		<description>Heroes Against Demons (HB, v1.03)</description>
 		<year>2020</year>
 		<manufacturer>Ichigo Bankai</manufacturer>
-		<rom name="HeroesAgainstDemons_1.03.sms" size="131072" crc="35f47e0a"/>
+		<rom name="Heroes Against Demons v1.03 (2020)(Ichigo Bankai).sms" size="131072" crc="35f47e0a"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -2889,7 +2907,7 @@
 		<description>Lambo (HB, Tech-Demo)</description>
 		<year>2015</year>
 		<manufacturer>Genesis Project</manufacturer>
-		<rom name="GenesisProject-Lambo.sms" size="262144" crc="92fe2775"/>
+		<rom name="Lambo (2015)(GenesisProject-Tech-Demo).sms" size="262144" crc="92fe2775"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3017,7 +3035,7 @@
 		<description>Lost Raider (HB, v1.01)</description>
 		<year>2015</year>
 		<manufacturer>Vingazole &amp; Ichigo Bankai</manufacturer>
-		<rom name="LostRaider-SMS-1.01.sms" size="131072" crc="2553b745"/>
+		<rom name="LostRaider v1.01 (2015)(Vingazole &amp; Ichigo Bankai).sms" size="131072" crc="2553b745"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3052,7 +3070,7 @@
 		<description>Lucky Penguin (HB, v1.1)</description>
 		<year>2020</year>
 		<manufacturer>Denine</manufacturer>
-		<rom name="LuckyPenguin-SMS-1.1.sms" size="49152" crc="69699887"/>
+		<rom name="Lucky Penguin v1.1 (2020)(Denine).sms" size="49152" crc="69699887"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3297,7 +3315,7 @@
 		<description>Moggy Master (HB, v1.00)</description>
 		<year>2015</year>
 		<manufacturer>The Mojon Twins</manufacturer>
-		<rom name="mojon-twins--moggy-master.sms" size="65536" crc="039539df"/>
+		<rom name="Moggy Master (2015)(The Mojon Twins).sms" size="65536" crc="039539df"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3348,7 +3366,7 @@
 		<description>Monster Crunch (HB, v1.00)</description>
 		<year>2020</year>
 		<manufacturer>Ichigo Bankai</manufacturer>
-		<rom name="MonsterCrunch-SMS-1.00.sms" size="32768" crc="7eacf20c"/>
+		<rom name="Monster Crunch v1.00 (2020)(Ichigo Bankai).sms" size="32768" crc="7eacf20c"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3489,7 +3507,7 @@
 		<description>New Order vs Depeche Mode vs Daft Punk (HB, Tech-Demo)</description>
 		<year>2019</year>
 		<manufacturer>Maxim</manufacturer>
-		<rom name="novdmvdp.sms" size="4176507" crc="d0eabe60"/>
+		<rom name="New Order vs Depeche Mode vs Daft Punk (2019)(Tech-Demo).sms" size="4176507" crc="d0eabe60"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3636,8 +3654,8 @@
 		<comment>Hack, Homebrew</comment>
 		<description>Papi Commando in CPP Land (GlobalHack, v1.01)</description>
 		<year>2019</year>
-		<manufacturer>Vetea</manufacturer>
-		<rom name="papi commando in cpp land v1.01 (2019)(studio vetea).sms" size="1048576" crc="bd531375"/>
+		<manufacturer>Studio Vetea</manufacturer>
+		<rom name="Papi Commando in CPP Land v1.01 (2019)(Studio Vetea).sms" size="1048576" crc="bd531375"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -3958,7 +3976,7 @@
 		<comment>Prototype</comment>
 		<description>R-Type (Prototype)</description>
 		<year>1988</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Irem Corp.</manufacturer>
 		<rom name="r-type (proto).bin" size="524288" crc="0d0840d5"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -3966,8 +3984,17 @@
 	<game name="rtype" sourcefile="sms/d_sms.cpp">
 		<description>R-Type (World)</description>
 		<year>1988</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Sega - Irem Corp.</manufacturer>
 		<rom name="mpr-12002 t13.ic2" size="524288" crc="bb54b6b0"/>
+		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="rtypeas" cloneof="rtype" romof="rtype" sourcefile="sms/d_sms.cpp">
+		<comment>Hack</comment>
+		<description>R-Type Arcade Style (Hack, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>Datchy</manufacturer>
+		<rom name="R-Type Arcade Style Hack v1.1 (2023)(Datchy).sms" size="524288" crc="26ccf06d"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4035,7 +4062,7 @@
 		<description>Rambo III (Hack, FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
-		<rom name="rambo iii (fm-mod).sms" size="262144" crc="c2073674"/>
+		<rom name="Rambo III (FM-Mod)(2018)(fatnick).sms" size="262144" crc="c2073674"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4354,8 +4381,8 @@
 		<comment>Homebrew</comment>
 		<description>Silver Valley (HB)</description>
 		<year>2018</year>
-		<manufacturer>MikGames / Enrique Ruiz</manufacturer>
-		<rom name="silvervalley-final.sms" size="262144" crc="2774b5cc"/>
+		<manufacturer>MikGames - Enrique Ruiz</manufacturer>
+		<rom name="Silver Valley (2018)(MikGames).sms" size="262144" crc="2774b5cc"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -4963,7 +4990,7 @@
 		<description>Summer Games (Hack, FM Mod)</description>
 		<year>2018</year>
 		<manufacturer>Sega - fatnick</manufacturer>
-		<rom name="summer games (fm-mod).sms" size="131072" crc="bbae488d"/>
+		<rom name="Summer Games (FM-Mod)(2018)(fatnick).sms" size="131072" crc="bbae488d"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5170,7 +5197,7 @@
 		<description>Sydney Hunter and the Sacred Tribe (HB)</description>
 		<year>2017</year>
 		<manufacturer>Oscar Toledo G.</manufacturer>
-		<rom name="Sydney Hunter.sms" size="131072" crc="e3060500"/>
+		<rom name="Sydney Hunter (2017)(Oscar Toledo G.).sms" size="131072" crc="e3060500"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5545,7 +5572,7 @@
 		<description>Tower of Sorrow - SMS Power Ed. (HB, rev3)</description>
 		<year>2020</year>
 		<manufacturer>Neofuturism</manufacturer>
-		<rom name="Tower_of_Sorrow_REV3.sms" size="524288" crc="d0e103d9"/>
+		<rom name="Tower of Sorrow REV3 (2020)(Neofuturism).sms" size="524288" crc="d0e103d9"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5670,7 +5697,7 @@
 		<description>Voyage - A Sorceress Vacation (GlobalHack, v1.05)</description>
 		<year>2021</year>
 		<manufacturer>SNAGS</manufacturer>
-		<rom name="Voyage - A Sorceress Vacation v1.05.sms" size="524288" crc="76a1d277"/>
+		<rom name="Voyage - A Sorceress Vacation v1.05 (GlobalHack)(2021)(SNAGS).sms" size="524288" crc="76a1d277"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5679,7 +5706,7 @@
 		<description>Waimanu: Scary Monsters Saga (HB)</description>
 		<year>2015</year>
 		<manufacturer>Disjointed Studio</manufacturer>
-		<rom name="WaimanuSMS.sms" size="131072" crc="195c3f78"/>
+		<rom name="Waimanu SMS (2015)(Disjointed Studio).sms" size="131072" crc="195c3f78"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5705,7 +5732,7 @@
 		<description>Weka Invaders (HB, v1.0)</description>
 		<year>2017</year>
 		<manufacturer>Disjointed Studio</manufacturer>
-		<rom name="WekaInvaders.sms" size="294912" crc="54b2fcf8"/>
+		<rom name="Weka Invaders (2017)(Disjointed Studio).sms" size="294912" crc="54b2fcf8"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -5830,7 +5857,7 @@
 		<description>Wonder Boy III - The Dragon's Trap (Hack, FM Mod)</description>
 		<year>1999</year>
 		<manufacturer>Sega - Bock</manufacturer>
-		<rom name="wonder boy iii - the dragon's trap (fm mod).sms" size="262144" crc="9442cfff"/>
+		<rom name="Wonder Boy III - The Dragon's Trap (FM Mod)(1999)(Bock).sms" size="262144" crc="9442cfff"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -6061,7 +6088,7 @@
 		<description>Ys - The Vanished Omens (Hack, FM Mod v1.2)</description>
 		<year>2009</year>
 		<manufacturer>Sega - SSTranslations</manufacturer>
-		<rom name="ys - the vanished omens (fm patch).sms" size="262144" crc="7ed5dca2"/>
+		<rom name="Ys - The Vanished Omens v1.2 (FM Mod)(2009)(SSTranslations).sms" size="262144" crc="7ed5dca2"/>
 		<video type="raster" orientation="horizontal" width="256" height="192" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

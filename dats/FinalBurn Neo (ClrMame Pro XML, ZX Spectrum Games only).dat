@@ -7800,6 +7800,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="exterminat16k" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Press 'C' to options, 'S' to start game</comment>
+		<description>Exterminator (16K)</description>
+		<year>1983</year>
+		<manufacturer>Silversoft</manufacturer>
+		<rom name="Exterminator 16K (1983)(Silversoft).tap" size="11858" crc="6e8e8f5d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="extreme" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Extreme (48K)</description>
 		<year>1991</year>
@@ -8167,6 +8177,15 @@
 		<year>1991</year>
 		<manufacturer>Alternative Software</manufacturer>
 		<rom name="Fireman Sam - The Hero Next Door 48K (1991)(Alternative).tap" size="87975" crc="b813c820"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="firetrap" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>FireTrap (48K)</description>
+		<year>1987</year>
+		<manufacturer>Electric Dreams</manufacturer>
+		<rom name="FireTrap 48K (1987)(Electric Dreams).z80" size="32097" crc="50c2787b"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -13726,6 +13745,28 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="mijavasee" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Mijadore vase, The (English) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>EdD</manufacturer>
+		<rom name="Mijadore vase, The EN 128K (2023)(EdD).tap" size="50242" crc="e846116a"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="mijavases" cloneof="mijavasee" romof="mijavasee" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Mijadore vase, The (Spanish) (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>EdD</manufacturer>
+		<rom name="Mijadore vase, The ES 128K (2023)(EdD).tap" size="50243" crc="fcc46b25"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="miketheguitar2" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Mike the Guitar - The Shooter (128K) (HB)</description>
@@ -13827,6 +13868,15 @@
 		<rom name="misifu_COLOR(2021)(JSM Soft).tap" size="73610" crc="387dd30a"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="missimp16k" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Mission Impossible (16K)</description>
+		<year>1983</year>
+		<manufacturer>Silversoft</manufacturer>
+		<rom name="Mission Impossible 16K (1983)(Silversoft).tap" size="10833" crc="420cc36f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -15089,6 +15139,16 @@
 		<year>1985</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Nonterraqueous 48K (1985)(Mastertronic).tap" size="48487" crc="658f720a"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="noon30sd" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Noon30 Shovel Duck (48K) (HB, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>KTB Productions</manufacturer>
+		<rom name="Noon30 Shovel Duck v1.1 48K (2023)(KTB Productions).tap" size="46210" crc="befa63c4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -21995,6 +22055,15 @@
 		<rom name="Trooper Point 5 (2010)(The Bog Brothers).tap" size="38475" crc="d17b61d0"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="troubrewin" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Trouble Brewin' (48K)</description>
+		<year>1984</year>
+		<manufacturer>Silversoft</manufacturer>
+		<rom name="Trouble Brewin' 48K (1984)(Silversoft).tap" size="46240" crc="19c6677d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

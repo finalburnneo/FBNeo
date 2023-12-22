@@ -8349,8 +8349,8 @@
 		<description>Metal Slug - Super Vehicle-001 (Item Random &amp; Powerful Enemy Defense FC2, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="201-p1fc2.p1" size="1048576" crc="c167facf"/>
-		<rom name="201-p2fc2.sp2" size="1048576" crc="1c278a37"/>
+		<rom name="201-p1fc2.p1" size="1048576" crc="b079dd40"/>
+		<rom name="201-p2fc2.sp2" size="1048576" crc="dce6a2de"/>
 		<rom name="201-s1.s1" merge="201-s1.s1" size="131072" crc="2f55958d"/>
 		<rom name="201-c1.c1" merge="201-c1.c1" size="4194304" crc="72813676"/>
 		<rom name="201-c2.c2" merge="201-c2.c2" size="4194304" crc="96f62574"/>
@@ -8405,8 +8405,8 @@
 		<description>Metal Slug - Super Vehicle-001 (Item Random FC2, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="201-p1fc1.p1" size="1048576" crc="aa915a0e"/>
-		<rom name="201-p2fc1.sp2" size="1048576" crc="6de5637a"/>
+		<rom name="201-p1fc1.p1" size="1048576" crc="db8f7d81"/>
+		<rom name="201-p2fc1.sp2" size="1048576" crc="ad244b93"/>
 		<rom name="201-s1.s1" merge="201-s1.s1" size="131072" crc="2f55958d"/>
 		<rom name="201-c1.c1" merge="201-c1.c1" size="4194304" crc="72813676"/>
 		<rom name="201-c2.c2" merge="201-c2.c2" size="4194304" crc="96f62574"/>
@@ -8512,7 +8512,7 @@
 		<video type="raster" orientation="horizontal" width="304" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="mslugyq" cloneof="mslug" romof="mslug" sourcefile="neogeo/d_neogeo.cpp">
+	<game name="mslugqy" cloneof="mslug" romof="mslug" sourcefile="neogeo/d_neogeo.cpp">
 		<comment>Hack</comment>
 		<description>Metal Slug - Super Vehicle-001 (Origins, Hack)</description>
 		<year>2023</year>
@@ -25265,15 +25265,15 @@
 		<description>The King of Fighters '97 (Strengthen Innovation, Hack)</description>
 		<year>2023</year>
 		<manufacturer>hack</manufacturer>
-		<rom name="232-p1st.p1" size="1048576" crc="32b4ce56"/>
-		<rom name="232-p2st.sp2" size="4194304" crc="b0aee031"/>
+		<rom name="232-p1st.p1" size="1048576" crc="4d4dfd30"/>
+		<rom name="232-p2st.sp2" size="4194304" crc="f144c697"/>
 		<rom name="232-s1.s1" merge="232-s1.s1" size="131072" crc="8514ecf5"/>
 		<rom name="232-c1st.c1" size="8388608" crc="57633aca"/>
 		<rom name="232-c2st.c2" size="8388608" crc="831ec266"/>
 		<rom name="232-c3st.c3" size="8388608" crc="b092e64f"/>
 		<rom name="232-c4st.c4" size="8388608" crc="d25e8a04"/>
-		<rom name="232-c5.c5" merge="232-c5.c5" size="4194304" crc="34fc4e51"/>
-		<rom name="232-c6.c6" merge="232-c6.c6" size="4194304" crc="4ff4d47b"/>
+		<rom name="232-c5st.c5" size="4194304" crc="91771218"/>
+		<rom name="232-c6st.c6" size="4194304" crc="55a1bf39"/>
 		<rom name="232-m1.m1" merge="232-m1.m1" size="131072" crc="45348747"/>
 		<rom name="232-v1.v1" merge="232-v1.v1" size="4194304" crc="22a2b5b5"/>
 		<rom name="232-v2.v2" merge="232-v2.v2" size="4194304" crc="2304e744"/>
@@ -27614,7 +27614,7 @@
 		<rom name="251-m1rp.m1" size="131072" crc="0cb24d46"/>
 		<rom name="251-v1.v1" merge="251-v1.v1" size="4194304" crc="ef2eecc8"/>
 		<rom name="251-v2.v2" merge="251-v2.v2" size="4194304" crc="73e211ca"/>
-		<rom name="251-v3rp.v3" merge="251-v3.v3" size="4194304" crc="821901da"/>
+		<rom name="251-v3rp.v3" size="4194304" crc="403628da"/>
 		<rom name="251-v4.v4" merge="251-v4.v4" size="2097152" crc="b49e6178"/>
 		<rom name="sp-s3.sp1" merge="sp-s3.sp1" size="131072" crc="91b64be3"/>
 		<rom name="sp-s2.sp1" merge="sp-s2.sp1" size="131072" crc="9036d879"/>
@@ -31116,8 +31116,8 @@
 		<rom name="271-s1ps2.s1" size="131072" crc="c2e48e98"/>
 		<rom name="271-c1d.c1" size="8388608" crc="e42fc226"/>
 		<rom name="271-c2d.c2" size="8388608" crc="1b5e3b58"/>
-		<rom name="271-c1d.c1" size="8388608" crc="e42fc226"/>
-		<rom name="271-c2d.c2" size="8388608" crc="1b5e3b58"/>
+		<rom name="271-c3d.c3" size="8388608" crc="d334fdd9"/>
+		<rom name="271-c4d.c4" size="8388608" crc="0d457699"/>
 		<rom name="271-c5d.c5" size="8388608" crc="8a91aae4"/>
 		<rom name="271-c6d.c6" size="8388608" crc="9f8674b8"/>
 		<rom name="271-c7ps2.c7" size="8388608" crc="0ff993d7"/>

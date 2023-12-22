@@ -1333,7 +1333,7 @@
 	<game name="seikepsy" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
 		<description>Seiken Psychocalibur - Majuu no Mori Densetsu (Hack, English)</description>
-		<year>20??</year>
+		<year>2013</year>
 		<manufacturer>The Spoony Bard</manufacturer>
 		<rom name="Seiken Psychocalibur - Majuu no Mori Densetsu (T-Eng).fds" size="131000" crc="1ec1552b"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
@@ -1437,6 +1437,25 @@
 		<year>1986</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Super Mario Brothers (Japan).fds" size="65500" crc="e0890cf2"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="supermarbro2fix" cloneof="supermarbro2" romof="supermarbro2" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Super Mario Brothers 2 (Hack, Bugs Fix)</description>
+		<year>2023</year>
+		<manufacturer>ShaneM</manufacturer>
+		<rom name="Super Mario Bros 2 (Disk Revision 3)(2023)(ShaneM).fds" size="65516" crc="73d374ad"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="supermarbro2e" cloneof="supermarbro2" romof="supermarbro2" sourcefile="nes/d_nes.cpp">
+		<description>Super Mario Brothers 2 (Japan) (DV 2)</description>
+		<year>1986</year>
+		<manufacturer>Nintendo</manufacturer>
+		<rom name="Super Mario Bros 2 (J)(En)(DV 2)(1986)(Nintendo).fds" size="65500" crc="5c419ee8"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>

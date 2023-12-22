@@ -23642,7 +23642,7 @@ static struct BurnRomInfo kof99rpRomDesc[] = {
 
 	{ "251-v1.v1",		0x400000, 0xef2eecc8, 5 | BRF_SND },
 	{ "251-v2.v2",		0x400000, 0x73e211ca, 5 | BRF_SND },
-	{ "251-v3rp.v3",	0x400000, 0x821901da, 5 | BRF_SND },
+	{ "251-v3rp.v3",	0x400000, 0x403628da, 5 | BRF_SND },
 	{ "251-v4.v4",		0x200000, 0xb49e6178, 5 | BRF_SND },
 };
 

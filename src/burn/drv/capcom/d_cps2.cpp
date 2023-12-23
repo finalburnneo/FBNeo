@@ -6956,36 +6956,20 @@ STD_SAMPLE_PICK(Sfz3mix)
 STD_SAMPLE_FN(Sfz3mix)
 
 static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sfz3mix.p1",   0x0600000, 0xdd05b62e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.p1",   0x0600000, 0x7287d3ae, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sfz3mix.c1",   0x2000000, 0x820c9445, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.c2",   0x2000000, 0x3922e859, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.c1",   0x2000000, 0x09f422ed, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.c2",   0x2000000, 0xcbc02909, CPS2_GFX | BRF_GRA },
 
-	{ "sfz3mix.m1",   0x0080000, 0x0b29471e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sfz3mix.m1",   0x0080000, 0xc6322d7b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sfz3mix.q1",   0x1000000, 0x3e35e4ca, CPS2_QSND | BRF_SND },
+	{ "sfz3mix.q1",   0x1000000, 0x180cbe91, CPS2_QSND | BRF_SND },
 
 	{ "phoenix.key",  0x0000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3mix)
 STD_ROM_FN(Sfz3mix)
-
-static struct BurnRomInfo Sfz3mix22fRomDesc[] = {
-	{ "sfz3mix.p1",   0x0600000, 0xcf806364, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-
-	{ "sfz3mix.c1",   0x2000000, 0x09f422ed, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.c2",   0x2000000, 0x9a017bea, CPS2_GFX | BRF_GRA },
-
-	{ "sfz3mix.m1",   0x0080000, 0x0b29471e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-
-	{ "sfz3mix.q1",   0x1000000, 0x3e35e4ca, CPS2_QSND | BRF_SND },
-
-	{ "phoenix.key",  0x0000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
-};
-
-STD_ROM_PICK(Sfz3mix22f)
-STD_ROM_FN(Sfz3mix22f)
 
 // Street Fighter Zero 3 Mix v0.13 (hacked by Zero800)
 // https://sfz3mix.github.io/
@@ -11592,10 +11576,10 @@ static INT32 Cps2TurboInit()
 		for (int i = 0; i < 0x40; i++) {
 			// Left side
 			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
-			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_LEFT);
+			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_NONE);
 			// Right side
 			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_RIGHT);
-			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
+			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_NONE);
 		}
 	}
 
@@ -11604,20 +11588,10 @@ static INT32 Cps2TurboInit()
 
 struct BurnDriver BurnDrvCpsSfz3mix = {
 	"sfz3mix", "sfa3", NULL, "sfz3mix", "2023",
-	"Street Fighter Zero 3 Mix v0.22\0", NULL, "hack", "CPS2",
+	"Street Fighter Zero 3 Mix v0.23\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
-	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
-};
-
-struct BurnDriver BurnDrvCpsSfz3mix22f = {
-	"sfz3mix22f", "sfa3", NULL, "sfz3mix", "2023",
-	"Street Fighter Zero 3 Mix v0.22f (beta)\0", NULL, "hack", "CPS2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfz3mix22fRomInfo, Sfz3mix22fRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
 	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
 };

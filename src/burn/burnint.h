@@ -195,6 +195,7 @@ void BurnExitMemoryManager();
 
 // ---------------------------------------------------------------------------
 // sound routes
+#define BURN_SND_ROUTE_NONE			0
 #define BURN_SND_ROUTE_LEFT			1
 #define BURN_SND_ROUTE_RIGHT		2
 #define BURN_SND_ROUTE_BOTH			(BURN_SND_ROUTE_LEFT | BURN_SND_ROUTE_RIGHT)

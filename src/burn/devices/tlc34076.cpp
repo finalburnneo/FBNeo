@@ -66,6 +66,13 @@ void tlc34076_reset(INT32 dacwidth)
 		dacbits = 6;
 	}
 
+	memset(local_paletteram, 0, sizeof(local_paletteram));
+	memset(regs, 0, sizeof(regs));
+	memset(palettedata, 0, sizeof(palettedata));
+
+	writeindex = 0;
+	readindex = 0;
+
 	regs[PIXEL_READ_MASK]	= 0xff;
 	regs[GENERAL_CONTROL]	= 0x03;
 	regs[INPUT_CLOCK_SEL]	= 0x00;

@@ -580,6 +580,25 @@ UINT8 *tms34061_get_vram_pointer()
 	return m_vram;
 }
 
+UINT16 tms34061_xyoffset() 
+{
+	return m_regs[TMS34061_XYOFFSET];
+}
+
+UINT16 tms34061_xyaddress()
+{
+	return m_regs[TMS34061_XYADDRESS];
+}
+
+UINT8 *tms34061_get_latchram_pointer()
+{
+	return m_latchram;
+}
+
+UINT16 tms34061_dipstart()
+{
+	return m_regs[TMS34061_DISPSTART];// << (m_rowshift - 2)) & (m_vramsize-1);
+}
 
 /*************************************
  *

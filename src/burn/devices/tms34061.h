@@ -13,3 +13,8 @@ void tms34061_init(UINT8 rowshift, UINT32 ram_size, void (*partial_update)(), vo
 void tms34061_reset();
 void tms34061_exit();
 INT32 tms34061_scan(INT32 nAction, INT32 *);
+
+UINT16 tms34061_xyoffset();
+UINT16 tms34061_xyaddress();
+UINT8 *tms34061_get_latchram_pointer();
+UINT16 tms34061_dipstart();

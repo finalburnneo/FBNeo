@@ -5857,13 +5857,24 @@ static struct BurnRomInfo mslug2ctRomDesc[] = {
 STDROMPICKEXT(mslug2ct, mslug2ct, neogeo)
 STD_ROM_FN(mslug2ct)
 
+static INT32 ngOc180taInit() // 180% speed, AliceMSU recomendation for mslug2t, mslug2ct, mslug5x
+{
+ 	INT32 nRet = NeoInit();
+	
+	if(nBurnCPUSpeedAdjust < 0x01cd) {
+		nBurnCPUSpeedAdjust = 0x01cd;
+	}
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvMSlug2ct = {
 	"mslug2ct", "mslug2", "neogeo", NULL, "2015",
 	"Metal Slug 2 (Survival, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2ctRomInfo, mslug2ctRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ngOc180taInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -16949,7 +16960,7 @@ struct BurnDriver BurnDrvMSlug2t = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug2tRomInfo, mslug2tRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ngOc180taInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -19362,7 +19373,7 @@ struct BurnDriver BurnDrvmslug5x = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug5xRomInfo, mslug5xRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ngOc180taInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -20678,13 +20689,24 @@ static struct BurnRomInfo mslugdqyRomDesc[] = {
 STDROMPICKEXT(mslugdqy, mslugdqy, neogeo)
 STD_ROM_FN(mslugdqy)
 
+static INT32 ngOc400osInit() // 400% speed, AliceMSU recomendation for mslugdqy, mslug3cq
+{
+ 	INT32 nRet = NeoInit();
+	
+	if(nBurnCPUSpeedAdjust < 0x0400) {
+		nBurnCPUSpeedAdjust = 0x0400;
+	}
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvmslugdqy = {
 	"mslugdqy", "mslug", "neogeo", NULL, "2023",
 	"Metal Slug (Origins, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugdqyRomInfo, mslugdqyRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ngOc400osInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 
@@ -21059,13 +21081,24 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 STDROMPICKEXT(mslugxsc, mslugxsc, neogeo)
 STD_ROM_FN(mslugxsc)
 
+static INT32 mslugxscInit() // 400% speed, AliceMSU recomendation for mslugxsc
+{
+ 	INT32 nRet = mslugxInit();
+	
+	if(nBurnCPUSpeedAdjust < 0x0400) {
+		nBurnCPUSpeedAdjust = 0x0400;
+	}
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvmslugxsc = {
 	"mslugxsc", "mslugx", "neogeo", NULL, "2023",
 	"Metal Slug X (Legendary, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslugxscRomInfo, mslugxscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
+	mslugxscInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 
@@ -21327,7 +21360,7 @@ struct BurnDriver BurnDrvmslug3cq = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
 	NULL, mslug3cqRomInfo, mslug3cqRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	ngOc400osInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

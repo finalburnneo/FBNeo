@@ -14258,13 +14258,24 @@ static struct BurnRomInfo Ffightaec2RomDesc[] = {
 STD_ROM_PICK(Ffightaec2)
 STD_ROM_FN(Ffightaec2)
 
+static INT32 ffightaec2Init() // 200% speed, Zombie Master recomendation...
+{
+	INT32 nRet = PhoenixInit();
+	
+	if(nBurnCPUSpeedAdjust < 0x0200) {
+		nBurnCPUSpeedAdjust = 0x0200;
+	}
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvCpsFfightaec2 = {
 	"ffightaec2", NULL, NULL, NULL, "2022",
 	"Final Fight Anniversary Edition (CPS2 hardware)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ffightaec2RomInfo, Ffightaec2RomName, NULL, NULL, NULL, NULL, Ffightaec2InputInfo, NULL,
-	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	ffightaec2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -14299,7 +14310,7 @@ struct BurnDriver BurnDrvCpsFfightaec2ds = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK | BDF_HISCORE_SUPPORTED, 3, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ffightaec2dsRomInfo, Ffightaec2dsRomName, NULL, NULL, NULL, NULL, Ffightaec2InputInfo, NULL,
-	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	ffightaec2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

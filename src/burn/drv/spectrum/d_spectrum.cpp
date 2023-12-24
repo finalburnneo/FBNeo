@@ -41317,19 +41317,19 @@ struct BurnDriver BurnSpecDucktalesen = {
 
 // DuckTales ZX (Ukrainian) (48K) (HB)
 
-static struct BurnRomInfo SpecDucktalesruRomDesc[] = {
+static struct BurnRomInfo SpecDucktalesuaRomDesc[] = {
 	{ "DuckTales ZX UA (2021)(Team N10).tap", 50407, 0x61e559ca, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecDucktalesru, SpecDucktalesru, Spectrum)
-STD_ROM_FN(SpecDucktalesru)
+STDROMPICKEXT(SpecDucktalesua, SpecDucktalesua, Spectrum)
+STD_ROM_FN(SpecDucktalesua)
 
-struct BurnDriver BurnSpecDucktalesru = {
-	"spec_ducktalesru", "spec_ducktalesen", "spec_spectrum", NULL, "2021",
+struct BurnDriver BurnSpecDucktalesua = {
+	"spec_ducktalesua", "spec_ducktalesen", "spec_spectrum", NULL, "2021",
 	"DuckTales ZX (Ukrainian) (48K) (HB)\0", NULL, "Team N10", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecDucktalesruRomInfo, SpecDucktalesruRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecDucktalesuaRomInfo, SpecDucktalesuaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

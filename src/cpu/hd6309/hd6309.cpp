@@ -151,6 +151,7 @@ HD6309_INLINE void fetch_effective_address( void );
 
 /* 6309 registers */
 static hd6309_Regs hd6309;
+static int (*insn_callback)(int cycles);
 //static int hd6309_slapstic = 0;
 
 #define pPPC	hd6309.ppc
@@ -562,6 +563,12 @@ void hd6309_init()
 //	state_save_register_item("hd6309", index, hd6309.nmi_state);
 //	state_save_register_item("hd6309", index, hd6309.irq_state[0]);
 //	state_save_register_item("hd6309", index, hd6309.irq_state[1]);
+	insn_callback = NULL;
+}
+
+void hd6309_set_callback(int (*cb)(int))
+{
+	insn_callback = cb;
 }
 
 /****************************************************************************/
@@ -643,12 +650,16 @@ int hd6309_execute(int cycles)	/* NS 970908 */
 	if (hd6309.int_state & (HD6309_CWAI | HD6309_SYNC))
 	{
 		//		debugger_instruction_hook(Machine, PCD);
+		if (insn_callback)
+			insn_callback(hd6309_ICount);
 		hd6309_ICount = 0;
 	}
 	else
 	{
 		do
 		{
+			INT32 pICOUNT = hd6309_ICount;
+
 			CHECK_IRQ_LINES();
 
 			pPPC = pPC;
@@ -923,6 +934,9 @@ int hd6309_execute(int cycles)	/* NS 970908 */
 #endif    /* BIG_SWITCH */
 
 			hd6309_ICount -= cycle_counts_page0[hd6309.ireg];
+
+			if (insn_callback)
+				insn_callback(pICOUNT - hd6309_ICount);
 
 		} while( hd6309_ICount > 0 && !hd6309.end_run );
 	}

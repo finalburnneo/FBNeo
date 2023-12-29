@@ -30618,6 +30618,25 @@ struct BurnDriver BurnDrvmsx_lastescape = {
 	272, 228, 4, 3
 };
 
+// Laser Mazer (HB, v1.5)
+
+static struct BurnRomInfo MSX_lasermazerRomDesc[] = {
+	{ "Laser Mazer v1.5 (2023)(OrbDream).rom",	32768, 0x7a30e4cc, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_lasermazer, MSX_lasermazer, msx_msx)
+STD_ROM_FN(MSX_lasermazer)
+
+struct BurnDriver BurnDrvMSX_lasermazer = {
+	"msx_lasermazer", NULL, "msx_msx", NULL, "2023",
+	"Laser Mazer (HB, v1.5)\0", NULL, "OrbDream", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
+	MSXGetZipName, MSX_lasermazerRomInfo, MSX_lasermazerRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Lift (HB)
 
 static struct BurnRomInfo MSX_liftRomDesc[] = {
@@ -34319,6 +34338,25 @@ struct BurnDriver BurnDrvMSX_yazzier = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_yazzierRomInfo, MSX_yazzierRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Yewdow (HB)
+
+static struct BurnRomInfo MSX_yewdowRomDesc[] = {
+	{ "Yewdow (2023)(Inufuto).rom",	8927, 0xc99ba689, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_yewdow, MSX_yewdow, msx_msx)
+STD_ROM_FN(MSX_yewdow)
+
+struct BurnDriver BurnDrvMSX_yewdow = {
+	"msx_yewdow", NULL, "msx_msx", NULL, "2023",
+	"Yewdow (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE | GBF_ACTION, 0,
+	MSXGetZipName, MSX_yewdowRomInfo, MSX_yewdowRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

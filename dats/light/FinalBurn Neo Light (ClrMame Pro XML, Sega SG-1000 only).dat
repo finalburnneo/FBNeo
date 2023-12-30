@@ -1757,6 +1757,15 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="yewdow" sourcefile="sg1000/d_sg1000.cpp">
+		<comment>Homebrew</comment>
+		<description>Yewdow (HB)</description>
+		<year>2023</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Yewdow (2023)(Inufuto).sg" size="9141" crc="5917970d"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="yiear" sourcefile="sg1000/d_sg1000.cpp">
 		<description>Yie Ar Kung-Fu (Taiwan)</description>
 		<year>1985?</year>

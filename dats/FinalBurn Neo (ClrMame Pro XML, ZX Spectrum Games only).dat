@@ -5306,6 +5306,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="crazychristmas" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, AY Sound supported - Set '3.Sinclair' to use controller</comment>
+		<description>Crazy Christmas (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Fransouls</manufacturer>
+		<rom name="Crazy Christmas 48K-AY (2023)(Fransouls).tap" size="46648" crc="0924923b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="crazyforest" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Crazy Forest (128K) (HB)</description>
@@ -5531,6 +5541,16 @@
 		<year>1987</year>
 		<manufacturer>Mastertronic</manufacturer>
 		<rom name="Curse of Sherwood, The (1987)(Mastertronic).z80" size="39360" crc="72701ae3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="cursedcastle" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, Set '3.Sinclair' to use controller</comment>
+		<description>Cursed Castle (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Fransouls</manufacturer>
+		<rom name="Cursed Castle 48K (2023)(Fransouls).tap" size="47687" crc="15819503"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -6695,6 +6715,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="docadv" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Doctor Adventures (Spanish) (48K) (HB)</description>
+		<year>2015</year>
+		<manufacturer>errecepe</manufacturer>
+		<rom name="Doctor Adventures ES 48K (2015)(errecepe).tap" size="43037" crc="e74af4dc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="doomrevenge" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>The Amazing Spider-Man and Captain America in Dr. Doom's Revenge!</comment>
 		<description>Doctor Doom's Revenge (48K)</description>
@@ -7219,22 +7249,42 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ducktalesen" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+	<game name="dtfcfen" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>DuckTales ZX (English) (48K) (HB)</description>
-		<year>2021</year>
-		<manufacturer>N10 Team</manufacturer>
-		<rom name="DuckTales ZX EN (2021)(N10Team).tap" size="50407" crc="576e90d2"/>
+		<description>DuckTales Family Comes First! (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Team N10</manufacturer>
+		<rom name="DuckTales Family Comes First! EN 48K (2023)(Team N10).tap" size="81805" crc="d72cd925"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="ducktalesru" cloneof="ducktalesen" romof="ducktalesen" sourcefile="spectrum/d_spectrum.cpp">
+	<game name="dtfcfua" cloneof="dtfcfen" romof="dtfcfen" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>DuckTales ZX (Russian) (48K) (HB)</description>
+		<description>DuckTales Family Comes First! (Ukrainian) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Team N10</manufacturer>
+		<rom name="DuckTales Family Comes First! UA 48K (2023)(Team N10).tap" size="81727" crc="a4049cde"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ducktalesen" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>DuckTales ZX (English) (48K) (HB)</description>
 		<year>2021</year>
-		<manufacturer>N10 Team</manufacturer>
-		<rom name="DuckTales ZX RU (2021)(N10Team).tap" size="50407" crc="61e559ca"/>
+		<manufacturer>Team N10</manufacturer>
+		<rom name="DuckTales ZX EN (2021)(Team N10).tap" size="50407" crc="576e90d2"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="ducktalesua" cloneof="ducktalesen" romof="ducktalesen" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>DuckTales ZX (Ukrainian) (48K) (HB)</description>
+		<year>2021</year>
+		<manufacturer>Team N10</manufacturer>
+		<rom name="DuckTales ZX UA (2021)(Team N10).tap" size="50407" crc="61e559ca"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -7355,6 +7405,36 @@
 		<rom name="Earthlight 128K (1988)(Firebird).tap" size="61597" crc="063d61f4"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eclipsiap1" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Eclipsia Part 1 - Beginning (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>ICreateworlds</manufacturer>
+		<rom name="Eclipsia part 1 - Beginning 48K (2023)(ICreateworlds).tap" size="48336" crc="fe2d5769"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eclipsiap2" cloneof="eclipsiap1" romof="eclipsiap1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Eclipsia part 2 - Awaken (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>ICreateworlds</manufacturer>
+		<rom name="Eclipsia part 2 - Awaken 48K (2023)(ICreateworlds).tap" size="48557" crc="ea18f33b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="eclipsiap3" cloneof="eclipsiap1" romof="eclipsiap1" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Eclipsia Part 3 - Starlost (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>ICreateworlds</manufacturer>
+		<rom name="Eclipsia part 3 - Starlost 48K (2023)(ICreateworlds).tap" size="48560" crc="bb923bfc"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -11547,6 +11627,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="johnnyghost" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, R: restart level - S: music on/off</comment>
+		<description>Johnny the Ghost (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Harald &amp; Marcus Gitzel</manufacturer>
+		<rom name="Johnny the Ghost 128K (2023)(Harald &amp; Marcus Gitzel).tap" size="39448" crc="22359f59"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="jonathan" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Jonathan - Trick or Treat (48K) (HB)</description>
@@ -14075,6 +14166,26 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="moonpiraten" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Moon and the Pirates (English) (48K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Moon and the Pirates EN 48K (2019)(Furillo Productions).tap" size="44496" crc="ae6e18e3"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="moonpirates" cloneof="moonpiraten" romof="moonpiraten" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Moon and the Pirates (Spanish) (48K) (HB)</description>
+		<year>2019</year>
+		<manufacturer>Furillo Productions</manufacturer>
+		<rom name="Moon and the Pirates ES 48K (2019)(Furillo Productions).tap" size="44493" crc="57323cf4"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="mooncrst" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Moon Cresta (48K)</description>
 		<year>1985</year>
@@ -15304,6 +15415,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="ofchristmas" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Official Father Christmas Game (48K)</description>
+		<year>1989</year>
+		<manufacturer>Alternative Software</manufacturer>
+		<rom name="Official Father Christmas Game 48K (1989)(Alternative Software).tap" size="43745" crc="4a874155"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ohmummy" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>A, Z, K, and L to play</comment>
 		<description>Oh Mummy (16K)</description>
@@ -15444,6 +15564,26 @@
 		<rom name="Oriental Games 128K (1990)(Micro Style).tap" size="138887" crc="4e03b386"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="orvolen" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Orvol Voon (English) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Orvol Voon EN 48K (2023)(The Mojon Twins).tap" size="35818" crc="57c016ed"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="orvoles" cloneof="orvolen" romof="orvolen" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Orvol Voon (Spanish) (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>The Mojon Twins</manufacturer>
+		<rom name="Orvol Voon ES 48K (2023)(The Mojon Twins).tap" size="35808" crc="fe3d978f"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -18276,6 +18416,27 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sxmascaper" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Set '1 using sinclair' to use controller</comment>
+		<description>Santa's Xmas Caper (48K)</description>
+		<year>1990</year>
+		<manufacturer>Zeppelin Games</manufacturer>
+		<rom name="Santa's Xmas Caper 48K (1990)(Zeppelin Games).tap" size="47687" crc="5430dcc6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="schristadv" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, AY Sound supported</comment>
+		<description>Santos' Christmas Adventure (48K) (HB)</description>
+		<year>2017</year>
+		<manufacturer>Dave Hughes</manufacturer>
+		<rom name="Santos' Christmas Adventure 48K-AY (2017)(Dave Hughes).tap" size="43228" crc="24437e43"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="sanxion128" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Sanxion - The Spectrum Remix (128K)</description>
 		<year>1989</year>
@@ -20799,7 +20960,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="superman" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<comment>'6', '7' and ENTER to select options</comment>
+		<comment>Use '6', '7' and 'ENTER' to select options</comment>
 		<description>Superman - The Man of Steel (48K)</description>
 		<year>1989</year>
 		<manufacturer>Tynesoft</manufacturer>
@@ -21712,6 +21873,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="tobit" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Tobit (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Rafal Miazga</manufacturer>
+		<rom name="Tobit 128K (2023)(Rafal Miazga).tap" size="47074" crc="69b7065d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="tokimal" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Tokimal (128K) (HB)</description>
@@ -22059,10 +22231,10 @@
 		<driver status="good"/>
 	</game>
 	<game name="troubrewin" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
-		<description>Trouble Brewin' (48K)</description>
+		<description>Trouble Brewin (48K)</description>
 		<year>1984</year>
 		<manufacturer>Silversoft</manufacturer>
-		<rom name="Trouble Brewin' 48K (1984)(Silversoft).tap" size="46240" crc="19c6677d"/>
+		<rom name="Trouble Brewin 48K (1984)(Silversoft).tap" size="46240" crc="19c6677d"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22078,10 +22250,10 @@
 	</game>
 	<game name="tuerkas" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>Tuerkas, the White Cat (48K) (HB)</description>
+		<description>Tuerkas, the White Cat (48K) (HB, v1.2)</description>
 		<year>2023</year>
 		<manufacturer>Retrobensoft</manufacturer>
-		<rom name="Tuerkas, the White Cat 48K (2023)(Retrobensoft).tap" size="49004" crc="661bddc2"/>
+		<rom name="Tuerkas, the White Cat v1.2 48K (2023)(Retrobensoft).tap" size="49005" crc="5fe3b3a4"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22161,6 +22333,16 @@
 		<rom name="Turbo The Tortoise 30th Anniversary Edition (2022)(BiNMaN).tap" size="74768" crc="0207ae31"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="turbomania" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Turbomania (16K) (HB)</description>
+		<year>2005</year>
+		<manufacturer>Jonathan Cauldwell</manufacturer>
+		<rom name="Turbomania 16K (2005)(Jonathan Cauldwell).tap" size="8669" crc="2632bccf"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -22393,7 +22575,7 @@
 	</game>
 	<game name="vallation128" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
-		<description>Vallation 128k (128K) (HB)</description>
+		<description>Vallation 128K Edition (128K) (HB)</description>
 		<year>2017</year>
 		<manufacturer>Tardis Remakes</manufacturer>
 		<rom name="Vallation 128k (2017)(Tardis Remakes).tap" size="68513" crc="a30a4662"/>
@@ -22854,6 +23036,15 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="wwhero" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Wild West Hero (48K)</description>
+		<year>1983</year>
+		<manufacturer>Timescape</manufacturer>
+		<rom name="Wild West Hero 48K (1983)(Timescape).tap" size="32638" crc="b709536d"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="wwseymr" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Wild West Seymour (128K)</description>
 		<year>1992</year>
@@ -23261,6 +23452,16 @@
 		<year>1988</year>
 		<manufacturer>Destiny</manufacturer>
 		<rom name="Yeti 48K (1988)(Destiny).tap" size="48009" crc="0536775c"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="yewdow" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, AY Sound supported</comment>
+		<description>Yewdow (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Inufuto</manufacturer>
+		<rom name="Yewdow 48K (2023)(Inufuto).tap" size="9818" crc="faf70151"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

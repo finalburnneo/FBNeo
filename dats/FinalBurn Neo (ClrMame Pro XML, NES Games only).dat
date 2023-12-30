@@ -7779,6 +7779,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="haraforcemmc5" cloneof="haraforce" romof="haraforce" sourcefile="nes/d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>HaraForce (HB, v1.00, MMC5)</description>
+		<year>2022</year>
+		<manufacturer>Impact Soft</manufacturer>
+		<rom name="HaraForce v1.00 (2022)(Impact Soft)[MMC5].nes" size="73744" crc="79cf8db1"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="haratylerhg" sourcefile="nes/d_nes.cpp">
 		<comment>Homebrew</comment>
 		<description>Haratyler HG (HB, v1.10)</description>

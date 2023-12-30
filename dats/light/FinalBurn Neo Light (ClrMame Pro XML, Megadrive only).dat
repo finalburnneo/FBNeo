@@ -8396,6 +8396,15 @@
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="gouketsuec" cloneof="gouketsu" romof="gouketsu" sourcefile="megadrive/d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>Gouketsuji Ichizoku (Hack, Enhanced Colors)</description>
+		<year>2023</year>
+		<manufacturer>Dolsilwa</manufacturer>
+		<rom name="Gouketsuji Ichizoku Enhanced Colors (2023)(Dolsilwa).bin" size="3145728" crc="019b11f2"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="gouketsu" sourcefile="megadrive/d_megadrive.cpp">
 		<description>Gouketsuji Ichizoku (Japan)</description>
 		<year>1994</year>
@@ -9146,6 +9155,15 @@
 		<year>1993</year>
 		<manufacturer>Flying Edge</manufacturer>
 		<rom name="incredible crash dummies, the (usa) (beta).bin" size="1048576" crc="623a920f"/>
+		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="hulkdx" cloneof="hulk" romof="hulk" sourcefile="megadrive/d_megadrive.cpp">
+		<comment>Hack</comment>
+		<description>Incredible Hulk DX, The (Hack)</description>
+		<year>2023</year>
+		<manufacturer>BillyTime! Games</manufacturer>
+		<rom name="Incredible Hulk DX, The(2023)(BillyTime! Games).bin" size="2097152" crc="b332051d"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -9916,7 +9934,7 @@
 		<comment>Hack</comment>
 		<description>Jurassic Park (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="jurassic park (hack, spanish).bin" size="2097152" crc="53d3dd70"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -9957,7 +9975,7 @@
 		<comment>Hack</comment>
 		<description>Jurassic Park - Rampage Edition (Hack, Spanish)</description>
 		<year>2018</year>
-		<manufacturer>Sega</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="jurassic park - rampage edition (hack, spanish).bin" size="2097152" crc="954efbf2"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -10038,7 +10056,7 @@
 		<comment>Hack</comment>
 		<description>Justice League Task Force (Hack, Spanish)</description>
 		<year>2019</year>
-		<manufacturer>Acclaim</manufacturer>
+		<manufacturer>Wave</manufacturer>
 		<rom name="justice league task force (hack, spanish).bin" size="3145728" crc="09844391"/>
 		<video type="raster" orientation="horizontal" width="320" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -22047,7 +22065,7 @@
 	</game>
 	<game name="timetraxp" sourcefile="megadrive/d_megadrive.cpp">
 		<comment>Prototype</comment>
-		<description>Time Trax (prototype)</description>
+		<description>Time Trax (Prototype)</description>
 		<year>1994</year>
 		<manufacturer>Black Pearl Software</manufacturer>
 		<rom name="Time Trax (prototype).bin" size="1048576" crc="dff045eb"/>

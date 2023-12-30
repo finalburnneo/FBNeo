@@ -2140,6 +2140,37 @@ static struct BurnDIPInfo WrestwarDIPList[]=
 
 STDDIPINFO(Wrestwar)
 
+static struct BurnDIPInfo ToryumondxDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xfe, NULL                                 },
+	{0x14, 0xff, 0xff, 0xff, NULL                                 },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x13, 0x01, 0x01, 0x01, "Off"                                },
+	{0x13, 0x01, 0x01, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 2   , "VS-Mode Battle"                     },
+	{0x13, 0x01, 0x10, 0x10, "1"                                  },
+	{0x13, 0x01, 0x10, 0x00, "3"                                  },
+
+	{0   , 0xfe, 0   , 8   , "Difficulty"                         },
+	{0x13, 0x01, 0xe0, 0xc0, "Easy"                               },
+	{0x13, 0x01, 0xe0, 0xe0, "Normal"                             },
+	{0x13, 0x01, 0xe0, 0xa0, "Hard"                               },
+	{0x13, 0x01, 0xe0, 0x80, "Hard+1"                             },
+	{0x13, 0x01, 0xe0, 0x60, "Hard+2"                             },
+	{0x13, 0x01, 0xe0, 0x40, "Hard+3"                             },
+	{0x13, 0x01, 0xe0, 0x20, "Hard+4"                             },
+	{0x13, 0x01, 0xe0, 0x00, "Hard+5"                             },
+
+	// Dip 2
+	SYSTEM16B_COINAGE(0x14)
+};
+
+STDDIPINFO(Toryumondx)
+
 #undef SYSTEM16B_COINAGE
 
 /*====================================================
@@ -11451,5 +11482,51 @@ struct BurnDriver BurnDrvTetrbx = {
 	BDF_GAME_WORKING | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_ISGSM | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, TetrbxRomInfo, TetrbxRomName, NULL, NULL, NULL, NULL, System16bDip3InputInfo, TetrbxDIPInfo,
 	TetrbxInit, IsgsmExit, System16BFrame, System16BRender, IsgsmScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+/*====================================================
+Hacks
+====================================================*/
+
+/*
+ * Toryumon DX :
+ * sonic drop - press UP on the joystick to drop the piece at the fastest possible speed. you can still control it as it's falling and landing.
+ * 2nd rotation - the original game only has 1 rotation button, clockwise. this adds a 2nd button.
+ */
+static struct BurnRomInfo ToryumondxRomDesc[] = {
+	{ "epr-17689dx.a2", 0x20000, 0x61d0dd76, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-17688dx.a1", 0x20000, 0x6a1a354f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-17700.b11",  0x40000, 0x8f288b37, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-17701.b12",  0x40000, 0x6dfb025b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-17702.b13",  0x40000, 0xae0b7eab, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-17692.b1",   0x20000, 0x543c4327, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-17695.b4",   0x20000, 0xee60f244, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-17693.b2",   0x20000, 0x4a350b3e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-17696.b5",   0x20000, 0x6edb54f1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-17694.b3",   0x20000, 0xb296d71d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-17697.b6",   0x20000, 0x6ccb7b28, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-17698.b7",   0x20000, 0xcd4dfb82, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-17699.b8",   0x20000, 0x2694ecce, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-17691.a13",  0x08000, 0x14205388, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-17690.a11",  0x40000, 0x4f9ba4e4, SYS16_ROM_UPD7759DATA | BRF_SND },
+
+	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
+};
+
+STD_ROM_PICK(Toryumondx)
+STD_ROM_FN(Toryumondx)
+
+struct BurnDriver BurnDrvToryumondx = {
+	"toryumondx", "toryumon", NULL, NULL, "2023",
+	"Toryumon DX\0", NULL, "hack (bankbank)", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_PUZZLE, 0,
+	NULL, ToryumondxRomInfo, ToryumondxRomName, NULL, NULL, NULL, NULL, System16bInputInfo, ToryumondxDIPInfo,
+	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

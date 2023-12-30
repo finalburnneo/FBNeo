@@ -56,6 +56,7 @@ int hd6309_segmentcycles();
 void hd6309_set_irq_line(int irqline, int state);
 void hd6309_get_context(void *dst);
 void hd6309_set_context(void *src);
+void hd6309_set_callback(int (*cb)(int));
 
 
 /* PUBLIC FUNCTIONS */

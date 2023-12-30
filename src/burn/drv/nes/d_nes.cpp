@@ -1404,6 +1404,8 @@ static void mapper_map_prg(INT32 pagesz, INT32 slot, INT32 bank, INT32 type = ME
 {
 	INT32 ramromsize = (type == MEM_ROM) ? Cart.PRGRomSize : Cart.WorkRAMSize;
 
+	if (!ramromsize) return;
+
 	if (bank < 0) { // negative bank == map page from end of rom
 		bank = (ramromsize / (pagesz * 1024)) + bank;
 	}
@@ -3825,12 +3827,14 @@ static UINT8 mapper5_read(UINT16 address)
 
 static void mapper5_exp_write(UINT16 address, UINT8 data) // 6000 - 7fff
 {
-	Cart.WorkRAM[PRGExpMap + (address & 0x1fff)] = data;
 	cart_exp_write_abort = 1;
+	if (!Cart.WorkRAMSize) return;
+	Cart.WorkRAM[PRGExpMap + (address & 0x1fff)] = data;
 }
 
 static UINT8 mapper5_exp_read(UINT16 address)             // 6000 - 7fff
 {
+	if (!Cart.WorkRAMSize) return 0;
 	return Cart.WorkRAM[PRGExpMap + (address & 0x1fff)];
 }
 
@@ -3929,7 +3933,9 @@ static void mapper5_write(UINT16 address, UINT8 data)
 			break;
 		case 0x5202: mmc5_splitchr = data; break;
 
-		case 0x5203: mmc5_irqcompare = data; break;
+		case 0x5203:
+			mmc5_irqcompare = data;
+			break;
 		case 0x5204:
 			mmc5_irqenable = (data & 0x80) >> 7;
 			M6502SetIRQLine(0, (mmc5_irqenable && mmc5_irqpend) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
@@ -10001,7 +10007,6 @@ static void ppu_write(UINT16 reg, UINT8 data)
 
 		case 5: // PPUSCROLL
 			if (ppu_startup) return; // ignore writes until line 261
-
 			if (!write_latch) {      // First write.
 				fine_x = data & 7;
 				tAddr = (tAddr & 0x7fe0) | ((data & 0xf8) >> 3);
@@ -24680,6 +24685,24 @@ struct BurnDriver BurnDrvnes_haraforce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_haraforceRomInfo, nes_haraforceRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// HaraForce (HB, v1.00, MMC5)
+static struct BurnRomInfo nes_haraforcemmc5RomDesc[] = {
+	{ "HaraForce v1.00 (2022)(Impact Soft)[MMC5].nes",          73744, 0x79cf8db1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_haraforcemmc5)
+STD_ROM_FN(nes_haraforcemmc5)
+
+struct BurnDriver BurnDrvnes_haraforcemmc5 = {
+	"nes_haraforcemmc5", "nes_haraforce", NULL, NULL, "2022",
+	"HaraForce (HB, v1.00, MMC5)\0", NULL, "Impact Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_haraforcemmc5RomInfo, nes_haraforcemmc5RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

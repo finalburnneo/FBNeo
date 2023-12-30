@@ -999,6 +999,12 @@ int ProcessCmdLine()
 		}
 	}
 
+	if (_tcsicmp(&szName[_tcslen(szName) - 4], _T(".cue")) == 0) {
+		// Neogeo CD Handling
+		_tcscpy(CDEmuImage, szName);
+		_tcscpy(szName, _T("neocdz"));
+	}
+
 	_stscanf(&szCmdLine[nOpt1Size], _T("%2s %i x %i x %i"), szOpt2, &nOptX, &nOptY, &nOptD);
 
 	if (_tcslen(szName)) {

@@ -406,6 +406,16 @@ INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 }
 
+void HD6309SetCallback(int (*cb)(int))
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetCallback called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetCallback called when no CPU open\n"));
+#endif
+
+	hd6309_set_callback(cb);
+}
+
 void HD6309SetReadHandler(UINT8 (*pHandler)(UINT16))
 {
 #if defined FBNEO_DEBUG

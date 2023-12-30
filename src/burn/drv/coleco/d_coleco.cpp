@@ -9073,6 +9073,32 @@ struct BurnDriver BurnDrvcv_spaceinvasion = {
 	272, 228, 4, 3
 };
 
+// Space Shuttle (SGM + EEPROM) (HB)
+
+static struct BurnRomInfo cv_spaceshuttleRomDesc[] = {
+	{ "Space Shuttle SGMEEPROM (2023)(Team Pixelboy).rom",	65536, 0xbb0f6678, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_spaceshuttle, cv_spaceshuttle, cv_coleco)
+STD_ROM_FN(cv_spaceshuttle)
+
+static INT32 DrvInitSGMEEPROM() // Space Shuttle
+{
+    use_EEPROM = 1;
+    use_SGM = 1;
+    return DrvInit();
+}
+
+struct BurnDriver BurnDrvcv_spaceshuttle = {
+	"cv_spaceshuttle", NULL, "cv_coleco", NULL, "1986-2023",
+	"Space Shuttle (SGM + EEPROM) (HB)\0", "SGM - Published by Team Pixelboy", "Activision", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SIM, 0,
+	CVGetZipName, cv_spaceshuttleRomInfo, cv_spaceshuttleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitSGMEEPROM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Sparkie (SGM) (HB)
 
 static struct BurnRomInfo cv_sparkieRomDesc[] = {
@@ -9786,6 +9812,25 @@ struct BurnDriver BurnDrvcv_uridium = {
     272, 228, 4, 3
 };
 
+// Utopia (HB)
+
+static struct BurnRomInfo cv_utopiaRomDesc[] = {
+	{ "Utopia (2023)(Team Pixelboy).rom",	32768, 0x0a90ba65, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_utopia, cv_utopia, cv_coleco)
+STD_ROM_FN(cv_utopia)
+
+struct BurnDriver BurnDrvcv_utopia = {
+	"cv_utopia", NULL, "cv_coleco", NULL, "1981-2023",
+	"Utopia (HB)\0", "Published by Team Pixelboy", "Intellivision Prod.", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_STRATEGY, 0,
+	CVGetZipName, cv_utopiaRomInfo, cv_utopiaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Vanguard (HB)
 
 static struct BurnRomInfo cv_vanguardRomDesc[] = {
@@ -9974,6 +10019,25 @@ struct BurnDriver BurnDrvcv_wonderboy = {
     CVGetZipName, cv_wonderboyRomInfo, cv_wonderboyRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
+};
+
+// Yewdow (HB)
+
+static struct BurnRomInfo cv_yewdowRomDesc[] = {
+	{ "Yewdow (2023)(Inufuto).rom",	16384, 0x706895db, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_yewdow, cv_yewdow, cv_coleco)
+STD_ROM_FN(cv_yewdow)
+
+struct BurnDriver BurnDrvcv_yewdow = {
+	"cv_yewdow", NULL, "cv_coleco", NULL, "2023",
+	"Yewdow (HB)\0", NULL, "Inufuto", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_MAZE | GBF_ACTION, 0,
+	CVGetZipName, cv_yewdowRomInfo, cv_yewdowRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
 };
 
 // Yie-Ar Kung Fu (HB)

@@ -45,6 +45,7 @@ void HD6309SetReadHandler(UINT8 (*pHandler)(UINT16));
 void HD6309SetWriteHandler(void (*pHandler)(UINT16, UINT8));
 void HD6309SetReadOpHandler(UINT8 (*pHandler)(UINT16));
 void HD6309SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
+void HD6309SetCallback(int (*cb)(int));
 INT32 HD6309Scan(INT32 nAction);
 
 void HD6309CPUPush(INT32 nCPU);

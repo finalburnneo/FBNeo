@@ -40,24 +40,24 @@ static INT32 nDrvVidRAMBank;
 static INT32 nDrvOkiBank;
 
 static struct BurnInputInfo FunybublInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Funybubl)
@@ -99,7 +99,7 @@ static struct BurnDIPInfo FunybublDIPList[]=
 STDDIPINFO(Funybubl)
 
 
-UINT8 __fastcall funybubl_in(UINT16 port)
+static UINT8 __fastcall funybubl_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -118,7 +118,7 @@ UINT8 __fastcall funybubl_in(UINT16 port)
 	return 0;
 }
 
-void __fastcall funybubl_write(UINT16 address, UINT8 data)
+static void __fastcall funybubl_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0xc400 && address <= 0xcfff) {
 
@@ -175,7 +175,7 @@ static void funybubl_set_oki_bank(INT32 data)
 	MSM6295SetBank(0, DrvSndROM + (nDrvOkiBank * 0x40000), 0x00000, 0x3ffff);
 }
 
-void __fastcall funybubl_out(UINT16 port, UINT8 data)
+static void __fastcall funybubl_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -199,7 +199,7 @@ void __fastcall funybubl_out(UINT16 port, UINT8 data)
 	}
 }
 
-void __fastcall funybubl_sound_write(UINT16 address, UINT8 data)
+static void __fastcall funybubl_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -213,7 +213,7 @@ void __fastcall funybubl_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall funybubl_sound_read(UINT16 address)
+static UINT8 __fastcall funybubl_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -323,12 +323,7 @@ static INT32 DrvDoReset()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0, 0, 1)) return 1;
@@ -391,7 +386,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -444,11 +439,11 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x300; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 	}
 
-	memset (pTransDraw, 0, nScreenWidth * nScreenHeight * 2);
+	BurnTransferClear();
 
 	draw_background();
 	draw_sprites();
@@ -479,17 +474,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment;
-
 		ZetOpen(0);
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);
-		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-		nCyclesDone[1] += ZetRun(nSegment);
+		CPU_RUN(1, Zet);
 		ZetClose();
 	}
 

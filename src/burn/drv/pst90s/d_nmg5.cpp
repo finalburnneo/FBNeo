@@ -594,7 +594,7 @@ static void palette_write(INT32 offset)
 	DrvPalette[offset>>1] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall nmg5_write_byte(UINT32 address, UINT8 data)
+static void __fastcall nmg5_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffff800) == 0x140000) {
 		DrvPalRAM[address & 0x7ff] = data;
@@ -640,7 +640,7 @@ void __fastcall nmg5_write_byte(UINT32 address, UINT8 data)
 	return;
 }
 
-void __fastcall nmg5_write_word(UINT32 address, UINT16 data)
+static void __fastcall nmg5_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff800) == 0x140000) {
 		*((UINT16*)(DrvPalRAM + (address & 0x7ff))) = BURN_ENDIAN_SWAP_INT16(data);
@@ -678,7 +678,7 @@ void __fastcall nmg5_write_word(UINT32 address, UINT16 data)
 	return;
 }
 
-UINT8 __fastcall nmg5_read_byte(UINT32 address)
+static UINT8 __fastcall nmg5_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -708,7 +708,7 @@ UINT8 __fastcall nmg5_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall nmg5_read_word(UINT32 address)
+static UINT16 __fastcall nmg5_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -730,7 +730,7 @@ UINT16 __fastcall nmg5_read_word(UINT32 address)
 
 //-----------------------------------------------------------------------------------------------
 
-void __fastcall pclubys_write_byte(UINT32 address, UINT8 data)
+static void __fastcall pclubys_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffff800) == 0x440000) {
 		DrvPalRAM[address & 0x7ff] = data;
@@ -776,7 +776,7 @@ void __fastcall pclubys_write_byte(UINT32 address, UINT8 data)
 	return;
 }
 
-void __fastcall pclubys_write_word(UINT32 address, UINT16 data)
+static void __fastcall pclubys_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff800) == 0x440000) {
 		*((UINT16*)(DrvPalRAM + (address & 0x7ff))) = BURN_ENDIAN_SWAP_INT16(data);
@@ -814,7 +814,7 @@ void __fastcall pclubys_write_word(UINT32 address, UINT16 data)
 	return;
 }
 
-UINT8 __fastcall pclubys_read_byte(UINT32 address)
+static UINT8 __fastcall pclubys_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -844,7 +844,7 @@ UINT8 __fastcall pclubys_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall pclubys_read_word(UINT32 address)
+static UINT16 __fastcall pclubys_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -866,7 +866,7 @@ UINT16 __fastcall pclubys_read_word(UINT32 address)
 
 //-----------------------------------------------------------------------------------------------
 
-void __fastcall nmg5_write_port(UINT16 port, UINT8 data)
+static void __fastcall nmg5_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -891,7 +891,7 @@ void __fastcall nmg5_write_port(UINT16 port, UINT8 data)
 	return;
 }
 
-UINT8 __fastcall nmg5_read_port(UINT16 port)
+static UINT8 __fastcall nmg5_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -952,8 +952,6 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	priority_reg = 7;
@@ -1044,28 +1042,14 @@ static INT32 DrvGfxDecode(INT32 type)
 	return 0;
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvInit(INT32 loadtype, INT32 sektype, INT32 zettype) // 0 nmg, 1 pclubys
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 1, 0, 2)) return 1;
@@ -1144,7 +1128,7 @@ static INT32 DrvInit(INT32 loadtype, INT32 sektype, INT32 zettype) // 0 nmg, 1 p
 	ZetSetOutHandler(nmg5_write_port);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1167,7 +1151,7 @@ static INT32 DrvExit()
 	ZetExit();
 	SekExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -1287,7 +1271,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x400; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 	}
 
@@ -1399,7 +1383,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
-//		BurnTimerScan(nAction, pnMin);
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(prot_val);

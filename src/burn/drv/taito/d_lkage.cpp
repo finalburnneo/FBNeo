@@ -49,6 +49,8 @@ static INT32 FakeMCUVal;
 
 static INT32 is_bygone = 0;
 
+static INT32 nExtraCycles[3];
+
 static struct BurnInputInfo LkageInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -459,11 +461,8 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	for (INT32 i = 0; i < 2; i++) {
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
-	}
+	ZetReset(0);
+	ZetReset(1);
 
 	m67805_taito_reset();
 
@@ -475,6 +474,8 @@ static INT32 DrvDoReset()
 
 	DrvNmiEnable = 0;
 	pending_nmi = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
 	HiscoreReset();
 
@@ -512,7 +513,7 @@ static INT32 MemIndex()
 
 	DrvMcuRAM	= Next; Next += 0x000080;
 
-	lkage_scroll	= Next; Next += 0x000006;
+	lkage_scroll= Next; Next += 0x000006;
 	DrvVidReg	= Next; Next += 0x000004;
 
 	RamEnd		= Next;
@@ -547,12 +548,7 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	use_mcu = ~BurnDrvGetFlags() & BDF_BOOTLEG;
 
@@ -639,7 +635,7 @@ static INT32 DrvExit()
 
 	BurnYM2203Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	Lkageb = 0;
 	FakeMCUVal = 0;
@@ -753,7 +749,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x400; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 		DrvRecalc = 0;
 	}
@@ -813,7 +809,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6000000 / 60, 6000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], 0, nExtraCycles[2] }; // BurnTimer (index 1) has built in cycle keeping
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
@@ -827,7 +823,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		CPU_RUN_TIMER(1);
 		ZetClose();
 
 		if (use_mcu) {
@@ -837,12 +833,12 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetOpen(1);
-	BurnTimerEndFrame(nCyclesTotal[1]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
+
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-	ZetClose();
 
 	return 0;
 }
@@ -869,6 +865,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen_y);
 		SCAN_VAR(DrvNmiEnable);
 		SCAN_VAR(pending_nmi);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

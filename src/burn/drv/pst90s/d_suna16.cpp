@@ -1209,8 +1209,6 @@ static UINT8 __fastcall bssoccer_sound2_in(UINT16 port)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
@@ -1432,11 +1430,6 @@ static void bestbestFMIRQHandler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static INT32 bestbestSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
-}
-
 static INT32 BestbestInit()
 {
 	game_select = 0;
@@ -1478,7 +1471,7 @@ static INT32 BestbestInit()
 	ZetSetOutHandler(bestbest_sound1_out);
 	ZetClose();
 
-	BurnYM3526Init(3000000, &bestbestFMIRQHandler, &bestbestSynchroniseStream, 1);
+	BurnYM3526Init(3000000, &bestbestFMIRQHandler, 1);
 	BurnTimerAttach(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1803,7 +1796,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x1000; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
 		}
 	}
 

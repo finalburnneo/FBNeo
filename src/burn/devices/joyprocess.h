@@ -113,4 +113,33 @@ struct HoldCoin {
 	}
 };
 
+template <int N>
+struct ClearOpposite {
+	UINT8 prev[N<<1];
+
+	void reset() {
+		memset(&prev, 0, sizeof(prev));
+	}
+
+	void scan() {
+		SCAN_VAR(prev);
+	}
+
+	void checkbit(UINT8 n, UINT8 &inp, UINT8 bit) {
+		// When opposites become pressed simultaneously,
+		// remove the previously stored direction if it exists,
+		// cancel each other direction otherwise
+		if ((inp & bit) == bit)
+			inp &= (prev[n] ? (inp ^ prev[n]) : ~bit);
+		// Store direction anytime it's pressed without its opposite
+		else if (inp & bit)
+			prev[n] = inp & bit;
+	}
+
+	void check(UINT8 num, UINT8 &inp, UINT8 bit1, UINT8 bit2) {
+		checkbit((num<<1)  , inp, bit1);
+		checkbit((num<<1)+1, inp, bit2);
+	}
+};
+
 #endif

@@ -1183,7 +1183,7 @@
 		<driver status="good"/>
 	</game>
 	<game name="astralworld" cloneof="smb" romof="smb" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
+		<comment>Hack, Homebrew</comment>
 		<description>Astral World (GlobalHack)</description>
 		<year>2023</year>
 		<manufacturer>Xasteria Group</manufacturer>
@@ -1324,6 +1324,15 @@
 		<year>1994</year>
 		<manufacturer>Someri Team</manufacturer>
 		<rom name="AV Pretty Girl Fight (Unl).nes" size="655376" crc="c3d2b090"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="awol" sourcefile="nes/d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>AWOL (HB)</description>
+		<year>2023</year>
+		<manufacturer>Rodnade</manufacturer>
+		<rom name="AWOL (2023)(Rodnade).nes" size="524304" crc="1177eb7a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -16992,12 +17001,30 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="supermanh" cloneof="sunman" romof="sunman" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Superman (Hack, v1.1)</description>
+		<year>2023</year>
+		<manufacturer>kenoi</manufacturer>
+		<rom name="Superman v1.1 (2023)(kenoi).nes" size="262160" crc="1c5a3eb8"/>
+		<video type="raster" orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
+		<driver status="good"/>
+	</game>
 	<game name="superman" sourcefile="nes/d_nes.cpp">
 		<description>Superman (USA)</description>
 		<year>1988</year>
 		<manufacturer>Kemco</manufacturer>
 		<rom name="Superman (USA).nes" size="262160" crc="721be58a"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="superman2h" cloneof="sunman" romof="sunman" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Superman II - Specter Edition (Hack, v2.1)</description>
+		<year>2017</year>
+		<manufacturer>pacnsacdave</manufacturer>
+		<rom name="Superman II - Specter Edition v2.1 (2017)(pacnsacdave).nes" size="262160" crc="f70f1143"/>
+		<video type="raster" orientation="horizontal" width="256" height="232" aspectx="256" aspecty="232"/>
 		<driver status="good"/>
 	</game>
 	<game name="super16in1" sourcefile="nes/d_nes.cpp">
@@ -18814,6 +18841,15 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
+	<game name="wacko" sourcefile="nes/d_nes.cpp">
+		<comment>Homebrew</comment>
+		<description>Wacko (HB)</description>
+		<year>2022</year>
+		<manufacturer>&lt;unknown&gt;</manufacturer>
+		<rom name="Wacko (2022).nes" size="524304" crc="a806e746"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
 	<game name="wackyraces" sourcefile="nes/d_nes.cpp">
 		<description>Wacky Races (USA)</description>
 		<year>1992</year>
@@ -19615,10 +19651,10 @@
 	</game>
 	<game name="zeldaiiac" cloneof="zeldaii" romof="zeldaii" sourcefile="nes/d_nes.cpp">
 		<comment>Hack, Homebrew</comment>
-		<description>Zelda II Amida's Curse (GlobalHack, v1.7)</description>
-		<year>2021</year>
+		<description>Zelda II Amida's Curse (GlobalHack, v1.9)</description>
+		<year>2023</year>
 		<manufacturer>Ok Impala!</manufacturer>
-		<rom name="Zelda II Amida's Curse GlobHack v1.7 (2021)(Ok Impala!).nes" size="262160" crc="a6ccfea4"/>
+		<rom name="Zelda II Amida's Curse GlobHack v1.9 (2021)(Ok Impala!).nes" size="262160" crc="f01a5b55"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
@@ -19633,7 +19669,7 @@
 	</game>
 	<game name="zeldakong" cloneof="donkeykong" romof="donkeykong" sourcefile="nes/d_nes.cpp">
 		<comment>Hack, Homebrew</comment>
-		<description>Zelda Kong (HB, Global Hack)</description>
+		<description>Zelda Kong (GlobalHack)</description>
 		<year>2021</year>
 		<manufacturer>Zero Meaning</manufacturer>
 		<rom name="Zelda Kong (2021)(Zero Meaning).nes" size="24592" crc="4c801a11"/>

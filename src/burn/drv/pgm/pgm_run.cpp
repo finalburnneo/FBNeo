@@ -11,6 +11,9 @@ UINT8 PgmJoy4[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmBtn1[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmBtn2[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmInput[9] = {0,0,0,0,0,0,0,0,0};
+UINT8 PgmInput_previous[9] = {0,0,0,0,0,0,0,0, 0};			//GSC2007  ADD
+UINT8 PgmInput_previous_lr[9] = {0,0,0,0,0,0,0,0, 0};		//GSC2007  ADD
+UINT8 PgmInput_previous_ud[9] = {0,0,0,0,0,0,0,0, 0};		//GSC2007  ADD
 UINT8 PgmReset = 0;
 static HoldCoin<4> hold_coin;
 
@@ -1008,6 +1011,37 @@ INT32 pgmExit()
 	return 0;
 }
 
+inline static void pgmClearOpposites(UINT8* nJoystickInputs,UINT8* nJoystickInputs_previous,UINT8* nJoystickInputs_previous_lr,UINT8* nJoystickInputs_previous_ud)	// GSC2007  add;
+{
+		if((*nJoystickInputs & 0x18) == 0x18)
+		{
+			 *nJoystickInputs &= *nJoystickInputs ^ *nJoystickInputs_previous_lr;//When left and right are pressed simultaneously, remove the interference items in *nJoystickInputs_previous_lr to obtain the actual required corrective input
+		} 
+		else if(*nJoystickInputs & 0x18)
+		{
+			*nJoystickInputs_previous_lr = *nJoystickInputs & 0x18;        //Only record the input when left and right are NOT pressed simultaneously
+		}
+		if((*nJoystickInputs & 0x06) == 0x06)
+		{
+			*nJoystickInputs &= *nJoystickInputs ^ *nJoystickInputs_previous_ud;        //Same as above
+		}
+		else if(*nJoystickInputs & 0x06)
+		{
+			*nJoystickInputs_previous_ud = *nJoystickInputs & 0x06;        //Same as above
+		}
+		
+//In extreme cases, opposite inputs are mutually exclusive
+		if ((*nJoystickInputs & 0x06) == 0x06)		
+			*nJoystickInputs &= ~0x06;
+		if ((*nJoystickInputs & 0x18) == 0x18)
+			*nJoystickInputs &= ~0x18;        
+
+		if (((*nJoystickInputs | *nJoystickInputs_previous) & 0x18) == 0x18)
+			*nJoystickInputs &= ~0x18;        //When switching left and right, the first frame is mutually exclusive
+		if (((*nJoystickInputs | *nJoystickInputs_previous) & 0x06) == 0x06)
+			*nJoystickInputs &= ~0x06;        //When switching down and up, the first frame is mutually exclusive
+}
+
 static void pgm_sprite_buffer()
 {
 	if (pgm_video_control & 0x0001) // verified
@@ -1039,6 +1073,9 @@ INT32 pgmFrame()
 
 	// compile inputs
 	{
+		for (INT32 i = 0; i < 4; i++) {
+			PgmInput_previous[i] = PgmInput[i];// GSC2007  add;
+		}
 		memset (PgmInput, 0, 6); // 6 is correct! Regions are stored in 7!
 
 		for (INT32 i = 0; i < sizeof(PgmJoy1); i++) {
@@ -1051,14 +1088,9 @@ INT32 pgmFrame()
 		}
 
 		// clear opposites
-		if ((PgmInput[0] & 0x06) == 0x06) PgmInput[0] &= 0xf9; // up/down
-		if ((PgmInput[0] & 0x18) == 0x18) PgmInput[0] &= 0xe7; // left/right
-		if ((PgmInput[1] & 0x06) == 0x06) PgmInput[1] &= 0xf9;
-		if ((PgmInput[1] & 0x18) == 0x18) PgmInput[1] &= 0xe7;
-		if ((PgmInput[2] & 0x06) == 0x06) PgmInput[2] &= 0xf9;
-		if ((PgmInput[2] & 0x18) == 0x18) PgmInput[2] &= 0xe7;
-		if ((PgmInput[3] & 0x06) == 0x06) PgmInput[3] &= 0xf9;
-		if ((PgmInput[3] & 0x18) == 0x18) PgmInput[3] &= 0xe7;
+		for (INT32 i = 0; i < 4; i++) {
+			pgmClearOpposites(&PgmInput[i],&PgmInput_previous[i],&PgmInput_previous_lr[i],&PgmInput_previous_ud[i]);// GSC2007  add;
+		}
 
 		hold_coin.check(0, PgmInput[4], 1, 7);
 		hold_coin.check(1, PgmInput[4], 2, 7);

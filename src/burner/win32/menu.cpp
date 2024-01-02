@@ -1009,11 +1009,6 @@ void MenuUpdate()
 	}
 
 	var = MENU_INTERPOLATE_0 + nInterpolation;
-	if (bDrvOkay) {
-		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) {
-			var = MENU_INTERPOLATE_0 + 1;
-		}
-	}
 	CheckMenuRadioItem(hMenu, MENU_INTERPOLATE_0, MENU_INTERPOLATE_5, var, MF_BYCOMMAND);
 
 	var = MENU_INTERPOLATE_FM_0 + nFMInterpolation;

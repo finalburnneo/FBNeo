@@ -13002,6 +13002,102 @@ static struct BurnRomInfo Sfz3mixRomDesc[] = {
 STD_ROM_PICK(Sfz3mix)
 STD_ROM_FN(Sfz3mix)
 
+// Street Fighter Zero 3 Training Edition v1.0 (hacked by 0xZERO3)
+static struct BurnRomInfo Sfz3teRomDesc[] = {
+	{ "sz3te.03",      0x080000, 0x3841b1e5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3te.04",      0x080000, 0x9bbcf01a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05",        0x080000, 0x9b21518a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06",        0x080000, 0xe7a6c3a7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07",        0x080000, 0xec4c0cfd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08",        0x080000, 0x5c7e7240, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09",        0x080000, 0xc5589553, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10",        0x080000, 0xa9717252, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3.13m",       0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",       0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",       0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",       0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+
+	{ "sfz3j.key",     0x000014, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz3te)
+STD_ROM_FN(Sfz3te)
+
+// Street Fighter Zero 3 Training Edition v1.1 (hacked by 0xZERO3)
+static struct BurnRomInfo Sfz3ter1RomDesc[] = {
+	{ "sz3te.03a",     0x080000, 0xb57412fa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3te.04a",     0x080000, 0xeea5e3ca, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05",        0x080000, 0x9b21518a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06",        0x080000, 0xe7a6c3a7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07",        0x080000, 0xec4c0cfd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08",        0x080000, 0x5c7e7240, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09",        0x080000, 0xc5589553, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10",        0x080000, 0xa9717252, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3.13m",       0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",       0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",       0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",       0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+
+	{ "sfz3j.key",     0x000014, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz3ter1)
+STD_ROM_FN(Sfz3ter1)
+
+// Street Fighter Zero 3 Training Edition v1.2 (hacked by 0xZERO3)
+static struct BurnRomInfo Sfz3ter2RomDesc[] = {
+	{ "sz3te.03b",     0x080000, 0x2fb19531, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3te.04b",     0x080000, 0x01e60fc4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05",        0x080000, 0x9b21518a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06",        0x080000, 0xe7a6c3a7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07",        0x080000, 0xec4c0cfd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08",        0x080000, 0x5c7e7240, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09",        0x080000, 0xc5589553, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10",        0x080000, 0xa9717252, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3.13m",       0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",       0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",       0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",       0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+
+	{ "sfz3j.key",     0x000014, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz3ter2)
+STD_ROM_FN(Sfz3ter2)
+
 static struct BurnRomInfo SgemfdRomDesc[] = {
 	{ "pcfud.03",      0x080000, 0x8b83674a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "pcfd.04",       0x080000, 0xb58f1d03, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -14019,6 +14115,36 @@ struct BurnDriver BurnDrvCpsSfz3mix = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfz3te = {
+	"sfz3te", "sfa3", NULL, NULL, "2019",
+	"Street Fighter Zero 3 (980629 Japan Training Edition v1.0)\0", NULL, "Hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3teRomInfo, Sfz3teRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfz3ter1 = {
+	"sfz3ter1", "sfa3", NULL, NULL, "2020",
+	"Street Fighter Zero 3 (980629 Japan Training Edition v1.1)\0", NULL, "Hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3ter1RomInfo, Sfz3ter1RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfz3ter2 = {
+	"sfz3ter2", "sfa3", NULL, NULL, "2021",
+	"Street Fighter Zero 3 (980629 Japan Training Edition v1.2)\0", NULL, "Hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3ter2RomInfo, Sfz3ter2RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

@@ -91,6 +91,8 @@ static INT32 DrvReset()
 
 	nCpsCyclesExtra = 0;
 
+	clear_opposite.reset();
+
 	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {			// Sound init (QSound)
 		QsndReset();
 	}

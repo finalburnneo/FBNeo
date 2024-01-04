@@ -3430,12 +3430,16 @@ static INT32 DrvFrame()
 	if ((~DrvDips[3] & 1) && in_tape_ffwd == 0 && tape_timer) {
 		in_tape_ffwd = 1;
 		INT32 cnt = 50;
+		UINT8 *draw_temp = pBurnDraw;
+		INT16 *sound_temp = pBurnSoundOut;
 		pBurnDraw = NULL;
 		pBurnSoundOut = NULL;
 		while (cnt) {
 			DrvFrame();
 			if (!tape_timer) cnt--;
 		}
+		pBurnSoundOut = sound_temp;
+		pBurnDraw = draw_temp;
 		in_tape_ffwd = 0;
 	}
 

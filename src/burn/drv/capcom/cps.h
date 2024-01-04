@@ -282,6 +282,8 @@ extern INT32 Port6SoundWrite;
 extern INT32 CpsBootlegEEPROM;
 extern INT32 Cps2Turbo;
 
+extern ClearOpposite<8> clear_opposite;
+
 extern UINT8* CpsEncZRom;
 
 INT32 CpsRwInit();

@@ -129,11 +129,11 @@ UINT8 NeoJoy3[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 NeoJoy4[8]     = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT16 NeoAxis[2]	 = { 0, 0 };
 UINT8 NeoInput[32]   = { 0, };
-UINT8 NeoInput_previous[32]   = { 0, };	// GSC2007
 UINT8 NeoDiag[2]	 = { 0, 0 };
 UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
 UINT8 NeoCDBios = 0;
+static ClearOpposite<4> clear_opposite;
 
 static UINT8 OldDebugDip[2] = { 0, 0 };
 
@@ -1540,6 +1540,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nInputSelect);
 
 		SCAN_OFF(NeoInputBank, NeoInput, nAction);
+		clear_opposite.scan();
 
 		SCAN_VAR(nAnalogAxis);
 
@@ -3766,6 +3767,8 @@ static INT32 neogeoReset()
 
 	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
+	clear_opposite.reset();
+
 	{
 		SekOpen(0);
 		ZetOpen(0);
@@ -4502,44 +4505,11 @@ INT32 NeoRender()
 	return 0;
 }
 
-inline static void NeoClearOpposites(UINT8* nJoystickInputs,UINT8* nJoystickInputs_previous,UINT8* nJoystickInputs_previous_lr,UINT8* nJoystickInputs_previous_ud)	// GSC2007  add
-{
-		if((*nJoystickInputs & 0x0C) == 0x0C)
-		{
-			 *nJoystickInputs &= *nJoystickInputs ^ *nJoystickInputs_previous_lr; //When left and right are pressed simultaneously, remove the interference items in *nJoystickInputs_previous_lr to obtain the actual required corrective input
-		} 
-		else if(*nJoystickInputs & 0x0C)
-		{
-			*nJoystickInputs_previous_lr = *nJoystickInputs & 0x0C;        //Only record the input when left and right are NOT pressed simultaneously
-		}
-		if((*nJoystickInputs & 0x03) == 0x03)
-		{
-			*nJoystickInputs &= *nJoystickInputs ^ *nJoystickInputs_previous_ud;        //Same as above
-		}
-		else if(*nJoystickInputs & 0x03)
-		{
-			*nJoystickInputs_previous_ud = *nJoystickInputs & 0x03;        //Same as above
-		}
-		
-//original code
-		if ((*nJoystickInputs & 0x03) == 0x03)		
-			*nJoystickInputs &= ~0x03;
-		if ((*nJoystickInputs & 0x0C) == 0x0C)
-			*nJoystickInputs &= ~0x0C;        
-
-		if (((*nJoystickInputs | *nJoystickInputs_previous) & 0x0C) == 0x0C)
-			*nJoystickInputs &= ~0x0C;        //When switching left and right, the first frame is mutually exclusive
-		if (((*nJoystickInputs | *nJoystickInputs_previous) & 0x03) == 0x03)
-			*nJoystickInputs &= ~0x03;        //When switching down and up, the first frame is mutually exclusive
-}
-
 static void NeoStandardInputs(INT32 nBank)
 {
 	if (nBank) {
 		NeoInput[ 8] = 0x00;					   					// Player 1
 		NeoInput[ 9] = 0x00;				   						// Player 2
-		NeoInput_previous[ 0] = NeoInput[ 8];	   					// GSC2007  add
-		NeoInput_previous[ 3] = NeoInput[ 9];	   					// GSC2007  add
 		NeoInput[10] = 0x00;				   						// Buttons
 		NeoInput[11] = 0x00;				   						//
 		for (INT32 i = 0; i < 8; i++) {
@@ -4548,8 +4518,8 @@ static void NeoStandardInputs(INT32 nBank)
 			NeoInput[10] |= (NeoButton3[i] & 1) << i;
 			NeoInput[11] |= (NeoButton4[i] & 1) << i;
 		}
-		NeoClearOpposites(&NeoInput[ 8],&NeoInput_previous[ 0],&NeoInput_previous[ 1],&NeoInput_previous[ 2]);// GSC2007  add
-		NeoClearOpposites(&NeoInput[ 9],&NeoInput_previous[ 3],&NeoInput_previous[ 4],&NeoInput_previous[ 5]);// GSC2007  add
+		clear_opposite.check(0, NeoInput[ 8], 0x0c, 0x03);
+		clear_opposite.check(1, NeoInput[ 9], 0x0c, 0x03);
 
 		if (NeoDiag[1]) {
 			NeoInput[13] |= 0x80;
@@ -4565,8 +4535,8 @@ static void NeoStandardInputs(INT32 nBank)
 			NeoInput[ 2] |= (NeoButton1[i] & 1) << i;
 			NeoInput[ 3] |= (NeoButton2[i] & 1) << i;
 		}
-		NeoClearOpposites(&NeoInput[ 0],&NeoInput_previous[ 6],&NeoInput_previous[ 7],&NeoInput_previous[ 8]);// GSC2007  add
-		NeoClearOpposites(&NeoInput[ 1],&NeoInput_previous[ 9],&NeoInput_previous[ 10],&NeoInput_previous[ 11]);// GSC2007  add
+		clear_opposite.check(2, NeoInput[ 0], 0x0c, 0x03);
+		clear_opposite.check(3, NeoInput[ 1], 0x0c, 0x03);
 		if (NeoDiag[0]) {
 			NeoInput[ 5] |= 0x80;
 		}

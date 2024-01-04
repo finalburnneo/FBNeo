@@ -48,6 +48,8 @@ INT32 Port6SoundWrite = 0;
 INT32 CpsBootlegEEPROM = 0;
 INT32 Cps2Turbo = 0;
 
+ClearOpposite<8> clear_opposite;
+
 CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = NULL;
 
 static INT32 nCalc[2] = {0, 0};
@@ -87,6 +89,8 @@ void CpsRwScan()
 		SCAN_VAR(nPrevInp000);
 		SCAN_VAR(nPrevInp001);
 	}
+
+	clear_opposite.scan();
 
 	SCAN_VAR(n664001);
 	SCAN_VAR(nCalc);
@@ -559,16 +563,6 @@ INT32 CpsRwExit()
 	return 0;
 }
 
-inline static void StopOpposite(UINT8* pInput)
-{
-	if ((*pInput & 0x03) == 0x03) {
-		*pInput &= ~0x03;
-	}
-	if ((*pInput & 0x0C) == 0x0C) {
-		*pInput &= ~0x0C;
-	}
-}
-
 INT32 CpsRwGetInp()
 {
 	// Compile separate buttons into Inpxxx
@@ -645,8 +639,8 @@ INT32 CpsRwGetInp()
 		CpsPaddle1 += CpsInpPaddle1 / 0x80; // add +-8 maximum to paddle-accumulator
 	}
 
-	StopOpposite(&Inp000);
-	StopOpposite(&Inp001);
+	clear_opposite.check(0, Inp000, 0x0c, 0x03);
+	clear_opposite.check(1, Inp001, 0x0c, 0x03);
 
 	// Ghouls uses a 4-way stick
 	if (Ghouls) {
@@ -677,19 +671,19 @@ INT32 CpsRwGetInp()
 
 	if (nMaxPlayers > 2) {
 		if (Cps == 2) {
-			StopOpposite(&Inp011);
+			clear_opposite.check(2, Inp011, 0x0c, 0x03);
 			if (nMaxPlayers == 4) {
-				StopOpposite(&Inp010);
+				clear_opposite.check(3, Inp010, 0x0c, 0x03);
 			}
 		} else {
-			StopOpposite(&Inp177);
+			clear_opposite.check(4, Inp177, 0x0c, 0x03);
 			if (nMaxPlayers == 4) {
-				StopOpposite(&Inp179);
+				clear_opposite.check(5, Inp179, 0x0c, 0x03);
 			}
 			if (Cps1Qs) {
-				StopOpposite(&Inpc001);
+				clear_opposite.check(6, Inpc001, 0x0c, 0x03);
 				if (nMaxPlayers == 4) {
-					StopOpposite(&Inpc003);
+					clear_opposite.check(7, Inpc003, 0x0c, 0x03);
 				}
 			}
 		}

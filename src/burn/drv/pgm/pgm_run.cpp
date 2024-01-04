@@ -13,6 +13,7 @@ UINT8 PgmBtn2[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmInput[9] = {0,0,0,0,0,0,0,0,0};
 UINT8 PgmReset = 0;
 static HoldCoin<4> hold_coin;
+static ClearOpposite<4> clear_opposite;
 
 INT32 nPGM68KROMLen = 0;
 INT32 nPGMTileROMLen = 0;
@@ -677,6 +678,7 @@ static INT32 PgmDoReset()
 	}
 
 	hold_coin.reset();
+	clear_opposite.reset();
 
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 
@@ -1051,14 +1053,9 @@ INT32 pgmFrame()
 		}
 
 		// clear opposites
-		if ((PgmInput[0] & 0x06) == 0x06) PgmInput[0] &= 0xf9; // up/down
-		if ((PgmInput[0] & 0x18) == 0x18) PgmInput[0] &= 0xe7; // left/right
-		if ((PgmInput[1] & 0x06) == 0x06) PgmInput[1] &= 0xf9;
-		if ((PgmInput[1] & 0x18) == 0x18) PgmInput[1] &= 0xe7;
-		if ((PgmInput[2] & 0x06) == 0x06) PgmInput[2] &= 0xf9;
-		if ((PgmInput[2] & 0x18) == 0x18) PgmInput[2] &= 0xe7;
-		if ((PgmInput[3] & 0x06) == 0x06) PgmInput[3] &= 0xf9;
-		if ((PgmInput[3] & 0x18) == 0x18) PgmInput[3] &= 0xe7;
+		for (INT32 i = 0; i < 4; i++) {
+			clear_opposite.check(i, PgmInput[i], 0x06, 0x18);
+		}
 
 		hold_coin.check(0, PgmInput[4], 1, 7);
 		hold_coin.check(1, PgmInput[4], 2, 7);
@@ -1271,6 +1268,7 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		v3021Scan();
 
 		hold_coin.scan();
+		clear_opposite.scan();
 
 		SCAN_VAR(nPgmCurrentBios);
 

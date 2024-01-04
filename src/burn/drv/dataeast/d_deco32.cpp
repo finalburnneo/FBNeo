@@ -527,12 +527,13 @@ void deco32_z80_sound_init(UINT8 *rom, UINT8 *ram)
 	ZetSetInHandler(deco32_z80_sound_read_port);
 	ZetClose();
 
-	BurnYM2151Init(3580000);
+	BurnYM2151InitBuffered(3580000, 1, NULL, 0);
 	BurnYM2151SetAllRoutes(0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetIrqHandler(&deco32_z80_YM2151_irq_handler);
 	BurnYM2151SetPortHandler(DrvYM2151WritePort);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.40, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.40, BURN_SND_ROUTE_RIGHT);
+	BurnTimerAttachZet(3580000);
 
 	MSM6295Init(0, (32220000 / 32) / 132, 1);
 	MSM6295Init(1, (32220000 / 16) / 132, 1);
@@ -561,7 +562,7 @@ void deco32_z80_sound_scan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		
+
 		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
 
@@ -3583,6 +3584,7 @@ static INT32 DrvZ80Frame()
 	}
 
 	ArmNewFrame();
+	ZetNewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
@@ -3599,7 +3601,6 @@ static INT32 DrvZ80Frame()
 	}
 
 	INT32 nInterleave = 274;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 7000000 / 60, 3580000 / 60 };
 	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -3612,7 +3613,7 @@ static INT32 DrvZ80Frame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, Arm);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
@@ -3622,26 +3623,14 @@ static INT32 DrvZ80Frame()
 			if (game_select == 1 || game_select == 2 || game_select == 3) irq_callback(1);
 			deco16_vblank = 1;
 		}
-
-		if (pBurnSoundOut && (i%4)==3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			deco32_z80_sound_update(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			deco32_z80_sound_update(pSoundBuf, nSegmentLength);
-		}
 	}
 
 	ZetClose();
 	ArmClose();
+
+	if (pBurnSoundOut) {
+		deco32_z80_sound_update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

@@ -40,6 +40,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
+static INT32 nCyclesExtra;
+
 static struct BurnInputInfo DblewingInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -173,11 +175,8 @@ static void __fastcall dblewing_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xa000:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0xa001:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address & 1, data);
 		return;
 
 		case 0xb000:
@@ -267,6 +266,8 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	sound_irq = 0;
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -310,12 +311,7 @@ static INT32 DrvInit()
 {
 	BurnSetRefreshRate(58.00);
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 2)) return 1;
@@ -389,7 +385,7 @@ static INT32 DrvInit()
 	deco_146_104_set_port_c_cb(dips_read); // dips
 	deco_146_104_set_soundlatch_cb(sound_callback);
 
-	BurnYM2151Init(3580000, 1);
+	BurnYM2151InitBuffered(3580000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetAllRoutes(0.75, BURN_SND_ROUTE_BOTH);
 	BurnTimerAttachZet(3580000);
@@ -415,7 +411,7 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	MSM6295ROM = NULL;
 
@@ -551,8 +547,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 3580000 / 58 };
-	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -573,28 +568,17 @@ static INT32 DrvFrame()
 
 		CPU_RUN(0, Sek);
 		CPU_RUN_TIMER(1);
-
-		if (pBurnSoundOut && i%4==3) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/4);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-		}
 	}
 
 	ZetClose();
 	SekClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	return 0;
 }
@@ -627,6 +611,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(sound_irq);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;

@@ -695,8 +695,7 @@ static INT32 DrvInit(INT32 game)
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
 
-//		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1; // un-comment and remove next line when dump available!
-		k++;
+		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1; // un-comment and remove next line when dump available!
 
 		if (BurnLoadRom(DrvGfxROM  + 0x00000, k++, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM  + 0x10000, k++, 1)) return 1;
@@ -709,7 +708,7 @@ static INT32 DrvInit(INT32 game)
 
 		DrvGfxDecode(0);
 
-		has_mcu = 0; // set "has_mcu = 2" when mcu dump is available
+		has_mcu = 2; // set "has_mcu = 2" when mcu dump is available
 		has_sub = 0;
 	}
 	else if (game == 1) // knightb
@@ -1019,139 +1018,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void mcu_simulate() // kikikai
-{
-	UINT8 *protection_ram = DrvPrtRAM;
-
-	if (!mcu_initialised)
-	{
-		if (protection_ram[0x01] == 0x00)
-		{
-			protection_ram[0x04] = 0xfc;   // coin inputs
-			protection_ram[0x02] = 0xff;   // player 1
-			protection_ram[0x03] = 0xff;   // player 2
-			protection_ram[0x1b] = 0xff;   // active player
-			protection_ram[0x06] = 0xff;   // must be FF otherwise PS4 ERROR
-			protection_ram[0x07] = 0x03;   // must be 03 otherwise PS4 ERROR
-			protection_ram[0x00] = 0x00;
-			mcu_initialised = 1;
-		}
-	}
-
-	if (mcu_initialised)
-	{
-		int i;
-		bool coin_curr;
-		UINT8 coin_in_read = DrvInputs[0] & 3;
-
-		for (INT32 coin_idx = 0; coin_idx < 2; coin_idx++)
-		{
-			coin_curr = (coin_in_read & (1 << coin_idx)) == 0;
-			if (coin_curr && coin_last[coin_idx] == false)
-			{
-				UINT8 coinage_setting = (DrvDips[0] >> (coin_idx*2 + 4)) & 3;
-
-				// increase credits counter
-				switch(coinage_setting)
-				{
-					case 0: // 2c / 3c
-					case 1: // 2c / 1c
-						if(coin_fract == 1)
-						{
-							protection_ram[0x01]+= (coinage_setting == 0) ? 3 : 1;
-							coin_fract = 0;
-						}
-						else
-							coin_fract ++;
-
-						break;
-					case 2: // 1c / 2c
-					case 3: // 1c / 1c
-						protection_ram[0x01]+= (coinage_setting == 2) ? 2 : 1;
-						break;
-
-				}
-
-				protection_ram[0x0a] = 0x01;   // set flag (coin inserted sound is not played otherwise)
-			}
-			coin_last[coin_idx] = coin_curr;
-		}
-		// Purge any coin counter higher than 9 TODO: is this limit correct?
-		if(protection_ram[0x01] > 9)
-			protection_ram[0x01] = 9;
-
-		protection_ram[0x04] = 0x3c | (coin_in_read ^ 3);   // coin inputs
-
-		protection_ram[0x02] = BITSWAP08(DrvInputs[1], 7,6,5,4,2,3,1,0); // player 1
-		protection_ram[0x03] = BITSWAP08(DrvInputs[2], 7,6,5,4,2,3,1,0); // player 2
-
-		if (protection_ram[0x19] == 0xaa)  // player 2 active
-			protection_ram[0x1b] = protection_ram[0x03];
-		else
-			protection_ram[0x1b] = protection_ram[0x02];
-
-		for (i = 0; i < 0x10; i += 2)
-			protection_ram[i + 0xb1] = protection_ram[i + 0xb0];
-
-		for (i = 0; i < 0x0a; i++)
-			protection_ram[i + 0xc0] = protection_ram[i + 0x90] + 1;
-
-		if (protection_ram[0xd1] == 0xff)
-		{
-			if (protection_ram[0xd0] > 0 && protection_ram[0xd0] < 4)
-			{
-				protection_ram[0xd2] = 0x81;
-				protection_ram[0xd0] = 0xff;
-			}
-		}
-
-		if (protection_ram[0xe0] > 0 && protection_ram[0xe0] < 4)
-		{
-			static const UINT8 answers[3][16] =
-			{
-				{ 0x00,0x40,0x48,0x50,0x58,0x60,0x68,0x70,0x78,0x80,0x88,0x00,0x00,0x00,0x00,0x00 },
-				{ 0x00,0x04,0x08,0x0C,0x10,0x14,0x18,0x1C,0x20,0x31,0x2B,0x35,0x00,0x00,0x00,0x00 },
-				{ 0x00,0x0C,0x0D,0x0E,0x0F,0x10,0x11,0x12,0x03,0x0A,0x0B,0x14,0x00,0x00,0x00,0x00 },
-			};
-			int table = protection_ram[0xe0] - 1;
-
-			for (i = 1; i < 0x10; i++)
-				protection_ram[0xe0 + i] = answers[table][i];
-			protection_ram[0xe0] = 0xff;
-		}
-
-		if (protection_ram[0xf0] > 0 && protection_ram[0xf0] < 4)
-		{
-			protection_ram[0xf1] = 0xb3;
-			protection_ram[0xf0] = 0xff;
-		}
-
-		// The following is missing from Knight Boy
-		// this should be equivalent to the obfuscated kiki_clogic() below
-		{
-			static const UINT8 db[16]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x08,0x00,0x10,0x18,0x00,0x00,0x00,0x00};
-			UINT16 sy = protection_ram[0xa0] + ((0x18) >> 1);
-			UINT16 sx = protection_ram[0xa1] + ((0x18) >> 1);
-
-			for (i = 0; i < 0x38; i += 8)
-			{
-				UINT8 hw = db[protection_ram[0x20 + i] & 0xf];
-
-				if (hw)
-				{
-					UINT16 xdiff = sx - ((UINT16)(protection_ram[0x20 + i + 6]) << 8 | protection_ram[0x20 + i + 7]);
-					if (xdiff < hw)
-					{
-						UINT16 ydiff = sy - ((UINT16)(protection_ram[0x20 + i + 4]) << 8 | protection_ram[0x20 + i + 5]);
-						if (ydiff < hw)
-							protection_ram[0xa2] = 1; // we have a collision
-					}
-				}
-			}
-		}
-	}
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1192,7 +1058,6 @@ static INT32 DrvFrame()
 		CPU_RUN(0, Zet);
 
 		if (i == 255 && (has_mcu == 0 || has_mcu == 2)) {
-			if (mcu_running && has_mcu == 0) mcu_simulate(); // kikikai mcu sim
 		    ZetSetVector(DrvPrtRAM[0]);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -1323,7 +1188,7 @@ static struct BurnRomInfo kikikaiRomDesc[] = {
 
 	{ "a85-11.f6",			0x08000, 0xcc3539db, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "a85-01.g8",			0x00800, 0x00000000, 3 | BRF_NODUMP | BRF_PRG }, //  3 MCU Code (undumped)
+	{ "a85-01_jph1020p.h8",	0x01000, 0x01771197, 3 | BRF_PRG | BRF_ESS }, //  3 M6801u4 Code
 
 	{ "a85-15.a1",			0x10000, 0xaebc8c32, 4 | BRF_GRA },           //  4 Graphics
 	{ "a85-14.a3",			0x10000, 0xa9df0453, 4 | BRF_GRA },           //  5

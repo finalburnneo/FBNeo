@@ -3565,6 +3565,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="buggyblast" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Set Cursor Keys 'Y' to use controller</comment>
+		<description>Buggy Blast (48K)</description>
+		<year>1985</year>
+		<manufacturer>Firebird Software</manufacturer>
+		<rom name="Buggy Blast 48K (1985)(Firebird).tap" size="48493" crc="23a6eda1"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="buggyboy" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Use 'P', 'L' and SPACE to set options</comment>
 		<description>Buggy Boy (128K)</description>
@@ -3999,6 +4009,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="cattivik24" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Cattivik 2024 (128K) (HB)</description>
+		<year>2024</year>
+		<manufacturer>Gabriele Amore</manufacturer>
+		<rom name="Cattivik 2024 128K (2024)(Gabriele Amore).tap" size="52220" crc="dba277f8"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="cattivik2" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>Cattivik Never Dies (128K) (HB)</description>
@@ -4257,7 +4278,7 @@
 		<comment>Homebrew</comment>
 		<description>Cherils Perils (48K) (HB)</description>
 		<year>2010</year>
-		<manufacturer>Mojon Twins</manufacturer>
+		<manufacturer>The Mojon Twins</manufacturer>
 		<rom name="Cherils Perils (2010)(Mojon Twins).z80" size="38505" crc="bf144935"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
@@ -10900,6 +10921,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="intkickbox" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Use 'Space' and 'Enter' to choose and set options</comment>
+		<description>International Kickboxing (128K)</description>
+		<year>1993</year>
+		<manufacturer>Your Sinclair</manufacturer>
+		<rom name="International Kickboxing 128K (1993)(Your Sinclair).tap" size="38591" crc="eefd494d"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="intninjarab" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<description>International Ninja Rabbits (128K)</description>
 		<year>1991</year>
@@ -16747,6 +16779,17 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="psyqosanta" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Psyqo Santa (128K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>IAMAI Creation</manufacturer>
+		<rom name="Psyqo Santa 128K (2023)(IAMAI Creation).tap" size="56501" crc="2dc3a9d9"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="ptm" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
 		<comment>Homebrew</comment>
 		<description>PTM (128K) (HB)</description>
@@ -19377,6 +19420,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="snakeshazards" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Snakes and Hazards (128K)</description>
+		<year>1987</year>
+		<manufacturer>Gremlin Graphics</manufacturer>
+		<rom name="Snakes and Hazards 128K (1987)(Gremlin Graphics).tap" size="51210" crc="6ff11e22"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="snoopy" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Snoopy (48K)</description>
 		<year>1990</year>
@@ -20633,6 +20686,16 @@
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
+	<game name="sudokuny" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew, AY Sound supported</comment>
+		<description>Sudoku NY (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>g0blinish</manufacturer>
+		<rom name="Sudoku NY 48K-AY (2023)(g0blinish).tap" size="10599" crc="2d065d7e"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
 	<game name="summergames" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
 		<description>Summer Games (48K)</description>
 		<year>1988</year>
@@ -21153,6 +21216,16 @@
 		<rom name="Tank battle (2020)(kas29).tap" size="44955" crc="2d909b3c"/>
 		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
 		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="tapeworm" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Tapeworm (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>ZXKerl</manufacturer>
+		<rom name="Tapeworm 48K (2023)(ZXKerl).tap" size="17206" crc="55d0b8a6"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
@@ -22265,6 +22338,16 @@
 		<manufacturer>BumFun Games</manufacturer>
 		<rom name="Tumult - Phase 1 48K (2018)(Bumfun Games).tap" size="35256" crc="d080978e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="turboboatsim" romof="spec128" sourcefile="spectrum/d_spectrum.cpp">
+		<description>Turbo Boat Simulator (128K)</description>
+		<year>1988</year>
+		<manufacturer>Silverbird Software</manufacturer>
+		<rom name="Turbo Boat Simulator 128K (1988)(Silverbird).tap" size="36697" crc="d7df8d1e"/>
+		<rom name="zx128_0.rom" merge="zx128_0.rom" size="16384" crc="e76799d2"/>
+		<rom name="zx128_1.rom" merge="zx128_1.rom" size="16384" crc="b96a36be"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>

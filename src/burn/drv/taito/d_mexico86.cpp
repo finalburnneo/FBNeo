@@ -28,20 +28,20 @@ static UINT8 *DrvPrtRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 nExtraCycles;
+static INT32 nExtraCycles[4];
 
 static INT32 nBankData;
 static INT32 nCharBank;
-static INT32 nSoundCPUHalted;
 static INT32 nSubCPUHalted;
 static INT32 mcu_running;
-static INT32 mcu_initialised;
-static bool coin_last[2];
-static INT32 coin_fract;
 static INT32 mcu_address;
 static INT32 mcu_latch;
 
-static INT32 has_mcu = 0; // 1 = taito-style 68705 (bootleg mcu), 2 = 6801u4 (real mcu)
+// 1 = taito-style 68705 (bootleg mcu)
+// 2 = 6801u4 (real / dumped from PCB mcu)
+static const INT32 MCU_BOOT = 1;
+static const INT32 MCU_REAL = 2;
+static INT32 has_mcu = 0;
 static INT32 has_sub = 0;
 
 static void (*screen_update)();
@@ -58,7 +58,7 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[8];
 static UINT8 DrvReset;
 
-// 6801u4 mcu: kicknrun, kicknrunu, kikikai (when dumped)
+// 6801u4 mcu: kicknrun, kicknrunu, kikikai
 static UINT8 ddr1, ddr2, ddr3, ddr4;
 static UINT8 port1_in, port2_in, port3_in, port4_in;
 static UINT8 port1_out, port2_out, port3_out, port4_out;
@@ -139,126 +139,128 @@ STDINPUTINFO(Mexico86)
 
 static struct BurnDIPInfo KikikaiDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xfe, NULL							},
-	{0x14, 0xff, 0xff, 0x7f, NULL							},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xfe, NULL							},
+	{0x01, 0xff, 0xff, 0x7f, NULL							},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"						},
-	{0x13, 0x01, 0x01, 0x00, "Upright"						},
-	{0x13, 0x01, 0x01, 0x01, "Cocktail"						},
+	{0x00, 0x01, 0x01, 0x00, "Upright"						},
+	{0x00, 0x01, 0x01, 0x01, "Cocktail"						},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"					},
-	{0x13, 0x01, 0x02, 0x02, "Off"							},
-	{0x13, 0x01, 0x02, 0x00, "On"							},
+	{0x00, 0x01, 0x02, 0x02, "Off"							},
+	{0x00, 0x01, 0x02, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"					},
-	{0x13, 0x01, 0x04, 0x04, "Off"							},
-	{0x13, 0x01, 0x04, 0x00, "On"							},
+	{0x00, 0x01, 0x04, 0x04, "Off"							},
+	{0x00, 0x01, 0x04, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Unused"						},
-	{0x13, 0x01, 0x08, 0x08, "Off"							},
-	{0x13, 0x01, 0x08, 0x00, "On"							},
+	{0x00, 0x01, 0x08, 0x08, "Off"							},
+	{0x00, 0x01, 0x08, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"						},
-	{0x13, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
-	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
-	{0x13, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
-	{0x13, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"						},
-	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
-	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
-	{0x13, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
-	{0x13, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"					},
-	{0x14, 0x01, 0x03, 0x02, "Easy"							},
-	{0x14, 0x01, 0x03, 0x03, "Normal"						},
-	{0x14, 0x01, 0x03, 0x01, "Hard"							},
-	{0x14, 0x01, 0x03, 0x00, "Hardest"						},
+	{0x01, 0x01, 0x03, 0x02, "Easy"							},
+	{0x01, 0x01, 0x03, 0x03, "Normal"						},
+	{0x01, 0x01, 0x03, 0x01, "Hard"							},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"						},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"					},
-	{0x14, 0x01, 0x0c, 0x00, "50000 100000"					},
-	{0x14, 0x01, 0x0c, 0x0c, "70000 150000"					},
-	{0x14, 0x01, 0x0c, 0x08, "70000 200000"					},
-	{0x14, 0x01, 0x0c, 0x04, "100000 300000"				},
+	{0x01, 0x01, 0x0c, 0x00, "50000 100000"					},
+	{0x01, 0x01, 0x0c, 0x0c, "70000 150000"					},
+	{0x01, 0x01, 0x0c, 0x08, "70000 200000"					},
+	{0x01, 0x01, 0x0c, 0x04, "100000 300000"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"						},
-	{0x14, 0x01, 0x30, 0x00, "2"							},
-	{0x14, 0x01, 0x30, 0x30, "3"							},
-	{0x14, 0x01, 0x30, 0x20, "4"							},
-	{0x14, 0x01, 0x30, 0x10, "5"							},
+	{0x01, 0x01, 0x30, 0x00, "2"							},
+	{0x01, 0x01, 0x30, 0x30, "3"							},
+	{0x01, 0x01, 0x30, 0x20, "4"							},
+	{0x01, 0x01, 0x30, 0x10, "5"							},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"						},
-	{0x14, 0x01, 0x40, 0x40, "A"							},
-	{0x14, 0x01, 0x40, 0x00, "B"							},
+	{0x01, 0x01, 0x40, 0x40, "A"							},
+	{0x01, 0x01, 0x40, 0x00, "B"							},
 
 	{0   , 0xfe, 0   ,    2, "Number Match"					},
-	{0x14, 0x01, 0x80, 0x80, "Off"							},
-	{0x14, 0x01, 0x80, 0x00, "On"							},
+	{0x01, 0x01, 0x80, 0x80, "Off"							},
+	{0x01, 0x01, 0x80, 0x00, "On"							},
 };
 
 STDDIPINFO(Kikikai)
 
 static struct BurnDIPInfo Mexico86DIPList[]=
 {
-	{0x23, 0xff, 0xff, 0xff, NULL							},
-	{0x24, 0xff, 0xff, 0xfb, NULL							},
+	DIP_OFFSET(0x23)
+	{0x00, 0xff, 0xff, 0xff, NULL							},
+	{0x01, 0xff, 0xff, 0xfb, NULL							},
 
 	{0   , 0xfe, 0   ,    2, "Master/Slave Mode"			},
-	{0x23, 0x01, 0x01, 0x01, "Off"							},
-	{0x23, 0x01, 0x01, 0x00, "On"							},
+	{0x00, 0x01, 0x01, 0x01, "Off"							},
+	{0x00, 0x01, 0x01, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"						},
-	{0x23, 0x01, 0x02, 0x02, "Off"							},
-	{0x23, 0x01, 0x02, 0x00, "On"							},
+	{0x00, 0x01, 0x02, 0x02, "Off"							},
+	{0x00, 0x01, 0x02, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"					},
-	{0x23, 0x01, 0x04, 0x04, "Off"							},
-	{0x23, 0x01, 0x04, 0x00, "On"							},
+	{0x00, 0x01, 0x04, 0x04, "Off"							},
+	{0x00, 0x01, 0x04, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"					},
-	{0x23, 0x01, 0x08, 0x00, "Off"							},
-	{0x23, 0x01, 0x08, 0x08, "On"							},
+	{0x00, 0x01, 0x08, 0x00, "Off"							},
+	{0x00, 0x01, 0x08, 0x08, "On"							},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"						},
-	{0x23, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
-	{0x23, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
-	{0x23, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
-	{0x23, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"						},
-	{0x23, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
-	{0x23, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
-	{0x23, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
-	{0x23, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"			},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"			},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"			},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"					},
-	{0x24, 0x01, 0x03, 0x03, "Easy"							},
-	{0x24, 0x01, 0x03, 0x02, "Normal"						},
-	{0x24, 0x01, 0x03, 0x01, "Hard"							},
-	{0x24, 0x01, 0x03, 0x00, "Hardest"						},
+	{0x01, 0x01, 0x03, 0x03, "Easy"							},
+	{0x01, 0x01, 0x03, 0x02, "Normal"						},
+	{0x01, 0x01, 0x03, 0x01, "Hard"							},
+	{0x01, 0x01, 0x03, 0x00, "Hardest"						},
 
 	{0   , 0xfe, 0   ,    4, "Playing Time"					},
-	{0x24, 0x01, 0x0c, 0x00, "40 Seconds"					},
-	{0x24, 0x01, 0x0c, 0x0c, "One Minute"					},
-	{0x24, 0x01, 0x0c, 0x08, "One Minute and 20 Sec."		},
-	{0x24, 0x01, 0x0c, 0x04, "One Minute and 40 Sec."		},
+	{0x01, 0x01, 0x0c, 0x00, "40 Seconds"					},
+	{0x01, 0x01, 0x0c, 0x0c, "One Minute"					},
+	{0x01, 0x01, 0x0c, 0x08, "One Minute and 20 Sec."		},
+	{0x01, 0x01, 0x0c, 0x04, "One Minute and 40 Sec."		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"						},
-	{0x24, 0x01, 0x10, 0x10, "Off"							},
-	{0x24, 0x01, 0x10, 0x00, "On"							},
+	{0x01, 0x01, 0x10, 0x10, "Off"							},
+	{0x01, 0x01, 0x10, 0x00, "On"							},
 
 	{0   , 0xfe, 0   ,    2, "Board ID"						},
-	{0x24, 0x01, 0x20, 0x20, "Master"						},
-	{0x24, 0x01, 0x20, 0x00, "Slave"						},
+	{0x01, 0x01, 0x20, 0x20, "Master"						},
+	{0x01, 0x01, 0x20, 0x00, "Slave"						},
 
 	{0   , 0xfe, 0   ,    2, "Number of Matches"			},
-	{0x24, 0x01, 0x40, 0x00, "2"							},
-	{0x24, 0x01, 0x40, 0x40, "6"							},
+	{0x01, 0x01, 0x40, 0x00, "2"							},
+	{0x01, 0x01, 0x40, 0x40, "6"							},
 
 	{0   , 0xfe, 0   ,    2, "Single board 4 Players Mode"	},
-	{0x24, 0x01, 0x80, 0x80, "Off"							},
-	{0x24, 0x01, 0x80, 0x00, "On"							},
+	{0x01, 0x01, 0x80, 0x80, "Off"							},
+	{0x01, 0x01, 0x80, 0x00, "On"							},
 };
 
 STDDIPINFO(Mexico86)
@@ -283,19 +285,14 @@ static void __fastcall mexico86_main_write(UINT16 address, UINT8 data)
 
 		case 0xf008:
 			{
-				mcu_running = data & 2;
-
-				if (!mcu_running)
-					mcu_initialised = 0;
-
-				if (!mcu_running) {
+				if (data & 2 && !mcu_running) {
 					switch (has_mcu) {
-						case 1:
+						case MCU_BOOT:
 							m6805Open(0);
 							m6805Reset();
 							m6805Close();
 							break;
-						case 2:
+						case MCU_REAL:
 							M6801Open(0);
 							M6801Reset();
 							M6801Close();
@@ -303,10 +300,9 @@ static void __fastcall mexico86_main_write(UINT16 address, UINT8 data)
 					}
 				}
 
-				nSoundCPUHalted = ~data & 0x04;
-				if (nSoundCPUHalted) {
-					ZetReset(1);
-				}
+				mcu_running = data & 2;
+
+				ZetSetRESETLine(1, ~data & 0x04);
 			}
 			return;
 
@@ -584,10 +580,10 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	switch (has_mcu) {
-		case 1:
+		case MCU_BOOT:
 			m67805_taito_reset();
 			break;
-		case 2:
+		case MCU_REAL:
 			M6801Open(0);
 			M6801Reset();
 			M6801Close();
@@ -605,17 +601,13 @@ static INT32 DrvDoReset()
 			ddr4 = 0x00;
 	}
 
-	nExtraCycles = 0;
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
+
 	nBankData = 0;
 	nCharBank = 0;
-	nSoundCPUHalted = 0;
 	nSubCPUHalted = (has_sub && (DrvDips[1] & 0x80)); // 4-player board
 
 	mcu_running = 0;
-	mcu_initialised = 0;
-	coin_last[0] = false;
-	coin_last[1] = false;
-	coin_fract = 0;
 
 	mcu_address = 0;
 	mcu_latch = 0;
@@ -685,6 +677,8 @@ static INT32 DrvInit(INT32 game)
 {
 	BurnAllocMemIndex();
 
+	BurnSetRefreshRate(59.18);
+
 	if (game == 0) // kiki
 	{
 		INT32 k = 0;
@@ -695,7 +689,7 @@ static INT32 DrvInit(INT32 game)
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, k++, 1)) return 1;
 
-		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1; // un-comment and remove next line when dump available!
+		if (BurnLoadRom(DrvMCUROM  + 0x00000, k++, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM  + 0x00000, k++, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM  + 0x10000, k++, 1)) return 1;
@@ -708,7 +702,7 @@ static INT32 DrvInit(INT32 game)
 
 		DrvGfxDecode(0);
 
-		has_mcu = 2; // set "has_mcu = 2" when mcu dump is available
+		has_mcu = MCU_REAL;
 		has_sub = 0;
 	}
 	else if (game == 1) // knightb
@@ -734,7 +728,7 @@ static INT32 DrvInit(INT32 game)
 
 		DrvGfxDecode(0);
 
-		has_mcu = 1;
+		has_mcu = MCU_BOOT;
 		has_sub = 0;
 	}
 	else if (game == 2 || game == 3) // mexico86 & kicknrun
@@ -775,8 +769,8 @@ static INT32 DrvInit(INT32 game)
 		DrvGfxDecode(0);
 
 		switch (game) {
-			case 2: has_mcu = 2; break; // M68001u4 real MCU / kicknrun
-			case 3: has_mcu = 1; break; // m68705 (bootleg) / mexico86
+			case 2: has_mcu = MCU_REAL; break; // M68001u4 real MCU / kicknrun
+			case 3: has_mcu = MCU_BOOT; break; // m68705 (bootleg) / mexico86
 		}
 		has_sub = 1; // cpu for 4player mode
 	}
@@ -816,10 +810,10 @@ static INT32 DrvInit(INT32 game)
 	ZetClose();
 
 	switch (has_mcu) {
-		case 1:
+		case MCU_BOOT:
 			m67805_taito_init(DrvMCUROM, DrvMCURAM, &mexico86_m68705_interface); // not on kiki
 			break;
-		case 2:
+		case MCU_REAL:
 			M6801Init(0);
 			M6801Open(0);
 			M6801MapMemory(DrvMCUROM, 0xf000, 0xffff, MAP_ROM);
@@ -851,8 +845,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	switch (has_mcu) {
-		case 1: m67805_taito_exit(); break;
-		case 2: M6801Exit(); break;
+		case MCU_BOOT: m67805_taito_exit(); break;
+		case MCU_REAL: M6801Exit(); break;
 	}
 
 	BurnYM2203Exit();
@@ -889,8 +883,6 @@ static void DrvPaletteInit()
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
-
-//	DrvPalette[0x100] = 0x100; // ??????
 }
 
 static void screen_update_mexico86()
@@ -1027,7 +1019,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		DrvInputs[0] = (has_mcu == 2) ? 0x00 : 0xff; // 6801u4 mcu - active high coins!
+		DrvInputs[0] = (has_mcu == MCU_REAL) ? 0x00 : 0xff; // 6801u4 mcu - active high coins!
 		DrvInputs[1] = 0xff;
 		DrvInputs[2] = 0xff;
 		DrvInputs[3] = 0xff;
@@ -1048,54 +1040,52 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[4] = { 6000000 / 60, 6000000 / 60, 4000000 / 60, 1000000 / 60 };
-	INT32 nCyclesDone[4] = { nExtraCycles, 0, 0, 0 };
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[4] = { (INT32)(6000000 / 59.185606), (INT32)(6000000 / 59.185606), (INT32)(4000000 / 59.185606), (INT32)(1000000 / 59.185606) };
+	INT32 nCyclesDone[4] = { nExtraCycles[0], 0, nExtraCycles[2], nExtraCycles[3] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		CPU_RUN(0, Zet);
 
-		if (i == 255 && (has_mcu == 0 || has_mcu == 2)) {
+		if (i == (nInterleave - 1) && has_mcu == MCU_REAL) {
 		    ZetSetVector(DrvPrtRAM[0]);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		if (nSoundCPUHalted) {
-			CPU_IDLE_SYNCINT(1, Zet);
-		} else {
-			CPU_RUN_TIMER(1);
-		}
-		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		CPU_RUN_TIMER(1);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		if (has_sub && !nSubCPUHalted)
 		{
 			ZetOpen(2);
 			CPU_RUN(2, Zet);
-			if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
+		} else {
+			CPU_IDLE_NULL(2);
 		}
 
-		if (!mcu_running || !has_mcu)
+		if (!mcu_running)
 		{
 			CPU_IDLE_NULL(3);
 		}
-		else if (has_mcu == 1)
+		else if (has_mcu == MCU_BOOT)
 		{
 			m6805Open(0);
 			CPU_RUN(3, m6805);
-			if (i == 255) m68705SetIrqLine(M68705_IRQ_LINE, CPU_IRQSTATUS_ACK);
+			if (i == (nInterleave - 1)) m68705SetIrqLine(M68705_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			m6805Close();
 		}
-		else if (has_mcu == 2)
+		else if (has_mcu == MCU_REAL)
 		{
 			M6801Open(0);
 			CPU_RUN(3, M6801);
-			if (i == 255) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (i == (nInterleave - 1)) M6801SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			M6801Close();
 		}
 	}
@@ -1105,10 +1095,14 @@ static INT32 DrvFrame()
 		BurnSoundDCFilter(); // kicknrun intro, dc offset from ay
 	}
 
-	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// [1] is timer driven sound, no need to tally
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nExtraCycles[3] = nCyclesDone[3] - nCyclesTotal[3];
 
-	if (pBurnDraw)
+	if (pBurnDraw) {
 		DrvDraw();
+	}
 
 	return 0;
 }
@@ -1133,10 +1127,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		switch (has_mcu) {
-			case 1:
+			case MCU_BOOT:
 				m68705_taito_scan(nAction);
 				break;
-			case 2:
+			case MCU_REAL:
 				M6801Scan(nAction);
 				break;
 		}
@@ -1159,15 +1153,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(port3_out);
 		SCAN_VAR(port4_out);
 
-		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(nBankData);
 		SCAN_VAR(nCharBank);
-		SCAN_VAR(nSoundCPUHalted);
 		SCAN_VAR(nSubCPUHalted);
 		SCAN_VAR(mcu_running);
-		SCAN_VAR(mcu_initialised);
-		SCAN_VAR(coin_last);
-		SCAN_VAR(coin_fract);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

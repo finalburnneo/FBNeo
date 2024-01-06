@@ -92,6 +92,35 @@ void SetPauseMode(bool bPause)
 	}
 }
 
+char* DecorateKailleraGameName(UINT32 nBurnDrv)
+{
+	static char szDecoratedName[256];
+	UINT32 nOldBurnDrv = nBurnDrvActive;
+
+	nBurnDrvActive = nBurnDrv;
+
+	const char* s1 = "";
+	const char* s2 = "";
+	const char* s3 = "";
+	const char* s4 = "";
+	const char* s5 = "";
+
+	s1 = BurnDrvGetTextA(DRV_FULLNAME);
+
+	s3 = GameDecoration(nBurnDrv);
+	if (strlen(s3) > 0) {
+		s2 = " [";
+		s4 = "]";
+	}
+
+	s5 = BurnDrvGetTextA(DRV_NAME);
+
+	snprintf(szDecoratedName, sizeof(szDecoratedName), "%s%s%s%s - %s", s1, s2, s3, s4, s5);
+
+	nBurnDrvActive = nOldBurnDrv;
+	return szDecoratedName;
+}
+
 static char* CreateKailleraList()
 {
 	unsigned int nOldDrvSelect = nBurnDrvActive;
@@ -113,7 +142,7 @@ static char* CreateKailleraList()
 
 		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 			if (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) {
-				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
+				char* szDecoratedName = DecorateKailleraGameName(nBurnDrvActive);
 
 				if (pName + strlen(szDecoratedName) >= pList + nSize) {
 					char* pNewList;
@@ -136,7 +165,7 @@ static char* CreateKailleraList()
 		// Add all the driver names to the list
 		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 			if(BurnDrvGetFlags() & BDF_GAME_WORKING && gameAv[nBurnDrvActive]) {
-				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
+				char* szDecoratedName = DecorateKailleraGameName(nBurnDrvActive);
 
 				if (pName + strlen(szDecoratedName) >= pList + nSize) {
 					char* pNewList;
@@ -207,7 +236,7 @@ static int WINAPI gameCallback(char* game, int player, int numplayers)
 
 	for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 
-		char* szDecoratedName = DecorateGameName(nBurnDrvActive);
+		char* szDecoratedName = DecorateKailleraGameName(nBurnDrvActive);
 
 		if (!strcmp(szDecoratedName, game)) {
 			bFound = true;

@@ -3001,7 +3001,19 @@
 		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
 	</game>
-	<game name="campaneras" romof="msx" sourcefile="msx/d_msx.cpp">
+	<game name="campanerae" romof="msx" sourcefile="msx/d_msx.cpp">
+		<comment>Homebrew</comment>
+		<description>Campanera - Jozelito's Adventure (English) (HB)</description>
+		<year>2022</year>
+		<manufacturer>Physical Dreams</manufacturer>
+		<rom name="Campanera - Jozelito's Adventure EN (2022)(Physical Dreams).rom" size="49152" crc="c57e69a9"/>
+		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
+		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
+		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
+		<video type="raster" orientation="horizontal" width="272" height="228" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="campaneras" cloneof="campanerae" romof="campanerae" sourcefile="msx/d_msx.cpp">
 		<comment>Homebrew</comment>
 		<description>Campanera - Jozelito's Adventure (Spanish) (HB)</description>
 		<year>2022</year>
@@ -15028,10 +15040,10 @@
 	</game>
 	<game name="shyre" romof="msx" sourcefile="msx/d_msx.cpp">
 		<comment>Homebrew</comment>
-		<description>Shyre (HB, v1.1)</description>
-		<year>2013</year>
+		<description>Shyre (HB, v1.2)</description>
+		<year>2023</year>
 		<manufacturer>Platty Soft</manufacturer>
-		<rom name="Shyre v1.1 (2023)(Platty Soft).rom" size="49152" crc="21ce1859"/>
+		<rom name="Shyre v1.2 (2023)(Platty Soft).rom" size="49152" crc="c3c76390"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -16502,10 +16514,10 @@
 	</game>
 	<game name="tcqmsx" romof="msx" sourcefile="msx/d_msx.cpp">
 		<comment>Homebrew</comment>
-		<description>T.C.Q. (HB)</description>
+		<description>T.C.Q. (HB, v1.1.2)</description>
 		<year>2022</year>
 		<manufacturer>Amaweks</manufacturer>
-		<rom name="T.C.Q. (2022)(Amaweks).rom" size="49152" crc="beb5b313"/>
+		<rom name="T.C.Q. v1.1.2 (2022)(Amaweks).rom" size="32768" crc="09b5f452"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>
@@ -16841,10 +16853,10 @@
 	</game>
 	<game name="tetpuz" romof="msx" sourcefile="msx/d_msx.cpp">
 		<comment>Homebrew</comment>
-		<description>Tetpuz (HB)</description>
+		<description>Tetpuz (HB, v1.1)</description>
 		<year>2023</year>
 		<manufacturer>Totta</manufacturer>
-		<rom name="Tetpuz (2023)(Totta).rom" size="49152" crc="15283559"/>
+		<rom name="Tetpuz v1.1 (2023)(Totta).rom" size="49152" crc="19782e9f"/>
 		<rom name="msx.rom" merge="msx.rom" size="32768" crc="a317e6b4"/>
 		<rom name="msxj.rom" merge="msxj.rom" size="32768" crc="071135e0"/>
 		<rom name="kanji.rom" merge="kanji.rom" size="262144" crc="1f6406fb"/>

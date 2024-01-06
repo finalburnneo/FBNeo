@@ -2602,6 +2602,7 @@ DRV		BurnDrvCameltryau;
 DRV		BurnDrvCameltry;
 DRV		BurnDrvCameltrya;
 DRV		BurnDrvcv_campaign;
+DRV		BurnDrvmsx_campanerae;
 DRV		BurnDrvmsx_campaneras;
 DRV		BurnDrvcv_canamini;
 DRV		BurnDrvMSX_candoon;
@@ -23016,6 +23017,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCameltry,			// Cameltry (US, YM2610)
 	&BurnDrvCameltrya,			// Cameltry (World, YM2203 + M6295)
 	&BurnDrvcv_campaign,		// Campaign '84
+	&BurnDrvmsx_campanerae,		// Campanera - Jozelito's Adventure (English) (HB)
 	&BurnDrvmsx_campaneras,		// Campanera - Jozelito's Adventure (Spanish) (HB)
 	&BurnDrvcv_canamini,		// Canadian Minigames (HB)
 	&BurnDrvMSX_candoon,		// Candoo Ninja (Japan)
@@ -35446,7 +35448,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvShuuz2,				// Shuuz (version 7.1)
 	&BurnDrvShuuz,				// Shuuz (version 8.0)
 	&BurnDrvmd_shylax,			// Shylax (HB, v0.1)
-	&BurnDrvMSX_shyre,			// Shyre (HB, v1.1)
+	&BurnDrvMSX_shyre,			// Shyre (HB, v1.2)
 	&BurnDrvSichuan2,			// Sichuan II (hack, set 1)
 	&BurnDrvSichuan2a,			// Sichuan II (hack, set 2)
 	&BurnSpecSidearms,			// Side Arms (48K)
@@ -36868,8 +36870,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz3a,			// Street Fighter Zero 3 (980904 Asia)
 	&BurnDrvCpsSfz3j,			// Street Fighter Zero 3 (980904 Japan)
 	&BurnDrvCpsSfz3mix13,		// Street Fighter Zero 3 Mix v0.13
-	&BurnDrvCpsSfz3mix,			// Street Fighter Zero 3 Mix v0.23
-	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.1 (980629 Japan)
+	&BurnDrvCpsSfz3mix,			// Street Fighter Zero 3 Mix v0.24
+	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.2 (980629 Japan)
 	&BurnDrvSftm110,			// Street Fighter: The Movie (v1.10)
 	&BurnDrvSftm111,			// Street Fighter: The Movie (v1.11)
 	&BurnDrvSftm,				// Street Fighter: The Movie (v1.12)
@@ -37673,7 +37675,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_tvirus,			// T-Virus (HB)
 	&BurnDrvTnk3b,				// T.A.N.K (bootleg, 8-way joystick)
 	&BurnDrvTnk3j,				// T.A.N.K (Japan)
-	&BurnDrvMSX_tcqmsx,			// T.C.Q. (HB)
+	&BurnDrvMSX_tcqmsx,			// T.C.Q. (HB, v1.1.2)
 	&BurnSpecTcqzx,				// T.C.Q. ZX (128K) (HB)
 	&BurnDrvTnk3,				// T.N.K III (US)
 	&BurnDrvDefenderj,			// T.T Defender
@@ -38109,7 +38111,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvMSX_testdrive2,		// Test Drive II - The Duel (Euro)
 	&BurnDrvmd_td2,				// Test Drive II - The Duel (Euro, USA)
 	&BurnDrvCtsttape,			// Test Tape (DECO Cassette) (US)
-	&BurnDrvMSX_tetpuz,			// Tetpuz (HB)
+	&BurnDrvMSX_tetpuz,			// Tetpuz (HB, v1.1)
 	&BurnDrvMSX_tetrahor,		// Tetra Horror (Japan)
 	&BurnDrvMSX_tetrahora,		// Tetra Horror (Japan, Alt)
 	&BurnDrvnes_tetra,			// Tetrastar - The Fighter (Japan)
@@ -43414,6 +43416,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "cameltry", "taito/d_taitof2.cpp"},
 	{ "cameltrya", "taito/d_taitof2.cpp"},
 	{ "cv_campaign", "coleco/d_coleco.cpp"},
+	{ "msx_campanerae", "msx/d_msx.cpp"},
 	{ "msx_campaneras", "msx/d_msx.cpp"},
 	{ "cv_canamini", "coleco/d_coleco.cpp"},
 	{ "msx_candoon", "msx/d_msx.cpp"},

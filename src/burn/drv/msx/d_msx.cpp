@@ -28490,6 +28490,25 @@ struct BurnDriver BurnDrvMSX_cacorm = {
 	272, 228, 4, 3
 };
 
+// Campanera - Jozelito's Adventure (English) (HB)
+
+static struct BurnRomInfo msx_campaneraeRomDesc[] = {
+	{ "Campanera - Jozelito's Adventure EN (2022)(Physical Dreams).rom",	49152, 0xc57e69a9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(msx_campanerae, msx_campanerae, msx_msx)
+STD_ROM_FN(msx_campanerae)
+
+struct BurnDriver BurnDrvmsx_campanerae = {
+	"msx_campanerae", NULL, "msx_msx", NULL, "2022",
+	"Campanera - Jozelito's Adventure (English) (HB)\0", NULL, "Physical Dreams", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
+	MSXGetZipName, msx_campaneraeRomInfo, msx_campaneraeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Campanera - Jozelito's Adventure (Spanish) (HB)
 
 static struct BurnRomInfo msx_campanerasRomDesc[] = {
@@ -28500,11 +28519,11 @@ STDROMPICKEXT(msx_campaneras, msx_campaneras, msx_msx)
 STD_ROM_FN(msx_campaneras)
 
 struct BurnDriver BurnDrvmsx_campaneras = {
-	"msx_campaneras", NULL, "msx_msx", NULL, "2022",
+	"msx_campaneras", "msx_campanerae", "msx_msx", NULL, "2022",
 	"Campanera - Jozelito's Adventure (Spanish) (HB)\0", NULL, "Physical Dreams", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
-	MSXGetZipName, msx_campanerasRomInfo, msx_campanerasRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_ADV, 0,
+	MSXGetZipName, msx_campanerasRomInfo, msx_campanerasRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -32898,18 +32917,18 @@ struct BurnDriver BurnDrvMSX_shouganai11 = {
 	272, 228, 4, 3
 };
 
-// Shyre (HB, v1.1)
+// Shyre (HB, v1.2)
 
 static struct BurnRomInfo MSX_shyreRomDesc[] = {
-	{ "Shyre v1.1 (2023)(Platty Soft).rom",	49152, 0x21ce1859, BRF_PRG | BRF_ESS },
+	{ "Shyre v1.2 (2023)(Platty Soft).rom",	49152, 0xc3c76390, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_shyre, MSX_shyre, msx_msx)
 STD_ROM_FN(MSX_shyre)
 
 struct BurnDriver BurnDrvMSX_shyre = {
-	"msx_shyre", NULL, "msx_msx", NULL, "2013",
-	"Shyre (HB, v1.1)\0", NULL, "Platty Soft", "MSX",
+	"msx_shyre", NULL, "msx_msx", NULL, "2023",
+	"Shyre (HB, v1.2)\0", NULL, "Platty Soft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE | GBF_ADV, 0,
 	MSXGetZipName, MSX_shyreRomInfo, MSX_shyreRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -33373,10 +33392,10 @@ struct BurnDriver BurnDrvMSX_suitemacabre = {
 	272, 228, 4, 3
 };
 
-// T.C.Q. (HB)
+// T.C.Q. (HB, v1.1.2)
 
 static struct BurnRomInfo MSX_tcqmsxRomDesc[] = {
-	{ "T.C.Q. (2022)(Amaweks).rom",	49152, 0xbeb5b313, BRF_PRG | BRF_ESS },
+	{ "T.C.Q. v1.1.2 (2022)(Amaweks).rom",	32768, 0x09b5f452, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_tcqmsx, MSX_tcqmsx, msx_msx)
@@ -33384,7 +33403,7 @@ STD_ROM_FN(MSX_tcqmsx)
 
 struct BurnDriver BurnDrvMSX_tcqmsx = {
 	"msx_tcqmsx", NULL, "msx_msx", NULL, "2022",
-	"T.C.Q. (HB)\0", NULL, "Amaweks", "MSX",
+	"T.C.Q. (HB, v1.1.2)\0", NULL, "Amaweks", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_tcqmsxRomInfo, MSX_tcqmsxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -33544,10 +33563,10 @@ struct BurnDriver BurnDrvMSX_terekines = {
 	272, 228, 4, 3
 };
 
-// Tetpuz (HB)
+// Tetpuz (HB, v1.1)
 
 static struct BurnRomInfo MSX_tetpuzRomDesc[] = {
-	{ "Tetpuz (2023)(Totta).rom",	49152, 0x15283559, BRF_PRG | BRF_ESS },
+	{ "Tetpuz v1.1 (2023)(Totta).rom",	49152, 0x19782e9f, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_tetpuz, MSX_tetpuz, msx_msx)
@@ -33555,7 +33574,7 @@ STD_ROM_FN(MSX_tetpuz)
 
 struct BurnDriver BurnDrvMSX_tetpuz = {
 	"msx_tetpuz", NULL, "msx_msx", NULL, "2023",
-	"Tetpuz (HB)\0", NULL, "Totta", "MSX",
+	"Tetpuz (HB, v1.1)\0", NULL, "Totta", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_tetpuzRomInfo, MSX_tetpuzRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

@@ -6783,12 +6783,12 @@ static struct BurnRomInfo Sfz3jr2RomDesc[] = {
 STD_ROM_PICK(Sfz3jr2)
 STD_ROM_FN(Sfz3jr2)
 
-// Street Fighter Zero 3 Training Edition v1.1 (hacked by 0xZERO3)
+// Street Fighter Zero 3 Training Edition v1.2 (hacked by 0xZERO3)
 // https://github.com/0xZERO3/ZERO3TE
 
 static struct BurnRomInfo Sfz3teRomDesc[] = {
-	{ "sz3te.03",      0x080000, 0xb57412fa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3te.04",      0x080000, 0xeea5e3ca, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3te.03b",     0x080000, 0x2fb19531, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3te.04b",     0x080000, 0x01e60fc4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3.05",        0x080000, 0x9b21518a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3.06",        0x080000, 0xe7a6c3a7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3.07",        0x080000, 0xec4c0cfd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11556,8 +11556,8 @@ struct BurnDriver BurnDrvCpsSfz3jr2 = {
 };
 
 struct BurnDriver BurnDrvCpsSfz3te = {
-	"sfz3te", "sfa3", NULL, NULL, "2020",
-	"Street Fighter Zero 3 Training Edition v1.1 (980629 Japan)\0", NULL, "hack", "CPS2",
+	"sfz3te", "sfa3", NULL, NULL, "2022",
+	"Street Fighter Zero 3 Training Edition v1.2 (980629 Japan)\0", NULL, "hack", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3teRomInfo, Sfz3teRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

@@ -115,6 +115,7 @@ You can use specific folder's name for detection, it's the easiest and recommend
 * Sega Megadrive : `megadriv` | `megadrive` | `genesis`
 * Sega SG-1000 : `sg1000`
 * SNK Neo-Geo Pocket : `ngp`
+* SNK Neo-Geo CD : `neocd`
 * ZX Spectrum : `spectrum` | `zxspectrum`
 
 You can also emulate consoles by prefixing the name of the roms with `XXX_` and removing the `zip|7z` extension in the command line, or adding the `--subsystem XXX` argument, here is the list of available prefixes :
@@ -132,6 +133,7 @@ You can also emulate consoles by prefixing the name of the roms with `XXX_` and 
 * Sega Megadrive : `md`
 * Sega SG-1000 : `sg1k`
 * SNK Neo-Geo Pocket : `ngp`
+* SNK Neo-Geo CD : `neocd`
 * ZX Spectrum : `spec`
 
 ## BIOS
@@ -305,8 +307,8 @@ This libretro port also supports various features which are usually buggy or tot
 
 There are several things to know :
 
+* You need to follow the instructions about [emulating consoles](#emulating-consoles-and-computers)
 * You need a copy of the `neocdz.zip` and `neogeo.zip` bioses
-* You need to add `--subsystem neocd` to the command line, or to place your games in a `neocd` folder
 * The supported format is single file MODE1/2352 cue/bin (use "CDmage" to convert your iso if needed), **they must not be compressed**
 
 You can convert your unsupported cd images by following this tutorial :

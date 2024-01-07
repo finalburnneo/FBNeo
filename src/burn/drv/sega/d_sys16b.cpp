@@ -8613,6 +8613,21 @@ static INT32 FantzntaInit()
 	return System16Init();
 }
 
+static INT32 Fantzps2Init()
+{
+	System16CustomLoadRomDo = FantzntaLoadRom;
+	System16UPD7759DataSize = 0x10000;
+
+	INT32 rc = System16Init();
+
+	if (!rc) {
+		// game wants sprite bank 2 to point to bank 8
+		System16SpriteBanks[2] = 8;
+	}
+
+	return rc;
+}
+
 static void FpointblMap68K()
 {
 	SekInit(0, 0x68000);
@@ -10024,7 +10039,7 @@ struct BurnDriver BurnDrvFantzps2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
 	NULL, Fantzps2RomInfo, Fantzps2RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
-	FantzntaInit, System16Exit, System16BFrame, System16BRender, System16Scan,
+	Fantzps2Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

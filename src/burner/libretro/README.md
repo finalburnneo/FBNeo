@@ -366,6 +366,10 @@ Note that there was also a request to add a retroarch macro mapper in https://gi
 
 This feature doesn't accept achievements made with any kind of cheat, meaning unibios, cheats, and patched romsets must be disabled in core options.
 
+### Why do i need to re-enable cheats every time i boot a game ?
+
+It is common for arcade machines to execute self-tests at boot, and in many cases they won't boot if unexpected values have been injected into their memory, which is exactly what cheats do. Disabling cheats at boot is a safety mecanism.
+
 ### Where is SYSTEM_DIRECTORY ?
 
 Open your `retroarch.cfg` file and look for `system_directory`, or check `Settings > Directory > System/BIOS`.

@@ -14,7 +14,7 @@ The main difference with MAME is that FBNeo doesn't mind including "quality of l
 * improving original game's sound (some games like "Burger Time" have noise which was clearly unintended by their developpers, we are removing it)
 * implementing alternative colors for games where the colors don't look right (sometimes there are controversies about which colors are right for an arcade board, like "Tropical Angel", we implement alternative colors as dipswitches)
 * having control alternatives that didn't exist on original cabinet (play rotary stick games like twin-stick shooters, use lightguns in "Rambo 3", use simplified 8-way directional controls for "Battlezone", ...)
-* improving the gaming experience by cutting what we deem as unnecessary aspect of emulation (you won't have to spend 20 minutes "installing" CPS-3 games)
+* improving the gaming experience by cutting what we deem as unnecessary aspect of emulation (you don't have to spend 20 minutes "installing" CPS-3 games, neither 100s loading Deco Cassette games)
 * reducing hardware requirements by cutting what we deem as unnecessary corners in the emulation code
 * supporting popular romhacks
 
@@ -22,7 +22,7 @@ Note: some of those "quality of life" hacks might be doable with programming ski
 
 ## License and changelog
 
-It's distributed under non-commercial license, see [LICENSE.md](https://github.com/finalburnneo/FBNeo/blob/master/LICENSE.md) and [whatsnew.html](https://github.com/finalburnneo/FBNeo/blob/master/whatsnew.html).
+It's distributed under a non-commercial license, see [LICENSE.md](https://github.com/finalburnneo/FBNeo/blob/master/LICENSE.md) and [whatsnew.html](https://github.com/finalburnneo/FBNeo/blob/master/whatsnew.html).
 
 ## Extensions
 
@@ -335,7 +335,7 @@ If you are wondering why this isn't required for the MAME core, you can find mor
 Additionally :
 
 * If you are playing on a vertical screen, you'll want to use the `Vertical Mode` core option to rotate the display for your needs, it should also be possible to rotate display from `Settings > Video > Output > Video Rotation` but that method might handle the aspect ratio incorrectly.
-* If you are using a bezel pack, make sure it's compatible with FBNeo (apparently, some were written specifically to work with MAME's internal rotation) and to follow its official instructions. In some case it seems enabling `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`) can help
+* If you are using a bezel pack, make sure it's compatible with FBNeo (apparently, some were written specifically to work with MAME's internal rotation) and to follow its official instructions. In some case it seems enabling `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`) can help.
 
 ### Why is the music high-pitched, too fast and/or different from upstream ?
 
@@ -344,9 +344,15 @@ By default standalone has 44100 samplerate and both interpolations off, and that
 
 You might also want to make sure you are running the game at the correct speed, most crt games don't run at 60Hz and if you want the proper refresh rate to be emulated you'll need to make sure `Force 60Hz` isn't enabled in core options and `Settings > Video > Synchronization > Sync to Exact Content Framerate` is enabled (`vrr_runloop_enable = "true"` in `retroarch.cfg`). Please note that your screen might not handle well the correct refresh rate, in which case you'll have to make a choice between smoothness and correct refresh rate.
 
-### Why do i get a black screen in neogeo games ?
+### Why do i get a black screen and/or can't i change bios in neogeo games ?
 
-Most likely because you have an incomplete `neogeo` romset and you changed your bios through core options. `MVS Asia/Europe ver. 6 (1 slot)` is the default bios and the only one that will cause a "white screen" if missing from your `neogeo` romset. If you select another neogeo bios while not having the corresponding file, you won't get the "white screen", instead you'll have a black screen with some sound playing. This issue will only happen if you didn't follow the instructions about romsets.
+The `neogeo` romset is a collection of neogeo bioses, and most of them are considered as optional so they won't cause a "white screen" when missing. Only `MVS Asia/Europe ver. 6 (1 slot)` is mandatory.
+
+However, having an incomplete romset can still cause various issues :
+* If you are using the "Use bios set in BIOS dipswitch" as "Neo-Geo mode" and the bios set in dipswitches is missing, you'll have a black screen where you can hear some sound playing.
+* If you are using any of the other choices available in "Neo-Geo mode" and a corresponding bios can't be found, the core will fallback to one of the available bioses.
+
+Obviously, none of this is supposed to ever happen if you followed the instructions about romsets as you are supposed to.
 
 ### Why do i get some weird transparent effects in game XXX ?
 
@@ -368,7 +374,7 @@ This feature doesn't accept achievements made with any kind of cheat, meaning un
 
 ### Why do i need to re-enable cheats every time i boot a game ?
 
-It is common for arcade machines to execute self-tests at boot, and in many cases they won't boot if unexpected values have been injected into their memory, which is exactly what cheats do. Disabling cheats at boot is a safety mecanism.
+It is common for arcade machines to execute self-tests at boot, and in many cases they won't boot if unexpected values have been injected into their memory, which is exactly what cheats do. Disabling cheats at boot is a safety mecanism to prevent those boot issues.
 
 ### Where is SYSTEM_DIRECTORY ?
 

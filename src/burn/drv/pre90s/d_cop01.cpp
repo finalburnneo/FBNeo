@@ -769,7 +769,7 @@ static void draw_sprites()
 
 		if (code & 0x80) code += bank;
 
-		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0, 0x200, DrvGfxROM2);
+		RenderTileTranstabOffset(pTransDraw, DrvGfxROM2, code, color << 4, 0xf, sx, sy - 16, flipx, flipy, 16, 16, DrvColPROM + 0x400, 0x200);
 	}
 }
 
@@ -1086,6 +1086,6 @@ struct BurnDriver BurnDrvMightguy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mightguyRomInfo, mightguyRomName, NULL, NULL, NULL, NULL, Cop01InputInfo, MightguyDIPInfo,
-	MightguyInit, DrvExit, MightguyFrame, DrvDraw, DrvScan, &DrvRecalc, 0x190,
+	MightguyInit, DrvExit, MightguyFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 256, 3, 4
 };

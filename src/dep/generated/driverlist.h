@@ -5688,7 +5688,7 @@ DRV		BurnDrvmd_fantazone;
 DRV		BurnDrvpce_fantzonemini;
 DRV		BurnDrvFantzonepr;
 DRV		BurnDrvFantzone;
-DRV		BurnDrvFantzps2;
+DRV		BurnDrvFantznps2;
 DRV		BurnDrvsms_fantzonetw;
 DRV		BurnDrvFantzoneta;
 DRV		BurnDrvFantzone1;
@@ -26103,7 +26103,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvpce_fantzonemini,	// Fantasy Zone (PC-Engine Mini Ed.)
 	&BurnDrvFantzonepr,			// Fantasy Zone (prototype)
 	&BurnDrvFantzone,			// Fantasy Zone (Rev A, unprotected)
-	&BurnDrvFantzps2,			// Fantasy Zone (System 16B, PS2 data file)
+	&BurnDrvFantznps2,			// Fantasy Zone (System 16B, PS2 data file)
 	&BurnDrvsms_fantzonetw,		// Fantasy Zone (Taiwan)
 	&BurnDrvFantzoneta,			// Fantasy Zone (Time Attack, bootleg)
 	&BurnDrvFantzone1,			// Fantasy Zone (unprotected)
@@ -46468,7 +46468,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "pce_fantzonemini", "pce/d_pce.cpp"},
 	{ "fantzonepr", "sega/d_sys16a.cpp"},
 	{ "fantzone", "sega/d_sys16a.cpp"},
-	{ "fantzps2", "sega/d_sys16b.cpp"},
+	{ "fantznps2", "sega/d_sys16b.cpp"},
 	{ "sms_fantzonetw", "sms/d_sms.cpp"},
 	{ "fantzoneta", "sega/d_sys16b.cpp"},
 	{ "fantzone1", "sega/d_sys16a.cpp"},

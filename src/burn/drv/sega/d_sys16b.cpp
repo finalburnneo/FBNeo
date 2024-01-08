@@ -4404,7 +4404,7 @@ static struct BurnRomInfo FantzntaRomDesc[] = {
 STD_ROM_PICK(Fantznta)
 STD_ROM_FN(Fantznta)
 
-static struct BurnRomInfo Fantzps2RomDesc[] = {
+static struct BurnRomInfo Fantznps2RomDesc[] = {
 	{ "fz1_s16b.p00",   0x040000, 0xe8c4041a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "fz1_s16b.scr",   0x040000, 0x10ecd8b9, SYS16_ROM_TILES | BRF_GRA },
@@ -4415,8 +4415,8 @@ static struct BurnRomInfo Fantzps2RomDesc[] = {
 };
 
 
-STD_ROM_PICK(Fantzps2)
-STD_ROM_FN(Fantzps2)
+STD_ROM_PICK(Fantznps2)
+STD_ROM_FN(Fantznps2)
 
 static struct BurnRomInfo FpointRomDesc[] = {
 	{ "epr-12599b.a4",  0x10000, 0x26e3f354, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -8613,7 +8613,7 @@ static INT32 FantzntaInit()
 	return System16Init();
 }
 
-static INT32 Fantzps2Init()
+static INT32 Fantznps2Init()
 {
 	System16CustomLoadRomDo = FantzntaLoadRom;
 	System16UPD7759DataSize = 0x10000;
@@ -10024,7 +10024,7 @@ struct BurnDriver BurnDrvFantzn2xps2 = {
 };
 
 struct BurnDriver BurnDrvFantznta = {
-	"fantznta", "fantzn2x", NULL, NULL, "2008",
+	"fantznta", "fantzone", NULL, NULL, "2008",
 	"Fantasy Zone Time Attack (System 16B, PS2 data file)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
@@ -10033,13 +10033,13 @@ struct BurnDriver BurnDrvFantznta = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvFantzps2 = {
-	"fantzps2", "fantzn2x", NULL, NULL, "2008",
+struct BurnDriver BurnDrvFantznps2 = {
+	"fantznps2", "fantzone", NULL, NULL, "2008",
 	"Fantasy Zone (System 16B, PS2 data file)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
-	NULL, Fantzps2RomInfo, Fantzps2RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
-	Fantzps2Init, System16Exit, System16BFrame, System16BRender, System16Scan,
+	NULL, Fantznps2RomInfo, Fantznps2RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
+	Fantznps2Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

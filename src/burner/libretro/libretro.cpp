@@ -1888,7 +1888,10 @@ static bool retro_load_game_common()
 		}
 
 		// Apply dipswitches
-		apply_dipswitches_from_variables();
+		// note: apply_dipswitches_from_variables won't be able to detect changed dips at boot if they are the defaults,
+		//       but we want to call set_dipswitches_visibility at least once since some dips should be hidden even at defaults
+		if (!apply_dipswitches_from_variables())
+			set_dipswitches_visibility();
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Applied dipswitches from core options\n");
 
 		// Override the NeoGeo bios DIP Switch by the main one (for the moment)

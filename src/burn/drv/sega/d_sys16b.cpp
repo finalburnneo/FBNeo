@@ -8613,19 +8613,20 @@ static INT32 FantzntaInit()
 	return System16Init();
 }
 
+static void Fantznps2ResetCallback()
+{
+	// game wants sprite bank 2 to point to bank 8
+	// note: to explain this callback: spritebanks get set to default values @ reset
+	System16SpriteBanks[2] = 8;
+}
+
 static INT32 Fantznps2Init()
 {
+	System16ResetCallbackDo = Fantznps2ResetCallback;
 	System16CustomLoadRomDo = FantzntaLoadRom;
 	System16UPD7759DataSize = 0x10000;
 
-	INT32 rc = System16Init();
-
-	if (!rc) {
-		// game wants sprite bank 2 to point to bank 8
-		System16SpriteBanks[2] = 8;
-	}
-
-	return rc;
+	return System16Init();
 }
 
 static void FpointblMap68K()

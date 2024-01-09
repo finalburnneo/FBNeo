@@ -180,6 +180,7 @@ System16CustomDecryptOpCode System16CustomDecryptOpCodeDo;
 System16ProcessAnalogControls System16ProcessAnalogControlsDo;
 System16MakeAnalogInputs System16MakeAnalogInputsDo;
 System16MakeAnalogInputs System16MakeInputsDo;
+System16ResetCallback System16ResetCallbackDo;
 
 /*====================================================
 Inputs
@@ -412,6 +413,10 @@ static INT32 System16DoReset()
 	System18Startup = 10;
 
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
+
+	if (System16ResetCallbackDo) {
+		System16ResetCallbackDo();
+	}
 
 	HiscoreReset(1 /*disable inversion pattern: see notes in hiscore.cpp's HiscoreReset()*/);
 
@@ -2786,6 +2791,7 @@ INT32 System16Exit()
  	System16ProcessAnalogControlsDo = NULL;
 	System16MakeAnalogInputsDo = NULL;
 	System16MakeInputsDo = NULL;
+	System16ResetCallbackDo = NULL;
 	System16I8751InitialConfig = NULL;
  	
  	memset(multiply, 0, sizeof(multiply));

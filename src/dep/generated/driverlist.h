@@ -12208,6 +12208,7 @@ DRV		BurnDrvPacman25o;
 DRV		BurnDrvPacman25;
 DRV		BurnDrvmd_pacman2c;
 DRV		BurnDrvmd_pacman2;
+DRV		BurnSpecPmarcade;
 DRV		BurnDrvnes_pacmance;
 DRV		BurnDrvpacplus;
 DRV		BurnDrvnes_pacmanx;
@@ -32623,6 +32624,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvPacman25,			// Pac-Man - 25th Anniversary Edition (Rev 3.00) [no comment, NOT WORKING]
 	&BurnDrvmd_pacman2c,		// Pac-Man 2 - The New Adventures (Hack, Chinese v1.1)
 	&BurnDrvmd_pacman2,			// Pac-Man 2 - The New Adventures (USA)
+	&BurnSpecPmarcade,			// Pac-Man Arcade (48K) (HB)
 	&BurnDrvnes_pacmance,		// Pac-Man Championship Edition
 	&BurnDrvpacplus,			// Pac-Man Plus
 	&BurnDrvnes_pacmanx,		// Pac-Man Xtreme (Hack)
@@ -52928,6 +52930,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "25pacman", "pst90s/d_20pacgal.cpp"},
 	{ "md_pacman2c", "megadrive/d_megadrive.cpp"},
 	{ "md_pacman2", "megadrive/d_megadrive.cpp"},
+	{ "spec_pmarcade", "spectrum/d_spectrum.cpp"},
 	{ "nes_pacmance", "nes/d_nes.cpp"},
 	{ "pacplus", "pre90s/d_pacman.cpp"},
 	{ "nes_pacmanx", "nes/d_nes.cpp"},

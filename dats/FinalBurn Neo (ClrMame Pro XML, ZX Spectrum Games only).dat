@@ -5332,7 +5332,7 @@
 		<description>Crazy Christmas (48K) (HB)</description>
 		<year>2023</year>
 		<manufacturer>Fransouls</manufacturer>
-		<rom name="Crazy Christmas 48K-AY (2023)(Fransouls).tap" size="46648" crc="0924923b"/>
+		<rom name="Crazy Christmas 48K-AY v1.0 (2023)(Fransouls).tap" size="46648" crc="647cff0e"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>
@@ -15717,6 +15717,16 @@
 		<year>1983</year>
 		<manufacturer>Atarisoft</manufacturer>
 		<rom name="Pac-Man (1983)(Atarisoft).z80" size="13820" crc="e3c56f6b"/>
+		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
+		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
+		<driver status="good"/>
+	</game>
+	<game name="pmarcade" romof="spectrum" sourcefile="spectrum/d_spectrum.cpp">
+		<comment>Homebrew</comment>
+		<description>Pac-Man Arcade (48K) (HB)</description>
+		<year>2023</year>
+		<manufacturer>Marco Leal</manufacturer>
+		<rom name="Pac-Man Arcade 48K (2023)(Marco Leal).tap" size="28597" crc="0dc420c7"/>
 		<rom name="spectrum.rom" merge="spectrum.rom" size="16384" crc="ddee531f"/>
 		<video type="raster" orientation="horizontal" width="288" height="224" aspectx="4" aspecty="3"/>
 		<driver status="good"/>

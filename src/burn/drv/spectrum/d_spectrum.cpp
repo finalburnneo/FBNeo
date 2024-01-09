@@ -44207,7 +44207,7 @@ struct BurnDriver BurnSpecPhrehab = {
 // Pac-Man Arcade (48K) (HB)
 
 static struct BurnRomInfo SpecPmarcadeRomDesc[] = {
-	{ "Pac-Man Arcade 48K (2023)(Marco Leal).z80", 20746, 0xf5a3d72a, BRF_ESS | BRF_PRG },
+	{ "Pac-Man Arcade 48K (2023)(Marco Leal).tap", 28597, 0x0dc420c7, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPmarcade, SpecPmarcade, Spectrum)

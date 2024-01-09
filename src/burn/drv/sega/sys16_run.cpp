@@ -2678,6 +2678,7 @@ INT32 System16Exit()
 	System16ScreenFlipYoffs = 0;
 	System16SpriteShadow = 0;
 	System16SpriteXOffset = 0;
+	System16SpriteYOffset = 0;
 	System16VideoControl = 0;
 	System16SoundLatch = 0;
 	System16SoundMute = 0;

@@ -264,6 +264,7 @@ extern INT32 System16ScreenFlipXoffs;
 extern INT32 System16ScreenFlipYoffs;
 extern INT32 System16SpriteShadow;
 extern INT32 System16SpriteXOffset;
+extern INT32 System16SpriteYOffset;
 extern INT32 System16SpriteBanks[16];
 extern INT32 System16TileBanks[8];
 extern INT32 System16OldTileBanks[8];

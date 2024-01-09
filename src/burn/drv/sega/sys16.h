@@ -158,6 +158,9 @@ typedef void (*System16MakeAnalogInputs)();
 extern System16MakeAnalogInputs System16MakeAnalogInputsDo;
 extern System16MakeAnalogInputs System16MakeInputsDo;
 
+typedef void (*System16ResetCallback)();
+extern System16ResetCallback System16ResetCallbackDo;
+
 UINT8 __fastcall System16PPIZ80PortRead(UINT16 a);
 void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d);
 

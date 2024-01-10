@@ -6628,6 +6628,37 @@ static struct BurnRomInfo Sfa3ceRomDesc[] = {
 STD_ROM_PICK(Sfa3ce)
 STD_ROM_FN(Sfa3ce)
 
+static struct BurnRomInfo Sfa3xlRomDesc[] = {
+	{ "sz3e-xl.03c",   0x080000, 0x9411ced4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3e-xl.04c",   0x080000, 0x01a7b266, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.05c",       0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.06c",       0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.07c",       0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.08c",       0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.09c",       0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3.10b",       0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3.13m",       0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",       0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",       0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",       0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+
+	{ "sfa3.key",      0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfa3xl)
+STD_ROM_FN(Sfa3xl)
+
 static struct BurnRomInfo Sfz3aRomDesc[] = {
 	{ "sz3a.03d",      0x080000, 0xd7e140d6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3a.04d",      0x080000, 0xe06869a2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -6816,194 +6847,6 @@ static struct BurnRomInfo Sfz3teRomDesc[] = {
 
 STD_ROM_PICK(Sfz3te)
 STD_ROM_FN(Sfz3te)
-
-// Street Fighter Zero 3 Mix v0.24 (hacked by Zero800)
-// https://sfz3mix.github.io/
-
-static struct BurnSampleInfo Sfz3mixSampleDesc[] = {
-	{ "empty", SAMPLE_NOLOOP },
-	{ "L01",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L02",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L03",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L04",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L05",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L06",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L07",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L08",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L09",   SAMPLE_NOLOOP },
-	{ "L0A",   SAMPLE_NOLOOP },
-	{ "L0B",   SAMPLE_NOLOOP },
-	{ "L0C",   SAMPLE_NOLOOP },
-	{ "L0D",   SAMPLE_NOLOOP },
-	{ "L0E",   SAMPLE_NOLOOP },
-	{ "L0F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L10",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L11",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L12",   SAMPLE_NOLOOP },
-	{ "L13",   SAMPLE_NOLOOP },
-	{ "L14",   SAMPLE_NOLOOP },
-	{ "L15",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L16",   SAMPLE_NOLOOP },
-	{ "L17",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L18",   SAMPLE_NOLOOP },
-	{ "L19",   SAMPLE_NOLOOP },
-	{ "L1A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L1B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L1C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L1D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L1E",   SAMPLE_NOLOOP },
-	{ "L1F",   SAMPLE_NOLOOP },
-	{ "L20",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L21",   SAMPLE_NOLOOP },
-	{ "L22",   SAMPLE_NOLOOP },
-	{ "L23",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L24",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L25",   SAMPLE_NOLOOP },
-	{ "L26",   SAMPLE_NOLOOP },
-	{ "L27",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L28",   SAMPLE_NOLOOP },
-	{ "L29",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L2A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L2B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L2C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L2D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L2E",   SAMPLE_NOLOOP },
-	{ "L2F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L30",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L31",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L32",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L33",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L34",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L35",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L36",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L37",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L38",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L39",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L3A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L3B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L3C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L3D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L3E",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "L3F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "empty", SAMPLE_NOLOOP },
-	{ "R01",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R02",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R03",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R04",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R05",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R06",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R07",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R08",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R09",   SAMPLE_NOLOOP },
-	{ "R0A",   SAMPLE_NOLOOP },
-	{ "R0B",   SAMPLE_NOLOOP },
-	{ "R0C",   SAMPLE_NOLOOP },
-	{ "R0D",   SAMPLE_NOLOOP },
-	{ "R0E",   SAMPLE_NOLOOP },
-	{ "R0F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R10",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R11",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R12",   SAMPLE_NOLOOP },
-	{ "R13",   SAMPLE_NOLOOP },
-	{ "R14",   SAMPLE_NOLOOP },
-	{ "R15",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R16",   SAMPLE_NOLOOP },
-	{ "R17",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R18",   SAMPLE_NOLOOP },
-	{ "R19",   SAMPLE_NOLOOP },
-	{ "R1A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R1B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R1C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R1D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R1E",   SAMPLE_NOLOOP },
-	{ "R1F",   SAMPLE_NOLOOP },
-	{ "R20",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R21",   SAMPLE_NOLOOP },
-	{ "R22",   SAMPLE_NOLOOP },
-	{ "R23",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R24",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R25",   SAMPLE_NOLOOP },
-	{ "R26",   SAMPLE_NOLOOP },
-	{ "R27",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R28",   SAMPLE_NOLOOP },
-	{ "R29",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R2A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R2B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R2C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R2D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R2E",   SAMPLE_NOLOOP },
-	{ "R2F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R30",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R31",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R32",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R33",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R34",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R35",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R36",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R37",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R38",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R39",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R3A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R3B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R3C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R3D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R3E",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "R3F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
-	{ "", 0 }
-};
-
-STD_SAMPLE_PICK(Sfz3mix)
-STD_SAMPLE_FN(Sfz3mix)
-
-static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sfz3mix.p1",   0x0600000, 0x6b3cfa0c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-
-	{ "sfz3mix.c1",   0x2000000, 0xef7f2d3f, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.c2",   0x2000000, 0xcbc02909, CPS2_GFX | BRF_GRA },
-
-	{ "sfz3mix.m1",   0x0080000, 0xc6322d7b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-
-	{ "sfz3mix.q1",   0x1000000, 0x180cbe91, CPS2_QSND | BRF_SND },
-
-	{ "phoenix.key",  0x0000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
-};
-
-STD_ROM_PICK(Sfz3mix)
-STD_ROM_FN(Sfz3mix)
-
-// Street Fighter Zero 3 Mix v0.13 (hacked by Zero800)
-// https://sfz3mix.github.io/
-
-static struct BurnRomInfo Sfz3mix13RomDesc[] = {
-	{ "c78mix13.p1",   0x080000, 0x39b106fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "c78mix13.p2",   0x080000, 0x0cde4b42, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "c78mix13.p3",   0x080000, 0xb8b19c1f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "c78mix13.p4",   0x080000, 0x35639da3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "c78mix13.p5",   0x080000, 0xa9d9f83e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "c78mix13.p6",   0x080000, 0xa85e33a5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "c78mix12.p7",   0x080000, 0x7a5a0d3c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "c78mix13.p8",   0x080000, 0x3fa5f874, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-
-	{ "c78mix11.c1",   0x400000, 0x93183516, CPS2_GFX | BRF_GRA },
-	{ "c78mix11.c2",   0x400000, 0xb06f14ce, CPS2_GFX | BRF_GRA },
-	{ "c78mix11.c3",   0x400000, 0x661c1355, CPS2_GFX | BRF_GRA },
-	{ "c78mix11.c4",   0x400000, 0x7227f353, CPS2_GFX | BRF_GRA },
-	{ "c78mix10.c5",   0x400000, 0x62496779, CPS2_GFX | BRF_GRA },
-	{ "c78mix10.c6",   0x400000, 0x1e7aa3cb, CPS2_GFX | BRF_GRA },
-	{ "c78mix10.c7",   0x400000, 0x95e161ce, CPS2_GFX | BRF_GRA },
-	{ "c78mix10.c8",   0x400000, 0xa6afdc2d, CPS2_GFX | BRF_GRA },
-
-	{ "c78mix13.m1",   0x020000, 0x5ac9bfe5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "c78mix13.m2",   0x020000, 0x68a17d87, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-
-	{ "c78mix13.q1",   0x400000, 0xab9415fb, CPS2_QSND | BRF_SND },
-	{ "c78.q2",        0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
-
-	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
-};
-
-STD_ROM_PICK(Sfz3mix13)
-STD_ROM_FN(Sfz3mix13)
 
 static struct BurnRomInfo SgemfRomDesc[] = {
 	{ "pcfu.03",       0x080000, 0xac2e8566, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11505,6 +11348,16 @@ struct BurnDriver BurnDrvCpsSfa3ce = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsSfa3xl = {
+	"sfa3xl", "sfa3", NULL, NULL, "2009",
+	"Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10)\0", NULL, "Hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfa3xlRomInfo, Sfa3xlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsSfz3a = {
 	"sfz3a", "sfa3", NULL, NULL, "1998",
 	"Street Fighter Zero 3 (980904 Asia)\0", NULL, "Capcom", "CPS2",
@@ -11561,47 +11414,6 @@ struct BurnDriver BurnDrvCpsSfz3te = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3teRomInfo, Sfz3teRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
-	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-static INT32 Cps2TurboInit()
-{
-	Cps2Turbo = 1;
-
-	INT32 rc = Cps2Init();
-
-	if (!rc) {
-		BurnSampleInit(1);
-		for (int i = 0; i < 0x40; i++) {
-			// Left side
-			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
-			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_NONE);
-			// Right side
-			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_RIGHT);
-			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_NONE);
-		}
-	}
-
-	return rc;
-}
-
-struct BurnDriver BurnDrvCpsSfz3mix = {
-	"sfz3mix", "sfa3", NULL, "sfz3mix", "2023",
-	"Street Fighter Zero 3 Mix v0.24\0", NULL, "hack (zero800)", "CPS2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
-	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
-};
-
-struct BurnDriver BurnDrvCpsSfz3mix13 = {
-	"sfz3mix13", "sfa3", NULL, NULL, "2022",
-	"Street Fighter Zero 3 Mix v0.13\0", NULL, "hack", "CPS2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfz3mix13RomInfo, Sfz3mix13RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -13359,37 +13171,6 @@ static struct BurnRomInfo Sfa3udRomDesc[] = {
 STD_ROM_PICK(Sfa3ud)
 STD_ROM_FN(Sfa3ud)
 
-static struct BurnRomInfo Sfa3xlRomDesc[] = {
-	{ "sz3e-xl.03c",   0x080000, 0x9411ced4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3e-xl.04c",   0x080000, 0x01a7b266, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.05c",       0x080000, 0x57fd0a40, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.06c",       0x080000, 0xf6305f8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.07c",       0x080000, 0x6eab0f6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.08c",       0x080000, 0x910c4a3b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.09c",       0x080000, 0xb29e5199, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.10b",       0x080000, 0xdeb2ff52, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-
-	{ "sz3.13m",       0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
-	{ "sz3.15m",       0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
-	{ "sz3.17m",       0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
-	{ "sz3.19m",       0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
-	{ "sz3.14m",       0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
-	{ "sz3.16m",       0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
-	{ "sz3.18m",       0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
-	{ "sz3.20m",       0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
-
-	{ "sz3.01",        0x020000, 0xde810084, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sz3.02",        0x020000, 0x72445dc4, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-
-	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
-	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
-
-	{ "sfa3.key",      0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
-};
-
-STD_ROM_PICK(Sfa3xl)
-STD_ROM_FN(Sfa3xl)
-
 static struct BurnRomInfo Sfz3jr2dRomDesc[] = {
 	{ "sz3j_d.03",     0x080000, 0xb0436151, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3j_d.04",     0x080000, 0x642d8170, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -13420,6 +13201,194 @@ static struct BurnRomInfo Sfz3jr2dRomDesc[] = {
 
 STD_ROM_PICK(Sfz3jr2d)
 STD_ROM_FN(Sfz3jr2d)
+
+// Street Fighter Zero 3 Mix v0.25 (hacked by Zero800)
+// https://sfz3mix.github.io/
+
+static struct BurnSampleInfo Sfz3mixSampleDesc[] = {
+	{ "empty", SAMPLE_NOLOOP },
+	{ "L01",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L02",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L03",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L04",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L05",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L06",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L07",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L08",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L09",   SAMPLE_NOLOOP },
+	{ "L0A",   SAMPLE_NOLOOP },
+	{ "L0B",   SAMPLE_NOLOOP },
+	{ "L0C",   SAMPLE_NOLOOP },
+	{ "L0D",   SAMPLE_NOLOOP },
+	{ "L0E",   SAMPLE_NOLOOP },
+	{ "L0F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L10",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L11",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L12",   SAMPLE_NOLOOP },
+	{ "L13",   SAMPLE_NOLOOP },
+	{ "L14",   SAMPLE_NOLOOP },
+	{ "L15",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L16",   SAMPLE_NOLOOP },
+	{ "L17",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L18",   SAMPLE_NOLOOP },
+	{ "L19",   SAMPLE_NOLOOP },
+	{ "L1A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L1E",   SAMPLE_NOLOOP },
+	{ "L1F",   SAMPLE_NOLOOP },
+	{ "L20",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L21",   SAMPLE_NOLOOP },
+	{ "L22",   SAMPLE_NOLOOP },
+	{ "L23",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L24",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L25",   SAMPLE_NOLOOP },
+	{ "L26",   SAMPLE_NOLOOP },
+	{ "L27",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L28",   SAMPLE_NOLOOP },
+	{ "L29",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L2E",   SAMPLE_NOLOOP },
+	{ "L2F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L30",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L31",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L32",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L33",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L34",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L35",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L36",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L37",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L38",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L39",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3E",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "L3F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "empty", SAMPLE_NOLOOP },
+	{ "R01",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R02",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R03",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R04",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R05",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R06",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R07",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R08",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R09",   SAMPLE_NOLOOP },
+	{ "R0A",   SAMPLE_NOLOOP },
+	{ "R0B",   SAMPLE_NOLOOP },
+	{ "R0C",   SAMPLE_NOLOOP },
+	{ "R0D",   SAMPLE_NOLOOP },
+	{ "R0E",   SAMPLE_NOLOOP },
+	{ "R0F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R10",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R11",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R12",   SAMPLE_NOLOOP },
+	{ "R13",   SAMPLE_NOLOOP },
+	{ "R14",   SAMPLE_NOLOOP },
+	{ "R15",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R16",   SAMPLE_NOLOOP },
+	{ "R17",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R18",   SAMPLE_NOLOOP },
+	{ "R19",   SAMPLE_NOLOOP },
+	{ "R1A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R1E",   SAMPLE_NOLOOP },
+	{ "R1F",   SAMPLE_NOLOOP },
+	{ "R20",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R21",   SAMPLE_NOLOOP },
+	{ "R22",   SAMPLE_NOLOOP },
+	{ "R23",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R24",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R25",   SAMPLE_NOLOOP },
+	{ "R26",   SAMPLE_NOLOOP },
+	{ "R27",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R28",   SAMPLE_NOLOOP },
+	{ "R29",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R2E",   SAMPLE_NOLOOP },
+	{ "R2F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R30",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R31",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R32",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R33",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R34",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R35",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R36",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R37",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R38",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R39",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3A",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3B",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3C",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3D",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3E",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "R3F",   SAMPLE_NOLOOP | SAMPLE_NODUMP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(Sfz3mix)
+STD_SAMPLE_FN(Sfz3mix)
+
+static struct BurnRomInfo Sfz3mixRomDesc[] = {
+	{ "sfz3mix.p1",   0x0600000, 0x2ef2a33b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sfz3mix.c1",   0x2000000, 0xef7f2d3f, CPS2_GFX | BRF_GRA },
+	{ "sfz3mix.c2",   0x2000000, 0xcbc02909, CPS2_GFX | BRF_GRA },
+
+	{ "sfz3mix.m1",   0x0080000, 0xc6322d7b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sfz3mix.q1",   0x1000000, 0x180cbe91, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",  0x0000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz3mix)
+STD_ROM_FN(Sfz3mix)
+
+// Street Fighter Zero 3 Mix v0.13 (hacked by Zero800)
+// https://sfz3mix.github.io/
+
+static struct BurnRomInfo Sfz3mix13RomDesc[] = {
+	{ "c78mix13.p1",   0x080000, 0x39b106fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c78mix13.p2",   0x080000, 0x0cde4b42, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c78mix13.p3",   0x080000, 0xb8b19c1f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c78mix13.p4",   0x080000, 0x35639da3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c78mix13.p5",   0x080000, 0xa9d9f83e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c78mix13.p6",   0x080000, 0xa85e33a5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c78mix12.p7",   0x080000, 0x7a5a0d3c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c78mix13.p8",   0x080000, 0x3fa5f874, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "c78mix11.c1",   0x400000, 0x93183516, CPS2_GFX | BRF_GRA },
+	{ "c78mix11.c2",   0x400000, 0xb06f14ce, CPS2_GFX | BRF_GRA },
+	{ "c78mix11.c3",   0x400000, 0x661c1355, CPS2_GFX | BRF_GRA },
+	{ "c78mix11.c4",   0x400000, 0x7227f353, CPS2_GFX | BRF_GRA },
+	{ "c78mix10.c5",   0x400000, 0x62496779, CPS2_GFX | BRF_GRA },
+	{ "c78mix10.c6",   0x400000, 0x1e7aa3cb, CPS2_GFX | BRF_GRA },
+	{ "c78mix10.c7",   0x400000, 0x95e161ce, CPS2_GFX | BRF_GRA },
+	{ "c78mix10.c8",   0x400000, 0xa6afdc2d, CPS2_GFX | BRF_GRA },
+
+	{ "c78mix13.m1",   0x020000, 0x5ac9bfe5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "c78mix13.m2",   0x020000, 0x68a17d87, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "c78mix13.q1",   0x400000, 0xab9415fb, CPS2_QSND | BRF_SND },
+	{ "c78.q2",        0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz3mix13)
+STD_ROM_FN(Sfz3mix13)
 
 static struct BurnRomInfo SgemfdRomDesc[] = {
 	{ "pcfud.03",      0x080000, 0x8b83674a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -14289,22 +14258,53 @@ struct BurnDriver BurnDrvCpsSfa3ud = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSfa3xl = {
-	"sfa3xl", "sfa3", NULL, NULL, "2009",
-	"Street Fighter Alpha 3 - Xiang Long Edition (Hack by pipi899, Ver.2009-05-10)\0", NULL, "Hack", "CPS2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfa3xlRomInfo, Sfa3xlRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
-	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 struct BurnDriver BurnDrvCpsSfz3jr2d = {
 	"sfz3jr2d", "sfa3", NULL, NULL, "1998",
 	"Street Fighter Zero 3 (980629 Japan Phoenix Edition)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz3jr2dRomInfo, Sfz3jr2dRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+static INT32 Cps2TurboInit()
+{
+	Cps2Turbo = 1;
+
+	INT32 rc = PhoenixInit();
+
+	if (!rc) {
+		BurnSampleInit(1);
+		for (int i = 0; i < 0x40; i++) {
+			// Left side
+			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
+			BurnSampleSetRoute(i + 0x00, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_NONE);
+			// Right side
+			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_1, 0.10, BURN_SND_ROUTE_RIGHT);
+			BurnSampleSetRoute(i + 0x40, BURN_SND_SAMPLE_ROUTE_2, 0.10, BURN_SND_ROUTE_NONE);
+		}
+	}
+
+	return rc;
+}
+
+struct BurnDriver BurnDrvCpsSfz3mix = {
+	"sfz3mix", "sfa3", NULL, "sfz3mix", "2024",
+	"Street Fighter Zero 3 Mix v0.25\0", NULL, "hack (zero800)", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3mixRomInfo, Sfz3mixRomName, NULL, NULL, Sfz3mixSampleInfo, Sfz3mixSampleName, Sfz3mixInputInfo, Sfz3mixDIPInfo,
+	Cps2TurboInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 416, 234, 16, 9
+};
+
+struct BurnDriver BurnDrvCpsSfz3mix13 = {
+	"sfz3mix13", "sfa3", NULL, NULL, "2022",
+	"Street Fighter Zero 3 Mix v0.13\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3mix13RomInfo, Sfz3mix13RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

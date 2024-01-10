@@ -2606,8 +2606,8 @@ STD_ROM_PICK(Wwallyja3p)
 STD_ROM_FN(Wwallyja3p)
 
 static struct BurnRomInfo AquarioRomDesc[] = {
-	{ "a4.bin",         0x080000, 0xd2ac7be4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "a6.bin",         0x080000, 0x058332a9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a4.bin",         0x080000, 0xc58ff95f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a6.bin",         0x080000, 0xb4a94cd9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "a5.bin",         0x080000, 0x1cef8145, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "a7.bin",         0x080000, 0x504e4665, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
@@ -2623,6 +2623,12 @@ static struct BurnRomInfo AquarioRomDesc[] = {
 	{ "a12.bin",        0x080000, 0x0219923f, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "c13.bin",        0x080000, 0x0beef46e, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "a13.bin",        0x080000, 0x9ea5c73d, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "c7.bin",   		0x040000, 0xf1183938, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "c6.bin",   		0x080000, 0x39f11291, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "c5.bin",   		0x080000, 0x6a380dca, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "c4.bin",   		0x080000, 0x1bd081f8, SYS16_ROM_RF5C68DATA | BRF_SND },
 };
 
 

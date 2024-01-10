@@ -678,6 +678,45 @@ static struct BurnDIPInfo FantzoneDIPList[]=
 
 STDDIPINFO(Fantzone)
 
+static struct BurnDIPInfo FantzonenXDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xff, NULL                                 },
+	{0x14, 0xff, 0xff, 0xfc, NULL                                 },
+
+	// Dip 1
+	SYSTEM16A_COINAGE(0x13)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Cabinet"                            },
+	{0x14, 0x01, 0x01, 0x00, "Upright"                            },
+	{0x14, 0x01, 0x01, 0x01, "Cocktail"                           },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"                     },
+	{0x14, 0x01, 0x02, 0x02, "Off"                                },
+	{0x14, 0x01, 0x02, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                              },
+	{0x14, 0x01, 0x0c, 0x08, "2"                                  },
+	{0x14, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x14, 0x01, 0x0c, 0x04, "4"                                  },
+	{0x14, 0x01, 0x0c, 0x00, "240"                                },
+
+	{0   , 0xfe, 0   , 4   , "Extra Ship Cost"                    },
+	{0x14, 0x01, 0x30, 0x30, "5000"                               },
+	{0x14, 0x01, 0x30, 0x20, "10000"                              },
+	{0x14, 0x01, 0x30, 0x10, "15000"                              },
+	{0x14, 0x01, 0x30, 0x00, "20000"                              },
+
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x14, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x14, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x14, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x14, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(FantzonenX)
+
 static struct BurnDIPInfo MjleagueDIPList[]=
 {
 	// Default Values
@@ -1496,6 +1535,48 @@ static struct BurnRomInfo FantzoneRomDesc[] = {
 
 STD_ROM_PICK(Fantzone)
 STD_ROM_FN(Fantzone)
+
+static struct BurnRomInfo FantzonenoRomDesc[] = {
+	{ "fz1_07536a.p00",0x30000, 0xc72830b5, SYS16_ROM_PROG_FLAT | BRF_ESS | BRF_PRG },
+
+	{ "epr-7388.95",   0x08000, 0x8eb02f6b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7389.94",   0x08000, 0x2f4f71b8, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7390.93",   0x08000, 0xd90609c6, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-7392.10",   0x08000, 0x5bb7c8b6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7396.11",   0x08000, 0x74ae4b57, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7393.17",   0x08000, 0x14fc7e82, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7397.18",   0x08000, 0xe05a1e25, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7394.23",   0x08000, 0x531ca13f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7398.24",   0x08000, 0x68807b49, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-7535a.12",  0x08000, 0xbc1374fa, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Fantzoneno)
+STD_ROM_FN(Fantzoneno)
+
+static struct BurnRomInfo FantzonenuRomDesc[] = {
+	{ "fz1_7536a.p00", 0x30000, 0x169491d4, SYS16_ROM_PROG_FLAT | BRF_ESS | BRF_PRG },
+
+	{ "epr-7388.95",   0x08000, 0x8eb02f6b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7389.94",   0x08000, 0x2f4f71b8, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7390.93",   0x08000, 0xd90609c6, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-7392.10",   0x08000, 0x5bb7c8b6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7396.11",   0x08000, 0x74ae4b57, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7393.17",   0x08000, 0x14fc7e82, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7397.18",   0x08000, 0xe05a1e25, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7394.23",   0x08000, 0x531ca13f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-7398.24",   0x08000, 0x68807b49, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-7535a.12",  0x08000, 0xbc1374fa, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Fantzonenu)
+STD_ROM_FN(Fantzonenu)
 
 static struct BurnRomInfo Fantzone1RomDesc[] = {
 	{ "epr-7385.43",   0x08000, 0x5cb64450, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3815,6 +3896,26 @@ struct BurnDriver BurnDrvFantzone1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
 	NULL, Fantzone1RomInfo, Fantzone1RomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
+	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFantzoneno = {
+	"fantzoneno", "fantzone", NULL, NULL, "1986",
+	"Fantasy Zone (New, Oversea, PS2)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
+	NULL, FantzonenoRomInfo, FantzonenoRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzonenXDIPInfo,
+	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFantzonenu = {
+	"fantzonenu", "fantzone", NULL, NULL, "1986",
+	"Fantasy Zone (New, US Rev.A, PS2)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
+	NULL, FantzonenuRomInfo, FantzonenuRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzonenXDIPInfo,
 	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

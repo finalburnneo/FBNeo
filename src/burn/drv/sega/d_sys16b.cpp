@@ -1324,6 +1324,40 @@ static struct BurnDIPInfo Fantzn2xDIPList[]=
 
 STDDIPINFO(Fantzn2x)
 
+static struct BurnDIPInfo Fantznps2DIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL                                 },
+	{0x14, 0xff, 0xff, 0xfc, NULL                                 },
+
+	{0   , 0xfe, 0   , 2   , "Cabinet"                            },
+	{0x14, 0x01, 0x01, 0x00, "Upright"                            },
+	{0x14, 0x01, 0x01, 0x01, "Cocktail"                           },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x14, 0x01, 0x02, 0x02, "Off"                                },
+	{0x14, 0x01, 0x02, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                              },
+	{0x14, 0x01, 0x0c, 0x08, "2"                                  },
+	{0x14, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x14, 0x01, 0x0c, 0x04, "4"                                  },
+	{0x14, 0x01, 0x0c, 0x00, "240"                                },
+
+	{0   , 0xfe, 0   , 4   , "Extra Ship Cost"                    },
+	{0x14, 0x01, 0x30, 0x30, "5000"                               },
+	{0x14, 0x01, 0x30, 0x20, "10000"                              },
+	{0x14, 0x01, 0x30, 0x10, "15000"                              },
+	{0x14, 0x01, 0x30, 0x00, "20000"                              },
+
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x14, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x14, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x14, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x14, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(Fantznps2)
+
 static struct BurnDIPInfo FpointDIPList[]=
 {
 	// Default Values
@@ -8618,6 +8652,7 @@ static void Fantznps2ResetCallback()
 	// game wants sprite bank 2 to point to bank 8
 	// note: to explain this callback: spritebanks get set to default values @ reset
 	System16SpriteBanks[2] = 8;
+	System16SpriteYOffset = 1;
 }
 
 static INT32 Fantznps2Init()
@@ -8626,7 +8661,17 @@ static INT32 Fantznps2Init()
 	System16CustomLoadRomDo = FantzntaLoadRom;
 	System16UPD7759DataSize = 0x10000;
 
-	return System16Init();
+	INT32 rc = System16Init();
+
+	if (!rc) {
+		char *temp = (char*)BurnMalloc(0x80000);
+		memcpy(temp, System16Tiles, 0x80000);
+		// game is drawing end-boss "trails" @ 0x900, which is @ 0x1200 in tiles
+		memcpy(&System16Tiles[(0x900*8*8)], temp + (0x1200*8*8), 0x10 * 8 * 8);
+		BurnFree(temp);
+	}
+
+	return rc;
 }
 
 static void FpointblMap68K()
@@ -10039,7 +10084,7 @@ struct BurnDriver BurnDrvFantznps2 = {
 	"Fantasy Zone (System 16B, PS2 data file)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
-	NULL, Fantznps2RomInfo, Fantznps2RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
+	NULL, Fantznps2RomInfo, Fantznps2RomName, NULL, NULL, NULL, NULL, System16bInputInfo, Fantznps2DIPInfo,
 	Fantznps2Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

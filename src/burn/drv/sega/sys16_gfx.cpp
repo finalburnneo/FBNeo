@@ -18,6 +18,7 @@ INT32 System16ScreenFlipXoffs = 0; // 16B
 INT32 System16ScreenFlipYoffs = 0; // 16B
 INT32 System16SpriteShadow;
 INT32 System16SpriteXOffset = 0;
+INT32 System16SpriteYOffset = 0; // only sys16b/c (fantznps2), only positive #'s!
 INT32 System16ColScroll = 0;
 INT32 System16RowScroll = 0;
 INT32 System16RoadControl = 0;
@@ -501,7 +502,7 @@ static void System16BCreateFgTileMaps()
 				Code = System16TileBanks[Code / System16TileBankSize] * System16TileBankSize + Code % System16TileBankSize;
 				Code &= (System16NumTiles - 1);
 				Colour = (Attr >> 6) & 0x7f;
-			
+
 				ColourOff = System16TilemapColorOffset;
 				if (Colour >= 0x20) ColourOff = (0x100 * ColourOffsMultiplier) | System16TilemapColorOffset;
 				if (Colour >= 0x40) ColourOff = (0x200 * ColourOffsMultiplier) | System16TilemapColorOffset;
@@ -3463,6 +3464,8 @@ static void System18RenderSpriteLayer()
 			bank %= numbanks;
 		spritedata = spritebase + 0x10000 * bank;
 
+	 //   bprintf(0, _T("%x:  %x  (%x)\n"), addr, bank, bbank);
+
 		/* reset the yzoom counter */
 		data[5] &= BURN_ENDIAN_SWAP_INT16(0x03ff);
 
@@ -3659,9 +3662,9 @@ INT32 System16BRender()
 
 	if (nSpriteEnable & 8) System18RenderSpriteLayer();
 
-	for (INT32 y = 0; y < nScreenHeight; y++) {
+	for (INT32 y = System16SpriteYOffset; y < (nScreenHeight - System16SpriteYOffset); y++) {
 		for (INT32 x = 0; x < nScreenWidth; x++) {
-			UINT16* pPixel = pSys18SpriteBMP + (y * 320);
+			UINT16* pPixel = pSys18SpriteBMP + ((y - System16SpriteYOffset) * 320);
 			UINT8*    pPri = pPrioDraw  + (y * nScreenWidth);
 			UINT16*  pDest = pTransDraw + (y * 320);
 			//UINT16 *PalRAM = (UINT16*)System16PaletteRam;

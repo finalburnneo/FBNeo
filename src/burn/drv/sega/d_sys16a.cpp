@@ -678,6 +678,45 @@ static struct BurnDIPInfo FantzoneDIPList[]=
 
 STDDIPINFO(Fantzone)
 
+static struct BurnDIPInfo FantzonenXDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xff, NULL                                 },
+	{0x14, 0xff, 0xff, 0xfc, NULL                                 },
+
+	// Dip 1
+	SYSTEM16A_COINAGE(0x13)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Cabinet"                            },
+	{0x14, 0x01, 0x01, 0x00, "Upright"                            },
+	{0x14, 0x01, 0x01, 0x01, "Cocktail"                           },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"                     },
+	{0x14, 0x01, 0x02, 0x02, "Off"                                },
+	{0x14, 0x01, 0x02, 0x00, "On"                                 },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                              },
+	{0x14, 0x01, 0x0c, 0x08, "2"                                  },
+	{0x14, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x14, 0x01, 0x0c, 0x04, "4"                                  },
+	{0x14, 0x01, 0x0c, 0x00, "240"                                },
+
+	{0   , 0xfe, 0   , 4   , "Extra Ship Cost"                    },
+	{0x14, 0x01, 0x30, 0x30, "5000"                               },
+	{0x14, 0x01, 0x30, 0x20, "10000"                              },
+	{0x14, 0x01, 0x30, 0x10, "15000"                              },
+	{0x14, 0x01, 0x30, 0x00, "20000"                              },
+
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x14, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x14, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x14, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x14, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(FantzonenX)
+
 static struct BurnDIPInfo MjleagueDIPList[]=
 {
 	// Default Values
@@ -3866,7 +3905,7 @@ struct BurnDriver BurnDrvFantzoneno = {
 	"Fantasy Zone (New, Oversea, PS2)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
-	NULL, FantzonenoRomInfo, FantzonenoRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
+	NULL, FantzonenoRomInfo, FantzonenoRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzonenXDIPInfo,
 	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -3876,7 +3915,7 @@ struct BurnDriver BurnDrvFantzonenu = {
 	"Fantasy Zone (New, US Rev.A, PS2)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
-	NULL, FantzonenuRomInfo, FantzonenuRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
+	NULL, FantzonenuRomInfo, FantzonenuRomName, NULL, NULL, NULL, NULL, System16aInputInfo, FantzonenXDIPInfo,
 	FantzoneInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

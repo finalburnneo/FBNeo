@@ -5685,6 +5685,8 @@ DRV		BurnDrvpce_fantzone;
 DRV		BurnDrvsms_fantzonej;
 DRV		BurnDrvMSX_fantzonek;
 DRV		BurnDrvmd_fantazone;
+DRV		BurnDrvFantzoneno;
+DRV		BurnDrvFantzonenu;
 DRV		BurnDrvpce_fantzonemini;
 DRV		BurnDrvFantzonepr;
 DRV		BurnDrvFantzone;
@@ -26101,6 +26103,8 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsms_fantzonej,		// Fantasy Zone (Japan, v0)
 	&BurnDrvMSX_fantzonek,		// Fantasy Zone (Korea) (Unl)
 	&BurnDrvmd_fantazone,		// Fantasy Zone (Mega Drive Mini 2 Edition)
+	&BurnDrvFantzoneno,			// Fantasy Zone (New, Oversea, PS2)
+	&BurnDrvFantzonenu,			// Fantasy Zone (New, US Rev.A, PS2)
 	&BurnDrvpce_fantzonemini,	// Fantasy Zone (PC-Engine Mini Ed.)
 	&BurnDrvFantzonepr,			// Fantasy Zone (prototype)
 	&BurnDrvFantzone,			// Fantasy Zone (Rev A, unprotected)
@@ -36872,7 +36876,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvCpsSfz3a,			// Street Fighter Zero 3 (980904 Asia)
 	&BurnDrvCpsSfz3j,			// Street Fighter Zero 3 (980904 Japan)
 	&BurnDrvCpsSfz3mix13,		// Street Fighter Zero 3 Mix v0.13
-	&BurnDrvCpsSfz3mix,			// Street Fighter Zero 3 Mix v0.24
+	&BurnDrvCpsSfz3mix,			// Street Fighter Zero 3 Mix v0.25
 	&BurnDrvCpsSfz3te,			// Street Fighter Zero 3 Training Edition v1.2 (980629 Japan)
 	&BurnDrvSftm110,			// Street Fighter: The Movie (v1.10)
 	&BurnDrvSftm111,			// Street Fighter: The Movie (v1.11)
@@ -46467,6 +46471,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "sms_fantzonej", "sms/d_sms.cpp"},
 	{ "msx_fantzonek", "msx/d_msx.cpp"},
 	{ "md_fantazone", "megadrive/d_megadrive.cpp"},
+	{ "fantzoneno", "sega/d_sys16a.cpp"},
+	{ "fantzonenu", "sega/d_sys16a.cpp"},
 	{ "pce_fantzonemini", "pce/d_pce.cpp"},
 	{ "fantzonepr", "sega/d_sys16a.cpp"},
 	{ "fantzone", "sega/d_sys16a.cpp"},

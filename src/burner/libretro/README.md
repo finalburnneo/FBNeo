@@ -202,6 +202,7 @@ Here is a list of samples currently in use :
 * reactor.zip
 * safarir.zip
 * sasuke.zip
+* sfz3mix.zip
 * sharkatt.zip
 * spacefb.zip
 * spacfury.zip
@@ -349,6 +350,7 @@ You might also want to make sure you are running the game at the correct speed, 
 The `neogeo` romset is a collection of neogeo bioses, and most of them are considered as optional so they won't cause a "white screen" when missing. Only `MVS Asia/Europe ver. 6 (1 slot)` is mandatory.
 
 However, having an incomplete romset can still cause various issues :
+
 * If you are using the "Use bios set in BIOS dipswitch" as "Neo-Geo mode" and the bios set in dipswitches is missing, you'll have a black screen where you can hear some sound playing.
 * If you are using any of the other choices available in "Neo-Geo mode" and a corresponding bios can't be found, the core will fallback to one of the available bioses.
 

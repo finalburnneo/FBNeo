@@ -15,6 +15,7 @@
 #include "resnet.h"
 #include "msm6295.h"
 
+#define SYS16_ROM_PROG_FLAT     25
 #define SYS16_ROM_PROG			1
 #define SYS16_ROM_TILES			2
 #define SYS16_ROM_SPRITES		3

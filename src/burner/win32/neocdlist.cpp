@@ -4,6 +4,8 @@
 #include "burner.h"
 #include "neocdlist.h"
 
+#define DEBUG_CD    0
+
 const int nSectorLength = 2352;
 
 NGCDGAME* game;
@@ -60,7 +62,9 @@ struct NGCDGAME games[] =
 	{ _T("aof2")		, _T("Art of Fighting 2 / Ryuuko no Ken 2")					, _T("1994")	, _T("SNK")					, 0x0056 },		//
 	{ _T("wh2")			, _T("World Heroes 2")										, _T("1995")	, _T("SNK/ADK")				, 0x0057 },		//
 	{ _T("fatfursp")	, _T("Fatal Fury Special / Garou Densetsu Special")			, _T("1994")	, _T("SNK")					, 0x0058 },		//
+	{ _T("fatfurspr1")	, _T("Fatal Fury Special / Garou Densetsu Special (Rev 1)")	, _T("1994")	, _T("SNK")					, 0x1058 },		//
 	{ _T("savagere")	, _T("Savage Reign / Fu'un Mokujiroku - Kakutou Sousei")	, _T("1995")	, _T("SNK")					, 0x0059 },		//
+	{ _T("savagerer1")	, _T("Savage Reign / Fu'un Mokujiroku - Kakutou Sousei (Rev 1)"), _T("1995")	, _T("SNK")					, 0x1059 },		//
 	{ _T("ssideki2")	, _T("Super Sidekicks 2 / Tokuten Oh 2")					, _T("1994")	, _T("SNK")					, 0x0061 },		//
 	{ _T("samsho2")		, _T("Samurai Shodown 2 / Shin Samurai Spirits")			, _T("1994")	, _T("SNK")					, 0x0063 },		//
 	{ _T("wh2j")		, _T("World Heroes 2 Jet")									, _T("1995")	, _T("SNK/ADK")				, 0x0064 },		//
@@ -75,7 +79,8 @@ struct NGCDGAME games[] =
 	{ _T("quizkof")		, _T("Quiz King of Fighters")								, _T("1993")	, _T("SNK/Saurus")			, 0x0080 },		//
 	{ _T("ssideki3")	, _T("Super Sidekicks 3 - The Next Glory / Tokuten Oh 3 - Eikoue No Chousen"), _T("1995") , _T("SNK")	, 0x0081 },		//
 	{ _T("doubledr")	, _T("Double Dragon")										, _T("1995")	, _T("Technos")				, 0x0082 },		//
-	{ _T("doubledrps1")	, _T("Double Dragon (PS1 OST)")								, _T("1995")	, _T("Technos")				, 0x1082 },		//
+	{ _T("doubledrr1")	, _T("Double Dragon (Rev 1)")								, _T("1995")	, _T("Technos")				, 0x1082 },		//
+	{ _T("doubledrps1")	, _T("Double Dragon (PS1 OST)")								, _T("1995")	, _T("Technos")				, 0x2082 },		//
 	{ _T("pbobblen")	, _T("Puzzle Bobble / Bust-A-Move")							, _T("1994")	, _T("SNK")					, 0x0083 },		//
 	{ _T("kof95")		, _T("The King of Fighters '95 (JP-US)")					, _T("1995")	, _T("SNK")					, 0x0084 },		//
 	{ _T("kof95r1")		, _T("The King of Fighters '95 (JP-US)(Rev 1)")				, _T("1995")	, _T("SNK")					, 0x1084 },		//
@@ -85,6 +90,7 @@ struct NGCDGAME games[] =
 	{ _T("stakwin")		, _T("Stakes Winner - GI Kanzen Seiha Heno Machi")			, _T("1995")	, _T("Saurus")				, 0x0088 },		//
 	{ _T("pulstar")		, _T("Pulstar")												, _T("1995")	, _T("Aicom")				, 0x0089 },		//
 	{ _T("whp")			, _T("World Heroes Perfect")								, _T("1995")	, _T("ADK")					, 0x0090 },		//
+	{ _T("whpr1")		, _T("World Heroes Perfect (Rev 1)")						, _T("1995")	, _T("ADK")					, 0x1090 },		//
 	{ _T("kabukikl")	, _T("Kabuki Klash / Tengai Makyou Shinden - Far East of Eden")	, _T("1995"), _T("Hudson")				, 0x0092 },		//
 	{ _T("gowcaizr")	, _T("Voltage Fighter Gowcaizer / Choujin Gakuen Gowcaizer"), _T("1995")	, _T("Technos")				, 0x0094 },		//
 	{ _T("rbff1")		, _T("Real Bout Fatal Fury")								, _T("1995")	, _T("SNK")					, 0x0095 },		//
@@ -114,19 +120,25 @@ struct NGCDGAME games[] =
 	{ _T("lastblad")	, _T("The Last Blade / Bakumatsu Roman - Gekka no Kenshi")	, _T("1997")	, _T("SNK")					, 0x0234 },		//
 	{ _T("rbff2")		, _T("Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - The Newcomers"), _T("1998"), _T("SNK") , 0x0240 },		//
 	{ _T("mslug2")		, _T("Metal Slug 2 - Super Vehicle-001/II")					, _T("1998")	, _T("SNK")					, 0x0241 },		//
-	{ _T("mslug2")		, _T("Metal Slug 2 Turbo - Super Vehicle-001/II")			, _T("1998")	, _T("SNK")					, 0x0941 },		//
+	{ _T("mslug2t")		, _T("Metal Slug 2 Turbo - Super Vehicle-001/II")			, _T("1998")	, _T("SNK")					, 0x0941 },		//
 	{ _T("kof98")		, _T("The King of Fighters '98 - The Slugfest")				, _T("1998")	, _T("SNK")					, 0x0242 },		//
 	{ _T("lastbld2")	, _T("The Last Blade 2")									, _T("1998")	, _T("SNK")					, 0x0243 },		//
 	{ _T("kof99")		, _T("The King of Fighters '99 - Millennium Battle")		, _T("1999")	, _T("SNK")					, 0x0251 },		//
-	{ _T("fatfury3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - Harukanaru Tatakai"), _T("1995"), _T("SNK"), 0x069c },		//
+	{ _T("fatfury3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3"), _T("1995"), _T("SNK"), 0x069c },		//
+	{ _T("fatfury3r1")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 1)"), _T("1995"), _T("SNK"), 0x169c },		//
+	{ _T("fatfury3r2")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 2)"), _T("1995"), _T("SNK"), 0x269c },		//
+	{ _T("fatfury3r3")	, _T("Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 (Rev 3)"), _T("1995"), _T("SNK"), 0x369c },		//
 	{ _T("lasthope")	, _T("Last Hope")									        , _T("2007")	, _T("NG.DEV.TEAM")			, 0x0666 },		//
 	{ _T("xenocrisis")	, _T("Xeno Crisis")									        , _T("2019")	, _T("Bitmap Bureau")		, 0xbb01 },		//
 	{ _T("neon")		, _T("Project Neon: Caravan Demo")							, _T("2019")	, _T("Team Project Neon")	, 0x7777 },		//
 	{ _T("looptris")	, _T("Looptris")											, _T("2019")	, _T("Blastar")				, 0x2019 },		//
+	{ _T("looptrsp")	, _T("Looptris Plus")										, _T("2022")	, _T("Blastar")				, 0x2119 },		// not really nID == 2119, see szVolumeID check below
 	{ _T("flappychick")	, _T("Flappy Chicken")										, _T("2023")	, _T("Blastar")				, 0x2022 },		//
 	{ _T("hypernoid")	, _T("Hypernoid")											, _T("2022")	, _T("NeoHomeBrew.com")		, 0x0600 },		//
 	{ _T("timesup")		, _T("Time's Up")											, _T("2012")	, _T("NGF DEV. INC.")		, 0x0276 },		//
 };
+
+static char szVolumeID[64];
 
 NGCDGAME* GetNeoGeoCDInfo(unsigned int nID)
 {
@@ -199,12 +211,14 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 	bool	bRevisionQueve		= false;
 	int		nRevisionQueveID	= 0;
 
+	bool    bGotDDPRG_ACM = false;
+
 	lOffset = (nSector * nSectorLength);
 
 	UINT8 nLenDR;
 	UINT8 Flags;
 	UINT8 LEN_FI;
-	UINT8* ExtentLoc = (UINT8*)malloc(8 + 32);
+	UINT8* ExtentLoc = (UINT8*)malloc(8 + 64 + 32);
 	UINT8* Data = (UINT8*)malloc(0x10b + 32);
 	char *File = (char*)malloc(32 + 32);
 
@@ -246,8 +260,28 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 
 		if(!(Flags & (1 << 1)))
 		{
-			iso9660_ReadOffset(ExtentLoc, fp, lOffset + 2, 8, sizeof(UINT8));
+			// each file entry record(struct) is 54 bytes
+			iso9660_ReadOffset(ExtentLoc, fp, lOffset + 2, 54, sizeof(UINT8));
 
+			// extract filename
+			char szFname[64];
+			UINT8 nDate[3] = { 0, 0, 0 };
+			memset(szFname, 0, sizeof(szFname));
+			int fname_len = (ExtentLoc[30] < 32) ? ExtentLoc[30] : 32;
+			strncpy(szFname, (char*)&ExtentLoc[31], fname_len);
+
+			// detecting doubledr rev 1
+			if (!strcmp(szFname, "DDPRG.ACM")) bGotDDPRG_ACM = true;
+
+			// Check for end of directory entries
+			if (fname_len == 0) break;
+
+			nDate[0] = ExtentLoc[16];
+			nDate[1] = ExtentLoc[17];
+			nDate[2] = ExtentLoc[18];
+#if DEBUG_CD
+			bprintf(0, _T("Checking File  [%S]  %d-%d-%d\n"), szFname, nDate[0],nDate[1],nDate[2]);
+#endif
 			char szValue[32];
 			sprintf(szValue, "%02x%02x%02x%02x", ExtentLoc[4], ExtentLoc[5], ExtentLoc[6], ExtentLoc[7]);
 
@@ -266,25 +300,67 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 
 				unsigned int nID = 0;
 				sscanf(id, "%x", &nID);
-
+#if DEBUG_CD
+				bprintf(0, _T("----- ID:  %x\n"), nID);
+#endif
 				iso9660_ReadOffset(&LEN_FI, fp, lOffset + 32, 1, sizeof(UINT8));
 
 				iso9660_ReadOffset((UINT8*)File, fp, lOffset + 33, LEN_FI, sizeof(UINT8));
 				File[LEN_FI] = 0;
 
+				// Savage Reign Rev 1
+				if (nID == 0x0059 && nDate[0]==95 && nDate[1]==6 && nDate[2]==20) {
+					nID |= 0x1000;
+				}
+
+				// Fatal Fury 3 Rev 1
+				if (nID == 0x069c && nDate[0]==95 && nDate[1]==4 && nDate[2]==29) {
+					nID |= 0x1000;
+				}
+
+				// Fatal Fury 3 Rev 2
+				if (nID == 0x069c && nDate[0]==95 && nDate[1]==6 && nDate[2]==1) {
+					nID |= 0x2000;
+				}
+
+				// Fatal Fury 3 Rev 3
+				if (nID == 0x069c && nDate[0]==95 && nDate[1]==7 && nDate[2]==10) {
+					nID |= 0x3000;
+				}
+
+				// World Heroes Perfect
+				if (nID == 0x0090 && nDate[0]==95 && nDate[1]==7 && nDate[2]==21) {
+					nID |= 0x1000;
+				}
+
+				// Fatal Fury Special Rev 1
+				if (nID == 0x0058 && nDate[0]==94 && nDate[1]==10 && nDate[2]==14) {
+					nID |= 0x1000;
+				}
+
+				// Double Dragon Rev 1
+				if (nID == 0x0082 && bGotDDPRG_ACM) {
+					nID |= 0x1000;
+				}
+
 				// Double Dragon PS1 OST
 				if (nID == 0x0082 && wcsstr(pszFile, _T("OST"))) {
-					nID = 0x1082;
+					nID |= 0x1000;
+				}
+
+				// Looptris Plus
+				if (nID == 0x2019 && !strcmp(szVolumeID, "LOOPTRSP")) {
+					nID |= 0x0100;
 				}
 
 				// Samurai Shodown RPG (FR)
 				if (nID == 0x0085 && wcsstr(pszFile, _T("(FR)"))) {
-					nID = 0x1085;
+					nID |= 0x1000;
 				}
 
 				// Treasure of Caribbean (c) 1994 / (c) 2011 NCI
 				if(nID == 0x0048 && Data[0x67] == 0x08) {
-					nID = 0x1048;
+					nID |= 0x1000;
 				}
 
 				// King of Fighters '94, The (1994)(SNK)(JP)
@@ -297,7 +373,7 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 				// 11-21-1994 (P1.PRG)
 				if(nID == 0x0055 && Data[0x67] == 0xE6) {
 					// Change to custom revision id
-					nID = 0x1055;
+					nID |= 0x1000;
 				}
 
 				// King of Fighters '95, The (1995)(SNK)(JP-US)[!][NGCD-084 MT B01, B03-B06, NGCD-084E MT B01]
@@ -310,7 +386,7 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 				// 10-5-1995 (P1.PRG)
 				if(nID == 0x0084 && Data[0x6C] == 0xFF) {
 					// Change to custom revision id
-					nID = 0x1084;
+					nID |= 0x1000;
 				}
 
 				// King of Fighters '96 NEOGEO Collection, The
@@ -321,8 +397,14 @@ static void NeoCDList_iso9660_CheckDirRecord(void (*pfEntryCallBack)(INT32, TCHA
 					break;
 				}
 
-				// King of Fighters '96, The
-				if(nID == 0x0214) {
+				// Sometimes there's multiple .prg entries in the
+				// list, .old / .bak files which preceed the proper one..
+				// For these, we have to keep searching the file list:
+
+				if (nID == 0x0214 // King of Fighters '96, The
+					|| (nID == 0x0058 && !(nDate[0]==94 && nDate[1]==8 && nDate[2]==5)) )
+					{ // !Fatal Fury Special Rev 0
+					// continue checking other files...
 					bRevisionQueve		= true;
 					nRevisionQueveID	= nID;
 					lOffset		+= nLenDR;
@@ -389,14 +471,23 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*))
 			if(lSize > (nSectorLength * 16))
 			{
 				// Check for Standard ISO9660 Identifier
-				UINT8 IsoCheck[32];
+				UINT8 IsoCheck[64];
+				memset(IsoCheck, 0, sizeof(IsoCheck));
+				memset(szVolumeID, 0, sizeof(szVolumeID));
 
 				// advance to sector 16 and PVD Field 2
-				iso9660_ReadOffset(&IsoCheck[0], fp, nSectorLength * 16 + 1, 1, 5); // get Standard Identifier Field from PVD
+				iso9660_ReadOffset(&IsoCheck[0], fp, nSectorLength * 16 + 1, 1, sizeof(IsoCheck));//5); // get Standard Identifier Field from PVD
 
 				// Verify that we have indeed a valid ISO9660 MODE1/2352
 				if(!memcmp(IsoCheck, "CD001", 5))
 				{
+					// copy out volume ID & trim ending whitespace
+					strncpy(szVolumeID, (char*)&IsoCheck[39], 24);
+					int l = strlen(szVolumeID);
+					while (l > 0 && szVolumeID[l - 1] == ' ') szVolumeID[l - 1] = '\0', l--;
+#if DEBUG_CD
+					bprintf(0, _T("VolumeID is [%S]\n"), szVolumeID);
+#endif
 					//bprintf(PRINT_NORMAL, _T("    Standard ISO9660 Identifier Found. \n"));
 					iso9660_VDH vdh;
 

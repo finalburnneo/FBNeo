@@ -27004,6 +27004,38 @@ struct BurnDriver BurnDrvxeviousng = {
 };
 
 
+// Looptris Plus (v.2022-12-24)
+
+static struct BurnRomInfo looptrspRomDesc[] = {
+	{ "looptrsp.p1",	0x080000, 0x894bb290, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "looptrsp.s1",	0x020000, 0x70e70448, 2 | BRF_GRA },           	//  1 Text layer tiles
+
+	{ "looptrsp.c1",	0x080000, 0xb9413f13, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "looptrsp.c2",	0x080000, 0x9409dbe8, 3 | BRF_GRA },           	//  3
+
+	{ "looptrsp.m1",	0x020000, 0x249bba11, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+
+	{ "looptrsp.v1",	0x080000, 0xc9f86637, 5 | BRF_SND },           	//  5 Sound data
+	{ "looptrsp.v2",	0x080000, 0x41b3e17a, 5 | BRF_SND },           	//  6 Sound data
+	{ "looptrsp.v3",	0x080000, 0x1ed4e538, 5 | BRF_SND },           	//  7 Sound data
+	{ "looptrsp.v4",	0x080000, 0x705e7065, 5 | BRF_SND },           	//  8 Sound data
+};
+
+STDROMPICKEXT(looptrsp, looptrsp, neogeo)
+STD_ROM_FN(looptrsp)
+
+struct BurnDriver BurnDrvLooptrsp = {
+	"looptrsp", NULL, "neogeo", NULL, "2022",
+	"Looptris Plus (v.2022-12-24)\0", NULL, "Blastar", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	NULL, looptrspRomInfo, looptrspRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // Looptris (v.2021-12-26)
 
 static struct BurnRomInfo looptrisRomDesc[] = {
@@ -27023,10 +27055,10 @@ STDROMPICKEXT(looptris, looptris, neogeo)
 STD_ROM_FN(looptris)
 
 struct BurnDriver BurnDrvLooptris = {
-	"looptris", NULL, "neogeo", NULL, "2021",
+	"looptris", "looptrsp", "neogeo", NULL, "2021",
 	"Looptris (v.2021-12-26)\0", NULL, "Blastar", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
 	NULL, looptrisRomInfo, looptrisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3

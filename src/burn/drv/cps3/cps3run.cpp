@@ -73,7 +73,7 @@ UINT8 Cps3But3[16];
 
 static UINT16 Cps3Input[4] = {0, 0, 0, 0};
 
-static ClearOpposite<4, UINT16> clear_opposite;
+static ClearOpposite<2, UINT16> clear_opposite;
 
 static UINT32 ss_bank_base = 0;
 static UINT32 ss_pal_base = 0;

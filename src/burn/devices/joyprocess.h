@@ -115,7 +115,7 @@ struct HoldCoin {
 
 template <int N, typename T>
 struct ClearOpposite {
-	T prev[N<<1];
+	T prev[N<<2];
 
 	void reset() {
 		memset(&prev, 0, sizeof(prev));

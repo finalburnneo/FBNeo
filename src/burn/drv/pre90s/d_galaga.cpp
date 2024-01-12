@@ -239,6 +239,7 @@ struct Namco_Sprite_Params
 	INT32 flags;
 	INT32 paletteBits;
 	INT32 paletteOffset;
+	UINT8 transparent_mask;
 };
 
 #define N06XX_BUF_SIZE       16
@@ -1220,58 +1221,13 @@ static void namcoRenderSprites(void)
 					if ((xPos < -15) || (xPos >= nScreenWidth) ) continue;
 					if ((yPos < -15) || (yPos >= nScreenHeight)) continue;
 
-					switch (spriteParams.flags & orient)
-					{
-						case 3:
-							Render16x16Tile_Mask_FlipXY_Clip(
-															 pTransDraw,
-															 code,
-															 xPos, yPos,
-															 spriteParams.colour,
-															 spriteParams.paletteBits,
-															 0,
-															 spriteParams.paletteOffset,
-															 graphics.sprites
-															);
-							break;
-						case 2:
-							Render16x16Tile_Mask_FlipY_Clip(
-															pTransDraw,
-															code,
-															xPos, yPos,
-															spriteParams.colour,
-															spriteParams.paletteBits,
-															0,
-															spriteParams.paletteOffset,
-															graphics.sprites
-														   );
-							break;
-						case 1:
-							Render16x16Tile_Mask_FlipX_Clip(
-															pTransDraw,
-															code,
-															xPos, yPos,
-															spriteParams.colour,
-															spriteParams.paletteBits,
-															0,
-															spriteParams.paletteOffset,
-															graphics.sprites
-														   );
-							break;
-						case 0:
-						default:
-							Render16x16Tile_Mask_Clip(
-													  pTransDraw,
-													  code,
-													  xPos, yPos,
-													  spriteParams.colour,
-													  spriteParams.paletteBits,
-													  0,
-													  spriteParams.paletteOffset,
-													  graphics.sprites
-													 );
-							break;
-					}
+					RenderTileTranstabOffset(pTransDraw, graphics.sprites, code,
+											 spriteParams.colour << spriteParams.paletteBits,
+											 spriteParams.transparent_mask, xPos, yPos,
+											 spriteParams.flags & xFlip,
+											 spriteParams.flags & yFlip, 16, 16,
+											 memory.PROM.spriteLookup, spriteParams.paletteOffset);
+
 				}
 			}
 		}
@@ -2424,6 +2380,7 @@ static UINT32 galagaGetSpriteParams(struct Namco_Sprite_Params *spriteParams, UI
 	spriteParams->yStep =     16;
 
 	spriteParams->flags =     spriteRam3[offset + 0] & 0x0f;
+	spriteParams->transparent_mask = 0x0f;
 
 	if (spriteParams->flags & ySize)
 	{
@@ -3183,6 +3140,8 @@ static UINT32 digdugGetSpriteParams(struct Namco_Sprite_Params *spriteParams, UI
 
 	spriteParams->flags = spriteRam3[offset + 0] & 0x03;
 	spriteParams->flags |= ((sprite & 0x80) >> 4) | ((sprite & 0x80) >> 5);
+
+	spriteParams->transparent_mask = 0x0f;
 
 	if (spriteParams->flags & ySize)
 	{
@@ -3959,6 +3918,7 @@ static void xeviousMemoryMap3(void);
 static INT32 xeviousCharDecode(void);
 static INT32 xeviousTilesDecode(void);
 static INT32 xeviousSpriteDecode(void);
+static INT32 xeviousSpriteLUTDec(void);
 static tilemap_scan(xevious);
 static tilemap_callback(xevious_bg);
 static tilemap_callback(xevious_fg);
@@ -4122,7 +4082,7 @@ static struct ROM_Load_Def xeviousROMTable[] =
 	{  &memory.PROM.charLookup,      0x00000, NULL                 },
 	{  &memory.PROM.charLookup,      0x00200, NULL                 },
 	{  &memory.PROM.spriteLookup,    0x00000, NULL                 },
-	{  &memory.PROM.spriteLookup,    0x00200, NULL                 },
+	{  &memory.PROM.spriteLookup,    0x00200, xeviousSpriteLUTDec  },
 	{  &NamcoSoundProm,              0x00000, NULL                 },
 	{  &NamcoSoundProm,              0x00100, namcoMachineInit     }
 };
@@ -4329,6 +4289,20 @@ static INT32 xeviousTilesDecode(void)
 
 	return 0;
 }
+
+static INT32 xeviousSpriteLUTDec(void)
+{
+	for (INT32 i = 0; i < XEVIOUS_PALETTE_SIZE_SPRITES; i ++)
+	{
+		UINT8 code = ( (memory.PROM.spriteLookup[i                               ] & 0x0f)       |
+				((memory.PROM.spriteLookup[XEVIOUS_PALETTE_SIZE_SPRITES + i] & 0x0f) << 4) );
+
+		memory.PROM.spriteLookup[i] = (code & 0x80) ? (code & 0x7f) : 0x80;
+	}
+
+	return 0;
+}
+
 
 static INT32 xeviousSpriteDecode(void)
 {
@@ -4650,12 +4624,19 @@ static void xeviousCalcPalette(void)
 	/* sprites */
 	for (INT32 i = 0; i < XEVIOUS_PALETTE_SIZE_SPRITES; i ++)
 	{
+		graphics.palette[XEVIOUS_PALETTE_OFFSET_SPRITE + i] = palette[memory.PROM.spriteLookup[i]];
+
+#if 0
 		code = ( (memory.PROM.spriteLookup[i                               ] & 0x0f)       |
 				((memory.PROM.spriteLookup[XEVIOUS_PALETTE_SIZE_SPRITES + i] & 0x0f) << 4) );
+
+		spriteLookup_converted[i] = (code & 0x80) ? code & 0x7f : 0x80;
+
 		if (code & 0x80)
 			graphics.palette[XEVIOUS_PALETTE_OFFSET_SPRITE + i] = palette[code & 0x7f];
 		else
 			graphics.palette[XEVIOUS_PALETTE_OFFSET_SPRITE + i] = palette[XEVIOUS_BASE_PALETTE_SIZE];
+#endif
 	}
 
 	/* characters - direct mapping */
@@ -4684,6 +4665,8 @@ static UINT32 xeviousGetSpriteParams(struct Namco_Sprite_Params *spriteParams, U
 	UINT8 *spriteRam2 = memory.RAM.shared1 + 0x780;
 	UINT8 *spriteRam3 = memory.RAM.shared2 + 0x780;
 	UINT8 *spriteRam1 = memory.RAM.shared3 + 0x780;
+
+	spriteParams->transparent_mask = 0x80;
 
 	if (0 == (spriteRam1[offset + 1] & 0x40))
 	{

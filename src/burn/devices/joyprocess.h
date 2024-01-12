@@ -125,7 +125,7 @@ struct ClearOpposite {
 		SCAN_VAR(prev);
 	}
 
-	void checkval(T n, T &inp, T val) {
+	void checkval(UINT8 n, T &inp, T val) {
 		// When opposites become pressed simultaneously,
 		// remove the previously stored direction if it exists,
 		// cancel each other direction otherwise
@@ -136,7 +136,7 @@ struct ClearOpposite {
 			prev[n] = inp & val;
 	}
 
-	void check(T num, T &inp, T val1, T val2) {
+	void check(UINT8 num, T &inp, T val1, T val2) {
 		checkval((num<<1)  , inp, val1);
 		checkval((num<<1)+1, inp, val2);
 	}

@@ -11,6 +11,8 @@ static UINT8 DrvJoy1[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy2[11] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT16 DrvInput[2] = {0x0000, 0x0000};
 
+static ClearOpposite<4, UINT16> clear_opposite;
+
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01, *RomZ80;
@@ -439,6 +441,8 @@ static INT32 DrvDoReset()
 
 	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
+	clear_opposite.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -499,8 +503,8 @@ static INT32 DrvFrame()
 		DrvInput[0] |= (DrvJoy1[i] & 1) << i;
 		DrvInput[1] |= (DrvJoy2[i] & 1) << i;
 	}
-	CaveClearOpposites(&DrvInput[0]);
-	CaveClearOpposites(&DrvInput[1]);
+	clear_opposite.check(0, DrvInput[0], 0x0003, 0x000c);
+	clear_opposite.check(1, DrvInput[1], 0x0003, 0x000c);
 
 	SekNewFrame();
 	ZetNewFrame();
@@ -746,6 +750,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvZ80Bank);
 
 		SCAN_VAR(nCyclesExtra);
+
+		clear_opposite.scan();
 
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);

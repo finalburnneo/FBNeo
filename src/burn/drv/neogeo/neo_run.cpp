@@ -133,7 +133,7 @@ UINT8 NeoDiag[2]	 = { 0, 0 };
 UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
 UINT8 NeoCDBios = 0;
-static ClearOpposite<4> clear_opposite;
+static ClearOpposite<4, UINT8> clear_opposite;
 
 static UINT8 OldDebugDip[2] = { 0, 0 };
 

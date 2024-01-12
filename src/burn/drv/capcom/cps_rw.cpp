@@ -48,7 +48,7 @@ INT32 Port6SoundWrite = 0;
 INT32 CpsBootlegEEPROM = 0;
 INT32 Cps2Turbo = 0;
 
-ClearOpposite<8> clear_opposite;
+ClearOpposite<8, UINT8> clear_opposite;
 
 CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = NULL;
 

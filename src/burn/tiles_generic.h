@@ -256,6 +256,7 @@ void BurnTransferClear();
 void BurnTransferClear(UINT16 nFillPattern);
 void BurnPrioClear();
 INT32 BurnTransferCopy(UINT32* pPalette);
+INT32 BurnTransferPartial(UINT32* pPalette, INT32 nStart, INT32 nEnd);
 void BurnTransferExit();
 INT32 BurnTransferInit();
 void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight); // Use extreme caution!

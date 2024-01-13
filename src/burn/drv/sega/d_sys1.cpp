@@ -6043,7 +6043,9 @@ static INT32 NobbInit()
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x8000, 4, 0x8000, 0);
 
 	if (nRet == 0) {
-		System1Rom2[0x02f9] = 0x28;
+		ZetOpen(1);
+		ZetMapMemory(System1Rom2, 0x4000, 0x7fff, MAP_ROM); // sound rom mirror (fixes: end of stg. 1 music loss)
+		ZetClose();
 
 		ZetOpen(0);
 		ZetSetWriteHandler(NoboranbZ801ProgWrite);

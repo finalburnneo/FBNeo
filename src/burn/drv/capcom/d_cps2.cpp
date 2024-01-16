@@ -13019,34 +13019,34 @@ static struct BurnRomInfo Sfz3jr2dRomDesc[] = {
 STD_ROM_PICK(Sfz3jr2d)
 STD_ROM_FN(Sfz3jr2d)
 
-// Street Fighter Zero 3 Mix (hacked by Zero800)
+// Street Fighter Zero 3 Mix v0.13 (hacked by Zero800)
 
 static struct BurnRomInfo Sfz3mixRomDesc[] = {
-	{ "sfz3mix.03",        0x080000, 0x39b106fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.04",        0x080000, 0x0cde4b42, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.05",        0x080000, 0xb8b19c1f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.06",        0x080000, 0x35639da3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.07",        0x080000, 0xa9d9f83e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.08",        0x080000, 0xa85e33a5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.09",        0x080000, 0x7a5a0d3c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.10",        0x080000, 0x3fa5f874, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.03",		0x080000, 0x39b106fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.04",		0x080000, 0x0cde4b42, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.05",		0x080000, 0xb8b19c1f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.06",		0x080000, 0x35639da3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.07",		0x080000, 0xa9d9f83e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.08",		0x080000, 0xa85e33a5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx12.09",		0x080000, 0x7a5a0d3c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.10",		0x080000, 0x3fa5f874, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sfz3mix.13m",       0x400000, 0x93183516, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.15m",       0x400000, 0xb06f14ce, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.17m",       0x400000, 0x661c1355, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.19m",       0x400000, 0x7227f353, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.14m",       0x400000, 0x62496779, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.16m",       0x400000, 0x1e7aa3cb, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.18m",       0x400000, 0x95e161ce, CPS2_GFX | BRF_GRA },
-	{ "sfz3mix.20m",       0x400000, 0xa6afdc2d, CPS2_GFX | BRF_GRA },
+	{ "sz3mx11.13m",	0x400000, 0x93183516, CPS2_GFX | BRF_GRA },
+	{ "sz3mx11.15m",	0x400000, 0xb06f14ce, CPS2_GFX | BRF_GRA },
+	{ "sz3mx11.17m",	0x400000, 0x661c1355, CPS2_GFX | BRF_GRA },
+	{ "sz3mx11.19m",	0x400000, 0x7227f353, CPS2_GFX | BRF_GRA },
+	{ "sz3mx10.14m",	0x400000, 0x62496779, CPS2_GFX | BRF_GRA },
+	{ "sz3mx10.16m",	0x400000, 0x1e7aa3cb, CPS2_GFX | BRF_GRA },
+	{ "sz3mx10.18m",	0x400000, 0x95e161ce, CPS2_GFX | BRF_GRA },
+	{ "sz3mx10.20m",	0x400000, 0xa6afdc2d, CPS2_GFX | BRF_GRA },
 
-	{ "sfz3mix.01",        0x020000, 0x5ac9bfe5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sfz3mix.02",	       0x020000, 0x68a17d87, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.01",		0x020000, 0x5ac9bfe5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3mx13.02",		0x020000, 0x68a17d87, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sfz3mix.11m",       0x400000, 0xab9415fb, CPS2_QSND | BRF_SND },
-	{ "sfz3mix.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	{ "sz3mx13.11m",	0x400000, 0xab9415fb, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",		0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
 
-	{ "phoenix.key",       0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3mix)

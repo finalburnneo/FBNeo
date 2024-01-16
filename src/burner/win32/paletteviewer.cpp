@@ -1,9 +1,12 @@
 #include "burner.h"
+#include "winuser.h"
 
 static HWND hPaletteViewerDlg	= NULL;
 static HWND hParent		= NULL;
 static HWND PaletteControl[256] = {NULL,};
 static HBRUSH PaletteBrush[256] = {NULL,};
+
+static HWND hYHeadings[0x10];
 
 static int nPalettePosition;
 static int nPaletteEntries;
@@ -67,7 +70,8 @@ static void UpdateLabels()
 		int nLabel = nPalettePosition + (i * 16);
 		szItemText[0] = _T('\0');
 		_stprintf(szItemText, _T("%05X"), nLabel);
-		SendMessage(GetDlgItem(hPaletteViewerDlg, IDC_GFX_VIEWER_VERT_1 + i), WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
+//		SendMessage(GetDlgItem(hPaletteViewerDlg, IDC_GFX_VIEWER_VERT_1 + i), WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
+		SetWindowText(hYHeadings[i], szItemText);
 	}
 }
 
@@ -81,9 +85,42 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			AudSoundStop();
 		}
 
+		HDC hDc = GetDC(0);
+
+		int dpi_x = GetDeviceCaps(hDc, LOGPIXELSX);
+		int dpi_y = GetDeviceCaps(hDc, LOGPIXELSY);
+		bprintf(0, _T("DPi x,y %d,%d\n"), dpi_x, dpi_y);
+
+		double _02 = ((double) 3 * dpi_x / 96) + 0.5;
+		double _20 = (double)19 * dpi_x / 96;
+		double _21 = (double)20 * dpi_x / 96;
+		double _st = (double)38 * dpi_x / 96; // start margin!
+		double _lh = (double)33 * dpi_x / 96; // left heading
+
+		int nHeight = -MulDiv(8, GetDeviceCaps(hDc, LOGPIXELSY), 72);
+		HFONT hFont = CreateFont(nHeight, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, 0, 0, DEFAULT_QUALITY/*ANTIALIASED_QUALITY*/, FF_MODERN, _T("MS Shell Dlg"));
+
+		ReleaseDC(0, hDc);
+
+		for (int i = 0; i < 16; i++) { // X - headings
+			char t[1024];
+			sprintf(t, "%X", i);
+			HWND hW =
+				CreateWindowEx(0, _T("STATIC"), ANSIToTCHAR(t, NULL, 0), ES_CENTER | WS_CHILD | WS_VISIBLE | SS_NOTIFY, (i * _21) + _st, _02, _20, _20, hPaletteViewerDlg, NULL, NULL, NULL);
+			SendMessage(hW, WM_SETFONT, (LPARAM)hFont, TRUE);
+		}
+		for (int i = 0; i < 16; i++) { // Y - headings
+			char t[1024];
+			sprintf(t, "%04X0", i);
+			hYHeadings[i] =
+				CreateWindowEx(0, _T("STATIC"), ANSIToTCHAR(t, NULL, 0), ES_LEFT | WS_CHILD | WS_VISIBLE | SS_NOTIFY, _02, (i * _21) + _21, _lh, _20, hPaletteViewerDlg, NULL, NULL, NULL);
+			SendMessage(hYHeadings[i], WM_SETFONT, (LPARAM)hFont, TRUE);
+		}
+
 		for (int y = 0; y < 16; y++) {
 			for (int x = 0; x < 16; x++) {
-				PaletteControl[(y * 16) + x] = CreateWindowEx(0, _T("STATIC"), NULL, WS_CHILD | WS_VISIBLE | SS_NOTIFY, (x * 21) + 38, (y * 21) + 21, 20, 20, hPaletteViewerDlg, NULL, NULL, NULL);
+				PaletteControl[(y * 16) + x] =
+					CreateWindowEx(0, _T("STATIC"), NULL, WS_CHILD | WS_VISIBLE | SS_NOTIFY, (x * _21) + _st, (y * _21) + _21, _20, _20, hPaletteViewerDlg, NULL, NULL, NULL);
 			}
 		}
 

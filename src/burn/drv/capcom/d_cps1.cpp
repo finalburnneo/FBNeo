@@ -13181,6 +13181,36 @@ static struct BurnRomInfo Sf2amf10RomDesc[] = {
 STD_ROM_PICK(Sf2amf10)
 STD_ROM_FN(Sf2amf10)
 
+// Dumped by: gomarco79
+// Street Fighter II - Champion Edition (L735 Test Rom / Mega Co, bootleg, set 4?)
+static struct BurnRomInfo Sf2amf11RomDesc[] = {
+	{ "1.040.bin",   0x080000, 0x9e6d058a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.040.bin",   0x080000, 0x518d8404, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.010.bin",   0x020000, 0xfca4fc1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.010.bin",   0x020000, 0xcfdd6f54, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "u70.bin",     0x100000, 0xa94a8b19, BRF_GRA | CPS1_TILES },
+	{ "u68.bin",     0x100000, 0x0405f21f, BRF_GRA | CPS1_TILES },
+	{ "u69.bin",   	 0x100000, 0x05dc2043, BRF_GRA | CPS1_TILES },
+	{ "u67.bin",   	 0x100000, 0x055b64f1, BRF_GRA | CPS1_TILES },
+	{ "u19.bin",   	 0x100000, 0x1a518609, BRF_GRA | CPS1_TILES },
+	{ "u18.bin",   	 0x100000, 0x84f9354f, BRF_GRA | CPS1_TILES },
+
+	{ "sf2_9.12a",   0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "oki.u210",    0x040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	{ "w-1",      	 0x020000, 0x6de44671, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "w-2",         0x020000, 0xe8f14362, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "w-3",         0x020000, 0xbf0cd819, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "w-4",         0x020000, 0x76f9f91f, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+
+	{ "conv.u133",   0x010000, 0x13ea1c44, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Sf2amf11)
+STD_ROM_FN(Sf2amf11)
+
 static struct BurnRomInfo Sf2megaRomDesc[] = {
 	// this set was previously known as sf2m2
 	{ "ch222esp",     0x0080000, 0x9e6d058a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -16431,6 +16461,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2amf8"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2amf9"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2amf10"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2amf11"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mega"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mega2"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceeabl"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
@@ -19100,6 +19131,20 @@ static INT32 Sf2b3Init()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2stt;
 	
 	return DrvInit();
+}
+
+static INT32 Sf2amf11Init()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2stt;
+
+	Cps1LockSpriteList910000 = 1;
+
+	CpsLayer1XOffs = -12;
+	CpsLayer2XOffs = -14;
+	CpsLayer3XOffs = -16;
+	CpsDrawSpritesInReverse = 1;
+
+	return TwelveMhzInit();
 }
 
 static INT32 Sf2rulesInit()
@@ -23745,6 +23790,17 @@ struct BurnDriver BurnDrvCpsSf2amf10 = {
 	Sf2amf10Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+struct BurnDriver BurnDrvCpsSf2amf11 = {
+	"sf2amf11", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II - Champion Edition (L735 Test Rom w/ Mega Co, bootleg, set 4)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2amf11RomInfo, Sf2amf11RomName, NULL, NULL, NULL, NULL, Sf2yycInputInfo, Sf2megaDIPInfo,
+	Sf2amf11Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsSf2mega = {
 	"sf2mega", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II': Champion Edition (Mega Co bootleg set 1)\0", NULL, "Mega Co", "CPS1",

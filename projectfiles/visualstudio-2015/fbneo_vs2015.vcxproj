@@ -1528,7 +1528,7 @@ del build_details.exe
   <PropertyGroup Label="Globals">
     <ProjectGuid>{86D06C32-A849-4988-A176-A38D014C36C1}</ProjectGuid>
     <RootNamespace>fbneo_vs2015</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <ProjectName>fcadefbneo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -1587,10 +1587,11 @@ del build_details.exe
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)$(Configuration)\</IntDir>
-    <IncludePath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;..\..\src\dep\vc\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86;D:\fbn\src\dep\vc\include\xaudio2;C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um;D:\fbn\projectfiles\visualstudio-2015\includes;C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x86;C:\Program Files (x86)\Windows Kits;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;..\..\src\dep\vc\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86;C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x86;$(LibraryPath)</LibraryPath>
     <TargetName>fcadefbneo</TargetName>
     <GenerateManifest>true</GenerateManifest>
+    <ExecutablePath>C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

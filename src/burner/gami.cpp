@@ -2037,67 +2037,65 @@ void GameInpClearOpposites(bool bCopy)
 			for (INT32 i = 0; i < 2; i++) {
 				//4 way direction forced, "last wins", for tetris
 				// first we need neutral socd cleaning
+			fourway:
 				if (GetInpFrame(i, UP) && GetInpFrame(i, DOWN)) {
 					SetInpFrame(i, UP, 0, bCopy);
 					SetInpFrame(i, DOWN, 0, bCopy);
 				}
-				
+
 				if (GetInpFrame(i, LEFT) && GetInpFrame(i, RIGHT)) {
 					SetInpFrame(i, LEFT, 0, bCopy);
 					SetInpFrame(i, RIGHT, 0, bCopy);
 				}
 				//on unlocked input, perform last wins cleaning between axes
-				if (!bInpIsLocked[i]) { 
+				if (!bInpIsLocked[i]) {
 					if (GetInpFrame(i, DOWN) && GetInpFrame(i, LEFT)) { //D+L
-						if (GetInpPrev(i, DOWN)) {
+						if (GetInpPrev(i, DOWN) || GetInpPrev(i, RIGHT)) {
 							SetInpFrame(i, DOWN, 0, bCopy);
 							bInpIsLocked[i] = 1; //lock inputs to prevent oscillating
 						} else {
 							SetInpFrame(i, LEFT, 0, bCopy);
 							bInpIsLocked[i] = 1; //same deal
-
 						}
 					}
-					
+
 					if (GetInpFrame(i, UP) && GetInpFrame(i, LEFT)) { //U+L
-						if (GetInpPrev(i, UP)) {
+						if (GetInpPrev(i, UP) || GetInpPrev(i, RIGHT)) {
 							SetInpFrame(i, UP, 0, bCopy);
 							bInpIsLocked[i] = 1;
-
 						} else {
 							SetInpFrame(i, LEFT, 0, bCopy);
 							bInpIsLocked[i] = 1;
-
 						}
 					}
-					
+
 					if (GetInpFrame(i, DOWN) && GetInpFrame(i, RIGHT)) { //D+R
-						if (GetInpPrev(i, DOWN)) {
+						if (GetInpPrev(i, DOWN) || GetInpPrev(i, LEFT)) {
 							SetInpFrame(i, DOWN, 0, bCopy);
 							bInpIsLocked[i] = 1;
-
 						} else {
 							SetInpFrame(i, RIGHT, 0, bCopy);
 							bInpIsLocked[i] = 1;
-
 						}
 					}
-					
+
 					if (GetInpFrame(i, UP) && GetInpFrame(i, RIGHT)) { //U+R
-						if (GetInpPrev(i, UP)) {
+						if (GetInpPrev(i, UP) || GetInpPrev(i, LEFT)) {
 							SetInpFrame(i, UP, 0, bCopy);
 							bInpIsLocked[i] = 1;
-
 						} else {
 							SetInpFrame(i, RIGHT, 0, bCopy);
 							bInpIsLocked[i] = 1;
-
 						}
 					}
-				//when locked:
+
+					//when locked:
 				} else {
 					if ((GetInpFrame(i, UP) + GetInpFrame(i, DOWN) + GetInpFrame(i, LEFT) + GetInpFrame(i, RIGHT)) <= 1) {
-						bInpIsLocked[i] = 0; //unlock only if there's zero or one directions pressed: the situation must be correct without cleaning
+						bInpIsLocked[i] = 0; //unlock if there's zero or one directions pressed: the situation must be correct without cleaning
+					} else if (((GetInpPrev(i, UP) + GetInpFrame(i, DOWN)) >= 2) || ((GetInpFrame(i, UP) + GetInpPrev(i, DOWN)) >= 2) || ((GetInpPrev(i, LEFT) + GetInpFrame(i, RIGHT)) >= 2) || ((GetInpFrame(i, LEFT) + GetInpPrev(i, RIGHT)) >= 2)) {
+						bInpIsLocked[i] = 0; //something changed, but still 2 directions held down => unlock and clean
+						goto	 fourway;
 					} else {
 						for (INT32 j = 0; j < COUNT; j++) {
 							SetInpFrame(i, j, GetInpPrev(i, j), bCopy);//else the situation must be the same as before so copy the input

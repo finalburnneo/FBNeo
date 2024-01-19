@@ -96,6 +96,9 @@ static int nDlgDrvRomInfoBtnInitialPos[4];
 static int nDlgSelectGameGrpInitialPos[4];
 static int nDlgSelectGameLstInitialPos[4];
 
+static int _213 = 213;
+static int _160 = 160;
+
 // Filter TreeView
 HWND hFilterList					= NULL;
 HTREEITEM hFilterCapcomMisc			= NULL;
@@ -359,6 +362,20 @@ static void RebuildEverything();
 #define SetControlPosAlignTopLeftResizeHorVertALT(a, b)			\
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1], b[2] - xDelta, b[3] - yDelta, SWP_NOZORDER | SWP_NOSENDCHANGING);
 
+static void GetTitlePreviewScale()
+{
+	RECT rect;
+	GetWindowRect(GetDlgItem(hSelDlg, IDC_STATIC2), &rect);
+	int w = rect.right - rect.left;
+	int h = rect.bottom - rect.top;
+
+	w = w * 90 / 100; // make W 90% of the "Preview / Title" windowpane
+	h = w * 75 / 100; // make H 75% of w (4:3)
+
+	_213 = w;
+	_160 = h;
+}
+
 static void GetInitialPositions()
 {
 	RECT rect;
@@ -408,6 +425,8 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDGAMEINFO, nDlgDrvRomInfoBtnInitialPos);
 	GetInititalControlPos(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
 	GetInititalControlPos(IDC_TREE1, nDlgSelectGameLstInitialPos);
+
+	GetTitlePreviewScale();
 
 	// When the window is created with too few entries for TreeView to warrant the
 	// use of a vertical scrollbar, the right side will be slightly askew. -dink
@@ -953,9 +972,10 @@ static void RefreshPanel()
 		nTimer = 0;
 	}
 
+	GetTitlePreviewScale();
 
-	hPrevBmp = PNGLoadBitmap(hSelDlg, NULL, 213, 160, 2);
-	hTitleBmp = PNGLoadBitmap(hSelDlg, NULL, 213, 160, 2);
+	hPrevBmp = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
+	hTitleBmp = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
 
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPrevBmp);
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
@@ -1083,12 +1103,12 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 		if (ay > ax) {
 			bImageOrientation = TRUE;
 
-			y = 160;
+			y = _160;
 			x = y * ax / ay;
 		} else {
 			bImageOrientation = FALSE;
 
-			x = 213;
+			x = _213;
 			y = x * ay / ax;
 		}
 
@@ -1129,7 +1149,7 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 				if (img.width <= game_x / 2) {
 					ax = 4;
 					ay = 3;
-					x = 213;
+					x = _213;
 					y = x * ay / ax;
 				}
 			}
@@ -1153,7 +1173,7 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 		}
 
 		bImageOrientation = FALSE;
-		hNewImage = PNGLoadBitmap(hSelDlg, NULL, 213, 160, 2);
+		hNewImage = PNGLoadBitmap(hSelDlg, NULL, _213, _160, 2);
 	}
 
 	if (hPrevBmp && (HorCtrl == IDC_SCREENSHOT_H || VerCtrl == IDC_SCREENSHOT_V)) {

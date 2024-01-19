@@ -435,8 +435,19 @@ static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFra
 	float w = (float)PNGRes.nWidth;
 	float h = (float)PNGRes.nHeight;
 
-	//float maxw = 216; //
-	//float maxh = 150; //
+	if (maxw == 0 && maxh == 0) {
+		// derive max w/h from dialog size
+		RECT rect = { 0, 0, 0, 0 };
+		GetWindowRect(GetDlgItem(hDlg, IDC_STATIC2), &rect);
+		int dw = rect.right - rect.left;
+		int dh = rect.bottom - rect.top;
+
+		dw = dw * 90 / 100; // make W 90% of the "Preview / Title" windowpane
+		dh = dw * 75 / 100; // make H 75% of w (4:3)
+
+		maxw = dw;
+		maxh = dh;
+	}
 
 	// max WIDTH
 	if(w > maxw) {
@@ -496,8 +507,8 @@ static void NeoCDList_ShowPreview(HWND hDlg, TCHAR* szFile, int nCtrID, int nFra
 
 static void NeoCDList_Clean()
 {
-	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 216, 150);
-	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 216, 150);
+	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
+	NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
 
 	SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), _T(""));
 	SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTPUBLISHER), _T(""));
@@ -569,8 +580,8 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 		hWhiteBGBrush	= CreateSolidBrush(RGB(0xFF,0xFF,0xFF));
 
-		NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 216, 150);
-		NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 216, 150);
+		NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
+		NeoCDList_ShowPreview(hNeoCDWnd, _T(""), IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
 
 		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTSHORT), _T(""));
 		SetWindowText(GetDlgItem(hNeoCDWnd, IDC_NCD_TEXTPUBLISHER), _T(""));
@@ -673,8 +684,8 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					_stprintf(szBack, _T("%s%s.png"), szAppPreviewsPath, ngcd_list[nItem].szShortName );
 
 					// Front / Back Cover preview
-					NeoCDList_ShowPreview(hNeoCDWnd, szFront, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 216, 150);
-					NeoCDList_ShowPreview(hNeoCDWnd, szBack, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 216, 150);
+					NeoCDList_ShowPreview(hNeoCDWnd, szFront, IDC_NCD_FRONT_PIC, IDC_NCD_FRONT_PIC_FRAME, 0, 0);
+					NeoCDList_ShowPreview(hNeoCDWnd, szBack, IDC_NCD_BACK_PIC, IDC_NCD_BACK_PIC_FRAME, 0, 0);
 
 					nSelectedItem = nItem;
 					break;

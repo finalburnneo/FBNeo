@@ -598,7 +598,7 @@ static int GameInfoInit()
 			}
 
 			if (inGame == 1) {
-				if (!strncmp("\t\t<text>", Temp, 8)) {
+				if (strstr(Temp, "<text>")) {
 					inGame = 2;
 					continue;
 				}
@@ -610,7 +610,7 @@ static int GameInfoInit()
 					// at this point, the "game was released XX years ago.." string is thrown out
 					fgets(Temp, 10000, fp);
 
-					if (!strncmp("\t\t</text>", Temp, 9)) {
+					if (strstr(Temp, "</text>")) {
 						break;
 					}
 

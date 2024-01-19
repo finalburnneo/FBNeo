@@ -2136,24 +2136,24 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 
 // Hardware description, preset file, {hardware, codes}, history.dat token
 tIniStruct gamehw_cfg[] = {
-	{_T("CPS-1/CPS-2/CPS-3 hardware"),	_T("config/presets/cps.ini"),		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, HARDWARE_CAPCOM_CPS2, HARDWARE_CAPCOM_CPS3, 0 }, "$info=" },
-	{_T("Neo-Geo hardware"),			_T("config/presets/neogeo.ini"),	{ HARDWARE_SNK_NEOGEO, 0 }, 		"$info="		},
-	{_T("Neo-Geo hardware"),			_T("config/presets/neogeocd.ini"),	{ HARDWARE_SNK_NEOCD, 0 },			"$neocd="		},
-	{_T("Neo Geo Pocket hardware"),     _T("config/presets/ngp.ini"),       { HARDWARE_SNK_NGP, 0 },			"$ngp="			},
-	{_T("Neo Geo Pocket hardware"),		_T("config/presets/ngp.ini"),		{ HARDWARE_SNK_NGPC, 0 },			"$ngpc="		},
-	{_T("NES hardware"),				_T("config/presets/nes.ini"),		{ HARDWARE_NES, 0 },				"$nes="			},
-	{_T("FDS hardware"),				_T("config/presets/fds.ini"),		{ HARDWARE_FDS, 0 },				"$famicom_flop="},
-	{_T("PGM hardware"),				_T("config/presets/pgm.ini"),		{ HARDWARE_IGS_PGM, 0 },			"$info="        },
-	{_T("MegaDrive hardware"),			_T("config/presets/megadrive.ini"),	{ HARDWARE_SEGA_MEGADRIVE, 0 },		"$megadriv="	},
-	{_T("PCE/SGX hardware"),			_T("config/presets/pce.ini"),		{ HARDWARE_PCENGINE_PCENGINE, 0 },	"$pce="			},
-	{_T("TG16 hardware"),				_T("config/presets/pce.ini"),		{ HARDWARE_PCENGINE_TG16, 0 },		"$tg16="		},
-	{_T("MSX1 hardware"),				_T("config/presets/msx.ini"),		{ HARDWARE_MSX, 0 },				"$msx1_cart="	},
-	{_T("Coleco hardware"),				_T("config/presets/coleco.ini"),	{ HARDWARE_COLECO, 0 },				"$coleco="		},
-	{_T("SG1000 hardware"),				_T("config/presets/sg1000.ini"),	{ HARDWARE_SEGA_SG1000, 0 },		"$sg1000="		},
-	{_T("Sega Master System hardware"),	_T("config/presets/sms.ini"),		{ HARDWARE_SEGA_MASTER_SYSTEM, 0 },	"$sms="			},
-	{_T("Sega Game Gear hardware"),		_T("config/presets/gg.ini"),		{ HARDWARE_SEGA_GAME_GEAR, 0 },		"$gamegear="	},
-	{_T("Sinclair Spectrum hardware"),	_T("config/presets/spectrum.ini"),	{ HARDWARE_SPECTRUM, 0 },			"$spectrum_cass=" },
-	{_T("Fairchild Channel F hardware"),_T("config/presets/channelf.ini"),	{ HARDWARE_CHANNELF, 0 },			"$channelf="	},
+	{_T("CPS-1/CPS-2/CPS-3 hardware"),	_T("config/presets/cps.ini"),		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, HARDWARE_CAPCOM_CPS2, HARDWARE_CAPCOM_CPS3, 0 }, "\t\t\t<system name=\"" },
+	{_T("Neo-Geo hardware"),			_T("config/presets/neogeo.ini"),	{ HARDWARE_SNK_NEOGEO, 0 }, 		"\t\t\t<system name=\""						},
+	{_T("Neo-Geo CD hardware"),			_T("config/presets/neogeocd.ini"),	{ HARDWARE_SNK_NEOCD, 0 },			"\t\t\t<item list=\"neocd\" name=\""		},
+	{_T("Neo Geo Pocket hardware"),     _T("config/presets/ngp.ini"),       { HARDWARE_SNK_NGP, 0 },			"\t\t\t<item list=\"ngp\" name=\""			},
+	{_T("Neo Geo Pocket C hardware"),	_T("config/presets/ngp.ini"),		{ HARDWARE_SNK_NGPC, 0 },			"\t\t\t<item list=\"ngpc\" name=\""			},
+	{_T("NES hardware"),				_T("config/presets/nes.ini"),		{ HARDWARE_NES, 0 },				"\t\t\t<item list=\"nes\" name=\""			},
+	{_T("FDS hardware"),				_T("config/presets/fds.ini"),		{ HARDWARE_FDS, 0 },				"\t\t\t<item list=\"famicom_flop\" name=\""	},
+	{_T("PGM hardware"),				_T("config/presets/pgm.ini"),		{ HARDWARE_IGS_PGM, 0 },			"\t\t\t<system name=\""        				},
+	{_T("MegaDrive hardware"),			_T("config/presets/megadrive.ini"),	{ HARDWARE_SEGA_MEGADRIVE, 0 },		"\t\t\t<item list=\"megadriv\" name=\""		},
+	{_T("PCE/SGX hardware"),			_T("config/presets/pce.ini"),		{ HARDWARE_PCENGINE_PCENGINE, 0 },	"\t\t\t<item list=\"pce\" name=\""			},
+	{_T("TG16 hardware"),				_T("config/presets/pce.ini"),		{ HARDWARE_PCENGINE_TG16, 0 },		"\t\t\t<item list=\"tg16\" name=\""			},
+	{_T("MSX1 hardware"),				_T("config/presets/msx.ini"),		{ HARDWARE_MSX, 0 },				"\t\t\t<item list=\"msx1_cart\" name=\""	},
+	{_T("Coleco hardware"),				_T("config/presets/coleco.ini"),	{ HARDWARE_COLECO, 0 },				"\t\t\t<item list=\"coleco\" name=\""		},
+	{_T("SG1000 hardware"),				_T("config/presets/sg1000.ini"),	{ HARDWARE_SEGA_SG1000, 0 },		"\t\t\t<item list=\"sg1000\" name=\""		},
+	{_T("Sega Master System hardware"),	_T("config/presets/sms.ini"),		{ HARDWARE_SEGA_MASTER_SYSTEM, 0 },	"\t\t\t<item list=\"sms\" name=\""			},
+	{_T("Sega Game Gear hardware"),		_T("config/presets/gg.ini"),		{ HARDWARE_SEGA_GAME_GEAR, 0 },		"\t\t\t<item list=\"gamegear\" name=\""		},
+	{_T("Sinclair Spectrum hardware"),	_T("config/presets/spectrum.ini"),	{ HARDWARE_SPECTRUM, 0 },			"\t\t\t<item list=\"spectrum_cass\" name=\""},
+	{_T("Fairchild Channel F hardware"),_T("config/presets/channelf.ini"),	{ HARDWARE_CHANNELF, 0 },			"\t\t\t<item list=\"channelf\" name=\""		},
 	{_T("\0"), _T("\0"), { 0 }, "" } // END of list
 };
 
@@ -2173,7 +2173,7 @@ void GetHistoryDatHardwareToken(char *to_string)
 	}
 
 	// HW not found, default to "$info=" (arcade game)
-	strcpy(to_string, "$info=");
+	strcpy(to_string, "\t\t\t<system name=\"");
 }
 
 INT32 ConfigGameLoadHardwareDefaults()

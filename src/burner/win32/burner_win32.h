@@ -133,6 +133,7 @@ char *utf8_from_astring(const CHAR *s);
 
 WCHAR *wstring_from_utf8(const char *s);
 char *utf8_from_wstring(const WCHAR *s);
+void tcharstrreplace(TCHAR *pszSRBuffer, const TCHAR *pszFind, const TCHAR *pszReplace);
 
 #ifdef _UNICODE
 #define tstring_from_utf8 wstring_from_utf8

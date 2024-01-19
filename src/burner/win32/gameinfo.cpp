@@ -567,49 +567,60 @@ static int GameInfoInit()
 
 	// Get the history info
 	CHAR szFileName[MAX_PATH] = "";
-	snprintf(szFileName, sizeof(szFileName), "%shistory.dat", TCHARToANSI(szAppHistoryPath, NULL, 0));
+	snprintf(szFileName, sizeof(szFileName), "%shistory.xml", TCHARToANSI(szAppHistoryPath, NULL, 0));
 
 	FILE *fp = fopen(szFileName, "rt");
 	char Temp[10000];
 	char rom_token[255];
 	char DRIVER_NAME[255];
+	char to_find[255*2];
 	int inGame = 0;
 
-	TCHAR szBuffer[50000] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
+	TCHAR szBuffer[0x10000*2] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fnil\\fcharset0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
 
 	GetHistoryDatHardwareToken(&rom_token[0]);
 	strcpy(DRIVER_NAME, BurnDrvGetTextA(DRV_NAME));
 
-	if (strncmp("$info=", rom_token, 6)) { // non-arcade game detected. (token not "$info=" !)
+	if (strncmp("\t\t\t<system name=\"", rom_token, 17)) { // non-arcade game detected. (token not "$info=" !)
+		bprintf(0, _T("not arcade\n"));
 		char *p = strchr(DRIVER_NAME, '_');
 		if (p) strcpy(DRIVER_NAME, p + 1); // change "nes_smb" -> "smb"
 	}
 
+	sprintf(to_find, "%s%s\"", rom_token, DRIVER_NAME);
+
 	if (fp) {
 		while (!feof(fp)) {
-			char *Tokens;
-
 			fgets(Temp, 10000, fp);
-			if (!strncmp(rom_token, Temp, strlen(rom_token))) {
-				Tokens = strtok(Temp, "=,");
-				while (Tokens != NULL) {
-					if (!strcmp(Tokens, DRIVER_NAME)) {
-						inGame = 1;
-						break;
-					}
+			if (!strncmp(to_find, Temp, strlen(to_find))) {
+				inGame = 1;
+				continue;
+			}
 
-					Tokens = strtok(NULL, "=,");
+			if (inGame == 1) {
+				if (!strncmp("\t\t<text>", Temp, 8)) {
+					inGame = 2;
+					continue;
 				}
 			}
 
-			if (inGame) {
+			if (inGame == 2) {
 				int nTitleWrote = 0;
-				while (strncmp("$end", Temp, 4)) {
+				while (!feof(fp)) {
+					// at this point, the "game was released XX years ago.." string is thrown out
 					fgets(Temp, 10000, fp);
 
-					if (!strncmp("$", Temp, 1)) continue;
+					if (!strncmp("\t\t</text>", Temp, 9)) {
+						break;
+					}
 
 					TCHAR *cnvTemp = wstring_from_utf8(Temp);
+
+					tcharstrreplace(cnvTemp, _T("&quot;"), _T("\""));
+					tcharstrreplace(cnvTemp, _T("&amp;"), _T("&"));
+					tcharstrreplace(cnvTemp, _T("&apos;"), _T("'"));
+					tcharstrreplace(cnvTemp, _T("&gt;"), _T(">"));
+					tcharstrreplace(cnvTemp, _T("&lt;"), _T("<"));
 
 					if (!nTitleWrote) {
 						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1\\f0 %s}"), szBuffer, cnvTemp);

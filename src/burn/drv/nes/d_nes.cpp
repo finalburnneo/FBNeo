@@ -9327,6 +9327,7 @@ static INT32 mapper_init(INT32 mappernum)
 		}
 
 		case 206: // mmc3 w/no irq (Tengen mimic-1, Namcot 118)
+		case 194: // mmc3 w/vram
 		case 4: { // mmc3
 			mapper_write = mapper04_write;
 			mapper_map   = mapper04_map;
@@ -27543,9 +27544,9 @@ struct BurnDriver BurnDrvnes_totoro = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Touhou Rououmu - Perfect Cherry Blossom (HB, v1.00a)
+// Touhou Rououmu - Perfect Cherry Blossom (HB, v1.00 beta 2)
 static struct BurnRomInfo nes_touhourououmuRomDesc[] = {
-	{ "Touhou Rououmu v1.00a (2023)(Kyoske Maeda).nes",          524304, 0x843a8cf8, BRF_ESS | BRF_PRG },
+	{ "Touhou Rououmu v1.00 beta 2 (2023)(Kyoske Maeda).nes",          524304, 0x8208a5c3, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_touhourououmu)
@@ -27553,7 +27554,7 @@ STD_ROM_FN(nes_touhourououmu)
 
 struct BurnDriver BurnDrvnes_touhourououmu = {
 	"nes_touhourououmu", NULL, NULL, NULL, "2023",
-	"Touhou Rououmu - Perfect Cherry Blossom (HB, v1.00a)\0", NULL, "Kyoske Maeda", "Miscellaneous",
+	"Touhou Rououmu - Perfect Cherry Blossom (HB, v1.00 beta 2)\0", NULL, "Kyoske Maeda", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_touhourououmuRomInfo, nes_touhourououmuRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

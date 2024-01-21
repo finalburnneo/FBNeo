@@ -3254,6 +3254,50 @@ static void mapper165_map()
 		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
 }
 
+// mapper 194: mmc3 + chrram banks 0-1
+static void mapper194_chrmap(INT32 slot, INT32 bank)
+{
+	mapper_map_chr_ramrom(1, slot, bank, (bank >= 0x0 && bank <= 0x1) ? MEM_RAM : MEM_ROM);
+}
+
+static void mapper194_map()
+{
+    mapper_map_prg(8, 1, mapper_regs[7]);
+
+    if (~mapper4_banksel & 0x40) {
+        mapper_map_prg(8, 0, mapper_regs[6]);
+        mapper_map_prg(8, 2, -2);
+    } else {
+        mapper_map_prg(8, 0, -2);
+        mapper_map_prg(8, 2, mapper_regs[6]);
+    }
+
+    if (~mapper4_banksel & 0x80) {
+		mapper194_chrmap(0, mapper_regs[0] & 0xfe);
+		mapper194_chrmap(1, mapper_regs[0] | 0x01);
+        mapper194_chrmap(2, mapper_regs[1] & 0xfe);
+        mapper194_chrmap(3, mapper_regs[1] | 0x01);
+
+		mapper194_chrmap(4, mapper_regs[2]);
+		mapper194_chrmap(5, mapper_regs[3]);
+		mapper194_chrmap(6, mapper_regs[4]);
+		mapper194_chrmap(7, mapper_regs[5]);
+	} else {
+		mapper194_chrmap(0, mapper_regs[2]);
+		mapper194_chrmap(1, mapper_regs[3]);
+		mapper194_chrmap(2, mapper_regs[4]);
+		mapper194_chrmap(3, mapper_regs[5]);
+
+		mapper194_chrmap(4, mapper_regs[0] & 0xfe);
+		mapper194_chrmap(5, mapper_regs[0] | 0x01);
+		mapper194_chrmap(6, mapper_regs[1] & 0xfe);
+		mapper194_chrmap(7, mapper_regs[1] | 0x01);
+	}
+
+	if (Cart.Mirroring != 4)
+		set_mirroring(mapper4_mirror ? VERTICAL : HORIZONTAL);
+}
+
 static void mapper192_chrmap(INT32 slot, INT32 bank)
 {
 	mapper_map_chr_ramrom(1, slot, bank, (bank >= 0x8 && bank <= 0xb) ? MEM_RAM : MEM_ROM);
@@ -9327,7 +9371,6 @@ static INT32 mapper_init(INT32 mappernum)
 		}
 
 		case 206: // mmc3 w/no irq (Tengen mimic-1, Namcot 118)
-		case 194: // mmc3 w/vram
 		case 4: { // mmc3
 			mapper_write = mapper04_write;
 			mapper_map   = mapper04_map;
@@ -9525,6 +9568,17 @@ static INT32 mapper_init(INT32 mappernum)
 		case 192: { // mmc3-derivative w/char ram+rom, ram mapped to chr banks 8, 9, a, b
 			mapper_write = mapper04_write;
 			mapper_map   = mapper192_map;
+			mapper_scanline = mapper04_scanline;
+			mapper_set_chrtype(MEM_RAM);
+			mapper_map_prg( 8, 3, -1);
+		    mapper_map();
+			retval = 0;
+			break;
+		}
+
+		case 194: { // mmc3-derivative w/char ram+rom, ram mapped to chr banks 0, 1
+			mapper_write = mapper04_write;
+			mapper_map   = mapper194_map;
 			mapper_scanline = mapper04_scanline;
 			mapper_set_chrtype(MEM_RAM);
 			mapper_map_prg( 8, 3, -1);

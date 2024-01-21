@@ -42,10 +42,18 @@ static void CpsBlendInit()
 	TCHAR filename[MAX_PATH];
 
 	_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_NAME));
-	
+
 	FILE *fa = _tfopen(filename, _T("rt"));
 
+	INT32 is_sfz3mix = strstr("sfz3mix", BurnDrvGetTextA(DRV_NAME)) != NULL;
+
 	if (fa == NULL) {
+		if (is_sfz3mix) {
+			// for sfz3mix, don't use parent's blend table. sfz3mix uses different
+			// sprite indexing
+			return;
+		}
+
 		_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_PARENT));
 
 		fa = _tfopen(filename, _T("rt"));

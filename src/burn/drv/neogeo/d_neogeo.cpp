@@ -27154,7 +27154,7 @@ struct BurnDriver BurnDrvxenocrisis = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN | GBF_SHOOT, 0,
 	NULL, xenocrisisRomInfo, xenocrisisRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 304, 224, 4, 3
+	0x1000, 320, 224, 4, 3
 };
 
 

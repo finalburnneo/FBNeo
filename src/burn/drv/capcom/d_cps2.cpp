@@ -3477,32 +3477,6 @@ static struct BurnRomInfo Hsf2j1RomDesc[] = {
 STD_ROM_PICK(Hsf2j1)
 STD_ROM_FN(Hsf2j1)
 
-static struct BurnRomInfo Hsf2ppRomDesc[] = {
-	{ "hsf2pp.03",     0x080000, 0x652728a6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hsf2pp.04",     0x080000, 0x7a02d7b6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hs2.06",        0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hs2.07",        0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hs2.08",        0x080000, 0xc9441533, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hs2.09",        0x080000, 0x3fc638a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hs2.10",        0x080000, 0x20d0f9e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-
-	{ "hs2.13m",       0x800000, 0xa6ecab17, CPS2_GFX | BRF_GRA },
-	{ "hs2.15m",       0x800000, 0x10a0ae4d, CPS2_GFX | BRF_GRA },
-	{ "hs2.17m",       0x800000, 0xadfa7726, CPS2_GFX | BRF_GRA },
-	{ "hs2.19m",       0x800000, 0xbb3ae322, CPS2_GFX | BRF_GRA },
-
-	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-
-	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
-
-	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
-};
-
-STD_ROM_PICK(Hsf2pp)
-STD_ROM_FN(Hsf2pp)
-
 static struct BurnRomInfo JyangokuRomDesc[] = {
 	{ "majj.03",       0x080000, 0x4614a3b2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
@@ -10258,16 +10232,6 @@ struct BurnDriver BurnDrvCpsHsf2j1 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsHsf2pp = {
-	"hsf2pp", "hsf2", NULL, NULL, "2017",
-	"Hyper Street Fighter II Plus Plus\0", NULL, "hack", "CPS2",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Hsf2ppRomInfo, Hsf2ppRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
-	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 struct BurnDriver BurnDrvCpsJyangoku = {
 	"jyangoku", NULL, NULL, NULL, "1999",
 	"Jyangokushi  -Haoh no Saihai- (990527 Japan)\0", NULL, "Mitchell", "CPS2",
@@ -12700,6 +12664,32 @@ static struct BurnRomInfo Hsf2daRomDesc[] = {
 STD_ROM_PICK(Hsf2da)
 STD_ROM_FN(Hsf2da)
 
+static struct BurnRomInfo Hsf2ppRomDesc[] = {
+	{ "hsf2pp.03",     0x080000, 0x652728a6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hsf2pp.04",     0x080000, 0x7a02d7b6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.06",        0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.07",        0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.08",        0x080000, 0xc9441533, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.09",        0x080000, 0x3fc638a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.10",        0x080000, 0x20d0f9e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "hs2.13m",       0x800000, 0xa6ecab17, CPS2_GFX | BRF_GRA },
+	{ "hs2.15m",       0x800000, 0x10a0ae4d, CPS2_GFX | BRF_GRA },
+	{ "hs2.17m",       0x800000, 0xadfa7726, CPS2_GFX | BRF_GRA },
+	{ "hs2.19m",       0x800000, 0xbb3ae322, CPS2_GFX | BRF_GRA },
+
+	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Hsf2pp)
+STD_ROM_FN(Hsf2pp)
+
 static struct BurnRomInfo Megamn2dRomDesc[] = {
 	{ "rm2ud.03",      0x080000, 0xd3635f25, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "rm2ud.04",      0x080000, 0x768a1705, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -13901,6 +13891,8 @@ static INT32 Ssf2tPhoenixInit()
 	
 	Ssf2t = 1;
 	
+	nCPS68KClockspeed = 10867500;
+	
 	nRet = PhoenixInit();
 	
 	nCpsGfxScroll[3] = 0;
@@ -14084,6 +14076,16 @@ struct BurnDriver BurnDrvCpsHsf2da = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Hsf2daRomInfo, Hsf2daRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsHsf2pp = {
+	"hsf2pp", "hsf2", NULL, NULL, "2017",
+	"Hyper Street Fighter II Plus Plus\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Hsf2ppRomInfo, Hsf2ppRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

@@ -545,7 +545,7 @@ static INT32 DrvInit()
 	return 0;
 }
 
-static void BootlegCommonInit(void __fastcall (*write_byte)(UINT16,UINT8), INT32 gfxbpp)
+static void BootlegCommonInit(void (__fastcall *write_byte)(UINT16,UINT8), INT32 gfxbpp)
 {
 	DrvGfxDecode(DrvGfxROM0, DrvGfxROM0, 0);
 	DrvGfxDecode(DrvGfxROM1, DrvGfxROM1, (gfxbpp == 3) ? 2 : 1);

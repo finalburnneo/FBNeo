@@ -3757,7 +3757,7 @@ struct BurnDriver BurnDrvAFighter = {
 	"afighter", NULL, NULL, NULL, "1986",
 	"Action Fighter (FD1089A 317-0018)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_VERSHOOT, 0,
 	NULL, AfighterRomInfo, AfighterRomName, NULL, NULL, NULL, NULL, System16aInputInfo, AfighterDIPInfo,
 	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -3767,7 +3767,7 @@ struct BurnDriver BurnDrvAFightera = {
 	"afightera", "afighter", NULL, NULL, "1986",
 	"Action Fighter (unprotected)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_VERSHOOT, 0,
 	NULL, AfighteraRomInfo, AfighteraRomName, NULL, NULL, NULL, NULL, System16aInputInfo, AfighterDIPInfo,
 	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -3777,7 +3777,7 @@ struct BurnDriver BurnDrvAFighterb = {
 	"afighterb", "afighter", NULL, NULL, "1986",
 	"Action Fighter (unprotected, analog controls)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_VERSHOOT, 0,
 	NULL, AfighterbRomInfo, AfighterbRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
 	AfighterbInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -3787,7 +3787,7 @@ struct BurnDriver BurnDrvAFighterc = {
 	"afighterc", "afighter", NULL, NULL, "1986",
 	"Action Fighter (FD1089B 317-unknown)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_VERSHOOT, 0,
 	NULL, AfightercRomInfo, AfightercRomName, NULL, NULL, NULL, NULL, System16aInputInfo, AfighterDIPInfo,
 	System16Init, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -3797,7 +3797,7 @@ struct BurnDriver BurnDrvAFighterd = {
 	"afighterd", "afighter", NULL, NULL, "1986",
 	"Action Fighter (FD1089B 317-unknown, analog controls)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_VERSHOOT, 0,
 	NULL, AfighterdRomInfo, AfighterdRomName, NULL, NULL, NULL, NULL, Afighter_analogInputInfo, Afighter_analogDIPInfo,
 	AfighterbInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4

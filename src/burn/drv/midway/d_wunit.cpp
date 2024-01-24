@@ -540,7 +540,7 @@ struct BurnDriver BurnDrvMk3 = {
 	"mk3", NULL, NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 2.1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3RomInfo, mk3RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -591,7 +591,7 @@ struct BurnDriver BurnDrvMk3r20 = {
 	"mk3r20", "mk3", NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 2.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3r20RomInfo, mk3r20RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -642,7 +642,7 @@ struct BurnDriver BurnDrvMk3r10 = {
 	"mk3r10", "mk3", NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 1.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3r10RomInfo, mk3r10RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -693,7 +693,7 @@ struct BurnDriver BurnDrvMk3p40 = {
 	"mk3p40", "mk3", NULL, NULL, "1994",
 	"Mortal Kombat 3 (rev 1 chip label p4.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, mk3p40RomInfo, mk3p40RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -746,7 +746,7 @@ struct BurnDriver BurnDrvUmk3 = {
 	"umk3", NULL, NULL, NULL, "1994",
 	"Ultimate Mortal Kombat 3 (rev 1.2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3RomInfo, umk3RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -799,7 +799,7 @@ struct BurnDriver BurnDrvUmk3r11 = {
 	"umk3r11", "umk3", NULL, NULL, "1994",
 	"Ultimate Mortal Kombat 3 (rev 1.1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3r11RomInfo, umk3r11RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -852,7 +852,7 @@ struct BurnDriver BurnDrvUmk3r10 = {
 	"umk3r10", "umk3", NULL, NULL, "1994",
 	"Ultimate Mortal Kombat 3 (rev 1.0)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3r10RomInfo, umk3r10RomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -904,7 +904,7 @@ struct BurnDriver BurnDrvUmk3te = {
 	"umk3te", "umk3", NULL, NULL, "2018",
 	"Ultimate Mortal Kombat 3 Tournament Edition (hack, V2.0.042/August 2018)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3teRomInfo, umk3teRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -964,7 +964,7 @@ struct BurnDriver BurnDrvUmk3uk = {
 	"umk3uk", "umk3", NULL, NULL, "2021",
 	"Ultimate Mortal Kombat 3 Uk (FBNeo, Ver. 2021-07-20)\0", NULL, "hack", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3ukRomInfo, umk3ukRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
 	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
 	400, 256, 4, 3
@@ -1023,7 +1023,7 @@ struct BurnDriver BurnDrvUmk3p = {
 	"umk3p", "umk3", NULL, NULL, "2022",
 	"Ultimate Mortal Kombat 3 Plus (Hack, Beta 2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_WUNIT, GBF_VSFIGHT, 0,
 	NULL, umk3pRomInfo, umk3pRomName, NULL, NULL, NULL, NULL, Mk3InputInfo, Mk3DIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1069,7 +1069,7 @@ struct BurnDriver BurnDrvOpenice = {
 	"openice", NULL, NULL, NULL, "1995",
 	"2 On 2 Open Ice Challenge (rev 1.21)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, openiceRomInfo, openiceRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1116,7 +1116,7 @@ struct BurnDriver BurnDrvOpenicea = {
 	"openicea", "openice", NULL, NULL, "1995",
 	"2 On 2 Open Ice Challenge (rev 1.2A)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, openiceaRomInfo, openiceaRomName, NULL, NULL, NULL, NULL, OpeniceInputInfo, OpeniceDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1169,7 +1169,7 @@ struct BurnDriver BurnDrvNbahangt = {
 	"nbahangt", NULL, NULL, NULL, "1996",
 	"NBA Hangtime (ver L1.3 10/10/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtRomInfo, nbahangtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1222,7 +1222,7 @@ struct BurnDriver BurnDrvNbahangtm13 = {
 	"nbahangtm13", "nbahangt", NULL, NULL, "1996",
 	"NBA Hangtime (ver M1.3 10/10/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtm13RomInfo, nbahangtm13RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1275,7 +1275,7 @@ struct BurnDriver BurnDrvNbahangtl12 = {
 	"nbahangtl12", "nbahangt", NULL, NULL, "1996",
 	"NBA Hangtime (ver L1.2 8/29/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtl12RomInfo, nbahangtl12RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1328,7 +1328,7 @@ struct BurnDriver BurnDrvNbahangtm12 = {
 	"nbahangtm12", "nbahangt", NULL, NULL, "1996",
 	"NBA Hangtime (ver M1.2 8/29/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtm12RomInfo, nbahangtm12RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1381,7 +1381,7 @@ struct BurnDriver BurnDrvNbahangtl11 = {
 	"nbahangtl11", "nbahangt", NULL, NULL, "1996",
 	"NBA Hangtime (ver L1.1 4/16/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtl11RomInfo, nbahangtl11RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1434,7 +1434,7 @@ struct BurnDriver BurnDrvNbahangtm11 = {
 	"nbahangtm11", "nbahangt", NULL, NULL, "1996",
 	"NBA Hangtime (ver M1.1 4/16/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbahangtm11RomInfo, nbahangtm11RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1494,7 +1494,7 @@ struct BurnDriver BurnDrvNbamht = {
 	"nbamht", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver L1.03 06/09/97)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtRomInfo, nbamhtRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1547,7 +1547,7 @@ struct BurnDriver BurnDrvNbamhtl10 = {
 	"nbamhtl10", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver L1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtl10RomInfo, nbamhtl10RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1600,7 +1600,7 @@ struct BurnDriver BurnDrvNbamhtm10 = {
 	"nbamhtm10", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver M1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtm10RomInfo, nbamhtm10RomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1653,7 +1653,7 @@ struct BurnDriver BurnDrvNbamhtp = {
 	"nbamhtp", "nbahangt", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (ver L0.9 10/30/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbamhtpRomInfo, nbamhtpRomName, NULL, NULL, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1701,7 +1701,7 @@ struct BurnDriver BurnDrvRmpgwt = {
 	"rmpgwt", NULL, NULL, NULL, "1997",
 	"Rampage: World Tour (rev 1.3)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_WUNIT, GBF_ACTION, 0,
 	NULL, rmpgwtRomInfo, rmpgwtRomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1749,7 +1749,7 @@ struct BurnDriver BurnDrvRmpgwt11 = {
 	"rmpgwt11", "rmpgwt", NULL, NULL, "1997",
 	"Rampage: World Tour (rev 1.1)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_WUNIT, GBF_ACTION, 0,
 	NULL, rmpgwt11RomInfo, rmpgwt11RomName, NULL, NULL, NULL, NULL, RmpgwtInputInfo, RmpgwtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1795,7 +1795,7 @@ struct BurnDriver BurnDrvWwfmania = {
 	"wwfmania", NULL, NULL, NULL, "1995",
 	"WWF: Wrestlemania (rev 1.30 08/10/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniaRomInfo, wwfmaniaRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1841,7 +1841,7 @@ struct BurnDriver BurnDrvWwfmaniab = {
 	"wwfmaniab", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (rev 1.20 08/02/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniabRomInfo, wwfmaniabRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1887,7 +1887,7 @@ struct BurnDriver BurnDrvWwfmaniac = {
 	"wwfmaniac", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (rev 1.1 07/11/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniacRomInfo, wwfmaniacRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1934,7 +1934,7 @@ struct BurnDriver BurnDrvWwfmaniap = {
 	"wwfmaniap", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (proto 2.01 06/07/95)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmaniapRomInfo, wwfmaniapRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     400, 256, 4, 3
@@ -1979,7 +1979,7 @@ struct BurnDriver BurnDrvWwfmanac = {
 	"wwfmanac", "wwfmania", NULL, NULL, "1995",
 	"WWF: Wrestlemania (Acid Clown Edition 2020.12.02 SP2)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_WUNIT, GBF_SPORTSMISC, 0,
 	NULL, wwfmanacRomInfo, wwfmanacRomName, NULL, NULL, NULL, NULL, WwfmaniaInputInfo, WwfmaniaDIPInfo,
 	WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
 	400, 256, 4, 3

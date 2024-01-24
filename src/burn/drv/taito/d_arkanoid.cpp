@@ -1,12 +1,11 @@
 // FB Neo Arkanoid driver module
 // Based on MAME driver by Brad Oliver and MANY others.
 
-// TODO: hw timer countdown @ bootup runs too slow? (maybe?)
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"
 #include "ay8910.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
@@ -35,10 +34,9 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
-static UINT16 DrvAxis[2];
-static UINT32 nAnalogAxis[2] = { 0, 0 };
 
-static INT32 nCyclesDone[2] = { 0, 0 };
+static INT16 Analog[2];
+
 static INT32 nExtraCycles[2];
 
 static INT32 arkanoid_bootleg_id = 0;
@@ -65,397 +63,407 @@ enum {
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 4,	"p1 coin"  },
-	{"P1 start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 fire 1"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 
-	A("P1 Right / left",	BIT_ANALOG_REL, DrvAxis + 0,	"p1 x-axis"),
+	A("P1 Right / left",BIT_ANALOG_REL,	&Analog[0],		"p1 x-axis"),
 
-	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy1 + 5,	"p2 coin"  },
-	{"P2 start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
-	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 2,	"p2 fire 1"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 1"	},
 
-	A("P2 Right / left",	BIT_ANALOG_REL, DrvAxis + 1,	"p1 x-axis"),
+	A("P2 Right / left",BIT_ANALOG_REL,	&Analog[1],		"p1 x-axis"),
 
-	{"Tilt",	  BIT_DIGITAL,   DrvJoy1 + 3,	"tilt"     },
-	{"Service",	  BIT_DIGITAL,   DrvJoy1 + 2,   "diag"     },
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"diag"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo tetrsarkInputList[] = {
-	{"P1 Coin"      , BIT_DIGITAL,   DrvJoy1 + 6,	"p1 coin"  },
-	{"P1 Start"  ,    BIT_DIGITAL,   DrvJoy1 + 4,	"p1 start" },
-	{"P1 Down",	  BIT_DIGITAL,   DrvJoy1 + 0,   "p1 down"  },
-	{"P1 Left",	  BIT_DIGITAL,	 DrvJoy1 + 1,   "p1 left"  },
-	{"P1 Right",	  BIT_DIGITAL,   DrvJoy1 + 2,   "p1 right" },
-	{"P1 Button 1"  , BIT_DIGITAL,   DrvJoy1 + 3,	"p1 fire 1"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 
-	{"P2 Coin"      , BIT_DIGITAL,   DrvJoy1 + 7,	"p2 coin"  },
-	{"P2 start"  ,    BIT_DIGITAL,   DrvJoy1 + 5,	"p2 start" },
-	{"P2 Down",	  BIT_DIGITAL,   DrvJoy2 + 0,   "p2 down"  },
-	{"P2 Left",	  BIT_DIGITAL,	 DrvJoy2 + 1,   "p2 left"  },
-	{"P2 Right",	  BIT_DIGITAL,   DrvJoy2 + 2,   "p2 right" },
-	{"P2 Button 1"  , BIT_DIGITAL,   DrvJoy2 + 3,	"p2 fire 1"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"	},
+	{"P2 start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
 
-	{"Reset",	  BIT_DIGITAL,   &DrvReset,	"reset"    },
-	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip 1",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(tetrsark)
 
 static struct BurnInputInfo HexaInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Hexa)
 
 static struct BurnDIPInfo arkanoidDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0xfe, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0xfe, NULL					},
 
-	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x0b, 0x01, 0x01, 0x01, "No"       		  },
-	{0x0b, 0x01, 0x01, 0x00, "Yes"       		  },
+	{0   , 0xfe, 0   , 2   , "Allow Continue"		},
+	{0x00, 0x01, 0x01, 0x01, "No"					},
+	{0x00, 0x01, 0x01, 0x00, "Yes"					},
 
-	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0   , 0xfe, 0   , 2   , "Flip Screen"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   , 2   , "Service Mode"            },
-	{0x0b, 0x01, 0x04, 0x04, "Off"			  },
-	{0x0b, 0x01, 0x04, 0x00, "On"			  },
+	{0   , 0xfe, 0   , 2   , "Service Mode"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0   , 0xfe, 0   , 2   , "Difficulty"			},
+	{0x00, 0x01, 0x08, 0x08, "Easy"					},
+	{0x00, 0x01, 0x08, 0x00, "Hard"					},
 
-	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "20K 60K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "20K"    		  },
+	{0   , 0xfe, 0   , 2   , "Bonus Life"			},
+	{0x00, 0x01, 0x10, 0x10, "20K 60K 60K+"			},
+	{0x00, 0x01, 0x10, 0x00, "20K"					},
 
-	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x20, "3"			  },
-	{0x0b, 0x01, 0x20, 0x00, "5"    		  },
+	{0   , 0xfe, 0   , 2   , "Lives"				},
+	{0x00, 0x01, 0x20, 0x20, "3"					},
+	{0x00, 0x01, 0x20, 0x00, "5"					},
 
-	{0   , 0xfe, 0   , 4   , "Coinage" 	          },
-	{0x0b, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"	  },
-	{0x0b, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"    	  },
-	{0x0b, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	  },
-	{0x0b, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"	  },
+	{0   , 0xfe, 0   , 4   , "Coinage"				},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"		},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"		},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"	},
 };
 
 STDDIPINFO(arkanoid)
 
 static struct BurnDIPInfo arkanoidjDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x7f, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x7f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x0b, 0x01, 0x01, 0x01, "No"       		  },
-	{0x0b, 0x01, 0x01, 0x00, "Yes"       		  },
+	{0x00, 0x01, 0x01, 0x01, "No"       		  },
+	{0x00, 0x01, 0x01, 0x00, "Yes"       		  },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0x00, 0x01, 0x02, 0x02, "Off"			  },
+	{0x00, 0x01, 0x02, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0x00, 0x01, 0x08, 0x08, "Easy"     		  },
+	{0x00, 0x01, 0x08, 0x00, "Hard"		          },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "20K 60K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "20K"    		  },
+	{0x00, 0x01, 0x10, 0x10, "20K 60K 60K+" 	  },
+	{0x00, 0x01, 0x10, 0x00, "20K"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x20, "3"			  },
-	{0x0b, 0x01, 0x20, 0x00, "5"    		  },
+	{0x00, 0x01, 0x20, 0x20, "3"			  },
+	{0x00, 0x01, 0x20, 0x00, "5"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Coinage" 	          },
-	{0x0b, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
-	{0x0b, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
+	{0x00, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x0b, 0x01, 0x80, 0x00, "Upright"		  },
-	{0x0b, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0x00, 0x01, 0x80, 0x00, "Upright"		  },
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"    		  },
 };
 
 STDDIPINFO(arkanoidj)
 
 static struct BurnDIPInfo ark1ballDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x7f, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x7f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x0b, 0x01, 0x01, 0x01, "No"       		  },
-	{0x0b, 0x01, 0x01, 0x00, "Yes"       		  },
+	{0x00, 0x01, 0x01, 0x01, "No"       		  },
+	{0x00, 0x01, 0x01, 0x00, "Yes"       		  },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0x00, 0x01, 0x02, 0x02, "Off"			  },
+	{0x00, 0x01, 0x02, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0x00, 0x01, 0x08, 0x08, "Easy"     		  },
+	{0x00, 0x01, 0x08, 0x00, "Hard"		          },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "60K 100K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "60K"    		  },
+	{0x00, 0x01, 0x10, 0x10, "60K 100K 60K+" 	  },
+	{0x00, 0x01, 0x10, 0x00, "60K"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x20, "1"			  },
-	{0x0b, 0x01, 0x20, 0x00, "2"    		  },
+	{0x00, 0x01, 0x20, 0x20, "1"			  },
+	{0x00, 0x01, 0x20, 0x00, "2"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Coinage" 	          },
-	{0x0b, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
-	{0x0b, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
+	{0x00, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x0b, 0x01, 0x80, 0x00, "Upright"		  },
-	{0x0b, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0x00, 0x01, 0x80, 0x00, "Upright"		  },
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"    		  },
 };
 
 STDDIPINFO(ark1ball)
 
 static struct BurnDIPInfo arkangcDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x7f, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x7f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Ball Speed"             },
-	{0x0b, 0x01, 0x01, 0x01, "Normal"       	  },
-	{0x0b, 0x01, 0x01, 0x00, "Faster"      		  },
+	{0x00, 0x01, 0x01, 0x01, "Normal"       	  },
+	{0x00, 0x01, 0x01, 0x00, "Faster"      		  },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0x00, 0x01, 0x02, 0x02, "Off"			  },
+	{0x00, 0x01, 0x02, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0x00, 0x01, 0x08, 0x08, "Easy"     		  },
+	{0x00, 0x01, 0x08, 0x00, "Hard"		          },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "20K 60K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "20K"    		  },
+	{0x00, 0x01, 0x10, 0x10, "20K 60K 60K+" 	  },
+	{0x00, 0x01, 0x10, 0x00, "20K"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x20, "3"			  },
-	{0x0b, 0x01, 0x20, 0x00, "5"    		  },
+	{0x00, 0x01, 0x20, 0x20, "3"			  },
+	{0x00, 0x01, 0x20, 0x00, "5"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Coinage" 	          },
-	{0x0b, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
-	{0x0b, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
+	{0x00, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x0b, 0x01, 0x80, 0x00, "Upright"		  },
-	{0x0b, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0x00, 0x01, 0x80, 0x00, "Upright"		  },
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"    		  },
 };
 
 STDDIPINFO(arkangc)
 
 static struct BurnDIPInfo arkangc2DIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x7f, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x7f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Ball Speed"             },
-	{0x0b, 0x01, 0x01, 0x01, "Slower"       	  },
-	{0x0b, 0x01, 0x01, 0x00, "Normal"      		  },
+	{0x00, 0x01, 0x01, 0x01, "Slower"       	  },
+	{0x00, 0x01, 0x01, 0x00, "Normal"      		  },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0x00, 0x01, 0x02, 0x02, "Off"			  },
+	{0x00, 0x01, 0x02, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0x00, 0x01, 0x08, 0x08, "Easy"     		  },
+	{0x00, 0x01, 0x08, 0x00, "Hard"		          },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "20K 60K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "20K"    		  },
+	{0x00, 0x01, 0x10, 0x10, "20K 60K 60K+" 	  },
+	{0x00, 0x01, 0x10, 0x00, "20K"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x20, "3"			  },
-	{0x0b, 0x01, 0x20, 0x00, "5"    		  },
+	{0x00, 0x01, 0x20, 0x20, "3"			  },
+	{0x00, 0x01, 0x20, 0x00, "5"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Coinage" 	          },
-	{0x0b, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
-	{0x0b, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
+	{0x00, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x0b, 0x01, 0x80, 0x00, "Upright"		  },
-	{0x0b, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0x00, 0x01, 0x80, 0x00, "Upright"		  },
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"    		  },
 };
 
 STDDIPINFO(arkangc2)
 
 static struct BurnDIPInfo arkgcblDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x5f, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x5f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Round Select"           },
-	{0x0b, 0x01, 0x01, 0x01, "Off"       		  },
-	{0x0b, 0x01, 0x01, 0x00, "On"       		  },
+	{0x00, 0x01, 0x01, 0x01, "Off"       		  },
+	{0x00, 0x01, 0x01, 0x00, "On"       		  },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0x00, 0x01, 0x02, 0x02, "Off"			  },
+	{0x00, 0x01, 0x02, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0x00, 0x01, 0x08, 0x08, "Easy"     		  },
+	{0x00, 0x01, 0x08, 0x00, "Hard"		          },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "60K 100K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "60K"    		  },
+	{0x00, 0x01, 0x10, 0x10, "60K 100K 60K+" 	  },
+	{0x00, 0x01, 0x10, 0x00, "60K"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x00, "2"			  },
-	{0x0b, 0x01, 0x20, 0x20, "3"    		  },
+	{0x00, 0x01, 0x20, 0x00, "2"			  },
+	{0x00, 0x01, 0x20, 0x20, "3"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x0b, 0x01, 0x80, 0x00, "Upright"		  },
-	{0x0b, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0x00, 0x01, 0x80, 0x00, "Upright"		  },
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"    		  },
 };
 
 STDDIPINFO(arkgcbl)
 
 static struct BurnDIPInfo paddle2DIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x5f, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x5f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Round Select"           },
-	{0x0b, 0x01, 0x01, 0x01, "Off"       		  },
-	{0x0b, 0x01, 0x01, 0x00, "On"       		  },
+	{0x00, 0x01, 0x01, 0x01, "Off"       		  },
+	{0x00, 0x01, 0x01, 0x00, "On"       		  },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0x00, 0x01, 0x02, 0x02, "Off"			  },
+	{0x00, 0x01, 0x02, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Controls ?"             },
-	{0x0b, 0x01, 0x04, 0x04, "Normal"		  },
-	{0x0b, 0x01, 0x04, 0x00, "Alternate"		  },
+	{0x00, 0x01, 0x04, 0x04, "Normal"		  },
+	{0x00, 0x01, 0x04, 0x00, "Alternate"		  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0x00, 0x01, 0x08, 0x08, "Easy"     		  },
+	{0x00, 0x01, 0x08, 0x00, "Hard"		          },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "60K 60K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "60K"    		  },
+	{0x00, 0x01, 0x10, 0x10, "60K 60K 60K+" 	  },
+	{0x00, 0x01, 0x10, 0x00, "60K"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x00, "2"			  },
-	{0x0b, 0x01, 0x20, 0x20, "3"    		  },
+	{0x00, 0x01, 0x20, 0x00, "2"			  },
+	{0x00, 0x01, 0x20, 0x20, "3"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Coinage" 	          },
-	{0x0b, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
-	{0x0b, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0x40, 0x40, "1 Coin  1 Credit"	  },
+	{0x00, 0x01, 0x40, 0x00, "1 Coin  2 Credits"      },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x0b, 0x01, 0x80, 0x00, "Upright"		  },
-	{0x0b, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0x00, 0x01, 0x80, 0x00, "Upright"		  },
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"    		  },
 };
 
 STDDIPINFO(paddle2)
 
 static struct BurnDIPInfo arktayt2DIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x3f, NULL                     },
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x3f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x0b, 0x01, 0x01, 0x01, "No"       		  },
-	{0x0b, 0x01, 0x01, 0x00, "Yes"       		  },
+	{0x00, 0x01, 0x01, 0x01, "No"       		  },
+	{0x00, 0x01, 0x01, 0x00, "Yes"       		  },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
-	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+	{0x00, 0x01, 0x02, 0x02, "Off"			  },
+	{0x00, 0x01, 0x02, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
-	{0x0b, 0x01, 0x08, 0x00, "Hard"		          },
+	{0x00, 0x01, 0x08, 0x08, "Easy"     		  },
+	{0x00, 0x01, 0x08, 0x00, "Hard"		          },
 
 	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x0b, 0x01, 0x10, 0x10, "60K 60K 60K+" 	  },
-	{0x0b, 0x01, 0x10, 0x00, "60K"    		  },
+	{0x00, 0x01, 0x10, 0x10, "60K 60K 60K+" 	  },
+	{0x00, 0x01, 0x10, 0x00, "60K"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Lives" 	          },
-	{0x0b, 0x01, 0x20, 0x20, "2"			  },
-	{0x0b, 0x01, 0x20, 0x00, "3"    		  },
+	{0x00, 0x01, 0x20, 0x20, "2"			  },
+	{0x00, 0x01, 0x20, 0x00, "3"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Coinage" 	          },
-	{0x0b, 0x01, 0x40, 0x00, "2 Coins 1 Credit"	  },
-	{0x0b, 0x01, 0x40, 0x40, "1 Coin  1 Credit"    	  },
+	{0x00, 0x01, 0x40, 0x00, "2 Coins 1 Credit"	  },
+	{0x00, 0x01, 0x40, 0x40, "1 Coin  1 Credit"    	  },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x0b, 0x01, 0x80, 0x00, "Upright"		  },
-	{0x0b, 0x01, 0x80, 0x80, "Cocktail"    		  },
+	{0x00, 0x01, 0x80, 0x00, "Upright"		  },
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"    		  },
 };
 
 STDDIPINFO(arktayt2)
 
 static struct BurnDIPInfo tetrsarkDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0xf0, NULL                     },
+	DIP_OFFSET(0x0d)
+	{0x00, 0xff, 0xff, 0xf0, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet"	          },
-	{0x0d, 0x01, 0x10, 0x10, "Upright"       	  },
-	{0x0d, 0x01, 0x10, 0x00, "Cocktail"    		  },
+	{0x00, 0x01, 0x10, 0x10, "Upright"       	  },
+	{0x00, 0x01, 0x10, 0x00, "Cocktail"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x0d, 0x01, 0x20, 0x20, "Off"			  },
-	{0x0d, 0x01, 0x20, 0x00, "On"			  },
+	{0x00, 0x01, 0x20, 0x20, "Off"			  },
+	{0x00, 0x01, 0x20, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 4   , "Coinage" 	          },
-	{0x0d, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"	  },
-	{0x0d, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"      },
-	{0x0d, 0x01, 0xc0, 0x40, "1C 3C"		  },
-	{0x0d, 0x01, 0xc0, 0x00, "1C 5C"    		  },
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"	  },
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"      },
+	{0x00, 0x01, 0xc0, 0x40, "1C 3C"		  },
+	{0x00, 0x01, 0xc0, 0x00, "1C 5C"    		  },
 };
 
 STDDIPINFO(tetrsark)
 
 static struct BurnDIPInfo HexaDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0xfb, NULL			},
+	DIP_OFFSET(0x09)
+	{0x00, 0xff, 0xff, 0xfb, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x09, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
-	{0x09, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
-	{0x09, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x09, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x03, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x01, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Naughty Pics"		},
-	{0x09, 0x01, 0x04, 0x04, "Off"			},
-	{0x09, 0x01, 0x04, 0x00, "On"			},
+	{0x00, 0x01, 0x04, 0x04, "Off"			},
+	{0x00, 0x01, 0x04, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x09, 0x01, 0x08, 0x08, "Off"			},
-	{0x09, 0x01, 0x08, 0x00, "On"			},
+	{0x00, 0x01, 0x08, 0x08, "Off"			},
+	{0x00, 0x01, 0x08, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty?"		},
-	{0x09, 0x01, 0x30, 0x30, "Easy?"		},
-	{0x09, 0x01, 0x30, 0x20, "Medium?"		},
-	{0x09, 0x01, 0x30, 0x10, "Hard?"		},
-	{0x09, 0x01, 0x30, 0x00, "Hardest?"		},
+	{0x00, 0x01, 0x30, 0x30, "Easy?"		},
+	{0x00, 0x01, 0x30, 0x20, "Medium?"		},
+	{0x00, 0x01, 0x30, 0x10, "Hard?"		},
+	{0x00, 0x01, 0x30, 0x00, "Hardest?"		},
 
 	{0   , 0xfe, 0   ,    2, "Pobys"		},
-	{0x09, 0x01, 0x40, 0x40, "2"			},
-	{0x09, 0x01, 0x40, 0x00, "4"			},
+	{0x00, 0x01, 0x40, 0x40, "2"			},
+	{0x00, 0x01, 0x40, 0x00, "4"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x09, 0x01, 0x80, 0x00, "Off"			},
-	{0x09, 0x01, 0x80, 0x80, "On"			},
+	{0x00, 0x01, 0x80, 0x00, "Off"			},
+	{0x00, 0x01, 0x80, 0x80, "On"			},
 };
 
 STDDIPINFO(Hexa)
@@ -908,7 +916,7 @@ static void arkanoid_set_timer(INT32 val)
 	} else { // on
 		if (m68705_timer == 0) // if was off, zero counter
 			m68705_timer_count = 0;
-		m68705_timer = (3000000 / 4) / (1 << (val & 0x7));
+		m68705_timer = (3000000 / 4) * (1 << (val & 0x7));
 	}
 }
 
@@ -966,13 +974,16 @@ static void arkanoid_m68705_portC_read()
 	if (!mcu_sent) portC_in |= 0x02;
 }
 
+static INT32 arkanoid_mcu_TotalCycles() // for happy _SYNCINT
+{
+	return m6805TotalCycles();
+}
+
 static INT32 arkanoid_mcu_Run(INT32 cyc)
 {
 	if (cyc < 1) return 0;
 
 	INT32 ran = ((mcu_on) ? m6805Run(cyc) : m6805Idle(cyc));
-
-	nCyclesDone[1] += ran;
 
 	if (m68705_timer && mcu_on) {
 		m68705_timer_count += ran;
@@ -1132,7 +1143,6 @@ static INT32 GetRoms()
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
@@ -1141,13 +1151,8 @@ static INT32 DrvDoReset()
 
 	arkanoid_mcu_reset();
 
-	ZetNewFrame(); // z80 doesn't clear cycles in reset
-	m6805NewFrame(); // m6805 clears cycles in reset.  They need to be sync'd or mcu dies.
-
 	AY8910Reset(0);
 
-	nAnalogAxis[0] = 0;
-	nAnalogAxis[1] = 0;
 	arkanoid_bootleg_cmd = 0;
 
 	nExtraCycles[0] = nExtraCycles[1] = 0;
@@ -1222,8 +1227,11 @@ static INT32 DrvInit()
 	if (arkanoid_bootleg_id == HEXA) {
 		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
+	AY8910SetBuffered(ZetTotalCycles, 6000000);
 
 	GenericTilesInit();
+
+	BurnTrackballInit(1);
 
 	DrvDoReset();
 
@@ -1240,6 +1248,8 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 
 	BurnFreeMemIndex();
+
+	BurnTrackballExit();
 
 	arkanoid_bootleg_id = 0;
 
@@ -1318,6 +1328,9 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+	m6805NewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 2);
 
@@ -1328,18 +1341,16 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 
-		nAnalogAxis[0] -= DrvAxis[0];
-		DrvInputs[2] = (~nAnalogAxis[0] >> 8) & 0xff;
-
-		nAnalogAxis[1] -= DrvAxis[1];
-		DrvInputs[3] = (~nAnalogAxis[1] >> 8) & 0xff;
+		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
+		BurnTrackballFrame(0, Analog[0]*1.5, Analog[1]*1.5, 0x01, 0x3f);
+		BurnTrackballUpdate(0);
+		DrvInputs[2] = BurnTrackballRead(0);
+		DrvInputs[3] = BurnTrackballRead(1);
 	}
 
 	INT32 nInterleave = 264;
 	INT32 nCyclesTotal[2] = { (INT32)((double)6000000 / 59.185606), (INT32)((double)3000000 / 4 / 59.185606) }; // m68705 has a /4 divider!
-
-	nCyclesDone[0] = nExtraCycles[0];
-	nCyclesDone[1] = nExtraCycles[1];
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	ZetOpen(0);
 	m6805Open(0);
@@ -1347,28 +1358,29 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Zet);
 
-		if (i == 240-1) {
+		if (i == nInterleave-1) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-
-			if (pBurnDraw) { // jets on thusters @ cutscene flicker wrong on one side if drawn at end of frame.
-				DrvDraw();
-			}
 		}
 
 		if (use_mcu) {
-			CPU_RUN(1, arkanoid_mcu_);
+			CPU_RUN_SYNCINT(1, arkanoid_mcu_); // _SYNCINT = run() outside of frame
 		}
 	}
 
-	m6805Close();
 	ZetClose();
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[1] = m6805TotalCycles() - nCyclesTotal[1];
+
+	m6805Close();
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		BurnSoundDCFilter();
+	}
+
+	if (pBurnDraw) {
+		DrvDraw();
 	}
 
 	return 0;
@@ -1398,7 +1410,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 
-		SCAN_VAR(nAnalogAxis);
+		BurnTrackballScan();
+
 		SCAN_VAR(arkanoid_bootleg_cmd);
 		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(portC_latch);

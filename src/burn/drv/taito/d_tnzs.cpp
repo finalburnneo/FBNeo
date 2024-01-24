@@ -1728,7 +1728,7 @@ static void assemble_inputs()
 	}
 
 	BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-	BurnTrackballFrame(0, DrvAxis[0], DrvAxis[1], 0x6, 0x3f);
+	BurnTrackballFrame(0, DrvAxis[0]*1.5, DrvAxis[1]*1.5, 0x1, 0x3f);
 	BurnTrackballUpdate(0);
 }
 

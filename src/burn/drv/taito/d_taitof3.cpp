@@ -1516,10 +1516,11 @@ static INT32 DrvFrame()
 	}
 
 	{
-		 // arkretn / puchicar analog dial
+		// arkretn / puchicar analog dial
 		if (f3_game == ARKRETRN || f3_game == PUCHICAR) {
+			float speed = 0.5;
 			BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-			BurnTrackballFrame(0, DrvAxis[0], DrvAxis[1], 0x1, 0x3);
+			BurnTrackballFrame(0, DrvAxis[0]*speed, DrvAxis[1]*speed, 0x1, 0x3);
 			BurnTrackballUpdate(0);
 		}
 

@@ -572,7 +572,7 @@ struct BurnDriver BurnDrvInvaders = {
 	"invaders", NULL, NULL, "invaders", "1978",
 	"Space Invaders / Space Invaders M\0", NULL, "Taito / Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, invadersRomInfo, invadersRomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, InvadersInputInfo, InvadersDIPInfo,
 	InvadersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
 	224, 260, 3, 4
@@ -603,7 +603,7 @@ struct BurnDriver BurnDrvSisv1 = {
 	"sisv1", "invaders", NULL, "invaders", "1978",
 	"Space Invaders (SV Version rev 1)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sisv1RomInfo, sisv1RomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, InvadersInputInfo, InvadersDIPInfo,
 	Sisv1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
@@ -628,7 +628,7 @@ struct BurnDriver BurnDrvSisv2 = {
 	"sisv2", "invaders", NULL, "invaders", "1978",
 	"Space Invaders (SV Version rev 2)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sisv2RomInfo, sisv2RomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, InvadersInputInfo, InvadersDIPInfo,
 	Sisv1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
@@ -653,7 +653,7 @@ struct BurnDriver BurnDrvSisv3 = {
 	"sisv3", "invaders", NULL, "invaders", "1978",
 	"Space Invaders (SV Version rev 3)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sisv3RomInfo, sisv3RomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, InvadersInputInfo, InvadersDIPInfo,
 	Sisv1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
@@ -678,7 +678,7 @@ struct BurnDriver BurnDrvSisv = {
 	"sisv", "invaders", NULL, "invaders", "1978",
 	"Space Invaders (SV Version rev 4)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sisvRomInfo, sisvRomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, InvadersInputInfo, InvadersDIPInfo,
 	Sisv1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
@@ -707,7 +707,7 @@ struct BurnDriver BurnDrvSitv1 = {
 	"sitv1", "invaders", NULL, "invaders", "1978",
 	"Space Invaders (TV Version rev 1)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sitv1RomInfo, sitv1RomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, SitvInputInfo, SitvDIPInfo,
 	Sitv1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
@@ -730,7 +730,7 @@ struct BurnDriver BurnDrvSitv = {
 	"sitv", "invaders", NULL, "invaders", "1978",
 	"Space Invaders (TV Version rev 2)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sitvRomInfo, sitvRomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, SitvInputInfo, SitvDIPInfo,
 	Sitv1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
@@ -764,7 +764,7 @@ struct BurnDriver BurnDrvOzmawars = {
 	"ozmawars", NULL, NULL, "invaders", "1979",
 	"Ozma Wars (set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ozmawarsRomInfo, ozmawarsRomName, NULL, NULL, OzmawarsSampleInfo, OzmawarsSampleName, InvadersInputInfo, OzmawarsDIPInfo,
 	OzmawarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
@@ -806,7 +806,7 @@ struct BurnDriver BurnDrvOzmawars2 = {
 	"ozmawars2", "ozmawars", NULL, "invaders", "1979",
 	"Ozma Wars (set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ozmawars2RomInfo, ozmawars2RomName, NULL, NULL, OzmawarsSampleInfo, OzmawarsSampleName, InvadersInputInfo, OzmawarsDIPInfo,
 	Ozmawars2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4

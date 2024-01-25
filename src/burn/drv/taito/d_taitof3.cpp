@@ -4215,7 +4215,7 @@ struct BurnDriver BurnDrvSpcinvdj = {
 	"spcinvdj", "spacedx", NULL, NULL, "1994",
 	"Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)\0", "Graphics issues in Cellophane mode - use parent!", "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, spcinvdjRomInfo, spcinvdjRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	spcinvdjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 232, 4, 3
@@ -4480,7 +4480,7 @@ struct BurnDriver BurnDrvSpcinv95 = {
 	"spcinv95", NULL, NULL, NULL, "1995",
 	"Space Invaders '95: The Attack Of Lunar Loonies (Ver 2.5O 1995/06/14)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, spcinv95RomInfo, spcinv95RomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	spcinv95Init, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	224, 320, 3, 4
@@ -4523,7 +4523,7 @@ struct BurnDriver BurnDrvSpcinv95u = {
 	"spcinv95u", "spcinv95", NULL, NULL, "1995",
 	"Space Invaders '95: The Attack Of Lunar Loonies (Ver 2.5A 1995/06/14)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, spcinv95uRomInfo, spcinv95uRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	spcinv95Init, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	224, 320, 3, 4
@@ -4560,7 +4560,7 @@ struct BurnDriver BurnDrvAkkanvdr = {
 	"akkanvdr", "spcinv95", NULL, NULL, "1995",
 	"Akkanbeder (Ver 2.5J 1995/06/14)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, akkanvdrRomInfo, akkanvdrRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
 	spcinv95Init, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	224, 320, 3, 4

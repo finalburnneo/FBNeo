@@ -759,7 +759,7 @@ struct BurnDriver BurnDrvHvyunit = {
 	"hvyunit", NULL, NULL, NULL, "1988",
 	"Heavy Unit (World)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, hvyunitRomInfo, hvyunitRomName, NULL, NULL, NULL, NULL, HvyunitInputInfo, HvyunitDIPInfo,
 	hvyunitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -798,7 +798,7 @@ struct BurnDriver BurnDrvHvyunitj = {
 	"hvyunitj", "hvyunit", NULL, NULL, "1988",
 	"Heavy Unit (Japan, newer)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, hvyunitjRomInfo, hvyunitjRomName, NULL, NULL, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunitjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -840,7 +840,7 @@ struct BurnDriver BurnDrvHvyunitja = {
 	"hvyunitja", "hvyunit", NULL, NULL, "1988",
 	"Heavy Unit (Japan, alternate ROM format)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, hvyunitjaRomInfo, hvyunitjaRomName, NULL, NULL, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunitjaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -877,7 +877,7 @@ struct BurnDriver BurnDrvHvyunitjo = {
 	"hvyunitjo", "hvyunit", NULL, NULL, "1988",
 	"Heavy Unit (Japan, older)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, hvyunitjoRomInfo, hvyunitjoRomName, NULL, NULL, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -916,7 +916,7 @@ struct BurnDriver BurnDrvHvyunitu = {
 	"hvyunitu", "hvyunit", NULL, NULL, "1988",
 	"Heavy Unit -U.S.A. Version- (US)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
 	NULL, hvyunituRomInfo, hvyunituRomName, NULL, NULL, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunituInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

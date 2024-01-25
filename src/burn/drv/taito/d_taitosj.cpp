@@ -2609,7 +2609,7 @@ struct BurnDriver BurnDrvSpaceskr = {
 	"spaceskr", NULL, NULL, NULL, "1981",
 	"Space Seeker\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, spaceskrRomInfo, spaceskrRomName, NULL, NULL, NULL, NULL, TwoButtonInputInfo, SpaceskrDIPInfo,
 	spaceskrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

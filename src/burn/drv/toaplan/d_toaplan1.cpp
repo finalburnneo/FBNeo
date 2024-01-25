@@ -3356,7 +3356,7 @@ struct BurnDriver BurnDrvHellfire = {
 	"hellfire", NULL, NULL, NULL, "1989",
 	"Hellfire (2P set)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, hellfireRomInfo, hellfireRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, HellfireDIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3392,7 +3392,7 @@ struct BurnDriver BurnDrvHellfire1 = {
 	"hellfire1", "hellfire", NULL, NULL, "1989",
 	"Hellfire (1P set)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, hellfire1RomInfo, hellfire1RomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Hellfire1DIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3428,7 +3428,7 @@ struct BurnDriver BurnDrvHellfire2a = {
 	"hellfire2a", "hellfire", NULL, NULL, "1989",
 	"Hellfire (2P set, older)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, hellfire2aRomInfo, hellfire2aRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Hellfire2aDIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3464,7 +3464,7 @@ struct BurnDriver BurnDrvHellfire1a = {
 	"hellfire1a", "hellfire", NULL, NULL, "1989",
 	"Hellfire (1P set, older)\0", NULL, "Toaplan (Taito license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, hellfire1aRomInfo, hellfire1aRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Hellfire1aDIPInfo,
 	HellfireInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3502,7 +3502,7 @@ struct BurnDriver BurnDrvZerowing = {
 	"zerowing", NULL, NULL, NULL, "1989",
 	"Zero Wing (2P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, zerowingRomInfo, zerowingRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Zerowing2DIPInfo,
 	ZerowingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3540,7 +3540,7 @@ struct BurnDriver BurnDrvZerowing1 = {
 	"zerowing1", "zerowing", NULL, NULL, "1989",
 	"Zero Wing (1P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, zerowing1RomInfo, zerowing1RomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, ZerowingDIPInfo,
 	ZerowingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -3578,7 +3578,7 @@ struct BurnDriver BurnDrvZerowingw = {
 	"zerowingw", "zerowing", NULL, NULL, "1989",
 	"Zero Wing (2P set, Williams license)\0", NULL, "Toaplan (Williams license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, zerowingwRomInfo, zerowingwRomName, NULL, NULL, NULL, NULL, Drv2bInputInfo, Zerowing2DIPInfo,
 	ZerowingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

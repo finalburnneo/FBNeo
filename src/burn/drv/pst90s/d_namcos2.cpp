@@ -3921,7 +3921,7 @@ struct BurnDriver BurnDrvAssaultj = {
 	"assaultj", "assault", NULL, NULL, "1988",
 	"Assault (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, assaultjRomInfo, assaultjRomName, NULL, NULL, NULL, NULL, AssaultInputInfo, AssaultDIPInfo,
 	AssaultInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
@@ -5162,7 +5162,7 @@ struct BurnDriver BurnDrvBurnforc = {
 	"burnforc", NULL, NULL, NULL, "1989",
 	"Burning Force (Japan, new version (Rev C))\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, burnforcRomInfo, burnforcRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	BurnforcInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

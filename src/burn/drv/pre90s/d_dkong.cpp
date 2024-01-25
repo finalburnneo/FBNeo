@@ -4018,6 +4018,42 @@ struct BurnDriver BurnDrvdkaccel = {
 	224, 256, 3, 4
 };
 
+// Donkey Kong Pac-Man Crossover
+static struct BurnRomInfo dkpmxRomDesc[] = {
+	{ "dkpmx.5et",	0x1000, 0xa7a913d5, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dkpmx.5ct",	0x1000, 0x03ce5531, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dkpmx.5bt",	0x1000, 0xabaf3fa1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dkpmx.5at",	0x1000, 0x843a9751, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "dkpmx_s_3i_b.bin",	0x0800, 0x4f865d26, 2 | BRF_PRG | BRF_ESS }, //  4 soundcpu
+	{ "dkpmx_s_3j_b.bin",	0x0800, 0x4743fe92, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "dkpmx_v_5h_b.bin",	0x0800, 0xb212d49b, 3 | BRF_GRA },           //  6 gfx1
+	{ "dkpmx_v_3pt.bin",	0x0800, 0x2bd67b35, 3 | BRF_GRA },           //  7
+
+	{ "dkpmx_l_4m_b.bin",	0x0800, 0x7db40811, 4 | BRF_GRA }, 			 //  8 gfx2
+	{ "dkpmx_l_4n_b.bin",	0x0800, 0xc9f3b37a, 4 | BRF_GRA }, 			 //  9
+	{ "dkpmx_l_4r_b.bin",	0x0800, 0x137ad00e, 4 | BRF_GRA }, 			 // 10
+	{ "dkpmx_l_4s_b.bin",	0x0800, 0x72b56559, 4 | BRF_GRA }, 			 // 11
+
+	{ "dkpmx_c-2k.bpr",	0x0100, 0x929a396b, 5 | BRF_GRA },           // 12 proms
+	{ "dkpmx_c-2j.bpr",	0x0100, 0x1aa9c17e, 5 | BRF_GRA },           // 13
+	{ "dkpmx_v-5e.bpr",	0x0100, 0xd06c6ba8, 5 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(dkpmx)
+STD_ROM_FN(dkpmx)
+
+struct BurnDriver BurnDrvdkpmx = {
+	"dkpmx", "dkong", NULL, "dkong", "2024",
+	"Donkey Kong Pac-Man Crossover\0", NULL, "Paul Goes", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkpmxRomInfo, dkpmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
 // Donkey Kong Anniversary Edition
 
 static struct BurnRomInfo dkong40yRomDesc[] = {

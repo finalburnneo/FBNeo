@@ -224,12 +224,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit(INT32 game)
 {
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	if (game == 0) // sstrangr
 	{
@@ -278,7 +273,7 @@ static INT32 DrvExit()
 
 	BurnSampleExit();
 
-	BurnFree(AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -376,8 +371,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 16;
-	INT32 nCyclesTotal = 1996800 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[1] = { 1996800 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
 
 	ZetOpen(0);
 
@@ -385,9 +380,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal / nInterleave;
-
-		nCyclesDone += ZetRun(nSegment);
+		CPU_RUN(0, Zet);
 
 		if (i == 7 || i == 12) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		if (i == 12) vblank = 1; // ??

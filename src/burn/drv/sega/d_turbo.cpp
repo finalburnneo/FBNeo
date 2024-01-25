@@ -3187,7 +3187,7 @@ struct BurnDriver BurnDrvZoom909 = {
 	"zoom909", "buckrog", NULL, "buckrog", "1982",
 	"Zoom 909\0", NULL, "Sega", "Z80-3D",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_RUNAHEAD_DRAWSYNC | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_MISC, GBF_SHOOT, 0,
 	NULL, zoom909RomInfo, zoom909RomName, NULL, NULL, BuckrogSampleInfo, BuckrogSampleName, BuckrogInputInfo, BuckrogDIPInfo,
 	BuckrogEncInit, DrvExit, BuckrogFrame, BuckrogDraw, DrvScan, &DrvRecalc, 0x400,
 	512, 224, 4, 3

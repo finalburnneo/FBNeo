@@ -5220,7 +5220,7 @@ struct BurnDriver BurnDrvBurnforco = {
 	"burnforco", "burnforc", NULL, NULL, "1989",
 	"Burning Force (Japan, old version)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, burnforcoRomInfo, burnforcoRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	BurnforcInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

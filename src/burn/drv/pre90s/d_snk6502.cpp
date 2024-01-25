@@ -1865,7 +1865,7 @@ struct BurnDriver BurnDrvZarzon = {
 	"zarzon", "satansat", NULL, "vanguard", "1981",
 	"Zarzon\0", NULL, "SNK (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, zarzonRomInfo, zarzonRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -1904,7 +1904,7 @@ struct BurnDriver BurnDrvSatansatind = {
 	"satansatind", "satansat", NULL, "vanguard", "1981",
 	"Satan of Saturn (Inder S.A., bootleg)\0", NULL, "bootleg (Inder S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, satansatindRomInfo, satansatindRomName, NULL, NULL, vanguardSampleInfo, vanguardSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatindInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4

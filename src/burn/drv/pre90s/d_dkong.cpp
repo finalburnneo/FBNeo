@@ -4252,6 +4252,44 @@ struct BurnDriver BurnDrvDkongx11 = {
 	224, 256, 3, 4
 };
 
+// Donkey Kong Remix (hack)
+
+static struct BurnRomInfo dkremixRomDesc[] = {
+	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x01000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x01000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x01000, 0xb9005ac0, 1 }, //  3
+
+	{ "dkremix.bin",    0x10000, 0xf47c13aa, 2 }, //  4 braze
+
+	{ "s_3i_b.bin",		0x00800, 0x45a4ed06, 3 }, //  5 soundcpu
+	{ "s_3j_b.bin",		0x00800, 0x4743fe92, 3 }, //  6
+
+	{ "dkremix.5h",		0x00800, 0xfc82b069, 4 }, //  7 gfx1
+	{ "dkremix.3pt",	0x00800, 0xfe32ee33, 4 }, //  8
+
+	{ "dkremix.4m",		0x00800, 0x3d9784d7, 5 }, //  9 gfx2
+	{ "dkremix.4n",		0x00800, 0x084c960a, 5 }, // 10
+	{ "dkremix.4r",		0x00800, 0x9ac5d874, 5 }, // 11
+	{ "dkremix.4s",		0x00800, 0x74a5d517, 5 }, // 12
+
+	{ "c-2k.bpr",		0x00100, 0xe273ede5, 6 }, // 13 proms
+	{ "c-2j.bpr",		0x00100, 0xd6412358, 6 }, // 14
+	{ "v-5e.bpr",		0x00100, 0xb869b8f5, 6 }, // 15
+};
+
+STD_ROM_PICK(dkremix)
+STD_ROM_FN(dkremix)
+
+struct BurnDriver BurnDrvDkremix = {
+	"dkremix", "dkong", NULL, "dkong", "2006",
+	"Donkey Kong Remix (hack)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkremixRomInfo, dkremixRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,
+	dkongxInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
 
 // Donkey Kong Christmas Remix (Hack)
 

@@ -4282,8 +4282,8 @@ STD_ROM_PICK(dkremix)
 STD_ROM_FN(dkremix)
 
 struct BurnDriver BurnDrvDkremix = {
-	"dkremix", "dkong", NULL, "dkong", "2006",
-	"Donkey Kong Remix (hack)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
+	"dkremix", "dkong", NULL, "dkong", "2015",
+	"Donkey Kong Remix (Hack)\0", NULL, "Sock Master", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkremixRomInfo, dkremixRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongNoDipDIPInfo,

@@ -105,6 +105,7 @@ void mcs51_iram_get(UINT8 *dst, UINT32 size);
 void mcs51_set_write_handler(void (*pointer)(INT32,UINT8));
 void mcs51_set_read_handler(UINT8 (*pointer)(INT32));
 void mcs51_set_forced_input(INT32 select, UINT8 data);
+UINT8 *mcs51_get_iram();
 void mcs51_scan(INT32 nAction);
 
 //-----------------------------------------------

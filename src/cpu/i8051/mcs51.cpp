@@ -397,6 +397,11 @@ static void io_write_byte(INT32 offset, UINT8 data)
 	}
 }
 
+UINT8 *mcs51_get_iram()
+{
+	return &mcs51_state->internal_ram[0];
+}
+
 
 /***************************************************************************
     MACROS
@@ -2289,6 +2294,8 @@ void mcs51_reset (void)
 	mcs51_state->forced_inputs[3] = 0;
 
 	/* these are all defined reset states */
+	RWM = 0;
+	PPC = PC;
 	PC = 0;
 	SP = 0x7;
 	SET_PSW(0);

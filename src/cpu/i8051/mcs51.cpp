@@ -283,7 +283,7 @@ struct _mcs51_state_t
 
 	/* Internal Ram */
 	UINT8	internal_ram[0xff+1];	/* 128 RAM (8031/51) + 128 RAM in second bank (8032/52) */
-	UINT8	sfr_ram[0xff];			/* 128 SFR - these are in 0x80 - 0xFF */
+	UINT8	sfr_ram[0xff+1];		/* 128 SFR - these are in 0x80 - 0xFF */
 	INT32	total_cycles;
 
 	UINT8	forced_inputs[4];

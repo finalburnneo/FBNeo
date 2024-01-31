@@ -4253,6 +4253,8 @@ struct BurnDriver BurnDrvDkongx11 = {
 };
 
 // Donkey Kong Remix (hack)
+// Hack of Donkey Kong Christmas Remix made to look like the original Donkey Kong Remix
+// from dkremix.com, it is NOT a dump of the kit.
 
 static struct BurnRomInfo dkremixRomDesc[] = {
 	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
@@ -4282,7 +4284,7 @@ STD_ROM_PICK(dkremix)
 STD_ROM_FN(dkremix)
 
 struct BurnDriver BurnDrvDkremix = {
-	"dkremix", "dkong", NULL, "dkong", "2015",
+	"dkremix", "dkong", NULL, "dkong", "2023",
 	"Donkey Kong Remix (Hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,

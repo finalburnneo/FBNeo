@@ -1706,7 +1706,68 @@ static struct BurnDIPInfo FootchmpDIPList[]=
 
 STDDIPINFO(Footchmp)
 
-static struct BurnDIPInfo HtheroDIPList[]=
+static struct BurnDIPInfo HtherouDIPList[]=
+{
+	// Default Values
+	{0x25, 0xff, 0xff, 0xfe, NULL                             },
+	{0x26, 0xff, 0xff, 0x7f, NULL                             },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Game Over Type"                 },
+	{0x25, 0x01, 0x01, 0x01, "Both Teams' Games Over"         },
+	{0x25, 0x01, 0x01, 0x00, "Losing Team's Game is Over"     },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"                    },
+	{0x25, 0x01, 0x02, 0x02, "Off"                            },
+	{0x25, 0x01, 0x02, 0x00, "On"                             },
+
+	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
+	{0x25, 0x01, 0x04, 0x04, "Off"                            },
+	{0x25, 0x01, 0x04, 0x00, "On"                             },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
+	{0x25, 0x01, 0x08, 0x00, "Off"                            },
+	{0x25, 0x01, 0x08, 0x08, "On"                             },
+
+	{0   , 0xfe, 0   , 4   , "Coin A"                         },
+	{0x25, 0x01, 0x30, 0x00, "4 Coins 1 Credit"               },
+	{0x25, 0x01, 0x30, 0x10, "3 Coins 1 Credit"               },
+	{0x25, 0x01, 0x30, 0x20, "2 Coins 1 Credit"               },
+	{0x25, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+
+	{0   , 0xfe, 0   , 4   , "Coin B"                         },
+	{0x25, 0x01, 0xc0, 0xc0, "1 Coin 2 Credits"               },
+	{0x25, 0x01, 0xc0, 0x80, "1 Coin 3 Credits"               },
+	{0x25, 0x01, 0xc0, 0x40, "1 Coin 4 Credits"               },
+	{0x25, 0x01, 0xc0, 0x00, "1 Coin 6 Credits"               },
+
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Difficulty"                     },
+	{0x26, 0x01, 0x03, 0x02, "Easy"                           },
+	{0x26, 0x01, 0x03, 0x03, "Normal"                         },
+	{0x26, 0x01, 0x03, 0x01, "Hard"                           },
+	{0x26, 0x01, 0x03, 0x00, "Hardest"                        },
+
+	{0   , 0xfe, 0   , 4   , "Game Time"                      },
+	{0x26, 0x01, 0x0c, 0x00, "1 minute  30 seconds"           },
+	{0x26, 0x01, 0x0c, 0x0c, "2 minutes"                      },
+	{0x26, 0x01, 0x0c, 0x04, "2 minutes 30 seconds"           },
+	{0x26, 0x01, 0x0c, 0x08, "3 minutes"                      },
+
+	{0   , 0xfe, 0   , 4   , "Cabinet"                        },
+	{0x26, 0x01, 0x30, 0x30, "2 Players"                      },
+	{0x26, 0x01, 0x30, 0x20, "4 Players / 4 Coin Slots"       },
+	{0x26, 0x01, 0x30, 0x10, "4 Players / 2 Cabinets Combined"},
+	{0x26, 0x01, 0x30, 0x00, "4 Players / 2 Coin Slots"       },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"                 },
+	{0x26, 0x01, 0x40, 0x00, "Off"                            },
+	{0x26, 0x01, 0x40, 0x40, "On"                             },
+};
+
+STDDIPINFO(Htherou)
+
+static struct BurnDIPInfo HtherojDIPList[]=
 {
 	// Default Values
 	{0x25, 0xff, 0xff, 0x7f, NULL                             },
@@ -1765,7 +1826,7 @@ static struct BurnDIPInfo HtheroDIPList[]=
 	{0x26, 0x01, 0x02, 0x02, "On"                             },
 };
 
-STDDIPINFO(Hthero)
+STDDIPINFO(Htheroj)
 
 static struct BurnDIPInfo GrowlDIPList[]=
 {
@@ -3975,7 +4036,30 @@ static struct BurnRomInfo FootchmpRomDesc[] = {
 STD_ROM_PICK(Footchmp)
 STD_ROM_FN(Footchmp)
 
-static struct BurnRomInfo HtheroRomDesc[] = {
+static struct BurnRomInfo HtherouRomDesc[] = {
+	{ "c80-11.6",           0x020000, 0xf78630fb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c80-10.4",           0x020000, 0x32c109cb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c80-12.7",           0x020000, 0x80d46fef, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c80-13.5",           0x020000, 0x37ab78be, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "c80-15.70",          0x010000, 0x05aa7fd7, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "c80-04.1",           0x080000, 0x9a17fe8c, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "c80-05.2",           0x080000, 0xacde7071, BRF_GRA | TAITO_CHARS_BYTESWAP },
+
+	{ "c80-01.9",           0x100000, 0xf43782e6, BRF_GRA | TAITO_SPRITESA },
+	{ "c80-02.10",          0x100000, 0x060a8b61, BRF_GRA | TAITO_SPRITESA },
+
+	{ "c80-03.57",          0x100000, 0x609938d5, BRF_SND | TAITO_YM2610A },
+
+	{ "c80-08.ic45",        0x000104, 0x6137dd15, BRF_OPT },
+	{ "c80-09.ic46",        0x000104, 0x4ca48869, BRF_OPT },
+};
+
+STD_ROM_PICK(Htherou)
+STD_ROM_FN(Htherou)
+
+static struct BurnRomInfo HtherojRomDesc[] = {
 	{ "c80-16.6",           0x020000, 0x4e795b52, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c80-17.4",           0x020000, 0x42c0a838, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c80-12.7",           0x020000, 0x80d46fef, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -3992,8 +4076,8 @@ static struct BurnRomInfo HtheroRomDesc[] = {
 	{ "c80-03.57",          0x100000, 0x609938d5, BRF_SND | TAITO_YM2610A },
 };
 
-STD_ROM_PICK(Hthero)
-STD_ROM_FN(Hthero)
+STD_ROM_PICK(Htheroj)
+STD_ROM_FN(Htheroj)
 
 static struct BurnRomInfo Euroch92RomDesc[] = {
 	{ "ec92_25.rom",        0x020000, 0x98482202, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -4014,6 +4098,26 @@ static struct BurnRomInfo Euroch92RomDesc[] = {
 
 STD_ROM_PICK(Euroch92)
 STD_ROM_FN(Euroch92)
+
+static struct BurnRomInfo Euroch92jRomDesc[] = {
+	{ "c80-25.ic6",         0x020000, 0x98482202, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c80-23.ic4",         0x020000, 0xae5e75e9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c80-26.ic7",         0x020000, 0xb986ccb2, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c80-28.ic5",         0x020000, 0x5d13f580, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "c80-27.ic70",        0x010000, 0x2db48e65, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "c80-21.ic1",         0x080000, 0x5759ed37, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "c80-22.ic2",         0x080000, 0xd9a0d38e, BRF_GRA | TAITO_CHARS_BYTESWAP },
+
+	{ "c80-19.ic9",         0x100000, 0x219141a5, BRF_GRA | TAITO_SPRITESA },
+	{ "c80-20.ic10",        0x100000, 0x060a8b61, BRF_GRA | TAITO_SPRITESA },
+
+	{ "c80-03.ic57",        0x100000, 0x609938d5, BRF_SND | TAITO_YM2610A },
+};
+
+STD_ROM_PICK(Euroch92j)
+STD_ROM_FN(Euroch92j)
 
 static struct BurnRomInfo GrowlRomDesc[] = {
 	{ "c74-10-1.ic59",      0x040000, 0x8bf17a85, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -8344,7 +8448,7 @@ static INT32 FootchmpInit()
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "hthero")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "htheroj")) {
 		TC0480SCPInit(TaitoNumChar, 3, 0x33, -4, -1, 0, 24);
 	} else {
 		TC0480SCPInit(TaitoNumChar, 3, 0x1d, 8, -1, 0, 0);
@@ -11198,12 +11302,22 @@ struct BurnDriver BurnDrvFootchmp = {
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvHthero = {
-	"hthero", "footchmp", NULL, NULL, "1990",
+struct BurnDriver BurnDrvHtherou = {
+	"htherou", "footchmp", NULL, NULL, "1990",
+	"Hat Trick Hero (US)\0", NULL, "Taito Corporation", "Taito F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
+	NULL, HtherouRomInfo, HtherouRomName, NULL, NULL, NULL, NULL, FootchmpInputInfo, HtherouDIPInfo,
+	FootchmpInit, TaitoF2Exit, TaitoF2Frame, FootchmpDraw, TaitoF2Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvHtheroj = {
+	"htheroj", "footchmp", NULL, NULL, "1990",
 	"Hat Trick Hero (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
-	NULL, HtheroRomInfo, HtheroRomName, NULL, NULL, NULL, NULL, FootchmpInputInfo, HtheroDIPInfo,
+	NULL, HtherojRomInfo, HtherojRomName, NULL, NULL, NULL, NULL, FootchmpInputInfo, HtherojDIPInfo,
 	FootchmpInit, TaitoF2Exit, TaitoF2Frame, FootchmpDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
@@ -11214,6 +11328,16 @@ struct BurnDriver BurnDrvEuroch92 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
 	NULL, Euroch92RomInfo, Euroch92RomName, NULL, NULL, NULL, NULL, FootchmpInputInfo, FootchmpDIPInfo,
+	FootchmpInit, TaitoF2Exit, TaitoF2Frame, FootchmpDraw, TaitoF2Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvEuroch92j = {
+	"euroch92j", "euroch92", NULL, NULL, "1992",
+	"Euro Champ '92 (Japan)\0", NULL, "Taito Corporation Japan", "Taito F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
+	NULL, Euroch92jRomInfo, Euroch92jRomName, NULL, NULL, NULL, NULL, FootchmpInputInfo, FootchmpDIPInfo,
 	FootchmpInit, TaitoF2Exit, TaitoF2Frame, FootchmpDraw, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

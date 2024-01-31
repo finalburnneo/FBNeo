@@ -1210,7 +1210,7 @@ struct BurnDriver BurnDrvKikikai = {
 };
 
 
-// Knight Boy
+// Knight Boy (bootleg of KiKi KaiKai, set 1)
 
 static struct BurnRomInfo knightbRomDesc[] = {
 	{ "a85-17.h16",			0x10000, 0xc141d5ab, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1240,7 +1240,7 @@ static INT32 KnightbInit()
 
 struct BurnDriver BurnDrvKnightb = {
 	"knightb", "kikikai", NULL, NULL, "1986",
-	"Knight Boy\0", NULL, "bootleg", "Miscellaneous",
+	"Knight Boy (bootleg of KiKi KaiKai, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, knightbRomInfo, knightbRomName, NULL, NULL, NULL, NULL, KikikaiInputInfo, KikikaiDIPInfo,
@@ -1326,7 +1326,7 @@ struct BurnDriver BurnDrvKicknrunu = {
 };
 
 
-// Mexico 86 (bootleg of Kick and Run) (set 1)
+// Mexico 86 (bootleg of Kick and Run, set 1)
 
 static struct BurnRomInfo mexico86RomDesc[] = {
 	{ "2_g.bin",			0x10000, 0x2bbfe0fb, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1358,7 +1358,7 @@ static INT32 Mexico86Init()
 
 struct BurnDriver BurnDrvMexico86 = {
 	"mexico86", "kicknrun", NULL, NULL, "1986",
-	"Mexico 86 (bootleg of Kick and Run) (set 1)\0", NULL, "bootleg", "Miscellaneous",
+	"Mexico 86 (bootleg of Kick and Run, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, mexico86RomInfo, mexico86RomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,
@@ -1367,7 +1367,7 @@ struct BurnDriver BurnDrvMexico86 = {
 };
 
 
-// Mexico 86 (bootleg of Kick and Run) (set 2)
+// Mexico 86 (bootleg of Kick and Run, set 2)
 
 static struct BurnRomInfo mexico86aRomDesc[] = {
 	{ "2.bin",				0x10000, 0x397c93ad, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -1403,7 +1403,7 @@ STD_ROM_FN(mexico86a)
 
 struct BurnDriverD BurnDrvMexico86a = {
 	"mexico86a", "kicknrun", NULL, NULL, "1986",
-	"Mexico 86 (bootleg of Kick and Run) (set 2)\0", NULL, "bootleg", "Miscellaneous",
+	"Mexico 86 (bootleg of Kick and Run, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, mexico86aRomInfo, mexico86aRomName, NULL, NULL, NULL, NULL, Mexico86InputInfo, Mexico86DIPInfo,

@@ -6318,7 +6318,7 @@ struct BurnDriver BurnDrvRastsagaa = {
 
 struct BurnDriver BurnDrvRastsagaabl = {
 	"rastsagaabl", "rastan", NULL, NULL, "1987",
-	"Rastan Saga (bootleg, Japan Rev 1, earlier code base)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Rastan Saga (bootleg, Japan Rev 1, earlier code base)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RastsagaablRomInfo, RastsagaablRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,

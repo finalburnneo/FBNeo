@@ -829,7 +829,7 @@ struct BurnDriver BurnDrvNetwars = {
 	"netwars", NULL, NULL, NULL, "1983",
 	"Net Wars\0", NULL, "Orca (Esco Trading Co license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, netwarsRomInfo, netwarsRomName, NULL, NULL, NULL, NULL, NetwarsInputInfo, NetwarsDIPInfo,
 	NetwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

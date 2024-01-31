@@ -4286,7 +4286,7 @@ struct BurnDriver BurnDrvPlgirls2 = {
 	"plgirls2", NULL, NULL, NULL, "1993",
 	"Play Girls 2\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, plgirls2RomInfo, plgirls2RomName, NULL, NULL, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
 	PalamedInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4
@@ -4311,7 +4311,7 @@ struct BurnDriver BurnDrvPlgirls2b = {
 	"plgirls2b", "plgirls2", NULL, NULL, "1993",
 	"Play Girls 2 (bootleg)\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, plgirls2bRomInfo, plgirls2bRomName, NULL, NULL, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
 	Plgirls2bInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4

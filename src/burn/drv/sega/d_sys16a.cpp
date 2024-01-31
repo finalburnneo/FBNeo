@@ -3827,7 +3827,7 @@ struct BurnDriver BurnDrvAliensynjo = {
 	"aliensynjo", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 1, Japan, old, System 16A, FD1089A 317-0033)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, AliensynjoRomInfo, AliensynjoRomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, AliensynDIPInfo,
 	AliensynjoInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -3837,7 +3837,7 @@ struct BurnDriver BurnDrvAliensyn2 = {
 	"aliensyn2", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 2, System 16A, FD1089A 317-0033)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Aliensyn2RomInfo, Aliensyn2RomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, AliensynDIPInfo,
 	AliensynjoInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -3847,7 +3847,7 @@ struct BurnDriver BurnDrvAliensyn5 = {
 	"aliensyn5", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 5, System 16A, FD1089B 317-0037)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Aliensyn5RomInfo, Aliensyn5RomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, AliensynDIPInfo,
 	Aliensyn5Init, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

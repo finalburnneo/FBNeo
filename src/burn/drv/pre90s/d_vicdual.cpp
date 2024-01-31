@@ -3653,7 +3653,7 @@ struct BurnDriver BurnDrvCarnival = {
 	"carnival", NULL, NULL, "carnival", "1980",
 	"Carnival (upright, AY8912 music)\0", NULL, "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, carnivalRomInfo, carnivalRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalInputInfo, CarnivalDIPInfo,
 	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3692,7 +3692,7 @@ struct BurnDriverD BurnDrvCarnivalh = {
 	"carnivalh", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 1)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, carnivalhRomInfo, carnivalhRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3726,7 +3726,7 @@ struct BurnDriverD BurnDrvCarnivalha = {
 	"carnivalha", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 2)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, carnivalhaRomInfo, carnivalhaRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3767,7 +3767,7 @@ struct BurnDriver BurnDrvCarnivalc = {
 	"carnivalc", "carnival", NULL, "carnival", "1980",
 	"Carnival (cocktail)\0", NULL, "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, carnivalcRomInfo, carnivalcRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalcInputInfo, CarnivalcDIPInfo,
 	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -3808,7 +3808,7 @@ struct BurnDriver BurnDrvVerbena = {
 	"verbena", "carnival", NULL, "carnival", "1980",
 	"Verbena (bootleg of Carnival)\0", NULL, "bootleg (Cocamatic)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, verbenaRomInfo, verbenaRomName, NULL, NULL, carnivalSampleInfo, carnivalSampleName, CarnivalcInputInfo, CarnivalcDIPInfo,
 	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
@@ -4227,7 +4227,7 @@ struct BurnDriver BurnDrvNsub = {
 	"nsub", NULL, NULL, "nsub", "1980",
 	"N-Sub (upright)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nsubRomInfo, nsubRomName, NULL, NULL, nsubSampleInfo, nsubSampleName, NsubInputInfo, NULL,
 	NsubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4

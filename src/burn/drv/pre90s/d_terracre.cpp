@@ -1264,7 +1264,7 @@ struct BurnDriver BurnDrvHorekid = {
 	"horekid", NULL, NULL, NULL, "1987",
 	"Kid no Hore Hore Daisakusen\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, HorekidRomInfo, HorekidRomName, NULL, NULL, NULL, NULL, TerracreInputInfo, HorekidDIPInfo,
 	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&BurnRecalc, 0x1110, 224, 256, 3, 4
@@ -1312,7 +1312,7 @@ struct BurnDriver BurnDrvHorekidb = {
 	"horekidb", "horekid", NULL, NULL, "1987",
 	"Kid no Hore Hore Daisakusen (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, HorekidbRomInfo, HorekidbRomName, NULL, NULL, NULL, NULL, TerracreInputInfo, HorekidDIPInfo,
 	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&BurnRecalc, 0x1110, 224, 256, 3, 4
@@ -1358,7 +1358,7 @@ struct BurnDriver BurnDrvBoobhack = {
 	"boobhack", "horekid", NULL, NULL, "1987",
 	"Booby Kids (Italian manufactured graphic hack / bootleg of Kid no Hore Hore Daisakusen (bootleg))\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, BoobhackRomInfo, BoobhackRomName, NULL, NULL, NULL, NULL, TerracreInputInfo, HorekidDIPInfo,
 	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&BurnRecalc, 0x1110, 224, 256, 3, 4

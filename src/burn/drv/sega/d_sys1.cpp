@@ -7416,7 +7416,7 @@ struct BurnDriver BurnDrvSeganinj = {
 	"seganinj", NULL, NULL, NULL, "1985",
 	"Sega Ninja (315-5102)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, SeganinjRomInfo, SeganinjRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	SeganinjInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7426,7 +7426,7 @@ struct BurnDriver BurnDrvSeganinju = {
 	"seganinju", "seganinj", NULL, NULL, "1985",
 	"Sega Ninja (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, SeganinjuRomInfo, SeganinjuRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	SeganinuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7436,7 +7436,7 @@ struct BurnDriver BurnDrvSeganinja = {
 	"seganinja", "seganinj", NULL, NULL, "1985",
 	"Sega Ninja (315-5113)\0", "needs decrypting", "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, SeganinjaRomInfo, SeganinjaRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	SeganinjInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7446,7 +7446,7 @@ struct BurnDriver BurnDrvNinja = {
 	"ninja", "seganinj", NULL, NULL, "1985",
 	"Ninja (315-5102)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, NinjaRomInfo, NinjaRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	SeganinjInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7456,7 +7456,7 @@ struct BurnDriver BurnDrvNprinces = {
 	"nprinces", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (315-5051, 64k Ver. bootleg?)\0", NULL, "bootleg?", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, NprincesRomInfo, NprincesRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincesInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7466,7 +7466,7 @@ struct BurnDriver BurnDrvNprinceso = {
 	"nprinceso", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (315-5098, 128k Ver.)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, NprincesoRomInfo, NprincesoRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincsoInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7476,7 +7476,7 @@ struct BurnDriver BurnDrvNprincesu = {
 	"nprincesu", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (64k Ver. not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, NprincesuRomInfo, NprincesuRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincsuInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7486,7 +7486,7 @@ struct BurnDriver BurnDrvNprincesb = {
 	"nprincesb", "seganinj", NULL, NULL, "1985",
 	"Ninja Princess (315-5051?, 128k Ver. bootleg?)\0", NULL, "bootleg?", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_RUNGUN, 0,
 	NULL, NprincesbRomInfo, NprincesbRomName, NULL, NULL, NULL, NULL, SeganinjInputInfo, SeganinjDIPInfo,
 	NprincsbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3

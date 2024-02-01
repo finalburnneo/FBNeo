@@ -98,6 +98,7 @@ static int nDlgSelectGameLstInitialPos[4];
 
 static int _213 = 213;
 static int _160 = 160;
+static int dpi_x = 96;
 
 // Filter TreeView
 HWND hFilterList					= NULL;
@@ -374,6 +375,12 @@ static void GetTitlePreviewScale()
 
 	_213 = w;
 	_160 = h;
+
+	HDC hDc = GetDC(0);
+
+	dpi_x = GetDeviceCaps(hDc, LOGPIXELSX);
+	//bprintf(0, _T("dpi_x is %d\n"), dpi_x);
+	ReleaseDC(0, hDc);
 }
 
 static void GetInitialPositions()
@@ -2587,8 +2594,18 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 						// Display the short name if needed
 						if (nLoadMenuShowY & SHOWSHORT) {
-							DrawText(lplvcd->nmcd.hdc, BurnDrvGetText(DRV_NAME), -1, &rect, DT_NOPREFIX | DT_SINGLELINE | DT_LEFT | DT_VCENTER);
-							rect.left += 16 + 40 + 20 + 20;
+							// calculate field expansion (between romname & description)
+							int expansion = (rect.right / dpi_x) - 4;
+							if (expansion < 0) expansion = 0;
+
+							const int FIELD_SIZE = 16 + 40 + 20 + 20 + (expansion*8);
+							const int EXPAND_ICON_SIZE = 16 + 8;
+							const int temp_right = rect.right;
+							rect.right = EXPAND_ICON_SIZE + FIELD_SIZE - 2;
+							DrawText(lplvcd->nmcd.hdc, BurnDrvGetText(DRV_NAME), -1, &rect, DT_NOPREFIX | DT_SINGLELINE | DT_LEFT | DT_VCENTER | DT_END_ELLIPSIS);
+							rect.right = temp_right;
+
+							rect.left += FIELD_SIZE;
 						}
 
 						{

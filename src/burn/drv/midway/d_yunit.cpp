@@ -2064,6 +2064,12 @@ static struct BurnRomInfo narcRomDesc[] = {
 	{ "rev2_narc_image_rom_u28.u28",					0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 67
 	{ "rev2_narc_image_rom_u27.u27",					0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 68
 	{ "rev2_narc_image_rom_u26.u26",					0x10000, 0xcb19f784, 4 | BRF_GRA },           // 69
+
+	{ "a-5346-3036-1_narc_pls153.u28",					0x000eb, 0x4db36615, 0 | BRF_OPT },           // 70 PLDs
+	{ "a-5346-3036-2_narc_pls153.u78",					0x000eb, 0x4b151863, 0 | BRF_OPT },           // 71
+	{ "a-5346-3036-3_narc_pls153.u79",					0x000eb, 0x35bd6ed8, 0 | BRF_OPT },           // 72
+	{ "a-5346-3036-4_narc_pls153.u80",					0x000eb, 0x9c10e4cf, 0 | BRF_OPT },           // 73
+	{ "a-5346-3036-5_narc_pls153.u83",					0x000eb, 0x3a2f21b2, 0 | BRF_OPT },           // 74
 };
 
 STD_ROM_PICK(narc)
@@ -2167,6 +2173,12 @@ static struct BurnRomInfo narc6RomDesc[] = {
 	{ "rev2_narc_image_rom_u28.u28",					0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 71
 	{ "rev2_narc_image_rom_u27.u27",					0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 72
 	{ "rev2_narc_image_rom_u26.u26",					0x10000, 0xcb19f784, 4 | BRF_GRA },           // 73
+
+	{ "a-5346-3036-1_narc_pls153.u28",					0x000eb, 0x4db36615, 0 | BRF_OPT },           // 74 PLDs
+	{ "a-5346-3036-2_narc_pls153.u78",					0x000eb, 0x4b151863, 0 | BRF_OPT },           // 75
+	{ "a-5346-3036-3_narc_pls153.u79",					0x000eb, 0x35bd6ed8, 0 | BRF_OPT },           // 76
+	{ "a-5346-3036-4_narc_pls153.u80",					0x000eb, 0x9c10e4cf, 0 | BRF_OPT },           // 77
+	{ "a-5346-3036-5_narc_pls153.u83",					0x000eb, 0x3a2f21b2, 0 | BRF_OPT },           // 78
 };
 
 STD_ROM_PICK(narc6)
@@ -2263,6 +2275,12 @@ static struct BurnRomInfo narc4RomDesc[] = {
 	{ "rev2_narc_image_rom_u28.u28",					0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 71
 	{ "rev2_narc_image_rom_u27.u27",					0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 72
 	{ "rev2_narc_image_rom_u26.u26",					0x10000, 0xcb19f784, 4 | BRF_GRA },           // 73
+
+	{ "a-5346-3036-1_narc_pls153.u28",					0x000eb, 0x4db36615, 0 | BRF_OPT },           // 74 PLDs
+	{ "a-5346-3036-2_narc_pls153.u78",					0x000eb, 0x4b151863, 0 | BRF_OPT },           // 75
+	{ "a-5346-3036-3_narc_pls153.u79",					0x000eb, 0x35bd6ed8, 0 | BRF_OPT },           // 76
+	{ "a-5346-3036-4_narc_pls153.u80",					0x000eb, 0x9c10e4cf, 0 | BRF_OPT },           // 77
+	{ "a-5346-3036-5_narc_pls153.u83",					0x000eb, 0x3a2f21b2, 0 | BRF_OPT },           // 78
 };
 
 STD_ROM_PICK(narc4)
@@ -2359,6 +2377,12 @@ static struct BurnRomInfo narc3RomDesc[] = {
 	{ "rev2_narc_image_rom_u28.u28",					0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 71
 	{ "rev2_narc_image_rom_u27.u27",					0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 72
 	{ "rev2_narc_image_rom_u26.u26",					0x10000, 0xcb19f784, 4 | BRF_GRA },           // 73
+
+	{ "a-5346-3036-1_narc_pls153.u28",					0x000eb, 0x4db36615, 0 | BRF_OPT },           // 74 PLDs
+	{ "a-5346-3036-2_narc_pls153.u78",					0x000eb, 0x4b151863, 0 | BRF_OPT },           // 75
+	{ "a-5346-3036-3_narc_pls153.u79",					0x000eb, 0x35bd6ed8, 0 | BRF_OPT },           // 76
+	{ "a-5346-3036-4_narc_pls153.u80",					0x000eb, 0x9c10e4cf, 0 | BRF_OPT },           // 77
+	{ "a-5346-3036-5_narc_pls153.u83",					0x000eb, 0x3a2f21b2, 0 | BRF_OPT },           // 78
 };
 
 STD_ROM_PICK(narc3)
@@ -2455,6 +2479,12 @@ static struct BurnRomInfo narc2RomDesc[] = {
 	{ "rev2_narc_image_rom_u28.u28",					0x10000, 0xd6cdac24, 4 | BRF_GRA },           // 71
 	{ "rev2_narc_image_rom_u27.u27",					0x10000, 0x4d33bbec, 4 | BRF_GRA },           // 72
 	{ "rev2_narc_image_rom_u26.u26",					0x10000, 0xcb19f784, 4 | BRF_GRA },           // 73
+
+	{ "a-5346-3036-1_narc_pls153.u28",					0x000eb, 0x4db36615, 0 | BRF_OPT },           // 74 PLDs
+	{ "a-5346-3036-2_narc_pls153.u78",					0x000eb, 0x4b151863, 0 | BRF_OPT },           // 75
+	{ "a-5346-3036-3_narc_pls153.u79",					0x000eb, 0x35bd6ed8, 0 | BRF_OPT },           // 76
+	{ "a-5346-3036-4_narc_pls153.u80",					0x000eb, 0x9c10e4cf, 0 | BRF_OPT },           // 77
+	{ "a-5346-3036-5_narc_pls153.u83",					0x000eb, 0x3a2f21b2, 0 | BRF_OPT },           // 78
 };
 
 STD_ROM_PICK(narc2)
@@ -2543,6 +2573,12 @@ static struct BurnRomInfo narc1RomDesc[] = {
 	{ "rev1_narc_image_rom_u29.u29",					0x10000, 0xfdaedb84, 4 | BRF_GRA },           // 63
 	{ "rev1_narc_image_rom_u28.u28",					0x10000, 0x3012cd6e, 4 | BRF_GRA },           // 64
 	{ "rev1_narc_image_rom_u27.u27",					0x10000, 0xe631fe7d, 4 | BRF_GRA },           // 65
+
+	{ "a-5346-3036-1_narc_pls153.u28",					0x000eb, 0x4db36615, 0 | BRF_OPT },           // 66 PLDs
+	{ "a-5346-3036-2_narc_pls153.u78",					0x000eb, 0x4b151863, 0 | BRF_OPT },           // 67
+	{ "a-5346-3036-3_narc_pls153.u79",					0x000eb, 0x35bd6ed8, 0 | BRF_OPT },           // 68
+	{ "a-5346-3036-4_narc_pls153.u80",					0x000eb, 0x9c10e4cf, 0 | BRF_OPT },           // 69
+	{ "a-5346-3036-5_narc_pls153.u83",					0x000eb, 0x3a2f21b2, 0 | BRF_OPT },           // 70
 };
 
 STD_ROM_PICK(narc1)

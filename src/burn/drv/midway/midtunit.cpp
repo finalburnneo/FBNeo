@@ -65,6 +65,7 @@ UINT8 TUnitIsMK = 0;
 UINT8 TUnitIsMKTurbo = 0;
 UINT8 TUnitIsMK2 = 0;
 UINT8 TUnitIsNbajam = 0;
+UINT8 TUnitIsNbajamp = 0;
 UINT8 TUnitIsNbajamTe = 0;
 UINT8 TUnitIsJdreddp = 0;
 
@@ -992,11 +993,24 @@ INT32 TUnitInit()
 	MemIndex();
 
 	UINT32 nRet;
-	nRet = BurnLoadRom(DrvBootROM + 0, 0, 2);
-	if (nRet != 0) return 1;
 
-	nRet = BurnLoadRom(DrvBootROM + 1, 1, 2);
-	if (nRet != 0) return 1;
+	if (TUnitIsNbajamp) {
+		nRet = BurnLoadRom(DrvBootROM + 0x00000, 0, 2);
+		if (nRet != 0) return 1;
+		nRet = BurnLoadRom(DrvBootROM + 0x80000, 0, 2);
+		if (nRet != 0) return 1;
+
+		nRet = BurnLoadRom(DrvBootROM + 0x00001, 1, 2);
+		if (nRet != 0) return 1;
+		nRet = BurnLoadRom(DrvBootROM + 0x80001, 1, 2);
+		if (nRet != 0) return 1;
+	} else {
+		nRet = BurnLoadRom(DrvBootROM + 0, 0, 2);
+		if (nRet != 0) return 1;
+
+		nRet = BurnLoadRom(DrvBootROM + 1, 1, 2);
+		if (nRet != 0) return 1;
+	}
 
 	if (TUnitIsMK) {
 		nRet = LoadSoundProgRom();

@@ -1252,6 +1252,100 @@ struct BurnDriver BurnDrvNbajamr1 = {
     400, 256, 4, 3
 };
 
+static INT32 NbajampInit()
+{
+	TUnitIsNbajam = 1;
+	TUnitIsNbajamp = 1;
+
+	return TUnitInit();
+}
+
+static struct BurnRomInfo nbajamp2RomDesc[] = {
+	{ "p2_nba_jam_game_rom_uj12.uj12",			0x040000, 0x4ebdf669, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "p2_nba_jam_game_rom_ug12.ug12",			0x040000, 0x8d6098b6, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "p1_nba_jam_u3_sound_rom.u3",				0x020000, 0x3d13633c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+	
+	{ "p1_nba_jam_u12_sound_rom.u12",			0x080000, 0x009aad42, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "p1_nba_jam_u13_sound_rom.u13",			0x080000, 0x248800c2, 2 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "p1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x39e16e0b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "p1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xa9ef8b67, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "p1_nba_jam_game_rom_ug19.ug19",			0x080000, 0xa88b961c, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "p1_nba_jam_game_rom_uj19.uj19",			0x080000, 0xa19d9889, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+
+	{ "p1_nba_jam_game_rom_ug16.ug16",			0x080000, 0x946b2ab0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "p1_nba_jam_game_rom_uj16.uj16",			0x080000, 0x46e11687, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "p1_nba_jam_game_rom_ug20.ug20",			0x080000, 0xd62be814, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "p1_nba_jam_game_rom_uj20.uj20",			0x080000, 0xbf8081a5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+
+	{ "p1_nba_jam_game_rom_ug17.ug17",			0x080000, 0x5e286f81, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "p1_nba_jam_game_rom_uj17.uj17",			0x080000, 0xa86775e2, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "p1_nba_jam_game_rom_ug22.ug22",			0x080000, 0xb4ad0c2f, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "p1_nba_jam_game_rom_uj22.uj22",			0x080000, 0x5b1bb97d, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+	
+	{ "p1_nba_jam_game_rom_ug18.ug18",			0x080000, 0x5acf3792, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 0) }, // 17
+	{ "p1_nba_jam_game_rom_uj18.uj18",			0x080000, 0xe00f906a, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 1) }, // 18
+	{ "p1_nba_jam_game_rom_ug23.ug23",			0x080000, 0xd7f199f6, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 2) }, // 19
+	{ "p1_nba_jam_game_rom_uj23.uj23",			0x080000, 0x5f87a4cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 3) }, // 20
+};
+
+STD_ROM_PICK(nbajamp2)
+STD_ROM_FN(nbajamp2)
+
+struct BurnDriver BurnDrvNbajamp2 = {
+	"nbajamp2", "nbajam", NULL, NULL, "1993",
+	"NBA Jam (proto v 2.00 1/24/93)\0", NULL, "Midway", "Midway T-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
+	NULL, nbajamp2RomInfo, nbajamp2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
+	NbajampInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	400, 256, 4, 3
+};
+
+static struct BurnRomInfo nbajamp1RomDesc[] = {
+	{ "p1_nba_jam_game_rom_uj12.uj12",			0x040000, 0xc0faf310, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "p1_nba_jam_game_rom_ug12.ug12",			0x040000, 0x5ee68e03, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "p1_nba_jam_u3_sound_rom.u3",				0x020000, 0x3d13633c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+	
+	{ "p1_nba_jam_u12_sound_rom.u12",			0x080000, 0x009aad42, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "p1_nba_jam_u13_sound_rom.u13",			0x080000, 0x248800c2, 2 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "p1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x39e16e0b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "p1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xa9ef8b67, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "p1_nba_jam_game_rom_ug19.ug19",			0x080000, 0xa88b961c, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "p1_nba_jam_game_rom_uj19.uj19",			0x080000, 0xa19d9889, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+
+	{ "p1_nba_jam_game_rom_ug16.ug16",			0x080000, 0x946b2ab0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "p1_nba_jam_game_rom_uj16.uj16",			0x080000, 0x46e11687, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "p1_nba_jam_game_rom_ug20.ug20",			0x080000, 0xd62be814, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "p1_nba_jam_game_rom_uj20.uj20",			0x080000, 0xbf8081a5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+
+	{ "p1_nba_jam_game_rom_ug17.ug17",			0x080000, 0x5e286f81, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "p1_nba_jam_game_rom_uj17.uj17",			0x080000, 0xa86775e2, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "p1_nba_jam_game_rom_ug22.ug22",			0x080000, 0xb4ad0c2f, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "p1_nba_jam_game_rom_uj22.uj22",			0x080000, 0x5b1bb97d, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+	
+	{ "p1_nba_jam_game_rom_ug18.ug18",			0x080000, 0x5acf3792, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 0) }, // 17
+	{ "p1_nba_jam_game_rom_uj18.uj18",			0x080000, 0xe00f906a, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 1) }, // 18
+	{ "p1_nba_jam_game_rom_ug23.ug23",			0x080000, 0xd7f199f6, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 2) }, // 19
+	{ "p1_nba_jam_game_rom_uj23.uj23",			0x080000, 0x5f87a4cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 3) }, // 20
+};
+
+STD_ROM_PICK(nbajamp1)
+STD_ROM_FN(nbajamp1)
+
+struct BurnDriver BurnDrvNbajamp1 = {
+	"nbajamp1", "nbajam", NULL, NULL, "1993",
+	"NBA Jam (proto v 1.01 1/23/93)\0", NULL, "Midway", "Midway T-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
+	NULL, nbajamp1RomInfo, nbajamp1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamDIPInfo,
+	NbajampInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	400, 256, 4, 3
+};
+
 static struct BurnRomInfo nbajamteRomDesc[] = {
 	{ "l4_nba_jam_tournament_game_rom_uj12.uj12",	0x080000, 0xd7c21bc4, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l4_nba_jam_tournament_game_rom_ug12.ug12",	0x080000, 0x7ad49229, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1513,8 +1607,8 @@ struct BurnDriver BurnDrvNbajamte2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte2aRomInfo, nbajamte2aRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
-    NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	400, 256, 4, 3
 };
 
 static struct BurnRomInfo nbajamte1RomDesc[] = {
@@ -1556,8 +1650,51 @@ struct BurnDriver BurnDrvNbajamte1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
 	NULL, nbajamte1RomInfo, nbajamte1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
-    NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    400, 256, 4, 3
+	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	400, 256, 4, 3
+};
+
+static struct BurnRomInfo nbajamtep2RomDesc[] = {
+	{ "p2_nba_jam_tournament_game_rom_uj12.uj12",	0x080000, 0xf90f7450, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "p2_nba_jam_tournament_game_rom_ug12.ug12",	0x080000, 0xa0d9d49a, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "l1_nba_jam_tournament_u3_sound_rom.u3",		0x020000, 0xd4551195, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+	
+	{ "l1_nba_jam_tournament_u12_sound_rom.u12",	0x080000, 0x4fac97bc, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "l1_nba_jam_tournament_u13_sound_rom.u13",	0x080000, 0x6f27b202, 2 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "l1_nba_jam_tournament_game_rom_ug14.ug14",	0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "l1_nba_jam_tournament_game_rom_uj14.uj14",	0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_nba_jam_tournament_game_rom_ug19.ug19",	0x080000, 0xa8f22fbb, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "l1_nba_jam_tournament_game_rom_uj19.uj19",	0x080000, 0x8130a8a2, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+
+	{ "l1_nba_jam_tournament_game_rom_ug16.ug16",	0x080000, 0xc7ce74d0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "l1_nba_jam_tournament_game_rom_uj16.uj16",	0x080000, 0x905ad88b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "l1_nba_jam_tournament_game_rom_ug20.ug20",	0x080000, 0x8a48728c, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "l1_nba_jam_tournament_game_rom_uj20.uj20",	0x080000, 0xbf263d61, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+
+	{ "l1_nba_jam_tournament_game_rom_ug17.ug17",	0x080000, 0x9401be62, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "l1_nba_jam_tournament_game_rom_uj17.uj17",	0x080000, 0x8a852b9e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "l1_nba_jam_tournament_game_rom_ug22.ug22",	0x080000, 0x3b05133b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "l1_nba_jam_tournament_game_rom_uj22.uj22",	0x080000, 0x39791051, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+	
+	{ "l1_nba_jam_tournament_game_rom_ug18.ug18",	0x080000, 0x6fd08f57, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 0) }, // 17
+	{ "l1_nba_jam_tournament_game_rom_uj18.uj18",	0x080000, 0x4eb73c26, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 1) }, // 18
+	{ "l1_nba_jam_tournament_game_rom_ug23.ug23",	0x080000, 0x854f73bc, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 2) }, // 19
+	{ "l1_nba_jam_tournament_game_rom_uj23.uj23",	0x080000, 0xf8c30998, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 3) }, // 20
+};
+
+STD_ROM_PICK(nbajamtep2)
+STD_ROM_FN(nbajamtep2)
+
+struct BurnDriver BurnDrvNbajamtep2 = {
+	"nbajamtep2", "nbajamte", NULL, NULL, "1993",
+	"NBA Jam Tournament Edition (proto 2.00 12/17/93)\0", NULL, "Midway", "Midway T-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
+	NULL, nbajamtep2RomInfo, nbajamtep2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	400, 256, 4, 3
 };
 
 static struct BurnRomInfo nbajamtenRomDesc[] = {

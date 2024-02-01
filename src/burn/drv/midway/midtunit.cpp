@@ -1216,6 +1216,7 @@ INT32 TUnitExit()
 	TUnitIsMK2 = 0;
 	TUnitIsMKTurbo = 0;
 	TUnitIsNbajam = 0;
+	TUnitIsNbajamp = 0;
 	TUnitIsNbajamTe = 0;
 	TUnitIsJdreddp = 0;
 

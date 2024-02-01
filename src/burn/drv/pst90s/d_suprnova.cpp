@@ -2829,7 +2829,7 @@ struct BurnDriver BurnDrvGalpaniska = {
 };
 
 
-// Gals Panic S2 (Europe)
+// Gals Panic S2 (Europe, version 3)
 // only the 2 program ROMs were dumped, but mask ROMs are supposed to match.
 
 static struct BurnRomInfo galpans2RomDesc[] = {
@@ -2865,7 +2865,7 @@ static INT32 Galpans2Init()
 
 struct BurnDriver BurnDrvGalpans2 = {
 	"galpans2", NULL, "skns", NULL, "1999",
-	"Gals Panic S2 (Europe)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Gals Panic S2 (Europe, version 3)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2RomInfo, galpans2RomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2918,7 +2918,7 @@ struct BurnDriver BurnDrvGalpans2j = {
 };
 
 
-// Gals Panic S2 (Asia)
+// Gals Panic S2 (Asia, version 1.1)
 
 static struct BurnRomInfo galpans2aRomDesc[] = {
 	{ "gps2av11.u6",	0x100000, 0x61c05d5f, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
@@ -2953,7 +2953,7 @@ static INT32 Galpans2aInit()
 
 struct BurnDriver BurnDrvGalpans2a = {
 	"galpans2a", "galpans2", "skns", NULL, "1999",
-	"Gals Panic S2 (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Gals Panic S2 (Asia, version 1.1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2aRomInfo, galpans2aRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2962,23 +2962,23 @@ struct BurnDriver BurnDrvGalpans2a = {
 };
 
 
-// Gals Panic SU (Korea)
+// Gals Panic SU (Korea, version 5)
 
 static struct BurnRomInfo galpansuRomDesc[] = {
-	{ "su.u10",		0x100000, 0x5ae66218, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
-	{ "su.u8",		0x100000, 0x10977a03, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gps2k_u6_ver.5.u6",	0x100000, 0x18ffb6d3, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps2k_u4_ver.5.u4",	0x100000, 0x211f3c7c, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "24",			0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
-	{ "20",			0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
-	{ "17",			0x400000, 0x25b4f56b, 2 | BRF_GRA },           //  4
-	{ "32",			0x400000, 0xdb6d4424, 2 | BRF_GRA },           //  5
+	{ "gs210000.u21",		0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
+	{ "gs210100.u20",		0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
+	{ "gs210200.u8",		0x400000, 0x25b4f56b, 2 | BRF_GRA },           //  4
+	{ "gs210300.u32",		0x400000, 0xdb6d4424, 2 | BRF_GRA },           //  5
 
-	{ "16",			0x400000, 0x5caae1c0, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "13",			0x400000, 0x8d51f197, 3 | BRF_GRA },           //  7
+	{ "gs220000.u17",		0x400000, 0x5caae1c0, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "gs220100.u9",		0x400000, 0x8d51f197, 3 | BRF_GRA },           //  7
 
-	{ "7",			0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
+	{ "gs221000.u3",		0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
 
-	{ "4",			0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
+	{ "gs230000.u1",		0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
 
 #if !defined (ROM_VERIFY)
 	{ "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS | BRF_OPT},      //  10 Korea Bios
@@ -3001,10 +3001,47 @@ static INT32 GalpansuInit()
 
 struct BurnDriver BurnDrvGalpansu = {
 	"galpansu", "galpans2", "skns", NULL, "1999",
-	"Gals Panic SU (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	"Gals Panic SU (Korea, version 5)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpansuRomInfo, galpansuRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	GalpansuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic SU (Korea)
+
+static struct BurnRomInfo galpansuaRomDesc[] = {
+	{ "su.u10",		0x100000, 0x5ae66218, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "su.u8",		0x100000, 0x10977a03, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "24",			0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
+	{ "20",			0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
+	{ "17",			0x400000, 0x25b4f56b, 2 | BRF_GRA },           //  4
+	{ "32",			0x400000, 0xdb6d4424, 2 | BRF_GRA },           //  5
+
+	{ "16",			0x400000, 0x5caae1c0, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "13",			0x400000, 0x8d51f197, 3 | BRF_GRA },           //  7
+
+	{ "7",			0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
+
+	{ "4",			0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
+
+#if !defined (ROM_VERIFY)
+	{ "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS | BRF_OPT},      //  10 Korea Bios
+#endif
+};
+
+STDROMPICKEXT(galpansua, galpansua, skns)
+STD_ROM_FN(galpansua)
+
+struct BurnDriver BurnDrvGalpansua = {
+	"galpansua", "galpans2", "skns", NULL, "1999",
+	"Gals Panic SU (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpansuaRomInfo, galpansuaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	GalpansuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };

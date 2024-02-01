@@ -5767,7 +5767,7 @@ struct BurnDriver BurnDrvSamSho4 = {
 };
 
 
-// Pae Wang Jeon Seol / Legend of a Warrior (Korean censored Samurai Shodown IV)
+// Paewang Jeonseol / Legend of a Warrior (Korean censored Samurai Shodown IV)
 /* KOREAN VERSION */
 
 static struct BurnRomInfo samsho4kRomDesc[] = {
@@ -5797,7 +5797,7 @@ STD_ROM_FN(samsho4k)
 
 struct BurnDriver BurnDrvSamSho4k = {
 	"samsho4k", "samsho4", "neogeo", NULL, "1996",
-	"Pae Wang Jeon Seol / Legend of a Warrior (Korean censored Samurai Shodown IV)\0", NULL, "SNK", "Neo Geo MVS",
+	"Paewang Jeonseol / Legend of a Warrior (Korean censored Samurai Shodown IV)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho4kRomInfo, samsho4kRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

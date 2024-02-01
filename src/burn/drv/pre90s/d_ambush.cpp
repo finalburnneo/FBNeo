@@ -1032,7 +1032,7 @@ struct BurnDriver BurnDrvMariobl = {
 	"mariobl", "mario", NULL, NULL, "1983",
 	"Mario Bros. (bootleg on Ambush Hardware, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, marioblRomInfo, marioblRomName, NULL, NULL, NULL, NULL, MarioblInputInfo, MarioblDIPInfo,
 	MarioblInit, DrvExit, DrvFrame, MarioblDraw, DrvScan, &BurnRecalc, 0x100,
 	256, 224, 4, 3
@@ -1064,7 +1064,7 @@ struct BurnDriver BurnDrvMariobla = {
 	"mariobla", "mario", NULL, NULL, "1983",
 	"Mario Bros. (bootleg on Ambush Hardware, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, marioblaRomInfo, marioblaRomName, NULL, NULL, NULL, NULL, MarioblInputInfo, MarioblDIPInfo,
 	MarioblaInit, DrvExit, DrvFrame, MarioblaDraw, DrvScan, &BurnRecalc, 0x100,
 	256, 224, 4, 3
@@ -1099,7 +1099,7 @@ struct BurnDriver BurnDrvDkong3abl = {
 	"dkong3abl", "dkong3", NULL, NULL, "1983",
 	"Donkey Kong 3 (bootleg on Ambush hardware)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkong3ablRomInfo, dkong3ablRomName, NULL, NULL, NULL, NULL, Dkong3ablInputInfo, Dkong3ablDIPInfo,
 	Dkong3ablInit, DrvExit, DrvFrame, Dkong3ablDraw, DrvScan, &BurnRecalc, 0x100,
 	224, 256, 3, 4

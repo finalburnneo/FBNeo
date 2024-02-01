@@ -4651,6 +4651,61 @@ struct BurnDriver BurnDrvSpinlbrkj = {
 };
 
 
+// Spinal Breakers (US, prototype)
+// the labels are official Video System without numbering and handwritten on top
+
+static struct BurnRomInfo spinlbrkupRomDesc[] = {
+	{ "spb0-e.ic98",				0x010000, 0x421eaff2, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "spb0-o.ic104",				0x010000, 0x9576d508, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sbp1-e.ic93",				0x010000, 0xd6444d1e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sbp1-o.ic94",				0x010000, 0xa3f7bd8e, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "11-14-15.00.music.ic117",	0x008000, 0x6b8c8f09, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "11-14.m.bank.ic118",			0x010000, 0xa1ed270b, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "ic15",						0x080000, 0xe318cf3a, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "ic9",						0x080000, 0xe071f674, 3 | BRF_GRA },           //  7
+
+	{ "ic17",						0x080000, 0xa63d5a55, 4 | BRF_GRA },           //  8 Foreground Tiles
+	{ "ic11",						0x080000, 0x7dcc913d, 4 | BRF_GRA },           //  9
+	{ "ic16",						0x080000, 0x0d84af7f, 4 | BRF_GRA },           // 10
+
+	{ "ic12",						0x080000, 0xd63fac4e, 5 | BRF_GRA },           // 11 Sprite Chip #0 Tiles
+	{ "ic18",						0x080000, 0x5a60444b, 5 | BRF_GRA },           // 12
+
+	{ "ic14",						0x080000, 0x1befd0f3, 6 | BRF_GRA },           // 13 Sprite Chip #1 Tiles
+	{ "ic20",						0x080000, 0xc2f84a61, 6 | BRF_GRA },           // 14
+	{ "ic35",						0x080000, 0xeba8e1a3, 6 | BRF_GRA },           // 15
+	{ "ic40",						0x080000, 0x5ef5aa7e, 6 | BRF_GRA },           // 16
+
+	{ "sbm-1-18.ic19",				0x010000, 0xe155357f, 7 | BRF_GRA },           // 17 Sprite Look-up Table
+	{ "sbm-0-18.ic13",  			0x010000, 0x16b79e45, 7 | BRF_GRA },           // 18
+
+	{ "ic166",						0x080000, 0x6e0d063a, 8 | BRF_SND },           // 19 YM2610 Samples
+	{ "ic163",						0x080000, 0xe6621dfb, 8 | BRF_SND },           // 20
+
+	{ "epl16p8bp.ic133",			0x000107, 0x00000000, 9 | BRF_NODUMP | BRF_OPT },           // 21 PLDs
+	{ "epl16p8bp.ic127",			0x000107, 0x00000000, 9 | BRF_NODUMP | BRF_OPT },           // 22
+	{ "epl16p8bp.ic99",				0x000107, 0x00000000, 9 | BRF_NODUMP | BRF_OPT },           // 23
+	{ "epl16p8bp.ic100",			0x000107, 0x00000000, 9 | BRF_NODUMP | BRF_OPT },           // 24
+	{ "gal16v8a.ic95",				0x000117, 0x00000000, 9 | BRF_NODUMP | BRF_OPT },           // 25
+	{ "gal16v8a.ic114",				0x000117, 0x00000000, 9 | BRF_NODUMP | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(spinlbrkup)
+STD_ROM_FN(spinlbrkup)
+
+struct BurnDriver BurnDrvSpinlbrkup = {
+	"spinlbrkup", "spinlbrk", NULL, NULL, "1990",
+	"Spinal Breakers (US, prototype)\0", NULL, "V-System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, spinlbrkupRomInfo, spinlbrkupRomName, NULL, NULL, NULL, NULL, SpinlbrkInputInfo, SpinlbrkDIPInfo,
+	SpinlbrkInit, DrvExit, DrvFrame, SpinlbrkDraw, DrvScan, &DrvRecalc, 0x400,
+	352, 240, 4, 3
+};
+
+
 // Power Spikes (World)
 
 static struct BurnRomInfo pspikesRomDesc[] = {
@@ -4867,7 +4922,7 @@ struct BurnDriver BurnDrvPspikesc = {
 	"pspikesc", "pspikes", NULL, NULL, "1991",
 	"Power Spikes (China)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pspikescRomInfo, pspikescRomName, NULL, NULL, NULL, NULL, PspikesInputInfo, PspikescDIPInfo,
 	PspikescInit, DrvExit, DrvFrame, PspikesDraw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3
@@ -5286,7 +5341,7 @@ struct BurnDriver BurnDrvTurbofrco = {
 };
 
 
-// Turbo Force (US)
+// Turbo Force (US, set 1)
 
 static struct BurnRomInfo turbofrcuRomDesc[] = {
 	{ "8v2.subpcb.u2",			0x040000, 0x721300ee, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -5319,10 +5374,52 @@ STD_ROM_FN(turbofrcu)
 
 struct BurnDriver BurnDrvTurbofrcu = {
 	"turbofrcu", "turbofrc", NULL, NULL, "1991",
-	"Turbo Force (US)\0", NULL, "Video System Co.", "Miscellaneous",
+	"Turbo Force (US, set 1)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, turbofrcuRomInfo, turbofrcuRomName, NULL, NULL, NULL, NULL, TurbofrcInputInfo, TurbofrcDIPInfo,
+	TurbofrcInit, DrvExit, DrvFrame, TurbofrcDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 352, 3, 4
+};
+
+
+// Turbo Force (US, set 2)
+
+static struct BurnRomInfo turbofrcuaRomDesc[] = {
+	{ "7v2.subpcb.u2",			0x040000, 0x721300ee, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "7v1.subpcb.u1",			0x040000, 0xd1513f96, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "7v3.u14",				0x040000, 0x63f50557, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "6.u166",					0x020000, 0x2ca14a65, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "lh534ggs.u94",			0x080000, 0xbaa53978, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "7.u95",					0x020000, 0x71a6c573, 3 | BRF_GRA },           //  5
+	
+	{ "lh534ggy.u105",			0x080000, 0x4de4e59e, 4 | BRF_GRA },           //  6 Foreground Tiles
+	{ "8.u106",					0x020000, 0xc6479eb5, 4 | BRF_GRA },           //  7
+	
+	{ "lh534gh2.u116",			0x080000, 0xdf210f3b, 5 | BRF_GRA },           //  8 Sprite Chip #0 Tiles
+	{ "5.u118",					0x040000, 0xf61d1d79, 5 | BRF_GRA },           //  9
+	{ "lh534gh1.u117",			0x080000, 0xf70812fd, 5 | BRF_GRA },           // 10
+	{ "4.u119",					0x040000, 0x474ea716, 5 | BRF_GRA },           // 11
+
+	{ "lh532a52.u134",			0x040000, 0x3c725a48, 6 | BRF_GRA },           // 12 Sprite Chip #1 Tiles
+	{ "lh532a51.u135",			0x040000, 0x95c63559, 6 | BRF_GRA },           // 13
+	
+	{ "lh532h74.u180",			0x040000, 0xa3d43254, 7 | BRF_SND },           // 14 YM2610 Delta-T Samples
+
+	{ "lh538o7j.u179",			0x100000, 0x60ca0333, 8 | BRF_SND },           // 15 YM2610 Samples
+};
+
+STD_ROM_PICK(turbofrcua)
+STD_ROM_FN(turbofrcua)
+
+struct BurnDriver BurnDrvTurbofrcua = {
+	"turbofrcua", "turbofrc", NULL, NULL, "1991",
+	"Turbo Force (US, set 2)\0", NULL, "Video System Co.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 3, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, turbofrcuaRomInfo, turbofrcuaRomName, NULL, NULL, NULL, NULL, TurbofrcInputInfo, TurbofrcDIPInfo,
 	TurbofrcInit, DrvExit, DrvFrame, TurbofrcDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 352, 3, 4
 };
@@ -5607,7 +5704,7 @@ struct BurnDriver BurnDrvWbbc97 = {
 	"wbbc97", NULL, NULL, NULL, "1997",
 	"Beach Festival World Championship 1997\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wbbc97RomInfo, wbbc97RomName, NULL, NULL, NULL, NULL, PspikesInputInfo, PspikesDIPInfo,
 	Wbbc97Init, DrvExit, DrvFrame, Wbbc97Draw, DrvScan, &DrvRecalc, 0x800,
 	352, 240, 4, 3

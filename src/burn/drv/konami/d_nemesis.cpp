@@ -4370,8 +4370,8 @@ struct BurnDriver BurnDrvCitybombj = {
 // Kitten Kaboodle
 
 static struct BurnRomInfo kittenkRomDesc[] = {
-	{ "kitten.15k",		0x10000, 0x8267cb2b, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
-	{ "kitten.15h",		0x10000, 0xeb41cfa5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "712-b10.15k",	0x10000, 0x8267cb2b, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
+	{ "712-b09.15h",	0x10000, 0xeb41cfa5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "712-b08.15f",	0x20000, 0xe6d71611, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "712-b07.15d",	0x20000, 0x30f75c9f, 1 | BRF_PRG | BRF_ESS }, //  3
 

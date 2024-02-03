@@ -799,9 +799,9 @@ static struct BurnRomInfo mototourRomDesc[] = {
 	{ "mt1-2.c3",		0x2000, 0x3a046dd1, 3 | BRF_GRA },           //  6
 	{ "mt1-3.a3",		0x2000, 0x1cc3d3f4, 3 | BRF_GRA },           //  7
 
-	{ "mt1-8..n3",		0x2000, 0x600a57f5, 4 | BRF_GRA },           //  8 Sprite tiles
-	{ "mt1-9..m3",		0x2000, 0x6f9f2a4e, 4 | BRF_GRA },           //  9
-	{ "mt1-10..k3",		0x2000, 0xd958def5, 4 | BRF_GRA },           // 10
+	{ "mt1-8.n3",		0x2000, 0x600a57f5, 4 | BRF_GRA },           //  8 Sprite tiles
+	{ "mt1-9.m3",		0x2000, 0x6f9f2a4e, 4 | BRF_GRA },           //  9
+	{ "mt1-10.k3",		0x2000, 0xd958def5, 4 | BRF_GRA },           // 10
 
 	{ "mmi6349.k2",		0x0200, 0xc9724350, 5 | BRF_GRA },           // 11 Color data
 	{ "prom1.f1",		0x0020, 0xa1130007, 5 | BRF_GRA },           // 12

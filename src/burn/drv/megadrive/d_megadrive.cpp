@@ -45337,6 +45337,24 @@ struct BurnDriver BurnDrvmd_lifeonmars = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Life on Earth - Reimagined (HB)
+static struct BurnRomInfo md_lifeonearthRomDesc[] = {
+	{ "Life on Earth - Reimagined (2023)(Kai Magazine).bin", 4194304, 0x0c194b63, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_lifeonearth)
+STD_ROM_FN(md_lifeonearth)
+
+struct BurnDriver BurnDrvmd_lifeonearth = {
+	"md_lifeonearth", NULL, NULL, NULL, "2022",
+	"Life on Earth - Reimagined (HB)\0", NULL, "Kai Magazine Software", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_lifeonearthRomInfo, md_lifeonearthRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Little Medusa (HB)
 static struct BurnRomInfo md_littlemedusaRomDesc[] = {
 	{ "Little Medusa (HB).bin", 2097152, 0x931dd919, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

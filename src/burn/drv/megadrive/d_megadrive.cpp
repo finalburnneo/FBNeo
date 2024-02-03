@@ -45346,7 +45346,7 @@ STD_ROM_PICK(md_lifeonearth)
 STD_ROM_FN(md_lifeonearth)
 
 struct BurnDriver BurnDrvmd_lifeonearth = {
-	"md_lifeonearth", NULL, NULL, NULL, "2022",
+	"md_lifeonearth", NULL, NULL, NULL, "2023",
 	"Life on Earth - Reimagined (HB)\0", NULL, "Kai Magazine Software", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,

@@ -1154,7 +1154,7 @@ struct BurnDriver BurnDrvLiberate = {
 	"liberate", NULL, NULL, NULL, "1984",
 	"Liberation\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, liberateRomInfo, liberateRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, LiberateDIPInfo,
 	LiberateInit, DrvExit, DrvFrame, LiberateDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4
@@ -1193,7 +1193,7 @@ struct BurnDriver BurnDrvDualaslt = {
 	"dualaslt", "liberate", NULL, NULL, "1984",
 	"Dual Assault\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, dualasltRomInfo, dualasltRomName, NULL, NULL, NULL, NULL, LiberateInputInfo, DualasltDIPInfo,
 	DualasltInit, DrvExit, DrvFrame, LiberateDraw, DrvScan, &DrvRecalc, 0x21,
 	240, 256, 3, 4

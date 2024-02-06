@@ -3518,7 +3518,7 @@ struct BurnDriver BurnDrvTimekill = {
 	"timekill", NULL, NULL, NULL, "1992",
 	"Time Killers (v1.32)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekillRomInfo, timekillRomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
@@ -3554,7 +3554,7 @@ struct BurnDriver BurnDrvTimekill132i = {
 	"timekill132i", "timekill", NULL, NULL, "1992",
 	"Time Killers (v1.32I)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill132iRomInfo, timekill132iRomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
@@ -3590,7 +3590,7 @@ struct BurnDriver BurnDrvTimekill131 = {
 	"timekill131", "timekill", NULL, NULL, "1992",
 	"Time Killers (v1.31)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill131RomInfo, timekill131RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
@@ -3626,7 +3626,7 @@ struct BurnDriver BurnDrvTimekill121 = {
 	"timekill121", "timekill", NULL, NULL, "1992",
 	"Time Killers (v1.21)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill121RomInfo, timekill121RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
@@ -3674,7 +3674,7 @@ struct BurnDriver BurnDrvTimekill121a = {
 	"timekill121a", "timekill", NULL, NULL, "1992",
 	"Time Killers (v1.21, alternate ROM board)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill121aRomInfo, timekill121aRomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
@@ -3711,7 +3711,7 @@ struct BurnDriver BurnDrvTimekill120 = {
 	"timekill120", "timekill", NULL, NULL, "1992",
 	"Time Killers (v1.20, alternate ROM board)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill120RomInfo, timekill120RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
@@ -3760,7 +3760,7 @@ struct BurnDriver BurnDrvTimekill100 = {
 	"timekill100", "timekill", NULL, NULL, "1992",
 	"Time Killers (v1.00)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, timekill100RomInfo, timekill100RomName, NULL, NULL, NULL, NULL, TimekillInputInfo, TimekillDIPInfo,
 	TimekillInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	384, 240, 4, 3
@@ -3806,7 +3806,7 @@ struct BurnDriver BurnDrvBloodstm = {
 	"bloodstm", NULL, NULL, NULL, "1994",
 	"Blood Storm (v2.22)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstmRomInfo, bloodstmRomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -3852,7 +3852,7 @@ struct BurnDriver BurnDrvBloodstm221 = {
 	"bloodstm221", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v2.21)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm221RomInfo, bloodstm221RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -3898,7 +3898,7 @@ struct BurnDriver BurnDrvBloodstm220 = {
 	"bloodstm220", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v2.20)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm220RomInfo, bloodstm220RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -3944,7 +3944,7 @@ struct BurnDriver BurnDrvBloodstm210 = {
 	"bloodstm210", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v2.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm210RomInfo, bloodstm210RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -3990,7 +3990,7 @@ struct BurnDriver BurnDrvBloodstm110 = {
 	"bloodstm110", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v1.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm110RomInfo, bloodstm110RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4036,7 +4036,7 @@ struct BurnDriver BurnDrvBloodstm104 = {
 	"bloodstm104", "bloodstm", NULL, NULL, "1994",
 	"Blood Storm (v1.04)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, bloodstm104RomInfo, bloodstm104RomName, NULL, NULL, NULL, NULL, BloodstmInputInfo, BloodstmDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4077,7 +4077,7 @@ struct BurnDriver BurnDrvHardyard = {
 	"hardyard", NULL, NULL, NULL, "1993",
 	"Hard Yardage (v1.20)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, hardyardRomInfo, hardyardRomName, NULL, NULL, NULL, NULL, HardyardInputInfo, HardyardDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4118,7 +4118,7 @@ struct BurnDriver BurnDrvHardyard11 = {
 	"hardyard11", "hardyard", NULL, NULL, "1993",
 	"Hard Yardage (v1.10)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, hardyard11RomInfo, hardyard11RomName, NULL, NULL, NULL, NULL, HardyardInputInfo, HardyardDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4159,7 +4159,7 @@ struct BurnDriver BurnDrvHardyard10 = {
 	"hardyard10", "hardyard", NULL, NULL, "1993",
 	"Hard Yardage (v1.00)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, hardyard10RomInfo, hardyard10RomName, NULL, NULL, NULL, NULL, HardyardInputInfo, HardyardDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4195,7 +4195,7 @@ struct BurnDriver BurnDrvPairs = {
 	"pairs", NULL, NULL, NULL, "1994",
 	"Pairs (V1.2, 09/30/94)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pairsRomInfo, pairsRomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4231,7 +4231,7 @@ struct BurnDriver BurnDrvPairsa = {
 	"pairsa", "pairs", NULL, NULL, "1994",
 	"Pairs (V1, 09/07/94)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pairsaRomInfo, pairsaRomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4264,7 +4264,7 @@ struct BurnDriver BurnDrvPairsred = {
 	"pairsred", NULL, NULL, NULL, "1994",
 	"Pairs Redemption (V1.0, 10/25/94)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, pairsredRomInfo, pairsredRomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4300,7 +4300,7 @@ struct BurnDriver BurnDrvHotmemry = {
 	"hotmemry", "pairs", NULL, NULL, "1994",
 	"Hot Memory (V1.2, Germany, 12/28/94)\0", NULL, "Incredible Technologies (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hotmemryRomInfo, hotmemryRomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4336,7 +4336,7 @@ struct BurnDriver BurnDrvHotmemry11 = {
 	"hotmemry11", "pairs", NULL, NULL, "1994",
 	"Hot Memory (V1.1, Germany, 11/30/94)\0", NULL, "Incredible Technologies (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hotmemry11RomInfo, hotmemry11RomName, NULL, NULL, NULL, NULL, PairsInputInfo, PairsDIPInfo,
 	Common16BitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -4388,7 +4388,7 @@ struct BurnDriver BurnDrvWcbowldx = {
 	"wcbowldx", "wcbowl", NULL, NULL, "1999",
 	"World Class Bowling Deluxe (v2.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowldxRomInfo, wcbowldxRomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowldxDIPInfo,
 	WcbowldxInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4442,7 +4442,7 @@ struct BurnDriver BurnDrvWcbowl140 = {
 	"wcbowl140", "wcbowl", NULL, NULL, "1997",
 	"World Class Bowling Tournament (v1.40)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl140RomInfo, wcbowl140RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowldxDIPInfo,
 	Wcbowl140Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4489,7 +4489,7 @@ struct BurnDriver BurnDrvWcbowl130 = {
 	"wcbowl130", "wcbowl", NULL, NULL, "1997",
 	"World Class Bowling Tournament (v1.30)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl130RomInfo, wcbowl130RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowloDIPInfo,
 	Wcbowl140Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4539,7 +4539,7 @@ struct BurnDriver BurnDrvWcbowl = {
 	"wcbowl", NULL, NULL, NULL, "1995",
 	"World Class Bowling (v1.66)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowlRomInfo, wcbowlRomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowlnDIPInfo,
 	WcbowlInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4582,7 +4582,7 @@ struct BurnDriver BurnDrvWcbowl165 = {
 	"wcbowl165", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.65)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl165RomInfo, wcbowl165RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowloDIPInfo,
 	WcbowlInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4625,7 +4625,7 @@ struct BurnDriver BurnDrvWcbowl161 = {
 	"wcbowl161", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.61)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl161RomInfo, wcbowl161RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowloDIPInfo,
 	WcbowlInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4668,7 +4668,7 @@ struct BurnDriver BurnDrvWcbowl16 = {
 	"wcbowl16", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.6)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl16RomInfo, wcbowl16RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowloDIPInfo,
 	WcbowlInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4759,7 +4759,7 @@ struct BurnDriver BurnDrvWcbowl14 = {
 	"wcbowl14", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.4)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl14RomInfo, wcbowl14RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowlDIPInfo,
 	Wcbowl_16B_Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4801,7 +4801,7 @@ struct BurnDriver BurnDrvWcbowl13 = {
 	"wcbowl13", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.3)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl13RomInfo, wcbowl13RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowlDIPInfo,
 	Wcbowl_16B_Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4843,7 +4843,7 @@ struct BurnDriver BurnDrvWcbowl13j = {
 	"wcbowl13j", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.3J, Japan)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl13jRomInfo, wcbowl13jRomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowljDIPInfo,
 	Wcbowl_16B_Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4885,7 +4885,7 @@ struct BurnDriver BurnDrvWcbowl12 = {
 	"wcbowl12", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.2)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl12RomInfo, wcbowl12RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowlDIPInfo,
 	Wcbowl_16B_Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4927,7 +4927,7 @@ struct BurnDriver BurnDrvWcbowl11 = {
 	"wcbowl11", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.1)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl11RomInfo, wcbowl11RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowlDIPInfo,
 	Wcbowl_16B_Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -4969,7 +4969,7 @@ struct BurnDriver BurnDrvWcbowl10 = {
 	"wcbowl10", "wcbowl", NULL, NULL, "1995",
 	"World Class Bowling (v1.0)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, wcbowl10RomInfo, wcbowl10RomName, NULL, NULL, NULL, NULL, WcbowlInputInfo, WcbowlDIPInfo,
 	Wcbowl_16B_Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5030,7 +5030,7 @@ struct BurnDriverX BurnDrvDrivedge = {
 	"drivedge", NULL, NULL, NULL, "1994",
 	"Driver's Edge (v1.6)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, drivedgeRomInfo, drivedgeRomName, NULL, NULL, NULL, NULL, NULL, NULL, //DrivedgeInputInfo, DrivedgeDIPInfo,
 	DrivedgeInit, DrivedgeExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5124,7 +5124,7 @@ struct BurnDriver BurnDrvSftm111 = {
 	"sftm111", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.11)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, sftm111RomInfo, sftm111RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	Sftm110Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5166,7 +5166,7 @@ struct BurnDriver BurnDrvSftm110 = {
 	"sftm110", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.10)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, sftm110RomInfo, sftm110RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	Sftm110Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5208,7 +5208,7 @@ struct BurnDriver BurnDrvSftmj114 = {
 	"sftmj114", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.14N, Japan)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, sftmj114RomInfo, sftmj114RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5250,7 +5250,7 @@ struct BurnDriver BurnDrvSftmj112 = {
 	"sftmj112", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.12N, Japan)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, sftmj112RomInfo, sftmj112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5292,7 +5292,7 @@ struct BurnDriver BurnDrvSftmk112 = {
 	"sftmk112", "sftm", NULL, NULL, "1995",
 	"Street Fighter: The Movie (v1.12K, Korea)\0", NULL, "Capcom / Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, sftmk112RomInfo, sftmk112RomName, NULL, NULL, NULL, NULL, SftmInputInfo, SftmDIPInfo,
 	SftmInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5446,7 +5446,7 @@ struct BurnDriver BurnDrvShufshot = {
 	"shufshot", NULL, NULL, NULL, "1997",
 	"Shuffleshot (v1.40)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshotRomInfo, shufshotRomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshotDIPInfo,
 	ShufshotInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5492,7 +5492,7 @@ struct BurnDriver BurnDrvShufshot139 = {
 	"shufshot139", "shufshot", NULL, NULL, "1997",
 	"Shuffleshot (v1.39)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot139RomInfo, shufshot139RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshotDIPInfo,
 	ShufshotInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5538,7 +5538,7 @@ struct BurnDriver BurnDrvShufshot138 = {
 	"shufshot138", "shufshot", NULL, NULL, "1997",
 	"Shuffleshot (v1.38)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot138RomInfo, shufshot138RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshotDIPInfo,
 	ShufshotInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5584,7 +5584,7 @@ struct BurnDriver BurnDrvShufshot137 = {
 	"shufshot137", "shufshot", NULL, NULL, "1997",
 	"Shuffleshot (v1.37)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot137RomInfo, shufshot137RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshtoDIPInfo,
 	ShufshotInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5630,7 +5630,7 @@ struct BurnDriver BurnDrvShufshot135 = {
 	"shufshot135", "shufshot", NULL, NULL, "1997",
 	"Shuffleshot (v1.35)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, shufshot135RomInfo, shufshot135RomName, NULL, NULL, NULL, NULL, ShufshotInputInfo, ShufshtoDIPInfo,
 	ShufshotInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 256, 4, 3
@@ -5677,7 +5677,7 @@ struct BurnDriver BurnDrvGt3d = {
 	"gt3d", NULL, NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.93N)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dRomInfo, gt3dRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3dInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -5728,7 +5728,7 @@ struct BurnDriver BurnDrvGt3ds192 = {
 	"gt3ds192", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.92S)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3ds192RomInfo, gt3ds192RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d_2_Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -5782,7 +5782,7 @@ struct BurnDriver BurnDrvGt3dl192 = {
 	"gt3dl192", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.92L)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dl192RomInfo, gt3dl192RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d1192Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -5827,7 +5827,7 @@ struct BurnDriver BurnDrvGt3dl191 = {
 	"gt3dl191", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.91L)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dl191RomInfo, gt3dl191RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d1192Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -5872,7 +5872,7 @@ struct BurnDriver BurnDrvGt3dl19 = {
 	"gt3dl19", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.9L)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dl19RomInfo, gt3dl19RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d1192Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -5917,7 +5917,7 @@ struct BurnDriver BurnDrvGt3dv18 = {
 	"gt3dv18", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.8)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dv18RomInfo, gt3dv18RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d_2_Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -5962,7 +5962,7 @@ struct BurnDriver BurnDrvGt3dv17 = {
 	"gt3dv17", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.7)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dv17RomInfo, gt3dv17RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d_2_Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6007,7 +6007,7 @@ struct BurnDriver BurnDrvGt3dv16 = {
 	"gt3dv16", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.6)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dv16RomInfo, gt3dv16RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d_2_Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6052,7 +6052,7 @@ struct BurnDriver BurnDrvGt3dv15 = {
 	"gt3dv15", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.5)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dv15RomInfo, gt3dv15RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d_2_Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6097,7 +6097,7 @@ struct BurnDriver BurnDrvGt3dv14 = {
 	"gt3dv14", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf (v1.4)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dv14RomInfo, gt3dv14RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3d_2_Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6147,7 +6147,7 @@ struct BurnDriver BurnDrvGt3dt231 = {
 	"gt3dt231", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf Tournament (v2.31)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dt231RomInfo, gt3dt231RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6184,7 +6184,7 @@ struct BurnDriver BurnDrvGt3dt211 = {
 	"gt3dt211", "gt3d", NULL, NULL, "1995",
 	"Golden Tee 3D Golf Tournament (v2.11)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt3dt211RomInfo, gt3dt211RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt3dDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6225,7 +6225,7 @@ struct BurnDriver BurnDrvGt97 = {
 	"gt97", NULL, NULL, NULL, "1997",
 	"Golden Tee '97 (v1.30)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt97RomInfo, gt97RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt97DIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6266,7 +6266,7 @@ struct BurnDriver BurnDrvGt97v122 = {
 	"gt97v122", "gt97", NULL, NULL, "1997",
 	"Golden Tee '97 (v1.22)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt97v122RomInfo, gt97v122RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt97oDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6307,7 +6307,7 @@ struct BurnDriver BurnDrvGt97v121 = {
 	"gt97v121", "gt97", NULL, NULL, "1997",
 	"Golden Tee '97 (v1.21)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt97v121RomInfo, gt97v121RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt97oDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6357,7 +6357,7 @@ struct BurnDriver BurnDrvGt97s121 = {
 	"gt97s121", "gt97", NULL, NULL, "1997",
 	"Golden Tee '97 (v1.21S)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt97s121RomInfo, gt97s121RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt97sDIPInfo,
 	Gt3dSverInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6398,7 +6398,7 @@ struct BurnDriver BurnDrvGt97v120 = {
 	"gt97v120", "gt97", NULL, NULL, "1997",
 	"Golden Tee '97 (v1.20)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt97v120RomInfo, gt97v120RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt97oDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6439,7 +6439,7 @@ struct BurnDriver BurnDrvGt97t243 = {
 	"gt97t243", "gt97", NULL, NULL, "1997",
 	"Golden Tee '97 Tournament (v2.43)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt97t243RomInfo, gt97t243RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt97oDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6480,7 +6480,7 @@ struct BurnDriver BurnDrvGt97t240 = {
 	"gt97t240", "gt97", NULL, NULL, "1997",
 	"Golden Tee '97 Tournament (v2.40)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt97t240RomInfo, gt97t240RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt97oDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6521,7 +6521,7 @@ struct BurnDriver BurnDrvGt98 = {
 	"gt98", NULL, NULL, NULL, "1998",
 	"Golden Tee '98 (v1.10)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt98RomInfo, gt98RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, AamaDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6562,7 +6562,7 @@ struct BurnDriver BurnDrvGt98v100 = {
 	"gt98v100", "gt98", NULL, NULL, "1998",
 	"Golden Tee '98 (v1.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt98v100RomInfo, gt98v100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98DIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6603,7 +6603,7 @@ struct BurnDriver BurnDrvGt98c100 = {
 	"gt98c100", "gt98", NULL, NULL, "1998",
 	"Golden Tee '98 (v1.00C)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt98c100RomInfo, gt98c100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98DIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6644,7 +6644,7 @@ struct BurnDriver BurnDrvGt98s100 = {
 	"gt98s100", "gt98", NULL, NULL, "1998",
 	"Golden Tee '98 (v1.00S)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt98s100RomInfo, gt98s100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dSverInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6685,7 +6685,7 @@ struct BurnDriver BurnDrvGt98t303 = {
 	"gt98t303", "gt98", NULL, NULL, "1998",
 	"Golden Tee '98 Tournament (v3.03)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt98t303RomInfo, gt98t303RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6726,7 +6726,7 @@ struct BurnDriver BurnDrvGt98t302 = {
 	"gt98t302", "gt98", NULL, NULL, "1998",
 	"Golden Tee '98 Tournament (v3.02)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt98t302RomInfo, gt98t302RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6767,7 +6767,7 @@ struct BurnDriver BurnDrvGtdiamond = {
 	"gtdiamond", "gt98", NULL, NULL, "1998",
 	"Golden Tee Diamond Edition Tournament (v3.05T ELC)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gtdiamondRomInfo, gtdiamondRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6808,7 +6808,7 @@ struct BurnDriver BurnDrvGt99 = {
 	"gt99", NULL, NULL, NULL, "1999",
 	"Golden Tee '99 (v1.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt99RomInfo, gt99RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, AamaDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6849,7 +6849,7 @@ struct BurnDriver BurnDrvGt99s100 = {
 	"gt99s100", "gt99", NULL, NULL, "1999",
 	"Golden Tee '99 (v1.00S)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt99s100RomInfo, gt99s100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, S_verDIPInfo,
 	Gt3dSverInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6890,7 +6890,7 @@ struct BurnDriver BurnDrvGt99t400 = {
 	"gt99t400", "gt99", NULL, NULL, "1999",
 	"Golden Tee '99 Tournament (v4.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt99t400RomInfo, gt99t400RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6931,7 +6931,7 @@ struct BurnDriver BurnDrvGtroyal = {
 	"gtroyal", "gt99", NULL, NULL, "1999",
 	"Golden Tee Royal Edition Tournament (v4.02T EDM)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gtroyalRomInfo, gtroyalRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -6972,7 +6972,7 @@ struct BurnDriver BurnDrvGt2k = {
 	"gt2k", NULL, NULL, NULL, "2000",
 	"Golden Tee 2K (v1.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt2kRomInfo, gt2kRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, AamaDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -7024,7 +7024,7 @@ struct BurnDriver BurnDrvGt2kp100 = {
 	"gt2kp100", "gt2k", NULL, NULL, "2000",
 	"Golden Tee 2K (v1.00) (alt protection)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt2kp100RomInfo, gt2kp100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, AamaDIPInfo,
 	Gt2kp100Init, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -7065,7 +7065,7 @@ struct BurnDriver BurnDrvGt2ks100 = {
 	"gt2ks100", "gt2k", NULL, NULL, "2000",
 	"Golden Tee 2K (v1.00S)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt2ks100RomInfo, gt2ks100RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, S_verDIPInfo,
 	Gt3dSverInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -7106,7 +7106,7 @@ struct BurnDriver BurnDrvGt2kt500 = {
 	"gt2kt500", "gt2k", NULL, NULL, "2000",
 	"Golden Tee 2K Tournament (v5.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gt2kt500RomInfo, gt2kt500RomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -7147,7 +7147,7 @@ struct BurnDriver BurnDrvGtsupreme = {
 	"gtsupreme", "gt2k", NULL, NULL, "2002",
 	"Golden Tee Supreme Edition Tournament (v5.10T ELC S)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gtsupremeRomInfo, gtsupremeRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, Gt98sDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -7188,7 +7188,7 @@ struct BurnDriver BurnDrvGtclassc = {
 	"gtclassc", NULL, NULL, NULL, "2001",
 	"Golden Tee Classic (v1.00)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gtclasscRomInfo, gtclasscRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, AamaDIPInfo,
 	Gt3dAmaaInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -7240,7 +7240,7 @@ struct BurnDriver BurnDrvGtclasscp = {
 	"gtclasscp", "gtclassc", NULL, NULL, "2001",
 	"Golden Tee Classic (v1.00) (alt protection)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gtclasscpRomInfo, gtclasscpRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, AamaDIPInfo,
 	GtclasscpInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3
@@ -7281,7 +7281,7 @@ struct BurnDriver BurnDrvGtclasscs = {
 	"gtclasscs", "gtclassc", NULL, NULL, "2001",
 	"Golden Tee Classic (v1.00S)\0", NULL, "Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, gtclasscsRomInfo, gtclasscsRomName, NULL, NULL, NULL, NULL, Gt3dInputInfo, S_verDIPInfo,
 	Gt3dSverInit, DrvExit, DrvFrame, DrvDraw32, DrvScan, &DrvRecalc, 0x8000,
 	384, 240, 4, 3

@@ -1266,7 +1266,7 @@ struct BurnDriver BurnDrvStrnskil = {
 	"strnskil", NULL, NULL, NULL, "1984",
 	"Strength & Skill\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, strnskilRomInfo, strnskilRomName, NULL, NULL, NULL, NULL, StrnskilInputInfo, StrnskilDIPInfo,
 	StrnskilInit, DrvExit, DrvFrame, StrnskilDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1308,7 +1308,7 @@ struct BurnDriver BurnDrvGuiness = {
 	"guiness", "strnskil", NULL, NULL, "1984",
 	"The Guiness (Japan)\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, guinessRomInfo, guinessRomName, NULL, NULL, NULL, NULL, StrnskilInputInfo, StrnskilDIPInfo,
 	StrnskilInit, DrvExit, DrvFrame, StrnskilDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1358,7 +1358,7 @@ struct BurnDriver BurnDrvBanbam = {
 	"banbam", NULL, NULL, NULL, "1984",
 	"BanBam\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, banbamRomInfo, banbamRomName, NULL, NULL, NULL, NULL, BanbamInputInfo, BanbamDIPInfo,
 	BanbamInit, DrvExit, DrvFrame, StrnskilDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1403,7 +1403,7 @@ struct BurnDriver BurnDrvPettanp = {
 	"pettanp", "banbam", NULL, NULL, "1984",
 	"Pettan Pyuu (Japan)\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, pettanpRomInfo, pettanpRomName, NULL, NULL, NULL, NULL, BanbamInputInfo, BanbamDIPInfo,
 	BanbamInit, DrvExit, DrvFrame, StrnskilDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1446,7 +1446,7 @@ struct BurnDriver BurnDrvIkki = {
 	"ikki", NULL, NULL, NULL, "1985",
 	"Ikki (Japan)\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikkiRomInfo, ikkiRomName, NULL, NULL, NULL, NULL, IkkiInputInfo, IkkiDIPInfo,
 	IkkiInit, DrvExit, DrvFrame, IkkiDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1489,7 +1489,7 @@ struct BurnDriver BurnDrvFarmer = {
 	"farmer", "ikki", NULL, NULL, "1985",
 	"Farmers Rebellion\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, farmerRomInfo, farmerRomName, NULL, NULL, NULL, NULL, IkkiInputInfo, IkkiDIPInfo,
 	IkkiInit, DrvExit, DrvFrame, IkkiDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3

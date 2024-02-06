@@ -592,7 +592,7 @@ struct BurnDriver BurnDrvKlax = {
 	"klax", NULL, NULL, NULL, "1989",
 	"Klax (version 6)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klaxRomInfo, klaxRomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -632,7 +632,7 @@ struct BurnDriver BurnDrvKlaxd2 = {
 	"klaxd2", "klax", NULL, NULL, "1989",
 	"Klax (Germany, version 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klaxd2RomInfo, klaxd2RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -672,7 +672,7 @@ struct BurnDriver BurnDrvKlaxj3 = {
 	"klaxj3", "klax", NULL, NULL, "1989",
 	"Klax (Japan, version 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klaxj3RomInfo, klaxj3RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -712,7 +712,7 @@ struct BurnDriver BurnDrvKlaxj4 = {
 	"klaxj4", "klax", NULL, NULL, "1989",
 	"Klax (Japan, version 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klaxj4RomInfo, klaxj4RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -752,7 +752,7 @@ struct BurnDriver BurnDrvKlax4 = {
 	"klax4", "klax", NULL, NULL, "1989",
 	"Klax (version 4)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klax4RomInfo, klax4RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -792,7 +792,7 @@ struct BurnDriver BurnDrvKlax5 = {
 	"klax5", "klax", NULL, NULL, "1989",
 	"Klax (version 5)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klax5RomInfo, klax5RomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3
@@ -827,7 +827,7 @@ struct BurnDriverD BurnDrvKlax5bl = {
 	"klax5bl", "klax", NULL, NULL, "1989",
 	"Klax (version 5, bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, klax5blRomInfo, klax5blRomName, NULL, NULL, NULL, NULL, KlaxInputInfo, KlaxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	336, 240, 4, 3

@@ -1,5 +1,6 @@
 // Screen Window
 #include "burner.h"
+#include <process.h>
 #include <shlobj.h>
 
 #define		HORIZONTAL_ORIENTED_RES		0
@@ -231,59 +232,29 @@ INT32 is_netgame_or_recording() // returns: 1 = netgame, 2 = recording/playback
 
 static int WINAPI gameCallback(char* game, int player, int numplayers)
 {
-	bool bFound = false;
-	HWND hActive;
+#if 0
+	// we can't run emu-stuffs from new thread, especially while a game might
+	// be running.  or else -- trust.  explosions be lurking!
+#endif
 
-	for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
+	strncpy(k_game_str, game, sizeof(k_game_str)-1);
 
-		char* szDecoratedName = DecorateKailleraGameName(nBurnDrvActive);
+	k_player_id = player;
+	k_numplayers = numplayers;
+//	bprintf(0, _T("end GameCallback() -> trigger kaillera game in main loop!\n"));
+	k_bLoadNetgame = 1;
 
-		if (!strcmp(szDecoratedName, game)) {
-			bFound = true;
-			break;
-		}
+	while (kNetGame == 0) {
+		// wait for message loop to pick up and initiate netplay loading
+		Sleep(1);
 	}
 
-	if (!bFound) {
-		Kaillera_End_Game();
-		return 1;
+	while (kNetGame) {
+		// now we wait here, to give kaillera client a thread to kill
+		// or we exit if the game is dropped or ends naturally.
+		Sleep(1000);
 	}
 
-	kNetGame = 1;
-	hActive = GetActiveWindow();
-
-	bCheatsAllowed = false;								// Disable cheats during netplay
-	AudSoundStop();										// Stop while we load roms
-	DrvInit(nBurnDrvActive, false);						// Init the game driver
-
-	// w/Kaillera: DrvInit() can't post it's restart message because we're not in the message loop yet.
-	// so we must MediaExit() / MediaInit() here.  -dink
-	MediaExit();
-	MediaInit();
-	AudSoundPlay();										// Restart sound
-	SetFocus(hScrnWnd);
-
-//	dprintf(_T(" ** OSD startnet text sent.\n"));
-
-	TCHAR szTemp1[256];
-	TCHAR szTemp2[256];
-	VidSAddChatMsg(FBALoadStringEx(hAppInst, IDS_NETPLAY_START, true), 0xFFFFFF, BurnDrvGetText(DRV_FULLNAME), 0xFFBFBF);
-	_sntprintf(szTemp1, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_YOU, true), player);
-	_sntprintf(szTemp2, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_TOTAL, true), numplayers);
-	VidSAddChatMsg(szTemp1, 0xFFFFFF, szTemp2, 0xFFBFBF);
-
-	RunMessageLoop();
-
-	DrvExit();
-	if (kNetGame) {
-		kNetGame = 0;
-		Kaillera_End_Game();
-	}
-	DeActivateChat();
-
-	bCheatsAllowed = true;								// reenable cheats netplay has ended
-
-	SetFocus(hActive);
 	return 0;
 }
 
@@ -301,11 +272,47 @@ static void WINAPI kDropCallback(char *nick, int playernb)
 	VidSAddChatMsg(szTemp, 0xFFFFFF, NULL, 0);
 }
 
+static int bServerDialogActive = 0;
+static char* kaillera_gameList = NULL;
+
+static unsigned __stdcall DoKailleraServerSelectThread(void *arg)
+{
+	bServerDialogActive = 1;
+	Kaillera_Select_Server_Dialog(NULL);
+	bServerDialogActive = 0;
+
+	// clean up
+	if (kaillera_gameList) {
+		free(kaillera_gameList);
+		kaillera_gameList = NULL;
+	}
+
+	End_Network();
+
+	k_bLoadNetgame = 2; // signal menu update
+
+	return 0;
+}
+
+static void KailleraServerSelect()
+{
+	HANDLE hThread = NULL;
+	unsigned ThreadID = 0;
+
+	bServerDialogActive = 0;
+
+	hThread = (HANDLE)_beginthreadex(NULL, 0, DoKailleraServerSelectThread, (void*)NULL, 0, &ThreadID);
+
+	while (bServerDialogActive == 0) { // wait for thread to start :)
+		Sleep(1);
+	}
+}
+
+
 static void DoNetGame()
 {
 	kailleraInfos ki;
 	char tmpver[128];
-	char* gameList;
 
 	if(bDrvOkay) {
 		DrvExit();
@@ -319,10 +326,10 @@ static void DoNetGame()
 	_snprintf(tmpver, 128, APP_TITLE " v%.20s", szAppBurnVer);
 #endif
 
-	gameList = CreateKailleraList();
+	kaillera_gameList = CreateKailleraList();
 
 	ki.appName = tmpver;
-	ki.gameList = gameList;
+	ki.gameList = kaillera_gameList;
 	ki.gameCallback = &gameCallback;
 	ki.chatReceivedCallback = &kChatCallback;
 	ki.clientDroppedCallback = &kDropCallback;
@@ -330,16 +337,7 @@ static void DoNetGame()
 
 	Kaillera_Set_Infos(&ki);
 
-	Kaillera_Select_Server_Dialog(NULL);
-
-	if (gameList) {
-		free(gameList);
-		gameList = NULL;
-	}
-
-	End_Network();
-
-	POST_INITIALISE_MESSAGE;
+	KailleraServerSelect();
 }
 
 int CreateDatfileWindows(int bType)
@@ -1282,7 +1280,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					kNetGame = 0;
 					Kaillera_End_Game();
 					DeActivateChat();
-					PostQuitMessage(0);
 				}
 				bCheatsAllowed = true;						// reenable cheats netplay has ended
 

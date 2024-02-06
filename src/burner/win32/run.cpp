@@ -500,6 +500,14 @@ static void BurnerHandlerKeyCallback(MSG *Msg, INT32 KeyDown, INT32 KeyType)
 	}
 }
 
+// Kaillera signals
+// they usually come from a different thread, so we have to keep it simple
+// (and not involve the windows message pump)
+int k_bLoadNetgame = 0;          // (1) signal to start net-game, (2) update menus
+int k_player_id = 0;             // data from the Kaillera Client
+int k_numplayers = 0;            // ""
+char k_game_str[255] = { 0, };   // ""
+
 // The main message loop
 int RunMessageLoop()
 {
@@ -540,6 +548,59 @@ int RunMessageLoop()
 		}
 
 		while (1) {
+			if (k_bLoadNetgame) {
+				if (k_bLoadNetgame == 2) {
+					k_bLoadNetgame = 0;
+					MenuEnableItems();
+					continue;
+				}
+				k_bLoadNetgame = 0;
+
+				if (bDrvOkay) {
+					StopReplay();
+#ifdef INCLUDE_AVI_RECORDING
+					AviStop();
+#endif
+					AudSoundStop();										// Stop while we load roms
+					DrvExit();
+				}
+
+				// find the game
+				bool bFound = false;
+
+				for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
+					char* szDecoratedName = DecorateKailleraGameName(nBurnDrvActive);
+
+					if (!strcmp(szDecoratedName, k_game_str)) {
+						bFound = true;
+						break;
+					}
+				}
+
+				if (!bFound) {
+					bprintf(PRINT_ERROR, _T("Kaillera: Can't find game in list!\n"));
+					Kaillera_End_Game();
+					continue; // carry on!
+				}
+
+				kNetGame = 1;
+
+				bCheatsAllowed = false;								// Disable cheats during netplay
+				AudSoundStop();										// Stop while we load roms
+				DrvInit(nBurnDrvActive, false);						// Init the game driver
+
+				AudSoundPlay();										// Restart sound
+				SetFocus(hScrnWnd);
+				POST_INITIALISE_MESSAGE;                            // Re-create main window with selected game's dimensions
+
+				TCHAR szTemp1[256];
+				TCHAR szTemp2[256];
+				VidSAddChatMsg(FBALoadStringEx(hAppInst, IDS_NETPLAY_START, true), 0xFFFFFF, BurnDrvGetText(DRV_FULLNAME), 0xFFBFBF);
+				_sntprintf(szTemp1, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_YOU, true), k_player_id);
+				_sntprintf(szTemp2, 256, FBALoadStringEx(hAppInst, IDS_NETPLAY_START_TOTAL, true), k_numplayers);
+				VidSAddChatMsg(szTemp1, 0xFFFFFF, szTemp2, 0xFFBFBF);
+			}
+
 			if (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
 				// A message is waiting to be processed
 				if (Msg.message == WM_QUIT)	{											// Quit program

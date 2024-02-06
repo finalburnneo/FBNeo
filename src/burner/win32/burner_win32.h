@@ -243,6 +243,11 @@ extern int bAlwaysDrawFrames;
 extern int nSlowMo;
 //extern INT32 bRunAhead;  // in burn.h! (partially platform agnostic feature)
 extern int kNetGame;
+extern int k_player_id;
+extern int k_numplayers;
+extern int k_bLoadNetgame;
+extern char k_game_str[255];
+
 int RunIdle();
 int RunFrame(int bDraw, int bPause);
 int RunMessageLoop();
@@ -274,6 +279,7 @@ void PausedRedraw(void);
 INT32 is_netgame_or_recording();
 void ScrnInitLua();
 void ScrnExitLua();
+char* DecorateKailleraGameName(UINT32 nBurnDrv);
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)

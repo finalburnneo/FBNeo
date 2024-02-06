@@ -442,6 +442,10 @@ UINT8 BurnTrackballReadInterpolated(INT32 dev, INT32 scanline) // linear device 
 
 UINT8 BurnTrackballReadInterpolated(INT32 dev, INT32 isB, INT32 scanline) // 2 axis per device #
 {
+	if (Max_Scanlines == -1) {
+		bprintf(0, _T("BurnTrackballReadInterpolated(): Max_Scanlines not set!\n"));
+	}
+
 	INT32 now = 0;
 	INT32 prev = 0;
 

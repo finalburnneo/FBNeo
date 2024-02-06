@@ -3509,7 +3509,7 @@ struct BurnDriver BurnDrvLastsurv = {
 	"lastsurv", NULL, NULL, NULL, "1989",
 	"Last Survivor (Japan) (FD1094 317-0083)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, LastsurvRomInfo, LastsurvRomName, NULL, NULL, NULL, NULL, LastsurvInputInfo, LastsurvDIPInfo,
 	LastsurvInit, XBoardExit, XBoardFrame, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
@@ -3519,7 +3519,7 @@ struct BurnDriver BurnDrvLastsurvd = {
 	"lastsurvd", "lastsurv", NULL, NULL, "1989",
 	"Last Survivor (Japan) (bootleg of FD1094 317-0083 set)\0", NULL, "bootleg", "X-Board",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, LastsurvdRomInfo, LastsurvdRomName, NULL, NULL, NULL, NULL, LastsurvInputInfo, LastsurvDIPInfo,
 	LastsurvInit, XBoardExit, XBoardFrame, XBoardRender, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3

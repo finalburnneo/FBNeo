@@ -5742,7 +5742,7 @@ struct BurnDriver BurnDrvShackled = {
 	"shackled", NULL, NULL, NULL, "1986",
 	"Shackled (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, shackledRomInfo, shackledRomName, NULL, NULL, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
@@ -5790,7 +5790,7 @@ struct BurnDriver BurnDrvBreywood = {
 	"breywood", "shackled", NULL, NULL, "1986",
 	"Breywood (Japan revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, breywoodRomInfo, breywoodRomName, NULL, NULL, NULL, NULL, ShackledInputInfo, BreywoodDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3

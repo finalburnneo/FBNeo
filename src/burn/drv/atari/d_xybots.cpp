@@ -640,7 +640,7 @@ struct BurnDriver BurnDrvXybots = {
 	"xybots", NULL, NULL, NULL, "1987",
 	"Xybots (rev 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, xybotsRomInfo, xybotsRomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
@@ -679,7 +679,7 @@ struct BurnDriver BurnDrvXybotsg = {
 	"xybotsg", "xybots", NULL, NULL, "1987",
 	"Xybots (German, rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, xybotsgRomInfo, xybotsgRomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
@@ -718,7 +718,7 @@ struct BurnDriver BurnDrvXybotsf = {
 	"xybotsf", "xybots", NULL, NULL, "1987",
 	"Xybots (French, rev 3)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, xybotsfRomInfo, xybotsfRomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
@@ -757,7 +757,7 @@ struct BurnDriver BurnDrvXybots1 = {
 	"xybots1", "xybots", NULL, NULL, "1987",
 	"Xybots (rev 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, xybots1RomInfo, xybots1RomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3
@@ -796,7 +796,7 @@ struct BurnDriver BurnDrvXybots0 = {
 	"xybots0", "xybots", NULL, NULL, "1987",
 	"Xybots (rev 0)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SHOOT, 0,
 	NULL, xybots0RomInfo, xybots0RomName, NULL, NULL, NULL, NULL, XybotsInputInfo, XybotsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	336, 240, 4, 3

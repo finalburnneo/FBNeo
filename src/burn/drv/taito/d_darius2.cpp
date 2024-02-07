@@ -2052,7 +2052,7 @@ struct BurnDriver BurnDrvWarriorb = {
 	"warriorb", NULL, NULL, NULL, "1991",
 	"Warrior Blade - Rastan Saga Episode III (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, WarriorbRomInfo, WarriorbRomName, NULL, NULL, NULL, NULL, WarriorbInputInfo, WarriorbDIPInfo,
 	WarriorbInit, Darius2Exit, Darius2dFrame, WarriorbDraw, Darius2Scan,
 	NULL, 0x2000, 640, 240, 8, 3

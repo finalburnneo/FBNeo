@@ -2119,9 +2119,7 @@ static void WriteIO2(INT32 nOffset, UINT8 byteValue)
 {
 	switch (nOffset) {
 		case 0x01:
-		case 0x09:
-		case 0x11:
-		case 0x19: // Screen Brightness
+		case 0x11: // Screen Brightness
 			if (nNeoSystemType & NEO_SYS_CART) {
 				NeoRecalcPalette = 1;
 				bNeoDarkenPalette = (nOffset == 0x11) ? 1 : 0;

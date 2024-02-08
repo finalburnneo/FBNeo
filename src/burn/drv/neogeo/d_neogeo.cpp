@@ -20667,11 +20667,11 @@ struct BurnDriver BurnDrvmslug1v2 = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug (Origins, Hack)
+// Metal Slug (Origins, Hack) - 2024-01-27
 // Modified by 合金弹头爱克斯 / CardCaptorSakura
 
 static struct BurnRomInfo mslugdqyRomDesc[] = {
-	{ "201-p1dqy.p1",	0x200000, 0x0019bc96, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1dqy.p1",	0x200000, 0xd541dbe4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 

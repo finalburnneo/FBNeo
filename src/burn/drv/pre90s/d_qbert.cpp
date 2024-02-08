@@ -2260,7 +2260,7 @@ struct BurnDriver BurnDrvQbert = {
 	"qbert", NULL, NULL, "qbert", "1982",
 	"Q*bert (US set 1)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, qbertRomInfo, qbertRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2293,7 +2293,7 @@ struct BurnDriver BurnDrvQberta = {
 	"qberta", "qbert", NULL, "qbert", "1982",
 	"Q*bert (US set 2)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, qbertaRomInfo, qbertaRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2326,7 +2326,7 @@ struct BurnDriver BurnDrvQbertj = {
 	"qbertj", "qbert", NULL, "qbert", "1982",
 	"Q*bert (Japan)\0", NULL, "Gottlieb (Konami license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, qbertjRomInfo, qbertjRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2359,7 +2359,7 @@ struct BurnDriver BurnDrvQberttst = {
 	"qberttst", "qbert", NULL, NULL, "1982",
 	"Q*bert (early test version)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, qberttstRomInfo, qberttstRomName, NULL, NULL, NULL, NULL, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2393,7 +2393,7 @@ struct BurnDriverD BurnDrvQbtrktst = {
 	"qbtrktst", "qbert", NULL, NULL, "1982",
 	"Q*bert Board Input Test Rom\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, qbtrktstRomInfo, qbtrktstRomName, NULL, NULL, NULL, NULL, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2426,7 +2426,7 @@ struct BurnDriver BurnDrvMyqbert = {
 	"myqbert", "qbert", NULL, "qbert", "1982",
 	"Mello Yello Q*bert\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, myqbertRomInfo, myqbertRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2466,7 +2466,7 @@ struct BurnDriver BurnDrvSqbert = {
 	"sqbert", NULL, NULL, "qbert", "1983",
 	"Faster, Harder, More Challenging Q*bert (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, sqbertRomInfo, sqbertRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2500,7 +2500,7 @@ struct BurnDriver BurnDrvMplanets = {
 	"mplanets", NULL, NULL, NULL, "1983",
 	"Mad Planets\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mplanetsRomInfo, mplanetsRomName, NULL, NULL, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
 	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2535,7 +2535,7 @@ struct BurnDriver BurnDrvMplanetsuk = {
 	"mplanetsuk", "mplanets", NULL, NULL, "1983",
 	"Mad Planets (UK)\0", NULL, "Gottlieb (Taitel license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mplanetsukRomInfo, mplanetsukRomName, NULL, NULL, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
 	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2576,7 +2576,7 @@ struct BurnDriver BurnDrvQbertqub = {
 	"qbertqub", NULL, NULL, "qbert", "1983",
 	"Q*bert's Qubes\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, qbertqubRomInfo, qbertqubRomName, NULL, NULL, qbertSampleInfo, qbertSampleName, QbertqubInputInfo, QbertqubDIPInfo,
 	DrvInitCube, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2616,7 +2616,7 @@ struct BurnDriver BurnDrvInsector = {
 	"insector", NULL, NULL, NULL, "1982",
 	"Insector (prototype)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, insectorRomInfo, insectorRomName, NULL, NULL, NULL, NULL, InsectorInputInfo, InsectorDIPInfo,
 	DrvInitInsector, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2661,7 +2661,7 @@ struct BurnDriver BurnDrvArgusg = {
 	"argusg", NULL, NULL, NULL, "1984",
 	"Argus (Gottlieb, prototype)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, argusgRomInfo, argusgRomName, NULL, NULL, NULL, NULL, ArgusgInputInfo, ArgusgDIPInfo,
 	DrvInitArgusg, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2697,7 +2697,7 @@ struct BurnDriver BurnDrvKrull = {
 	"krull", NULL, NULL, NULL, "1983",
 	"Krull\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, krullRomInfo, krullRomName, NULL, NULL, NULL, NULL, KrullInputInfo, KrullDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2738,7 +2738,7 @@ struct BurnDriver BurnDrvCurvebal = {
 	"curvebal", NULL, NULL, NULL, "1984",
 	"Curve Ball\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, curvebalRomInfo, curvebalRomName, NULL, NULL, NULL, NULL, CurvebalInputInfo, CurvebalDIPInfo,
 	DrvInitCurvebal, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -2778,7 +2778,7 @@ struct BurnDriver BurnDrvTylz = {
 	"tylz", NULL, NULL, NULL, "1982",
 	"Tylz (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, tylzRomInfo, tylzRomName, NULL, NULL, NULL, NULL, TylzInputInfo, TylzDIPInfo,
 	DrvInitTylz, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2811,7 +2811,7 @@ struct BurnDriver BurnDrvKngtmare = {
 	"kngtmare", NULL, NULL, NULL, "1983",
 	"Knightmare (prototype)\0", "Game has NO sound", "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, kngtmareRomInfo, kngtmareRomName, NULL, NULL, NULL, NULL, KngtmareInputInfo, KngtmareDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2854,7 +2854,7 @@ struct BurnDriver BurnDrvReactor = {
 	"reactor", NULL, NULL, "reactor", "1982",
 	"Reactor\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, reactorRomInfo, reactorRomName, NULL, NULL, reactorSampleInfo, reactorSampleName, ReactorInputInfo, ReactorDIPInfo,
 	DrvInitReactor, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2904,7 +2904,7 @@ struct BurnDriver BurnDrvScrewloo = {
 	"screwloo", NULL, NULL, NULL, "1983",
 	"Screw Loose (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, screwlooRomInfo, screwlooRomName, NULL, NULL, NULL, NULL, ScrewlooInputInfo, ScrewlooDIPInfo,
 	DrvInitScrewloo, DrvExit, Drv2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -2947,7 +2947,7 @@ struct BurnDriver BurnDrvWizwarz = {
 	"wizwarz", NULL, NULL, NULL, "1984",
 	"Wiz Warz (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, wizwarzRomInfo, wizwarzRomName, NULL, NULL, NULL, NULL, WizwarzInputInfo, WizwarzDIPInfo,
 	DrvInitWizwarz, DrvExit, Drv2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -3001,7 +3001,7 @@ struct BurnDriver BurnDrvVidvince = {
 	"vidvince", NULL, NULL, NULL, "1984",
 	"Video Vince and the Game Factory (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, vidvinceRomInfo, vidvinceRomName, NULL, NULL, NULL, NULL, VidvinceInputInfo, VidvinceDIPInfo,
 	DrvInitVidvince, DrvExit, Drv2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -3044,7 +3044,7 @@ struct BurnDriver BurnDrvStooges3 = {
 	"3stooges", NULL, NULL, NULL, "1984",
 	"The Three Stooges In Brides Is Brides (set 1)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, stooges3RomInfo, stooges3RomName, NULL, NULL, NULL, NULL, Stooges3InputInfo, Stooges3DIPInfo,
 	DrvInitStooges3, DrvExit, Drv2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3
@@ -3081,7 +3081,7 @@ struct BurnDriver BurnDrvStooges3a = {
 	"3stoogesa", "3stooges", NULL, NULL, "1984",
 	"The Three Stooges In Brides Is Brides (set 2)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, stooges3aRomInfo, stooges3aRomName, NULL, NULL, NULL, NULL, Stooges3InputInfo, Stooges3DIPInfo,
 	DrvInitStooges3, DrvExit, Drv2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 240, 4, 3

@@ -1310,7 +1310,7 @@ struct BurnDriver BurnDrvWarpwarp = {
 	"warpwarp", NULL, NULL, NULL, "1981",
 	"Warp & Warp\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_MAZE, 0,
 	NULL, warpwarpRomInfo, warpwarpRomName, NULL, NULL, NULL, NULL, WarpwarpInputInfo, WarpwarpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1341,7 +1341,7 @@ struct BurnDriver BurnDrvWarpwarpr = {
 	"warpwarpr", "warpwarp", NULL, NULL, "1981",
 	"Warp Warp (Rock-Ola set 1)\0", NULL, "Namco (Rock-Ola license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_MAZE, 0,
 	NULL, warpwarprRomInfo, warpwarprRomName, NULL, NULL, NULL, NULL, WarpwarpInputInfo, WarpwarprDIPInfo,
 	warpwarprDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1366,7 +1366,7 @@ struct BurnDriver BurnDrvWarpwarpr2 = {
 	"warpwarpr2", "warpwarp", NULL, NULL, "1981",
 	"Warp Warp (Rock-Ola set 2)\0", NULL, "Namco (Rock-Ola license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_MAZE, 0,
 	NULL, warpwarpr2RomInfo, warpwarpr2RomName, NULL, NULL, NULL, NULL, WarpwarpInputInfo, WarpwarprDIPInfo,
 	warpwarprDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1528,7 +1528,7 @@ struct BurnDriver BurnDrvKaitein = {
 	"kaitein", "kaitei", NULL, NULL, "1980",
 	"Kaitei Takara Sagashi (Namco license)\0", NULL, "K.K. Tokki (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, kaiteinRomInfo, kaiteinRomName, NULL, NULL, NULL, NULL, KaiteinInputInfo, KaiteinDIPInfo,
 	KaiteinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1561,7 +1561,7 @@ struct BurnDriver BurnDrvKaitei = {
 	"kaitei", NULL, NULL, NULL, "1980",
 	"Kaitei Takara Sagashi\0", NULL, "K.K. Tokki", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, kaiteiRomInfo, kaiteiRomName, NULL, NULL, NULL, NULL, KaiteiInputInfo, KaiteiDIPInfo,
 	KaiteiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
@@ -1594,7 +1594,7 @@ struct BurnDriver BurnDrvSos = {
 	"sos", NULL, NULL, NULL, "1979",
 	"SOS Game\0", NULL, "K.K. Tokki (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, sosRomInfo, sosRomName, NULL, NULL, NULL, NULL, SosInputInfo, SosDIPInfo,
 	SOSInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4

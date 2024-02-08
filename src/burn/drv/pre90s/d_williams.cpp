@@ -2907,7 +2907,7 @@ struct BurnDriver BurnDrvJoust = {
 	"joust", NULL, NULL, NULL, "1982",
 	"Joust (Green label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, joustRomInfo, joustRomName, NULL, NULL, NULL, NULL, JoustInputInfo, NULL,
 	JoustInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -2944,7 +2944,7 @@ struct BurnDriver BurnDrvJousty = {
 	"jousty", "joust", NULL, NULL, "1982",
 	"Joust (Yellow label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, joustyRomInfo, joustyRomName, NULL, NULL, NULL, NULL, JoustInputInfo, NULL,
 	JoustInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -2981,7 +2981,7 @@ struct BurnDriver BurnDrvJoustr = {
 	"joustr", "joust", NULL, NULL, "1982",
 	"Joust (Red label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, joustrRomInfo, joustrRomName, NULL, NULL, NULL, NULL, JoustInputInfo, NULL,
 	JoustInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3030,7 +3030,7 @@ struct BurnDriver BurnDrvBubbles = {
 	"bubbles", NULL, NULL, NULL, "1982",
 	"Bubbles\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, bubblesRomInfo, bubblesRomName, NULL, NULL, NULL, NULL, BubblesInputInfo, NULL,
 	BubblesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3066,7 +3066,7 @@ struct BurnDriver BurnDrvBubblesr = {
 	"bubblesr", "bubbles", NULL, NULL, "1982",
 	"Bubbles (Solid Red label)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, bubblesrRomInfo, bubblesrRomName, NULL, NULL, NULL, NULL, BubblesInputInfo, NULL,
 	BubblesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3102,7 +3102,7 @@ struct BurnDriver BurnDrvBubblesp = {
 	"bubblesp", "bubbles", NULL, NULL, "1982",
 	"Bubbles (prototype)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, bubblespRomInfo, bubblespRomName, NULL, NULL, NULL, NULL, BubblesInputInfo, NULL,
 	BubblesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3155,7 +3155,7 @@ struct BurnDriver BurnDrvSplat = {
 	"splat", NULL, NULL, NULL, "1982",
 	"Splat!\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, splatRomInfo, splatRomName, NULL, NULL, NULL, NULL, SplatInputInfo, NULL,
 	SplatInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3247,7 +3247,7 @@ struct BurnDriver BurnDrvAlienar = {
 	"alienar", NULL, NULL, NULL, "1985",
 	"Alien Arena\0", "Game has no sound", "Duncan Brown", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, alienarRomInfo, alienarRomName, NULL, NULL, NULL, NULL, AlienarInputInfo, NULL,
 	AlienarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3283,7 +3283,7 @@ struct BurnDriver BurnDrvAlienaru = {
 	"alienaru", "alienar", NULL, NULL, "1985",
 	"Alien Arena (Stargate upgrade)\0", NULL, "Duncan Brown", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, alienaruRomInfo, alienaruRomName, NULL, NULL, NULL, NULL, AlienarInputInfo, NULL,
 	AlienarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
@@ -3490,7 +3490,7 @@ struct BurnDriver BurnDrvPlayball = {
 	"playball", NULL, NULL, NULL, "1983",
 	"PlayBall! (prototype)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, playballRomInfo, playballRomName, NULL, NULL, NULL, NULL, PlayballInputInfo, NULL,
 	PlayballInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
@@ -3535,7 +3535,7 @@ struct BurnDriver BurnDrvLottofun = {
 	"lottofun", NULL, NULL, NULL, "1987",
 	"Lotto Fun\0", NULL, "H.A.R. Management", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_CASINO, 0,
 	NULL, lottofunRomInfo, lottofunRomName, NULL, NULL, NULL, NULL, LottofunInputInfo, NULL,
 	LottofunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	286, 240, 4, 3
@@ -3595,7 +3595,7 @@ struct BurnDriver BurnDrvBlaster = {
 	"blaster", NULL, NULL, NULL, "1983",
 	"Blaster\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, blasterRomInfo, blasterRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
 	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
 	292, 240, 4, 3
@@ -3640,7 +3640,7 @@ struct BurnDriver BurnDrvBlastero = {
 	"blastero", "blaster", NULL, NULL, "1983",
 	"Blaster (location test)\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, blasteroRomInfo, blasteroRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
 	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
 	292, 240, 4, 3

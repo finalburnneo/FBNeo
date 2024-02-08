@@ -22155,7 +22155,7 @@ struct BurnDriver BurnDrvCpsGanbare = {
 	"ganbare", NULL, NULL, NULL, "2000",
 	"Ganbare! Marine Kun (Japan 2K0411)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_SHOOT, 0,
 	NULL, GanbareRomInfo, GanbareRomName, NULL, NULL, NULL, NULL, GanbareInputInfo, GanbareDIPInfo,
 	GanbareInit, GanbareExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24265,7 +24265,7 @@ struct BurnDriver BurnDrvCpsStrider = {
 	"strider", NULL, NULL, NULL, "1989",
 	"Strider (USA, B-Board 89624B-2)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StriderRomInfo, StriderRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
 	StriderInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24275,7 +24275,7 @@ struct BurnDriver BurnDrvCpsStriderua = {
 	"striderua", "strider", NULL, NULL, "1989",
 	"Strider (USA, B-Board 89624B-3)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StrideruaRomInfo, StrideruaRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StrideruaDIPInfo,
 	StriderInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24285,7 +24285,7 @@ struct BurnDriver BurnDrvCpsStrideruc = {
 	"strideruc", "strider", NULL, NULL, "1989",
 	"Strider (USA, B-Board 90629B-3, buggy Street Fighter II conversion)\0", NULL, "bootleg (Capcom)", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE |BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE |BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StriderucRomInfo, StriderucRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StrideruaDIPInfo,
 	StriderInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24295,7 +24295,7 @@ struct BurnDriver BurnDrvCpsStriderjr = {
 	"striderjr", "strider", NULL, NULL, "1989",
 	"Strider Hiryu (Japan Resale Ver.)\0", NULL, "Capcom", "CPS1",
 	L"\u30B9\u30C8\u30E9\u30A4\u30C0\u30FC\u98DB\u7ADC\0Strider Hiryu (Japan Resale Ver.)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StriderjrRomInfo, StriderjrRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
 	StriderjrInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24305,7 +24305,7 @@ struct BurnDriver BurnDrvCpsStriderj = {
 	"striderj", "strider", NULL, NULL, "1989",
 	"Strider Hiryu (Japan)\0", NULL, "Capcom", "CPS1",
 	L"\u30B9\u30C8\u30E9\u30A4\u30C0\u30FC\u98DB\u7ADC\0Strider Hiryu (Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StriderjRomInfo, StriderjRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
 	StriderjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24315,7 +24315,7 @@ struct BurnDriver BurnDrvCpsStriderfix = {
 	"striderfix", "strider", NULL, NULL, "2022",
 	"Strider (USA, B-Board 89624B-2)(Graphic and music fixes, Hack)\0", NULL, "NeoInvader", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StriderfixRomInfo, StriderfixRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
 	StriderInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24415,7 +24415,7 @@ struct BurnDriver BurnDrvCpsWillow = {
 	"willow", NULL, NULL, NULL, "1989",
 	"Willow (World)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, WillowRomInfo, WillowRomName, NULL, NULL, NULL, NULL, WillowInputInfo, WillowDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24425,7 +24425,7 @@ struct BurnDriver BurnDrvCpsWillowu = {
 	"willowu", "willow", NULL, NULL, "1989",
 	"Willow (USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, WillowuRomInfo, WillowuRomName, NULL, NULL, NULL, NULL, WillowInputInfo, WillowDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24435,7 +24435,7 @@ struct BurnDriver BurnDrvCpsWillowuo = {
 	"willowuo", "willow", NULL, NULL, "1989",
 	"Willow (USA Old Ver.)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, WillowuoRomInfo, WillowuoRomName, NULL, NULL, NULL, NULL, WillowInputInfo, WillowDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -24445,7 +24445,7 @@ struct BurnDriver BurnDrvCpsWillowj = {
 	"willowj", "willow", NULL, NULL, "1989",
 	"Willow (Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, WillowjRomInfo, WillowjRomName, NULL, NULL, NULL, NULL, WillowInputInfo, WillowDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

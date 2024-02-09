@@ -1831,7 +1831,7 @@ struct BurnDriver BurnDrvBlasted = {
 	"blasted", NULL, NULL, NULL, "1988",
 	"Blasted\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, blastedRomInfo, blastedRomName, NULL, NULL, NULL, NULL, BlastedInputInfo, BlastedDIPInfo,
 	BlastedInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -1874,7 +1874,7 @@ struct BurnDriver BurnDrvIntlaser = {
 	"intlaser", "blasted", NULL, NULL, "1987",
 	"International Team Laser (prototype)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, intlaserRomInfo, intlaserRomName, NULL, NULL, NULL, NULL, IntlaserInputInfo, IntlaserDIPInfo,
 	BlastedInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3

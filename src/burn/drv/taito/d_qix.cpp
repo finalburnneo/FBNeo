@@ -1287,7 +1287,7 @@ struct BurnDriver BurnDrvQixa = {
 	"qixa", "qix", NULL, NULL, "1981",
 	"Qix (set 2, smaller roms)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_ACTION | GBF_PUZZLE, 0,
 	NULL, qixaRomInfo, qixaRomName, NULL, NULL, NULL, NULL, QixInputInfo, NULL,
 	FourWayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4

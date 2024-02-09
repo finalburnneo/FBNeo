@@ -20267,7 +20267,7 @@ struct BurnDriver BurnDrvNamenayo = {
 	"namenayo", NULL, NULL, NULL, "1982",
 	"Namennayo (Japan)\0", NULL, "Cat's", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_ACTION, 0,
 	NULL, namenayoRomInfo, namenayoRomName, NULL, NULL, NULL, NULL, NamenayoInputInfo, NamenayoDIPInfo,
 	NamenayoInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 256, 224, 4, 3

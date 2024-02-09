@@ -1042,7 +1042,7 @@ struct BurnDriver BurnDrvAlpha1v = {
 	"alpha1v", NULL, NULL, NULL, "1988",
 	"Alpha One (Vision Electronics)\0", NULL, "Vision Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, alpha1vRomInfo, alpha1vRomName, NULL, NULL, NULL, NULL, Alpha1vInputInfo, Alpha1vDIPInfo,
 	alpha1vInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x42c,
 	240, 256, 4, 3

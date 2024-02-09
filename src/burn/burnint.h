@@ -183,6 +183,8 @@ void CpuCheatRegister(INT32 type, cpu_core_config *config);
 cheat_core *GetCpuCheatRegister(INT32 nCPU);
 cpu_core_config *GetCpuCoreConfig(INT32 nCPU);
 
+void nes_init_cheat_functions(void (*func1)(char*), void (*func2)(char*)); // callback for d_nes
+
 // burn_memory.cpp
 void BurnInitMemoryManager();
 UINT8 *_BurnMalloc(INT32 size, char *file, INT32 line); // internal use only :)

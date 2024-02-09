@@ -11033,6 +11033,8 @@ static INT32 DrvDoReset()
 
 static INT32 NESInit()
 {
+	nes_init_cheat_functions(nes_add_cheat, nes_remove_cheat);
+
 	GenericTilesInit();
 
 	NES_CPU_RAM = (UINT8*)BurnMalloc(0x800);

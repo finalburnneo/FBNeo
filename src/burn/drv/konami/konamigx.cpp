@@ -121,8 +121,8 @@ void konamigx_mixer_exit()
 void konamigx_scan(INT32 nAction)
 {
 	if (nAction & ACB_MEMORY_RAM) {
-		ScanVar(gx_shdzbuf, 512 * 256 * 2, "gx shd z buf");
-		ScanVar(gx_objzbuf, 512 * 256 * 2, "gx obj z buf");
+//		ScanVar(gx_shdzbuf, 512 * 256 * 2, "gx shd z buf");    UNNECESSARY
+//		ScanVar(gx_objzbuf, 512 * 256 * 2, "gx obj z buf");    "" -dink
 		if (m_gx_objdma && gx_spriteram) {
 			ScanVar(gx_spriteram, 0x1000, "gx spriteram");
 		}
@@ -651,6 +651,11 @@ void konamigx_mixer(INT32 sub1 /*extra tilemap 1*/, INT32 sub1flags, INT32 sub2 
 
 		switch (m_gx_primode & 0xf)
 		{
+			case 0xf:
+				// viostorm bad shadow grid st.2 fireworks (right side of screen)
+				if (code == 0xe140 && shdpri[0x02] == 0x28) continue;
+			break;
+
 			// Dadandarn zcode suppression
 			case  1:
 				zcode = 0;

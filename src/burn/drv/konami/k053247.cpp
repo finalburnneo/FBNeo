@@ -1028,7 +1028,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 							if (highlight_enable) {
 								dst_ptr[ecx] = highlight_blend(dst_ptr[ecx]); 
 							} else {
-								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], highlight_enable); //shd_base[pix.as_rgb15()];
+								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], shadow_bank); //shd_base[pix.as_rgb15()];
 							}
 						}
 						while (++ecx);

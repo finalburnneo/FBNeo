@@ -861,6 +861,7 @@ static void __fastcall metamrph_main_write_word(UINT32 address, UINT16 data)
 			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 		return;
 	}
+//	bprintf(0, _T("ww  %x  %x\n"), address, data);
 }
 
 static void __fastcall metamrph_main_write_byte(UINT32 address, UINT8 data)
@@ -947,6 +948,8 @@ static void __fastcall metamrph_main_write_byte(UINT32 address, UINT8 data)
 			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 		return;
 	}
+//	if (address != 0x27c000)
+//		bprintf(0, _T("bw  %x  %x\n"), address, data);
 }
 
 static UINT16 __fastcall metamrph_main_read_word(UINT32 address)
@@ -1730,7 +1733,21 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
 
-static void metamrph_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
+static void metamrph_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
+{
+	if (layer == 1) {
+		if (*code >= 0x6270  && *code <= 0x627d) {
+			// for the window light, we have to hack the palette
+			konami_palette32[0x101] = 0xefefef;
+			konami_palette32[0x102] = 0xdfdfdf;
+		}
+		*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
+	} else {
+		*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
+	}
+}
+
+static void viostorm_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
 }
@@ -1746,17 +1763,21 @@ static void mystwarr_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *prior
 	*priority = c & 0x00f0;
 }
 
-static void metamrph_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
+static void metamrph_sprite_callback(INT32 *code, INT32 *color, INT32 *priority)
 {
 	INT32 c = *color;
 	INT32 attr = c;
 
+	//bprintf(0, _T("code/color/pri:  %x  %x  %x\n"), *code, *color, *priority);
+
 	c = (c & 0x1f) | sprite_colorbase;
 
-	if ((attr & 0x300) != 0x300)
+	if ((attr & 0x300) != 0x300) // && !(*code >= 0xfab0 && *code <= 0xfc00)) // not-good hackfix for intro
 	{
 		*color = c;
-		*priority = (attr & 0xe0) >> 2;
+		// metamorphic force: title screen & first boss w/psychedelic rings
+		// priority issues.  fixed by adding 5 to the sprite priority -dink feb 2024
+		*priority = ((attr & 0xe0) >> 2) + ((nGame == 2) ? 5 : 0);
 	}
 	else
 	{
@@ -2265,7 +2286,7 @@ static INT32 ViostormInit()
 	K055555Init();
 	K054338Init();
 
-	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x200000, metamrph_tile_callback);
+	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x200000, viostorm_tile_callback);
 	K056832SetGlobalOffsets(40, 16);
 	K056832SetLayerOffsets(0, -2+1, 0);
 	K056832SetLayerOffsets(1,  0+1, 0);
@@ -2533,7 +2554,7 @@ static INT32 GaiapolisInit()
 	K055555Init();
 	K054338Init();
 
-	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x400000, metamrph_tile_callback);
+	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x400000, viostorm_tile_callback);
 	K056832SetGlobalOffsets(32, 16);
 	K056832SetLayerOffsets(0, -2, 0);
 	K056832SetLayerOffsets(1,  0, 0);

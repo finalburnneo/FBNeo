@@ -32,6 +32,8 @@ static UINT8 *nDrvBank;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nCyclesExtra;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -430,7 +432,7 @@ static void bankswitch(INT32 data)
 	K052109RMRDLine = data & 0x40;
 }
 
-UINT8 mainevt_main_read(UINT16 address)
+static UINT8 mainevt_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -470,7 +472,7 @@ UINT8 mainevt_main_read(UINT16 address)
 	return 0;
 }
 
-void mainevt_main_write(UINT16 address, UINT8 data)
+static void mainevt_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -521,7 +523,7 @@ static void soundbankswitch(INT32 data)
 	memcpy (DrvSndROM1, DrvSndROM1 + bank_C, 0x20000);
 }
 
-void __fastcall mainevt_sound_write(UINT16 address, UINT8 data)
+static void __fastcall mainevt_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -555,7 +557,7 @@ void __fastcall mainevt_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall mainevt_sound_read(UINT16 address)
+static UINT8 __fastcall mainevt_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -637,6 +639,8 @@ static INT32 DrvDoReset()
 
 	KonamiICReset();
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -646,13 +650,13 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvHD6309ROM		= Next; Next += 0x020000;
+	DrvHD6309ROM	= Next; Next += 0x020000;
 	DrvZ80ROM		= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x040000;
-	DrvGfxROMExp0		= Next; Next += 0x080000;
+	DrvGfxROMExp0	= Next; Next += 0x080000;
 	DrvGfxROM1		= Next; Next += 0x100000;
-	DrvGfxROMExp1		= Next; Next += 0x200000;
+	DrvGfxROMExp1	= Next; Next += 0x200000;
 
 	DrvSndROM0		= Next; Next += 0x080000;
 	DrvSndROM1		= Next; Next += 0x0a0000;
@@ -661,7 +665,7 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvHD6309RAM		= Next; Next += 0x002000;
+	DrvHD6309RAM	= Next; Next += 0x002000;
 	DrvZ80RAM		= Next; Next += 0x000400;
 
 	soundlatch		= Next; Next += 0x000001;
@@ -681,12 +685,7 @@ static INT32 DrvInit(INT32 type)
 {
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	nGame = type;
 
@@ -745,8 +744,9 @@ static INT32 DrvInit(INT32 type)
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(3579545);
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM1);
 	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
@@ -770,7 +770,7 @@ static INT32 DrvExit()
 	UPD7759Exit();
 	BurnYM2151Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -833,10 +833,9 @@ static INT32 DrvFrame()
 		if ((DrvInputs[4] & 0x03) == 0) DrvInputs[4] |= 0x03;
 	}
 
-	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 12000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	ZetOpen(0);
 	HD6309Open(0);
@@ -847,7 +846,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		CPU_RUN(0, HD6309);
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 
 		if (i == nCyclesSoundIrqTrigger-1) {
 			nCyclesSoundIrqTrigger+=nCyclesSoundIrq;
@@ -855,14 +854,6 @@ static INT32 DrvFrame()
 				if (nGame) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				else ZetNmi();
 			}
-		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
 		}
 	}
 
@@ -872,18 +863,16 @@ static INT32 DrvFrame()
 		if (K052109_irq_enabled) HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 	}
 
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-		}
-		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
-	}
-
 	HD6309Close();
 	ZetClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
+		UPD7759Render(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -916,6 +905,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		K007232Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {

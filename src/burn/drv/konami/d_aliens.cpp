@@ -30,6 +30,8 @@ static UINT8 *soundlatch;
 static UINT8 *nDrvRamBank;
 static UINT8 *nDrvKonamiBank;
 
+static INT32 nCyclesExtra;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -38,29 +40,29 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo AliensInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Aliens)
@@ -145,7 +147,7 @@ static void set_ram_bank(INT32 data)
 	}
 }
 
-void aliens_main_write(UINT16 address, UINT8 data)
+static void aliens_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -167,7 +169,7 @@ void aliens_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 aliens_main_read(UINT16 address)
+static UINT8 aliens_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -198,7 +200,7 @@ UINT8 aliens_main_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall aliens_sound_write(UINT16 address, UINT8 data)
+static void __fastcall aliens_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff0) == 0xe000) {
 		K007232WriteReg(0, address & 0x0f, data);
@@ -217,7 +219,7 @@ void __fastcall aliens_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall aliens_sound_read(UINT16 address)
+static UINT8 __fastcall aliens_sound_read(UINT16 address)
 {
 	if ((address & 0xfff0) == 0xe000) {
 		return K007232ReadReg(0, address & 0x0f);
@@ -306,6 +308,8 @@ static INT32 DrvDoReset()
 
 	KonamiICReset();
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -320,8 +324,8 @@ static INT32 MemIndex()
 
 	DrvGfxROM0		= Next; Next += 0x200000;
 	DrvGfxROM1		= Next; Next += 0x200000;
-	DrvGfxROMExp0		= Next; Next += 0x400000;
-	DrvGfxROMExp1		= Next; Next += 0x400000;
+	DrvGfxROMExp0	= Next; Next += 0x400000;
+	DrvGfxROMExp1	= Next; Next += 0x400000;
 
 	DrvSndROM		= Next; Next += 0x040000;
 
@@ -338,7 +342,7 @@ static INT32 MemIndex()
 	soundlatch		= Next; Next += 0x000001;
 
 	nDrvRamBank		= Next; Next += 0x000001;
-	nDrvKonamiBank		= Next; Next += 0x000001;
+	nDrvKonamiBank	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -350,12 +354,7 @@ static INT32 DrvInit()
 {
 	GenericTilesInit();
 
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(DrvKonROM  + 0x030000,  0, 1)) return 1;
@@ -410,9 +409,10 @@ static INT32 DrvInit()
 	K051960SetCallback(K051960Callback);
 	K051960SetSpriteOffset(8, 0);
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetPortHandler(&DrvYM2151WritePort);
 	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(3579545);
 
 	K007232Init(0, 3579545, DrvSndROM, 0x40000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
@@ -435,7 +435,7 @@ static INT32 DrvExit()
 	K007232Exit();
 	BurnYM2151Exit();
 
-	BurnFree (AllMem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -485,46 +485,30 @@ static INT32 DrvFrame()
 	konamiNewFrame();
 	ZetNewFrame();
 
-	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 6000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
 	ZetOpen(0);
 	konamiOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-
-		nCyclesDone[0] += konamiRun(nSegment - nCyclesDone[0]);
-
-		nSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		CPU_RUN(0, konami);
+		CPU_RUN_TIMER(1);
 	}
 
 	if (K051960_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		if (nSegmentLength) {
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
-		}
-	}
-
 	konamiClose();
 	ZetClose();
+
+	nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -533,7 +517,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -541,7 +525,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029704;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -556,6 +540,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		K007232Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -599,7 +585,7 @@ struct BurnDriver BurnDrvAliens = {
 	"aliens", NULL, NULL, NULL, "1990",
 	"Aliens (World set 1)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliensRomInfo, aliensRomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -636,7 +622,7 @@ struct BurnDriver BurnDrvAliens2 = {
 	"aliens2", "aliens", NULL, NULL, "1990",
 	"Aliens (World set 2)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliens2RomInfo, aliens2RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -673,7 +659,7 @@ struct BurnDriver BurnDrvAliens3 = {
 	"aliens3", "aliens", NULL, NULL, "1990",
 	"Aliens (World set 3)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliens3RomInfo, aliens3RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -710,7 +696,7 @@ struct BurnDriver BurnDrvAliens4 = {
 	"aliens4", "aliens", NULL, NULL, "1990",
 	"Aliens (World set 4)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliens4RomInfo, aliens4RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -747,7 +733,7 @@ struct BurnDriver BurnDrvAliensu = {
 	"aliensu", "aliens", NULL, NULL, "1990",
 	"Aliens (US, set 1)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliensuRomInfo, aliensuRomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -784,7 +770,7 @@ struct BurnDriver BurnDrvAliensu2 = {
 	"aliensu2", "aliens", NULL, NULL, "1990",
 	"Aliens (US, set 2)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliensu2RomInfo, aliensu2RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -821,7 +807,7 @@ struct BurnDriver BurnDrvAliensj = {
 	"aliensj", "aliens", NULL, NULL, "1990",
 	"Aliens (Japan set 1)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliensjRomInfo, aliensjRomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -858,7 +844,7 @@ struct BurnDriver BurnDrvAliensj2 = {
 	"aliensj2", "aliens", NULL, NULL, "1990",
 	"Aliens (Japan set 2)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliensj2RomInfo, aliensj2RomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3
@@ -895,7 +881,7 @@ struct BurnDriver BurnDrvAliensa = {
 	"aliensa", "aliens", NULL, NULL, "1990",
 	"Aliens (Asia)\0", NULL, "Konami", "GX875",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, aliensaRomInfo, aliensaRomName, NULL, NULL, NULL, NULL, AliensInputInfo, AliensDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	288, 224, 4, 3

@@ -1446,7 +1446,7 @@ struct BurnDriver BurnDrvStinger = {
 	"stinger", NULL, NULL, "stinger", "1983",
 	"Stinger\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stingerRomInfo, stingerRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, StingerDIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1483,7 +1483,7 @@ struct BurnDriver BurnDrvStinger2 = {
 	"stinger2", "stinger", NULL, "stinger", "1983",
 	"Stinger (prototype?)\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, stinger2RomInfo, stinger2RomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1522,7 +1522,7 @@ struct BurnDriver BurnDrvFinger = {
 	"finger", "stinger", NULL, "stinger", "1983",
 	"Finger (bootleg of Stinger)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, fingerRomInfo, fingerRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1610,7 +1610,7 @@ struct BurnDriver BurnDrvScion = {
 	"scion", NULL, NULL, "stinger", "1984",
 	"Scion\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, scionRomInfo, scionRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
 	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 240, 224, 4, 3
@@ -1647,7 +1647,7 @@ struct BurnDriver BurnDrvScionc = {
 	"scionc", "scion", NULL, "stinger", "1984",
 	"Scion (Cinematronics)\0", NULL, "Seibu Denshi (Cinematronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, scioncRomInfo, scioncRomName, NULL, NULL, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
 	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 240, 224, 4, 3

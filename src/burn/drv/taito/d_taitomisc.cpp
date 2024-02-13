@@ -6240,7 +6240,7 @@ struct BurnDriver BurnDrvRastan = {
 	"rastan", NULL, NULL, NULL, "1987",
 	"Rastan (World Rev 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastanRomInfo, RastanRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastanDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6250,7 +6250,7 @@ struct BurnDriver BurnDrvRastana = {
 	"rastana", "rastan", NULL, NULL, "1987",
 	"Rastan (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastanaRomInfo, RastanaRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastanDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6260,7 +6260,7 @@ struct BurnDriver BurnDrvRastanb = {
 	"rastanb", "rastan", NULL, NULL, "1987",
 	"Rastan (World, earlier code base)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastanbRomInfo, RastanbRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastanDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6270,7 +6270,7 @@ struct BurnDriver BurnDrvRastanu = {
 	"rastanu", "rastan", NULL, NULL, "1987",
 	"Rastan (US Rev 1)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastanuRomInfo, RastanuRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6280,7 +6280,7 @@ struct BurnDriver BurnDrvRastanua = {
 	"rastanua", "rastan", NULL, NULL, "1987",
 	"Rastan (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastanuaRomInfo, RastanuaRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6290,7 +6290,7 @@ struct BurnDriver BurnDrvRastanub = {
 	"rastanub", "rastan", NULL, NULL, "1987",
 	"Rastan (US, earlier code base)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastanubRomInfo, RastanubRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6300,7 +6300,7 @@ struct BurnDriver BurnDrvRastsaga = {
 	"rastsaga", "rastan", NULL, NULL, "1987",
 	"Rastan Saga (Japan Rev 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastsagaRomInfo, RastsagaRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6310,7 +6310,7 @@ struct BurnDriver BurnDrvRastsagaa = {
 	"rastsagaa", "rastan", NULL, NULL, "1987",
 	"Rastan Saga (Japan Rev 1, earlier code base)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastsagaaRomInfo, RastsagaaRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6320,7 +6320,7 @@ struct BurnDriver BurnDrvRastsagaabl = {
 	"rastsagaabl", "rastan", NULL, NULL, "1987",
 	"Rastan Saga (bootleg, Japan Rev 1, earlier code base)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastsagaablRomInfo, RastsagaablRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
@@ -6330,7 +6330,7 @@ struct BurnDriver BurnDrvRastsagab = {
 	"rastsagab", "rastan", NULL, NULL, "1987",
 	"Rastan Saga (Japan, earlier code base)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, RastsagabRomInfo, RastsagabRomName, NULL, NULL, NULL, NULL, RastanInputInfo, RastsagaDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, RastanDraw, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3

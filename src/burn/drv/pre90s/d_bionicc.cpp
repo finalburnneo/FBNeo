@@ -10,7 +10,7 @@
 // cocktail flipping disabled, so 2 players can play via netgame (kaillera, etc)
 #define COCKTAIL_FLIPPING 0
 
-static UINT8 *Mem;
+static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
@@ -44,6 +44,8 @@ static INT32 bg_scroll_y;
 static INT32 fg_enable;
 static INT32 bg_enable;
 static INT32 flipscreen;
+
+static INT32 nCyclesExtra[3];
 
 static UINT8 DrvJoy1[16];
 static UINT16 DrvInputs[1];
@@ -424,7 +426,7 @@ static tilemap_callback( text )
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	Drv68KROM	= Next; Next += 0x0040000;
 	DrvZ80ROM	= Next; Next += 0x0008000;
@@ -486,6 +488,8 @@ static INT32 DrvDoReset()
 	mcu_p1 = 0;
 	mcu_p3 = 0;
 
+	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = 0;
+
 	return 0;
 }
 
@@ -526,12 +530,7 @@ static void DrvGfxDecode()
 
 static INT32 CommonDrvInit(INT32 game)
 {
-	Mem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		INT32 k = 0;
@@ -617,8 +616,9 @@ static INT32 CommonDrvInit(INT32 game)
 	mcs51_set_write_handler(mcu_write_port);
 	mcs51_set_read_handler(mcu_read_port);
 
-	BurnYM2151Init(3579545);
+	BurnYM2151InitBuffered(3579545, 1, NULL, 0);
 	BurnYM2151SetAllRoutes(0.25, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttachZet(3579545);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, background_map_callback,  8,  8, 64, 64);
@@ -655,7 +655,7 @@ static INT32 DrvExit()
 	ZetExit();
 	mcs51_exit();
 
-	BurnFree (Mem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -736,6 +736,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	ZetNewFrame();
+
 	{
 		DrvInputs[0] = 0xffff;
 
@@ -746,8 +748,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256*4;
 	INT32 nCyclesTotal[3] = { 12000000 / 60, 3579545 / 60, 6000000 / 12 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, nCyclesExtra[2] }; // [1] is a timer
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -760,26 +761,21 @@ static INT32 DrvFrame()
 			if (i == 240*4) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 
-		CPU_RUN(1, Zet);
+		CPU_RUN_TIMER(1);
 
 		CPU_RUN(2, mcs51);
-
-		if (pBurnSoundOut && (i&0xf)==0xf) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 0x10);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		BurnYM2151Render(pSoundBuf, nSegmentLength);
+		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
 	SekClose();
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	// [1] = timer, not needed
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -823,6 +819,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(fg_enable);
 		SCAN_VAR(bg_enable);
 		SCAN_VAR(flipscreen);
+
+		SCAN_VAR(nCyclesExtra);
 	}
 
 	return 0;
@@ -874,7 +872,7 @@ struct BurnDriver BurnDrvbionicc = {
 	"bionicc", NULL, NULL, NULL, "1987",
 	"Bionic Commando (Euro)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, bioniccRomInfo, bioniccRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -927,7 +925,7 @@ struct BurnDriver BurnDrvbionicc1 = {
 	"bionicc1", "bionicc", NULL, NULL, "1987",
 	"Bionic Commando (US set 1)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, bionicc1RomInfo, bionicc1RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -980,7 +978,7 @@ struct BurnDriver BurnDrvbionicc2 = {
 	"bionicc2", "bionicc", NULL, NULL, "1987",
 	"Bionic Commando (US set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, bionicc2RomInfo, bionicc2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1033,7 +1031,7 @@ struct BurnDriver BurnDrvtopsecrt = {
 	"topsecrt", "bionicc", NULL, NULL, "1987",
 	"Top Secret (Japan, old revision)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, topsecrtRomInfo, topsecrtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1086,7 +1084,7 @@ struct BurnDriver BurnDrvtopsecrt2 = {
 	"topsecrt2", "bionicc", NULL, NULL, "1987",
 	"Top Secret (Japan, revision B)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, topsecrt2RomInfo, topsecrt2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1134,7 +1132,7 @@ struct BurnDriver BurnDrvbioniccbl = {
 	"bioniccbl", "bionicc", NULL, NULL, "1987",
 	"Bionic Commandos (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, bioniccblRomInfo, bioniccblRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -1188,7 +1186,7 @@ struct BurnDriver BurnDrvbioniccbl2 = {
 	"bioniccbl2", "bionicc", NULL, NULL, "1987",
 	"Bionic Commandos (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, bioniccbl2RomInfo, bioniccbl2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

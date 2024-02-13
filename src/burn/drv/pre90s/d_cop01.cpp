@@ -1084,7 +1084,7 @@ struct BurnDriver BurnDrvMightguy = {
 	"mightguy", NULL, NULL, NULL, "1986",
 	"Mighty Guy\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, mightguyRomInfo, mightguyRomName, NULL, NULL, NULL, NULL, Cop01InputInfo, MightguyDIPInfo,
 	MightguyInit, DrvExit, MightguyFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 256, 3, 4

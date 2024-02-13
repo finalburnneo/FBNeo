@@ -1586,7 +1586,7 @@ struct BurnDriver BurnDrvDevilw = {
 	"devilw", NULL, NULL, NULL, "1987",
 	"Devil World\0", NULL, "Konami", "GX687",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, devilwRomInfo, devilwRomName, NULL, NULL, NULL, NULL, DevilwInputInfo, DevilwDIPInfo,
 	devilwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
@@ -1630,7 +1630,7 @@ struct BurnDriver BurnDrvMajuu = {
 	"majuu", "devilw", NULL, NULL, "1987",
 	"Majuu no Ohkoku\0", NULL, "Konami", "GX687",
 	L"\u9B54\u7363\u306E\u738B\u56FD\0Majuu no Ohkoku\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, majuuRomInfo, majuuRomName, NULL, NULL, NULL, NULL, DevilwInputInfo, DevilwDIPInfo,
 	devilwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
@@ -1674,7 +1674,7 @@ struct BurnDriver BurnDrvDarkadv = {
 	"darkadv", "devilw", NULL, NULL, "1987",
 	"Dark Adventure\0", NULL, "Konami", "GX687",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 3, HARDWARE_PREFIX_KONAMI, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, darkadvRomInfo, darkadvRomName, NULL, NULL, NULL, NULL, DarkadvInputInfo, DarkadvDIPInfo,
 	devilwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3

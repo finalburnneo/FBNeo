@@ -2012,7 +2012,7 @@ struct BurnDriver BurnDrvNinjaw = {
 	"ninjaw", NULL, NULL, NULL, "1987",
 	"The Ninja Warriors (World, later version)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, NinjawRomInfo, NinjawRomName, NULL, NULL, NULL, NULL, Darius2InputInfo, NinjawDIPInfo,
 	NinjawInit, Darius2Exit, Darius2Frame, Darius2Draw, Darius2Scan,
 	NULL, 0x3000, 864, 224, 12, 3
@@ -2022,7 +2022,7 @@ struct BurnDriver BurnDrvNinjaw1 = {
 	"ninjaw1", "ninjaw", NULL, NULL, "1987",
 	"The Ninja Warriors (World, earlier version)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, Ninjaw1RomInfo, Ninjaw1RomName, NULL, NULL, NULL, NULL, Darius2InputInfo, NinjawDIPInfo,
 	NinjawInit, Darius2Exit, Darius2Frame, Darius2Draw, Darius2Scan,
 	NULL, 0x3000, 864, 224, 12, 3
@@ -2032,7 +2032,7 @@ struct BurnDriver BurnDrvNinjawj = {
 	"ninjawj", "ninjaw", NULL, NULL, "1987",
 	"The Ninja Warriors (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, NinjawjRomInfo, NinjawjRomName, NULL, NULL, NULL, NULL, Darius2InputInfo, NinjawjDIPInfo,
 	NinjawInit, Darius2Exit, Darius2Frame, Darius2Draw, Darius2Scan,
 	NULL, 0x3000, 864, 224, 12, 3
@@ -2042,7 +2042,7 @@ struct BurnDriver BurnDrvNinjawu = {
 	"ninjawu", "ninjaw", NULL, NULL, "1987",
 	"The Ninja Warriors (US, Romstar license)\0", NULL, "Taito Corporation America (licensed to Romstar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, NinjawuRomInfo, NinjawuRomName, NULL, NULL, NULL, NULL, Darius2InputInfo, NinjawjDIPInfo,
 	NinjawInit, Darius2Exit, Darius2Frame, Darius2Draw, Darius2Scan,
 	NULL, 0x3000, 864, 224, 12, 3

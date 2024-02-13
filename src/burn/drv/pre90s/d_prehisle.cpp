@@ -7,30 +7,33 @@
 #include "burn_ym3812.h"
 #include "upd7759.h"
 
-static UINT8 *Mem				= NULL;
-static UINT8 *MemEnd			= NULL;
-static UINT8 *RamStart			= NULL;
-static UINT8 *RamEnd			= NULL;
-static UINT8 *Drv68KROM			= NULL;
-static UINT8 *DrvZ80ROM			= NULL;
-static UINT8 *DrvTileMapROM		= NULL;
-static UINT8 *DrvSndROM 		= NULL;
-static UINT8 *Drv68KRAM         = NULL;
-static UINT8 *DrvVidRAM0		= NULL;
-static UINT8 *DrvSprRAM			= NULL;
-static UINT8 *DrvVidRAM1		= NULL;
-static UINT8 *DrvPalRAM			= NULL;
-static UINT8 *DrvZ80RAM			= NULL;
-static UINT32 *DrvPalette		= NULL;
-static UINT8 *DrvTextROM		= NULL;
-static UINT8 *DrvSprROM			= NULL;
-static UINT8 *DrvFgROM			= NULL;
-static UINT8 *DrvBgROM			= NULL;
+static UINT8 *AllMem;
+static UINT8 *MemEnd;
+static UINT8 *RamStart;
+static UINT8 *RamEnd;
+static UINT8 *Drv68KROM;
+static UINT8 *DrvZ80ROM;
+static UINT8 *DrvTileMapROM;
+static UINT8 *DrvSndROM;
+static UINT8 *Drv68KRAM;
+static UINT8 *DrvVidRAM0;
+static UINT8 *DrvSprRAM;
+static UINT8 *DrvVidRAM1;
+static UINT8 *DrvPalRAM;
+static UINT8 *DrvZ80RAM;
+static UINT32 *DrvPalette;
+static UINT8 *DrvTextROM;
+static UINT8 *DrvSprROM;
+static UINT8 *DrvFgROM;
+static UINT8 *DrvBgROM;
 
 static INT32 ControlsInvert;
 static UINT16 ScrollData[4];
 static INT32 FlipScreen;
 static INT32 SoundLatch;
+static INT32 vblank;
+
+static INT32 nExtraCycles;
 
 static UINT8 DrvInputPort0[8];
 static UINT8 DrvInputPort1[8];
@@ -40,11 +43,8 @@ static UINT8 DrvInput[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo PrehisleInputList[] = {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
@@ -53,6 +53,8 @@ static struct BurnInputInfo PrehisleInputList[] = {
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
@@ -126,20 +128,15 @@ static struct BurnDIPInfo PrehisleDIPList[]=
 
 STDDIPINFO(Prehisle)
 
-inline UINT16 PrehisleVBlankRegister()
+static UINT8 __fastcall PrehisleReadByte(UINT32 address)
 {
-	INT32 nCycles = SekTotalCycles();
+	bprintf(0, _T("rb %x\n"), address);
+	return 0;
+}
 
-	// 262 == approximate number of scanlines on an arcade monitor
-	if (nCycles >= (262 - 16) * ((9000000 / 60) / 262)) {
-		return 0x80;
-	} else {
-		if (nCycles < (262 - 210 - 16) * ((9000000 / 60) / 262)) {
-			return 0x80;
-		}
-	}
-
-	return 0x00;
+static void __fastcall PrehisleWriteByte(UINT32 address, UINT8 data)
+{
+	bprintf(0, _T("wb %x  %x\n"), address, data);
 }
 
 static UINT16 __fastcall PrehisleReadWord(UINT32 address)
@@ -159,7 +156,7 @@ static UINT16 __fastcall PrehisleReadWord(UINT32 address)
 			return DrvDip[0];
 
 		case 0x0e0044:
-			return DrvDip[1] + PrehisleVBlankRegister();
+			return (DrvDip[1] & ~0x80) | ((vblank) ? 0x00 : 0x80);
 	}
 
 	return 0;
@@ -186,7 +183,7 @@ static void __fastcall PrehisleWriteWord(UINT32 address, UINT16 data)
 		return;
 
 		case 0x0f0046:
-			ControlsInvert = data ? 0xff : 0x00;
+			ControlsInvert = (data) ? 0xff : 0x00;
 		return;
 
 		case 0x0f0050:
@@ -295,6 +292,9 @@ static INT32 DrvDoReset()
 	ControlsInvert = 0;
 	SoundLatch = 0;
 	FlipScreen = 0;
+	vblank = 1;
+
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -303,7 +303,7 @@ static INT32 DrvDoReset()
 
 static INT32 MemIndex()
 {
-	UINT8 *Next; Next = Mem;
+	UINT8 *Next; Next = AllMem;
 
 	Drv68KROM			= Next; Next += 0x40000;
 	DrvZ80ROM			= Next; Next += 0x10000;
@@ -364,12 +364,7 @@ static void DrvGfxDecode()
 
 static INT32 PrehisleInit()
 {
-	Mem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+	BurnAllocMemIndex();
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x00001,  0, 2)) return 1;
@@ -464,6 +459,8 @@ static INT32 PrehisleInit()
 	SekMapMemory(DrvPalRAM, 	0x0d0000, 0x0d07ff, MAP_RAM);
 	SekSetReadWordHandler(0, 	PrehisleReadWord);
 	SekSetWriteWordHandler(0, 	PrehisleWriteWord);
+	SekSetReadByteHandler(0, 	PrehisleReadByte);
+	SekSetWriteByteHandler(0, 	PrehisleWriteByte);
 	SekClose();
 
 	ZetInit(0);
@@ -478,7 +475,7 @@ static INT32 PrehisleInit()
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
-	
+
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
 	UPD7759SetSyncCallback(0, ZetTotalCycles, 4000000);
@@ -509,7 +506,7 @@ static INT32 DrvExit()
 
 	GenericTilesExit();
 
-	BurnFree(Mem);
+	BurnFreeMemIndex();
 
 	return 0;
 }
@@ -611,9 +608,9 @@ static INT32 DrvFrame()
 		DrvClearOpposites(&DrvInput[1]);
 	}
 
-	INT32 nInterleave = 1;
+	INT32 nInterleave = 264;
 	INT32 nCyclesTotal[2] = { 9000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -621,13 +618,20 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Sek);
 
-		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) {
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			vblank = 1;
+		}
+
+		if (i == 40) vblank = 0;
 
 		CPU_RUN_TIMER(1);
 	}
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -668,6 +672,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(ScrollData);
 		SCAN_VAR(SoundLatch);
 		SCAN_VAR(FlipScreen);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;

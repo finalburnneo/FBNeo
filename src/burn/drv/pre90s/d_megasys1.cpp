@@ -3130,6 +3130,12 @@ static void System1A_draw_sprites()
 
 static void System1Z_draw_sprites()
 {
+	if (sprite_flag & 0x10) {
+		sprite_clear_trails(sprite_flag & 0x0f);
+	} else {
+		memset(DrvSpriteBMP, 0x0f, 256*256*sizeof(UINT16));
+	}
+
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
 
 	for (INT32 sprite = 0x80-1; sprite >= 0; sprite--)
@@ -3151,7 +3157,7 @@ static void System1Z_draw_sprites()
 
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x80;
-		INT32 pri  = (attr & 0x08) ? 0x0c : 0x0a;
+		INT32 pri  = (attr & 0x08) >> 3;
 
 		if (screen_flag & 1)
 		{
@@ -3323,8 +3329,8 @@ static INT32 DrvDraw()
 			System1Z_draw_sprites();
 		} else {
 			System1A_draw_sprites();
-			sprite_mixer();
 		}
+		sprite_mixer();
 	}
 
 	BurnTransferCopy(DrvPalette);

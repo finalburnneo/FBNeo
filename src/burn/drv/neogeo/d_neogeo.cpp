@@ -19732,7 +19732,7 @@ struct BurnDriver BurnDrvmslug5unity = {
 // Metal Slug 5 (Fully Decrypted)
 
 static struct BurnRomInfo mslug5fdRomDesc[] = {
-	{ "268-p1d.p1",		0x100000, 0xca50afdf, 1 | BRF_ESS | BRF_PRG },
+	{ "268-p1d.p1",		0x100000, 0x24ae2e4d, 1 | BRF_ESS | BRF_PRG },
 	{ "268-p2d.sp2",	0x400000, 0x768ee64a, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG5_DECRYPTED_COMPONENT

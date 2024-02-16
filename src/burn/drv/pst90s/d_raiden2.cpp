@@ -5612,3 +5612,354 @@ struct BurnDriver BurnDrvZerotm2k = {
 	Zerotm2kInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
+
+
+#define ZEROTEAM_COMPONENTS																\
+	{ "copx-d2.u0313.6n",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT },	\
+	{ "seibu__5.u1110.5b",				0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS },	\
+	{ "seibu__7.u072.5s",				0x010000, 0x9f6aa0f0, 4 | BRF_GRA },			\
+	{ "seibu__8.u077.5r",				0x010000, 0x68f7dddc, 4 | BRF_GRA },			\
+	{ "musha_back-1.u075.4s",			0x100000, 0x8b7f9219, 5 | BRF_GRA },			\
+	{ "musha_back-2.u0714.2s",			0x080000, 0xce61c952, 5 | BRF_GRA },			\
+	{ "musha_obj-1.u0811.6f",			0x200000, 0x45be8029, 6 | BRF_GRA },			\
+	{ "musha_obj-2.u082.5f",			0x200000, 0xcb61c19d, 6 | BRF_GRA },			\
+	{ "seibu__6.u105.4a",				0x040000, 0x48be32b1, 7 | BRF_SND },			\
+	{ "v3c001.pal.u0310",				0x000288, 0x00000000, 0 | BRF_NODUMP },			\
+	{ "v3c002.tibpal16l8-25.u0322",		0x000288, 0x00000000, 0 | BRF_NODUMP },			\
+	{ "v3c003.ami18cv8p-15.u0619",		0x000288, 0x00000000, 0 | BRF_NODUMP },			\
+	{ "v3c004x.ami18cv8pc-25.u0310",	0x000288, 0x00000000, 0 | BRF_NODUMP },
+
+// Zero Team USA (Incubus, Hack)
+// Modified by YanYan
+// GOTVG 20240114
+
+static struct BurnRomInfo zteammmRomDesc[] = {
+	{ "ztmm__1.u024.5k",	0x040000, 0x0a3cef0d, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztmm__3.u023.6k",	0x040000, 0x7f752b91, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztmm__2.u025.6l",	0x040000, 0x89a18871, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztmm__4.u026.5l",	0x040000, 0xc0c8eefb, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteammm)
+STD_ROM_FN(zteammm)
+
+struct BurnDriver BurnDrvZteammm = {
+	"zteammm", "zeroteam", NULL, NULL, "2024",
+	"Zero Team USA (Incubus, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteammmRomInfo, zteammmRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (Nightmare, Hack)
+// GOTVG 20181022
+
+static struct BurnRomInfo zteamemRomDesc[] = {
+	{ "ztem__1.u024.5k",	0x040000, 0xc1c66888, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztem__3.u023.6k",	0x040000, 0xf5c02ca4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztem__2.u025.6l",	0x040000, 0x8ff58607, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztem__4.u026.5l",	0x040000, 0x58d7c48e, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamem)
+STD_ROM_FN(zteamem)
+
+struct BurnDriver BurnDrvZteamem = {
+	"zteamem", "zeroteam", NULL, NULL, "2018",
+	"Zero Team USA (Nightmare, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamemRomInfo, zteamemRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (Warriors, Hack)
+// GOTVG 20180920
+
+static struct BurnRomInfo zteamdwRomDesc[] = {
+	{ "ztdw__1.u024.5k",	0x040000, 0xb47b73b7, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztdw__3.u023.6k",	0x040000, 0x81979a9b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztdw__2.u025.6l",	0x040000, 0x7513250c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztdw__4.u026.5l",	0x040000, 0x10341ede, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamdw)
+STD_ROM_FN(zteamdw)
+
+struct BurnDriver BurnDrvZteamdw = {
+	"zteamdw", "zeroteam", NULL, NULL, "2018",
+	"Zero Team USA (Warriors, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamdwRomInfo, zteamdwRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (Providence, Hack)
+// Modified by YouTan
+// GOTVG 20240125
+
+static struct BurnRomInfo zteamdrRomDesc[] = {
+	{ "ztdr__1.u024.5k",	0x040000, 0xb2745c94, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztdr__3.u023.6k",	0x040000, 0x3a69d56e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztdr__2.u025.6l",	0x040000, 0xbc42adf1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztdr__4.u026.5l",	0x040000, 0x0d774a72, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamdr)
+STD_ROM_FN(zteamdr)
+
+struct BurnDriver BurnDrvZteamdr = {
+	"zteamdr", "zeroteam", NULL, NULL, "2024",
+	"Zero Team USA (Providence, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamdrRomInfo, zteamdrRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (Question Mark, Hack)
+// Modified by iwhati
+// GOTVG 20220511
+
+static struct BurnRomInfo zteamwhRomDesc[] = {
+	{ "ztwh__1.u024.5k",	0x040000, 0x854149c1, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztwh__3.u023.6k",	0x040000, 0x0a8f8d95, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztwh__2.u025.6l",	0x040000, 0xd29c2966, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztwh__4.u026.5l",	0x040000, 0xeb3c3985, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamwh)
+STD_ROM_FN(zteamwh)
+
+struct BurnDriver BurnDrvZteamwh = {
+	"zteamwh", "zeroteam", NULL, NULL, "2022",
+	"Zero Team USA (Question Mark, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamwhRomInfo, zteamwhRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (Infinite Cannon, Hack)
+// Modified by YanYan
+// GOTVG 20220220
+
+static struct BurnRomInfo zteamwxpRomDesc[] = {
+	{ "ztwxp__1.u024.5k",	0x040000, 0xaf84c07b, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztwxp__3.u023.6k",	0x040000, 0x89642d55, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztwxp__2.u025.6l",	0x040000, 0x29214880, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztwxp__4.u026.5l",	0x040000, 0x62a6acad, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamwxp)
+STD_ROM_FN(zteamwxp)
+
+struct BurnDriver BurnDrvZteamwxp = {
+	"zteamwxp", "zeroteam", NULL, NULL, "2022",
+	"Zero Team USA (Infinite Cannon, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamwxpRomInfo, zteamwxpRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (Devil, Hack)
+// Modified by YanYan
+// GOTVG 20231118
+
+static struct BurnRomInfo zteamymRomDesc[] = {
+	{ "ztym__1.u024.5k",	0x040000, 0xbcf0c74f, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztym__3.u023.6k",	0x040000, 0x0e97523a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztym__2.u025.6l",	0x040000, 0x01c5f0f4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztym__4.u026.5l",	0x040000, 0xd5a90262, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamym)
+STD_ROM_FN(zteamym)
+
+struct BurnDriver BurnDrvZteamym = {
+	"zteamym", "zeroteam", NULL, NULL, "2023",
+	"Zero Team USA (Devil, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamymRomInfo, zteamymRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (God, Hack)
+// Modified by YanYan
+// GOTVG 20240214
+
+static struct BurnRomInfo zteamysRomDesc[] = {
+	{ "ztys__1.u024.5k",	0x040000, 0xd795a957, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztys__3.u023.6k",	0x040000, 0xfffa1699, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztys__2.u025.6l",	0x040000, 0x046a4d7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztys__4.u026.5l",	0x040000, 0x24beeac9, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamys)
+STD_ROM_FN(zteamys)
+
+struct BurnDriver BurnDrvZteamys = {
+	"zteamys", "zeroteam", NULL, NULL, "2024",
+	"Zero Team USA (God, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamysRomInfo, zteamysRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (God of War, Hack)
+// Modified by DouYan
+// GOTVG 20210611
+
+static struct BurnRomInfo zteamzsRomDesc[] = {
+	{ "ztzs__1.u024.5k",	0x040000, 0xc1308a39, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztzs__3.u023.6k",	0x040000, 0xa2854e6c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztzs__2.u025.6l",	0x040000, 0x0985babe, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztzs__4.u026.5l",	0x040000, 0x34afb3ba, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteamzs)
+STD_ROM_FN(zteamzs)
+
+struct BurnDriver BurnDrvZteamzs = {
+	"zteamzs", "zeroteam", NULL, NULL, "2021",
+	"Zero Team USA (God of War, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamzsRomInfo, zteamzsRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (1v4, Hack)
+// GOTVG 20180220
+
+static struct BurnRomInfo zteam1v4RomDesc[] = {
+	{ "zt1v4__1.u024.5k",	0x040000, 0xc2f5bba6, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "zt1v4__3.u023.6k",	0x040000, 0xaa278057, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "seibu__2.u025.6l",	0x040000, 0x54f3d359, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "zt1v4__4.u026.5l",	0x040000, 0xae82d427, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteam1v4)
+STD_ROM_FN(zteam1v4)
+
+struct BurnDriver BurnDrvZteam1v4 = {
+	"zteam1v4", "zeroteam", NULL, NULL, "2018",
+	"Zero Team USA (1v4, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteam1v4RomInfo, zteam1v4RomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Zero Team USA (Plus, Hack)
+// Modified by iwhati
+// GOTVG 20220711
+
+static struct BurnRomInfo zteamplsRomDesc[] = {
+	{ "ztpls__1.u024.5k",	0x040000, 0xa3146641, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztpls__3.u023.6k",	0x040000, 0xdb2b9524, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztpls__2.u025.6l",	0x040000, 0xb2cc20a5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztpls__4.u026.5l",	0x040000, 0xadf151f8, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	ZEROTEAM_COMPONENTS
+};
+
+STD_ROM_PICK(zteampls)
+STD_ROM_FN(zteampls)
+
+struct BurnDriver BurnDrvZteampls = {
+	"zteampls", "zeroteam", NULL, NULL, "2022",
+	"Zero Team USA (Plus, Hack)\0", "Unemulated protection", "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, zteamplsRomInfo, zteamplsRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
+	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+#undef ZEROTEAM_COMPONENTS
+
+
+// New Zero Team (Plus, Hack)
+// GOTVG 20180219
+
+static struct BurnRomInfo nzteampRomDesc[] = {
+	{ "nztp_1.u0224",			0x080000, 0xcc45b0c6, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "nztp_2.u0226",			0x080000, 0x8537b97d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d3.bin",			0x020000, 0xfa2cf3ad, 2 | BRF_GRA },           //  2 Copx data
+
+	{ "seibu_3.u01019",			0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "seibu_5.u0616",			0x010000, 0xce68ba3c, 4 | BRF_GRA },           //  4 Characters
+	{ "seibu_6.u0617",			0x010000, 0xcf44aea7, 4 | BRF_GRA },           //  5
+
+	{ "back-1",					0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  6 Tiles
+	{ "back-2",					0x080000, 0xce61c952, 5 | BRF_GRA },           //  7
+
+	{ "obj-1",					0x200000, 0x45be8029, 6 | BRF_GRA },           //  8 Sprites (Encrypted)
+	{ "obj-2",					0x200000, 0xcb61c19d, 6 | BRF_GRA },           //  9
+
+	{ "seibu_4.u099",			0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 OKI Samples
+
+	{ "sysv33b-2.u0227.bin",	0x000117, 0xd9f4612f, 0 | BRF_OPT },           // 11 PLDs
+	{ "sysv33b-1.u0222.bin",	0x000117, 0xf514a11f, 0 | BRF_OPT },           // 12
+};
+
+STD_ROM_PICK(nzteamp)
+STD_ROM_FN(nzteamp)
+
+struct BurnDriver BurnDrvNzteamp = {
+	"nzteamp", "zeroteam", NULL, NULL, "2018",
+	"New Zero Team (Plus, Hack)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, nzteampRomInfo, nzteampRomName, NULL, NULL, NULL, NULL, NzeroteaInputInfo, NzeroteaDIPInfo,
+	NzeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};

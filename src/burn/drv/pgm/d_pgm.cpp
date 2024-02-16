@@ -158,8 +158,6 @@ static struct BurnDIPInfo pgmhDIPList[] = {
 	{0x30, 0x01, 0x01, 0x01, "Non-real hardware"                     },
 };
 
-STDDIPINFO(pgmh)
-
 static struct BurnDIPInfo jammahDIPList[] = {
 	{0x2D, 0xFF, 0xFF, 0x00, NULL                                    },
 	{0x2F, 0xFF, 0x01, 0x00, NULL                                    },
@@ -174,8 +172,6 @@ static struct BurnDIPInfo jammahDIPList[] = {
 	{0x30, 0x01, 0x01, 0x00, "Real hardware"                         },
 	{0x30, 0x01, 0x01, 0x01, "Non-real hardware"                     },
 };
-
-STDDIPINFO(jammah)
 
 static struct BurnDIPInfo orlegendDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL								},
@@ -903,7 +899,7 @@ static struct BurnRomInfo kov2dzxxBiosRomDesc[] = {
 
 	{ "pgm_m01s.rom", 				0x0200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
 
-	{ "dzxx_p02s.u20", 				0x0080000, 0x38a1ae33, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (hack)
+	{ "dzxx_p02s.u20", 				0x0080000, 0xcb060565, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (hack)
 };
 
 static struct BurnRomInfo kovplus12dwBiosRomDesc[] = {
@@ -7857,8 +7853,8 @@ struct BurnDriver BurnDrvEspgalbl = {
 // More info at: https://www.ppxclub.com/forum.php?mod=viewthread&tid=718724
 
 static struct BurnRomInfo oldsplusnrRomDesc[] = {
-	/* v211 - 20230427 */
-	{ "v-211cn.u10",			0x0400000, 0x5758fe37, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
+	/* v211 - 20240128 */
+	{ "v-211cn.u10",			0x0400000, 0x89c0afdf, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
 	{ "igs_t05301naw064.u2",	0x0800000, 0xbf3db9be, 2 | BRF_GRA },                        //  1 Tile data
 
@@ -7937,7 +7933,7 @@ static INT32 oldsplusnrInit()
 }
 
 struct BurnDriver BurnDrvoldsplusnr = {
-	"oldsplusnr", "oldsplus", "pgm", NULL, "2023",
+	"oldsplusnr", "oldsplus", "pgm", NULL, "2020-2024",
 	"Xi You Shi E Zhuan - Xin Qun Mo Luan Wu (Hack)\0", "Switchable v208 / v211", "hack", "PolyGameMaster",
 	L"Xi You Shi E Zhuan - Xin Qun Mo Luan Wu (Hack)\0\u897f\u6e38\u91ca\u5384\u4f20 - \u65b0\u7fa4\u9b54\u4e71\u821e (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
@@ -8796,7 +8792,7 @@ struct BurnDriver BurnDrvkovshpd3dw = {
 // Contributor: Creamymami (FBAs)
 
 static struct BurnRomInfo kov2dzxxRomDesc[] = {
-	{ "dzxx_v110_u18.u18",			0x0400000, 0xfd087eca, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "dzxx_v110_u18.u18",			0x0400000, 0x4bb58528, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "dzxx_t1200.u27",	   			0x0800000, 0xe27c3fab, 2 | BRF_GRA },           //  1 Tile data
 
@@ -8813,7 +8809,7 @@ static struct BurnRomInfo kov2dzxxRomDesc[] = {
 
 	{ "kov2dzxx_v110_china.asic", 	0x0004000, 0xed3198b4, 7 | BRF_PRG | BRF_ESS }, // 10 Internal ARM7 Rom
 
-	{ "dzxx_v110_u19.u19",			0x0300000, 0x8e903c94, 8 | BRF_PRG | BRF_ESS }, // 11 External ARM7 Rom
+	{ "dzxx_v110_u19.u19",			0x0300000, 0xce3fb9b3, 8 | BRF_PRG | BRF_ESS }, // 11 External ARM7 Rom
 };
 
 STDROMPICKEXT(kov2dzxx, kov2dzxx, kov2dzxxBios)

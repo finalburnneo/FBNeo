@@ -17359,7 +17359,11 @@ static void Jurassic99PatchCallback()
 	};
 
 	for (INT32 i = 0; i < (sizeof(patch_fix_a) / sizeof(UINT32)) >> 1; i++) {
+#ifdef LSB_FIRST
 		CpsRom[patch_fix_a[(i << 1) + 0]] = (UINT8)patch_fix_a[(i << 1) + 1];
+#else
+		CpsRom[patch_fix_a[(i << 1) + 0]] = (UINT8)patch_fix_a[(i << 1) + (i & 1 ? -1 : 3)];
+#endif
 	}
 
 	if (Cps1QSDip & 1) {
@@ -17383,7 +17387,11 @@ static void Jurassic99PatchCallback()
 		};
 
 		for (INT32 i = 0; i < (sizeof(patch_fix_b) / sizeof(UINT32)) >> 1; i++) {
+#ifdef LSB_FIRST
 			CpsRom[patch_fix_b[(i << 1) + 0]] = (UINT8)patch_fix_b[(i << 1) + 1];
+#else
+			CpsRom[patch_fix_b[(i << 1) + 0]] = (UINT8)patch_fix_b[(i << 1) + (i & 1 ? -1 : 3)];
+#endif
 		}
 	}
 }

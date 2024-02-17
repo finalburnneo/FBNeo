@@ -359,7 +359,7 @@ static UINT8 keyRowGet(INT32 row) { // for ppi to read
 	return ~keyRows[row];
 }
 
-static void keyInput(UINT8 kchar, UINT8 onoff) { // input from emulator
+static void keyInput(UINT8 kchar, UINT8 onoff, UINT8 allowoff = 0) { // input from emulator
 	INT32 i = 0;
 	INT32 gotkey = 0;
 
@@ -367,7 +367,7 @@ static void keyInput(UINT8 kchar, UINT8 onoff) { // input from emulator
 		if (kchar == charMatrix[i][0]) {
 			if (onoff) {
 				intkeyOn(charMatrix[i][1], charMatrix[i][2]);
-			} else {
+			} else if (allowoff) {
 				intkeyOff(charMatrix[i][1], charMatrix[i][2]);
 			}
 			gotkey = 1;
@@ -383,8 +383,8 @@ void msxKeyCallback(UINT8 code, UINT8 KeyType, UINT8 down)
 	if (SwapSlash && code == '/') code = 0xe0;
 
 	if (lastshifted) memset(&keyRows, 0, sizeof(keyRows));
-	keyInput(/*VK_SHIFT*/'\x10', (KeyType & 0xf0));
-	keyInput(code, down);
+	keyInput(/*VK_SHIFT*/'\x10', (KeyType & 0xf0), 1);
+	keyInput(code, down, 1);
 	lastshifted = (KeyType & 0xf0);
 	// Note regarding 'lastshifted'.  If shift+key is pressed (f.ex. ") and shift
 	// is let up before the key is let up, windows won't send the right keyup message.

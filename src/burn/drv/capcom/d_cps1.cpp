@@ -17052,6 +17052,7 @@ static INT32 DrvExit()
 	if (NULL != szGameName) szGameName = NULL;
 	
 	BurnFree(CpsBootlegSpriteRam);
+	CpsBootlegSpriteRam = NULL;
 	
 	return 0;
 }
@@ -17072,7 +17073,7 @@ static INT32 MpumpkinInit()
 
 static INT32 CpsBootlegSpriteRamScanCallback(INT32 nAction, INT32*)
 {
-	if (nAction & ACB_MEMORY_RAM) {
+	if (nAction & ACB_MEMORY_RAM && CpsBootlegSpriteRam != NULL) {
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 

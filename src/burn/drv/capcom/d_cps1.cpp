@@ -17363,7 +17363,7 @@ static void Jurassic99PatchCallback()
 #ifdef LSB_FIRST
 		CpsRom[patch_fix_a[(i << 1) + 0]] = (UINT8)patch_fix_a[(i << 1) + 1];
 #else
-		CpsRom[patch_fix_a[(i << 1) + 0]] = (UINT8)patch_fix_a[(i << 1) + (i & 1 ? -1 : 3)];
+		CpsRom[patch_fix_a[(i << 1) + 0] ^ 1] = (UINT8)patch_fix_a[(i << 1) + 1];
 #endif
 	}
 
@@ -17391,9 +17391,29 @@ static void Jurassic99PatchCallback()
 #ifdef LSB_FIRST
 			CpsRom[patch_fix_b[(i << 1) + 0]] = (UINT8)patch_fix_b[(i << 1) + 1];
 #else
-			CpsRom[patch_fix_b[(i << 1) + 0]] = (UINT8)patch_fix_b[(i << 1) + (i & 1 ? -1 : 3)];
+			CpsRom[patch_fix_b[(i << 1) + 0] ^ 1] = (UINT8)patch_fix_b[(i << 1) + 1];
 #endif
 		}
+	}
+}
+
+static void DinotpicPatchCallback()
+{
+	// first add patch from jurassic99
+
+	Jurassic99PatchCallback();
+
+	UINT32 patch_fix_a[] = {
+		// Change character with start
+		0x1900da, 0x18, 0x1900f8, 0x18
+	};
+
+	for (INT32 i = 0; i < (sizeof(patch_fix_a) / sizeof(UINT32)) >> 1; i++) {
+#ifdef LSB_FIRST
+		CpsRom[patch_fix_a[(i << 1) + 0]] = (UINT8)patch_fix_a[(i << 1) + 1];
+#else
+		CpsRom[patch_fix_a[(i << 1) + 0] ^ 1] = (UINT8)patch_fix_a[(i << 1) + 1];
+#endif
 	}
 }
 
@@ -17563,7 +17583,7 @@ static INT32 DinotpicInit()
 	CpsBootlegEEPROM = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	if (Cps1QSDip & 1) {
-		AmendProgRomCallback = Jurassic99PatchCallback;
+		AmendProgRomCallback = DinotpicPatchCallback;
 	} else {
 		Cps1ObjGetCallbackFunction = DinopicObjGet;
 		Cps1ObjDrawCallbackFunction = FcrashObjDraw;

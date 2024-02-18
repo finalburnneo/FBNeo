@@ -103,6 +103,7 @@ static struct BurnInputInfo HedpanicInputList[] = {
 	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 13,	 "p2 fire 2"},
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy2 + 4,    "service"  },
+	{"Diagnostic"   , BIT_DIGITAL  , DrvJoy2 + 6,    "diag"  },
 
 	{"Reset",	  BIT_DIGITAL  , &DrvReset,	 "reset"    },
 };
@@ -132,6 +133,7 @@ static struct BurnInputInfo SwatpolcInputList[] = {
 	{"P2 Button 3"  , BIT_DIGITAL  , DrvJoy1 + 14,	 "p2 fire 3"},
 
 	{"Service"      , BIT_DIGITAL  , DrvJoy2 + 4,    "service"  },
+	{"Diagnostic"   , BIT_DIGITAL  , DrvJoy2 + 6,    "diag"  },
 
 	{"Reset",	  BIT_DIGITAL  , &DrvReset,	 "reset"    },
 };

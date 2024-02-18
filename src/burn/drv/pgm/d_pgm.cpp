@@ -902,9 +902,17 @@ static struct BurnRomInfo kov2dzxxBiosRomDesc[] = {
 	{ "dzxx_p02s.u20", 				0x0080000, 0xcb060565, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (hack)
 };
 
-static struct BurnRomInfo kovplus12dwBiosRomDesc[] = {
+static struct BurnRomInfo kovp12dwBiosRomDesc[] = {
 	{ "pgm_t01s.rom", 				0x0200000, 0x1a7123a0, BRF_GRA | BRF_BIOS },	// 0x80 - 8x8 Text Layer Tiles
-	{ "2012dw_m01s.rom", 			0x0200000, 0x692511a5, BRF_SND | BRF_BIOS },	// 0x81 - Samples (hack)
+	{ "12dw_m01s.rom", 				0x0200000, 0x692511a5, BRF_SND | BRF_BIOS },	// 0x81 - Samples (hack)
+
+	{ "pgm_p01s.u20", 				0x0020000, 0xe42b166e, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001,     older  - 02/26/97 - 11:14:09)
+	{ "pgm_p02s.u20", 				0x0020000, 0x78c15fa2, BRF_PRG | BRF_BIOS },	// 0x83 - 68K BIOS (V0001,     newer  - 07/10/97 - 16:36:08)
+};
+
+static struct BurnRomInfo kovp12emBiosRomDesc[] = {
+	{ "pgm_t01s.rom", 				0x0200000, 0x1a7123a0, BRF_GRA | BRF_BIOS },	// 0x80 - 8x8 Text Layer Tiles
+	{ "12em_m01s.rom", 				0x0200000, 0xbc785efc, BRF_SND | BRF_BIOS },	// 0x81 - Samples (hack)
 
 	{ "pgm_p01s.u20", 				0x0020000, 0xe42b166e, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001,     older  - 02/26/97 - 11:14:09)
 	{ "pgm_p02s.u20", 				0x0020000, 0x78c15fa2, BRF_PRG | BRF_BIOS },	// 0x83 - 68K BIOS (V0001,     newer  - 07/10/97 - 16:36:08)
@@ -8081,17 +8089,11 @@ static struct BurnRomInfo kovlsyxRomDesc[] = {
 STDROMPICKEXT(kovlsyx, kovlsyx, pgm)
 STD_ROM_FN(kovlsyx)
 
-static INT32 kovlsyxInit()
+static INT32 kovshpmaphackInit()
 {
-	INT32 nRet = kovshpInit();
+	nPGMMapperHack = 1;
 
-	if (nRet == 0) {
-		SekOpen(0);
-		SekMapMemory((PGM68KROM + 0x300000), 0x600000, 0x6fffff, MAP_ROM);
-		SekClose();
-	}
-
-	return nRet;
+	return  kovshpInit();
 }
 
 struct BurnDriver BurnDrvkovlsyx = {
@@ -8100,7 +8102,7 @@ struct BurnDriver BurnDrvkovlsyx = {
 	L"San Guo Zhan Ji - Luan Shi Ying Xiong\0\u4e09\u56fd\u6218\u7eaa - \u4e71\u4e16\u82f1\u96c4\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsyxRomInfo, kovlsyxRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
-	kovlsyxInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	kovshpmaphackInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -8356,16 +8358,14 @@ STD_ROM_FN(kov2pfwll)
 
 static INT32 kov2pfwllInit()
 {
+	nPGMMapperHack = 1;
+
 	INT32 nRet = kov2pInit();
 	
 	if (nRet == 0)
 	{
 		if (PGMARMROM[0x26f] == 0x0a)	// crash patch
 			PGMARMROM[0x26f] = 0xea;
-
-		SekOpen(0);
-		SekMapMemory((PGM68KROM + 0x300000), 0x600000, 0x6FFFFF, MAP_ROM); // Many hacks from GOTVG, such as zerofx, kovshpd and kovplus2012 serials, use this as protection.
-		SekClose();
 	}
 
 	return nRet;
@@ -8815,13 +8815,20 @@ static struct BurnRomInfo kov2dzxxRomDesc[] = {
 STDROMPICKEXT(kov2dzxx, kov2dzxx, kov2dzxxBios)
 STD_ROM_FN(kov2dzxx)
 
+static INT32 kov2maphackInit()
+{
+	nPGMMapperHack = 1;
+
+	return kov2Init();
+}
+
 struct BurnDriver BurnDrvkov2dzxx = {
 	"kov2dzxx", "kov2", "pgm", NULL, "2021",
 	"Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)\0", NULL, "hack", "PolyGameMaster",
 	L"Knights of Valour 2 (Dou Zhuan Xing Xuan, ver.110)\0\u4e09\u570b\u6230\u7d002 (\u9b25\u8f49\u661f\u65cb, \u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kov2dzxxRomInfo, kov2dzxxRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kov2dzxxDIPInfo,
-	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	kov2maphackInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -8829,7 +8836,7 @@ struct BurnDriver BurnDrvkov2dzxx = {
 // Knights of Valour Plus 2012 - Warriors
 // GOTVG 20230120
 
-static struct BurnRomInfo kovplus12dwRomDesc[] = {
+static struct BurnRomInfo kovp12dwRomDesc[] = {
 	{ "12dw_p0603_119.u1",	0x0400000, 0x5c0e150b, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
 
 	{ "12dw_t0600.u11",		0x0800000, 0x364aec7e, 2 | BRF_GRA },                        //  1 Tile data
@@ -8847,16 +8854,58 @@ static struct BurnRomInfo kovplus12dwRomDesc[] = {
 	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  9 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(kovplus12dw, kovplus12dw, kovplus12dwBios)
-STD_ROM_FN(kovplus12dw)
+STDROMPICKEXT(kovp12dw, kovp12dw, kovp12dwBios)
+STD_ROM_FN(kovp12dw)
 
-struct BurnDriver BurnDrvkovplus12dw = {
-	"kovplus12dw", "kovplus", "pgm", NULL, "2023",
+struct BurnDriver BurnDrvkovp12dw = {
+	"kovp12dw", "kovplus", "pgm", NULL, "2023",
 	"Knights of Valour Plus 2012 - Warriors\0", NULL, "hack", "PolyGameMaster",
 	L"Knights of Valour Plus 2012 - Warriors\0\u4e09\u570b\u6230\u7d00 \u6b63\u5b97 2012 - \u7121\u96d9 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, kovplus12dwRomInfo, kovplus12dwRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
+	NULL, kovp12dwRomInfo, kovp12dwRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Knights of Valour Plus 2012 - Nightmare
+// 20220723
+
+static struct BurnRomInfo kovp12emRomDesc[] = {
+	{ "12em_p0603_119.u1",	0x0400000, 0x145f39f9, 1 | BRF_PRG | BRF_ESS },              //  0 68K Code
+
+	{ "12em_t0600.u11",		0x0800000, 0x597ee034, 2 | BRF_GRA },                        //  1 Tile data
+
+	{ "12dw_a0600.u2",		0x0800000, 0x5bd7ea9f, 3 | BRF_GRA },                        //  2 Sprite Color Data
+	{ "pgm_a0601.u4",		0x0800000, 0xff7a4373, 3 | BRF_GRA },                        //  3
+	{ "pgm_a0602.u6",     	0x0800000, 0xe7a32959, 3 | BRF_GRA },                        //  4
+	{ "pgm_a0603.u9",		0x0400000, 0xec31abda, 3 | BRF_GRA },                        //  5
+
+	{ "12dw_b0600.u5",		0x0800000, 0x07d91ea3, 4 | BRF_GRA },                        //  6 Sprite Masks & Color Indexes
+	{ "pgm_b0601.u7",     	0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },                        //  7
+
+	{ "12em_m0600.u3",		0x0400000, 0x7a50501b, 5 | BRF_SND },                        //  8 Samples
+
+	{ "kov_igs027a.bin",	0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovp12em, kovp12em, kovp12emBios)
+STD_ROM_FN(kovp12em)
+
+static INT32 kovmaphackInit()
+{
+	nPGMMapperHack = 1;
+
+	return kovInit();
+}
+
+struct BurnDriver BurnDrvkovp12em = {
+	"kovp12em", "kovplus", "pgm", NULL, "2022",
+	"Knights of Valour Plus 2012 - Nightmare\0", NULL, "hack", "PolyGameMaster",
+	L"Knights of Valour Plus 2012 - Nightmare\0\u4e09\u570b\u6230\u7d00 \u6b63\u5b97 2012 - \u5669\u5922 (\u4fee\u6539\u7248)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, kovp12emRomInfo, kovp12emRomName, NULL, NULL, NULL, NULL, pgmhInputInfo, kovchsDIPInfo,
+	kovmaphackInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

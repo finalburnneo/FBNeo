@@ -16181,9 +16181,9 @@ STD_ROM_PICK(Wofahb)
 STD_ROM_FN(Wofahb)
 
 static struct BurnRomInfo wofsgzbRomDesc[] = {
-	{ "p23", 0x080000, 0xD4811B58, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "p22", 0x080000, 0xF99A6FD3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "p21", 0x080000, 0x2C16579E, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p23",	0x080000, 0xD4811B58, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p22",	0x080000, 0xF99A6FD3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p21",	0x080000, 0x2C16579E, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "a10",	0x080000, 0x5414122B, BRF_GRA | CPS1_TILES },
 	{ "a11",	0x080000, 0x74BC2116, BRF_GRA | CPS1_TILES },
@@ -16600,7 +16600,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofah"         , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofaha"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofahb"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
-	{ "wofsgzb"		  , CPS_B_21_DEF, mapper_SFZ63B, 0, NULL                },
+	{ "wofsgzb"		  , CPS_B_21_DEF, mapper_TKSGZB, 0, NULL                },
 	{ "sfzch"         , CPS_B_21_DEF, mapper_SFZ63B, 0, NULL                },
 	{ "sfzcha"        , CPS_B_21_DEF, mapper_SFZ63B, 0, NULL                },
 	{ "wofch"         , CPS_B_21_DEF, mapper_sfzch , 0, wof_decode          },
@@ -24812,7 +24812,7 @@ struct BurnDriver BurnDrvCpswofsgzb = {
 	"wofsgzb", "wof", NULL, NULL, "2005",
 	"Sangokushi 2 (San Guo Zheng Ba)\0", "Hack", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, wofsgzbRomInfo, wofsgzbRomName, NULL, NULL, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

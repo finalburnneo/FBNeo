@@ -306,6 +306,12 @@ static const struct GfxRange mapper_TK263B_table[] = {
 	{ 0                                ,      0,      0, 0 }
 };
 
+static const struct GfxRange mapper_TKSGZB_table[] = {
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x00000, 0x07fff, 0 },
+	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x08000, 0x1ffff, 1 },
+	{ 0                                ,      0,      0, 0 }
+};
+
 static const struct GfxRange mapper_CD63B_table[] = {
 	{ GFXTYPE_SCROLL1,                   0x0000, 0x0fff, 0 },
 	{ GFXTYPE_SPRITES,                   0x1000, 0x7fff, 0 },
@@ -747,6 +753,15 @@ void SetGfxMapper(INT32 MapperId)
 			GfxBankSizes[2] = 0x0000;
 			GfxBankSizes[3] = 0x0000;
 			GfxBankMapper = mapper_TK263B_table;
+			return;
+		}
+
+		case mapper_TKSGZB: {
+			GfxBankSizes[0] = 0x08000;
+			GfxBankSizes[1] = 0x10000;
+			GfxBankSizes[2] = 0x00000;
+			GfxBankSizes[3] = 0x00000;
+			GfxBankMapper = mapper_TKSGZB_table;
 			return;
 		}
 		

@@ -4087,11 +4087,11 @@ struct BurnDriverD BurnDrvFuncube4 = {
 	{ "u32.bin",	0x100000, 0xcf0f3017, BRF_SND },
 
 // Guardians / Denjin Makai II (Pro, Hack)
-// GOTVG 20231206
+// GOTVG 20240204
 
 static struct BurnRomInfo grdiandsRomDesc[] = {
-	{ "u2_ds.bin",	0x080000, 0x751225ed, BRF_ESS | BRF_PRG },
-	{ "u3_ds.bin",	0x080000, 0xda4273e3, BRF_ESS | BRF_PRG },
+	{ "u2_ds.bin",	0x080000, 0x3e62b0f2, BRF_ESS | BRF_PRG },
+	{ "u3_ds.bin",	0x080000, 0x46111562, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4099,9 +4099,9 @@ STD_ROM_PICK(grdiands)
 STD_ROM_FN(grdiands)
 
 struct BurnDriver BurnDrvGrdiands = {
-	"grdiands", "grdians", NULL, NULL, "2023",
+	"grdiands", "grdians", NULL, NULL, "2024",
 	"Guardians / Denjin Makai II (Pro, Hack)\0", NULL, "hack", "Newer Seta",
-	L"Guardians\0\u96FB\u795E\u9B54\u584A \uFF29\uFF29 Pro (Hack)\0", NULL, NULL, NULL,
+	L"Guardians\0\u96FB\u795E\u9B54\u584A \uFF29\uFF29 (Pro, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiandsRomInfo, grdiandsRomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
 	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
@@ -4110,11 +4110,11 @@ struct BurnDriver BurnDrvGrdiands = {
 
 
 // Guardians / Denjin Makai II (Evil, Hack)
-// GOTVG 20230918
+// GOTVG 20240204
 
 static struct BurnRomInfo grdiansyRomDesc[] = {
-	{ "u2_sy.bin",	0x080000, 0x46e6d4c4, BRF_ESS | BRF_PRG },
-	{ "u3_sy.bin",	0x080000, 0xc34ef734, BRF_ESS | BRF_PRG },
+	{ "u2_ds.bin",	0x080000, 0x3e62b0f2, BRF_ESS | BRF_PRG },
+	{ "u3_sy.bin",	0x080000, 0x28ae495d, BRF_ESS | BRF_PRG },
 	GRDIANS_COMPONENT
 };
 
@@ -4122,7 +4122,7 @@ STD_ROM_PICK(grdiansy)
 STD_ROM_FN(grdiansy)
 
 struct BurnDriver BurnDrvGrdiansy = {
-	"grdiansy", "grdians", NULL, NULL, "2023",
+	"grdiansy", "grdians", NULL, NULL, "2024",
 	"Guardians / Denjin Makai II (Evil, Hack)\0", NULL, "hack", "Newer Seta",
 	L"Guardians\0\u96FB\u795E\u9B54\u584A \uFF29\uFF29 (Evil, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,

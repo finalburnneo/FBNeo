@@ -1725,11 +1725,11 @@ static INT32 DrvDoReset()
 	if (DrvHasZ80) {
 		ZetOpen(0);
 		ZetReset();
+		if (DrvHasYM3812) BurnYM3812Reset();
 		ZetClose();
 	}
 
 	if (DrvHasYM2151) BurnYM2151Reset();
-	if (DrvHasYM3812) BurnYM3812Reset();
 
 	MSM6295Reset(0);
 

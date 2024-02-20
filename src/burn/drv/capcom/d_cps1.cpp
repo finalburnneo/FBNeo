@@ -17343,7 +17343,7 @@ void __fastcall DinopicScrollWrite(UINT32 a, UINT16 d)
 void __fastcall DinopicLayerWrite(UINT32 a, UINT16 d)
 {
 	if (a == 0x800222) {
-		*((UINT16*)(CpsReg + 0x06)) = d;
+		*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(d);;
 		return;
 	}
 	

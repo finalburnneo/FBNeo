@@ -21159,7 +21159,7 @@ static INT32 WofsjInit()
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
-	INT32 nRet = TwelveMhzInit();
+	INT32 nRet = Cps1RasterInit();
 	if (nRet) return nRet;
 	
 	SekOpen(0);
@@ -21442,7 +21442,7 @@ static INT32 WofablInit()
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
-	INT32 nRet = TwelveMhzInit();
+	INT32 nRet = Cps1RasterInit();
 	if (nRet) return nRet;
 	
 	SekOpen(0);
@@ -24814,7 +24814,7 @@ struct BurnDriver BurnDrvCpswofsgzb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, wofsgzbRomInfo, wofsgzbRomName, NULL, NULL, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
-	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

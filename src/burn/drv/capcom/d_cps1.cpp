@@ -1601,6 +1601,48 @@ static struct BurnInputInfo WofhfhInputList[] =
 
 STDINPUTINFO(Wofhfh)
 
+static struct BurnInputInfo WofsgzbInputList[] =
+{
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018 + 0, "p1 coin"   }, //  0
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp018 + 4, "p1 start"  }, //  1
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001 + 3, "p1 up"     }, //  2
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001 + 2, "p1 down"   }, //  3
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001 + 1, "p1 left"   }, //  4
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001 + 0, "p1 right"  }, //  5
+	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001 + 4, "p1 fire 1" }, //  6
+	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001 + 5, "p1 fire 2" }, //  7
+	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001 + 6, "p1 fire 3" }, //  8
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018 + 1, "p2 coin"   }, //  9
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp018 + 5, "p2 start"  }, //  a
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000 + 3, "p2 up"     }, //  b
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000 + 2, "p2 down"   }, //  c
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000 + 1, "p2 left"   }, //  d
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000 + 0, "p2 right"  }, //  e
+	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000 + 4, "p2 fire 1" }, //  f
+	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000 + 5, "p2 fire 2" }, // 10
+	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000 + 6, "p2 fire 3" }, // 11
+
+	{"P3 Coin"          , BIT_DIGITAL  , CpsInpc001+ 6, "p3 coin"   }, // 12
+	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+ 7, "p3 start"  }, // 13
+	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+ 3, "p3 up"     }, // 14
+	{"P3 Down"          , BIT_DIGITAL  , CpsInpc001+ 2, "p3 down"   }, // 15
+	{"P3 Left"          , BIT_DIGITAL  , CpsInpc001+ 1, "p3 left"   }, // 16
+	{"P3 Right"         , BIT_DIGITAL  , CpsInpc001+ 0, "p3 right"  }, // 17
+	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+ 4, "p3 fire 1" }, // 18
+	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+ 5, "p3 fire 2" }, // 19
+	{"P3 Fire 3"        , BIT_DIGITAL  , CpsInpc001+ 6, "p3 fire 3" }, // 1a same as P3 Coin
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset    , "reset"     }, // 1b
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018 + 6, "diag"      }, // 1c
+	{"Service"          , BIT_DIGITAL  , CpsInp018 + 2, "service"   }, // 1d
+	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A      , "dip"       }, // 1e
+	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C      , "dip"       }, // 1f
+	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E      , "dip"       }, // 20
+};
+
+STDINPUTINFO(Wofsgzb)
+
 static struct BurnInputInfo WofhInputList[] =
 {
  	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   }, //  0
@@ -4783,6 +4825,58 @@ static struct BurnDIPInfo WofhfhDIPList[]=
 };
 
 STDDIPINFO(Wofhfh)
+
+static struct BurnDIPInfo WofsgzbDIPList[] =
+{
+	DIP_OFFSET(0x1e)
+
+	// Defaults
+	{0x00, 0xff, 0xff, 0x00, NULL                      },
+	{0x01, 0xff, 0xff, 0x13, NULL                      },
+	{0x02, 0xff, 0xff, 0x20, NULL                      },
+
+	// Dip A
+	{0   , 0xfe, 0   , 4   , "Coin A"                  },
+	{0x00, 0x01, 0x03, 0x00, "1 Coin 1 Credit"         },
+	{0x00, 0x01, 0x03, 0x01, "1 Coin 2 Credits"        },
+	{0x00, 0x01, 0x03, 0x02, "1 Coin 3 Credits"        },
+	{0x00, 0x01, 0x03, 0x03, "1 Coin 4 Credits"        },
+
+	// Dip B
+	{0   , 0xfe, 0   , 8   , "Difficulty"              },
+	{0x01, 0x01, 0x07, 0x00, "Extra Easy"              },
+	{0x01, 0x01, 0x07, 0x01, "Very Easy"               },
+	{0x01, 0x01, 0x07, 0x02, "Easy"                    },
+	{0x01, 0x01, 0x07, 0x03, "Normal"                  },
+	{0x01, 0x01, 0x07, 0x04, "Hard"                    },
+	{0x01, 0x01, 0x07, 0x05, "Very Hard"               },
+	{0x01, 0x01, 0x07, 0x06, "Extra Hard"              },
+	{0x01, 0x01, 0x07, 0x07, "Hardest"                 },
+
+	{0   , 0xfe, 0   , 8   , "Lives"                   },
+	{0x01, 0x01, 0x70, 0x70, "Start 4 Continue 5"      },
+	{0x01, 0x01, 0x70, 0x60, "Start 3 Continue 4"      },
+	{0x01, 0x01, 0x70, 0x50, "Start 2 Continue 3"      },
+	{0x01, 0x01, 0x70, 0x40, "Start 1 Continue 2"      },
+	{0x01, 0x01, 0x70, 0x30, "Start 4 Continue 4"      },
+	{0x01, 0x01, 0x70, 0x20, "Start 3 Continue 3"      },
+	{0x01, 0x01, 0x70, 0x10, "Start 2 Continue 2"      },
+	{0x01, 0x01, 0x70, 0x00, "Start 1 Continue 1"      },
+
+	// Dip C
+	{0   , 0xfe, 0   , 3   , "Coin Slots"              },
+	{0x02, 0x01, 0x03, 0x02, "2 Players 1 Shooter"     },
+	{0x02, 0x01, 0x03, 0x01, "3 Players 1 Shooter"     },
+	{0x02, 0x01, 0x03, 0x00, "3 Players 3 Shooters"    },
+
+	{0   , 0xfe, 0   , 4   , "Bonus Life"              },
+	{0x02, 0x01, 0x30, 0x30, "100k, 300k, 500k, 1000k" },
+	{0x02, 0x01, 0x30, 0x20, "300k"                    },
+	{0x02, 0x01, 0x30, 0x10, "100k"                    },
+	{0x02, 0x01, 0x30, 0x00, "None"                    },
+};
+
+STDDIPINFO(Wofsgzb)
 
 static struct BurnDIPInfo WofhDIPList[]=
 {
@@ -16181,28 +16275,27 @@ STD_ROM_PICK(Wofahb)
 STD_ROM_FN(Wofahb)
 
 static struct BurnRomInfo wofsgzbRomDesc[] = {
-	{ "p23",	0x080000, 0xD4811B58, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "p22",	0x080000, 0xF99A6FD3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "p21",	0x080000, 0x2C16579E, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p23",	0x080000, 0xd4811b58, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p22",	0x080000, 0xf99a6fd3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p21",	0x080000, 0x2c16579e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "a10",	0x080000, 0x5414122B, BRF_GRA | CPS1_TILES },
-	{ "a11",	0x080000, 0x74BC2116, BRF_GRA | CPS1_TILES },
-	{ "a12",	0x080000, 0x529EE8EF, BRF_GRA | CPS1_TILES },
-	{ "a13",	0x080000, 0x9A951CD8, BRF_GRA | CPS1_TILES },
-	{ "a1",		0x080000, 0x0D9CB9BF, BRF_GRA | CPS1_TILES },
+	{ "a10",	0x080000, 0x5414122b, BRF_GRA | CPS1_TILES },
+	{ "a11",	0x080000, 0x74bc2116, BRF_GRA | CPS1_TILES },
+	{ "a12",	0x080000, 0x529ee8ef, BRF_GRA | CPS1_TILES },
+	{ "a13",	0x080000, 0x9a951cd8, BRF_GRA | CPS1_TILES },
+	{ "a1",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
 	{ "a2",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
-	{ "a3",		0x080000, 0xC5CA2460, BRF_GRA | CPS1_TILES },
-	{ "a4",		0x080000, 0xE349551C, BRF_GRA | CPS1_TILES },
-	{ "a5",		0x080000, 0x71ADDDA7, BRF_GRA | CPS1_TILES },
-	{ "a6",		0x080000, 0x9AD61056, BRF_GRA | CPS1_TILES },
-	{ "a7",		0x080000, 0x80E231FF, BRF_GRA | CPS1_TILES },
-	{ "a8",		0x080000, 0xB0707469, BRF_GRA | CPS1_TILES },
+	{ "a3",		0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "a4",		0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "a5",		0x080000, 0x71addda7, BRF_GRA | CPS1_TILES },
+	{ "a6",		0x080000, 0x9ad61056, BRF_GRA | CPS1_TILES },
+	{ "a7",		0x080000, 0x80e231ff, BRF_GRA | CPS1_TILES },
+	{ "a8",		0x080000, 0xb0707469, BRF_GRA | CPS1_TILES },
 
-	{ "m9",		0x010000, 0x210C376F, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "m9",		0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "m18",	0x020000, 0xAB740743, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "m19",	0x020000, 0xFBB8D8C1, BRF_SND | CPS1_OKIM6295_SAMPLES },
-
+	{ "m18",	0x020000, 0xab740743, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "m19",	0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(wofsgzb)
@@ -21456,6 +21549,14 @@ static INT32 WofablInit()
 	return nRet;
 }
 
+static INT32 WofsgzbInit()
+{
+	Cps1DrawAtVblank = 1;
+//	CpsBootlegEEPROM = 1;
+
+	return TwelveMhzInit();
+}
+
 // Driver Definitions
 
 struct BurnDriver BurnDrvCps1941 = {
@@ -24810,11 +24911,11 @@ struct BurnDriver BurnDrvCpsWofahb = {
 
 struct BurnDriver BurnDrvCpswofsgzb = {
 	"wofsgzb", "wof", NULL, NULL, "2005",
-	"Sangokushi 2 (San Guo Zheng Ba)\0", "Hack", "bootleg", "CPS1",
+	"Sangokushi II: San Guo Zheng Ba (Chinese bootleg of Sangokushi II)\0", "Hack", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, wofsgzbRomInfo, wofsgzbRomName, NULL, NULL, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
-	Cps1RasterInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, wofsgzbRomInfo, wofsgzbRomName, NULL, NULL, NULL, NULL, WofsgzbInputInfo, WofsgzbDIPInfo,
+	WofsgzbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

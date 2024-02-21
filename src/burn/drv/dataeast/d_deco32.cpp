@@ -55,6 +55,10 @@ static INT32 global_priority;
 static UINT32 sprite_ctrl;
 static UINT32 lightgun_port;
 
+static UINT16 color_base[3];
+
+static INT32 nExtraCycles;
+
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
@@ -991,18 +995,21 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 			} else {
 				EEPROMWrite(data & 0x20, data & 0x40, data & 0x10);
 			}
-			global_priority = data & 3;
+			global_priority = data & 7;
 		return;
 
 		case 0x140000:
 			ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		return;
 
+		case 0x164000: // tmap
+		case 0x164004: // spr0
+		case 0x164008: // spr1
+			color_base[(address & 0xf) / 4] = (data & 7) << 8;
+		return;
+
 		case 0x130000:
 		case 0x148000:
-		case 0x164000:
-		case 0x164004:
-		case 0x164008:
 		case 0x16400c:
 		case 0x16c000:
 		case 0x16c00c:
@@ -1458,6 +1465,8 @@ static INT32 DrvDoReset()
 	raster_irq_scanline = 0;
 	lightgun_latch = 0;
 
+	nExtraCycles = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -1491,7 +1500,7 @@ static INT32 MemIndex()
 		DrvDVIROM   = Next; Next += 0x1000000;
 	}
 
-	DrvPalette	= (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x801 * 2 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -2332,32 +2341,53 @@ static INT32 DrvExit()
 	return 0;
 }
 
+#ifndef MIN
+#define MIN(x,y)			((x) < (y) ? (x) : (y))
+#endif
+#ifndef MAX
+#define MAX(x,y)			((x) > (y) ? (x) : (y))
+#endif
+
 static void DrvPaletteUpdate()
 {
 	UINT32 *p = (UINT32*)DrvPalBuf;
 	UINT32 *s = (UINT32*)DrvAceRAM;
 
-	UINT8 ptr = s[0x20];
-	UINT8 ptg = s[0x21];
-	UINT8 ptb = s[0x22];
-	UINT8 psr = s[0x23];
-	UINT8 psg = s[0x24];
-	UINT8 psb = s[0x25];
+	UINT8 fadeptr = s[0x20] & 0xff;
+	UINT8 fadeptg = s[0x21] & 0xff;
+	UINT8 fadeptb = s[0x22] & 0xff;
+	UINT8 fadepsr = s[0x23] & 0xff;
+	UINT8 fadepsg = s[0x24] & 0xff;
+	UINT8 fadepsb = s[0x25] & 0xff;
+	UINT16 mode = s[0x26] & 0xffff;
 
 	for (INT32 i = 0; i < 0x2000/4; i++)
 	{
-		UINT8 r = BURN_ENDIAN_SWAP_INT32(p[i]) >> 0;
-		UINT8 g = BURN_ENDIAN_SWAP_INT32(p[i]) >> 8;
-		UINT8 b = BURN_ENDIAN_SWAP_INT32(p[i]) >> 16;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT32(p[i]) >> 0) & 0xff;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT32(p[i]) >> 8) & 0xff;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT32(p[i]) >> 16) & 0xff;
 
-		if (i > 255 && has_ace == 1)
+		DrvPalette[i + 0x800] = BurnHighCol(r,g,b,0);
+
+		if (has_ace == 1)
 		{
-			b = (UINT8)((float)b + (((float)ptb - (float)b) * (float)psb/255.0f));
-			g = (UINT8)((float)g + (((float)ptg - (float)g) * (float)psg/255.0f));
-			r = (UINT8)((float)r + (((float)ptr - (float)r) * (float)psr/255.0f));
-		}
+			switch (mode)
+			{
+				default:
+				case 0x1100: // multiplicative fade
+					b = MAX(0, MIN(255, UINT8((b + (((fadeptb - b) * fadepsb) / 255)))));
+					g = MAX(0, MIN(255, UINT8((g + (((fadeptg - g) * fadepsg) / 255)))));
+					r = MAX(0, MIN(255, UINT8((r + (((fadeptr - r) * fadepsr) / 255)))));
+					break;
+				case 0x1000: // additive fade, correct?
+					b = MIN(b + fadepsb, 0xff);
+					g = MIN(g + fadepsg, 0xff);
+					r = MIN(r + fadepsr, 0xff);
+					break;
+			}
 
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+			DrvPalette[i] = BurnHighCol(r,g,b,0);
+		}
 	}
 }
 
@@ -2368,10 +2398,6 @@ static INT32 default_col_cb(INT32 col)
 
 static INT32 (*m_pri_cb)(INT32, INT32) = NULL;
 static INT32 (*m_col_cb)(INT32) = NULL;
-
-#if defined FBNEO_DEBUG
-extern int counter; // dink debug stuff, to be removed when driver 100%.  (or slightly less)
-#endif
 
 static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, INT32 sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format, INT32 layerID )
 {
@@ -2504,25 +2530,6 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 					mult2 = multi + 1;
 
 					y -= 8;
-					if (game_select == 2) {
-						// Hack for nslasher bad trans.  alpha prio's: 0x80 pri0, 0xa0 pri1, 0xc0 pri2, pri3 0xe0
-						UINT32 *ace_ram = (UINT32*)DrvAceRAM;
-
-						//if (counter && layerID && sprite) bprintf(0, _T("%X - %X (%X:%X), "), sprite, colour, global_priority, ace_ram[0]);
-						if (layerID && (sprite == 0x3cd || sprite == 0x3d0) && !(colour&0x80))
-							colour |= (BURN_ENDIAN_SWAP_INT32(ace_ram[0]) == 0x17) ? 0xa0 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
-						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1) && !(colour&0x80))
-							colour |= 0xe0; // level 2 carriage buggy
-						if (layerID && (sprite >= 0x728 && sprite <= 0x79f))
-							colour |= 0x80; // Hong Hua (Girl hero) "special"
-						if (layerID && (sprite == 0x7e0 || sprite == 0x7e4 || sprite == 0x7e8 || sprite == 0x7ec ||
-										sprite == 0x7f0 || sprite == 0x7f4 || sprite == 0x7f8 || sprite == 0x7fc ||
-										sprite == 0x800 || sprite == 0x804)) {
-							colour &= ~0x20; // level 5 mid-boss "hole in plane" wrong priority (doesn't show up until after character goes through the hole w/o this)
-						} else
-							if (layerID && (sprite >= 0x7a0 && sprite <= 0x829))
-								colour &= ~0x80; // level 5 cargobay with bad alpha
-					}
 
 					while (multi >= 0)
 					{
@@ -2890,10 +2897,29 @@ static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
 		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
 }
 
+static UINT8 ace_get_alpha(UINT8 val)
+{
+	val &= 0x1f;
+
+	UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
+
+	int alpha = BURN_ENDIAN_SWAP_INT32(m_ace_ram[val]) & 0xff;
+	if (alpha > 0x20) {
+		return 0x80;
+	} else {
+		alpha = 255 - (alpha << 3);
+		if (alpha < 0) {
+			alpha = 0;
+		}
+
+		return alpha & 0xff;
+	}
+}
+
 static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 {
-	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? 0x400 : 0x600);
-	UINT32 *pal1 = DrvPalette + ((game_select == 2) ? 0x600 : 0x500);
+	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? color_base[1] : 0x600);
+	UINT32 *pal1 = DrvPalette + ((game_select == 2) ? color_base[2] : 0x500);
 	UINT32 *pal2 = DrvPalette;
 
 	INT32 granularity0 = 1<<5;
@@ -2918,6 +2944,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 
 	/* Mix sprites into main bitmap, based on priority & alpha */
 	for (INT32 y=0; y<nScreenHeight; y++) {
+		UINT16* alphaTilemap=pTempDraw[2] + y * nScreenWidth;
 		UINT8* tilemapPri=deco16_prio_map + (y * 512);
 		UINT16* sprite0=pTempDraw[0] + (y * nScreenWidth);
 		UINT16* sprite1=pTempDraw[1] + (y * nScreenWidth);
@@ -2927,7 +2954,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 		destLine16 += y * nScreenWidth;
 
 		for (INT32 x=0; x<nScreenWidth; x++) {
-			if (tilemapPri[x] == 8) {
+			if (tilemapPri[x] == 8) { // text layer, always on top!
 				continue;
 			}
 
@@ -2937,36 +2964,46 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 			UINT16 pri1=(priColAlphaPal1&0x6000)>>13;
 			UINT16 col0=((priColAlphaPal0&0x1f00)>>8);
 			UINT16 col1=((priColAlphaPal1&0x0f00)>>8);
-			UINT16 alpha1=priColAlphaPal1&0x8000;
+			bool alpha1=(priColAlphaPal1&0x8000);
+			bool alpha2=(!(priColAlphaPal1&0x1000));
 
+			// Apply sprite bitmap 0 according to priority rules
+			UINT16 coloffs = ((global_priority & 4) == 0) ? 0x800 : 0;
+			bool sprite1_drawn = false;
 			if ((priColAlphaPal0&0xff)!=0)
 			{
 				if ((pri0&0x3)==0 || (pri0&0x3)==1 || ((pri0&0x3)==2 && mixAlphaTilemap))
 				{
 					if (depth == 32)
-						destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						destLine32[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
 					else if (depth < 24)
-						destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						destLine16[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
+					sprite1_drawn = true;
 				}
 				else if ((pri0&0x3)==2) // Spri0 under top playfield
 				{
 					if (tilemapPri[x]<4) {
 						if (depth == 32)
-							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine32[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
 						else if (depth < 24)
-							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine16[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
+						sprite1_drawn = true;
 					}
 				}
 				else // Spri0 under top & middle playfields
 				{
 					if (tilemapPri[x]<2) {
 						if (depth == 32)
-							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine32[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
 						else if (depth < 24)
-							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine16[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
+						sprite1_drawn = true;
 					}
 				}
 			}
+
+			coloffs = (((global_priority & 4) == 0) && sprite1_drawn) ? 0x800 : 0;
+			int alpha = ((!alpha1) || alpha2) ? ace_get_alpha((col1 & 0x8) ? (0x4 + ((col1 & 0x3) / 2)) : ((col1 & 0x7) / 2)) : 0xff;
 
 			// Apply sprite bitmap 1 according to priority rules
 			if (priColAlphaPal1&0xff)
@@ -2975,51 +3012,46 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 				{
 					if (pri1==0 && (((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2))))
 					{
-						if ((global_priority&1)==0 || ((global_priority&1)==1 && tilemapPri[x]<4) || ((global_priority&1)==1 && mixAlphaTilemap)) {
+						if ((global_priority&1)==0 ||
+							((global_priority&1)==1 && tilemapPri[x]<4) ||
+							((global_priority&1)==1 && (mixAlphaTilemap && ((alphaTilemap[x] & 0xf) == 0))))
+							{
 							// usually "shadows" under characters (nslasher)
 							if (depth == 32)
-								destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+								destLine32[x]=alphablend32(destLine32[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 							else if (depth == 16)
-								destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+								destLine16[x]=alphablend16(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 							else if (depth == 15)
-								destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+								destLine16[x]=alphablend15(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 
 						}
 					}
-					else if ((pri1>=2) || (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2)))) {
-						INT32 alpha = 0x7f;
-
-						if (game_select == 2 && (pri1 == 1 || pri1 == 3)) { // nslasher: carriage buggy wheels behind / in front of object
-							UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
-							alpha = (mixAlphaTilemap) ? ((BURN_ENDIAN_SWAP_INT32(m_ace_ram[0x17 + (((priColAlphaPal1&0xf0)>>4)/2)])) * 8)-1 : 0x7f;
-							if (alpha<0)
-								alpha=0;
-						}
+					else if ((pri1>=2) || (pri1 == 1 && ((global_priority & 1) == 0 || tilemapPri[x] < 4)
+										   && ((priColAlphaPal0 & 0xff) == 0 || ((pri0 & 0x3) != 0 && (pri0 & 0x3) != 1 && ((global_priority & 1) == 0 || (pri0 & 0x3) != 2))))) {
 
 						if (depth == 32)
-							destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
+							destLine32[x]=alphablend32(destLine32[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 						else if (depth == 16)
-							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
+							destLine16[x]=alphablend16(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 						else if (depth == 15)
-							destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
+							destLine16[x]=alphablend15(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 					}
 				}
 				else
 				{
 					if ((pri1==0 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0))) || (pri1>=1)) {
 						if (depth == 32)
-							destLine32[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
-						else if (depth < 24)
-							destLine16[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
+							destLine32[x]=alphablend32(destLine32[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
+						else if (depth == 16)
+							destLine16[x]=alphablend16(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
+						else if (depth == 15)
+							destLine16[x]=alphablend15(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 					}
 				}
 			}
 
 			if (mixAlphaTilemap && drawAlphaTilemap)
 			{
-				UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
-				UINT16* alphaTilemap=pTempDraw[2] + y * nScreenWidth;
-
 				UINT16 p=alphaTilemap[x];
 				if (p&0xf)
 				{
@@ -3029,16 +3061,14 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 						&& ((priColAlphaPal1&0xff)==0 || (pri1&0x3)==2 || (pri1&0x3)==3 || alpha1))
 					{
 						/* Alpha values are tied to ACE ram */
-						INT32 alpha=((BURN_ENDIAN_SWAP_INT32(m_ace_ram[0x17 + (((p&0xf0)>>4)/2)])) * 8)-1;
-						if (alpha<0)
-							alpha=0;
+						INT32 alpha_ = ace_get_alpha(0x17 + (((p & 0xf0) >> 4) / 2));
 
 						if (depth == 32)
-							destLine32[x]=alphablend32(destLine32[x], pal2[p], 255-alpha);
+							destLine32[x]=alphablend32(destLine32[x], pal2[coloffs | p], alpha_);
 						else if (depth == 16)
-							destLine16[x]=alphablend16(destLine16[x], pal2[p], 255-alpha);
+							destLine16[x]=alphablend16(destLine16[x], pal2[coloffs | p], alpha_);
 						else if (depth == 15)
-							destLine16[x]=alphablend15(destLine16[x], pal2[p], 255-alpha);
+							destLine16[x]=alphablend15(destLine16[x], pal2[coloffs | p], alpha_);
 
 					}
 				}
@@ -3059,8 +3089,7 @@ static INT32 NslasherDraw()
 
 	UINT32 *ace = (UINT32*)DrvAceRAM;
 
-	INT32 draw_alpha_tmap = 0;
-	INT32 has_alpha = (ace[0x17] && global_priority) ? 1 : 0;
+	INT32 has_alpha = (ace[0x17] && global_priority&3) ? 1 : 0;
 
 	if (global_priority & 2)
 	{
@@ -3075,13 +3104,11 @@ static INT32 NslasherDraw()
 		{
 			if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 2);
 			if (nBurnLayer & 4) deco16_draw_layer(2, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			draw_alpha_tmap = (has_alpha && deco16_layer_enabled(2));
 		}
 		else
 		{
 			if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 2);
 			if (nBurnLayer & 2) deco16_draw_layer(1, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			draw_alpha_tmap = (has_alpha && deco16_layer_enabled(1));
 		}
 	}
 
@@ -3098,7 +3125,7 @@ static INT32 NslasherDraw()
 
 	BurnTransferCopy(DrvPalette);
 
-	mixDualAlphaSprites(has_alpha, draw_alpha_tmap);
+	mixDualAlphaSprites(has_alpha, has_alpha);
 
 	return 0;
 }
@@ -3529,7 +3556,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[2] = { (INT32)((double)7000000 / 57.799650), (INT32)((double)deco16_sound_cpuclock / 57.799650) };
 	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	ArmOpen(0);
 	h6280Open(0);
@@ -3570,6 +3597,8 @@ static INT32 DrvFrame()
 	h6280Close();
 	ArmClose();
 
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnDraw && pDrawScanline == NULL) {
 		BurnDrvRedraw();
 	}
@@ -3603,7 +3632,7 @@ static INT32 DrvZ80Frame()
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[2] = { 7000000 / 60, 3580000 / 60 };
 	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	ArmOpen(0);
 	ZetOpen(0);
@@ -3627,6 +3656,8 @@ static INT32 DrvZ80Frame()
 
 	ZetClose();
 	ArmClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		deco32_z80_sound_update(pBurnSoundOut, nBurnSoundLen);
@@ -3661,7 +3692,7 @@ static INT32 DrvBSMTFrame()
 
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[3] = { 7000000 / 58, 1789790 / 58, 24000000/4 / 58 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles, 0, 0 };
 
 	ArmOpen(0);
 	deco16_vblank = 1;
@@ -3698,6 +3729,8 @@ static INT32 DrvBSMTFrame()
 	}
 
 	ArmClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -3756,6 +3789,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(lightgun_latch);
 		SCAN_VAR(sprite_ctrl);
 		SCAN_VAR(lightgun_port);
+		SCAN_VAR(color_base);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

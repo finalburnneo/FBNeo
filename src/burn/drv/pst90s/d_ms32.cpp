@@ -2289,7 +2289,7 @@ STD_ROM_FN(gametngk)
 
 struct BurnDriver BurnDrvGametngk = {
 	"gametngk", NULL, NULL, NULL, "1995",
-	"The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise (ver 1.0)\0", NULL, "Jaleco", "MegaSystem 32",
+	"The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise (ver 1.0)\0", "imperfect graphics", "Jaleco", "MegaSystem 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, gametngkRomInfo, gametngkRomName, NULL, NULL, NULL, NULL, MS32InputInfo, GametngkDIPInfo,

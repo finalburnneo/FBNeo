@@ -329,7 +329,7 @@ static void DblaxleMakeInputs() // and racingb
 	UINT8 *DrvJoy[3] = { TC0510NIOInputPort0, TC0510NIOInputPort1, TC0510NIOInputPort2 };
 	CompileInput(DrvJoy, (void*)TC0510NIOInput, 3, 8, DrvJoyInit);
 
-	TC0510NIOInput[0] = (TC0510NIOInput[0] & ~0x02) | (BurnShiftInputCheckToggle(TC0220IOCInputPort0[1]) ? 0x00 : 0x02);
+	TC0510NIOInput[0] = (TC0510NIOInput[0] & ~0x02) | (BurnShiftInputCheckToggle(TC0510NIOInputPort0[1]) ? 0x00 : 0x02);
 }
 
 static void EnforceMakeInputs()

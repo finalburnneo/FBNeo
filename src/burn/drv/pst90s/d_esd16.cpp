@@ -378,7 +378,7 @@ static void __fastcall mchampdx_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x50000e:
-			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 6);
+			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 2);
 		return;
 	}
 
@@ -471,10 +471,11 @@ static void __fastcall tangtang_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x50000e:
-			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 6);
+			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 2);
 		return;
 	}
-	return;
+
+	bprintf(0, _T("wb %x %x\n"), address, data);
 }
 
 static void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
@@ -508,6 +509,10 @@ static void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
 			head_layersize = data;
 		return;
 
+		case 0x500000:
+			// nop
+		return;
+
 		case 0x500008:
 			esd16_tilemap0_color = data & 3;
 			flipscreen = data & 0x80;
@@ -523,7 +528,9 @@ static void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
 			*((UINT16*)(DrvVidRAM1 + ofst)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
-	return;
+
+	bprintf(0, _T("ww %x %x\n"), address, data);
+
 }
 
 static UINT8 __fastcall tangtang_read_byte(UINT32 address)
@@ -540,6 +547,7 @@ static UINT8 __fastcall tangtang_read_byte(UINT32 address)
 			return (EEPROMRead() & 1) << 7;
 	}
 
+	bprintf(0, _T("rb %x\n"), address);
 	return 0;
 }
 
@@ -551,6 +559,7 @@ static UINT16 __fastcall tangtang_read_word(UINT32 address)
 		case 0x500004:
 			return DrvInputs[(address - 0x500002) >> 1];
 	}
+	bprintf(0, _T("rw %x\n"), address);
 
 	return 0;
 }
@@ -975,7 +984,7 @@ static void draw_layer_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrol
 {
 	UINT16 *vram = (UINT16*)vidram;
 
-	//scrollx &= 0x3ff; breaks a few frames of scrolling in hedpanic
+	scrollx &= 0x3ff;
 	scrolly &= 0x1ff;
 
 	if (weird_offsets && fg == 0) scrollx += -3; //hedpanic

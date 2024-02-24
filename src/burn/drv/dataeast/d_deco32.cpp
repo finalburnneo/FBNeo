@@ -492,7 +492,7 @@ static UINT8 __fastcall deco32_z80_sound_read(UINT16 address)
 		case 0xd000:
 			deco32_sound_irq &= ~0x02;
 			ZetSetIRQLine(0, (deco32_sound_irq != 0) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-			return deco16_soundlatch; 
+			return deco16_soundlatch;
 	}
 
 	return 0;
@@ -989,13 +989,14 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 	{
 		case 0x1201fc: deco32_soundlatch_write(data); return;
 		case 0x12002c: if (game_select != 1) return; // fghthist only (ignore compiler warning -dink)
-		case 0x150000: // fghthist / nslasher
+		case 0x150000: // fghthist / nslasher / tattass
 			if (game_select == 3) {
 				tattass_control_write(data);
+				global_priority = (data & 3) | (~data & 4); // 3rd bit is inverted in tattass
 			} else {
 				EEPROMWrite(data & 0x20, data & 0x40, data & 0x10);
+				global_priority = data & 7;
 			}
-			global_priority = data & 7;
 		return;
 
 		case 0x140000:
@@ -2259,9 +2260,9 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	deco16Init(0, 0, 1);
 	deco16_dragngun_kludge = 1; // st.3 boss blank tile fix
 	deco16_set_graphics(DrvGfxROM0, 0x020000 * 2, DrvGfxROM1, 0x120000 * 2, DrvGfxROM2, 0x400000 * 1);
-	deco16_set_color_base(0, 0x200);
+	deco16_set_color_base(0, 0x200); // >> 4 internally (bpp shifts)
 	deco16_set_color_base(1, 0x300);
-	deco16_set_color_base(2, 0x400);
+	deco16_set_color_base(2, 0x400); // >> 8 ""
 	deco16_set_color_base(3, 0x400);
 	deco16_set_color_mask(2, 0x003);
 	deco16_set_color_mask(3, 0x003);
@@ -2386,8 +2387,9 @@ static void DrvPaletteUpdate()
 					break;
 			}
 
-			DrvPalette[i] = BurnHighCol(r,g,b,0);
 		}
+
+		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 }
 
@@ -2876,25 +2878,25 @@ static inline UINT32 alphablend32(UINT32 d, UINT32 s, UINT32 p)
 	INT32 a = 255 - p;
 
 	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
-		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+			((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
 }
 
-static UINT32 alphablend16(UINT32 s, UINT32 d, UINT32 p)
+static inline UINT32 alphablend16(UINT32 d, UINT32 s, UINT32 p)
 {
 	p = (p + 2) >> 2;
-	UINT8 a = 63 - p;
+	UINT8 a = 64 - p;
 
 	return (((((s & 0x00f81f) * p) + ((d & 0x00f81f) * a)) & 0x003e07c0) +
-		((((s & 0x0007e0) * p) + ((d & 0x0007e0) * a)) & 0x0001f800)) >> 6;
+			((((s & 0x0007e0) * p) + ((d & 0x0007e0) * a)) & 0x0001f800)) >> 6;
 }
 
-static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
+static inline UINT32 alphablend15(UINT32 d, UINT32 s, UINT32 p)
 {
 	p = (p + 4) >> 3;
-	UINT8 a = 31 - p;
+	UINT8 a = 32 - p;
 
 	return (((((s & 0x007c1f) * p) + ((d & 0x007c1f) * a)) & 0x00f83e0) +
-		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
+			((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
 }
 
 static UINT8 ace_get_alpha(UINT8 val)
@@ -2918,8 +2920,8 @@ static UINT8 ace_get_alpha(UINT8 val)
 
 static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 {
-	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? color_base[1] : 0x600);
-	UINT32 *pal1 = DrvPalette + ((game_select == 2) ? color_base[2] : 0x500);
+	UINT32 *pal0 = DrvPalette + color_base[1];
+	UINT32 *pal1 = DrvPalette + color_base[2];
 	UINT32 *pal2 = DrvPalette;
 
 	INT32 granularity0 = 1<<5;
@@ -2964,6 +2966,10 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 			UINT16 pri1=(priColAlphaPal1&0x6000)>>13;
 			UINT16 col0=((priColAlphaPal0&0x1f00)>>8);
 			UINT16 col1=((priColAlphaPal1&0x0f00)>>8);
+			if (game_select == 3) { // tattass
+				col0=((priColAlphaPal0&0x0f00)>>8); // diff. masks
+				col1=((priColAlphaPal1&0x3f00)>>8);
+			}
 			bool alpha1=(priColAlphaPal1&0x8000);
 			bool alpha2=(!(priColAlphaPal1&0x1000));
 
@@ -3005,6 +3011,11 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 			coloffs = (((global_priority & 4) == 0) && sprite1_drawn) ? 0x800 : 0;
 			int alpha = ((!alpha1) || alpha2) ? ace_get_alpha((col1 & 0x8) ? (0x4 + ((col1 & 0x3) / 2)) : ((col1 & 0x7) / 2)) : 0xff;
 
+			if (game_select == 3) {
+				alpha = ace_get_alpha(col1 / 8);
+				col1 &= 0xf;
+			}
+
 			// Apply sprite bitmap 1 according to priority rules
 			if (priColAlphaPal1&0xff)
 			{
@@ -3028,7 +3039,6 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 					}
 					else if ((pri1>=2) || (pri1 == 1 && ((global_priority & 1) == 0 || tilemapPri[x] < 4)
 										   && ((priColAlphaPal0 & 0xff) == 0 || ((pri0 & 0x3) != 0 && (pri0 & 0x3) != 1 && ((global_priority & 1) == 0 || (pri0 & 0x3) != 2))))) {
-
 						if (depth == 32)
 							destLine32[x]=alphablend32(destLine32[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 						else if (depth == 16)
@@ -3312,8 +3322,6 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 fli
 	}
 }
 
-//extern int counter;
-
 static void dragngun_draw_sprites()
 {
 	const UINT32 *spritedata = (UINT32*)DrvSprBuf;
@@ -3416,6 +3424,7 @@ static void dragngun_draw_sprites()
 					sprite ^= 0xc000;
 				//if (counter) bprintf(0, _T("%X, "), sprite);
 
+				// hack for sprite mask in intro
 				if (sprite >= 0x3e44 && sprite <= 0x3f03 && priority_orig == 1) // dragon-fire masking effect for titlescreen
 					priority = 1; else priority = 7;
 
@@ -3489,7 +3498,7 @@ static INT32 DragngunStartDraw()
 
 	deco16_clear_prio_map();
 
-	BurnTransferClear(0x800);
+	BurnTransferClear(0x400);
 
 	return 0;
 }
@@ -3779,7 +3788,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(DrvOkiBank);
 		SCAN_VAR(global_priority);
-		SCAN_VAR(DrvOkiBank);
 		SCAN_VAR(raster_irq_target);
 		SCAN_VAR(raster_irq_masked);
 		SCAN_VAR(raster_irq);

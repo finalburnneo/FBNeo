@@ -2359,7 +2359,7 @@ struct BurnDriver BurnDrvSuperpac = {
 	"superpac", NULL, NULL, NULL, "1982",
 	"Super Pac-Man\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, superpacRomInfo, superpacRomName, NULL, NULL, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
 	SuperpacInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2392,7 +2392,7 @@ struct BurnDriver BurnDrvSuperpacm = {
 	"superpacm", "superpac", NULL, NULL, "1982",
 	"Super Pac-Man (Midway)\0", NULL, "Namco (Bally Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, superpacmRomInfo, superpacmRomName, NULL, NULL, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
 	SuperpacInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2426,7 +2426,7 @@ struct BurnDriver BurnDrvPacnpal = {
 	"pacnpal", NULL, NULL, NULL, "1983",
 	"Pac & Pal\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, pacnpalRomInfo, pacnpalRomName, NULL, NULL, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2460,7 +2460,7 @@ struct BurnDriver BurnDrvPacnpal2 = {
 	"pacnpal2", "pacnpal", NULL, NULL, "1983",
 	"Pac & Pal (older)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, pacnpal2RomInfo, pacnpal2RomName, NULL, NULL, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2494,7 +2494,7 @@ struct BurnDriver BurnDrvPacnchmp = {
 	"pacnchmp", "pacnpal", NULL, NULL, "1983",
 	"Pac-Man & Chomp Chomp\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, pacnchmpRomInfo, pacnchmpRomName, NULL, NULL, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

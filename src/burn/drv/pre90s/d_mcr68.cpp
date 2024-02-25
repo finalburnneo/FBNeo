@@ -1948,7 +1948,7 @@ struct BurnDriver BurnDrvArchrivl = {
 	"archrivl", NULL, NULL, NULL, "1989",
 	"Arch Rivals (rev 4.0 6/29/89)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, archrivlRomInfo, archrivlRomName, NULL, NULL, NULL, NULL, ArchrivlInputInfo, ArchrivlDIPInfo,
 	ArchrivlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -1996,7 +1996,7 @@ struct BurnDriver BurnDrvArchrivla = {
 	"archrivla", "archrivl", NULL, NULL, "1989",
 	"Arch Rivals (rev 2.0 5/03/89)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, archrivlaRomInfo, archrivlaRomName, NULL, NULL, NULL, NULL, ArchrivlInputInfo, ArchrivlDIPInfo,
 	ArchrivlInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2052,7 +2052,7 @@ struct BurnDriver BurnDrvArchrivlb = {
 	"archrivlb", "archrivl", NULL, NULL, "1989",
 	"Arch Rivals (rev 2.0 5/03/89, 8-way joystick bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, archrivlbRomInfo, archrivlbRomName, NULL, NULL, NULL, NULL, ArchrivlbInputInfo, ArchrivlbDIPInfo,
 	ArchrivlbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2100,7 +2100,7 @@ struct BurnDriver BurnDrvBasketbal = {
 	"basketbal", "archrivl", NULL, NULL, "1989",
 	"Basket Ball (8-way joystick bootleg of Arch Rivals)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, basketbalRomInfo, basketbalRomName, NULL, NULL, NULL, NULL, ArchrivlbInputInfo, ArchrivlbDIPInfo,
 	ArchrivlbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2135,7 +2135,7 @@ struct BurnDriver BurnDrvPigskin = {
 	"pigskin", NULL, NULL, NULL, "1990",
 	"Pigskin 621AD (rev 1.1K 8/01/90)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, pigskinRomInfo, pigskinRomName, NULL, NULL, NULL, NULL, PigskinInputInfo, PigskinDIPInfo,
 	PigskinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2170,7 +2170,7 @@ struct BurnDriver BurnDrvPigskina = {
 	"pigskina", "pigskin", NULL, NULL, "1990",
 	"Pigskin 621AD (rev 2.0 7/06/90)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, pigskinaRomInfo, pigskinaRomName, NULL, NULL, NULL, NULL, PigskinInputInfo, PigskinDIPInfo,
 	PigskinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3
@@ -2205,7 +2205,7 @@ struct BurnDriver BurnDrvPigskinb = {
 	"pigskinb", "pigskin", NULL, NULL, "1990",
 	"Pigskin 621AD (rev 1.1 6/05/90)\0", NULL, "Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, pigskinbRomInfo, pigskinbRomName, NULL, NULL, NULL, NULL, PigskinInputInfo, PigskinDIPInfo,
 	PigskinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	512, 480, 4, 3

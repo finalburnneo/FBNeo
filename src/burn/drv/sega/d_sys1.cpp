@@ -7736,7 +7736,7 @@ struct BurnDriver BurnDrvChoplift = {
 	"choplift", NULL, NULL,  NULL, "1985",
 	"Choplifter (8751 315-5151)\0", NULL, "Sega (licensed from Dan Gorlin)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ChopliftRomInfo, ChopliftRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
 	ChopliftInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7746,7 +7746,7 @@ struct BurnDriver BurnDrvChopliftu = {
 	"chopliftu", "choplift", NULL,  NULL, "1985",
 	"Choplifter (unprotected)\0", NULL, "Sega (licensed from Dan Gorlin)", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ChopliftuRomInfo, ChopliftuRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
 	ChplftbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
@@ -7756,7 +7756,7 @@ struct BurnDriver BurnDrvChopliftbl = {
 	"chopliftbl", "choplift", NULL,  NULL, "1985",
 	"Choplifter (bootleg)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM1, GBF_ACTION | GBF_SHOOT, 0,
 	NULL, ChopliftblRomInfo, ChopliftblRomName, NULL, NULL, NULL, NULL, ChopliftInputInfo, ChopliftDIPInfo,
 	ChplftbInit, System1Exit, System1Frame, System1Render, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3

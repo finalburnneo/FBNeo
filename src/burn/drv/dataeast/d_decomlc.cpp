@@ -1286,7 +1286,7 @@ struct BurnDriver BurnDrvAvengrgs = {
 	"avengrgs", NULL, NULL, NULL, "1995",
 	"Avengers In Galactic Storm (US/Europe 1.0)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, avengrgsRomInfo, avengrgsRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -1328,7 +1328,7 @@ struct BurnDriver BurnDrvAvengrgsj = {
 	"avengrgsj", "avengrgs", NULL, NULL, "1995",
 	"Avengers In Galactic Storm (Japan 1.2)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, avengrgsjRomInfo, avengrgsjRomName, NULL, NULL, NULL, NULL, MlcInputInfo, NULL,
 	AvengrgsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

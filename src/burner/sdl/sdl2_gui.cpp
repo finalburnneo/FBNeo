@@ -7,7 +7,7 @@ extern char videofiltering[3];
 
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128, decocass, midssio, cchip, fdsbios, ngp, bubsys)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
-#define REDUCE_TOTAL_SETS_BIOS		16
+#define REDUCE_TOTAL_SETS_BIOS		21
 #define MAX_STRING_SIZE 300
 // Limit CPU usage
 #define maxfps 20

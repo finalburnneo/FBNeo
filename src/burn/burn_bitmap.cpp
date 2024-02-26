@@ -2,7 +2,7 @@
 
 #include "tiles_generic.h"
 
-#define MAX_BITMAPS			32			// maximum number of 
+#define MAX_BITMAPS			64			// maximum number of
 
 #define FLAG_INITIALIZED	0x01		// flag to ensure this bitmap has been initialized
 #define FLAG_HAS_PRIMAP		0x02		// flat to mark this bitmap has a priority map

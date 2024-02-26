@@ -1460,7 +1460,7 @@ static void system32_main_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xf00000) == 0x300000) {
 		UINT16 *ram = (UINT16*)DrvVidRAM;
-		ram[(address & 0x1ffff) >> 1] = data;
+		ram[(address & 0x1ffff) >> 1] = BURN_ENDIAN_SWAP_INT16(data);
 		mark_dirty((address & 0x1ffff) >> 1);
 		return;
 	}
@@ -1693,7 +1693,7 @@ static UINT16 system32_main_read_word(UINT32 address)
 
 	if ((address & 0xf00000) == 0x300000) {
 		UINT16 *ram = (UINT16*)DrvVidRAM;
-		return ram[(address & 0x1ffff) >> 1];
+		return BURN_ENDIAN_SWAP_INT16(ram[(address & 0x1ffff) >> 1]);
 	}
 
 	if ((address & 0xf00000) == 0x500000) {

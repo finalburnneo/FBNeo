@@ -37,12 +37,13 @@ static UINT8 DrvRecalc;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoy4[16];
 static UINT8 DrvJoyF[16];
 
 static ButtonToggle shifter[2];
 
 static UINT8 DrvDips[1];
-static UINT16 DrvInputs[3];
+static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
 
 static INT32 analog_select;
@@ -56,7 +57,7 @@ static INT32 single_screen = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo BackfireInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
@@ -68,21 +69,22 @@ static struct BurnInputInfo BackfireInputList[] = {
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 //	{"P1 Shift",        BIT_DIGITAL,    DrvJoyF + 0,    "p1 fire 4" },
 
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
 	A("P2 Wheel",       BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 //	{"P2 Shift",        BIT_DIGITAL,    DrvJoyF + 1,    "p2 fire 4" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
-	{"Service Mode",	BIT_DIGITAL,	DrvJoy3 + 3,	"diag"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy4 + 2,	"service"	},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy2 + 3,	"diag"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -90,7 +92,7 @@ STDINPUTINFO(Backfire)
 
 static struct BurnDIPInfo BackfireDIPList[]=
 {
-	DIP_OFFSET(0x17)
+	DIP_OFFSET(0x18)
 	{0x00, 0xff, 0xff, 0x00, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Screen Width"		},
@@ -162,6 +164,8 @@ static void backfire_write_long(UINT32 address, UINT32 data)
 	}
 }
 
+static UINT32 backfire_read_long(UINT32 address); // forward
+
 static UINT8 backfire_read_byte(UINT32 address)
 {
 	Read16Byte(((UINT8*)deco16_pf_control[0]),	0x100000, 0x10001f) // 16-bit
@@ -182,9 +186,15 @@ static UINT8 backfire_read_byte(UINT32 address)
 
 	switch (address)
 	{
-		case 0x190000: return DrvInputs[0];
-		case 0x190002: return DrvInputs[2];
-		case 0x194002: return DrvInputs[1];
+		case 0x190000:
+		case 0x190001:
+		case 0x190002:
+		case 0x190003:
+		case 0x194000:
+		case 0x194001:
+		case 0x194002:
+		case 0x194003:
+			return backfire_read_long(address & ~3) >> ((address & 3) * 8);
 
 		case 0x1c0000: return YMZ280BRead(0);
 		case 0x1c0004: return YMZ280BRead(1);
@@ -194,7 +204,6 @@ static UINT8 backfire_read_byte(UINT32 address)
 
 	return 0;
 }
-
 
 static UINT32 backfire_read_long(UINT32 address)
 {
@@ -217,26 +226,21 @@ static UINT32 backfire_read_long(UINT32 address)
 	switch (address)
 	{
 		case 0x190000: {
-			UINT32 vblnk=0;
-			vblnk ^= 1 << 16;
-
 			if (analog_ready > 0) analog_ready--;
 
-			UINT32 ret = 0;
+			UINT32 ret = 0xfa00ff00;
 			ret |= EEPROMRead() << 24;
 			ret |= (analog_ready == 0) << 26;
-			ret |= (DrvInputs[2] & 0xbf) << 16;
-			ret |= deco16_vblank;
-			ret |= DrvInputs[0];
-			ret |= vblnk;
+			ret |= (DrvInputs[1] & 0xaf) << 16;
+			ret |= ((deco16_vblank) ? 0x50 : 0x00) << 16;
+			ret |= DrvInputs[0] & 0xff;
 			return ret;
 		}
 
 		case 0x194000: {
-			UINT32 ret = 0;
-			ret |= EEPROMRead() << 24;
-			ret |= DrvInputs[1] << 16;
-			ret |= DrvInputs[1] <<  0;
+			UINT32 ret = 0xfff8ff00;
+			ret |= (DrvInputs[3] & 0x07) << 16;
+			ret |= (DrvInputs[2] & 0xff) <<  0;
 			return ret;
 		}
 
@@ -663,32 +667,29 @@ static INT32 DrvFrame()
 	}
 
 	{
-		DrvInputs[0] = 0x00ff;
-		DrvInputs[1] = 0x00ff;
-		DrvInputs[2] = 0xffe7;
+		DrvInputs[0] = 0xff;
+		DrvInputs[1] = 0xff;
+		DrvInputs[2] = 0xff;
+		DrvInputs[3] = 0xff;
 
 		shifter[0].Toggle(DrvJoyF[0]);
 		shifter[1].Toggle(DrvJoyF[1]);
 
-		for (INT32 i = 0; i < 16; i++) {
+		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
-
-		DrvInputs[0] = DrvInputs[0] ^ (DrvJoyF[0]&1); // add p1 shift
-		DrvInputs[1] = DrvInputs[1] ^ (DrvJoyF[1]&1); // add p2 shift
-
-		DrvInputs[2] = (DrvInputs[2] & ~0x8) | ((DrvJoy3[3]^1) << 3);
 	}
 
 	INT32 nTotalCycles = 28000000 / 60;
 
 	ArmOpen(0);
-	deco16_vblank = 0x10;
+	deco16_vblank = 1;
 	ArmRun(nTotalCycles - 2240);
 	ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_AUTO);
-	deco16_vblank = 0x00;
+	deco16_vblank = 0;
 	ArmRun(2240);
 	ArmClose();
 

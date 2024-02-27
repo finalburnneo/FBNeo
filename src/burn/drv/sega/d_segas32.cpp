@@ -1437,6 +1437,7 @@ static inline void mark_dirty(UINT32 offset)
 		for (cache_entry *entry = cache_head; entry != NULL; entry = entry->next) {
 			if (entry->page == (offset >> 9)) {
 				entry->dirty = 1;
+				GenericTilemapSetTileDirty(entry->tmap, offset & 0x1ff);
 			}
 		}
 	}
@@ -1930,7 +1931,6 @@ static tilemap_callback( layer )
 static void tilemap_configure_allocate()
 {
 	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, layer_map_callback, 16, 16, 32, 16);
 	GenericTilemapSetGfx(0, DrvGfxROM[0], 4, 16, 16, graphics_length[0], 0, 0x3ff);
 
 	if (has_gun) {
@@ -1952,6 +1952,9 @@ static void tilemap_configure_allocate()
 		entry->next = cache_head;
 		entry->tmap = tmap;
 		entry->dirty = 1;
+
+		GenericTilemapInit(tmap, TILEMAP_SCAN_ROWS, layer_map_callback, 16, 16, 32, 16);
+		GenericTilemapUseDirtyTiles(tmap);
 
 		BurnBitmapAllocate(32 + tmap, 512, 256, true); // each tmap gets a draw-buffer (speedup)
 
@@ -2795,6 +2798,7 @@ static INT32 find_cache_entry(INT32 page, INT32 bank)
 	entry->page = page;
 	entry->bank = bank;
 	entry->dirty = 1;
+	GenericTilemapAllTilesDirty(entry->tmap);
 
 	prev->next = entry->next;
 	entry->next = cache_head;
@@ -2857,7 +2861,7 @@ static void update_tilemap_zoom(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 
 		if (tilemap_cache->dirty) {
 			tilemap_cache->dirty = 0;
-			GenericTilemapDraw(0, 32 + tilemap_cache->tmap, 0);
+			GenericTilemapDraw(tilemap_cache->tmap, 32 + tilemap_cache->tmap, 0);
 		}
 	}
 
@@ -2977,7 +2981,7 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 
 		if (tilemap_cache->dirty) {
 			tilemap_cache->dirty = 0;
-			GenericTilemapDraw(0, 32 + tilemap_cache->tmap, 0);
+			GenericTilemapDraw(tilemap_cache->tmap, 32 + tilemap_cache->tmap, 0);
 		}
 	}
 

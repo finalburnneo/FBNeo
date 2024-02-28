@@ -1639,6 +1639,8 @@ static struct BurnInputInfo WofsgzbInputList[] =
 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A      , "dip"       }, // 1e
 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C      , "dip"       }, // 1f
 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E      , "dip"       }, // 20
+	{"Dip D"            , BIT_DIPSWITCH, &Cps1QSDip   , "dip"       }, // 21
+	{"Dip Ex"            ,BIT_DIPSWITCH, &VerSwitcher , "dip"       }, // 22
 };
 
 STDINPUTINFO(Wofsgzb)
@@ -4837,6 +4839,8 @@ static struct BurnDIPInfo WofsgzbDIPList[] =
 	{0x00, 0xff, 0xff, 0x00, NULL                      },
 	{0x01, 0xff, 0xff, 0x13, NULL                      },
 	{0x02, 0xff, 0xff, 0x20, NULL                      },
+	{0x03, 0xff, 0xff, 0x00, NULL                      },
+	{0x04, 0xff, 0xff, 0x00, NULL                      },
 
 	// Dip A
 	{0   , 0xfe, 0   , 4   , "Coinage"                 },
@@ -4877,6 +4881,16 @@ static struct BurnDIPInfo WofsgzbDIPList[] =
 	{0x02, 0x01, 0x30, 0x20, "300k"                    },
 	{0x02, 0x01, 0x30, 0x10, "100k"                    },
 	{0x02, 0x01, 0x30, 0x00, "None"                    },
+
+	// Dip D
+	{0   , 0xfe, 0   , 2   , "Sound (Must reload)"     },
+	{0x03, 0x01, 0x01, 0x00, "Original"                },
+	{0x03, 0x01, 0x01, 0x01, "Q Sound"                 },
+
+	// Dip Ex
+	{0   , 0xfe, 0   , 2   , "Scenario (Must reload)"  },
+	{0x04, 0x01, 0x01, 0x00, "Original"                },
+	{0x04, 0x01, 0x01, 0x01, "Wof"                     },
 };
 
 STDDIPINFO(Wofsgzb)
@@ -5126,7 +5140,7 @@ static struct BurnDIPInfo DinoQSoundDIPList[] =
 	{0x1c, 0xff, 0xff, 0x01, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Must reload)"  },
 	{0x1c, 0x01, 0x01, 0x00, "Off"                    },
 	{0x1c, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -5139,7 +5153,7 @@ static struct BurnDIPInfo DinohQSoundDIPList[] =
 	{0x1e, 0xff, 0xff, 0x01, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Must reload)"  },
 	{0x1e, 0x01, 0x01, 0x00, "Off"                    },
 	{0x1e, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -5150,7 +5164,7 @@ static struct BurnDIPInfo PunisherQSoundDIPList[] =
 	{0x14, 0xff, 0xff, 0x01, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Must reload)"  },
 	{0x14, 0x01, 0x01, 0x00, "Off"                    },
 	{0x14, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -5161,7 +5175,7 @@ static struct BurnDIPInfo SlammastQSoundDIPList[] =
 	{0x28, 0xff, 0xff, 0x01, NULL                     },
 
 	// Fake Dip
-	{0   , 0xfe, 0   , 2   , "Q Sound"                },
+	{0   , 0xfe, 0   , 2   , "Q Sound (Must reload)"  },
 	{0x28, 0x01, 0x01, 0x00, "Off"                    },
 	{0x28, 0x01, 0x01, 0x01, "On"                     },
 };
@@ -16288,27 +16302,32 @@ STD_ROM_PICK(Wofahb)
 STD_ROM_FN(Wofahb)
 
 static struct BurnRomInfo wofsgzbRomDesc[] = {
-	{ "p23",	0x080000, 0xd4811b58, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "p22",	0x080000, 0xf99a6fd3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "p21",	0x080000, 0x2c16579e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p23",		0x080000, 0xd4811b58, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p22",		0x080000, 0xf99a6fd3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "p21",		0x080000, 0x2c16579e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "a10",	0x080000, 0x5414122b, BRF_GRA | CPS1_TILES },
-	{ "a11",	0x080000, 0x74bc2116, BRF_GRA | CPS1_TILES },
-	{ "a12",	0x080000, 0x529ee8ef, BRF_GRA | CPS1_TILES },
-	{ "a13",	0x080000, 0x9a951cd8, BRF_GRA | CPS1_TILES },
-	{ "a1",		0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
-	{ "a2",		0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
-	{ "a3",		0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
-	{ "a4",		0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
-	{ "a5",		0x080000, 0x71addda7, BRF_GRA | CPS1_TILES },
-	{ "a6",		0x080000, 0x9ad61056, BRF_GRA | CPS1_TILES },
-	{ "a7",		0x080000, 0x80e231ff, BRF_GRA | CPS1_TILES },
-	{ "a8",		0x080000, 0xb0707469, BRF_GRA | CPS1_TILES },
+	{ "a10",		0x080000, 0x5414122b, BRF_GRA | CPS1_TILES },
+	{ "a11",		0x080000, 0x74bc2116, BRF_GRA | CPS1_TILES },
+	{ "a12",		0x080000, 0x529ee8ef, BRF_GRA | CPS1_TILES },
+	{ "a13",		0x080000, 0x9a951cd8, BRF_GRA | CPS1_TILES },
+	{ "a1",			0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
+	{ "a2",			0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
+	{ "a3",			0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "a4",			0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "a5",			0x080000, 0x71addda7, BRF_GRA | CPS1_TILES },
+	{ "a6",			0x080000, 0x9ad61056, BRF_GRA | CPS1_TILES },
+	{ "a7",			0x080000, 0x80e231ff, BRF_GRA | CPS1_TILES },
+	{ "a8",			0x080000, 0xb0707469, BRF_GRA | CPS1_TILES },
 
-	{ "m9",		0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "m9",			0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "tk2_qa.5k",	0x020000, 0xc9183a0d, BRF_PRG }, // 16
 
-	{ "m18",	0x020000, 0xab740743, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "m19",	0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "m18",		0x020000, 0xab740743, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "m19",		0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "tk2-q1.1k",	0x080000, 0x611268cf, BRF_SND }, // 19
+	{ "tk2-q2.2k",	0x080000, 0x20f55ca9, BRF_SND },
+	{ "tk2-q3.3k",	0x080000, 0xbfcf6f52, BRF_SND },
+	{ "tk2-q4.4k",	0x080000, 0x36642e88, BRF_SND },
 };
 
 STD_ROM_PICK(wofsgzb)
@@ -16342,22 +16361,16 @@ static KabukiDecode KabukiDecodeFunction;
 
 static INT32 GameHasStars = 0;
 
-void wof_patch(void) {
-	if (Cps1QSDip & 1)
-		wof_decode();
+#define qs_patch(Name)		\
+void Name##_patch() {		\
+	if (Cps1QSDip & 1)		\
+		Name##_decode();	\
 }
-void dino_patch(void) {
-	if (Cps1QSDip & 1)
-		dino_decode();
-}
-void punisher_patch(void) {
-	if (Cps1QSDip & 1)
-		punisher_decode();
-}
-void slammast_patch(void) {
-	if (Cps1QSDip & 1)
-		slammast_decode();
-}
+
+qs_patch(wof)
+qs_patch(dino)
+qs_patch(punisher)
+qs_patch(slammast)
 
 struct GameConfig {
 	const char *DriverName;
@@ -16706,7 +16719,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofah"         , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofaha"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofahb"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
-	{ "wofsgzb"		  , CPS_B_21_DEF, mapper_TKSGZB, 0, NULL                },
+	{ "wofsgzb"		  , CPS_B_21_DEF, mapper_TKSGZB, 0, wof_patch           },
 	{ "sfzch"         , CPS_B_21_DEF, mapper_SFZ63B, 0, NULL                },
 	{ "sfzcha"        , CPS_B_21_DEF, mapper_SFZ63B, 0, NULL                },
 	{ "wofch"         , CPS_B_21_DEF, mapper_sfzch , 0, wof_decode          },
@@ -21550,10 +21563,49 @@ static INT32 WofablInit()
 	return nRet;
 }
 
+static void WofsgzbPatchCallback()
+{
+	// QSound
+	if (Cps1Qs) {
+		CpsRom[0x056c] = 0x46;
+
+		// Clearing oki's z80 and samples
+		memset(CpsZRom, 0, 0x010000);
+		memset(CpsAd,   0, 0x040000);
+
+		// Loading QSound's z80
+		BurnLoadRom(CpsZRom,    16, 1);
+		BurnLoadRom(CpsEncZRom, 16, 1);
+
+		// Loading QSound's samples
+		for (INT32 nNum = 0, nIndex = 19; nNum < 4; nNum++, nIndex++) {
+			BurnLoadRom((UINT8*)CpsQSam + 0x080000 * nNum, nIndex, 1);
+		}
+
+	}
+
+	// Scenario: Same as wof
+	if (VerSwitcher & 1) {
+		CpsRom[0xb1b0] = 0x00;
+		*((UINT16*)(CpsRom + 0xb380)) = BURN_ENDIAN_SWAP_INT16(0x2020);
+		*((UINT16*)(CpsRom + 0xb382)) = BURN_ENDIAN_SWAP_INT16(0x522d);
+		*((UINT16*)(CpsRom + 0xb384)) = BURN_ENDIAN_SWAP_INT16(0xff88);
+	}
+}
+
 static INT32 WofsgzbInit()
 {
 	Cps1DrawAtVblank = 1;
 //	CpsBootlegEEPROM = 1;
+
+	Cps1Qs = Cps1QSDip & 1;
+
+	if (Cps1Qs) {
+		CRI.nCpsZRomLen = 0x010000;
+		CRI.nCpsQSamLen = 0x200000;
+	}
+
+	AmendProgRomCallback = WofsgzbPatchCallback;
 
 	return TwelveMhzInit();
 }

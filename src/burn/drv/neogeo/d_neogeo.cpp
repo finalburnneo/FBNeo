@@ -17784,11 +17784,11 @@ struct BurnDriver BurnDrvmslugqy = {
 
 // Metal Slug - Super Vehicle-001 (Item Random FC2, Hack)
 // Modified by Alice
-// 20231215
+// 20240228
 
 static struct BurnRomInfo mslugfc1RomDesc[] = {
 	{ "201-p1fc1.p1",	0x100000, 0xdb8f7d81, 1 | BRF_ESS | BRF_PRG },
-	{ "201-p2fc1.sp2",	0x100000, 0xad244b93, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p2fc1.sp2",	0x100000, 0xf3d34029, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENT
 };
@@ -17797,7 +17797,7 @@ STDROMPICKEXT(mslugfc1, mslugfc1, neogeo)
 STD_ROM_FN(mslugfc1)
 
 struct BurnDriver BurnDrvmslugfc1 = {
-	"mslugfc1", "mslug", "neogeo", NULL, "2023",
+	"mslugfc1", "mslug", "neogeo", NULL, "2024",
 	"Metal Slug - Super Vehicle-001 (Item Random FC2, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,
@@ -17809,11 +17809,11 @@ struct BurnDriver BurnDrvmslugfc1 = {
 
 // Metal Slug - Super Vehicle-001 (Item Random & Powerful Enemy Defense FC2, Hack)
 // Modified by Alice
-// 20231215
+// 20240228
 
 static struct BurnRomInfo mslugfc2RomDesc[] = {
 	{ "201-p1fc2.p1",	0x100000, 0xb079dd40, 1 | BRF_ESS | BRF_PRG },
-	{ "201-p2fc2.sp2",	0x100000, 0xdce6a2de, 1 | BRF_ESS | BRF_PRG },
+	{ "201-p2fc2.sp2",	0x100000, 0x8211a964, 1 | BRF_ESS | BRF_PRG },
 
 	MSLUG_COMPONENT
 };
@@ -17822,7 +17822,7 @@ STDROMPICKEXT(mslugfc2, mslugfc2, neogeo)
 STD_ROM_FN(mslugfc2)
 
 struct BurnDriver BurnDrvmslugfc2 = {
-	"mslugfc2", "mslug", "neogeo", NULL, "2023",
+	"mslugfc2", "mslug", "neogeo", NULL, "2024",
 	"Metal Slug - Super Vehicle-001 (Item Random & Powerful Enemy Defense FC2, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, FBF_MSLUG,

@@ -20710,10 +20710,10 @@ struct BurnDriver BurnDrvmslugdqy = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug (Item Random, Hack)
+// Metal Slug (Item Random, Hack) - 2024-02-27
 
 static struct BurnRomInfo mslugfc1RomDesc[] = {
-	{ "201-p1fc1.p1",	0x200000, 0x2a95ea0a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1fc1.p1",	0x200000, 0x98e45436, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -20732,7 +20732,7 @@ STDROMPICKEXT(mslugfc1, mslugfc1, neogeo)
 STD_ROM_FN(mslugfc1)
 
 struct BurnDriver BurnDrvmslugfc1 = {
-	"mslugfc1", "mslug", "neogeo", NULL, "2023",
+	"mslugfc1", "mslug", "neogeo", NULL, "2024",
 	"Metal Slug (Item Random, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,
@@ -20741,10 +20741,10 @@ struct BurnDriver BurnDrvmslugfc1 = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug (Item Random, Powerful Enemy Defense, Hack)
+// Metal Slug (Item Random, Powerful Enemy Defense, Hack) - 2024-02-27
 
 static struct BurnRomInfo mslugfc2RomDesc[] = {
-	{ "201-p1fc2.p1",	0x200000, 0x87bd758d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1fc2.p1",	0x200000, 0x35cccbb1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "201-s1.s1",		0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -20763,7 +20763,7 @@ STDROMPICKEXT(mslugfc2, mslugfc2, neogeo)
 STD_ROM_FN(mslugfc2)
 
 struct BurnDriver BurnDrvmslugfc2 = {
-	"mslugfc2", "mslug", "neogeo", NULL, "2023",
+	"mslugfc2", "mslug", "neogeo", NULL, "2024",
 	"Metal Slug (Item Random, Powerful Enemy Defense, Hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_RUNGUN, FBF_MSLUG,

@@ -1536,7 +1536,7 @@ static INT32 DrvFrame()
 
 		// Clear Opposites
 		DrvClearOpposites(&DrvInputs[1]);
-		DrvClearOpposites(&DrvInputs[3]);
+		if (f3_game != KAISERKN) DrvClearOpposites(&DrvInputs[3]);
 
 		DrvInputs[1] &= ~0xff00;
 		DrvInputs[4] = (DrvInputs[4] & ~2) | ((DrvSrv[0]) ? 0x00 : 0x02);

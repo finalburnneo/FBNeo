@@ -27645,18 +27645,18 @@ struct BurnDriver BurnDrvsms_fpigarus = {
 	256, 192, 4, 3
 };
 
-// Wing Warriors (HB)
+// Wing Warriors (HB, v1.00 fix)
 
 static struct BurnRomInfo sms_wingwarriorsRomDesc[] = {
-	{ "Wing Warriors (2020)(Kitmaker Ent.).sms",	131072, 0x8c384703, BRF_PRG | BRF_ESS },
+	{ "Wing Warriors v1.00 fix (2020-24)(Kitmaker Ent.).sms",	131072, 0x11d3d834, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_wingwarriors)
 STD_ROM_FN(sms_wingwarriors)
 
 struct BurnDriver BurnDrvsms_wingwarriors = {
-	"sms_wingwarriors", NULL, NULL, NULL, "2020",
-	"Wing Warriors (HB)\0", NULL, "Kitmaker", "Sega Master System",
+	"sms_wingwarriors", NULL, NULL, NULL, "2020-24",
+	"Wing Warriors (HB, v1.00 fix)\0", NULL, "Kitmaker", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
 	SMSGetZipName, sms_wingwarriorsRomInfo, sms_wingwarriorsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

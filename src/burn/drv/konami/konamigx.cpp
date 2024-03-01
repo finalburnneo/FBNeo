@@ -654,6 +654,10 @@ void konamigx_mixer(INT32 sub1 /*extra tilemap 1*/, INT32 sub1flags, INT32 sub2 
 			case 0xf:
 				// viostorm bad shadow grid st.2 fireworks (right side of screen)
 				if (code == 0xe140 && shdpri[0x02] == 0x28) continue;
+
+				// move shadows 1-pri behind sprites (first mid-boss, boss, throwing multiple enemies on train platform)
+				// note: this doesn't affect the fireworks
+				spri++;
 			break;
 
 			// Dadandarn zcode suppression

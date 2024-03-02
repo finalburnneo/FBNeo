@@ -1683,7 +1683,6 @@ static INT32 DrvFrame()
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nExtraCycles[1]); // because timer(!)
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1694,7 +1693,6 @@ static INT32 DrvFrame()
 	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
 
 	ZetClose();
 	SekClose();

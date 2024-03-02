@@ -29,7 +29,7 @@ static INT8 nIRQPending;
 
 static INT32 nCyclesTotal[2];
 static INT32 nCyclesDone[2];
-static INT32 nCyclesExtra[2];
+static INT32 nCyclesExtra;
 
 static INT32 SoundLatch;
 static INT32 SoundLatchReply[48];
@@ -439,7 +439,7 @@ static INT32 DrvDoReset()
 	DrvZ80Bank = 0;
 	NMK112Reset();
 
-	nCyclesExtra[0] = nCyclesExtra[1] = 0;
+	nCyclesExtra = 0;
 
 	clear_opposite.reset();
 
@@ -512,11 +512,9 @@ static INT32 DrvFrame()
 	SekOpen(0);
 	ZetOpen(0);
 
-	ZetIdle(nCyclesExtra[1]); // using timer, must idle extra cycles (timer syncs to cpuTotalCycles()!)
-
 	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
 	nCyclesTotal[1] = (INT32)(8000000 / CAVE_REFRESHRATE);
-	nCyclesDone[0] = nCyclesExtra[0];
+	nCyclesDone[0] = nCyclesExtra;
 	nCyclesDone[1] = 0;
 
 	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
@@ -552,8 +550,7 @@ static INT32 DrvFrame()
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 	}
 	
-    nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nCyclesExtra[1] = ZetTotalCycles() - nCyclesTotal[1];
+    nCyclesExtra = nCyclesDone[0] - nCyclesTotal[0];
 	SekClose();
 	
 	BurnTimerEndFrame(nCyclesTotal[1]);

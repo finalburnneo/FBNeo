@@ -2171,7 +2171,6 @@ static INT32 DrvFrame()
 	VezOpen(0);
 	ZetOpen(0);
 	VezIdle(nExtraCycles[0]); // for mcu sync to nec
-	ZetIdle(nExtraCycles[1]); // using timer
 	if (use_mcu) {
 		mcs51Idle(nExtraCycles[2]);
 	}
@@ -2207,7 +2206,6 @@ static INT32 DrvFrame()
 	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
 	if (use_mcu) nExtraCycles[2] = mcs51TotalCycles() - nCyclesTotal[2];
 
 	//if (use_mcu) bprintf(0, _T("mcu %d  v30 %d  mcutotalcyc  %d   nectotalcyc  %d\n"), nExtraCycles[2], nExtraCycles[0], mcs51TotalCycles(), VezTotalCycles());

@@ -24,7 +24,7 @@ static UINT8 *DrvShareRAM1;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 nExtraCycles[2];
+static INT32 nExtraCycles;
 
 static UINT8 scrollx;
 static UINT8 scrollx_shifted;
@@ -320,7 +320,7 @@ static INT32 DrvDoReset()
 	cpu_status = 0;
 	flipscreen = 0;
 
-	nExtraCycles[0] = nExtraCycles[1] = 0;
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -563,8 +563,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
-	ZetIdle(0, nExtraCycles[0]); // syncint
-	ZetIdle(1, nExtraCycles[1]); // timer
+	ZetIdle(0, nExtraCycles); // syncint
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -591,8 +590,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	nExtraCycles[0] = ZetTotalCycles(0) - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles(1) - nCyclesTotal[1];
+	nExtraCycles = ZetTotalCycles(0) - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);

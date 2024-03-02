@@ -45,7 +45,7 @@ static UINT8 *soundlatch2;
 
 static INT32 nGame;
 
-static INT32 nExtraCycles[2];
+static INT32 nExtraCycles;
 
 static struct BurnInputInfo McatadvInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"	},
@@ -339,8 +339,7 @@ static void sound_bankswitch(INT32 data)
 {
 	*nDrvZ80Bank = data;
 
-	ZetMapArea(0x4000 << nGame, 0xbfff, 0, DrvZ80ROM + (data * 0x4000));
-	ZetMapArea(0x4000 << nGame, 0xbfff, 2, DrvZ80ROM + (data * 0x4000));
+	ZetMapMemory(DrvZ80ROM + (data * 0x4000), 0x4000 << nGame, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall mcatadv_sound_write(UINT16 address, UINT8 data)
@@ -466,10 +465,10 @@ static INT32 MemIndex()
 	DrvSprRAM		= Next; Next += 0x010000;
 	DrvSprBuf		= Next; Next += 0x008000;
 
-	DrvScrollRAM0		= (UINT16*)Next; Next += 0x000004 * sizeof(UINT16);
-	DrvScrollRAM1		= (UINT16*)Next; Next += 0x000004 * sizeof(UINT16);
+	DrvScrollRAM0	= (UINT16*)Next; Next += 0x000004 * sizeof(UINT16);
+	DrvScrollRAM1	= (UINT16*)Next; Next += 0x000004 * sizeof(UINT16);
 	DrvVidRegs		= (UINT16*)Next; Next += 0x000008 * sizeof(UINT16);
-	DrvVidRegBuf		= (UINT16*)Next; Next += 0x000008 * sizeof(UINT16);
+	DrvVidRegBuf	= (UINT16*)Next; Next += 0x000008 * sizeof(UINT16);
 
 	nDrvZ80Bank		= Next; Next += 0x000001;
 	soundlatch		= Next; Next += 0x000001;
@@ -500,7 +499,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnWatchdogReset();
 	BurnWatchdogRead(); // needs watchdog on by default
 
-	nExtraCycles[0] = nExtraCycles[1] = 0;
+	nExtraCycles = 0;
 
 	HiscoreReset();
 
@@ -566,11 +565,8 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xdfff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xdfff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xdfff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xdfff, MAP_RAM);
 	ZetSetWriteHandler(mcatadv_sound_write);
 	ZetSetReadHandler(mcatadv_sound_read);
 	ZetSetInHandler(mcatadv_sound_in);
@@ -824,9 +820,6 @@ static INT32 DrvDraw()
 
 	draw_sprites();
 
-	memcpy (DrvSprBuf, DrvSprRAM, 0x08000);
-	memcpy (DrvVidRegBuf, DrvVidRegs, 0x08 * sizeof(UINT16));
-
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -851,7 +844,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
-	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 	INT32 nInterleave = 30;
 
 	SekNewFrame();
@@ -859,27 +852,29 @@ static INT32 DrvFrame()
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nExtraCycles[1]); // because timer(!)
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		CPU_RUN(0, Sek);
 		CPU_RUN_TIMER(1);
 	}
+
 	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+
+	ZetClose();
+	SekClose();
 
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = ZetTotalCycles() - nCyclesTotal[1];
-
-	ZetClose();
-	SekClose();
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+
+	memcpy (DrvSprBuf, DrvSprRAM, 0x08000);
+	memcpy (DrvVidRegBuf, DrvVidRegs, 0x08 * sizeof(UINT16));
 
 	return 0;
 }

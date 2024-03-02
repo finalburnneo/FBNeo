@@ -438,8 +438,10 @@ static struct BurnInputInfo HwchampInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL   , System16InputPort0 + 0, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL   , System16InputPort0 + 4, "p1 start"  },
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Left"             , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
-	A("Right"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
+	A("Punch Left"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Punch Right"      , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
+	A("Block Left/Right" , BIT_ANALOG_REL, &System16AnalogPort3,   "p1 fire 3"  ),
+	A("Block Up/Down"    , BIT_ANALOG_REL, &System16AnalogPort4,   "p1 fire 4"  ),
 
 	{"P2 Coin"           , BIT_DIGITAL   , System16InputPort0 + 1, "p2 coin"   },
 	{"P2 Start"          , BIT_DIGITAL   , System16InputPort0 + 5, "p2 start"  },
@@ -1447,37 +1449,35 @@ STDDIPINFO(Goldnaxe)
 
 static struct BurnDIPInfo HwchampDIPList[]=
 {
-	// Default Values
-	{0x0a, 0xff, 0xff, 0xf9, NULL                                 },
-	{0x0b, 0xff, 0xff, 0xff, NULL                                 },
+	DIP_OFFSET(0x0c)
+	{0x00, 0xff, 0xff, 0xff, NULL                                 },
+	{0x01, 0xff, 0xff, 0xf0, NULL                                 },
 
-	// Dip 1
+	SYSTEM16B_COINAGE(0x00)
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
-	{0x0a, 0x01, 0x02, 0x02, "Off"                                },
-	{0x0a, 0x01, 0x02, 0x00, "On"                                 },
+	{0x01, 0x01, 0x02, 0x02, "Off"                                },
+	{0x01, 0x01, 0x02, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Start Level Select"                 },
-	{0x0a, 0x01, 0x04, 0x04, "Off"                                },
-	{0x0a, 0x01, 0x04, 0x00, "On"                                 },
+	{0x01, 0x01, 0x04, 0x04, "Off"                                },
+	{0x01, 0x01, 0x04, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"                     },
-	{0x0a, 0x01, 0x08, 0x08, "Off"                                },
-	{0x0a, 0x01, 0x08, 0x00, "On"                                 },
+	{0x01, 0x01, 0x08, 0x08, "Off"                                },
+	{0x01, 0x01, 0x08, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
-	{0x0a, 0x01, 0x30, 0x20, "Easy"                               },
-	{0x0a, 0x01, 0x30, 0x30, "Normal"                             },
-	{0x0a, 0x01, 0x30, 0x10, "Hard"                               },
-	{0x0a, 0x01, 0x30, 0x00, "Hardest"                            },
+	{0x01, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x01, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x01, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x01, 0x01, 0x30, 0x00, "Hardest"                            },
 
 	{0   , 0xfe, 0   , 4   , "Time Adjust"                        },
-	{0x0a, 0x01, 0xc0, 0x80, "Easy"                               },
-	{0x0a, 0x01, 0xc0, 0xc0, "Normal"                             },
-	{0x0a, 0x01, 0xc0, 0x40, "Hard"                               },
-	{0x0a, 0x01, 0xc0, 0x00, "Hardest"                            },
-
-	// Dip 2
-	SYSTEM16B_COINAGE(0x0b)
+	{0x01, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x01, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x01, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x01, 0x01, 0xc0, 0x00, "Hardest"                            },
 };
 
 STDDIPINFO(Hwchamp)
@@ -7606,14 +7606,36 @@ static UINT8 HwchampReadIO(UINT32 offset)
 
 		case 0x1810:
 		case 0x1811:
-		case 0x1812:
-		case 0x1818:
-		case 0x1819:
-		case 0x181a: {
+		case 0x1812: {
 			result = (HwchampInputVal & 0x80) >> 7;
 			HwchampInputVal <<= 1;
 			return result & 0xff;
 		}
+		case 0x1818:
+		case 0x1819:
+		case 0x181a: {
+			UINT8 lr = ProcessAnalog(System16AnalogPort3, 0, INPUT_DEADZONE, 0x00, 0xff);
+			UINT8 ud = ProcessAnalog(System16AnalogPort4, 0, INPUT_DEADZONE, 0x00, 0xff);
+
+			result = 0x00;
+
+			if (ud > 0xa0) { // up
+				if (lr > 0xa0) {
+					result |= 1; // right
+				} else if (lr < 0x60) {
+					result |= 4; // left
+				}
+			} else if (ud < 0x60) { // down
+				if (lr > 0xa0) {
+					result |= 2; // right
+				} else if (lr < 0x60) {
+					result |= 8; // left
+				}
+			}
+
+			return result;
+		}
+
 	}
 
 	return sega_315_5195_io_read(offset);
@@ -7621,31 +7643,22 @@ static UINT8 HwchampReadIO(UINT32 offset)
 
 static void HwchampWriteIO(UINT32 offset, UINT8 d)
 {
-	UINT8 temp = 0;
-
 	switch (offset) {
 		case 0x1810:
 		case 0x1818: {
-			temp = 0x80 + (System16AnalogPort0 >> 4);
-			if (temp < 0x01) temp = 0x01;
-			if (temp > 0xfe) temp = 0xfe;
-			HwchampInputVal = temp;
+			HwchampInputVal = ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x00, 0xff);
 			return;
 		}
 
 		case 0x1811:
 		case 0x1819: {
-			temp = 0x26;
-			if (System16AnalogPort2 > 1) temp = 0xfe;
-			HwchampInputVal = temp;
+			HwchampInputVal = ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x20, 0xff);
 			return;
 		}
 
 		case 0x1812:
 		case 0x181a: {
-			temp = 0x26;
-			if (System16AnalogPort1 > 1) temp = 0xfe;
-			HwchampInputVal = temp;
+			HwchampInputVal = ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x20, 0xff);
 			return;
 		}
 	}

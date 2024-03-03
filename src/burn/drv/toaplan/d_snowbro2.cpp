@@ -21,6 +21,8 @@ static INT32 nColCount = 0x0800;
 
 static UINT8 DrvReset = 0;
 
+static HoldCoin<2> hold_coin;
+
 static struct BurnInputInfo snowbro2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
 	{"P1 Start",	BIT_DIGITAL,	DrvButton + 5,	"p1 start"},
@@ -339,6 +341,8 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 	BurnYM2151Reset();
 
+	hold_coin.reset();
+
 	HiscoreReset();
 
 	return 0;
@@ -381,6 +385,9 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInput[1]);
 	ToaClearOpposites(&DrvInput[6]);
 	ToaClearOpposites(&DrvInput[7]);
+
+	hold_coin.check(0, DrvInput[2], 1 << 3, 1);
+	hold_coin.check(1, DrvInput[2], 1 << 4, 1);
 
 	SekNewFrame();
 
@@ -498,6 +505,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ToaScanGP9001(nAction, pnMin);
 
 		SCAN_VAR(DrvInput);
+
+		hold_coin.scan();
 	}
 	return 0;
 }

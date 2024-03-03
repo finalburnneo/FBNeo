@@ -4411,23 +4411,22 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		INT32 scanline = (i + 224) % 262;
+
 		INT32 cyc = v60TotalCycles();
 
-		if (i == 224) {
-			if (pBurnDraw) {
-				BurnDrvRedraw();
-			}
+		if (scanline == 224) {
 			signal_v60_irq(MAIN_IRQ_VBSTART);
 
 			if (system32_prot_vblank)
 				system32_prot_vblank();
 		}
 
-		if (i == 0) {
+		if (scanline == 0) {
 			signal_v60_irq(MAIN_IRQ_VBSTOP);
 		}
 
-		if (i == 1) {
+		if (scanline == 1) {
 			update_sprites();
 		}
 
@@ -4458,10 +4457,12 @@ static INT32 DrvFrame()
 
 		if (use_v25) CPU_RUN(1, Vez);
 
-		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
+		CPU_RUN_TIMER(2);
 	}
 
-	BurnTimerEndFrame(nCyclesTotal[2]);
+	ZetClose();
+	if (use_v25) VezClose();
+	v60Close();
 
 	if (pBurnSoundOut) {
 		BurnYM3438Update(pBurnSoundOut, nBurnSoundLen);
@@ -4472,9 +4473,9 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetClose();
-	if (use_v25) VezClose();
-	v60Close();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	nExtraCycles[1] = (use_v25) ? (nCyclesDone[1] - nCyclesTotal[1]) : 0;
@@ -4904,7 +4905,7 @@ static INT32 ArabfgtInit()
 
 struct BurnDriver BurnDrvArabfgt = {
 	"arabfgt", NULL, NULL, NULL, "1991",
-	"Arabian Fight (World)\0", NULL, "Sega", "System 32",
+	"Arabian Fight (World)\0", "imperfect graphics", "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM32, GBF_SCRFIGHT, 0,
 	NULL, arabfgtRomInfo, arabfgtRomName, NULL, NULL, NULL, NULL, ArabfgtInputInfo, ArabfgtDIPInfo,
@@ -4945,7 +4946,7 @@ STD_ROM_FN(arabfgtu)
 
 struct BurnDriver BurnDrvArabfgtu = {
 	"arabfgtu", "arabfgt", NULL, NULL, "1991",
-	"Arabian Fight (US)\0", NULL, "Sega", "System 32",
+	"Arabian Fight (US)\0", "imperfect graphics", "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM32, GBF_SCRFIGHT, 0,
 	NULL, arabfgtuRomInfo, arabfgtuRomName, NULL, NULL, NULL, NULL, ArabfgtuInputInfo, ArabfgtuDIPInfo,
@@ -4986,7 +4987,7 @@ STD_ROM_FN(arabfgtj)
 
 struct BurnDriver BurnDrvArabfgtj = {
 	"arabfgtj", "arabfgt", NULL, NULL, "1991",
-	"Arabian Fight (Japan)\0", NULL, "Sega", "System 32",
+	"Arabian Fight (Japan)\0", "imperfect graphics", "Sega", "System 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_SEGA_SYSTEM32, GBF_SCRFIGHT, 0,
 	NULL, arabfgtjRomInfo, arabfgtjRomName, NULL, NULL, NULL, NULL, ArabfgtInputInfo, ArabfgtDIPInfo,

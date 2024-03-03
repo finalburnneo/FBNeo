@@ -5391,6 +5391,43 @@ struct BurnDriver BurnDrvBubblemj = {
 };
 
 
+// Bubble Memories: Black Edition (hack, rtw, MetalliC)
+static struct BurnRomInfo bubblembeRomDesc[] = {
+	{ "e21-21.20",		0x080000, 0xc4a1e3c2, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e21-20.19",		0x080000, 0xbd9c3812, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e21-19.18",		0x080000, 0xc5a6ec87, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e21-18.17",		0x080000, 0xa15e492d, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "e21-02.rom",		0x200000, 0xb7cb9232, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e21-01.rom",		0x200000, 0xa11f2f99, TAITO_SPRITESA_BYTESWAP },  //  5
+
+	{ "e21-07.rom",		0x100000, 0x7789bf7c, TAITO_CHARS_BYTESWAP },     //  6 Layer Tiles
+	{ "e21-06.rom",		0x100000, 0x997fc0d7, TAITO_CHARS_BYTESWAP },     //  7
+	{ "e21-05.rom",		0x100000, 0x07eab58f, TAITO_CHARS },              //  8
+
+	{ "e21-12.32",		0x040000, 0x34093de1, TAITO_68KROM2_BYTESWAP },   //  9 68k Code
+	{ "e21-13.33",		0x040000, 0x9e9ec437, TAITO_68KROM2_BYTESWAP },   // 10
+
+	{ "e21-03.rom",		0x200000, 0x54c5f83d, TAITO_ES5505_BYTESWAP },    // 11 Ensoniq Samples
+	{ "e21-04.rom",		0x200000, 0xe5af2a2d, TAITO_ES5505_BYTESWAP },    // 12
+
+	{ "bubblem.nv",		0x000080, 0x9a59326e, TAITO_DEFAULT_EEPROM },     // 13 eeprom
+};
+
+STD_ROM_PICK(bubblembe)
+STD_ROM_FN(bubblembe)
+
+struct BurnDriver BurnDrvBubblembe = {
+	"bubblembe", "bubblem", NULL, NULL, "2020",
+	"Bubble Memories: Black Edition (Hack)\0", NULL, "rtw, MetalliC", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, bubblembeRomInfo, bubblembeRomName, NULL, NULL, NULL, NULL, F3InputInfo, F3DIPInfo,
+	bubblemInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
 // Cleopatra Fortune (Ver 2.1J 1996/09/05)
 
 static struct BurnRomInfo cleopatrRomDesc[] = {

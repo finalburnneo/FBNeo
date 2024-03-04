@@ -2922,6 +2922,22 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+void clear_opposites_viostorm(UINT16 &ipt)
+{
+	if ((ipt & 0x0003) == 0x0000) {
+		ipt |= 0x0003;
+	}
+	if ((ipt & 0x000c) == 0x0000) {
+		ipt |= 0x000c;
+	}
+	if ((ipt & 0x0300) == 0x0000) {
+		ipt |= 0x0300;
+	}
+	if ((ipt & 0x0c00) == 0x0000) {
+		ipt |= 0x0c00;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -2937,6 +2953,12 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
+
+		if (nGame == 3) { // viostorm
+			clear_opposites_viostorm(DrvInputs[2]);
+			clear_opposites_viostorm(DrvInputs[3]);
+		}
+
 
 		DrvInputs[1] = DrvDips[0] | (DrvInputs[1] & 0xff00) | 2;
 		if (nGame == 1) DrvInputs[0] &= 0xff;

@@ -13,6 +13,8 @@ extern INT32 nReplayUndoCount;
 extern UINT32 nReplayCurrentFrame;
 extern UINT32 nStartFrame;
 
+bool bWithEEPROM = false; // used at beginning of a movie playback or record, to embed EEPROM (which is usually saved as a file)
+
 // If bAll=0 save/load all non-volatile ram to .fs
 // If bAll=1 save/load all ram to .fs
 
@@ -32,8 +34,10 @@ static INT32 StateInfo(int* pnLen, int* pnMinVer, INT32 bAll, INT32 bRead = 1)
 	nTotalLen = 0;
 	BurnAcb = StateLenAcb;
 
+	UINT32 nAddEEPROM = (bWithEEPROM) ? ACB_EEPROM : 0;
+
 	// we need to know the read/write context here, otherwise drivers like ngp won't return anything -barbudreadmon
-	BurnAreaScan(ACB_NVRAM | (bRead ? ACB_READ : ACB_WRITE), &nMin);						// Scan nvram
+	BurnAreaScan(ACB_NVRAM | nAddEEPROM | (bRead ? ACB_READ : ACB_WRITE), &nMin);						// Scan nvram
 	if (bAll) {
 		INT32 m;
 		BurnAreaScan(ACB_MEMCARD | (bRead ? ACB_READ : ACB_WRITE), &m);					// Scan memory card

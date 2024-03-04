@@ -34,6 +34,7 @@ void StateRunAheadLoad();
 
 #define ACB_MEMORY_ROM			(1<<2)
 #define ACB_NVRAM				(1<<3)
+#define ACB_EEPROM              (1<<10) // for recordings (eeprom embed)
 #define ACB_MEMCARD				(1<<4)
 #define ACB_MEMCARD_ACTION		(1<<14) // Insertion / Removal action
 #define ACB_MEMORY_RAM			(1<<5)

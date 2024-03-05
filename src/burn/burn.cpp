@@ -1069,7 +1069,7 @@ INT32 BurnByteswap(UINT8* pMem, INT32 nLen)
 
 // useful for expanding 4bpp pixels packed into one byte using little to-no
 // extra memory.
-// use 'swap' to swap whether the high or low nibble goes into byte 0 or 1
+// use 'swap' (1) to swap whether the high or low nibble goes into byte 0 or 1
 // 'nxor' is useful for inverting the data
 // this is an example of a graphics decode that can be converted to use this
 // function:
@@ -1089,12 +1089,14 @@ void BurnNibbleExpand(UINT8 *source, UINT8 *dst, INT32 length, INT32 swap, UINT8
 		return;
 	}
 
-	swap = swap ? 1 : 0;
+	int swap_src = (swap & 2) >> 1; // swap src
+	swap &= 1; // swap nibble
+
 	if (dst == NULL) dst = source;
 
 	for (INT32 i = length - 1; i >= 0; i--)
 	{
-		INT32 t = source[i] ^ nxor;
+		INT32 t = source[i ^ swap_src] ^ nxor;
 		dst[(i * 2 + 0) ^ swap] = t >> 4;
 		dst[(i * 2 + 1) ^ swap] = t & 0xf;
 	}

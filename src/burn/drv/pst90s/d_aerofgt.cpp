@@ -3121,10 +3121,10 @@ static INT32 AerofgtbInit()
 
 		if (BurnLoadRom(DrvSndROM[1]  + 0x000000, k++, 1)) return 1;
 
-		BurnNibbleExpand(DrvGfxROM[0], NULL, 0x080000, 0, 0);
-		BurnNibbleExpand(DrvGfxROM[1], NULL, 0x080000, 0, 0);
-		BurnNibbleExpand(DrvGfxROM[2], NULL, 0x100000, 0, 0);
-		BurnNibbleExpand(DrvGfxROM[3], NULL, 0x080000, 0, 0);
+		BurnNibbleExpand(DrvGfxROM[0], NULL, 0x080000, 1, 0);
+		BurnNibbleExpand(DrvGfxROM[1], NULL, 0x080000, 1, 0);
+	    BurnNibbleExpand(DrvGfxROM[2], NULL, 0x100000, 1|2, 0);
+		BurnNibbleExpand(DrvGfxROM[3], NULL, 0x080000, 1|2, 0);
 	}
 
 	SekInit(0, 0x68000);
@@ -3135,21 +3135,21 @@ static INT32 AerofgtbInit()
 	SekMapMemory(DrvWRAM[1],		0x0d2000, 0x0d3fff, MAP_RAM);
 	SekMapMemory(DrvSprLutRAM[0],	0x0e0000, 0x0e3fff, MAP_RAM);
 	SekMapMemory(DrvSprLutRAM[1],	0x0e4000, 0x0e7fff, MAP_RAM);
-	SekMapMemory(DrvExtraRAM,		0xff8000, 0xffbfff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0xffc000, 0xffcfff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0xffd000, 0xffdfff, MAP_RAM);
-	SekMapMemory(DrvRasterRAM,		0xfff000, 0xffffff, MAP_RAM);
+	SekMapMemory(DrvExtraRAM,		0x0f8000, 0x0fbfff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,			0x0fc000, 0x0fcfff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,			0x0fd000, 0x0fdfff, MAP_RAM);
+	SekMapMemory(DrvRasterRAM,		0x0ff000, 0x0fffff, MAP_RAM);
 	SekSetWriteWordHandler(0,		turbofrc_main_write_word);
 	SekSetWriteByteHandler(0,		turbofrc_main_write_byte);
 	SekSetReadWordHandler(0,		aerofgtb_main_read_word);
 	SekSetReadByteHandler(0,		aerofgtb_main_read_byte);
 
-	install_palette_handler(0xffd000, 0xffdfff);
+	install_palette_handler(0x0fd000, 0x0fdfff);
 	SekClose();
 
 	standard_sound_system(1, 0x040000, 0x100000);
 
-	screen_offsets[0] = -8;
+	screen_offsets[0] = -12;
 	screen_offsets[1] = 0;
 
 	GenericTilesInit();
@@ -3163,6 +3163,10 @@ static INT32 AerofgtbInit()
 	GenericTilemapSetTransparent(1, 0xf);
 	GenericTilemapBuildSkipTable(1, 1, 0xf);
 	GenericTilemapSetScrollRows(0, 512);
+
+	// sprite offsets slightly diff. from tilemaps
+	screen_offsets[0] = -9;
+	screen_offsets[1] = -1;
 
 	DrvDoReset();
 
@@ -4337,7 +4341,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { (INT32)(((INT64)10000000 * 100 * nBurnCPUSpeedAdjust) / (0x100 * nBurnFPS)), (zet_frequency * 100) / nBurnFPS };
+	INT32 nCyclesTotal[2] = { BurnSpeedAdjust(10000000 / 60), zet_frequency / 60 };
 	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	SekOpen(0);

@@ -14260,7 +14260,7 @@ static struct BurnRomInfo Ffightaec2RomDesc[] = {
 STD_ROM_PICK(Ffightaec2)
 STD_ROM_FN(Ffightaec2)
 
-static INT32 ffightaec2Init() // 200% speed, Zombie Master recomendation...
+static INT32 ffightaec2Init()
 {
 	INT32 nRet = PhoenixInit();
 	

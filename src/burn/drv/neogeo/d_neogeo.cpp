@@ -5857,7 +5857,7 @@ static struct BurnRomInfo mslug2ctRomDesc[] = {
 STDROMPICKEXT(mslug2ct, mslug2ct, neogeo)
 STD_ROM_FN(mslug2ct)
 
-static INT32 ngOc180taInit() // 180% speed, AliceMSU recomendation for mslug2t, mslug2ct, mslug5x
+static INT32 ngOc180taInit()
 {
  	INT32 nRet = NeoInit();
 	
@@ -20689,7 +20689,7 @@ static struct BurnRomInfo mslugdqyRomDesc[] = {
 STDROMPICKEXT(mslugdqy, mslugdqy, neogeo)
 STD_ROM_FN(mslugdqy)
 
-static INT32 ngOc400osInit() // 400% speed, AliceMSU recomendation for mslugdqy, mslug3cq
+static INT32 ngOc400osInit()
 {
  	INT32 nRet = NeoInit();
 	
@@ -21055,12 +21055,12 @@ struct BurnDriver BurnDrvMSlugX2r1v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug X (Legendary, Hack) - 2024-02-01
+// Metal Slug X (Legendary, Hack) - 2024-03-06
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslugxscRomDesc[] = {
-	{ "250-p1sc.p1",    0x100000, 0x52120338, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "250-p2sc.ep1",   0x400000, 0x006cc14b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "250-p1sc.p1",    0x100000, 0xccb23f6a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "250-p2sc.ep1",   0x400000, 0xd4b8511b, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "250-s1sc.s1",    0x020000, 0x03bce893, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -21068,8 +21068,8 @@ static struct BurnRomInfo mslugxscRomDesc[] = {
 	{ "250-c2.c2",      0x800000, 0x31679821, 3 | BRF_GRA },           //  4
 	{ "250-c3sc.c3",    0x800000, 0x917f95c5, 3 | BRF_GRA },           //  5
 	{ "250-c4sc.c4",    0x800000, 0x93290f81, 3 | BRF_GRA },           //  6
-	{ "250-c5sc.c5",    0x800000, 0x5fd01617, 3 | BRF_GRA },           //  7
-	{ "250-c6sc.c6",    0x800000, 0x30ff06cc, 3 | BRF_GRA },           //  8
+	{ "250-c5sc.c5",    0x800000, 0xa3b56ab4, 3 | BRF_GRA },           //  7
+	{ "250-c6sc.c6",    0x800000, 0xac06c7bb, 3 | BRF_GRA },           //  8
 
 	{ "250-m1.m1",      0x020000, 0xfd42a842, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
 
@@ -21327,12 +21327,12 @@ struct BurnDriver BurnDrvmslug31v2 = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Metal Slug 3 (Legendary, Hack) - 2024-01-31
+// Metal Slug 3 (Legendary, Hack) - 2024-03-06
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug3cqRomDesc[] = {
-	{ "256-ph1cq.p1",    0x100000, 0x44ac1146, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-ph2cq.sp2",   0x400000, 0xe99d3a3a, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "256-ph1cq.p1",    0x100000, 0x72eb3b34, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-ph2cq.sp2",   0x400000, 0x5c7c454b, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "256-c1d.c1",      0x800000, 0x3540398c, 3 | BRF_GRA },           //  2 Sprite data
 	{ "256-c2d.c2",      0x800000, 0xbdd220f0, 3 | BRF_GRA },           //  3
@@ -21340,8 +21340,8 @@ static struct BurnRomInfo mslug3cqRomDesc[] = {
 	{ "256-c4d.c4",      0x800000, 0x1463add6, 3 | BRF_GRA },           //  5
 	{ "256-c5d.c5",      0x800000, 0x48ca7f28, 3 | BRF_GRA },           //  6
 	{ "256-c6d.c6",      0x800000, 0x806eb36f, 3 | BRF_GRA },           //  7
-	{ "256-c7cq.c7",     0x800000, 0x4ee4c193, 3 | BRF_GRA },           //  8
-	{ "256-c8cq.c8",     0x800000, 0x87645c1f, 3 | BRF_GRA },           //  9
+	{ "256-c7cq.c7",     0x800000, 0x2d54bf3c, 3 | BRF_GRA },           //  8
+	{ "256-c8cq.c8",     0x800000, 0xe7f00844, 3 | BRF_GRA },           //  9
 
 	{ "256-m1.m1",       0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 

@@ -2060,7 +2060,7 @@ struct BurnDriver BurnDrvSailorMoonOh = {
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
-static INT32 sailormnrotInit() // 150% speed, Zombie Master recomendation...
+static INT32 sailormnrotInit()
 {
 	INT32 nRet = sailormnInit();
 	

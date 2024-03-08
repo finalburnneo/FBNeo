@@ -1429,10 +1429,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 	}
 
-	if (nAction & ACB_NVRAM)
-	{
-		EEPROMScan(nAction, pnMin);
-	}
+	EEPROMScan(nAction, pnMin);
 
 	return 0;
 }

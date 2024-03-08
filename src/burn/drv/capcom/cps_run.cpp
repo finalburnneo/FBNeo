@@ -335,13 +335,13 @@ INT32 Cps1Frame()
 		}
 	}
 	
-	if (CpsRunFrameStartCallbackFunction) {
-		CpsRunFrameStartCallbackFunction();
-	}
-
 	nCpsCycles = (INT32)((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust >> 8);
 
 	CpsRwGetInp();												// Update the input port values
+
+	if (CpsRunFrameStartCallbackFunction) {
+		CpsRunFrameStartCallbackFunction();
+	}
 
 	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / nCpsNumScanlines;	// Account for VBlank
 

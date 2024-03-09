@@ -12083,7 +12083,9 @@ static INT32 MooncrgxInit()
 	GalPostLoadCallbackFunction = MooncrgxInstallHandler;
 	
 	nRet = GalInit();
-	
+
+	Mooncrs2RearrangeGfx();
+
 	GalExtendTileInfoFunction = MooncrstExtendTileInfo;
 	GalExtendSpriteInfoFunction = MooncrstExtendSpriteInfo;
 	
@@ -12332,7 +12334,7 @@ struct BurnDriver BurnDrvAtaqandr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, AtaqandrRomInfo, AtaqandrRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
-	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	Mooncrs2Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -12352,7 +12354,7 @@ struct BurnDriver BurnDrvMooncmw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncmwRomInfo, MooncmwRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrsaDIPInfo,
-	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	Mooncrs2Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -12382,7 +12384,7 @@ struct BurnDriver BurnDrvFloritas = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, FloritasRomInfo, FloritasRomName, NULL, NULL, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
-	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	Mooncrs2Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -12412,7 +12414,7 @@ struct BurnDriver BurnDrvMooncreg2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Mooncreg2RomInfo, Mooncreg2RomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrslDIPInfo,
-	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	Mooncrs2Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -12432,7 +12434,7 @@ struct BurnDriver BurnDrvmooncrecm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, mooncrecmRomInfo, mooncrecmRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrslDIPInfo,
-	MooncrstInit, GalExit, GalFrame, GalDraw, GalScan,
+	Mooncrs2Init, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

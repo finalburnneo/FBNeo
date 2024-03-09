@@ -48,7 +48,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
+          make mingw SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -97,7 +97,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw SKIPDEPEND=1
+          make mingw SKIPDEPEND=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2

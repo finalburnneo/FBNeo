@@ -140,7 +140,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
+          make mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -183,7 +183,7 @@ jobs:
 
       - name: Build FBNeo
         run: |
-          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1
+          make mingw BUILD_X64_EXE=1 SKIPDEPEND=1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2

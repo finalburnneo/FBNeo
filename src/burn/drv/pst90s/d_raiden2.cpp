@@ -5631,13 +5631,13 @@ struct BurnDriver BurnDrvZerotm2k = {
 
 // Zero Team USA (Incubus, Hack)
 // Modified by YanYan
-// GOTVG 20240114
+// GOTVG 20240229
 
 static struct BurnRomInfo zteammmRomDesc[] = {
-	{ "ztmm__1.u024.5k",	0x040000, 0x0a3cef0d, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "ztmm__3.u023.6k",	0x040000, 0x7f752b91, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ztmm__2.u025.6l",	0x040000, 0x89a18871, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ztmm__4.u026.5l",	0x040000, 0xc0c8eefb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ztmm__1.u024.5k",	0x040000, 0xc8bec908, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztmm__3.u023.6k",	0x040000, 0xb96f3a32, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztmm__2.u025.6l",	0x040000, 0x6fdfdf1c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztmm__4.u026.5l",	0x040000, 0x5dae1177, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	ZEROTEAM_COMPONENTS
 };
@@ -5818,13 +5818,13 @@ struct BurnDriver BurnDrvZteamym = {
 
 // Zero Team USA (God, Hack)
 // Modified by YanYan
-// GOTVG 20240214
+// GOTVG 20240227
 
 static struct BurnRomInfo zteamysRomDesc[] = {
-	{ "ztys__1.u024.5k",	0x040000, 0xd795a957, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "ztys__3.u023.6k",	0x040000, 0xfffa1699, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ztys__2.u025.6l",	0x040000, 0x046a4d7e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ztys__4.u026.5l",	0x040000, 0x24beeac9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ztys__1.u024.5k",	0x040000, 0xb18507f8, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ztys__3.u023.6k",	0x040000, 0x085be47f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ztys__2.u025.6l",	0x040000, 0x40483d13, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ztys__4.u026.5l",	0x040000, 0x28237717, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	ZEROTEAM_COMPONENTS
 };

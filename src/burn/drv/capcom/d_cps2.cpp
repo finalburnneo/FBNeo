@@ -14705,8 +14705,138 @@ struct BurnDriver BurnDrvCpsGigaman2 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Dungeons & Dragons - shadow over mystara (T-Chi)
+// Dungeons & Dragons: Tower of Doom (Plus, Hack)
+// GOTVG 20160825
+
+static struct BurnRomInfo DdtoddpRomDesc[] = {
+	{ "dadedp.03c",		0x080000, 0x748d17d3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "daded.04c",		0x080000, 0x306f14fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "daded.05c",		0x080000, 0x8c6b8328, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dadedp.06a",		0x080000, 0x1005b2d7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dadd.07a",		0x080000, 0x0f0df6cc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "dad.13m",		0x200000, 0xda3cb7d6, CPS2_GFX | BRF_GRA },
+	{ "dad.15m",		0x200000, 0x92b63172, CPS2_GFX | BRF_GRA },
+	{ "dad.17m",		0x200000, 0xb98757f5, CPS2_GFX | BRF_GRA },
+	{ "dad.19m",		0x200000, 0x8121ce46, CPS2_GFX | BRF_GRA },
+	{ "dad.14m",		0x100000, 0x837e6f3f, CPS2_GFX | BRF_GRA },
+	{ "dad.16m",		0x100000, 0xf0916bdb, CPS2_GFX | BRF_GRA },
+	{ "dad.18m",		0x100000, 0xcef393ef, CPS2_GFX | BRF_GRA },
+	{ "dad.20m",		0x100000, 0x8953fe9e, CPS2_GFX | BRF_GRA },
+
+	{ "dad.01",			0x020000, 0x3f5e2424, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "dad.11m",		0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
+	{ "dad.12m",		0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ddtoddp)
+STD_ROM_FN(Ddtoddp)
+
+struct BurnDriver BurnDrvCpsDdtoddp = {
+	"ddtoddp", "ddtod", NULL, NULL, "2016",
+	"Dungeons & Dragons: Tower of Doom (Plus, Hack)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, DdtoddpRomInfo, DdtoddpRomName, NULL, NULL, NULL, NULL, DdtodInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Dungeons & Dragons: Shadow over Mystara (Plus, Hack)
+// GOTVG 20160825
+
+static struct BurnRomInfo DdsomudpRomDesc[] = {
+	{ "dd2udp.03g",		0x080000, 0x41429cbc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2udp.04g",		0x080000, 0x11f7496d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2udp.05g",		0x080000, 0xc00d5fb6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2udp.06g",		0x080000, 0x5eaf9618, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.07",			0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.08",			0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.09",			0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2udp.10",		0x080000, 0x33d55230, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "dd2.13m",		0x400000, 0xa46b4e6e, CPS2_GFX | BRF_GRA },
+	{ "dd2.15m",		0x400000, 0xd5fc50fc, CPS2_GFX | BRF_GRA },
+	{ "dd2.17m",		0x400000, 0x837c0867, CPS2_GFX | BRF_GRA },
+	{ "dd2.19m",		0x400000, 0xbb0ec21c, CPS2_GFX | BRF_GRA },
+	{ "dd2.14m",		0x200000, 0x6d824ce2, CPS2_GFX | BRF_GRA },
+	{ "dd2.16m",		0x200000, 0x79682ae5, CPS2_GFX | BRF_GRA },
+	{ "dd2.18m",		0x200000, 0xacddd149, CPS2_GFX | BRF_GRA },
+	{ "dd2.20m",		0x200000, 0x117fb0c0, CPS2_GFX | BRF_GRA },
+
+	{ "dd2.01",			0x020000, 0x99d657e5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "dd2.02",			0x020000, 0x117a3824, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "dd2.11m",		0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
+	{ "dd2.12m",		0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ddsomudp)
+STD_ROM_FN(Ddsomudp)
+
+struct BurnDriver BurnDrvCpsDdsomudp = {
+	"ddsomudp", "ddsom", NULL, NULL, "2016",
+	"Dungeons & Dragons: Shadow over Mystara (Plus, Hack)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, DdsomudpRomInfo, DdsomudpRomName, NULL, NULL, NULL, NULL, DdsomInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Dungeons & Dragons: Shadow over Mystara (1v4, Hack)
+// Modified by Pipi899
+// 20090629
+
+static struct BurnRomInfo Ddsom1v4RomDesc[] = {
+	{ "dd2a1v4.03g",	0x080000, 0xe28c61f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2a1v4.04g",	0x080000, 0x145efa6f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.05g",		0x080000, 0x5eb1991c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.06g",		0x080000, 0xc26b5e55, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.07",			0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.08",			0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.09",			0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.10",			0x080000, 0xad954c26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "dd2.13m",		0x400000, 0xa46b4e6e, CPS2_GFX | BRF_GRA },
+	{ "dd2.15m",		0x400000, 0xd5fc50fc, CPS2_GFX | BRF_GRA },
+	{ "dd2.17m",		0x400000, 0x837c0867, CPS2_GFX | BRF_GRA },
+	{ "dd2.19m",		0x400000, 0xbb0ec21c, CPS2_GFX | BRF_GRA },
+	{ "dd2.14m",		0x200000, 0x6d824ce2, CPS2_GFX | BRF_GRA },
+	{ "dd2.16m",		0x200000, 0x79682ae5, CPS2_GFX | BRF_GRA },
+	{ "dd2.18m",		0x200000, 0xacddd149, CPS2_GFX | BRF_GRA },
+	{ "dd2.20m",		0x200000, 0x117fb0c0, CPS2_GFX | BRF_GRA },
+
+	{ "dd2.01",			0x020000, 0x99d657e5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "dd2.02",			0x020000, 0x117a3824, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "dd2.11m",		0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
+	{ "dd2.12m",		0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+
+	{ "ddsoma.key",		0x000014, 0x8c3cc560, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ddsom1v4)
+STD_ROM_FN(Ddsom1v4)
+
+struct BurnDriver BurnDrvCpsDdsom1v4 = {
+	"ddsom1v4", "ddsom", NULL, NULL, "2009",
+	"Dungeons & Dragons: Shadow over Mystara (1v4, Hack)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, Ddsom1v4RomInfo, Ddsom1v4RomName, NULL, NULL, NULL, NULL, DdsomInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Dungeons & Dragons: Shadow over Mystara (T-Chi)
 // Modified by フェニックス
+
 static struct BurnRomInfo DdsomjcRomDesc[] = {
 	{ "dd2jc.03g",		0x080000, 0xed73e646, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2jc.04g",		0x080000, 0xc5a6e4b5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },

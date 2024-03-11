@@ -23775,13 +23775,13 @@ struct BurnDriver BurnDrvCpssf2mix = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Street Fighter II' - Hyper Fighting Special Champion Edition
-// By Sr. Street Fighter blog
+// Street Fighter II' - Hyper Fighting Sr. SF Champion Edition v1.3 - 2023-10-17
+// Modified by Sr. Street Fighter (gamesbks)
 
 static struct BurnRomInfo Sf2hfsceRomDesc[] = {
-	{ "s2tsce_23.8f",   0x080000, 0x65326b0e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "s2tsce_22.7f",   0x080000, 0x1b8c6712, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "s2tsce_21.6f",   0x080000, 0x1730e660, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s2tsce_23.8f",   0x080000, 0xcaf0c875, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s2tsce_22.7f",   0x080000, 0x20fff8c3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s2tsce_21.6f",   0x080000, 0x325db237, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "s92-1m.3a",       0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
 	{ "s92-3m.5a",       0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
@@ -23814,8 +23814,8 @@ STD_ROM_PICK(Sf2hfsce)
 STD_ROM_FN(Sf2hfsce)
 
 struct BurnDriver BurnDrvCpsSf2hfsce = {
-	"sf2hfsce", "sf2hf", NULL, NULL, "2023-05-01",
-	"Street Fighter II' - Hyper Fighting (Special Champion Edition v1.2, Hack)\0", NULL, "hack", "CPS1",
+	"sf2hfsce", "sf2hf", NULL, NULL, "2023",
+	"Street Fighter II' - Hyper Fighting (Sr. SF Champion Edition v1.3, Hack)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfsceRomInfo, Sf2hfsceRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

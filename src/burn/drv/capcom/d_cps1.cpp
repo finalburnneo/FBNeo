@@ -16456,6 +16456,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceja"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2cejb"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2cejc"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2hfsce"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mix"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb"         , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb2"        , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -25575,6 +25576,54 @@ struct BurnDriverX BurnDrvCpsSfzhch = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPSCHANGER, GBF_VSFIGHT, FBF_SF,
 	NULL, SfzhchRomInfo, SfzhchRomName, NULL, NULL, NULL, NULL, SfzchInputInfo, NULL,
 	SfzchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Street Fighter II' - Hyper Fighting Sr. SF Champion Edition v1.3 - 2023-10-17
+// Modified by Sr. Street Fighter (gamesbks)
+
+static struct BurnRomInfo Sf2hfsceRomDesc[] = {
+	{ "s2tsce_23.8f",   0x080000, 0xcaf0c875, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s2tsce_22.7f",   0x080000, 0x20fff8c3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s2tsce_21.6f",   0x080000, 0x325db237, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92-1m.3a",       0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92-3m.5a",       0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92-2m.4a",       0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92-4m.6a",       0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92sce-5m.7a",    0x080000, 0x75e20f8c, BRF_GRA | CPS1_TILES },
+	{ "s92sce-7m.9a",    0x080000, 0xee803831, BRF_GRA | CPS1_TILES },
+	{ "s92sce-6m.8a",    0x080000, 0x779c37ed, BRF_GRA | CPS1_TILES },
+	{ "s92sce-8m.10a",   0x080000, 0x005867b6, BRF_GRA | CPS1_TILES },
+	{ "s92sce-10m.3c",   0x080000, 0xd374589b, BRF_GRA | CPS1_TILES },
+	{ "s92sce-12m.5c",   0x080000, 0xd43d5f31, BRF_GRA | CPS1_TILES },
+	{ "s92sce-11m.4c",   0x080000, 0x09e7ea4b, BRF_GRA | CPS1_TILES },
+	{ "s92sce-13m.6c",   0x080000, 0x136d9999, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.11a",      0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.11c",      0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",      0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s9263b.1a",       0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",        0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",       0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",        0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",        0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2hfsce)
+STD_ROM_FN(Sf2hfsce)
+
+struct BurnDriver BurnDrvCpsSf2hfsce = {
+	"sf2hfsce", "sf2hf", NULL, NULL, "2023",
+	"Street Fighter II' - Hyper Fighting (Sr. SF Champion Edition v1.3, Hack)\0", NULL, "hack", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2hfsceRomInfo, Sf2hfsceRomName, NULL, NULL, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2hfInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -12003,6 +12003,37 @@ static INT32 Mooncrs2Init()
 	return nRet;
 }
 
+static INT32 MooncmwInit()
+{
+	GalPostLoadCallbackFunction = MapMooncrst;
+	
+	INT32 nRet = GalInit();
+	
+	UINT8* TempRom = (UINT8*)BurnMalloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	BurnLoadRom(TempRom, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
+	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
+	memcpy(GalTempRom + 0x0800, TempRom + 0x0800, 0x200);
+	memcpy(GalTempRom + 0x0c00, TempRom + 0x0a00, 0x200);
+	memcpy(GalTempRom + 0x0a00, TempRom + 0x0c00, 0x200);
+	memcpy(GalTempRom + 0x0e00, TempRom + 0x0e00, 0x200);
+	BurnLoadRom(TempRom, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
+	memcpy(GalTempRom + 0x1000, TempRom + 0x0000, 0x800);
+	memcpy(GalTempRom + 0x1800, TempRom + 0x0800, 0x200);
+	memcpy(GalTempRom + 0x1c00, TempRom + 0x0a00, 0x200);
+	memcpy(GalTempRom + 0x1a00, TempRom + 0x0c00, 0x200);
+	memcpy(GalTempRom + 0x1e00, TempRom + 0x0e00, 0x200);
+	BurnFree(TempRom);
+	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
+	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);	
+	BurnFree(GalTempRom);
+	
+	GalExtendTileInfoFunction = MooncrstExtendTileInfo;
+	GalExtendSpriteInfoFunction = MooncrstExtendSpriteInfo;
+	
+	return nRet;
+}
+
 static void Mooncrs3PostLoad()
 {
 	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
@@ -12354,7 +12385,7 @@ struct BurnDriver BurnDrvMooncmw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncmwRomInfo, MooncmwRomName, NULL, NULL, NULL, NULL, OmegabInputInfo, MooncrsaDIPInfo,
-	Mooncrs2Init, GalExit, GalFrame, GalDraw, GalScan,
+	MooncmwInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

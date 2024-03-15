@@ -3269,10 +3269,10 @@ STD_ROM_PICK(gtg2)
 STD_ROM_FN(gtg2)
 
 struct BurnDriver BurnDrvGtg2 = {
-	"gtg2", "gtg2", NULL, NULL, "1989",
+	"gtg2", NULL, NULL, NULL, "1989",
 	"Golden Tee Golf II (Trackball, V1.1)\0", NULL, "Strata/Incredible Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gtg2RomInfo, gtg2RomName, NULL, NULL, NULL, NULL, Gtg2InputInfo, Gtg2DIPInfo,
 	Gtg2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x100,
 	256, 240, 4, 3

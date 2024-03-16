@@ -21780,11 +21780,11 @@ struct BurnDriver BurnDrvmslug5f = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 5 (Boss Battle, Hack)
+// Metal Slug 5 (Boss Battle, Hack) - 2024-03-14
 // Modified by 合金弹头爱克斯
 
 static struct BurnRomInfo mslug5bossRomDesc[] = {
-	{ "268-p1boss.p1",    0x600000, 0x3ec95964, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
+	{ "268-p1boss.p1",    0x600000, 0x4d2aa270, 1 | BRF_ESS | BRF_PRG },  //  0 68K code
 
 	{ "268-s1d.s1",       0x020000, 0x64952683, 2 | BRF_GRA },            //  1 Text layer tiles
 

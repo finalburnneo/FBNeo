@@ -761,8 +761,8 @@ static void expand_colourdata()
 	
 			if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 3)
 			{
-				// Fix for kovsh a0603 rom overlap
-				if (ri.nLen == 0x400000 && prev_len == 0x400000 && nPGMSPRColROMLen == 0x2000000) {
+				// Fix for kovsh & hacks a0613 rom overlap
+				if ((ri.nLen >= 0x400000) && (prev_len == 0x400000) && (nPGMSPRColROMLen >= 0x2000000)) {
 					PGMSPRColROMLoad -= 0x200000;
 				}
 

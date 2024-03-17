@@ -1173,6 +1173,46 @@ static struct BurnRomInfo plegendsjRomDesc[] = {
 STD_ROM_PICK(plegendsj)
 STD_ROM_FN(plegendsj)
 
+// Gouketsuji Gaiden - Saikyou Densetsu (Infinite Energy, Hack)
+// GOYVG 20230821
+
+static struct BurnRomInfo plegendsjqRomDesc[] = {
+	{ "prog_jq.u45",		0x080000, 0x82f55c8f, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "prog_jq.u44",		0x080000, 0xf0141a4f, BRF_ESS | BRF_PRG }, //  1
+	{ "pr12.u2",			0x080000, 0x0e202559, BRF_ESS | BRF_PRG }, //  2
+	{ "pr12.u3",			0x080000, 0x54742f21, BRF_ESS | BRF_PRG }, //  3
+	{ "d15.u4",				0x080000, 0x6352cec0, BRF_ESS | BRF_PRG }, //  4
+	{ "d17.u5",				0x080000, 0x7af810d8, BRF_ESS | BRF_PRG }, //  5
+
+	{ "sound.u3",			0x020000, 0x36f71520, BRF_ESS | BRF_PRG }, //  6 Z80 Code
+
+	{ "g02.u61",			0x200000, 0x91e30398, BRF_GRA },           //  7 Sprite data
+	{ "g02.u62",			0x200000, 0xd9455dd7, BRF_GRA },           //  8
+	{ "g02.u63",			0x200000, 0x4d20560b, BRF_GRA },           //  9
+	{ "g02.u64",			0x200000, 0xb17b9b6e, BRF_GRA },           // 10
+	{ "g02.u65",			0x200000, 0x08541878, BRF_GRA },           // 11
+	{ "g02.u66",			0x200000, 0xbecf2a36, BRF_GRA },           // 12
+	{ "atgs.u1",			0x200000, 0xaa6f34a9, BRF_GRA },           // 13
+	{ "atgs.u2",			0x200000, 0x553eda27, BRF_GRA },           // 14
+
+	{ "atgs.u78",			0x200000, 0x16710ecb, BRF_GRA },           // 15 Layer 0 Tile data
+	{ "atgs.u81",			0x200000, 0xcb2aca91, BRF_GRA },           // 16 Layer 1 Tile data
+	{ "atgs.u89",			0x200000, 0x65f45a0f, BRF_GRA },           // 17 Layer 2 Tile data
+	{ "text.u82",			0x080000, 0xf57333ea, BRF_GRA },           // 18 Layer 3 Tile data
+
+	{ "g02.u53",			0x200000, 0xc4bdd9e0, BRF_SND },           // 19 MSM6295 #1 ADPCM data
+	{ "g02.u54",			0x200000, 0x1357d50e, BRF_SND },           // 20
+	{ "g02.u55",			0x200000, 0x2d102898, BRF_SND },           // 21 MSM6295 #2 ADPCM data
+	{ "g02.u56",			0x200000, 0x9ff50dda, BRF_SND },           // 22
+
+	{ "peel18cv8p-15.u7",	0x000155, 0xe02b2d2b, BRF_OPT },           // 23 PLDs
+	{ "peel18cv8p-15.u21",	0x000155, 0x7ca78400, BRF_OPT },           // 24
+	{ "peel18cv8p-15.u25",	0x000155, 0x61b414df, BRF_OPT },           // 25
+};
+
+STD_ROM_PICK(plegendsjq)
+STD_ROM_FN(plegendsjq)
+
 struct BurnDriver BurnDrvPwrinst2 = {
 	"pwrinst2", NULL, NULL, NULL, "1994",
 	"Power Instinct 2 (US, Ver. 94.04.08, set 1)\0", NULL, "Atlus", "Cave",
@@ -1229,6 +1269,16 @@ struct BurnDriver BurnDrvPlegendsj = {
 	L"\u8C6A\u8840\u5BFA\u5916\u4F1D Gogetsuji \u6700\u5F37\u4F1D\u8AAC (Japan, ver. 95/06/20)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, plegendsjRomInfo, plegendsjRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
+	PlegendsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvPlegendsjq = {
+	"plegendsjq", "plegends", NULL, NULL, "2023",
+	"Gouketsuji Gaiden - Saikyou Densetsu (Infinite Energy, Hack)\0", NULL, "hack", "Cave",
+	L"\u8C6A\u8840\u5BFA\u5916\u4F1D Gogetsuji \u6700\u5F37\u4F1D\u8AAC (Infinite Energy, Hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
+	NULL, plegendsjqRomInfo, plegendsjqRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,
 	PlegendsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };

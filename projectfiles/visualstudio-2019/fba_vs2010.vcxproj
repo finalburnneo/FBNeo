@@ -299,6 +299,7 @@
     <ClCompile Include="..\..\src\cpu\i386\i386.cpp" />
     <ClCompile Include="..\..\src\cpu\i8x41\mcs48.cpp" />
     <ClCompile Include="..\..\src\cpu\m377\m37710.cpp" />
+    <ClCompile Include="..\..\src\cpu\mb88xx\mb88xx.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\x64\mips3_x64.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
